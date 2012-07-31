@@ -21,7 +21,6 @@
 
 package org.ambraproject.admin;
 
-import com.google.common.base.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
@@ -35,6 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,22 +74,29 @@ public class ArticleCrudController extends AmbraController {
     return new ResponseEntity<Object>(HttpStatus.OK);
   }
 
-  private ResponseEntity<String> reportError(Exception e, HttpStatus reason) {
+  @ExceptionHandler(RestfulServerException.class)
+  public ResponseEntity<String> reportError(RestfulServerException e) {
+    HttpStatus responseStatus = e.getResponseStatus();
+
     StringWriter s = new StringWriter();
-    e.printStackTrace(new PrintWriter(s));
-    return reportError(s.toString(), reason);
+    PrintWriter pw = new PrintWriter(s);
+    pw.print(responseStatus.getReasonPhrase());
+    pw.print(" -- ");
+    pw.println(e.getMessage());
+
+    // Generally, the stack trace is interesting only if another exception was the cause
+    Throwable cause = e.getCause();
+    if (cause != null && cause != e) {
+      // Append a non-trivial stack trace to the error message
+      e.printStackTrace(pw);
+    }
+
+    return new ResponseEntity<String>(s.toString(), responseStatus);
   }
 
-  private ResponseEntity<String> reportError(String message, HttpStatus reason) {
-    int reasonCode = reason.value();
-    Preconditions.checkArgument(reasonCode >= 400 && reasonCode < 600,
-        "HTTP status must indicate an error condition");
-
-    return new ResponseEntity<String>(message, reason);
-  }
-
-  private ResponseEntity<String> reportDoiNotFoundError() {
-    return reportError("DOI does not belong to an article", HttpStatus.NOT_FOUND);
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<String> catchGeneralErrors(Exception e) {
+    return reportError(new RestfulServerException(e));
   }
 
 
@@ -100,7 +107,7 @@ public class ArticleCrudController extends AmbraController {
       input = file.getInputStream();
       inputData = IOUtils.toByteArray(input);
     } catch (IOException e) {
-      return reportError("Could not read provided file", HttpStatus.BAD_REQUEST);
+      throw new RestfulServerException("Could not read provided file", HttpStatus.BAD_REQUEST);
     } finally {
       IOUtils.closeQuietly(input);
     }
@@ -111,9 +118,9 @@ public class ArticleCrudController extends AmbraController {
       output = getFileStoreService().getFileOutStream(doi, inputData.length);
       output.write(inputData);
     } catch (FileStoreException e) {
-      return reportError("Could not open the file store", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new RestfulServerException("Could not open the file store", HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (IOException e) {
-      return reportError("Could not write to the file store", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new RestfulServerException("Could not write to the file store", HttpStatus.INTERNAL_SERVER_ERROR);
     } finally {
       IOUtils.closeQuietly(output);
     }
@@ -135,7 +142,7 @@ public class ArticleCrudController extends AmbraController {
                                   @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
     final String doi = buildDoi(doiPrefix, doiId);
     if (articleExistsAt(doi)) {
-      return reportError("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
+      throw new RestfulServerException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     Article article = new Article();
@@ -150,14 +157,14 @@ public class ArticleCrudController extends AmbraController {
   public ResponseEntity<?> read(@PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
     final String doi = buildDoi(doiPrefix, doiId);
     if (!articleExistsAt(doi)) {
-      return reportDoiNotFoundError();
+      throw reportDoiNotFound();
     }
 
     byte[] fileData = null;
     try {
       fileData = getFileStoreService().getFileByteArray(doi);
     } catch (FileStoreException e) {
-      return reportError(e, HttpStatus.NOT_FOUND);
+      throw new RestfulServerException(e); // TODO Can be caused by invalid request?
     }
 
     return new ResponseEntity<byte[]>(fileData, HttpStatus.OK);
@@ -168,7 +175,7 @@ public class ArticleCrudController extends AmbraController {
                                   @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
     final String doi = buildDoi(doiPrefix, doiId);
     if (!articleExistsAt(doi)) {
-      return reportDoiNotFoundError();
+      throw reportDoiNotFound();
     }
 
     return write(file, doi);
@@ -178,7 +185,7 @@ public class ArticleCrudController extends AmbraController {
   public ResponseEntity<?> delete(@PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
     final String doi = buildDoi(doiPrefix, doiId);
     if (!articleExistsAt(doi)) {
-      return reportDoiNotFoundError();
+      throw reportDoiNotFound();
     }
 
     HibernateTemplate hibernateTemplate = getHibernateTemplate();
@@ -191,9 +198,13 @@ public class ArticleCrudController extends AmbraController {
     try {
       getFileStoreService().deleteFile(doi);
     } catch (FileStoreException e) {
-      return reportError(e, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new RestfulServerException(e);
     }
     return reportOk();
+  }
+
+  private RestfulServerException reportDoiNotFound() {
+    return new RestfulServerException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
   }
 
 }

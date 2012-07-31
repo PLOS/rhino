@@ -22,33 +22,28 @@
 package org.ambraproject.admin;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * An error to be represented to a RESTful client with an appropriate HTTP status code and a message in the (plain text)
  * response body.
- * <p/>
- * TODO: Configure a Spring exception resolver
  */
-public class RestfulServerException extends Exception {
+public class RestfulServerException extends RuntimeException {
 
   private final HttpStatus responseStatus;
 
-  public RestfulServerException(HttpStatus responseStatus, String message) {
+  public RestfulServerException(String message, HttpStatus responseStatus) {
     super(Preconditions.checkNotNull(message));
     this.responseStatus = Preconditions.checkNotNull(responseStatus);
     checkResponseStatus();
   }
 
-  public RestfulServerException(HttpStatus responseStatus, Throwable cause) {
-    this(responseStatus, cause.getMessage(), cause);
+  public RestfulServerException(Throwable cause) {
+    this(Strings.nullToEmpty(cause.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR, cause);
   }
 
-  public RestfulServerException(HttpStatus responseStatus, String message, Throwable cause) {
+  public RestfulServerException(String message, HttpStatus responseStatus, Throwable cause) {
     super(Preconditions.checkNotNull(message), cause);
     this.responseStatus = Preconditions.checkNotNull(responseStatus);
   }
@@ -59,15 +54,8 @@ public class RestfulServerException extends Exception {
         "HTTP status must indicate an error condition");
   }
 
-  public ResponseEntity<String> getResponse() {
-    StringWriter s = new StringWriter();
-    PrintWriter pw = new PrintWriter(s);
-    pw.print(responseStatus.getReasonPhrase());
-    pw.print(": ");
-    pw.println(getMessage());
-    printStackTrace(pw);
-
-    return new ResponseEntity<String>(s.toString(), responseStatus);
+  public HttpStatus getResponseStatus() {
+    return responseStatus;
   }
 
 }
