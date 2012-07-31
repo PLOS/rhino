@@ -1,6 +1,12 @@
+# Compiled code #
 *.class
+*.pyc
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# Build locations #
+overlays/
+target/
