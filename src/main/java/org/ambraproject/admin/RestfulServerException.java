@@ -21,8 +21,9 @@
 
 package org.ambraproject.admin;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -31,27 +32,39 @@ import org.springframework.http.HttpStatus;
  */
 public class RestfulServerException extends RuntimeException {
 
+  private static final Logger log = LoggerFactory.getLogger(RestfulServerException.class);
+
   private final HttpStatus responseStatus;
 
   public RestfulServerException(String message, HttpStatus responseStatus) {
-    super(Preconditions.checkNotNull(message));
-    this.responseStatus = Preconditions.checkNotNull(responseStatus);
-    checkResponseStatus();
-  }
-
-  public RestfulServerException(Throwable cause) {
-    this(Strings.nullToEmpty(cause.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR, cause);
+    super(message);
+    this.responseStatus = responseStatus;
+    validate();
   }
 
   public RestfulServerException(String message, HttpStatus responseStatus, Throwable cause) {
-    super(Preconditions.checkNotNull(message), cause);
-    this.responseStatus = Preconditions.checkNotNull(responseStatus);
+    super(message, cause);
+    this.responseStatus = responseStatus;
+    validate();
   }
 
-  private void checkResponseStatus() {
-    int statusCode = responseStatus.value();
-    Preconditions.checkArgument(statusCode >= 400 && statusCode < 600,
-        "HTTP status must indicate an error condition");
+  /**
+   * Log warnings if the arguments to this exception are invalid. (Throwing an IllegalArgumentException would be
+   * counterproductive, as it would only obscure this exception.)
+   */
+  private void validate() {
+    if (responseStatus == null) {
+      log.warn("Null response status");
+    } else {
+      int responseCode = responseStatus.value();
+      if (responseCode < 400 || responseCode >= 500) {
+        log.warn("HTTP status ({}) should report a client error (400-499)", responseCode);
+      }
+    }
+
+    if (StringUtils.isBlank(getMessage())) {
+      log.warn("No message (required to form the response body)");
+    }
   }
 
   public HttpStatus getResponseStatus() {

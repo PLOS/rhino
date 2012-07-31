@@ -74,35 +74,43 @@ public class ArticleCrudController extends AmbraController {
     return new ResponseEntity<Object>(HttpStatus.OK);
   }
 
+  /**
+   * Report an error condition to the REST client. The brief error message is sent as the response body, with the
+   * response code specified when the exception object was created. The stack trace is not included because we generally
+   * expect the client to fix the error with a simple change to input.
+   *
+   * @param e the exception that Spring wants to handle
+   * @return the RESTful response body
+   */
   @ExceptionHandler(RestfulServerException.class)
   public ResponseEntity<String> reportError(RestfulServerException e) {
-    HttpStatus responseStatus = e.getResponseStatus();
-
-    StringWriter s = new StringWriter();
-    PrintWriter pw = new PrintWriter(s);
-    pw.print(responseStatus.getReasonPhrase());
-    pw.print(" -- ");
-    pw.println(e.getMessage());
-
-    // Generally, the stack trace is interesting only if another exception was the cause
-    Throwable cause = e.getCause();
-    if (cause != null && cause != e) {
-      // Append a non-trivial stack trace to the error message
-      e.printStackTrace(pw);
-    }
-
-    return new ResponseEntity<String>(s.toString(), responseStatus);
+    log.info("Reporting error to client", e);
+    return new ResponseEntity<String>(e.getMessage(), e.getResponseStatus());
   }
 
+  /**
+   * Display a server-side error to the rest client. This is meant generally to handle bugs and configuration errors.
+   * Because this is assumed to be caused by programmer error, the stack trace is sent in the request body.
+   *
+   * @param e the exception that Spring wants to handle
+   * @return the RESTful response body
+   */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<String> catchGeneralErrors(Exception e) {
-    return reportError(new RestfulServerException(e));
+    log.error("Exception from controller", e);
+    StringWriter s = new StringWriter();
+    e.printStackTrace(new PrintWriter(s));
+    return new ResponseEntity<String>(s.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  private RestfulServerException reportDoiNotFound() {
+    return new RestfulServerException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
   }
 
 
-  private ResponseEntity<?> write(MultipartFile file, String doi) {
+  private ResponseEntity<?> write(MultipartFile file, String doi) throws FileStoreException, IOException {
+    byte[] inputData;
     InputStream input = null;
-    byte[] inputData = null;
     try {
       input = file.getInputStream();
       inputData = IOUtils.toByteArray(input);
@@ -111,16 +119,11 @@ public class ArticleCrudController extends AmbraController {
     } finally {
       IOUtils.closeQuietly(input);
     }
-    assert inputData != null;
 
     OutputStream output = null;
     try {
       output = getFileStoreService().getFileOutStream(doi, inputData.length);
       output.write(inputData);
-    } catch (FileStoreException e) {
-      throw new RestfulServerException("Could not open the file store", HttpStatus.INTERNAL_SERVER_ERROR);
-    } catch (IOException e) {
-      throw new RestfulServerException("Could not write to the file store", HttpStatus.INTERNAL_SERVER_ERROR);
     } finally {
       IOUtils.closeQuietly(output);
     }
@@ -139,7 +142,8 @@ public class ArticleCrudController extends AmbraController {
 
   @RequestMapping(value = DOI_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<?> create(@RequestParam(FILE_ARG) MultipartFile file,
-                                  @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
+                                  @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId)
+      throws IOException, FileStoreException {
     final String doi = buildDoi(doiPrefix, doiId);
     if (articleExistsAt(doi)) {
       throw new RestfulServerException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
@@ -154,25 +158,23 @@ public class ArticleCrudController extends AmbraController {
   }
 
   @RequestMapping(value = DOI_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(@PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
+  public ResponseEntity<?> read(@PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId)
+      throws FileStoreException {
     final String doi = buildDoi(doiPrefix, doiId);
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
     }
 
-    byte[] fileData = null;
-    try {
-      fileData = getFileStoreService().getFileByteArray(doi);
-    } catch (FileStoreException e) {
-      throw new RestfulServerException(e); // TODO Can be caused by invalid request?
-    }
+    // TODO Can an invalid request cause this to throw FileStoreException?
+    byte[] fileData = getFileStoreService().getFileByteArray(doi);
 
     return new ResponseEntity<byte[]>(fileData, HttpStatus.OK);
   }
 
   @RequestMapping(value = DOI_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> update(@RequestParam("file") MultipartFile file,
-                                  @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
+                                  @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId)
+      throws IOException, FileStoreException {
     final String doi = buildDoi(doiPrefix, doiId);
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
@@ -182,7 +184,7 @@ public class ArticleCrudController extends AmbraController {
   }
 
   @RequestMapping(value = DOI_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(@PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) {
+  public ResponseEntity<?> delete(@PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId) throws FileStoreException {
     final String doi = buildDoi(doiPrefix, doiId);
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
@@ -195,16 +197,8 @@ public class ArticleCrudController extends AmbraController {
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)).get(0);
     hibernateTemplate.delete(article);
 
-    try {
-      getFileStoreService().deleteFile(doi);
-    } catch (FileStoreException e) {
-      throw new RestfulServerException(e);
-    }
+    getFileStoreService().deleteFile(doi);
     return reportOk();
-  }
-
-  private RestfulServerException reportDoiNotFound() {
-    return new RestfulServerException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
   }
 
 }
