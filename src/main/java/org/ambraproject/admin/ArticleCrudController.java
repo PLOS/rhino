@@ -34,7 +34,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,8 +43,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Date;
 
 /**
@@ -55,7 +52,7 @@ import java.util.Date;
  * (especially) the file store.
  */
 @Controller
-public class ArticleCrudController extends AmbraController {
+public class ArticleCrudController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
@@ -68,39 +65,6 @@ public class ArticleCrudController extends AmbraController {
 
   private static String buildDoi(String prefix, String id) {
     return DOI_SCHEME_VALUE + prefix + '/' + id;
-  }
-
-  private ResponseEntity<Object> reportOk() {
-    return new ResponseEntity<Object>(HttpStatus.OK);
-  }
-
-  /**
-   * Report an error condition to the REST client. The brief error message is sent as the response body, with the
-   * response code specified when the exception object was created. The stack trace is not included because we generally
-   * expect the client to fix the error with a simple change to input.
-   *
-   * @param e the exception that Spring wants to handle
-   * @return the RESTful response body
-   */
-  @ExceptionHandler(RestClientException.class)
-  public ResponseEntity<String> reportError(RestClientException e) {
-    log.info("Reporting error to client", e);
-    return new ResponseEntity<String>(e.getMessage(), e.getResponseStatus());
-  }
-
-  /**
-   * Display a server-side error to the rest client. This is meant generally to handle bugs and configuration errors.
-   * Because this is assumed to be caused by programmer error, the stack trace is sent in the request body.
-   *
-   * @param e the exception that Spring wants to handle
-   * @return the RESTful response body
-   */
-  @ExceptionHandler(Exception.class)
-  public ResponseEntity<String> catchGeneralErrors(Exception e) {
-    log.error("Exception from controller", e);
-    StringWriter s = new StringWriter();
-    e.printStackTrace(new PrintWriter(s));
-    return new ResponseEntity<String>(s.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   private RestClientException reportDoiNotFound() {
