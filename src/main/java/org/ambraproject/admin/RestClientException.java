@@ -30,19 +30,19 @@ import org.springframework.http.HttpStatus;
  * An error to be represented to a RESTful client with an appropriate HTTP status code and a message in the (plain text)
  * response body.
  */
-public class RestfulServerException extends RuntimeException {
+public class RestClientException extends RuntimeException {
 
-  private static final Logger log = LoggerFactory.getLogger(RestfulServerException.class);
+  private static final Logger log = LoggerFactory.getLogger(RestClientException.class);
 
   private final HttpStatus responseStatus;
 
-  public RestfulServerException(String message, HttpStatus responseStatus) {
+  public RestClientException(String message, HttpStatus responseStatus) {
     super(message);
     this.responseStatus = responseStatus;
     validate();
   }
 
-  public RestfulServerException(String message, HttpStatus responseStatus, Throwable cause) {
+  public RestClientException(String message, HttpStatus responseStatus, Throwable cause) {
     super(message, cause);
     this.responseStatus = responseStatus;
     validate();

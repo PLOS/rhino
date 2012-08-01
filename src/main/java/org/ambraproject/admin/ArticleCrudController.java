@@ -82,8 +82,8 @@ public class ArticleCrudController extends AmbraController {
    * @param e the exception that Spring wants to handle
    * @return the RESTful response body
    */
-  @ExceptionHandler(RestfulServerException.class)
-  public ResponseEntity<String> reportError(RestfulServerException e) {
+  @ExceptionHandler(RestClientException.class)
+  public ResponseEntity<String> reportError(RestClientException e) {
     log.info("Reporting error to client", e);
     return new ResponseEntity<String>(e.getMessage(), e.getResponseStatus());
   }
@@ -103,8 +103,8 @@ public class ArticleCrudController extends AmbraController {
     return new ResponseEntity<String>(s.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  private RestfulServerException reportDoiNotFound() {
-    return new RestfulServerException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
+  private RestClientException reportDoiNotFound() {
+    return new RestClientException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
   }
 
 
@@ -115,7 +115,7 @@ public class ArticleCrudController extends AmbraController {
       input = file.getInputStream();
       inputData = IOUtils.toByteArray(input);
     } catch (IOException e) {
-      throw new RestfulServerException("Could not read provided file", HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST);
     } finally {
       IOUtils.closeQuietly(input);
     }
@@ -146,7 +146,7 @@ public class ArticleCrudController extends AmbraController {
       throws IOException, FileStoreException {
     final String doi = buildDoi(doiPrefix, doiId);
     if (articleExistsAt(doi)) {
-      throw new RestfulServerException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
+      throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     Article article = new Article();
