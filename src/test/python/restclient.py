@@ -40,8 +40,8 @@ PATCH   = 'PATCH'
 class ResponseReceiver:
     """An object to provide read/write functions.
 
-    This works better than a bare StringIO because it yields None, rather than
-    the empty string, if the write method was never called at all.
+    This works better than a bare StringIO because it yields None, rather
+    than the empty string, if the write method was never called at all.
     """
 
     def __init__(self):
@@ -50,7 +50,8 @@ class ResponseReceiver:
     def write(self, data):
         """Write to the buffer.
 
-        This method is useful for passing to pycurl as a callback.
+        It is useful to pass this method, as a first-class object, to
+        pycurl as a callback.
         """
         if not self._buf:
             self._buf = cStringIO.StringIO()
@@ -59,16 +60,26 @@ class ResponseReceiver:
     def read(self):
         """Read what has been written to the buffer.
 
-        If this object has not been written to, return None. Else, return all
-        the written data, concatenated. The empty string is returned if and
-        only if an empty string was written at least once and no other strings
-        were.
+        If this object has not been written to, return None. Else, return
+        all the written data, concatenated. The empty string is returned if
+        and only if an empty string was written at least once and no other
+        strings were.
         """
         if self._buf:
             return self._buf.getvalue()
         return None
 
 class Request:
+    """A request set up to perform a RESTful operation.
+
+    Sending a request with an instance should not change its state, so
+    instances should be reusable if you want the same parameters.
+
+    As of this version, any values passed into this class do not have
+    special HTML characters (like '#', '?', and '&') escaped. Bugs may
+    ensue if such characters are not manually escaped (like '%23') from
+    strings before they are passed in.
+    """
 
     def __init__(self, domain, path, port=None):
         self.domain = domain
@@ -84,12 +95,13 @@ class Request:
         appended to the end of the URL, as in
             http://example.com/page.html?spam=canned&eggs=fried
         """
-        self.quary_params[key] = value
+        self.query_params[key] = value
 
     def set_form_parameter(self, key, value):
         """Add the value for an HTML <form> element.
 
-        These values are used only with uploading (POST and PUT) operations.
+        These values are used only with uploading (POST and PUT)
+        operations.
         """
         self.form_params[key] = value
 
@@ -102,21 +114,21 @@ class Request:
         """Build the URL that this request will go to."""
         buf = ['http://', self.domain]
         if self.port:
-            buf += [':' + str(self.port)]
+            buf += [':', str(self.port)]
         buf += ['/', self.path]
         in_query = False
         for (query_key, query_value) in self.query_params.items():
             buf += [('&' if in_query else '?'),
-                    query_key, '=', query_value]
+                    str(query_key), '=', str(query_value)]
             in_query = True
         return ''.join(buf)
 
     def _build_curl(self):
         """Build a Curl object to execute this request.
 
-        The returned object is extended with a method (actually just a member
-        function) named read_response that will, after perform is called on the
-        same object, return the response body.
+        The returned object is extended with a method (actually just a
+        member function) named read_response that will, after perform is
+        called on the same object, return the response body.
         """
         curl = pycurl.Curl()
         curl.setopt(pycurl.URL, ''.join(self._build_url()))
@@ -154,11 +166,11 @@ class Request:
     def delete(self):
         """Send a DELETE request."""
         curl = self._build_curl()
-        curl.setopt(pycurl.CUSTOMREQUEST, 'DELETE')
+        curl.setopt(pycurl.CUSTOMREQUEST, DELETE)
         curl.perform()
         return curl.getinfo(pycurl.RESPONSE_CODE), curl.read_response()
 
-    HTTP_METHODS = {
+    _HTTP_METHODS = {
         OPTIONS: None,
         GET:     get,
         HEAD:    None,
@@ -169,13 +181,14 @@ class Request:
         CONNECT: None,
         PATCH:   None,
         }
+    """HTTP "verbs" mapped onto the methods that handle them."""
 
     def send(self, method):
         """Send a request.
 
         The argument is an HTTP "verb".
         """
-        m = Request.HTTP_METHODS[method]
+        m = Request._HTTP_METHODS[method]
         if m is None:
-            raise Exception("Method not supported")
+            raise ValueError("Method not supported")
         return m(self)
