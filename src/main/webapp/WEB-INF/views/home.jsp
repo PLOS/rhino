@@ -1,9 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%--
-  ~ $HeadURL$
-  ~ $Id$
-  ~
   ~ Copyright (c) 2006-2012 by Public Library of Science
   ~ http://plos.org
   ~ http://ambraproject.org
