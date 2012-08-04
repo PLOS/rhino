@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.controller;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.springframework.beans.factory.annotation.Autowired;

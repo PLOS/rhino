@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

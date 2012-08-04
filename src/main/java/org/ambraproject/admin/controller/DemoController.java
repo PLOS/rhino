@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.controller;
 
 import org.ambraproject.models.Article;
 import org.hibernate.criterion.DetachedCriteria;
