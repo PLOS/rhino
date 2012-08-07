@@ -32,7 +32,7 @@ import java.io.StringWriter;
 /**
  * Controller that sends HTTP responses to RESTful requests.
  */
-public class RestController extends AmbraController {
+public class RestController {
 
   private static final Logger log = LoggerFactory.getLogger(RestController.class);
 

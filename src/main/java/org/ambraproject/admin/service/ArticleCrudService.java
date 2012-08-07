@@ -16,27 +16,21 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.service;
 
-import org.ambraproject.filestore.FileStoreService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.ambraproject.filestore.FileStoreException;
+import org.springframework.web.multipart.MultipartFile;
 
-public abstract class AmbraController {
+import java.io.IOException;
 
-  @Autowired
-  private LocalSessionFactoryBean hibernateSessionFactory;
+public interface ArticleCrudService {
 
-  @Autowired
-  private FileStoreService fileStoreService;
+  public abstract void create(MultipartFile file, String doi) throws IOException, FileStoreException;
 
-  protected HibernateTemplate getHibernateTemplate() {
-    return new HibernateTemplate(hibernateSessionFactory.getObject());
-  }
+  public abstract byte[] read(String doi) throws FileStoreException;
 
-  protected FileStoreService getFileStoreService() {
-    return fileStoreService;
-  }
+  public abstract void update(MultipartFile file, String doi) throws IOException, FileStoreException;
+
+  public abstract void delete(String doi) throws FileStoreException;
 
 }
