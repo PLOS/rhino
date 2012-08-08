@@ -16,18 +16,25 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin;
 
-import org.ambraproject.filestore.FileStoreService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public abstract class AmbraService {
+import javax.inject.Inject;
 
-  @Autowired
-  protected HibernateTemplate hibernateTemplate;
+@Configuration
+public class AdminConfiguration {
 
-  @Autowired
-  protected FileStoreService fileStoreService;
+  @Inject
+  private ApplicationContext context;
+
+  @Bean
+  public HibernateTemplate hibernateTemplate(SessionFactory hibernateSessionFactory) {
+    return new HibernateTemplate(hibernateSessionFactory);
+  }
 
 }

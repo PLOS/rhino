@@ -27,7 +27,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ import java.util.Date;
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private boolean articleExistsAt(String doi) {
-    Long articleCount = (Long) getHibernateTemplate().findByCriteria(DetachedCriteria
+    Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
         .forClass(Article.class)
         .add(Restrictions.eq("doi", doi))
         .setProjection(Projections.rowCount())
@@ -71,7 +70,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     OutputStream output = null;
     try {
-      output = getFileStoreService().getFileOutStream(doi, inputData.length);
+      output = fileStoreService.getFileOutStream(doi, inputData.length);
       output.write(inputData);
     } finally {
       IOUtils.closeQuietly(output);
@@ -89,7 +88,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Article article = new Article();
     article.setDoi(doi);
     article.setDate(new Date());
-    getHibernateTemplate().save(article);
+    hibernateTemplate.save(article);
 
     write(file, doi);
   }
@@ -101,7 +100,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return getFileStoreService().getFileByteArray(doi);
+    return fileStoreService.getFileByteArray(doi);
   }
 
   @Override
@@ -118,14 +117,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       throw reportDoiNotFound();
     }
 
-    HibernateTemplate hibernateTemplate = getHibernateTemplate();
     Article article = (Article) hibernateTemplate.findByCriteria(DetachedCriteria
         .forClass(Article.class)
         .add(Restrictions.eq("doi", doi))
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)).get(0);
     hibernateTemplate.delete(article);
 
-    getFileStoreService().deleteFile(doi);
+    fileStoreService.deleteFile(doi);
   }
 
 }

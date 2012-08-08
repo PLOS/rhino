@@ -72,9 +72,4 @@
     <beans:property name="jndiName" value="java:comp/env/ambra/FileStore"/>
   </beans:bean>
 
-  <!-- Feature services -->
-  <beans:bean id="articleCrudService" class="org.ambraproject.admin.service.ArticleCrudServiceImpl">
-  </beans:bean>
-
-
 </beans:beans>
