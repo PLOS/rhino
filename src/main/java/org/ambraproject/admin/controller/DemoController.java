@@ -37,14 +37,13 @@ import java.util.List;
 public class DemoController {
 
   @Autowired
-  private org.springframework.orm.hibernate3.LocalSessionFactoryBean hibernateSessionFactory;
+  private HibernateTemplate hibernateTemplate;
 
   /**
    * Populate the page with data retrieved from the persistence layer.
    */
   @RequestMapping(value = "/demo", method = RequestMethod.GET)
   public String demo(Model model) {
-    HibernateTemplate hibernateTemplate = new HibernateTemplate(hibernateSessionFactory.getObject());
     List<String> dois = hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Article.class)
             .setProjection(Projections.property("doi"))

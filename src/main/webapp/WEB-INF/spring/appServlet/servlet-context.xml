@@ -50,22 +50,6 @@
   <beans:bean id="hibernateDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     <beans:property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>
   </beans:bean>
-  <beans:bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-    <beans:property name="dataSource" ref="hibernateDataSource"/>
-    <beans:property name="mappingLocations">
-      <beans:list>
-        <beans:value>classpath:org/ambraproject/models/*.hbm.xml</beans:value>
-      </beans:list>
-    </beans:property>
-    <beans:property name="hibernateProperties">
-      <beans:props>
-        <!-- We might use MySQLInnoDBDialect instead -->
-        <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
-        <beans:prop key="hibernate.show_sql">false</beans:prop>
-        <beans:prop key="hibernate.format_sql">false</beans:prop>
-      </beans:props>
-    </beans:property>
-  </beans:bean>
 
   <!-- Bean config for file store -->
   <beans:bean id="fileStoreService" class="org.springframework.jndi.JndiObjectFactoryBean">
