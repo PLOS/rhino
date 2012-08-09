@@ -18,11 +18,29 @@
 
 package org.ambraproject.admin;
 
+import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.admin.service.ArticleCrudServiceImpl;
+import org.ambraproject.filestore.FileStoreService;
+import org.ambraproject.testutils.HibernateTestSessionFactory;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+
+import javax.inject.Inject;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Properties;
 
 @Configuration
+//@Import(AdminConfiguration.class)
 public class TestConfiguration {
+
+  @Inject
+  private ApplicationContext context;
 
   /**
    * Dummy object for sanity-checking the unit test configuration.
@@ -32,6 +50,53 @@ public class TestConfiguration {
   @Bean
   public Object sampleBean() {
     return new Object();
+  }
+
+  @Bean
+  public DataSource dataSource() {
+    BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setUrl("jdbc:hsqldb:mem:testdb");
+    dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+    return dataSource;
+  }
+
+  @Bean
+  public SessionFactory sessionFactory(DataSource dataSource) throws IOException {
+    HibernateTestSessionFactory bean = new HibernateTestSessionFactory();
+    bean.setDataSource(dataSource);
+    bean.setSchemaUpdate(true);
+
+    Resource[] mappingLocations = context.getResources("classpath:org/ambraproject/models/*.hbm.xml");
+    if (mappingLocations.length == 0) {
+      throw new IllegalStateException("Config error: No Ambra data models found");
+    }
+    bean.setMappingLocations(mappingLocations);
+
+    Properties hibernateProperties = new Properties();
+    hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+    bean.setHibernateProperties(hibernateProperties);
+
+    try {
+      bean.afterPropertiesSet();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return bean.getObject();
+  }
+
+  @Bean
+  public HibernateTemplate hibernateTemplate(SessionFactory sessionFactory) {
+    return new HibernateTemplate(sessionFactory);
+  }
+
+  @Bean
+  public ArticleCrudService articleCrudService() {
+    return new ArticleCrudServiceImpl();
+  }
+
+  @Bean
+  public FileStoreService fileStoreService() throws IOException {
+    return null; // TODO
   }
 
 }
