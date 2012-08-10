@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -36,7 +37,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-//@Import(AdminConfiguration.class)
 public class TestConfiguration {
 
   @Inject
@@ -61,8 +61,8 @@ public class TestConfiguration {
   }
 
   @Bean
-  public SessionFactory sessionFactory(DataSource dataSource) throws IOException {
-    HibernateTestSessionFactory bean = new HibernateTestSessionFactory();
+  public LocalSessionFactoryBean sessionFactory(DataSource dataSource) throws IOException {
+    LocalSessionFactoryBean bean = new HibernateTestSessionFactory();
     bean.setDataSource(dataSource);
     bean.setSchemaUpdate(true);
 
@@ -76,12 +76,7 @@ public class TestConfiguration {
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
     bean.setHibernateProperties(hibernateProperties);
 
-    try {
-      bean.afterPropertiesSet();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-    return bean.getObject();
+    return bean;
   }
 
   @Bean

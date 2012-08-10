@@ -38,7 +38,7 @@ public class AdminConfiguration {
   private ApplicationContext context;
 
   @Bean
-  public SessionFactory sessionFactory(DataSource hibernateDataSource) throws IOException {
+  public LocalSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
     LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
     bean.setDataSource(hibernateDataSource);
 
@@ -54,12 +54,7 @@ public class AdminConfiguration {
     hibernateProperties.setProperty("hibernate.format_sql", Boolean.FALSE.toString());
     bean.setHibernateProperties(hibernateProperties);
 
-    try {
-      bean.afterPropertiesSet();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-    return bean.getObject();
+    return bean;
   }
 
   @Bean
