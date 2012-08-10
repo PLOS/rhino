@@ -21,6 +21,7 @@ package org.ambraproject.admin;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.ArticleCrudServiceImpl;
 import org.ambraproject.filestore.FileStoreService;
+import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -73,7 +75,13 @@ public class TestConfiguration extends BaseConfiguration {
 
   @Bean
   public FileStoreService fileStoreService() throws IOException {
-    return null; // TODO
+    final String topDir = ""; // Should be "${project.basedir}/target/test-classes/filestore"
+    // TODO Configure this with the correct property
+    // This can be made to work temporarily by hard-coding a path to an empty temp directory on your machine
+
+    final String domain = ""; // Blank for the test environment
+    FileStoreService service = null; // TODO new FileSystemImpl(new File(topDir), domain);
+    return service;
   }
 
 }

@@ -22,6 +22,34 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
+
+  /**
+   * Mock input stream that yields a constant string and keeps track of whether is has been closed.
+   * <p/>
+   * Closing the stream is not significant in this implementation, but one might want to test for it.
+   */
+  protected static class TestInputStream extends ByteArrayInputStream {
+    private boolean isClosed;
+
+    public TestInputStream(String content) {
+      super(content.getBytes());
+      isClosed = false;
+    }
+
+    public boolean isClosed() {
+      return isClosed;
+    }
+
+    @Override
+    public void close() throws IOException {
+      super.close();
+      isClosed = true;
+    }
+  }
+
 }

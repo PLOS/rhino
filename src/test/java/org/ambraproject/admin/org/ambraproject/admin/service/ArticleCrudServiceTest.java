@@ -19,11 +19,19 @@
 package org.ambraproject.admin.org.ambraproject.admin.service;
 
 import org.ambraproject.admin.BaseAdminTest;
+import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.filestore.FileStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 public class ArticleCrudServiceTest extends BaseAdminTest {
 
@@ -37,6 +45,60 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
   @Test
   public void testServiceAutowiring() {
     assertNotNull(articleCrudService);
+  }
+
+  private void assertArticleExistence(String doi, boolean expectedToExist) throws FileStoreException {
+    boolean received404 = false;
+    try {
+      articleCrudService.read(doi);
+    } catch (RestClientException e) {
+      if (HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
+        received404 = true;
+      }
+    }
+    assertEquals(received404, !expectedToExist);
+  }
+
+  @Test
+  public void testCrud() throws IOException, FileStoreException {
+    final String data = "Imagine this is some XML data.";
+    final String doi = "test/crud";
+    assertArticleExistence(doi, false);
+
+    TestInputStream input = new TestInputStream(data);
+    articleCrudService.create(input, doi);
+    assertArticleExistence(doi, true);
+    assertTrue(input.isClosed());
+
+    byte[] readData = articleCrudService.read(doi);
+    assertEquals(readData, data.getBytes());
+
+    final String updated = data + "\nThis is appended";
+    input = new TestInputStream(updated);
+    articleCrudService.update(input, doi);
+    assertEquals(articleCrudService.read(doi), updated.getBytes());
+    assertArticleExistence(doi, true);
+    assertTrue(input.isClosed());
+
+    articleCrudService.delete(doi);
+    assertArticleExistence(doi, false);
+  }
+
+  @Test
+  public void testCreateCollision() throws IOException, FileStoreException {
+    final String data = "Imagine this is some XML data.";
+    final String doi = "test/createCollision";
+    assertArticleExistence(doi, false);
+
+    articleCrudService.create(new TestInputStream(data), doi);
+    assertArticleExistence(doi, true);
+
+    try {
+      articleCrudService.create(new TestInputStream(data), doi);
+      fail("Expected RestClientException on redundant create");
+    } catch (RestClientException e) {
+      assertEquals(e.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
   }
 
 }
