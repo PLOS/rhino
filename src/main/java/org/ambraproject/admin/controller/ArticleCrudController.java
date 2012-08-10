@@ -20,6 +20,7 @@ package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -62,7 +64,13 @@ public class ArticleCrudController extends RestController {
                                   @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId)
       throws IOException, FileStoreException {
     String doi = buildDoi(doiPrefix, doiId);
-    articleCrudService.create(file, doi);
+    InputStream stream = null;
+    try {
+      stream = file.getInputStream();
+      articleCrudService.create(stream, doi);
+    } finally {
+      IOUtils.closeQuietly(stream);
+    }
     return reportOk();
   }
 
@@ -80,7 +88,13 @@ public class ArticleCrudController extends RestController {
                                   @PathVariable(DOI_PREFIX) String doiPrefix, @PathVariable(DOI_ID) String doiId)
       throws IOException, FileStoreException {
     String doi = buildDoi(doiPrefix, doiId);
-    articleCrudService.update(file, doi);
+    InputStream stream = null;
+    try {
+      stream = file.getInputStream();
+      articleCrudService.update(stream, doi);
+    } finally {
+      IOUtils.closeQuietly(stream);
+    }
     return reportOk();
   }
 

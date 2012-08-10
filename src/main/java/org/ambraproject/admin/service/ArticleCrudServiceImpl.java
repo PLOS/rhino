@@ -27,7 +27,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,11 +55,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
 
-  private void write(MultipartFile file, String doi) throws FileStoreException, IOException {
+  /**
+   * Write the data from the input stream to the file store, using an article DOI as the key.
+   *
+   * @param input the input stream
+   * @param doi   the article DOI to use as a key
+   * @throws FileStoreException
+   * @throws IOException
+   */
+  private void write(InputStream input, String doi) throws FileStoreException, IOException {
     byte[] inputData;
-    InputStream input = null;
     try {
-      input = file.getInputStream();
       inputData = IOUtils.toByteArray(input);
     } catch (IOException e) {
       throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST);
@@ -79,8 +84,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void create(MultipartFile file, String doi) throws IOException, FileStoreException {
+  public void create(InputStream file, String doi) throws IOException, FileStoreException {
     if (articleExistsAt(doi)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
@@ -93,6 +101,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     write(file, doi);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] read(String doi) throws FileStoreException {
     if (!articleExistsAt(doi)) {
@@ -103,14 +114,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return fileStoreService.getFileByteArray(doi);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void update(MultipartFile file, String doi) throws IOException, FileStoreException {
+  public void update(InputStream file, String doi) throws IOException, FileStoreException {
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
     }
     write(file, doi);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void delete(String doi) throws FileStoreException {
     if (!articleExistsAt(doi)) {
