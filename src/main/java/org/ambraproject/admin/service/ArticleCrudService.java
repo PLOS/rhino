@@ -19,18 +19,61 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.filestore.FileStoreException;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public interface ArticleCrudService {
 
-  public abstract void create(MultipartFile file, String doi) throws IOException, FileStoreException;
+  /**
+   * Create an article from supplied XML data.
+   * <p/>
+   * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
+   * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
+   *
+   * @param file the XML data for the created article
+   * @param doi  the DOI of the created article
+   * @throws org.ambraproject.admin.RestClientException
+   *                            if the DOI is already used
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  public abstract void create(InputStream file, String doi) throws IOException, FileStoreException;
 
+  /**
+   * Read the XML file for an article, as raw XML data.
+   *
+   * @param doi the DOI of the article
+   * @return the XML file, as bytes
+   * @throws org.ambraproject.admin.RestClientException
+   *                            if the DOI does not belong to an article
+   * @throws FileStoreException
+   */
   public abstract byte[] read(String doi) throws FileStoreException;
 
-  public abstract void update(MultipartFile file, String doi) throws IOException, FileStoreException;
+  /**
+   * Overwrite an article with supplied XML data.
+   * <p/>
+   * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
+   * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
+   *
+   * @param file the XML data for the article
+   * @param doi  the DOI of the article
+   * @throws org.ambraproject.admin.RestClientException
+   *                            if the DOI does not belong to an article
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  public abstract void update(InputStream file, String doi) throws IOException, FileStoreException;
 
+  /**
+   * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
+   *
+   * @param doi the DOI of the article to delete
+   * @throws org.ambraproject.admin.RestClientException
+   *                            if the DOI does not belong to an article
+   * @throws FileStoreException
+   */
   public abstract void delete(String doi) throws FileStoreException;
 
 }
