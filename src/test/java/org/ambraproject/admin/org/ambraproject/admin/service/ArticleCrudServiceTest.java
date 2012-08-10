@@ -30,6 +30,10 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
   @Autowired
   private ArticleCrudService articleCrudService;
 
+  /**
+   * In addition to checking the existence of the service, this will throw an exception under certain error conditions
+   * in the configuration of the Hibernate environment.
+   */
   @Test
   public void testServiceAutowiring() {
     assertNotNull(articleCrudService);

@@ -18,35 +18,22 @@
 
 package org.ambraproject.admin;
 
-import org.hibernate.SessionFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-public class AdminConfiguration {
-
-  @Inject
-  private ApplicationContext context;
+public class AdminConfiguration extends BaseConfiguration {
 
   @Bean
   public LocalSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
     LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
     bean.setDataSource(hibernateDataSource);
-
-    Resource[] mappingLocations = context.getResources("classpath:org/ambraproject/models/*.hbm.xml");
-    if (mappingLocations.length == 0) {
-      throw new IllegalStateException("Config error: No Ambra data models found");
-    }
-    bean.setMappingLocations(mappingLocations);
+    setAmbraMappings(bean);
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", org.hibernate.dialect.MySQLDialect.class.getName());
@@ -55,11 +42,6 @@ public class AdminConfiguration {
     bean.setHibernateProperties(hibernateProperties);
 
     return bean;
-  }
-
-  @Bean
-  public HibernateTemplate hibernateTemplate(SessionFactory sessionFactory) {
-    return new HibernateTemplate(sessionFactory);
   }
 
 }
