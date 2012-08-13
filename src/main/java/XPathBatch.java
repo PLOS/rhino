@@ -18,7 +18,6 @@
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
@@ -33,56 +32,81 @@ import java.util.Map;
 
 public class XPathBatch {
 
-  private final Map<String, String> queryStrings;
+  private final ImmutableMap<String, String> queries;
+  private final ImmutableMap<String, XPathExpression> expressions;
 
   private XPathBatch(Map<String, String> queries) {
-    this.queryStrings = Preconditions.checkNotNull(queries);
+    this.queries = ImmutableMap.copyOf(queries); // defensive copy
+    this.expressions = compileExpressions();
   }
 
-  public static XPathBatch empty() {
-    return new XPathBatch(Maps.<String, String>newHashMap());
-  }
-
-  public static XPathBatch fromMap(Map<String, String> keyedQueries) {
-    Map<String, String> queries = Maps.newHashMap(keyedQueries);
-    return new XPathBatch(queries);
-  }
-
-  public Map<String, String> asMap() {
-    return ImmutableMap.copyOf(queryStrings);
-  }
-
-  public Map<String, String> evaluateOnArticle(String articleDoi, FileStoreService fileStoreService) throws FileStoreException {
-    String fsid = FSIDMapper.doiTofsid(articleDoi, "XML");
-    if (fsid.isEmpty()) {
-      throw new IllegalArgumentException("Could not parse DOI into FSID");
-    }
-    InputStream xmlInput = fileStoreService.getFileInStream(fsid);
-    InputSource xml = new InputSource(xmlInput);
-
-    ImmutableMap.Builder<String, String> queryResults = ImmutableMap.builder();
+  private ImmutableMap<String, XPathExpression> compileExpressions() {
     XPath xPath = XPathFactory.newInstance().newXPath();
-    for (Map.Entry<String, String> queryEntry : queryStrings.entrySet()) {
+    ImmutableMap.Builder<String, XPathExpression> compiled = ImmutableMap.builder();
+    for (Map.Entry<String, String> queryEntry : queries.entrySet()) {
       String key = queryEntry.getKey();
       String query = queryEntry.getValue();
 
-      XPathExpression xPathExpression;
+      XPathExpression xPathExpression = null;
       try {
         xPathExpression = xPath.compile(query);
       } catch (XPathExpressionException e) {
-        throw new IllegalArgumentException("Query cannot be compiled: " + query);
+        throw new IllegalArgumentException("Can't compile XPath query: " + query);
       }
+      compiled.put(key, xPathExpression);
+    }
+    return compiled.build();
+  }
+
+  /**
+   * Factory method.
+   *
+   * @param keyedQueries a set of XPath queries (the map values) with arbitrary labels (the map keys)
+   * @return an instance
+   */
+  public static XPathBatch fromMap(Map<String, String> keyedQueries) {
+    return new XPathBatch(keyedQueries);
+  }
+
+  /**
+   * Get the queries that produced this object.
+   *
+   * @return a set of XPath queries, keyed by their names
+   */
+  public Map<String, String> asQueryMap() {
+    return queries;
+  }
+
+  public Map<String, String> evaluateOnArticle(String articleDoi, FileStoreService fileStoreService) {
+    Preconditions.checkNotNull(articleDoi);
+    Preconditions.checkNotNull(fileStoreService);
+
+    String fsid = FSIDMapper.doiTofsid(articleDoi, "XML");
+    if (fsid.isEmpty()) {
+      throw new IllegalArgumentException("Could not parse DOI into FSID" + articleDoi);
+    }
+    InputStream xmlInput = null;
+    try {
+      xmlInput = fileStoreService.getFileInStream(fsid);
+    } catch (FileStoreException e) {
+      throw new IllegalArgumentException("DOI not found in file store: " + articleDoi);
+    }
+    InputSource xml = new InputSource(xmlInput);
+
+    ImmutableMap.Builder<String, String> results = ImmutableMap.builder();
+    for (Map.Entry<String, XPathExpression> expressionEntry : expressions.entrySet()) {
+      String key = expressionEntry.getKey();
+      XPathExpression expression = expressionEntry.getValue();
 
       String result;
       try {
-         result = xPathExpression.evaluate(xml);
+        result = expression.evaluate(xml);
       } catch (XPathExpressionException e) {
-        throw new IllegalArgumentException("Query cannot be evaluated: " + query);
+        throw new IllegalArgumentException("Query cannot be evaluated: " + queries.get(key));
       }
-
-      queryResults.put(key, result);
+      results.put(key, result);
     }
-    return queryResults.build();
+    return results.build();
   }
 
 }
