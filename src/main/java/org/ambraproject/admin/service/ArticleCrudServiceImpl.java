@@ -19,6 +19,7 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
@@ -54,6 +55,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new RestClientException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
   }
 
+  /**
+   * Produce the file store ID for an article's base XML file.
+   *
+   * @param doi the DOI of an article
+   * @return the FSID for the article's XML file
+   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
+   */
+  private static String findFsidForArticleXml(String doi) {
+    String fsid = FSIDMapper.doiTofsid(doi, "XML");
+    if (fsid.isEmpty()) {
+      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
+    }
+    return fsid;
+  }
+
 
   /**
    * Write the data from the input stream to the file store, using an article DOI as the key.
@@ -73,9 +89,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       IOUtils.closeQuietly(input);
     }
 
+    String fsid = findFsidForArticleXml(doi);
     OutputStream output = null;
     try {
-      output = fileStoreService.getFileOutStream(doi, inputData.length);
+      output = fileStoreService.getFileOutStream(fsid, inputData.length);
       output.write(inputData);
     } finally {
       IOUtils.closeQuietly(output);
@@ -109,9 +126,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
     }
+    String fsid = findFsidForArticleXml(doi);
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileByteArray(doi);
+    return fileStoreService.getFileByteArray(fsid);
   }
 
   /**
