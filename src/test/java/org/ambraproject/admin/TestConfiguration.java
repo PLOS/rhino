@@ -73,14 +73,22 @@ public class TestConfiguration extends BaseConfiguration {
     return new ArticleCrudServiceImpl();
   }
 
+  /**
+   * Produce the file store service bean.
+   * <p/>
+   * This bean-getter has a side effect of creating the mock file store directory if it does not already exist. This
+   * should be fixed if possible. There is no side effect to calling it more than once.
+   *
+   * @return the file store service bean
+   * @throws IOException
+   */
   @Bean
   public FileStoreService fileStoreService() throws IOException {
-    final String topDir = ""; // Should be "${project.basedir}/target/test-classes/filestore"
-    // TODO Configure this with the correct property
-    // This can be made to work temporarily by hard-coding a path to an empty temp directory on your machine
+    final File topDir = new File("target/test-classes/filestore/");
+    topDir.mkdirs(); // TODO Obviate this with Maven?
 
     final String domain = ""; // Blank for the test environment
-    FileStoreService service = null; // TODO new FileSystemImpl(new File(topDir), domain);
+    FileStoreService service = new FileSystemImpl(topDir, domain);
     return service;
   }
 
