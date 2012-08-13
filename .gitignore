@@ -10,3 +10,8 @@
 # Build locations #
 overlays/
 target/
+
+# Project metadata #
+.idea/
+*.iml
+*.ipr
