@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
+import org.apache.commons.io.IOUtils;
 import org.xml.sax.InputSource;
 
 import javax.xml.xpath.XPath;
@@ -79,21 +80,38 @@ public class XPathBatch {
     return queries;
   }
 
+  /**
+   * Perform this batch of queries on an article's XML file.
+   * <p/>
+   * The returned map has a key set equal to that of the query map used to build this object. The map's values are the
+   * results of each query when applied to the article XML.
+   *
+   * @param articleDoi       the DOI of the article
+   * @param fileStoreService a file store service for the file store containing the article
+   * @return the map of results
+   * @throws IllegalArgumentException if the article cannot have all of this object's queries evaluated on it
+   */
   public Map<String, String> evaluateOnArticle(String articleDoi, FileStoreService fileStoreService) {
     Preconditions.checkNotNull(articleDoi);
-    Preconditions.checkNotNull(fileStoreService);
-
     String fsid = FSIDMapper.doiTofsid(articleDoi, "XML");
     if (fsid.isEmpty()) {
       throw new IllegalArgumentException("Could not parse DOI into FSID" + articleDoi);
     }
+
     InputStream xmlInput = null;
     try {
       xmlInput = fileStoreService.getFileInStream(fsid);
+      return evaluate(xmlInput, fileStoreService);
     } catch (FileStoreException e) {
       throw new IllegalArgumentException("DOI not found in file store: " + articleDoi);
+    } finally {
+      IOUtils.closeQuietly(xmlInput);
     }
-    InputSource xml = new InputSource(xmlInput);
+  }
+
+  private Map<String, String> evaluate(InputStream input, FileStoreService fileStoreService) {
+    Preconditions.checkNotNull(fileStoreService);
+    InputSource xml = new InputSource(input);
 
     ImmutableMap.Builder<String, String> results = ImmutableMap.builder();
     for (Map.Entry<String, XPathExpression> expressionEntry : expressions.entrySet()) {
