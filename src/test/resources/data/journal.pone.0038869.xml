@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v2.0 20040830//EN" "http://dtd.nlm.nih.gov/publishing/2.0/journalpublishing.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML" article-type="research-article" dtd-version="2.0" xml:lang="EN">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title>PLoS ONE</journal-title>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-05755</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0038869</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Computer science</subject>
+          <subj-group>
+            <subject>Computer applications</subject>
+            <subj-group>
+              <subject>Web-based applications</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Physics</subject>
+          <subj-group>
+            <subject>Interdisciplinary physics</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Statistical mechanics</subject>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Social and behavioral sciences</subject>
+          <subj-group>
+            <subject>Political science</subject>
+            <subj-group>
+              <subject>War and civil unrest</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Psychology</subject>
+            <subj-group>
+              <subject>Cognitive psychology</subject>
+              <subj-group>
+                <subject>Memory</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Social psychology</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Sociology</subject>
+            <subj-group>
+              <subject>Social networks</subject>
+              <subject>Social systems</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computer Science</subject>
+          <subject>Neuroscience</subject>
+          <subject>Physics</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Dynamics of Conflicts in Wikipedia</article-title>
+        <alt-title alt-title-type="running-head">Dynamics of Conflicts in Wikipedia</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Yasseri</surname>
+            <given-names>Taha</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Sumi</surname>
+            <given-names>Robert</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Rung</surname>
+            <given-names>András</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Kornai</surname>
+            <given-names>András</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Kertész</surname>
+            <given-names>János</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1"><label>1</label><addr-line>Department of Theoretical Physics, Budapest University of Technology and Economics, Budapest, Hungary</addr-line>       </aff>
+      <aff id="aff2"><label>2</label><addr-line>Computer and Automation Research Institute, Hungarian Academy of Sciences, Budapest, Hungary</addr-line>       </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Szolnoki</surname>
+            <given-names>Attila</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">Hungarian Academy of Sciences, Hungary</aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">yasseri@phy.bme.hu</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: TY RS AR AK JK. Performed the experiments: TY RS AR. Analyzed the data: TY RS AR AK. Wrote the paper: TY AK JK.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>20</day>
+        <month>6</month>
+        <year>2012</year>
+      </pub-date>
+      <volume>7</volume>
+      <issue>6</issue>
+      <elocation-id>e38869</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>20</day>
+          <month>2</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>15</day>
+          <month>5</month>
+          <year>2012</year>
+        </date>
+      </history>
+      <copyright-statement>Yasseri et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</copyright-statement>
+      <copyright-year>2012</copyright-year>
+      <abstract>
+        <p>In this work we study the dynamical features of editorial wars in Wikipedia (WP). Based on our previously established algorithm, we build up samples of controversial and peaceful articles and analyze the temporal characteristics of the activity in these samples. On short time scales, we show that there is a clear correspondence between conflict and burstiness of activity patterns, and that memory effects play an important role in controversies. On long time scales, we identify three distinct developmental patterns for the overall behavior of the articles. We are able to distinguish cases eventually leading to consensus from those cases where a compromise is far from achievable. Finally, we analyze discussion networks and conclude that edit wars are mainly fought by few editors only.</p>
+      </abstract>
+      <counts>
+        <page-count count="12"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>New media such as the internet and the web enable entirely new ways of collaboration, opening unprecedented opportunities for handling tasks of extraordinary size and complexity. Such collaborative schemes have already been used to solve challenges in software engineering <xref ref-type="bibr" rid="pone.0038869-The1">[1]</xref> and mathematics <xref ref-type="bibr" rid="pone.0038869-Gowers1">[2]</xref>. Understanding the laws of internet-based collaborative value production is of great importance.</p>
+      <p>Perhaps the most prominent example of such value production is Wikipedia (WP), a free, collaborative, multilingual internet encyclopedia <xref ref-type="bibr" rid="pone.0038869-Wikipedia1">[3]</xref>. WP evolves without the supervision of a pre-selected expert team, its voluntary editors define the rules and maintain the quality. WP has grown beyond other encyclopedias both in size and in use, having unquestionably become the number one reference in practice. Although criticism has been continuously expressed concerning its reliability and accuracy, partly because the editorial policy is in favor of consensus over credentials <xref ref-type="bibr" rid="pone.0038869-Wikipedia2">[4]</xref>, independent studies have shown that, as early as in 2005, science articles in WP and Encyclopedia Britannica were of comparable quality <xref ref-type="bibr" rid="pone.0038869-Giles1">[5]</xref>. As every edit and discussion post is saved and available, WP is particularly well suited to study internet-based collaborative processes. Indeed, WP has been studied extensively from different aspects including the growth of content and community <xref ref-type="bibr" rid="pone.0038869-Voss1">[6]</xref>, <xref ref-type="bibr" rid="pone.0038869-Ortega1">[7]</xref>, coverage <xref ref-type="bibr" rid="pone.0038869-Halavais1">[8]</xref>, <xref ref-type="bibr" rid="pone.0038869-Kittur1">[9]</xref> and evolution of the hyperlink networks <xref ref-type="bibr" rid="pone.0038869-Buriol1">[10]</xref>–<xref ref-type="bibr" rid="pone.0038869-Ratkiewicz1">[14]</xref>, the extraction of semantic networks <xref ref-type="bibr" rid="pone.0038869-Strube1">[15]</xref>–<xref ref-type="bibr" rid="pone.0038869-Medelyan1">[17]</xref>, linguistic studies <xref ref-type="bibr" rid="pone.0038869-Tyers1">[18]</xref>–<xref ref-type="bibr" rid="pone.0038869-Yasseri1">[20]</xref>, user reputation <xref ref-type="bibr" rid="pone.0038869-Javanmardi1">[21]</xref> and collaboration quality <xref ref-type="bibr" rid="pone.0038869-Javanmardi2">[22]</xref>, <xref ref-type="bibr" rid="pone.0038869-Kimmons1">[23]</xref>, vandalism detection <xref ref-type="bibr" rid="pone.0038869-Potthast1">[24]</xref>–<xref ref-type="bibr" rid="pone.0038869-Adler1">[26]</xref>, and the social aspects of the editor community <xref ref-type="bibr" rid="pone.0038869-Hu1">[27]</xref>–<xref ref-type="bibr" rid="pone.0038869-Laniado2">[32]</xref>.</p>
+      <fig id="pone-0038869-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Revert and mutual revert maps of Benjamin Franklin (left) and Israel and the apartheid analogy (right).</title>
+          <p>Diagrams in upper row show the map of all reverts, whereas only mutual reverts are depicted on the diagrams in the lower row. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e001" mimetype="image" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e002" mimetype="image" xlink:type="simple"/></inline-formula> are the number of edits made by the reverting and reverted editors respectively. Size of the dots is proportional to the number of reverts by the same reverting and reverted pair of editors.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g001" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <p>Usually, different editors constructively extend each other’s text, correct minor errors and mistakes until a consensual article emerges – this is the most natural, and by far the most common, way for a WP entry to be developed <xref ref-type="bibr" rid="pone.0038869-Wilkinson1">[33]</xref>. Good examples include (WP articles will be cited in typewriter font throughout the text) Benjamin Franklin, Pumpkin or Helium. As we shall see, in the English WP close to 99% of the articles result from this rather smooth, constructive process. However, the development of WP articles is not always peaceful and collaborative, there are sometimes heavy fights called <italic>edit wars</italic> between groups representing opposing opinions. Schneider et al. <xref ref-type="bibr" rid="pone.0038869-Schneider1">[34]</xref> estimated that in the English WP, among the highly edited or highly viewed articles (these notions are strongly correlated, see <xref ref-type="bibr" rid="pone.0038869-Ratkiewicz2">[35]</xref>), about 12% of discussions are devoted to reverts and vandalism, suggesting that the WP development process for articles of major interest is highly contentious. The WP community has created a full system of measures to resolve conflict situations, including the so called “three revert rule” (see Wikipedia:Edit warring), locking articles for non-registered editors, tagging controversial articles, and temporal or final banning of malevolent editors. It is against this rich backdrop of explicit rules, explicit or implicit regulations, and unwritten conventions that the present paper undertakes to investigate a fundamental part of the collaborative value production, how conflicts emerge and get resolved.</p>
+      <fig id="pone-0038869-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>The percentage of true positives in detection of controversial articles compared to human judgment at different values of <italic>M</italic></title>
+          <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e003" mimetype="image" xlink:type="simple"/></inline-formula><bold>.</bold> A threshold of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e004" mimetype="image" xlink:type="simple"/></inline-formula> for controversiality is selected according to this diagram.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g002" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <p>The first order of business is to construct an automated procedure to identify controversial articles. For a human reader the simplest way to do so is to go to the discussion (talk) pages of the articles, which often show the typical signatures of conflicts as known from social psychology <xref ref-type="bibr" rid="pone.0038869-Samson1">[36]</xref>. The length of the discussion page could already be considered a good indicator of conflict: the more severe the conflict, the longer the talk page is expected to be (this will be shown in detail later). However, this feature is very language dependent: while conflicts are indeed fought out in detail on discussion pages in the English WP, German editors do not use this vehicle for the same purpose. Moreover, there are WPs, e.g. the Hungarian one, where discussion pages are always rather sparse, rarely mentioning the actual arguments. Clearly the discussion page alone is not an appropriate source to identify conflicts if we aim at a general, multi-lingual, culture-independent indicator.</p>
+      <p>Conflicts in WP were studied previously both on the article and on the user level. Kittur et al. <xref ref-type="bibr" rid="pone.0038869-Suh1">[37]</xref>, <xref ref-type="bibr" rid="pone.0038869-Kittur2">[38]</xref> and Vuong et al. <xref ref-type="bibr" rid="pone.0038869-Vuong1">[39]</xref> measured controversiality by counting the “controversial” tag in the history of an article, and compared other possible metrics to that. It should be noted, however, that this is at best a one-sided measure as highly disputed pages such as Gdansk or Euthanasia in the English WP lack such tags, and the situation is even worse in other WPs. In <xref ref-type="bibr" rid="pone.0038869-Kittur2">[38]</xref>, different page metrics like the number of reverts, the number of revisions etc. were compared to the tag counts and in <xref ref-type="bibr" rid="pone.0038869-Vuong1">[39]</xref> the number of deleted words between users were counted and a “Mutual Reinforcement Principle” <xref ref-type="bibr" rid="pone.0038869-Zha1">[40]</xref> was used to measure how controversial a given article is. Clearly, there are several features of an article which correlate with its controversiality, making it highly non-trivial to choose an appropriate indicator. Some papers try to detect the negative “conflict” links between WP editors in a given article and, based on this, attempt to classify editors into groups. The main idea of the method used by Kittur et al. <xref ref-type="bibr" rid="pone.0038869-Kittur2">[38]</xref> is to relate the severity of the conflict between two editors to the number of reverts they carry out on each other’s versions. In a more recent study <xref ref-type="bibr" rid="pone.0038869-Brandes1">[41]</xref>, <xref ref-type="bibr" rid="pone.0038869-Brandes2">[42]</xref>, Brandes et al. counted the number of deleted words between editors and used this as a measure of controversy.</p>
+      <fig id="pone-0038869-g003" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g003</object-id>
+        <label>Figure 3</label>
+        <caption>
+          <title>Histogram of articles according to their controversiality measure </title>
+          <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e005" mimetype="image" xlink:type="simple"/></inline-formula><bold>.</bold> There are some 84 k articles with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e006" mimetype="image" xlink:type="simple"/></inline-formula>, 12 k controversial articles with <italic>M</italic><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e007" mimetype="image" xlink:type="simple"/></inline-formula>, and less than 100 super-controversial articles with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e008" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g003" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <p>There is no question that reverting a part of an article expresses strong disagreement, but sometimes this is just related to eliminating vandalized texts, while in other cases it is related to conflict about the contents of the article. Here we are interested in the second case and it will be one of our goals to distinguish between deeper conflict and mere vandalism. Beyond identifying conflict pages and edit wars, we aim at relating different properties of the articles to their level of controversiality. In the <xref ref-type="sec" rid="s2">Methods</xref> section we describe the dataset, summarize our conflict identification method, and relate it to other measures proposed in the literature. In the main body of the paper we analyze the temporal evolution of conflicts both on the micro and the macro timescales and, based on that, we try to categorize them.</p>
+      <fig id="pone-0038869-g004" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g004</object-id>
+        <label>Figure 4</label>
+        <caption>
+          <title>Temporal edit patterns of Lady Gaga and Homosexuality during a one month period (12/2009).</title>
+          <p>The horizontal axis is time, each vertical line represents a single edit. Despite the large differences in average time intervals between successive edits, the bursty editing pattern is common to both cases.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g004" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+    </sec>
+    <sec id="s2" sec-type="methods">
+      <title>Methods</title>
+      <p>To analyze edit wars in WP first we need to be able to detect the articles where significant debates occur. For the human viewer of page histories it is evident that an article such as Liancourt Rocks, discussing a group of small islets claimed by both Korea and Japan, or the article on Homosexuality were the subject of major edit wars. Yet articles with a similar number or relative proportion of edits such as Benjamin Franklin or Pumpkin were, equally evidently to the human reader, developed peacefully. For our conflict detection method (previously reported in <xref ref-type="bibr" rid="pone.0038869-Sumi1">[43]</xref>, <xref ref-type="bibr" rid="pone.0038869-Sumi2">[44]</xref>), similar to most pattern recognition tasks such as speech or character recognition, we take human judgment to be the gold standard or “truth” against which machine performance is to be judged. How human judgment is solicited is discussed in <xref ref-type="supplementary-material" rid="pone.0038869.s002">Text S1</xref>.</p>
+      <fig id="pone-0038869-g005" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g005</object-id>
+        <label>Figure 5</label>
+        <caption>
+          <title>PDF of the average time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e009" mimetype="image" xlink:type="simple"/></inline-formula> between two successive edits of articles measured in days.</title>
+          <p>In any two week period most of the articles are edited twice or more.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g005" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <fig id="pone-0038869-g006" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g006</object-id>
+        <label>Figure 6</label>
+        <caption>
+          <title>Scatter plot of the average time interval between successive edits and the controversy measure.</title>
+          <p>Color coding is according to logarithm of the density of points. The correlation coefficient <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e010" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g006" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <p>The whole structured dataset and the implementation of the ranking algorithm described below, along with the raw results, are available at <italic>WikiWarMonitor</italic> webpage: <ext-link ext-link-type="uri" xlink:href="http://wwm.phy.bme.hu" xlink:type="simple">http://wwm.phy.bme.hu</ext-link>.</p>
+      <fig id="pone-0038869-g007" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g007</object-id>
+        <label>Figure 7</label>
+        <caption>
+          <title>Scatter plot of burstiness and the controversy measure.</title>
+          <p>Color coding according to logarithm of the density of points. The correlation coefficient <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e011" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g007" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <sec id="s2a">
+        <title>Dataset</title>
+        <p>Our analysis is based on the January 2010 dump of the English WP <xref ref-type="bibr" rid="pone.0038869-Wikimedia1">[45]</xref>, which contains all the versions of all pages up to that date. The dataset originally contains 3.2 M articles, but we have filtered out all short (less than 1,000 characters) and evidently conflict-free (less than 100 edits) articles, leaving a final set of around 223 k articles.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Detecting Edit Wars</title>
+        <p>Our detection method is entirely based on statistical features of edits and is therefore independent of language characteristics. This makes possible both inter-cultural comparisons and cross-language checks and validation.</p>
+        <fig id="pone-0038869-g008" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g008</object-id>
+          <label>Figure 8</label>
+          <caption>
+            <title>Histogram of burstiness of A) all edits, B) reverts, and C) mutual reverts for four classes of articles.</title>
+            <p>High controversy (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e012" mimetype="image" xlink:type="simple"/></inline-formula>, topmost panels),listed as controversial (2nd panels), randomly selected (3rd panels), and featured articles (bottom panels).</p>
+          </caption>
+          <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g008" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+        </fig>
+        <sec id="s2b1">
+          <title>Revert maps</title>
+          <p>To detect reverts we calculated the MD5 <xref ref-type="bibr" rid="pone.0038869-Rivest1">[46]</xref> hash for each revision, and reverts were identified by comparing the hash of different revisions. Let <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e013" mimetype="image" xlink:type="simple"/></inline-formula> be stages in the history of an article. If the text of revision <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e014" mimetype="image" xlink:type="simple"/></inline-formula> coincides with the text of revision <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e015" mimetype="image" xlink:type="simple"/></inline-formula>, we considered this a revert between the editor of revision <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e016" mimetype="image" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e017" mimetype="image" xlink:type="simple"/></inline-formula> respectively. Let us denote by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e018" mimetype="image" xlink:type="simple"/></inline-formula> the total number of edits in the given article of that user who edited the revision <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e019" mimetype="image" xlink:type="simple"/></inline-formula>. We characterize reverts by pairs <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e020" mimetype="image" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e021" mimetype="image" xlink:type="simple"/></inline-formula> denotes the editor who makes the revert, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e022" mimetype="image" xlink:type="simple"/></inline-formula> refers to the reverted editor (self-reverts are excluded). <xref ref-type="fig" rid="pone-0038869-g001">Figure 1</xref> represents the revert map of the non-controversial Benjamin Franklin and the highly controversial Israel and the apartheid analogy articles. Each mark corresponds to one or more reverts. The revert maps already distinguish disputed and non-disputed articles, and we can improve the results by considering only those cases where two editors revert each other mutually, hereafter called mutual reverts. This causes little change in disputed articles (compare the right panels of <xref ref-type="fig" rid="pone-0038869-g001">Figure 1</xref> but has great impact on non-disputed articles (compare left panels).</p>
+          <fig id="pone-0038869-g009" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g009</object-id>
+            <label>Figure 9</label>
+            <caption>
+              <title>PDF of intervals between two successive edits on an article (in seconds) for two samples of highly/weakly disputed articles (left/right panel).</title>
+              <p>Each sample contains 20 articles and the average <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e023" mimetype="image" xlink:type="simple"/></inline-formula> for all articles is about 10 hours. Circles are empirical data and solid lines are model fit, with values <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e024" mimetype="image" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e025" mimetype="image" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e026" mimetype="image" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e027" mimetype="image" xlink:type="simple"/></inline-formula> respectively for disputed and non-disputed samples. The dashed line in the left panel is the power law with exponent <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e028" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g009" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+        </sec>
+        <sec id="s2b2">
+          <title>Controversy measure</title>
+          <p>Based on the rank (total edit number within an article) of editors, two main revert types can be distinguished: when one or both of the editors have few edits to their credit (these are typically reverts of vandalism since vandals do not get a chance to achieve a large edit number, as they get banned by experienced users) and when both editors are experienced (created many edits). In order to express this distinction numerically, we use the <italic>lesser</italic> of the coordinates <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e029" mimetype="image" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e030" mimetype="image" xlink:type="simple"/></inline-formula>, so that the total count includes vandalism-related reverts as well, but with a much smaller weight. Thus we define our raw measure of controversiality as.</p>
+          <fig id="pone-0038869-g010" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g010</object-id>
+            <label>Figure 10</label>
+            <caption>
+              <title>Autocorrelation function of edits sequences for two samples of highly/weakly disputed articles (left/right panel).</title>
+              <p>Circles are for the original sequences, empty squares correspond to the shuffled sequences. Dashed lines are power-law fits.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g010" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <p><disp-formula><graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e031" alt-version="no" mimetype="image" position="float" xlink:type="simple"/><label>(1)</label></disp-formula>Once we developed our first auto-detection algorithm based on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e032" mimetype="image" xlink:type="simple"/></inline-formula>, we iteratively refined the controversial and the noncontroversial seeds on multiple languages by manually checking pages scoring very high or very low. In this process, we improved <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e033" mimetype="image" xlink:type="simple"/></inline-formula> in two ways: first, by multiplying with the number of editors <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e034" mimetype="image" xlink:type="simple"/></inline-formula> who ever reverted mutually (the larger the armies, the larger the war) and define <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e035" mimetype="image" xlink:type="simple"/></inline-formula> and second, by censuring the topmost mutually reverting editors (eliminating cases with conflicts between two persons only). Our final measure of controversiality <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e036" mimetype="image" xlink:type="simple"/></inline-formula> is thus defined by<disp-formula><graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e037" alt-version="no" mimetype="image" position="float" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+        </sec>
+        <sec id="s2b3">
+          <title>Evaluation and accuracy</title>
+          <p>One conceptually easy (but in practice very labor-intensive) way to validate <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e038" mimetype="image" xlink:type="simple"/></inline-formula> is by simply taking samples at different <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e039" mimetype="image" xlink:type="simple"/></inline-formula> values and counting how many controversial pages are found (see <xref ref-type="fig" rid="pone-0038869-g002">Figure 2</xref>), considering human judgment as the “truth”. We have checked this measure for six different languages and concluded that its overall performance is superior to other measures <xref ref-type="bibr" rid="pone.0038869-Sumi2">[44]</xref>.</p>
+          <fig id="pone-0038869-g011" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g011</object-id>
+            <label>Figure 11</label>
+            <caption>
+              <title>Distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e040" mimetype="image" xlink:type="simple"/></inline-formula> for two samples of highly/weakly disputed articles (left/right panel).</title>
+              <p>Circles are for the original sequences, whereas empty squares correspond to the shuffled sequences. Dashed lines are exponential fits to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e041" mimetype="image" xlink:type="simple"/></inline-formula> for shuffled data and solid line in the left panel is a power-law with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e042" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g011" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results and Discussion</title>
+      <p>Having validated the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e043" mimetype="image" xlink:type="simple"/></inline-formula>-based selection process, we can start analyzing the controversial and peaceful articles from a variety of perspectives. We calculated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e044" mimetype="image" xlink:type="simple"/></inline-formula> for all the articles in the sample – a histogram is shown in <xref ref-type="fig" rid="pone-0038869-g003">Figure 3</xref>. The primary observation here is that the overall population of controversial articles is very small compared to the large number of total articles. Out of our sample of 233 k articles, there are some 84 k articles with nonzero <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e045" mimetype="image" xlink:type="simple"/></inline-formula>, and only about 12 k with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e046" mimetype="image" xlink:type="simple"/></inline-formula>. The number of super-controversial articles with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e047" mimetype="image" xlink:type="simple"/></inline-formula> is less than 100.</p>
+      <table-wrap id="pone-0038869-t001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.t001</object-id>
+        <label>Table 1</label>
+        <caption>
+          <title>Scaling exponents for the two samples of controversial and peaceful articles, and users.</title>
+        </caption>
+        <graphic id="pone-0038869-t001-1" xlink:href="info:doi/10.1371/journal.pone.0038869.t001" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+        <table alternate-form-of="pone-0038869-t001-1">
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" rowspan="1" colspan="1"/>
+              <td align="left" rowspan="1" colspan="1">
+                <inline-formula>
+                  <inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e048" mimetype="image" xlink:type="simple"/>
+                </inline-formula>
+              </td>
+              <td align="left" rowspan="1" colspan="1">
+                <inline-formula>
+                  <inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e049" mimetype="image" xlink:type="simple"/>
+                </inline-formula>
+              </td>
+              <td align="left" rowspan="1" colspan="1">
+                <inline-formula>
+                  <inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e050" mimetype="image" xlink:type="simple"/>
+                </inline-formula>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" rowspan="1" colspan="1">Low M articles</td>
+              <td align="left" rowspan="1" colspan="1">0.89±0.02</td>
+              <td align="left" rowspan="1" colspan="1">–</td>
+              <td align="left" rowspan="1" colspan="1">–</td>
+            </tr>
+            <tr>
+              <td align="left" rowspan="1" colspan="1">High M articles</td>
+              <td align="left" rowspan="1" colspan="1">0.56±0.01</td>
+              <td align="left" rowspan="1" colspan="1">2.83±0.06</td>
+              <td align="left" rowspan="1" colspan="1">0.97±0.01</td>
+            </tr>
+            <tr>
+              <td align="left" rowspan="1" colspan="1">Users</td>
+              <td align="left" rowspan="1" colspan="1">0.46±0.01</td>
+              <td align="left" rowspan="1" colspan="1">3.05±0.03</td>
+              <td align="left" rowspan="1" colspan="1">1.44±0.01</td>
+            </tr>
+          </tbody>
+        </table>
+        <table-wrap-foot>
+          <fn id="nt101">
+            <label/>
+            <p>Edit patterns of controversial articles and activity patterns of users show all the expected features of bursty correlated processes.</p>
+          </fn>
+        </table-wrap-foot>
+      </table-wrap>
+      <p>We mention in passing that the topical distribution of the controversial issues differs significantly spatially (across different language editions of WP): for example, soccer-related issues are massively controversial in the Spanish WP but not elsewhere. There are flashpoints common to all languages and cultures, in particular religious and political topics, but we leave the detailed cross-cultural analysis for another occasion <xref ref-type="bibr" rid="pone.0038869-Yasseri2">[47]</xref>. Here we focus on the temporal aspects of conflict (based, unless specifically mentioned otherwise, on the English WP), first at the <italic>micro-dynamic</italic> level (hours, days, and weeks), and next on a macro timescale (the lifetime of the article, typically measured in years) to see the <italic>overall patterns</italic> of conflicts.</p>
+      <fig id="pone-0038869-g012" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g012</object-id>
+        <label>Figure 12</label>
+        <caption>
+          <title>Time evolution of the controversy measure of Michael Jackson.</title>
+          <p>A: Jackson is acquitted on all counts after five month trial. B: Jackson makes his first public appearance since the trial to accept eight records from the Guinness World Records in London, including <italic>Most Successful Entertainer of All Time.</italic> C: Jackson issues <italic>Thriller 25</italic>. D: Jackson dies in Los Angeles.</p>
+        </caption>
+        <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g012" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+      </fig>
+      <sec id="s3a">
+        <title>Micro-dynamics of Conflicts</title>
+        <p>Once we have a reliable measure of controversiality, not only can we find and rank controversial issues in WPs, but we actually begin to see important phenomena and common characteristics of wars and disputes. Here we report our findings on the temporal characteristics of edits on high and low controversiality pages. We make use of the fact that in the WP dump a timestamp with one second precision is assigned to each edit. One month of activity (the time-line of all edits irrespective of who performed them) on two sample articles are depicted in <xref ref-type="fig" rid="pone-0038869-g004">Figure 4</xref>.</p>
+        <p>West et. al. <xref ref-type="bibr" rid="pone.0038869-West1">[48]</xref> and Adler et. al. <xref ref-type="bibr" rid="pone.0038869-Adler1">[26]</xref> have developed vandalism detection methods based on temporal patterns of edits. In both studies the main assumption is that offensive edits are reverted much faster than normal edits, and therefore, by considering the time interval between an arbitrary edit and its subsequent reverts, one can classify vandalized versions with high precision.</p>
+        <fig id="pone-0038869-g013" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g013</object-id>
+          <label>Figure 13</label>
+          <caption>
+            <title>Evolution of controversy measure with number of edits of Jyllands-Posten Muhammad cartoons controversy, with Gompertz fit shown in red.</title>
+            <p>The initial rapid growth in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e051" mimetype="image" xlink:type="simple"/></inline-formula> tends to saturate, corresponding to the reaching to consensus.</p>
+          </caption>
+          <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g013" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0038869-g014" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g014</object-id>
+          <label>Figure 14</label>
+          <caption>
+            <title>Evolution of controversy measure with number of edits of of Iran – the insets depict focuses of some of the local war periods.</title>
+            <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e052" mimetype="image" xlink:type="simple"/></inline-formula> is normalized to the final value <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e053" mimetype="image" xlink:type="simple"/></inline-formula>. Cycles of peace and war appear consequently, activated by internal and external causes.</p>
+          </caption>
+          <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g014" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+        </fig>
+        <sec id="s3a1">
+          <title>Edit frequency</title>
+          <p>Most of the articles are frequently edited. <xref ref-type="fig" rid="pone-0038869-g005">Figure 5</xref> shows the empirical probability density function of the average time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e054" mimetype="image" xlink:type="simple"/></inline-formula> between two successive edits. As already noted in <xref ref-type="bibr" rid="pone.0038869-Ratkiewicz2">[35]</xref> edit frequency also depends on the controversiality of a page, and one expects higher edit frequency for more controversial pages. However, as <xref ref-type="fig" rid="pone-0038869-g006">Figure 6</xref> makes clear, the correlation is quite weak (correlation coefficient <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e055" mimetype="image" xlink:type="simple"/></inline-formula>).</p>
+          <fig id="pone-0038869-g015" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g015</object-id>
+            <label>Figure 15</label>
+            <caption>
+              <title>Length of peacful periods.</title>
+              <p>Histogram of number of edits between two successive war periods for a selected sample of 44 articles which are not driven by external events. The average value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e056" mimetype="image" xlink:type="simple"/></inline-formula> is 1300 edits.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g015" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+        </sec>
+        <sec id="s3a2">
+          <title>Burstiness</title>
+          <p>It is clear that edits are clustered in a way that there are many edits done in a rather short period, followed by a rather long period of silence. This feature is known in the literature as <italic>burstiness</italic> <xref ref-type="bibr" rid="pone.0038869-Goh1">[49]</xref>, <xref ref-type="bibr" rid="pone.0038869-Barabsi1">[50]</xref>, and is quantified based on the coefficient of variation by a simple formula as<disp-formula><graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e057" alt-version="no" mimetype="image" position="float" xlink:type="simple"/><label>(3)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e058" mimetype="image" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e059" mimetype="image" xlink:type="simple"/></inline-formula> denote respectively the mean and standard deviation of the interval <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e060" mimetype="image" xlink:type="simple"/></inline-formula> between successive edits. We have calculated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e061" mimetype="image" xlink:type="simple"/></inline-formula> for all the articles in the sample, considering all the edits made on them by any user. As it can be seen from <xref ref-type="fig" rid="pone-0038869-g007">Figure 7</xref>, overall burstiness of edits correlates rather weakly with controversiality (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e062" mimetype="image" xlink:type="simple"/></inline-formula>).</p>
+          <fig id="pone-0038869-g016" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g016</object-id>
+            <label>Figure 16</label>
+            <caption>
+              <title>Evolution of controversy measure with number of edits of Anarchism and Barack Obama.</title>
+              <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e063" mimetype="image" xlink:type="simple"/></inline-formula> is normalized to the final value <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e064" mimetype="image" xlink:type="simple"/></inline-formula>. There is no consensus even for a short period and editorial wars continue nonstop.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g016" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <p>To see the impact of controversiality on burstiness we calculated <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e065" mimetype="image" xlink:type="simple"/></inline-formula> for different groups of articles separately: <italic>Disputed</italic> articles <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e066" mimetype="image" xlink:type="simple"/></inline-formula>, <italic>Listed</italic> articles coming from the List of controversial articles in WP <xref ref-type="bibr" rid="pone.0038869-Wikipedia3">[51]</xref>, <italic>Random</italic>ly selected articles, and <italic>Featured</italic> articles (assumed to be least controversial given WPs stringent selection criteria for featuring an article). The histograms in <xref ref-type="fig" rid="pone-0038869-g008">Figure 8(A)</xref> show the PDF of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e067" mimetype="image" xlink:type="simple"/></inline-formula> in these four classes. As can be seen, the peaks are shifted to the right (higher <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e068" mimetype="image" xlink:type="simple"/></inline-formula>) for more controversial articles, but not strongly enough to base the detection of controversy on burstiness of editorial activity alone. Reverting is a useful tool to restore vandalized articles, but it is also a popular weapon in heated debates. <xref ref-type="fig" rid="pone-0038869-g008">Figure 8(B)</xref> shows the distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e069" mimetype="image" xlink:type="simple"/></inline-formula> calculated not for all edits, but for reverts alone: the shift is now more marked. Finally, we considered an even stronger form of warfare: <italic>mutual reverts</italic>. It is evident that the temporal pattern of mutual reverts provides a better characterization of controversiality than that of all edits or all reverts, and the very visible shift observed in <xref ref-type="fig" rid="pone-0038869-g008">Figure 8(C)</xref> constitutes another, albeit less direct, justification of our decision to make mutual reverts the central element in our measure of controversiality.</p>
+          <fig id="pone-0038869-g017" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g017</object-id>
+            <label>Figure 17</label>
+            <caption>
+              <title>Relative share of each category at different <italic>M</italic><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e070" mimetype="image" xlink:type="simple"/></inline-formula>.</title>
+              <p>Blue: category (a), consensus. Red: category (b), multi-consensus. Yellow: Category (c), never-ending war. For the precise definition of each category see the main text.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g017" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <fig id="pone-0038869-g018" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g018</object-id>
+            <label>Figure 18</label>
+            <caption>
+              <title>Length distribution of articles and talk pages with log-normals fits.</title>
+              <p>The distribution of articles length is better described by a log-normal distribution compared to the talk length distribution, which tends to be more like a power-law.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g018" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <p>To gain a better understanding of the microdynamics of edit wars, we selected two samples of 20 articles each, extracted from a pool of articles with average successive edit time intervals of 10 hours <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e071" mimetype="image" xlink:type="simple"/></inline-formula>. One sample contains the most controversial articles in the pool with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e072" mimetype="image" xlink:type="simple"/></inline-formula>, whereas the other one contains the most peaceful articles with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e073" mimetype="image" xlink:type="simple"/></inline-formula>. The probability distribution of time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e074" mimetype="image" xlink:type="simple"/></inline-formula> between edits for these samples is shown in <xref ref-type="fig" rid="pone-0038869-g009">Figure 9</xref>. Both samples have a rather fat-tailed distribution with a shoulder in the distribution (as observed both in the empirical data and the model calculation), indicating that a characteristic time, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e075" mimetype="image" xlink:type="simple"/></inline-formula> seconds (one day), is present in the system. However, only the sample consisting of controversial articles displays a clear power-law distribution, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e076" mimetype="image" xlink:type="simple"/></inline-formula>,with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e077" mimetype="image" xlink:type="simple"/></inline-formula>. All exponents were calculated by applying the Gnuplot implementation <xref ref-type="bibr" rid="pone.0038869-gnuplot1">[52]</xref> of the nonlinear least-squares Marquardt-Levenberg algorithm <xref ref-type="bibr" rid="pone.0038869-Wikipedia4">[53]</xref> on the log-binned data with an upper cut-off to avoid system size effects.</p>
+          <fig id="pone-0038869-g019" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g019</object-id>
+            <label>Figure 19</label>
+            <caption>
+              <title>Scatter plot of talk page vs. article length.</title>
+              <p>Color coding is according to logarithm of the density of points. The correlation between the length of the article and the corresponding talk page is weak, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e078" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g019" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <fig id="pone-0038869-g020" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g020</object-id>
+            <label>Figure 20</label>
+            <caption>
+              <title>Scatter plot of talk page length vs. </title>
+              <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e079" mimetype="image" xlink:type="simple"/></inline-formula><bold>.</bold> Color coding is according to logarithm of the density of points. There is a rather clear correlation, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e080" mimetype="image" xlink:type="simple"/></inline-formula> between the length of the talk page and the controversality of the article.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g020" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <p>To fit the data depicted in <xref ref-type="fig" rid="pone-0038869-g009">Figure 9</xref>, we used a model based on a queuing mechanism introduced in <xref ref-type="bibr" rid="pone.0038869-Barabsi1">[50]</xref> and further developed in <xref ref-type="bibr" rid="pone.0038869-Vzquez1">[54]</xref>. Here we briefly explain its basis and how we use it to model our empirical findings. Let us assume that there is a list of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e081" mimetype="image" xlink:type="simple"/></inline-formula> articles and there is only one editor (mean-field approximation) who edits at each step once. With probability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e082" mimetype="image" xlink:type="simple"/></inline-formula>, the editor selects the article to edit from the list randomly and with no preference among <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e083" mimetype="image" xlink:type="simple"/></inline-formula> choices. With probability <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e084" mimetype="image" xlink:type="simple"/></inline-formula> the articles will be selected according to a priority <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e085" mimetype="image" xlink:type="simple"/></inline-formula> which is assigned randomly to the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e086" mimetype="image" xlink:type="simple"/></inline-formula> article after each edit on it. The key parameters are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e087" mimetype="image" xlink:type="simple"/></inline-formula> and the real time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e088" mimetype="image" xlink:type="simple"/></inline-formula> associated to the model time step. Controversial articles are fitted well by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e089" mimetype="image" xlink:type="simple"/></inline-formula> close to 1 and small <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e090" mimetype="image" xlink:type="simple"/></inline-formula>. Uncontroversial articles fit with large <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e091" mimetype="image" xlink:type="simple"/></inline-formula> and smaller <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e092" mimetype="image" xlink:type="simple"/></inline-formula>, in nice agreement with the real situation, where editors tend to edit a few controversial articles more intentionally and many peaceful articles in a more or less uncorrelated manner with no bias and memory. To check the validity of the model, we calculated the ratio of the number of controversial articles (with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e093" mimetype="image" xlink:type="simple"/></inline-formula>) to the rest of the articles (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e094" mimetype="image" xlink:type="simple"/></inline-formula>) to be <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e095" mimetype="image" xlink:type="simple"/></inline-formula>, which is in nice agreement with the fitting model parameters, 20/500 = 0.04.</p>
+          <p>Another important characteristic quantity is the autocorrelation function <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e096" mimetype="image" xlink:type="simple"/></inline-formula>. To calculate it, first we produce a binary series of 0/1 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e097" mimetype="image" xlink:type="simple"/></inline-formula> similar to the one in <xref ref-type="fig" rid="pone-0038869-g004">Figure 4</xref>. Then <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e098" mimetype="image" xlink:type="simple"/></inline-formula> is computed simply as<disp-formula><graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e099" alt-version="no" mimetype="image" position="float" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+          <fig id="pone-0038869-g021" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g021</object-id>
+            <label>Figure 21</label>
+            <caption>
+              <title>Network representation of editors’ interactions in the discussion page of Safavid dynasty.</title>
+              <p>Each circle is an editor, red arrows represent comments opposing the target editor, T-end green lines represent positive comments (agreeing with the other editor), and yellow lines with round end represent neutral comments. Line thickness is proportional to the number of times that the same interaction occurs. Data based entirely on subjective assessments (manual review).</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g021" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <p>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e100" mimetype="image" xlink:type="simple"/></inline-formula> stands for the time average over the whole series. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e101" mimetype="image" xlink:type="simple"/></inline-formula> for the same samples of controversial and peaceful articles are shown in <xref ref-type="fig" rid="pone-0038869-g010">Figure 10</xref>. We calculate the same quantity for a shuffled sequence of events as a reference. The shuffled sequence has the same time interval distribution as the original sequence, but with a randomized order in the occurrence of events. In both cases, a power-law of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e102" mimetype="image" xlink:type="simple"/></inline-formula> describes <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e103" mimetype="image" xlink:type="simple"/></inline-formula> very well. Usually it is assumed that slow (power law) decay of the autocorrelation function is an indicator for long time memory processes. However, if independent random intervals taken from a power law distribution separate the events, the resulting autocorrelation will also show power law time dependence <xref ref-type="bibr" rid="pone.0038869-Vajna1">[55]</xref>, <xref ref-type="bibr" rid="pone.0038869-Karsai1">[56]</xref>. Assuming that the exponent of the independent inter-event time distribution is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e104" mimetype="image" xlink:type="simple"/></inline-formula> and the exponent of the decay of the correlation function is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e105" mimetype="image" xlink:type="simple"/></inline-formula>, we have the relationship <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e106" mimetype="image" xlink:type="simple"/></inline-formula>. Deviations from this scaling law reflect intrinsic correlations in the events.</p>
+          <fig id="pone-0038869-g022" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0038869.g022</object-id>
+            <label>Figure 22</label>
+            <caption>
+              <title>Average <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e107" mimetype="image" xlink:type="simple"/></inline-formula>, color coded for different <italic>M</italic><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e108" mimetype="image" xlink:type="simple"/></inline-formula>’s and <italic>n</italic><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e109" mimetype="image" xlink:type="simple"/></inline-formula>’s.</title>
+              <p>For a wide range of articles and in a long time of their lives <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e110" mimetype="image" xlink:type="simple"/></inline-formula>, the relative contribution of the top 5 most reverting pair of editors, is very close to 1, making clear the important role of the top 5 pairs of fighting editors.</p>
+            </caption>
+            <graphic xlink:href="info:doi/10.1371/journal.pone.0038869.g022" alt-version="no" mimetype="image" position="float" xlink:type="simple"/>
+          </fig>
+          <p>There is another measure which indicates long time correlations between the events even more sensitively. Take a period to be bursty if the time interval between each pair of successive edits is not larger than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e111" mimetype="image" xlink:type="simple"/></inline-formula>, and define <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e112" mimetype="image" xlink:type="simple"/></inline-formula> as the number of events in the bursty periods. If events in the time series are independent and there is no memory in the system (i.e. in a Poisson process), one can easily show that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e113" mimetype="image" xlink:type="simple"/></inline-formula> should have an exponential decay, whereas in the presence of long range memory, the decay is in the form of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e114" mimetype="image" xlink:type="simple"/></inline-formula> <xref ref-type="bibr" rid="pone.0038869-Karsai1">[56]</xref>. In <xref ref-type="fig" rid="pone-0038869-g011">Figure 11</xref>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e115" mimetype="image" xlink:type="simple"/></inline-formula> is shown for samples of highly controversial and peaceful articles. In the high controversy sample a well defined slope of -2.83 is observed, while in the low controversy sample edits are more independent and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e116" mimetype="image" xlink:type="simple"/></inline-formula> is very close to the one obtained for the shuffled sequence. Note that by shuffling the sequence of time intervals, all the correlations are eliminated and the resulting sequence should mimic the features of an uncorrelated occurrence of the intervals.</p>
+          <p>The same measurements are performed for a sample of users, see <xref ref-type="supplementary-material" rid="pone.0038869.s001">Figure S1</xref> in Supporting Information. In Table.1, a summary of the scaling exponents for the both article samples and users is reported.</p>
+          <p>The simplest explanation of these results is to say that conflicts induce correlations in the editing history of articles. This can already be seen in <xref ref-type="fig" rid="pone-0038869-g010">Figure 10</xref>, where shuffling influences the decay of the autocorrelation functions much more for high-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e117" mimetype="image" xlink:type="simple"/></inline-formula> articles than for low-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e118" mimetype="image" xlink:type="simple"/></inline-formula> ones. For the more sensitive measure <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e119" mimetype="image" xlink:type="simple"/></inline-formula> the original and the shuffled data are again quite close to each other for the low-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e120" mimetype="image" xlink:type="simple"/></inline-formula> case, while a power-law type decay can be observed in the empirical data for high-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e121" mimetype="image" xlink:type="simple"/></inline-formula> articles.</p>
+        </sec>
+      </sec>
+      <sec id="s3b">
+        <title>Overall Patterns of Conflicts</title>
+        <p>Before we can consider the macro-scale evolution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e122" mimetype="image" xlink:type="simple"/></inline-formula> (during the entire life of the article), we need to make an important distinction between endo- and exogenous causes of conflict. Our principal interest is with endogenous forces, which originate in internal sources of conflict and disagreement, but it cannot be denied that in a significant number of cases conflicts are occasioned by some exogenous event, typically some recent development related to the real-world subject of the article rather than to its text (see <xref ref-type="fig" rid="pone-0038869-g012">Figure 12</xref> for some examples).</p>
+        <sec id="s3b1">
+          <title>Categorization</title>
+          <p>In the presence of significant exogenous events one can best follow the increase of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e123" mimetype="image" xlink:type="simple"/></inline-formula> as a function of time <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e124" mimetype="image" xlink:type="simple"/></inline-formula>, but if endogenous edits dominate (as is the case with most science articles and bibliographies of persons long dead) it is more natural to trace <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e125" mimetype="image" xlink:type="simple"/></inline-formula> as a function of the number of edits on the article <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e126" mimetype="image" xlink:type="simple"/></inline-formula> because temporal frequency of edits changes from time to time and from article to article, due to many different known and unknown causes <xref ref-type="bibr" rid="pone.0038869-Ratkiewicz3">[57]</xref>, <xref ref-type="bibr" rid="pone.0038869-Yasseri3">[58]</xref>. Since exogenous factors are completely unpredictable, in the following section we try to categorize articles according to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e127" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+          <p>Even if we restrict attention to endogenous growth, very different patterns can be observed in the evolution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e128" mimetype="image" xlink:type="simple"/></inline-formula>, depending not just on the current controversiality of a subject (by definition, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e129" mimetype="image" xlink:type="simple"/></inline-formula> never decreases except for small truncation effects due to changes in who are the most engaged pair of reverters), but also on the micro-dynamics of edit wars. Here we try to recognize some general features based on numerical properties of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e130" mimetype="image" xlink:type="simple"/></inline-formula> and its derivative, and categorize the articles accordingly. We applied a maximum detection tool to the smoothed derivative curve to locate both the hot periods of wars and the ‘consensus reached’ situations where the derivative of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e131" mimetype="image" xlink:type="simple"/></inline-formula> is very small or zero. Based on the statistics of the war and consensus periods, we categorize articles into three main categories.</p>
+          <sec id="s3b1a">
+            <title>
+              <italic>a) Consensus</italic>
+            </title>
+            <p>The common scenario for the cases where at the end consensus is reached is the following. Usually growth starts slowly and with an increasing acceleration until it reaches a maximum speed of growth. Afterwards, when the hot period of war is passed, the growth rate decreases and consensus is reached, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e132" mimetype="image" xlink:type="simple"/></inline-formula> does not, or only very slightly, increases upon the next edits. We do not offer a mathematical model for such growth here, but we note that a Gompertz function <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e133" mimetype="image" xlink:type="simple"/></inline-formula> (with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e134" mimetype="image" xlink:type="simple"/></inline-formula> being the final value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e135" mimetype="image" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e136" mimetype="image" xlink:type="simple"/></inline-formula> are the displacement parameter and growth rate respectively) offers a reasonable fit (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e137" mimetype="image" xlink:type="simple"/></inline-formula>) for almost all <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e138" mimetype="image" xlink:type="simple"/></inline-formula> in this category (see <xref ref-type="fig" rid="pone-0038869-g013">Figure 13</xref> for an example). In general, the Gompertz function fares better than sigmoid because it does not force symmetry around the initial and the final asymptote, and the literature such as <xref ref-type="bibr" rid="pone.0038869-Laird1">[59]</xref> suggests it is a more appropriate model for growth in a confined space. We leave the matter of how controversiality becomes a consumable resource for future research, but we find it quite plausible that certain articles can become so well polished that it becomes extremely hard to pick a fight about them.</p>
+          </sec>
+          <sec id="s3b1b">
+            <title>
+              <italic>b) Sequence of temporary consensuses</italic>
+            </title>
+            <p>The common feature of the articles in this category is sequential appearance of war and peace periods in a quasi-periodic manner. After the first cycle of war and consensus as described in (a), internal or external causes initiate another cycle. Exogenous changes happen completely randomly, but the endogenous causes may be contributed by a simple mechanism such as a constant influx of new editors, who are not satisfied with the previously settled state of the article (see <xref ref-type="fig" rid="pone-0038869-g014">Figure 14</xref> for an example).</p>
+            <p>We do not have the means to make the required systematic distinction between internal end external causes (manual evaluation is too expensive, auto-detection would require too much world knowledge). Therefore, we created a limited sample of 44 articles, which are entirely about solid concepts and facts, in order to measure the periodicity of endogenous controversies. <xref ref-type="fig" rid="pone-0038869-g015">Figure 15</xref> gives a histogram of the distance (number of edits) between two successive war periods. We obtain a mean value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e139" mimetype="image" xlink:type="simple"/></inline-formula>.</p>
+          </sec>
+          <sec id="s3b1c">
+            <title>
+              <italic>c) Never-ending wars</italic>
+            </title>
+            <p>In the evolution of the articles in this category no permanent, or even temporary, consensus gets ever built. Articles describing intrinsically highly controversial/hot topics tend to belong in this category (see <xref ref-type="fig" rid="pone-0038869-g016">Figure 16</xref> for an example).</p>
+            <p>We sorted all articles with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e140" mimetype="image" xlink:type="simple"/></inline-formula> in one of the categories (a–c) and calculated the relative share of each category at a given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e141" mimetype="image" xlink:type="simple"/></inline-formula>. The results are shown in <xref ref-type="fig" rid="pone-0038869-g017">Figure 17</xref>. Keeping in mind that less than 1% of WP pages is controversial (some 12 k out of 3.2 M in the original data set have <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e142" mimetype="image" xlink:type="simple"/></inline-formula>), we see that only a small fraction of these fit the ‘multiple consensuses’ category (b), with the majority fitting rather clearly in the two polarly opposed classes (a) and (c). Quite as expected, with the growth of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e143" mimetype="image" xlink:type="simple"/></inline-formula> category (a) dies out, since consensus is reached, and only articles in the never-ending war category remain. While in earlier research we set the controversiality threshold at <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e144" mimetype="image" xlink:type="simple"/></inline-formula>, <xref ref-type="fig" rid="pone-0038869-g017">Figure 17</xref> is suggestive that there is hope for consensus by natural process as long as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e145" mimetype="image" xlink:type="simple"/></inline-formula>, while the remaining subjects are truly ‘bad apples’, and it is a credit to the WP community that such cases are kept to a minuscule proportion of less than 100 in the entire set of 3.2 M articles.</p>
+          </sec>
+        </sec>
+      </sec>
+      <sec id="s3c">
+        <title>Talk pages and Conflict Resolution</title>
+        <p>Talk pages (also known as a discussion pages) in WP are supposed to be pages where editors can discuss improvements to an article or other Wikipedia page <xref ref-type="bibr" rid="pone.0038869-Wikipedia5">[60]</xref>. Each article could have its own talk page in addition to user talk pages, which host more personal discussions. In Ref. <xref ref-type="bibr" rid="pone.0038869-Schneider1">[34]</xref>, case studies of talk pages of 58 selected articles were reported – the authors concluded that a considerable portion of talk pages are dedicated to discussions about removed materials and controversial edits. In the following, we report our preliminary results on how well talk pages reflect editorial wars and to what extent they help in resolving disputes.</p>
+        <sec id="s3c1">
+          <title>Talk page length</title>
+          <p>Those familiar only with the English WP may come to the conclusion that the length of talk pages associated to each article could provide a simple, direct measure of controversiality, especially as the whole mechanism of talk pages was invented to channel controversies. As can be seen from <xref ref-type="fig" rid="pone-0038869-g018">Figure 18</xref>, article length and talk page length are distributed quite differently, with the log-normal providing a very good fit for article length (and a reasonable genesis as a multiplicative process with a left barrier, here the minimum length of an article, <xref ref-type="bibr" rid="pone.0038869-Champernowne1">[61]</xref>) but not for talk page length, which is no surprise, since there is no left barrier for the lengths of the talk pages. (We mention that the total number of edits on an article has also been argued to be log-normally distributed <xref ref-type="bibr" rid="pone.0038869-Wilkinson1">[33]</xref>.).</p>
+          <p>As can be seen from <xref ref-type="fig" rid="pone-0038869-g019">Figure 19</xref>, the correlation between article and talk page length is not very strong (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e146" mimetype="image" xlink:type="simple"/></inline-formula>) – the most natural hypothesis is that the discrepancy is caused by the fact that articles of the same length can nevertheless have different degrees of controversiality. In the English WP talk page length correlates reasonably well (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e147" mimetype="image" xlink:type="simple"/></inline-formula>) with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e148" mimetype="image" xlink:type="simple"/></inline-formula> (see <xref ref-type="fig" rid="pone-0038869-g020">Figure 20</xref>), yet in other WPs, talk pages are used far less: for example, in the Hungarian WP editors solve their conflicts directly on the pages, changing and reverting the versions which they do not like, generally without any talk or arguments, while in the Spanish WP (which has the longest talk pages after normalization by article length) or the Czech WP, the talk pages are generally more cooperative. According to this result, it becomes evident that the philosophy of “talk before type” <xref ref-type="bibr" rid="pone.0038869-Viegas1">[62]</xref> is not truly followed in practice. Depending on culture, talk pages can be reflective of the conflicts and edit wars, but they do not act as a dampening mechanism.</p>
+        </sec>
+        <sec id="s3c2">
+          <title>Discussion networks</title>
+          <p>We begin by some qualitative observations that emerge from the manual study of the networks of editorial interactions such as depicted in <xref ref-type="fig" rid="pone-0038869-g021">Figure 21</xref>. It appears that the discussions on talk pages are dominated by continual back and forth between those editors who hardly change their opinion. In contrast to other social networks, clusters beyond pairs are rare. Editors joining the discussion at later stages have very little chance of becoming one of these high-activity editors. Less active editors tend to address the more active ones rather than each other – from studying the text one gets the distinct impression that they do not consider the other low activity editors worthy of commenting upon. Also, the less prolific editors appear more negative, more fierce, hysterical in tone, sometimes downright irrational. Debates rarely conclude on the basis of merit: typically they are ended by outside intervention, sheer exhaustion, or the evident numerical dominance of one group.</p>
+          <p>Based on these observations we hypothesized that most of the editorial war is carried on by only a few editors. To check this, we have looked at the <italic>top 5</italic> <italic>ratio</italic>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e149" mimetype="image" xlink:type="simple"/></inline-formula> defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e150" mimetype="image" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e151" mimetype="image" xlink:type="simple"/></inline-formula> is the value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e152" mimetype="image" xlink:type="simple"/></inline-formula> only considering the contributions of the top 5 pair of editors (ranked by their mutual reverts) among all the editor pairs of the article. In <xref ref-type="fig" rid="pone-0038869-g022">Figure 22</xref>, values of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e153" mimetype="image" xlink:type="simple"/></inline-formula> calculated from the whole sample are visualized as a function of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e154" mimetype="image" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e155" mimetype="image" xlink:type="simple"/></inline-formula>. The color code is corresponding to the average value of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e156" mimetype="image" xlink:type="simple"/></inline-formula> for the points located in each cell. Perhaps surprisingly, this number is quite large (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e157" mimetype="image" xlink:type="simple"/></inline-formula>)) for many articles and for long periods of the article’s life, meaning that a large fraction of the whole war is indeed caused by a small number of fighting pairs. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e158" mimetype="image" xlink:type="simple"/></inline-formula> becomes smaller than 0.5 only for the articles which are already in the controversial region (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e159" mimetype="image" xlink:type="simple"/></inline-formula>) and were edited many times (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e160" mimetype="image" xlink:type="simple"/></inline-formula>). Smaller values of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e161" mimetype="image" xlink:type="simple"/></inline-formula> can be observed only in the articles which belong to the category of never-ending wars. In these articles, many different editors have fought at different periods of time, and a steady flow of replacement armies keeps the article always far from equilibrium.</p>
+          <p>In conclusion, we showed that conflicts and editorial wars, although restricted to a limited number of articles which can be efficiently located, consume considerable amounts of editorial resources. Moreover, we observed that conflicts have their own temporal fingerprint which is rooted in memory effects and the correlation between edits by different editors. Finally, we demonstrated that, even in the controversial articles, often a consensus can be achieved in a reasonable time, and that those articles which do not achieve consensus are driven by an influx of newly arriving editors and external events. We believe that these empirical results could serve as the basis of more theoretical agent-centered models which could extend beyond the WP development process to other large-scale collective and collaborative problem-solving projects.</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0038869.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pone.0038869.s001" position="float" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>Burst statistics for users’ editorial activity.</bold> Upper panel: distribution of time interval between two successive edits made by a certain user on any article <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e162" mimetype="image" xlink:type="simple"/></inline-formula>. Middle panel: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e163" mimetype="image" xlink:type="simple"/></inline-formula>, the number of events in the bursty periods separated by a silence window of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e164" mimetype="image" xlink:type="simple"/></inline-formula>. Lower panel: autocorrelation function <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0038869.e165" mimetype="image" xlink:type="simple"/></inline-formula> for the editing time train of individual users.</p>
+          <p>(TIFF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0038869.s002" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pone.0038869.s002" position="float" xlink:type="simple">
+        <label>Text S1</label>
+        <caption>
+          <p><bold>Details of classification experiments.</bold> More details of peaceful/controversial classification experiments based on human judgment are given.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank Farzaneh Kaveh and Márton Mestyán for helping us perform and validate the human judgment experiments and Hoda Sepehri Rad for useful discussions and technical remarks on implementation of the ranking algorithm. Comments from an anonymous PLoS ONE reviewer led to significant improvements in the presentation and are gratefully acknowledged.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0038869-The1">
+        <label>1</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>The gnu operating system.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://www.gnu.org/gnu" xlink:type="simple">http://www.gnu.org/gnu</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Gowers1">
+        <label>2</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Gowers</surname><given-names>T</given-names></name><name name-style="western"><surname>Nielsen</surname><given-names>M</given-names></name></person-group>             <year>2009</year>             <article-title>Massively collaborative mathematics.</article-title>             <source>Nature</source>             <volume>461</volume>             <fpage>879</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wikipedia1">
+        <label>3</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>Wikipedia.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://www.wikipedia.org" xlink:type="simple">http://www.wikipedia.org</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wikipedia2">
+        <label>4</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>Wikipedia. Wikipedia:policies and guidelines.</article-title>             <comment> <ext-link ext-link-type="uri" xlink:href="http://en.wikipedia.org/w/index.php?title=Wikipedia:Policies_and_guidelines&amp;oldid=491866751" xlink:type="simple">http://en.wikipedia.org/w/index.php?title=Wikipedia:Policies_and_guidelines&amp;oldid=491866751</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Giles1">
+        <label>5</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Giles</surname><given-names>J</given-names></name></person-group>             <year>2005</year>             <article-title>Internet encyclopaedias go head to head.</article-title>             <source>Nature</source>             <volume>438</volume>             <fpage>900</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Voss1">
+        <label>6</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Voss</surname><given-names>J</given-names></name></person-group>             <year>2005</year>             <article-title>Measuring wikipedia.</article-title>             <source>International Conference of the International Society for Scientometrics and Informetrics: 10th, Stockholm (Sweden), 24–28 July 2005</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Ortega1">
+        <label>7</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ortega</surname><given-names>F</given-names></name><name name-style="western"><surname>Gonzalez Barahona</surname><given-names>JM</given-names></name></person-group>             <year>2007</year>             <article-title>Quantitative analysis of the wikipedia community of users.</article-title>             <source>In: Proceedings of the 2007 international symposium on Wikis. New York, NY, USA: ACM, WikiSym ’07, 75–86.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Halavais1">
+        <label>8</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Halavais</surname><given-names>A</given-names></name><name name-style="western"><surname>Lackaff</surname><given-names>D</given-names></name></person-group>             <year>2008</year>             <article-title>An analysis of topical coverage of wikipedia.</article-title>             <source>Journal of Computer-Mediated Communication</source>             <volume>13</volume>             <fpage>429</fpage>             <lpage>440</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Kittur1">
+        <label>9</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kittur</surname><given-names>A</given-names></name><name name-style="western"><surname>Chi</surname><given-names>EH</given-names></name><name name-style="western"><surname>Suh</surname><given-names>B</given-names></name></person-group>             <year>2009</year>             <article-title>What’s in wikipedia?: mapping topics and conict using socially annotated category structure.</article-title>             <source>In: Proceedings of the 27th international conference on Human factors in computing systems. New York, NY, USA: ACM, CHI ’09, 1509–1512.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Buriol1">
+        <label>10</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Buriol</surname><given-names>L</given-names></name><name name-style="western"><surname>Castillo</surname><given-names>C</given-names></name><name name-style="western"><surname>Donato</surname><given-names>D</given-names></name><name name-style="western"><surname>Leonardi</surname><given-names>S</given-names></name><name name-style="western"><surname>Millozzi</surname><given-names>S</given-names></name></person-group>             <year>2006</year>             <article-title>Temporal analysis of the wikigraph.</article-title>             <source>In: Web Intelligence, 2006. WI 2006. IEEE/WIC/ACM International Conference on.</source>             <fpage>45</fpage>             <lpage>51</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Capocci1">
+        <label>11</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Capocci</surname><given-names>A</given-names></name><name name-style="western"><surname>Servedio</surname><given-names>VDP</given-names></name><name name-style="western"><surname>Colaiori</surname><given-names>F</given-names></name><name name-style="western"><surname>Buriol</surname><given-names>LS</given-names></name><name name-style="western"><surname>Donato</surname><given-names>D</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Preferential attachment in the growth of social networks: The internet encyclopedia wikipedia.</article-title>             <source>Phys Rev E</source>             <volume>74</volume>             <fpage>036116</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Zlati1">
+        <label>12</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zlatić</surname><given-names>V</given-names></name><name name-style="western"><surname>Božičević</surname><given-names>M</given-names></name><name name-style="western"><surname>Štefančić</surname><given-names>H</given-names></name><name name-style="western"><surname>Domazet</surname><given-names>M</given-names></name></person-group>             <year>2006</year>             <article-title>Wikipedias: Collaborative web-based encyclopedias as complex networks.</article-title>             <source>Phys Rev E</source>             <volume>74</volume>             <fpage>016115</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Zlati2">
+        <label>13</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zlatić</surname><given-names>V</given-names></name><name name-style="western"><surname>Štefančić</surname><given-names>H</given-names></name></person-group>             <year>2011</year>             <article-title>Model of wikipedia growth based on information exchange via reciprocal arcs.</article-title>             <source>EPL</source>             <volume>93</volume>             <fpage>58005</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Ratkiewicz1">
+        <label>14</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ratkiewicz</surname><given-names>J</given-names></name><name name-style="western"><surname>Flammini</surname><given-names>A</given-names></name><name name-style="western"><surname>Menczer</surname><given-names>F</given-names></name></person-group>             <year>2010</year>             <article-title>Traffic in social media i: Paths through information networks.</article-title>             <source>In: Social Computing (SocialCom), 2010 IEEE Second International Conference on.</source>             <fpage>452</fpage>             <lpage>458</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Strube1">
+        <label>15</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Strube</surname><given-names>M</given-names></name><name name-style="western"><surname>Ponzetto</surname><given-names>SP</given-names></name></person-group>             <year>2006</year>             <article-title>Wikirelate! computing semantic relatedness using wikipedia.</article-title>             <source>In: proceedings of the 21st national conference on Artificial intelligence. AAAI Press, volume 2, 1419–1424.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Ponzetto1">
+        <label>16</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ponzetto</surname><given-names>SP</given-names></name><name name-style="western"><surname>Strube</surname><given-names>M</given-names></name></person-group>             <year>2007</year>             <article-title>Knowledge derived from wikipedia for computing semantic relatedness.</article-title>             <source>J Artif Int Res</source>             <volume>30</volume>             <fpage>181</fpage>             <lpage>212</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Medelyan1">
+        <label>17</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Medelyan</surname><given-names>O</given-names></name><name name-style="western"><surname>Milne</surname><given-names>D</given-names></name><name name-style="western"><surname>Legg</surname><given-names>C</given-names></name><name name-style="western"><surname>Witten</surname><given-names>IH</given-names></name></person-group>             <year>2009</year>             <article-title>Mining meaning from wikipedia.</article-title>             <source>International Journal of Human-Computer Studies</source>             <volume>67</volume>             <fpage>716</fpage>             <lpage>754</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Tyers1">
+        <label>18</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Tyers</surname><given-names>F</given-names></name><name name-style="western"><surname>Pienaar</surname><given-names>J</given-names></name></person-group>             <year>2008</year>             <article-title>Extracting bilingual word pairs from wikipedia.</article-title>             <source>In: Proceedings of the SALTMIL Workshop at Language Resources and Evaluation Conference.</source> <page-count count="LREC08"/>           </citation>
+      </ref>
+      <ref id="pone.0038869-Sharoff1">
+        <label>19</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sharoff</surname><given-names>SKS</given-names></name><name name-style="western"><surname>Hartley</surname><given-names>A</given-names></name></person-group>             <year>2008</year>             <article-title>Seeking needles in the web haystack: Finding texts suitable for language learners.</article-title>             <source>In: 8th Teaching and Language Corpora Conference.</source>             <fpage>TaLC</fpage>             <lpage>8</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Yasseri1">
+        <label>20</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yasseri</surname><given-names>T</given-names></name><name name-style="western"><surname>Kornai</surname><given-names>A</given-names></name><name name-style="western"><surname>Kertész</surname><given-names>J</given-names></name></person-group>             <year>2012</year>             <article-title>A practical approach to language complexity: a wikipedia case study.</article-title>             <source>submitted</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Javanmardi1">
+        <label>21</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Javanmardi</surname><given-names>S</given-names></name><name name-style="western"><surname>Lopes</surname><given-names>C</given-names></name><name name-style="western"><surname>Baldi</surname><given-names>P</given-names></name></person-group>             <year>2010</year>             <article-title>Modeling user reputation in wikis.</article-title>             <source>Statistical Analysis and Data Mining</source>             <volume>3</volume>             <fpage>126</fpage>             <lpage>139</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Javanmardi2">
+        <label>22</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Javanmardi</surname><given-names>S</given-names></name><name name-style="western"><surname>Lopes</surname><given-names>C</given-names></name></person-group>             <year>2010</year>             <article-title>Statistical measure of quality in wikipedia.</article-title>             <source>In: Proceedings of the First Workshop on Social Media Analytics. New York, NY, USA: ACM, SOMA ’10, 132–138.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Kimmons1">
+        <label>23</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kimmons</surname><given-names>R</given-names></name></person-group>             <year>2011</year>             <article-title>Understanding collaboration in wikipedia.</article-title>             <source>First Monday 16</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Potthast1">
+        <label>24</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Potthast</surname><given-names>M</given-names></name><name name-style="western"><surname>Stein</surname><given-names>B</given-names></name><name name-style="western"><surname>Gerling</surname><given-names>R</given-names></name></person-group>             <year>2008</year>             <article-title>Automatic vandalism detection in wikipedia.</article-title>             <source>In: Proceedings of the IR research, 30th European conference on Advances in information retrieval. Berlin, Heidelberg: Springer-Verlag, ECIR’08, 663–668.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Smets1">
+        <label>25</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Smets</surname><given-names>K</given-names></name><name name-style="western"><surname>Goethals</surname><given-names>B</given-names></name><name name-style="western"><surname>Verdonk</surname><given-names>B</given-names></name></person-group>             <year>2008</year>             <article-title>Automatic vandalism detection in wikipedia: towards a machine learning approach.</article-title>             <source>In: AAAI Workshop Wikipedia and Artificial Intelligence: an Evolving Synergy. Association for the Advancement of Artigicial Intelligence, WikiAI08, 43–48.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Adler1">
+        <label>26</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Adler</surname><given-names>B</given-names></name><name name-style="western"><surname>de Alfaro</surname><given-names>L</given-names></name><name name-style="western"><surname>Mola-Velasco</surname><given-names>S</given-names></name><name name-style="western"><surname>Rosso</surname><given-names>P</given-names></name><name name-style="western"><surname>West</surname><given-names>A</given-names></name></person-group>             <year>2011</year>             <article-title>Wikipedia vandalism detection: Combining natural language, metadata, and reputation features.</article-title>             <source>In: Gelbukh A, editor, Computational Linguistics and Intelligent Text Processing, Springer Berlin/Heidelberg, volume 6609 of Lecture Notes in Computer Science.</source>             <fpage>277</fpage>             <lpage>288</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Hu1">
+        <label>27</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hu</surname><given-names>M</given-names></name><name name-style="western"><surname>Lim</surname><given-names>EP</given-names></name><name name-style="western"><surname>Sun</surname><given-names>A</given-names></name><name name-style="western"><surname>Lauw</surname><given-names>HW</given-names></name><name name-style="western"><surname>Vuong</surname><given-names>BQ</given-names></name></person-group>             <year>2007</year>             <article-title>Measuring article quality in wikipedia: models and evaluation.</article-title>             <source>In: Proceedings of the sixteenth ACM conference on Conference on information and knowledge management. New York, NY, USA: ACM, CIKM ’07, 243–252.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Leskovec1">
+        <label>28</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Leskovec</surname><given-names>J</given-names></name><name name-style="western"><surname>Huttenlocher</surname><given-names>D</given-names></name><name name-style="western"><surname>Kleinberg</surname><given-names>J</given-names></name></person-group>             <year>2010</year>             <article-title>Governance in social media: A case study of the wikipedia promotion process.</article-title>             <source>In: Proceedings of the International Conference on Weblogs and Social Media. ICWSM’10.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-McDonald1">
+        <label>29</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>McDonald</surname><given-names>DW</given-names></name><name name-style="western"><surname>Javanmardi</surname><given-names>S</given-names></name><name name-style="western"><surname>Zachry</surname><given-names>M</given-names></name></person-group>             <year>2011</year>             <article-title>Finding patterns in behavioral observations by automatically labeling forms of wikiwork in barnstars.</article-title>             <source>In: Proceedings of the 7th International Symposium on Wikis and Open Collaboration. New York, NY, USA: ACM, WikiSym ’11, 15–24.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Laniado1">
+        <label>30</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Laniado</surname><given-names>D</given-names></name><name name-style="western"><surname>Tasso</surname><given-names>R</given-names></name><name name-style="western"><surname>Volkovich</surname><given-names>Y</given-names></name><name name-style="western"><surname>Kaltenbrunner</surname><given-names>A</given-names></name></person-group>             <year>2011</year>             <article-title>When the wikipedians talk: Network and tree structure of wikipedia discussion pages.</article-title>             <source>In: 5th International AAAI Conference onWeblogs and Social Media. ICWSM 2011, 177–184.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Massa1">
+        <label>31</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Massa</surname><given-names>P</given-names></name></person-group>             <year>2011</year>             <article-title>Social networks of wikipedia.</article-title>             <source>In: Proceedings of the 22nd ACM conference on Hypertext and hypermedia. New York, NY, USA: ACM, HT ’11, 221–230.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Laniado2">
+        <label>32</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Laniado</surname><given-names>D</given-names></name><name name-style="western"><surname>Tasso</surname><given-names>R</given-names></name></person-group>             <year>2011</year>             <article-title>Co-authorship 2.0: patterns of collaboration in wikipedia.</article-title>             <source>In: Proceedings of the 22nd ACM conference on Hypertext and hypermedia. New York, NY, USA: ACM, HT ’11, 201–210.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wilkinson1">
+        <label>33</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Wilkinson</surname><given-names>DM</given-names></name><name name-style="western"><surname>Huberman</surname><given-names>BA</given-names></name></person-group>             <year>2007</year>             <article-title>Assessing the value of cooperation in wikipedia.</article-title>             <source>First Monday 12</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Schneider1">
+        <label>34</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Schneider</surname><given-names>J</given-names></name><name name-style="western"><surname>Passant</surname><given-names>A</given-names></name><name name-style="western"><surname>Breslin</surname><given-names>J</given-names></name></person-group>             <year>2010</year>             <article-title>A qualitative and quantitative analysis of how wikipedia talk pages are used.</article-title>             <source>In: Proceedings of the WebSci10: Extending the Frontiers of Society, April 26–27th, 2010, Raleigh, NC: US.</source>             <fpage>1</fpage>             <lpage>7</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Ratkiewicz2">
+        <label>35</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ratkiewicz</surname><given-names>J</given-names></name><name name-style="western"><surname>Fortunato</surname><given-names>S</given-names></name><name name-style="western"><surname>Flammini</surname><given-names>A</given-names></name><name name-style="western"><surname>Menczer</surname><given-names>F</given-names></name><name name-style="western"><surname>Vespignani</surname><given-names>A</given-names></name></person-group>             <year>2010</year>             <article-title>Characterizing and modeling the dynamics of online popularity.</article-title>             <source>Phys Rev Lett</source>             <volume>105</volume>             <fpage>158701</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Samson1">
+        <label>36</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Samson</surname><given-names>K</given-names></name><name name-style="western"><surname>Nowak</surname><given-names>A</given-names></name></person-group>             <year>2010</year>             <article-title>Linguistic signs of destructive and constructive processes in conict.</article-title>             <source>IACM 23rd Annual Conference Paper</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Suh1">
+        <label>37</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Suh</surname><given-names>B</given-names></name><name name-style="western"><surname>Chi</surname><given-names>E</given-names></name><name name-style="western"><surname>Pendleton</surname><given-names>B</given-names></name><name name-style="western"><surname>Kittur</surname><given-names>A</given-names></name></person-group>             <year>2007</year>             <article-title>Us vs. them: Understanding social dynamics in wikipedia with revert graph visualizations.</article-title>             <source>In: Visual Analytics Science and Technology, 2007. VAST 2007. IEEE Symposium on.</source>             <fpage>163</fpage>             <lpage>170</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Kittur2">
+        <label>38</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kittur</surname><given-names>A</given-names></name><name name-style="western"><surname>Suh</surname><given-names>B</given-names></name><name name-style="western"><surname>Pendleton</surname><given-names>BA</given-names></name><name name-style="western"><surname>Chi</surname><given-names>EH</given-names></name></person-group>             <year>2007</year>             <article-title>He says, she says: conict and coordination in wikipedia.</article-title>             <source>In: Proceedings of the SIGCHI conference on Human factors in computing systems. New York, NY, USA: ACM, CHI ’07, 453–462.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Vuong1">
+        <label>39</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vuong</surname><given-names>BQ</given-names></name><name name-style="western"><surname>Lim</surname><given-names>EP</given-names></name><name name-style="western"><surname>Sun</surname><given-names>A</given-names></name><name name-style="western"><surname>Le</surname><given-names>MT</given-names></name><name name-style="western"><surname>Lauw</surname><given-names>HW</given-names></name></person-group>             <year>2008</year>             <article-title>On ranking controversies in wikipedia: models and evaluation.</article-title>             <source>In: Proceedings of the international conference on Web search and web data mining. New York, NY, USA: ACM, WSDM ’08, 171–182.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Zha1">
+        <label>40</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zha</surname><given-names>H</given-names></name></person-group>             <year>2002</year>             <article-title>Generic summarization and keyphrase extraction using mutual reinforcement principle and sentence clustering.</article-title>             <source>In: Proceedings of the 25th annual international ACM SIGIR conference on Research and development in information retrieval. New York, NY, USA: ACM, SIGIR ’02, 113–120.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Brandes1">
+        <label>41</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Brandes</surname><given-names>U</given-names></name><name name-style="western"><surname>Lerner</surname><given-names>J</given-names></name></person-group>             <year>2008</year>             <article-title>Visual analysis of controversy in user-generated encyclopedias.</article-title>             <source>Information Visualization</source>             <volume>7</volume>             <fpage>34</fpage>             <lpage>48</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Brandes2">
+        <label>42</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Brandes</surname><given-names>U</given-names></name><name name-style="western"><surname>Kenis</surname><given-names>P</given-names></name><name name-style="western"><surname>Lerner</surname><given-names>J</given-names></name><name name-style="western"><surname>van Raaij</surname><given-names>D</given-names></name></person-group>             <year>2009</year>             <article-title>Network analysis of collaboration structure in wikipedia.</article-title>             <source>In: Proceedings of the 18th international conference on World wide web. New York, NY, USA: ACM, WWW ’09, 731–740.</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Sumi1">
+        <label>43</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sumi</surname><given-names>R</given-names></name><name name-style="western"><surname>Yasseri</surname><given-names>T</given-names></name><name name-style="western"><surname>Rung</surname><given-names>A</given-names></name><name name-style="western"><surname>Kornai</surname><given-names>A</given-names></name><name name-style="western"><surname>Kertész</surname><given-names>J</given-names></name></person-group>             <year>2011</year>             <article-title>Characterization and prediction of wikipedia edit wars.</article-title>             <source>In: Proceedings of the ACM WebSci’11, Koblenz, Germany.</source>             <fpage>1</fpage>             <lpage>3</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Sumi2">
+        <label>44</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sumi</surname><given-names>R</given-names></name><name name-style="western"><surname>Yasseri</surname><given-names>T</given-names></name><name name-style="western"><surname>Rung</surname><given-names>A</given-names></name><name name-style="western"><surname>Kornai</surname><given-names>A</given-names></name><name name-style="western"><surname>Kertész</surname><given-names>J</given-names></name></person-group>             <year>2011</year>             <article-title>Edit wars in wikipedia.</article-title>             <source>In: Privacy, Security, Risk and Trust (PASSAT), 2011 IEEE Third International Conference on and 2011 IEEE Third International Confernece on Social Computing (SocialCom).</source>             <fpage>724</fpage>             <lpage>727</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wikimedia1">
+        <label>45</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>Wikimedia. Wikimedia downloads.</article-title>             <comment> <ext-link ext-link-type="uri" xlink:href="http://dumps.wikimedia.org" xlink:type="simple">http://dumps.wikimedia.org</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Rivest1">
+        <label>46</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rivest</surname><given-names>RL</given-names></name></person-group>             <year>1992</year>             <article-title>The md5 message-digest algorithm.</article-title>             <source>Internet Request for Comments : RFC 1321</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Yasseri2">
+        <label>47</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yasseri</surname><given-names>T</given-names></name><etal/></person-group>             <year>2012</year>             <article-title>Most controversial topics in wikipedia: a multilingual analysis.</article-title>             <source>In preparation</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-West1">
+        <label>48</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>West AG, Kannan S, Lee I Detecting wikipedia vandalism via spatio-temporal analysis of revision metadata.</article-title>             <source>In: Proceedings of the Third European Workshop on System Security.</source>             <fpage>22</fpage>             <lpage>28</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Goh1">
+        <label>49</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Goh</surname><given-names>KI</given-names></name><name name-style="western"><surname>Barabási</surname><given-names>AL</given-names></name></person-group>             <year>2008</year>             <article-title>Burstiness and memory in complex systems.</article-title>             <source>EPL</source>             <volume>81</volume>             <fpage>48002</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Barabsi1">
+        <label>50</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Barabási</surname><given-names>AL</given-names></name></person-group>             <year>2005</year>             <article-title>The origin of bursts and heavy tails in human dynamics.</article-title>             <source>Nature</source>             <volume>435</volume>             <fpage>207</fpage>             <lpage>211</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wikipedia3">
+        <label>51</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>Wikipedia. Wikipedia:list of controversial issues.</article-title>             <comment> <ext-link ext-link-type="uri" xlink:href="http://en.wikipedia.org/w/index.php?title=Wikipedia:List_of_controversial_issues&amp;oldid=492307881" xlink:type="simple">http://en.wikipedia.org/w/index.php?title=Wikipedia:List_of_controversial_issues&amp;oldid=492307881</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-gnuplot1">
+        <label>52</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>gnuplot version 4.6.</article-title>             <comment><ext-link ext-link-type="uri" xlink:href="http://www.gnuplot.info" xlink:type="simple">http://www.gnuplot.info</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wikipedia4">
+        <label>53</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>Wikipedia. Levenbergmarquardt algorithm.</article-title>             <comment> URL <ext-link ext-link-type="uri" xlink:href="http://en.wikipedia.org/w/index.php?title=Levenberg%E2%80%93Marquardt_algorithm&amp;oldid=486636602" xlink:type="simple">http://en.wikipedia.org/w/index.php?title=Levenberg%E2%80%93Marquardt_algorithm&amp;oldid=486636602</ext-link>.</comment>             <comment>[Online; accessed 23-April-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Vzquez1">
+        <label>54</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vázquez</surname><given-names>A</given-names></name><name name-style="western"><surname>Oliveira</surname><given-names>JaG</given-names></name><name name-style="western"><surname>Dezsö</surname><given-names>Z</given-names></name><name name-style="western"><surname>Goh</surname><given-names>KI</given-names></name><name name-style="western"><surname>Kondor</surname><given-names>I</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Modeling bursts and heavy tails in human dynamics.</article-title>             <source>Phys Rev E</source>             <volume>73</volume>             <fpage>036127</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Vajna1">
+        <label>55</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vajna</surname><given-names>S</given-names></name><name name-style="western"><surname>Toth</surname><given-names>B</given-names></name><name name-style="western"><surname>J Kertész</surname><given-names>J</given-names></name></person-group>             <year>2012</year>             <article-title>To be published.</article-title>          </citation>
+      </ref>
+      <ref id="pone.0038869-Karsai1">
+        <label>56</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Karsai</surname><given-names>M</given-names></name><name name-style="western"><surname>Kaski</surname><given-names>K</given-names></name><name name-style="western"><surname>Barabási</surname><given-names>AL</given-names></name><name name-style="western"><surname>Kertész</surname><given-names>J</given-names></name></person-group>             <year>2012</year>             <article-title>Universal features of correlated bursty behaviour.</article-title>             <source>Scientific Reports 2</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Ratkiewicz3">
+        <label>57</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ratkiewicz</surname><given-names>J</given-names></name><name name-style="western"><surname>Menczer</surname><given-names>F</given-names></name><name name-style="western"><surname>Fortunato</surname><given-names>S</given-names></name><name name-style="western"><surname>Flammini</surname><given-names>A</given-names></name><name name-style="western"><surname>Vespignani</surname><given-names>A</given-names></name></person-group>             <year>2010</year>             <article-title>Traffic in social media ii: Modeling bursty popularity.</article-title>             <source>In: Social Computing (SocialCom), 2010 IEEE Second International Conference on.</source>             <fpage>393</fpage>             <lpage>400</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Yasseri3">
+        <label>58</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yasseri</surname><given-names>T</given-names></name><name name-style="western"><surname>Sumi</surname><given-names>R</given-names></name><name name-style="western"><surname>Kertész</surname><given-names>J</given-names></name></person-group>             <year>2012</year>             <article-title>Circadian patterns of wikipedia editorial activity: A demographic analysis.</article-title>             <source>PLoS ONE</source>             <volume>7</volume>             <fpage>e30091</fpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Laird1">
+        <label>59</label>
+        <citation citation-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Laird</surname><given-names>AK</given-names></name></person-group>             <year>1964</year>             <article-title>Dynamics of tumor growth.</article-title>             <source>Br J Cancer</source>             <volume>18</volume>             <fpage>490</fpage>             <lpage>502</lpage>          </citation>
+      </ref>
+      <ref id="pone.0038869-Wikipedia5">
+        <label>60</label>
+        <citation citation-type="other" xlink:type="simple">             <article-title>Wikipedia. Help:using talk pages.</article-title>             <comment> <ext-link ext-link-type="uri" xlink:href="http://en.wikipedia.org/w/index.php?title=Help:Using_talk_pages&amp;oldid=492609161" xlink:type="simple">http://en.wikipedia.org/w/index.php?title=Help:Using_talk_pages&amp;oldid=492609161</ext-link>.</comment>             <comment>[Online; accessed 17-May-2012].</comment>          </citation>
+      </ref>
+      <ref id="pone.0038869-Champernowne1">
+        <label>61</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Champernowne</surname><given-names>DG</given-names></name></person-group>             <year>1973</year>             <article-title>The distribution of income between persons.</article-title>             <source>Cambridge: Cambridge University Press</source>          </citation>
+      </ref>
+      <ref id="pone.0038869-Viegas1">
+        <label>62</label>
+        <citation citation-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Viegas</surname><given-names>FB</given-names></name><name name-style="western"><surname>Wattenberg</surname><given-names>M</given-names></name><name name-style="western"><surname>Kriss</surname><given-names>J</given-names></name><name name-style="western"><surname>van Ham</surname><given-names>F</given-names></name></person-group>             <year>2007</year>             <article-title>Talk before you type: Coordination in wikipedia.</article-title>             <source>In: System Sciences, 2007. HICSS 2007. 40th Annual Hawaii International Conference on. p.</source> <page-count count="78"/>           </citation>
+      </ref>
+    </ref-list>
+    <fn-group>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn>
+      <fn fn-type="financial-disclosure">
+        <p>Financial support came from EU's FP7 FET-Open to ICTeCollective project no. 238597 and OTKA grant no. 82333. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>
