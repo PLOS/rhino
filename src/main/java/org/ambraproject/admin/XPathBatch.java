@@ -103,7 +103,7 @@ public class XPathBatch {
       xmlInput = fileStoreService.getFileInStream(fsid);
       return evaluate(xmlInput, fileStoreService);
     } catch (FileStoreException e) {
-      throw new IllegalArgumentException("DOI not found in file store: " + articleDoi);
+      throw new IllegalArgumentException("DOI not found in file store: " + articleDoi, e);
     } finally {
       IOUtils.closeQuietly(xmlInput);
     }
@@ -122,7 +122,7 @@ public class XPathBatch {
       try {
         result = expression.evaluate(xml);
       } catch (XPathExpressionException e) {
-        throw new IllegalArgumentException("Query cannot be evaluated: " + queries.get(key));
+        throw new IllegalArgumentException("Query cannot be evaluated: " + queries.get(key), e);
       }
       results.put(key, result);
     }
