@@ -25,7 +25,6 @@ import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -61,24 +60,6 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     }
     assertEquals(received404, !expectedToExist,
         (expectedToExist ? "Article expected to exist but doesn't" : "Article expected not to exist but does"));
-  }
-
-  @DataProvider
-  public Object[][] sampleArticles() {
-    final String[] doiStubs = {
-        "journal.pone.0038869",
-    };
-
-    int count = doiStubs.length;
-    Object[][] cases = new Object[count][];
-    for (int i = 0; i < count; i++) {
-      String doiStub = doiStubs[i];
-      cases[i] = new Object[]{
-          "info:doi/10.1371/" + doiStub,
-          new File("src/test/resources/data/" + doiStub + ".xml"),
-      };
-    }
-    return cases;
   }
 
   @Test(dataProvider = "sampleArticles")
