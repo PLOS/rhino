@@ -18,10 +18,13 @@
 
 package org.ambraproject.admin;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.DataProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -29,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
@@ -87,6 +91,23 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     public byte[] getData() {
       return Arrays.copyOf(fileData, fileData.length);
     }
+  }
+
+  protected static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.copyOf(new String[]{
+      "journal.pone.0038869",
+  });
+
+  @DataProvider
+  public Object[][] sampleArticles() {
+    List<Object[]> cases = Lists.newArrayListWithCapacity(SAMPLE_ARTICLES.size());
+    for (String doiStub : SAMPLE_ARTICLES) {
+      Object[] sampleArticle = {
+          "info:doi/10.1371/" + doiStub,
+          new File("src/test/resources/data/" + doiStub + ".xml"),
+      };
+      cases.add(sampleArticle);
+    }
+    return cases.toArray(new Object[cases.size()][]);
   }
 
 }
