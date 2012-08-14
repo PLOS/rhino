@@ -84,7 +84,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     try {
       inputData = IOUtils.toByteArray(input);
     } catch (IOException e) {
-      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST, e);
     } finally {
       IOUtils.closeQuietly(input);
     }
