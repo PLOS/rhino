@@ -18,14 +18,17 @@
 
 package org.ambraproject.admin.org.ambraproject.admin.service;
 
+import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.testng.Assert.assertEquals;
@@ -56,45 +59,69 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
         received404 = true;
       }
     }
-    assertEquals(received404, !expectedToExist);
+    assertEquals(received404, !expectedToExist,
+        (expectedToExist ? "Article expected to exist but doesn't" : "Article expected not to exist but does"));
   }
 
-  @Test
-  public void testCrud() throws IOException, FileStoreException {
-    final String data = "Imagine this is some XML data.";
-    final String doi = "test/crud";
+  @DataProvider
+  public Object[][] sampleArticles() {
+    final String[] doiStubs = {
+        "journal.pone.0038869",
+    };
+
+    int count = doiStubs.length;
+    Object[][] cases = new Object[count][];
+    for (int i = 0; i < count; i++) {
+      String doiStub = doiStubs[i];
+      cases[i] = new Object[]{
+          "info:doi/10.1371/" + doiStub,
+          new File("src/test/resources/data/" + doiStub + ".xml"),
+      };
+    }
+    return cases;
+  }
+
+  @Test(dataProvider = "sampleArticles")
+  public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
+    doi += ".testCrud"; // Avoid collisions with canonical sample data
+
+    final TestFile sampleFile = new TestFile(fileLocation);
+    final byte[] sampleData = sampleFile.getData();
+
     assertArticleExistence(doi, false);
 
-    TestInputStream input = new TestInputStream(data);
+    TestInputStream input = sampleFile.read();
     articleCrudService.create(input, doi);
     assertArticleExistence(doi, true);
-    assertTrue(input.isClosed());
+    assertTrue(input.isClosed(), "Service didn't close stream");
 
     byte[] readData = articleCrudService.read(doi);
-    assertEquals(readData, data.getBytes());
+    assertEquals(readData, sampleData);
 
-    final String updated = data + "\nThis is appended";
-    input = new TestInputStream(updated);
+    final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
+    input = TestInputStream.of(updated);
     articleCrudService.update(input, doi);
-    assertEquals(articleCrudService.read(doi), updated.getBytes());
+    assertEquals(articleCrudService.read(doi), updated);
     assertArticleExistence(doi, true);
-    assertTrue(input.isClosed());
+    assertTrue(input.isClosed(), "Service didn't close stream");
 
     articleCrudService.delete(doi);
     assertArticleExistence(doi, false);
   }
 
-  @Test
-  public void testCreateCollision() throws IOException, FileStoreException {
-    final String data = "Imagine this is some XML data.";
-    final String doi = "test/createCollision";
+  @Test(dataProvider = "sampleArticles")
+  public void testCreateCollision(String doi, File fileLocation) throws IOException, FileStoreException {
+    doi += ".testCreateCollision"; // Avoid collisions with canonical sample data
+
+    final TestFile sampleFile = new TestFile(fileLocation);
+
     assertArticleExistence(doi, false);
 
-    articleCrudService.create(new TestInputStream(data), doi);
+    articleCrudService.create(sampleFile.read(), doi);
     assertArticleExistence(doi, true);
 
     try {
-      articleCrudService.create(new TestInputStream(data), doi);
+      articleCrudService.create(sampleFile.read(), doi);
       fail("Expected RestClientException on redundant create");
     } catch (RestClientException e) {
       assertEquals(e.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);

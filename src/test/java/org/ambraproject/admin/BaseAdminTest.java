@@ -18,12 +18,17 @@
 
 package org.ambraproject.admin;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
@@ -36,9 +41,17 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
   protected static class TestInputStream extends ByteArrayInputStream {
     private boolean isClosed;
 
-    public TestInputStream(String content) {
-      super(content.getBytes());
+    private TestInputStream(byte[] data) {
+      super(data);
       isClosed = false;
+    }
+
+    public static TestInputStream of(byte[] data) {
+      return new TestInputStream(Arrays.copyOf(data, data.length));
+    }
+
+    public static TestInputStream of(String data) {
+      return new TestInputStream(data.getBytes());
     }
 
     public boolean isClosed() {
@@ -49,6 +62,30 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     public void close() throws IOException {
       super.close();
       isClosed = true;
+    }
+  }
+
+  protected static class TestFile {
+    private final File fileLocation;
+    private final byte[] fileData;
+
+    public TestFile(File fileLocation) throws IOException {
+      this.fileLocation = fileLocation;
+      InputStream stream = null;
+      try {
+        stream = new FileInputStream(this.fileLocation);
+        fileData = IOUtils.toByteArray(stream);
+      } finally {
+        IOUtils.closeQuietly(stream);
+      }
+    }
+
+    public TestInputStream read() {
+      return new TestInputStream(fileData);
+    }
+
+    public byte[] getData() {
+      return Arrays.copyOf(fileData, fileData.length);
     }
   }
 
