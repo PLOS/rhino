@@ -113,6 +113,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   }
 
+  private Article prepareMetadata(byte[] xmlData, String doi) {
+    Article article = new Article();
+
+    // TODO Read metadata from XML file into article object
+
+    article.setDoi(doi);         // TODO Ensure that this is consistent with XML
+    article.setDate(new Date()); // TODO Should be defined in XML instead?
+
+    return article;
+  }
+
 
   /**
    * {@inheritDoc}
@@ -122,13 +133,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (articleExistsAt(doi)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
+    byte[] xmlData = readClientInput(file);
 
-    Article article = new Article();
-    article.setDoi(doi);
-    article.setDate(new Date());
+    Article article = prepareMetadata(xmlData, doi);
     hibernateTemplate.save(article);
 
-    write(readClientInput(file), doi);
+    write(xmlData, doi);
   }
 
   /**
