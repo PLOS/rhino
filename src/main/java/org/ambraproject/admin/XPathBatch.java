@@ -18,8 +18,10 @@
 
 package org.ambraproject.admin;
 
+import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
@@ -32,6 +34,8 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XPathBatch {
 
@@ -71,6 +75,30 @@ public class XPathBatch {
     return new XPathBatch(keyedQueries);
   }
 
+  public static XPathBatch useQueriesAsKeys(Iterable<String> queries) {
+    Map<String, String> queriesAsKeys = Maps.uniqueIndex(queries, Functions.<String>identity());
+    return XPathBatch.fromMap(queriesAsKeys);
+  }
+
+  private static final Pattern INGEST_QUERY_STRUCTURE = Pattern.compile(
+      "//(\\p{Alnum}+/)*(\\p{Alnum}+)(/\\p{Alnum}+\\(\\))?");
+
+  /*
+   * TODO Is this inapplicable except to transformed XML (which we won't make)?
+   */
+  public static XPathBatch inferKeysFromIngestQueries(Iterable<String> queries) {
+    ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+    for (String query : queries) {
+      Matcher m = INGEST_QUERY_STRUCTURE.matcher(query);
+      if (!m.matches()) {
+        throw new IllegalArgumentException("Cannot infer key from structure of query");
+      }
+      String inferredKey = m.group(2);
+      builder.put(inferredKey, query);
+    }
+    return XPathBatch.fromMap(builder.build());
+  }
+
   /**
    * Get the queries that produced this object.
    *
@@ -89,9 +117,9 @@ public class XPathBatch {
    * @param articleDoi       the DOI of the article
    * @param fileStoreService a file store service for the file store containing the article
    * @return the map of results
-   * @throws IllegalArgumentException if the article cannot have all of this object's queries evaluated on it
+   * @throws XPathExpressionException if the article cannot have one or more of this object's queries evaluated on it
    */
-  public Map<String, String> evaluateOnArticle(String articleDoi, FileStoreService fileStoreService) {
+  public Map<String, String> evaluateOnArticle(String articleDoi, FileStoreService fileStoreService) throws XPathExpressionException {
     Preconditions.checkNotNull(articleDoi);
     String fsid = FSIDMapper.doiTofsid(articleDoi, "XML");
     if (fsid.isEmpty()) {
@@ -109,7 +137,7 @@ public class XPathBatch {
     }
   }
 
-  private Map<String, String> evaluate(InputStream input, FileStoreService fileStoreService) {
+  private Map<String, String> evaluate(InputStream input, FileStoreService fileStoreService) throws XPathExpressionException {
     Preconditions.checkNotNull(fileStoreService);
     InputSource xml = new InputSource(input);
 
@@ -118,12 +146,7 @@ public class XPathBatch {
       String key = expressionEntry.getKey();
       XPathExpression expression = expressionEntry.getValue();
 
-      String result;
-      try {
-        result = expression.evaluate(xml);
-      } catch (XPathExpressionException e) {
-        throw new IllegalArgumentException("Query cannot be evaluated: " + queries.get(key), e);
-      }
+      String result = expression.evaluate(xml);
       results.put(key, result);
     }
     return results.build();
