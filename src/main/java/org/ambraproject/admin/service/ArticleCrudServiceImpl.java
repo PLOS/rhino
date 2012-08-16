@@ -18,7 +18,10 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.collect.ImmutableMap;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.XPathBatch;
+import org.ambraproject.admin.util.NodeListAdapter;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -27,12 +30,28 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -41,6 +60,17 @@ import java.util.Date;
  * (especially) the file store.
  */
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
+
+  private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+
+  private static final String DOI_PREFIX = "info:doi/";
+
+  private static final XPathBatch INGESTION = XPathBatch.fromMap(ImmutableMap.<String, String>builder()
+      .put("Doi", "/article/front/article-meta/article-id[@pub-id-type=\"doi\"]")
+          // Just a stub
+      .build());
+
+  public static final XPath XPATH = XPathFactory.newInstance().newXPath();
 
   private boolean articleExistsAt(String doi) {
     Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
@@ -114,11 +144,61 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private Article prepareMetadata(byte[] xmlData, String doi) {
+    InputStream xmlStream = null;
+    Document xml;
+    try {
+      xmlStream = new ByteArrayInputStream(xmlData);
+      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      xml = documentBuilder.parse(xmlStream);
+    } catch (SAXException e) {
+      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } finally {
+      IOUtils.closeQuietly(xmlStream);
+    }
+
+    Article article;
+    try {
+      article = prepareMetadata(xml, doi);
+    } catch (XPathExpressionException e) {
+      throw new RestClientException("XML does not match expected format", HttpStatus.BAD_REQUEST, e);
+    }
+
+    return article;
+  }
+
+  private static List<Node> xpathQueryForNodes(String query, Document xml) throws XPathExpressionException {
+    Object result = XPATH.evaluate(query, xml, XPathConstants.NODESET);
+    return NodeListAdapter.wrap((NodeList) result);
+  }
+
+  /**
+   * Read metadata from an XML file into a new article representation.
+   * <p/>
+   * TODO Clean up and finish implementing
+   *
+   * @param xml the XML file for the new article
+   * @param doi the article's DOI, according to the action that wants to create the article
+   * @return the new article object
+   * @throws XPathExpressionException if the XML cannot be evaluated with the expected expressions
+   */
+  private Article prepareMetadata(Document xml, String doi) throws XPathExpressionException {
     Article article = new Article();
+    Map<String, String> results = INGESTION.evaluate(xml);
 
-    // TODO Read metadata from XML file into article object
+    String xmlDoi = XPATH.evaluate("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]", xml);
+    if (!doi.equals(DOI_PREFIX + xmlDoi)) {
+      if (log.isWarnEnabled()) {
+        log.warn("Article at DOI=" + doi + " has XML listing DOI as " + DOI_PREFIX + xmlDoi);
+      }
+    }
+    article.setDoi(doi);
 
-    article.setDoi(doi);         // TODO Ensure that this is consistent with XML
+    List<Node> people = xpathQueryForNodes("//person-group", xml);
+
     article.setDate(new Date()); // TODO Should be defined in XML instead?
 
     return article;

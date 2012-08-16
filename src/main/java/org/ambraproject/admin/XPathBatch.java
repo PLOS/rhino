@@ -26,6 +26,7 @@ import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
+import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import javax.xml.xpath.XPath;
@@ -121,6 +122,7 @@ public class XPathBatch {
    */
   public Map<String, String> evaluateOnArticle(String articleDoi, FileStoreService fileStoreService) throws XPathExpressionException {
     Preconditions.checkNotNull(articleDoi);
+    Preconditions.checkNotNull(fileStoreService);
     String fsid = FSIDMapper.doiTofsid(articleDoi, "XML");
     if (fsid.isEmpty()) {
       throw new IllegalArgumentException("Could not parse DOI into FSID" + articleDoi);
@@ -129,7 +131,7 @@ public class XPathBatch {
     InputStream xmlInput = null;
     try {
       xmlInput = fileStoreService.getFileInStream(fsid);
-      return evaluate(xmlInput, fileStoreService);
+      return evaluate(new InputSource(xmlInput));
     } catch (FileStoreException e) {
       throw new IllegalArgumentException("DOI not found in file store: " + articleDoi, e);
     } finally {
@@ -137,16 +139,28 @@ public class XPathBatch {
     }
   }
 
-  private Map<String, String> evaluate(InputStream input, FileStoreService fileStoreService) throws XPathExpressionException {
-    Preconditions.checkNotNull(fileStoreService);
-    InputSource xml = new InputSource(input);
+  public Map<String, String> evaluate(Document xml) throws XPathExpressionException {
+    return evaluate((Object) xml);
+  }
 
+  /**
+   * Apply this object's queries to XML.
+   * <p/>
+   * The argument's runtime type must be either {@link InputSource} or another type accepted by {@link
+   * XPathExpression#evaluate(java.lang.Object)} (for example, any class that implements {@link org.w3c.dom.Node}, such
+   * as {@link Document}). This weirdness is inherited from the API of {@link XPathExpression}.
+   *
+   * @param xml the XML object to parse
+   * @return the map of results
+   * @throws XPathExpressionException
+   */
+  private Map<String, String> evaluate(Object xml) throws XPathExpressionException {
     ImmutableMap.Builder<String, String> results = ImmutableMap.builder();
     for (Map.Entry<String, XPathExpression> expressionEntry : expressions.entrySet()) {
       String key = expressionEntry.getKey();
       XPathExpression expression = expressionEntry.getValue();
 
-      String result = expression.evaluate(xml);
+      String result = (xml instanceof InputSource) ? expression.evaluate((InputSource) xml) : expression.evaluate(xml);
       results.put(key, result);
     }
     return results.build();
