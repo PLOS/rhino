@@ -61,7 +61,8 @@ public class XmlToArticle {
     }
   }
 
-  public static final ImmutableCollection<XmlToObjectOperation<Article, ?>> FIELDS = ImmutableList.<XmlToObjectOperation<Article, ?>>copyOf(new XmlToObjectOperation[]{
+  @SuppressWarnings("unchecked") // can't parameterize array
+  private static final ImmutableCollection<XmlToObjectOperation<Article, ?>> FIELDS = ImmutableList.<XmlToObjectOperation<Article, ?>>copyOf(new XmlToObjectOperation[]{
 
       new StringExpression("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]") {
         @Override

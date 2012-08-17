@@ -89,7 +89,8 @@ public abstract class XmlToObjectOperation<T, V> {
 
     @Override
     protected String extract(Node xml) throws XPathExpressionException {
-      return xPathExpression.evaluate(xml);
+      Node stringNode = (Node) xPathExpression.evaluate(xml, XPathConstants.NODE);
+      return stringNode.getTextContent();
     }
   }
 

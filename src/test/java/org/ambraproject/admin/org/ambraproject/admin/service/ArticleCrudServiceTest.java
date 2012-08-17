@@ -24,6 +24,7 @@ import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,11 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
         .get(0);
     assertNotNull(stored, "ArticleCrudService.create did not store an article");
     assertEquals(stored.getDoi(), doi);
+
+    String storedDescription = stored.getDescription();
+    assertTrue(StringUtils.isNotBlank(storedDescription), "Description was not set on article");
+    assertTrue(storedDescription.trim().length() == storedDescription.length(),
+        "Description was stored with whitespace");
 
     byte[] readData = articleCrudService.read(doi);
     assertEquals(readData, sampleData);
