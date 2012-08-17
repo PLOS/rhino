@@ -38,17 +38,38 @@ import java.util.List;
  */
 public abstract class XmlToObjectOperation<T, V> {
 
-  protected static final XPath XPATH = XPathFactory.newInstance().newXPath();
-
   protected final String xPathQuery;
-  protected final XPathExpression xPathExpression;
 
   protected XmlToObjectOperation(String xPathQuery) {
     this.xPathQuery = Preconditions.checkNotNull(xPathQuery);
+  }
+
+
+  /**
+   * Produce a new XPath object.
+   * <p/>
+   * Must use a new {@link XPathFactory} object every time this method is called, because it is not thread-safe.
+   *
+   * @return a new XPath object
+   */
+  protected XPath getXPath() {
+    return XPathFactory.newInstance().newXPath();
+  }
+
+  /**
+   * Compile the expression for this instance.
+   * <p/>
+   * Must return a new expression object every time this method is called, because {@link XPathExpression} is not
+   * thread-safe.
+   *
+   * @return a new {@link XPathExpression} object compiled from this object's query
+   */
+  protected XPathExpression getExpression() {
     try {
-      this.xPathExpression = XPATH.compile(this.xPathQuery);
+      return getXPath().compile(xPathQuery);
     } catch (XPathExpressionException e) {
-      throw new RuntimeException("Could not compile a constant query");
+      // Queries are expected to be programmer-defined constants; this shouldn't be possible from user error
+      throw new RuntimeException("Could not compile: " + xPathQuery);
     }
   }
 
@@ -89,7 +110,7 @@ public abstract class XmlToObjectOperation<T, V> {
 
     @Override
     protected String extract(Node xml) throws XPathExpressionException {
-      Node stringNode = (Node) xPathExpression.evaluate(xml, XPathConstants.NODE);
+      Node stringNode = (Node) getExpression().evaluate(xml, XPathConstants.NODE);
       return stringNode.getTextContent();
     }
   }
@@ -101,7 +122,7 @@ public abstract class XmlToObjectOperation<T, V> {
 
     @Override
     protected Node extract(Node xml) throws XPathExpressionException {
-      return (Node) xPathExpression.evaluate(xml, XPathConstants.NODE);
+      return (Node) getExpression().evaluate(xml, XPathConstants.NODE);
     }
   }
 
@@ -112,7 +133,7 @@ public abstract class XmlToObjectOperation<T, V> {
 
     @Override
     protected List<Node> extract(Node xml) throws XPathExpressionException {
-      NodeList result = (NodeList) xPathExpression.evaluate(xml, XPathConstants.NODESET);
+      NodeList result = (NodeList) getExpression().evaluate(xml, XPathConstants.NODESET);
       return NodeListAdapter.wrap(result);
     }
   }
@@ -125,19 +146,16 @@ public abstract class XmlToObjectOperation<T, V> {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    XmlToObjectOperation that = (XmlToObjectOperation) o;
-
-    if (xPathQuery != null ? !xPathQuery.equals(that.xPathQuery) : that.xPathQuery != null) return false;
-
-    return true;
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    return xPathQuery.equals(((XmlToObjectOperation) o).xPathQuery);
   }
 
   @Override
   public int hashCode() {
-    return xPathQuery != null ? xPathQuery.hashCode() : 0;
+    return xPathQuery.hashCode();
   }
 
 }

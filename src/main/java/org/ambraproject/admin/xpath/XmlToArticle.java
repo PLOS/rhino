@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -102,11 +103,12 @@ public class XmlToArticle {
       new NodeExpression("//pub-date[@pub-type=\"epub\"]") {
         @Override
         protected void apply(Article obj, Node value) throws XPathExpressionException, XmlContentException {
+          XPath xPath = getXPath();
           int year, month, day;
           try {
-            year = Integer.parseInt(XPATH.evaluate("//year", value));
-            month = Integer.parseInt(XPATH.evaluate("//month", value));
-            day = Integer.parseInt(XPATH.evaluate("//day", value));
+            year = Integer.parseInt(xPath.evaluate("//year", value));
+            month = Integer.parseInt(xPath.evaluate("//month", value));
+            day = Integer.parseInt(xPath.evaluate("//day", value));
           } catch (NumberFormatException e) {
             throw new XmlContentException("Expected numbers for date fields", e);
           }
