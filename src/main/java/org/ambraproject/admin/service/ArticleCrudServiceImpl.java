@@ -18,10 +18,7 @@
 
 package org.ambraproject.admin.service;
 
-import com.google.common.collect.ImmutableMap;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.util.NodeListAdapter;
-import org.ambraproject.admin.xpath.XPathBatch;
 import org.ambraproject.admin.xpath.XmlToArticle;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
@@ -35,24 +32,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -65,13 +56,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
   private static final MimetypesFileTypeMap MIMETYPES_FILE_TYPE_MAP = new MimetypesFileTypeMap();
-
-  private static final XPathBatch INGESTION = XPathBatch.fromMap(ImmutableMap.<String, String>builder()
-      .put("Doi", "/article/front/article-meta/article-id[@pub-id-type=\"doi\"]")
-          // Just a stub
-      .build());
-
-  private static final XPath XPATH = XPathFactory.newInstance().newXPath();
 
   private boolean articleExistsAt(String doi) {
     Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
@@ -169,11 +153,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     return article;
-  }
-
-  private static List<Node> xpathQueryForNodes(String query, Document xml) throws XPathExpressionException {
-    Object result = XPATH.evaluate(query, xml, XPathConstants.NODESET);
-    return NodeListAdapter.wrap((NodeList) result);
   }
 
   /**
