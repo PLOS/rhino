@@ -34,7 +34,8 @@ public class NodeListAdapter extends AbstractList<Node> implements RandomAccess 
   private final NodeList nodes;
 
   private NodeListAdapter(NodeList nodes) {
-    this.nodes = nodes;
+    super();
+    this.nodes = Preconditions.checkNotNull(nodes);
   }
 
   /**
@@ -45,7 +46,7 @@ public class NodeListAdapter extends AbstractList<Node> implements RandomAccess 
    * @throws NullPointerException if {@code nodes} is null
    */
   public static List<Node> wrap(NodeList nodes) {
-    return new NodeListAdapter(Preconditions.checkNotNull(nodes));
+    return new NodeListAdapter(nodes);
   }
 
   /**

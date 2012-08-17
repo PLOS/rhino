@@ -38,6 +38,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -51,7 +52,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -63,14 +63,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
-  private static final String DOI_PREFIX = "info:doi/";
+  private static final MimetypesFileTypeMap MIMETYPES_FILE_TYPE_MAP = new MimetypesFileTypeMap();
 
   private static final XPathBatch INGESTION = XPathBatch.fromMap(ImmutableMap.<String, String>builder()
       .put("Doi", "/article/front/article-meta/article-id[@pub-id-type=\"doi\"]")
           // Just a stub
       .build());
 
-  public static final XPath XPATH = XPathFactory.newInstance().newXPath();
+  private static final XPath XPATH = XPathFactory.newInstance().newXPath();
 
   private boolean articleExistsAt(String doi) {
     Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
@@ -187,19 +187,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private Article prepareMetadata(Document xml, String doi) throws XPathExpressionException {
     Article article = new Article();
-    Map<String, String> results = INGESTION.evaluate(xml);
-
-    String xmlDoi = XPATH.evaluate("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]", xml);
-    if (!doi.equals(DOI_PREFIX + xmlDoi)) {
-      if (log.isWarnEnabled()) {
-        log.warn("Article at DOI=" + doi + " has XML listing DOI as " + DOI_PREFIX + xmlDoi);
-      }
-    }
     article.setDoi(doi);
-
-    List<Node> people = xpathQueryForNodes("//person-group", xml);
-
     article.setDate(new Date()); // TODO Should be defined in XML instead?
+
+    // Constants formerly hard-coded in pmc2obj.xslt
+    article.setFormat("text/xml");
+    article.setLanguage("en");
+
+    for (ArticleXmlTranslator<?> field : ArticleXmlTranslator.FIELDS) {
+      field.evaluate(article, xml);
+    }
+
 
     return article;
   }

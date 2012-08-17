@@ -23,6 +23,9 @@ import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
@@ -75,6 +78,12 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     articleCrudService.create(input, doi);
     assertArticleExistence(doi, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
+
+    Article stored = (Article) hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class).add(Restrictions.eq("doi", doi)))
+        .get(0);
+    assertNotNull(stored, "ArticleCrudService.create did not store an article");
+    assertEquals(stored.getDoi(), doi);
 
     byte[] readData = articleCrudService.read(doi);
     assertEquals(readData, sampleData);
