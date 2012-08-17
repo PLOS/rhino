@@ -38,7 +38,7 @@ import java.util.List;
  */
 public abstract class XmlToObjectOperation<T, V> {
 
-  private static final XPath XPATH = XPathFactory.newInstance().newXPath();
+  protected static final XPath XPATH = XPathFactory.newInstance().newXPath();
 
   protected final String xPathQuery;
   protected final XPathExpression xPathExpression;
@@ -58,7 +58,7 @@ public abstract class XmlToObjectOperation<T, V> {
    * @param obj   the object to modify
    * @param value the value to set
    */
-  protected abstract void apply(T obj, V value);
+  protected abstract void apply(T obj, V value) throws XPathExpressionException, XmlContentException;
 
   /**
    * Read a value from XML.
@@ -76,7 +76,7 @@ public abstract class XmlToObjectOperation<T, V> {
    * @param xml the XML structure from which to retrieve the value
    * @throws XPathExpressionException if this object's XPath query cannot be applied to the supplied XML structure
    */
-  public final void evaluate(T obj, Node xml) throws XPathExpressionException {
+  public final void evaluate(T obj, Node xml) throws XPathExpressionException, XmlContentException {
     V value = extract(xml);
     apply(obj, value);
   }
@@ -91,6 +91,17 @@ public abstract class XmlToObjectOperation<T, V> {
     protected String extract(Node xml) throws XPathExpressionException {
       Node stringNode = (Node) xPathExpression.evaluate(xml, XPathConstants.NODE);
       return stringNode.getTextContent();
+    }
+  }
+
+  protected static abstract class NodeExpression<T> extends XmlToObjectOperation<T, Node> {
+    protected NodeExpression(String xPathQuery) {
+      super(xPathQuery);
+    }
+
+    @Override
+    protected Node extract(Node xml) throws XPathExpressionException {
+      return (Node) xPathExpression.evaluate(xml, XPathConstants.NODE);
     }
   }
 

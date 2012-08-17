@@ -19,11 +19,13 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.admin.xpath.XmlToArticle;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -43,7 +45,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -168,13 +169,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private Article prepareMetadata(Document xml, String doi) throws XPathExpressionException {
     Article article = new Article();
     article.setDoi(doi);
-    article.setDate(new Date()); // TODO Should be defined in XML instead?
 
     // Constants formerly hard-coded in pmc2obj.xslt
     article.setFormat("text/xml");
     article.setLanguage("en");
 
-    XmlToArticle.evaluate(article, xml);
+    try {
+      XmlToArticle.evaluate(article, xml);
+    } catch (XmlContentException e) {
+      String msg = "Error in submitted XML";
+      String nestedMsg = e.getMessage();
+      if (StringUtils.isNotBlank(nestedMsg)) {
+        msg = msg + ": " + nestedMsg;
+      }
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
+    }
 
     return article;
   }

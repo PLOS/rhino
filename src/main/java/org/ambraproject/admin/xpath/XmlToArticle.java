@@ -27,6 +27,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import javax.xml.xpath.XPathExpressionException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -48,6 +50,12 @@ public class XmlToArticle {
     }
   }
 
+  protected static abstract class NodeExpression extends XmlToObjectOperation.NodeExpression<Article> {
+    protected NodeExpression(String xPathQuery) {
+      super(xPathQuery);
+    }
+  }
+
   protected static abstract class NodeListExpression extends XmlToObjectOperation.NodeListExpression<Article> {
     protected NodeListExpression(String xPathQuery) {
       super(xPathQuery);
@@ -55,7 +63,7 @@ public class XmlToArticle {
   }
 
 
-  public static void evaluate(Article article, Document xml) throws XPathExpressionException {
+  public static void evaluate(Article article, Document xml) throws XPathExpressionException, XmlContentException {
     for (XmlToObjectOperation<Article, ?> field : FIELDS) {
       field.evaluate(article, xml);
     }
@@ -81,6 +89,31 @@ public class XmlToArticle {
         @Override
         protected void apply(Article article, String value) {
           article.setDescription(value);
+        }
+      },
+
+      new StringExpression("//copyright-statement") {
+        @Override
+        protected void apply(Article article, String value) {
+          article.setRights(value);
+        }
+      },
+
+      new NodeExpression("//pub-date[@pub-type=\"epub\"]") {
+        @Override
+        protected void apply(Article obj, Node value) throws XPathExpressionException, XmlContentException {
+          int year, month, day;
+          try {
+            year = Integer.parseInt(XPATH.evaluate("//year", value));
+            month = Integer.parseInt(XPATH.evaluate("//month", value));
+            day = Integer.parseInt(XPATH.evaluate("//day", value));
+          } catch (NumberFormatException e) {
+            throw new XmlContentException("Expected numbers for date fields", e);
+          }
+
+          Calendar date = GregorianCalendar.getInstance();
+          date.set(year, month, day);
+          obj.setDate(date.getTime());
         }
       },
 
