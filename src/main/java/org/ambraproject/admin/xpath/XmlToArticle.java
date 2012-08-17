@@ -16,84 +16,52 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.xpath;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.admin.util.NodeListAdapter;
 import org.ambraproject.models.Article;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.util.List;
 
 /**
- * An XPath query meant to be applied in bulk to an article object.
+ * A set of operations for translating an article XML into an {@link Article} object.
  */
-public abstract class ArticleXmlTranslator<T> {
+public class XmlToArticle {
 
-  private static final Logger log = LoggerFactory.getLogger(ArticleXmlTranslator.class);
-
-  private static final XPath XPATH = XPathFactory.newInstance().newXPath();
+  private static final Logger log = LoggerFactory.getLogger(XmlToArticle.class);
   private static final String DOI_PREFIX = "info:doi/";
 
-
-  protected final String xPathQuery;
-  protected final XPathExpression xPathExpression;
-
-  protected ArticleXmlTranslator(String xPathQuery) {
-    this.xPathQuery = Preconditions.checkNotNull(xPathQuery);
-    try {
-      this.xPathExpression = XPATH.compile(this.xPathQuery);
-    } catch (XPathExpressionException e) {
-      throw new RuntimeException("Could not compile a constant query");
-    }
-  }
-
-  protected abstract void apply(Article article, T value);
-
-  protected abstract T extract(Document xml) throws XPathExpressionException;
-
-  public final void evaluate(Article article, Document xml) throws XPathExpressionException {
-    T value = extract(xml);
-    apply(article, value);
+  private XmlToArticle() {
+    throw new RuntimeException("Not instantiable");
   }
 
 
-  private static abstract class StringExpression extends ArticleXmlTranslator<String> {
+  protected static abstract class StringExpression extends XmlToObjectOperation.StringExpression<Article> {
     protected StringExpression(String xPathQuery) {
       super(xPathQuery);
     }
-
-    @Override
-    protected String extract(Document xml) throws XPathExpressionException {
-      return xPathExpression.evaluate(xml);
-    }
   }
 
-  private static abstract class NodeListExpression extends ArticleXmlTranslator<List<Node>> {
+  protected static abstract class NodeListExpression extends XmlToObjectOperation.NodeListExpression<Article> {
     protected NodeListExpression(String xPathQuery) {
       super(xPathQuery);
     }
-
-    @Override
-    protected List<Node> extract(Document xml) throws XPathExpressionException {
-      NodeList result = (NodeList) xPathExpression.evaluate(xml, XPathConstants.NODESET);
-      return NodeListAdapter.wrap(result);
-    }
   }
 
 
-  public static final ImmutableCollection<ArticleXmlTranslator<?>> FIELDS = ImmutableList.<ArticleXmlTranslator<?>>copyOf(new ArticleXmlTranslator[]{
+  public static void evaluate(Article article, Document xml) throws XPathExpressionException {
+    for (XmlToObjectOperation<Article, ?> field : FIELDS) {
+      field.evaluate(article, xml);
+    }
+  }
+
+  public static final ImmutableCollection<XmlToObjectOperation<Article, ?>> FIELDS = ImmutableList.<XmlToObjectOperation<Article, ?>>copyOf(new XmlToObjectOperation[]{
 
       new StringExpression("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]") {
         @Override
@@ -125,5 +93,6 @@ public abstract class ArticleXmlTranslator<T> {
       // TODO More
 
   });
+
 
 }

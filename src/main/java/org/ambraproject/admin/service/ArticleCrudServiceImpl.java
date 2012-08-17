@@ -20,8 +20,9 @@ package org.ambraproject.admin.service;
 
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.XPathBatch;
 import org.ambraproject.admin.util.NodeListAdapter;
+import org.ambraproject.admin.xpath.XPathBatch;
+import org.ambraproject.admin.xpath.XmlToArticle;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -194,10 +195,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     article.setFormat("text/xml");
     article.setLanguage("en");
 
-    for (ArticleXmlTranslator<?> field : ArticleXmlTranslator.FIELDS) {
-      field.evaluate(article, xml);
-    }
-
+    XmlToArticle.evaluate(article, xml);
 
     return article;
   }

@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.xpath;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,10 @@ public class XPathBatchTest extends BaseAdminTest {
 
   @Test(dataProvider = "sampleArticles")
   public void testXPath(String doi, File fileLocation) throws Exception {
+    doi += ".testXPath"; // avoid collisions with canonical sample data
     XPathBatch batch = XPathBatch.inferKeysFromIngestQueries(INGEST_XPATH);
     articleCrudService.create(new TestFile(fileLocation).read(), doi);
+
     // TODO This would work on transformed XML, not the PMC XML that we have
 //    Map<String, String> results = batch.evaluateOnArticle(doi, fileStoreService);
 //    assertFalse(results.isEmpty());

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.xpath;
 
 import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
