@@ -20,17 +20,24 @@ package org.ambraproject.admin.xpath;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAuthor;
+import org.ambraproject.models.ArticlePerson;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A set of operations for translating an article XML into an {@link Article} object.
@@ -86,21 +93,21 @@ public class XmlToArticle {
         }
       },
 
-      new StringExpression("//abstract") {
+      new StringExpression("/article/front/article-meta/abstract") {
         @Override
         protected void apply(Article article, String value) {
           article.setDescription(value);
         }
       },
 
-      new StringExpression("//copyright-statement") {
+      new StringExpression("/article/front/article-meta/copyright-statement") {
         @Override
         protected void apply(Article article, String value) {
           article.setRights(value);
         }
       },
 
-      new NodeExpression("//pub-date[@pub-type=\"epub\"]") {
+      new NodeExpression("/article/front/article-meta/pub-date[@pub-type=\"epub\"]") {
         @Override
         protected void apply(Article obj, Node value) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
@@ -119,10 +126,44 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("//person-group") {
+      new NodeListExpression("/article/@article-type") {
         @Override
-        protected void apply(Article article, List<Node> value) {
-          // TODO
+        protected void apply(Article obj, List<Node> value) throws XPathExpressionException, XmlContentException {
+          Set<String> articleTypes = Sets.newHashSetWithExpectedSize(value.size());
+          for (Node node : value) {
+            String textContent = node.getTextContent();
+            articleTypes.add(textContent);
+          }
+          obj.setTypes(articleTypes);
+        }
+      },
+
+      new NodeListExpression("//contrib-group/contrib[@contrib-type=\"author\"]") {
+        @Override
+        protected List<Node> extract(Node xml) throws XPathExpressionException {
+          return super.extract(xml);
+        }
+
+        @Override
+        protected void apply(Article article, List<Node> value) throws XPathExpressionException, XmlContentException {
+          XPath xPath = getXPath();
+          List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(value.size());
+          //XPathExpression nameExpr = xPath.compile("//name");
+          for (Node authorNode : value) {
+            // TODO Debug: Gets the first author's name for every node
+            Node nameNode = (Node) getXPath().evaluate("//name", authorNode, XPathConstants.NODE);
+            ArticleAuthor author = parseArticlePerson(new ArticleAuthor(), nameNode, xPath);
+            log.debug(author.getFullName());
+            authors.add(author);
+          }
+          article.setAuthors(authors);
+        }
+      },
+
+      new NodeExpression("//person-group[@person-group-type=\"editor\"]") {
+        @Override
+        protected void apply(Article article, Node value) throws XPathExpressionException, XmlContentException {
+          // TODO Analogous to author
         }
       },
 
@@ -130,5 +171,48 @@ public class XmlToArticle {
 
   });
 
+  // Helper methods for the above
+
+  private static final String WESTERN_NAME_STYLE = "western";
+  private static final String EASTERN_NAME_STYLE = "eastern";
+
+  private static <P extends ArticlePerson> P parseArticlePerson(P person, Node nameNode, XPath xPath) throws XPathExpressionException, XmlContentException {
+    String nameStyle = nameNode.getAttributes().getNamedItem("name-style").getTextContent();
+    String surname = xPath.evaluate("//surname", nameNode);
+    String givenName = xPath.evaluate("//given-names", nameNode);
+    String suffix = xPath.evaluate("//suffix", nameNode);
+    if (surname == null) {
+      throw new XmlContentException("Required surname is omitted");
+    }
+    if (givenName == null) {
+      throw new XmlContentException("Required given name is omitted");
+    }
+
+    String fullName;
+    if (WESTERN_NAME_STYLE.equals(nameStyle)) {
+      fullName = buildFullName(givenName, surname, suffix);
+    } else if (EASTERN_NAME_STYLE.equals(nameStyle)) {
+      fullName = buildFullName(surname, givenName, suffix);
+    } else {
+      throw new XmlContentException("Invalid name-style: " + nameStyle);
+    }
+
+    person.setSurnames(surname);
+    person.setGivenNames(givenName);
+    person.setSuffix(suffix);
+    person.setFullName(fullName);
+    return person;
+  }
+
+  private static String buildFullName(String firstName, String lastName, String suffix) {
+    boolean hasSuffix = StringUtils.isNotBlank(suffix);
+    int expectedLength = 2 + firstName.length() + lastName.length() + (hasSuffix ? suffix.length() : -1);
+    StringBuilder name = new StringBuilder(expectedLength);
+    name.append(firstName).append(' ').append(lastName);
+    if (hasSuffix) {
+      name.append(' ').append(suffix);
+    }
+    return name.toString();
+  }
 
 }

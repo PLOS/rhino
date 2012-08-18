@@ -20,6 +20,8 @@ package org.ambraproject.admin.xpath;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.util.NodeListAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -37,6 +39,8 @@ import java.util.List;
  * @param <V> the type of value that this instance reads from XML
  */
 public abstract class XmlToObjectOperation<T, V> {
+
+  private static final Logger log = LoggerFactory.getLogger(XmlToObjectOperation.class);
 
   protected final String xPathQuery;
 
@@ -73,6 +77,11 @@ public abstract class XmlToObjectOperation<T, V> {
     }
   }
 
+  protected List<Node> queryForNodeList(String query, Node node) throws XPathExpressionException {
+    NodeList result = (NodeList) getXPath().evaluate(query, node, XPathConstants.NODESET);
+    return NodeListAdapter.wrap(result);
+  }
+
   /**
    * Modify an object by setting a value.
    *
@@ -99,7 +108,11 @@ public abstract class XmlToObjectOperation<T, V> {
    */
   public final void evaluate(T obj, Node xml) throws XPathExpressionException, XmlContentException {
     V value = extract(xml);
-    apply(obj, value);
+    if (value != null) {
+      apply(obj, value);
+    } else {
+      log.debug("Nothing found for {}", xPathQuery);
+    }
   }
 
 
@@ -133,8 +146,7 @@ public abstract class XmlToObjectOperation<T, V> {
 
     @Override
     protected List<Node> extract(Node xml) throws XPathExpressionException {
-      NodeList result = (NodeList) getExpression().evaluate(xml, XPathConstants.NODESET);
-      return NodeListAdapter.wrap(result);
+      return queryForNodeList(xPathQuery, xml);
     }
   }
 
