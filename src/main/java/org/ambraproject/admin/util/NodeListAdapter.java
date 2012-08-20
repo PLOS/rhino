@@ -54,6 +54,9 @@ public class NodeListAdapter extends AbstractList<Node> implements RandomAccess 
    */
   @Override
   public Node get(int index) {
+    // To match the List contract (nodes.item returns null on invalid index)
+    Preconditions.checkElementIndex(index, size());
+
     return nodes.item(index);
   }
 

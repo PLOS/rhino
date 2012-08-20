@@ -56,7 +56,7 @@ public abstract class XmlToObjectOperation<T, V> {
    *
    * @return a new XPath object
    */
-  protected XPath getXPath() {
+  protected static XPath getXPath() {
     return XPathFactory.newInstance().newXPath();
   }
 

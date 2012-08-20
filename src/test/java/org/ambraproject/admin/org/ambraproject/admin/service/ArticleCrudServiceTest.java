@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.org.ambraproject.admin.service;
 
+import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
@@ -25,6 +26,7 @@ import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -102,6 +105,14 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     List<ArticleAuthor> storedAuthors = stored.getAuthors();
     assertNotNull(storedAuthors, "Article's authors field was not set");
     assertFalse(storedAuthors.isEmpty(), "No authors were associated with the article");
+
+    // Check that no author names were stored redundantly
+    Set<String> authorNames = Sets.newHashSetWithExpectedSize(storedAuthors.size());
+    for (ArticleAuthor author : storedAuthors) {
+      String fullName = author.getFullName();
+      assertFalse(StringUtils.isBlank(fullName), "Name not set for author");
+      assertTrue(authorNames.add(fullName), "Redundant author name");
+    }
 
     byte[] readData = articleCrudService.read(doi);
     assertEquals(readData, sampleData);

@@ -24,6 +24,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
+import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.ArticlePerson;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -32,7 +33,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -138,32 +138,29 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("//contrib-group/contrib[@contrib-type=\"author\"]") {
+      new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name") {
         @Override
-        protected List<Node> extract(Node xml) throws XPathExpressionException {
-          return super.extract(xml);
-        }
-
-        @Override
-        protected void apply(Article article, List<Node> value) throws XPathExpressionException, XmlContentException {
+        protected void apply(Article article, List<Node> authorNames) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
-          List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(value.size());
-          //XPathExpression nameExpr = xPath.compile("//name");
-          for (Node authorNode : value) {
-            // TODO Debug: Gets the first author's name for every node
-            Node nameNode = (Node) getXPath().evaluate("//name", authorNode, XPathConstants.NODE);
-            ArticleAuthor author = parseArticlePerson(new ArticleAuthor(), nameNode, xPath);
-            log.debug(author.getFullName());
+          List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNames.size());
+          for (Node authorName : authorNames) {
+            ArticleAuthor author = parseArticlePerson(new ArticleAuthor(), authorName, xPath);
             authors.add(author);
           }
           article.setAuthors(authors);
         }
       },
 
-      new NodeExpression("//person-group[@person-group-type=\"editor\"]") {
+      new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name") {
         @Override
-        protected void apply(Article article, Node value) throws XPathExpressionException, XmlContentException {
-          // TODO Analogous to author
+        protected void apply(Article article, List<Node> editorNames) throws XPathExpressionException, XmlContentException {
+          XPath xPath = getXPath();
+          List<ArticleEditor> editors = Lists.newArrayListWithCapacity(editorNames.size());
+          for (Node editorName : editorNames) {
+            ArticleEditor editor = parseArticlePerson(new ArticleEditor(), editorName, xPath);
+            editors.add(editor);
+          }
+          article.setEditors(editors);
         }
       },
 
@@ -177,14 +174,14 @@ public class XmlToArticle {
   private static final String EASTERN_NAME_STYLE = "eastern";
 
   private static <P extends ArticlePerson> P parseArticlePerson(P person, Node nameNode, XPath xPath) throws XPathExpressionException, XmlContentException {
-    String nameStyle = nameNode.getAttributes().getNamedItem("name-style").getTextContent();
-    String surname = xPath.evaluate("//surname", nameNode);
-    String givenName = xPath.evaluate("//given-names", nameNode);
-    String suffix = xPath.evaluate("//suffix", nameNode);
-    if (surname == null) {
+    String nameStyle = xPath.evaluate("@name-style", nameNode);
+    String surname = xPath.evaluate("surname", nameNode);
+    String givenName = xPath.evaluate("given-names", nameNode);
+    String suffix = xPath.evaluate("suffix", nameNode);
+    if (StringUtils.isBlank(surname)) {
       throw new XmlContentException("Required surname is omitted");
     }
-    if (givenName == null) {
+    if (StringUtils.isBlank(givenName)) {
       throw new XmlContentException("Required given name is omitted");
     }
 
@@ -197,10 +194,12 @@ public class XmlToArticle {
       throw new XmlContentException("Invalid name-style: " + nameStyle);
     }
 
+    person.setFullName(fullName);
     person.setSurnames(surname);
     person.setGivenNames(givenName);
-    person.setSuffix(suffix);
-    person.setFullName(fullName);
+    if (StringUtils.isNotBlank(suffix)) {
+      person.setSuffix(suffix);
+    }
     return person;
   }
 
