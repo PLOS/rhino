@@ -81,15 +81,20 @@ public class XmlToArticle {
   /**
    * Set constant values.
    * <p/>
-   * Prior to this version, these values were hard-coded in the XSLT files that did the job of this class. Setting the
-   * format to XML makes sense because that is the only supported kind of input. However, it is too purpose-specific to
-   * hard-code that the input is always expected to be in English. If this can be extracted from the XML (from {@code
-   * "/article@xml:lang"} perhaps), then it should be.
+   * Prior to this version, these values were hard-coded either in the XSLT files that did the job of this class or in
+   * the Java class (XslIngestArchiveProcessor) that read them.
    *
    * @param article the article to modify
    */
   private static void setConstants(Article article) {
+    // These are fine because they are implied by how we get the input
     article.setFormat("text/xml");
+    article.setState(Article.STATE_UNPUBLISHED);
+
+    /*
+     * In current usage, we expect input always to be in English, but this is so purpose-specific that it ought not to
+     * be hard-coded. Possible refactor to extract from the XML (from {@code "/article@xml:lang"} perhaps).
+     */
     article.setLanguage("en");
   }
 
@@ -111,14 +116,14 @@ public class XmlToArticle {
 
       new StringExpression("/article/front/article-meta/title-group/article-title") {
         @Override
-        protected void apply(Article obj, String value) throws XPathExpressionException, XmlContentException {
+        protected void apply(Article obj, String value) {
           obj.setTitle(value);
         }
       },
 
       new StringExpression("/article/front/journal-meta/issn[@pub-type=\"epub\"]") {
         @Override
-        protected void apply(Article obj, String value) throws XPathExpressionException, XmlContentException {
+        protected void apply(Article obj, String value) {
           obj.seteIssn(value);
         }
       },
@@ -157,9 +162,51 @@ public class XmlToArticle {
         }
       },
 
+      new StringExpression("/article/front/article-meta/elocation-id") {
+        @Override
+        protected void apply(Article obj, String value) {
+          obj.seteLocationId(value);
+        }
+      },
+
+      new StringExpression("/article/front/article-meta/volume") {
+        @Override
+        protected void apply(Article obj, String value) {
+          obj.setVolume(value);
+        }
+      },
+
+      new StringExpression("/article/front/article-meta/issue") {
+        @Override
+        protected void apply(Article obj, String value) {
+          obj.setIssue(value);
+        }
+      },
+
+      new StringExpression("/article/front/journal-meta/journal-title") {
+        @Override
+        protected void apply(Article obj, String value) {
+          obj.setJournal(value);
+        }
+      },
+
+      new StringExpression("/article/front/journal-meta/publisher/publisher-name") {
+        @Override
+        protected void apply(Article obj, String value) {
+          obj.setPublisherName(value);
+        }
+      },
+
+      new StringExpression("/article/front/journal-meta/publisher/publisher-loc") {
+        @Override
+        protected void apply(Article obj, String value) {
+          obj.setPublisherLocation(value);
+        }
+      },
+
       new NodeListExpression("/article/@article-type") {
         @Override
-        protected void apply(Article obj, List<Node> value) throws XPathExpressionException, XmlContentException {
+        protected void apply(Article obj, List<Node> value) {
           Set<String> articleTypes = Sets.newHashSetWithExpectedSize(value.size());
           for (Node node : value) {
             articleTypes.add(node.getTextContent());
