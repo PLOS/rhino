@@ -72,9 +72,25 @@ public class XmlToArticle {
 
 
   public static void evaluate(Article article, Document xml) throws XPathExpressionException, XmlContentException {
+    setConstants(article);
     for (XmlToObjectOperation<Article, ?> field : FIELDS) {
       field.evaluate(article, xml);
     }
+  }
+
+  /**
+   * Set constant values.
+   * <p/>
+   * Prior to this version, these values were hard-coded in the XSLT files that did the job of this class. Setting the
+   * format to XML makes sense because that is the only supported kind of input. However, it is too purpose-specific to
+   * hard-code that the input is always expected to be in English. If this can be extracted from the XML (from {@code
+   * "/article@xml:lang"} perhaps), then it should be.
+   *
+   * @param article the article to modify
+   */
+  private static void setConstants(Article article) {
+    article.setFormat("text/xml");
+    article.setLanguage("en");
   }
 
   @SuppressWarnings("unchecked") // can't parameterize array
@@ -90,6 +106,20 @@ public class XmlToArticle {
               log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
             }
           }
+        }
+      },
+
+      new StringExpression("/article/front/article-meta/title-group/article-title") {
+        @Override
+        protected void apply(Article obj, String value) throws XPathExpressionException, XmlContentException {
+          obj.setTitle(value);
+        }
+      },
+
+      new StringExpression("/article/front/journal-meta/issn[@pub-type=\"epub\"]") {
+        @Override
+        protected void apply(Article obj, String value) throws XPathExpressionException, XmlContentException {
+          obj.seteIssn(value);
         }
       },
 
@@ -113,15 +143,16 @@ public class XmlToArticle {
           XPath xPath = getXPath();
           int year, month, day;
           try {
-            year = Integer.parseInt(xPath.evaluate("//year", value));
-            month = Integer.parseInt(xPath.evaluate("//month", value));
-            day = Integer.parseInt(xPath.evaluate("//day", value));
+            year = Integer.parseInt(xPath.evaluate("year", value));
+            month = Integer.parseInt(xPath.evaluate("month", value));
+            day = Integer.parseInt(xPath.evaluate("day", value));
           } catch (NumberFormatException e) {
             throw new XmlContentException("Expected numbers for date fields", e);
           }
 
+          // TODO Avoid setting to system-default time zone and locale
           Calendar date = GregorianCalendar.getInstance();
-          date.set(year, month, day);
+          date.set(year, month, day, 0, 0, 0); // TODO Is this the correct convention?
           obj.setDate(date.getTime());
         }
       },
@@ -131,8 +162,7 @@ public class XmlToArticle {
         protected void apply(Article obj, List<Node> value) throws XPathExpressionException, XmlContentException {
           Set<String> articleTypes = Sets.newHashSetWithExpectedSize(value.size());
           for (Node node : value) {
-            String textContent = node.getTextContent();
-            articleTypes.add(textContent);
+            articleTypes.add(node.getTextContent());
           }
           obj.setTypes(articleTypes);
         }

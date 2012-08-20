@@ -170,10 +170,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Article article = new Article();
     article.setDoi(doi);
 
-    // Constants formerly hard-coded in pmc2obj.xslt
-    article.setFormat("text/xml");
-    article.setLanguage("en");
-
     try {
       XmlToArticle.evaluate(article, xml);
     } catch (XmlContentException e) {

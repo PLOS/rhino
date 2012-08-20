@@ -97,7 +97,7 @@ public abstract class XmlToObjectOperation<T, V> {
    * @return the found value
    * @throws XPathExpressionException if this object's XPath query cannot be applied to the supplied XML structure
    */
-  protected abstract V extract(Node xml) throws XPathExpressionException;
+  protected abstract V extract(Node xml) throws XPathExpressionException, XmlContentException;
 
   /**
    * Read the value corresponding to this instance from an XML document and put that value into an object.
@@ -122,8 +122,11 @@ public abstract class XmlToObjectOperation<T, V> {
     }
 
     @Override
-    protected String extract(Node xml) throws XPathExpressionException {
+    protected String extract(Node xml) throws XPathExpressionException, XmlContentException {
       Node stringNode = (Node) getExpression().evaluate(xml, XPathConstants.NODE);
+      if (stringNode == null) {
+        throw new XmlContentException("Not found: " + xPathQuery);
+      }
       return stringNode.getTextContent();
     }
   }
