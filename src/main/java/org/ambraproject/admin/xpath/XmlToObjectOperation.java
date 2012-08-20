@@ -77,7 +77,7 @@ public abstract class XmlToObjectOperation<T, V> {
     }
   }
 
-  protected List<Node> queryForNodeList(String query, Node node) throws XPathExpressionException {
+  protected static List<Node> queryForNodeList(String query, Node node) throws XPathExpressionException {
     NodeList result = (NodeList) getXPath().evaluate(query, node, XPathConstants.NODESET);
     return NodeListAdapter.wrap(result);
   }

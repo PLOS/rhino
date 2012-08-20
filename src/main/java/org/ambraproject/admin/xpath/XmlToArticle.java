@@ -26,6 +26,8 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.ArticlePerson;
+import org.ambraproject.models.Category;
+import org.ambraproject.models.CitedArticle;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +95,7 @@ public class XmlToArticle {
 
     /*
      * In current usage, we expect input always to be in English, but this is so purpose-specific that it ought not to
-     * be hard-coded. Possible refactor to extract from the XML (from {@code "/article@xml:lang"} perhaps).
+     * be hard-coded. Possibly refactor to extract from the XML (from {@code "/article@xml:lang"} perhaps).
      */
     article.setLanguage("en");
   }
@@ -215,6 +217,28 @@ public class XmlToArticle {
         }
       },
 
+      new NodeListExpression("/article/front/article-meta/article-categories/subj-group[@subj-group-type=\"Discipline\"]/subject") {
+        @Override
+        protected void apply(Article obj, List<Node> value) {
+          Set<Category> categories = Sets.newHashSetWithExpectedSize(value.size());
+          for (Node node : value) {
+            categories.add(parseCategory(node.getTextContent()));
+          }
+          obj.setCategories(categories);
+        }
+      },
+
+      new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab") {
+        @Override
+        protected void apply(Article obj, List<Node> value) throws XPathExpressionException, XmlContentException {
+          List<String> collabAuthors = Lists.newArrayListWithCapacity(value.size());
+          for (Node collabNode : value) {
+            collabAuthors.add(collabNode.getTextContent());
+          }
+          obj.setCollaborativeAuthors(collabAuthors);
+        }
+      },
+
       new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name") {
         @Override
         protected void apply(Article article, List<Node> authorNames) throws XPathExpressionException, XmlContentException {
@@ -241,16 +265,51 @@ public class XmlToArticle {
         }
       },
 
+      new NodeListExpression("/article/back/ref-list//citation") {
+        @Override
+        protected void apply(Article obj, List<Node> citationNodes) throws XPathExpressionException {
+          XPath xPath = getXPath();
+          List<CitedArticle> citations = Lists.newArrayListWithCapacity(citationNodes.size());
+          for (Node citationNode : citationNodes) {
+            citations.add(parseCitation(citationNode, xPath));
+          }
+          obj.setCitedArticles(citations);
+        }
+      }
+
       // TODO More
 
   });
 
   // Helper methods for the above
 
+  /**
+   * Parse the main category and subcategory from a "Discipline" element, as specified by NLM. If there is a slash in
+   * the string, the first one separates the main category from the subcategory. Else, the whole string is the main
+   * category.
+   * <p/>
+   * This is equivalent to capturing groups 1 and 3 from the regex {@code "([^/]*)(/(.*))?"}, but more efficiently.
+   *
+   * @param categoryString
+   * @return
+   */
+  private static Category parseCategory(String categoryString) {
+    Category category = new Category();
+    int slashIndex = categoryString.indexOf('/');
+    if (slashIndex < 0) {
+      category.setMainCategory(categoryString);
+    } else {
+      category.setMainCategory(categoryString.substring(0, slashIndex));
+      category.setSubCategory(categoryString.substring(slashIndex + 1));
+    }
+    return category;
+  }
+
   private static final String WESTERN_NAME_STYLE = "western";
   private static final String EASTERN_NAME_STYLE = "eastern";
 
-  private static <P extends ArticlePerson> P parseArticlePerson(P person, Node nameNode, XPath xPath) throws XPathExpressionException, XmlContentException {
+  private static <P extends ArticlePerson> P parseArticlePerson(P person, Node nameNode, XPath xPath)
+      throws XPathExpressionException, XmlContentException {
     String nameStyle = xPath.evaluate("@name-style", nameNode);
     String surname = xPath.evaluate("surname", nameNode);
     String givenName = xPath.evaluate("given-names", nameNode);
@@ -290,5 +349,15 @@ public class XmlToArticle {
     }
     return name.toString();
   }
+
+  private static CitedArticle parseCitation(Node citationNode, XPath xPath) throws XPathExpressionException {
+    CitedArticle citation = new CitedArticle();
+    citation.setCitationType(xPath.evaluate("@citation-type", citationNode));
+
+    // TODO Finish implementing
+
+    return citation;
+  }
+
 
 }
