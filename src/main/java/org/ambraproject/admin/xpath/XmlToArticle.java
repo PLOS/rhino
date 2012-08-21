@@ -28,6 +28,8 @@ import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.CitedArticle;
+import org.ambraproject.models.CitedArticleAuthor;
+import org.ambraproject.models.CitedArticleEditor;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -267,7 +269,7 @@ public class XmlToArticle {
 
       new NodeListExpression("/article/back/ref-list//citation") {
         @Override
-        protected void apply(Article obj, List<Node> citationNodes) throws XPathExpressionException {
+        protected void apply(Article obj, List<Node> citationNodes) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
           List<CitedArticle> citations = Lists.newArrayListWithCapacity(citationNodes.size());
           for (Node citationNode : citationNodes) {
@@ -348,14 +350,32 @@ public class XmlToArticle {
     return name.toString();
   }
 
-  private static CitedArticle parseCitation(Node citationNode, XPath xPath) throws XPathExpressionException {
+  private static CitedArticle parseCitation(Node citationNode, XPath xPath) throws XPathExpressionException, XmlContentException {
     CitedArticle citation = new CitedArticle();
     citation.setCitationType(xPath.evaluate("@citation-type", citationNode));
+    citation.setTitle(xPath.evaluate("article-title", citationNode));
+
+    List<Node> authorNodes = XmlToObjectOperation.queryForNodeList(
+        "person-group[@person-group-type=\"author\"]/name", citationNode);
+    List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
+    for (Node authorNode : authorNodes) {
+      CitedArticleAuthor author = parsePersonName(authorNode, xPath).copyTo(new CitedArticleAuthor());
+      authors.add(author);
+    }
+    citation.setAuthors(authors);
+
+    List<Node> editorNodes = XmlToObjectOperation.queryForNodeList(
+        "person-group[@person-group-type=\"editor\"]/name", citationNode);
+    List<CitedArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
+    for (Node editorNode : editorNodes) {
+      CitedArticleEditor editor = parsePersonName(editorNode, xPath).copyTo(new CitedArticleEditor());
+      editors.add(editor);
+    }
+    citation.setEditors(editors);
 
     // TODO Finish implementing
 
     return citation;
   }
-
 
 }
