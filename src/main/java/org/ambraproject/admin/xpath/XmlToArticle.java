@@ -56,25 +56,6 @@ public class XmlToArticle {
   }
 
 
-  protected static abstract class StringExpression extends XmlToObjectOperation.StringExpression<Article> {
-    protected StringExpression(String xPathQuery) {
-      super(xPathQuery);
-    }
-  }
-
-  protected static abstract class NodeExpression extends XmlToObjectOperation.NodeExpression<Article> {
-    protected NodeExpression(String xPathQuery) {
-      super(xPathQuery);
-    }
-  }
-
-  protected static abstract class NodeListExpression extends XmlToObjectOperation.NodeListExpression<Article> {
-    protected NodeListExpression(String xPathQuery) {
-      super(xPathQuery);
-    }
-  }
-
-
   public static void evaluate(Article article, Document xml) throws XPathExpressionException, XmlContentException {
     setConstants(article);
     for (XmlToObjectOperation<Article, ?> field : FIELDS) {
@@ -103,9 +84,11 @@ public class XmlToArticle {
   }
 
   @SuppressWarnings("unchecked") // can't parameterize array
-  private static final ImmutableCollection<XmlToObjectOperation<Article, ?>> FIELDS = ImmutableList.<XmlToObjectOperation<Article, ?>>copyOf(new XmlToObjectOperation[]{
+  private static final ImmutableCollection<XmlToObjectOperation<Article, ?>> FIELDS
+      = ImmutableList.<XmlToObjectOperation<Article, ?>>copyOf(new XmlToObjectOperation[]{
 
-      new StringExpression("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/article-id[@pub-id-type=\"doi\"]") {
         @Override
         protected void apply(Article article, String value) {
           String doiAccordingToRest = article.getDoi();
@@ -118,35 +101,40 @@ public class XmlToArticle {
         }
       },
 
-      new StringExpression("/article/front/article-meta/title-group/article-title") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/title-group/article-title") {
         @Override
         protected void apply(Article obj, String value) {
           obj.setTitle(value);
         }
       },
 
-      new StringExpression("/article/front/journal-meta/issn[@pub-type=\"epub\"]") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/journal-meta/issn[@pub-type=\"epub\"]") {
         @Override
         protected void apply(Article obj, String value) {
           obj.seteIssn(value);
         }
       },
 
-      new StringExpression("/article/front/article-meta/abstract") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/abstract") {
         @Override
         protected void apply(Article article, String value) {
           article.setDescription(value);
         }
       },
 
-      new StringExpression("/article/front/article-meta/copyright-statement") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/copyright-statement") {
         @Override
         protected void apply(Article article, String value) {
           article.setRights(value);
         }
       },
 
-      new NodeExpression("/article/front/article-meta/pub-date[@pub-type=\"epub\"]") {
+      new XmlToObjectOperation.NodeExpression<Article>(
+          "/article/front/article-meta/pub-date[@pub-type=\"epub\"]") {
         @Override
         protected void apply(Article obj, Node value) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
@@ -166,49 +154,56 @@ public class XmlToArticle {
         }
       },
 
-      new StringExpression("/article/front/article-meta/elocation-id") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/elocation-id") {
         @Override
         protected void apply(Article obj, String value) {
           obj.seteLocationId(value);
         }
       },
 
-      new StringExpression("/article/front/article-meta/volume") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/volume") {
         @Override
         protected void apply(Article obj, String value) {
           obj.setVolume(value);
         }
       },
 
-      new StringExpression("/article/front/article-meta/issue") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/article-meta/issue") {
         @Override
         protected void apply(Article obj, String value) {
           obj.setIssue(value);
         }
       },
 
-      new StringExpression("/article/front/journal-meta/journal-title") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/journal-meta/journal-title") {
         @Override
         protected void apply(Article obj, String value) {
           obj.setJournal(value);
         }
       },
 
-      new StringExpression("/article/front/journal-meta/publisher/publisher-name") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/journal-meta/publisher/publisher-name") {
         @Override
         protected void apply(Article obj, String value) {
           obj.setPublisherName(value);
         }
       },
 
-      new StringExpression("/article/front/journal-meta/publisher/publisher-loc") {
+      new XmlToObjectOperation.StringExpression<Article>(
+          "/article/front/journal-meta/publisher/publisher-loc") {
         @Override
         protected void apply(Article obj, String value) {
           obj.setPublisherLocation(value);
         }
       },
 
-      new NodeListExpression("/article/@article-type") {
+      new XmlToObjectOperation.NodeListExpression<Article>(
+          "/article/@article-type") {
         @Override
         protected void apply(Article obj, List<Node> value) {
           Set<String> articleTypes = Sets.newHashSetWithExpectedSize(value.size());
@@ -219,7 +214,8 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("/article/front/article-meta/article-categories/subj-group[@subj-group-type=\"Discipline\"]/subject") {
+      new XmlToObjectOperation.NodeListExpression<Article>(
+          "/article/front/article-meta/article-categories/subj-group[@subj-group-type=\"Discipline\"]/subject") {
         @Override
         protected void apply(Article obj, List<Node> value) {
           Set<Category> categories = Sets.newHashSetWithExpectedSize(value.size());
@@ -230,7 +226,8 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab") {
+      new XmlToObjectOperation.NodeListExpression<Article>(
+          "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab") {
         @Override
         protected void apply(Article obj, List<Node> value) throws XPathExpressionException, XmlContentException {
           List<String> collabAuthors = Lists.newArrayListWithCapacity(value.size());
@@ -241,7 +238,8 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name") {
+      new XmlToObjectOperation.NodeListExpression<Article>(
+          "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name") {
         @Override
         protected void apply(Article article, List<Node> authorNames) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
@@ -254,7 +252,8 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name") {
+      new XmlToObjectOperation.NodeListExpression<Article>(
+          "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name") {
         @Override
         protected void apply(Article article, List<Node> editorNames) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
@@ -267,7 +266,8 @@ public class XmlToArticle {
         }
       },
 
-      new NodeListExpression("/article/back/ref-list//citation") {
+      new XmlToObjectOperation.NodeListExpression<Article>(
+          "/article/back/ref-list//citation") {
         @Override
         protected void apply(Article obj, List<Node> citationNodes) throws XPathExpressionException, XmlContentException {
           XPath xPath = getXPath();
@@ -352,30 +352,60 @@ public class XmlToArticle {
 
   private static CitedArticle parseCitation(Node citationNode, XPath xPath) throws XPathExpressionException, XmlContentException {
     CitedArticle citation = new CitedArticle();
-    citation.setCitationType(xPath.evaluate("@citation-type", citationNode));
-    citation.setTitle(xPath.evaluate("article-title", citationNode));
-
-    List<Node> authorNodes = XmlToObjectOperation.queryForNodeList(
-        "person-group[@person-group-type=\"author\"]/name", citationNode);
-    List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
-    for (Node authorNode : authorNodes) {
-      CitedArticleAuthor author = parsePersonName(authorNode, xPath).copyTo(new CitedArticleAuthor());
-      authors.add(author);
+    for (XmlToObjectOperation<CitedArticle, ?> operation : CITED_ARTICLE_FIELDS) {
+      operation.evaluate(citation, citationNode);
     }
-    citation.setAuthors(authors);
-
-    List<Node> editorNodes = XmlToObjectOperation.queryForNodeList(
-        "person-group[@person-group-type=\"editor\"]/name", citationNode);
-    List<CitedArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
-    for (Node editorNode : editorNodes) {
-      CitedArticleEditor editor = parsePersonName(editorNode, xPath).copyTo(new CitedArticleEditor());
-      editors.add(editor);
-    }
-    citation.setEditors(editors);
-
-    // TODO Finish implementing
-
     return citation;
   }
+
+  @SuppressWarnings("unchecked") // can't parameterize array
+  private static final ImmutableCollection<XmlToObjectOperation<CitedArticle, ?>> CITED_ARTICLE_FIELDS
+      = ImmutableList.<XmlToObjectOperation<CitedArticle, ?>>copyOf(new XmlToObjectOperation[]{
+
+      new XmlToObjectOperation.StringExpression<CitedArticle>("@citation-type") {
+        @Override
+        protected void apply(CitedArticle obj, String value) throws XPathExpressionException, XmlContentException {
+          obj.setCitationType(value);
+        }
+      },
+
+      new XmlToObjectOperation.StringExpression<CitedArticle>("article-title") {
+        @Override
+        protected void apply(CitedArticle obj, String value) throws XPathExpressionException, XmlContentException {
+          obj.setTitle(value);
+        }
+      },
+
+      new XmlToObjectOperation.NodeListExpression<CitedArticle>(
+          "person-group[@person-group-type=\"author\"]/name") {
+        @Override
+        protected void apply(CitedArticle obj, List<Node> authorNodes) throws XPathExpressionException, XmlContentException {
+          List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
+          XPath xPath = getXPath();
+          for (Node authorNode : authorNodes) {
+            CitedArticleAuthor author = parsePersonName(authorNode, xPath).copyTo(new CitedArticleAuthor());
+            authors.add(author);
+          }
+          obj.setAuthors(authors);
+        }
+      },
+
+      new XmlToObjectOperation.NodeListExpression<CitedArticle>(
+          "person-group[@person-group-type=\"editor\"]/name") {
+        @Override
+        protected void apply(CitedArticle obj, List<Node> editorNodes) throws XPathExpressionException, XmlContentException {
+          List<CitedArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
+          XPath xPath = getXPath();
+          for (Node editorNode : editorNodes) {
+            CitedArticleEditor editor = parsePersonName(editorNode, xPath).copyTo(new CitedArticleEditor());
+            editors.add(editor);
+          }
+          obj.setEditors(editors);
+        }
+      },
+
+      // TODO Finish implementing
+
+  });
 
 }
