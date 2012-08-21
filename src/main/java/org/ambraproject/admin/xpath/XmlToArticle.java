@@ -22,10 +22,10 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.ambraproject.admin.util.PersonName;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
-import org.ambraproject.models.ArticlePerson;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.CitedArticle;
 import org.apache.commons.lang.StringUtils;
@@ -245,7 +245,7 @@ public class XmlToArticle {
           XPath xPath = getXPath();
           List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNames.size());
           for (Node authorName : authorNames) {
-            ArticleAuthor author = parseArticlePerson(new ArticleAuthor(), authorName, xPath);
+            ArticleAuthor author = parsePersonName(authorName, xPath).copyTo(new ArticleAuthor());
             authors.add(author);
           }
           article.setAuthors(authors);
@@ -258,7 +258,7 @@ public class XmlToArticle {
           XPath xPath = getXPath();
           List<ArticleEditor> editors = Lists.newArrayListWithCapacity(editorNames.size());
           for (Node editorName : editorNames) {
-            ArticleEditor editor = parseArticlePerson(new ArticleEditor(), editorName, xPath);
+            ArticleEditor editor = parsePersonName(editorName, xPath).copyTo(new ArticleEditor());
             editors.add(editor);
           }
           article.setEditors(editors);
@@ -308,17 +308,21 @@ public class XmlToArticle {
   private static final String WESTERN_NAME_STYLE = "western";
   private static final String EASTERN_NAME_STYLE = "eastern";
 
-  private static <P extends ArticlePerson> P parseArticlePerson(P person, Node nameNode, XPath xPath)
+  private static PersonName parsePersonName(Node nameNode, XPath xPath)
       throws XPathExpressionException, XmlContentException {
     String nameStyle = xPath.evaluate("@name-style", nameNode);
     String surname = xPath.evaluate("surname", nameNode);
     String givenName = xPath.evaluate("given-names", nameNode);
     String suffix = xPath.evaluate("suffix", nameNode);
+
     if (StringUtils.isBlank(surname)) {
       throw new XmlContentException("Required surname is omitted");
     }
     if (StringUtils.isBlank(givenName)) {
       throw new XmlContentException("Required given name is omitted");
+    }
+    if (StringUtils.isBlank(suffix)) {
+      suffix = null;
     }
 
     String fullName;
@@ -330,13 +334,7 @@ public class XmlToArticle {
       throw new XmlContentException("Invalid name-style: " + nameStyle);
     }
 
-    person.setFullName(fullName);
-    person.setSurnames(surname);
-    person.setGivenNames(givenName);
-    if (StringUtils.isNotBlank(suffix)) {
-      person.setSuffix(suffix);
-    }
-    return person;
+    return new PersonName(fullName, givenName, surname, suffix);
   }
 
   private static String buildFullName(String firstName, String lastName, String suffix) {
