@@ -364,15 +364,43 @@ public class XmlToArticle {
 
       new XmlToObjectOperation.StringExpression<CitedArticle>("@citation-type") {
         @Override
-        protected void apply(CitedArticle obj, String value) throws XPathExpressionException, XmlContentException {
+        protected void apply(CitedArticle obj, String value) {
           obj.setCitationType(value);
         }
       },
 
       new XmlToObjectOperation.StringExpression<CitedArticle>("article-title") {
         @Override
-        protected void apply(CitedArticle obj, String value) throws XPathExpressionException, XmlContentException {
+        protected void apply(CitedArticle obj, String value) {
           obj.setTitle(value);
+        }
+      },
+
+      new XmlToObjectOperation.StringExpression<CitedArticle>("volume") {
+        @Override
+        protected void apply(CitedArticle obj, String value) {
+          obj.setVolume(value);
+        }
+      },
+
+      new XmlToObjectOperation.StringExpression<CitedArticle>("issue") {
+        @Override
+        protected void apply(CitedArticle obj, String value) {
+          obj.setIssue(value);
+        }
+      },
+
+      new XmlToObjectOperation.StringExpression<CitedArticle>("publisher-loc") {
+        @Override
+        protected void apply(CitedArticle obj, String value) {
+          obj.setPublisherLocation(value);
+        }
+      },
+
+      new XmlToObjectOperation.StringExpression<CitedArticle>("publisher-name") {
+        @Override
+        protected void apply(CitedArticle obj, String value) {
+          obj.setPublisherName(value);
         }
       },
 

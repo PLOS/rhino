@@ -83,24 +83,27 @@ public abstract class XmlToObjectOperation<T, V> {
   }
 
   /**
-   * Modify an object by setting a value.
+   * Modify an object by setting a value. The supplied value is always non-null and, if it is a node list, is not
+   * empty.
    *
    * @param obj   the object to modify
-   * @param value the value to set
+   * @param value the non-null, non-empty value to set
    */
   protected abstract void apply(T obj, V value) throws XPathExpressionException, XmlContentException;
 
   /**
    * Read a value from XML.
+   * <p/>
+   * If the value is not present, return {@code null}. Then {@link #apply} will not be called.
    *
    * @param xml the XML structure to read (typically a full document)
-   * @return the found value
+   * @return the found value, or null if it is not present
    * @throws XPathExpressionException if this object's XPath query cannot be applied to the supplied XML structure
    */
   protected abstract V extract(Node xml) throws XPathExpressionException, XmlContentException;
 
   /**
-   * Read the value corresponding to this instance from an XML document and put that value into an object.
+   * Put the value corresponding to this instance from an XML document into an object.
    *
    * @param obj the object to modify with the found value
    * @param xml the XML structure from which to retrieve the value
@@ -124,10 +127,7 @@ public abstract class XmlToObjectOperation<T, V> {
     @Override
     protected String extract(Node xml) throws XPathExpressionException, XmlContentException {
       Node stringNode = (Node) getExpression().evaluate(xml, XPathConstants.NODE);
-      if (stringNode == null) {
-        throw new XmlContentException("Not found: " + xPathQuery);
-      }
-      return stringNode.getTextContent();
+      return (stringNode == null ? null : stringNode.getTextContent());
     }
   }
 
@@ -149,7 +149,8 @@ public abstract class XmlToObjectOperation<T, V> {
 
     @Override
     protected List<Node> extract(Node xml) throws XPathExpressionException {
-      return queryForNodeList(xPathQuery, xml);
+      List<Node> nodeList = queryForNodeList(xPathQuery, xml);
+      return (nodeList.isEmpty() ? null : nodeList);
     }
   }
 
