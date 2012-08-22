@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.xpath;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.CitedArticleAuthor;
@@ -28,18 +29,44 @@ import java.util.List;
 
 public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
 
+  /*
+   * Possible values for the "citation-type" attribute that indicate that the "source" element is a journal name and
+   * should go into the CitedArticle.journal field.
+   */
+  private static final ImmutableSet<String> JOURNAL_TYPES = ImmutableSet.of("journal", "confproc");
+
   protected CitedArticleXml(Node xml) {
     super(xml);
   }
 
   @Override
   public CitedArticle build(CitedArticle citation) throws XmlContentException {
-    citation.setCitationType(readString("@citation-type"));
+    String citationType = readString("@citation-type");
+    citation.setCitationType(citationType);
+    if (JOURNAL_TYPES.contains(citationType)) {
+      citation.setJournal(readString("source"));
+    }
+
     citation.setTitle(readString("article-title"));
     citation.setVolume(readString("volume"));
     citation.setIssue(readString("issue"));
     citation.setPublisherLocation(readString("publisher-loc"));
     citation.setPublisherName(readString("publisher-name"));
+    citation.setNote(readString("comment"));
+
+    String displayYear = readString("year");
+    if (displayYear != null) {
+      citation.setDisplayYear(displayYear);
+      try {
+        citation.setYear(Integer.valueOf(displayYear));
+      } catch (ArithmeticException e) {
+        throw new XmlContentException("Year is not a number: " + displayYear, e);
+      }
+    }
+    citation.setMonth(readString("month"));
+    citation.setDay(readString("day"));
+
+    citation.setPages(parsePageRange(readString("fpage"), readString("lpage")));
 
     citation.setAuthors(readAuthors(readNodeList("person-group[@person-group-type=\"author\"]/name")));
     citation.setEditors(readEditors(readNodeList("person-group[@person-group-type=\"editor\"]/name")));
@@ -47,6 +74,14 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     // TODO Finish implementing
 
     return citation;
+  }
+
+  protected String parsePageRange(String firstPage, String lastPage) {
+    if (firstPage != null && lastPage != null) {
+      return firstPage + '-' + lastPage;
+    }
+    // TODO Other formats?
+    return null;
   }
 
   private List<CitedArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {

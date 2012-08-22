@@ -38,6 +38,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * An NLM-format XML document that can be "ingested" to build an {@link Article} object.
@@ -57,6 +58,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   });
 
   private static final String DOI_PREFIX = "info:doi/";
+  private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {
     super(xml);
@@ -144,9 +146,12 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       throw new XmlContentException("Expected numbers for date fields", e);
     }
 
-    // TODO Avoid setting to system-default time zone and locale
     Calendar date = GregorianCalendar.getInstance();
-    date.set(year, month, day, 0, 0, 0); // TODO Is this the correct convention?
+
+    // TODO Is this the correct convention?
+    date.setTimeZone(UTC);
+    date.set(year, month, day, 0, 0, 0);
+
     return date.getTime();
   }
 
