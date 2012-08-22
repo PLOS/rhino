@@ -20,7 +20,6 @@ package org.ambraproject.admin.xpath;
 
 import org.ambraproject.admin.util.PersonName;
 import org.ambraproject.models.AmbraEntity;
-import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Node;
 
 public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObject<T> {
@@ -29,6 +28,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     super(xml);
   }
 
+  // Legal values for the "name-style" attribute of a <name> node
   private static final String WESTERN_NAME_STYLE = "western";
   private static final String EASTERN_NAME_STYLE = "eastern";
 
@@ -39,14 +39,11 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     String givenName = readString("given-names", nameNode);
     String suffix = readString("suffix", nameNode);
 
-    if (StringUtils.isBlank(surname)) {
+    if (surname == null) {
       throw new XmlContentException("Required surname is omitted");
     }
-    if (StringUtils.isBlank(givenName)) {
+    if (givenName == null) {
       throw new XmlContentException("Required given name is omitted");
-    }
-    if (StringUtils.isBlank(suffix)) {
-      suffix = null;
     }
 
     String fullName;
@@ -61,8 +58,11 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     return new PersonName(fullName, givenName, surname, suffix);
   }
 
+  /*
+   * Precondtions: firstName and lastName are both non-null and non-empty; suffix may be null
+   */
   private static String buildFullName(String firstName, String lastName, String suffix) {
-    boolean hasSuffix = StringUtils.isNotBlank(suffix);
+    boolean hasSuffix = (suffix != null);
     int expectedLength = 2 + firstName.length() + lastName.length() + (hasSuffix ? suffix.length() : -1);
     StringBuilder name = new StringBuilder(expectedLength);
     name.append(firstName).append(' ').append(lastName);

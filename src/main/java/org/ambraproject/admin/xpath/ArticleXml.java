@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.xpath;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
@@ -34,6 +35,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +45,16 @@ import java.util.Set;
 public class ArticleXml extends AbstractArticleXml<Article> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
+
+  /*
+   * As specified by <http://dtd.nlm.nih.gov/publishing/2.0/journalpublishing.dtd> (see <!ENTITY % article-types>)
+   */
+  private static final ImmutableSet<String> VALID_ARTICLE_TYPES = ImmutableSet.copyOf(new String[]{
+      "article-commentary", "abstract", "addendum", "announcement", "book-review", "books-received", "brief-report",
+      "calendar", "case-report", "correction", "discussion", "editorial", "in-brief", "introduction", "letter",
+      "meeting-report", "news", "obituary", "oration", "other", "product-review", "research-article", "retraction",
+      "reply", "review-article",
+  });
 
   private static final String DOI_PREFIX = "info:doi/";
 
@@ -95,7 +107,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
-    article.setTypes(Sets.newHashSet(readTextList("/article/@article-type")));
+    article.setTypes(parseArticleTypes(readTextList("/article/@article-type")));
     article.setCategories(parseCategories(readNodeList(
         "/article/front/article-meta/article-categories/subj-group[@subj-group-type=\"Discipline\"]/subject")));
     article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//citation")));
@@ -136,6 +148,17 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     Calendar date = GregorianCalendar.getInstance();
     date.set(year, month, day, 0, 0, 0); // TODO Is this the correct convention?
     return date.getTime();
+  }
+
+  private Set<String> parseArticleTypes(Collection<String> articleTypeText) throws XmlContentException {
+    if (articleTypeText == null) {
+      return null;
+    }
+    HashSet<String> articleTypes = Sets.newHashSet(articleTypeText);
+    if (!VALID_ARTICLE_TYPES.containsAll(articleTypes)) {
+      throw new XmlContentException("Contains invalid article type: " + articleTypes);
+    }
+    return articleTypes;
   }
 
   private Set<Category> parseCategories(Collection<Node> categoryNodes) {
