@@ -18,32 +18,20 @@
 
 package org.ambraproject.admin;
 
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.inject.Inject;
 import java.io.IOException;
 
 /**
- * Configuration code common to both the main and testing configurations.
+ * Code common to both the main and testing configurations.
  */
 public abstract class BaseConfiguration {
 
-  // Common configuration
-
   @Inject
-  protected ApplicationContext context;
-
-  @Bean
-  public HibernateTemplate hibernateTemplate(SessionFactory sessionFactory) {
-    return new HibernateTemplate(sessionFactory);
-  }
-
-  // Helper methods
+  private ApplicationContext context;
 
   protected void setAmbraMappings(LocalSessionFactoryBean sessionFactoryBean) throws IOException {
     final String mappingLocation = "classpath:org/ambraproject/models/*.hbm.xml";
