@@ -26,8 +26,6 @@ import org.ambraproject.models.CitedArticlePerson;
  * <p/>
  * This is a hack to allow code to write to {@link ArticlePerson} and {@link CitedArticlePerson} with minimal
  * duplication, because those two classes lack a superclass or interface to unify them.
- *
- * @see org.ambraproject.admin.xpath.XmlToArticle#parsePersonName(org.w3c.dom.Node, javax.xml.xpath.XPath)
  */
 public class PersonName {
 

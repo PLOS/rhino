@@ -19,8 +19,8 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
-import org.ambraproject.admin.xpath.XmlToArticle;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -171,7 +171,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     article.setDoi(doi);
 
     try {
-      XmlToArticle.evaluate(article, xml);
+      article = new ArticleXml(xml).build(article);
     } catch (XmlContentException e) {
       String msg = "Error in submitted XML";
       String nestedMsg = e.getMessage();
