@@ -18,14 +18,13 @@
 
 package org.ambraproject.admin;
 
-import org.ambraproject.admin.service.ArticleCrudService;
-import org.ambraproject.admin.service.ArticleCrudServiceImpl;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
@@ -34,6 +33,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
+@Import(AdminConfiguration.class)
 public class TestConfiguration extends BaseConfiguration {
 
   /**
@@ -66,11 +66,6 @@ public class TestConfiguration extends BaseConfiguration {
     bean.setHibernateProperties(hibernateProperties);
 
     return bean;
-  }
-
-  @Bean
-  public ArticleCrudService articleCrudService() {
-    return new ArticleCrudServiceImpl();
   }
 
   /**

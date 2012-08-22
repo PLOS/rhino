@@ -18,14 +18,23 @@
 
 package org.ambraproject.admin;
 
+import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.admin.service.ArticleCrudServiceImpl;
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Bean configuration for the application.
+ * <p/>
+ * This augments some other bean configurations located at {@code src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml}.
+ */
 @Configuration
 public class AdminConfiguration extends BaseConfiguration {
 
@@ -42,6 +51,16 @@ public class AdminConfiguration extends BaseConfiguration {
     bean.setHibernateProperties(hibernateProperties);
 
     return bean;
+  }
+
+  @Bean
+  public HibernateTemplate hibernateTemplate(SessionFactory sessionFactory) {
+    return new HibernateTemplate(sessionFactory);
+  }
+
+  @Bean
+  public ArticleCrudService articleCrudService() {
+    return new ArticleCrudServiceImpl();
   }
 
 }
