@@ -18,19 +18,28 @@
 
 package org.ambraproject.admin.org.ambraproject.admin.service;
 
+import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAuthor;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -62,6 +71,14 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
         (expectedToExist ? "Article expected to exist but doesn't" : "Article expected not to exist but does"));
   }
 
+  private void assertGoodText(String text) {
+    assertNotNull(text, "Text field was not set");
+    assertFalse(text.isEmpty(), "Text field was set to an empty string");
+    assertFalse(Character.isWhitespace(text.charAt(0)), "Text field was set with leading whitespace");
+    assertFalse(Character.isWhitespace(text.charAt(text.length() - 1)),
+        "Text field was set with trailing whitespace");
+  }
+
   @Test(dataProvider = "sampleArticles")
   public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
     doi += ".testCrud"; // Avoid collisions with canonical sample data
@@ -75,6 +92,27 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     articleCrudService.create(input, doi);
     assertArticleExistence(doi, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
+
+    Article stored = (Article) hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class).add(Restrictions.eq("doi", doi)))
+        .get(0);
+    assertNotNull(stored, "ArticleCrudService.create did not store an article");
+    assertEquals(stored.getDoi(), doi);
+
+    assertGoodText(stored.getDescription());
+    assertGoodText(stored.getRights());
+
+    List<ArticleAuthor> storedAuthors = stored.getAuthors();
+    assertNotNull(storedAuthors, "Article's authors field was not set");
+    assertFalse(storedAuthors.isEmpty(), "No authors were associated with the article");
+
+    // Check that no author names were stored redundantly
+    Set<String> authorNames = Sets.newHashSetWithExpectedSize(storedAuthors.size());
+    for (ArticleAuthor author : storedAuthors) {
+      String fullName = author.getFullName();
+      assertFalse(StringUtils.isBlank(fullName), "Name not set for author");
+      assertTrue(authorNames.add(fullName), "Redundant author name");
+    }
 
     byte[] readData = articleCrudService.read(doi);
     assertEquals(readData, sampleData);

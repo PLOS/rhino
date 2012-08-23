@@ -21,6 +21,8 @@ package org.ambraproject.admin;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -36,6 +38,9 @@ import java.util.List;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
+
+  @Autowired
+  protected HibernateTemplate hibernateTemplate;
 
   /**
    * Mock input stream that yields a constant string and keeps track of whether is has been closed.

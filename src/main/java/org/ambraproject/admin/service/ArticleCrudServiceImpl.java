@@ -19,20 +19,32 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.xpath.ArticleXml;
+import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import javax.activation.MimetypesFileTypeMap;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -41,6 +53,10 @@ import java.util.Date;
  * (especially) the file store.
  */
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
+
+  private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+
+  private static final MimetypesFileTypeMap MIMETYPES_FILE_TYPE_MAP = new MimetypesFileTypeMap();
 
   private boolean articleExistsAt(String doi) {
     Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
@@ -113,6 +129,61 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   }
 
+  private Article prepareMetadata(byte[] xmlData, String doi) {
+    InputStream xmlStream = null;
+    Document xml;
+    try {
+      xmlStream = new ByteArrayInputStream(xmlData);
+      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      xml = documentBuilder.parse(xmlStream);
+    } catch (SAXException e) {
+      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } finally {
+      IOUtils.closeQuietly(xmlStream);
+    }
+
+    Article article;
+    try {
+      article = prepareMetadata(xml, doi);
+    } catch (XPathExpressionException e) {
+      throw new RestClientException("XML does not match expected format", HttpStatus.BAD_REQUEST, e);
+    }
+
+    return article;
+  }
+
+  /**
+   * Read metadata from an XML file into a new article representation.
+   * <p/>
+   * TODO Clean up and finish implementing
+   *
+   * @param xml the XML file for the new article
+   * @param doi the article's DOI, according to the action that wants to create the article
+   * @return the new article object
+   * @throws XPathExpressionException if the XML cannot be evaluated with the expected expressions
+   */
+  private Article prepareMetadata(Document xml, String doi) throws XPathExpressionException {
+    Article article = new Article();
+    article.setDoi(doi);
+
+    try {
+      article = new ArticleXml(xml).build(article);
+    } catch (XmlContentException e) {
+      String msg = "Error in submitted XML";
+      String nestedMsg = e.getMessage();
+      if (StringUtils.isNotBlank(nestedMsg)) {
+        msg = msg + ": " + nestedMsg;
+      }
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
+    }
+
+    return article;
+  }
+
 
   /**
    * {@inheritDoc}
@@ -122,13 +193,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (articleExistsAt(doi)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
+    byte[] xmlData = readClientInput(file);
 
-    Article article = new Article();
-    article.setDoi(doi);
-    article.setDate(new Date());
+    Article article = prepareMetadata(xmlData, doi);
     hibernateTemplate.save(article);
 
-    write(readClientInput(file), doi);
+    write(xmlData, doi);
   }
 
   /**
