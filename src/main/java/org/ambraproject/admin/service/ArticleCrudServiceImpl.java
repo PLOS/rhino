@@ -40,7 +40,6 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -146,14 +145,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       IOUtils.closeQuietly(xmlStream);
     }
 
-    Article article;
-    try {
-      article = prepareMetadata(xml, doi);
-    } catch (XPathExpressionException e) {
-      throw new RestClientException("XML does not match expected format", HttpStatus.BAD_REQUEST, e);
-    }
-
-    return article;
+    return prepareMetadata(xml, doi);
   }
 
   /**
@@ -164,9 +156,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param xml the XML file for the new article
    * @param doi the article's DOI, according to the action that wants to create the article
    * @return the new article object
-   * @throws XPathExpressionException if the XML cannot be evaluated with the expected expressions
    */
-  private Article prepareMetadata(Document xml, String doi) throws XPathExpressionException {
+  private Article prepareMetadata(Document xml, String doi) {
     Article article = new Article();
     article.setDoi(doi);
 
