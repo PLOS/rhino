@@ -23,6 +23,8 @@
   <title>Ambra Admin TNG: Demo Page</title>
 </head>
 <body>
+<p>Welcome to the <b>Ambra Admin "TNG"</b> prototype. Your locale is ${clientLocale}. Server time is ${serverTime}.</p>
+
 <p>There are ${articleCount} articles in the database.</p>
 
 <p>List of article DOIs:</p>

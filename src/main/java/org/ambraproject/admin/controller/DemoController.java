@@ -28,10 +28,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Does a sanity check on the admin application's ability to access Ambra's models and database.
+ * <p/>
+ * This should be replaced with a real home page when this project is out of development.
  */
 @Controller
 public class DemoController {
@@ -40,10 +45,15 @@ public class DemoController {
   private HibernateTemplate hibernateTemplate;
 
   /**
-   * Populate the page with data retrieved from the persistence layer.
+   * Populate the page with some sample data from the Spring framework and the persistence layer.
    */
-  @RequestMapping(value = "/demo", method = RequestMethod.GET)
-  public String demo(Model model) {
+  @RequestMapping(value = "/", method = RequestMethod.GET)
+  public String demo(Locale locale, Model model) {
+    model.addAttribute("clientLocale", locale.toString());
+    DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+    String formattedDate = dateFormat.format(new Date());
+    model.addAttribute("serverTime", formattedDate);
+
     List<String> dois = hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Article.class)
             .setProjection(Projections.property("doi"))
