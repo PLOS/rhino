@@ -48,8 +48,13 @@ public class ArticleCrudController extends RestController {
 
   private static final String DOI_PREFIX = "doiPrefix";
   private static final String DOI_ID = "doiId";
-  private static final String DOI_TEMPLATE = "article/{" + DOI_PREFIX + "}/{" + DOI_ID + "}";
   private static final String FILE_ARG = "file";
+
+  /*
+   * The ":.*" forces Spring to keep a file-extension-like suffix as part of the PathVariable argument.
+   * It mangles DOIs otherwise.
+   */
+  private static final String DOI_TEMPLATE = "article/{" + DOI_PREFIX + "}/{" + DOI_ID + ":.*}";
 
   private static String buildDoi(String prefix, String id) {
     return DOI_SCHEME_VALUE + prefix + '/' + id;
