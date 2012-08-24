@@ -76,9 +76,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
   /**
    * Set constant values.
-   * <p/>
-   * Prior to this version, these values were hard-coded either in the XSLT files that did the job of this class or in
-   * the Java class (XslIngestArchiveProcessor) that read them.
    *
    * @param article the article to modify
    */
@@ -86,12 +83,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     // These are fine because they are implied by how we get the input
     article.setFormat("text/xml");
     article.setState(Article.STATE_UNPUBLISHED);
-
-    /*
-     * In current usage, we expect input always to be in English, but this is so purpose-specific that it ought not to
-     * be hard-coded. Possibly refactor to extract from the XML (from {@code "/article@xml:lang"} perhaps).
-     */
-    article.setLanguage("en");
   }
 
   private void setFromXml(Article article) throws XmlContentException {
@@ -108,6 +99,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
+    article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
     article.setTypes(parseArticleTypes(readTextList("/article/@article-type")));
     article.setCategories(parseCategories(readNodeList(
@@ -134,6 +126,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
         log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
       }
     }
+  }
+
+  private String parseLanguage(String language) {
+    if (language == null) {
+      log.warn("Language not specified in article XML; defaulting to English");
+      return "en"; // Formerly hard-coded for all articles, so it's the most sensible default
+    }
+    return language.toLowerCase();
   }
 
   private Date parseDate(Node dateNode) throws XmlContentException {

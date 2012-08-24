@@ -36,7 +36,6 @@ import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -54,8 +53,6 @@ import java.io.OutputStream;
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
-
-  private static final MimetypesFileTypeMap MIMETYPES_FILE_TYPE_MAP = new MimetypesFileTypeMap();
 
   private boolean articleExistsAt(String doi) {
     Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
@@ -125,7 +122,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } finally {
       IOUtils.closeQuietly(output);
     }
-
   }
 
   private Article prepareMetadata(byte[] xmlData, String doi) {
@@ -150,8 +146,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   /**
    * Read metadata from an XML file into a new article representation.
-   * <p/>
-   * TODO Clean up and finish implementing
    *
    * @param xml the XML file for the new article
    * @param doi the article's DOI, according to the action that wants to create the article

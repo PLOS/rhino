@@ -98,7 +98,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
         .get(0);
     assertNotNull(stored, "ArticleCrudService.create did not store an article");
     assertEquals(stored.getDoi(), doi);
-
+    assertEquals(stored.getLanguage(), "en");
     assertGoodText(stored.getDescription());
     assertGoodText(stored.getRights());
 
