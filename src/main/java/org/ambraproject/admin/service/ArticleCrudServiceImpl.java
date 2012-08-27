@@ -84,27 +84,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
 
   /**
-   * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
-   * stream.
-   *
-   * @param input an input stream from a RESTful request
-   * @return a byte array of the input stream contents
-   */
-  private byte[] readClientInput(InputStream input) {
-    try {
-      return IOUtils.toByteArray(input);
-    } catch (IOException e) {
-      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST, e);
-    } finally {
-      try {
-        input.close();
-      } catch (IOException e) {
-        throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
-      }
-    }
-  }
-
-  /**
    * Write the base article XML to the file store. The DOI is used to generate the FSID. If something is already stored
    * for that DOI, it is overwritten; else, a new file is created.
    *

@@ -18,9 +18,17 @@
 
 package org.ambraproject.admin.service;
 
+
+import com.google.common.base.Preconditions;
+import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FileStoreService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public abstract class AmbraService {
 
@@ -29,5 +37,27 @@ public abstract class AmbraService {
 
   @Autowired
   protected FileStoreService fileStoreService;
+
+  /**
+   * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
+   * stream.
+   *
+   * @param input an input stream from a RESTful request
+   * @return a byte array of the input stream contents
+   */
+  protected static byte[] readClientInput(InputStream input) {
+    Preconditions.checkNotNull(input);
+    try {
+      return IOUtils.toByteArray(input);
+    } catch (IOException e) {
+      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST, e);
+    } finally {
+      try {
+        input.close();
+      } catch (IOException e) {
+        throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
+      }
+    }
+  }
 
 }
