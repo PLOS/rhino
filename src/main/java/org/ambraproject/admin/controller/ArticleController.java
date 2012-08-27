@@ -31,7 +31,7 @@ public abstract class ArticleController extends RestController {
   private static final String DOI_SCHEME_VALUE = "info:doi/";
 
   /**
-   * Interpret an article DOI from a RESTful request made to the article address space.
+   * Interpret the DOI of an object in the article address space (an article or asset) from a RESTful request.
    * <p/>
    * It would be preferable if possible to parse these values using {@link org.springframework.web.bind.annotation.PathVariable}
    * annotations. Unfortunately, this version of Spring does not support {@code PathVariable}s that span multiple URI
@@ -40,7 +40,7 @@ public abstract class ArticleController extends RestController {
    * @param request a request to the application
    * @return the DOI of the article indicated by the request
    */
-  protected static String parseArticleDoi(HttpServletRequest request) {
+  protected static String parseEntityDoi(HttpServletRequest request) {
     String requestUri = request.getRequestURI();
     if (!requestUri.startsWith(ARTICLE_NAMESPACE)) {
       // Should be impossible if controllers are mapped correctly
