@@ -29,13 +29,19 @@ import java.util.RandomAccess;
 /**
  * Adapts a {@link NodeList} to be a {@link List} compatible with the Java Collections Framework.
  */
-public class NodeListAdapter extends AbstractList<Node> implements RandomAccess {
+public class NodeListAdapter extends AbstractList<Node> {
 
   private final NodeList nodes;
 
   private NodeListAdapter(NodeList nodes) {
     super();
     this.nodes = Preconditions.checkNotNull(nodes);
+  }
+
+  private static class NodeListAdapterRandomAccess extends NodeListAdapter implements RandomAccess {
+    private NodeListAdapterRandomAccess(NodeList nodes) {
+      super(nodes);
+    }
   }
 
   /**
@@ -46,7 +52,9 @@ public class NodeListAdapter extends AbstractList<Node> implements RandomAccess 
    * @throws NullPointerException if {@code nodes} is null
    */
   public static List<Node> wrap(NodeList nodes) {
-    return new NodeListAdapter(nodes);
+    return (nodes instanceof RandomAccess)
+        ? new NodeListAdapterRandomAccess(nodes)
+        : new NodeListAdapter(nodes);
   }
 
   /**
