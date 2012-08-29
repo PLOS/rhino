@@ -44,7 +44,8 @@ def report(description, rest_response):
     if message is None:
         buf.append('No response body')
     elif len(message) >= 80:
-        buf += ['Response head: {0!r}'.format(message[ :  40]),
+        buf += ['Response size: {0}'.format(len(message)),
+                'Response head: {0!r}'.format(message[ :  40]),
                 'Response tail: {0!r}'.format(message[-40 : ])]
     else:
         buf += ['Response body:', repr(message)]
@@ -60,6 +61,7 @@ def test(example_doi, path_to_sample_file):
 
     create = new_req()
     create.set_form_file_path('file', path_to_sample_file)
+    #create.set_query_parameter('assetOf', 'asdf')
     print report('Response to CREATE', create.post())
 
     read = new_req()

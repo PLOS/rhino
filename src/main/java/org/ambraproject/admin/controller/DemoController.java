@@ -19,6 +19,7 @@
 package org.ambraproject.admin.controller;
 
 import org.ambraproject.models.Article;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,10 @@ public class DemoController {
     String formattedDate = dateFormat.format(new Date());
     model.addAttribute("serverTime", formattedDate);
 
-    List<String> dois = hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Article.class)
-            .setProjection(Projections.property("doi"))
+    List<String> dois = hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class)
+        .setProjection(Projections.property("doi"))
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
     );
     model.addAttribute("articleCount", dois.size());
     model.addAttribute("articleDoiList", dois);
