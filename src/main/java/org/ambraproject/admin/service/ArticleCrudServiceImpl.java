@@ -32,6 +32,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -55,11 +56,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
   private boolean articleExistsAt(String doi) {
-    Long articleCount = (Long) hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Article.class)
-        .add(Restrictions.eq("doi", doi))
-        .setProjection(Projections.rowCount())
-    ).get(0);
+    Long articleCount = (Long) DataAccessUtils.requiredSingleResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Article.class)
+            .add(Restrictions.eq("doi", doi))
+            .setProjection(Projections.rowCount())
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
     return articleCount > 0L;
   }
 
@@ -216,16 +219,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public void delete(String doi) throws FileStoreException {
-    if (!articleExistsAt(doi)) {
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Article.class)
+            .add(Restrictions.eq("doi", doi))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (article == null) {
       throw reportDoiNotFound();
     }
 
-    Article article = (Article) hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Article.class)
-        .add(Restrictions.eq("doi", doi))
-        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)).get(0);
     hibernateTemplate.delete(article);
-
     fileStoreService.deleteFile(doi);
   }
 
