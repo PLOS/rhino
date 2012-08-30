@@ -193,14 +193,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public byte[] read(String doi) throws FileStoreException {
+  public InputStream read(String doi) throws FileStoreException {
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
     }
     String fsid = findFsidForArticleXml(doi);
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileByteArray(fsid);
+    return fileStoreService.getFileInStream(fsid);
   }
 
   /**

@@ -65,9 +65,16 @@ public class ArticleCrudController extends ArticleController {
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException {
+  public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
     String doi = parseArticleDoi(request);
-    byte[] fileData = articleCrudService.read(doi);
+    InputStream fileStream = null;
+    byte[] fileData;
+    try {
+      fileStream = articleCrudService.read(doi);
+      fileData = IOUtils.toByteArray(fileStream); // TODO Can avoid dumping into memory?
+    } finally {
+      IOUtils.closeQuietly(fileStream);
+    }
     return new ResponseEntity<byte[]>(fileData, HttpStatus.OK);
   }
 
