@@ -20,6 +20,10 @@
 
 
 """A minimal library for sending HTTP requests to a RESTful server.
+
+Mostly, this script is a facade to the built-in pycurl library. Its purpose
+is to provide a public API that is better suited to making RESTful requests
+tersely.
 """
 
 import cStringIO
@@ -61,9 +65,9 @@ class ResponseReceiver:
         """Read what has been written to the buffer.
 
         If this object has not been written to, return None. Else, return
-        all the written data, concatenated. The empty string is returned if
+        all the written data, concatenated. An empty string is returned if
         and only if an empty string was written at least once and no other
-        strings were.
+        strings were written.
         """
         if self._buf:
             return self._buf.getvalue()
@@ -186,7 +190,7 @@ class Request:
     def send(self, method):
         """Send a request.
 
-        The argument is an HTTP "verb".
+        The argument is an HTTP "verb" (as an all-uppercase string).
         """
         m = Request._HTTP_METHODS[method]
         if m is None:
