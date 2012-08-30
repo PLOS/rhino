@@ -16,13 +16,12 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.org.ambraproject.admin.service;
+package org.ambraproject.admin.service;
 
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
