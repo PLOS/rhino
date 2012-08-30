@@ -41,7 +41,7 @@ TRACE   = 'TRACE'
 CONNECT = 'CONNECT'
 PATCH   = 'PATCH'
 
-class ResponseReceiver:
+class ResponseReceiver(object):
     """An object to provide read/write functions.
 
     This works better than a bare StringIO because it yields None, rather
@@ -73,7 +73,7 @@ class ResponseReceiver:
             return self._buf.getvalue()
         return None
 
-class Request:
+class Request(object):
     """A request set up to perform a RESTful operation.
 
     Sending a request with an instance should not change its state, so
