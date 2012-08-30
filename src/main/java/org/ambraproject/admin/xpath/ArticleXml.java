@@ -18,10 +18,13 @@
 
 package org.ambraproject.admin.xpath;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.Category;
@@ -113,6 +116,12 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     // TODO Actually this simple, or can it have more structure?
     article.setCollaborativeAuthors(readTextList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
+
+    article.setAssets(parseAssets(
+        readNodeList("//table-wrap"),
+        readNodeList("//fig"),
+        readNodeList("//supplementary-material"),
+        readNodeList("//inline-graphic")));
 
     // TODO Finish implementing
 
@@ -231,6 +240,46 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       citations.add(citation);
     }
     return citations;
+  }
+
+  private static <E> List<E> nullToEmpty(List<E> list) {
+    return (list == null) ? ImmutableList.<E>of() : list;
+  }
+
+  private List<ArticleAsset> parseAssets(List<Node> tables, List<Node> figures, List<Node> supplementaries, List<Node> inlines) {
+    tables = nullToEmpty(tables);
+    figures = nullToEmpty(figures);
+    supplementaries = nullToEmpty(supplementaries);
+    inlines = nullToEmpty(inlines);
+
+    int nodeCount = tables.size() + figures.size() + supplementaries.size() + inlines.size();
+    List<ArticleAsset> assets = Lists.newArrayListWithCapacity(nodeCount);
+
+    for (Node assetNode : Iterables.concat(tables, figures)) {
+      String doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
+      if (doi == null) {
+        continue;
+      }
+      assets.add(parseAsset(doi, assetNode));
+    }
+
+    for (Node assetNode : Iterables.concat(supplementaries, inlines)) {
+      String doi = readString("@href", assetNode); // TODO Debug
+      if (doi == null) {
+        continue;
+      }
+      assets.add(parseAsset(doi, assetNode));
+    }
+
+    return assets;
+  }
+
+  private ArticleAsset parseAsset(String doi, Node assetNode) {
+    ArticleAsset asset = new ArticleAsset();
+    asset.setDoi(doi);
+    asset.setTitle(readString("caption/title", assetNode));
+    asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?
+    return asset;
   }
 
 }
