@@ -38,7 +38,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -107,7 +106,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setTypes(parseArticleTypes(readTextList("/article/@article-type")));
     article.setCategories(parseCategories(readNodeList(
         "/article/front/article-meta/article-categories/subj-group[@subj-group-type=\"Discipline\"]/subject")));
-    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//citation")));
+    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//(citation|nlm-citation)")));
     article.setAuthors(readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readEditors(readNodeList(
@@ -168,9 +167,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     if (articleTypeText == null) {
       return null;
     }
-    HashSet<String> articleTypes = Sets.newHashSet(articleTypeText);
+    Set<String> articleTypes = Sets.newHashSet(articleTypeText);
     if (!VALID_ARTICLE_TYPES.containsAll(articleTypes)) {
-      throw new XmlContentException("Contains invalid article type: " + articleTypes);
+      Set<String> invalidTypes = Sets.difference(articleTypes, VALID_ARTICLE_TYPES);
+      throw new XmlContentException("Contains invalid article type: " + invalidTypes);
     }
     return articleTypes;
   }

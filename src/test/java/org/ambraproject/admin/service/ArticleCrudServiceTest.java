@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.org.ambraproject.admin.service;
+package org.ambraproject.admin.service;
 
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
@@ -119,13 +119,14 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
       assertTrue(authorNames.add(fullName), "Redundant author name");
     }
 
-    byte[] readData = articleCrudService.read(doi);
+    byte[] readData = IOUtils.toByteArray(articleCrudService.read(doi));
     assertEquals(readData, sampleData);
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
     articleCrudService.update(input, doi);
-    assertEquals(articleCrudService.read(doi), updated);
+    byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(doi));
+    assertEquals(updatedData, updated);
     assertArticleExistence(doi, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 

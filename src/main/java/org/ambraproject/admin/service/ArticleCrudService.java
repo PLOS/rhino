@@ -41,15 +41,15 @@ public interface ArticleCrudService {
   public abstract void create(InputStream file, String doi) throws IOException, FileStoreException;
 
   /**
-   * Read the XML file for an article, as raw XML data.
+   * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
    *
    * @param doi the DOI of the article
-   * @return the XML file, as bytes
+   * @return a stream containing the XML file
    * @throws org.ambraproject.admin.RestClientException
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract byte[] read(String doi) throws FileStoreException;
+  public abstract InputStream read(String doi) throws FileStoreException;
 
   /**
    * Overwrite an article with supplied XML data.

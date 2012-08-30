@@ -47,9 +47,6 @@ import java.io.OutputStream;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
- * <p/>
- * This is proof-of-concept code; it isn't necessarily correct for representing articles in the database and
- * (especially) the file store.
  */
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
@@ -63,7 +60,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setProjection(Projections.rowCount())
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
-    return articleCount > 0L;
+    return articleCount.longValue() > 0L;
   }
 
   private RestClientException reportDoiNotFound() {
@@ -106,6 +103,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
+  /**
+   * Create an article entity to represent the metadata provided in the article's XML file.
+   *
+   * @param xmlData data from the XML file for the new article
+   * @param doi     the article's DOI, according to the action that wants to create the article
+   * @return the new article object
+   */
   private Article prepareMetadata(byte[] xmlData, String doi) {
     InputStream xmlStream = null;
     Document xml;
@@ -129,7 +133,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   /**
    * Read metadata from an XML file into a new article representation.
    *
-   * @param xml the XML file for the new article
+   * @param xml the parsed XML for the new article
    * @param doi the article's DOI, according to the action that wants to create the article
    * @return the new article object
    */
@@ -172,14 +176,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public byte[] read(String doi) throws FileStoreException {
+  public InputStream read(String doi) throws FileStoreException {
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
     }
     String fsid = findFsidForArticleXml(doi);
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileByteArray(fsid);
+    return fileStoreService.getFileInStream(fsid);
   }
 
   /**

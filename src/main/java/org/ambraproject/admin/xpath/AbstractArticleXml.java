@@ -22,6 +22,11 @@ import org.ambraproject.admin.util.PersonName;
 import org.ambraproject.models.AmbraEntity;
 import org.w3c.dom.Node;
 
+/**
+ * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
+ *
+ * @param <T> the type of entity that can be build from this XML element
+ */
 public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObject<T> {
 
   public AbstractArticleXml(Node xml) {
@@ -59,7 +64,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   }
 
   /*
-   * Precondtions: firstName and lastName are both non-null and non-empty; suffix may be null
+   * Preconditions: firstName and lastName are both non-null and non-empty; suffix may be null
    */
   private static String buildFullName(String firstName, String lastName, String suffix) {
     boolean hasSuffix = (suffix != null);

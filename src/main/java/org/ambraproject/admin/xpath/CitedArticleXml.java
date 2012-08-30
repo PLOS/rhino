@@ -27,6 +27,9 @@ import org.w3c.dom.Node;
 
 import java.util.List;
 
+/**
+ * A holder for an NLM-format XML node that represents an article citation.
+ */
 public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
 
   /*
