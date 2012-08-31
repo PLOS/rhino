@@ -18,7 +18,7 @@
 
 package org.ambraproject.admin.xpath;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -32,6 +32,7 @@ import org.ambraproject.models.CitedArticle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.util.Calendar;
@@ -116,11 +117,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setCollaborativeAuthors(readTextList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
 
-    article.setAssets(parseAssets(
-        readNodeList("//table-wrap"),
-        readNodeList("//fig"),
-        readNodeList("//supplementary-material"),
-        readNodeList("//inline-graphic")));
+    article.setAssets(parseAssets(readNodeList(ASSET_EXPRESSION)));
 
     // TODO Finish implementing
 
@@ -242,36 +239,52 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return citations;
   }
 
-  private static <E> List<E> nullToEmpty(List<E> list) {
-    return (list == null) ? ImmutableList.<E>of() : list;
+  private static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
+  private static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of("supplementary-material", "inline-graphic");
+  private static final String ASSET_EXPRESSION = String.format("//(%s)",
+      Joiner.on('|').join(Iterables.concat(ASSET_WITH_OBJID, ASSET_WITH_HREF)));
+
+  private List<ArticleAsset> parseAssets(List<Node> assetNodes) throws XmlContentException {
+    if (assetNodes == null) {
+      return null;
+    }
+
+    List<ArticleAsset> assets = Lists.newArrayListWithCapacity(assetNodes.size());
+    for (Node assetNode : assetNodes) {
+      String nodeName = assetNode.getNodeName();
+      String doi;
+      if (ASSET_WITH_OBJID.contains(nodeName)) {
+        doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
+      } else if (ASSET_WITH_HREF.contains(nodeName)) {
+        doi = parseAssetWithHref(assetNode);
+      } else {
+        String message = "Node of unrecognized type passed to parseAssets: " + nodeName;
+        throw new IllegalArgumentException(message);
+      }
+      if (doi == null) {
+        String message = "Asset node (" + nodeName + ") does not have DOI as expected";
+        throw new XmlContentException(message);
+      }
+      assets.add(parseAsset(doi, assetNode));
+    }
+    return assets;
   }
 
-  private List<ArticleAsset> parseAssets(List<Node> tables, List<Node> figures, List<Node> supplementaries, List<Node> inlines) {
-    tables = nullToEmpty(tables);
-    figures = nullToEmpty(figures);
-    supplementaries = nullToEmpty(supplementaries);
-    inlines = nullToEmpty(inlines);
-
-    int nodeCount = tables.size() + figures.size() + supplementaries.size() + inlines.size();
-    List<ArticleAsset> assets = Lists.newArrayListWithCapacity(nodeCount);
-
-    for (Node assetNode : Iterables.concat(tables, figures)) {
-      String doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
-      if (doi == null) {
-        continue;
-      }
-      assets.add(parseAsset(doi, assetNode));
+  /*
+   * Read the "xlink:href" attribute from a <supplementary-material> or <inline-graphic> node.
+   *
+   * TODO: Use XPath instead. Requires configuring XML namespaces.
+   */
+  private static String parseAssetWithHref(Node assetNode) {
+    NamedNodeMap attributes = assetNode.getAttributes();
+    if (attributes == null) {
+      return null;
     }
-
-    for (Node assetNode : Iterables.concat(supplementaries, inlines)) {
-      String doi = readString("@href", assetNode); // TODO Debug
-      if (doi == null) {
-        continue;
-      }
-      assets.add(parseAsset(doi, assetNode));
+    Node hrefAttr = attributes.getNamedItem("xlink:href");
+    if (hrefAttr == null) {
+      return null;
     }
-
-    return assets;
+    return hrefAttr.getTextContent();
   }
 
   private ArticleAsset parseAsset(String doi, Node assetNode) {
@@ -279,6 +292,16 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     asset.setDoi(doi);
     asset.setTitle(readString("caption/title", assetNode));
     asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?
+
+    /*
+     * TODO: Avoid this placeholder value
+     *
+     * It is not generally possible to infer the file extension of the asset (i.e., the actual data) that, when it is
+     * uploaded later, will correspond to this ArticleAsset entity. This may call for a redesign. For now, fill in a
+     * dummy string to avoid unit test noise.
+     */
+    asset.setExtension("");
+
     return asset;
   }
 
