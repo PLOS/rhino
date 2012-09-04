@@ -21,12 +21,18 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -37,6 +43,7 @@ public abstract class AmbraService {
 
   @Autowired
   protected FileStoreService fileStoreService;
+
 
   /**
    * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
@@ -57,6 +64,43 @@ public abstract class AmbraService {
       } catch (IOException e) {
         throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
       }
+    }
+  }
+
+  /**
+   * Produce the file store ID for an article's base XML file.
+   *
+   * @param doi the DOI of an article
+   * @return the FSID for the article's XML file
+   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
+   */
+  protected static String findFsidForArticleXml(String doi) {
+    String fsid = FSIDMapper.doiTofsid(doi, "XML");
+    if (fsid.isEmpty()) {
+      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
+    }
+    return fsid;
+  }
+
+  /**
+   * Parse client-provided XML. Errors are handled according to whether they most likely were caused by the client or
+   * the server.
+   *
+   * @param stream an input stream containing an XML document as raw bytes
+   * @return the XML document parsed from the stream
+   * @throws IOException         if the stream cannot be read
+   * @throws RestClientException if the stream does not contain valid XML
+   */
+  protected static Document parseXml(InputStream stream) throws IOException, RestClientException {
+    try {
+      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      return documentBuilder.parse(stream);
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException();
+    } catch (SAXException e) {
+      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+    } finally {
+      IOUtils.closeQuietly(stream);
     }
   }
 

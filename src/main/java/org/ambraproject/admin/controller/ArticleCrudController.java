@@ -66,7 +66,8 @@ public class ArticleCrudController extends ArticleController {
       if (assetOf == null) {
         articleCrudService.create(stream, doi);
       } else {
-        assetCrudService.create(stream, doi, assetOf);
+        String articleDoi = doiToKey(assetOf);
+        assetCrudService.create(stream, doi, articleDoi);
       }
     } finally {
       IOUtils.closeQuietly(stream);

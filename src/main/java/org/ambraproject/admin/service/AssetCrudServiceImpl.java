@@ -19,13 +19,20 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.xpath.AssetXml;
+import org.ambraproject.admin.xpath.XmlContentException;
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
+import org.apache.commons.io.IOUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.w3c.dom.Document;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
@@ -34,7 +41,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, String assetDoi, String articleDoi) {
+  public void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException {
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
@@ -46,7 +53,37 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
-    // TODO Implement
+    String articleFsid = findFsidForArticleXml(articleDoi);
+    InputStream articleStream = null;
+    Document articleXml;
+    try {
+      articleStream = fileStoreService.getFileInStream(articleFsid);
+      articleXml = parseXml(articleStream);
+    } catch (IOException e) {
+      throw new FileStoreException(e);
+    } finally {
+      IOUtils.closeQuietly(articleStream);
+    }
+
+    /*
+     * TODO: Replace this placeholder
+     *
+     * Will need either:
+     *     to extend the controller to get this value explicitly from the client;
+     *     to extend the controller to infer this value from the request header; or
+     *     to infer it somehow from the article XML or file content itself.
+     */
+    String fileExtension = "";
+
+    ArticleAsset asset;
+    try {
+      asset = new AssetXml(articleXml, assetDoi, fileExtension).build(new ArticleAsset());
+    } catch (XmlContentException e) {
+      throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    hibernateTemplate.save(asset);
+
+    // TODO Finish implementing -- store file data
   }
 
 }

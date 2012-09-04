@@ -50,4 +50,28 @@ public abstract class ArticleController extends RestController {
     return DOI_SCHEME_VALUE + doi;
   }
 
+  /**
+   * Prepend the scheme value to a DOI, so it may be used as a database key.
+   * <p/>
+   * TODO: Minimize calls here, for clarity
+   *
+   * @param doi a DOI with a scheme
+   * @return the DOI in the form used as a database key
+   */
+  public static String doiToKey(String doi) {
+    return DOI_SCHEME_VALUE + doi;
+  }
+
+  /**
+   * Remove the scheme value from a DOI database value, to get the DOI as it appears within NLM documents.
+   * <p/>
+   * TODO: Minimize calls here, for clarity
+   *
+   * @param key a DOI in the form used as a database key
+   * @return a DOI with no scheme value
+   */
+  public static String keyToDoi(String key) {
+    return key.substring(DOI_SCHEME_VALUE.length());
+  }
+
 }

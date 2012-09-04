@@ -21,7 +21,6 @@ package org.ambraproject.admin.service;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
-import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
@@ -35,11 +34,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,22 +61,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private RestClientException reportDoiNotFound() {
     return new RestClientException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
   }
-
-  /**
-   * Produce the file store ID for an article's base XML file.
-   *
-   * @param doi the DOI of an article
-   * @return the FSID for the article's XML file
-   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
-   */
-  private static String findFsidForArticleXml(String doi) {
-    String fsid = FSIDMapper.doiTofsid(doi, "XML");
-    if (fsid.isEmpty()) {
-      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
-    }
-    return fsid;
-  }
-
 
   /**
    * Write the base article XML to the file store. The DOI is used to generate the FSID. If something is already stored
@@ -115,12 +94,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Document xml;
     try {
       xmlStream = new ByteArrayInputStream(xmlData);
-      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      xml = documentBuilder.parse(xmlStream);
-    } catch (SAXException e) {
-      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
-    } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
+      xml = parseXml(xmlStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     } finally {
