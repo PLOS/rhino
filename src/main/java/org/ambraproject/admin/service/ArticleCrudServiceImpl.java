@@ -105,16 +105,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Write the base article XML to the file store. The DOI is used to generate the FSID. If something is already stored
-   * for that DOI, it is overwritten; else, a new file is created.
+   * Write the base article XML to the file store. If something is already stored at the same file store ID, it is
+   * overwritten; else, a new file is created.
    *
    * @param fileData the data to write, as raw bytes
-   * @param doi      the article XML
+   * @param fsid     the file store ID
    * @throws FileStoreException
    * @throws IOException
    */
-  private void write(byte[] fileData, String doi) throws FileStoreException, IOException {
-    String fsid = findFsidForArticleXml(doi);
+  private void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
     OutputStream output = null;
     try {
       output = fileStoreService.getFileOutStream(fsid, fileData.length);
@@ -185,12 +184,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (articleExistsAt(doi)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
+    String fsid = findFsidForArticleXml(doi); // do this first, to fail fast if the DOI is invalid
     byte[] xmlData = readClientInput(file);
 
     Article article = prepareMetadata(xmlData, doi);
     hibernateTemplate.save(article);
 
-    write(xmlData, doi);
+    write(xmlData, fsid);
   }
 
   /**
@@ -215,7 +215,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (!articleExistsAt(doi)) {
       throw reportDoiNotFound();
     }
-    write(readClientInput(file), doi);
+    write(readClientInput(file), findFsidForArticleXml(doi));
   }
 
   /**
