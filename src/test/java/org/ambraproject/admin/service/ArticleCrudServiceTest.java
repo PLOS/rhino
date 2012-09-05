@@ -70,6 +70,8 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     } catch (RestClientException e) {
       if (HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
         received404 = true;
+      } else {
+        throw e;
       }
     }
     assertEquals(received404, !expectedToExist,
