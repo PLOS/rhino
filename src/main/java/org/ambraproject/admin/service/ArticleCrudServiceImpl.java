@@ -38,7 +38,6 @@ import org.w3c.dom.Document;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -60,25 +59,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private RestClientException reportDoiNotFound() {
     return new RestClientException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
-  }
-
-  /**
-   * Write the base article XML to the file store. If something is already stored at the same file store ID, it is
-   * overwritten; else, a new file is created.
-   *
-   * @param fileData the data to write, as raw bytes
-   * @param fsid     the file store ID
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  private void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
-    OutputStream output = null;
-    try {
-      output = fileStoreService.getFileOutStream(fsid, fileData.length);
-      output.write(fileData);
-    } finally {
-      IOUtils.closeQuietly(output);
-    }
   }
 
   /**

@@ -22,6 +22,7 @@ package org.ambraproject.admin.service;
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FSIDMapper;
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public abstract class AmbraService {
 
@@ -68,6 +70,22 @@ public abstract class AmbraService {
   }
 
   /**
+   * Produce a file store ID from a client-supplied DOI.
+   *
+   * @param doi           the DOI of an object
+   * @param fileExtension the file extension that denotes the type of the data to be stored
+   * @return the FSID for the digital object
+   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
+   */
+  protected static String findFsid(String doi, String fileExtension) {
+    String fsid = FSIDMapper.doiTofsid(doi, fileExtension);
+    if (fsid.isEmpty()) {
+      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
+    }
+    return fsid;
+  }
+
+  /**
    * Produce the file store ID for an article's base XML file.
    *
    * @param doi the DOI of an article
@@ -75,11 +93,27 @@ public abstract class AmbraService {
    * @throws RestClientException if the DOI can't be parsed and converted into an FSID
    */
   protected static String findFsidForArticleXml(String doi) {
-    String fsid = FSIDMapper.doiTofsid(doi, "XML");
-    if (fsid.isEmpty()) {
-      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
+    return findFsid(doi, "XML");
+  }
+
+  /**
+   * Write the base article XML to the file store. If something is already stored at the same file store ID, it is
+   * overwritten; else, a new file is created.
+   *
+   * @param fileData the data to write, as raw bytes
+   * @param fsid     the file store ID
+   * @throws org.ambraproject.filestore.FileStoreException
+   *
+   * @throws IOException
+   */
+  protected void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
+    OutputStream output = null;
+    try {
+      output = fileStoreService.getFileOutStream(fsid, fileData.length);
+      output.write(fileData);
+    } finally {
+      IOUtils.closeQuietly(output);
     }
-    return fsid;
   }
 
   /**

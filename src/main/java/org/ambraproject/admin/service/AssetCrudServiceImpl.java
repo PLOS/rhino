@@ -41,7 +41,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException {
+  public void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException, IOException {
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
@@ -74,6 +74,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
      *     to infer it somehow from the article XML or file content itself.
      */
     String fileExtension = "";
+    String assetFsid = findFsid(assetDoi, fileExtension);
 
     ArticleAsset asset;
     try {
@@ -83,7 +84,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
     hibernateTemplate.save(asset);
 
-    // TODO Finish implementing -- store file data
+    byte[] assetData = readClientInput(file);
+    write(assetData, assetFsid);
   }
 
 }

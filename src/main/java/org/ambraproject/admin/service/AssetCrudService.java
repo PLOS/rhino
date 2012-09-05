@@ -20,10 +20,11 @@ package org.ambraproject.admin.service;
 
 import org.ambraproject.filestore.FileStoreException;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public interface AssetCrudService {
 
-  public abstract void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException;
+  public abstract void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException, IOException;
 
 }
