@@ -20,6 +20,7 @@ package org.ambraproject.admin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import org.ambraproject.admin.controller.ArticleController;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -35,6 +36,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
@@ -98,19 +101,53 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     }
   }
 
-  protected static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.copyOf(new String[]{
+  private static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.copyOf(new String[]{
       "journal.pone.0038869",
+      // More can be filled in here
   });
+
+  /*
+   * Each of these must belong to an article in SAMPLE_ARTICLES.
+   */
+  private static final ImmutableList<String> SAMPLE_ASSETS = ImmutableList.copyOf(new String[]{
+      "journal.pone.0038869.g002.tif",
+      // More can be filled in here
+  });
+
+  private static final Pattern ASSET_PATTERN = Pattern.compile("((.*)\\.[^.]+?)\\.([^.]+?)");
+
+  private static final String fullyPrefixed(String doi) {
+    return ArticleController.doiToKey("10.1371/" + doi);
+  }
 
   @DataProvider
   public Object[][] sampleArticles() {
     List<Object[]> cases = Lists.newArrayListWithCapacity(SAMPLE_ARTICLES.size());
     for (String doiStub : SAMPLE_ARTICLES) {
       Object[] sampleArticle = {
-          "info:doi/10.1371/" + doiStub,
+          fullyPrefixed(doiStub),
           new File("src/test/resources/data/" + doiStub + ".xml"),
       };
       cases.add(sampleArticle);
+    }
+    return cases.toArray(new Object[cases.size()][]);
+  }
+
+  @DataProvider
+  public Object[][] sampleAssets() {
+    List<Object[]> cases = Lists.newArrayListWithCapacity(SAMPLE_ASSETS.size());
+    for (String assetFileName : SAMPLE_ASSETS) {
+      Matcher matcher = ASSET_PATTERN.matcher(assetFileName);
+      if (!matcher.matches()) {
+        throw new RuntimeException("Asset DOI does not match expected format");
+      }
+      String assetDoi = matcher.group(1);
+      String articleDoi = matcher.group(2);
+      String fileExtension = matcher.group(3);
+      File articleFile = new File(String.format("src/test/resources/data/%s.xml", articleDoi));
+      File assetFile = new File(String.format("src/test/resources/data/%s.%s",
+          assetDoi, fileExtension));
+      cases.add(new Object[]{fullyPrefixed(articleDoi), articleFile, fullyPrefixed(assetDoi), assetFile});
     }
     return cases.toArray(new Object[cases.size()][]);
   }

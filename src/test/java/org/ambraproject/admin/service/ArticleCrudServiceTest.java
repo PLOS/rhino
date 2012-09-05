@@ -24,6 +24,7 @@ import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +51,8 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private AssetCrudService assetCrudService;
 
   /**
    * In addition to checking the existence of the service, this will throw an exception under certain error conditions
@@ -132,6 +135,25 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     articleCrudService.delete(doi);
     assertArticleExistence(doi, false);
+  }
+
+  @Test(dataProvider = "sampleAssets")
+  public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
+      throws IOException, FileStoreException {
+    articleDoi += ".testCreateAsset";
+//    assetDoi += ".testCreateAsset";
+    articleCrudService.create(new TestFile(articleFile).read(), articleDoi);
+
+    TestInputStream assetFileStream = new TestFile(assetFile).read();
+    assetCrudService.create(assetFileStream, assetDoi, articleDoi);
+
+    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", assetDoi))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    assertNotNull(stored);
   }
 
   @Test(dataProvider = "sampleArticles")
