@@ -25,7 +25,11 @@ import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
@@ -46,6 +50,26 @@ public abstract class AmbraService {
   @Autowired
   protected FileStoreService fileStoreService;
 
+
+  /**
+   * Check whether a distinct entity exists.
+   *
+   * @param criteria the criteria describing a distinct entity
+   * @return {@code true} if the described entity exists and {@code false} otherwise
+   */
+  protected boolean exists(DetachedCriteria criteria) {
+    long count = (Long) DataAccessUtils.requiredSingleResult(
+        hibernateTemplate.findByCriteria(criteria
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            .setProjection(Projections.rowCount())
+        ));
+    return count > 0L;
+  }
+
+  protected RestClientException reportNotFound(String id) {
+    String message = "Item not found at the provided ID: " + id;
+    return new RestClientException(message, HttpStatus.NOT_FOUND);
+  }
 
   /**
    * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the

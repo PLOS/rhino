@@ -37,11 +37,35 @@ import java.io.InputStream;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
+  private boolean assetExistsAt(String doi) {
+    DetachedCriteria criteria = DetachedCriteria.forClass(ArticleAsset.class)
+        .add(Restrictions.eq("doi", doi));
+    return exists(criteria);
+  }
+
+  /*
+   * Temporary placeholder value for the file extension of all assets.
+   * TODO: Replace this placeholder
+   *
+   * Since this project's design involves generalizing the role of assets in the data model, the need for this method
+   * might be removed outright. But assuming that this service still needs to know the file type of asset data, then it
+   * will be necessary:
+   *     to extend the controller to get this value explicitly from the client, and pass it to the service;
+   *     to extend the controller to infer this value from the request header, and pass it to the service; or
+   *     to have the service infer it somehow from the article XML or file content itself.
+   */
+  private String getFileExtension() {
+    return "";
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
   public void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException, IOException {
+    if (assetExistsAt(assetDoi)) {
+      throw new RestClientException("Can't create asset; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
+    }
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
@@ -65,15 +89,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       IOUtils.closeQuietly(articleStream);
     }
 
-    /*
-     * TODO: Replace this placeholder
-     *
-     * Will need either:
-     *     to extend the controller to get this value explicitly from the client;
-     *     to extend the controller to infer this value from the request header; or
-     *     to infer it somehow from the article XML or file content itself.
-     */
-    String fileExtension = "";
+    String fileExtension = getFileExtension();
     String assetFsid = findFsid(assetDoi, fileExtension);
 
     ArticleAsset asset;
@@ -86,6 +102,54 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public InputStream read(String assetDoi) throws FileStoreException {
+    if (!assetExistsAt(assetDoi)) {
+      throw reportNotFound(assetDoi);
+    }
+    String fileExtension = getFileExtension();
+    String assetFsid = findFsid(assetDoi, fileExtension);
+    return fileStoreService.getFileInStream(assetFsid);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void update(InputStream file, String assetDoi) throws FileStoreException, IOException {
+    if (!assetExistsAt(assetDoi)) {
+      throw reportNotFound(assetDoi);
+    }
+    String fileExtension = getFileExtension();
+    String assetFsid = findFsid(assetDoi, fileExtension);
+    byte[] assetData = readClientInput(file);
+    write(assetData, assetFsid);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void delete(String assetDoi) throws FileStoreException {
+    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", assetDoi))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (asset == null) {
+      throw reportNotFound(assetDoi);
+    }
+    hibernateTemplate.delete(asset);
+
+    String fileExtension = getFileExtension();
+    String assetFsid = findFsid(assetDoi, fileExtension);
+    fileStoreService.deleteFile(assetFsid);
   }
 
 }

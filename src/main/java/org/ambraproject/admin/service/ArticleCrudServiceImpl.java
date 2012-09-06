@@ -27,7 +27,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,18 +46,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
   private boolean articleExistsAt(String doi) {
-    Long articleCount = (Long) DataAccessUtils.requiredSingleResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", doi))
-            .setProjection(Projections.rowCount())
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    return articleCount.longValue() > 0L;
-  }
-
-  private RestClientException reportDoiNotFound() {
-    return new RestClientException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
+    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
+        .add(Restrictions.eq("doi", doi));
+    return exists(criteria);
   }
 
   /**
@@ -132,7 +122,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream read(String doi) throws FileStoreException {
     if (!articleExistsAt(doi)) {
-      throw reportDoiNotFound();
+      throw reportNotFound(doi);
     }
     String fsid = findFsidForArticleXml(doi);
 
@@ -146,7 +136,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void update(InputStream file, String doi) throws IOException, FileStoreException {
     if (!articleExistsAt(doi)) {
-      throw reportDoiNotFound();
+      throw reportNotFound(doi);
     }
     write(readClientInput(file), findFsidForArticleXml(doi));
   }
@@ -163,7 +153,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      throw reportDoiNotFound();
+      throw reportNotFound(doi);
     }
 
     hibernateTemplate.delete(article);
