@@ -21,6 +21,7 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.controller.ArticleSpaceId;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
@@ -94,30 +95,18 @@ public abstract class AmbraService {
   }
 
   /**
-   * Produce a file store ID from a client-supplied DOI.
+   * Produce a file store ID from a client-supplied identifier.
    *
-   * @param doi           the DOI of an object
-   * @param fileExtension the file extension that denotes the type of the data to be stored
-   * @return the FSID for the digital object
+   * @param id the identifier of the entity (article or asset)
+   * @return the FSID for a file associated with the entity
    * @throws RestClientException if the DOI can't be parsed and converted into an FSID
    */
-  protected static String findFsid(String doi, String fileExtension) {
-    String fsid = FSIDMapper.doiTofsid(doi, fileExtension);
+  protected static String findFsid(ArticleSpaceId id) {
+    String fsid = FSIDMapper.doiTofsid(id.getKey(), id.getExtension());
     if (fsid.isEmpty()) {
       throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
     }
     return fsid;
-  }
-
-  /**
-   * Produce the file store ID for an article's base XML file.
-   *
-   * @param doi the DOI of an article
-   * @return the FSID for the article's XML file
-   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
-   */
-  protected static String findFsidForArticleXml(String doi) {
-    return findFsid(doi, "XML");
   }
 
   /**

@@ -41,12 +41,15 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends ArticleController {
+public class ArticleCrudController extends RestController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
+  static final String ARTICLE_NAMESPACE = "/article/";
+  static final String ASSET_PARAM = "assetOf";
+
+  private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
   private static final String FILE_ARG = "file";
-  private static final String ASSET_PARAM = "assetOf";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -57,17 +60,15 @@ public class ArticleCrudController extends ArticleController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
       throws IOException, FileStoreException {
-    String doi = parseEntityDoi(request);
-    String assetOf = request.getParameter(ASSET_PARAM);
+    ArticleSpaceId id = ArticleSpaceId.parse(request);
 
     InputStream stream = null;
     try {
       stream = file.getInputStream();
-      if (assetOf == null) {
-        articleCrudService.create(stream, doi);
+      if (!id.isAsset()) {
+        articleCrudService.create(stream, id);
       } else {
-        String articleDoi = doiToKey(assetOf);
-        assetCrudService.create(stream, doi, articleDoi);
+        assetCrudService.create(stream, id);
       }
     } finally {
       IOUtils.closeQuietly(stream);
@@ -77,11 +78,11 @@ public class ArticleCrudController extends ArticleController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    String doi = parseEntityDoi(request);
+    ArticleSpaceId id = ArticleSpaceId.parse(request);
     InputStream fileStream = null;
     byte[] fileData;
     try {
-      fileStream = articleCrudService.read(doi);
+      fileStream = articleCrudService.read(id);
       fileData = IOUtils.toByteArray(fileStream); // TODO Can avoid dumping into memory?
     } finally {
       IOUtils.closeQuietly(fileStream);
@@ -92,11 +93,11 @@ public class ArticleCrudController extends ArticleController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> update(HttpServletRequest request, @RequestParam("file") MultipartFile file)
       throws IOException, FileStoreException {
-    String doi = parseEntityDoi(request);
+    ArticleSpaceId id = ArticleSpaceId.parse(request);
     InputStream stream = null;
     try {
       stream = file.getInputStream();
-      articleCrudService.update(stream, doi);
+      articleCrudService.update(stream, id);
     } finally {
       IOUtils.closeQuietly(stream);
     }
@@ -105,8 +106,8 @@ public class ArticleCrudController extends ArticleController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    String doi = parseEntityDoi(request);
-    articleCrudService.delete(doi);
+    ArticleSpaceId id = ArticleSpaceId.parse(request);
+    articleCrudService.delete(id);
     return reportOk();
   }
 

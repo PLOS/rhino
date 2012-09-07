@@ -19,6 +19,7 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.controller.ArticleSpaceId;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
@@ -103,14 +104,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, String doi) throws IOException, FileStoreException {
-    if (articleExistsAt(doi)) {
+  public void create(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
+    if (articleExistsAt(id.getKey())) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
-    String fsid = findFsidForArticleXml(doi); // do this first, to fail fast if the DOI is invalid
+    String fsid = findFsid(id); // do this first, to fail fast if the DOI is invalid
     byte[] xmlData = readClientInput(file);
 
-    Article article = prepareMetadata(xmlData, doi);
+    Article article = prepareMetadata(xmlData, id.getKey());
     hibernateTemplate.save(article);
 
     write(xmlData, fsid);
@@ -120,11 +121,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(String doi) throws FileStoreException {
-    if (!articleExistsAt(doi)) {
-      throw reportNotFound(doi);
+  public InputStream read(ArticleSpaceId id) throws FileStoreException {
+    if (!articleExistsAt(id.getKey())) {
+      throw reportNotFound(id.getId());
     }
-    String fsid = findFsidForArticleXml(doi);
+    String fsid = findFsid(id);
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
     return fileStoreService.getFileInStream(fsid);
@@ -134,30 +135,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void update(InputStream file, String doi) throws IOException, FileStoreException {
-    if (!articleExistsAt(doi)) {
-      throw reportNotFound(doi);
+  public void update(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
+    if (!articleExistsAt(id.getKey())) {
+      throw reportNotFound(id.getId());
     }
-    write(readClientInput(file), findFsidForArticleXml(doi));
+    write(readClientInput(file), findFsid(id));
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void delete(String doi) throws FileStoreException {
+  public void delete(ArticleSpaceId id) throws FileStoreException {
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
-            .add(Restrictions.eq("doi", doi))
+            .add(Restrictions.eq("doi", id.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      throw reportNotFound(doi);
+      throw reportNotFound(id.getId());
     }
 
     hibernateTemplate.delete(article);
-    fileStoreService.deleteFile(doi);
+    fileStoreService.deleteFile(findFsid(id));
   }
 
 }

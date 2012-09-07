@@ -22,6 +22,7 @@ import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.controller.ArticleSpaceId;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -63,10 +64,10 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertNotNull(articleCrudService);
   }
 
-  private void assertArticleExistence(String doi, boolean expectedToExist) throws FileStoreException {
+  private void assertArticleExistence(ArticleSpaceId id, boolean expectedToExist) throws FileStoreException {
     boolean received404 = false;
     try {
-      articleCrudService.read(doi);
+      articleCrudService.read(id);
     } catch (RestClientException e) {
       if (HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
         received404 = true;
@@ -92,22 +93,24 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     final TestFile sampleFile = new TestFile(fileLocation);
     final byte[] sampleData = sampleFile.getData();
+    final ArticleSpaceId articleId = ArticleSpaceId.forArticle(doi);
+    final String key = articleId.getKey();
 
-    assertArticleExistence(doi, false);
+    assertArticleExistence(articleId, false);
 
     TestInputStream input = sampleFile.read();
-    articleCrudService.create(input, doi);
-    assertArticleExistence(doi, true);
+    articleCrudService.create(input, articleId);
+    assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
     Article stored = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
-            .add(Restrictions.eq("doi", doi))
+            .add(Restrictions.eq("doi", key))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored, "ArticleCrudService.create did not store an article");
-    assertEquals(stored.getDoi(), doi);
+    assertEquals(stored.getDoi(), key);
     assertEquals(stored.getLanguage(), "en");
     assertGoodText(stored.getDescription());
     assertGoodText(stored.getRights());
@@ -124,35 +127,39 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
       assertTrue(authorNames.add(fullName), "Redundant author name");
     }
 
-    byte[] readData = IOUtils.toByteArray(articleCrudService.read(doi));
+    byte[] readData = IOUtils.toByteArray(articleCrudService.read(articleId));
     assertEquals(readData, sampleData);
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
-    articleCrudService.update(input, doi);
-    byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(doi));
+    articleCrudService.update(input, articleId);
+    byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(articleId));
     assertEquals(updatedData, updated);
-    assertArticleExistence(doi, true);
+    assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
-    articleCrudService.delete(doi);
-    assertArticleExistence(doi, false);
+    articleCrudService.delete(articleId);
+    assertArticleExistence(articleId, false);
   }
 
   @Test(dataProvider = "sampleAssets")
   public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
       throws IOException, FileStoreException {
-    articleDoi += ".testCreateAsset";
-//    assetDoi += ".testCreateAsset";
-    articleCrudService.create(new TestFile(articleFile).read(), articleDoi);
+    articleDoi += ".testCreateAsset"; // Avoid collisions with canonical sample data
+
+    String assetFilePath = assetFile.getPath();
+    String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
+    final ArticleSpaceId assetId = ArticleSpaceId.forAsset(assetDoi, extension, articleDoi);
+
+    articleCrudService.create(new TestFile(articleFile).read(), ArticleSpaceId.forArticle(articleDoi));
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
-    assetCrudService.create(assetFileStream, assetDoi, articleDoi);
+    assetCrudService.create(assetFileStream, assetId);
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetDoi))
+            .add(Restrictions.eq("doi", assetId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored);
@@ -161,16 +168,17 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
   @Test(dataProvider = "sampleArticles")
   public void testCreateCollision(String doi, File fileLocation) throws IOException, FileStoreException {
     doi += ".testCreateCollision"; // Avoid collisions with canonical sample data
+    final ArticleSpaceId articleId = ArticleSpaceId.forArticle(doi);
 
     final TestFile sampleFile = new TestFile(fileLocation);
 
-    assertArticleExistence(doi, false);
+    assertArticleExistence(articleId, false);
 
-    articleCrudService.create(sampleFile.read(), doi);
-    assertArticleExistence(doi, true);
+    articleCrudService.create(sampleFile.read(), articleId);
+    assertArticleExistence(articleId, true);
 
     try {
-      articleCrudService.create(sampleFile.read(), doi);
+      articleCrudService.create(sampleFile.read(), articleId);
       fail("Expected RestClientException on redundant create");
     } catch (RestClientException e) {
       assertEquals(e.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);

@@ -26,18 +26,20 @@ from sys import argv
 _USAGE = """
 Usage: admintest.py article_doi article_path asset_doi asset_path
 
-    article_doi
-        The DOI of the article to create, read, and delete.  The script
-        will direct RESTful actions to a URL that refers to this article.
+    article_id
+        The REST identifier of the article to create, read, and delete. The
+        script will use a URL that refers to this article. For valid input,
+        this should be the article's DOI with ".xml" appended.
 
     article_path
         The local path to the XML file (NLM format) of the article to
         create.
 
-    asset_doi
-        The DOI of an asset to create and attach to the same article. It
-        should be referred to within the article XML. Use the full DOI, not
-        just the extension to the article DOI.
+    asset_id
+        The REST identifier of an asset to create and attach to the same
+        article. For valid input, this should match the article DOI
+        (conforming to Ambra's DOI-like convention for naming assets) and
+        have an extension matching the file type.
 
     asset_path
         The local path to a file that will be uploaded as the asset
@@ -64,7 +66,8 @@ def report(description, rest_response):
 
 def test(article_doi, article_path, asset_doi, asset_path):
     """Run three test operations."""
-    print 'Arguments:\n{0!r}\n'.format((article_doi, article_path, asset_doi, asset_path))
+    print 'Arguments:'
+    print '\n'.join(repr(x) for x in (article_doi, article_path, asset_doi, asset_path))
 
     def new_req(doi):
         return Request('localhost', 'article/' + doi, port=8080)

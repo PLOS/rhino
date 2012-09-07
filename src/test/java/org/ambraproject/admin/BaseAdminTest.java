@@ -20,7 +20,6 @@ package org.ambraproject.admin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import org.ambraproject.admin.controller.ArticleController;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -116,8 +115,8 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
 
   private static final Pattern ASSET_PATTERN = Pattern.compile("((.*)\\.[^.]+?)\\.([^.]+?)");
 
-  private static final String fullyPrefixed(String doi) {
-    return ArticleController.doiToKey("10.1371/" + doi);
+  private static final String prefixed(String doi) {
+    return "10.1371/" + doi;
   }
 
   @DataProvider
@@ -125,7 +124,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     List<Object[]> cases = Lists.newArrayListWithCapacity(SAMPLE_ARTICLES.size());
     for (String doiStub : SAMPLE_ARTICLES) {
       Object[] sampleArticle = {
-          fullyPrefixed(doiStub),
+          prefixed(doiStub),
           new File("src/test/resources/data/" + doiStub + ".xml"),
       };
       cases.add(sampleArticle);
@@ -147,7 +146,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
       File articleFile = new File(String.format("src/test/resources/data/%s.xml", articleDoi));
       File assetFile = new File(String.format("src/test/resources/data/%s.%s",
           assetDoi, fileExtension));
-      cases.add(new Object[]{fullyPrefixed(articleDoi), articleFile, fullyPrefixed(assetDoi), assetFile});
+      cases.add(new Object[]{prefixed(articleDoi), articleFile, prefixed(assetDoi), assetFile});
     }
     return cases.toArray(new Object[cases.size()][]);
   }

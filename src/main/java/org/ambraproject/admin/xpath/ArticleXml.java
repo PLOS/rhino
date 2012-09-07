@@ -56,7 +56,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       "reply", "review-article",
   });
 
-  private static final String DOI_PREFIX = "info:doi/";
+  static final String DOI_PREFIX = "info:doi/"; // TODO Refactor out with ArticleSpaceId
   private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {

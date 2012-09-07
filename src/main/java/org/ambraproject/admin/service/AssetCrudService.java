@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.service;
 
+import org.ambraproject.admin.controller.ArticleSpaceId;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
@@ -31,22 +32,21 @@ public interface AssetCrudService {
    * This temporary API is based on the assumption that there is exactly one file associated with each asset. This
    * should be refactored when the role of assets is generalized later.
    *
-   * @param file       the file data to associate with the new asset
-   * @param assetDoi   the DOI for the new asset
-   * @param articleDoi the DOI of the article with which the new asset is associated
+   * @param file the file data to associate with the new asset
+   * @param id   the identifier for the new asset
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void create(InputStream file, String assetDoi, String articleDoi) throws FileStoreException, IOException;
+  public abstract void create(InputStream file, ArticleSpaceId id) throws FileStoreException, IOException;
 
   /**
    * Read the file associated with an asset.
    *
-   * @param assetDoi the DOI of the asset whose file is to be read
+   * @param id the identifier of the asset whose file is to be read
    * @return a stream containing the file data
    * @throws FileStoreException
    */
-  public abstract InputStream read(String assetDoi) throws FileStoreException;
+  public abstract InputStream read(ArticleSpaceId id) throws FileStoreException;
 
   /**
    * Replace asset data from a provided file stream.
@@ -54,19 +54,19 @@ public interface AssetCrudService {
    * This temporary API is based on the assumption that there is exactly one file associated with each asset. This
    * should be refactored when the role of assets is generalized later.
    *
-   * @param file     a stream containing the data to write
-   * @param assetDoi the DOI of the asset to update
+   * @param file a stream containing the data to write
+   * @param id   the identifier of the asset to update
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void update(InputStream file, String assetDoi) throws FileStoreException, IOException;
+  public abstract void update(InputStream file, ArticleSpaceId id) throws FileStoreException, IOException;
 
   /**
    * Delete an asset and its associated file.
    *
-   * @param assetDoi the DOI of the asset to delete
+   * @param id the identifier of the asset to delete
    * @throws FileStoreException
    */
-  public abstract void delete(String assetDoi) throws FileStoreException;
+  public abstract void delete(ArticleSpaceId id) throws FileStoreException;
 
 }

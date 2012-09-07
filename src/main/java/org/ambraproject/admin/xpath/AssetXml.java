@@ -23,7 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.admin.controller.ArticleController;
+import org.ambraproject.admin.controller.ArticleSpaceId;
 import org.ambraproject.models.ArticleAsset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,13 +39,12 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
-  private final String assetDoi;
-  private final String fileExtension;
+  private final ArticleSpaceId assetId;
 
-  public AssetXml(Node xml, String assetDoi, String fileExtension) {
+  public AssetXml(Node xml, ArticleSpaceId assetId) {
     super(xml);
-    this.assetDoi = Preconditions.checkNotNull(assetDoi);
-    this.fileExtension = Preconditions.checkNotNull(fileExtension);
+    this.assetId = Preconditions.checkNotNull(assetId);
+    Preconditions.checkArgument(assetId.isAsset());
   }
 
   // The node-names for nodes that can be an asset, separated by where to find the DOI
@@ -71,7 +70,7 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
       assetNodes = ImmutableList.of(); // skip to error
     }
 
-    String targetDoi = ArticleController.keyToDoi(assetDoi);
+    final String targetDoi = assetId.getId();
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();
       String doi;
@@ -86,12 +85,14 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
 
       if (doi == null) {
         log.warn("An asset node ({}) does not have DOI as expected", nodeName);
-      } else if (doi.equals(targetDoi)) {
-        return assetNode;
+      } else {
+        if (doi.equals(targetDoi)) {
+          return assetNode;
+        }
       }
     }
 
-    String errorMsg = "Article XML does not have an asset with DOI=" + assetDoi;
+    String errorMsg = "Article XML does not have an asset with DOI=" + targetDoi;
     throw new XmlContentException(errorMsg);
   }
 
@@ -113,8 +114,8 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
   }
 
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
-    asset.setDoi(assetDoi);
-    asset.setExtension(fileExtension);
+    asset.setDoi(assetId.getKey());
+    asset.setExtension(assetId.getExtension());
 
     asset.setTitle(readString("caption/title", assetNode));
     asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?

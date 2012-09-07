@@ -1,7 +1,10 @@
 #!/bin/sh
+
 testdata=../resources/data
-./admintest.py                              \
-    10.1371/journal.pone.0038869            \
-    $testdata/journal.pone.0038869.xml      \
-    10.1371/journal.pone.0038869.g002       \
-    $testdata/journal.pone.0038869.g002.tif
+doi=journal.pone.0038869
+
+./admintest.py              \
+    10.1371/$doi.xml        \
+    $testdata/$doi.xml      \
+    10.1371/$doi.g002.tif   \
+    $testdata/$doi.g002.tif
