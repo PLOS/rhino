@@ -61,7 +61,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      String message = "Cannot attach asset to article; no article found at DOI: " + articleId.getId();
+      String message = "Cannot attach asset to article; no article found at DOI: " + articleId.getDoi();
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
@@ -97,7 +97,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public InputStream read(ArticleSpaceId assetId) throws FileStoreException {
     if (!assetExistsAt(assetId.getKey())) {
-      throw reportNotFound(assetId.getId());
+      throw reportNotFound(assetId.getDoi());
     }
     String assetFsid = findFsid(assetId);
     return fileStoreService.getFileInStream(assetFsid);
@@ -109,7 +109,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public void update(InputStream file, ArticleSpaceId assetId) throws FileStoreException, IOException {
     if (!assetExistsAt(assetId.getKey())) {
-      throw reportNotFound(assetId.getId());
+      throw reportNotFound(assetId.getDoi());
     }
     String assetFsid = findFsid(assetId);
     byte[] assetData = readClientInput(file);
@@ -128,7 +128,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      throw reportNotFound(assetId.getId());
+      throw reportNotFound(assetId.getDoi());
     }
     hibernateTemplate.delete(asset);
 

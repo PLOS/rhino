@@ -123,7 +123,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream read(ArticleSpaceId id) throws FileStoreException {
     if (!articleExistsAt(id.getKey())) {
-      throw reportNotFound(id.getId());
+      throw reportNotFound(id.getDoi());
     }
     String fsid = findFsid(id);
 
@@ -137,7 +137,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void update(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
     if (!articleExistsAt(id.getKey())) {
-      throw reportNotFound(id.getId());
+      throw reportNotFound(id.getDoi());
     }
     write(readClientInput(file), findFsid(id));
   }
@@ -154,7 +154,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      throw reportNotFound(id.getId());
+      throw reportNotFound(id.getDoi());
     }
 
     hibernateTemplate.delete(article);

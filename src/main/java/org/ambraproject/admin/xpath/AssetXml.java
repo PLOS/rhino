@@ -70,7 +70,7 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
       assetNodes = ImmutableList.of(); // skip to error
     }
 
-    final String targetDoi = assetId.getId();
+    final String targetDoi = assetId.getDoi();
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();
       String doi;
