@@ -233,4 +233,5 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return citations;
   }
 
+
 }

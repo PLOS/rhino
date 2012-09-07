@@ -24,14 +24,24 @@ from sys import argv
 
 
 _USAGE = """
-Usage: admintest.py doi path
+Usage: admintest.py article_doi article_path asset_doi asset_path
 
-    doi
-        The script builds the URL to which the RESTful actions are directed
-        by using this value as an article DOI.
-    path
-        The local path to the file whose contents will be submitted as the
-        article XML (NLM format).
+    article_doi
+        The DOI of the article to create, read, and delete.  The script
+        will direct RESTful actions to a URL that refers to this article.
+
+    article_path
+        The local path to the XML file (NLM format) of the article to
+        create.
+
+    asset_doi
+        The DOI of an asset to create and attach to the same article. It
+        should be referred to within the article XML. Use the full DOI, not
+        just the extension to the article DOI.
+
+    asset_path
+        The local path to a file that will be uploaded as the asset
+        content.
 
 An example is in runadmintest.sh.
 """
@@ -52,26 +62,30 @@ def report(description, rest_response):
     buf.append('')  # Extra blank line
     return '\n'.join(buf)
 
-def test(example_doi, path_to_sample_file):
+def test(article_doi, article_path, asset_doi, asset_path):
     """Run three test operations."""
-    print 'Arguments:\n{0!r}\n'.format((example_doi, path_to_sample_file))
+    print 'Arguments:\n{0!r}\n'.format((article_doi, article_path, asset_doi, asset_path))
 
-    def new_req():
-        return Request('localhost', 'article/' + example_doi, port=8080)
+    def new_req(doi):
+        return Request('localhost', 'article/' + doi, port=8080)
 
-    create = new_req()
-    create.set_form_file_path('file', path_to_sample_file)
-    #create.set_query_parameter('assetOf', 'asdf')
-    print report('Response to CREATE', create.post())
+    create = new_req(article_doi)
+    create.set_form_file_path('file', article_path)
+    print report('Response to CREATE for article', create.post())
 
-    read = new_req()
+    create_asset = new_req(asset_doi)
+    create_asset.set_form_file_path('file', asset_path)
+    create_asset.set_query_parameter('assetOf', article_doi)
+    print report('Response to CREATE for asset', create_asset.post())
+
+    read = new_req(article_doi)
     print report('Response to READ', read.get())
 
-    delete = new_req()
+    delete = new_req(article_doi)
     print report('Response to DELETE', delete.delete())
 
 
-if len(argv) == 3:
+if len(argv) == 5:
     test(*argv[1:])
 else:
     print _USAGE

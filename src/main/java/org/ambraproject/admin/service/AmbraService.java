@@ -18,9 +18,29 @@
 
 package org.ambraproject.admin.service;
 
+
+import com.google.common.base.Preconditions;
+import org.ambraproject.admin.RestClientException;
+import org.ambraproject.filestore.FSIDMapper;
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
+import org.apache.commons.io.IOUtils;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public abstract class AmbraService {
 
@@ -29,5 +49,117 @@ public abstract class AmbraService {
 
   @Autowired
   protected FileStoreService fileStoreService;
+
+
+  /**
+   * Check whether a distinct entity exists.
+   *
+   * @param criteria the criteria describing a distinct entity
+   * @return {@code true} if the described entity exists and {@code false} otherwise
+   */
+  protected boolean exists(DetachedCriteria criteria) {
+    long count = (Long) DataAccessUtils.requiredSingleResult(
+        hibernateTemplate.findByCriteria(criteria
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            .setProjection(Projections.rowCount())
+        ));
+    return count > 0L;
+  }
+
+  protected RestClientException reportNotFound(String id) {
+    String message = "Item not found at the provided ID: " + id;
+    return new RestClientException(message, HttpStatus.NOT_FOUND);
+  }
+
+  /**
+   * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
+   * stream.
+   *
+   * @param input an input stream from a RESTful request
+   * @return a byte array of the input stream contents
+   */
+  protected static byte[] readClientInput(InputStream input) {
+    Preconditions.checkNotNull(input);
+    try {
+      return IOUtils.toByteArray(input);
+    } catch (IOException e) {
+      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST, e);
+    } finally {
+      try {
+        input.close();
+      } catch (IOException e) {
+        throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
+      }
+    }
+  }
+
+  /**
+   * Produce a file store ID from a client-supplied DOI.
+   *
+   * @param doi           the DOI of an object
+   * @param fileExtension the file extension that denotes the type of the data to be stored
+   * @return the FSID for the digital object
+   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
+   */
+  protected static String findFsid(String doi, String fileExtension) {
+    String fsid = FSIDMapper.doiTofsid(doi, fileExtension);
+    if (fsid.isEmpty()) {
+      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
+    }
+    return fsid;
+  }
+
+  /**
+   * Produce the file store ID for an article's base XML file.
+   *
+   * @param doi the DOI of an article
+   * @return the FSID for the article's XML file
+   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
+   */
+  protected static String findFsidForArticleXml(String doi) {
+    return findFsid(doi, "XML");
+  }
+
+  /**
+   * Write the base article XML to the file store. If something is already stored at the same file store ID, it is
+   * overwritten; else, a new file is created.
+   *
+   * @param fileData the data to write, as raw bytes
+   * @param fsid     the file store ID
+   * @throws org.ambraproject.filestore.FileStoreException
+   *
+   * @throws IOException
+   */
+  protected void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
+    OutputStream output = null;
+    try {
+      output = fileStoreService.getFileOutStream(fsid, fileData.length);
+      output.write(fileData);
+    } finally {
+      IOUtils.closeQuietly(output);
+    }
+  }
+
+  /**
+   * Parse client-provided XML. Errors are handled according to whether they most likely were caused by the client or
+   * the server.
+   *
+   * @param stream an input stream containing an XML document as raw bytes
+   * @return the XML document parsed from the stream
+   * @throws IOException         if the stream cannot be read
+   * @throws RestClientException if the stream does not contain valid XML
+   */
+  protected static Document parseXml(InputStream stream) throws IOException, RestClientException {
+    try {
+      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      return documentBuilder.parse(stream);
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException();
+    } catch (SAXException e) {
+      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+    } finally {
+      IOUtils.closeQuietly(stream);
+    }
+  }
 
 }

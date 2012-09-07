@@ -20,6 +20,8 @@ package org.ambraproject.admin;
 
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.ArticleCrudServiceImpl;
+import org.ambraproject.admin.service.AssetCrudService;
+import org.ambraproject.admin.service.AssetCrudServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,6 +63,11 @@ public class AdminConfiguration extends BaseConfiguration {
   @Bean
   public ArticleCrudService articleCrudService() {
     return new ArticleCrudServiceImpl();
+  }
+
+  @Bean
+  public AssetCrudService assetCrudService() {
+    return new AssetCrudServiceImpl();
   }
 
 }

@@ -19,6 +19,7 @@
 package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -45,19 +46,29 @@ public class ArticleCrudController extends ArticleController {
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
   private static final String FILE_ARG = "file";
+  private static final String ASSET_PARAM = "assetOf";
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private AssetCrudService assetCrudService;
 
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
       throws IOException, FileStoreException {
-    String doi = parseArticleDoi(request);
+    String doi = parseEntityDoi(request);
+    String assetOf = request.getParameter(ASSET_PARAM);
+
     InputStream stream = null;
     try {
       stream = file.getInputStream();
-      articleCrudService.create(stream, doi);
+      if (assetOf == null) {
+        articleCrudService.create(stream, doi);
+      } else {
+        String articleDoi = doiToKey(assetOf);
+        assetCrudService.create(stream, doi, articleDoi);
+      }
     } finally {
       IOUtils.closeQuietly(stream);
     }
@@ -66,7 +77,7 @@ public class ArticleCrudController extends ArticleController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    String doi = parseArticleDoi(request);
+    String doi = parseEntityDoi(request);
     InputStream fileStream = null;
     byte[] fileData;
     try {
@@ -81,7 +92,7 @@ public class ArticleCrudController extends ArticleController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> update(HttpServletRequest request, @RequestParam("file") MultipartFile file)
       throws IOException, FileStoreException {
-    String doi = parseArticleDoi(request);
+    String doi = parseEntityDoi(request);
     InputStream stream = null;
     try {
       stream = file.getInputStream();
@@ -94,7 +105,7 @@ public class ArticleCrudController extends ArticleController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    String doi = parseArticleDoi(request);
+    String doi = parseEntityDoi(request);
     articleCrudService.delete(doi);
     return reportOk();
   }

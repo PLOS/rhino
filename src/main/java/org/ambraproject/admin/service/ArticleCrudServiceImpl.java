@@ -21,29 +21,22 @@ package org.ambraproject.admin.service;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
-import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -53,74 +46,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
   private boolean articleExistsAt(String doi) {
-    Long articleCount = (Long) DataAccessUtils.requiredSingleResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", doi))
-            .setProjection(Projections.rowCount())
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    return articleCount.longValue() > 0L;
-  }
-
-  private RestClientException reportDoiNotFound() {
-    return new RestClientException("DOI does not belong to an article", HttpStatus.NOT_FOUND);
-  }
-
-  /**
-   * Produce the file store ID for an article's base XML file.
-   *
-   * @param doi the DOI of an article
-   * @return the FSID for the article's XML file
-   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
-   */
-  private static String findFsidForArticleXml(String doi) {
-    String fsid = FSIDMapper.doiTofsid(doi, "XML");
-    if (fsid.isEmpty()) {
-      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
-    }
-    return fsid;
-  }
-
-
-  /**
-   * Read a client-provided stream into memory. Report it as a client error if the stream cannot be read. Closes the
-   * stream.
-   *
-   * @param input an input stream from a RESTful request
-   * @return a byte array of the input stream contents
-   */
-  private byte[] readClientInput(InputStream input) {
-    try {
-      return IOUtils.toByteArray(input);
-    } catch (IOException e) {
-      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST, e);
-    } finally {
-      try {
-        input.close();
-      } catch (IOException e) {
-        throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
-      }
-    }
-  }
-
-  /**
-   * Write the base article XML to the file store. If something is already stored at the same file store ID, it is
-   * overwritten; else, a new file is created.
-   *
-   * @param fileData the data to write, as raw bytes
-   * @param fsid     the file store ID
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  private void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
-    OutputStream output = null;
-    try {
-      output = fileStoreService.getFileOutStream(fsid, fileData.length);
-      output.write(fileData);
-    } finally {
-      IOUtils.closeQuietly(output);
-    }
+    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
+        .add(Restrictions.eq("doi", doi));
+    return exists(criteria);
   }
 
   /**
@@ -135,12 +63,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Document xml;
     try {
       xmlStream = new ByteArrayInputStream(xmlData);
-      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      xml = documentBuilder.parse(xmlStream);
-    } catch (SAXException e) {
-      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
-    } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
+      xml = parseXml(xmlStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     } finally {
@@ -199,7 +122,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream read(String doi) throws FileStoreException {
     if (!articleExistsAt(doi)) {
-      throw reportDoiNotFound();
+      throw reportNotFound(doi);
     }
     String fsid = findFsidForArticleXml(doi);
 
@@ -213,7 +136,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void update(InputStream file, String doi) throws IOException, FileStoreException {
     if (!articleExistsAt(doi)) {
-      throw reportDoiNotFound();
+      throw reportNotFound(doi);
     }
     write(readClientInput(file), findFsidForArticleXml(doi));
   }
@@ -230,7 +153,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      throw reportDoiNotFound();
+      throw reportNotFound(doi);
     }
 
     hibernateTemplate.delete(article);

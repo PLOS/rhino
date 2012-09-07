@@ -18,6 +18,9 @@
 
 package org.ambraproject.admin.controller;
 
+
+import com.google.common.base.Preconditions;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -31,7 +34,7 @@ public abstract class ArticleController extends RestController {
   private static final String DOI_SCHEME_VALUE = "info:doi/";
 
   /**
-   * Interpret an article DOI from a RESTful request made to the article address space.
+   * Interpret the DOI of an object in the article address space (an article or asset) from a RESTful request.
    * <p/>
    * It would be preferable if possible to parse these values using {@link org.springframework.web.bind.annotation.PathVariable}
    * annotations. Unfortunately, this version of Spring does not support {@code PathVariable}s that span multiple URI
@@ -40,7 +43,7 @@ public abstract class ArticleController extends RestController {
    * @param request a request to the application
    * @return the DOI of the article indicated by the request
    */
-  protected static String parseArticleDoi(HttpServletRequest request) {
+  protected static String parseEntityDoi(HttpServletRequest request) {
     String requestUri = request.getRequestURI();
     if (!requestUri.startsWith(ARTICLE_NAMESPACE)) {
       // Should be impossible if controllers are mapped correctly
@@ -48,6 +51,36 @@ public abstract class ArticleController extends RestController {
     }
     String doi = requestUri.substring(ARTICLE_NAMESPACE.length());
     return DOI_SCHEME_VALUE + doi;
+  }
+
+  /**
+   * Prepend the scheme value to a DOI, so it may be used as a database key.
+   * <p/>
+   * TODO: Replace these with clearer semantics
+   *
+   * @param doi a DOI with a scheme
+   * @return the DOI in the form used as a database key
+   * @throws IllegalArgumentException if the DOI is already prefixed with a scheme
+   */
+  public static String doiToKey(String doi) {
+    Preconditions.checkArgument(!doi.startsWith(DOI_SCHEME_VALUE),
+        "Attempted to prepend \"%s\" to a DOI that already has it: %s", DOI_SCHEME_VALUE, doi);
+    return DOI_SCHEME_VALUE + doi;
+  }
+
+  /**
+   * Remove the scheme value from a DOI database value, to get the DOI as it appears within NLM documents.
+   * <p/>
+   * TODO: Replace these with clearer semantics
+   *
+   * @param key a DOI in the form used as a database key
+   * @return a DOI with no scheme value
+   * @throws IllegalArgumentException if the DOI does not have a scheme prefix
+   */
+  public static String keyToDoi(String key) {
+    Preconditions.checkArgument(key.startsWith(DOI_SCHEME_VALUE),
+        "Expected to start with \"%s\": %s", DOI_SCHEME_VALUE, key);
+    return key.substring(DOI_SCHEME_VALUE.length());
   }
 
 }
