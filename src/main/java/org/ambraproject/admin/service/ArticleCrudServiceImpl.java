@@ -46,9 +46,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
-  private boolean articleExistsAt(String doi) {
+  private boolean articleExistsAt(ArticleSpaceId id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
-        .add(Restrictions.eq("doi", doi));
+        .add(Restrictions.eq("doi", id.getKey()));
     return exists(criteria);
   }
 
@@ -56,10 +56,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * Create an article entity to represent the metadata provided in the article's XML file.
    *
    * @param xmlData data from the XML file for the new article
-   * @param doi     the article's DOI, according to the action that wants to create the article
+   * @param id      the identifier for the article
    * @return the new article object
    */
-  private Article prepareMetadata(byte[] xmlData, String doi) {
+  private Article prepareMetadata(byte[] xmlData, ArticleSpaceId id) {
     InputStream xmlStream = null;
     Document xml;
     try {
@@ -71,19 +71,22 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       IOUtils.closeQuietly(xmlStream);
     }
 
-    return prepareMetadata(xml, doi);
+    return prepareMetadata(xml, id);
   }
 
   /**
    * Read metadata from an XML file into a new article representation.
+   * <p/>
+   * The identifier argument provides the DOI according to the REST action that is trying to create the article. It is
+   * expected to match the DOI in the XML document, but this must be validated against client error.
    *
    * @param xml the parsed XML for the new article
-   * @param doi the article's DOI, according to the action that wants to create the article
+   * @param id  the identifier for the article
    * @return the new article object
    */
-  private Article prepareMetadata(Document xml, String doi) {
+  private Article prepareMetadata(Document xml, ArticleSpaceId id) {
     Article article = new Article();
-    article.setDoi(doi);
+    article.setDoi(id.getKey());
 
     try {
       article = new ArticleXml(xml).build(article);
@@ -105,13 +108,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public void create(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
-    if (articleExistsAt(id.getKey())) {
+    if (articleExistsAt(id)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
     String fsid = findFsid(id); // do this first, to fail fast if the DOI is invalid
     byte[] xmlData = readClientInput(file);
 
-    Article article = prepareMetadata(xmlData, id.getKey());
+    Article article = prepareMetadata(xmlData, id);
     hibernateTemplate.save(article);
 
     write(xmlData, fsid);
@@ -122,7 +125,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public InputStream read(ArticleSpaceId id) throws FileStoreException {
-    if (!articleExistsAt(id.getKey())) {
+    if (!articleExistsAt(id)) {
       throw reportNotFound(id.getDoi());
     }
     String fsid = findFsid(id);
@@ -136,7 +139,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public void update(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
-    if (!articleExistsAt(id.getKey())) {
+    if (!articleExistsAt(id)) {
       throw reportNotFound(id.getDoi());
     }
     write(readClientInput(file), findFsid(id));

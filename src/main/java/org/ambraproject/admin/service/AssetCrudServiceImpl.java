@@ -38,9 +38,9 @@ import java.io.InputStream;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
-  private boolean assetExistsAt(String doi) {
+  private boolean assetExistsAt(ArticleSpaceId id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(ArticleAsset.class)
-        .add(Restrictions.eq("doi", doi));
+        .add(Restrictions.eq("doi", id.getKey()));
     return exists(criteria);
   }
 
@@ -50,7 +50,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public void create(InputStream file, ArticleSpaceId assetId) throws FileStoreException, IOException {
     final ArticleSpaceId articleId = assetId.getParent();
-    if (assetExistsAt(assetId.getKey())) {
+    if (assetExistsAt(assetId)) {
       throw new RestClientException("Can't create asset; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
@@ -96,7 +96,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public InputStream read(ArticleSpaceId assetId) throws FileStoreException {
-    if (!assetExistsAt(assetId.getKey())) {
+    if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId.getDoi());
     }
     String assetFsid = findFsid(assetId);
@@ -108,7 +108,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public void update(InputStream file, ArticleSpaceId assetId) throws FileStoreException, IOException {
-    if (!assetExistsAt(assetId.getKey())) {
+    if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId.getDoi());
     }
     String assetFsid = findFsid(assetId);
