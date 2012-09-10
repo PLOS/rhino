@@ -97,7 +97,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public InputStream read(ArticleSpaceId assetId) throws FileStoreException {
     if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId.getDoi());
+      throw reportNotFound(assetId.getFilePath());
     }
     String assetFsid = findFsid(assetId);
     return fileStoreService.getFileInStream(assetFsid);
@@ -109,7 +109,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public void update(InputStream file, ArticleSpaceId assetId) throws FileStoreException, IOException {
     if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId.getDoi());
+      throw reportNotFound(assetId.getFilePath());
     }
     String assetFsid = findFsid(assetId);
     byte[] assetData = readClientInput(file);
@@ -128,7 +128,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      throw reportNotFound(assetId.getDoi());
+      throw reportNotFound(assetId.getFilePath());
     }
     hibernateTemplate.delete(asset);
 

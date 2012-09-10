@@ -32,29 +32,26 @@ public class ArticleSpaceId {
 
   private static final String DOI_SCHEME_VALUE = "info:doi/";
   private static final Pattern URI_PATTERN = Pattern.compile(
-      Pattern.quote(ArticleCrudController.ARTICLE_NAMESPACE) + "(.+)\\.(\\w+)");
+      Pattern.quote(ArticleCrudController.ARTICLE_NAMESPACE) + "(.+)\\.(.+?)");
 
   /*
    * Internal invariants:
    *   - Instances of this class are immutable.
-   *   - All four fields are always non-null (but the Optional object might have an "absent" state, of course).
-   *   - The three string fields have length > 0
-   *   - key.equals(DOI_SCHEME_VALUE + doi)
-   *   - doi and key do not contain ':'
-   *   - extension contains no uppercase letters
-   *   - If parent has a present value, then that value's parent is absent. (That is, the parent-child relationship has
-   *     a maximum depth of 1 and cycles are prohibited.)
+   *   - All fields are non-null (but the Optional object may have an "absent" state, of course).
+   *   - The string fields are non-empty (they have length > 0).
+   *   - The doi field does not contain ':'.
+   *   - The extension field contains no uppercase letters.
+   *   - If an instance has a parent (meaning the instance is an asset), then the parent (an article) has no parent.
+   *     (In other words, the tree has a maximum depth of 1. There are no cycles.)
    */
 
   private final String doi;
-  private final String key;
   private final String extension;
   private final Optional<ArticleSpaceId> parent;
 
   private ArticleSpaceId(String doi, String extension, String parentId) {
     super();
     this.doi = Preconditions.checkNotNull(doi);
-    this.key = DOI_SCHEME_VALUE + this.doi;
     this.extension = Preconditions.checkNotNull(extension).toLowerCase();
     this.parent = (parentId == null)
         ? Optional.<ArticleSpaceId>absent()
@@ -67,6 +64,8 @@ public class ArticleSpaceId {
     Preconditions.checkArgument(doi.indexOf(':') < 0, "DOI must not have scheme prefix (\"info:doi/\")");
     Preconditions.checkArgument(!doi.isEmpty(), "DOI is an empty string");
     Preconditions.checkArgument(!extension.isEmpty(), "Extension is an empty string");
+    Preconditions.checkArgument(!parent.isPresent() || !parent.get().parent.isPresent(),
+        "An asset has another asset as a parent");
   }
 
   /**
@@ -136,7 +135,20 @@ public class ArticleSpaceId {
    * @return the key value
    */
   public String getKey() {
-    return key;
+    return DOI_SCHEME_VALUE + doi;
+  }
+
+  /**
+   * Return the virtual file path to the article or asset that this object identifies. The returned string would appear
+   * at the end of a RESTful URL that the client uses to refer to the article or asset. (That is, the identified object
+   * would have
+   * <pre>"http://" + theHostname + "/article/" + this.getFilePath()</pre>
+   * for a URL.)
+   *
+   * @return the file path
+   */
+  public String getFilePath() {
+    return doi + '.' + extension;
   }
 
   /**
