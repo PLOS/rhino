@@ -19,6 +19,7 @@
 package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.admin.service.ArticleSpaceCrudService;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
@@ -56,20 +57,19 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private AssetCrudService assetCrudService;
 
+  private ArticleSpaceCrudService getServiceFor(ArticleSpaceId id) {
+    return (id.isAsset() ? assetCrudService : articleCrudService);
+  }
+
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
       throws IOException, FileStoreException {
     ArticleSpaceId id = ArticleSpaceId.parse(request);
-
     InputStream stream = null;
     try {
       stream = file.getInputStream();
-      if (!id.isAsset()) {
-        articleCrudService.create(stream, id);
-      } else {
-        assetCrudService.create(stream, id);
-      }
+      getServiceFor(id).create(stream, id);
     } finally {
       IOUtils.closeQuietly(stream);
     }
@@ -82,7 +82,7 @@ public class ArticleCrudController extends RestController {
     InputStream fileStream = null;
     byte[] fileData;
     try {
-      fileStream = articleCrudService.read(id);
+      fileStream = getServiceFor(id).read(id);
       fileData = IOUtils.toByteArray(fileStream); // TODO Can avoid dumping into memory?
     } finally {
       IOUtils.closeQuietly(fileStream);
@@ -97,7 +97,7 @@ public class ArticleCrudController extends RestController {
     InputStream stream = null;
     try {
       stream = file.getInputStream();
-      articleCrudService.update(stream, id);
+      getServiceFor(id).update(stream, id);
     } finally {
       IOUtils.closeQuietly(stream);
     }
@@ -107,7 +107,7 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
     ArticleSpaceId id = ArticleSpaceId.parse(request);
-    articleCrudService.delete(id);
+    getServiceFor(id).delete(id);
     return reportOk();
   }
 

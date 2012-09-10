@@ -24,7 +24,7 @@ import org.ambraproject.filestore.FileStoreException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface AssetCrudService {
+public interface AssetCrudService extends ArticleSpaceCrudService {
 
   /**
    * Create a new article asset.

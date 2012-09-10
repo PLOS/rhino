@@ -32,7 +32,7 @@ import java.io.StringWriter;
 /**
  * Controller that sends HTTP responses to RESTful requests.
  */
-public class RestController {
+public abstract class RestController {
 
   private static final Logger log = LoggerFactory.getLogger(RestController.class);
 
@@ -70,11 +70,10 @@ public class RestController {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<String> reportServerError(Exception e) {
     log.error("Exception from controller", e);
-    StringWriter reportBuffer = new StringWriter();
-    e.printStackTrace(new PrintWriter(reportBuffer));
-    String report = reportBuffer.toString();
+    StringWriter report = new StringWriter();
+    e.printStackTrace(new PrintWriter(report));
 
-    return new ResponseEntity<String>(report, HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<String>(report.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
 }
