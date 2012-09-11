@@ -27,8 +27,6 @@ import org.springframework.http.MediaType;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
@@ -40,9 +38,7 @@ import java.util.regex.Pattern;
 public class DoiBasedIdentity {
 
   private static final String DOI_SCHEME_VALUE = "info:doi/";
-  public static final String XML_EXTENSION = "xml";
-  private static final Pattern URI_PATTERN = Pattern.compile(
-      Pattern.quote(ArticleCrudController.ARTICLE_NAMESPACE) + "(.+)\\.(.+?)");
+  private static final String XML_EXTENSION = "xml";
   private static final MimetypesFileTypeMap MIMETYPES = new MimetypesFileTypeMap();
 
 
@@ -118,16 +114,21 @@ public class DoiBasedIdentity {
    * @return an for the article or asset to which the REST action was directed
    * @see ArticleCrudController
    */
-  public static DoiBasedIdentity parse(HttpServletRequest request) {
+  public static DoiBasedIdentity parse(HttpServletRequest request, String namespace) {
     String requestUri = request.getRequestURI();
-    Matcher matcher = URI_PATTERN.matcher(requestUri);
-    if (!matcher.matches()) {
+    if (!requestUri.startsWith(namespace)) {
       // Valid controller mappings should prevent this
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Request URI prefixed with wrong namespace");
     }
+    int dotIndex = requestUri.lastIndexOf('.');
+    if (dotIndex < 0 || dotIndex + 1 >= requestUri.length()) {
+      throw new IllegalArgumentException("Request URI does not have file extension");
+    }
+    String identifier = requestUri.substring(namespace.length(), dotIndex);
+    String extension = requestUri.substring(dotIndex + 1);
 
     String parentId = request.getParameter(ArticleCrudController.ASSET_PARAM);
-    return new DoiBasedIdentity(matcher.group(1), matcher.group(2), parentId);
+    return new DoiBasedIdentity(identifier, extension, parentId);
   }
 
   /**

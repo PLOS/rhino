@@ -95,7 +95,7 @@ def test(article_id, article_path, asset_id, asset_path):
     create_asset = new_req(asset_id)
     create_asset.set_form_file_path('file', asset_path)
     create_asset.set_query_parameter('assetOf', article_doi)
-    print report('Response to CREATE for asset', create_asset.post())
+    #print report('Response to CREATE for asset', create_asset.post())
 
     read = new_req(article_id)
     print report('Response to READ', read.get())
@@ -103,12 +103,12 @@ def test(article_id, article_path, asset_id, asset_path):
     read_asset = new_req(asset_id)
     read_asset.set_form_file_path('file', asset_path)
     read_asset.set_query_parameter('assetOf', article_doi)
-    print report('Response to READ for asset', read_asset.get())
+    #print report('Response to READ for asset', read_asset.get())
 
     delete_asset = new_req(asset_id)
     delete_asset.set_form_file_path('file', asset_path)
     delete_asset.set_query_parameter('assetOf', article_doi)
-    print report('Response to DELETE for asset', delete_asset.delete())
+    #print report('Response to DELETE for asset', delete_asset.delete())
 
     delete = new_req(article_id)
     print report('Response to DELETE', delete.delete())
