@@ -74,7 +74,7 @@ public class ArticleCrudController extends RestController {
     } finally {
       IOUtils.closeQuietly(stream);
     }
-    return reportOk();
+    return new ResponseEntity<Object>(HttpStatus.CREATED);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
