@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -79,15 +80,20 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
     ArticleSpaceId id = ArticleSpaceId.parse(request);
+
     InputStream fileStream = null;
     byte[] fileData;
     try {
       fileStream = getServiceFor(id).read(id);
-      fileData = IOUtils.toByteArray(fileStream); // TODO Can avoid dumping into memory?
+      fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
     } finally {
       IOUtils.closeQuietly(fileStream);
     }
-    return new ResponseEntity<byte[]>(fileData, HttpStatus.OK);
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(id.getContentType());
+
+    return new ResponseEntity<byte[]>(fileData, headers, HttpStatus.OK);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)

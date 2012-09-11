@@ -20,7 +20,9 @@ package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import org.springframework.http.MediaType;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,8 +33,11 @@ import java.util.regex.Pattern;
 public class ArticleSpaceId {
 
   private static final String DOI_SCHEME_VALUE = "info:doi/";
+  public static final String XML_EXTENSION = "xml";
   private static final Pattern URI_PATTERN = Pattern.compile(
       Pattern.quote(ArticleCrudController.ARTICLE_NAMESPACE) + "(.+)\\.(.+?)");
+  private static final MimetypesFileTypeMap MIMETYPES = new MimetypesFileTypeMap();
+
 
   /*
    * Internal invariants:
@@ -43,6 +48,7 @@ public class ArticleSpaceId {
    *   - The extension field contains no uppercase letters.
    *   - If an instance has a parent (meaning the instance is an asset), then the parent (an article) has no parent.
    *     (In other words, the tree has a maximum depth of 1. There are no cycles.)
+   *   - The MIMETYPES object is never mutated.
    */
 
   private final String doi;
@@ -79,7 +85,7 @@ public class ArticleSpaceId {
    * @throws IllegalArgumentException if the DOI is prefixed with a URI scheme value or is null or empty
    */
   public static ArticleSpaceId forArticle(String doi) {
-    return new ArticleSpaceId(doi, "xml", null);
+    return new ArticleSpaceId(doi, XML_EXTENSION, null);
   }
 
   /**
@@ -163,6 +169,20 @@ public class ArticleSpaceId {
    */
   public String getExtension() {
     return extension;
+  }
+
+  /**
+   * Get the content type for the data associated with the identified entity in the file store. The returned value is a
+   * Spring object that maps onto a standard MIME type.
+   *
+   * @return the content type
+   */
+  public MediaType getContentType() {
+    if (extension.equalsIgnoreCase(XML_EXTENSION)) {
+      return MediaType.TEXT_XML;
+    }
+    String mimeType = MIMETYPES.getContentType(getFilePath());
+    return MediaType.parseMediaType(mimeType);
   }
 
   /**
