@@ -111,7 +111,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (articleExistsAt(id)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
-    String fsid = findFsid(id); // do this first, to fail fast if the DOI is invalid
+    String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
     byte[] xmlData = readClientInput(file);
 
     Article article = prepareMetadata(xmlData, id);
@@ -128,10 +128,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (!articleExistsAt(id)) {
       throw reportNotFound(id.getFilePath());
     }
-    String fsid = findFsid(id);
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileInStream(fsid);
+    return fileStoreService.getFileInStream(id.getFsid());
   }
 
   /**
@@ -142,7 +141,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (!articleExistsAt(id)) {
       throw reportNotFound(id.getFilePath());
     }
-    write(readClientInput(file), findFsid(id));
+    String fsid = id.getFsid(); // make sure this is valid before reading the stream
+    byte[] fileData = readClientInput(file);
+    write(fileData, fsid);
   }
 
   /**
@@ -159,9 +160,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id.getFilePath());
     }
+    String fsid = id.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 
     hibernateTemplate.delete(article);
-    fileStoreService.deleteFile(findFsid(id));
+    fileStoreService.deleteFile(fsid);
   }
 
 }

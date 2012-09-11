@@ -20,6 +20,9 @@ package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import org.ambraproject.admin.RestClientException;
+import org.ambraproject.filestore.FSIDMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -184,6 +187,21 @@ public class ArticleSpaceId {
     String mimeType = MIMETYPES.getContentType(getFilePath());
     return MediaType.parseMediaType(mimeType);
   }
+
+  /**
+   * Get file store identifier for the data associated with the article or asset that this object identifies.
+   *
+   * @return the FSID (file store identifier)
+   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
+   */
+  public String getFsid() {
+    String fsid = FSIDMapper.doiTofsid(getKey(), extension);
+    if (fsid.isEmpty()) {
+      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
+    }
+    return fsid;
+  }
+
 
   /**
    * Check whether this object identifies an asset.

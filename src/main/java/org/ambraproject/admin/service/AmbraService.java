@@ -21,8 +21,6 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.ArticleSpaceId;
-import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
@@ -92,21 +90,6 @@ public abstract class AmbraService {
         throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
       }
     }
-  }
-
-  /**
-   * Produce a file store ID from a client-supplied identifier.
-   *
-   * @param id the identifier of the entity (article or asset)
-   * @return the FSID for a file associated with the entity
-   * @throws RestClientException if the DOI can't be parsed and converted into an FSID
-   */
-  protected static String findFsid(ArticleSpaceId id) {
-    String fsid = FSIDMapper.doiTofsid(id.getKey(), id.getExtension());
-    if (fsid.isEmpty()) {
-      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
-    }
-    return fsid;
   }
 
   /**

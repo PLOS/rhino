@@ -54,6 +54,11 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException("Can't create asset; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
 
+    // Get these first to fail faster in case of client error
+    String articleFsid = articleId.getFsid();
+    String assetFsid = assetId.getFsid();
+
+
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
@@ -65,7 +70,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
-    String articleFsid = findFsid(articleId);
     InputStream articleStream = null;
     Document articleXml;
     try {
@@ -76,8 +80,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     } finally {
       IOUtils.closeQuietly(articleStream);
     }
-
-    String assetFsid = findFsid(assetId);
 
     ArticleAsset asset;
     try {
@@ -99,8 +101,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId.getFilePath());
     }
-    String assetFsid = findFsid(assetId);
-    return fileStoreService.getFileInStream(assetFsid);
+    return fileStoreService.getFileInStream(assetId.getFsid());
   }
 
   /**
@@ -111,7 +112,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId.getFilePath());
     }
-    String assetFsid = findFsid(assetId);
+    String assetFsid = assetId.getFsid(); // make sure this is valid before reading the stream
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);
   }
@@ -130,10 +131,10 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (asset == null) {
       throw reportNotFound(assetId.getFilePath());
     }
-    hibernateTemplate.delete(asset);
+    String fsid = assetId.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 
-    String assetFsid = findFsid(assetId);
-    fileStoreService.deleteFile(assetFsid);
+    hibernateTemplate.delete(asset);
+    fileStoreService.deleteFile(fsid);
   }
 
 }
