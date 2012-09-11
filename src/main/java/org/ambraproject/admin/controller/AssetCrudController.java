@@ -18,10 +18,13 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +34,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 public class AssetCrudController extends DoiBasedCrudController {
 
   private static final String ASSET_NAMESPACE = "/asset/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
+  private static final String PARENT_PARAM = "assetOf";
 
   @Autowired
   private AssetCrudService assetCrudService;
@@ -52,11 +57,35 @@ public class AssetCrudController extends DoiBasedCrudController {
   }
 
 
-  @Override
+  /**
+   * Dispatch an action to create an article.
+   *
+   * @param request the HTTP request from a REST client
+   * @param file    the uploaded file to use to create an article
+   * @return the HTTP response, to indicate success or describe an error
+   * @throws IOException
+   * @throws FileStoreException
+   */
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
+  public ResponseEntity<?> create(HttpServletRequest request, MultipartFile file)
       throws IOException, FileStoreException {
-    return super.create(request, file);
+    DoiBasedIdentity assetId = parse(request);
+
+    String parentId = request.getParameter(PARENT_PARAM);
+    if (parentId == null) {
+      String message = String.format("Creating an asset requires \"?%s=\" with the article DOI", PARENT_PARAM);
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+    DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(parentId);
+
+    InputStream stream = null;
+    try {
+      stream = file.getInputStream();
+      assetCrudService.create(stream, assetId, articleId);
+    } finally {
+      IOUtils.closeQuietly(stream);
+    }
+    return new ResponseEntity<Object>(HttpStatus.CREATED);
   }
 
   @Override

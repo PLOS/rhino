@@ -48,8 +48,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, DoiBasedIdentity assetId) throws FileStoreException, IOException {
-    final DoiBasedIdentity articleId = assetId.getParent();
+  public void create(InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId) throws FileStoreException, IOException {
     if (assetExistsAt(assetId)) {
       throw new RestClientException("Can't create asset; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }

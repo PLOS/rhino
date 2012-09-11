@@ -44,7 +44,6 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
   public AssetXml(Node xml, DoiBasedIdentity assetId) {
     super(xml);
     this.assetId = Preconditions.checkNotNull(assetId);
-    Preconditions.checkArgument(assetId.isAsset());
   }
 
   // The node-names for nodes that can be an asset, separated by where to find the DOI

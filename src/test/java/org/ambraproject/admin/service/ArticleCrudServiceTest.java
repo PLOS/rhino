@@ -64,6 +64,12 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertNotNull(articleCrudService);
   }
 
+
+  private static DoiBasedIdentity identifyAsset(String assetDoi, String extension) {
+    final String assetNamespace = "/asset/";
+    return DoiBasedIdentity.parse(assetNamespace + assetDoi + '.' + extension, assetNamespace);
+  }
+
   private void assertArticleExistence(DoiBasedIdentity id, boolean expectedToExist) throws FileStoreException {
     boolean received404 = false;
     try {
@@ -149,12 +155,13 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final DoiBasedIdentity assetId = DoiBasedIdentity.forAsset(assetDoi, extension, articleDoi);
+    final DoiBasedIdentity assetId = identifyAsset(assetDoi, extension);
+    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(articleDoi);
 
-    articleCrudService.create(new TestFile(articleFile).read(), DoiBasedIdentity.forArticle(articleDoi));
+    articleCrudService.create(new TestFile(articleFile).read(), articleId);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
-    assetCrudService.create(assetFileStream, assetId);
+    assetCrudService.create(assetFileStream, assetId, articleId);
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria

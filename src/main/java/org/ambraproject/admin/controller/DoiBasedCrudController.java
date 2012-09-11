@@ -57,8 +57,8 @@ public abstract class DoiBasedCrudController extends RestController {
    */
   protected abstract String getNamespacePrefix();
 
-  private DoiBasedIdentity parse(HttpServletRequest request) {
-    return DoiBasedIdentity.parse(request, getNamespacePrefix());
+  protected DoiBasedIdentity parse(HttpServletRequest request) {
+    return DoiBasedIdentity.parse(request.getRequestURI(), getNamespacePrefix());
   }
 
 
@@ -66,28 +66,6 @@ public abstract class DoiBasedCrudController extends RestController {
    * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
    * (and @RequestParam where needed).
    */
-
-  /**
-   * Dispatch a "create" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @param file    the uploaded file to use to create an entity
-   * @return the HTTP response, to indicate success or describe an error
-   * @throws IOException
-   * @throws FileStoreException
-   */
-  protected ResponseEntity<?> create(HttpServletRequest request, MultipartFile file)
-      throws IOException, FileStoreException {
-    DoiBasedIdentity id = parse(request);
-    InputStream stream = null;
-    try {
-      stream = file.getInputStream();
-      getService().create(stream, id);
-    } finally {
-      IOUtils.closeQuietly(stream);
-    }
-    return new ResponseEntity<Object>(HttpStatus.CREATED);
-  }
 
   /**
    * Dispatch a "read" action to the service.

@@ -28,16 +28,14 @@ public interface AssetCrudService extends DoiBasedCrudService {
 
   /**
    * Create a new article asset.
-   * <p/>
-   * This temporary API is based on the assumption that there is exactly one file associated with each asset. This
-   * should be refactored when the role of assets is generalized later.
    *
-   * @param file the file data to associate with the new asset
-   * @param id   the identifier for the new asset
+   * @param file      the file data to associate with the new asset
+   * @param assetId   the identifier for the new asset
+   * @param articleId the identifier for the existing article to which the asset belongs
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void create(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
+  public abstract void create(InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId) throws FileStoreException, IOException;
 
   /**
    * Read the file associated with an asset.

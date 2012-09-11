@@ -21,9 +21,11 @@ package org.ambraproject.admin.controller;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -43,7 +46,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
   private static final String ARTICLE_NAMESPACE = "/article/";
-  static final String ASSET_PARAM = "assetOf";
   private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
 
   @Autowired
@@ -60,12 +62,29 @@ public class ArticleCrudController extends DoiBasedCrudController {
   }
 
 
-  @Override
+  /**
+   * Dispatch an action to create an article.
+   *
+   * @param request the HTTP request from a REST client
+   * @param file    the uploaded file to use to create an article
+   * @return the HTTP response, to indicate success or describe an error
+   * @throws IOException
+   * @throws FileStoreException
+   */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
+  public ResponseEntity<?> create(HttpServletRequest request, MultipartFile file)
       throws IOException, FileStoreException {
-    return super.create(request, file);
+    DoiBasedIdentity id = parse(request);
+    InputStream stream = null;
+    try {
+      stream = file.getInputStream();
+      articleCrudService.create(stream, id);
+    } finally {
+      IOUtils.closeQuietly(stream);
+    }
+    return new ResponseEntity<Object>(HttpStatus.CREATED);
   }
+
 
   @Override
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)

@@ -27,11 +27,10 @@ import java.io.InputStream;
 /**
  * Super-interface to CRUD services within the article namespace.
  * <p/>
- * See the extending interfaces for documentation on the behavior of each method.
+ * Methods are included here only if they share a common signature among services. See the extending interfaces for
+ * documentation on the behavior of each method.
  */
 public abstract interface DoiBasedCrudService {
-
-  public abstract void create(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
   public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
 
