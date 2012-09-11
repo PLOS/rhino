@@ -23,7 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.models.ArticleAsset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,9 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
-  private final ArticleSpaceId assetId;
+  private final DoiBasedIdentity assetId;
 
-  public AssetXml(Node xml, ArticleSpaceId assetId) {
+  public AssetXml(Node xml, DoiBasedIdentity assetId) {
     super(xml);
     this.assetId = Preconditions.checkNotNull(assetId);
     Preconditions.checkArgument(assetId.isAsset());
@@ -70,7 +70,7 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
       assetNodes = ImmutableList.of(); // skip to error
     }
 
-    final String targetDoi = assetId.getDoi();
+    final String targetDoi = assetId.getIdentifier();
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();
       String doi;

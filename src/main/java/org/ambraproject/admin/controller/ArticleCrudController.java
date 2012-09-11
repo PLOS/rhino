@@ -58,7 +58,7 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private AssetCrudService assetCrudService;
 
-  private ArticleSpaceCrudService getServiceFor(ArticleSpaceId id) {
+  private ArticleSpaceCrudService getServiceFor(DoiBasedIdentity id) {
     return (id.isAsset() ? assetCrudService : articleCrudService);
   }
 
@@ -66,7 +66,7 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
       throws IOException, FileStoreException {
-    ArticleSpaceId id = ArticleSpaceId.parse(request);
+    DoiBasedIdentity id = DoiBasedIdentity.parse(request);
     InputStream stream = null;
     try {
       stream = file.getInputStream();
@@ -79,7 +79,7 @@ public class ArticleCrudController extends RestController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    ArticleSpaceId id = ArticleSpaceId.parse(request);
+    DoiBasedIdentity id = DoiBasedIdentity.parse(request);
 
     InputStream fileStream = null;
     byte[] fileData;
@@ -99,7 +99,7 @@ public class ArticleCrudController extends RestController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> update(HttpServletRequest request, @RequestParam("file") MultipartFile file)
       throws IOException, FileStoreException {
-    ArticleSpaceId id = ArticleSpaceId.parse(request);
+    DoiBasedIdentity id = DoiBasedIdentity.parse(request);
     InputStream stream = null;
     try {
       stream = file.getInputStream();
@@ -112,7 +112,7 @@ public class ArticleCrudController extends RestController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    ArticleSpaceId id = ArticleSpaceId.parse(request);
+    DoiBasedIdentity id = DoiBasedIdentity.parse(request);
     getServiceFor(id).delete(id);
     return reportOk();
   }

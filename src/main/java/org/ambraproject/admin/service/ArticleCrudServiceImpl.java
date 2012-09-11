@@ -19,7 +19,7 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
@@ -46,7 +46,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
-  private boolean articleExistsAt(ArticleSpaceId id) {
+  private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
         .add(Restrictions.eq("doi", id.getKey()));
     return exists(criteria);
@@ -59,7 +59,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param id      the identifier for the article
    * @return the new article object
    */
-  private Article prepareMetadata(byte[] xmlData, ArticleSpaceId id) {
+  private Article prepareMetadata(byte[] xmlData, DoiBasedIdentity id) {
     InputStream xmlStream = null;
     Document xml;
     try {
@@ -84,7 +84,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param id  the identifier for the article
    * @return the new article object
    */
-  private Article prepareMetadata(Document xml, ArticleSpaceId id) {
+  private Article prepareMetadata(Document xml, DoiBasedIdentity id) {
     Article article = new Article();
     article.setDoi(id.getKey());
 
@@ -107,7 +107,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
+  public void create(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
     if (articleExistsAt(id)) {
       throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
@@ -124,7 +124,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(ArticleSpaceId id) throws FileStoreException {
+  public InputStream read(DoiBasedIdentity id) throws FileStoreException {
     if (!articleExistsAt(id)) {
       throw reportNotFound(id.getFilePath());
     }
@@ -137,7 +137,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void update(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException {
+  public void update(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
     if (!articleExistsAt(id)) {
       throw reportNotFound(id.getFilePath());
     }
@@ -150,7 +150,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void delete(ArticleSpaceId id) throws FileStoreException {
+  public void delete(DoiBasedIdentity id) throws FileStoreException {
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)

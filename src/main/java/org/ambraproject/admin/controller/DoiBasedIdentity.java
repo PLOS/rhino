@@ -31,9 +31,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * An identifier for an entity in the article namespace, which can be either an article or an asset.
+ * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
+ * <li>The entity is an article, in which case the {@link #getIdentifier() identifier} is the article's actual DOI that
+ * would be known to public DOI resolvers.</li> <li>The entity is an asset of an article. In this case, the {@link
+ * #getIdentifier() identifier} is not a true DOI, but uses the parent article's DOI as a prefix. In this sense it is
+ * "DOI-based".</li> </ol>
  */
-public class ArticleSpaceId {
+public class DoiBasedIdentity {
 
   private static final String DOI_SCHEME_VALUE = "info:doi/";
   public static final String XML_EXTENSION = "xml";
@@ -47,31 +51,31 @@ public class ArticleSpaceId {
    *   - Instances of this class are immutable.
    *   - All fields are non-null (but the Optional object may have an "absent" state, of course).
    *   - The string fields are non-empty (they have length > 0).
-   *   - The doi field does not contain ':'.
+   *   - The identifier field does not contain ':'.
    *   - The extension field contains no uppercase letters.
    *   - If an instance has a parent (meaning the instance is an asset), then the parent (an article) has no parent.
    *     (In other words, the tree has a maximum depth of 1. There are no cycles.)
    *   - The MIMETYPES object is never mutated.
    */
 
-  private final String doi;
+  private final String identifier;
   private final String extension;
-  private final Optional<ArticleSpaceId> parent;
+  private final Optional<DoiBasedIdentity> parent;
 
-  private ArticleSpaceId(String doi, String extension, String parentId) {
+  private DoiBasedIdentity(String identifier, String extension, String parentId) {
     super();
-    this.doi = Preconditions.checkNotNull(doi);
+    this.identifier = Preconditions.checkNotNull(identifier);
     this.extension = Preconditions.checkNotNull(extension).toLowerCase();
     this.parent = (parentId == null)
-        ? Optional.<ArticleSpaceId>absent()
+        ? Optional.<DoiBasedIdentity>absent()
         : Optional.of(forArticle(parentId));
 
     validate();
   }
 
   private void validate() {
-    Preconditions.checkArgument(doi.indexOf(':') < 0, "DOI must not have scheme prefix (\"info:doi/\")");
-    Preconditions.checkArgument(!doi.isEmpty(), "DOI is an empty string");
+    Preconditions.checkArgument(identifier.indexOf(':') < 0, "DOI must not have scheme prefix (\"info:doi/\")");
+    Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
     Preconditions.checkArgument(!extension.isEmpty(), "Extension is an empty string");
     Preconditions.checkArgument(!parent.isPresent() || !parent.get().parent.isPresent(),
         "An asset has another asset as a parent");
@@ -83,12 +87,12 @@ public class ArticleSpaceId {
    * <p/>
    * The DOI provided must <em>not</em> be prefixed with {@code "info:doi/"} or any other URI scheme value.
    *
-   * @param doi the article's DOI
+   * @param identifier the article's DOI
    * @return a new identifier for the article
    * @throws IllegalArgumentException if the DOI is prefixed with a URI scheme value or is null or empty
    */
-  public static ArticleSpaceId forArticle(String doi) {
-    return new ArticleSpaceId(doi, XML_EXTENSION, null);
+  public static DoiBasedIdentity forArticle(String identifier) {
+    return new DoiBasedIdentity(identifier, XML_EXTENSION, null);
   }
 
   /**
@@ -103,8 +107,8 @@ public class ArticleSpaceId {
    * @throws IllegalArgumentException if a DOI is prefixed with a URI scheme value, or if a DOI or the extension is null
    *                                  or empty
    */
-  public static ArticleSpaceId forAsset(String assetDoi, String fileExtension, String articleDoi) {
-    return new ArticleSpaceId(assetDoi, fileExtension, Preconditions.checkNotNull(articleDoi));
+  public static DoiBasedIdentity forAsset(String assetDoi, String fileExtension, String articleDoi) {
+    return new DoiBasedIdentity(assetDoi, fileExtension, Preconditions.checkNotNull(articleDoi));
   }
 
   /**
@@ -114,7 +118,7 @@ public class ArticleSpaceId {
    * @return an for the article or asset to which the REST action was directed
    * @see ArticleCrudController
    */
-  public static ArticleSpaceId parse(HttpServletRequest request) {
+  public static DoiBasedIdentity parse(HttpServletRequest request) {
     String requestUri = request.getRequestURI();
     Matcher matcher = URI_PATTERN.matcher(requestUri);
     if (!matcher.matches()) {
@@ -123,28 +127,31 @@ public class ArticleSpaceId {
     }
 
     String parentId = request.getParameter(ArticleCrudController.ASSET_PARAM);
-    return new ArticleSpaceId(matcher.group(1), matcher.group(2), parentId);
+    return new DoiBasedIdentity(matcher.group(1), matcher.group(2), parentId);
   }
 
   /**
    * Return the DOI or DOI-like identifier for the article or asset that this object identifies. The return value will
    * not be prefixed with {@code "info:doi/"} and, under Ambra's current data model, must not be stored in a DOI column
    * of any database table.
+   * <p/>
+   * The value {@code this.getIdentifier()} represents an actual DOI (that a public DOI resolver would know about) if
+   * and only if {@code this.isAsset()} returns {@code false}.
    *
    * @return the DOI or DOI-like identifier
    */
-  public String getDoi() {
-    return doi;
+  public String getIdentifier() {
+    return identifier;
   }
 
   /**
    * Return a database key value to represent the article or asset that this object identifies. Under Ambra's current
-   * data model, this is the string returned by {@link #getDoi} prefixed with {@code "info:doi/"}.
+   * data model, this is the string returned by {@link #getIdentifier} prefixed with {@code "info:doi/"}.
    *
    * @return the key value
    */
   public String getKey() {
-    return DOI_SCHEME_VALUE + doi;
+    return DOI_SCHEME_VALUE + identifier;
   }
 
   /**
@@ -157,7 +164,7 @@ public class ArticleSpaceId {
    * @return the file path
    */
   public String getFilePath() {
-    return doi + '.' + extension;
+    return identifier + '.' + extension;
   }
 
   /**
@@ -206,8 +213,9 @@ public class ArticleSpaceId {
   /**
    * Check whether this object identifies an asset.
    * <p/>
-   * If this method returns {@code true}, then this object has the identifier for the asset's parent article, which can
-   * be retrieved with {@link #getParent()}.
+   * If this method returns {@code true}, then this object contains the identifier for the asset's parent article, which
+   * can be retrieved with {@link #getParent()}. If this method returns {@code false}, then {@link #getParent()} will
+   * throw an exception.
    *
    * @return {@code true} if this object identifies an asset and {@code false} if it identifies an article
    */
@@ -224,7 +232,7 @@ public class ArticleSpaceId {
    * @return the identifier for the parent article
    * @throws IllegalStateException if this object identifies an article
    */
-  public ArticleSpaceId getParent() {
+  public DoiBasedIdentity getParent() {
     Preconditions.checkState(parent.isPresent(), "Does not identify an asset");
     return parent.get();
   }
@@ -235,9 +243,9 @@ public class ArticleSpaceId {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArticleSpaceId that = (ArticleSpaceId) o;
+    DoiBasedIdentity that = (DoiBasedIdentity) o;
 
-    if (!doi.equals(that.doi)) return false;
+    if (!identifier.equals(that.identifier)) return false;
     if (!extension.equals(that.extension)) return false;
     if (!parent.equals(that.parent)) return false;
 
@@ -248,7 +256,7 @@ public class ArticleSpaceId {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + doi.hashCode();
+    result = prime * result + identifier.hashCode();
     result = prime * result + extension.hashCode();
     result = prime * result + parent.hashCode();
     return result;
@@ -258,12 +266,12 @@ public class ArticleSpaceId {
   public String toString() {
     final StringBuilder sb = new StringBuilder();
     sb.append(getClass().getSimpleName()).append('(');
-    sb.append("doi=\"").append(doi).append('\"');
+    sb.append("identifier=\"").append(identifier).append('\"');
     sb.append(", extension=\"").append(extension).append('\"');
 
     sb.append(", parent=");
     if (parent.isPresent()) {
-      sb.append('\"').append(parent.get().getDoi()).append('\"');
+      sb.append('\"').append(parent.get().getIdentifier()).append('\"');
     } else {
       sb.append((Object) null);
     }

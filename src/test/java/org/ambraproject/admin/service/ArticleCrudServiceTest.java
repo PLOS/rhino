@@ -22,7 +22,7 @@ import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -64,7 +64,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertNotNull(articleCrudService);
   }
 
-  private void assertArticleExistence(ArticleSpaceId id, boolean expectedToExist) throws FileStoreException {
+  private void assertArticleExistence(DoiBasedIdentity id, boolean expectedToExist) throws FileStoreException {
     boolean received404 = false;
     try {
       articleCrudService.read(id);
@@ -93,7 +93,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     final TestFile sampleFile = new TestFile(fileLocation);
     final byte[] sampleData = sampleFile.getData();
-    final ArticleSpaceId articleId = ArticleSpaceId.forArticle(doi);
+    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(doi);
     final String key = articleId.getKey();
 
     assertArticleExistence(articleId, false);
@@ -149,9 +149,9 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final ArticleSpaceId assetId = ArticleSpaceId.forAsset(assetDoi, extension, articleDoi);
+    final DoiBasedIdentity assetId = DoiBasedIdentity.forAsset(assetDoi, extension, articleDoi);
 
-    articleCrudService.create(new TestFile(articleFile).read(), ArticleSpaceId.forArticle(articleDoi));
+    articleCrudService.create(new TestFile(articleFile).read(), DoiBasedIdentity.forArticle(articleDoi));
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.create(assetFileStream, assetId);
@@ -168,7 +168,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
   @Test(dataProvider = "sampleArticles")
   public void testCreateCollision(String doi, File fileLocation) throws IOException, FileStoreException {
     doi += ".testCreateCollision"; // Avoid collisions with canonical sample data
-    final ArticleSpaceId articleId = ArticleSpaceId.forArticle(doi);
+    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(doi);
 
     final TestFile sampleFile = new TestFile(fileLocation);
 

@@ -18,7 +18,7 @@
 
 package org.ambraproject.admin.service;
 
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public interface AssetCrudService extends ArticleSpaceCrudService {
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void create(InputStream file, ArticleSpaceId id) throws FileStoreException, IOException;
+  public abstract void create(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
   /**
    * Read the file associated with an asset.
@@ -46,7 +46,7 @@ public interface AssetCrudService extends ArticleSpaceCrudService {
    * @return a stream containing the file data
    * @throws FileStoreException
    */
-  public abstract InputStream read(ArticleSpaceId id) throws FileStoreException;
+  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
 
   /**
    * Replace asset data from a provided file stream.
@@ -59,7 +59,7 @@ public interface AssetCrudService extends ArticleSpaceCrudService {
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void update(InputStream file, ArticleSpaceId id) throws FileStoreException, IOException;
+  public abstract void update(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
   /**
    * Delete an asset and its associated file.
@@ -67,6 +67,6 @@ public interface AssetCrudService extends ArticleSpaceCrudService {
    * @param id the identifier of the asset to delete
    * @throws FileStoreException
    */
-  public abstract void delete(ArticleSpaceId id) throws FileStoreException;
+  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
 
 }

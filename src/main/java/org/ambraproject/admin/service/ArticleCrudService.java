@@ -18,7 +18,7 @@
 
 package org.ambraproject.admin.service;
 
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public interface ArticleCrudService extends ArticleSpaceCrudService {
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract void create(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException;
+  public abstract void create(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException;
 
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
@@ -50,7 +50,7 @@ public interface ArticleCrudService extends ArticleSpaceCrudService {
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract InputStream read(ArticleSpaceId id) throws FileStoreException;
+  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
 
   /**
    * Overwrite an article with supplied XML data.
@@ -65,7 +65,7 @@ public interface ArticleCrudService extends ArticleSpaceCrudService {
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract void update(InputStream file, ArticleSpaceId id) throws IOException, FileStoreException;
+  public abstract void update(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException;
 
   /**
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
@@ -75,6 +75,6 @@ public interface ArticleCrudService extends ArticleSpaceCrudService {
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract void delete(ArticleSpaceId id) throws FileStoreException;
+  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
 
 }

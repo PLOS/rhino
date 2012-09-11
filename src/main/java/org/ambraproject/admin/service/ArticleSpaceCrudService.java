@@ -18,7 +18,7 @@
 
 package org.ambraproject.admin.service;
 
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
@@ -31,12 +31,12 @@ import java.io.InputStream;
  */
 public abstract interface ArticleSpaceCrudService {
 
-  public abstract void create(InputStream file, ArticleSpaceId id) throws FileStoreException, IOException;
+  public abstract void create(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
-  public abstract InputStream read(ArticleSpaceId id) throws FileStoreException;
+  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
 
-  public abstract void update(InputStream file, ArticleSpaceId id) throws FileStoreException, IOException;
+  public abstract void update(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
-  public abstract void delete(ArticleSpaceId id) throws FileStoreException;
+  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
 
 }

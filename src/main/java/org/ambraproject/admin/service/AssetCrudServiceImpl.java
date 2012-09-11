@@ -19,7 +19,7 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.ArticleSpaceId;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.AssetXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
@@ -38,7 +38,7 @@ import java.io.InputStream;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
-  private boolean assetExistsAt(ArticleSpaceId id) {
+  private boolean assetExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(ArticleAsset.class)
         .add(Restrictions.eq("doi", id.getKey()));
     return exists(criteria);
@@ -48,8 +48,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, ArticleSpaceId assetId) throws FileStoreException, IOException {
-    final ArticleSpaceId articleId = assetId.getParent();
+  public void create(InputStream file, DoiBasedIdentity assetId) throws FileStoreException, IOException {
+    final DoiBasedIdentity articleId = assetId.getParent();
     if (assetExistsAt(assetId)) {
       throw new RestClientException("Can't create asset; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
     }
@@ -66,7 +66,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      String message = "Cannot attach asset to article; no article found at DOI: " + articleId.getDoi();
+      String message = "Cannot attach asset to article; no article found at DOI: " + articleId.getIdentifier();
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
@@ -97,7 +97,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(ArticleSpaceId assetId) throws FileStoreException {
+  public InputStream read(DoiBasedIdentity assetId) throws FileStoreException {
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId.getFilePath());
     }
@@ -108,7 +108,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void update(InputStream file, ArticleSpaceId assetId) throws FileStoreException, IOException {
+  public void update(InputStream file, DoiBasedIdentity assetId) throws FileStoreException, IOException {
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId.getFilePath());
     }
@@ -121,7 +121,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void delete(ArticleSpaceId assetId) throws FileStoreException {
+  public void delete(DoiBasedIdentity assetId) throws FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
