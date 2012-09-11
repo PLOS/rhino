@@ -19,8 +19,8 @@
 package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.ArticleCrudService;
-import org.ambraproject.admin.service.ArticleSpaceCrudService;
 import org.ambraproject.admin.service.AssetCrudService;
+import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public class ArticleCrudController extends RestController {
   @Autowired
   private AssetCrudService assetCrudService;
 
-  private ArticleSpaceCrudService getServiceFor(DoiBasedIdentity id) {
+  private DoiBasedCrudService getServiceFor(DoiBasedIdentity id) {
     return (id.isAsset() ? assetCrudService : articleCrudService);
   }
 

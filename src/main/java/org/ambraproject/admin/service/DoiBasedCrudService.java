@@ -29,7 +29,7 @@ import java.io.InputStream;
  * <p/>
  * See the extending interfaces for documentation on the behavior of each method.
  */
-public abstract interface ArticleSpaceCrudService {
+public abstract interface DoiBasedCrudService {
 
   public abstract void create(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 

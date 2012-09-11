@@ -24,7 +24,7 @@ import org.ambraproject.filestore.FileStoreException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface ArticleCrudService extends ArticleSpaceCrudService {
+public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
    * Create an article from supplied XML data.
