@@ -37,6 +37,11 @@ import java.io.InputStream;
 public abstract class DoiBasedCrudController extends RestController {
 
   /**
+   * The request parameter name for uploading a single file. This is part of the public REST API.
+   */
+  protected static final String FILE_ARG = "file";
+
+  /**
    * Return a service object that can perform CRUD operations on the appropriate type of entity. Typically, this is just
    * a constant, dependency-injected field.
    *
@@ -58,7 +63,8 @@ public abstract class DoiBasedCrudController extends RestController {
 
 
   /*
-   * Subclasses should override the CRUD below, to add a @RequestMapping annotation and to make them public.
+   * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
+   * (and @RequestParam where needed).
    */
 
   /**
