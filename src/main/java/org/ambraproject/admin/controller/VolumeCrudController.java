@@ -20,11 +20,19 @@ package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.VolumeCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class VolumeCrudController extends DoiBasedCrudController {
 
   private static final String VOLUME_NAMESPACE = "/volume/";
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
+
+  private static final String DISPLAY_PARAM = "display";
 
   @Override
   protected String getNamespacePrefix() {
@@ -33,5 +41,13 @@ public class VolumeCrudController extends DoiBasedCrudController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
+
+
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
+  public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(DISPLAY_PARAM) String displayName) {
+    DoiBasedIdentity id = parse(request);
+    volumeCrudService.create(id, displayName);
+    return reportCreated();
+  }
 
 }

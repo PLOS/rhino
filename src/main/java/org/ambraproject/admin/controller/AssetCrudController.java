@@ -85,7 +85,7 @@ public class AssetCrudController extends FileStoreController {
     } finally {
       IOUtils.closeQuietly(stream);
     }
-    return new ResponseEntity<Object>(HttpStatus.CREATED);
+    return reportCreated();
   }
 
   @Override

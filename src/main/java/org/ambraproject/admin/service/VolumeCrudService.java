@@ -18,5 +18,10 @@
 
 package org.ambraproject.admin.service;
 
+import org.ambraproject.admin.controller.DoiBasedIdentity;
+
 public interface VolumeCrudService {
+
+  public abstract void create(DoiBasedIdentity id, String displayName);
+
 }

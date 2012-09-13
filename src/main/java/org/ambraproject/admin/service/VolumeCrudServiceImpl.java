@@ -18,5 +18,18 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Preconditions;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.models.Volume;
+
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
+
+  @Override
+  public void create(DoiBasedIdentity id, String displayName) {
+    Volume volume = new Volume();
+    volume.setVolumeUri(id.getKey());
+    volume.setDisplayName(Preconditions.checkNotNull(displayName));
+    hibernateTemplate.save(volume);
+  }
+
 }
