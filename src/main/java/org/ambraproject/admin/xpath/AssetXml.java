@@ -114,7 +114,7 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
 
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
     asset.setDoi(assetId.getKey());
-    asset.setExtension(assetId.getExtension());
+    asset.setExtension(assetId.getFileExtension());
 
     asset.setTitle(readString("caption/title", assetNode));
     asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?

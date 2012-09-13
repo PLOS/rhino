@@ -40,7 +40,15 @@ public abstract class DoiBasedCrudController extends RestController {
   protected abstract String getNamespacePrefix();
 
   protected DoiBasedIdentity parse(HttpServletRequest request) {
-    return DoiBasedIdentity.parse(request.getRequestURI(), getNamespacePrefix());
+    return DoiBasedIdentity.parse(request.getRequestURI(), getNamespacePrefix(), hasAssociatedFile());
+  }
+
+  /**
+   * @return whether entities handled by this controller have a file in the file store associated with them
+   * @see FileStoreController
+   */
+  protected boolean hasAssociatedFile() {
+    return false;
   }
 
 }

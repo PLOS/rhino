@@ -44,6 +44,12 @@ public abstract class FileStoreController extends DoiBasedCrudController {
    */
   protected abstract DoiBasedCrudService getService();
 
+  @Override
+  protected boolean hasAssociatedFile() {
+    return true;
+  }
+
+
   /*
   * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
   * (and @RequestParam where needed).
