@@ -22,6 +22,10 @@ import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.ArticleCrudServiceImpl;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.AssetCrudServiceImpl;
+import org.ambraproject.admin.service.IssueCrudService;
+import org.ambraproject.admin.service.IssueCrudServiceImpl;
+import org.ambraproject.admin.service.VolumeCrudService;
+import org.ambraproject.admin.service.VolumeCrudServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,6 +72,16 @@ public class AdminConfiguration extends BaseConfiguration {
   @Bean
   public AssetCrudService assetCrudService() {
     return new AssetCrudServiceImpl();
+  }
+
+  @Bean
+  public VolumeCrudService volumeCrudService() {
+    return new VolumeCrudServiceImpl();
+  }
+
+  @Bean
+  public IssueCrudService issueCrudService() {
+    return new IssueCrudServiceImpl();
   }
 
 }

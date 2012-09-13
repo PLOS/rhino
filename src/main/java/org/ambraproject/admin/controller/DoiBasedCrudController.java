@@ -18,17 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
-import org.ambraproject.admin.service.DoiBasedCrudService;
-import org.ambraproject.filestore.FileStoreException;
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
@@ -37,17 +27,9 @@ import java.io.InputStream;
 public abstract class DoiBasedCrudController extends RestController {
 
   /**
-   * The request parameter name for uploading a single file. This is part of the public REST API.
+   * The request parameter name for uploading a single file. Part of this application's public REST API.
    */
   protected static final String FILE_ARG = "file";
-
-  /**
-   * Return a service object that can perform CRUD operations on the appropriate type of entity. Typically, this is just
-   * a constant, dependency-injected field.
-   *
-   * @return the service
-   */
-  protected abstract DoiBasedCrudService getService();
 
   /**
    * Return the URL prefix that describes the RESTful namespace that this controller handles. It should include a
@@ -59,73 +41,6 @@ public abstract class DoiBasedCrudController extends RestController {
 
   protected DoiBasedIdentity parse(HttpServletRequest request) {
     return DoiBasedIdentity.parse(request.getRequestURI(), getNamespacePrefix());
-  }
-
-
-  /*
-   * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
-   * (and @RequestParam where needed).
-   */
-
-  /**
-   * Dispatch a "read" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @return the HTTP response containing the read data or describing an error
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  protected ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    DoiBasedIdentity id = parse(request);
-
-    InputStream fileStream = null;
-    byte[] fileData;
-    try {
-      fileStream = getService().read(id);
-      fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
-    } finally {
-      IOUtils.closeQuietly(fileStream);
-    }
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(id.getContentType());
-
-    return new ResponseEntity<byte[]>(fileData, headers, HttpStatus.OK);
-  }
-
-  /**
-   * Dispatch an "update" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @param file    the uploaded file to replace existing data in the file store
-   * @return the HTTP response, to indicate success or describe an error
-   * @throws IOException
-   * @throws FileStoreException
-   */
-  protected ResponseEntity<?> update(HttpServletRequest request, MultipartFile file)
-      throws IOException, FileStoreException {
-    DoiBasedIdentity id = parse(request);
-    InputStream stream = null;
-    try {
-      stream = file.getInputStream();
-      getService().update(stream, id);
-    } finally {
-      IOUtils.closeQuietly(stream);
-    }
-    return reportOk();
-  }
-
-  /**
-   * Dispatch a "delete" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @return the HTTP response, to indicate success or describe an error
-   * @throws FileStoreException
-   */
-  protected ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    DoiBasedIdentity id = parse(request);
-    getService().delete(id);
-    return reportOk();
   }
 
 }
