@@ -20,11 +20,21 @@ package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.IssueCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class IssueCrudController extends DoiBasedCrudController {
 
-  private static final String ISSUE_NAMESPACE = "/volume/";
+  private static final String ISSUE_NAMESPACE = "/issue/";
   private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
+
+  private static final String DISPLAY_PARAM = "display";
+  private static final String VOLUME_PARAM = "volume";
+  private static final String IMAGE_PARAM = "image";
 
   @Override
   protected String getNamespacePrefix() {
@@ -33,5 +43,16 @@ public class IssueCrudController extends DoiBasedCrudController {
 
   @Autowired
   private IssueCrudService issueCrudService;
+
+
+  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.POST)
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @RequestParam(DISPLAY_PARAM) String displayName,
+                                  @RequestParam(VOLUME_PARAM) String volumeUri,
+                                  @RequestParam(IMAGE_PARAM) String imageUri) {
+    DoiBasedIdentity issueId = parse(request);
+    issueCrudService.create(volumeUri, issueId, displayName, imageUri);
+    return reportCreated();
+  }
 
 }

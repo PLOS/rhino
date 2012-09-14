@@ -18,5 +18,39 @@
 
 package org.ambraproject.admin.service;
 
+import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.models.Issue;
+import org.ambraproject.models.Volume;
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
+
+  @Override
+  public void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri) {
+    Issue issue = new Issue();
+    issue.setIssueUri(issueId.getKey());
+    issue.setDisplayName(issueDisplayName);
+    issue.setImageUri(issueImageUri);
+
+    Volume volume = (Volume) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Volume.class)
+            .add(Restrictions.eq("volumeUri", volumeUri))
+            .setFetchMode("issues", FetchMode.JOIN)
+        ));
+    if (volume == null) {
+      throw new RestClientException("Volume not found for volumeUri: " + volumeUri, HttpStatus.BAD_REQUEST);
+    }
+    List<Issue> volumeIssues = volume.getIssues();
+    volumeIssues.add(issue);
+    hibernateTemplate.update(volume);
+  }
+
 }
