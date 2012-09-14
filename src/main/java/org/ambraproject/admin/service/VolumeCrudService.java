@@ -22,6 +22,6 @@ import org.ambraproject.admin.controller.DoiBasedIdentity;
 
 public interface VolumeCrudService {
 
-  public abstract void create(DoiBasedIdentity id, String displayName);
+  public abstract void create(DoiBasedIdentity id, String displayName, String journalKey);
 
 }

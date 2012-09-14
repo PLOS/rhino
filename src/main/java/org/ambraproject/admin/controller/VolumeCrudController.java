@@ -33,6 +33,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
 
   private static final String DISPLAY_PARAM = "display";
+  private static final String JOURNAL_PARAM = "journal";
 
   @Override
   protected String getNamespacePrefix() {
@@ -44,9 +45,11 @@ public class VolumeCrudController extends DoiBasedCrudController {
 
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request, @RequestParam(DISPLAY_PARAM) String displayName) {
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @RequestParam(DISPLAY_PARAM) String displayName,
+                                  @RequestParam(JOURNAL_PARAM) String journalKey) {
     DoiBasedIdentity id = parse(request);
-    volumeCrudService.create(id, displayName);
+    volumeCrudService.create(id, displayName, journalKey);
     return reportCreated();
   }
 

@@ -18,43 +18,49 @@
 
 package org.ambraproject.admin.service;
 
-import com.google.common.base.Preconditions;
-import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.http.HttpStatus;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
+import static org.testng.Assert.assertFalse;
 
-  @Override
-  public void create(DoiBasedIdentity id, String displayName, String journalKey) {
-    // TODO Transaction safety
-    Journal journal = (Journal) DataAccessUtils.uniqueResult(
+public class VolumeCrudServiceTest extends BaseAdminTest {
+
+  @Autowired
+  private VolumeCrudService volumeCrudService;
+
+  private static final String TEST_JOURNAL_KEY = "journal";
+
+  private Journal getTestJournal() {
+    return (Journal) DataAccessUtils.requiredUniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Journal.class)
-            .add(Restrictions.eq("journalKey", journalKey))
+            .add(Restrictions.eq("journalKey", TEST_JOURNAL_KEY))
             .setFetchMode("volumes", FetchMode.JOIN)
         ));
-    if (journal == null) {
-      String message = "Journal not found for journal key: " + journalKey;
-      HttpStatus status = HttpStatus.BAD_REQUEST; // Not "NOT FOUND", because the URL wasn't wrong
-      throw new RestClientException(message, status);
-    }
+  }
 
-    Volume volume = new Volume();
-    volume.setVolumeUri(id.getKey());
-    volume.setDisplayName(Preconditions.checkNotNull(displayName));
 
-    List<Volume> volumeList = journal.getVolumes();
-    volumeList.add(volume);
-    hibernateTemplate.update(journal);
+  @Test
+  public void testCreate() {
+    DoiBasedIdentity volumeId = DoiBasedIdentity.parse("testVolume", false);
+    String displayName = "volumeDisplay";
+
+    Journal testJournal = getTestJournal();
+    volumeCrudService.create(volumeId, displayName, testJournal.getJournalKey());
+
+    testJournal = getTestJournal();
+    List<Volume> testJournalVolumes = testJournal.getVolumes();
+    assertFalse(testJournalVolumes.isEmpty());
   }
 
 }
