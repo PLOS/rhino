@@ -33,7 +33,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +44,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
   protected HibernateTemplate hibernateTemplate;
 
   /**
-   * Mock input stream that yields a constant string and keeps track of whether is has been closed.
+   * Mock input stream that yields a constant string and keeps track of whether it has been closed.
    * <p/>
    * Closing the stream is not significant in this implementation, but one might want to test for it.
    */
@@ -58,7 +57,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     }
 
     public static TestInputStream of(byte[] data) {
-      return new TestInputStream(Arrays.copyOf(data, data.length));
+      return new TestInputStream(data.clone());
     }
 
     public static TestInputStream of(String data) {
@@ -76,6 +75,10 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     }
   }
 
+  /**
+   * A file holding test input. An instance pre-loads the file contents into memory, and then makes them available as
+   * needed through {@link TestInputStream}s or array dumps.
+   */
   protected static class TestFile {
     private final File fileLocation;
     private final byte[] fileData;
@@ -96,7 +99,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     }
 
     public byte[] getData() {
-      return Arrays.copyOf(fileData, fileData.length);
+      return fileData.clone();
     }
   }
 
