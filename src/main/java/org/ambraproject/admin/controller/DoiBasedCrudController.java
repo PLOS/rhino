@@ -40,7 +40,8 @@ public abstract class DoiBasedCrudController extends RestController {
   protected abstract String getNamespacePrefix();
 
   protected DoiBasedIdentity parse(HttpServletRequest request) {
-    return DoiBasedIdentity.parse(request.getRequestURI(), getNamespacePrefix(), hasAssociatedFile());
+    String identifier = getFullPathVariable(request, getNamespacePrefix());
+    return DoiBasedIdentity.parse(identifier, hasAssociatedFile());
   }
 
   /**

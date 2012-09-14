@@ -24,8 +24,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -35,6 +37,35 @@ import java.io.StringWriter;
 public abstract class RestController {
 
   private static final Logger log = LoggerFactory.getLogger(RestController.class);
+
+  /**
+   * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
+   * consists of one or more URI path elements that the API defines as a prefix for a class of RESTful "nouns" and must
+   * end with a slash (for example, {@code "/article/"}).
+   * <p/>
+   * This is essentially doing the work of a {@link PathVariable} annotated parameter, but Spring does not seem to
+   * support {@code PathVariable}s that span multiple URI components across slashes. So, if we want to treat a value
+   * that contains slashes (such as a DOI, which is itself a nested URI) as a single variable, we have to parse it from
+   * the request URI string ourselves.
+   *
+   * @param request   the HTTP request for a REST action
+   * @param namespace the namespace in which the request was received
+   * @return the contents of the request path after the namespace prefix
+   * @throws IllegalArgumentException if the request URI does not start with the namespace or if the namespace does not
+   *                                  end with a slash
+   */
+  protected static String getFullPathVariable(HttpServletRequest request, String namespace) {
+    if (namespace.charAt(namespace.length() - 1) != '/') {
+      throw new IllegalArgumentException("Namespace must end with '/'");
+    }
+    String requestUri = request.getRequestURI();
+    if (!requestUri.startsWith(namespace)) {
+      String message = String.format("Request URI (\"%s\") does not start with expected namespace (\"%s\")",
+          requestUri, namespace);
+      throw new IllegalArgumentException(message);
+    }
+    return requestUri.substring(namespace.length());
+  }
 
   /**
    * Report that a RESTful operation succeeded. The returned object (if returned from a {@link RequestMapping}) will

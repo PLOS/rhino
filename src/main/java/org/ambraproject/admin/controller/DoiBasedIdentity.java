@@ -72,26 +72,22 @@ public class DoiBasedIdentity {
   }
 
   /**
-   * Parse the identifier from a RESTful request directed at an object in the article namespace.
+   * Parse the identifier from a path. The input is from URL that a REST client would use to identify an entity.
    *
-   * @param requestUri the location at which the RESTful request to parse was received
-   * @return an for the article or asset to which the REST action was directed
-   * @see ArticleCrudController
+   * @param path the full path variable from the URL that identifies the entity
+   * @return an identifier object for the entity
+   * @see RestController#getFullPathVariable
    */
-  public static DoiBasedIdentity parse(String requestUri, String namespace, boolean expectExtension) {
-    if (!requestUri.startsWith(namespace)) {
-      // Valid controller mappings should prevent this
-      throw new IllegalArgumentException("Request URI prefixed with wrong namespace");
-    }
+  public static DoiBasedIdentity parse(String path, boolean expectExtension) {
     if (!expectExtension) {
-      return new DoiBasedIdentity(requestUri.substring(namespace.length()), null);
+      return new DoiBasedIdentity(path, null);
     }
-    int dotIndex = requestUri.lastIndexOf('.');
-    if (dotIndex < 0 || dotIndex + 1 >= requestUri.length()) {
+    int dotIndex = path.lastIndexOf('.');
+    if (dotIndex < 0 || dotIndex + 1 >= path.length()) {
       throw new IllegalArgumentException("Request URI does not have file extension");
     }
-    String identifier = requestUri.substring(namespace.length(), dotIndex);
-    String extension = requestUri.substring(dotIndex + 1);
+    String identifier = path.substring(0, dotIndex);
+    String extension = path.substring(dotIndex + 1);
 
     return new DoiBasedIdentity(identifier, extension);
   }

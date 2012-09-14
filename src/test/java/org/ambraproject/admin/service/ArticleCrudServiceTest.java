@@ -66,8 +66,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
 
   private static DoiBasedIdentity identifyAsset(String assetDoi, String extension) {
-    final String assetNamespace = "/asset/";
-    return DoiBasedIdentity.parse(assetNamespace + assetDoi + '.' + extension, assetNamespace, true);
+    return DoiBasedIdentity.parse(assetDoi + '.' + extension, true);
   }
 
   private void assertArticleExistence(DoiBasedIdentity id, boolean expectedToExist) throws FileStoreException {
