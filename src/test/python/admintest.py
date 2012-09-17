@@ -17,41 +17,78 @@
 # limitations under the License.
 
 
-"""Exercises the ArticleCrudController methods in Ambra Admin TNG."""
+"""Exercises the ArticleCrudController methods in Ambra Admin TNG.
 
-import httplib
-import re
-from restclient import Request
-from sys import argv
+This script serves as a quick-and-dirty integration test by exercising the
+Spring controllers in ways that the unit tests cannot. It requires that a
+Tomcat instance be running Ambra Admin TNG at the time the script is
+executed.
 
-
-_USAGE = """
-Usage: admintest.py article_doi article_path asset_doi asset_path
-
-    article_id
-        The REST identifier of the article to create, read, and delete. The
-        script will use a URL that refers to this article. For valid input,
-        this should be the article's DOI with ".xml" appended.
-
-    article_path
-        The local path to the XML file (NLM format) of the article to
-        create.
-
-    asset_id
-        The REST identifier of an asset to create and attach to the same
-        article. For valid input, this should match the article DOI
-        (conforming to Ambra's DOI-like convention for naming assets) and
-        have an extension matching the file type.
-
-    asset_path
-        The local path to a file that will be uploaded as the asset
-        content.
-
-An example is in runadmintest.sh.
+This script uses the same test data as the unit test suite. The list of
+test cases is currently hard-coded into the script, but if it grows too
+large, it could be either split into its own module or automated to use
+whatever it finds in the right directories.
 """
 
+import httplib
+import os
+from restclient import Request
 
-SNIPPET_SIZE = 40
+
+TEST_DATA_PATH = '../resources/data/'
+"""A file path, relative to this script, to the test data location."""
+
+DOI_PREFIX = '10.1371/'
+
+class TestArticle(object):
+    """One test case of an article to manipulate."""
+    def __init__(self, doi, asset_suffixes=()):
+        """Create a test case for an article.
+
+        The DOI is the actual DOI for the article; it should not have an
+        '.xml' extension. Each asset suffix can be appended to the DOI to
+        produce the quasi-DOI identifier of an asset that goes with th
+        earticle. The asset suffixes *should* have filename extensions.
+        """
+        self.doi = doi
+        self.asset_suffixes = asset_suffixes
+
+    def article_doi(self):
+        """Return the article's actual DOI."""
+        return DOI_PREFIX + self.doi
+
+    def article_id(self):
+        """Return the article's RESTful identifier."""
+        return self.article_doi() + '.xml'
+
+    def xml_path(self):
+        """Return a local file path from this script to the article's data."""
+        return os.path.join(TEST_DATA_PATH, self.doi + '.xml')
+
+    def assets(self):
+        """Generate the sequence of this article's assets.
+
+        Each yielded value is a (asset_id, asset_file) tuple. The ID is the
+        full RESTful identifier for the asset, and the file is the local
+        file path to the asset data.
+        """
+        for suffix in self.asset_suffixes:
+            if not suffix.startswith('.'):
+                suffix = '.' + suffix
+            asset_path = self.doi + suffix
+            asset_id = DOI_PREFIX + asset_path
+            asset_file = os.path.join(TEST_DATA_PATH, asset_path)
+            yield (asset_id, asset_file)
+
+    def __str__(self):
+        return 'TestArticle({0!r}, {1!r})'.format(self.doi, self.asset_suffixes)
+
+TEST_ARTICLES = [
+    TestArticle('journal.pone.0038869', ['g002.tif']),
+    ]
+
+_SNIPPET_SIZE = 40
+"""The display size for the response body's head and tail."""
 
 def code_message(code):
     """Translate an HTTP response code to its standard message."""
@@ -69,52 +106,44 @@ def report(description, rest_response):
         buf.append('No response body')
     elif len(message) >= 80:
         buf += ['Response size: {0}'.format(len(message)),
-                'Response head: {0!r}'.format(message[ :  SNIPPET_SIZE]),
-                'Response tail: {0!r}'.format(message[-SNIPPET_SIZE : ])]
+                'Response head: {0!r}'.format(message[ :  _SNIPPET_SIZE]),
+                'Response tail: {0!r}'.format(message[-_SNIPPET_SIZE : ])]
     else:
         buf += ['Response body:', repr(message)]
     buf.append('')  # Extra blank line
     return '\n'.join(buf)
 
-def test(article_id, article_path, asset_id, asset_path):
-    """Run test operations."""
-    print 'Arguments:'
-    for shell_arg in (article_id, article_path, asset_id, asset_path):
-        print repr(shell_arg)
-    print
+def run_test_on_article(case):
+    """Run the test for one article test case."""
+    print 'Running article test for', case
 
-    article_doi = re.match(r'(.*)\.xml', article_id).groups()[0]
+    def article_req():
+        return Request('localhost', 'article/' + case.article_id(), port=8080)
+    def asset_req(asset_id):
+        return Request('localhost', 'asset/' + asset_id, port=8080)
 
-    def article_req(doi):
-        return Request('localhost', 'article/' + doi, port=8080)
-    def asset_req(doi):
-        return Request('localhost', 'asset/' + doi, port=8080)
-
-    create = article_req(article_id)
-    create.set_form_file_path('file', article_path)
+    create = article_req()
+    create.set_form_file_path('file', case.xml_path())
     print report('Response to CREATE for article', create.post())
 
-    create_asset = asset_req(asset_id)
-    create_asset.set_form_file_path('file', asset_path)
-    create_asset.set_query_parameter('assetOf', article_doi)
-    print report('Response to CREATE for asset', create_asset.post())
+    for asset_id, asset_file in case.assets():
+        create_asset = asset_req(asset_id)
+        create_asset.set_form_file_path('file', asset_file)
+        create_asset.set_query_parameter('assetOf', case.article_doi())
+        print report('Response to CREATE for asset', create_asset.post())
 
-    read = article_req(article_id)
+    read = article_req()
     print report('Response to READ', read.get())
 
-    read_asset = asset_req(asset_id)
-    read_asset.set_form_file_path('file', asset_path)
-    print report('Response to READ for asset', read_asset.get())
+    for asset_id, asset_file in case.assets():
+        read_asset = asset_req(asset_id)
+        print report('Response to READ for asset', read_asset.get())
+        delete_asset = asset_req(asset_id)
+        print report('Response to DELETE for asset', delete_asset.delete())
 
-    delete_asset = asset_req(asset_id)
-    delete_asset.set_form_file_path('file', asset_path)
-    print report('Response to DELETE for asset', delete_asset.delete())
-
-    delete = article_req(article_id)
+    delete = article_req()
     print report('Response to DELETE', delete.delete())
 
 
-if len(argv) == 5:
-    test(*argv[1:])
-else:
-    print _USAGE
+for case in TEST_ARTICLES:
+    run_test_on_article(case)
