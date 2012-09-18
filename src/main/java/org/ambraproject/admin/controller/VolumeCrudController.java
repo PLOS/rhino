@@ -21,12 +21,14 @@ package org.ambraproject.admin.controller;
 import org.ambraproject.admin.service.VolumeCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Controller
 public class VolumeCrudController extends DoiBasedCrudController {
 
   private static final String VOLUME_NAMESPACE = "/volume/";
@@ -44,7 +46,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
   private VolumeCrudService volumeCrudService;
 
 
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> create(HttpServletRequest request,
                                   @RequestParam(DISPLAY_PARAM) String displayName,
                                   @RequestParam(JOURNAL_PARAM) String journalKey) {

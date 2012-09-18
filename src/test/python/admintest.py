@@ -43,7 +43,7 @@ DOI_PREFIX = '10.1371/'
 class TestVolume(object):
     """One test case of a volume to create."""
     def __init__(self, doi, journal_key, display_name, issues=()):
-        self.doi = doi
+        self.doi = DOI_PREFIX + doi
         self.journal_key = journal_key
         self.display_name = display_name
         self.issues = issues
@@ -59,6 +59,8 @@ class TestIssue(object):
     of a TestVolume object.
     """
     def __init__(self, suffix, display_name, image_uri=None):
+        if not suffix.startswith('.'):
+            suffix = '.' + suffix
         self.suffix = suffix
         self.display_name = display_name
         self.image_uri = image_uri
@@ -68,8 +70,8 @@ class TestIssue(object):
             self.suffix, self.display_name, self.image_uri)
 
 TEST_VOLUMES = [
-    TestVolume('volume.pone.v47', 'PLOSONE', 'Test Volume',
-               issues=[TestIssue('i23', 'Test Issue')]),
+    TestVolume('volume.pone.v47', 'PLoSONE', 'TestVolume',
+               issues=[TestIssue('i23', 'TestIssue')]),
     ]
 """A list of test volumes to create.
 
@@ -160,10 +162,15 @@ def create_test_volume(case):
     req = build_request('volume/' + case.doi)
     req.set_query_parameter('display', case.display_name)
     req.set_query_parameter('journal', case.journal_key)
-    print report('Response to CREATE for volume', req.post())
+    result = req.put()
+    print report('Response to CREATE for volume', result)
     
     for issue_case in case.issues:
-        pass # TODO
+        req = build_request('issue/' + case.doi + issue_case.suffix)
+        req.set_query_parameter('volume', case.doi)
+        req.set_query_parameter('display', issue_case.display_name)
+        if issue_case.image_uri:
+            req.set_query_parameter('image', issue_case.image_uri)
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
