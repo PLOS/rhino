@@ -86,13 +86,14 @@ class ResponseBuffer(object):
 
 class Response(object):
     """A response from a RESTful operation."""
-    def __init__(self, status, body, headers):
+    def __init__(self, request, status, body, headers):
         """Construct a response object from response data.
 
         The headers input can be a raw text blob from curl, a dictionary,
         or a key-value sequence. On construction, it will be parsed into a
         key-value list, which will then be the value of self.headers.
         """
+        self.request = request
         self.status = status
         self.body = body
         self.headers = Response._parse_headers(headers)
@@ -124,8 +125,8 @@ class Response(object):
         raise TypeError(msg)
 
     def __repr__(self):
-        return 'Response({0!r}, {1!r}, {2!r})'.format(
-            self.status, self.body, self.get_headers())
+        return 'Response({0!r}, {1!r}, {2!r}, {3!r})'.format(
+            self.request, self.status, self.body, self.get_headers())
 
     @staticmethod
     def _display_header_item(header_item):
@@ -143,7 +144,7 @@ class Response(object):
         """Return a user-readable string describing the response."""
         status_description = 'HTTP Status {0}: {1}'.format(
             self.status, status_message(self.status))
-        lines = [status_description]
+        lines = [self.request.get_url(), status_description]
 
         if not self.headers:
             lines.append('No headers')
@@ -209,8 +210,8 @@ class Request(object):
         """Upload a form file using a local path to the file."""
         self.set_form_parameter(key, (pycurl.FORM_FILE, file_path))
 
-    def _build_url(self):
-        """Build the URL that this request will go to."""
+    def get_url(self):
+        """Get the full URL that this request will go to."""
         buf = ['http://', self.domain]
         if self.port:
             buf += [':', str(self.port)]
@@ -230,7 +231,7 @@ class Request(object):
         return the response body and headers respectively.
         """
         curl = pycurl.Curl()
-        curl.setopt(pycurl.URL, ''.join(self._build_url()))
+        curl.setopt(pycurl.URL, ''.join(self.get_url()))
 
         read_body = ResponseBuffer()
         curl.setopt(pycurl.WRITEFUNCTION, read_body.write)
@@ -251,7 +252,7 @@ class Request(object):
             curl.setopt(pycurl.HTTPPOST, self.form_params.items())
 
         curl.perform()
-        return Response(curl.getinfo(pycurl.RESPONSE_CODE),
+        return Response(self, curl.getinfo(pycurl.RESPONSE_CODE),
                         curl.read_body(), curl.read_headers())
 
     def post(self):
@@ -260,9 +261,9 @@ class Request(object):
 
     def get(self):
         """Send a GET request."""
-        url = self._build_url()
+        url = self.get_url()
         response = urllib.urlopen(url)
-        return Response(response.getcode(),
+        return Response(self, response.getcode(),
                         response.read(), response.headers.items())
 
     def put(self):
@@ -274,7 +275,7 @@ class Request(object):
         curl = self._build_curl()
         curl.setopt(pycurl.CUSTOMREQUEST, DELETE)
         curl.perform()
-        return Response(curl.getinfo(pycurl.RESPONSE_CODE),
+        return Response(self, curl.getinfo(pycurl.RESPONSE_CODE),
                         curl.read_body(), curl.read_headers())
 
     HTTP_METHODS = {
