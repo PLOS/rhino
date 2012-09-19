@@ -97,19 +97,22 @@ def code_message(code):
     except KeyError:
         return '(Undefined)'
 
-def report(description, rest_response):
+def report(description, response):
     """Prepare an HTTP response for display as a string."""
-    code, message = rest_response
     buf = [description,
-           'HTTP Status {0}: {1}'.format(code, code_message(code))]
-    if message is None:
+           'HTTP Status {0}: {1}'.format(response.status,
+                                         code_message(response.status))]
+    if response.body is None:
         buf.append('No response body')
-    elif len(message) >= 80:
-        buf += ['Response size: {0}'.format(len(message)),
-                'Response head: {0!r}'.format(message[ :  _SNIPPET_SIZE]),
-                'Response tail: {0!r}'.format(message[-_SNIPPET_SIZE : ])]
+    elif len(response.body) >= 80:
+        buf += ['Response size: {0}'.format(len(response.body)),
+                'Response head: {0!r}'.format(response.body[ :  _SNIPPET_SIZE]),
+                'Response tail: {0!r}'.format(response.body[-_SNIPPET_SIZE : ])]
     else:
-        buf += ['Response body:', repr(message)]
+        buf += ['Response body:', repr(response.body)]
+
+    buf += ['Headers!', repr(response.headers)]
+
     buf.append('')  # Extra blank line
     return '\n'.join(buf)
 

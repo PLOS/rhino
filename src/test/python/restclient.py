@@ -28,6 +28,7 @@ tersely.
 
 import cStringIO
 import pycurl
+import re
 import urllib
 
 # Universal HTTP method names
@@ -72,6 +73,31 @@ class ResponseReceiver(object):
         if self._buf:
             return self._buf.getvalue()
         return None
+
+class Response(object):
+    def __init__(self, status, body, headers):
+        self.status = status
+        self.body = body
+        self.headers = Response._parse_headers(headers)
+
+    _HEADER_SEP = re.compile(r'[\r\n]+')
+    _HEADER_GROUPS = re.compile(r'(.*?):(.*)')
+
+    @staticmethod
+    def _parse_headers(headers):
+        if headers is None:
+            return []
+        if isinstance(headers, dict):
+            return headers.items()
+        if getattr(headers, '__iter__', False):
+            return list(headers)
+        if not isinstance(headers, str):
+            errmsg = "Can't parse headers of type: {0}".format(type(headers))
+            raise TypeError(errmsg)
+        header_items = []
+        for item in Response._HEADER_SEP.split(headers):
+            m = Response._HEADER_GROUPS.match(item)
+            header_items.append(m.groups() if m else item)
 
 class Request(object):
     """A request set up to perform a RESTful operation.
@@ -130,16 +156,21 @@ class Request(object):
     def _build_curl(self):
         """Build a Curl object to execute this request.
 
-        The returned object is extended with a method (actually just a
-        member function) named read_response that will, after perform is
-        called on the same object, return the response body.
+        The returned object is extended with methods named read_body and
+        read_headers that will, after perform is called on the same object,
+        return the response body and headers respectively.
         """
         curl = pycurl.Curl()
         curl.setopt(pycurl.URL, ''.join(self._build_url()))
 
-        rr = ResponseReceiver()
-        curl.setopt(pycurl.WRITEFUNCTION, rr.write)
-        curl.read_response = rr.read
+        read_body = ResponseReceiver()
+        curl.setopt(pycurl.WRITEFUNCTION, read_body.write)
+        curl.read_body = read_body.read
+
+        read_headers = ResponseReceiver()
+        curl.setopt(pycurl.HEADERFUNCTION, read_headers.write)
+        curl.read_headers = read_headers.read
+
         return curl
 
     def _send_with_form_data(self, method_opt):
@@ -151,7 +182,8 @@ class Request(object):
             curl.setopt(pycurl.HTTPPOST, self.form_params.items())
 
         curl.perform()
-        return curl.getinfo(pycurl.RESPONSE_CODE), curl.read_response()
+        return Response(curl.getinfo(pycurl.RESPONSE_CODE),
+                        curl.read_body(), curl.read_headers())
 
     def post(self):
         """Send a POST request."""
@@ -161,7 +193,8 @@ class Request(object):
         """Send a GET request."""
         url = self._build_url()
         response = urllib.urlopen(url)
-        return response.getcode(), response.read()
+        return Response(response.getcode(),
+                        response.read(), response.headers.items())
 
     def put(self):
         """Send a PUT request."""
@@ -172,7 +205,8 @@ class Request(object):
         curl = self._build_curl()
         curl.setopt(pycurl.CUSTOMREQUEST, DELETE)
         curl.perform()
-        return curl.getinfo(pycurl.RESPONSE_CODE), curl.read_response()
+        return Response(curl.getinfo(pycurl.RESPONSE_CODE),
+                        curl.read_body(), curl.read_headers())
 
     _HTTP_METHODS = {
         OPTIONS: None,
