@@ -27,7 +27,9 @@ tersely.
 """
 
 import cStringIO
+import httplib
 import pycurl
+import re
 import urllib
 
 # Universal HTTP method names
@@ -41,8 +43,16 @@ TRACE   = 'TRACE'
 CONNECT = 'CONNECT'
 PATCH   = 'PATCH'
 
-class ResponseReceiver(object):
-    """An object to provide read/write functions.
+def status_message(status_code):
+    """Translate an HTTP response code to its standard message."""
+    try:
+        return httplib.responses[int(status_code)]
+    except KeyError:
+        return '(Undefined)'
+
+
+class ResponseBuffer(object):
+    """An object to provide read/write functions to curl.
 
     This works better than a bare StringIO because it yields None, rather
     than the empty string, if the write method was never called at all.
@@ -72,6 +82,110 @@ class ResponseReceiver(object):
         if self._buf:
             return self._buf.getvalue()
         return None
+
+
+class Response(object):
+    """A response from a RESTful operation."""
+    def __init__(self, request, status, body, headers):
+        """Construct a response object from response data.
+
+        Arguments:
+
+            request: A backlink to the Request object to which this was a
+            response.
+
+            status: The response's HTTP status code, as an int (or string
+            that can be parsed to an int).
+
+            body: The response body, as a string or byte sequence.
+
+            headers: The response headers. May be input as a raw text blob
+            from curl, a dictionary, or a key-value sequence. On
+            construction, it will be parsed into a key-value list, which
+            will then be the value of self.headers.
+        """
+        self.request = request
+        self.status = status
+        self.body = body
+        self.headers = Response._parse_headers(headers)
+
+    _HEADER_SEP = re.compile(r'[\r\n]+')
+    _HEADER_GROUPS = re.compile(r'(.*?):\s*(.*)')
+
+    @staticmethod
+    def _parse_headers(headers):
+        if headers is None:
+            # If the response was an empty ResponseBuffer
+            return []
+        if isinstance(headers, dict):
+            # urllib.urlopen provides headers this way
+            # There is no ordering of headers to preserve
+            return headers.items()
+        if getattr(headers, '__iter__', False):
+            return list(headers)
+        if isinstance(headers, str):
+            # curl.setopt(HEADERFUNCTION...) writes a formatted string
+            header_items = []
+            for item in Response._HEADER_SEP.split(headers):
+                if not item:
+                    continue
+                m = Response._HEADER_GROUPS.match(item)
+                header_items.append(m.groups() if m else item)
+            return header_items
+        msg = "Can't parse headers of type: {0}".format(type(headers))
+        raise TypeError(msg)
+
+    def __repr__(self):
+        return 'Response({0!r}, {1!r}, {2!r}, {3!r})'.format(
+            self.request, self.status, self.body, self.get_headers())
+
+    @staticmethod
+    def _display_header_item(header_item):
+        """Render one header as a user-readable string.
+
+        The argument is either a simple string value or a (key, value) tuple.
+        """
+        if isinstance(header_item, str):
+            return repr(header_item)
+        if len(header_item) != 2:
+            raise ValueError("Expected only strings and 2-tuples in headers")
+        return '{0!r}: {1!r}'.format(*header_item)
+
+    def display(self, snippet_size=40):
+        """Return a user-readable string describing the response.
+
+        The snippet size is the size of the head and tail of the response
+        body to display. If the head and tail would cover the full body, it
+        is displayed uncut. To always display it uncut, use
+        snippet_size=None.
+        """
+        status_description = 'HTTP Status {0}: {1}'.format(
+            self.status, status_message(self.status))
+        lines = [self.request.get_url(), status_description]
+
+        if not self.headers:
+            lines.append('No headers')
+        else:
+            lines.append('Headers:')
+            lines += ('    ' + Response._display_header_item(item)
+                      for item in self.headers)
+        lines.append('')  # Skip a line before the response body
+
+        if self.body is None:
+            lines.append('No response body')
+        elif snippet_size and len(self.body) >= snippet_size * 2:
+            size = len(self.body)
+            head = self.body[ :  snippet_size]
+            tail = self.body[-snippet_size : ]
+            lines += ['Response size: {0}'  .format(size),
+                      'Response head: {0!r}'.format(head),
+                      'Response tail: {0!r}'.format(tail)]
+        else:
+            lines += ['Response body:', repr(self.body)]
+
+        lines.append('\n')  # An extra blank line to separate reports
+        return '\n'.join(lines)
+
 
 class Request(object):
     """A request set up to perform a RESTful operation.
@@ -110,12 +224,11 @@ class Request(object):
         self.form_params[key] = value
 
     def set_form_file_path(self, key, file_path):
-        """Upload a form file using a local path to the file.
-        """
+        """Upload a form file using a local path to the file."""
         self.set_form_parameter(key, (pycurl.FORM_FILE, file_path))
 
-    def _build_url(self):
-        """Build the URL that this request will go to."""
+    def get_url(self):
+        """Get the full URL that this request will go to."""
         buf = ['http://', self.domain]
         if self.port:
             buf += [':', str(self.port)]
@@ -130,16 +243,21 @@ class Request(object):
     def _build_curl(self):
         """Build a Curl object to execute this request.
 
-        The returned object is extended with a method (actually just a
-        member function) named read_response that will, after perform is
-        called on the same object, return the response body.
+        The returned object is extended with methods named read_body and
+        read_headers that will, after perform is called on the same object,
+        return the response body and headers respectively.
         """
         curl = pycurl.Curl()
-        curl.setopt(pycurl.URL, ''.join(self._build_url()))
+        curl.setopt(pycurl.URL, ''.join(self.get_url()))
 
-        rr = ResponseReceiver()
-        curl.setopt(pycurl.WRITEFUNCTION, rr.write)
-        curl.read_response = rr.read
+        read_body = ResponseBuffer()
+        curl.setopt(pycurl.WRITEFUNCTION, read_body.write)
+        curl.read_body = read_body.read
+
+        read_headers = ResponseBuffer()
+        curl.setopt(pycurl.HEADERFUNCTION, read_headers.write)
+        curl.read_headers = read_headers.read
+
         return curl
 
     def _send_with_form_data(self, method_opt):
@@ -151,7 +269,8 @@ class Request(object):
             curl.setopt(pycurl.HTTPPOST, self.form_params.items())
 
         curl.perform()
-        return curl.getinfo(pycurl.RESPONSE_CODE), curl.read_response()
+        return Response(self, curl.getinfo(pycurl.RESPONSE_CODE),
+                        curl.read_body(), curl.read_headers())
 
     def post(self):
         """Send a POST request."""
@@ -159,9 +278,10 @@ class Request(object):
 
     def get(self):
         """Send a GET request."""
-        url = self._build_url()
+        url = self.get_url()
         response = urllib.urlopen(url)
-        return response.getcode(), response.read()
+        return Response(self, response.getcode(),
+                        response.read(), response.headers.items())
 
     def put(self):
         """Send a PUT request."""
@@ -172,9 +292,10 @@ class Request(object):
         curl = self._build_curl()
         curl.setopt(pycurl.CUSTOMREQUEST, DELETE)
         curl.perform()
-        return curl.getinfo(pycurl.RESPONSE_CODE), curl.read_response()
+        return Response(self, curl.getinfo(pycurl.RESPONSE_CODE),
+                        curl.read_body(), curl.read_headers())
 
-    _HTTP_METHODS = {
+    HTTP_METHODS = {
         OPTIONS: None,
         GET:     get,
         HEAD:    None,
@@ -190,9 +311,11 @@ class Request(object):
     def send(self, method):
         """Send a request.
 
-        The argument is an HTTP "verb" (as an all-uppercase string).
+        The argument is an HTTP "verb" (as an all-uppercase string) that
+        appears in Request.HTTP_METHODS.keys(). Only keys with a non-None
+        value are supported.
         """
-        m = Request._HTTP_METHODS[method]
+        m = Request.HTTP_METHODS[method]
         if m is None:
             raise ValueError("Method not supported")
         return m(self)

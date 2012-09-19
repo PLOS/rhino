@@ -30,7 +30,8 @@ large, it could be either split into its own module or automated to use
 whatever it finds in the right directories.
 """
 
-import httplib
+from __future__ import print_function
+
 import os
 from restclient import Request
 
@@ -126,45 +127,25 @@ TEST_ARTICLES = [
     TestArticle('journal.pone.0038869', ['g002.tif']),
     ]
 
-_SNIPPET_SIZE = 40
-"""The display size for the response body's head and tail."""
-
-def code_message(code):
-    """Translate an HTTP response code to its standard message."""
-    try:
-        return httplib.responses[code]
-    except KeyError:
-        return '(Undefined)'
-
-def report(description, rest_response):
-    """Prepare an HTTP response for display as a string."""
-    code, message = rest_response
-    buf = [description,
-           'HTTP Status {0}: {1}'.format(code, code_message(code))]
-    if message is None:
-        buf.append('No response body')
-    elif len(message) >= 80:
-        buf += ['Response size: {0}'.format(len(message)),
-                'Response head: {0!r}'.format(message[ :  _SNIPPET_SIZE]),
-                'Response tail: {0!r}'.format(message[-_SNIPPET_SIZE : ])]
-    else:
-        buf += ['Response body:', repr(message)]
-    buf.append('')  # Extra blank line
-    return '\n'.join(buf)
+def report(description, response):
+    """Print a description of the HTTP response."""
+    print(description)
+    print()
+    print(response.display())
 
 def build_request(path):
     return Request('localhost', path, port=8080)
 
 def create_test_volume(case):
     """Test volume creation for one case."""
-    print 'Running volume test for', case
-    
+    print('Running volume test for', case)
+
     req = build_request('volume/' + case.doi)
     req.set_query_parameter('display', case.display_name)
     req.set_query_parameter('journal', case.journal_key)
     result = req.put()
-    print report('Response to CREATE for volume', result)
-    
+    report('Response to CREATE for volume', result)
+
     for issue_case in case.issues:
         req = build_request('issue/' + case.doi + issue_case.suffix)
         req.set_query_parameter('volume', case.doi)
@@ -174,7 +155,8 @@ def create_test_volume(case):
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
-    print 'Running article test for', case
+    print('Running article test for', case)
+    print()
 
     def article_req():
         return build_request('article/' + case.article_id())
@@ -183,25 +165,25 @@ def run_test_on_article(case):
 
     create = article_req()
     create.set_form_file_path('file', case.xml_path())
-    print report('Response to CREATE for article', create.post())
+    report('Response to CREATE for article', create.post())
 
     for asset_id, asset_file in case.assets():
         create_asset = asset_req(asset_id)
         create_asset.set_form_file_path('file', asset_file)
         create_asset.set_query_parameter('assetOf', case.article_doi())
-        print report('Response to CREATE for asset', create_asset.post())
+        report('Response to CREATE for asset', create_asset.post())
 
     read = article_req()
-    print report('Response to READ', read.get())
+    report('Response to READ', read.get())
 
     for asset_id, asset_file in case.assets():
         read_asset = asset_req(asset_id)
-        print report('Response to READ for asset', read_asset.get())
+        report('Response to READ for asset', read_asset.get())
         delete_asset = asset_req(asset_id)
-        print report('Response to DELETE for asset', delete_asset.delete())
+        report('Response to DELETE for asset', delete_asset.delete())
 
     delete = article_req()
-    print report('Response to DELETE', delete.delete())
+    report('Response to DELETE', delete.delete())
 
 
 for volume_case in TEST_VOLUMES:
