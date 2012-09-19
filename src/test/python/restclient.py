@@ -27,6 +27,7 @@ tersely.
 """
 
 import cStringIO
+import httplib
 import pycurl
 import re
 import urllib
@@ -41,6 +42,13 @@ DELETE  = 'DELETE'
 TRACE   = 'TRACE'
 CONNECT = 'CONNECT'
 PATCH   = 'PATCH'
+
+def status_message(status_code):
+    """Translate an HTTP response code to its standard message."""
+    try:
+        return httplib.responses[status_code]
+    except KeyError:
+        return '(Undefined)'
 
 
 class ResponseBuffer(object):
@@ -79,52 +87,86 @@ class ResponseBuffer(object):
 class Response(object):
     """A response from a RESTful operation."""
     def __init__(self, status, body, headers):
+        """Construct a response object from response data.
+
+        The headers input can be a raw text blob from curl, a dictionary,
+        or a key-value sequence. On construction, it will be parsed into a
+        key-value list, which will then be the value of self.headers.
+        """
         self.status = status
         self.body = body
-        self.headers = headers
+        self.headers = Response._parse_headers(headers)
 
     _HEADER_SEP = re.compile(r'[\r\n]+')
     _HEADER_GROUPS = re.compile(r'(.*?):\s*(.*)')
 
-    def get_headers(self):
-        """Return the response headers.
-
-        The return type is a sequence of strings and key-value 2-tuples. If
-        the headers appear in a particular order in an HTTP text blob, that
-        order is preserved.
-        """
-        if isinstance(self.headers, list):
-            return self.headers
-
-        # The first time this is called, reformat headers from other types
-        def parse_headers():
-            if self.headers is None:
-                # If the response was an empty ResponseBuffer
-                return []
-            if isinstance(self.headers, dict):
-                # urllib.urlopen provides headers this way
-                # There is no ordering of headers to preserve
-                return self.headers.items()
-            if getattr(self.headers, '__iter__', False):
-                return list(self.headers)
-            if isinstance(self.headers, str):
-                # curl.setopt(HEADERFUNCTION...) writes a formatted string
-                header_items = []
-                for item in Response._HEADER_SEP.split(self.headers):
-                    if not item:
-                        continue
-                    m = Response._HEADER_GROUPS.match(item)
-                    header_items.append(m.groups() if m else item)
-                return header_items
-            raise TypeError("Can't parse headers of type: {0}".format(
-                type(self.headers)))
-
-        self.headers = parse_headers()
-        return self.headers
+    @staticmethod
+    def _parse_headers(headers):
+        if headers is None:
+            # If the response was an empty ResponseBuffer
+            return []
+        if isinstance(headers, dict):
+            # urllib.urlopen provides headers this way
+            # There is no ordering of headers to preserve
+            return headers.items()
+        if getattr(headers, '__iter__', False):
+            return list(headers)
+        if isinstance(headers, str):
+            # curl.setopt(HEADERFUNCTION...) writes a formatted string
+            header_items = []
+            for item in Response._HEADER_SEP.split(headers):
+                if not item:
+                    continue
+                m = Response._HEADER_GROUPS.match(item)
+                header_items.append(m.groups() if m else item)
+            return header_items
+        msg = "Can't parse headers of type: {0}".format(type(headers))
+        raise TypeError(msg)
 
     def __repr__(self):
         return 'Response({0!r}, {1!r}, {2!r})'.format(
             self.status, self.body, self.get_headers())
+
+    @staticmethod
+    def _display_header_item(header_item):
+        """Render one header as a user-readable string.
+
+        The argument is either a simple string value or a (key, value) tuple.
+        """
+        if isinstance(header_item, str):
+            return repr(header_item)
+        if len(header_item) != 2:
+            raise ValueError("Expected only strings and 2-tuples in headers")
+        return '{0!r}: {1!r}'.format(*header_item)
+
+    def display(self, snippet_size=40):
+        """Return a user-readable string describing the response."""
+        status_description = 'HTTP Status {0}: {1}'.format(
+            self.status, status_message(self.status))
+        lines = [status_description]
+
+        if not self.headers:
+            lines.append('No headers')
+        else:
+            lines.append('Headers:')
+            lines += ('    ' + Response._display_header_item(item)
+                      for item in self.headers)
+        lines.append('')  # Skip a line before the response body
+
+        if self.body is None:
+            lines.append('No response body')
+        elif len(self.body) >= snippet_size * 2:
+            size = len(self.body)
+            head = self.body[ :  snippet_size]
+            tail = self.body[-snippet_size : ]
+            lines += ['Response size: {0}'  .format(size),
+                      'Response head: {0!r}'.format(head),
+                      'Response tail: {0!r}'.format(tail)]
+        else:
+            lines += ['Response body:', repr(self.body)]
+
+        lines.append('\n')  # An extra blank line to separate reports
+        return '\n'.join(lines)
 
 
 class Request(object):

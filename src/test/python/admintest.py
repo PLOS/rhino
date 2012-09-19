@@ -30,7 +30,6 @@ large, it could be either split into its own module or automated to use
 whatever it finds in the right directories.
 """
 
-import httplib
 import os
 from restclient import Request
 
@@ -87,55 +86,16 @@ TEST_ARTICLES = [
     TestArticle('journal.pone.0038869', ['g002.tif']),
     ]
 
-_SNIPPET_SIZE = 40
-"""The display size for the response body's head and tail."""
-
-def code_message(code):
-    """Translate an HTTP response code to its standard message."""
-    try:
-        return httplib.responses[code]
-    except KeyError:
-        return '(Undefined)'
-
-def display_header_item(header_item):
-    """Render one header as a user-readable string.
-
-    The argument is either a simple string value or a (key, value) tuple.
-    """
-    if isinstance(header_item, str):
-        return repr(header_item)
-    if len(header_item) != 2:
-        raise ValueError("Expected only strings and 2-tuples in headers")
-    return '{0!r}: {1!r}'.format(*header_item)
-
 def report(description, response):
-    """Prepare an HTTP response for display as a string."""
-    buf = [description, '',
-           'HTTP Status {0}: {1}'.format(response.status,
-                                         code_message(response.status))]
-    headers = response.get_headers()
-    if not headers:
-        buf.append('No headers')
-    else:
-        buf.append('Headers:')
-        buf += ('    ' + display_header_item(item) for item in headers)
-    buf.append('')  # Skip a line before the response body
-
-    if response.body is None:
-        buf.append('No response body')
-    elif len(response.body) >= 80:
-        buf += ['Response size: {0}'.format(len(response.body)),
-                'Response head: {0!r}'.format(response.body[ :  _SNIPPET_SIZE]),
-                'Response tail: {0!r}'.format(response.body[-_SNIPPET_SIZE : ])]
-    else:
-        buf += ['Response body:', repr(response.body)]
-
-    buf.append('\n')  # Two blank lines to separate reports
-    return '\n'.join(buf)
+    """Print a description of the HTTP response."""
+    print description
+    print
+    print response.display()
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
     print 'Running article test for', case
+    print
 
     def article_req():
         return Request('localhost', 'article/' + case.article_id(), port=8080)
@@ -144,25 +104,25 @@ def run_test_on_article(case):
 
     create = article_req()
     create.set_form_file_path('file', case.xml_path())
-    print report('Response to CREATE for article', create.post())
+    report('Response to CREATE for article', create.post())
 
     for asset_id, asset_file in case.assets():
         create_asset = asset_req(asset_id)
         create_asset.set_form_file_path('file', asset_file)
         create_asset.set_query_parameter('assetOf', case.article_doi())
-        print report('Response to CREATE for asset', create_asset.post())
+        report('Response to CREATE for asset', create_asset.post())
 
     read = article_req()
-    print report('Response to READ', read.get())
+    report('Response to READ', read.get())
 
     for asset_id, asset_file in case.assets():
         read_asset = asset_req(asset_id)
-        print report('Response to READ for asset', read_asset.get())
+        report('Response to READ for asset', read_asset.get())
         delete_asset = asset_req(asset_id)
-        print report('Response to DELETE for asset', delete_asset.delete())
+        report('Response to DELETE for asset', delete_asset.delete())
 
     delete = article_req()
-    print report('Response to DELETE', delete.delete())
+    report('Response to DELETE', delete.delete())
 
 
 for case in TEST_ARTICLES:
