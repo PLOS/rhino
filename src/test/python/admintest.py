@@ -30,6 +30,8 @@ large, it could be either split into its own module or automated to use
 whatever it finds in the right directories.
 """
 
+from __future__ import print_function
+
 import os
 from restclient import Request
 
@@ -88,14 +90,14 @@ TEST_ARTICLES = [
 
 def report(description, response):
     """Print a description of the HTTP response."""
-    print description
-    print
-    print response.display()
+    print(description)
+    print()
+    print(response.display())
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
-    print 'Running article test for', case
-    print
+    print('Running article test for', case)
+    print()
 
     def article_req():
         return Request('localhost', 'article/' + case.article_id(), port=8080)

@@ -46,7 +46,7 @@ PATCH   = 'PATCH'
 def status_message(status_code):
     """Translate an HTTP response code to its standard message."""
     try:
-        return httplib.responses[status_code]
+        return httplib.responses[int(status_code)]
     except KeyError:
         return '(Undefined)'
 
@@ -89,9 +89,20 @@ class Response(object):
     def __init__(self, request, status, body, headers):
         """Construct a response object from response data.
 
-        The headers input can be a raw text blob from curl, a dictionary,
-        or a key-value sequence. On construction, it will be parsed into a
-        key-value list, which will then be the value of self.headers.
+        Arguments:
+
+            request: A backlink to the Request object to which this was a
+            response.
+
+            status: The response's HTTP status code, as an int (or string
+            that can be parsed to an int).
+
+            body: The response body, as a string or byte sequence.
+
+            headers: The response headers. May be input as a raw text blob
+            from curl, a dictionary, or a key-value sequence. On
+            construction, it will be parsed into a key-value list, which
+            will then be the value of self.headers.
         """
         self.request = request
         self.status = status
@@ -141,7 +152,13 @@ class Response(object):
         return '{0!r}: {1!r}'.format(*header_item)
 
     def display(self, snippet_size=40):
-        """Return a user-readable string describing the response."""
+        """Return a user-readable string describing the response.
+
+        The snippet size is the size of the head and tail of the response
+        body to display. If the head and tail would cover the full body, it
+        is displayed uncut. To always display it uncut, use
+        snippet_size=None.
+        """
         status_description = 'HTTP Status {0}: {1}'.format(
             self.status, status_message(self.status))
         lines = [self.request.get_url(), status_description]
@@ -156,7 +173,7 @@ class Response(object):
 
         if self.body is None:
             lines.append('No response body')
-        elif len(self.body) >= snippet_size * 2:
+        elif snippet_size and len(self.body) >= snippet_size * 2:
             size = len(self.body)
             head = self.body[ :  snippet_size]
             tail = self.body[-snippet_size : ]
