@@ -42,8 +42,9 @@ TRACE   = 'TRACE'
 CONNECT = 'CONNECT'
 PATCH   = 'PATCH'
 
-class ResponseReceiver(object):
-    """An object to provide read/write functions.
+
+class ResponseBuffer(object):
+    """An object to provide read/write functions to curl.
 
     This works better than a bare StringIO because it yields None, rather
     than the empty string, if the write method was never called at all.
@@ -74,30 +75,57 @@ class ResponseReceiver(object):
             return self._buf.getvalue()
         return None
 
+
 class Response(object):
+    """A response from a RESTful operation."""
     def __init__(self, status, body, headers):
         self.status = status
         self.body = body
-        self.headers = Response._parse_headers(headers)
+        self.headers = headers
 
     _HEADER_SEP = re.compile(r'[\r\n]+')
-    _HEADER_GROUPS = re.compile(r'(.*?):(.*)')
+    _HEADER_GROUPS = re.compile(r'(.*?):\s*(.*)')
 
-    @staticmethod
-    def _parse_headers(headers):
-        if headers is None:
-            return []
-        if isinstance(headers, dict):
-            return headers.items()
-        if getattr(headers, '__iter__', False):
-            return list(headers)
-        if not isinstance(headers, str):
-            errmsg = "Can't parse headers of type: {0}".format(type(headers))
-            raise TypeError(errmsg)
-        header_items = []
-        for item in Response._HEADER_SEP.split(headers):
-            m = Response._HEADER_GROUPS.match(item)
-            header_items.append(m.groups() if m else item)
+    def get_headers(self):
+        """Return the response headers.
+
+        The return type is a sequence of strings and key-value 2-tuples. If
+        the headers appear in a particular order in an HTTP text blob, that
+        order is preserved.
+        """
+        if isinstance(self.headers, list):
+            return self.headers
+
+        # The first time this is called, reformat headers from other types
+        def parse_headers():
+            if self.headers is None:
+                # If the response was an empty ResponseBuffer
+                return []
+            if isinstance(self.headers, dict):
+                # urllib.urlopen provides headers this way
+                # There is no ordering of headers to preserve
+                return self.headers.items()
+            if getattr(self.headers, '__iter__', False):
+                return list(self.headers)
+            if isinstance(self.headers, str):
+                # curl.setopt(HEADERFUNCTION...) writes a formatted string
+                header_items = []
+                for item in Response._HEADER_SEP.split(self.headers):
+                    if not item:
+                        continue
+                    m = Response._HEADER_GROUPS.match(item)
+                    header_items.append(m.groups() if m else item)
+                return header_items
+            raise TypeError("Can't parse headers of type: {0}".format(
+                type(self.headers)))
+
+        self.headers = parse_headers()
+        return self.headers
+
+    def __repr__(self):
+        return 'Response({0!r}, {1!r}, {2!r})'.format(
+            self.status, self.body, self.get_headers())
+
 
 class Request(object):
     """A request set up to perform a RESTful operation.
@@ -136,8 +164,7 @@ class Request(object):
         self.form_params[key] = value
 
     def set_form_file_path(self, key, file_path):
-        """Upload a form file using a local path to the file.
-        """
+        """Upload a form file using a local path to the file."""
         self.set_form_parameter(key, (pycurl.FORM_FILE, file_path))
 
     def _build_url(self):
@@ -163,11 +190,11 @@ class Request(object):
         curl = pycurl.Curl()
         curl.setopt(pycurl.URL, ''.join(self._build_url()))
 
-        read_body = ResponseReceiver()
+        read_body = ResponseBuffer()
         curl.setopt(pycurl.WRITEFUNCTION, read_body.write)
         curl.read_body = read_body.read
 
-        read_headers = ResponseReceiver()
+        read_headers = ResponseBuffer()
         curl.setopt(pycurl.HEADERFUNCTION, read_headers.write)
         curl.read_headers = read_headers.read
 
@@ -208,7 +235,7 @@ class Request(object):
         return Response(curl.getinfo(pycurl.RESPONSE_CODE),
                         curl.read_body(), curl.read_headers())
 
-    _HTTP_METHODS = {
+    HTTP_METHODS = {
         OPTIONS: None,
         GET:     get,
         HEAD:    None,
@@ -224,9 +251,11 @@ class Request(object):
     def send(self, method):
         """Send a request.
 
-        The argument is an HTTP "verb" (as an all-uppercase string).
+        The argument is an HTTP "verb" (as an all-uppercase string) that
+        appears in Request.HTTP_METHODS.keys(). Only keys with a non-None
+        value are supported.
         """
-        m = Request._HTTP_METHODS[method]
+        m = Request.HTTP_METHODS[method]
         if m is None:
             raise ValueError("Method not supported")
         return m(self)

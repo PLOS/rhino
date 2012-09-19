@@ -97,11 +97,30 @@ def code_message(code):
     except KeyError:
         return '(Undefined)'
 
+def display_header_item(header_item):
+    """Render one header as a user-readable string.
+
+    The argument is either a simple string value or a (key, value) tuple.
+    """
+    if isinstance(header_item, str):
+        return repr(header_item)
+    if len(header_item) != 2:
+        raise ValueError("Expected only strings and 2-tuples in headers")
+    return '{0!r}: {1!r}'.format(*header_item)
+
 def report(description, response):
     """Prepare an HTTP response for display as a string."""
-    buf = [description,
+    buf = [description, '',
            'HTTP Status {0}: {1}'.format(response.status,
                                          code_message(response.status))]
+    headers = response.get_headers()
+    if not headers:
+        buf.append('No headers')
+    else:
+        buf.append('Headers:')
+        buf += ('    ' + display_header_item(item) for item in headers)
+    buf.append('')  # Skip a line before the response body
+
     if response.body is None:
         buf.append('No response body')
     elif len(response.body) >= 80:
@@ -111,9 +130,7 @@ def report(description, response):
     else:
         buf += ['Response body:', repr(response.body)]
 
-    buf += ['Headers!', repr(response.headers)]
-
-    buf.append('')  # Extra blank line
+    buf.append('\n')  # Two blank lines to separate reports
     return '\n'.join(buf)
 
 def run_test_on_article(case):
