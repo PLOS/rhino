@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
@@ -27,7 +28,7 @@ import java.io.InputStream;
 public interface AssetCrudService extends DoiBasedCrudService {
 
   /**
-   * Create a new article asset.
+   * Create or update an article asset.
    *
    * @param file      the file data to associate with the new asset
    * @param assetId   the identifier for the new asset
@@ -35,7 +36,8 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void create(InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId) throws FileStoreException, IOException;
+  public abstract void upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleId)
+      throws FileStoreException, IOException;
 
   /**
    * Read the file associated with an asset.
@@ -45,19 +47,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws FileStoreException
    */
   public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
-
-  /**
-   * Replace asset data from a provided file stream.
-   * <p/>
-   * This temporary API is based on the assumption that there is exactly one file associated with each asset. This
-   * should be refactored when the role of assets is generalized later.
-   *
-   * @param file a stream containing the data to write
-   * @param id   the identifier of the asset to update
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  public abstract void update(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
   /**
    * Delete an asset and its associated file.

@@ -147,19 +147,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void update(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
-    if (!articleExistsAt(id)) {
-      throw reportNotFound(id.getFilePath());
-    }
-    String fsid = id.getFsid(); // make sure this is valid before reading the stream
-    byte[] fileData = readClientInput(file);
-    write(fileData, fsid);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void delete(DoiBasedIdentity id) throws FileStoreException {
     Article article = findArticleById(id);
     if (article == null) {

@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
@@ -46,7 +47,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 public class ArticleCrudServiceTest extends BaseAdminTest {
 
@@ -138,7 +138,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
-    articleCrudService.update(input, articleId);
+    articleCrudService.upload(input, articleId);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -161,7 +161,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     articleCrudService.upload(new TestFile(articleFile).read(), articleId);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
-    assetCrudService.create(assetFileStream, assetId, articleId);
+    assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria

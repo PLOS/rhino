@@ -112,11 +112,12 @@ def run_test_on_article(case):
             hdr = 'Response to UPLOAD for article (iteration {0})'.format(i+1)
             report(hdr, upload.put())
 
-    for asset_id, asset_file in case.assets():
+    for asset_id, asset_filename in case.assets():
         create_asset = asset_req(asset_id)
-        create_asset.set_form_file_path('file', asset_file)
         create_asset.set_query_parameter('assetOf', case.article_doi())
-        report('Response to CREATE for asset', create_asset.post())
+        with open(asset_filename) as asset_file:
+            create_asset.message_body = asset_file
+            report('Response to CREATE for asset', create_asset.put())
 
     read = article_req()
     report('Response to READ', read.get())
