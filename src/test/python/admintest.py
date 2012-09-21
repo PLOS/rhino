@@ -86,7 +86,7 @@ class TestArticle(object):
         return 'TestArticle({0!r}, {1!r})'.format(self.doi, self.asset_suffixes)
 
 TEST_ARTICLES = [
-    TestArticle('journal.pone.0038869', ['g002.tif']),
+    TestArticle('journal.pone.0038869', ['g001.tif', 'g002.tif']),
     ]
 
 def report(description, response):
