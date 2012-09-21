@@ -109,15 +109,19 @@ def run_test_on_article(case):
         upload = article_req()
         with open(case.xml_path()) as xml_file:
             upload.message_body = xml_file
-            hdr = 'Response to UPLOAD for article (iteration {0})'.format(i+1)
-            report(hdr, upload.put())
+            result = upload.put()
+        hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
+        report(hdr, result)
 
     for asset_id, asset_filename in case.assets():
-        create_asset = asset_req(asset_id)
-        create_asset.set_query_parameter('assetOf', case.article_doi())
-        with open(asset_filename) as asset_file:
-            create_asset.message_body = asset_file
-            report('Response to CREATE for asset', create_asset.put())
+        for i in range(2): # First create, then update
+            create_asset = asset_req(asset_id)
+            create_asset.set_query_parameter('assetOf', case.article_doi())
+            with open(asset_filename) as asset_file:
+                create_asset.message_body = asset_file
+                result = create_asset.put()
+            hdr = 'Response to CREATE for asset (iteration {0})'.format(i + 1)
+            report(hdr, result)
 
     read = article_req()
     report('Response to READ', read.get())

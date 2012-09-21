@@ -73,22 +73,22 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
         throw new RestClientException(message, HttpStatus.BAD_REQUEST);
       }
       // TODO Verify that articleId refers to an existing article; throw RestClientException if not
-      upload(new ArticleAsset(), file, assetId, articleId.get());
+      upload(new ArticleAsset(), file, assetId, articleId.get(), true);
       return UploadResult.CREATED;
     } else {
       // Updating an existing asset
       if (articleId.isPresent()) {
         // TODO Ensure that the given articleId is consistent with the actual parent article
-        upload(asset, file, assetId, articleId.get());
+        upload(asset, file, assetId, articleId.get(), false);
       } else {
         DoiBasedIdentity parentArticleId = null; // TODO Look up parent from existing asset
-        upload(asset, file, assetId, parentArticleId);
+        upload(asset, file, assetId, parentArticleId, false);
       }
       return UploadResult.UPDATED;
     }
   }
 
-  private void upload(ArticleAsset asset, InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId)
+  private void upload(ArticleAsset asset, InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId, boolean creating)
       throws FileStoreException, IOException {
     // Get these first to fail faster in case of client error
     String assetFsid = assetId.getFsid();
@@ -110,7 +110,11 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     } catch (XmlContentException e) {
       throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
-    hibernateTemplate.save(asset);
+    if (creating) {
+      hibernateTemplate.save(asset);
+    } else {
+      hibernateTemplate.update(asset);
+    }
 
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);
