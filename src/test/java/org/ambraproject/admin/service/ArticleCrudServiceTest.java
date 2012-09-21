@@ -105,7 +105,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertArticleExistence(articleId, false);
 
     TestInputStream input = sampleFile.read();
-    articleCrudService.create(input, articleId);
+    articleCrudService.upload(input, articleId);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -158,7 +158,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     final DoiBasedIdentity assetId = identifyAsset(assetDoi, extension);
     final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(articleDoi);
 
-    articleCrudService.create(new TestFile(articleFile).read(), articleId);
+    articleCrudService.upload(new TestFile(articleFile).read(), articleId);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.create(assetFileStream, assetId, articleId);
@@ -170,26 +170,6 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored);
-  }
-
-  @Test(dataProvider = "sampleArticles")
-  public void testCreateCollision(String doi, File fileLocation) throws IOException, FileStoreException {
-    doi += ".testCreateCollision"; // Avoid collisions with canonical sample data
-    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(doi);
-
-    final TestFile sampleFile = new TestFile(fileLocation);
-
-    assertArticleExistence(articleId, false);
-
-    articleCrudService.create(sampleFile.read(), articleId);
-    assertArticleExistence(articleId, true);
-
-    try {
-      articleCrudService.create(sampleFile.read(), articleId);
-      fail("Expected RestClientException on redundant create");
-    } catch (RestClientException e) {
-      assertEquals(e.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
-    }
   }
 
 }

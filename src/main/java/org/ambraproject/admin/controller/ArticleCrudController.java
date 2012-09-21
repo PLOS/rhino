@@ -30,8 +30,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -63,22 +61,21 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
 
   /**
-   * Dispatch an action to create an article.
+   * Dispatch an action to upload an article.
    *
    * @param request the HTTP request from a REST client
-   * @param file    the uploaded file to use to create an article
    * @return the HTTP response, to indicate success or describe an error
    * @throws IOException
    * @throws FileStoreException
    */
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request, MultipartFile file)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
+  public ResponseEntity<?> upload(HttpServletRequest request)
       throws IOException, FileStoreException {
     DoiBasedIdentity id = parse(request);
     InputStream stream = null;
     try {
-      stream = file.getInputStream();
-      articleCrudService.create(stream, id);
+      stream = request.getInputStream();
+      articleCrudService.upload(stream, id);
     } finally {
       IOUtils.closeQuietly(stream);
     }
@@ -90,13 +87,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
     return super.read(request);
-  }
-
-  @Override
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> update(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
-      throws IOException, FileStoreException {
-    return super.update(request, file);
   }
 
   @Override

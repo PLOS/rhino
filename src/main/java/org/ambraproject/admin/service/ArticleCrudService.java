@@ -27,7 +27,8 @@ import java.io.InputStream;
 public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
-   * Create an article from supplied XML data.
+   * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
+   * entity is created; else, the article is re-ingested and the new data replaces the old data in the file store.
    * <p/>
    * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
    * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
@@ -39,7 +40,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract void create(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException;
+  public abstract void upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException;
 
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
@@ -51,21 +52,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws FileStoreException
    */
   public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
-
-  /**
-   * Overwrite an article with supplied XML data.
-   * <p/>
-   * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
-   * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
-   *
-   * @param file the XML data for the article
-   * @param id   the identifier of the article
-   * @throws org.ambraproject.admin.RestClientException
-   *                            if the DOI does not belong to an article
-   * @throws IOException
-   * @throws FileStoreException
-   */
-  public abstract void update(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException;
 
   /**
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.

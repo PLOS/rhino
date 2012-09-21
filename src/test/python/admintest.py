@@ -31,6 +31,7 @@ whatever it finds in the right directories.
 """
 
 from __future__ import print_function
+from __future__ import with_statement
 
 import os
 from restclient import Request
@@ -104,9 +105,12 @@ def run_test_on_article(case):
     def asset_req(asset_id):
         return Request('localhost', 'asset/' + asset_id, port=8080)
 
-    create = article_req()
-    create.set_form_file_path('file', case.xml_path())
-    report('Response to CREATE for article', create.post())
+    for i in range(2): # First create, then update
+        upload = article_req()
+        with open(case.xml_path()) as xml_file:
+            upload.message_body = xml_file
+            hdr = 'Response to UPLOAD for article (iteration {0})'.format(i+1)
+            report(hdr, upload.put())
 
     for asset_id, asset_file in case.assets():
         create_asset = asset_req(asset_id)
