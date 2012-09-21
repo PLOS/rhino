@@ -57,7 +57,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleId)
+  public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleId)
       throws FileStoreException, IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
@@ -74,6 +74,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       }
       // TODO Verify that articleId refers to an existing article; throw RestClientException if not
       upload(new ArticleAsset(), file, assetId, articleId.get());
+      return UploadResult.CREATED;
     } else {
       // Updating an existing asset
       if (articleId.isPresent()) {
@@ -83,8 +84,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
         DoiBasedIdentity parentArticleId = null; // TODO Look up parent from existing asset
         upload(asset, file, assetId, parentArticleId);
       }
+      return UploadResult.UPDATED;
     }
-
   }
 
   private void upload(ArticleAsset asset, InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId)

@@ -33,14 +33,16 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
    * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
    *
-   * @param file the XML data for the created article
-   * @param id   the identifier for the created article
+   * @param file the XML data for the article
+   * @param id   the identifier for the article
+   * @return an indication of whether the article was created or updated
    * @throws org.ambraproject.admin.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract void upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException;
+  public abstract AmbraService.UploadResult upload(InputStream file, DoiBasedIdentity id)
+      throws IOException, FileStoreException;
 
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.

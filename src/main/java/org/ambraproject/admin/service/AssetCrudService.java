@@ -33,10 +33,13 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param file      the file data to associate with the new asset
    * @param assetId   the identifier for the new asset
    * @param articleId the identifier for the existing article to which the asset belongs
+   * @return an indication of whether the asset was created or updated
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract void upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleId)
+  public abstract AmbraService.UploadResult upload(InputStream file,
+                                                   DoiBasedIdentity assetId,
+                                                   Optional<DoiBasedIdentity> articleId)
       throws FileStoreException, IOException;
 
   /**

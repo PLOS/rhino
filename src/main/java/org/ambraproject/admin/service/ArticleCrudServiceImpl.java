@@ -109,7 +109,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
+  public UploadResult upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
     String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
     byte[] xmlData = readClientInput(file);
 
@@ -128,6 +128,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     write(xmlData, fsid);
+    return creatingNewArticle ? UploadResult.CREATED : UploadResult.UPDATED;
   }
 
   /**

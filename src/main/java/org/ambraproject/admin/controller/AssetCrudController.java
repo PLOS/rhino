@@ -19,12 +19,12 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
+import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,13 +75,14 @@ public class AssetCrudController extends DoiBasedCrudController {
         : Optional.of(DoiBasedIdentity.forArticle(parentId));
 
     InputStream stream = null;
+    AmbraService.UploadResult result;
     try {
       stream = request.getInputStream();
-      assetCrudService.upload(stream, assetId, articleId);
+      result = assetCrudService.upload(stream, assetId, articleId);
     } finally {
       IOUtils.closeQuietly(stream);
     }
-    return new ResponseEntity<Object>(HttpStatus.CREATED);
+    return new ResponseEntity<Object>(result.getStatus());
   }
 
   @Override

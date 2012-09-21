@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
@@ -25,7 +26,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,13 +73,14 @@ public class ArticleCrudController extends DoiBasedCrudController {
       throws IOException, FileStoreException {
     DoiBasedIdentity id = parse(request);
     InputStream stream = null;
+    AmbraService.UploadResult result;
     try {
       stream = request.getInputStream();
-      articleCrudService.upload(stream, id);
+      result = articleCrudService.upload(stream, id);
     } finally {
       IOUtils.closeQuietly(stream);
     }
-    return new ResponseEntity<Object>(HttpStatus.CREATED);
+    return new ResponseEntity<Object>(result.getStatus());
   }
 
 
