@@ -21,6 +21,7 @@ package org.ambraproject.admin.controller;
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FSIDMapper;
+import org.ambraproject.models.Article;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -73,11 +74,28 @@ public class DoiBasedIdentity {
    * The DOI provided must <em>not</em> be prefixed with {@code "info:doi/"} or any other URI scheme value.
    *
    * @param identifier the article's DOI
-   * @return a new identifier for the article
+   * @return an identifier for the article
    * @throws IllegalArgumentException if the DOI is prefixed with a URI scheme value or is null or empty
    */
   public static DoiBasedIdentity forArticle(String identifier) {
     return new DoiBasedIdentity(identifier, XML_EXTENSION);
+  }
+
+  /**
+   * Create an identifier for an article entity. The data described by the identifier is the article's XML file.
+   *
+   * @param article an article
+   * @return an identifier for the article
+   * @throws IllegalArgumentException if the article's DOI is uninitialized or does not start with the expected scheme
+   *                                  value
+   */
+  public static DoiBasedIdentity forArticle(Article article) {
+    String doi = article.getDoi();
+    if (doi == null || !doi.startsWith(DOI_SCHEME_VALUE)) {
+      throw new IllegalArgumentException("Article does not have expected DOI: " + doi);
+    }
+    String identifier = doi.substring(DOI_SCHEME_VALUE.length());
+    return forArticle(identifier);
   }
 
   /**

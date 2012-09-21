@@ -45,19 +45,11 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     return exists(criteria);
   }
 
-  private Article getParentFor(ArticleAsset asset) {
-    throw new RuntimeException("Unimplemented"); // TODO
-//    return (Article) DataAccessUtils.uniqueResult(
-//        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-//            .add(Restrictions.in("assets", ImmutableList.of(asset)))
-//        ));
-  }
-
   /**
    * {@inheritDoc}
    */
   @Override
-  public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleId)
+  public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleIdParam)
       throws FileStoreException, IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
@@ -65,34 +57,85 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
 
-    if (asset == null) {
-      // Creating a new asset
-      if (!articleId.isPresent()) {
-        String message = String.format("Asset does not exist with DOI=\"%s\". "
-            + "Must provide an assetOf parameter when uploading a new asset.", assetId.getKey());
-        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-      }
-      // TODO Verify that articleId refers to an existing article; throw RestClientException if not
-      upload(new ArticleAsset(), file, assetId, articleId.get(), true);
-      return UploadResult.CREATED;
-    } else {
-      // Updating an existing asset
-      if (articleId.isPresent()) {
-        // TODO Ensure that the given articleId is consistent with the actual parent article
-        upload(asset, file, assetId, articleId.get(), false);
-      } else {
-        DoiBasedIdentity parentArticleId = null; // TODO Look up parent from existing asset
-        upload(asset, file, assetId, parentArticleId, false);
-      }
-      return UploadResult.UPDATED;
-    }
+    return (asset == null)
+        ? create(file, assetId, articleIdParam)
+        : update(file, assetId, articleIdParam, asset);
   }
 
-  private void upload(ArticleAsset asset, InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId, boolean creating)
+  /*
+   * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
+   */
+  private UploadResult create(InputStream file,
+                              DoiBasedIdentity assetId,
+                              Optional<DoiBasedIdentity> articleIdParam)
+      throws FileStoreException, IOException {
+    // Require that the user identified the parent article
+    if (!articleIdParam.isPresent()) {
+      String message = String.format("Asset does not exist with DOI=\"%s\". "
+          + "Must provide an assetOf parameter when uploading a new asset.", assetId.getKey());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+
+    // Look up the identified parent article
+    DoiBasedIdentity articleId = articleIdParam.get();
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .add(Restrictions.eq("doi", articleId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (article == null) {
+      String message = "Could not find article with DOI=" + articleId.getIdentifier();
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+
+    // Create the association now; the asset's state will be set in doUpload
+    ArticleAsset asset = new ArticleAsset();
+    article.getAssets().add(asset);
+
+    doUpload(file, article, asset, assetId);
+    return UploadResult.CREATED;
+  }
+
+  /*
+   * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
+   */
+  private UploadResult update(InputStream file,
+                              DoiBasedIdentity assetId,
+                              Optional<DoiBasedIdentity> articleIdParam,
+                              ArticleAsset asset)
+      throws FileStoreException, IOException {
+    // Look up the parent article, by the asset's preexisting association
+    String assetDoi = asset.getDoi();
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            .createCriteria("assets").add(Restrictions.eq("doi", assetDoi))
+        ));
+    if (article == null) {
+      throw new IllegalStateException("Orphan asset: " + assetId.getKey());
+    }
+    DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(article);
+
+    // If the user identified an article, throw an error if it was inconsistent
+    if (articleIdParam.isPresent() && !articleIdParam.get().equals(articleId)) {
+      String message = String.format(
+          "Provided ID for asset's article (%s) is inconsistent with asset's actual article (%s)",
+          articleIdParam.get().getIdentifier(), articleId.getIdentifier());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+
+    doUpload(file, article, asset, assetId);
+    return UploadResult.UPDATED;
+  }
+
+  /*
+   * "Payload" behavior common to both create and update operations.
+   */
+  private void doUpload(InputStream file, Article article, ArticleAsset asset, DoiBasedIdentity assetId)
       throws FileStoreException, IOException {
     // Get these first to fail faster in case of client error
     String assetFsid = assetId.getFsid();
-    String articleFsid = articleId.getFsid();
+    String articleFsid = DoiBasedIdentity.forArticle(article).getFsid();
 
     InputStream articleStream = null;
     Document articleXml;
@@ -110,11 +153,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     } catch (XmlContentException e) {
       throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
-    if (creating) {
-      hibernateTemplate.save(asset);
-    } else {
-      hibernateTemplate.update(asset);
-    }
+    hibernateTemplate.update(article);
 
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);

@@ -113,15 +113,22 @@ def run_test_on_article(case):
         hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
         report(hdr, result)
 
+    def upload_asset(description, asset_id, asset_filename, article_id):
+        req = asset_req(asset_id)
+        if article_id:
+            req.set_query_parameter('assetOf', article_id)
+        with open(asset_filename) as asset_file:
+            req.message_body = asset_file
+            result = req.put()
+        report(description, result)
+
     for asset_id, asset_filename in case.assets():
-        for i in range(2): # First create, then update
-            create_asset = asset_req(asset_id)
-            create_asset.set_query_parameter('assetOf', case.article_doi())
-            with open(asset_filename) as asset_file:
-                create_asset.message_body = asset_file
-                result = create_asset.put()
-            hdr = 'Response to CREATE for asset (iteration {0})'.format(i + 1)
-            report(hdr, result)
+        upload_asset('Response to creating asset',
+                     asset_id, asset_filename, case.article_doi())
+        upload_asset('Response to re-uploading asset',
+                     asset_id, asset_filename, case.article_doi())
+        upload_asset('Response to re-uploading asset without article DOI',
+                     asset_id, asset_filename, None)
 
     read = article_req()
     report('Response to READ', read.get())
