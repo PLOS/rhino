@@ -18,6 +18,8 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.service.DoiBasedCrudService;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -27,9 +29,12 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class DoiBasedCrudController extends RestController {
 
   /**
-   * The request parameter name for uploading a single file. Part of this application's public REST API.
+   * Return a service object that can perform CRUD operations on the appropriate type of entity. Typically, this is just
+   * a constant, dependency-injected field.
+   *
+   * @return the service
    */
-  protected static final String FILE_ARG = "file";
+  protected abstract DoiBasedCrudService getService();
 
   /**
    * Return the URL prefix that describes the RESTful namespace that this controller handles. It should include a

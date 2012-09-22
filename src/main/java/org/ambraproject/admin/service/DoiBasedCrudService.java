@@ -21,7 +21,6 @@ package org.ambraproject.admin.service;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -33,8 +32,6 @@ import java.io.InputStream;
 public abstract interface DoiBasedCrudService {
 
   public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
-
-  public abstract void update(InputStream file, DoiBasedIdentity id) throws FileStoreException, IOException;
 
   public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
 

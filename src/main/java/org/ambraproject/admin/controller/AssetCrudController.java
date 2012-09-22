@@ -18,19 +18,18 @@
 
 package org.ambraproject.admin.controller;
 
-import org.ambraproject.admin.RestClientException;
+import com.google.common.base.Optional;
+import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -58,47 +57,38 @@ public class AssetCrudController extends FileStoreController {
 
 
   /**
-   * Dispatch an action to create an article.
+   * Dispatch an action to upload an asset.
    *
-   * @param request the HTTP request from a REST client
-   * @param file    the uploaded file to use to create an article
+   * @param request  the HTTP request from a REST client
+   * @param parentId the DOI of the asset's parent article; required only if the asset is being newly created
    * @return the HTTP response, to indicate success or describe an error
    * @throws IOException
    * @throws FileStoreException
    */
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request, MultipartFile file)
+  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
+  public ResponseEntity<?> upload(HttpServletRequest request,
+                                  @RequestParam(value = PARENT_PARAM, required = false) String parentId)
       throws IOException, FileStoreException {
     DoiBasedIdentity assetId = parse(request);
-
-    String parentId = request.getParameter(PARENT_PARAM);
-    if (parentId == null) {
-      String message = String.format("Creating an asset requires \"?%s=\" with the article DOI", PARENT_PARAM);
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-    DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(parentId);
+    Optional<DoiBasedIdentity> articleId = (parentId == null)
+        ? Optional.<DoiBasedIdentity>absent()
+        : Optional.of(DoiBasedIdentity.forArticle(parentId));
 
     InputStream stream = null;
+    AmbraService.UploadResult result;
     try {
-      stream = file.getInputStream();
-      assetCrudService.create(stream, assetId, articleId);
+      stream = request.getInputStream();
+      result = assetCrudService.upload(stream, assetId, articleId);
     } finally {
       IOUtils.closeQuietly(stream);
     }
-    return reportCreated();
+    return new ResponseEntity<Object>(result.getStatus());
   }
 
   @Override
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
     return super.read(request);
-  }
-
-  @Override
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> update(HttpServletRequest request, @RequestParam(FILE_ARG) MultipartFile file)
-      throws IOException, FileStoreException {
-    return super.update(request, file);
   }
 
   @Override
