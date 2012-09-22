@@ -49,6 +49,27 @@ public abstract class AmbraService {
   @Autowired
   protected FileStoreService fileStoreService;
 
+  /**
+   * An indication of whether a request that uploaded data (typically, PUT) created new data or updated existing data.
+   */
+  public static enum UploadResult {
+    CREATED(HttpStatus.CREATED), UPDATED(HttpStatus.OK);
+
+    private final HttpStatus status;
+
+    private UploadResult(HttpStatus status) {
+      this.status = status;
+    }
+
+    /**
+     * An HTTP status code that describes the operation.
+     *
+     * @return the status
+     */
+    public HttpStatus getStatus() {
+      return status;
+    }
+  }
 
   /**
    * Check whether a distinct entity exists.

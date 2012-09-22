@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.AssetXml;
@@ -48,26 +49,93 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, DoiBasedIdentity assetId, DoiBasedIdentity articleId) throws FileStoreException, IOException {
-    if (assetExistsAt(assetId)) {
-      throw new RestClientException("Can't create asset; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
+  public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleIdParam)
+      throws FileStoreException, IOException {
+    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", assetId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+
+    return (asset == null)
+        ? create(file, assetId, articleIdParam)
+        : update(file, assetId, articleIdParam, asset);
+  }
+
+  /*
+   * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
+   */
+  private UploadResult create(InputStream file,
+                              DoiBasedIdentity assetId,
+                              Optional<DoiBasedIdentity> articleIdParam)
+      throws FileStoreException, IOException {
+    // Require that the user identified the parent article
+    if (!articleIdParam.isPresent()) {
+      String message = String.format("Asset does not exist with DOI=\"%s\". "
+          + "Must provide an assetOf parameter when uploading a new asset.", assetId.getKey());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    // Get these first to fail faster in case of client error
-    String articleFsid = articleId.getFsid();
-    String assetFsid = assetId.getFsid();
-
-
+    // Look up the identified parent article
+    DoiBasedIdentity articleId = articleIdParam.get();
     Article article = (Article) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", articleId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      String message = "Cannot attach asset to article; no article found at DOI: " + articleId.getIdentifier();
-      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+      String message = "Could not find article with DOI=" + articleId.getIdentifier();
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
+
+    // Create the association now; the asset's state will be set in doUpload
+    ArticleAsset asset = new ArticleAsset();
+    article.getAssets().add(asset);
+
+    doUpload(file, article, asset, assetId);
+    return UploadResult.CREATED;
+  }
+
+  /*
+   * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
+   */
+  private UploadResult update(InputStream file,
+                              DoiBasedIdentity assetId,
+                              Optional<DoiBasedIdentity> articleIdParam,
+                              ArticleAsset asset)
+      throws FileStoreException, IOException {
+    // Look up the parent article, by the asset's preexisting association
+    String assetDoi = asset.getDoi();
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            .createCriteria("assets").add(Restrictions.eq("doi", assetDoi))
+        ));
+    if (article == null) {
+      throw new IllegalStateException("Orphan asset: " + assetId.getKey());
+    }
+    DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(article);
+
+    // If the user identified an article, throw an error if it was inconsistent
+    if (articleIdParam.isPresent() && !articleIdParam.get().equals(articleId)) {
+      String message = String.format(
+          "Provided ID for asset's article (%s) is inconsistent with asset's actual article (%s)",
+          articleIdParam.get().getIdentifier(), articleId.getIdentifier());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+
+    doUpload(file, article, asset, assetId);
+    return UploadResult.UPDATED;
+  }
+
+  /*
+   * "Payload" behavior common to both create and update operations.
+   */
+  private void doUpload(InputStream file, Article article, ArticleAsset asset, DoiBasedIdentity assetId)
+      throws FileStoreException, IOException {
+    // Get these first to fail faster in case of client error
+    String assetFsid = assetId.getFsid();
+    String articleFsid = DoiBasedIdentity.forArticle(article).getFsid();
 
     InputStream articleStream = null;
     Document articleXml;
@@ -80,13 +148,12 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       IOUtils.closeQuietly(articleStream);
     }
 
-    ArticleAsset asset;
     try {
-      asset = new AssetXml(articleXml, assetId).build(new ArticleAsset());
+      asset = new AssetXml(articleXml, assetId).build(asset);
     } catch (XmlContentException e) {
       throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }
-    hibernateTemplate.save(asset);
+    hibernateTemplate.update(article);
 
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);
@@ -101,19 +168,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw reportNotFound(assetId.getFilePath());
     }
     return fileStoreService.getFileInStream(assetId.getFsid());
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void update(InputStream file, DoiBasedIdentity assetId) throws FileStoreException, IOException {
-    if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId.getFilePath());
-    }
-    String assetFsid = assetId.getFsid(); // make sure this is valid before reading the stream
-    byte[] assetData = readClientInput(file);
-    write(assetData, assetFsid);
   }
 
   /**

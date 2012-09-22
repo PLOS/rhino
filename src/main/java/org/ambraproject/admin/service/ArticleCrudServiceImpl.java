@@ -53,13 +53,32 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Create an article entity to represent the metadata provided in the article's XML file.
+   * Query for an article by its identifier.
    *
+   * @param id the article's identity
+   * @return the article, or {@code null} if not found
+   */
+  private Article findArticleById(DoiBasedIdentity id) {
+    return (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Article.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+  }
+
+  /**
+   * Modify an article entity to represent the metadata provided in the article's XML file.
+   * <p/>
+   * The identifier argument provides the DOI according to the REST action that is trying to create the article. It is
+   * expected to match the DOI in the XML document, but this must be validated against client error.
+   *
+   * @param article the article entity that will receive the metadata (new and empty if the article is being created)
    * @param xmlData data from the XML file for the new article
    * @param id      the identifier for the article
    * @return the new article object
    */
-  private Article prepareMetadata(byte[] xmlData, DoiBasedIdentity id) {
+  private Article prepareMetadata(Article article, byte[] xmlData, DoiBasedIdentity id) {
     InputStream xmlStream = null;
     Document xml;
     try {
@@ -71,23 +90,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       IOUtils.closeQuietly(xmlStream);
     }
 
-    return prepareMetadata(xml, id);
-  }
-
-  /**
-   * Read metadata from an XML file into a new article representation.
-   * <p/>
-   * The identifier argument provides the DOI according to the REST action that is trying to create the article. It is
-   * expected to match the DOI in the XML document, but this must be validated against client error.
-   *
-   * @param xml the parsed XML for the new article
-   * @param id  the identifier for the article
-   * @return the new article object
-   */
-  private Article prepareMetadata(Document xml, DoiBasedIdentity id) {
-    Article article = new Article();
     article.setDoi(id.getKey());
-
     try {
       article = new ArticleXml(xml).build(article);
     } catch (XmlContentException e) {
@@ -98,7 +101,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
     }
-
     return article;
   }
 
@@ -107,17 +109,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void create(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
-    if (articleExistsAt(id)) {
-      throw new RestClientException("Can't create article; DOI already exists", HttpStatus.METHOD_NOT_ALLOWED);
-    }
+  public UploadResult upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
     String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
     byte[] xmlData = readClientInput(file);
 
-    Article article = prepareMetadata(xmlData, id);
-    hibernateTemplate.save(article);
+    boolean creatingNewArticle = false;
+    Article article = findArticleById(id);
+    if (article == null) {
+      creatingNewArticle = true;
+      article = new Article();
+    }
+    prepareMetadata(article, xmlData, id);
+
+    if (creatingNewArticle) {
+      hibernateTemplate.save(article);
+    } else {
+      hibernateTemplate.update(article);
+    }
 
     write(xmlData, fsid);
+    return creatingNewArticle ? UploadResult.CREATED : UploadResult.UPDATED;
   }
 
   /**
@@ -137,26 +148,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void update(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
-    if (!articleExistsAt(id)) {
-      throw reportNotFound(id.getFilePath());
-    }
-    String fsid = id.getFsid(); // make sure this is valid before reading the stream
-    byte[] fileData = readClientInput(file);
-    write(fileData, fsid);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void delete(DoiBasedIdentity id) throws FileStoreException {
-    Article article = (Article) DataAccessUtils.uniqueResult(
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+    Article article = findArticleById(id);
     if (article == null) {
       throw reportNotFound(id.getFilePath());
     }

@@ -31,6 +31,7 @@ whatever it finds in the right directories.
 """
 
 from __future__ import print_function
+from __future__ import with_statement
 
 import os
 from restclient import Request
@@ -85,7 +86,7 @@ class TestArticle(object):
         return 'TestArticle({0!r}, {1!r})'.format(self.doi, self.asset_suffixes)
 
 TEST_ARTICLES = [
-    TestArticle('journal.pone.0038869', ['g002.tif']),
+    TestArticle('journal.pone.0038869', ['g001.tif', 'g002.tif']),
     ]
 
 def report(description, response):
@@ -104,15 +105,30 @@ def run_test_on_article(case):
     def asset_req(asset_id):
         return Request('localhost', 'asset/' + asset_id, port=8080)
 
-    create = article_req()
-    create.set_form_file_path('file', case.xml_path())
-    report('Response to CREATE for article', create.post())
+    for i in range(2): # First create, then update
+        upload = article_req()
+        with open(case.xml_path()) as xml_file:
+            upload.message_body = xml_file
+            result = upload.put()
+        hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
+        report(hdr, result)
 
-    for asset_id, asset_file in case.assets():
-        create_asset = asset_req(asset_id)
-        create_asset.set_form_file_path('file', asset_file)
-        create_asset.set_query_parameter('assetOf', case.article_doi())
-        report('Response to CREATE for asset', create_asset.post())
+    def upload_asset(description, asset_id, asset_filename, article_id):
+        req = asset_req(asset_id)
+        if article_id:
+            req.set_query_parameter('assetOf', article_id)
+        with open(asset_filename) as asset_file:
+            req.message_body = asset_file
+            result = req.put()
+        report(description, result)
+
+    for asset_id, asset_filename in case.assets():
+        upload_asset('Response to creating asset',
+                     asset_id, asset_filename, case.article_doi())
+        upload_asset('Response to re-uploading asset',
+                     asset_id, asset_filename, case.article_doi())
+        upload_asset('Response to re-uploading asset without article DOI',
+                     asset_id, asset_filename, None)
 
     read = article_req()
     report('Response to READ', read.get())

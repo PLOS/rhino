@@ -199,10 +199,11 @@ class Request(object):
     strings before they are passed in.
     """
 
-    def __init__(self, domain, path, port=None):
+    def __init__(self, domain, path, port=None, message_body=None):
         self.domain = domain
         self.port = port
         self.path = path
+        self.message_body = message_body
         self.query_params = dict()
         self.form_params = dict()
 
@@ -240,6 +241,23 @@ class Request(object):
             in_query = True
         return ''.join(buf)
 
+    def _get_body_readfunc(self):
+        """Return a function from which the message body can be read.
+
+        The returned function has the same behavior as a file.read method
+        or StringIO().read: it takes a number of bytes as an argument and
+        streams that many bytes from the message body.
+        """
+        if hasattr(self.message_body, 'read'):
+            # It's a file or file-like object
+            return self.message_body.read
+        if self.message_body is None:
+            # Default to providing a READFUNCTION that returns an empty body.
+            # Server has been observed to hang in at least one situation where
+            # READFUNCTION was not set at all.
+            return (lambda byte_count: '')
+        return cStringIO.StringIO(str(self.message_body)).read
+
     def _build_curl(self):
         """Build a Curl object to execute this request.
 
@@ -249,6 +267,8 @@ class Request(object):
         """
         curl = pycurl.Curl()
         curl.setopt(pycurl.URL, ''.join(self.get_url()))
+
+        curl.setopt(pycurl.READFUNCTION, self._get_body_readfunc())
 
         read_body = ResponseBuffer()
         curl.setopt(pycurl.WRITEFUNCTION, read_body.write)
