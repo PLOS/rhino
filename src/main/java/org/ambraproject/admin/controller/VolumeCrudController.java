@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.admin.service.VolumeCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,11 @@ public class VolumeCrudController extends DoiBasedCrudController {
 
   private static final String DISPLAY_PARAM = "display";
   private static final String JOURNAL_PARAM = "journal";
+
+  @Override
+  protected DoiBasedCrudService getService() {
+    return volumeCrudService;
+  }
 
   @Override
   protected String getNamespacePrefix() {

@@ -20,7 +20,7 @@ package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 
-public interface IssueCrudService {
+public interface IssueCrudService extends DoiBasedCrudService {
 
   public abstract void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri);
 

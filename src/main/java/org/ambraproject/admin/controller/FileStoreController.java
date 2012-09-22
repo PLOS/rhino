@@ -24,7 +24,6 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -80,28 +79,6 @@ public abstract class FileStoreController extends DoiBasedCrudController {
     headers.setContentType(id.getContentType());
 
     return new ResponseEntity<byte[]>(fileData, headers, HttpStatus.OK);
-  }
-
-  /**
-   * Dispatch an "update" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @param file    the uploaded file to replace existing data in the file store
-   * @return the HTTP response, to indicate success or describe an error
-   * @throws IOException
-   * @throws FileStoreException
-   */
-  protected ResponseEntity<?> update(HttpServletRequest request, MultipartFile file)
-      throws IOException, FileStoreException {
-    DoiBasedIdentity id = parse(request);
-    InputStream stream = null;
-    try {
-      stream = file.getInputStream();
-      getService().update(stream, id);
-    } finally {
-      IOUtils.closeQuietly(stream);
-    }
-    return reportOk();
   }
 
   /**
