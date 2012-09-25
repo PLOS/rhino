@@ -21,7 +21,6 @@ package org.ambraproject.admin.service;
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
@@ -30,7 +29,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
-import java.io.InputStream;
 import java.util.List;
 
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
@@ -59,13 +57,4 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     hibernateTemplate.update(journal);
   }
 
-  @Override
-  public InputStream read(DoiBasedIdentity id) throws FileStoreException {
-    throw new RuntimeException("Unimplemented"); // TODO
-  }
-
-  @Override
-  public void delete(DoiBasedIdentity id) throws FileStoreException {
-    throw new RuntimeException("Unimplemented"); // TODO
-  }
 }

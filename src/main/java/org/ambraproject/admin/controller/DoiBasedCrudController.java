@@ -18,8 +18,6 @@
 
 package org.ambraproject.admin.controller;
 
-import org.ambraproject.admin.service.DoiBasedCrudService;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -27,14 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  * DoiBasedIdentity}.
  */
 public abstract class DoiBasedCrudController extends RestController {
-
-  /**
-   * Return a service object that can perform CRUD operations on the appropriate type of entity. Typically, this is just
-   * a constant, dependency-injected field.
-   *
-   * @return the service
-   */
-  protected abstract DoiBasedCrudService getService();
 
   /**
    * Return the URL prefix that describes the RESTful namespace that this controller handles. It should include a

@@ -18,7 +18,6 @@
 
 package org.ambraproject.admin.controller;
 
-import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.admin.service.IssueCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +37,6 @@ public class IssueCrudController extends DoiBasedCrudController {
   private static final String DISPLAY_PARAM = "display";
   private static final String VOLUME_PARAM = "volume";
   private static final String IMAGE_PARAM = "image";
-
-  @Override
-  protected DoiBasedCrudService getService() {
-    return issueCrudService;
-  }
 
   @Override
   protected String getNamespacePrefix() {
