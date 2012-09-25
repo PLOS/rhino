@@ -18,30 +18,13 @@
 
 package org.ambraproject.admin.controller;
 
-import org.ambraproject.admin.service.DoiBasedCrudService;
-import org.ambraproject.filestore.FileStoreException;
-import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
  * DoiBasedIdentity}.
  */
 public abstract class DoiBasedCrudController extends RestController {
-
-  /**
-   * Return a service object that can perform CRUD operations on the appropriate type of entity. Typically, this is just
-   * a constant, dependency-injected field.
-   *
-   * @return the service
-   */
-  protected abstract DoiBasedCrudService getService();
 
   /**
    * Return the URL prefix that describes the RESTful namespace that this controller handles. It should include a
@@ -52,52 +35,16 @@ public abstract class DoiBasedCrudController extends RestController {
   protected abstract String getNamespacePrefix();
 
   protected DoiBasedIdentity parse(HttpServletRequest request) {
-    return DoiBasedIdentity.parse(request.getRequestURI(), getNamespacePrefix());
-  }
-
-
-  /*
-   * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
-   * (and @RequestParam where needed).
-   */
-
-  /**
-   * Dispatch a "read" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @return the HTTP response containing the read data or describing an error
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  protected ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    DoiBasedIdentity id = parse(request);
-
-    InputStream fileStream = null;
-    byte[] fileData;
-    try {
-      fileStream = getService().read(id);
-      fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
-    } finally {
-      IOUtils.closeQuietly(fileStream);
-    }
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(id.getContentType());
-
-    return new ResponseEntity<byte[]>(fileData, headers, HttpStatus.OK);
+    String identifier = getFullPathVariable(request, getNamespacePrefix());
+    return DoiBasedIdentity.parse(identifier, hasAssociatedFile());
   }
 
   /**
-   * Dispatch a "delete" action to the service.
-   *
-   * @param request the HTTP request from a REST client
-   * @return the HTTP response, to indicate success or describe an error
-   * @throws FileStoreException
+   * @return whether entities handled by this controller have a file in the file store associated with them
+   * @see FileStoreController
    */
-  protected ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    DoiBasedIdentity id = parse(request);
-    getService().delete(id);
-    return reportOk();
+  protected boolean hasAssociatedFile() {
+    return false;
   }
 
 }

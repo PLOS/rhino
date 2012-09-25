@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FSIDMapper;
@@ -38,26 +39,16 @@ public class DoiBasedIdentity {
 
   private static final String DOI_SCHEME_VALUE = "info:doi/";
   private static final String XML_EXTENSION = "xml";
-  private static final MimetypesFileTypeMap MIMETYPES = new MimetypesFileTypeMap();
+  private static final MimetypesFileTypeMap MIMETYPES = new MimetypesFileTypeMap(); // don't mutate the instance
 
 
-  /*
-   * Internal invariants:
-   *   - Instances of this class are immutable.
-   *   - All fields are non-null (but the Optional object may have an "absent" state, of course).
-   *   - The string fields are non-empty (they have length > 0).
-   *   - The identifier field does not contain ':'.
-   *   - The extension field contains no uppercase letters.
-   *   - The static MIMETYPES object's state is never mutated.
-   */
-
-  private final String identifier;
-  private final String extension;
+  private final String identifier; // non-null, non-empty, doesn't contain ':'
+  private final Optional<String> extension; // if present, string is non-empty and contains no uppercase letters
 
   private DoiBasedIdentity(String identifier, String extension) {
     super();
     this.identifier = Preconditions.checkNotNull(identifier);
-    this.extension = Preconditions.checkNotNull(extension).toLowerCase();
+    this.extension = (extension == null ? Optional.<String>absent() : Optional.of(extension.toLowerCase()));
 
     validate();
   }
@@ -65,7 +56,7 @@ public class DoiBasedIdentity {
   private void validate() {
     Preconditions.checkArgument(identifier.indexOf(':') < 0, "DOI must not have scheme prefix (\"info:doi/\")");
     Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
-    Preconditions.checkArgument(!extension.isEmpty(), "Extension is an empty string");
+    Preconditions.checkArgument(!extension.isPresent() || !extension.get().isEmpty(), "Extension is an empty string");
   }
 
   /**
@@ -99,26 +90,26 @@ public class DoiBasedIdentity {
   }
 
   /**
-   * Parse the identifier from a RESTful request directed at an object in the article namespace.
+   * Parse the identifier from a path. The input is from URL that a REST client would use to identify an entity.
    *
-   * @param requestUri the location at which the RESTful request to parse was received
-   * @return an for the article or asset to which the REST action was directed
-   * @see ArticleCrudController
+   * @param path the full path variable from the URL that identifies the entity
+   * @return an identifier object for the entity
+   * @see RestController#getFullPathVariable
    */
-  public static DoiBasedIdentity parse(String requestUri, String namespace) {
-    if (!requestUri.startsWith(namespace)) {
-      // Valid controller mappings should prevent this
-      throw new IllegalArgumentException("Request URI prefixed with wrong namespace");
+  public static DoiBasedIdentity parse(String path, boolean expectExtension) {
+    if (!expectExtension) {
+      return new DoiBasedIdentity(path, null);
     }
-    int dotIndex = requestUri.lastIndexOf('.');
-    if (dotIndex < 0 || dotIndex + 1 >= requestUri.length()) {
+    int dotIndex = path.lastIndexOf('.');
+    if (dotIndex < 0 || dotIndex + 1 >= path.length()) {
       throw new IllegalArgumentException("Request URI does not have file extension");
     }
-    String identifier = requestUri.substring(namespace.length(), dotIndex);
-    String extension = requestUri.substring(dotIndex + 1);
+    String identifier = path.substring(0, dotIndex);
+    String extension = path.substring(dotIndex + 1);
 
     return new DoiBasedIdentity(identifier, extension);
   }
+
 
   /**
    * Return the DOI or DOI-like identifier for the article or asset that this object identifies. The return value will
@@ -154,12 +145,25 @@ public class DoiBasedIdentity {
    * @return the file path
    */
   public String getFilePath() {
-    return identifier + '.' + extension;
+    return identifier + '.' + getFileExtension();
   }
 
   /**
-   * Get the file extension for the data associated with the identified entity in the file store. File extensions are
+   * Check whether the identified entity has a file associated with it in the file store. It is safe to call {@link
+   * #getFileExtension()}  if and only if this method returns {@code true}.
+   *
+   * @return {@code true} if the identified entity has an associated file
+   */
+  public boolean hasFile() {
+    return extension.isPresent();
+  }
+
+  /**
+   * Get the file extension for the file associated with the identified entity in the file store. File extensions are
    * treated as case-insensitive, so any letters in the returned value are lowercase.
+   * <p/>
+   * This is safe to call only if the identified entity has a file associated with it, that is, if {@link #hasFile()}
+   * returns {@code true}.
    * <p/>
    * If this object identifies an article, then the associated data is the NLM-format article XML and this method
    * returns {@code "xml"}. If this object identifies an asset, then the file extension represents the data type of that
@@ -167,8 +171,11 @@ public class DoiBasedIdentity {
    *
    * @return the file extension
    */
-  public String getExtension() {
-    return extension;
+  public String getFileExtension() {
+    if (!extension.isPresent()) {
+      throw new IllegalStateException(getIdentifier() + " has no associated file");
+    }
+    return extension.get();
   }
 
   /**
@@ -178,7 +185,7 @@ public class DoiBasedIdentity {
    * @return the content type
    */
   public MediaType getContentType() {
-    if (extension.equalsIgnoreCase(XML_EXTENSION)) {
+    if (getFileExtension().equalsIgnoreCase(XML_EXTENSION)) {
       return MediaType.TEXT_XML;
     }
     String mimeType = MIMETYPES.getContentType(getFilePath());
@@ -192,7 +199,7 @@ public class DoiBasedIdentity {
    * @throws RestClientException if the DOI can't be parsed and converted into an FSID
    */
   public String getFsid() {
-    String fsid = FSIDMapper.doiTofsid(getKey(), extension);
+    String fsid = FSIDMapper.doiTofsid(getKey(), getFileExtension());
     if (fsid.isEmpty()) {
       throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
     }
@@ -227,7 +234,14 @@ public class DoiBasedIdentity {
     final StringBuilder sb = new StringBuilder();
     sb.append(getClass().getSimpleName()).append('(');
     sb.append("identifier=\"").append(identifier).append('\"');
-    sb.append(", extension=\"").append(extension).append('\"');
+
+    sb.append(", extension=");
+    if (extension.isPresent()) {
+      sb.append('\"').append(extension.get()).append('\"');
+    } else {
+      sb.append((Object) null);
+    }
+
     sb.append(')');
     return sb.toString();
   }

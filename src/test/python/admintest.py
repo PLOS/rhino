@@ -42,6 +42,45 @@ TEST_DATA_PATH = '../resources/data/'
 
 DOI_PREFIX = '10.1371/'
 
+class TestVolume(object):
+    """One test case of a volume to create."""
+    def __init__(self, doi, journal_key, display_name, issues=()):
+        self.doi = DOI_PREFIX + doi
+        self.journal_key = journal_key
+        self.display_name = display_name
+        self.issues = issues
+
+    def __str__(self):
+        return 'TestVolume({0!r}, {1!r}, {2!r}, {3!r})'.format(
+            self.doi, self.journal_key, self.display_name, self.issues)
+
+class TestIssue(object):
+    """One test case of an issue to create.
+
+    In order to be created, an instance should belong to the 'issues' field
+    of a TestVolume object.
+    """
+    def __init__(self, suffix, display_name, image_uri=None):
+        if not suffix.startswith('.'):
+            suffix = '.' + suffix
+        self.suffix = suffix
+        self.display_name = display_name
+        self.image_uri = image_uri
+
+    def __str__(self):
+        return 'TestIssue({0!r}, {1!r}, {2!r})'.format(
+            self.suffix, self.display_name, self.image_uri)
+
+TEST_VOLUMES = [
+    TestVolume('volume.pone.v47', 'PLoSONE', 'TestVolume',
+               issues=[TestIssue('i23', 'TestIssue')]),
+    ]
+"""A list of test volumes to create.
+
+Unlike TEST_ARTICLES, these do not map on to any data outside this script
+and can have any values.
+"""
+
 class TestArticle(object):
     """One test case of an article to manipulate."""
     def __init__(self, doi, asset_suffixes=()):
@@ -95,15 +134,39 @@ def report(description, response):
     print()
     print(response.display())
 
+def build_request(path):
+    return Request('localhost', path, port=8080)
+
+def create_test_volume(case):
+    """Test volume creation for one case."""
+    print('Running volume test for', case)
+
+    req = build_request('volume/' + case.doi)
+    req.set_query_parameter('display', case.display_name)
+    req.set_query_parameter('journal', case.journal_key)
+    result = req.put()
+    report('Response to CREATE for volume', result)
+
+    req = build_request('volume/' + case.doi)
+    result = req.get()
+    report('Response to READ for volume', result)
+
+    for issue_case in case.issues:
+        req = build_request('issue/' + case.doi + issue_case.suffix)
+        req.set_query_parameter('volume', case.doi)
+        req.set_query_parameter('display', issue_case.display_name)
+        if issue_case.image_uri:
+            req.set_query_parameter('image', issue_case.image_uri)
+
 def run_test_on_article(case):
     """Run the test for one article test case."""
     print('Running article test for', case)
     print()
 
     def article_req():
-        return Request('localhost', 'article/' + case.article_id(), port=8080)
+        return build_request('article/' + case.article_id())
     def asset_req(asset_id):
-        return Request('localhost', 'asset/' + asset_id, port=8080)
+        return build_request('asset/' + asset_id)
 
     for i in range(2): # First create, then update
         upload = article_req()
@@ -143,5 +206,7 @@ def run_test_on_article(case):
     report('Response to DELETE', delete.delete())
 
 
-for case in TEST_ARTICLES:
-    run_test_on_article(case)
+for volume_case in TEST_VOLUMES:
+    create_test_volume(volume_case)
+for article_case in TEST_ARTICLES:
+    run_test_on_article(article_case)

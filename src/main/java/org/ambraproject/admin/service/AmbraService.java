@@ -20,6 +20,7 @@ package org.ambraproject.admin.service;
 
 
 import com.google.common.base.Preconditions;
+import com.google.gson.Gson;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
@@ -48,6 +49,9 @@ public abstract class AmbraService {
 
   @Autowired
   protected FileStoreService fileStoreService;
+
+  @Autowired
+  protected Gson entityGson;
 
   /**
    * An indication of whether a request that uploaded data (typically, PUT) created new data or updated existing data.
