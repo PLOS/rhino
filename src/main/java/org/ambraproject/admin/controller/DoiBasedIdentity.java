@@ -31,9 +31,9 @@ import javax.activation.MimetypesFileTypeMap;
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
  * <li>The entity is an article, in which case the {@link #getIdentifier() identifier} is the article's actual DOI that
- * would be known to public DOI resolvers.</li> <li>The entity is an asset of an article. In this case, the {@link
- * #getIdentifier() identifier} is not a true DOI, but uses the parent article's DOI as a prefix. In this sense it is
- * "DOI-based".</li> </ol>
+ * would be known to public DOI resolvers.</li> <li>The entity is not an article, but has a "DOI-like" identifier. In
+ * this case, the {@link #getIdentifier() identifier} is not a true DOI that a resolver would recognize. (However, such
+ * asset IDs use the parent article's DOI as a prefix, so in that sense they are "DOI-based".)</li> </ol>
  */
 public class DoiBasedIdentity {
 
@@ -48,7 +48,7 @@ public class DoiBasedIdentity {
   private DoiBasedIdentity(String identifier, String extension) {
     super();
     this.identifier = Preconditions.checkNotNull(identifier);
-    this.extension = (extension == null ? Optional.<String>absent() : Optional.of(extension.toLowerCase()));
+    this.extension = (extension == null) ? Optional.<String>absent() : Optional.of(extension.toLowerCase());
 
     validate();
   }
