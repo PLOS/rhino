@@ -147,6 +147,10 @@ def create_test_volume(case):
     result = req.put()
     report('Response to CREATE for volume', result)
 
+    req = build_request('volume/' + case.doi)
+    result = req.get()
+    report('Response to READ for volume', result)
+
     for issue_case in case.issues:
         req = build_request('issue/' + case.doi + issue_case.suffix)
         req.set_query_parameter('volume', case.doi)

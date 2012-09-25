@@ -151,13 +151,12 @@ class Response(object):
             raise ValueError("Expected only strings and 2-tuples in headers")
         return '{0!r}: {1!r}'.format(*header_item)
 
-    def display(self, snippet_size=40):
+    def display(self, head_size=4*80, tail_size=80):
         """Return a user-readable string describing the response.
 
-        The snippet size is the size of the head and tail of the response
+        The head and tail size define the sizes of snippets of the response
         body to display. If the head and tail would cover the full body, it
-        is displayed uncut. To always display it uncut, use
-        snippet_size=None.
+        is displayed uncut. To always display it uncut, set both to 0.
         """
         status_description = 'HTTP Status {0}: {1}'.format(
             self.status, status_message(self.status))
@@ -173,15 +172,16 @@ class Response(object):
 
         if self.body is None:
             lines.append('No response body')
-        elif snippet_size and len(self.body) >= snippet_size * 2:
-            size = len(self.body)
-            head = self.body[ :  snippet_size]
-            tail = self.body[-snippet_size : ]
-            lines += ['Response size: {0}'  .format(size),
-                      'Response head: {0!r}'.format(head),
-                      'Response tail: {0!r}'.format(tail)]
         else:
-            lines += ['Response body:', repr(self.body)]
+            size = len(self.body)
+            lines += ['Response size:', str(size)]
+            if (head_size or tail_size) and size >= head_size + tail_size:
+                if head_size > 0:
+                    lines += ['Response head:', self.body[ : +head_size]]
+                if tail_size > 0:
+                    lines += ['Response tail:', self.body[-tail_size : ]]
+            else:
+                lines += ['Response body:', self.body]
 
         lines.append('\n')  # An extra blank line to separate reports
         return '\n'.join(lines)

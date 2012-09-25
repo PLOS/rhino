@@ -29,6 +29,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
@@ -55,6 +57,21 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     List<Volume> volumeList = journal.getVolumes();
     volumeList.add(volume);
     hibernateTemplate.update(journal);
+  }
+
+  @Override
+  public InputStream readJson(DoiBasedIdentity id) {
+    Volume volume = (Volume) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Volume.class)
+            .add(Restrictions.eq("volumeUri", id.getKey()))
+            .setFetchMode("issues", FetchMode.JOIN)
+        ));
+    if (volume == null) {
+      throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    String volString = entityGson.toJson(volume);
+    return new ByteArrayInputStream(volString.getBytes());
   }
 
 }

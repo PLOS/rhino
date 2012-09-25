@@ -19,7 +19,9 @@
 package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.VolumeCrudService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 public class VolumeCrudController extends DoiBasedCrudController {
@@ -53,6 +57,24 @@ public class VolumeCrudController extends DoiBasedCrudController {
     DoiBasedIdentity id = parse(request);
     volumeCrudService.create(id, displayName, journalKey);
     return reportCreated();
+  }
+
+  /*
+   * Always assume the user wants the metadata as JSON.
+   *
+   * TODO: Add way to specify metadata format to API and make this consistent with it.
+   */
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
+  public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
+    DoiBasedIdentity id = parse(request);
+    InputStream stream = null;
+    try {
+      stream = volumeCrudService.readJson(id);
+      byte[] data = IOUtils.toByteArray(stream);
+      return new ResponseEntity<String>(new String(data), HttpStatus.OK);
+    } finally {
+      IOUtils.closeQuietly(stream);
+    }
   }
 
 }

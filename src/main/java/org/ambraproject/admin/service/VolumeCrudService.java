@@ -20,8 +20,12 @@ package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 
+import java.io.InputStream;
+
 public interface VolumeCrudService {
 
   public abstract void create(DoiBasedIdentity id, String displayName, String journalKey);
+
+  public abstract InputStream readJson(DoiBasedIdentity id);
 
 }

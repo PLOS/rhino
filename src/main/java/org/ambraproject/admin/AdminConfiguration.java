@@ -18,6 +18,10 @@
 
 package org.ambraproject.admin;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.ArticleCrudServiceImpl;
 import org.ambraproject.admin.service.AssetCrudService;
@@ -62,6 +66,29 @@ public class AdminConfiguration extends BaseConfiguration {
   @Bean
   public HibernateTemplate hibernateTemplate(SessionFactory sessionFactory) {
     return new HibernateTemplate(sessionFactory);
+  }
+
+  /**
+   * Gson instance for serializing Ambra entities into human-friendly JSON.
+   */
+  @Bean
+  public Gson entityGson() {
+    GsonBuilder builder = new GsonBuilder();
+    builder.setPrettyPrinting();
+    builder.setExclusionStrategies(
+        new ExclusionStrategy() {
+          @Override
+          public boolean shouldSkipField(FieldAttributes f) {
+            return "ID".equals(f.getName());
+          }
+
+          @Override
+          public boolean shouldSkipClass(Class<?> clazz) {
+            return false;
+          }
+        }
+    );
+    return builder.create();
   }
 
   @Bean
