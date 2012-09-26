@@ -20,7 +20,6 @@ package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.ArticleCrudService;
-import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -39,7 +38,7 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends FileStoreController {
+public class ArticleCrudController extends DoiBasedCrudController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
@@ -48,11 +47,6 @@ public class ArticleCrudController extends FileStoreController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
-  @Override
-  protected DoiBasedCrudService getService() {
-    return articleCrudService;
-  }
 
   @Override
   protected String getNamespacePrefix() {
@@ -83,17 +77,14 @@ public class ArticleCrudController extends FileStoreController {
     return new ResponseEntity<Object>(result.getStatus());
   }
 
-
-  @Override
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    return super.read(request);
+    throw new RuntimeException("Not implemented yet"); // TODO
   }
 
-  @Override
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    return super.delete(request);
+    throw new RuntimeException("Not implemented yet"); // TODO
   }
 
 }

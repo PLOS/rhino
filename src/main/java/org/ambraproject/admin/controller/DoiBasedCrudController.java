@@ -41,7 +41,7 @@ public abstract class DoiBasedCrudController extends RestController {
 
   /**
    * @return whether entities handled by this controller have a file in the file store associated with them
-   * @see FileStoreController
+   * @see AssetCrudController
    */
   protected boolean hasAssociatedFile() {
     return false;

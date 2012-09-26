@@ -21,10 +21,11 @@ package org.ambraproject.admin.controller;
 import com.google.common.base.Optional;
 import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.AssetCrudService;
-import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class AssetCrudController extends FileStoreController {
+public class AssetCrudController extends DoiBasedCrudController {
 
   private static final String ASSET_NAMESPACE = "/asset/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
@@ -44,11 +45,6 @@ public class AssetCrudController extends FileStoreController {
 
   @Autowired
   private AssetCrudService assetCrudService;
-
-  @Override
-  protected DoiBasedCrudService getService() {
-    return assetCrudService;
-  }
 
   @Override
   protected String getNamespacePrefix() {
@@ -85,16 +81,30 @@ public class AssetCrudController extends FileStoreController {
     return new ResponseEntity<Object>(result.getStatus());
   }
 
-  @Override
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    return super.read(request);
+    DoiBasedIdentity id = parse(request);
+
+    InputStream fileStream = null;
+    byte[] fileData;
+    try {
+      fileStream = assetCrudService.read(id);
+      fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
+    } finally {
+      IOUtils.closeQuietly(fileStream);
+    }
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(id.getContentType());
+
+    return new ResponseEntity<byte[]>(fileData, headers, HttpStatus.OK);
   }
 
-  @Override
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    return super.delete(request);
+    DoiBasedIdentity id = parse(request);
+    assetCrudService.delete(id);
+    return reportOk();
   }
 
 }
