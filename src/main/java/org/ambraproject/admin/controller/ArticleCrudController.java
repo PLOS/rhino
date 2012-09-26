@@ -25,12 +25,14 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -78,8 +80,11 @@ public class ArticleCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    throw new RuntimeException("Not implemented yet"); // TODO
+  public ResponseEntity<?> read(HttpServletRequest request, HttpServletResponse response)
+      throws FileStoreException, IOException {
+    DoiBasedIdentity id = parse(request);
+    String json = IOUtils.toString(articleCrudService.readMetadata(id));
+    return new ResponseEntity<String>(json, HttpStatus.OK);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)

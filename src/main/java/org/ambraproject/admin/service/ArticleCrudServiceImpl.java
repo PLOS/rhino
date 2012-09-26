@@ -27,6 +27,7 @@ import org.ambraproject.models.Article;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ import org.w3c.dom.Document;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -142,6 +145,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
     return fileStoreService.getFileInStream(id.getFsid());
+  }
+
+  @Override
+  public Reader readMetadata(DoiBasedIdentity id) {
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .setFetchMode("assets", FetchMode.JOIN)
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (article == null) {
+      throw reportNotFound(id.getIdentifier());
+    }
+    String json = entityGson.toJson(article);
+    return new StringReader(json);
   }
 
   /**
