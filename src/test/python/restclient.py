@@ -285,8 +285,7 @@ class Request(object):
         curl = self._build_curl()
 
         curl.setopt(method_opt, 1)
-        if self.form_params:
-            curl.setopt(pycurl.HTTPPOST, self.form_params.items())
+        curl.setopt(pycurl.HTTPPOST, self.form_params.items())
 
         curl.perform()
         return Response(self, curl.getinfo(pycurl.RESPONSE_CODE),
