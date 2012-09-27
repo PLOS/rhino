@@ -20,6 +20,7 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.controller.MetadataFormat;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
@@ -59,4 +60,14 @@ public interface AssetCrudService extends DoiBasedCrudService {
    */
   public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
 
+  /**
+   * Read the metadata of an asset.
+   *
+   * @param id     the identifier of the asset
+   * @param format the desired metadata format
+   * @return the metadata
+   * @throws org.ambraproject.admin.RestClientException
+   *          if the DOI does not belong to an article
+   */
+  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
 }

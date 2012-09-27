@@ -176,6 +176,9 @@ def run_test_on_article(case):
         hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
         report(hdr, result)
 
+    read = article_req()
+    report('Response to READ (article metadata, no assets)', read.get())
+
     def upload_asset(description, asset_id, asset_filename, article_id):
         req = asset_req(asset_id)
         if article_id:
@@ -193,8 +196,7 @@ def run_test_on_article(case):
         upload_asset('Response to re-uploading asset without article DOI',
                      asset_id, asset_filename, None)
 
-    read = article_req()
-    report('Response to READ', read.get())
+    report('Response to READ (article metadata, with assets)', read.get())
 
     for asset_id, asset_file in case.assets():
         read_asset = asset_req(asset_id)

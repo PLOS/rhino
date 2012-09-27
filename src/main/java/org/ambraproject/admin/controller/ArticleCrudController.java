@@ -30,9 +30,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -80,10 +80,12 @@ public class ArticleCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request, HttpServletResponse response)
+  public ResponseEntity<?> read(HttpServletRequest request,
+                                @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
     DoiBasedIdentity id = parse(request);
-    String json = IOUtils.toString(articleCrudService.readMetadata(id));
+    MetadataFormat mf = MetadataFormat.getFromParameter(format);
+    String json = articleCrudService.readMetadata(id, mf);
     return new ResponseEntity<String>(json, HttpStatus.OK);
   }
 

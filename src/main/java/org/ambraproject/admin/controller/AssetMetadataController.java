@@ -18,6 +18,16 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.service.AssetCrudService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+
 public class AssetMetadataController extends DoiBasedCrudController {
 
   private static final String ASSET_META_NAMESPACE = "/asset-meta/";
@@ -26,6 +36,18 @@ public class AssetMetadataController extends DoiBasedCrudController {
   @Override
   protected String getNamespacePrefix() {
     return ASSET_META_NAMESPACE;
+  }
+
+  @Autowired
+  private AssetCrudService assetCrudService;
+
+  @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
+  public ResponseEntity<String> read(HttpServletRequest request,
+                                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format) {
+    DoiBasedIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format);
+    String metadata = assetCrudService.readMetadata(id, mf);
+    return new ResponseEntity<String>(metadata, HttpStatus.OK);
   }
 
 }

@@ -19,12 +19,11 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.controller.MetadataFormat;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -68,13 +67,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
 
   /**
-   * Open a reader to read the article metadata as human-friendly JSON text.
+   * Read the metadata of an article.
    *
-   * @param id the identifier of the article
-   * @return a reader containing the metadata as JSON
+   * @param id     the identifier of the article
+   * @param format the desired metadata format
+   * @return the metadata
    * @throws org.ambraproject.admin.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract Reader readMetadata(DoiBasedIdentity id);
+  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
 
 }

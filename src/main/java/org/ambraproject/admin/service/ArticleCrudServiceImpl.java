@@ -20,6 +20,7 @@ package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.controller.MetadataFormat;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
@@ -39,8 +40,6 @@ import org.w3c.dom.Document;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -148,7 +147,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Reader readMetadata(DoiBasedIdentity id) {
+  public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
+    assert format == MetadataFormat.JSON;
     Article article = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
@@ -158,8 +158,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id.getIdentifier());
     }
-    String json = entityGson.toJson(article);
-    return new StringReader(json);
+    return entityGson.toJson(article);
   }
 
   /**
