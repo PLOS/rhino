@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.base.Optional;
 import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
@@ -57,6 +58,22 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
 
   /**
+   * Create an article received at the root noun, without an identifier in the URL.
+   *
+   * @param requestBody
+   * @return
+   */
+  @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.POST)
+  public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
+    try {
+      articleCrudService.create(requestBody, Optional.<DoiBasedIdentity>absent());
+    } finally {
+      IOUtils.closeQuietly(requestBody);
+    }
+    return reportCreated();
+  }
+
+  /**
    * Dispatch an action to upload an article.
    *
    * @param request the HTTP request from a REST client
@@ -64,7 +81,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
    * @throws IOException
    * @throws FileStoreException
    */
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
+//  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> upload(HttpServletRequest request)
       throws IOException, FileStoreException {
     DoiBasedIdentity id = parse(request);

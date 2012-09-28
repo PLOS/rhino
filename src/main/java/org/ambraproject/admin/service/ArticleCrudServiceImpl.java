@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.controller.MetadataFormat;
@@ -74,13 +75,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * <p/>
    * The identifier argument provides the DOI according to the REST action that is trying to create the article. It is
    * expected to match the DOI in the XML document, but this must be validated against client error.
+   * <p/>
+   * This method takes a byte array instead of a stream because the XML data will have to be sent to the file store
+   * after it is parsed here, so the stream would need to be read twice.
    *
    * @param article the article entity that will receive the metadata (new and empty if the article is being created)
    * @param xmlData data from the XML file for the new article
-   * @param id      the identifier for the article
+   * @param id      the identifier for the article as provided by the client, if any
    * @return the new article object
    */
-  private Article prepareMetadata(Article article, byte[] xmlData, DoiBasedIdentity id) {
+  private Article prepareMetadata(Article article, byte[] xmlData, Optional<DoiBasedIdentity> id) {
     InputStream xmlStream = null;
     Document xml;
     try {
@@ -92,7 +96,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       IOUtils.closeQuietly(xmlStream);
     }
 
-    article.setDoi(id.getKey());
+    if (id.isPresent()) {
+      article.setDoi(id.get().getKey());
+    }
+
     try {
       article = new ArticleXml(xml).build(article);
     } catch (XmlContentException e) {
@@ -111,26 +118,35 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public UploadResult upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
-    String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
+  public void create(InputStream file, Optional<DoiBasedIdentity> id) throws IOException, FileStoreException {
+    Article article = new Article();
     byte[] xmlData = readClientInput(file);
-
-    boolean creatingNewArticle = false;
-    Article article = findArticleById(id);
-    if (article == null) {
-      creatingNewArticle = true;
-      article = new Article();
-    }
     prepareMetadata(article, xmlData, id);
 
-    if (creatingNewArticle) {
-      hibernateTemplate.save(article);
-    } else {
-      hibernateTemplate.update(article);
+    String fsid = DoiBasedIdentity.forArticle(article).getFsid();
+    hibernateTemplate.save(article);
+    write(xmlData, fsid);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public UploadResult upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
+    String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
+
+    Article article = findArticleById(id);
+    if (article == null) {
+      create(file, Optional.of(id));
+      return UploadResult.CREATED;
     }
 
+    byte[] xmlData = readClientInput(file);
+    prepareMetadata(article, xmlData, Optional.of(id));
+    hibernateTemplate.update(article);
+
     write(xmlData, fsid);
-    return creatingNewArticle ? UploadResult.CREATED : UploadResult.UPDATED;
+    return UploadResult.UPDATED;
   }
 
   /**

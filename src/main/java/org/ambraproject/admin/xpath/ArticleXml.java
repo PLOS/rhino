@@ -21,6 +21,7 @@ package org.ambraproject.admin.xpath;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
@@ -56,7 +57,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       "reply", "review-article",
   });
 
-  static final String DOI_PREFIX = "info:doi/"; // TODO Refactor out with DoiBasedIdentity
   private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {
@@ -118,12 +118,19 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private void checkDoi(Article article, String doiValue) {
+    String doiAccordingToXml = DoiBasedIdentity.forArticle(doiValue).getKey();
     String doiAccordingToRest = article.getDoi();
-    String doiAccordingToXml = DOI_PREFIX + doiValue;
-    if (!doiAccordingToRest.equals(doiAccordingToXml)) {
-      if (log.isWarnEnabled()) {
-        log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
+
+    if (doiAccordingToRest != null) {
+      // The user gave a DOI. Check whether it was consistent.
+      if (!doiAccordingToRest.equals(doiAccordingToXml)) {
+        if (log.isWarnEnabled()) {
+          log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
+        }
       }
+    } else {
+      // The user gave no DOI. Whatever it says in the XML is the correct DOI.
+      article.setDoi(doiValue);
     }
   }
 

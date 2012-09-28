@@ -83,7 +83,7 @@ public class DoiBasedIdentity {
   public static DoiBasedIdentity forArticle(Article article) {
     String doi = article.getDoi();
     if (doi == null || !doi.startsWith(DOI_SCHEME_VALUE)) {
-      throw new IllegalArgumentException("Article does not have expected DOI: " + doi);
+      throw new IllegalArgumentException("Article does not have expected DOI format: " + doi);
     }
     String identifier = doi.substring(DOI_SCHEME_VALUE.length());
     return forArticle(identifier);

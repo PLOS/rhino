@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.controller.MetadataFormat;
 import org.ambraproject.filestore.FileStoreException;
@@ -26,6 +27,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
+
+  /**
+   * Create an article from supplied XML data. Because the article is new, its identifier is defined by the content of
+   * the XML. But if the user uploaded the XML to a DOI-specific address (i.e., if {@code id.isPresent()}), then check
+   * whether it was consistent.
+   *
+   * @param file the XML data for the article
+   * @param id   the identifier, if the user provided one
+   */
+  public abstract void create(InputStream file, Optional<DoiBasedIdentity> id) throws IOException, FileStoreException;
 
   /**
    * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
