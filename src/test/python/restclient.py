@@ -266,7 +266,7 @@ class Request(object):
         return the response body and headers respectively.
         """
         curl = pycurl.Curl()
-        curl.setopt(pycurl.URL, ''.join(self.get_url()))
+        curl.setopt(pycurl.URL, self.get_url())
 
         curl.setopt(pycurl.READFUNCTION, self._get_body_readfunc())
 
