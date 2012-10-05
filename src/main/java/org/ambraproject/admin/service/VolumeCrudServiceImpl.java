@@ -38,7 +38,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   @Override
   public void create(DoiBasedIdentity id, String displayName, String journalKey) {
     // TODO Transaction safety
-    Journal journal = (Journal) DataAccessUtils.uniqueResult(
+    Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Journal.class)
             .add(Restrictions.eq("journalKey", journalKey))
@@ -61,7 +61,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Override
   public InputStream readJson(DoiBasedIdentity id) {
-    Volume volume = (Volume) DataAccessUtils.uniqueResult(
+    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Volume.class)
             .add(Restrictions.eq("volumeUri", id.getKey()))

@@ -39,7 +39,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     issue.setDisplayName(issueDisplayName);
     issue.setImageUri(issueImageUri);
 
-    Volume volume = (Volume) DataAccessUtils.uniqueResult(
+    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Volume.class)
             .add(Restrictions.eq("volumeUri", volumeUri))

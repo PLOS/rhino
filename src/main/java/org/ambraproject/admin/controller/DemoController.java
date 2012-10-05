@@ -55,7 +55,7 @@ public class DemoController {
     String formattedDate = dateFormat.format(new Date());
     model.addAttribute("serverTime", formattedDate);
 
-    List<String> dois = hibernateTemplate.findByCriteria(DetachedCriteria
+    List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
         .forClass(Article.class)
         .setProjection(Projections.property("doi"))
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)

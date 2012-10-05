@@ -41,6 +41,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 public abstract class AmbraService {
 
@@ -82,7 +83,7 @@ public abstract class AmbraService {
    * @return {@code true} if the described entity exists and {@code false} otherwise
    */
   protected boolean exists(DetachedCriteria criteria) {
-    long count = (Long) DataAccessUtils.requiredSingleResult(
+    long count = (Long) DataAccessUtils.requiredSingleResult((List<?>)
         hibernateTemplate.findByCriteria(criteria
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             .setProjection(Projections.rowCount())

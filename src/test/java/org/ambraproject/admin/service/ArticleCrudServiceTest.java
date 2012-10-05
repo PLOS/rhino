@@ -108,7 +108,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
-    Article stored = (Article) DataAccessUtils.uniqueResult(
+    Article stored = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .add(Restrictions.eq("doi", key))
@@ -162,7 +162,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
 
-    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult(
+    ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", assetId.getKey()))

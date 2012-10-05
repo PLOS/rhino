@@ -36,6 +36,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
@@ -51,7 +52,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleIdParam)
       throws FileStoreException, IOException {
-    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
+    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", assetId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
@@ -78,7 +79,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
     // Look up the identified parent article
     DoiBasedIdentity articleId = articleIdParam.get();
-    Article article = (Article) DataAccessUtils.uniqueResult(
+    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", articleId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
@@ -106,7 +107,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throws FileStoreException, IOException {
     // Look up the parent article, by the asset's preexisting association
     String assetDoi = asset.getDoi();
-    Article article = (Article) DataAccessUtils.uniqueResult(
+    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             .createCriteria("assets").add(Restrictions.eq("doi", assetDoi))
@@ -175,7 +176,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public void delete(DoiBasedIdentity assetId) throws FileStoreException {
-    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
+    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", assetId.getKey()))
