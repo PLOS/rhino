@@ -98,8 +98,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private void setFromXml(Article article) throws XmlContentException {
-    checkDoi(article, readDoi());
-
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
     article.setDescription(readString("/article/front/article-meta/abstract"));
@@ -128,24 +126,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     // TODO Finish implementing
 
-  }
-
-  private void checkDoi(Article article, DoiBasedIdentity doi) {
-    String doiAccordingToXml = doi.getKey();
-    String doiAccordingToRest = article.getDoi();
-
-    if (doiAccordingToRest != null) {
-      // The user gave a DOI. Check whether it was consistent.
-      if (!doiAccordingToRest.equals(doiAccordingToXml)) {
-        // TODO This should probably be an error, but that screws with the tests
-        if (log.isWarnEnabled()) {
-          log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
-        }
-      }
-    } else {
-      // The user gave no DOI. Whatever it says in the XML is the correct DOI (reformatted per DoiBasedIdentity).
-      article.setDoi(doiAccordingToXml);
-    }
   }
 
   private String parseLanguage(String language) {

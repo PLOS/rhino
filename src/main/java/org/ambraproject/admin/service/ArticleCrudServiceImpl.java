@@ -78,7 +78,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     byte[] xmlData = readClientInput(file);
     ArticleXml xml = new ArticleXml(parseXml(xmlData));
-    DoiBasedIdentity doi = null;
+    DoiBasedIdentity doi;
     try {
       doi = xml.readDoi();
     } catch (XmlContentException e) {
