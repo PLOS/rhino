@@ -59,11 +59,13 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
   /**
    * Create an article received at the root noun, without an identifier in the URL.
+   * <p/>
+   * TODO: Handle the case where the article already exists
    *
    * @param requestBody
    * @return
    */
-  @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.POST)
+  @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
   public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
     try {
       articleCrudService.create(requestBody, Optional.<DoiBasedIdentity>absent());

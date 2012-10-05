@@ -124,13 +124,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     if (doiAccordingToRest != null) {
       // The user gave a DOI. Check whether it was consistent.
       if (!doiAccordingToRest.equals(doiAccordingToXml)) {
+        // This should probably be an error, but that screws with the tests
         if (log.isWarnEnabled()) {
           log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
         }
       }
     } else {
-      // The user gave no DOI. Whatever it says in the XML is the correct DOI.
-      article.setDoi(doiValue);
+      // The user gave no DOI. Whatever it says in the XML is the correct DOI (reformatted per DoiBasedIdentity).
+      article.setDoi(doiAccordingToXml);
     }
   }
 
@@ -211,7 +212,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * the string, the first one separates the main category from the subcategory. Else, the whole string is the main
    * category.
    * <p/>
-   * This is equivalent to capturing groups 1 and 3 from the regex {@code "([^/]*)(/(.*))?"}, but more efficiently.
+   * This is equivalent to capturing groups 1 and 3 from the regex {@code "([^/]*)(/(.*))?"}, but more efficient.
    *
    * @param categoryString
    * @return
@@ -239,6 +240,5 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     }
     return citations;
   }
-
 
 }

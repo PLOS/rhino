@@ -169,7 +169,7 @@ def run_test_on_article(case):
         return build_request('asset/' + asset_id)
 
     for i in range(2): # First create, then update
-        upload = article_req()
+        upload = build_request('article/')
         with open(case.xml_path()) as xml_file:
             upload.message_body = xml_file
             result = upload.put()
