@@ -24,6 +24,8 @@ import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -40,6 +42,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -64,6 +67,17 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertNotNull(articleCrudService);
   }
 
+
+  private static TestInputStream alterStream(InputStream stream, String from, String to) throws IOException {
+    String content;
+    try {
+      content = IOUtils.toString(stream, "UTF-8");
+    } finally {
+      stream.close();
+    }
+    content = content.replace(from, to);
+    return TestInputStream.of(content);
+  }
 
   private static DoiBasedIdentity identifyAsset(String assetDoi, String extension) {
     return DoiBasedIdentity.parse(assetDoi + '.' + extension, true);
@@ -94,17 +108,18 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
   @Test(dataProvider = "sampleArticles")
   public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
-    doi += ".testCrud"; // Avoid collisions with canonical sample data
+    String testDoi = doi + ".testCrud"; // Avoid collisions with canonical sample data
+    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(testDoi);
+    final String key = articleId.getKey();
 
     final TestFile sampleFile = new TestFile(fileLocation);
-    final byte[] sampleData = sampleFile.getData();
-    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(doi);
-    final String key = articleId.getKey();
+    final byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, testDoi));
 
     assertArticleExistence(articleId, false);
 
-    TestInputStream input = sampleFile.read();
-    articleCrudService.write(input, Optional.of(articleId), null);
+    TestInputStream input = TestInputStream.of(sampleData);
+    WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
+    assertEquals(writeResult, WriteResult.CREATED);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -137,7 +152,8 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
-    articleCrudService.write(input, Optional.of(articleId), null);
+    writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
+    assertEquals(writeResult, WriteResult.UPDATED);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -150,14 +166,18 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
   @Test(dataProvider = "sampleAssets")
   public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
       throws IOException, FileStoreException {
-    articleDoi += ".testCreateAsset"; // Avoid collisions with canonical sample data
+    String testArticleDoi = articleDoi + ".testCreateAsset"; // Avoid collisions with canonical sample data
+    String testAssetDoi = assetDoi.replace(articleDoi, testArticleDoi);
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final DoiBasedIdentity assetId = identifyAsset(assetDoi, extension);
-    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(articleDoi);
+    final DoiBasedIdentity assetId = identifyAsset(testAssetDoi, extension);
+    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(testArticleDoi);
 
-    articleCrudService.write(new TestFile(articleFile).read(), Optional.of(articleId), null);
+    TestInputStream input = new TestFile(articleFile).read();
+    input = alterStream(input, articleDoi, testArticleDoi);
+    WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
+    assertEquals(writeResult, WriteResult.UPDATED);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
