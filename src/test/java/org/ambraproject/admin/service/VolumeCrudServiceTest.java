@@ -41,7 +41,7 @@ public class VolumeCrudServiceTest extends BaseAdminTest {
   private static final String TEST_JOURNAL_KEY = "journal";
 
   private Journal getTestJournal() {
-    return (Journal) DataAccessUtils.requiredUniqueResult(
+    return (Journal) DataAccessUtils.requiredUniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Journal.class)
             .add(Restrictions.eq("journalKey", TEST_JOURNAL_KEY))

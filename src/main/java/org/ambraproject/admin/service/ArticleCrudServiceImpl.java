@@ -38,6 +38,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -59,7 +60,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @return the article, or {@code null} if not found
    */
   private Article findArticleById(DoiBasedIdentity id) {
-    return (Article) DataAccessUtils.uniqueResult(
+    return (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
