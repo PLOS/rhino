@@ -19,8 +19,8 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.AssetCrudService;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class AssetCrudController extends DoiBasedCrudController {
         : Optional.of(DoiBasedIdentity.forArticle(parentId));
 
     InputStream stream = null;
-    AmbraService.UploadResult result;
+    WriteResult result;
     try {
       stream = request.getInputStream();
       result = assetCrudService.upload(stream, assetId, articleId);

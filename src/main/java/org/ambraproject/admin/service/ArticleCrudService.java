@@ -29,31 +29,21 @@ import java.io.InputStream;
 public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
-   * Create an article from supplied XML data. Because the article is new, its identifier is defined by the content of
-   * the XML. But if the user uploaded the XML to a DOI-specific address (i.e., if {@code id.isPresent()}), then check
-   * whether it was consistent.
-   *
-   * @param file the XML data for the article
-   * @param id   the identifier, if the user provided one
-   */
-  public abstract void create(InputStream file, Optional<DoiBasedIdentity> id) throws IOException, FileStoreException;
-
-  /**
    * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
    * entity is created; else, the article is re-ingested and the new data replaces the old data in the file store.
    * <p/>
    * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
    * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
    *
-   * @param file the XML data for the article
-   * @param id   the identifier for the article
+   * @param file       the XML data for the article
+   * @param suppliedId the identifier supplied for the article, if any
    * @return an indication of whether the article was created or updated
    * @throws org.ambraproject.admin.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract AmbraService.UploadResult upload(InputStream file, DoiBasedIdentity id)
+  public abstract WriteResult write(InputStream file, Optional<DoiBasedIdentity> suppliedId, WriteMode mode)
       throws IOException, FileStoreException;
 
   /**

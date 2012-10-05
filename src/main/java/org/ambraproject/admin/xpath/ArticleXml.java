@@ -63,6 +63,19 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     super(xml);
   }
 
+
+  /**
+   * @return
+   * @throws XmlContentException if the DOI is not present
+   */
+  public DoiBasedIdentity readDoi() throws XmlContentException {
+    String doi = readString("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]");
+    if (doi == null) {
+      throw new XmlContentException("DOI not found");
+    }
+    return DoiBasedIdentity.forArticle(doi);
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -79,13 +92,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @param article the article to modify
    */
   private static void setConstants(Article article) {
-    // These are fine because they are implied by how we get the input
+    // These are constants because they are implied by how we get the input
     article.setFormat("text/xml");
     article.setState(Article.STATE_UNPUBLISHED);
   }
 
   private void setFromXml(Article article) throws XmlContentException {
-    checkDoi(article, readString("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]"));
+    checkDoi(article, readDoi());
 
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
@@ -117,14 +130,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
   }
 
-  private void checkDoi(Article article, String doiValue) {
-    String doiAccordingToXml = DoiBasedIdentity.forArticle(doiValue).getKey();
+  private void checkDoi(Article article, DoiBasedIdentity doi) {
+    String doiAccordingToXml = doi.getKey();
     String doiAccordingToRest = article.getDoi();
 
     if (doiAccordingToRest != null) {
       // The user gave a DOI. Check whether it was consistent.
       if (!doiAccordingToRest.equals(doiAccordingToXml)) {
-        // This should probably be an error, but that screws with the tests
+        // TODO This should probably be an error, but that screws with the tests
         if (log.isWarnEnabled()) {
           log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
         }

@@ -26,7 +26,6 @@ import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -36,9 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.w3c.dom.Document;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -71,82 +68,66 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Modify an article entity to represent the metadata provided in the article's XML file.
-   * <p/>
-   * The identifier argument provides the DOI according to the REST action that is trying to create the article. It is
-   * expected to match the DOI in the XML document, but this must be validated against client error.
-   * <p/>
-   * This method takes a byte array instead of a stream because the XML data will have to be sent to the file store
-   * after it is parsed here, so the stream would need to be read twice.
-   *
-   * @param article the article entity that will receive the metadata (new and empty if the article is being created)
-   * @param xmlData data from the XML file for the new article
-   * @param id      the identifier for the article as provided by the client, if any
-   * @return the new article object
+   * {@inheritDoc}
    */
-  private Article prepareMetadata(Article article, byte[] xmlData, Optional<DoiBasedIdentity> id) {
-    InputStream xmlStream = null;
-    Document xml;
-    try {
-      xmlStream = new ByteArrayInputStream(xmlData);
-      xml = parseXml(xmlStream);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    } finally {
-      IOUtils.closeQuietly(xmlStream);
+  @Override
+  public WriteResult write(InputStream file, Optional<DoiBasedIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+    if (mode == null) {
+      mode = WriteMode.WRITE_ANY;
     }
 
-    if (id.isPresent()) {
-      article.setDoi(id.get().getKey());
-    }
-
+    byte[] xmlData = readClientInput(file);
+    ArticleXml xml = new ArticleXml(parseXml(xmlData));
+    DoiBasedIdentity doi = null;
     try {
-      article = new ArticleXml(xml).build(article);
+      doi = xml.readDoi();
     } catch (XmlContentException e) {
-      String msg = "Error in submitted XML";
-      String nestedMsg = e.getMessage();
-      if (StringUtils.isNotBlank(nestedMsg)) {
-        msg = msg + ": " + nestedMsg;
-      }
-      throw new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
+      throw complainAboutXml(e);
     }
-    return article;
-  }
 
+    if (suppliedId.isPresent() && !doi.equals(suppliedId.get())) {
+      String message = String.format("Article XML with DOI=\"%s\" uploaded to mismatched address: \"%s\"",
+          doi.getIdentifier(), suppliedId.get().getIdentifier());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+    String fsid = doi.getFsid(); // do this first, to fail fast if the DOI is invalid
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void create(InputStream file, Optional<DoiBasedIdentity> id) throws IOException, FileStoreException {
-    Article article = new Article();
-    byte[] xmlData = readClientInput(file);
-    prepareMetadata(article, xmlData, id);
-
-    String fsid = DoiBasedIdentity.forArticle(article).getFsid();
-    hibernateTemplate.save(article);
-    write(xmlData, fsid);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public UploadResult upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
-    String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
-
-    Article article = findArticleById(id);
+    Article article = findArticleById(doi);
+    boolean creating = false;
     if (article == null) {
-      create(file, Optional.of(id));
-      return UploadResult.CREATED;
+      article = new Article();
+      article.setDoi(doi.getKey());
+      creating = true;
     }
 
-    byte[] xmlData = readClientInput(file);
-    prepareMetadata(article, xmlData, Optional.of(id));
-    hibernateTemplate.update(article);
+    if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
+      String messageStub = (creating ?
+          "Can't update; article does not exist at " : "Can't create; article already exists at ");
+      throw new RestClientException(messageStub + doi.getIdentifier(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
 
+    try {
+      article = xml.build(article);
+    } catch (XmlContentException e) {
+      throw complainAboutXml(e);
+    }
+
+    if (creating) {
+      hibernateTemplate.save(article);
+    } else {
+      hibernateTemplate.update(article);
+    }
     write(xmlData, fsid);
-    return UploadResult.UPDATED;
+    return (creating ? WriteResult.CREATED : WriteResult.UPDATED);
+  }
+
+  private static RestClientException complainAboutXml(XmlContentException e) {
+    String msg = "Error in submitted XML";
+    String nestedMsg = e.getMessage();
+    if (StringUtils.isNotBlank(nestedMsg)) {
+      msg = msg + " -- " + nestedMsg;
+    }
+    return new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
   }
 
   /**

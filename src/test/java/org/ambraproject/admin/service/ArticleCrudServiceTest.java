@@ -104,7 +104,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     assertArticleExistence(articleId, false);
 
     TestInputStream input = sampleFile.read();
-    articleCrudService.upload(input, articleId);
+    articleCrudService.write(input, Optional.of(articleId), null);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -137,7 +137,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
-    articleCrudService.upload(input, articleId);
+    articleCrudService.write(input, Optional.of(articleId), null);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -157,7 +157,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     final DoiBasedIdentity assetId = identifyAsset(assetDoi, extension);
     final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(articleDoi);
 
-    articleCrudService.upload(new TestFile(articleFile).read(), articleId);
+    articleCrudService.write(new TestFile(articleFile).read(), Optional.of(articleId), null);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));

@@ -50,7 +50,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleIdParam)
+  public WriteResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleIdParam)
       throws FileStoreException, IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
@@ -66,9 +66,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   /*
    * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
    */
-  private UploadResult create(InputStream file,
-                              DoiBasedIdentity assetId,
-                              Optional<DoiBasedIdentity> articleIdParam)
+  private WriteResult create(InputStream file,
+                             DoiBasedIdentity assetId,
+                             Optional<DoiBasedIdentity> articleIdParam)
       throws FileStoreException, IOException {
     // Require that the user identified the parent article
     if (!articleIdParam.isPresent()) {
@@ -94,16 +94,16 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     article.getAssets().add(asset);
 
     doUpload(file, article, asset, assetId);
-    return UploadResult.CREATED;
+    return WriteResult.CREATED;
   }
 
   /*
    * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
    */
-  private UploadResult update(InputStream file,
-                              DoiBasedIdentity assetId,
-                              Optional<DoiBasedIdentity> articleIdParam,
-                              ArticleAsset asset)
+  private WriteResult update(InputStream file,
+                             DoiBasedIdentity assetId,
+                             Optional<DoiBasedIdentity> articleIdParam,
+                             ArticleAsset asset)
       throws FileStoreException, IOException {
     // Look up the parent article, by the asset's preexisting association
     String assetDoi = asset.getDoi();
@@ -126,7 +126,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
 
     doUpload(file, article, asset, assetId);
-    return UploadResult.UPDATED;
+    return WriteResult.UPDATED;
   }
 
   /*

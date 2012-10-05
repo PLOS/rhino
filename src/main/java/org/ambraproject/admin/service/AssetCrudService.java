@@ -38,9 +38,9 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract AmbraService.UploadResult upload(InputStream file,
-                                                   DoiBasedIdentity assetId,
-                                                   Optional<DoiBasedIdentity> articleId)
+  public abstract WriteResult upload(InputStream file,
+                                     DoiBasedIdentity assetId,
+                                     Optional<DoiBasedIdentity> articleId)
       throws FileStoreException, IOException;
 
   /**

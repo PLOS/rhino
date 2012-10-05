@@ -19,8 +19,9 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
   public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
     try {
-      articleCrudService.create(requestBody, Optional.<DoiBasedIdentity>absent());
+      articleCrudService.write(requestBody, Optional.<DoiBasedIdentity>absent(), WriteMode.CREATE_ONLY);
     } finally {
       IOUtils.closeQuietly(requestBody);
     }
@@ -83,15 +84,15 @@ public class ArticleCrudController extends DoiBasedCrudController {
    * @throws IOException
    * @throws FileStoreException
    */
-//  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> upload(HttpServletRequest request)
       throws IOException, FileStoreException {
     DoiBasedIdentity id = parse(request);
     InputStream stream = null;
-    AmbraService.UploadResult result;
+    WriteResult result;
     try {
       stream = request.getInputStream();
-      result = articleCrudService.upload(stream, id);
+      result = articleCrudService.write(stream, Optional.of(id), WriteMode.WRITE_ANY);
     } finally {
       IOUtils.closeQuietly(stream);
     }
