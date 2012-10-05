@@ -381,7 +381,7 @@
           <systemProperties>
             <property>
               <name>log4j.configuration</name>
-              <value>file:${project.basedir}/target/test-classes/log4j.properties</value>
+              <value>file:${project.basedir}/target/test-classes/log4j.xml</value>
             </property>
           </systemProperties>
         </configuration>
