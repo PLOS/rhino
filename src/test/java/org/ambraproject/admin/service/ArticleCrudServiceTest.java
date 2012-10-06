@@ -177,7 +177,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     TestInputStream input = new TestFile(articleFile).read();
     input = alterStream(input, articleDoi, testArticleDoi);
     WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
-    assertEquals(writeResult, WriteResult.UPDATED);
+    assertEquals(writeResult, WriteResult.CREATED);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
