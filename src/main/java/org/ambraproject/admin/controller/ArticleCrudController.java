@@ -18,11 +18,11 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +78,7 @@ public class ArticleCrudController extends FileStoreController {
       stream = request.getInputStream();
       result = articleCrudService.upload(stream, id);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }

@@ -20,6 +20,7 @@ package org.ambraproject.admin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.io.Closeables;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -90,7 +91,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
         stream = new FileInputStream(this.fileLocation);
         fileData = IOUtils.toByteArray(stream);
       } finally {
-        IOUtils.closeQuietly(stream);
+        Closeables.closeQuietly(stream);
       }
     }
 

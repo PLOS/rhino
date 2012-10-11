@@ -19,11 +19,11 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.service.AmbraService;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -80,7 +80,7 @@ public class AssetCrudController extends FileStoreController {
       stream = request.getInputStream();
       result = assetCrudService.upload(stream, assetId, articleId);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }

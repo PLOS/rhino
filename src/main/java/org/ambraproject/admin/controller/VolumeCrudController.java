@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.service.VolumeCrudService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
       byte[] data = IOUtils.toByteArray(stream);
       return new ResponseEntity<String>(new String(data), HttpStatus.OK);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
   }
 

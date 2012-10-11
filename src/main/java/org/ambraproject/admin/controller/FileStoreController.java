@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.service.DoiBasedCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.apache.commons.io.IOUtils;
@@ -72,7 +73,7 @@ public abstract class FileStoreController extends DoiBasedCrudController {
       fileStream = getService().read(id);
       fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
     } finally {
-      IOUtils.closeQuietly(fileStream);
+      Closeables.closeQuietly(fileStream);
     }
 
     HttpHeaders headers = new HttpHeaders();

@@ -18,13 +18,13 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
@@ -88,7 +88,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (IOException e) {
       throw new RuntimeException(e);
     } finally {
-      IOUtils.closeQuietly(xmlStream);
+      Closeables.closeQuietly(xmlStream);
     }
 
     article.setDoi(id.getKey());
