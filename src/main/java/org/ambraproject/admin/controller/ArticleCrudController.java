@@ -19,11 +19,11 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
     try {
       articleCrudService.write(requestBody, Optional.<DoiBasedIdentity>absent(), WriteMode.CREATE_ONLY);
     } finally {
-      IOUtils.closeQuietly(requestBody);
+      Closeables.closeQuietly(requestBody);
     }
     return reportCreated();
   }
@@ -94,7 +94,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
       stream = request.getInputStream();
       result = articleCrudService.write(stream, Optional.of(id), WriteMode.WRITE_ANY);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }

@@ -19,6 +19,7 @@
 package org.ambraproject.admin.service;
 
 import com.google.common.base.Optional;
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.controller.MetadataFormat;
@@ -27,7 +28,6 @@ import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
-import org.apache.commons.io.IOUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -147,7 +147,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     } catch (IOException e) {
       throw new FileStoreException(e);
     } finally {
-      IOUtils.closeQuietly(articleStream);
+      Closeables.closeQuietly(articleStream);
     }
 
     try {

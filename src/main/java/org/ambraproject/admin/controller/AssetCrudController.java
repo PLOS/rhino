@@ -19,6 +19,7 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.io.Closeables;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
@@ -76,7 +77,7 @@ public class AssetCrudController extends DoiBasedCrudController {
       stream = request.getInputStream();
       result = assetCrudService.upload(stream, assetId, articleId);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }
@@ -91,7 +92,7 @@ public class AssetCrudController extends DoiBasedCrudController {
       fileStream = assetCrudService.read(id);
       fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
     } finally {
-      IOUtils.closeQuietly(fileStream);
+      Closeables.closeQuietly(fileStream);
     }
 
     HttpHeaders headers = new HttpHeaders();

@@ -20,6 +20,7 @@ package org.ambraproject.admin.service;
 
 
 import com.google.common.base.Preconditions;
+import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.filestore.FileStoreException;
@@ -113,7 +114,7 @@ public abstract class AmbraService {
       output = fileStoreService.getFileOutStream(fsid, fileData.length);
       output.write(fileData);
     } finally {
-      IOUtils.closeQuietly(output);
+      Closeables.closeQuietly(output);
     }
   }
 
@@ -123,7 +124,7 @@ public abstract class AmbraService {
       stream = new ByteArrayInputStream(bytes);
       return parseXml(stream);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
   }
 
@@ -145,7 +146,7 @@ public abstract class AmbraService {
     } catch (SAXException e) {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
     } finally {
-      IOUtils.closeQuietly(stream);
+      Closeables.closeQuietly(stream);
     }
   }
 
