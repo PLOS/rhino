@@ -127,13 +127,12 @@
       <scope>compile</scope>
     </dependency>
 
-    <!--The warpath dependency allows us to build with ambra classes and
-          includes all the transitive dependencies from ambra-->
+    <!-- ========================= Begin Ambra inclusions ========================= -->
+
     <dependency>
       <groupId>org.ambraproject</groupId>
-      <artifactId>ambra-webapp</artifactId>
+      <artifactId>ambra-base</artifactId>
       <version>${ambra.version}</version>
-      <type>warpath</type>
       <exclusions>
         <!--These are some easy wins for reducing the size of the admin war, we don't need these libraries in admin-->
         <exclusion>
@@ -152,14 +151,33 @@
           <groupId>org.ambraproject</groupId>
           <artifactId>ambra-js</artifactId>
         </exclusion>
-        <!--This is a hack, but for some reason warpath is including version 1.0 of conf-helper,
-                  even though ambra is using the correct version-->
         <exclusion>
-          <groupId>org.ambraproject</groupId>
-          <artifactId>conf-helper</artifactId>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>file-store</artifactId>
+      <version>${filestore.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context-support</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- ========================= End Ambra inclusions ========================= -->
+
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>2.2.2</version>
+    </dependency>
+
     <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>saxon</artifactId>
@@ -438,11 +456,6 @@
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
             <version>7.0.21</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ambraproject</groupId>
-            <artifactId>file-store</artifactId>
-            <version>${filestore.version}</version>
           </dependency>
           <dependency>
             <groupId>mysql</groupId>
