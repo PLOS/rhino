@@ -24,7 +24,6 @@ import org.w3c.dom.NodeList;
 
 import java.util.AbstractList;
 import java.util.List;
-import java.util.RandomAccess;
 
 /**
  * Adapts a {@link NodeList} to be a {@link List} compatible with the Java Collections Framework.
@@ -38,12 +37,6 @@ public class NodeListAdapter extends AbstractList<Node> {
     this.nodes = Preconditions.checkNotNull(nodes);
   }
 
-  private static class NodeListAdapterRandomAccess extends NodeListAdapter implements RandomAccess {
-    private NodeListAdapterRandomAccess(NodeList nodes) {
-      super(nodes);
-    }
-  }
-
   /**
    * Wrap a node list. The returned list is immutable and supports all non-destructive operations.
    *
@@ -52,9 +45,7 @@ public class NodeListAdapter extends AbstractList<Node> {
    * @throws NullPointerException if {@code nodes} is null
    */
   public static List<Node> wrap(NodeList nodes) {
-    return (nodes instanceof RandomAccess)
-        ? new NodeListAdapterRandomAccess(nodes)
-        : new NodeListAdapter(nodes);
+    return new NodeListAdapter(nodes);
   }
 
   /**
