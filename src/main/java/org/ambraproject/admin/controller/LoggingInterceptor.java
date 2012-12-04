@@ -18,13 +18,18 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
+import java.util.Iterator;
 
 /**
  * Logs attributes of incoming HTTP requests.
@@ -41,6 +46,31 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     return super.preHandle(request, response, handler);
   }
 
+  private static final Function<String, String> LITERAL = new Function<String, String>() {
+    @Override
+    public String apply(@Nullable String input) {
+      if (input == null) {
+        return String.valueOf(null);
+      }
+      /*
+       * TODO: Use org.apache.commons.lang.StringEscapeUtils?
+       * StringEscapeUtils is a little funny with forward-slashes, which makes these values hard to read. So for now,
+       * just handle some simple cases by hand. The returned values are not guaranteed to be parsable in any particular
+       * context; this is just for human readability.
+       */
+      input = input.replace("\"", "\\\"").replace("\\", "\\\\");
+      return '"' + input + '"';
+    }
+  };
+
+  private static final Joiner JOINER = Joiner.on(", ");
+
+  /**
+   * Build a message describing a request.
+   *
+   * @param request the request to describe
+   * @return the description
+   */
   private static String describe(HttpServletRequest request) {
     StringBuilder message = new StringBuilder();
     message.append(request.getMethod()).append(' ').append(request.getRequestURI());
@@ -49,11 +79,16 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
       message.append(" ? ").append(queryString);
     }
     message.append('\n');
+
+    // Append a list of headers
     for (Enumeration headerNames = request.getHeaderNames(); headerNames.hasMoreElements(); ) {
       String headerName = (String) headerNames.nextElement();
-      String headerValue = request.getHeader(headerName);
-      message.append("\t\"").append(headerName).append("\": \"").append(headerValue).append('\"').append('\n');
+      message.append('\t').append(LITERAL.apply(headerName)).append(": ");
+      Enumeration<String> headers = request.getHeaders(headerName);
+      Iterator<String> headerStrings = Iterators.transform(Iterators.forEnumeration(headers), LITERAL);
+      message.append(JOINER.join(headerStrings)).append('\n');
     }
+
     return message.toString();
   }
 
