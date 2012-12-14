@@ -64,6 +64,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
   };
 
   private static final Joiner JOINER = Joiner.on(", ");
+  private static final String INDENT = "  ";
 
   /**
    * Build a message describing a request.
@@ -83,10 +84,11 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     // Append a list of headers
     for (Enumeration headerNames = request.getHeaderNames(); headerNames.hasMoreElements(); ) {
       String headerName = (String) headerNames.nextElement();
-      message.append('\t').append(LITERAL.apply(headerName)).append(": ");
+      message.append(INDENT).append(LITERAL.apply(headerName)).append(": ");
       Enumeration<String> headers = request.getHeaders(headerName);
       Iterator<String> headerStrings = Iterators.transform(Iterators.forEnumeration(headers), LITERAL);
-      message.append(JOINER.join(headerStrings)).append('\n');
+      JOINER.appendTo(message, headerStrings);
+      message.append('\n');
     }
 
     return message.toString();
