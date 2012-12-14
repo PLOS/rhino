@@ -48,6 +48,18 @@ import java.util.Properties;
 @Configuration
 public class AdminConfiguration extends BaseConfiguration {
 
+  /**
+   * Static stuff outside the Spring framework that needs to be run on startup. Ideally this should be empty.
+   */
+  private static void doStartupKludges() {
+    // Required by Ambra; see org.topazproject.ambra.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
+    System.setProperty("SYSTEM_OBJECT_ID_PREFIX", "info:doi/0.0/");
+  }
+
+  static {
+    doStartupKludges();
+  }
+
   @Bean
   public LocalSessionFactoryBean sessionFactory(DataSource hibernateDataSource) throws IOException {
     LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
