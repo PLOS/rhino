@@ -88,8 +88,8 @@ class TestArticle(object):
 
         The DOI is the actual DOI for the article; it should not have an
         '.xml' extension. Each asset suffix can be appended to the DOI to
-        produce the quasi-DOI identifier of an asset that goes with th
-        earticle. The asset suffixes *should* have filename extensions.
+        produce the quasi-DOI identifier of an asset that goes with the
+        article. The asset suffixes *should* have filename extensions.
         """
         self.doi = doi
         self.asset_suffixes = asset_suffixes

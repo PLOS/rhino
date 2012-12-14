@@ -51,9 +51,9 @@ public abstract class FileStoreController extends DoiBasedCrudController {
 
 
   /*
-  * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
-  * (and @RequestParam where needed).
-  */
+   * Subclasses should override the CRUD methods below, to make them public and to add a @RequestMapping annotation
+   * (and @RequestParam where needed).
+   */
 
   /**
    * Dispatch a "read" action to the service.
