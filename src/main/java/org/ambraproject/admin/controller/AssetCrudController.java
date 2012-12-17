@@ -92,7 +92,7 @@ public class AssetCrudController extends DoiBasedCrudController {
       fileStream = assetCrudService.read(id);
       fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
     } finally {
-      Closeables.closeQuietly(fileStream);
+      Closeables.close(fileStream, false);
     }
 
     HttpHeaders headers = new HttpHeaders();

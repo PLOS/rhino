@@ -124,7 +124,7 @@ public abstract class AmbraService {
       stream = new ByteArrayInputStream(bytes);
       return parseXml(stream);
     } finally {
-      Closeables.closeQuietly(stream);
+      Closeables.close(stream, false);
     }
   }
 

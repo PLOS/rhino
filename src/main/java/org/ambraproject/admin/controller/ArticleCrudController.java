@@ -71,7 +71,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
     try {
       articleCrudService.write(requestBody, Optional.<DoiBasedIdentity>absent(), WriteMode.CREATE_ONLY);
     } finally {
-      Closeables.closeQuietly(requestBody);
+      Closeables.close(requestBody, false);
     }
     return reportCreated();
   }
