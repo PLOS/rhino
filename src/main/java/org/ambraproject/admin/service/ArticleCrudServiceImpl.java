@@ -84,7 +84,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     try {
       xml = parseXml(xmlStream);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException(e); // shouldn't happen because we're just reading from a byte array
     }
 
     article.setDoi(id.getKey());
