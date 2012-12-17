@@ -182,7 +182,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      reportNotFound(id.getFilePath());
+      throw reportNotFound(id.getFilePath());
     }
     return entityGson.toJson(asset);
   }
