@@ -94,7 +94,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
       stream = request.getInputStream();
       result = articleCrudService.write(stream, Optional.of(id), WriteMode.WRITE_ANY);
     } finally {
-      Closeables.closeQuietly(stream);
+      Closeables.close(stream, false);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }

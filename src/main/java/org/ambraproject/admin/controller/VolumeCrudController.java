@@ -74,7 +74,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
       byte[] data = IOUtils.toByteArray(stream);
       return new ResponseEntity<String>(new String(data), HttpStatus.OK);
     } finally {
-      Closeables.closeQuietly(stream);
+      Closeables.close(stream, false);
     }
   }
 

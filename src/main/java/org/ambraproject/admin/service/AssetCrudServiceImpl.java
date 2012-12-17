@@ -147,7 +147,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     } catch (IOException e) {
       throw new FileStoreException(e);
     } finally {
-      Closeables.closeQuietly(articleStream);
+      Closeables.close(articleStream, false);
     }
 
     try {
