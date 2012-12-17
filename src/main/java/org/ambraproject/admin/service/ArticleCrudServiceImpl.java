@@ -137,7 +137,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream read(DoiBasedIdentity id) throws FileStoreException {
     if (!articleExistsAt(id)) {
-      throw reportNotFound(id.getFilePath());
+      throw reportNotFound(id.getName());
     }
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
@@ -166,7 +166,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void delete(DoiBasedIdentity id) throws FileStoreException {
     Article article = findArticleById(id);
     if (article == null) {
-      throw reportNotFound(id.getFilePath());
+      throw reportNotFound(id.getName());
     }
     String fsid = id.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 

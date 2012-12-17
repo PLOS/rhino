@@ -136,6 +136,16 @@ public class DoiBasedIdentity {
   }
 
   /**
+   * Return the unambiguous identity of this object: the file path with extension if it has one, or the bare identifier
+   * otherwise.
+   *
+   * @return the name
+   */
+  public String getName() {
+    return hasFile() ? getFilePath() : getIdentifier();
+  }
+
+  /**
    * Return the virtual file path to the article or asset that this object identifies. The returned string would appear
    * at the end of a RESTful URL that the client uses to refer to the article or asset. (That is, the identified object
    * would have

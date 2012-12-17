@@ -167,7 +167,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public InputStream read(DoiBasedIdentity assetId) throws FileStoreException {
     if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId.getFilePath());
+      throw reportNotFound(assetId.getName());
     }
     return fileStoreService.getFileInStream(assetId.getFsid());
   }
@@ -182,7 +182,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      throw reportNotFound(id.getFilePath());
+      throw reportNotFound(id.getName());
     }
     return entityGson.toJson(asset);
   }
@@ -199,7 +199,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      throw reportNotFound(assetId.getFilePath());
+      throw reportNotFound(assetId.getName());
     }
     String fsid = assetId.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 

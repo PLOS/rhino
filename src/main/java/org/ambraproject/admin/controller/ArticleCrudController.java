@@ -111,7 +111,9 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    throw new RuntimeException("Not implemented yet"); // TODO
+    DoiBasedIdentity id = parse(request);
+    articleCrudService.delete(id);
+    return new ResponseEntity<String>(HttpStatus.OK);
   }
 
 }
