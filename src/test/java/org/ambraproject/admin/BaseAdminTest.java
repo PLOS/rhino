@@ -91,7 +91,7 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
         stream = new FileInputStream(this.fileLocation);
         fileData = IOUtils.toByteArray(stream);
       } finally {
-        Closeables.closeQuietly(stream);
+        Closeables.close(stream, false);
       }
     }
 

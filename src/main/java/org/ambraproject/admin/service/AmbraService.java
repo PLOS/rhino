@@ -135,7 +135,7 @@ public abstract class AmbraService {
       output = fileStoreService.getFileOutStream(fsid, fileData.length);
       output.write(fileData);
     } finally {
-      Closeables.closeQuietly(output);
+      Closeables.close(output, false);
     }
   }
 
@@ -157,7 +157,7 @@ public abstract class AmbraService {
     } catch (SAXException e) {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
     } finally {
-      Closeables.closeQuietly(stream);
+      Closeables.close(stream, false);
     }
   }
 

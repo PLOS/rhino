@@ -18,7 +18,6 @@
 
 package org.ambraproject.admin.service;
 
-import com.google.common.io.Closeables;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.ArticleXml;
@@ -80,15 +79,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @return the new article object
    */
   private Article prepareMetadata(Article article, byte[] xmlData, DoiBasedIdentity id) {
-    InputStream xmlStream = null;
+    ByteArrayInputStream xmlStream = new ByteArrayInputStream(xmlData);
     Document xml;
     try {
-      xmlStream = new ByteArrayInputStream(xmlData);
       xml = parseXml(xmlStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
-    } finally {
-      Closeables.closeQuietly(xmlStream);
     }
 
     article.setDoi(id.getKey());

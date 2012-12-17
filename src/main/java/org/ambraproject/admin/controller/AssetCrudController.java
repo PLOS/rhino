@@ -80,7 +80,7 @@ public class AssetCrudController extends FileStoreController {
       stream = request.getInputStream();
       result = assetCrudService.upload(stream, assetId, articleId);
     } finally {
-      Closeables.closeQuietly(stream);
+      Closeables.close(stream, false);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }

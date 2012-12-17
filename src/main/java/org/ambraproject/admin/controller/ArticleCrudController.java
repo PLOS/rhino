@@ -78,7 +78,7 @@ public class ArticleCrudController extends FileStoreController {
       stream = request.getInputStream();
       result = articleCrudService.upload(stream, id);
     } finally {
-      Closeables.closeQuietly(stream);
+      Closeables.close(stream, false);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }

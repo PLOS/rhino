@@ -73,7 +73,7 @@ public abstract class FileStoreController extends DoiBasedCrudController {
       fileStream = getService().read(id);
       fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
     } finally {
-      Closeables.closeQuietly(fileStream);
+      Closeables.close(fileStream, false);
     }
 
     HttpHeaders headers = new HttpHeaders();
