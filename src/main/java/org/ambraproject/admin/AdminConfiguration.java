@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -87,11 +88,18 @@ public class AdminConfiguration extends BaseConfiguration {
   public Gson entityGson() {
     GsonBuilder builder = new GsonBuilder();
     builder.setPrettyPrinting();
+
+    final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{
+        "ID", // Internal to the database
+
+        // Kludges below; TODO: Debug as needed to remove all
+        "journals", // Lazy initialization glitch on Article; not sure if outside our control or not
+    });
     builder.setExclusionStrategies(
         new ExclusionStrategy() {
           @Override
           public boolean shouldSkipField(FieldAttributes f) {
-            return "ID".equals(f.getName());
+            return namesToExclude.contains(f.getName());
           }
 
           @Override
