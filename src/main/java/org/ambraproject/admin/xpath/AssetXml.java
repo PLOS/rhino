@@ -23,7 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.models.ArticleAsset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

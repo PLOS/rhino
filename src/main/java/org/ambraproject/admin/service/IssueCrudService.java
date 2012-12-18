@@ -18,7 +18,7 @@
 
 package org.ambraproject.admin.service;
 
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 
 public interface IssueCrudService {
 

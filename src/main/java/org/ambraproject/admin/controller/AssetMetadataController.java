@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -19,6 +19,7 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.io.Closeables;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.VolumeCrudService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;

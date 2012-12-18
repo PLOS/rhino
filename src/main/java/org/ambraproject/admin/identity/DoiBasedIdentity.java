@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.identity;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -94,7 +94,7 @@ public class DoiBasedIdentity {
    *
    * @param path the full path variable from the URL that identifies the entity
    * @return an identifier object for the entity
-   * @see RestController#getFullPathVariable
+   * @see org.ambraproject.admin.controller.RestController#getFullPathVariable
    */
   public static DoiBasedIdentity parse(String path, boolean expectExtension) {
     if (!expectExtension) {

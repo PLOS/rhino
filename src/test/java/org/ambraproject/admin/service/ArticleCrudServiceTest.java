@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;

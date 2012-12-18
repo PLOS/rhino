@@ -20,6 +20,7 @@ package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;

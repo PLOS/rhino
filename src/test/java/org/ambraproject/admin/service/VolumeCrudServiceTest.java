@@ -19,7 +19,7 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.BaseAdminTest;
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;

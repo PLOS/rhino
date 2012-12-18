@@ -18,11 +18,13 @@
 
 package org.ambraproject.admin.controller;
 
+import org.ambraproject.admin.identity.DoiBasedIdentity;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
- * DoiBasedIdentity}.
+ * org.ambraproject.admin.identity.DoiBasedIdentity}.
  */
 public abstract class DoiBasedCrudController extends RestController {
 
