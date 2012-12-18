@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class StandAloneDoiCrudController extends DoiBasedCrudController<StandAloneIdentity> {
 
   @Override
-  protected DoiBasedIdentity parse(HttpServletRequest request) {
+  protected StandAloneIdentity parse(HttpServletRequest request) {
     return StandAloneIdentity.create(getIdentifier(request));
   }
 

@@ -42,6 +42,6 @@ public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends
     return getFullPathVariable(request, getNamespacePrefix());
   }
 
-  protected abstract DoiBasedIdentity parse(HttpServletRequest request);
+  protected abstract I parse(HttpServletRequest request);
 
 }

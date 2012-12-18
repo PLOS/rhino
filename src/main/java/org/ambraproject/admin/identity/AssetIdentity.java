@@ -18,9 +18,11 @@
 
 package org.ambraproject.admin.identity;
 
+import com.google.common.base.Preconditions;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.util.ImmutableMimetypesFileTypeMap;
 import org.ambraproject.filestore.FSIDMapper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -30,8 +32,12 @@ public class AssetIdentity extends DoiBasedIdentity {
 
   private final String extension; // non-empty and contains no uppercase letters
 
+  /*
+   * Package-private for org.ambraproject.admin.identity.ArticleIdentity.forXmlAsset
+   */
   AssetIdentity(String identifier, String extension) {
     super(identifier);
+    Preconditions.checkArgument(StringUtils.isNotBlank(extension));
     this.extension = extension.toLowerCase();
   }
 
@@ -108,6 +114,15 @@ public class AssetIdentity extends DoiBasedIdentity {
       throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
     }
     return fsid;
+  }
+
+  /**
+   * Get an identifier for this asset's metadata.
+   *
+   * @return the identifier
+   */
+  public StandAloneIdentity forMetadata() {
+    return StandAloneIdentity.create(getIdentifier());
   }
 
   @Override

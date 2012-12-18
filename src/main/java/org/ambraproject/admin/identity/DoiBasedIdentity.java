@@ -68,7 +68,8 @@ public abstract class DoiBasedIdentity {
   }
 
   /**
-   * Return a full, unambiguous string describing this identity.
+   * Return a full, unambiguous string describing this identity. (The identifier by default; override with file
+   * extension if there is one.)
    *
    * @return the name
    */
