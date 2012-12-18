@@ -100,7 +100,7 @@ class TestArticle(object):
 
     def article_id(self):
         """Return the article's RESTful identifier."""
-        return self.article_doi() + '.xml'
+        return self.article_doi()
 
     def xml_path(self):
         """Return a local file path from this script to the article's data."""
@@ -128,8 +128,16 @@ TEST_ARTICLES = [
     TestArticle('journal.pone.0038869', ['g001.tif', 'g002.tif']),
     ]
 
+_BANNER_WIDTH = 79
+
+def section(*parts):
+    print('=' * _BANNER_WIDTH)
+    print(*parts)
+    print()
+
 def report(description, response):
     """Print a description of the HTTP response."""
+    print('-' * _BANNER_WIDTH)
     print(description)
     print()
     print(response.display())
@@ -139,7 +147,7 @@ def build_request(path):
 
 def create_test_volume(case):
     """Test volume creation for one case."""
-    print('Running volume test for', case)
+    section('Running volume test for', case)
 
     req = build_request('volume/' + case.doi)
     req.set_query_parameter('display', case.display_name)
@@ -160,8 +168,7 @@ def create_test_volume(case):
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
-    print('Running article test for', case)
-    print()
+    section('Running article test for', case)
 
     def article_req():
         return build_request('article/' + case.article_id())
