@@ -20,13 +20,14 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.admin.controller.MetadataFormat;
+import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface ArticleCrudService extends DoiBasedCrudService {
+public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity> {
 
   /**
    * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
@@ -43,7 +44,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract WriteResult write(InputStream file, Optional<DoiBasedIdentity> suppliedId, WriteMode mode)
+  public abstract WriteResult write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException, FileStoreException;
 
   /**
@@ -55,7 +56,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
+  public abstract InputStream read(ArticleIdentity id) throws FileStoreException;
 
   /**
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
@@ -65,7 +66,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
+  public abstract void delete(ArticleIdentity id) throws FileStoreException;
 
   /**
    * Read the metadata of an article.

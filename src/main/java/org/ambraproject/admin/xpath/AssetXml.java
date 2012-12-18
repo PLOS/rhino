@@ -23,7 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.models.ArticleAsset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,9 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
-  private final DoiBasedIdentity assetId;
+  private final AssetIdentity assetId;
 
-  public AssetXml(Node xml, DoiBasedIdentity assetId) {
+  public AssetXml(Node xml, AssetIdentity assetId) {
     super(xml);
     this.assetId = Preconditions.checkNotNull(assetId);
   }

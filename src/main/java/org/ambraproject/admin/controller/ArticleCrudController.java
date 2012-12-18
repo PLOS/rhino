@@ -20,6 +20,7 @@ package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
+import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
@@ -43,7 +44,7 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends DoiBasedCrudController {
+public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentity> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
@@ -58,6 +59,11 @@ public class ArticleCrudController extends DoiBasedCrudController {
     return ARTICLE_NAMESPACE;
   }
 
+  @Override
+  protected ArticleIdentity parse(HttpServletRequest request) {
+    return ArticleIdentity.create(getIdentifier(request));
+  }
+
 
   /**
    * Create an article received at the root noun, without an identifier in the URL.
@@ -70,7 +76,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
   public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
     try {
-      articleCrudService.write(requestBody, Optional.<DoiBasedIdentity>absent(), WriteMode.CREATE_ONLY);
+      articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
     } finally {
       Closeables.close(requestBody, false);
     }
@@ -88,7 +94,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> upload(HttpServletRequest request)
       throws IOException, FileStoreException {
-    DoiBasedIdentity id = parse(request);
+    ArticleIdentity id = parse(request);
     InputStream stream = null;
     WriteResult result;
     try {
@@ -112,7 +118,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    DoiBasedIdentity id = parse(request);
+    ArticleIdentity id = parse(request);
     articleCrudService.delete(id);
     return new ResponseEntity<String>(HttpStatus.OK);
   }

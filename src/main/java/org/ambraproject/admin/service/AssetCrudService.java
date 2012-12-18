@@ -20,13 +20,15 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.admin.controller.MetadataFormat;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface AssetCrudService extends DoiBasedCrudService {
+public interface AssetCrudService extends DoiBasedCrudService<AssetIdentity> {
 
   /**
    * Create or update an article asset.
@@ -39,8 +41,8 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws IOException
    */
   public abstract WriteResult upload(InputStream file,
-                                     DoiBasedIdentity assetId,
-                                     Optional<DoiBasedIdentity> articleId)
+                                     AssetIdentity assetId,
+                                     Optional<ArticleIdentity> articleId)
       throws FileStoreException, IOException;
 
   /**
@@ -50,7 +52,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @return a stream containing the file data
    * @throws FileStoreException
    */
-  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
+  public abstract InputStream read(AssetIdentity id) throws FileStoreException;
 
   /**
    * Delete an asset and its associated file.
@@ -58,7 +60,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id the identifier of the asset to delete
    * @throws FileStoreException
    */
-  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
+  public abstract void delete(AssetIdentity id) throws FileStoreException;
 
   /**
    * Read the metadata of an asset.
@@ -70,4 +72,5 @@ public interface AssetCrudService extends DoiBasedCrudService {
    *          if the DOI does not belong to an article
    */
   public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
+
 }

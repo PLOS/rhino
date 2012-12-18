@@ -23,7 +23,8 @@ import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.admin.BaseAdminTest;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
@@ -79,11 +80,11 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
     return TestInputStream.of(content);
   }
 
-  private static DoiBasedIdentity identifyAsset(String assetDoi, String extension) {
-    return DoiBasedIdentity.parse(assetDoi + '.' + extension, true);
+  private static AssetIdentity identifyAsset(String assetDoi, String extension) {
+    return AssetIdentity.parse(assetDoi + '.' + extension);
   }
 
-  private void assertArticleExistence(DoiBasedIdentity id, boolean expectedToExist) throws FileStoreException {
+  private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) throws FileStoreException {
     boolean received404 = false;
     try {
       articleCrudService.read(id);
@@ -109,7 +110,7 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
   @Test(dataProvider = "sampleArticles")
   public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
     String testDoi = doi + ".testCrud"; // Avoid collisions with canonical sample data
-    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(testDoi);
+    final ArticleIdentity articleId = ArticleIdentity.create(testDoi);
     final String key = articleId.getKey();
 
     final TestFile sampleFile = new TestFile(fileLocation);
@@ -171,8 +172,8 @@ public class ArticleCrudServiceTest extends BaseAdminTest {
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final DoiBasedIdentity assetId = identifyAsset(testAssetDoi, extension);
-    final DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(testArticleDoi);
+    final AssetIdentity assetId = identifyAsset(testAssetDoi, extension);
+    final ArticleIdentity articleId = ArticleIdentity.create(testArticleDoi);
 
     TestInputStream input = new TestFile(articleFile).read();
     input = alterStream(input, articleDoi, testArticleDoi);

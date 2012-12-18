@@ -20,7 +20,8 @@ package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
-import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
@@ -39,7 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class AssetCrudController extends DoiBasedCrudController {
+public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
 
   private static final String ASSET_NAMESPACE = "/asset/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
@@ -51,6 +52,11 @@ public class AssetCrudController extends DoiBasedCrudController {
   @Override
   protected String getNamespacePrefix() {
     return ASSET_NAMESPACE;
+  }
+
+  @Override
+  protected AssetIdentity parse(HttpServletRequest request) {
+    return AssetIdentity.parse(getIdentifier(request));
   }
 
 
@@ -67,10 +73,10 @@ public class AssetCrudController extends DoiBasedCrudController {
   public ResponseEntity<?> upload(HttpServletRequest request,
                                   @RequestParam(value = PARENT_PARAM, required = false) String parentId)
       throws IOException, FileStoreException {
-    DoiBasedIdentity assetId = parse(request);
-    Optional<DoiBasedIdentity> articleId = (parentId == null)
-        ? Optional.<DoiBasedIdentity>absent()
-        : Optional.of(DoiBasedIdentity.forArticle(parentId));
+    AssetIdentity assetId = parse(request);
+    Optional<ArticleIdentity> articleId = (parentId == null)
+        ? Optional.<ArticleIdentity>absent()
+        : Optional.of(ArticleIdentity.create(parentId));
 
     InputStream stream = null;
     WriteResult result;
@@ -85,7 +91,7 @@ public class AssetCrudController extends DoiBasedCrudController {
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    DoiBasedIdentity id = parse(request);
+    AssetIdentity id = parse(request);
 
     InputStream fileStream = null;
     byte[] fileData;
@@ -104,7 +110,7 @@ public class AssetCrudController extends DoiBasedCrudController {
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    DoiBasedIdentity id = parse(request);
+    AssetIdentity id = parse(request);
     assetCrudService.delete(id);
     return reportOk();
   }

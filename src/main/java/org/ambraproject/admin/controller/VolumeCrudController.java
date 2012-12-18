@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class VolumeCrudController extends DoiBasedCrudController {
+public class VolumeCrudController extends StandAloneDoiCrudController {
 
   private static final String VOLUME_NAMESPACE = "/volume/";
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";

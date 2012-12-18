@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class AssetMetadataController extends DoiBasedCrudController {
+public class AssetMetadataController extends StandAloneDoiCrudController {
 
   private static final String ASSET_META_NAMESPACE = "/asset-meta/";
   private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";

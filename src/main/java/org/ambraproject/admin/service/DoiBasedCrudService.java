@@ -30,11 +30,11 @@ import java.io.InputStream;
  * Methods are included here only if they share a common signature among services. See the extending interfaces for
  * documentation on the behavior of each method.
  */
-public abstract interface DoiBasedCrudService {
+public abstract interface DoiBasedCrudService<I extends DoiBasedIdentity> {
 
-  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
+  public abstract InputStream read(I id) throws FileStoreException;
 
-  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
+  public abstract void delete(I id) throws FileStoreException;
 
   public static enum WriteMode {
     /**

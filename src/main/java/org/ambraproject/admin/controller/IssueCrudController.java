@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class IssueCrudController extends DoiBasedCrudController {
+public class IssueCrudController extends StandAloneDoiCrudController {
 
   private static final String ISSUE_NAMESPACE = "/issue/";
   private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";

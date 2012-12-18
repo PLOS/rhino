@@ -21,6 +21,7 @@ package org.ambraproject.admin.service;
 import com.google.common.base.Optional;
 import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.controller.MetadataFormat;
+import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
@@ -72,14 +73,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public WriteResult write(InputStream file, Optional<DoiBasedIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+  public WriteResult write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
     if (mode == null) {
       mode = WriteMode.WRITE_ANY;
     }
 
     byte[] xmlData = readClientInput(file);
     ArticleXml xml = new ArticleXml(parseXml(xmlData));
-    DoiBasedIdentity doi;
+    ArticleIdentity doi;
     try {
       doi = xml.readDoi();
     } catch (XmlContentException e) {
@@ -91,7 +92,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           doi.getIdentifier(), suppliedId.get().getIdentifier());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
-    String fsid = doi.getFsid(); // do this first, to fail fast if the DOI is invalid
+    String fsid = doi.forXmlAsset().getFsid(); // do this first, to fail fast if the DOI is invalid
 
     Article article = findArticleById(doi);
     boolean creating = false;
@@ -135,13 +136,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(DoiBasedIdentity id) throws FileStoreException {
+  public InputStream read(ArticleIdentity id) throws FileStoreException {
     if (!articleExistsAt(id)) {
       throw reportNotFound(id.getName());
     }
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileInStream(id.getFsid());
+    return fileStoreService.getFileInStream(id.forXmlAsset().getFsid());
   }
 
   @Override
@@ -163,12 +164,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void delete(DoiBasedIdentity id) throws FileStoreException {
+  public void delete(ArticleIdentity id) throws FileStoreException {
     Article article = findArticleById(id);
     if (article == null) {
       throw reportNotFound(id.getName());
     }
-    String fsid = id.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
+    String fsid = id.forXmlAsset().getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 
     hibernateTemplate.delete(article);
     fileStoreService.deleteFile(fsid);
