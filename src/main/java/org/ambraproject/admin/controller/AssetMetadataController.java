@@ -19,43 +19,36 @@
 package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.identity.DoiBasedIdentity;
-import org.ambraproject.admin.service.IssueCrudService;
+import org.ambraproject.admin.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
-public class IssueCrudController extends StandAloneDoiCrudController {
+public class AssetMetadataController extends StandAloneDoiCrudController {
 
-  private static final String ISSUE_NAMESPACE = "/issue/";
-  private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
-
-  private static final String DISPLAY_PARAM = "display";
-  private static final String VOLUME_PARAM = "volume";
-  private static final String IMAGE_PARAM = "image";
+  private static final String ASSET_META_NAMESPACE = "/asset-meta/";
+  private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";
 
   @Override
   protected String getNamespacePrefix() {
-    return ISSUE_NAMESPACE;
+    return ASSET_META_NAMESPACE;
   }
 
   @Autowired
-  private IssueCrudService issueCrudService;
+  private AssetCrudService assetCrudService;
 
-
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam(DISPLAY_PARAM) String displayName,
-                                  @RequestParam(VOLUME_PARAM) String volumeUri,
-                                  @RequestParam(IMAGE_PARAM) String imageUri) {
-    DoiBasedIdentity issueId = parse(request);
-    issueCrudService.create(volumeUri, issueId, displayName, imageUri);
-    return reportCreated();
+  @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
+  public ResponseEntity<String> read(HttpServletRequest request,
+                                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format) {
+    DoiBasedIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    String metadata = assetCrudService.readMetadata(id, mf);
+    return new ResponseEntity<String>(metadata, HttpStatus.OK);
   }
 
 }

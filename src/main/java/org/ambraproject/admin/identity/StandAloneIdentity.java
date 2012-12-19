@@ -16,12 +16,16 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.identity;
 
-import org.ambraproject.admin.identity.DoiBasedIdentity;
+public class StandAloneIdentity extends DoiBasedIdentity {
 
-public interface IssueCrudService {
+  protected StandAloneIdentity(String identifier) {
+    super(identifier);
+  }
 
-  public abstract void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri);
+  public static StandAloneIdentity create(String identifier) {
+    return new StandAloneIdentity(identifier);
+  }
 
 }

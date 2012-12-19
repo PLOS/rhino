@@ -18,18 +18,23 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
-import org.ambraproject.admin.service.AmbraService;
+import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.service.ArticleCrudService;
-import org.ambraproject.admin.service.DoiBasedCrudService;
+import org.ambraproject.admin.service.AssetCrudService;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -39,7 +44,7 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends FileStoreController {
+public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentity> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
@@ -48,17 +53,37 @@ public class ArticleCrudController extends FileStoreController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
-  @Override
-  protected DoiBasedCrudService getService() {
-    return articleCrudService;
-  }
+  @Autowired
+  private AssetCrudService assetCrudService;
 
   @Override
   protected String getNamespacePrefix() {
     return ARTICLE_NAMESPACE;
   }
 
+  @Override
+  protected ArticleIdentity parse(HttpServletRequest request) {
+    return ArticleIdentity.create(getIdentifier(request));
+  }
+
+
+  /**
+   * Create an article received at the root noun, without an identifier in the URL.
+   * <p/>
+   * TODO: Handle the case where the article already exists
+   *
+   * @param requestBody
+   * @return
+   */
+  @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
+  public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
+    try {
+      articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
+    } finally {
+      Closeables.close(requestBody, false);
+    }
+    return reportCreated();
+  }
 
   /**
    * Dispatch an action to upload an article.
@@ -71,29 +96,54 @@ public class ArticleCrudController extends FileStoreController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> upload(HttpServletRequest request)
       throws IOException, FileStoreException {
-    DoiBasedIdentity id = parse(request);
+    ArticleIdentity id = parse(request);
     InputStream stream = null;
-    AmbraService.UploadResult result;
+    WriteResult result;
     try {
       stream = request.getInputStream();
-      result = articleCrudService.upload(stream, id);
+      result = articleCrudService.write(stream, Optional.of(id), WriteMode.WRITE_ANY);
     } finally {
       Closeables.close(stream, false);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }
 
-
-  @Override
+  /*
+   * If a parameter for metadata format was supplied, return the article metadata. Else, dump the article's XML file to
+   * the response.
+   *
+   * This is semi-intentionally inconsistent with {@link AssetMetadataController#read}. That method has a whole,
+   * different "RESTful noun" namespace for asset metadata, whereas here article data and metadata live in the same
+   * namespace and are differentiated by parameters. It is an open question of API design which is preferable, but we
+   * should settle on one and change the other to match it.
+   *
+   * TODO: Resolve above
+   */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    return super.read(request);
+  public ResponseEntity<?> read(HttpServletRequest request,
+                                @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws FileStoreException, IOException {
+    ArticleIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, false);
+    if (mf == null) {
+      InputStream fileStream = null;
+      try {
+        fileStream = articleCrudService.read(id);
+        return respondWithStream(fileStream, id.forXmlAsset());
+      } finally {
+        Closeables.close(fileStream, false);
+      }
+    } else {
+      String json = articleCrudService.readMetadata(id, mf);
+      return new ResponseEntity<String>(json, HttpStatus.OK);
+    }
   }
 
-  @Override
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    return super.delete(request);
+    ArticleIdentity id = parse(request);
+    articleCrudService.delete(id);
+    return new ResponseEntity<String>(HttpStatus.OK);
   }
 
 }

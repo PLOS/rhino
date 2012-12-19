@@ -16,12 +16,18 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.controller;
 
 import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.identity.StandAloneIdentity;
 
-public interface IssueCrudService {
+import javax.servlet.http.HttpServletRequest;
 
-  public abstract void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri);
+public abstract class StandAloneDoiCrudController extends DoiBasedCrudController<StandAloneIdentity> {
+
+  @Override
+  protected StandAloneIdentity parse(HttpServletRequest request) {
+    return StandAloneIdentity.create(getIdentifier(request));
+  }
 
 }

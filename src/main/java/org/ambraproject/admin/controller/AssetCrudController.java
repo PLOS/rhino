@@ -20,9 +20,10 @@ package org.ambraproject.admin.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
-import org.ambraproject.admin.service.AmbraService;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.service.AssetCrudService;
-import org.ambraproject.admin.service.DoiBasedCrudService;
+import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class AssetCrudController extends FileStoreController {
+public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
 
   private static final String ASSET_NAMESPACE = "/asset/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
@@ -46,13 +47,13 @@ public class AssetCrudController extends FileStoreController {
   private AssetCrudService assetCrudService;
 
   @Override
-  protected DoiBasedCrudService getService() {
-    return assetCrudService;
+  protected String getNamespacePrefix() {
+    return ASSET_NAMESPACE;
   }
 
   @Override
-  protected String getNamespacePrefix() {
-    return ASSET_NAMESPACE;
+  protected AssetIdentity parse(HttpServletRequest request) {
+    return AssetIdentity.parse(getIdentifier(request));
   }
 
 
@@ -69,13 +70,13 @@ public class AssetCrudController extends FileStoreController {
   public ResponseEntity<?> upload(HttpServletRequest request,
                                   @RequestParam(value = PARENT_PARAM, required = false) String parentId)
       throws IOException, FileStoreException {
-    DoiBasedIdentity assetId = parse(request);
-    Optional<DoiBasedIdentity> articleId = (parentId == null)
-        ? Optional.<DoiBasedIdentity>absent()
-        : Optional.of(DoiBasedIdentity.forArticle(parentId));
+    AssetIdentity assetId = parse(request);
+    Optional<ArticleIdentity> articleId = (parentId == null)
+        ? Optional.<ArticleIdentity>absent()
+        : Optional.of(ArticleIdentity.create(parentId));
 
     InputStream stream = null;
-    AmbraService.UploadResult result;
+    WriteResult result;
     try {
       stream = request.getInputStream();
       result = assetCrudService.upload(stream, assetId, articleId);
@@ -85,16 +86,23 @@ public class AssetCrudController extends FileStoreController {
     return new ResponseEntity<Object>(result.getStatus());
   }
 
-  @Override
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
-    return super.read(request);
+    AssetIdentity id = parse(request);
+    InputStream fileStream = null;
+    try {
+      fileStream = assetCrudService.read(id);
+      return respondWithStream(fileStream, id);
+    } finally {
+      Closeables.close(fileStream, false);
+    }
   }
 
-  @Override
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    return super.delete(request);
+    AssetIdentity id = parse(request);
+    assetCrudService.delete(id);
+    return reportOk();
   }
 
 }

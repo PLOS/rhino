@@ -21,7 +21,10 @@ package org.ambraproject.admin.service;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.controller.MetadataFormat;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.AssetIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.AssetXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
@@ -50,7 +53,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public UploadResult upload(InputStream file, DoiBasedIdentity assetId, Optional<DoiBasedIdentity> articleIdParam)
+  public WriteResult upload(InputStream file, AssetIdentity assetId, Optional<ArticleIdentity> articleIdParam)
       throws FileStoreException, IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
@@ -66,9 +69,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   /*
    * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
    */
-  private UploadResult create(InputStream file,
-                              DoiBasedIdentity assetId,
-                              Optional<DoiBasedIdentity> articleIdParam)
+  private WriteResult create(InputStream file,
+                             AssetIdentity assetId,
+                             Optional<ArticleIdentity> articleIdParam)
       throws FileStoreException, IOException {
     // Require that the user identified the parent article
     if (!articleIdParam.isPresent()) {
@@ -94,16 +97,16 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     article.getAssets().add(asset);
 
     doUpload(file, article, asset, assetId);
-    return UploadResult.CREATED;
+    return WriteResult.CREATED;
   }
 
   /*
    * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
    */
-  private UploadResult update(InputStream file,
-                              DoiBasedIdentity assetId,
-                              Optional<DoiBasedIdentity> articleIdParam,
-                              ArticleAsset asset)
+  private WriteResult update(InputStream file,
+                             AssetIdentity assetId,
+                             Optional<ArticleIdentity> articleIdParam,
+                             ArticleAsset asset)
       throws FileStoreException, IOException {
     // Look up the parent article, by the asset's preexisting association
     String assetDoi = asset.getDoi();
@@ -115,7 +118,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (article == null) {
       throw new IllegalStateException("Orphan asset: " + assetId.getKey());
     }
-    DoiBasedIdentity articleId = DoiBasedIdentity.forArticle(article);
+    ArticleIdentity articleId = ArticleIdentity.create(article);
 
     // If the user identified an article, throw an error if it was inconsistent
     if (articleIdParam.isPresent() && !articleIdParam.get().equals(articleId)) {
@@ -126,17 +129,17 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
 
     doUpload(file, article, asset, assetId);
-    return UploadResult.UPDATED;
+    return WriteResult.UPDATED;
   }
 
   /*
    * "Payload" behavior common to both create and update operations.
    */
-  private void doUpload(InputStream file, Article article, ArticleAsset asset, DoiBasedIdentity assetId)
+  private void doUpload(InputStream file, Article article, ArticleAsset asset, AssetIdentity assetId)
       throws FileStoreException, IOException {
     // Get these first to fail faster in case of client error
     String assetFsid = assetId.getFsid();
-    String articleFsid = DoiBasedIdentity.forArticle(article).getFsid();
+    String articleFsid = ArticleIdentity.create(article).forXmlAsset().getFsid();
 
     InputStream articleStream = null;
     Document articleXml;
@@ -164,18 +167,33 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(DoiBasedIdentity assetId) throws FileStoreException {
+  public InputStream read(AssetIdentity assetId) throws FileStoreException {
     if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId.getFilePath());
+      throw reportNotFound(assetId);
     }
     return fileStoreService.getFileInStream(assetId.getFsid());
+  }
+
+  @Override
+  public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
+    assert format == MetadataFormat.JSON;
+    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (asset == null) {
+      throw reportNotFound(id);
+    }
+    return entityGson.toJson(asset);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void delete(DoiBasedIdentity assetId) throws FileStoreException {
+  public void delete(AssetIdentity assetId) throws FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
@@ -183,7 +201,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      throw reportNotFound(assetId.getFilePath());
+      throw reportNotFound(assetId);
     }
     String fsid = assetId.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 

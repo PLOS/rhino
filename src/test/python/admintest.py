@@ -100,7 +100,7 @@ class TestArticle(object):
 
     def article_id(self):
         """Return the article's RESTful identifier."""
-        return self.article_doi() + '.xml'
+        return self.article_doi()
 
     def xml_path(self):
         """Return a local file path from this script to the article's data."""
@@ -128,8 +128,16 @@ TEST_ARTICLES = [
     TestArticle('journal.pone.0038869', ['g001.tif', 'g002.tif']),
     ]
 
+_BANNER_WIDTH = 79
+
+def section(*parts):
+    print('=' * _BANNER_WIDTH)
+    print(*parts)
+    print()
+
 def report(description, response):
     """Print a description of the HTTP response."""
+    print('-' * _BANNER_WIDTH)
     print(description)
     print()
     print(response.display())
@@ -139,7 +147,7 @@ def build_request(path):
 
 def create_test_volume(case):
     """Test volume creation for one case."""
-    print('Running volume test for', case)
+    section('Running volume test for', case)
 
     req = build_request('volume/' + case.doi)
     req.set_query_parameter('display', case.display_name)
@@ -160,21 +168,29 @@ def create_test_volume(case):
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
-    print('Running article test for', case)
-    print()
+    section('Running article test for', case)
 
-    def article_req():
-        return build_request('article/' + case.article_id())
+    def article_req(query_param=None):
+        url = ['article/', case.article_id()]
+        if query_param:
+            url += ['?', query_param]
+        return build_request(''.join(url))
     def asset_req(asset_id):
         return build_request('asset/' + asset_id)
 
     for i in range(2): # First create, then update
-        upload = article_req()
+        upload = build_request('article/')
         with open(case.xml_path()) as xml_file:
             upload.message_body = xml_file
             result = upload.put()
         hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
         report(hdr, result)
+
+    read_meta = article_req('format=json')
+    report('Response to READ (article metadata, no assets)', read_meta.get())
+
+    read_data = article_req()
+    report('Response to READ (article XML)', read_data.get())
 
     def upload_asset(description, asset_id, asset_filename, article_id):
         req = asset_req(asset_id)
@@ -186,6 +202,7 @@ def run_test_on_article(case):
         report(description, result)
 
     for asset_id, asset_filename in case.assets():
+        continue
         upload_asset('Response to creating asset',
                      asset_id, asset_filename, case.article_doi())
         upload_asset('Response to re-uploading asset',
@@ -193,10 +210,10 @@ def run_test_on_article(case):
         upload_asset('Response to re-uploading asset without article DOI',
                      asset_id, asset_filename, None)
 
-    read = article_req()
-    report('Response to READ', read.get())
+    report('Response to READ (article metadata, with assets)', read_meta.get())
 
     for asset_id, asset_file in case.assets():
+        continue
         read_asset = asset_req(asset_id)
         report('Response to READ for asset', read_asset.get())
         delete_asset = asset_req(asset_id)

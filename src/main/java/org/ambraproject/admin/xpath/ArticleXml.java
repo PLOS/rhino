@@ -21,6 +21,7 @@ package org.ambraproject.admin.xpath;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
@@ -56,11 +57,23 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       "reply", "review-article",
   });
 
-  static final String DOI_PREFIX = "info:doi/"; // TODO Refactor out with DoiBasedIdentity
   private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {
     super(xml);
+  }
+
+
+  /**
+   * @return
+   * @throws XmlContentException if the DOI is not present
+   */
+  public ArticleIdentity readDoi() throws XmlContentException {
+    String doi = readString("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]");
+    if (doi == null) {
+      throw new XmlContentException("DOI not found");
+    }
+    return ArticleIdentity.create(doi);
   }
 
   /**
@@ -79,14 +92,12 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @param article the article to modify
    */
   private static void setConstants(Article article) {
-    // These are fine because they are implied by how we get the input
+    // These are constants because they are implied by how we get the input
     article.setFormat("text/xml");
     article.setState(Article.STATE_UNPUBLISHED);
   }
 
   private void setFromXml(Article article) throws XmlContentException {
-    checkDoi(article, readString("/article/front/article-meta/article-id[@pub-id-type=\"doi\"]"));
-
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
     article.setDescription(readString("/article/front/article-meta/abstract"));
@@ -115,16 +126,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     // TODO Finish implementing
 
-  }
-
-  private void checkDoi(Article article, String doiValue) {
-    String doiAccordingToRest = article.getDoi();
-    String doiAccordingToXml = DOI_PREFIX + doiValue;
-    if (!doiAccordingToRest.equals(doiAccordingToXml)) {
-      if (log.isWarnEnabled()) {
-        log.warn("Article at DOI=" + doiAccordingToRest + " has XML listing DOI as " + doiAccordingToXml);
-      }
-    }
   }
 
   private String parseLanguage(String language) {
@@ -204,7 +205,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * the string, the first one separates the main category from the subcategory. Else, the whole string is the main
    * category.
    * <p/>
-   * This is equivalent to capturing groups 1 and 3 from the regex {@code "([^/]*)(/(.*))?"}, but more efficiently.
+   * This is equivalent to capturing groups 1 and 3 from the regex {@code "([^/]*)(/(.*))?"}, but more efficient.
    *
    * @param categoryString
    * @return
@@ -232,6 +233,5 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     }
     return citations;
   }
-
 
 }

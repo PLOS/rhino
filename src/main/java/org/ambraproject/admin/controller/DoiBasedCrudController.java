@@ -18,13 +18,25 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.io.Closeables;
+import org.ambraproject.admin.identity.AssetIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
- * DoiBasedIdentity}.
+ * org.ambraproject.admin.identity.DoiBasedIdentity}.
  */
-public abstract class DoiBasedCrudController extends RestController {
+public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends RestController {
+
+  protected static final String METADATA_FORMAT_PARAM = "format";
 
   /**
    * Return the URL prefix that describes the RESTful namespace that this controller handles. It should include a
@@ -34,17 +46,24 @@ public abstract class DoiBasedCrudController extends RestController {
    */
   protected abstract String getNamespacePrefix();
 
-  protected DoiBasedIdentity parse(HttpServletRequest request) {
-    String identifier = getFullPathVariable(request, getNamespacePrefix());
-    return DoiBasedIdentity.parse(identifier, hasAssociatedFile());
+  protected String getIdentifier(HttpServletRequest request) {
+    return getFullPathVariable(request, getNamespacePrefix());
   }
 
-  /**
-   * @return whether entities handled by this controller have a file in the file store associated with them
-   * @see FileStoreController
-   */
-  protected boolean hasAssociatedFile() {
-    return false;
+  protected abstract I parse(HttpServletRequest request);
+
+  protected ResponseEntity<byte[]> respondWithStream(InputStream stream, AssetIdentity identity) throws IOException {
+    byte[] data;
+    try {
+      data = IOUtils.toByteArray(stream); // TODO Avoid dumping into memory?
+    } finally {
+      Closeables.close(stream, false);
+    }
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(identity.getContentType());
+
+    return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
   }
 
 }

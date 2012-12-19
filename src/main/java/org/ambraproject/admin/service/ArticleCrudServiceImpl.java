@@ -18,23 +18,25 @@
 
 package org.ambraproject.admin.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.admin.RestClientException;
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.controller.MetadataFormat;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.xpath.ArticleXml;
 import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.w3c.dom.Document;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -68,89 +70,106 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Modify an article entity to represent the metadata provided in the article's XML file.
-   * <p/>
-   * The identifier argument provides the DOI according to the REST action that is trying to create the article. It is
-   * expected to match the DOI in the XML document, but this must be validated against client error.
-   *
-   * @param article the article entity that will receive the metadata (new and empty if the article is being created)
-   * @param xmlData data from the XML file for the new article
-   * @param id      the identifier for the article
-   * @return the new article object
-   */
-  private Article prepareMetadata(Article article, byte[] xmlData, DoiBasedIdentity id) {
-    ByteArrayInputStream xmlStream = new ByteArrayInputStream(xmlData);
-    Document xml;
-    try {
-      xml = parseXml(xmlStream);
-    } catch (IOException e) {
-      throw new RuntimeException(e); // shouldn't happen because we're just reading from a byte array
-    }
-
-    article.setDoi(id.getKey());
-    try {
-      article = new ArticleXml(xml).build(article);
-    } catch (XmlContentException e) {
-      String msg = "Error in submitted XML";
-      String nestedMsg = e.getMessage();
-      if (StringUtils.isNotBlank(nestedMsg)) {
-        msg = msg + ": " + nestedMsg;
-      }
-      throw new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
-    }
-    return article;
-  }
-
-
-  /**
    * {@inheritDoc}
    */
   @Override
-  public UploadResult upload(InputStream file, DoiBasedIdentity id) throws IOException, FileStoreException {
-    String fsid = id.getFsid(); // do this first, to fail fast if the DOI is invalid
-    byte[] xmlData = readClientInput(file);
-
-    boolean creatingNewArticle = false;
-    Article article = findArticleById(id);
-    if (article == null) {
-      creatingNewArticle = true;
-      article = new Article();
+  public WriteResult write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+    if (mode == null) {
+      mode = WriteMode.WRITE_ANY;
     }
-    prepareMetadata(article, xmlData, id);
 
-    if (creatingNewArticle) {
+    byte[] xmlData = readClientInput(file);
+    ArticleXml xml = new ArticleXml(parseXml(xmlData));
+    ArticleIdentity doi;
+    try {
+      doi = xml.readDoi();
+    } catch (XmlContentException e) {
+      throw complainAboutXml(e);
+    }
+
+    if (suppliedId.isPresent() && !doi.equals(suppliedId.get())) {
+      String message = String.format("Article XML with DOI=\"%s\" uploaded to mismatched address: \"%s\"",
+          doi.getIdentifier(), suppliedId.get().getIdentifier());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+    String fsid = doi.forXmlAsset().getFsid(); // do this first, to fail fast if the DOI is invalid
+
+    Article article = findArticleById(doi);
+    boolean creating = false;
+    if (article == null) {
+      article = new Article();
+      article.setDoi(doi.getKey());
+      creating = true;
+    }
+
+    if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
+      String messageStub = (creating ?
+          "Can't update; article does not exist at " : "Can't create; article already exists at ");
+      throw new RestClientException(messageStub + doi.getIdentifier(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    try {
+      article = xml.build(article);
+    } catch (XmlContentException e) {
+      throw complainAboutXml(e);
+    }
+
+    if (creating) {
       hibernateTemplate.save(article);
     } else {
       hibernateTemplate.update(article);
     }
-
     write(xmlData, fsid);
-    return creatingNewArticle ? UploadResult.CREATED : UploadResult.UPDATED;
+    return (creating ? WriteResult.CREATED : WriteResult.UPDATED);
+  }
+
+  private static RestClientException complainAboutXml(XmlContentException e) {
+    String msg = "Error in submitted XML";
+    String nestedMsg = e.getMessage();
+    if (StringUtils.isNotBlank(nestedMsg)) {
+      msg = msg + " -- " + nestedMsg;
+    }
+    return new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(DoiBasedIdentity id) throws FileStoreException {
+  public InputStream read(ArticleIdentity id) throws FileStoreException {
     if (!articleExistsAt(id)) {
-      throw reportNotFound(id.getFilePath());
+      throw reportNotFound(id);
     }
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileInStream(id.getFsid());
+    return fileStoreService.getFileInStream(id.forXmlAsset().getFsid());
+  }
+
+  @Override
+  public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
+    assert format == MetadataFormat.JSON;
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .setFetchMode("assets", FetchMode.JOIN)
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (article == null) {
+      throw reportNotFound(id);
+    }
+    return entityGson.toJson(article);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void delete(DoiBasedIdentity id) throws FileStoreException {
+  public void delete(ArticleIdentity id) throws FileStoreException {
     Article article = findArticleById(id);
     if (article == null) {
-      throw reportNotFound(id.getFilePath());
+      throw reportNotFound(id);
     }
-    String fsid = id.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
+    String fsid = id.forXmlAsset().getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 
     hibernateTemplate.delete(article);
     fileStoreService.deleteFile(fsid);

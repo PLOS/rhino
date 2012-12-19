@@ -19,6 +19,7 @@
 package org.ambraproject.admin.controller;
 
 import com.google.common.io.Closeables;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.VolumeCrudService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class VolumeCrudController extends DoiBasedCrudController {
+public class VolumeCrudController extends StandAloneDoiCrudController {
 
   private static final String VOLUME_NAMESPACE = "/volume/";
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";

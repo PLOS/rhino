@@ -19,7 +19,8 @@
 package org.ambraproject.admin.service;
 
 import org.ambraproject.admin.BaseAdminTest;
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.identity.StandAloneIdentity;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
@@ -52,7 +53,7 @@ public class VolumeCrudServiceTest extends BaseAdminTest {
 
   @Test
   public void testCreate() {
-    DoiBasedIdentity volumeId = DoiBasedIdentity.parse("testVolume", false);
+    DoiBasedIdentity volumeId = StandAloneIdentity.create("testVolume");
     String displayName = "volumeDisplay";
 
     Journal testJournal = getTestJournal();

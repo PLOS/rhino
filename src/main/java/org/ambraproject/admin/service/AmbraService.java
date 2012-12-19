@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
@@ -39,6 +40,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -56,28 +58,6 @@ public abstract class AmbraService {
   protected Gson entityGson;
 
   /**
-   * An indication of whether a request that uploaded data (typically, PUT) created new data or updated existing data.
-   */
-  public static enum UploadResult {
-    CREATED(HttpStatus.CREATED), UPDATED(HttpStatus.OK);
-
-    private final HttpStatus status;
-
-    private UploadResult(HttpStatus status) {
-      this.status = status;
-    }
-
-    /**
-     * An HTTP status code that describes the operation.
-     *
-     * @return the status
-     */
-    public HttpStatus getStatus() {
-      return status;
-    }
-  }
-
-  /**
    * Check whether a distinct entity exists.
    *
    * @param criteria the criteria describing a distinct entity
@@ -92,7 +72,7 @@ public abstract class AmbraService {
     return count > 0L;
   }
 
-  protected RestClientException reportNotFound(String id) {
+  protected RestClientException reportNotFound(DoiBasedIdentity id) {
     String message = "Item not found at the provided ID: " + id;
     return new RestClientException(message, HttpStatus.NOT_FOUND);
   }
@@ -136,6 +116,16 @@ public abstract class AmbraService {
       output.write(fileData);
     } finally {
       Closeables.close(output, false);
+    }
+  }
+
+  protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
+    InputStream stream = null;
+    try {
+      stream = new ByteArrayInputStream(bytes);
+      return parseXml(stream);
+    } finally {
+      Closeables.close(stream, false);
     }
   }
 

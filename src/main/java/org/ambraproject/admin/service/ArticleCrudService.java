@@ -18,13 +18,16 @@
 
 package org.ambraproject.admin.service;
 
-import org.ambraproject.admin.controller.DoiBasedIdentity;
+import com.google.common.base.Optional;
+import org.ambraproject.admin.controller.MetadataFormat;
+import org.ambraproject.admin.identity.ArticleIdentity;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface ArticleCrudService extends DoiBasedCrudService {
+public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity> {
 
   /**
    * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
@@ -33,15 +36,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
    * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
    *
-   * @param file the XML data for the article
-   * @param id   the identifier for the article
+   * @param file       the XML data for the article
+   * @param suppliedId the identifier supplied for the article, if any
    * @return an indication of whether the article was created or updated
    * @throws org.ambraproject.admin.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract AmbraService.UploadResult upload(InputStream file, DoiBasedIdentity id)
+  public abstract WriteResult write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException, FileStoreException;
 
   /**
@@ -53,7 +56,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract InputStream read(DoiBasedIdentity id) throws FileStoreException;
+  public abstract InputStream read(ArticleIdentity id) throws FileStoreException;
 
   /**
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
@@ -63,6 +66,17 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract void delete(DoiBasedIdentity id) throws FileStoreException;
+  public abstract void delete(ArticleIdentity id) throws FileStoreException;
+
+  /**
+   * Read the metadata of an article.
+   *
+   * @param id     the identifier of the article
+   * @param format the desired metadata format
+   * @return the metadata
+   * @throws org.ambraproject.admin.RestClientException
+   *          if the DOI does not belong to an article
+   */
+  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
 
 }

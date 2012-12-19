@@ -16,12 +16,33 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.util;
 
-import org.ambraproject.admin.identity.DoiBasedIdentity;
+import javax.activation.MimetypesFileTypeMap;
+import java.io.IOException;
+import java.io.InputStream;
 
-public interface IssueCrudService {
+public class ImmutableMimetypesFileTypeMap extends MimetypesFileTypeMap {
 
-  public abstract void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri);
+  public ImmutableMimetypesFileTypeMap() {
+    super();
+  }
+
+  public ImmutableMimetypesFileTypeMap(InputStream inputStream) {
+    super(inputStream);
+  }
+
+  public ImmutableMimetypesFileTypeMap(String s) throws IOException {
+    super(s);
+  }
+
+  /**
+   * @deprecated This object is immutable.
+   */
+  @Deprecated
+  @Override
+  public final synchronized void addMimeTypes(String s) {
+    throw new UnsupportedOperationException();
+  }
 
 }
