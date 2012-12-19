@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.apache.commons.io.IOUtils;
@@ -71,7 +72,7 @@ public abstract class AmbraService {
     return count > 0L;
   }
 
-  protected RestClientException reportNotFound(String id) {
+  protected RestClientException reportNotFound(DoiBasedIdentity id) {
     String message = "Item not found at the provided ID: " + id;
     return new RestClientException(message, HttpStatus.NOT_FOUND);
   }

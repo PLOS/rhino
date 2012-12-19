@@ -59,11 +59,6 @@ public class AssetIdentity extends DoiBasedIdentity {
     return new AssetIdentity(identifier, extension);
   }
 
-  @Override
-  public String getName() {
-    return getFilePath();
-  }
-
   /**
    * Get the file extension for the file associated with the identified asset in the file store. File extensions are
    * treated as case-insensitive, so any letters in the returned value are lowercase.
@@ -123,6 +118,11 @@ public class AssetIdentity extends DoiBasedIdentity {
    */
   public StandAloneIdentity forMetadata() {
     return StandAloneIdentity.create(getIdentifier());
+  }
+
+  @Override
+  public String toString() {
+    return getFilePath();
   }
 
   @Override

@@ -138,7 +138,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream read(ArticleIdentity id) throws FileStoreException {
     if (!articleExistsAt(id)) {
-      throw reportNotFound(id.getName());
+      throw reportNotFound(id);
     }
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
@@ -155,7 +155,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
-      throw reportNotFound(id.getIdentifier());
+      throw reportNotFound(id);
     }
     return entityGson.toJson(article);
   }
@@ -167,7 +167,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void delete(ArticleIdentity id) throws FileStoreException {
     Article article = findArticleById(id);
     if (article == null) {
-      throw reportNotFound(id.getName());
+      throw reportNotFound(id);
     }
     String fsid = id.forXmlAsset().getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 

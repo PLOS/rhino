@@ -67,13 +67,8 @@ public abstract class DoiBasedIdentity {
     return DOI_SCHEME_VALUE + identifier;
   }
 
-  /**
-   * Return a full, unambiguous string describing this identity. (The identifier by default; override with file
-   * extension if there is one.)
-   *
-   * @return the name
-   */
-  public String getName() {
+  @Override
+  public String toString() {
     return getIdentifier();
   }
 
@@ -93,4 +88,5 @@ public abstract class DoiBasedIdentity {
   public int hashCode() {
     return identifier != null ? identifier.hashCode() : 0;
   }
+
 }
