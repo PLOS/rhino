@@ -20,11 +20,11 @@ package org.ambraproject.admin.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.content.ArticleXml;
+import org.ambraproject.admin.content.XmlContentException;
 import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.rest.MetadataFormat;
-import org.ambraproject.admin.xpath.ArticleXml;
-import org.ambraproject.admin.xpath.XmlContentException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.lang.StringUtils;

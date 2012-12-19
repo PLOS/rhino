@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.xpath;
+package org.ambraproject.admin.content;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;

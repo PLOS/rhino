@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.xpath;
+package org.ambraproject.admin.content;
 
 import org.ambraproject.admin.util.PersonName;
 import org.ambraproject.models.AmbraEntity;
