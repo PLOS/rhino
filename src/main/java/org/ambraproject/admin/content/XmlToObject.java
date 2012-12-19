@@ -18,6 +18,7 @@
 
 package org.ambraproject.admin.content;
 
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.ambraproject.admin.util.NodeListAdapter;
@@ -95,21 +96,18 @@ public abstract class XmlToObject<T> {
     } catch (XPathExpressionException e) {
       throw new InvalidXPathException(query, e);
     }
-    if (nodeList.getLength() == 0)
-      return null;
     return NodeListAdapter.wrap(nodeList);
   }
 
+  private static final Function<Node, String> GET_TEXT_CONTENT = new Function<Node, String>() {
+    @Override
+    public String apply(Node input) {
+      return input.getTextContent();
+    }
+  };
+
   protected List<String> readTextList(String query) {
-    List<Node> nodes = readNodeList(query);
-    if (nodes == null) {
-      return null;
-    }
-    List<String> text = Lists.newArrayListWithCapacity(nodes.size());
-    for (Node node : nodes) {
-      text.add(node.getTextContent());
-    }
-    return text;
+    return Lists.transform(readNodeList(query), GET_TEXT_CONTENT);
   }
 
 }

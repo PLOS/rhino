@@ -20,7 +20,6 @@ package org.ambraproject.admin.content;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import org.ambraproject.admin.identity.AssetIdentity;
@@ -65,10 +64,6 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
    * TODO: Query directly for the correct node instead of finding all of them and iterating
    */
   private Node findMatchingAsset(List<Node> assetNodes) throws XmlContentException {
-    if (assetNodes == null) {
-      assetNodes = ImmutableList.of(); // skip to error
-    }
-
     final String targetDoi = assetId.getIdentifier();
     for (Node assetNode : assetNodes) {
       String nodeName = assetNode.getNodeName();

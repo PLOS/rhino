@@ -156,9 +156,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private Set<String> parseArticleTypes(Collection<String> articleTypeText) throws XmlContentException {
-    if (articleTypeText == null) {
-      return null;
-    }
     Set<String> articleTypes = Sets.newHashSet(articleTypeText);
     if (!VALID_ARTICLE_TYPES.containsAll(articleTypes)) {
       Set<String> invalidTypes = Sets.difference(articleTypes, VALID_ARTICLE_TYPES);
@@ -177,9 +174,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private List<ArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
-    if (authorNodes == null) {
-      return null;
-    }
     List<ArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
     for (Node authorNode : authorNodes) {
       ArticleAuthor author = parsePersonName(authorNode).copyTo(new ArticleAuthor());
@@ -189,9 +183,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private List<ArticleEditor> readEditors(List<Node> editorNodes) throws XmlContentException {
-    if (editorNodes == null) {
-      return null;
-    }
     List<ArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
     for (Node editorNode : editorNodes) {
       ArticleEditor editor = parsePersonName(editorNode).copyTo(new ArticleEditor());
@@ -223,9 +214,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private List<CitedArticle> parseCitations(List<Node> citationNodes) throws XmlContentException {
-    if (citationNodes == null) {
-      return null;
-    }
     List<CitedArticle> citations = Lists.newArrayListWithCapacity(citationNodes.size());
     for (Node citationNode : citationNodes) {
       CitedArticle citation = new CitedArticleXml(citationNode).build(new CitedArticle());

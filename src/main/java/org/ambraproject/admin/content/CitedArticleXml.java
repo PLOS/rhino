@@ -88,9 +88,6 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   }
 
   private List<CitedArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
-    if (authorNodes == null) {
-      return null;
-    }
     List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
     for (Node authorNode : authorNodes) {
       CitedArticleAuthor author = parsePersonName(authorNode).copyTo(new CitedArticleAuthor());
@@ -100,9 +97,6 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   }
 
   private List<CitedArticleEditor> readEditors(List<Node> editorNodes) throws XmlContentException {
-    if (editorNodes == null) {
-      return null;
-    }
     List<CitedArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
     for (Node editorNode : editorNodes) {
       CitedArticleEditor editor = parsePersonName(editorNode).copyTo(new CitedArticleEditor());
