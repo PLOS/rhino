@@ -19,6 +19,7 @@
 package org.ambraproject.admin.util;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -38,7 +39,9 @@ public class NodeListAdapter extends AbstractList<Node> {
   }
 
   /**
-   * Wrap a node list. The returned list is immutable and supports all non-destructive operations.
+   * Wrap a node list. The returned list is unmodifiable and supports all non-destructive operations. Any changes in the
+   * underlying list will be reflected in this object. (The {@link NodeList} contract implies, but does not explicitly
+   * guarantee, that such changes should not be possible.)
    *
    * @param nodes a DOM node list
    * @return a Java Collections Framework node list
@@ -49,6 +52,18 @@ public class NodeListAdapter extends AbstractList<Node> {
   }
 
   /**
+   * Make a copy of a node list. The returned list is guaranteed not to change regardless of the original list's
+   * behavior.
+   *
+   * @param nodes a DOM node list
+   * @return an immutable Java Collections Framework node list
+   * @throws NullPointerException if {@code nodes} is null
+   */
+  public static ImmutableList<Node> copy(NodeList nodes) {
+    return ImmutableList.copyOf(wrap(nodes));
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -56,7 +71,11 @@ public class NodeListAdapter extends AbstractList<Node> {
     // To match the List contract (nodes.item returns null on invalid index)
     Preconditions.checkElementIndex(index, size());
 
-    return nodes.item(index);
+    Node node = nodes.item(index);
+    if (node == null) {
+      throw new NullPointerException("Delegate NodeList returned null for a valid index");
+    }
+    return node;
   }
 
   /**
