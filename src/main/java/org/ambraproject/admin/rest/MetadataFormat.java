@@ -22,7 +22,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
-import org.ambraproject.admin.RestClientException;
 import org.springframework.http.HttpStatus;
 
 /**

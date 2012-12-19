@@ -19,8 +19,8 @@
 package org.ambraproject.admin.service;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.admin.RestClientException;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.rest.RestClientException;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;

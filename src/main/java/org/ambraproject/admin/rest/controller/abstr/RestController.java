@@ -18,7 +18,7 @@
 
 package org.ambraproject.admin.rest.controller.abstr;
 
-import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.rest.RestClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

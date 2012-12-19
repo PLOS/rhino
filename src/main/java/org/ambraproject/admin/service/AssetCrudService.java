@@ -68,7 +68,7 @@ public interface AssetCrudService extends DoiBasedCrudService<AssetIdentity> {
    * @param id     the identifier of the asset
    * @param format the desired metadata format
    * @return the metadata
-   * @throws org.ambraproject.admin.RestClientException
+   * @throws org.ambraproject.admin.rest.RestClientException
    *          if the DOI does not belong to an article
    */
   public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);

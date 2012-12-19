@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;

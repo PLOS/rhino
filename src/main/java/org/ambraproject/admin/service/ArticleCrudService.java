@@ -39,7 +39,7 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
    * @param file       the XML data for the article
    * @param suppliedId the identifier supplied for the article, if any
    * @return an indication of whether the article was created or updated
-   * @throws org.ambraproject.admin.RestClientException
+   * @throws org.ambraproject.admin.rest.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
@@ -52,7 +52,7 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
    *
    * @param id the identifier of the article
    * @return a stream containing the XML file
-   * @throws org.ambraproject.admin.RestClientException
+   * @throws org.ambraproject.admin.rest.RestClientException
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
@@ -62,7 +62,7 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
    *
    * @param id the identifier of the article to delete
-   * @throws org.ambraproject.admin.RestClientException
+   * @throws org.ambraproject.admin.rest.RestClientException
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
@@ -74,7 +74,7 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
    * @param id     the identifier of the article
    * @param format the desired metadata format
    * @return the metadata
-   * @throws org.ambraproject.admin.RestClientException
+   * @throws org.ambraproject.admin.rest.RestClientException
    *          if the DOI does not belong to an article
    */
   public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);

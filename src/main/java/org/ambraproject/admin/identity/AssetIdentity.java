@@ -19,7 +19,7 @@
 package org.ambraproject.admin.identity;
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.admin.RestClientException;
+import org.ambraproject.admin.rest.RestClientException;
 import org.ambraproject.admin.util.ImmutableMimetypesFileTypeMap;
 import org.ambraproject.filestore.FSIDMapper;
 import org.apache.commons.lang.StringUtils;
@@ -100,7 +100,7 @@ public class AssetIdentity extends DoiBasedIdentity {
    * Get file store identifier for the data associated with the article or asset that this object identifies.
    *
    * @return the FSID (file store identifier)
-   * @throws org.ambraproject.admin.RestClientException
+   * @throws org.ambraproject.admin.rest.RestClientException
    *          if the DOI can't be parsed and converted into an FSID
    */
   public String getFsid() {

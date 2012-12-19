@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.rest;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

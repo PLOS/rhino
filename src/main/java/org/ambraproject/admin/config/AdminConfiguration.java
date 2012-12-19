@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.config;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.ExclusionStrategy;

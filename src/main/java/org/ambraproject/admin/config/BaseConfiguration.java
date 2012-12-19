@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.config;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;

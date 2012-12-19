@@ -16,8 +16,9 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin;
+package org.ambraproject.admin.config;
 
+import org.ambraproject.admin.BaseAdminTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
