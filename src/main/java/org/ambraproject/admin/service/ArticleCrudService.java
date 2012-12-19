@@ -19,9 +19,9 @@
 package org.ambraproject.admin.service;
 
 import com.google.common.base.Optional;
-import org.ambraproject.admin.controller.MetadataFormat;
 import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.rest.MetadataFormat;
 import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;

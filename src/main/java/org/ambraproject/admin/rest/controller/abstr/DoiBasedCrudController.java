@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.rest.controller.abstr;
 
 import com.google.common.io.Closeables;
 import org.ambraproject.admin.identity.AssetIdentity;

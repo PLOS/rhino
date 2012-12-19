@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.rest.controller.abstr;
 
 import org.ambraproject.admin.RestClientException;
 import org.slf4j.Logger;

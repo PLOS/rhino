@@ -58,7 +58,7 @@
   </beans:bean>
 
   <mvc:interceptors>
-    <beans:bean class="org.ambraproject.admin.controller.LoggingInterceptor"/>
+    <beans:bean class="org.ambraproject.admin.rest.LoggingInterceptor"/>
   </mvc:interceptors>
 
 </beans:beans>

@@ -16,9 +16,11 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.rest.controller;
 
 import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.ambraproject.admin.rest.MetadataFormat;
+import org.ambraproject.admin.rest.controller.abstr.StandAloneDoiCrudController;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

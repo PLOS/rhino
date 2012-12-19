@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.rest.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.AssetIdentity;
+import org.ambraproject.admin.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;

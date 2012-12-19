@@ -16,9 +16,8 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.controller;
+package org.ambraproject.admin.rest.controller.abstr;
 
-import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.identity.StandAloneIdentity;
 
 import javax.servlet.http.HttpServletRequest;

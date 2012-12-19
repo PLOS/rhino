@@ -46,7 +46,7 @@ public class AssetIdentity extends DoiBasedIdentity {
    *
    * @param path the full path variable from the URL that identifies the entity
    * @return an identifier object for the entity
-   * @see org.ambraproject.admin.controller.RestController#getFullPathVariable
+   * @see org.ambraproject.admin.rest.controller.abstr.RestController#getFullPathVariable
    */
   public static AssetIdentity parse(String path) {
     int dotIndex = path.lastIndexOf('.');
