@@ -18,9 +18,17 @@
 
 package org.ambraproject.admin.controller;
 
+import com.google.common.io.Closeables;
+import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
@@ -43,5 +51,19 @@ public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends
   }
 
   protected abstract I parse(HttpServletRequest request);
+
+  protected ResponseEntity<byte[]> respondWithStream(InputStream stream, AssetIdentity identity) throws IOException {
+    byte[] data;
+    try {
+      data = IOUtils.toByteArray(stream); // TODO Avoid dumping into memory?
+    } finally {
+      Closeables.close(stream, false);
+    }
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(identity.getContentType());
+
+    return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+  }
 
 }

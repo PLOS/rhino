@@ -50,13 +50,15 @@ public enum MetadataFormat {
   /**
    * Return the metadata format named by a request parameter, or the default if no parameter was provided.
    *
-   * @param parameter a parameter string naming a metadata format, or {@code null} if the client omitted the parameter
-   * @return the metadata format object, or the default if the parameter was null
+   * @param parameter  a parameter string naming a metadata format, or {@code null} if the client omitted the parameter
+   * @param useDefault {@code true} to supply the default format if {@code parameter == null}; {@code false} to return
+   *                   null if {@code parameter == null}
+   * @return the metadata format object, or the default or null according to {@code useDefault}
    * @throws RestClientException if the parameter is unrecognized
    */
-  public static MetadataFormat getFromParameter(String parameter) {
+  public static MetadataFormat getFromParameter(String parameter, boolean useDefault) {
     if (parameter == null) {
-      return DEFAULT;
+      return useDefault ? DEFAULT : null;
     }
     MetadataFormat metadataFormat = BY_EXTENSION.get(parameter.toLowerCase());
     if (metadataFormat == null) {

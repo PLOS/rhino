@@ -25,10 +25,7 @@ import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,20 +89,13 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
     AssetIdentity id = parse(request);
-
     InputStream fileStream = null;
-    byte[] fileData;
     try {
       fileStream = assetCrudService.read(id);
-      fileData = IOUtils.toByteArray(fileStream); // TODO Avoid dumping into memory?
+      return respondWithStream(fileStream, id);
     } finally {
       Closeables.close(fileStream, false);
     }
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(id.getContentType());
-
-    return new ResponseEntity<byte[]>(fileData, headers, HttpStatus.OK);
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)

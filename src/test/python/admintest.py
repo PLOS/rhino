@@ -170,8 +170,11 @@ def run_test_on_article(case):
     """Run the test for one article test case."""
     section('Running article test for', case)
 
-    def article_req():
-        return build_request('article/' + case.article_id())
+    def article_req(query_param=None):
+        url = ['article/', case.article_id()]
+        if query_param:
+            url += ['?', query_param]
+        return build_request(''.join(url))
     def asset_req(asset_id):
         return build_request('asset/' + asset_id)
 
@@ -183,8 +186,11 @@ def run_test_on_article(case):
         hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
         report(hdr, result)
 
-    read = article_req()
-    report('Response to READ (article metadata, no assets)', read.get())
+    read_meta = article_req('format=json')
+    report('Response to READ (article metadata, no assets)', read_meta.get())
+
+    read_data = article_req()
+    report('Response to READ (article XML)', read_data.get())
 
     def upload_asset(description, asset_id, asset_filename, article_id):
         req = asset_req(asset_id)
@@ -196,6 +202,7 @@ def run_test_on_article(case):
         report(description, result)
 
     for asset_id, asset_filename in case.assets():
+        continue
         upload_asset('Response to creating asset',
                      asset_id, asset_filename, case.article_doi())
         upload_asset('Response to re-uploading asset',
@@ -203,9 +210,10 @@ def run_test_on_article(case):
         upload_asset('Response to re-uploading asset without article DOI',
                      asset_id, asset_filename, None)
 
-    report('Response to READ (article metadata, with assets)', read.get())
+    report('Response to READ (article metadata, with assets)', read_meta.get())
 
     for asset_id, asset_file in case.assets():
+        continue
         read_asset = asset_req(asset_id)
         report('Response to READ for asset', read_asset.get())
         delete_asset = asset_req(asset_id)

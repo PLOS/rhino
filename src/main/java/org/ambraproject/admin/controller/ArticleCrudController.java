@@ -21,8 +21,8 @@ package org.ambraproject.admin.controller;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.admin.identity.ArticleIdentity;
-import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.service.ArticleCrudService;
+import org.ambraproject.admin.service.AssetCrudService;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.admin.service.DoiBasedCrudService.WriteResult;
 import org.ambraproject.filestore.FileStoreException;
@@ -53,6 +53,8 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
 
   @Autowired
   private ArticleCrudService articleCrudService;
+  @Autowired
+  private AssetCrudService assetCrudService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -106,14 +108,35 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     return new ResponseEntity<Object>(result.getStatus());
   }
 
+  /*
+   * If a parameter for metadata format was supplied, return the article metadata. Else, dump the article's XML file to
+   * the response.
+   *
+   * This is semi-intentionally inconsistent with {@link AssetMetadataController#read}. That method has a whole,
+   * different "RESTful noun" namespace for asset metadata, whereas here article data and metadata live in the same
+   * namespace and are differentiated by parameters. It is an open question of API design which is preferable, but we
+   * should settle on one and change the other to match it.
+   *
+   * TODO: Resolve above
+   */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request,
                                 @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
-    DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format);
-    String json = articleCrudService.readMetadata(id, mf);
-    return new ResponseEntity<String>(json, HttpStatus.OK);
+    ArticleIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, false);
+    if (mf == null) {
+      InputStream fileStream = null;
+      try {
+        fileStream = articleCrudService.read(id);
+        return respondWithStream(fileStream, id.forXmlAsset());
+      } finally {
+        Closeables.close(fileStream, false);
+      }
+    } else {
+      String json = articleCrudService.readMetadata(id, mf);
+      return new ResponseEntity<String>(json, HttpStatus.OK);
+    }
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)

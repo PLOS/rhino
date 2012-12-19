@@ -46,7 +46,7 @@ public class AssetMetadataController extends StandAloneDoiCrudController {
   public ResponseEntity<String> read(HttpServletRequest request,
                                      @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format) {
     DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     String metadata = assetCrudService.readMetadata(id, mf);
     return new ResponseEntity<String>(metadata, HttpStatus.OK);
   }
