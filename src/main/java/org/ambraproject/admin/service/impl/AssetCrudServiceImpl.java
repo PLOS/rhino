@@ -168,11 +168,17 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(AssetIdentity assetId) throws FileStoreException {
+  public InputStream read(AssetIdentity assetId) {
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId);
     }
-    return fileStoreService.getFileInStream(assetId.getFsid());
+    try {
+      return fileStoreService.getFileInStream(assetId.getFsid());
+    } catch (FileStoreException e) {
+      String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
+          assetId.getIdentifier(), assetId.getFileExtension());
+      throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
+    }
   }
 
   @Override

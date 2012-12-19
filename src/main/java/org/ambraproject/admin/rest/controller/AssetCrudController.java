@@ -88,7 +88,7 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws FileStoreException, IOException {
+  public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
     AssetIdentity id = parse(request);
     InputStream fileStream = null;
     try {

@@ -50,9 +50,8 @@ public interface AssetCrudService extends DoiBasedCrudService<AssetIdentity> {
    *
    * @param id the identifier of the asset whose file is to be read
    * @return a stream containing the file data
-   * @throws FileStoreException
    */
-  public abstract InputStream read(AssetIdentity id) throws FileStoreException;
+  public abstract InputStream read(AssetIdentity id);
 
   /**
    * Delete an asset and its associated file.
