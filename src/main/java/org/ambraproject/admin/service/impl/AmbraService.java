@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.service.impl;
 
 
 import com.google.common.base.Preconditions;

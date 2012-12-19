@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.service.impl;
 
 import com.google.common.base.Optional;
 import org.ambraproject.admin.content.ArticleXml;
@@ -25,6 +25,7 @@ import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.rest.MetadataFormat;
 import org.ambraproject.admin.rest.RestClientException;
+import org.ambraproject.admin.service.ArticleCrudService;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.apache.commons.lang.StringUtils;

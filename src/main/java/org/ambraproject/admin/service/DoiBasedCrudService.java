@@ -30,7 +30,7 @@ import java.io.InputStream;
  * Methods are included here only if they share a common signature among services. See the extending interfaces for
  * documentation on the behavior of each method.
  */
-public abstract interface DoiBasedCrudService<I extends DoiBasedIdentity> {
+public interface DoiBasedCrudService<I extends DoiBasedIdentity> {
 
   public abstract InputStream read(I id) throws FileStoreException;
 

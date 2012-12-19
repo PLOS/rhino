@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.service;
+package org.ambraproject.admin.service.impl;
 
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.rest.RestClientException;
+import org.ambraproject.admin.service.IssueCrudService;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
