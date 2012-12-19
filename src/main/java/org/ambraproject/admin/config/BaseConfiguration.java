@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * Code common to both the main and testing configurations.
  */
-public abstract class BaseConfiguration {
+abstract class BaseConfiguration {
 
   @Inject
   private ApplicationContext context;

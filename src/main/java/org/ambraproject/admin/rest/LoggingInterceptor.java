@@ -50,7 +50,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
     @Override
     public String apply(@Nullable String input) {
       if (input == null) {
-        return String.valueOf(null);
+        return String.valueOf((Object) null);
       }
       /*
        * TODO: Use org.apache.commons.lang.StringEscapeUtils?
@@ -58,7 +58,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
        * just handle some simple cases by hand. The returned values are not guaranteed to be parsable in any particular
        * context; this is just for human readability.
        */
-      input = input.replace("\"", "\\\"").replace("\\", "\\\\");
+      input = input.replace("\\", "\\\\").replace("\"", "\\\"");
       return '"' + input + '"';
     }
   };

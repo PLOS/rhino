@@ -148,7 +148,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
     assert format == MetadataFormat.JSON;
-    Article article = (Article) DataAccessUtils.uniqueResult(
+    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
             .setFetchMode("assets", FetchMode.JOIN)

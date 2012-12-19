@@ -79,10 +79,8 @@ public class AssetXml extends XmlToObject<ArticleAsset> {
 
       if (doi == null) {
         log.warn("An asset node ({}) does not have DOI as expected", nodeName);
-      } else {
-        if (doi.equals(targetDoi)) {
-          return assetNode;
-        }
+      } else if (doi.equals(targetDoi)) {
+        return assetNode;
       }
     }
 
