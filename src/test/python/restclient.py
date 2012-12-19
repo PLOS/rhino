@@ -194,7 +194,7 @@ class Request(object):
     instances should be reusable if you want the same parameters.
 
     As of this version, any values passed into this class do not have
-    special HTML characters (like '#', '?', and '&') escaped. Bugs may
+    special HTTP characters (like '#', '?', and '&') escaped. Bugs may
     ensue if such characters are not manually escaped (like '%23') from
     strings before they are passed in.
     """
