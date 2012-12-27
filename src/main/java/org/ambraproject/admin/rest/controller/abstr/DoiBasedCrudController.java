@@ -54,10 +54,12 @@ public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends
 
   protected ResponseEntity<byte[]> respondWithStream(InputStream stream, AssetIdentity identity) throws IOException {
     byte[] data;
+    boolean threw = true;
     try {
       data = IOUtils.toByteArray(stream); // TODO Avoid dumping into memory?
+      threw = false;
     } finally {
-      Closeables.close(stream, false);
+      Closeables.close(stream, threw);
     }
 
     HttpHeaders headers = new HttpHeaders();

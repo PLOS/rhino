@@ -79,10 +79,12 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
    */
   @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
   public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
+    boolean threw = true;
     try {
       articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
+      threw = false;
     } finally {
-      Closeables.close(requestBody, false);
+      Closeables.close(requestBody, threw);
     }
     return reportCreated();
   }
@@ -101,11 +103,13 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     ArticleIdentity id = parse(request);
     InputStream stream = null;
     WriteResult result;
+    boolean threw = true;
     try {
       stream = request.getInputStream();
       result = articleCrudService.write(stream, Optional.of(id), WriteMode.WRITE_ANY);
+      threw = false;
     } finally {
-      Closeables.close(stream, false);
+      Closeables.close(stream, threw);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }
@@ -129,12 +133,16 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     MetadataFormat mf = MetadataFormat.getFromParameter(format, false);
     if (mf == null) {
       InputStream fileStream = null;
+      ResponseEntity<byte[]> response;
+      boolean threw = true;
       try {
         fileStream = articleCrudService.read(id);
-        return respondWithStream(fileStream, id.forXmlAsset());
+        response = respondWithStream(fileStream, id.forXmlAsset());
+        threw = false;
       } finally {
-        Closeables.close(fileStream, false);
+        Closeables.close(fileStream, threw);
       }
+      return response;
     } else {
       String json = articleCrudService.readMetadata(id, mf);
       return new ResponseEntity<String>(json, HttpStatus.OK);

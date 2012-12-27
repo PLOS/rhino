@@ -88,11 +88,13 @@ public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
     public TestFile(File fileLocation) throws IOException {
       this.fileLocation = fileLocation;
       InputStream stream = null;
+      boolean threw = true;
       try {
         stream = new FileInputStream(this.fileLocation);
         fileData = IOUtils.toByteArray(stream);
+        threw = false;
       } finally {
-        Closeables.close(stream, false);
+        Closeables.close(stream, threw);
       }
     }
 

@@ -111,21 +111,26 @@ public abstract class AmbraService {
    */
   protected void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
     OutputStream output = null;
+    boolean threw = true;
     try {
       output = fileStoreService.getFileOutStream(fsid, fileData.length);
       output.write(fileData);
+      threw = false;
     } finally {
-      Closeables.close(output, false);
+      Closeables.close(output, threw);
     }
   }
 
   protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
     InputStream stream = null;
+    boolean threw = true;
     try {
       stream = new ByteArrayInputStream(bytes);
-      return parseXml(stream);
+      Document document = parseXml(stream);
+      threw = false;
+      return document;
     } finally {
-      Closeables.close(stream, false);
+      Closeables.close(stream, threw);
     }
   }
 

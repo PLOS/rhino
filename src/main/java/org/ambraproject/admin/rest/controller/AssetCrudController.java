@@ -78,11 +78,13 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
 
     InputStream stream = null;
     WriteResult result;
+    boolean threw = true;
     try {
       stream = request.getInputStream();
       result = assetCrudService.upload(stream, assetId, articleId);
+      threw = false;
     } finally {
-      Closeables.close(stream, false);
+      Closeables.close(stream, threw);
     }
     return new ResponseEntity<Object>(result.getStatus());
   }
@@ -91,12 +93,16 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
     AssetIdentity id = parse(request);
     InputStream fileStream = null;
+    ResponseEntity<byte[]> response;
+    boolean threw = true;
     try {
       fileStream = assetCrudService.read(id);
-      return respondWithStream(fileStream, id);
+      response = respondWithStream(fileStream, id);
+      threw = false;
     } finally {
-      Closeables.close(fileStream, false);
+      Closeables.close(fileStream, threw);
     }
+    return response;
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)

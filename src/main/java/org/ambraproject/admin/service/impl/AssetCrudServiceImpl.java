@@ -144,13 +144,15 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
     InputStream articleStream = null;
     Document articleXml;
+    boolean threw = true;
     try {
       articleStream = fileStoreService.getFileInStream(articleFsid);
       articleXml = parseXml(articleStream);
+      threw = false;
     } catch (IOException e) {
       throw new FileStoreException(e);
     } finally {
-      Closeables.close(articleStream, false);
+      Closeables.close(articleStream, threw);
     }
 
     try {

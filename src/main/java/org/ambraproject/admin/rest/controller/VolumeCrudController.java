@@ -71,13 +71,16 @@ public class VolumeCrudController extends StandAloneDoiCrudController {
   public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
     DoiBasedIdentity id = parse(request);
     InputStream stream = null;
+    byte[] data;
+    boolean threw = true;
     try {
       stream = volumeCrudService.readJson(id);
-      byte[] data = IOUtils.toByteArray(stream);
-      return new ResponseEntity<String>(new String(data), HttpStatus.OK);
+      data = IOUtils.toByteArray(stream);
+      threw = false;
     } finally {
-      Closeables.close(stream, false);
+      Closeables.close(stream, threw);
     }
+    return new ResponseEntity<String>(new String(data), HttpStatus.OK);
   }
 
 }
