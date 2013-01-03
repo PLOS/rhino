@@ -20,8 +20,8 @@ package org.ambraproject.admin.service.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
-import org.ambraproject.admin.content.AssetXml;
-import org.ambraproject.admin.content.XmlContentException;
+import org.ambraproject.admin.content.xml.AssetXml;
+import org.ambraproject.admin.content.xml.XmlContentException;
 import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.AssetIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;

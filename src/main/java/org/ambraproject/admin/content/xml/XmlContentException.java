@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.content;
+package org.ambraproject.admin.content.xml;
 
 /**
  * Indicates that client-submitted XML has an error, omission, or invalid structure.

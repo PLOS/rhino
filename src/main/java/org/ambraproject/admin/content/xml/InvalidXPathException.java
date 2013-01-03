@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.content;
+package org.ambraproject.admin.content.xml;
 
 import javax.xml.xpath.XPathExpressionException;
 

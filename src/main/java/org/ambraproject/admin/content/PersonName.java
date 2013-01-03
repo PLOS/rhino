@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.util;
+package org.ambraproject.admin.content;
 
 import org.ambraproject.models.ArticlePerson;
 import org.ambraproject.models.CitedArticlePerson;

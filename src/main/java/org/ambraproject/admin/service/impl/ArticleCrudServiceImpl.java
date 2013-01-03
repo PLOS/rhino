@@ -19,8 +19,8 @@
 package org.ambraproject.admin.service.impl;
 
 import com.google.common.base.Optional;
-import org.ambraproject.admin.content.ArticleXml;
-import org.ambraproject.admin.content.XmlContentException;
+import org.ambraproject.admin.content.xml.ArticleXml;
+import org.ambraproject.admin.content.xml.XmlContentException;
 import org.ambraproject.admin.identity.ArticleIdentity;
 import org.ambraproject.admin.identity.DoiBasedIdentity;
 import org.ambraproject.admin.rest.MetadataFormat;

@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.content;
+package org.ambraproject.admin.content.xml;
 
-import org.ambraproject.admin.util.PersonName;
+import org.ambraproject.admin.content.PersonName;
 import org.ambraproject.models.AmbraEntity;
 import org.w3c.dom.Node;
 

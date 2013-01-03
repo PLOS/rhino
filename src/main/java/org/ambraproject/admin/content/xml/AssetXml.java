@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.ambraproject.admin.content;
+package org.ambraproject.admin.content.xml;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
