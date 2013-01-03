@@ -96,17 +96,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     String fsid = doi.forXmlAsset().getFsid(); // do this first, to fail fast if the DOI is invalid
 
     Article article = findArticleById(doi);
-    boolean creating = false;
-    if (article == null) {
-      article = new Article();
-      article.setDoi(doi.getKey());
-      creating = true;
-    }
-
+    final boolean creating = (article == null);
     if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
       String messageStub = (creating ?
           "Can't update; article does not exist at " : "Can't create; article already exists at ");
       throw new RestClientException(messageStub + doi.getIdentifier(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+    if (creating) {
+      article = new Article();
+      article.setDoi(doi.getKey());
     }
 
     try {
