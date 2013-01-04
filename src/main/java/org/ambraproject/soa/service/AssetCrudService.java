@@ -19,11 +19,11 @@
 package org.ambraproject.soa.service;
 
 import com.google.common.base.Optional;
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.soa.identity.ArticleIdentity;
 import org.ambraproject.soa.identity.AssetIdentity;
 import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.ambraproject.soa.rest.MetadataFormat;
-import org.ambraproject.filestore.FileStoreException;
 
 import java.io.IOException;
 import java.io.InputStream;

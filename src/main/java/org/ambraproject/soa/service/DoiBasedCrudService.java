@@ -18,8 +18,8 @@
 
 package org.ambraproject.soa.service;
 
-import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.springframework.http.HttpStatus;
 
 import java.io.InputStream;

@@ -19,11 +19,11 @@
 package org.ambraproject.soa.service.impl;
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.models.Journal;
+import org.ambraproject.models.Volume;
 import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.ambraproject.soa.rest.RestClientException;
 import org.ambraproject.soa.service.VolumeCrudService;
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;

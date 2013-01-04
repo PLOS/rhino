@@ -20,12 +20,12 @@ package org.ambraproject.soa.rest.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.soa.identity.ArticleIdentity;
 import org.ambraproject.soa.identity.AssetIdentity;
 import org.ambraproject.soa.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.soa.service.AssetCrudService;
 import org.ambraproject.soa.service.DoiBasedCrudService.WriteResult;
-import org.ambraproject.filestore.FileStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

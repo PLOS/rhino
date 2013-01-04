@@ -18,11 +18,11 @@
 
 package org.ambraproject.soa.service.impl;
 
+import org.ambraproject.models.Issue;
+import org.ambraproject.models.Volume;
 import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.ambraproject.soa.rest.RestClientException;
 import org.ambraproject.soa.service.IssueCrudService;
-import org.ambraproject.models.Issue;
-import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;

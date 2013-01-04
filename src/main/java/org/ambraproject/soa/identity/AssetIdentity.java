@@ -19,9 +19,9 @@
 package org.ambraproject.soa.identity;
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.soa.rest.RestClientException;
 import org.ambraproject.soa.util.ImmutableMimetypesFileTypeMap;
-import org.ambraproject.filestore.FSIDMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

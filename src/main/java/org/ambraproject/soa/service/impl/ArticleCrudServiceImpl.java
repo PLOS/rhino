@@ -19,6 +19,8 @@
 package org.ambraproject.soa.service.impl;
 
 import com.google.common.base.Optional;
+import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
 import org.ambraproject.soa.content.xml.ArticleXml;
 import org.ambraproject.soa.content.xml.XmlContentException;
 import org.ambraproject.soa.identity.ArticleIdentity;
@@ -26,8 +28,6 @@ import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.ambraproject.soa.rest.MetadataFormat;
 import org.ambraproject.soa.rest.RestClientException;
 import org.ambraproject.soa.service.ArticleCrudService;
-import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.Article;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;

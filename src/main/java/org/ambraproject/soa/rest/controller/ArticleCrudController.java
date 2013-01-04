@@ -20,6 +20,7 @@ package org.ambraproject.soa.rest.controller;
 
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.soa.identity.ArticleIdentity;
 import org.ambraproject.soa.rest.MetadataFormat;
 import org.ambraproject.soa.rest.controller.abstr.DoiBasedCrudController;
@@ -27,7 +28,6 @@ import org.ambraproject.soa.service.ArticleCrudService;
 import org.ambraproject.soa.service.AssetCrudService;
 import org.ambraproject.soa.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.soa.service.DoiBasedCrudService.WriteResult;
-import org.ambraproject.filestore.FileStoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

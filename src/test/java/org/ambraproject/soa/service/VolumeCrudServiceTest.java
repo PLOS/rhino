@@ -18,11 +18,11 @@
 
 package org.ambraproject.soa.service;
 
+import org.ambraproject.models.Journal;
+import org.ambraproject.models.Volume;
 import org.ambraproject.soa.BaseAdminTest;
 import org.ambraproject.soa.identity.DoiBasedIdentity;
 import org.ambraproject.soa.identity.StandAloneIdentity;
-import org.ambraproject.models.Journal;
-import org.ambraproject.models.Volume;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;

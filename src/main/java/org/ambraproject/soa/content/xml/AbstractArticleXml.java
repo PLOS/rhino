@@ -18,8 +18,8 @@
 
 package org.ambraproject.soa.content.xml;
 
-import org.ambraproject.soa.content.PersonName;
 import org.ambraproject.models.AmbraEntity;
+import org.ambraproject.soa.content.PersonName;
 import org.w3c.dom.Node;
 
 /**
