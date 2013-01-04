@@ -165,12 +165,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private Set<Category> parseCategories(Collection<Node> categoryNodes) {
-    Set<Category> categories = Sets.newHashSetWithExpectedSize(categoryNodes.size());
-    for (Node node : categoryNodes) {
-      Category category = parseCategory(node.getTextContent());
-      categories.add(category);
-    }
-    return categories;
+    /*
+     * TODO: Update according to new taxonomy system
+     */
+    return Sets.newHashSetWithExpectedSize(0);
   }
 
   private List<ArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
@@ -189,28 +187,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       editors.add(editor);
     }
     return editors;
-  }
-
-  /**
-   * Parse the main category and subcategory from a "Discipline" element, as specified by NLM. If there is a slash in
-   * the string, the first one separates the main category from the subcategory. Else, the whole string is the main
-   * category.
-   * <p/>
-   * This is equivalent to capturing groups 1 and 3 from the regex {@code "([^/]*)(/(.*))?"}, but more efficient.
-   *
-   * @param categoryString
-   * @return
-   */
-  private static Category parseCategory(String categoryString) {
-    Category category = new Category();
-    int slashIndex = categoryString.indexOf('/');
-    if (slashIndex < 0) {
-      category.setMainCategory(categoryString);
-    } else {
-      category.setMainCategory(categoryString.substring(0, slashIndex));
-      category.setSubCategory(categoryString.substring(slashIndex + 1));
-    }
-    return category;
   }
 
   private List<CitedArticle> parseCitations(List<Node> citationNodes) throws XmlContentException {
