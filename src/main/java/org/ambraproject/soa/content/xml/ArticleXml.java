@@ -121,8 +121,9 @@ public class ArticleXml extends AbstractArticleXml<Article> {
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
 
     // TODO Actually this simple, or can it have more structure?
-    article.setCollaborativeAuthors(readTextList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
+    List<String> collaborativeAuthors = readTextList("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab");
+    collaborativeAuthors = Lists.newArrayList(collaborativeAuthors); // copy to simpler implementation
+    article.setCollaborativeAuthors(collaborativeAuthors);
 
     // TODO Finish implementing
 
