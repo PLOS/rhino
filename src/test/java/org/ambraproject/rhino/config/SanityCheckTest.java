@@ -18,7 +18,7 @@
 
 package org.ambraproject.rhino.config;
 
-import org.ambraproject.rhino.BaseAdminTest;
+import org.ambraproject.rhino.BaseRhinoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
@@ -28,7 +28,7 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Meta-test to check whether the Spring/TestNG testing harness is configured correctly.
  */
-public class SanityCheckTest extends BaseAdminTest {
+public class SanityCheckTest extends BaseRhinoTest {
 
   @Autowired
   private Object sampleBean;

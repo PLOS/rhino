@@ -40,7 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
-public abstract class BaseAdminTest extends AbstractTestNGSpringContextTests {
+public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
 
   @Autowired
   protected HibernateTemplate hibernateTemplate;

@@ -25,7 +25,7 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
-import org.ambraproject.rhino.BaseAdminTest;
+import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -52,7 +52,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class ArticleCrudServiceTest extends BaseAdminTest {
+public class ArticleCrudServiceTest extends BaseRhinoTest {
 
   @Autowired
   private ArticleCrudService articleCrudService;

@@ -17,12 +17,11 @@
 # limitations under the License.
 
 
-"""Exercises the ArticleCrudController methods in Ambra Admin TNG.
+"""Exercises the ArticleCrudController methods in Rhino.
 
 This script serves as a quick-and-dirty integration test by exercising the
 Spring controllers in ways that the unit tests cannot. It requires that a
-Tomcat instance be running Ambra Admin TNG at the time the script is
-executed.
+Tomcat instance be running Rhino at the time the script is executed.
 
 This script uses the same test data as the unit test suite. The list of
 test cases is currently hard-coded into the script, but if it grows too

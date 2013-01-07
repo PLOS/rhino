@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-@Import(AdminConfiguration.class)
+@Import(RhinoConfiguration.class)
 public class TestConfiguration extends BaseConfiguration {
 
   /**

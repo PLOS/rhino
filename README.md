@@ -1,4 +1,4 @@
-AdminTNG
-========
+Rhino ("TNG")
+=============
 
-The Next Generation of Ambra Amdmin
+Ambra's "next-generation" service-oriented back end.

@@ -20,7 +20,7 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
-import org.ambraproject.rhino.BaseAdminTest;
+import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.identity.StandAloneIdentity;
 import org.hibernate.FetchMode;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertFalse;
 
-public class VolumeCrudServiceTest extends BaseAdminTest {
+public class VolumeCrudServiceTest extends BaseRhinoTest {
 
   @Autowired
   private VolumeCrudService volumeCrudService;

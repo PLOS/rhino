@@ -47,7 +47,7 @@ import java.util.Properties;
  * This augments some other bean configurations located at {@code src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml}.
  */
 @Configuration
-public class AdminConfiguration extends BaseConfiguration {
+public class RhinoConfiguration extends BaseConfiguration {
 
   /**
    * Static stuff outside the Spring framework that needs to be run on startup. Ideally this should be empty.
