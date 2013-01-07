@@ -29,7 +29,7 @@
   </appender>
 
   <!-- Application Loggers -->
-  <logger name="org.ambraproject.soa">
+  <logger name="org.ambraproject.rhino">
     <level value="info"/>
   </logger>
 
