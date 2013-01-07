@@ -15,6 +15,7 @@ target/
 .idea/
 *.iml
 *.ipr
+*.iws
 
 # Temporary files #
 *~
