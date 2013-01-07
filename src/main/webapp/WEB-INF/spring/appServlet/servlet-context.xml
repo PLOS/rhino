@@ -40,7 +40,7 @@
     <beans:property name="suffix" value=".jsp"/>
   </beans:bean>
 
-  <context:component-scan base-package="org.ambraproject.soa"/>
+  <context:component-scan base-package="org.ambraproject.rhino"/>
   <context:annotation-config/>
 
   <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -58,7 +58,7 @@
   </beans:bean>
 
   <mvc:interceptors>
-    <beans:bean class="org.ambraproject.soa.rest.LoggingInterceptor"/>
+    <beans:bean class="org.ambraproject.rhino.rest.LoggingInterceptor"/>
   </mvc:interceptors>
 
 </beans:beans>

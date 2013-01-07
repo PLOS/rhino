@@ -24,12 +24,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.ambraproject</groupId>
-  <artifactId>admin</artifactId>
-  <name>ambra-admin-tng</name>
+  <artifactId>rhino</artifactId>
+  <name>rhino</name>
   <packaging>war</packaging>
   <version>1.0.0-BUILD-SNAPSHOT</version>
 
-  <description>Administrative web application for Ambra.</description>
+  <description>Service-oriented back end for Ambra.</description>
 
   <licenses>
     <license>
