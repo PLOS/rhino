@@ -27,6 +27,12 @@ This script uses the same test data as the unit test suite. The list of
 test cases is currently hard-coded into the script, but if it grows too
 large, it could be either split into its own module or automated to use
 whatever it finds in the right directories.
+
+This script does not currently assert its expected behavior; it is more
+like a demo for a human to examine than a proper test suite. It is
+supplanted by the Java unit tests that assert correct behavior for the
+services (but not the REST API). Extending the REST API tests with
+assertions and automated checking is a to-do.
 """
 
 from __future__ import print_function
