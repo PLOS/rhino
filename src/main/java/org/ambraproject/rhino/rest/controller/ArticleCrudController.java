@@ -129,23 +129,33 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
                                 @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, false);
-    if (mf == null) {
-      InputStream fileStream = null;
-      ResponseEntity<byte[]> response;
-      boolean threw = true;
-      try {
-        fileStream = articleCrudService.read(id);
-        response = respondWithStream(fileStream, id.forXmlAsset());
-        threw = false;
-      } finally {
-        Closeables.close(fileStream, threw);
-      }
-      return response;
-    } else {
-      String json = articleCrudService.readMetadata(id, mf);
-      return respondWithPlainText(json);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    String metadata = articleCrudService.readMetadata(id, mf);
+    return respondWithPlainText(metadata);
+  }
+
+  /**
+   * Send a response containing the XML file for an article.
+   * <p/>
+   * The API doesn't currently provide this functionality in the article namespace.
+   *
+   * @param article the parent article of the XML file to send
+   * @return the response entity with the XML file stream
+   * @throws FileStoreException
+   * @throws IOException
+   */
+  private ResponseEntity<?> provideXmlFor(ArticleIdentity article) throws FileStoreException, IOException {
+    InputStream fileStream = null;
+    ResponseEntity<byte[]> response;
+    boolean threw = true;
+    try {
+      fileStream = articleCrudService.read(article);
+      response = respondWithStream(fileStream, article.forXmlAsset());
+      threw = false;
+    } finally {
+      Closeables.close(fileStream, threw);
     }
+    return response;
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
