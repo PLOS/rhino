@@ -54,8 +54,9 @@ public abstract class RestController {
    * @throws IllegalArgumentException if the request URI does not start with the namespace or if the namespace does not
    *                                  end with a slash
    */
-  protected static String getFullPathVariable(HttpServletRequest request, String namespace) {
-    if (namespace.charAt(namespace.length() - 1) != '/') {
+  protected static String getFullPathVariable(HttpServletRequest request, final String namespace) {
+    final int namespaceLength = namespace.length();
+    if (namespace.charAt(namespaceLength - 1) != '/') {
       throw new IllegalArgumentException("Namespace must end with '/'");
     }
     String requestUri = request.getRequestURI();
@@ -64,7 +65,11 @@ public abstract class RestController {
           requestUri, namespace);
       throw new IllegalArgumentException(message);
     }
-    return requestUri.substring(namespace.length());
+    int end = requestUri.length() - (requestUri.endsWith("/") ? 1 : 0);
+    if (end <= namespaceLength) {
+      throw new IllegalArgumentException("Request URI has no path variable after namespace");
+    }
+    return requestUri.substring(namespaceLength, end);
   }
 
   /**
