@@ -97,8 +97,9 @@ public abstract class RestController {
    */
   @ExceptionHandler(RestClientException.class)
   public ResponseEntity<String> reportClientError(RestClientException e) {
-    log.info("Reporting error to client", e);
-    return new ResponseEntity<String>(e.getMessage(), e.getResponseStatus());
+    HttpStatus status = e.getResponseStatus();
+    log.info("Reporting error to client (" + status + ")", e);
+    return new ResponseEntity<String>(e.getMessage(), status);
   }
 
   /**
