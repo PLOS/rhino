@@ -86,7 +86,7 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
     } finally {
       Closeables.close(stream, threw);
     }
-    return new ResponseEntity<Object>(result.getStatus());
+    return respondWithStatus(result.getStatus());
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)

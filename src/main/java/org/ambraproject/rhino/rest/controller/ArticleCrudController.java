@@ -31,7 +31,6 @@ import org.ambraproject.rhino.service.DoiBasedCrudService.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,7 +110,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     } finally {
       Closeables.close(stream, threw);
     }
-    return new ResponseEntity<Object>(result.getStatus());
+    return respondWithStatus(result.getStatus());
   }
 
   /*
@@ -145,7 +144,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
       return response;
     } else {
       String json = articleCrudService.readMetadata(id, mf);
-      return new ResponseEntity<String>(json, HttpStatus.OK);
+      return respondWithPlainText(json);
     }
   }
 
@@ -153,7 +152,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
     ArticleIdentity id = parse(request);
     articleCrudService.delete(id);
-    return new ResponseEntity<String>(HttpStatus.OK);
+    return reportOk();
   }
 
 }

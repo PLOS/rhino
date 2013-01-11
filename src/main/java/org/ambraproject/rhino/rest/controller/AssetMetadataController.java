@@ -23,7 +23,6 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.StandAloneDoiCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +49,7 @@ public class AssetMetadataController extends StandAloneDoiCrudController {
     DoiBasedIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     String metadata = assetCrudService.readMetadata(id, mf);
-    return new ResponseEntity<String>(metadata, HttpStatus.OK);
+    return respondWithPlainText(metadata);
   }
 
 }

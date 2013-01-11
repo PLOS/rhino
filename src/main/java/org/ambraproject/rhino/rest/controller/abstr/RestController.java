@@ -21,7 +21,9 @@ package org.ambraproject.rhino.rest.controller.abstr;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,6 +72,38 @@ public abstract class RestController {
       throw new IllegalArgumentException("Request URI has no path variable after namespace");
     }
     return requestUri.substring(namespaceLength, end);
+  }
+
+  /**
+   * Produce an HTTP header set that defines the content type but no other information.
+   *
+   * @param mediaType the content type
+   * @return the HTTP header set
+   */
+  protected static HttpHeaders makeContentTypeHeader(MediaType mediaType) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(mediaType);
+    return headers;
+  }
+
+  /**
+   * Return a response with a given status code, no body, and no defined headers.
+   *
+   * @param status the response status code
+   * @return the response object
+   */
+  protected static ResponseEntity<?> respondWithStatus(HttpStatus status) {
+    return new ResponseEntity<Object>(status);
+  }
+
+  /**
+   * Return a plain-text HTTP response with an "OK" status code.
+   *
+   * @param text the response body
+   * @return the response object
+   */
+  protected static ResponseEntity<String> respondWithPlainText(CharSequence text) {
+    return new ResponseEntity<String>(text.toString(), makeContentTypeHeader(MediaType.TEXT_PLAIN), HttpStatus.OK);
   }
 
   /**
