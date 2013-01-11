@@ -24,7 +24,6 @@ import org.ambraproject.rhino.rest.controller.abstr.StandAloneDoiCrudController;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,7 +79,7 @@ public class VolumeCrudController extends StandAloneDoiCrudController {
     } finally {
       Closeables.close(stream, threw);
     }
-    return new ResponseEntity<String>(new String(data), HttpStatus.OK);
+    return respondWithPlainText(new String(data));
   }
 
 }
