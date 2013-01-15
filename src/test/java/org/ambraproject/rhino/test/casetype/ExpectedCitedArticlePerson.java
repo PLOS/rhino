@@ -4,13 +4,13 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.CitedArticlePerson;
-import org.ambraproject.rhino.test.IngestionTestCase;
-import org.ambraproject.rhino.test.IngestionTestCase.AssertionFailure;
+import org.ambraproject.rhino.test.AssertionFailure;
+import org.ambraproject.rhino.test.ExpectedEntity;
 import org.apache.commons.lang.ObjectUtils;
 
 import java.util.Collection;
 
-public class ExpectedCitedArticlePerson extends IngestionTestCase.ExpectedEntity<CitedArticlePerson> {
+public class ExpectedCitedArticlePerson extends ExpectedEntity<CitedArticlePerson> {
   private final String fullName;
   private final String givenNames;
   private final String surnames;
@@ -29,29 +29,12 @@ public class ExpectedCitedArticlePerson extends IngestionTestCase.ExpectedEntity
   }
 
   @Override
-  public Collection<AssertionFailure> test(CitedArticlePerson citedArticlePerson) {
-    Collection<AssertionFailure> failures = Lists.newArrayList();
-
-    String fullName = citedArticlePerson.getFullName();
-    if (!Objects.equal(fullName, this.fullName)) {
-      failures.add(AssertionFailure.create(CitedArticlePerson.class, "fullName", fullName, this.fullName));
-    }
-
-    String givenNames = citedArticlePerson.getGivenNames();
-    if (!Objects.equal(givenNames, this.givenNames)) {
-      failures.add(AssertionFailure.create(CitedArticlePerson.class, "givenNames", givenNames, this.givenNames));
-    }
-
-    String surnames = citedArticlePerson.getSurnames();
-    if (!Objects.equal(surnames, this.surnames)) {
-      failures.add(AssertionFailure.create(CitedArticlePerson.class, "surnames", surnames, this.surnames));
-    }
-
-    String suffix = citedArticlePerson.getSuffix();
-    if (!Objects.equal(suffix, this.suffix)) {
-      failures.add(AssertionFailure.create(CitedArticlePerson.class, "suffix", suffix, this.suffix));
-    }
-
+  public Collection<AssertionFailure<?>> test(CitedArticlePerson citedArticlePerson) {
+    Collection<AssertionFailure<?>> failures = Lists.newArrayList();
+    testField(failures, "fullName", citedArticlePerson.getFullName(), fullName);
+    testField(failures, "givenNames", citedArticlePerson.getGivenNames(), givenNames);
+    testField(failures, "surnames", citedArticlePerson.getSurnames(), surnames);
+    testField(failures, "suffix", citedArticlePerson.getSuffix(), suffix);
     return ImmutableList.copyOf(failures);
   }
 

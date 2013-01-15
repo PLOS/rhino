@@ -6,14 +6,14 @@ import com.google.common.collect.Lists;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.CitedArticleAuthor;
 import org.ambraproject.models.CitedArticleEditor;
-import org.ambraproject.rhino.test.IngestionTestCase;
-import org.ambraproject.rhino.test.IngestionTestCase.AssertionFailure;
+import org.ambraproject.rhino.test.AssertionFailure;
+import org.ambraproject.rhino.test.ExpectedEntity;
 import org.apache.commons.lang.ObjectUtils;
 
 import java.util.Collection;
 import java.util.List;
 
-public class ExpectedCitedArticle extends IngestionTestCase.ExpectedEntity<CitedArticle> {
+public class ExpectedCitedArticle extends ExpectedEntity<CitedArticle> {
   private final String key;
   private final Integer year;
   private final String displayYear;
@@ -68,119 +68,30 @@ public class ExpectedCitedArticle extends IngestionTestCase.ExpectedEntity<Cited
   }
 
   @Override
-  public Collection<AssertionFailure> test(CitedArticle citedArticle) {
-    Collection<AssertionFailure> failures = Lists.newArrayList();
-
-    String key = citedArticle.getKey();
-    if (!Objects.equal(key, this.key)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "key", key, this.key));
-    }
-
-    Integer year = citedArticle.getYear();
-    if (!Objects.equal(year, this.year)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "year", year, this.year));
-    }
-
-    String displayYear = citedArticle.getDisplayYear();
-    if (!Objects.equal(displayYear, this.displayYear)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "displayYear", displayYear, this.displayYear));
-    }
-
-    String month = citedArticle.getMonth();
-    if (!Objects.equal(month, this.month)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "month", month, this.month));
-    }
-
-    String day = citedArticle.getDay();
-    if (!Objects.equal(day, this.day)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "day", day, this.day));
-    }
-
-    Integer volumeNumber = citedArticle.getVolumeNumber();
-    if (!Objects.equal(volumeNumber, this.volumeNumber)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "volumeNumber", volumeNumber, this.volumeNumber));
-    }
-
-    String volume = citedArticle.getVolume();
-    if (!Objects.equal(volume, this.volume)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "volume", volume, this.volume));
-    }
-
-    String issue = citedArticle.getIssue();
-    if (!Objects.equal(issue, this.issue)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "issue", issue, this.issue));
-    }
-
-    String title = citedArticle.getTitle();
-    if (!Objects.equal(title, this.title)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "title", title, this.title));
-    }
-
-    String publisherLocation = citedArticle.getPublisherLocation();
-    if (!Objects.equal(publisherLocation, this.publisherLocation)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "publisherLocation", publisherLocation, this.publisherLocation));
-    }
-
-    String publisherName = citedArticle.getPublisherName();
-    if (!Objects.equal(publisherName, this.publisherName)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "publisherName", publisherName, this.publisherName));
-    }
-
-    String pages = citedArticle.getPages();
-    if (!Objects.equal(pages, this.pages)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "pages", pages, this.pages));
-    }
-
-    String eLocationID = citedArticle.geteLocationID();
-    if (!Objects.equal(eLocationID, this.eLocationID)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "eLocationID", eLocationID, this.eLocationID));
-    }
-
-    String journal = citedArticle.getJournal();
-    if (!Objects.equal(journal, this.journal)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "journal", journal, this.journal));
-    }
-
-    String note = citedArticle.getNote();
-    if (!Objects.equal(note, this.note)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "note", note, this.note));
-    }
-
-    List<String> collaborativeAuthors = citedArticle.getCollaborativeAuthors();
-    if (!Objects.equal(collaborativeAuthors, this.collaborativeAuthors)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "collaborativeAuthors", collaborativeAuthors, this.collaborativeAuthors));
-    }
-
-    String url = citedArticle.getUrl();
-    if (!Objects.equal(url, this.url)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "url", url, this.url));
-    }
-
-    String doi = citedArticle.getDoi();
-    if (!Objects.equal(doi, this.doi)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "doi", doi, this.doi));
-    }
-
-    String summary = citedArticle.getSummary();
-    if (!Objects.equal(summary, this.summary)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "summary", summary, this.summary));
-    }
-
-    String citationType = citedArticle.getCitationType();
-    if (!Objects.equal(citationType, this.citationType)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "citationType", citationType, this.citationType));
-    }
-
-    List<CitedArticleAuthor> authors = citedArticle.getAuthors();
-    if (!Objects.equal(authors, this.authors)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "authors", authors, this.authors));
-    }
-
-    List<CitedArticleEditor> editors = citedArticle.getEditors();
-    if (!Objects.equal(editors, this.editors)) {
-      failures.add(AssertionFailure.create(CitedArticle.class, "editors", editors, this.editors));
-    }
-
+  public Collection<AssertionFailure<?>> test(CitedArticle citedArticle) {
+    Collection<AssertionFailure<?>> failures = Lists.newArrayList();
+    testField(failures, "key", citedArticle.getKey(), key);
+    testField(failures, "year", citedArticle.getYear(), year);
+    testField(failures, "displayYear", citedArticle.getDisplayYear(), displayYear);
+    testField(failures, "month", citedArticle.getMonth(), month);
+    testField(failures, "day", citedArticle.getDay(), day);
+    testField(failures, "volumeNumber", citedArticle.getVolumeNumber(), volumeNumber);
+    testField(failures, "volume", citedArticle.getVolume(), volume);
+    testField(failures, "issue", citedArticle.getIssue(), issue);
+    testField(failures, "title", citedArticle.getTitle(), title);
+    testField(failures, "publisherLocation", citedArticle.getPublisherLocation(), publisherLocation);
+    testField(failures, "publisherName", citedArticle.getPublisherName(), publisherName);
+    testField(failures, "pages", citedArticle.getPages(), pages);
+    testField(failures, "eLocationID", citedArticle.geteLocationID(), eLocationID);
+    testField(failures, "journal", citedArticle.getJournal(), journal);
+    testField(failures, "note", citedArticle.getNote(), note);
+    testField(failures, "collaborativeAuthors", citedArticle.getCollaborativeAuthors(), collaborativeAuthors);
+    testField(failures, "url", citedArticle.getUrl(), url);
+    testField(failures, "doi", citedArticle.getDoi(), doi);
+    testField(failures, "summary", citedArticle.getSummary(), summary);
+    testField(failures, "citationType", citedArticle.getCitationType(), citationType);
+    testField(failures, "authors", citedArticle.getAuthors(), authors);
+    testField(failures, "editors", citedArticle.getEditors(), editors);
     return ImmutableList.copyOf(failures);
   }
 

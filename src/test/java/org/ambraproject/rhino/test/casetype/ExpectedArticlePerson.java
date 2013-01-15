@@ -4,13 +4,13 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.ArticlePerson;
-import org.ambraproject.rhino.test.IngestionTestCase;
-import org.ambraproject.rhino.test.IngestionTestCase.AssertionFailure;
+import org.ambraproject.rhino.test.AssertionFailure;
+import org.ambraproject.rhino.test.ExpectedEntity;
 import org.apache.commons.lang.ObjectUtils;
 
 import java.util.Collection;
 
-public class ExpectedArticlePerson extends IngestionTestCase.ExpectedEntity<ArticlePerson> {
+public class ExpectedArticlePerson extends ExpectedEntity<ArticlePerson> {
   private final String fullName;
   private final String givenNames;
   private final String surnames;
@@ -29,29 +29,12 @@ public class ExpectedArticlePerson extends IngestionTestCase.ExpectedEntity<Arti
   }
 
   @Override
-  public Collection<AssertionFailure> test(ArticlePerson articlePerson) {
-    Collection<AssertionFailure> failures = Lists.newArrayList();
-
-    String fullName = articlePerson.getFullName();
-    if (!Objects.equal(fullName, this.fullName)) {
-      failures.add(AssertionFailure.create(ArticlePerson.class, "fullName", fullName, this.fullName));
-    }
-
-    String givenNames = articlePerson.getGivenNames();
-    if (!Objects.equal(givenNames, this.givenNames)) {
-      failures.add(AssertionFailure.create(ArticlePerson.class, "givenNames", givenNames, this.givenNames));
-    }
-
-    String surnames = articlePerson.getSurnames();
-    if (!Objects.equal(surnames, this.surnames)) {
-      failures.add(AssertionFailure.create(ArticlePerson.class, "surnames", surnames, this.surnames));
-    }
-
-    String suffix = articlePerson.getSuffix();
-    if (!Objects.equal(suffix, this.suffix)) {
-      failures.add(AssertionFailure.create(ArticlePerson.class, "suffix", suffix, this.suffix));
-    }
-
+  public Collection<AssertionFailure<?>> test(ArticlePerson articlePerson) {
+    Collection<AssertionFailure<?>> failures = Lists.newArrayList();
+    testField(failures, "fullName", articlePerson.getFullName(), fullName);
+    testField(failures, "givenNames", articlePerson.getGivenNames(), givenNames);
+    testField(failures, "surnames", articlePerson.getSurnames(), surnames);
+    testField(failures, "suffix", articlePerson.getSuffix(), suffix);
     return ImmutableList.copyOf(failures);
   }
 

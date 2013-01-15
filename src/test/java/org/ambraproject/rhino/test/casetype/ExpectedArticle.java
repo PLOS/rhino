@@ -11,8 +11,8 @@ import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.Journal;
-import org.ambraproject.rhino.test.IngestionTestCase;
-import org.ambraproject.rhino.test.IngestionTestCase.AssertionFailure;
+import org.ambraproject.rhino.test.AssertionFailure;
+import org.ambraproject.rhino.test.ExpectedEntity;
 import org.apache.commons.lang.ObjectUtils;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class ExpectedArticle extends IngestionTestCase.ExpectedEntity<Article> {
+public class ExpectedArticle extends ExpectedEntity<Article> {
   private final String doi;
   private final String title;
   private final String eIssn;
@@ -87,149 +87,36 @@ public class ExpectedArticle extends IngestionTestCase.ExpectedEntity<Article> {
   }
 
   @Override
-  public Collection<AssertionFailure> test(Article article) {
-    Collection<AssertionFailure> failures = Lists.newArrayList();
-
-    String doi = article.getDoi();
-    if (!Objects.equal(doi, this.doi)) {
-      failures.add(AssertionFailure.create(Article.class, "doi", doi, this.doi));
-    }
-
-    String title = article.getTitle();
-    if (!Objects.equal(title, this.title)) {
-      failures.add(AssertionFailure.create(Article.class, "title", title, this.title));
-    }
-
-    String eIssn = article.geteIssn();
-    if (!Objects.equal(eIssn, this.eIssn)) {
-      failures.add(AssertionFailure.create(Article.class, "eIssn", eIssn, this.eIssn));
-    }
-
-    int state = article.getState();
-    if (state != this.state) {
-      failures.add(AssertionFailure.create(Article.class, "state", state, this.state));
-    }
-
-    String archiveName = article.getArchiveName();
-    if (!Objects.equal(archiveName, this.archiveName)) {
-      failures.add(AssertionFailure.create(Article.class, "archiveName", archiveName, this.archiveName));
-    }
-
-    String description = article.getDescription();
-    if (!Objects.equal(description, this.description)) {
-      failures.add(AssertionFailure.create(Article.class, "description", description, this.description));
-    }
-
-    String rights = article.getRights();
-    if (!Objects.equal(rights, this.rights)) {
-      failures.add(AssertionFailure.create(Article.class, "rights", rights, this.rights));
-    }
-
-    String language = article.getLanguage();
-    if (!Objects.equal(language, this.language)) {
-      failures.add(AssertionFailure.create(Article.class, "language", language, this.language));
-    }
-
-    String format = article.getFormat();
-    if (!Objects.equal(format, this.format)) {
-      failures.add(AssertionFailure.create(Article.class, "format", format, this.format));
-    }
-
-    String pages = article.getPages();
-    if (!Objects.equal(pages, this.pages)) {
-      failures.add(AssertionFailure.create(Article.class, "pages", pages, this.pages));
-    }
-
-    String eLocationId = article.geteLocationId();
-    if (!Objects.equal(eLocationId, this.eLocationId)) {
-      failures.add(AssertionFailure.create(Article.class, "eLocationId", eLocationId, this.eLocationId));
-    }
-
-    String strkImgURI = article.getStrkImgURI();
-    if (!Objects.equal(strkImgURI, this.strkImgURI)) {
-      failures.add(AssertionFailure.create(Article.class, "strkImgURI", strkImgURI, this.strkImgURI));
-    }
-
-    Date date = article.getDate();
-    if (!Objects.equal(date, this.date)) {
-      failures.add(AssertionFailure.create(Article.class, "date", date, this.date));
-    }
-
-    String volume = article.getVolume();
-    if (!Objects.equal(volume, this.volume)) {
-      failures.add(AssertionFailure.create(Article.class, "volume", volume, this.volume));
-    }
-
-    String issue = article.getIssue();
-    if (!Objects.equal(issue, this.issue)) {
-      failures.add(AssertionFailure.create(Article.class, "issue", issue, this.issue));
-    }
-
-    String journal = article.getJournal();
-    if (!Objects.equal(journal, this.journal)) {
-      failures.add(AssertionFailure.create(Article.class, "journal", journal, this.journal));
-    }
-
-    String publisherLocation = article.getPublisherLocation();
-    if (!Objects.equal(publisherLocation, this.publisherLocation)) {
-      failures.add(AssertionFailure.create(Article.class, "publisherLocation", publisherLocation, this.publisherLocation));
-    }
-
-    String publisherName = article.getPublisherName();
-    if (!Objects.equal(publisherName, this.publisherName)) {
-      failures.add(AssertionFailure.create(Article.class, "publisherName", publisherName, this.publisherName));
-    }
-
-    String url = article.getUrl();
-    if (!Objects.equal(url, this.url)) {
-      failures.add(AssertionFailure.create(Article.class, "url", url, this.url));
-    }
-
-    List<String> collaborativeAuthors = article.getCollaborativeAuthors();
-    if (!Objects.equal(collaborativeAuthors, this.collaborativeAuthors)) {
-      failures.add(AssertionFailure.create(Article.class, "collaborativeAuthors", collaborativeAuthors, this.collaborativeAuthors));
-    }
-
-    Set<String> types = article.getTypes();
-    if (!Objects.equal(types, this.types)) {
-      failures.add(AssertionFailure.create(Article.class, "types", types, this.types));
-    }
-
-    Set<Category> categories = article.getCategories();
-    if (!Objects.equal(categories, this.categories)) {
-      failures.add(AssertionFailure.create(Article.class, "categories", categories, this.categories));
-    }
-
-    List<ArticleAsset> assets = article.getAssets();
-    if (!Objects.equal(assets, this.assets)) {
-      failures.add(AssertionFailure.create(Article.class, "assets", assets, this.assets));
-    }
-
-    List<CitedArticle> citedArticles = article.getCitedArticles();
-    if (!Objects.equal(citedArticles, this.citedArticles)) {
-      failures.add(AssertionFailure.create(Article.class, "citedArticles", citedArticles, this.citedArticles));
-    }
-
-    List<ArticleRelationship> relatedArticles = article.getRelatedArticles();
-    if (!Objects.equal(relatedArticles, this.relatedArticles)) {
-      failures.add(AssertionFailure.create(Article.class, "relatedArticles", relatedArticles, this.relatedArticles));
-    }
-
-    List<ArticleAuthor> authors = article.getAuthors();
-    if (!Objects.equal(authors, this.authors)) {
-      failures.add(AssertionFailure.create(Article.class, "authors", authors, this.authors));
-    }
-
-    List<ArticleEditor> editors = article.getEditors();
-    if (!Objects.equal(editors, this.editors)) {
-      failures.add(AssertionFailure.create(Article.class, "editors", editors, this.editors));
-    }
-
-    Set<Journal> journals = article.getJournals();
-    if (!Objects.equal(journals, this.journals)) {
-      failures.add(AssertionFailure.create(Article.class, "journals", journals, this.journals));
-    }
-
+  public Collection<AssertionFailure<?>> test(Article article) {
+    Collection<AssertionFailure<?>> failures = Lists.newArrayList();
+    testField(failures, "doi", article.getDoi(), doi);
+    testField(failures, "title", article.getTitle(), title);
+    testField(failures, "eIssn", article.geteIssn(), eIssn);
+    testField(failures, "state", article.getState(), state);
+    testField(failures, "archiveName", article.getArchiveName(), archiveName);
+    testField(failures, "description", article.getDescription(), description);
+    testField(failures, "rights", article.getRights(), rights);
+    testField(failures, "language", article.getLanguage(), language);
+    testField(failures, "format", article.getFormat(), format);
+    testField(failures, "pages", article.getPages(), pages);
+    testField(failures, "eLocationId", article.geteLocationId(), eLocationId);
+    testField(failures, "strkImgURI", article.getStrkImgURI(), strkImgURI);
+    testField(failures, "date", article.getDate(), date);
+    testField(failures, "volume", article.getVolume(), volume);
+    testField(failures, "issue", article.getIssue(), issue);
+    testField(failures, "journal", article.getJournal(), journal);
+    testField(failures, "publisherLocation", article.getPublisherLocation(), publisherLocation);
+    testField(failures, "publisherName", article.getPublisherName(), publisherName);
+    testField(failures, "url", article.getUrl(), url);
+    testField(failures, "collaborativeAuthors", article.getCollaborativeAuthors(), collaborativeAuthors);
+    testField(failures, "types", article.getTypes(), types);
+    testField(failures, "categories", article.getCategories(), categories);
+    testField(failures, "assets", article.getAssets(), assets);
+    testField(failures, "citedArticles", article.getCitedArticles(), citedArticles);
+    testField(failures, "relatedArticles", article.getRelatedArticles(), relatedArticles);
+    testField(failures, "authors", article.getAuthors(), authors);
+    testField(failures, "editors", article.getEditors(), editors);
+    testField(failures, "journals", article.getJournals(), journals);
     return ImmutableList.copyOf(failures);
   }
 

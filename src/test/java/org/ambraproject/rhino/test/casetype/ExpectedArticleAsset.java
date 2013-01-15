@@ -4,13 +4,13 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.test.IngestionTestCase;
-import org.ambraproject.rhino.test.IngestionTestCase.AssertionFailure;
+import org.ambraproject.rhino.test.AssertionFailure;
+import org.ambraproject.rhino.test.ExpectedEntity;
 import org.apache.commons.lang.ObjectUtils;
 
 import java.util.Collection;
 
-public class ExpectedArticleAsset extends IngestionTestCase.ExpectedEntity<ArticleAsset> {
+public class ExpectedArticleAsset extends ExpectedEntity<ArticleAsset> {
   private final String doi;
   private final String contextElement;
   private final String extension;
@@ -35,44 +35,15 @@ public class ExpectedArticleAsset extends IngestionTestCase.ExpectedEntity<Artic
   }
 
   @Override
-  public Collection<AssertionFailure> test(ArticleAsset articleAsset) {
-    Collection<AssertionFailure> failures = Lists.newArrayList();
-
-    String doi = articleAsset.getDoi();
-    if (!Objects.equal(doi, this.doi)) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "doi", doi, this.doi));
-    }
-
-    String contextElement = articleAsset.getContextElement();
-    if (!Objects.equal(contextElement, this.contextElement)) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "contextElement", contextElement, this.contextElement));
-    }
-
-    String extension = articleAsset.getExtension();
-    if (!Objects.equal(extension, this.extension)) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "extension", extension, this.extension));
-    }
-
-    String contentType = articleAsset.getContentType();
-    if (!Objects.equal(contentType, this.contentType)) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "contentType", contentType, this.contentType));
-    }
-
-    String title = articleAsset.getTitle();
-    if (!Objects.equal(title, this.title)) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "title", title, this.title));
-    }
-
-    String description = articleAsset.getDescription();
-    if (!Objects.equal(description, this.description)) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "description", description, this.description));
-    }
-
-    long size = articleAsset.getSize();
-    if (size != this.size) {
-      failures.add(AssertionFailure.create(ArticleAsset.class, "size", size, this.size));
-    }
-
+  public Collection<AssertionFailure<?>> test(ArticleAsset articleAsset) {
+    Collection<AssertionFailure<?>> failures = Lists.newArrayList();
+    testField(failures, "doi", articleAsset.getDoi(), doi);
+    testField(failures, "contextElement", articleAsset.getContextElement(), contextElement);
+    testField(failures, "extension", articleAsset.getExtension(), extension);
+    testField(failures, "contentType", articleAsset.getContentType(), contentType);
+    testField(failures, "title", articleAsset.getTitle(), title);
+    testField(failures, "description", articleAsset.getDescription(), description);
+    testField(failures, "size", articleAsset.getSize(), size);
     return ImmutableList.copyOf(failures);
   }
 

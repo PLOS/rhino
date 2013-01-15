@@ -46,11 +46,11 @@ GETTER_SPECIAL_CASES = {
     'eIssn': 'geteIssn',
     }
 
-def subclass_for(java_type, field_decls):
+def subclass_for(java_type, field_decls, out=None):
     generated_type = 'Expected' + java_type
 
     # Class declaration
-    print('public static class {0} extends ExpectedEntity<{1}> {{'
+    print('public class {0} extends ExpectedEntity<{1}> {{'
           .format(generated_type, java_type))
 
     # Field declarations
@@ -66,13 +66,13 @@ def subclass_for(java_type, field_decls):
     print('public static Builder builder() { return new Builder(); }')
 
     # The testing method
-    print('@Override public Collection<AssertionFailure> test({t} {n}) {{'
+    print('@Override public Collection<AssertionFailure<?>> test({t} {n}) {{'
           .format(t=java_type, n=low(java_type)))
-    print('Collection<AssertionFailure> failures = Lists.newArrayList();')
-    print()
+    print('Collection<AssertionFailure<?>> failures = Lists.newArrayList();')
     for (t, n) in field_decls:
-        print_assertion(java_type, t, n)
-        print()
+        getter = GETTER_SPECIAL_CASES.get(n, 'get' + cap(n))
+        print('testField(failures, "{n}", {e}.{g}(), {n});'
+              .format(n=n, e=low(java_type), g=getter))
     print('return ImmutableList.copyOf(failures); }')
 
     # Builder subclass
@@ -111,20 +111,3 @@ def subclass_for(java_type, field_decls):
 
     # Close the class declaration
     print('}')
-
-def print_assertion(object_type, field_type, field_name):
-    format_kw = {'ot': object_type,
-                 'on': low(object_type), # object name
-                 'ft': field_type,
-                 'fn': field_name,
-                 }
-    getter = GETTER_SPECIAL_CASES.get(field_name, 'get' + cap(field_name))
-    print('{ft} {fn} = {on}.{0}();'.format(getter, **format_kw))
-    inequality_expr = ('{fn} != this.{fn}'
-                       if is_primitive(field_type) else
-                       '!Objects.equal({fn}, this.{fn})'
-                       ).format(**format_kw)
-    print('if ({0}) {{'.format(inequality_expr))
-    print(('failures.add(AssertionFailure.create('
-           '{ot}.class, "{fn}", {fn}, this.{fn})); }}'
-           ).format(**format_kw))
