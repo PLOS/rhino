@@ -40,4 +40,28 @@ public class AssertionFailure<T> {
         String.valueOf(expectedValue), String.valueOf(actualValue));
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    AssertionFailure that = (AssertionFailure) o;
+
+    if (actualValue != null ? !actualValue.equals(that.actualValue) : that.actualValue != null) return false;
+    if (expectedValue != null ? !expectedValue.equals(that.expectedValue) : that.expectedValue != null) return false;
+    if (!fieldChecked.equals(that.fieldChecked)) return false;
+    if (!typeChecked.equals(that.typeChecked)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = typeChecked.hashCode();
+    result = 31 * result + fieldChecked.hashCode();
+    result = 31 * result + (actualValue != null ? actualValue.hashCode() : 0);
+    result = 31 * result + (expectedValue != null ? expectedValue.hashCode() : 0);
+    return result;
+  }
+
 }

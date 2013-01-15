@@ -13,6 +13,9 @@ import org.apache.commons.lang.ObjectUtils;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
+ */
 public class ExpectedCitedArticle extends ExpectedEntity<CitedArticle> {
   private final String key;
   private final Integer year;

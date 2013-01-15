@@ -10,6 +10,9 @@ import org.apache.commons.lang.ObjectUtils;
 
 import java.util.Collection;
 
+/**
+ * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
+ */
 public class ExpectedArticlePerson extends ExpectedEntity<ArticlePerson> {
   private final String fullName;
   private final String givenNames;

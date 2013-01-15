@@ -20,6 +20,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
+ */
 public class ExpectedArticle extends ExpectedEntity<Article> {
   private final String doi;
   private final String title;
