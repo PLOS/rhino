@@ -26,6 +26,8 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.service.article.ArticleClassifier;
+import org.ambraproject.service.article.ArticleService;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
@@ -56,6 +58,12 @@ public abstract class AmbraService {
 
   @Autowired
   protected Gson entityGson;
+
+  @Autowired
+  protected ArticleClassifier articleClassifier;
+
+  @Autowired
+  protected ArticleService articleService;
 
   /**
    * Check whether a distinct entity exists.

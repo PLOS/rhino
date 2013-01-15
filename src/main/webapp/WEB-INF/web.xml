@@ -32,6 +32,11 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
+  <!-- The configuration WebAppListener to pull in the configuration stuff automatically. -->
+  <listener>
+    <listener-class>org.topazproject.ambra.configuration.WebAppListener</listener-class>
+  </listener>
+
   <!-- Processes application requests -->
   <servlet>
     <servlet-name>appServlet</servlet-name>

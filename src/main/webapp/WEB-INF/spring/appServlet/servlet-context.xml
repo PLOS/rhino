@@ -34,6 +34,9 @@
   <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
   <resources mapping="/resources/**" location="/resources/"/>
 
+  <!-- Allow us to use "${foo}" notation to pull values from ambra configuration in this file.  -->
+  <beans:bean id="propertyConfigurer" class="org.topazproject.ambra.configuration.SpringPlaceholderConfigurer" />
+
   <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <beans:property name="prefix" value="/WEB-INF/views/"/>
@@ -55,6 +58,61 @@
   <!-- Bean config for file store -->
   <beans:bean id="fileStoreService" class="org.springframework.jndi.JndiObjectFactoryBean">
     <beans:property name="jndiName" value="java:comp/env/ambra/FileStore"/>
+  </beans:bean>
+
+  <beans:bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <beans:property name="dataSource" ref="hibernateDataSource"/>
+    <beans:property name="mappingLocations">
+      <beans:list>
+        <beans:value>classpath:org/ambraproject/models/*.hbm.xml</beans:value>
+      </beans:list>
+    </beans:property>
+    <beans:property name="hibernateProperties">
+      <beans:props>
+        <!-- We might use MySQLInnoDBDialect instead -->
+        <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
+        <beans:prop key="hibernate.show_sql">false</beans:prop>
+        <beans:prop key="hibernate.format_sql">false</beans:prop>
+      </beans:props>
+    </beans:property>
+  </beans:bean>
+
+  <beans:bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+    <beans:property name="cacheName" value="RolesCache"/>
+  </beans:bean>
+
+  <beans:bean id="rolesCache" class="org.ambraproject.service.cache.EhcacheProvider">
+    <beans:constructor-arg index="0" ref="rolesEhCache"/>
+  </beans:bean>
+
+  <beans:bean id="permissionsService" class="org.ambraproject.service.permission.PermissionsServiceImpl">
+    <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
+    <beans:property name="rolesCache" ref="rolesCache"/>
+  </beans:bean>
+
+  <beans:bean id="articleService" class="org.ambraproject.service.article.ArticleServiceImpl">
+    <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
+    <beans:property name="permissionsService" ref="permissionsService"/>
+  </beans:bean>
+
+  <beans:bean id="httpConnectionManagerParams" class="org.apache.commons.httpclient.params.HttpConnectionManagerParams">
+    <!-- time out after 30 sec -->
+    <beans:property name="soTimeout" value="30000"/>
+    <beans:property name="connectionTimeout" value="30000"/>
+  </beans:bean>
+
+  <beans:bean id="multiThreadedHttpConnectionManager"
+        class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager">
+    <beans:property name="params" ref="httpConnectionManagerParams"/>
+  </beans:bean>
+
+  <beans:bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+    <beans:constructor-arg index="0" ref="multiThreadedHttpConnectionManager"/>
+  </beans:bean>
+
+  <beans:bean id="articleClassifier" class="org.ambraproject.service.article.AIArticleClassifier">
+    <beans:property name="httpClient" ref="httpClient"/>
+    <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>
   </beans:bean>
 
   <mvc:interceptors>
