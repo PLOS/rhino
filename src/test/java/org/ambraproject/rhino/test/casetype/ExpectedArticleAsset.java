@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.test.casetype;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.ArticleAsset;
@@ -14,31 +15,20 @@ import java.util.Collection;
  * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
  */
 public class ExpectedArticleAsset extends ExpectedEntity<ArticleAsset> {
-  private final String doi;
-  private final String contextElement;
-  private final String extension;
-  private final String contentType;
-  private final String title;
-  private final String description;
-  private final long size;
+  private String doi;
+  private String contextElement;
+  private String extension;
+  private String contentType;
+  private String title;
+  private String description;
+  private long size;
 
-  private ExpectedArticleAsset(Builder builder) {
+  public ExpectedArticleAsset() {
     super(ArticleAsset.class);
-    this.doi = builder.doi;
-    this.contextElement = builder.contextElement;
-    this.extension = builder.extension;
-    this.contentType = builder.contentType;
-    this.title = builder.title;
-    this.description = builder.description;
-    this.size = builder.size;
-  }
-
-  public static Builder builder() {
-    return new Builder();
   }
 
   @Override
-  public Collection<AssertionFailure<?>> test(ArticleAsset articleAsset) {
+  public ImmutableCollection<AssertionFailure<?>> test(ArticleAsset articleAsset) {
     Collection<AssertionFailure<?>> failures = Lists.newArrayList();
     testField(failures, "doi", articleAsset.getDoi(), doi);
     testField(failures, "contextElement", articleAsset.getContextElement(), contextElement);
@@ -50,53 +40,60 @@ public class ExpectedArticleAsset extends ExpectedEntity<ArticleAsset> {
     return ImmutableList.copyOf(failures);
   }
 
-  public static class Builder {
-    private String doi;
-    private String contextElement;
-    private String extension;
-    private String contentType;
-    private String title;
-    private String description;
-    private long size;
+  public String getDoi() {
+    return doi;
+  }
 
-    public Builder setDoi(String doi) {
-      this.doi = doi;
-      return this;
-    }
+  public void setDoi(String doi) {
+    this.doi = doi;
+  }
 
-    public Builder setContextElement(String contextElement) {
-      this.contextElement = contextElement;
-      return this;
-    }
+  public String getContextElement() {
+    return contextElement;
+  }
 
-    public Builder setExtension(String extension) {
-      this.extension = extension;
-      return this;
-    }
+  public void setContextElement(String contextElement) {
+    this.contextElement = contextElement;
+  }
 
-    public Builder setContentType(String contentType) {
-      this.contentType = contentType;
-      return this;
-    }
+  public String getExtension() {
+    return extension;
+  }
 
-    public Builder setTitle(String title) {
-      this.title = title;
-      return this;
-    }
+  public void setExtension(String extension) {
+    this.extension = extension;
+  }
 
-    public Builder setDescription(String description) {
-      this.description = description;
-      return this;
-    }
+  public String getContentType() {
+    return contentType;
+  }
 
-    public Builder setSize(long size) {
-      this.size = size;
-      return this;
-    }
+  public void setContentType(String contentType) {
+    this.contentType = contentType;
+  }
 
-    public ExpectedArticleAsset build() {
-      return new ExpectedArticleAsset(this);
-    }
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public long getSize() {
+    return size;
+  }
+
+  public void setSize(long size) {
+    this.size = size;
   }
 
   @Override

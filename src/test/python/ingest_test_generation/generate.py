@@ -55,18 +55,15 @@ def subclass_for(java_type, field_decls, out=None):
 
     # Field declarations
     for (t, n) in field_decls:
-        print('private final {t} {n};'.format(t=t, n=n))
+        print('private {t} {n};'.format(t=t, n=n))
 
     # Constructor
-    print('private {0}(Builder builder) {{ super({1}.class);'
+    print('public {0}() {{ super({1}.class); }}'
           .format(generated_type, java_type))
-    for (t, n) in field_decls:
-        print('this.{n} = builder.{n};'.format(t=t, n=n))
-    print('}')
-    print('public static Builder builder() { return new Builder(); }')
 
     # The testing method
-    print('@Override public Collection<AssertionFailure<?>> test({t} {n}) {{'
+    print(('@Override public ImmutableCollection<AssertionFailure<?>> '
+           'test({t} {n}) {{')
           .format(t=java_type, n=low(java_type)))
     print('Collection<AssertionFailure<?>> failures = Lists.newArrayList();')
     for (t, n) in field_decls:
@@ -75,16 +72,12 @@ def subclass_for(java_type, field_decls, out=None):
               .format(n=n, e=low(java_type), g=getter))
     print('return ImmutableList.copyOf(failures); }')
 
-    # Builder subclass
-    print('public static class Builder {')
+    # Getters and setters
     for (t, n) in field_decls:
-        print('private {t} {n};'.format(t=t, n=n))
-    for (t, n) in field_decls:
-        print('public Builder set{c}({t} {n}) {{ this.{n} = {n}; return this; }}'
-              .format(t=t, n=n, c=cap(n)))
-    print('public {t} build() {{ return new {t}(this); }}'
-          .format(t=generated_type))
-    print('}')
+        print('public {t} get{cn}() {{ return {n}; }}'
+              .format(t=t, n=n, cn=cap(n)))
+        print('public void set{cn}({t} {n}) {{ this.{n} = {n}; }}'
+              .format(t=t, n=n, cn=cap(n)))
 
     # Just in case
     print('@Override public boolean equals(Object obj) {')

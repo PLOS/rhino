@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.test.casetype;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.CitedArticle;
@@ -17,61 +18,35 @@ import java.util.List;
  * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
  */
 public class ExpectedCitedArticle extends ExpectedEntity<CitedArticle> {
-  private final String key;
-  private final Integer year;
-  private final String displayYear;
-  private final String month;
-  private final String day;
-  private final Integer volumeNumber;
-  private final String volume;
-  private final String issue;
-  private final String title;
-  private final String publisherLocation;
-  private final String publisherName;
-  private final String pages;
-  private final String eLocationID;
-  private final String journal;
-  private final String note;
-  private final List<String> collaborativeAuthors;
-  private final String url;
-  private final String doi;
-  private final String summary;
-  private final String citationType;
-  private final List<CitedArticleAuthor> authors;
-  private final List<CitedArticleEditor> editors;
+  private String key;
+  private Integer year;
+  private String displayYear;
+  private String month;
+  private String day;
+  private Integer volumeNumber;
+  private String volume;
+  private String issue;
+  private String title;
+  private String publisherLocation;
+  private String publisherName;
+  private String pages;
+  private String eLocationID;
+  private String journal;
+  private String note;
+  private List<String> collaborativeAuthors;
+  private String url;
+  private String doi;
+  private String summary;
+  private String citationType;
+  private List<CitedArticleAuthor> authors;
+  private List<CitedArticleEditor> editors;
 
-  private ExpectedCitedArticle(Builder builder) {
+  public ExpectedCitedArticle() {
     super(CitedArticle.class);
-    this.key = builder.key;
-    this.year = builder.year;
-    this.displayYear = builder.displayYear;
-    this.month = builder.month;
-    this.day = builder.day;
-    this.volumeNumber = builder.volumeNumber;
-    this.volume = builder.volume;
-    this.issue = builder.issue;
-    this.title = builder.title;
-    this.publisherLocation = builder.publisherLocation;
-    this.publisherName = builder.publisherName;
-    this.pages = builder.pages;
-    this.eLocationID = builder.eLocationID;
-    this.journal = builder.journal;
-    this.note = builder.note;
-    this.collaborativeAuthors = builder.collaborativeAuthors;
-    this.url = builder.url;
-    this.doi = builder.doi;
-    this.summary = builder.summary;
-    this.citationType = builder.citationType;
-    this.authors = builder.authors;
-    this.editors = builder.editors;
-  }
-
-  public static Builder builder() {
-    return new Builder();
   }
 
   @Override
-  public Collection<AssertionFailure<?>> test(CitedArticle citedArticle) {
+  public ImmutableCollection<AssertionFailure<?>> test(CitedArticle citedArticle) {
     Collection<AssertionFailure<?>> failures = Lists.newArrayList();
     testField(failures, "key", citedArticle.getKey(), key);
     testField(failures, "year", citedArticle.getYear(), year);
@@ -98,143 +73,180 @@ public class ExpectedCitedArticle extends ExpectedEntity<CitedArticle> {
     return ImmutableList.copyOf(failures);
   }
 
-  public static class Builder {
-    private String key;
-    private Integer year;
-    private String displayYear;
-    private String month;
-    private String day;
-    private Integer volumeNumber;
-    private String volume;
-    private String issue;
-    private String title;
-    private String publisherLocation;
-    private String publisherName;
-    private String pages;
-    private String eLocationID;
-    private String journal;
-    private String note;
-    private List<String> collaborativeAuthors;
-    private String url;
-    private String doi;
-    private String summary;
-    private String citationType;
-    private List<CitedArticleAuthor> authors;
-    private List<CitedArticleEditor> editors;
+  public String getKey() {
+    return key;
+  }
 
-    public Builder setKey(String key) {
-      this.key = key;
-      return this;
-    }
+  public void setKey(String key) {
+    this.key = key;
+  }
 
-    public Builder setYear(Integer year) {
-      this.year = year;
-      return this;
-    }
+  public Integer getYear() {
+    return year;
+  }
 
-    public Builder setDisplayYear(String displayYear) {
-      this.displayYear = displayYear;
-      return this;
-    }
+  public void setYear(Integer year) {
+    this.year = year;
+  }
 
-    public Builder setMonth(String month) {
-      this.month = month;
-      return this;
-    }
+  public String getDisplayYear() {
+    return displayYear;
+  }
 
-    public Builder setDay(String day) {
-      this.day = day;
-      return this;
-    }
+  public void setDisplayYear(String displayYear) {
+    this.displayYear = displayYear;
+  }
 
-    public Builder setVolumeNumber(Integer volumeNumber) {
-      this.volumeNumber = volumeNumber;
-      return this;
-    }
+  public String getMonth() {
+    return month;
+  }
 
-    public Builder setVolume(String volume) {
-      this.volume = volume;
-      return this;
-    }
+  public void setMonth(String month) {
+    this.month = month;
+  }
 
-    public Builder setIssue(String issue) {
-      this.issue = issue;
-      return this;
-    }
+  public String getDay() {
+    return day;
+  }
 
-    public Builder setTitle(String title) {
-      this.title = title;
-      return this;
-    }
+  public void setDay(String day) {
+    this.day = day;
+  }
 
-    public Builder setPublisherLocation(String publisherLocation) {
-      this.publisherLocation = publisherLocation;
-      return this;
-    }
+  public Integer getVolumeNumber() {
+    return volumeNumber;
+  }
 
-    public Builder setPublisherName(String publisherName) {
-      this.publisherName = publisherName;
-      return this;
-    }
+  public void setVolumeNumber(Integer volumeNumber) {
+    this.volumeNumber = volumeNumber;
+  }
 
-    public Builder setPages(String pages) {
-      this.pages = pages;
-      return this;
-    }
+  public String getVolume() {
+    return volume;
+  }
 
-    public Builder setELocationID(String eLocationID) {
-      this.eLocationID = eLocationID;
-      return this;
-    }
+  public void setVolume(String volume) {
+    this.volume = volume;
+  }
 
-    public Builder setJournal(String journal) {
-      this.journal = journal;
-      return this;
-    }
+  public String getIssue() {
+    return issue;
+  }
 
-    public Builder setNote(String note) {
-      this.note = note;
-      return this;
-    }
+  public void setIssue(String issue) {
+    this.issue = issue;
+  }
 
-    public Builder setCollaborativeAuthors(List<String> collaborativeAuthors) {
-      this.collaborativeAuthors = collaborativeAuthors;
-      return this;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public Builder setUrl(String url) {
-      this.url = url;
-      return this;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public Builder setDoi(String doi) {
-      this.doi = doi;
-      return this;
-    }
+  public String getPublisherLocation() {
+    return publisherLocation;
+  }
 
-    public Builder setSummary(String summary) {
-      this.summary = summary;
-      return this;
-    }
+  public void setPublisherLocation(String publisherLocation) {
+    this.publisherLocation = publisherLocation;
+  }
 
-    public Builder setCitationType(String citationType) {
-      this.citationType = citationType;
-      return this;
-    }
+  public String getPublisherName() {
+    return publisherName;
+  }
 
-    public Builder setAuthors(List<CitedArticleAuthor> authors) {
-      this.authors = authors;
-      return this;
-    }
+  public void setPublisherName(String publisherName) {
+    this.publisherName = publisherName;
+  }
 
-    public Builder setEditors(List<CitedArticleEditor> editors) {
-      this.editors = editors;
-      return this;
-    }
+  public String getPages() {
+    return pages;
+  }
 
-    public ExpectedCitedArticle build() {
-      return new ExpectedCitedArticle(this);
-    }
+  public void setPages(String pages) {
+    this.pages = pages;
+  }
+
+  public String getELocationID() {
+    return eLocationID;
+  }
+
+  public void setELocationID(String eLocationID) {
+    this.eLocationID = eLocationID;
+  }
+
+  public String getJournal() {
+    return journal;
+  }
+
+  public void setJournal(String journal) {
+    this.journal = journal;
+  }
+
+  public String getNote() {
+    return note;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
+  }
+
+  public List<String> getCollaborativeAuthors() {
+    return collaborativeAuthors;
+  }
+
+  public void setCollaborativeAuthors(List<String> collaborativeAuthors) {
+    this.collaborativeAuthors = collaborativeAuthors;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public String getDoi() {
+    return doi;
+  }
+
+  public void setDoi(String doi) {
+    this.doi = doi;
+  }
+
+  public String getSummary() {
+    return summary;
+  }
+
+  public void setSummary(String summary) {
+    this.summary = summary;
+  }
+
+  public String getCitationType() {
+    return citationType;
+  }
+
+  public void setCitationType(String citationType) {
+    this.citationType = citationType;
+  }
+
+  public List<CitedArticleAuthor> getAuthors() {
+    return authors;
+  }
+
+  public void setAuthors(List<CitedArticleAuthor> authors) {
+    this.authors = authors;
+  }
+
+  public List<CitedArticleEditor> getEditors() {
+    return editors;
+  }
+
+  public void setEditors(List<CitedArticleEditor> editors) {
+    this.editors = editors;
   }
 
   @Override

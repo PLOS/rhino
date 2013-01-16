@@ -2,6 +2,7 @@ package org.ambraproject.rhino.test;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableCollection;
 import org.ambraproject.models.AmbraEntity;
 
 import javax.annotation.Nullable;
@@ -27,7 +28,7 @@ public abstract class ExpectedEntity<T extends AmbraEntity> {
    * @param actualEntity the created entity
    * @return the set of failed assertions about the entity's fields
    */
-  public abstract Collection<AssertionFailure<?>> test(T actualEntity);
+  public abstract ImmutableCollection<AssertionFailure<?>> test(T actualEntity);
 
   /**
    * Test a value from one field. If the value is not equal to the expected value, the failure is added to the provided

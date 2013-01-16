@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.test.casetype;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.ArticlePerson;
@@ -14,25 +15,17 @@ import java.util.Collection;
  * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
  */
 public class ExpectedArticlePerson extends ExpectedEntity<ArticlePerson> {
-  private final String fullName;
-  private final String givenNames;
-  private final String surnames;
-  private final String suffix;
+  private String fullName;
+  private String givenNames;
+  private String surnames;
+  private String suffix;
 
-  private ExpectedArticlePerson(Builder builder) {
+  public ExpectedArticlePerson() {
     super(ArticlePerson.class);
-    this.fullName = builder.fullName;
-    this.givenNames = builder.givenNames;
-    this.surnames = builder.surnames;
-    this.suffix = builder.suffix;
-  }
-
-  public static Builder builder() {
-    return new Builder();
   }
 
   @Override
-  public Collection<AssertionFailure<?>> test(ArticlePerson articlePerson) {
+  public ImmutableCollection<AssertionFailure<?>> test(ArticlePerson articlePerson) {
     Collection<AssertionFailure<?>> failures = Lists.newArrayList();
     testField(failures, "fullName", articlePerson.getFullName(), fullName);
     testField(failures, "givenNames", articlePerson.getGivenNames(), givenNames);
@@ -41,35 +34,36 @@ public class ExpectedArticlePerson extends ExpectedEntity<ArticlePerson> {
     return ImmutableList.copyOf(failures);
   }
 
-  public static class Builder {
-    private String fullName;
-    private String givenNames;
-    private String surnames;
-    private String suffix;
+  public String getFullName() {
+    return fullName;
+  }
 
-    public Builder setFullName(String fullName) {
-      this.fullName = fullName;
-      return this;
-    }
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
 
-    public Builder setGivenNames(String givenNames) {
-      this.givenNames = givenNames;
-      return this;
-    }
+  public String getGivenNames() {
+    return givenNames;
+  }
 
-    public Builder setSurnames(String surnames) {
-      this.surnames = surnames;
-      return this;
-    }
+  public void setGivenNames(String givenNames) {
+    this.givenNames = givenNames;
+  }
 
-    public Builder setSuffix(String suffix) {
-      this.suffix = suffix;
-      return this;
-    }
+  public String getSurnames() {
+    return surnames;
+  }
 
-    public ExpectedArticlePerson build() {
-      return new ExpectedArticlePerson(this);
-    }
+  public void setSurnames(String surnames) {
+    this.surnames = surnames;
+  }
+
+  public String getSuffix() {
+    return suffix;
+  }
+
+  public void setSuffix(String suffix) {
+    this.suffix = suffix;
   }
 
   @Override

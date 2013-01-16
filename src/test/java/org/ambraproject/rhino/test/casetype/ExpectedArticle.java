@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.test.casetype;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.Article;
@@ -24,73 +25,41 @@ import java.util.Set;
  * Generated code! See {@code /src/test/python/ingest_test_generation/generate.py}
  */
 public class ExpectedArticle extends ExpectedEntity<Article> {
-  private final String doi;
-  private final String title;
-  private final String eIssn;
-  private final int state;
-  private final String archiveName;
-  private final String description;
-  private final String rights;
-  private final String language;
-  private final String format;
-  private final String pages;
-  private final String eLocationId;
-  private final String strkImgURI;
-  private final Date date;
-  private final String volume;
-  private final String issue;
-  private final String journal;
-  private final String publisherLocation;
-  private final String publisherName;
-  private final String url;
-  private final List<String> collaborativeAuthors;
-  private final Set<String> types;
-  private final Set<Category> categories;
-  private final List<ArticleAsset> assets;
-  private final List<CitedArticle> citedArticles;
-  private final List<ArticleRelationship> relatedArticles;
-  private final List<ArticleAuthor> authors;
-  private final List<ArticleEditor> editors;
-  private final Set<Journal> journals;
+  private String doi;
+  private String title;
+  private String eIssn;
+  private int state;
+  private String archiveName;
+  private String description;
+  private String rights;
+  private String language;
+  private String format;
+  private String pages;
+  private String eLocationId;
+  private String strkImgURI;
+  private Date date;
+  private String volume;
+  private String issue;
+  private String journal;
+  private String publisherLocation;
+  private String publisherName;
+  private String url;
+  private List<String> collaborativeAuthors;
+  private Set<String> types;
+  private Set<Category> categories;
+  private List<ArticleAsset> assets;
+  private List<CitedArticle> citedArticles;
+  private List<ArticleRelationship> relatedArticles;
+  private List<ArticleAuthor> authors;
+  private List<ArticleEditor> editors;
+  private Set<Journal> journals;
 
-  private ExpectedArticle(Builder builder) {
+  public ExpectedArticle() {
     super(Article.class);
-    this.doi = builder.doi;
-    this.title = builder.title;
-    this.eIssn = builder.eIssn;
-    this.state = builder.state;
-    this.archiveName = builder.archiveName;
-    this.description = builder.description;
-    this.rights = builder.rights;
-    this.language = builder.language;
-    this.format = builder.format;
-    this.pages = builder.pages;
-    this.eLocationId = builder.eLocationId;
-    this.strkImgURI = builder.strkImgURI;
-    this.date = builder.date;
-    this.volume = builder.volume;
-    this.issue = builder.issue;
-    this.journal = builder.journal;
-    this.publisherLocation = builder.publisherLocation;
-    this.publisherName = builder.publisherName;
-    this.url = builder.url;
-    this.collaborativeAuthors = builder.collaborativeAuthors;
-    this.types = builder.types;
-    this.categories = builder.categories;
-    this.assets = builder.assets;
-    this.citedArticles = builder.citedArticles;
-    this.relatedArticles = builder.relatedArticles;
-    this.authors = builder.authors;
-    this.editors = builder.editors;
-    this.journals = builder.journals;
-  }
-
-  public static Builder builder() {
-    return new Builder();
   }
 
   @Override
-  public Collection<AssertionFailure<?>> test(Article article) {
+  public ImmutableCollection<AssertionFailure<?>> test(Article article) {
     Collection<AssertionFailure<?>> failures = Lists.newArrayList();
     testField(failures, "doi", article.getDoi(), doi);
     testField(failures, "title", article.getTitle(), title);
@@ -123,179 +92,228 @@ public class ExpectedArticle extends ExpectedEntity<Article> {
     return ImmutableList.copyOf(failures);
   }
 
-  public static class Builder {
-    private String doi;
-    private String title;
-    private String eIssn;
-    private int state;
-    private String archiveName;
-    private String description;
-    private String rights;
-    private String language;
-    private String format;
-    private String pages;
-    private String eLocationId;
-    private String strkImgURI;
-    private Date date;
-    private String volume;
-    private String issue;
-    private String journal;
-    private String publisherLocation;
-    private String publisherName;
-    private String url;
-    private List<String> collaborativeAuthors;
-    private Set<String> types;
-    private Set<Category> categories;
-    private List<ArticleAsset> assets;
-    private List<CitedArticle> citedArticles;
-    private List<ArticleRelationship> relatedArticles;
-    private List<ArticleAuthor> authors;
-    private List<ArticleEditor> editors;
-    private Set<Journal> journals;
+  public String getDoi() {
+    return doi;
+  }
 
-    public Builder setDoi(String doi) {
-      this.doi = doi;
-      return this;
-    }
+  public void setDoi(String doi) {
+    this.doi = doi;
+  }
 
-    public Builder setTitle(String title) {
-      this.title = title;
-      return this;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public Builder setEIssn(String eIssn) {
-      this.eIssn = eIssn;
-      return this;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public Builder setState(int state) {
-      this.state = state;
-      return this;
-    }
+  public String getEIssn() {
+    return eIssn;
+  }
 
-    public Builder setArchiveName(String archiveName) {
-      this.archiveName = archiveName;
-      return this;
-    }
+  public void setEIssn(String eIssn) {
+    this.eIssn = eIssn;
+  }
 
-    public Builder setDescription(String description) {
-      this.description = description;
-      return this;
-    }
+  public int getState() {
+    return state;
+  }
 
-    public Builder setRights(String rights) {
-      this.rights = rights;
-      return this;
-    }
+  public void setState(int state) {
+    this.state = state;
+  }
 
-    public Builder setLanguage(String language) {
-      this.language = language;
-      return this;
-    }
+  public String getArchiveName() {
+    return archiveName;
+  }
 
-    public Builder setFormat(String format) {
-      this.format = format;
-      return this;
-    }
+  public void setArchiveName(String archiveName) {
+    this.archiveName = archiveName;
+  }
 
-    public Builder setPages(String pages) {
-      this.pages = pages;
-      return this;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public Builder setELocationId(String eLocationId) {
-      this.eLocationId = eLocationId;
-      return this;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public Builder setStrkImgURI(String strkImgURI) {
-      this.strkImgURI = strkImgURI;
-      return this;
-    }
+  public String getRights() {
+    return rights;
+  }
 
-    public Builder setDate(Date date) {
-      this.date = date;
-      return this;
-    }
+  public void setRights(String rights) {
+    this.rights = rights;
+  }
 
-    public Builder setVolume(String volume) {
-      this.volume = volume;
-      return this;
-    }
+  public String getLanguage() {
+    return language;
+  }
 
-    public Builder setIssue(String issue) {
-      this.issue = issue;
-      return this;
-    }
+  public void setLanguage(String language) {
+    this.language = language;
+  }
 
-    public Builder setJournal(String journal) {
-      this.journal = journal;
-      return this;
-    }
+  public String getFormat() {
+    return format;
+  }
 
-    public Builder setPublisherLocation(String publisherLocation) {
-      this.publisherLocation = publisherLocation;
-      return this;
-    }
+  public void setFormat(String format) {
+    this.format = format;
+  }
 
-    public Builder setPublisherName(String publisherName) {
-      this.publisherName = publisherName;
-      return this;
-    }
+  public String getPages() {
+    return pages;
+  }
 
-    public Builder setUrl(String url) {
-      this.url = url;
-      return this;
-    }
+  public void setPages(String pages) {
+    this.pages = pages;
+  }
 
-    public Builder setCollaborativeAuthors(List<String> collaborativeAuthors) {
-      this.collaborativeAuthors = collaborativeAuthors;
-      return this;
-    }
+  public String getELocationId() {
+    return eLocationId;
+  }
 
-    public Builder setTypes(Set<String> types) {
-      this.types = types;
-      return this;
-    }
+  public void setELocationId(String eLocationId) {
+    this.eLocationId = eLocationId;
+  }
 
-    public Builder setCategories(Set<Category> categories) {
-      this.categories = categories;
-      return this;
-    }
+  public String getStrkImgURI() {
+    return strkImgURI;
+  }
 
-    public Builder setAssets(List<ArticleAsset> assets) {
-      this.assets = assets;
-      return this;
-    }
+  public void setStrkImgURI(String strkImgURI) {
+    this.strkImgURI = strkImgURI;
+  }
 
-    public Builder setCitedArticles(List<CitedArticle> citedArticles) {
-      this.citedArticles = citedArticles;
-      return this;
-    }
+  public Date getDate() {
+    return date;
+  }
 
-    public Builder setRelatedArticles(List<ArticleRelationship> relatedArticles) {
-      this.relatedArticles = relatedArticles;
-      return this;
-    }
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
-    public Builder setAuthors(List<ArticleAuthor> authors) {
-      this.authors = authors;
-      return this;
-    }
+  public String getVolume() {
+    return volume;
+  }
 
-    public Builder setEditors(List<ArticleEditor> editors) {
-      this.editors = editors;
-      return this;
-    }
+  public void setVolume(String volume) {
+    this.volume = volume;
+  }
 
-    public Builder setJournals(Set<Journal> journals) {
-      this.journals = journals;
-      return this;
-    }
+  public String getIssue() {
+    return issue;
+  }
 
-    public ExpectedArticle build() {
-      return new ExpectedArticle(this);
-    }
+  public void setIssue(String issue) {
+    this.issue = issue;
+  }
+
+  public String getJournal() {
+    return journal;
+  }
+
+  public void setJournal(String journal) {
+    this.journal = journal;
+  }
+
+  public String getPublisherLocation() {
+    return publisherLocation;
+  }
+
+  public void setPublisherLocation(String publisherLocation) {
+    this.publisherLocation = publisherLocation;
+  }
+
+  public String getPublisherName() {
+    return publisherName;
+  }
+
+  public void setPublisherName(String publisherName) {
+    this.publisherName = publisherName;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public List<String> getCollaborativeAuthors() {
+    return collaborativeAuthors;
+  }
+
+  public void setCollaborativeAuthors(List<String> collaborativeAuthors) {
+    this.collaborativeAuthors = collaborativeAuthors;
+  }
+
+  public Set<String> getTypes() {
+    return types;
+  }
+
+  public void setTypes(Set<String> types) {
+    this.types = types;
+  }
+
+  public Set<Category> getCategories() {
+    return categories;
+  }
+
+  public void setCategories(Set<Category> categories) {
+    this.categories = categories;
+  }
+
+  public List<ArticleAsset> getAssets() {
+    return assets;
+  }
+
+  public void setAssets(List<ArticleAsset> assets) {
+    this.assets = assets;
+  }
+
+  public List<CitedArticle> getCitedArticles() {
+    return citedArticles;
+  }
+
+  public void setCitedArticles(List<CitedArticle> citedArticles) {
+    this.citedArticles = citedArticles;
+  }
+
+  public List<ArticleRelationship> getRelatedArticles() {
+    return relatedArticles;
+  }
+
+  public void setRelatedArticles(List<ArticleRelationship> relatedArticles) {
+    this.relatedArticles = relatedArticles;
+  }
+
+  public List<ArticleAuthor> getAuthors() {
+    return authors;
+  }
+
+  public void setAuthors(List<ArticleAuthor> authors) {
+    this.authors = authors;
+  }
+
+  public List<ArticleEditor> getEditors() {
+    return editors;
+  }
+
+  public void setEditors(List<ArticleEditor> editors) {
+    this.editors = editors;
+  }
+
+  public Set<Journal> getJournals() {
+    return journals;
+  }
+
+  public void setJournals(Set<Journal> journals) {
+    this.journals = journals;
   }
 
   @Override
