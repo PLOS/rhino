@@ -46,6 +46,10 @@ GETTER_SPECIAL_CASES = {
     'eIssn': 'geteIssn',
     }
 
+def entity_getter(field_name):
+    getter_name = 'get' + cap(field_name)
+    return GETTER_SPECIAL_CASES.get(field_name, getter_name)
+
 def subclass_for(java_type, field_decls, out=None):
     generated_type = 'Expected' + java_type
 

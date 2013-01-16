@@ -2,6 +2,7 @@ import re
 import string
 
 import generate
+from generate import cap, low, entity_getter
 
 entity_types = {
     'Article': '''
@@ -100,6 +101,16 @@ def fields_for(java_field_decls):
     p = re.compile(r'private\s+([\w<>]+)\s+(\w+)\s*;')
     return p.findall(java_field_decls)
 
-for (java_type, field_declaration_blob) in entity_types.items():
-    fields = fields_for(field_declaration_blob)
-    generate.subclass_for(java_type, fields)
+def print_assertion_classes():
+    for (java_type, field_declaration_blob) in entity_types.items():
+        fields = fields_for(field_declaration_blob)
+        generate.subclass_for(java_type, fields)
+
+def print_assertion_sets():
+    fields = fields_for(entity_types['Article'])
+    for (t, n) in fields:
+        if ('<' not in t) or ('<String>' in t):
+            print('expected.{n} = article.{g}();'
+                  .format(n=n, g=entity_getter(n)))
+
+print_assertion_sets()

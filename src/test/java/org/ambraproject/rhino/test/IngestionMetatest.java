@@ -4,6 +4,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.test.casetype.ExpectedArticle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,14 @@ public class IngestionMetatest {
       })
       .create();
 
+  public static class Bean {
+    public String foo;
+  }
+
   @Test
   public void test() {
+    Article fromJson = GSON.fromJson(TEST_JSON, Article.class);
+
     ExpectedArticle original = new ExpectedArticle();
     original.setTitle("Test!");
     String json = GSON.toJson(original);
@@ -42,5 +49,7 @@ public class IngestionMetatest {
     assertFalse(persisted == original);
     assertEquals(persisted, original);
   }
+
+  private static final String TEST_JSON = ""; // Sample case from Admin was pasted here -- still tinkering
 
 }
