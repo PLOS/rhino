@@ -126,7 +126,28 @@ public class IngestionTest extends BaseRhinoTest {
   private AssertionCollector compareArticle(Article actual, Article expected) {
     AssertionCollector results = new AssertionCollector();
 
-    // TODO Fill in per-field assertions
+    results.compare(Article.class, "doi", actual.getDoi(), expected.getDoi());
+    results.compare(Article.class, "title", actual.getTitle(), expected.getTitle());
+    results.compare(Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
+    results.compare(Article.class, "state", actual.getState(), expected.getState());
+    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
+    results.compare(Article.class, "description", actual.getDescription(), expected.getDescription());
+    results.compare(Article.class, "rights", actual.getRights(), expected.getRights());
+    results.compare(Article.class, "language", actual.getLanguage(), expected.getLanguage());
+    results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
+    results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
+    results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
+    results.compare(Article.class, "strkImgURI", actual.getStrkImgURI(), expected.getStrkImgURI());
+    results.compare(Article.class, "date", actual.getDate(), expected.getDate());
+    results.compare(Article.class, "volume", actual.getVolume(), expected.getVolume());
+    results.compare(Article.class, "issue", actual.getIssue(), expected.getIssue());
+    results.compare(Article.class, "journal", actual.getJournal(), expected.getJournal());
+    results.compare(Article.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
+    results.compare(Article.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
+    results.compare(Article.class, "url", actual.getUrl(), expected.getUrl());
+    results.compare(Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
+
     // TODO Compare sets of related objects (ArticleAsset, CitedArticle, ArticlePerson)
 
     return results;

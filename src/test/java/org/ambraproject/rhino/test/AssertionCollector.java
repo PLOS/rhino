@@ -18,10 +18,21 @@ import java.util.Collection;
  */
 public class AssertionCollector {
 
+  private final Collection<Success> successes;
   private final Collection<Failure> failures;
 
   public AssertionCollector() {
+    super();
+    successes = Lists.newArrayList();
     failures = Lists.newArrayList();
+  }
+
+  public int getSuccessCount() {
+    return successes.size();
+  }
+
+  public ImmutableCollection<Success> getSuccesses() {
+    return ImmutableList.copyOf(successes);
   }
 
   public int getFailureCount() {
@@ -58,23 +69,62 @@ public class AssertionCollector {
    */
   public boolean compare(String objectName, String fieldName, @Nullable Object actual, @Nullable Object expected) {
     if (Objects.equal(actual, expected)) {
+      successes.add(new Success(objectName, fieldName));
       return true;
     }
     failures.add(new Failure(objectName, fieldName, actual, expected));
     return false;
   }
 
-  public static class Failure {
-    private final String objectName;
-    private final String fieldName;
+  private static class AssertionCase {
+    protected final String objectName;
+    protected final String fieldName;
+
+    protected AssertionCase(String objectName, String fieldName) {
+      this.objectName = Preconditions.checkNotNull(objectName);
+      this.fieldName = Preconditions.checkNotNull(fieldName);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      AssertionCase that = (AssertionCase) o;
+
+      if (!fieldName.equals(that.fieldName)) return false;
+      if (!objectName.equals(that.objectName)) return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = objectName.hashCode();
+      result = 31 * result + fieldName.hashCode();
+      return result;
+    }
+  }
+
+  public static class Success extends AssertionCase {
+    private Success(String objectName, String fieldName) {
+      super(objectName, fieldName);
+    }
+
+    @Override
+    public String toString() {
+      return objectName + "." + fieldName;
+    }
+  }
+
+  public static class Failure extends AssertionCase {
     @Nullable
     private final Object actual;
     @Nullable
     private final Object expected;
 
     private Failure(String objectName, String fieldName, @Nullable Object actual, @Nullable Object expected) {
-      this.objectName = Preconditions.checkNotNull(objectName);
-      this.fieldName = Preconditions.checkNotNull(fieldName);
+      super(objectName, fieldName);
       this.actual = actual;
       this.expected = expected;
     }
@@ -89,21 +139,19 @@ public class AssertionCollector {
     public boolean equals(Object o) {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
+      if (!super.equals(o)) return false;
 
       Failure failure = (Failure) o;
 
       if (actual != null ? !actual.equals(failure.actual) : failure.actual != null) return false;
       if (expected != null ? !expected.equals(failure.expected) : failure.expected != null) return false;
-      if (!fieldName.equals(failure.fieldName)) return false;
-      if (!objectName.equals(failure.objectName)) return false;
 
       return true;
     }
 
     @Override
     public int hashCode() {
-      int result = objectName.hashCode();
-      result = 31 * result + fieldName.hashCode();
+      int result = super.hashCode();
       result = 31 * result + (actual != null ? actual.hashCode() : 0);
       result = 31 * result + (expected != null ? expected.hashCode() : 0);
       return result;

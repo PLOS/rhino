@@ -110,7 +110,8 @@ def print_assertion_sets():
     fields = fields_for(entity_types['Article'])
     for (t, n) in fields:
         if ('<' not in t) or ('<String>' in t):
-            print('expected.{n} = article.{g}();'
+            print(('results.compare(Article.class, "{n}", '
+                   'actual.{g}(), expected.{g}());')
                   .format(n=n, g=entity_getter(n)))
 
 print_assertion_sets()
