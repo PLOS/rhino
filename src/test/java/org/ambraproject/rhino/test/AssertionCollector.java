@@ -69,7 +69,7 @@ public class AssertionCollector {
    */
   public boolean compare(String objectName, String fieldName, @Nullable Object actual, @Nullable Object expected) {
     if (Objects.equal(actual, expected)) {
-      successes.add(new Success(objectName, fieldName));
+      successes.add(new Success(objectName, fieldName, expected));
       return true;
     }
     failures.add(new Failure(objectName, fieldName, actual, expected));
@@ -107,13 +107,18 @@ public class AssertionCollector {
   }
 
   public static class Success extends AssertionCase {
-    private Success(String objectName, String fieldName) {
+    @Nullable
+    private final Object value;
+
+    private Success(String objectName, String fieldName, Object value) {
       super(objectName, fieldName);
+      this.value = value;
     }
 
     @Override
     public String toString() {
-      return objectName + "." + fieldName;
+      return String.format("[%s.%s: matched {%s}]",
+          objectName, fieldName, String.valueOf(value));
     }
   }
 

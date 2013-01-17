@@ -107,11 +107,12 @@ def print_assertion_classes():
         generate.subclass_for(java_type, fields)
 
 def print_assertion_sets():
-    fields = fields_for(entity_types['Article'])
-    for (t, n) in fields:
-        if ('<' not in t) or ('<String>' in t):
-            print(('results.compare(Article.class, "{n}", '
-                   'actual.{g}(), expected.{g}());')
-                  .format(n=n, g=entity_getter(n)))
+    for (java_type, fields) in entity_types.items():
+        for (t, n) in fields_for(fields):
+            if ('<' not in t) or ('<String>' in t):
+                print(('results.compare({jt}.class, "{n}", '
+                       'actual.{g}(), expected.{g}());')
+                      .format(jt=java_type, n=n, g=entity_getter(n)))
+        print()
 
 print_assertion_sets()

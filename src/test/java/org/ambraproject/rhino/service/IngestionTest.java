@@ -185,7 +185,13 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareAssets(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
-    // TODO Fill in fields
+    results.compare(ArticleAsset.class, "doi", actual.getDoi(), expected.getDoi());
+    results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
+    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
+    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
+    results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
+    results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
+    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
   }
 
   private void compareCitationLists(AssertionCollector results,
@@ -211,7 +217,26 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareCitations(AssertionCollector results, CitedArticle actual, CitedArticle expected) {
-    // TODO Fill in fields
+    results.compare(CitedArticle.class, "key", actual.getKey(), expected.getKey());
+    results.compare(CitedArticle.class, "year", actual.getYear(), expected.getYear());
+    results.compare(CitedArticle.class, "displayYear", actual.getDisplayYear(), expected.getDisplayYear());
+    results.compare(CitedArticle.class, "month", actual.getMonth(), expected.getMonth());
+    results.compare(CitedArticle.class, "day", actual.getDay(), expected.getDay());
+    results.compare(CitedArticle.class, "volumeNumber", actual.getVolumeNumber(), expected.getVolumeNumber());
+    results.compare(CitedArticle.class, "volume", actual.getVolume(), expected.getVolume());
+    results.compare(CitedArticle.class, "issue", actual.getIssue(), expected.getIssue());
+    results.compare(CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
+    results.compare(CitedArticle.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
+    results.compare(CitedArticle.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
+    results.compare(CitedArticle.class, "pages", actual.getPages(), expected.getPages());
+    results.compare(CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
+    results.compare(CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
+    results.compare(CitedArticle.class, "note", actual.getNote(), expected.getNote());
+    results.compare(CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    results.compare(CitedArticle.class, "url", actual.getUrl(), expected.getUrl());
+    results.compare(CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
+    results.compare(CitedArticle.class, "summary", actual.getSummary(), expected.getSummary());
+    results.compare(CitedArticle.class, "citationType", actual.getCitationType(), expected.getCitationType());
   }
 
   private static final Function<ArticleAsset, AssetIdentity> GET_ASSET_ID = new Function<ArticleAsset, AssetIdentity>() {
