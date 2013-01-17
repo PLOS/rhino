@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
  *
  * @param <T> the entity type
  */
-public class AssertionFailure<T> {
+public class FieldAssertionFailure<T> {
   private final Class<?> typeChecked;
   private final String fieldChecked;
   @Nullable
@@ -17,8 +17,8 @@ public class AssertionFailure<T> {
   @Nullable
   private final T expectedValue;
 
-  AssertionFailure(Class<?> typeChecked, String fieldChecked,
-                   @Nullable T actualValue, @Nullable T expectedValue) {
+  private FieldAssertionFailure(Class<?> typeChecked, String fieldChecked,
+                                @Nullable T actualValue, @Nullable T expectedValue) {
     this.typeChecked = Preconditions.checkNotNull(typeChecked);
     this.fieldChecked = Preconditions.checkNotNull(fieldChecked);
     this.actualValue = actualValue;
@@ -28,9 +28,9 @@ public class AssertionFailure<T> {
   /**
    * Convenience method, for generic type inference.
    */
-  public static <T> AssertionFailure<T> create(Class<?> typeChecked, String fieldChecked,
-                                               @Nullable T actualValue, @Nullable T expectedValue) {
-    return new AssertionFailure<T>(typeChecked, fieldChecked, actualValue, expectedValue);
+  public static <T> FieldAssertionFailure<T> create(Class<?> typeChecked, String fieldChecked,
+                                                    @Nullable T actualValue, @Nullable T expectedValue) {
+    return new FieldAssertionFailure<T>(typeChecked, fieldChecked, actualValue, expectedValue);
   }
 
   @Override
@@ -45,7 +45,7 @@ public class AssertionFailure<T> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    AssertionFailure that = (AssertionFailure) o;
+    FieldAssertionFailure that = (FieldAssertionFailure) o;
 
     if (actualValue != null ? !actualValue.equals(that.actualValue) : that.actualValue != null) return false;
     if (expectedValue != null ? !expectedValue.equals(that.expectedValue) : that.expectedValue != null) return false;

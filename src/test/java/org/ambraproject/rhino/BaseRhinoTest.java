@@ -21,6 +21,7 @@ package org.ambraproject.rhino;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
+import com.google.gson.Gson;
 import org.ambraproject.rhino.config.TestConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
 
   @Autowired
   protected HibernateTemplate hibernateTemplate;
+
+  @Autowired
+  protected Gson entityGson;
 
   /**
    * Mock input stream that yields a constant string and keeps track of whether it has been closed.
