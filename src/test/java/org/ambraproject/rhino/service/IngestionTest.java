@@ -3,8 +3,6 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -12,7 +10,7 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.test.FieldAssertionFailure;
+import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -28,7 +26,6 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Collection;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -117,22 +114,22 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
-    Collection<FieldAssertionFailure> failures = compareFields(actual, expected);
-    if (!failures.isEmpty()) {
-      for (FieldAssertionFailure failure : failures) {
+    AssertionCollector results = compareArticle(actual, expected);
+    if (results.getFailureCount() > 0) {
+      for (AssertionCollector.Failure failure : results.getFailures()) {
         log.error(failure.toString());
       }
-      assertEquals(failures.size(), 0, "Mismatched Article fields");
+      assertEquals(results.getFailureCount(), 0, "Mismatched Article fields");
     }
   }
 
-  private ImmutableCollection<FieldAssertionFailure> compareFields(Article actual, Article expected) {
-    Collection<FieldAssertionFailure> failures = Lists.newArrayList();
+  private AssertionCollector compareArticle(Article actual, Article expected) {
+    AssertionCollector results = new AssertionCollector();
 
     // TODO Fill in per-field assertions
     // TODO Compare sets of related objects (ArticleAsset, CitedArticle, ArticlePerson)
 
-    return ImmutableList.copyOf(failures);
+    return results;
   }
 
 }
