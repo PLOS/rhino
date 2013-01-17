@@ -1,15 +1,24 @@
 package org.ambraproject.rhino.service;
 
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -26,6 +35,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Collection;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -148,9 +158,71 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
 
-    // TODO Compare sets of related objects (ArticleAsset, CitedArticle, ArticlePerson)
+    compareAssetLists(results, actual.getAssets(), expected.getAssets());
+    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
 
     return results;
   }
+
+  private void compareAssetLists(AssertionCollector results,
+                                 Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
+    // Compare assets by their DOI, ignoring order
+    ImmutableMap<AssetIdentity, ArticleAsset> actualAssetMap = Maps.uniqueIndex(actualList, GET_ASSET_ID);
+    ImmutableSet<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
+    ImmutableMap<AssetIdentity, ArticleAsset> expectedAssetMap = Maps.uniqueIndex(expectedList, GET_ASSET_ID);
+    ImmutableSet<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
+
+    for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
+      results.compare(ArticleAsset.class, "doi", null, missingDoi);
+    }
+    for (AssetIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
+      results.compare(ArticleAsset.class, "doi", extraDoi, null);
+    }
+
+    for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
+      compareAssets(results, actualAssetMap.get(assetDoi), actualAssetMap.get(assetDoi));
+    }
+  }
+
+  private void compareAssets(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
+    // TODO Fill in fields
+  }
+
+  private void compareCitationLists(AssertionCollector results,
+                                    List<CitedArticle> actualList, List<CitedArticle> expectedList) {
+    // Ensure no problems with random access or delayed evaluation
+    actualList = ImmutableList.copyOf(actualList);
+    expectedList = ImmutableList.copyOf(expectedList);
+
+    // Citations have no guaranteed, database-independent identity, so use list position to match them up.
+    // So far Hibernate produces these lists in an order that matches the XML. We depend on this for now.
+    int commonSize = Math.min(actualList.size(), expectedList.size());
+    for (int i = 0; i < commonSize; i++) {
+      compareCitations(results, actualList.get(i), expectedList.get(i));
+    }
+
+    // If the sizes didn't match, report missing/extra citations as errors
+    for (int i = commonSize; i < actualList.size(); i++) {
+      results.compare(Article.class, "citedArticles", actualList.get(i), null);
+    }
+    for (int i = commonSize; i < expectedList.size(); i++) {
+      results.compare(Article.class, "citedArticles", null, expectedList.get(i));
+    }
+  }
+
+  private void compareCitations(AssertionCollector results, CitedArticle actual, CitedArticle expected) {
+    // TODO Fill in fields
+  }
+
+  private static final Function<ArticleAsset, AssetIdentity> GET_ASSET_ID = new Function<ArticleAsset, AssetIdentity>() {
+    @Override
+    public AssetIdentity apply(ArticleAsset input) {
+      String doi = input.getDoi();
+      if (doi.startsWith("info:doi/")) {
+        doi = doi.substring("info:doi/".length());
+      }
+      return AssetIdentity.parse(doi + "." + input.getExtension());
+    }
+  };
 
 }
