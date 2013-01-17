@@ -1,14 +1,11 @@
 package org.ambraproject.rhino.service;
 
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -41,6 +38,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -173,10 +172,10 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetLists(AssertionCollector results,
                                  Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
-    ImmutableMap<AssetIdentity, ArticleAsset> actualAssetMap = Maps.uniqueIndex(actualList, GET_ASSET_ID);
-    ImmutableSet<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    ImmutableMap<AssetIdentity, ArticleAsset> expectedAssetMap = Maps.uniqueIndex(expectedList, GET_ASSET_ID);
-    ImmutableSet<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
+    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapAssetsById(actualList);
+    Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
+    Map<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetsById(expectedList);
+    Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
 
     for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
       results.compare(ArticleAsset.class, "doi", null, missingDoi);
@@ -250,8 +249,8 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,
                                   List<? extends AmbraEntity> actualList, List<? extends AmbraEntity> expectedList) {
-    ImmutableList<PersonName> actualNames = ImmutableList.copyOf(Lists.transform(actualList, AS_PERSON_NAME));
-    ImmutableList<PersonName> expectedNames = ImmutableList.copyOf(Lists.transform(expectedList, AS_PERSON_NAME));
+    List<PersonName> actualNames = asPersonNames(actualList);
+    List<PersonName> expectedNames = asPersonNames(expectedList);
 
     int commonSize = Math.min(actualNames.size(), expectedNames.size());
     for (int i = 0; i < commonSize; i++) {
@@ -267,29 +266,32 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-  private static final Function<ArticleAsset, AssetIdentity> GET_ASSET_ID = new Function<ArticleAsset, AssetIdentity>() {
-    @Override
-    public AssetIdentity apply(ArticleAsset input) {
-      String doi = input.getDoi();
+  private static ImmutableMap<AssetIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
+    ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
+    for (ArticleAsset asset : assets) {
+      String doi = asset.getDoi();
       if (doi.startsWith("info:doi/")) {
         doi = doi.substring("info:doi/".length());
       }
-      return AssetIdentity.parse(doi + "." + input.getExtension());
+      AssetIdentity identity = AssetIdentity.parse(doi + "." + asset.getExtension());
+      map.put(identity, asset);
     }
-  };
+    return map.build();
+  }
 
-  private static final Function<AmbraEntity, PersonName> AS_PERSON_NAME = new Function<AmbraEntity, PersonName>() {
-    @Override
-    public PersonName apply(AmbraEntity input) {
+  private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
+    List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());
+    for (Object personObj : persons) {
       // Have to do it this way for the same reason that PersonName exists in the first place -- see PersonName docs
-      if (input instanceof ArticlePerson) {
-        return PersonName.from((ArticlePerson) input);
+      if (personObj instanceof ArticlePerson) {
+        names.add(PersonName.from((ArticlePerson) personObj));
+      } else if (personObj instanceof CitedArticlePerson) {
+        names.add(PersonName.from((CitedArticlePerson) personObj));
+      } else {
+        throw new ClassCastException();
       }
-      if (input instanceof CitedArticlePerson) {
-        return PersonName.from((CitedArticlePerson) input);
-      }
-      throw new ClassCastException();
     }
-  };
+    return ImmutableList.copyOf(names);
+  }
 
 }
