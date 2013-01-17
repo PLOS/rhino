@@ -23,14 +23,20 @@ import com.google.common.collect.Lists;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.CitedArticleAuthor;
 import org.ambraproject.models.CitedArticleEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A holder for an NLM-format XML node that represents an article citation.
  */
 public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
+
+  private static final Logger log = LoggerFactory.getLogger(CitedArticleXml.class);
 
   /*
    * Possible values for the "citation-type" attribute that indicate that the "source" element is a journal name and
@@ -62,8 +68,10 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
       citation.setDisplayYear(displayYear);
       try {
         citation.setYear(Integer.valueOf(displayYear));
-      } catch (ArithmeticException e) {
-        throw new XmlContentException("Year is not a number: " + displayYear, e);
+      } catch (NumberFormatException e) {
+        log.error("Year is not a number: " + displayYear, e);
+        citation.setYear(parseYearFallback(displayYear));
+        // TODO: Report to client?
       }
     }
     citation.setMonth(readString("month"));
@@ -78,6 +86,30 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
 
     return citation;
   }
+
+  /**
+   * As a fallback for parsing the display year into an integer, if there is one uninterrupted sequence of digits,
+   * assume that it is the year.  This deals with a bug known from {@code pone.0005723.xml}, where display years have
+   * one-letter suffixes (e.g., "2000b").
+   * <p/>
+   * TODO: Better solution; find out how Admin would handle this
+   *
+   * @param displayYear the display year given as text in the article XML
+   * @return the year as a number, if exactly one sequence of digits is found in the displayYear; else {@code null}
+   */
+  private Integer parseYearFallback(String displayYear) {
+    Matcher matcher = YEAR_FALLBACK.matcher(displayYear);
+    if (!matcher.find()) {
+      return null; // displayYear contains no sequence of digits
+    }
+    String displayYearSub = matcher.group();
+    if (matcher.find()) {
+      return null; // displayYear contains more than one sequence of digits; we don't know which is the year
+    }
+    return Integer.valueOf(displayYearSub); // YEAR_FALLBACK should guarantee that this parses validly
+  }
+
+  private static final Pattern YEAR_FALLBACK = Pattern.compile("\\d+");
 
   protected String parsePageRange(String firstPage, String lastPage) {
     if (firstPage != null && lastPage != null) {
