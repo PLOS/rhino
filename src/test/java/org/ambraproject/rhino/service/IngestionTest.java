@@ -14,8 +14,11 @@ import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticlePerson;
+import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.models.Category;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.CitedArticlePerson;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -138,7 +141,25 @@ public class IngestionTest extends BaseRhinoTest {
 
   private AssertionCollector compareArticle(Article actual, Article expected) {
     AssertionCollector results = new AssertionCollector();
+    compareArticleFields(results, actual, expected);
+    comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
+    comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
+    compareCategorySets(results, actual.getCategories(), expected.getCategories());
+    compareJournalSets(results, actual.getJournals(), expected.getJournals());
+    compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
+    compareAssetLists(results, actual.getAssets(), expected.getAssets());
+    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
+    return results;
+  }
 
+  /**
+   * Compare simple (non-associative) fields.
+   *
+   * @param results
+   * @param actual
+   * @param expected
+   */
+  private void compareArticleFields(AssertionCollector results, Article actual, Article expected) {
     results.compare(Article.class, "doi", actual.getDoi(), expected.getDoi());
     results.compare(Article.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
@@ -160,13 +181,18 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "url", actual.getUrl(), expected.getUrl());
     results.compare(Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
+  }
 
-    comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
-    comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
-    compareAssetLists(results, actual.getAssets(), expected.getAssets());
-    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
+  private void compareCategorySets(AssertionCollector results, Set<Category> actual, Set<Category> expected) {
+    // TODO
+  }
 
-    return results;
+  private void compareJournalSets(AssertionCollector results, Set<Journal> actual, Set<Journal> expected) {
+    // TODO
+  }
+
+  private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
+    // TODO
   }
 
   private void compareAssetLists(AssertionCollector results,
@@ -265,6 +291,9 @@ public class IngestionTest extends BaseRhinoTest {
       results.compare(parentType, fieldName, null, expectedNames.get(i));
     }
   }
+
+
+  // Transformation helper methods
 
   private static ImmutableMap<AssetIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
     ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
