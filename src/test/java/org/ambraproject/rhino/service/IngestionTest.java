@@ -13,10 +13,14 @@ import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.models.ArticlePerson;
 import org.ambraproject.models.CitedArticle;
+import org.ambraproject.models.CitedArticlePerson;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
@@ -158,6 +162,8 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
 
+    comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
+    comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
     compareAssetLists(results, actual.getAssets(), expected.getAssets());
     compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
 
@@ -237,6 +243,28 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
     results.compare(CitedArticle.class, "summary", actual.getSummary(), expected.getSummary());
     results.compare(CitedArticle.class, "citationType", actual.getCitationType(), expected.getCitationType());
+
+    comparePersonLists(results, CitedArticle.class, "authors", actual.getAuthors(), expected.getAuthors());
+    comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
+  }
+
+  private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,
+                                  List<? extends AmbraEntity> actualList, List<? extends AmbraEntity> expectedList) {
+    ImmutableList<PersonName> actualNames = ImmutableList.copyOf(Lists.transform(actualList, AS_PERSON_NAME));
+    ImmutableList<PersonName> expectedNames = ImmutableList.copyOf(Lists.transform(expectedList, AS_PERSON_NAME));
+
+    int commonSize = Math.min(actualNames.size(), expectedNames.size());
+    for (int i = 0; i < commonSize; i++) {
+      results.compare(parentType, fieldName, actualNames.get(i), actualNames.get(i));
+    }
+
+    // If the sizes didn't match, report missing/extra citations as errors
+    for (int i = commonSize; i < actualList.size(); i++) {
+      results.compare(parentType, fieldName, actualNames.get(i), null);
+    }
+    for (int i = commonSize; i < expectedList.size(); i++) {
+      results.compare(parentType, fieldName, null, expectedNames.get(i));
+    }
   }
 
   private static final Function<ArticleAsset, AssetIdentity> GET_ASSET_ID = new Function<ArticleAsset, AssetIdentity>() {
@@ -247,6 +275,20 @@ public class IngestionTest extends BaseRhinoTest {
         doi = doi.substring("info:doi/".length());
       }
       return AssetIdentity.parse(doi + "." + input.getExtension());
+    }
+  };
+
+  private static final Function<AmbraEntity, PersonName> AS_PERSON_NAME = new Function<AmbraEntity, PersonName>() {
+    @Override
+    public PersonName apply(AmbraEntity input) {
+      // Have to do it this way for the same reason that PersonName exists in the first place -- see PersonName docs
+      if (input instanceof ArticlePerson) {
+        return PersonName.from((ArticlePerson) input);
+      }
+      if (input instanceof CitedArticlePerson) {
+        return PersonName.from((CitedArticlePerson) input);
+      }
+      throw new ClassCastException();
     }
   };
 
