@@ -64,16 +64,8 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     citation.setNote(readString("comment"));
 
     String displayYear = readString("year");
-    if (displayYear != null) {
-      citation.setDisplayYear(displayYear);
-      try {
-        citation.setYear(Integer.valueOf(displayYear));
-      } catch (NumberFormatException e) {
-        log.error("Year is not a number: " + displayYear, e);
-        citation.setYear(parseYearFallback(displayYear));
-        // TODO: Report to client?
-      }
-    }
+    citation.setDisplayYear(displayYear);
+    citation.setYear(parseYear(displayYear));
     citation.setMonth(readString("month"));
     citation.setDay(readString("day"));
 
@@ -85,6 +77,19 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     // TODO Finish implementing
 
     return citation;
+  }
+
+  private Integer parseYear(String displayYear) {
+    if (displayYear == null) {
+      return null;
+    }
+    try {
+      return Integer.valueOf(displayYear);
+    } catch (NumberFormatException e) {
+      log.error("Year is not a number: " + displayYear, e);
+      return parseYearFallback(displayYear);
+      // TODO: Report to client?
+    }
   }
 
   /**
