@@ -113,17 +113,6 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     return respondWithStatus(result.getStatus());
   }
 
-  /*
-   * If a parameter for metadata format was supplied, return the article metadata. Else, dump the article's XML file to
-   * the response.
-   *
-   * This is semi-intentionally inconsistent with {@link AssetMetadataController#read}. That method has a whole,
-   * different "RESTful noun" namespace for asset metadata, whereas here article data and metadata live in the same
-   * namespace and are differentiated by parameters. It is an open question of API design which is preferable, but we
-   * should settle on one and change the other to match it.
-   *
-   * TODO: Resolve above
-   */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public ResponseEntity<?> read(HttpServletRequest request,
                                 @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
