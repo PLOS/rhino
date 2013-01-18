@@ -24,6 +24,7 @@ import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -111,6 +112,20 @@ public class IngestionTest extends BaseRhinoTest {
     } finally {
       Closeables.close(input, threw);
     }
+
+    String eissn = article.geteIssn();
+    Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Journal.class)
+            .add(Restrictions.eq("eIssn", eissn))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
+    if (journal == null) {
+      journal = new Journal();
+      journal.setTitle("Test Journal " + eissn);
+      journal.seteIssn(eissn);
+      hibernateTemplate.save(journal);
+    }
+
     return article;
   }
 
