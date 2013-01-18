@@ -22,6 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
@@ -39,9 +40,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -83,7 +86,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     byte[] xmlData = readClientInput(file);
-    ArticleXml xml = new ArticleXml(parseXml(xmlData));
+    Document doc = parseXml(xmlData);
+    ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
       doi = xml.readDoi();
@@ -117,6 +121,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     relateToJournals(article);
 
+    populateCategories(article, doc);
     if (creating) {
       hibernateTemplate.save(article);
     } else {
@@ -158,6 +163,29 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       journals = Sets.newHashSet(journal);
     }
     article.setJournals(journals);
+  }
+
+  /**
+   * Populates article category information by making a call to the taxonomy server.
+   *
+   * @param article the Article model instance
+   * @param xml     Document representing the article XML
+   */
+  private void populateCategories(Article article, Document xml) {
+
+    // Attempt to assign categories to the article based on the taxonomy server.  However,
+    // we still want to ingest the article even if this process fails.
+    List<String> terms = null;
+    try {
+      terms = articleClassifier.classifyArticle(xml);
+    } catch (Exception e) {
+      log.warn("Taxonomy server not responding, but ingesting article anyway", e);
+    }
+    if (terms != null && terms.size() > 0) {
+      articleService.setArticleCategories(article, terms);
+    } else {
+      article.setCategories(new HashSet<Category>());
+    }
   }
 
   private static RestClientException complainAboutXml(XmlContentException e) {

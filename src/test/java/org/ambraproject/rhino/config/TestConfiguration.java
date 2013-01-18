@@ -20,6 +20,10 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
+import org.ambraproject.service.article.ArticleClassifier;
+import org.ambraproject.service.article.ArticleService;
+import org.ambraproject.service.article.ArticleServiceImpl;
+import org.ambraproject.service.article.DummyArticleClassifier;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
@@ -87,4 +91,17 @@ public class TestConfiguration extends BaseConfiguration {
     return service;
   }
 
+  @Bean
+  public ArticleClassifier articleClassifier() {
+    return new DummyArticleClassifier();
+  }
+
+  @Bean
+  public ArticleService articleService() throws IOException {
+    ArticleServiceImpl service = new ArticleServiceImpl();
+    service.setSessionFactory(sessionFactory(dataSource()).getObject());
+
+    // TODO: service.setPermissionsService if it's ever needed.
+    return service;
+  }
 }

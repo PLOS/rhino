@@ -26,6 +26,7 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
+import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -47,6 +48,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -169,6 +171,15 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
       assertFalse(StringUtils.isBlank(fullName), "Name not set for author");
       assertTrue(authorNames.add(fullName), "Redundant author name");
     }
+
+    Set<Category> expectedCategories = new HashSet<Category>();
+    Category cat1 = new Category();
+    cat1.setPath("/TopLevel1/term1");
+    expectedCategories.add(cat1);
+    Category cat2 = new Category();
+    cat2.setPath("/TopLevel2/term2");
+    expectedCategories.add(cat2);
+    assertEquals(stored.getCategories(), expectedCategories);
 
     byte[] readData = IOUtils.toByteArray(articleCrudService.read(articleId));
     assertEquals(readData, sampleData);

@@ -50,12 +50,39 @@ public class PersonName {
     return articlePerson;
   }
 
+  public static PersonName from(ArticlePerson articlePerson) {
+    return new PersonName(articlePerson.getFullName(), articlePerson.getGivenNames(),
+        articlePerson.getSurnames(), articlePerson.getSuffix());
+  }
+
   public <P extends CitedArticlePerson> P copyTo(P citedArticlePerson) {
     citedArticlePerson.setFullName(fullName);
     citedArticlePerson.setGivenNames(givenNames);
     citedArticlePerson.setSurnames(surname);
     citedArticlePerson.setSuffix(suffix);
     return citedArticlePerson;
+  }
+
+  public static PersonName from(CitedArticlePerson citedArticlePerson) {
+    return new PersonName(citedArticlePerson.getFullName(), citedArticlePerson.getGivenNames(),
+        citedArticlePerson.getSurnames(), citedArticlePerson.getSuffix());
+  }
+
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public String getGivenNames() {
+    return givenNames;
+  }
+
+  public String getSuffix() {
+    return suffix;
+  }
+
+  public String getSurname() {
+    return surname;
   }
 
 
