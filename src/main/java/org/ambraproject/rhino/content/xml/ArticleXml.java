@@ -192,8 +192,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
   private List<CitedArticle> parseCitations(List<Node> citationNodes) throws XmlContentException {
     List<CitedArticle> citations = Lists.newArrayListWithCapacity(citationNodes.size());
+    int key = 1;
     for (Node citationNode : citationNodes) {
       CitedArticle citation = new CitedArticleXml(citationNode).build(new CitedArticle());
+      citation.setKey(Integer.toString(key++));
       citations.add(citation);
     }
     return citations;
