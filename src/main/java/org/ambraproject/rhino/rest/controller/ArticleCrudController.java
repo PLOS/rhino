@@ -49,7 +49,8 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
-  private static final String ARTICLE_NAMESPACE = "/article/";
+  private static final String ARTICLE_ROOT = "/article";
+  private static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
   private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
 
   @Autowired
@@ -76,7 +77,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
    * @param requestBody
    * @return
    */
-  @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
   public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
     boolean threw = true;
     try {
