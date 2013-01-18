@@ -112,10 +112,9 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   private static final Pattern YEAR_FALLBACK = Pattern.compile("\\d+");
 
   protected String parsePageRange(String firstPage, String lastPage) {
-    if (firstPage != null && lastPage != null) {
-      return firstPage + '-' + lastPage;
+    if (firstPage != null) {
+      return (lastPage == null) ? firstPage : (firstPage + '-' + lastPage);
     }
-    // TODO Other formats?
     return null;
   }
 
