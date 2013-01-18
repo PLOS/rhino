@@ -112,8 +112,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
     article.setTypes(parseArticleTypes(readTextList("/article/@article-type")));
-    article.setCategories(parseCategories(readNodeList(
-        "/article/front/article-meta/article-categories/subj-group[@subj-group-type=\"Discipline\"]/subject")));
     article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//(citation|nlm-citation)")));
     article.setAuthors(readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
@@ -163,13 +161,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       throw new XmlContentException("Contains invalid article type: " + invalidTypes);
     }
     return articleTypes;
-  }
-
-  private Set<Category> parseCategories(Collection<Node> categoryNodes) {
-    /*
-     * TODO: Update according to new taxonomy system
-     */
-    return Sets.newHashSetWithExpectedSize(0);
   }
 
   private List<ArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
