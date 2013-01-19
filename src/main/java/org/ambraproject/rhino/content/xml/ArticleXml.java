@@ -24,9 +24,9 @@ import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
-import org.ambraproject.models.Category;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.util.Rhino;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -100,7 +100,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private void setFromXml(Article article) throws XmlContentException {
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
-    article.setDescription(readString("/article/front/article-meta/abstract"));
+    article.setDescription(Rhino.getAllText(readNode("/article/front/article-meta/abstract")));
     article.setRights(readString("/article/front/article-meta/copyright-statement"));
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
