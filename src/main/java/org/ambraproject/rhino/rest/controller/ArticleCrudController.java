@@ -36,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -52,6 +53,11 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
   private static final String ARTICLE_ROOT = "/article";
   private static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
   private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
+
+  /**
+   * The request parameter whose value is the XML file being uploaded for a create operation.
+   */
+  private static final String FILE_ARG = "file";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -74,13 +80,15 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
    * <p/>
    * TODO: Handle the case where the article already exists
    *
-   * @param requestBody
+   * @param requestFile
    * @return
    */
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
+  public ResponseEntity<?> create(@RequestParam(FILE_ARG) MultipartFile requestFile) throws IOException, FileStoreException {
+    InputStream requestBody = null;
     boolean threw = true;
     try {
+      requestBody = requestFile.getInputStream();
       articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
       threw = false;
     } finally {

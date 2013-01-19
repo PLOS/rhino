@@ -183,13 +183,12 @@ def run_test_on_article(case):
     def asset_req(asset_id):
         return build_request('asset/' + asset_id)
 
-    for i in range(2): # First create, then update
-        upload = build_request('article/')
-        with open(case.xml_path()) as xml_file:
-            upload.message_body = xml_file
-            result = upload.put()
-        hdr = 'Response to UPLOAD for article (iteration {0})'.format(i + 1)
-        report(hdr, result)
+    # Create by POSTing to namespace root
+    create = build_request('article')
+    print(create.get_url())
+    create.set_form_file_path('file', case.xml_path())
+    result = create.post()
+    report('Response to CREATE for article', result)
 
     read_meta = article_req('format=json')
     report('Response to READ (article metadata, no assets)', read_meta.get())
