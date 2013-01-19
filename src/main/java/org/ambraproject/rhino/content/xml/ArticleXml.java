@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -26,7 +27,7 @@ import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.util.Rhino;
+import org.ambraproject.rhino.util.NodeListAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -100,7 +101,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private void setFromXml(Article article) throws XmlContentException {
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
-    article.setDescription(Rhino.getAllText(readNode("/article/front/article-meta/abstract")));
+    article.setDescription(buildDescription(readNode("/article/front/article-meta/abstract")));
     article.setRights(readString("/article/front/article-meta/copyright-statement"));
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
@@ -125,6 +126,43 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     // TODO Finish implementing
 
+  }
+
+  /**
+   * Build a description field by partially reconstructing the node's content as XML. The output is text content between
+   * the node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
+   * their attributes are deleted. Text nodes containing only whitespace are deleted.
+   *
+   * @param node the description node
+   * @return the marked-up description
+   */
+  private static String buildDescription(Node node) {
+    StringBuilder nodeContent = new StringBuilder();
+    buildDescription(nodeContent, node);
+    return nodeContent.toString();
+  }
+
+  /*
+   * Recursive helper method for buildDescription(Node).
+   */
+  private static void buildDescription(StringBuilder nodeContent, Node node) {
+    List<Node> children = NodeListAdapter.wrap(node.getChildNodes());
+    for (Node child : children) {
+      switch (child.getNodeType()) {
+        case Node.TEXT_NODE:
+          String text = child.getNodeValue();
+          if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
+            nodeContent.append(text);
+          }
+          break;
+        case Node.ELEMENT_NODE:
+          String nodeName = child.getNodeName();
+          nodeContent.append('<').append(nodeName).append('>');
+          buildDescription(nodeContent, child);
+          nodeContent.append("</").append(nodeName).append('>');
+          break;
+      }
+    }
   }
 
   private String parseLanguage(String language) {
