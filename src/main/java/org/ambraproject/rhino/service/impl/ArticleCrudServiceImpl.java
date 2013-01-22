@@ -19,8 +19,9 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Category;
@@ -47,8 +48,10 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -69,10 +72,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param id the article's identity
    * @return the article, or {@code null} if not found
    */
-  private <T extends AmbraEntity> T findEntityById(Class<T> entityType, DoiBasedIdentity id) {
-    return (T) DataAccessUtils.uniqueResult((List<?>)
+  private Article findArticleById(DoiBasedIdentity id) {
+    return (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(entityType)
+            .forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
@@ -104,7 +107,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     String fsid = doi.forXmlAsset().getFsid(); // do this first, to fail fast if the DOI is invalid
 
-    Article article = findEntityById(Article.class, doi);
+    Article article = findArticleById(doi);
     final boolean creating = (article == null);
     if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
       String messageStub = (creating ?
@@ -124,8 +127,22 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     populateCategories(article, doc);
 
     List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    List<ArticleAsset> assets = article.getAssets();
+    Map<String, ArticleAsset> assetMap;
+    if (assets == null) {
+      assets = Lists.newArrayListWithCapacity(assetNodes.size());
+      article.setAssets(assets);
+      assetMap = ImmutableMap.of();
+    } else {
+      assetMap = mapAssetsByDoi(assets);
+    }
     for (AssetNode assetNode : assetNodes) {
-      writeAsset(assetNode);
+      ArticleAsset asset = assetMap.get(assetNode.getDoi());
+      if (asset == null) {
+        asset = new ArticleAsset();
+        assets.add(asset);
+      }
+      writeAsset(asset, assetNode);
     }
 
     if (creating) {
@@ -160,23 +177,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private void writeAsset(AssetNode assetNode) {
+  private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
+    ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
+    for (ArticleAsset asset : assets) {
+      String doi = asset.getDoi();
+      doi = DoiBasedIdentity.removeScheme(doi);
+      map.put(doi, asset);
+    }
+    return map.build();
+  }
+
+  /**
+   * Copy metadata into an asset entity from an XML node describing the asset.
+   *
+   * @param asset     the persistent asset entity to modify
+   * @param assetNode the XML node from which to extract data
+   * @return the modified asset (same identity)
+   */
+  private static ArticleAsset writeAsset(ArticleAsset asset, AssetNode assetNode) {
     String assetDoi = assetNode.getDoi();
     String extension = "TIF"; // For now, assume all assets are *.tif figures; TODO: Handle other asset types
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi, extension);
 
-    ArticleAsset asset = findEntityById(ArticleAsset.class, assetIdentity);
-    boolean creating = (asset == null);
-    if (creating) {
-      asset = new ArticleAsset(); // TODO Associate with article; modify existing if necessary
-    }
     try {
-      asset = new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
+      return new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
-
-    // TODO Persist it
   }
 
   private static RestClientException complainAboutXml(XmlContentException e) {
@@ -221,7 +248,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public void delete(ArticleIdentity id) throws FileStoreException {
-    Article article = findEntityById(Article.class, id);
+    Article article = findArticleById(id);
     if (article == null) {
       throw reportNotFound(id);
     }
