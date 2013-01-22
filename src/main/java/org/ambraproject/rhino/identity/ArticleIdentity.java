@@ -62,7 +62,7 @@ public class ArticleIdentity extends StandAloneIdentity {
    * @return an identity for the XML asset
    */
   public AssetIdentity forXmlAsset() {
-    return new AssetIdentity(getIdentifier(), XML_EXTENSION);
+    return AssetIdentity.create(getIdentifier(), XML_EXTENSION);
   }
 
 }

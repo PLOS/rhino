@@ -18,9 +18,20 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -29,8 +40,68 @@ import org.w3c.dom.Node;
  */
 public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObject<T> {
 
-  public AbstractArticleXml(Node xml) {
+  private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
+
+  protected AbstractArticleXml(Node xml) {
     super(xml);
+  }
+
+  // The node-names for nodes that can be an asset, separated by where to find the DOI
+  protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
+  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of("supplementary-material", "inline-graphic");
+
+  // An XPath expression that will match any node with one of the names above
+  private static final String ASSET_EXPRESSION = String.format("//(%s)",
+      Joiner.on('|').join(Iterables.concat(ASSET_WITH_OBJID, ASSET_WITH_HREF)));
+
+  /**
+   * Get a list containing each node within this object's XML whose name is expected to be associated with an asset
+   * entity.
+   *
+   * @return the list of asset nodes
+   */
+  protected List<AssetNode> findAllAssetNodes() {
+    List<Node> raw = readNodeList(ASSET_EXPRESSION);
+    List<AssetNode> wrapped = Lists.newArrayListWithCapacity(raw.size());
+    for (Node node : raw) {
+      wrapped.add(new AssetNode(node, getAssetDoi(node)));
+    }
+    return ImmutableList.copyOf(wrapped);
+  }
+
+  protected String getAssetDoi(Node assetNode) {
+    String nodeName = assetNode.getNodeName();
+    String doi;
+    if (ASSET_WITH_OBJID.contains(nodeName)) {
+      doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
+    } else if (ASSET_WITH_HREF.contains(nodeName)) {
+      doi = parseAssetWithHref(assetNode);
+    } else {
+      String message = String.format("Received a node of type \"%s\"; expected one of: %s",
+          nodeName, ASSET_EXPRESSION);
+      throw new IllegalArgumentException(message);
+    }
+    if (doi == null) {
+      log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
+    }
+    return DoiBasedIdentity.removeScheme(doi);
+  }
+
+  /*
+   * Read the "xlink:href" attribute from a <supplementary-material> or <inline-graphic> node.
+   *
+   * TODO: Use XPath instead and handle the XML namespace properly.
+   */
+  private static String parseAssetWithHref(Node assetNode) {
+    NamedNodeMap attributes = assetNode.getAttributes();
+    if (attributes == null) {
+      return null;
+    }
+    Node hrefAttr = attributes.getNamedItem("xlink:href");
+    if (hrefAttr == null) {
+      return null;
+    }
+    return hrefAttr.getTextContent();
   }
 
   // Legal values for the "name-style" attribute of a <name> node

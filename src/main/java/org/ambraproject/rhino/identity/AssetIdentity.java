@@ -20,6 +20,7 @@ package org.ambraproject.rhino.identity;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.filestore.FSIDMapper;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.ImmutableMimetypesFileTypeMap;
 import org.apache.commons.lang.StringUtils;
@@ -32,10 +33,7 @@ public class AssetIdentity extends DoiBasedIdentity {
 
   private final String extension; // non-empty and contains no uppercase letters
 
-  /*
-   * Package-private for org.ambraproject.rhino.identity.ArticleIdentity.forXmlAsset
-   */
-  AssetIdentity(String identifier, String extension) {
+  private AssetIdentity(String identifier, String extension) {
     super(identifier);
     Preconditions.checkArgument(StringUtils.isNotBlank(extension));
     this.extension = extension.toLowerCase();
@@ -57,6 +55,14 @@ public class AssetIdentity extends DoiBasedIdentity {
     String extension = path.substring(dotIndex + 1);
 
     return new AssetIdentity(identifier, extension);
+  }
+
+  public static AssetIdentity create(String identifier, String extension) {
+    return new AssetIdentity(removeScheme(identifier), extension);
+  }
+
+  public static AssetIdentity from(ArticleAsset asset) {
+    return AssetIdentity.create(asset.getDoi(), asset.getExtension());
   }
 
   /**

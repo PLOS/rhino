@@ -81,6 +81,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * {@inheritDoc}
    */
   @Override
+  public List<AssetNode> findAllAssetNodes() {
+    return super.findAllAssetNodes();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public Article build(Article article) throws XmlContentException {
     setConstants(article);
     setFromXml(article);
