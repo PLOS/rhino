@@ -19,12 +19,18 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Category;
 import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.AssetNode;
+import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -42,8 +48,10 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -116,8 +124,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
-
     populateCategories(article, doc);
+
+    List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    List<ArticleAsset> assets = article.getAssets();
+    Map<String, ArticleAsset> assetMap;
+    if (assets == null) {
+      assets = Lists.newArrayListWithCapacity(assetNodes.size());
+      article.setAssets(assets);
+      assetMap = ImmutableMap.of();
+    } else {
+      assetMap = mapAssetsByDoi(assets);
+    }
+    for (AssetNode assetNode : assetNodes) {
+      ArticleAsset asset = assetMap.get(assetNode.getDoi());
+      if (asset == null) {
+        asset = new ArticleAsset();
+        assets.add(asset);
+      }
+      writeAsset(asset, assetNode);
+    }
+
     if (creating) {
       hibernateTemplate.save(article);
     } else {
@@ -128,11 +155,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Populates article category information by making a call to the taxonomy
-   * server.
+   * Populates article category information by making a call to the taxonomy server.
    *
    * @param article the Article model instance
-   * @param xml Document representing the article XML
+   * @param xml     Document representing the article XML
    */
   private void populateCategories(Article article, Document xml) {
 
@@ -148,6 +174,35 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       articleService.setArticleCategories(article, terms);
     } else {
       article.setCategories(new HashSet<Category>());
+    }
+  }
+
+  private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
+    ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
+    for (ArticleAsset asset : assets) {
+      String doi = asset.getDoi();
+      doi = DoiBasedIdentity.removeScheme(doi);
+      map.put(doi, asset);
+    }
+    return map.build();
+  }
+
+  /**
+   * Copy metadata into an asset entity from an XML node describing the asset.
+   *
+   * @param asset     the persistent asset entity to modify
+   * @param assetNode the XML node from which to extract data
+   * @return the modified asset (same identity)
+   */
+  private static ArticleAsset writeAsset(ArticleAsset asset, AssetNode assetNode) {
+    String assetDoi = assetNode.getDoi();
+    String extension = "TIF"; // For now, assume all assets are *.tif figures; TODO: Handle other asset types
+    AssetIdentity assetIdentity = AssetIdentity.create(assetDoi, extension);
+
+    try {
+      return new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
+    } catch (XmlContentException e) {
+      throw complainAboutXml(e);
     }
   }
 

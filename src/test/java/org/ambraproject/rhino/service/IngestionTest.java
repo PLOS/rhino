@@ -349,11 +349,7 @@ public class IngestionTest extends BaseRhinoTest {
   private static ImmutableMap<AssetIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
     ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
-      String doi = asset.getDoi();
-      if (doi.startsWith("info:doi/")) {
-        doi = doi.substring("info:doi/".length());
-      }
-      AssetIdentity identity = AssetIdentity.parse(doi + "." + asset.getExtension());
+      AssetIdentity identity = AssetIdentity.from(asset);
       map.put(identity, asset);
     }
     return map.build();
