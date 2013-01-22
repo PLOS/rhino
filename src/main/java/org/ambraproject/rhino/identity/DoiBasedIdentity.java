@@ -42,6 +42,17 @@ public abstract class DoiBasedIdentity {
     Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
   }
 
+  /**
+   * Remove the leading {@code "info:doi/"} from a DOI. If the DOI does not start with {@code "info:doi/"}, return it
+   * unchanged.
+   *
+   * @param doi a non-null DOI
+   * @return a DOI that does not start with {@code "info:doi/"}
+   */
+  public static String removeScheme(String doi) {
+    return doi.startsWith(DOI_SCHEME_VALUE) ? doi.substring(DOI_SCHEME_VALUE.length()) : doi;
+  }
+
 
   /**
    * Return the DOI or DOI-like identifier for the article or asset that this object identifies. The return value will

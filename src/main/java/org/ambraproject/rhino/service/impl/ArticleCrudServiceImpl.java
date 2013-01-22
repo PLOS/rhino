@@ -20,11 +20,16 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Category;
 import org.ambraproject.rhino.content.xml.ArticleXml;
+import org.ambraproject.rhino.content.xml.AssetNode;
+import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -64,10 +69,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param id the article's identity
    * @return the article, or {@code null} if not found
    */
-  private Article findArticleById(DoiBasedIdentity id) {
-    return (Article) DataAccessUtils.uniqueResult((List<?>)
+  private <T extends AmbraEntity> T findEntityById(Class<T> entityType, DoiBasedIdentity id) {
+    return (T) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
+            .forClass(entityType)
             .add(Restrictions.eq("doi", id.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
@@ -99,7 +104,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     String fsid = doi.forXmlAsset().getFsid(); // do this first, to fail fast if the DOI is invalid
 
-    Article article = findArticleById(doi);
+    Article article = findEntityById(Article.class, doi);
     final boolean creating = (article == null);
     if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
       String messageStub = (creating ?
@@ -116,8 +121,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
-
     populateCategories(article, doc);
+
+    List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    for (AssetNode assetNode : assetNodes) {
+      writeAsset(assetNode);
+    }
+
     if (creating) {
       hibernateTemplate.save(article);
     } else {
@@ -128,11 +138,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Populates article category information by making a call to the taxonomy
-   * server.
+   * Populates article category information by making a call to the taxonomy server.
    *
    * @param article the Article model instance
-   * @param xml Document representing the article XML
+   * @param xml     Document representing the article XML
    */
   private void populateCategories(Article article, Document xml) {
 
@@ -149,6 +158,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } else {
       article.setCategories(new HashSet<Category>());
     }
+  }
+
+  private void writeAsset(AssetNode assetNode) {
+    String assetDoi = assetNode.getDoi();
+    String extension = "TIF"; // For now, assume all assets are *.tif figures; TODO: Handle other asset types
+    AssetIdentity assetIdentity = AssetIdentity.create(assetDoi, extension);
+
+    ArticleAsset asset = findEntityById(ArticleAsset.class, assetIdentity);
+    boolean creating = (asset == null);
+    if (creating) {
+      asset = new ArticleAsset(); // TODO Associate with article; modify existing if necessary
+    }
+    try {
+      asset = new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
+    } catch (XmlContentException e) {
+      throw complainAboutXml(e);
+    }
+
+    // TODO Persist it
   }
 
   private static RestClientException complainAboutXml(XmlContentException e) {
@@ -193,7 +221,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public void delete(ArticleIdentity id) throws FileStoreException {
-    Article article = findArticleById(id);
+    Article article = findEntityById(Article.class, id);
     if (article == null) {
       throw reportNotFound(id);
     }

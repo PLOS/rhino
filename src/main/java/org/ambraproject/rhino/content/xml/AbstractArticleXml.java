@@ -19,10 +19,13 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.NamedNodeMap;
@@ -51,8 +54,19 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   private static final String ASSET_EXPRESSION = String.format("//(%s)",
       Joiner.on('|').join(Iterables.concat(ASSET_WITH_OBJID, ASSET_WITH_HREF)));
 
-  protected List<Node> findAllAssetNodes() {
-    return readNodeList(ASSET_EXPRESSION);
+  /**
+   * Get a list containing each node within this object's XML whose name is expected to be associated with an asset
+   * entity.
+   *
+   * @return the list of asset nodes
+   */
+  protected List<AssetNode> findAllAssetNodes() {
+    List<Node> raw = readNodeList(ASSET_EXPRESSION);
+    List<AssetNode> wrapped = Lists.newArrayListWithCapacity(raw.size());
+    for (Node node : raw) {
+      wrapped.add(new AssetNode(node, getAssetDoi(node)));
+    }
+    return ImmutableList.copyOf(wrapped);
   }
 
   protected String getAssetDoi(Node assetNode) {
@@ -70,7 +84,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     if (doi == null) {
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
     }
-    return doi;
+    return DoiBasedIdentity.removeScheme(doi);
   }
 
   /*

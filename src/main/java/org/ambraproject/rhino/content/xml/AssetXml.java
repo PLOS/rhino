@@ -50,7 +50,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   @Override
   public ArticleAsset build(ArticleAsset obj) throws XmlContentException {
-    List<Node> allAssetNodes = findAllAssetNodes();
+    List<AssetNode> allAssetNodes = findAllAssetNodes();
     Node matchingAssetNode = findMatchingAsset(allAssetNodes);
     return parseAsset(matchingAssetNode, obj);
   }
@@ -58,12 +58,11 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
   /*
    * TODO: Query directly for the correct node instead of finding all of them and iterating
    */
-  private Node findMatchingAsset(List<Node> assetNodes) throws XmlContentException {
+  private Node findMatchingAsset(List<AssetNode> assetNodes) throws XmlContentException {
     final String targetDoi = assetId.getIdentifier();
-    for (Node assetNode : assetNodes) {
-      String doi = getAssetDoi(assetNode);
-      if (targetDoi.equals(doi)) {
-        return assetNode;
+    for (AssetNode assetNode : assetNodes) {
+      if (targetDoi.equals(assetNode.getDoi())) {
+        return assetNode.getNode();
       }
     }
 

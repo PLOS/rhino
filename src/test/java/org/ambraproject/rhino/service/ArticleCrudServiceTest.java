@@ -82,10 +82,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     return TestInputStream.of(content);
   }
 
-  private static AssetIdentity identifyAsset(String assetDoi, String extension) {
-    return AssetIdentity.parse(assetDoi + '.' + extension);
-  }
-
   private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) throws FileStoreException {
     boolean received404 = false;
     try {
@@ -183,7 +179,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final AssetIdentity assetId = identifyAsset(testAssetDoi, extension);
+    final AssetIdentity assetId = AssetIdentity.create(testAssetDoi, extension);
     final ArticleIdentity articleId = ArticleIdentity.create(testArticleDoi);
 
     TestInputStream input = new TestFile(articleFile).read();
