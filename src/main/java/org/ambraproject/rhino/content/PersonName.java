@@ -70,23 +70,6 @@ public class PersonName {
   }
 
 
-  public String getFullName() {
-    return fullName;
-  }
-
-  public String getGivenNames() {
-    return givenNames;
-  }
-
-  public String getSuffix() {
-    return suffix;
-  }
-
-  public String getSurname() {
-    return surname;
-  }
-
-
   @Override
   public String toString() {
     return fullName;
