@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -121,6 +122,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     if (givenName == null) {
       throw new XmlContentException("Required given name is omitted");
     }
+    suffix = Strings.nullToEmpty(suffix);
 
     String fullName;
     if (WESTERN_NAME_STYLE.equals(nameStyle)) {
@@ -135,10 +137,10 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   }
 
   /*
-   * Preconditions: firstName and lastName are both non-null and non-empty; suffix may be null
+   * Preconditions: all arguments are non-null; firstName and lastName are non-empty; suffix may be empty
    */
   private static String buildFullName(String firstName, String lastName, String suffix) {
-    boolean hasSuffix = (suffix != null);
+    boolean hasSuffix = !suffix.isEmpty();
     int expectedLength = 2 + firstName.length() + lastName.length() + (hasSuffix ? suffix.length() : -1);
     StringBuilder name = new StringBuilder(expectedLength);
     name.append(firstName).append(' ').append(lastName);

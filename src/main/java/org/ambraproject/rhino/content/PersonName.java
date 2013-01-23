@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content;
 
+import com.google.common.base.Preconditions;
 import org.ambraproject.models.ArticlePerson;
 import org.ambraproject.models.CitedArticlePerson;
 
@@ -35,10 +36,10 @@ public class PersonName {
   private final String suffix;
 
   public PersonName(String fullName, String givenNames, String surname, String suffix) {
-    this.fullName = fullName;
-    this.givenNames = givenNames;
-    this.surname = surname;
-    this.suffix = suffix;
+    this.fullName = Preconditions.checkNotNull(fullName);
+    this.givenNames = Preconditions.checkNotNull(givenNames);
+    this.surname = Preconditions.checkNotNull(surname);
+    this.suffix = Preconditions.checkNotNull(suffix);
   }
 
 
@@ -98,20 +99,20 @@ public class PersonName {
 
     PersonName that = (PersonName) o;
 
-    if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null) return false;
-    if (givenNames != null ? !givenNames.equals(that.givenNames) : that.givenNames != null) return false;
-    if (suffix != null ? !suffix.equals(that.suffix) : that.suffix != null) return false;
-    if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
+    if (!fullName.equals(that.fullName)) return false;
+    if (!givenNames.equals(that.givenNames)) return false;
+    if (!suffix.equals(that.suffix)) return false;
+    if (!surname.equals(that.surname)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = fullName != null ? fullName.hashCode() : 0;
-    result = 31 * result + (givenNames != null ? givenNames.hashCode() : 0);
-    result = 31 * result + (surname != null ? surname.hashCode() : 0);
-    result = 31 * result + (suffix != null ? suffix.hashCode() : 0);
+    int result = fullName.hashCode();
+    result = 31 * result + givenNames.hashCode();
+    result = 31 * result + surname.hashCode();
+    result = 31 * result + suffix.hashCode();
     return result;
   }
 }
