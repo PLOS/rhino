@@ -323,7 +323,7 @@ public class IngestionTest extends BaseRhinoTest {
 
     int commonSize = Math.min(actualNames.size(), expectedNames.size());
     for (int i = 0; i < commonSize; i++) {
-      results.compare(parentType, fieldName, actualNames.get(i), actualNames.get(i));
+      results.compare(parentType, fieldName, actualNames.get(i), expectedNames.get(i));
     }
 
     // If the sizes didn't match, report missing/extra citations as errors
