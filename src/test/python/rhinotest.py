@@ -42,7 +42,7 @@ import os
 from restclient import Request
 
 
-TEST_DATA_PATH = '../resources/data/'
+TEST_DATA_PATH = '../resources/articles/'
 """A file path, relative to this script, to the test data location."""
 
 DOI_PREFIX = '10.1371/'
