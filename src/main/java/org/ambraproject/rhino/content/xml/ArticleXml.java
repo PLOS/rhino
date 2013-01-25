@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -135,6 +136,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     List<String> collaborativeAuthors = readTextList("/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab");
     collaborativeAuthors = Lists.newArrayList(collaborativeAuthors); // copy to simpler implementation
     article.setCollaborativeAuthors(collaborativeAuthors);
+    article.setUrl(buildUrl());
 
     // TODO Finish implementing
 
@@ -178,6 +180,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       result = readString("/article/front/journal-meta/journal-title-group/journal-title");
     }
     return result == null ? "" : result;
+  }
+
+  /**
+   * @return a valid URL to the article (base on the DOI)
+   */
+  private String buildUrl() {
+    String doi = readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']");
+    return "http://dx.doi.org/" + URLEncoder.encode(doi);
   }
 
   /**
