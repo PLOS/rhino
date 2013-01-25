@@ -219,7 +219,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(ArticleIdentity id) throws FileStoreException {
+  public InputStream readXml(ArticleIdentity id) throws FileStoreException {
     if (!articleExistsAt(id)) {
       throw reportNotFound(id);
     }

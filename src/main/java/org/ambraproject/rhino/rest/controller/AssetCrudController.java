@@ -141,7 +141,7 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
     ResponseEntity<byte[]> response;
     boolean threw = true;
     try {
-      fileStream = articleCrudService.read(article);
+      fileStream = articleCrudService.readXml(article);
       response = respondWithStream(fileStream, article.forXmlAsset());
       threw = false;
     } finally {

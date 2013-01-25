@@ -28,7 +28,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface AssetCrudService extends DoiBasedCrudService<AssetIdentity> {
+public interface AssetCrudService extends DoiBasedCrudService {
 
   /**
    * Create or update an article asset.

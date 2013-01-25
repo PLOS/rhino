@@ -27,7 +27,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity> {
+public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
    * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
@@ -56,7 +56,7 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract InputStream read(ArticleIdentity id) throws FileStoreException;
+  public abstract InputStream readXml(ArticleIdentity id) throws FileStoreException;
 
   /**
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.

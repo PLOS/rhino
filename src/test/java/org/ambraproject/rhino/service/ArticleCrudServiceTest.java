@@ -85,7 +85,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
   private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) throws FileStoreException {
     boolean received404 = false;
     try {
-      articleCrudService.read(id);
+      articleCrudService.readXml(id);
     } catch (RestClientException e) {
       if (HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
         received404 = true;
@@ -155,14 +155,14 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     expectedCategories.add(cat2);
     assertEquals(stored.getCategories(), expectedCategories);
 
-    byte[] readData = IOUtils.toByteArray(articleCrudService.read(articleId));
+    byte[] readData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(readData, sampleData);
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
     writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
     assertEquals(writeResult, WriteResult.UPDATED);
-    byte[] updatedData = IOUtils.toByteArray(articleCrudService.read(articleId));
+    byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
