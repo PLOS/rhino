@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 
-# Copyright (c) 2012 by Public Library of Science
+# Copyright (c) 2012-2013 by Public Library of Science
 # http://plos.org
 # http://ambraproject.org
 #
@@ -17,123 +17,47 @@
 # limitations under the License.
 
 
-"""Exercises the ArticleCrudController methods in Rhino.
+"""Exercises Rhino's REST API.
 
-This script serves as a quick-and-dirty integration test by exercising the
-Spring controllers in ways that the unit tests cannot. It requires that a
-Tomcat instance be running Rhino at the time the script is executed.
+This script is a quick-and-dirty integration test that exercises the REST
+API with actual HTTP requests. It requires that a Tomcat instance be
+running Rhino at the time the script is executed.
 
-This script uses the same test data as the unit test suite. The list of
-test cases is currently hard-coded into the script, but if it grows too
-large, it could be either split into its own module or automated to use
-whatever it finds in the right directories.
-
-This script does not currently assert its expected behavior; it is more
-like a demo for a human to examine than a proper test suite. It is
-supplanted by the Java unit tests that assert correct behavior for the
-services (but not the REST API). Extending the REST API tests with
-assertions and automated checking is a to-do.
+This script does not currently assert its expected behavior; it is not
+really an automated test suite as much as a demo for a human to examine and
+debug. It is supplanted by the Java unit tests, which do assert correct
+behavior for the services (but not the REST API).
 """
 
 from __future__ import print_function
 from __future__ import with_statement
 
-import os
-from restclient import Request
+try:
+    import requests
+except ImportError, e:
+    print('''
+        Requires third-party library: requests
+        <http://docs.python-requests.org/>
+        To install on a PLOS development box:
+            sudo apt-get install pip
+            sudo pip install requests
+        ''')
+    raise e
+
+from articlecase import ArticleCase
 
 
-TEST_DATA_PATH = '../resources/articles/'
 """A file path, relative to this script, to the test data location."""
 
-DOI_PREFIX = '10.1371/'
 
-class TestVolume(object):
-    """One test case of a volume to create."""
-    def __init__(self, doi, journal_key, display_name, issues=()):
-        self.doi = DOI_PREFIX + doi
-        self.journal_key = journal_key
-        self.display_name = display_name
-        self.issues = issues
-
-    def __str__(self):
-        return 'TestVolume({0!r}, {1!r}, {2!r}, {3!r})'.format(
-            self.doi, self.journal_key, self.display_name, self.issues)
-
-class TestIssue(object):
-    """One test case of an issue to create.
-
-    In order to be created, an instance should belong to the 'issues' field
-    of a TestVolume object.
-    """
-    def __init__(self, suffix, display_name, image_uri=None):
-        if not suffix.startswith('.'):
-            suffix = '.' + suffix
-        self.suffix = suffix
-        self.display_name = display_name
-        self.image_uri = image_uri
-
-    def __str__(self):
-        return 'TestIssue({0!r}, {1!r}, {2!r})'.format(
-            self.suffix, self.display_name, self.image_uri)
-
-TEST_VOLUMES = [
-    TestVolume('volume.pone.v47', 'PLoSONE', 'TestVolume',
-               issues=[TestIssue('i23', 'TestIssue')]),
-    ]
-"""A list of test volumes to create.
-
-Unlike TEST_ARTICLES, these do not map on to any data outside this script
-and can have any values.
-"""
-
-class TestArticle(object):
-    """One test case of an article to manipulate."""
-    def __init__(self, doi, asset_suffixes=()):
-        """Create a test case for an article.
-
-        The DOI is the actual DOI for the article; it should not have an
-        '.xml' extension. Each asset suffix can be appended to the DOI to
-        produce the quasi-DOI identifier of an asset that goes with the
-        article. The asset suffixes *should* have filename extensions.
-        """
-        self.doi = doi
-        self.asset_suffixes = asset_suffixes
-
-    def article_doi(self):
-        """Return the article's actual DOI."""
-        return DOI_PREFIX + self.doi
-
-    def article_id(self):
-        """Return the article's RESTful identifier."""
-        return self.article_doi()
-
-    def xml_path(self):
-        """Return a local file path from this script to the article's data."""
-        return os.path.join(TEST_DATA_PATH, self.doi + '.xml')
-
-    def assets(self):
-        """Generate the sequence of this article's assets.
-
-        Each yielded value is a (asset_id, asset_file) tuple. The ID is the
-        full RESTful identifier for the asset, and the file is the local
-        file path to the asset data.
-        """
-        for suffix in self.asset_suffixes:
-            if not suffix.startswith('.'):
-                suffix = '.' + suffix
-            asset_path = self.doi + suffix
-            asset_id = DOI_PREFIX + asset_path
-            asset_file = os.path.join(TEST_DATA_PATH, asset_path)
-            yield (asset_id, asset_file)
-
-    def __str__(self):
-        return 'TestArticle({0!r}, {1!r})'.format(self.doi, self.asset_suffixes)
-
-TEST_ARTICLES = [
-    TestArticle('journal.pone.0038869', ['g001.tif', 'g002.tif']),
-    ]
+SERVER_HOST = 'http://localhost:8080/'
 
 _BANNER_WIDTH = 79
+
+
+def pretty_dict_repr(d):
+    lines = ['    {0!r}: {1!r},'.format(k, v) for (k, v) in sorted(d.items())]
+    return '\n'.join(['{'] + lines + ['}'])
 
 def section(*parts):
     print('=' * _BANNER_WIDTH)
@@ -145,89 +69,35 @@ def report(description, response):
     print('-' * _BANNER_WIDTH)
     print(description)
     print()
-    print(response.display())
+    print('Status {0}: {1!r}'.format(response.status_code, response.reason))
+    print('Headers:', pretty_dict_repr(response.headers))
+    print()
 
-def build_request(path):
-    return Request('localhost', path, port=8080)
-
-def create_test_volume(case):
-    """Test volume creation for one case."""
-    section('Running volume test for', case)
-
-    req = build_request('volume/' + case.doi)
-    req.set_query_parameter('display', case.display_name)
-    req.set_query_parameter('journal', case.journal_key)
-    result = req.put()
-    report('Response to CREATE for volume', result)
-
-    req = build_request('volume/' + case.doi)
-    result = req.get()
-    report('Response to READ for volume', result)
-
-    for issue_case in case.issues:
-        req = build_request('issue/' + case.doi + issue_case.suffix)
-        req.set_query_parameter('volume', case.doi)
-        req.set_query_parameter('display', issue_case.display_name)
-        if issue_case.image_uri:
-            req.set_query_parameter('image', issue_case.image_uri)
+    print('Response size:', len(response.content))
+    content_lines = list(response.iter_lines())
+    for (line_number, line) in enumerate(content_lines):
+        if line_number > 4:
+            print('...')
+            print(content_lines[-1])
+            break
+        print(line)
+    print()
 
 def run_test_on_article(case):
     """Run the test for one article test case."""
-    section('Running article test for', case)
+    section('Running article test for', case.article_doi())
 
-    def article_req(query_param=None):
-        url = ['article/', case.article_id()]
-        if query_param:
-            url += ['?', query_param]
-        return build_request(''.join(url))
-    def asset_req(asset_id):
-        return build_request('asset/' + asset_id)
+    with open(case.xml_path()) as f:
+        create = requests.post(SERVER_HOST + 'article', files={'file': f})
+    report('Create article', create)
 
-    # Create by POSTing to namespace root
-    create = build_request('article')
-    print(create.get_url())
-    create.set_form_file_path('file', case.xml_path())
-    result = create.post()
-    report('Response to CREATE for article', result)
+    article_id = 'article/' + case.article_doi()
 
-    read_meta = article_req('format=json')
-    report('Response to READ (article metadata, no assets)', read_meta.get())
+    read = requests.get(SERVER_HOST + article_id)
+    report('Read article metadata', read)
 
-    read_data = article_req()
-    report('Response to READ (article XML)', read_data.get())
+    delete = requests.delete(SERVER_HOST + article_id)
+    report('Delete article', delete)
 
-    def upload_asset(description, asset_id, asset_filename, article_id):
-        req = asset_req(asset_id)
-        if article_id:
-            req.set_query_parameter('assetOf', article_id)
-        with open(asset_filename) as asset_file:
-            req.message_body = asset_file
-            result = req.put()
-        report(description, result)
-
-    for asset_id, asset_filename in case.assets():
-        continue
-        upload_asset('Response to creating asset',
-                     asset_id, asset_filename, case.article_doi())
-        upload_asset('Response to re-uploading asset',
-                     asset_id, asset_filename, case.article_doi())
-        upload_asset('Response to re-uploading asset without article DOI',
-                     asset_id, asset_filename, None)
-
-    report('Response to READ (article metadata, with assets)', read_meta.get())
-
-    for asset_id, asset_file in case.assets():
-        continue
-        read_asset = asset_req(asset_id)
-        report('Response to READ for asset', read_asset.get())
-        delete_asset = asset_req(asset_id)
-        report('Response to DELETE for asset', delete_asset.delete())
-
-    delete = article_req()
-    report('Response to DELETE', delete.delete())
-
-
-for volume_case in TEST_VOLUMES:
-    create_test_volume(volume_case)
-for article_case in TEST_ARTICLES:
-    run_test_on_article(article_case)
+run_test_on_article(ArticleCase(
+        '../resources/articles/', 'journal.pone.0038869'))
