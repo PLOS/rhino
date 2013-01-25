@@ -115,7 +115,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
-    article.setJournal(readString("/article/front/journal-meta/journal-title"));
+    String journal = buildJournal();
+    if (journal != null && !journal.isEmpty()) {
+      article.setJournal(journal);
+    }
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
@@ -160,6 +163,21 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     } else {
       return "1-" + pageCount;
     }
+  }
+
+  /**
+   * @return the name of the journal the article was published in
+   */
+  private String buildJournal() {
+    String result;
+    String journalId = readString(
+        "/article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']");
+    if (journalId != null && !journalId.isEmpty()) {
+      result = journalId;
+    } else {
+      result = readString("/article/front/journal-meta/journal-title-group/journal-title");
+    }
+    return result == null ? "" : result;
   }
 
   /**
