@@ -88,7 +88,7 @@ def run_test_on_article(case):
     section('Running article test for', case.article_doi())
 
     with open(case.xml_path()) as f:
-        create = requests.post(SERVER_HOST + 'article', files={'file': f})
+        create = requests.post(SERVER_HOST + 'article', files={'xml': f})
     report('Create article', create)
 
     article_id = 'article/' + case.article_doi()

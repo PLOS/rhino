@@ -57,7 +57,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
   /**
    * The request parameter whose value is the XML file being uploaded for a create operation.
    */
-  private static final String FILE_ARG = "file";
+  private static final String ARTICLE_XML_FIELD = "xml";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -84,7 +84,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
    * @return
    */
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam(FILE_ARG) MultipartFile requestFile) throws IOException, FileStoreException {
+  public ResponseEntity<?> create(@RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile) throws IOException, FileStoreException {
     InputStream requestBody = null;
     boolean threw = true;
     try {
