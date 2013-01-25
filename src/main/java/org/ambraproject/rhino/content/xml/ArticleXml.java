@@ -49,16 +49,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleXml.class);
 
-  /*
-   * As specified by <http://dtd.nlm.nih.gov/publishing/2.0/journalpublishing.dtd> (see <!ENTITY % article-types>)
-   */
-  private static final ImmutableSet<String> VALID_ARTICLE_TYPES = ImmutableSet.copyOf(new String[]{
-      "article-commentary", "abstract", "addendum", "announcement", "book-review", "books-received", "brief-report",
-      "calendar", "case-report", "correction", "discussion", "editorial", "in-brief", "introduction", "letter",
-      "meeting-report", "news", "obituary", "oration", "other", "product-review", "research-article", "retraction",
-      "reply", "review-article",
-  });
-
   private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
   public ArticleXml(Document xml) {
@@ -125,7 +115,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
-    article.setTypes(parseArticleTypes(readTextList("/article/@article-type")));
+    article.setTypes(buildArticleTypes());
     article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//(citation|nlm-citation)")));
     article.setAuthors(readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
@@ -147,6 +137,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    *     article XML.
    */
   private String buildRights() {
+
+    // pmc2obj-v3.xslt lines 179-183
     StringBuilder rightsStr = new StringBuilder();
     rightsStr.append(readString("/article/front/article-meta/permissions/copyright-holder"))
         .append(". ")
@@ -171,6 +163,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @return the name of the journal the article was published in
    */
   private String buildJournal() {
+
+    // pmc2obj-v3.xslt lines 308-311
     String result;
     String journalId = readString(
         "/article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']");
@@ -188,6 +182,23 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private String buildUrl() {
     String doi = readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']");
     return "http://dx.doi.org/" + URLEncoder.encode(doi);
+  }
+
+  /**
+   * @return set of article type strings for the article
+   */
+  private Set<String> buildArticleTypes() {
+
+    // pmc2obj-v3.xslt lines 93-96
+    Set<String> articleTypes = Sets.newHashSet();
+    articleTypes.add("http://rdf.plos.org/RDF/articleType/"
+        + readString("/article/@article-type"));
+    List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
+        + "subj-group[@subj-group-type = 'heading']/subject");
+    for (String otherType : otherTypes) {
+      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + uriEncode(otherType));
+    }
+    return articleTypes;
   }
 
   /**
@@ -257,15 +268,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     // Note that Calendar wants month to be zero-based.
     date.set(year, month - 1, day, 0, 0, 0);
     return date.getTime();
-  }
-
-  private Set<String> parseArticleTypes(Collection<String> articleTypeText) throws XmlContentException {
-    Set<String> articleTypes = Sets.newHashSet(articleTypeText);
-    if (!VALID_ARTICLE_TYPES.containsAll(articleTypes)) {
-      Set<String> invalidTypes = Sets.difference(articleTypes, VALID_ARTICLE_TYPES);
-      throw new XmlContentException("Contains invalid article type: " + invalidTypes);
-    }
-    return articleTypes;
   }
 
   private List<ArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {

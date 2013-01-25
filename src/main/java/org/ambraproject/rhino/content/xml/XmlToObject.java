@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.ambraproject.rhino.util.NodeListAdapter;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.util.UriUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -30,6 +31,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -110,4 +112,19 @@ public abstract class XmlToObject<T> {
     return Lists.transform(readNodeList(query), GET_TEXT_CONTENT);
   }
 
+  /**
+   * Encodes a string according to the URI escaping rules as described in section 2 of RFC 3986.
+   */
+  public static String uriEncode(String s) {
+
+    // This is surprisingly difficult in Java.  You would think that java.net.URLEncoder would
+    // do the trick, but it doesn't--it uses HTML form encoding, which is different.  For
+    // instance URLEncode encodes a space character as "+" while RFC 3986 states that it
+    // should be "%20".
+    try {
+      return UriUtils.encodeFragment(s, "UTF-8");
+    } catch (UnsupportedEncodingException uee) {
+      throw new RuntimeException(uee);
+    }
+  }
 }
