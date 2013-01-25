@@ -110,13 +110,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
     article.setDescription(buildDescription(readNode("/article/front/article-meta/abstract")));
-    
-    StringBuilder rightsStr = new StringBuilder();
-    rightsStr.append(readString("/article/front/article-meta/permissions/copyright-holder"))
-        .append(". ")
-        .append(readString("/article/front/article-meta/permissions/license/license-p"));
-    article.setRights(rightsStr.toString());
-
+    article.setRights(buildRights());
+    article.setPages(buildPages());
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
@@ -140,6 +135,31 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     // TODO Finish implementing
 
+  }
+
+  /**
+   * @return the appropriate value for the rights property of {@link Article}, based on the
+   *     article XML.
+   */
+  private String buildRights() {
+    StringBuilder rightsStr = new StringBuilder();
+    rightsStr.append(readString("/article/front/article-meta/permissions/copyright-holder"))
+        .append(". ")
+        .append(readString("/article/front/article-meta/permissions/license/license-p"));
+    return rightsStr.toString();
+  }
+
+  /**
+   * @return the appropriate value for the pages property of {@link Article}, based on the
+   *     article XML.
+   */
+  private String buildPages() {
+    String pageCount = readString("/article/front/article-meta/counts/page-count/@count");
+    if (pageCount == null || pageCount.isEmpty()) {
+      return "";
+    } else {
+      return "1-" + pageCount;
+    }
   }
 
   /**
