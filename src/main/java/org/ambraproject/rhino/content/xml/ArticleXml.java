@@ -110,7 +110,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
     article.setDescription(buildDescription(readNode("/article/front/article-meta/abstract")));
-    article.setRights(readString("/article/front/article-meta/copyright-statement"));
+    
+    StringBuilder rightsStr = new StringBuilder();
+    rightsStr.append(readString("/article/front/article-meta/permissions/copyright-holder"))
+        .append(". ")
+        .append(readString("/article/front/article-meta/permissions/license/license-p"));
+    article.setRights(rightsStr.toString());
+
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
