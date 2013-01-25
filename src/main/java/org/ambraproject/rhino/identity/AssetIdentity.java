@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.identity;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.models.ArticleAsset;
@@ -124,6 +125,19 @@ public class AssetIdentity extends DoiBasedIdentity {
    */
   public StandAloneIdentity forMetadata() {
     return StandAloneIdentity.create(getIdentifier());
+  }
+
+  /**
+   * If this asset is an XML file, return the identity of the article to which it would belong <em>if</em> it is an
+   * article's NLM DTD file.
+   *
+   * @return
+   */
+  public Optional<ArticleIdentity> forArticle() {
+    if (XML_EXTENSION.equalsIgnoreCase(extension)) {
+      return Optional.of(ArticleIdentity.create(getIdentifier()));
+    }
+    return Optional.absent();
   }
 
   @Override

@@ -23,10 +23,13 @@ import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +47,8 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
   private static final String PARENT_PARAM = "assetOf";
 
+  @Autowired
+  private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
 
@@ -90,14 +95,54 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
+  public ResponseEntity<?> read(HttpServletRequest request) throws IOException, FileStoreException {
     AssetIdentity id = parse(request);
+
+    Optional<ArticleIdentity> articleId = id.forArticle();
+    if (articleId.isPresent()) {
+      try {
+        return provideXmlFor(articleId.get());
+      } catch (RestClientException e) {
+        /*
+         * If there was no such article, it might still be a regular asset whose type happens to be XML.
+         * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
+         * the same "not found" response anyway.)
+         */
+
+        if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
+          throw e; // Anything other than "not found" is unexpected
+        }
+      }
+    }
+
     InputStream fileStream = null;
     ResponseEntity<byte[]> response;
     boolean threw = true;
     try {
       fileStream = assetCrudService.read(id);
       response = respondWithStream(fileStream, id);
+      threw = false;
+    } finally {
+      Closeables.close(fileStream, threw);
+    }
+    return response;
+  }
+
+  /**
+   * Send a response containing the XML file for an article.
+   *
+   * @param article the parent article of the XML file to send
+   * @return the response entity with the XML file stream
+   * @throws FileStoreException
+   * @throws IOException
+   */
+  private ResponseEntity<?> provideXmlFor(ArticleIdentity article) throws FileStoreException, IOException {
+    InputStream fileStream = null;
+    ResponseEntity<byte[]> response;
+    boolean threw = true;
+    try {
+      fileStream = articleCrudService.read(article);
+      response = respondWithStream(fileStream, article.forXmlAsset());
       threw = false;
     } finally {
       Closeables.close(fileStream, threw);

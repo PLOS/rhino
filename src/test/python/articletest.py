@@ -50,7 +50,7 @@ from articlecase import ArticleCase
 """A file path, relative to this script, to the test data location."""
 
 
-SERVER_HOST = 'http://localhost:8080/'
+SERVER_HOST = 'http://localhost:8080'
 
 _BANNER_WIDTH = 79
 
@@ -88,15 +88,20 @@ def run_test_on_article(case):
     section('Running article test for', case.article_doi())
 
     with open(case.xml_path()) as f:
-        create = requests.post(SERVER_HOST + 'article', files={'xml': f})
+        create = requests.post(SERVER_HOST + '/article', files={'xml': f})
     report('Create article', create)
 
-    article_id = 'article/' + case.article_doi()
+    url_args = {'host': SERVER_HOST, 'doi': case.article_doi()}
+    article_id = '{host}/article/{doi}'.format(**url_args)
+    xml_asset_id = '{host}/asset/{doi}.xml'.format(**url_args)
 
-    read = requests.get(SERVER_HOST + article_id)
-    report('Read article metadata', read)
+    read_meta = requests.get(article_id)
+    report('Read article metadata', read_meta)
 
-    delete = requests.delete(SERVER_HOST + article_id)
+    read_xml = requests.get(xml_asset_id)
+    report('Read article XML', read_xml)
+
+    delete = requests.delete(article_id)
     report('Delete article', delete)
 
 run_test_on_article(ArticleCase(

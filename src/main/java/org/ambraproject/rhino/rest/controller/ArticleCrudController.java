@@ -132,30 +132,6 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     return respondWithPlainText(metadata);
   }
 
-  /**
-   * Send a response containing the XML file for an article.
-   * <p/>
-   * The API doesn't currently provide this functionality in the article namespace.
-   *
-   * @param article the parent article of the XML file to send
-   * @return the response entity with the XML file stream
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  private ResponseEntity<?> provideXmlFor(ArticleIdentity article) throws FileStoreException, IOException {
-    InputStream fileStream = null;
-    ResponseEntity<byte[]> response;
-    boolean threw = true;
-    try {
-      fileStream = articleCrudService.read(article);
-      response = respondWithStream(fileStream, article.forXmlAsset());
-      threw = false;
-    } finally {
-      Closeables.close(fileStream, threw);
-    }
-    return response;
-  }
-
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
     ArticleIdentity id = parse(request);
