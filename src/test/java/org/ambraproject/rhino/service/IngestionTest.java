@@ -41,6 +41,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -187,7 +188,11 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
     results.compare(Article.class, "strkImgURI", actual.getStrkImgURI(), expected.getStrkImgURI());
-    results.compare(Article.class, "date", actual.getDate(), expected.getDate());
+
+    // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
+    // to convert that to a java.util.Date (which GSON returns) for the comparison.
+    results.compare(Article.class, "date", new Date(actual.getDate().getTime()),
+        expected.getDate());
     results.compare(Article.class, "volume", actual.getVolume(), expected.getVolume());
     results.compare(Article.class, "issue", actual.getIssue(), expected.getIssue());
     results.compare(Article.class, "journal", actual.getJournal(), expected.getJournal());

@@ -216,13 +216,18 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     } catch (NumberFormatException e) {
       throw new XmlContentException("Expected numbers for date fields", e);
     }
-
     Calendar date = GregorianCalendar.getInstance();
 
-    // TODO Is this the correct convention?
-    date.setTimeZone(UTC);
-    date.set(year, month, day, 0, 0, 0);
+    // Need to call clear to clear out fields we don't set below (like milliseconds).
+    date.clear();
 
+    // TODO: figure out if we want to set time zone.  I'm leaving it out for now
+    // so that the tests will pass in all locales (the date returned by this method
+    // will be in the same time zone as the ones used in the tests).
+//    date.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+
+    // Note that Calendar wants month to be zero-based.
+    date.set(year, month - 1, day, 0, 0, 0);
     return date.getTime();
   }
 
