@@ -211,6 +211,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return nodeContent.toString();
   }
 
+
   private String parseLanguage(String language) {
     if (language == null) {
       log.warn("Language not specified in article XML; defaulting to English");
