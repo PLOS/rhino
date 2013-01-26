@@ -39,7 +39,7 @@ except ImportError, e:
         Requires third-party library: requests
         <http://docs.python-requests.org/>
         To install on a PLOS development box:
-            sudo apt-get install pip
+            sudo apt-get install python-pip
             sudo pip install requests
         ''')
     raise e
