@@ -72,15 +72,6 @@ public class AssertionCollector {
       successes.add(new Success(objectName, fieldName, expected));
       return true;
     }
-
-    // Consider an actual null to be equivalent to an expected empty string.
-    if (actual == null && expected instanceof String) {
-      String expectedStr = (String) expected;
-      if (expectedStr.isEmpty()) {
-        successes.add(new Success(objectName, fieldName, expected));
-        return true;
-      }
-    }
     failures.add(new Failure(objectName, fieldName, actual, expected));
     return false;
   }

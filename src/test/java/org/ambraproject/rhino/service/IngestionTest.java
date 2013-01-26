@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -187,7 +188,14 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
-    results.compare(Article.class, "strkImgURI", actual.getStrkImgURI(), expected.getStrkImgURI());
+
+    /*
+     * Ambra uses uses null and "" for this value inconsistently, depending on whether the article was ingested before
+     * or after the strkImgURI column was introduced. So, we assume they're interchangeable.
+     */
+    results.compare(Article.class, "strkImgURI",
+        Strings.nullToEmpty(actual.getStrkImgURI()),
+        Strings.nullToEmpty(expected.getStrkImgURI()));
 
     // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
     // to convert that to a java.util.Date (which GSON returns) for the comparison.
@@ -328,7 +336,13 @@ public class IngestionTest extends BaseRhinoTest {
 
     int commonSize = Math.min(actualNames.size(), expectedNames.size());
     for (int i = 0; i < commonSize; i++) {
-      results.compare(parentType, fieldName, actualNames.get(i), expectedNames.get(i));
+      PersonName actualName = actualNames.get(i);
+      PersonName expectedName = expectedNames.get(i);
+
+      results.compare(parentType, fieldName + ".fullName", actualName.getFullName(), expectedName.getFullName());
+      results.compare(parentType, fieldName + ".givenNames", actualName.getGivenNames(), expectedName.getGivenNames());
+      results.compare(parentType, fieldName + ".surname", actualName.getSurname(), expectedName.getSurname());
+      results.compare(parentType, fieldName + ".suffix", actualName.getSuffix(), expectedName.getSuffix());
     }
 
     // If the sizes didn't match, report missing/extra citations as errors
