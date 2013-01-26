@@ -109,6 +109,18 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   private static final String WESTERN_NAME_STYLE = "western";
   private static final String EASTERN_NAME_STYLE = "eastern";
 
+  /**
+   * Parse a person's name from an article XML node. The returned object is useful for populating a {@link
+   * org.ambraproject.models.ArticlePerson} or {@link org.ambraproject.models.CitedArticlePerson}.
+   * <p/>
+   * This method expects to find a "name-style" attribute and "surname" and "given-names" subnodes. The "suffix" subnode
+   * is optional. The suffix will be represented by an empty string if the suffix node is omitted. In some cases, an
+   * empty suffix will need to be manually changed to null -- see {@link CitedArticleXml#emptySuffixToNull}.
+   *
+   * @param nameNode the node to parse
+   * @return the name
+   * @throws XmlContentException if an expected field is omitted
+   */
   protected PersonName parsePersonName(Node nameNode)
       throws XmlContentException {
     String nameStyle = readString("@name-style", nameNode);
