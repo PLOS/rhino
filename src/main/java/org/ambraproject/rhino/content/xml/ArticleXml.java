@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -106,17 +107,15 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
-    String journal = buildJournal();
-    if (journal != null && !journal.isEmpty()) {
-      article.setJournal(journal);
-    }
+    article.setJournal(buildJournal());
     article.setPublisherName(readString("/article/front/journal-meta/publisher/publisher-name"));
     article.setPublisherLocation(readString("/article/front/journal-meta/publisher/publisher-loc"));
 
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
     article.setTypes(buildArticleTypes());
-    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//(citation|nlm-citation)")));
+    article.setCitedArticles(parseCitations(readNodeList(
+        "/article/back/ref-list/ref/(element-citation|mixed-citation)")));
     article.setAuthors(readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readEditors(readNodeList(
@@ -127,9 +126,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     collaborativeAuthors = Lists.newArrayList(collaborativeAuthors); // copy to simpler implementation
     article.setCollaborativeAuthors(collaborativeAuthors);
     article.setUrl(buildUrl());
-
-    // TODO Finish implementing
-
   }
 
   /**
@@ -152,7 +148,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    */
   private String buildPages() {
     String pageCount = readString("/article/front/article-meta/counts/page-count/@count");
-    if (pageCount == null || pageCount.isEmpty()) {
+    if (Strings.isNullOrEmpty(pageCount)) {
       return "";
     } else {
       return "1-" + pageCount;
@@ -168,7 +164,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     String result;
     String journalId = readString(
         "/article/front/journal-meta/journal-id[@journal-id-type='nlm-ta']");
-    if (journalId != null && !journalId.isEmpty()) {
+    if (!Strings.isNullOrEmpty(journalId)) {
       result = journalId;
     } else {
       result = readString("/article/front/journal-meta/journal-title-group/journal-title");
@@ -211,31 +207,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    */
   private static String buildDescription(Node node) {
     StringBuilder nodeContent = new StringBuilder();
-    buildDescription(nodeContent, node);
+    buildTextWithMarkup(nodeContent, node);
     return nodeContent.toString();
-  }
-
-  /*
-   * Recursive helper method for buildDescription(Node).
-   */
-  private static void buildDescription(StringBuilder nodeContent, Node node) {
-    List<Node> children = NodeListAdapter.wrap(node.getChildNodes());
-    for (Node child : children) {
-      switch (child.getNodeType()) {
-        case Node.TEXT_NODE:
-          String text = child.getNodeValue();
-          if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
-            nodeContent.append(text);
-          }
-          break;
-        case Node.ELEMENT_NODE:
-          String nodeName = child.getNodeName();
-          nodeContent.append('<').append(nodeName).append('>');
-          buildDescription(nodeContent, child);
-          nodeContent.append("</").append(nodeName).append('>');
-          break;
-      }
-    }
   }
 
   private String parseLanguage(String language) {

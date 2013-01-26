@@ -329,7 +329,7 @@
       
       "\u003cp\u003eMeasurements of individual bones of \u003citalic\u003eDarwinius masillae\u003c/italic\u003e. Tables 4–23.\u003c/p\u003e\u003cp\u003e(0.24 MB DOC)\u003c/p\u003e",
       "size":243712}],"citedArticles":[{"key":"1","year":2000,"displayYear":
-      "2000b","volumeNumber":801,"volume":"80(1)","title":
+      "2000b","volumeNumber":80,"volume":"80(1)","title":
       "Der sechste Messel-Primate (Mammalia, Primates, Notharctidae, Cercamoniinae).",
       "pages":"289-303","eLocationID":"289","journal":
       "Senckenbergiana lethaea","collaborativeAuthors":[],"citationType":
@@ -356,7 +356,7 @@
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"PD Gingerich","givenNames":"PD","surnames":
           "Gingerich"}],"editors":[]},{"key":"5","year":1975,"displayYear":
-      "1975","volumeNumber":2415,"volume":"24(15)","title":
+      "1975","volumeNumber":24,"volume":"24(15)","title":
       "A new genus of Adapidae (Mammalia, Primates) from the late Eocene of southern France, and its significance for the origin of higher primates.",
       "pages":"163-170","eLocationID":"163","journal":
       "Contributions of the Museum of Paleontology of the University of Michigan",
@@ -364,14 +364,14 @@
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
           "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
       "editors":[]},{"key":"6","year":1980,"displayYear":"1980",
-      "volumeNumber":11012,"volume":"110(12)","title":
+      "volumeNumber":110,"volume":"110(12)","title":
       "Beiträge zur Ernährungsbiologie eozäner Fledermäuse aus der “Grube Messel”.",
       "pages":"353-367","eLocationID":"353","journal":"Natur und Museum",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
           "G Richter","givenNames":"G","surnames":"Richter"},{"fullName":
           "G Storch","givenNames":"G","surnames":"Storch"}],"editors":[]},{
-      "key":"7","year":1994,"displayYear":"1994","volumeNumber":1243,
+      "key":"7","year":1994,"displayYear":"1994","volumeNumber":124,
       "volume":"124(3)","title":
       "Die eozänen Tiere von Messel – ertrunken, erstickt oder vergiftet?",
       "pages":"91-97","eLocationID":"91","journal":"Natur und Museum",
@@ -420,7 +420,7 @@
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"JL Franzen","givenNames":"JL","surnames":
           "Franzen"}],"editors":[]},{"key":"13","year":1979,"displayYear":
-      "1979","volumeNumber":5312,"volume":"53(1/2)","title":
+      "1979","volumeNumber":53,"volume":"53(1/2)","title":
       "Ein Lemurenrest aus dem eozänen Ölschiefer der Grube Messel bei Darmstadt.",
       "pages":"63-76","eLocationID":"63","journal":
       "Paläontologische Zeitschrift","collaborativeAuthors":[],
@@ -462,14 +462,14 @@
           "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[{
           "fullName":"JF Fleagle","givenNames":"JF","surnames":"Fleagle"},{
           "fullName":"RF Kay","givenNames":"RF","surnames":"Kay"}]},{"key":
-      "19","year":2000,"displayYear":"2000a","volumeNumber":801,"volume":
+      "19","year":2000,"displayYear":"2000a","volumeNumber":80,"volume":
       "80(1)","title":
       "\u003citalic\u003eEuropolemur kelleri\u003c/italic\u003e n.sp. von Messel und ein Nachtrag zu \u003citalic\u003eEuropolemur koenigswaldi\u003c/italic\u003e (Mammalia, Primates, Notharctidae, Cercamoniinae).",
       "pages":"275-287","eLocationID":"275","journal":
       "Senckenbergiana lethaea","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
           "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[]},
-    {"key":"20","year":2005,"displayYear":"2005","volumeNumber":914,"volume":
+    {"key":"20","year":2005,"displayYear":"2005","volumeNumber":91,"volume":
       "91(4)","title":
       "The implications of the numerical dating of the Messel fossil deposit (Eocene, Germany) for mammalian biochronology.",
       "pages":"329-335","eLocationID":"329","journal":
@@ -492,7 +492,7 @@
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"U Thalmann","givenNames":"U","surnames":
           "Thalmann"}],"editors":[]},{"key":"23","year":1920,"displayYear":
-      "1920","volumeNumber":32,"volume":"3(2)","title":
+      "1920","volumeNumber":3,"volume":"3(2)","title":
       "On the structure and relations of \u003citalic\u003eNotharctus\u003c/italic\u003e, an american Eocene Primate. Studies on the Evolution of Primates, Part III.",
       "pages":"49-243","eLocationID":"49","journal":
       "Memoirs of the American Museum of Natural History (N.S.)",
@@ -512,7 +512,7 @@
       "eLocationID":"614","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
           "fullName":"O Schaller","givenNames":"O","surnames":"Schaller"}]},{
-      "key":"26","year":1970,"displayYear":"1970","volumeNumber":125,
+      "key":"26","year":1970,"displayYear":"1970","volumeNumber":12,
       "volume":"12(5)","title":
       "Les mammifères d\u0027Egerkingen et l\u0027histoire des faunes de l\u0027Eocène d\u0027Europe.",
       "pages":"886-893","eLocationID":"886","journal":
@@ -621,7 +621,7 @@
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
           "JL Franzen","givenNames":"JL","surnames":"Franzen"},{"fullName":
           "E Frey","givenNames":"E","surnames":"Frey"}],"editors":[]},{"key":
-      "39","year":1983,"displayYear":"1983","volumeNumber":6456,"volume":
+      "39","year":1983,"displayYear":"1983","volumeNumber":64,"volume":
       "64(5/6)","title":
       "Weichteil Erhaltung durch lithifizierte Mikroorganismen bei mittel-eozänen Vertebraten aus den Ôlschiefern der Grube Messel bei Darmstadt.",
       "pages":"509-527","eLocationID":"509","journal":
@@ -738,7 +738,7 @@
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"C Soligo","givenNames":"C","surnames":
           "Soligo"}],"editors":[]},{"key":"55","year":1992,"displayYear":
-      "1992","volumeNumber":133,"volume":"13(3)","title":
+      "1992","volumeNumber":13,"volume":"13(3)","title":
       "Estimating body size of Eocene primates: A comparison of results from dental and postcranial variables.",
       "pages":"307-344","eLocationID":"307","journal":
       "International Journal of Primatology","collaborativeAuthors":[],
@@ -970,7 +970,7 @@
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
           "NC Tappen","givenNames":"NC","surnames":"Tappen"},{"fullName":
           "A Severson","givenNames":"A","surnames":"Severson"}],"editors":[]},
-    {"key":"83","year":1997,"displayYear":"1997","volumeNumber":1272,
+    {"key":"83","year":1997,"displayYear":"1997","volumeNumber":127,
       "volume":"127(2)","title":
       "Ein Koprolith als Leckerbissen. Der siebte Primatenfund aus Messel.",
       "pages":"46-53","eLocationID":"46","journal":"Natur und Museum",
@@ -986,7 +986,7 @@
       "editors":[{"fullName":"H Preuschoft","givenNames":"H","surnames":
           "Preuschoft"},{"fullName":"DJ Chivers","givenNames":"DJ",
           "surnames":"Chivers"}]},{"key":"85","year":1991,"displayYear":
-      "1991","volumeNumber":64,"volume":"6(4)","title":
+      "1991","volumeNumber":6,"volume":"6(4)","title":
       "A survey of fossil primate hands and an evolutionary inquiry emphasizing early forms.",
       "pages":"307-354","eLocationID":"307","journal":"Human Evolution",
       "collaborativeAuthors":[],"citationType":
