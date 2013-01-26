@@ -116,7 +116,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
     article.setTypes(buildArticleTypes());
-    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//(citation|nlm-citation)")));
+    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list//element-citation")));
     article.setAuthors(readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readEditors(readNodeList(
