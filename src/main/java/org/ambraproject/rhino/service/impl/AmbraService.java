@@ -39,13 +39,16 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.List;
 
 public abstract class AmbraService {
@@ -162,6 +165,31 @@ public abstract class AmbraService {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
     } finally {
       stream.close();
+    }
+  }
+
+  /**
+   * Write JSON describing an object to the response.
+   * <p/>
+   * Passing an {@link HttpServletResponse} object into the service layer here isn't great. It's necessary to do this,
+   * rather than pass in the {@link Writer}, because we must call {@link javax.servlet.ServletResponse#getWriter()} as
+   * late as possible. If an exception (even an expected {@link RestClientException}) is thrown after {@code
+   * getWriter()} is called, Spring won't be able to write its own response when handling the exception.
+   *
+   * @param response the response object to write to
+   * @param entity   the object to describe in JSON
+   * @throws IOException if the response can't be written to
+   */
+  protected void writeJsonToResponse(HttpServletResponse response, Object entity) throws IOException {
+    Writer writer = null;
+    boolean threw = true;
+    try {
+      writer = response.getWriter();
+      writer = new BufferedWriter(writer);
+      entityGson.toJson(entity, writer);
+      threw = false;
+    } finally {
+      Closeables.close(writer, threw);
     }
   }
 

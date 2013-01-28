@@ -42,7 +42,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -130,15 +129,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-
-    Writer responseWriter = null;
-    boolean threw = true;
-    try {
-      responseWriter = response.getWriter();
-      articleCrudService.readMetadata(responseWriter, id, mf);
-    } finally {
-      Closeables.close(responseWriter, threw);
-    }
+    articleCrudService.readMetadata(response, id, mf);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
