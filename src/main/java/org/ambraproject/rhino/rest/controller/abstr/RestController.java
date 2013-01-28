@@ -97,13 +97,24 @@ public abstract class RestController {
   }
 
   /**
+   * Return a plain-text HTTP response.
+   *
+   * @param text   the response body
+   * @param status the response's status code
+   * @return the response object
+   */
+  private static ResponseEntity<String> respondWithPlainText(CharSequence text, HttpStatus status) {
+    return new ResponseEntity<String>(text.toString(), makeContentTypeHeader(MediaType.TEXT_PLAIN), status);
+  }
+
+  /**
    * Return a plain-text HTTP response with an "OK" status code.
    *
    * @param text the response body
    * @return the response object
    */
   protected static ResponseEntity<String> respondWithPlainText(CharSequence text) {
-    return new ResponseEntity<String>(text.toString(), makeContentTypeHeader(MediaType.TEXT_PLAIN), HttpStatus.OK);
+    return respondWithPlainText(text, HttpStatus.OK);
   }
 
   /**
@@ -138,7 +149,7 @@ public abstract class RestController {
   public ResponseEntity<String> reportClientError(RestClientException e) {
     HttpStatus status = e.getResponseStatus();
     log.info("Reporting error to client (" + status + ")", e);
-    return new ResponseEntity<String>(e.getMessage(), status);
+    return respondWithPlainText(e.getMessage(), status);
   }
 
   /**
@@ -154,7 +165,7 @@ public abstract class RestController {
     StringWriter report = new StringWriter();
     e.printStackTrace(new PrintWriter(report));
 
-    return new ResponseEntity<String>(report.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+    return respondWithPlainText(report.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
 }

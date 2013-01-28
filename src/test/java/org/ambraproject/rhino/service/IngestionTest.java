@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -25,6 +26,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -41,6 +43,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -115,8 +118,17 @@ public class IngestionTest extends BaseRhinoTest {
     } finally {
       Closeables.close(input, threw);
     }
+    createTestJournal(article.geteIssn());
 
-    String eissn = article.geteIssn();
+    return article;
+  }
+
+  /**
+   * Persist a dummy Journal object with a particular eIssn into the test environment, if it doesn't already exist.
+   *
+   * @param eissn the journal eIssn
+   */
+  private void createTestJournal(String eissn) {
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Journal.class)
@@ -128,8 +140,6 @@ public class IngestionTest extends BaseRhinoTest {
       journal.seteIssn(eissn);
       hibernateTemplate.save(journal);
     }
-
-    return article;
   }
 
   @Test(dataProvider = "generatedIngestionData")
@@ -145,6 +155,7 @@ public class IngestionTest extends BaseRhinoTest {
     Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
+            .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
@@ -163,7 +174,7 @@ public class IngestionTest extends BaseRhinoTest {
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
     compareCategorySets(results, actual.getCategories(), expected.getCategories());
-//TODO Fix Hibernate LazyInitializationException for journals    compareJournalSets(results, actual.getJournals(), expected.getJournals());
+    compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
     compareAssetLists(results, actual.getAssets(), expected.getAssets());
     compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
@@ -189,8 +200,19 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
-    results.compare(Article.class, "strkImgURI", actual.getStrkImgURI(), expected.getStrkImgURI());
-    results.compare(Article.class, "date", actual.getDate(), expected.getDate());
+
+    /*
+     * Ambra uses uses null and "" for this value inconsistently, depending on whether the article was ingested before
+     * or after the strkImgURI column was introduced. So, we assume they're interchangeable.
+     */
+    results.compare(Article.class, "strkImgURI",
+        Strings.nullToEmpty(actual.getStrkImgURI()),
+        Strings.nullToEmpty(expected.getStrkImgURI()));
+
+    // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
+    // to convert that to a java.util.Date (which GSON returns) for the comparison.
+    results.compare(Article.class, "date", new Date(actual.getDate().getTime()),
+        expected.getDate());
     results.compare(Article.class, "volume", actual.getVolume(), expected.getVolume());
     results.compare(Article.class, "issue", actual.getIssue(), expected.getIssue());
     results.compare(Article.class, "journal", actual.getJournal(), expected.getJournal());
@@ -215,24 +237,21 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
-    // Journal's equals and hashCode care about Hibernate identity, so we have to map them ourselves
-    Map<String, Journal> actualMap = mapJournalsByKey(actualSet);
+    // We care only about eIssn, because that's the only part given in article XML.
+    // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
+    Map<String, Journal> actualMap = mapJournalsByEissn(actualSet);
     Set<String> actualKeys = actualMap.keySet();
-    Map<String, Journal> expectedMap = mapJournalsByKey(expectedSet);
+    Map<String, Journal> expectedMap = mapJournalsByEissn(expectedSet);
     Set<String> expectedKeys = expectedMap.keySet();
 
     for (String missing : Sets.difference(expectedKeys, actualKeys)) {
-      results.compare(Journal.class, "key", null, missing);
+      results.compare(Journal.class, "eIssn", null, missing);
     }
     for (String extra : Sets.difference(actualKeys, expectedKeys)) {
-      results.compare(Journal.class, "key", extra, null);
+      results.compare(Journal.class, "eIssn", extra, null);
     }
-
     for (String key : Sets.intersection(actualKeys, expectedKeys)) {
-      Journal actual = actualMap.get(key);
-      Journal expected = expectedMap.get(key);
-
-      // TODO Compare journal fields
+      results.compare(Journal.class, "eIssn", key, key);
     }
   }
 
@@ -321,12 +340,20 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,
                                   List<? extends AmbraEntity> actualList, List<? extends AmbraEntity> expectedList) {
+    final String field = parentType.getSimpleName() + "." + fieldName;
+
     List<PersonName> actualNames = asPersonNames(actualList);
     List<PersonName> expectedNames = asPersonNames(expectedList);
 
     int commonSize = Math.min(actualNames.size(), expectedNames.size());
     for (int i = 0; i < commonSize; i++) {
-      results.compare(parentType, fieldName, actualNames.get(i), actualNames.get(i));
+      PersonName actualName = actualNames.get(i);
+      PersonName expectedName = expectedNames.get(i);
+
+      results.compare(field, "fullName", actualName.getFullName(), expectedName.getFullName());
+      results.compare(field, "givenNames", actualName.getGivenNames(), expectedName.getGivenNames());
+      results.compare(field, "surname", actualName.getSurname(), expectedName.getSurname());
+      results.compare(field, "suffix", actualName.getSuffix(), expectedName.getSuffix());
     }
 
     // If the sizes didn't match, report missing/extra citations as errors
@@ -341,10 +368,10 @@ public class IngestionTest extends BaseRhinoTest {
 
   // Transformation helper methods
 
-  private static ImmutableMap<String, Journal> mapJournalsByKey(Collection<Journal> journals) {
+  private static ImmutableMap<String, Journal> mapJournalsByEissn(Collection<Journal> journals) {
     ImmutableMap.Builder<String, Journal> map = ImmutableMap.builder();
     for (Journal journal : journals) {
-      map.put(journal.getJournalKey(), journal);
+      map.put(journal.geteIssn(), journal);
     }
     return map.build();
   }

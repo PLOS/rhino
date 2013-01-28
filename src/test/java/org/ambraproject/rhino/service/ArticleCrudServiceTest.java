@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import org.ambraproject.filestore.FileStoreException;
@@ -26,6 +27,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -40,6 +42,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -68,6 +71,25 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
   @Test
   public void testServiceAutowiring() {
     assertNotNull(articleCrudService);
+  }
+
+  /**
+   * Create journals with all eIssn values mentioned in test cases' XML files.
+   */
+  @BeforeMethod
+  public void addJournal() {
+    final ImmutableSet<String> testCaseEissns = ImmutableSet.of("1932-6203");
+
+    for (String eissn : testCaseEissns) {
+      List<?> existing = hibernateTemplate.findByCriteria(DetachedCriteria
+          .forClass(Journal.class)
+          .add(Restrictions.eq("eIssn", eissn)));
+      if (!existing.isEmpty())
+        continue;
+      Journal journal = new Journal();
+      journal.seteIssn(eissn);
+      hibernateTemplate.save(journal);
+    }
   }
 
 
