@@ -337,6 +337,8 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,
                                   List<? extends AmbraEntity> actualList, List<? extends AmbraEntity> expectedList) {
+    final String field = parentType.getSimpleName() + "." + fieldName;
+
     List<PersonName> actualNames = asPersonNames(actualList);
     List<PersonName> expectedNames = asPersonNames(expectedList);
 
@@ -345,10 +347,10 @@ public class IngestionTest extends BaseRhinoTest {
       PersonName actualName = actualNames.get(i);
       PersonName expectedName = expectedNames.get(i);
 
-      results.compare(parentType, fieldName + ".fullName", actualName.getFullName(), expectedName.getFullName());
-      results.compare(parentType, fieldName + ".givenNames", actualName.getGivenNames(), expectedName.getGivenNames());
-      results.compare(parentType, fieldName + ".surname", actualName.getSurname(), expectedName.getSurname());
-      results.compare(parentType, fieldName + ".suffix", actualName.getSuffix(), expectedName.getSuffix());
+      results.compare(field, "fullName", actualName.getFullName(), expectedName.getFullName());
+      results.compare(field, "givenNames", actualName.getGivenNames(), expectedName.getGivenNames());
+      results.compare(field, "surname", actualName.getSurname(), expectedName.getSurname());
+      results.compare(field, "suffix", actualName.getSuffix(), expectedName.getSuffix());
     }
 
     // If the sizes didn't match, report missing/extra citations as errors
