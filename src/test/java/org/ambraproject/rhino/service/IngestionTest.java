@@ -26,6 +26,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -114,8 +115,17 @@ public class IngestionTest extends BaseRhinoTest {
     } finally {
       Closeables.close(input, threw);
     }
+    createTestJournal(article.geteIssn());
 
-    String eissn = article.geteIssn();
+    return article;
+  }
+
+  /**
+   * Persist a dummy Journal object with a particular eIssn into the test environment, if it doesn't already exist.
+   *
+   * @param eissn the journal eIssn
+   */
+  private void createTestJournal(String eissn) {
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Journal.class)
@@ -127,8 +137,6 @@ public class IngestionTest extends BaseRhinoTest {
       journal.seteIssn(eissn);
       hibernateTemplate.save(journal);
     }
-
-    return article;
   }
 
   @Test(dataProvider = "generatedIngestionData")
@@ -144,6 +152,7 @@ public class IngestionTest extends BaseRhinoTest {
     Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
+            .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
@@ -162,7 +171,7 @@ public class IngestionTest extends BaseRhinoTest {
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
     compareCategorySets(results, actual.getCategories(), expected.getCategories());
-//TODO Fix Hibernate LazyInitializationException for journals    compareJournalSets(results, actual.getJournals(), expected.getJournals());
+    compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
     compareAssetLists(results, actual.getAssets(), expected.getAssets());
     compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
@@ -225,24 +234,21 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
-    // Journal's equals and hashCode care about Hibernate identity, so we have to map them ourselves
-    Map<String, Journal> actualMap = mapJournalsByKey(actualSet);
+    // We care only about eIssn, because that's the only part given in article XML.
+    // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
+    Map<String, Journal> actualMap = mapJournalsByEissn(actualSet);
     Set<String> actualKeys = actualMap.keySet();
-    Map<String, Journal> expectedMap = mapJournalsByKey(expectedSet);
+    Map<String, Journal> expectedMap = mapJournalsByEissn(expectedSet);
     Set<String> expectedKeys = expectedMap.keySet();
 
     for (String missing : Sets.difference(expectedKeys, actualKeys)) {
-      results.compare(Journal.class, "key", null, missing);
+      results.compare(Journal.class, "eIssn", null, missing);
     }
     for (String extra : Sets.difference(actualKeys, expectedKeys)) {
-      results.compare(Journal.class, "key", extra, null);
+      results.compare(Journal.class, "eIssn", extra, null);
     }
-
     for (String key : Sets.intersection(actualKeys, expectedKeys)) {
-      Journal actual = actualMap.get(key);
-      Journal expected = expectedMap.get(key);
-
-      // TODO Compare journal fields
+      results.compare(Journal.class, "eIssn", key, key);
     }
   }
 
@@ -357,10 +363,10 @@ public class IngestionTest extends BaseRhinoTest {
 
   // Transformation helper methods
 
-  private static ImmutableMap<String, Journal> mapJournalsByKey(Collection<Journal> journals) {
+  private static ImmutableMap<String, Journal> mapJournalsByEissn(Collection<Journal> journals) {
     ImmutableMap.Builder<String, Journal> map = ImmutableMap.builder();
     for (Journal journal : journals) {
-      map.put(journal.getJournalKey(), journal);
+      map.put(journal.geteIssn(), journal);
     }
     return map.build();
   }
