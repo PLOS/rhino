@@ -50,6 +50,7 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -267,7 +268,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
+  public void readMetadata(Writer writer, DoiBasedIdentity id, MetadataFormat format) {
     assert format == MetadataFormat.JSON;
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
@@ -280,7 +281,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
-    return entityGson.toJson(article);
+    entityGson.toJson(article, writer);
   }
 
   /**

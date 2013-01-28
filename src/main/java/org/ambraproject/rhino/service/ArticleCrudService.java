@@ -26,6 +26,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -70,13 +71,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
    * Read the metadata of an article.
+   * <p/>
+   * The invoker must close the {@link Writer}.
    *
+   * @param writer the object that will receive the metadata
    * @param id     the identifier of the article
    * @param format the desired metadata format
-   * @return the metadata
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
+  public abstract void readMetadata(Writer writer, DoiBasedIdentity id, MetadataFormat format);
 
 }

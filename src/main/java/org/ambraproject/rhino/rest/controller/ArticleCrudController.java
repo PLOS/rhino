@@ -39,8 +39,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -123,13 +125,20 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request,
-                                @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    String metadata = articleCrudService.readMetadata(id, mf);
-    return respondWithPlainText(metadata);
+
+    Writer responseWriter = null;
+    boolean threw = true;
+    try {
+      responseWriter = response.getWriter();
+      articleCrudService.readMetadata(responseWriter, id, mf);
+    } finally {
+      Closeables.close(responseWriter, threw);
+    }
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
