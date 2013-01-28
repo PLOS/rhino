@@ -91,9 +91,6 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{
         "ID", // Internal to the database
-
-        // Kludges below; TODO: Debug as needed to remove all
-        "journals", // Lazy initialization glitch on Article; not sure if outside our control or not
     });
     builder.setExclusionStrategies(
         new ExclusionStrategy() {

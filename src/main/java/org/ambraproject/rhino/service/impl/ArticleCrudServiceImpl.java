@@ -235,6 +235,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
             .setFetchMode("assets", FetchMode.JOIN)
+            .setFetchMode("journals", FetchMode.JOIN)
+            .setFetchMode("journals.volumes", FetchMode.JOIN)
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
