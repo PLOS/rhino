@@ -10,7 +10,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -70,12 +69,8 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-
-  /*
-   * Use instead of the Spring bean entityGson because it currently has some hackery around journals that is bad here.
-   * TODO: Smooth out hackery; use entityGson here.
-   */
-  private static final Gson GSON = new GsonBuilder().create();
+  @Autowired
+  private Gson entityGson;
 
   private static FilenameFilter forSuffix(final String suffix) {
     return new FilenameFilter() {
@@ -113,7 +108,7 @@ public class IngestionTest extends BaseRhinoTest {
     try {
       input = new FileReader(jsonFile);
       input = new BufferedReader(input);
-      article = GSON.fromJson(input, Article.class);
+      article = entityGson.fromJson(input, Article.class);
       threw = false;
     } finally {
       Closeables.close(input, threw);
