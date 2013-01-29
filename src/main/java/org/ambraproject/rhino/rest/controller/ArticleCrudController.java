@@ -49,7 +49,7 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentity> {
+public class ArticleCrudController extends DoiBasedCrudController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 

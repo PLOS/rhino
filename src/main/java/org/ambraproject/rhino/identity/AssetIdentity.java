@@ -129,15 +129,6 @@ public class AssetIdentity extends DoiBasedIdentity {
   }
 
   /**
-   * Get an identifier for this asset's metadata.
-   *
-   * @return the identifier
-   */
-  public StandAloneIdentity forMetadata() {
-    return StandAloneIdentity.create(getIdentifier());
-  }
-
-  /**
    * If this asset is an XML file, return the identity of the article to which it would belong <em>if</em> it is an
    * article's NLM DTD file.
    *

@@ -20,7 +20,7 @@ package org.ambraproject.rhino.identity;
 
 import org.ambraproject.models.Article;
 
-public class ArticleIdentity extends StandAloneIdentity {
+public class ArticleIdentity extends DoiBasedIdentity {
 
   private ArticleIdentity(String identifier) {
     super(identifier);

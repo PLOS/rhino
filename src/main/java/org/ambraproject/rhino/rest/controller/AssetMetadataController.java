@@ -20,7 +20,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.controller.abstr.StandAloneDoiCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class AssetMetadataController extends StandAloneDoiCrudController {
+public class AssetMetadataController extends DoiBasedCrudController {
 
   private static final String ASSET_META_NAMESPACE = "/asset-meta/";
   private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";

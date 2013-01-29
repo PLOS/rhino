@@ -22,7 +22,6 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.identity.StandAloneIdentity;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -53,7 +52,7 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
 
   @Test
   public void testCreate() {
-    DoiBasedIdentity volumeId = StandAloneIdentity.create("testVolume");
+    DoiBasedIdentity volumeId = DoiBasedIdentity.create("testVolume");
     String displayName = "volumeDisplay";
 
     Journal testJournal = getTestJournal();

@@ -19,7 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.StandAloneDoiCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class IssueCrudController extends StandAloneDoiCrudController {
+public class IssueCrudController extends DoiBasedCrudController {
 
   private static final String ISSUE_NAMESPACE = "/issue/";
   private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
