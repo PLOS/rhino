@@ -103,9 +103,7 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    // Passing the ID and loading the article fresh, to force initialization of associative fields.
-    ArticleIdentity createdId = ArticleIdentity.create(result.getWrittenObject());
-    articleCrudService.readMetadata(response, createdId, MetadataFormat.JSON);
+    articleCrudService.readMetadata(response, result.getWrittenObject(), MetadataFormat.JSON);
   }
 
   /**
