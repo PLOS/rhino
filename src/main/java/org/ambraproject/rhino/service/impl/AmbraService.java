@@ -157,14 +157,33 @@ public abstract class AmbraService {
   protected static Document parseXml(InputStream stream) throws IOException, RestClientException {
     Preconditions.checkNotNull(stream);
     try {
-      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      return documentBuilder.parse(stream);
-    } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
+      // Get a new DocumentBuilder every time because because it isn't thread-safe
+      return newDocumentBuilder().parse(stream);
     } catch (SAXException e) {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
     } finally {
       stream.close();
+    }
+  }
+
+  /**
+   * Construct a non-validating document builder. We assume that we don't want to connect to remote servers to validate
+   * except with a specific reason.
+   *
+   * @return a new document builder
+   */
+  private static DocumentBuilder newDocumentBuilder() {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(false);
+    factory.setValidating(false);
+    try {
+      factory.setFeature("http://xml.org/sax/features/namespaces", false);
+      factory.setFeature("http://xml.org/sax/features/validation", false);
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+      return factory.newDocumentBuilder();
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
     }
   }
 
