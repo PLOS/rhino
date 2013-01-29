@@ -30,7 +30,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.apache.commons.io.IOUtils;
@@ -200,7 +200,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final AssetIdentity assetId = AssetIdentity.create(testAssetDoi, extension);
+    final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
     final ArticleIdentity articleId = ArticleIdentity.create(testArticleDoi);
 
     TestInputStream input = new TestFile(articleFile).read();

@@ -30,13 +30,16 @@ import org.springframework.http.MediaType;
 
 import java.util.regex.Pattern;
 
-public class AssetIdentity extends DoiBasedIdentity {
+/**
+ * An identifier for one file that corresponds to an asset. It is uniquely identified by a DOI and file extension.
+ */
+public class AssetFileIdentity extends DoiBasedIdentity {
 
   private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
 
   private final String extension; // non-empty and contains no uppercase letters
 
-  private AssetIdentity(String identifier, String extension) {
+  private AssetFileIdentity(String identifier, String extension) {
     super(identifier);
     Preconditions.checkArgument(StringUtils.isNotBlank(extension));
     this.extension = extension.toLowerCase();
@@ -49,7 +52,7 @@ public class AssetIdentity extends DoiBasedIdentity {
    * @return an identifier object for the entity
    * @see org.ambraproject.rhino.rest.controller.abstr.RestController#getFullPathVariable
    */
-  public static AssetIdentity parse(String path) {
+  public static AssetFileIdentity parse(String path) {
     int dotIndex = path.lastIndexOf('.');
     if (dotIndex < 0 || dotIndex + 1 >= path.length()) {
       throw new IllegalArgumentException("Request URI does not have file extension");
@@ -57,15 +60,15 @@ public class AssetIdentity extends DoiBasedIdentity {
     String identifier = path.substring(0, dotIndex);
     String extension = path.substring(dotIndex + 1);
 
-    return new AssetIdentity(identifier, extension);
+    return new AssetFileIdentity(identifier, extension);
   }
 
-  public static AssetIdentity create(String identifier, String extension) {
-    return new AssetIdentity(removeScheme(identifier), extension);
+  public static AssetFileIdentity create(String identifier, String extension) {
+    return new AssetFileIdentity(removeScheme(identifier), extension);
   }
 
-  public static AssetIdentity from(ArticleAsset asset) {
-    return AssetIdentity.create(asset.getDoi(), asset.getExtension());
+  public static AssetFileIdentity from(ArticleAsset asset) {
+    return AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
   }
 
   /**
@@ -152,7 +155,7 @@ public class AssetIdentity extends DoiBasedIdentity {
     if (o == null || getClass() != o.getClass()) return false;
     if (!super.equals(o)) return false;
 
-    AssetIdentity that = (AssetIdentity) o;
+    AssetFileIdentity that = (AssetFileIdentity) o;
 
     if (extension != null ? !extension.equals(that.extension) : that.extension != null) return false;
 

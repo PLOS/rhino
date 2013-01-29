@@ -20,7 +20,7 @@ package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -34,7 +34,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
-  private final AssetIdentity assetId;
+  private final AssetFileIdentity assetId;
 
   /**
    * The Node passed to this constructor may be a full document or just the asset node. In the former case, this class
@@ -43,7 +43,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
    * @param xml
    * @param assetId
    */
-  public AssetXml(Node xml, AssetIdentity assetId) {
+  public AssetXml(Node xml, AssetFileIdentity assetId) {
     super(xml);
     this.assetId = Preconditions.checkNotNull(assetId);
   }

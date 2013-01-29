@@ -22,7 +22,7 @@ import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 
@@ -42,7 +42,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws IOException
    */
   public abstract WriteResult<ArticleAsset> upload(InputStream file,
-                                                   AssetIdentity assetId,
+                                                   AssetFileIdentity assetId,
                                                    Optional<ArticleIdentity> articleId)
       throws FileStoreException, IOException;
 
@@ -52,7 +52,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id the identifier of the asset whose file is to be read
    * @return a stream containing the file data
    */
-  public abstract InputStream read(AssetIdentity id);
+  public abstract InputStream read(AssetFileIdentity id);
 
   /**
    * Delete an asset and its associated file.
@@ -60,7 +60,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id the identifier of the asset to delete
    * @throws FileStoreException
    */
-  public abstract void delete(AssetIdentity id) throws FileStoreException;
+  public abstract void delete(AssetFileIdentity id) throws FileStoreException;
 
   /**
    * Read the metadata of an asset.

@@ -61,8 +61,8 @@ public class ArticleIdentity extends DoiBasedIdentity {
    *
    * @return an identity for the XML asset
    */
-  public AssetIdentity forXmlAsset() {
-    return AssetIdentity.create(getIdentifier(), XML_EXTENSION);
+  public AssetFileIdentity forXmlAsset() {
+    return AssetFileIdentity.create(getIdentifier(), XML_EXTENSION);
   }
 
 }

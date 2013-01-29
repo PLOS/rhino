@@ -22,7 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -59,8 +59,8 @@ public class AssetCrudController extends DoiBasedCrudController {
   }
 
   @Override
-  protected AssetIdentity parse(HttpServletRequest request) {
-    return AssetIdentity.parse(getIdentifier(request));
+  protected AssetFileIdentity parse(HttpServletRequest request) {
+    return AssetFileIdentity.parse(getIdentifier(request));
   }
 
 
@@ -77,7 +77,7 @@ public class AssetCrudController extends DoiBasedCrudController {
   public ResponseEntity<?> upload(HttpServletRequest request,
                                   @RequestParam(value = PARENT_PARAM, required = false) String parentId)
       throws IOException, FileStoreException {
-    AssetIdentity assetId = parse(request);
+    AssetFileIdentity assetId = parse(request);
     Optional<ArticleIdentity> articleId = (parentId == null)
         ? Optional.<ArticleIdentity>absent()
         : Optional.of(ArticleIdentity.create(parentId));
@@ -98,7 +98,7 @@ public class AssetCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
-    AssetIdentity id = parse(request);
+    AssetFileIdentity id = parse(request);
 
     Optional<ArticleIdentity> articleId = id.forArticle();
     if (articleId.isPresent()) {
@@ -152,7 +152,7 @@ public class AssetCrudController extends DoiBasedCrudController {
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
-    AssetIdentity id = parse(request);
+    AssetFileIdentity id = parse(request);
     assetCrudService.delete(id);
     return reportOk();
   }

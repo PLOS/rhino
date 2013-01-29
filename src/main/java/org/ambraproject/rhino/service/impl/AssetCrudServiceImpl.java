@@ -26,7 +26,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -55,7 +55,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public WriteResult upload(InputStream file, AssetIdentity assetId, Optional<ArticleIdentity> articleIdParam)
+  public WriteResult upload(InputStream file, AssetFileIdentity assetId, Optional<ArticleIdentity> articleIdParam)
       throws FileStoreException, IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
@@ -72,7 +72,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
    */
   private WriteResult<ArticleAsset> create(InputStream file,
-                                           AssetIdentity assetId,
+                                           AssetFileIdentity assetId,
                                            Optional<ArticleIdentity> articleIdParam)
       throws FileStoreException, IOException {
     // Require that the user identified the parent article
@@ -106,7 +106,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
    */
   private WriteResult<ArticleAsset> update(InputStream file,
-                                           AssetIdentity assetId,
+                                           AssetFileIdentity assetId,
                                            Optional<ArticleIdentity> articleIdParam,
                                            ArticleAsset asset)
       throws FileStoreException, IOException {
@@ -137,7 +137,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   /*
    * "Payload" behavior common to both create and update operations.
    */
-  private void doUpload(InputStream file, Article article, ArticleAsset asset, AssetIdentity assetId)
+  private void doUpload(InputStream file, Article article, ArticleAsset asset, AssetFileIdentity assetId)
       throws FileStoreException, IOException {
     // Get these first to fail faster in case of client error
     String assetFsid = assetId.getFsid();
@@ -171,7 +171,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public InputStream read(AssetIdentity assetId) {
+  public InputStream read(AssetFileIdentity assetId) {
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId);
     }
@@ -203,7 +203,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void delete(AssetIdentity assetId) throws FileStoreException {
+  public void delete(AssetFileIdentity assetId) throws FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)

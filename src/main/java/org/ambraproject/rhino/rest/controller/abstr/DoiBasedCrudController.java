@@ -19,7 +19,7 @@
 package org.ambraproject.rhino.rest.controller.abstr;
 
 import com.google.common.io.Closeables;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.apache.commons.io.IOUtils;
 
@@ -55,7 +55,7 @@ public abstract class DoiBasedCrudController extends RestController {
 
   protected void respondWithStream(InputStream readStream,
                                    HttpServletResponse response,
-                                   AssetIdentity identity)
+                                   AssetFileIdentity identity)
       throws IOException {
     response.setContentType(identity.getContentType().toString());
 

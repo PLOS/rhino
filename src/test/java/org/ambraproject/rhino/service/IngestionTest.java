@@ -22,7 +22,7 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -257,19 +257,19 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetLists(AssertionCollector results,
                                  Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
-    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapAssetsById(actualList);
-    Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    Map<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetsById(expectedList);
-    Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
+    Map<AssetFileIdentity, ArticleAsset> actualAssetMap = mapAssetsById(actualList);
+    Set<AssetFileIdentity> actualAssetIds = actualAssetMap.keySet();
+    Map<AssetFileIdentity, ArticleAsset> expectedAssetMap = mapAssetsById(expectedList);
+    Set<AssetFileIdentity> expectedAssetIds = expectedAssetMap.keySet();
 
-    for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
+    for (AssetFileIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
       results.compare(ArticleAsset.class, "doi", null, missingDoi);
     }
-    for (AssetIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
+    for (AssetFileIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
       results.compare(ArticleAsset.class, "doi", extraDoi, null);
     }
 
-    for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
+    for (AssetFileIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
       // An asset with the right DOI is in both sets; now compare its fields individually
       compareAssets(results, actualAssetMap.get(assetDoi), actualAssetMap.get(assetDoi));
     }
@@ -371,10 +371,10 @@ public class IngestionTest extends BaseRhinoTest {
     return map.build();
   }
 
-  private static ImmutableMap<AssetIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
-    ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
+  private static ImmutableMap<AssetFileIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
+    ImmutableMap.Builder<AssetFileIdentity, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
-      AssetIdentity identity = AssetIdentity.from(asset);
+      AssetFileIdentity identity = AssetFileIdentity.from(asset);
       map.put(identity, asset);
     }
     return map.build();
