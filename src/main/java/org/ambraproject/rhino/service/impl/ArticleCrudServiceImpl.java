@@ -37,6 +37,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.WriteResult;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -89,7 +90,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public WriteResult write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+  public WriteResult<Article> write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
     if (mode == null) {
       mode = WriteMode.WRITE_ANY;
     }
@@ -156,7 +157,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       hibernateTemplate.update(article);
     }
     write(xmlData, fsid);
-    return (creating ? WriteResult.CREATED : WriteResult.UPDATED);
+    WriteResult.Action action = (creating ? WriteResult.Action.CREATED : WriteResult.Action.UPDATED);
+    return new WriteResult<Article>(article, action);
   }
 
   /**
@@ -281,6 +283,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
+    readMetadata(response, article, format);
+  }
+
+  @Override
+  public void readMetadata(HttpServletResponse response, Article article, MetadataFormat format) throws IOException {
+    assert format == MetadataFormat.JSON;
     writeJsonToResponse(response, article);
   }
 

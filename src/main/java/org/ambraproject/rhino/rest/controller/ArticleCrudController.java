@@ -21,16 +21,18 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteResult;
+import org.ambraproject.rhino.service.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,25 +79,33 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
 
 
   /**
-   * Create an article received at the root noun, without an identifier in the URL.
-   * <p/>
-   * TODO: Handle the case where the article already exists
+   * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
    *
+   * @param response
    * @param requestFile
-   * @return
+   * @throws IOException
+   * @throws FileStoreException
    */
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile) throws IOException, FileStoreException {
+  public void create(HttpServletResponse response,
+                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
+      throws IOException, FileStoreException {
+    WriteResult<Article> result;
     InputStream requestBody = null;
     boolean threw = true;
     try {
       requestBody = requestFile.getInputStream();
-      articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
+      result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
       threw = false;
     } finally {
       Closeables.close(requestBody, threw);
     }
-    return reportCreated();
+    response.setStatus(HttpStatus.CREATED.value());
+
+    // Report the written data, as JSON, in the response.
+    // Passing the ID and loading the article fresh, to force initialization of associative fields.
+    ArticleIdentity createdId = ArticleIdentity.create(result.getWrittenObject());
+    articleCrudService.readMetadata(response, createdId, MetadataFormat.JSON);
   }
 
   /**

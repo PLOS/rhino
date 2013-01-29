@@ -33,7 +33,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteResult;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -140,7 +139,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
     TestInputStream input = TestInputStream.of(sampleData);
     WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
-    assertEquals(writeResult, WriteResult.CREATED);
+    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -183,7 +182,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
     writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
-    assertEquals(writeResult, WriteResult.UPDATED);
+    assertEquals(writeResult.getAction(), WriteResult.Action.UPDATED);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -207,7 +206,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     TestInputStream input = new TestFile(articleFile).read();
     input = alterStream(input, articleDoi, testArticleDoi);
     WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
-    assertEquals(writeResult, WriteResult.CREATED);
+    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));

@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -40,9 +41,9 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws FileStoreException
    * @throws IOException
    */
-  public abstract WriteResult upload(InputStream file,
-                                     AssetIdentity assetId,
-                                     Optional<ArticleIdentity> articleId)
+  public abstract WriteResult<ArticleAsset> upload(InputStream file,
+                                                   AssetIdentity assetId,
+                                                   Optional<ArticleIdentity> articleId)
       throws FileStoreException, IOException;
 
   /**
