@@ -109,9 +109,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
       titleNode = readNode("source");
     }
     if (titleNode != null) {
-      StringBuilder title = new StringBuilder();
-      buildTextWithMarkup(title, titleNode);
-      return title.toString();
+      return buildTextWithMarkup(titleNode);
     } else {
       return "";
     }

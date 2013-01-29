@@ -200,9 +200,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @return the marked-up description
    */
   private static String buildDescription(Node node) {
-    StringBuilder nodeContent = new StringBuilder();
-    buildTextWithMarkup(nodeContent, node);
-    return nodeContent.toString();
+    return buildTextWithMarkup(node);
   }
 
 

@@ -134,11 +134,14 @@ public abstract class XmlToObject<T> {
    * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
    * their attributes are deleted. Text nodes containing only whitespace are deleted.
    *
-   * @param nodeContent StringBuilder that will be populated
-   * @param node        the node containing the text we are retrieving
+   * @param node the node containing the text we are retrieving
    * @return the marked-up node contents
    */
-  protected static void buildTextWithMarkup(StringBuilder nodeContent, Node node) {
+  protected static String buildTextWithMarkup(Node node) {
+    return buildTextWithMarkup(new StringBuilder(), node).toString();
+  }
+
+  private static StringBuilder buildTextWithMarkup(StringBuilder nodeContent, Node node) {
     List<Node> children = NodeListAdapter.wrap(node.getChildNodes());
     for (Node child : children) {
       switch (child.getNodeType()) {
@@ -154,7 +157,10 @@ public abstract class XmlToObject<T> {
           buildTextWithMarkup(nodeContent, child);
           nodeContent.append("</").append(nodeName).append('>');
           break;
+        default:
+          // Skip the child
       }
     }
+    return nodeContent;
   }
 }
