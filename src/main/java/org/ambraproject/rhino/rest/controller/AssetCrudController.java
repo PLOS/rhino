@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -95,13 +96,15 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws IOException, FileStoreException {
+  public void read(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, FileStoreException {
     AssetIdentity id = parse(request);
 
     Optional<ArticleIdentity> articleId = id.forArticle();
     if (articleId.isPresent()) {
       try {
-        return provideXmlFor(articleId.get());
+        provideXmlFor(response, articleId.get());
+        return;
       } catch (RestClientException e) {
         /*
          * If there was no such article, it might still be a regular asset whose type happens to be XML.
@@ -116,38 +119,35 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
     }
 
     InputStream fileStream = null;
-    ResponseEntity<byte[]> response;
     boolean threw = true;
     try {
       fileStream = assetCrudService.read(id);
-      response = respondWithStream(fileStream, id);
+      respondWithStream(fileStream, response, id);
       threw = false;
     } finally {
       Closeables.close(fileStream, threw);
     }
-    return response;
   }
 
   /**
-   * Send a response containing the XML file for an article.
+   * Write a response containing the XML file for an article.
    *
-   * @param article the parent article of the XML file to send
-   * @return the response entity with the XML file stream
+   * @param response the response object to modify
+   * @param article  the parent article of the XML file to send
    * @throws FileStoreException
    * @throws IOException
    */
-  private ResponseEntity<?> provideXmlFor(ArticleIdentity article) throws FileStoreException, IOException {
+  private void provideXmlFor(HttpServletResponse response, ArticleIdentity article)
+      throws FileStoreException, IOException {
     InputStream fileStream = null;
-    ResponseEntity<byte[]> response;
     boolean threw = true;
     try {
       fileStream = articleCrudService.readXml(article);
-      response = respondWithStream(fileStream, article.forXmlAsset());
+      respondWithStream(fileStream, response, article.forXmlAsset());
       threw = false;
     } finally {
       Closeables.close(fileStream, threw);
     }
-    return response;
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
