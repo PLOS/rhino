@@ -36,8 +36,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,8 +51,14 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
-  private static final String ARTICLE_NAMESPACE = "/article/";
+  private static final String ARTICLE_ROOT = "/article";
+  private static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
   private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
+
+  /**
+   * The request parameter whose value is the XML file being uploaded for a create operation.
+   */
+  private static final String ARTICLE_XML_FIELD = "xml";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -73,13 +81,15 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
    * <p/>
    * TODO: Handle the case where the article already exists
    *
-   * @param requestBody
+   * @param requestFile
    * @return
    */
-  @RequestMapping(value = ARTICLE_NAMESPACE, method = RequestMethod.PUT)
-  public ResponseEntity<?> create(InputStream requestBody) throws IOException, FileStoreException {
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
+  public ResponseEntity<?> create(@RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile) throws IOException, FileStoreException {
+    InputStream requestBody = null;
     boolean threw = true;
     try {
+      requestBody = requestFile.getInputStream();
       articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
       threw = false;
     } finally {
@@ -114,37 +124,12 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request,
-                                @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    String metadata = articleCrudService.readMetadata(id, mf);
-    return respondWithPlainText(metadata);
-  }
-
-  /**
-   * Send a response containing the XML file for an article.
-   * <p/>
-   * The API doesn't currently provide this functionality in the article namespace.
-   *
-   * @param article the parent article of the XML file to send
-   * @return the response entity with the XML file stream
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  private ResponseEntity<?> provideXmlFor(ArticleIdentity article) throws FileStoreException, IOException {
-    InputStream fileStream = null;
-    ResponseEntity<byte[]> response;
-    boolean threw = true;
-    try {
-      fileStream = articleCrudService.read(article);
-      response = respondWithStream(fileStream, article.forXmlAsset());
-      threw = false;
-    } finally {
-      Closeables.close(fileStream, threw);
-    }
-    return response;
+    articleCrudService.readMetadata(response, id, mf);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)

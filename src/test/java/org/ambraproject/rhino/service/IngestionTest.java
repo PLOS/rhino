@@ -64,7 +64,7 @@ import static org.testng.Assert.fail;
 public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
 
-  private static final File DATA_PATH = new File("src/test/resources/data/ingestcase/");
+  private static final File DATA_PATH = new File("src/test/resources/articles/");
   private static final String JSON_SUFFIX = ".json";
   private static final String XML_SUFFIX = ".xml";
 
@@ -90,6 +90,8 @@ public class IngestionTest extends BaseRhinoTest {
   public Object[][] generatedIngestionData() {
     File[] jsonFiles = DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
     List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
+
+    // For each JSON file, expect a matching XML file. Ignore XML files without JSON files.
     for (File jsonFile : jsonFiles) {
       String jsonFilePath = jsonFile.getPath();
       String xmlPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + XML_SUFFIX;
@@ -99,6 +101,7 @@ public class IngestionTest extends BaseRhinoTest {
       }
       cases.add(new Object[]{jsonFile, xmlFile});
     }
+
     return cases.toArray(new Object[0][]);
   }
 

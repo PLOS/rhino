@@ -23,10 +23,13 @@ import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,6 +48,8 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
   private static final String PARENT_PARAM = "assetOf";
 
+  @Autowired
+  private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
 
@@ -90,19 +96,58 @@ public class AssetCrudController extends DoiBasedCrudController<AssetIdentity> {
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
+  public void read(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, FileStoreException {
     AssetIdentity id = parse(request);
+
+    Optional<ArticleIdentity> articleId = id.forArticle();
+    if (articleId.isPresent()) {
+      try {
+        provideXmlFor(response, articleId.get());
+        return;
+      } catch (RestClientException e) {
+        /*
+         * If there was no such article, it might still be a regular asset whose type happens to be XML.
+         * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
+         * the same "not found" response anyway.)
+         */
+
+        if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
+          throw e; // Anything other than "not found" is unexpected
+        }
+      }
+    }
+
     InputStream fileStream = null;
-    ResponseEntity<byte[]> response;
     boolean threw = true;
     try {
       fileStream = assetCrudService.read(id);
-      response = respondWithStream(fileStream, id);
+      respondWithStream(fileStream, response, id);
       threw = false;
     } finally {
       Closeables.close(fileStream, threw);
     }
-    return response;
+  }
+
+  /**
+   * Write a response containing the XML file for an article.
+   *
+   * @param response the response object to modify
+   * @param article  the parent article of the XML file to send
+   * @throws FileStoreException
+   * @throws IOException
+   */
+  private void provideXmlFor(HttpServletResponse response, ArticleIdentity article)
+      throws FileStoreException, IOException {
+    InputStream fileStream = null;
+    boolean threw = true;
+    try {
+      fileStream = articleCrudService.readXml(article);
+      respondWithStream(fileStream, response, article.forXmlAsset());
+      threw = false;
+    } finally {
+      Closeables.close(fileStream, threw);
+    }
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)

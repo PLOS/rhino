@@ -18,11 +18,7 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.springframework.http.HttpStatus;
-
-import java.io.InputStream;
 
 /**
  * Super-interface to CRUD services within the article namespace.
@@ -30,11 +26,7 @@ import java.io.InputStream;
  * Methods are included here only if they share a common signature among services. See the extending interfaces for
  * documentation on the behavior of each method.
  */
-public interface DoiBasedCrudService<I extends DoiBasedIdentity> {
-
-  public abstract InputStream read(I id) throws FileStoreException;
-
-  public abstract void delete(I id) throws FileStoreException;
+public interface DoiBasedCrudService {
 
   public static enum WriteMode {
     /**

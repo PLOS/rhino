@@ -136,7 +136,7 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
     for (String doiStub : SAMPLE_ARTICLES) {
       Object[] sampleArticle = {
           prefixed(doiStub),
-          new File("src/test/resources/data/" + doiStub + ".xml"),
+          new File("src/test/resources/articles/" + doiStub + ".xml"),
       };
       cases.add(sampleArticle);
     }
@@ -154,8 +154,8 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
       String assetDoi = matcher.group(1);
       String articleDoi = matcher.group(2);
       String fileExtension = matcher.group(3);
-      File articleFile = new File(String.format("src/test/resources/data/%s.xml", articleDoi));
-      File assetFile = new File(String.format("src/test/resources/data/%s.%s",
+      File articleFile = new File(String.format("src/test/resources/articles/%s.xml", articleDoi));
+      File assetFile = new File(String.format("src/test/resources/articles/%s.%s",
           assetDoi, fileExtension));
       cases.add(new Object[]{prefixed(articleDoi), articleFile, prefixed(assetDoi), assetFile});
     }

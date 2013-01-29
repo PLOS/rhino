@@ -24,10 +24,11 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity> {
+public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
    * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
@@ -56,7 +57,7 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
    *                            if the DOI does not belong to an article
    * @throws FileStoreException
    */
-  public abstract InputStream read(ArticleIdentity id) throws FileStoreException;
+  public abstract InputStream readXml(ArticleIdentity id) throws FileStoreException;
 
   /**
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
@@ -71,12 +72,13 @@ public interface ArticleCrudService extends DoiBasedCrudService<ArticleIdentity>
   /**
    * Read the metadata of an article.
    *
-   * @param id     the identifier of the article
-   * @param format the desired metadata format
-   * @return the metadata
+   * @param response the response object to which to send the metadata
+   * @param id       the identifier of the article
+   * @param format   the desired metadata format
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
+  public abstract void readMetadata(HttpServletResponse response, DoiBasedIdentity id, MetadataFormat format)
+      throws IOException;
 
 }
