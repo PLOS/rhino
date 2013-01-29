@@ -18,9 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
@@ -28,7 +26,6 @@ import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.util.NodeListAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -36,7 +33,6 @@ import org.w3c.dom.Node;
 
 import java.net.URLEncoder;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -129,8 +125,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * @return the appropriate value for the rights property of {@link Article}, based on the
-   *     article XML.
+   * @return the appropriate value for the rights property of {@link Article}, based on the article XML.
    */
   private String buildRights() {
 
@@ -143,8 +138,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * @return the appropriate value for the pages property of {@link Article}, based on the
-   *     article XML.
+   * @return the appropriate value for the pages property of {@link Article}, based on the article XML.
    */
   private String buildPages() {
     String pageCount = readString("/article/front/article-meta/counts/page-count/@count");

@@ -130,13 +130,12 @@ public abstract class XmlToObject<T> {
   }
 
   /**
-   * Build a text field by partially reconstructing the node's content as XML.
-   * The output is text content between the node's two tags, including nested XML
-   * tags but not this node's outer tags. Nested tags show only the node name;
+   * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
+   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
    * their attributes are deleted. Text nodes containing only whitespace are deleted.
    *
    * @param nodeContent StringBuilder that will be populated
-   * @param node the node containing the text we are retrieving
+   * @param node        the node containing the text we are retrieving
    * @return the marked-up node contents
    */
   protected static void buildTextWithMarkup(StringBuilder nodeContent, Node node) {
