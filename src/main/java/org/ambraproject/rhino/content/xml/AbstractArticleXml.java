@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -27,11 +28,14 @@ import com.google.common.collect.Lists;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.util.NodeListAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.util.UriUtils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -162,6 +166,56 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     return name.toString();
   }
 
+  /**
+   * Encodes a string according to the URI escaping rules as described in section 2 of RFC 3986.
+   */
+  public static String uriEncode(String s) {
+
+    // This is surprisingly difficult in Java.  You would think that java.net.URLEncoder would
+    // do the trick, but it doesn't--it uses HTML form encoding, which is different.  For
+    // instance URLEncode encodes a space character as "+" while RFC 3986 states that it
+    // should be "%20".
+    try {
+      return UriUtils.encodeFragment(s, "UTF-8");
+    } catch (UnsupportedEncodingException uee) {
+      throw new RuntimeException(uee);
+    }
+  }
+
+  /**
+   * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
+   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
+   * their attributes are deleted. Text nodes containing only whitespace are deleted.
+   *
+   * @param node the node containing the text we are retrieving
+   * @return the marked-up node contents
+   */
+  protected static String buildTextWithMarkup(Node node) {
+    return buildTextWithMarkup(new StringBuilder(), node).toString();
+  }
+
+  private static StringBuilder buildTextWithMarkup(StringBuilder nodeContent, Node node) {
+    List<Node> children = NodeListAdapter.wrap(node.getChildNodes());
+    for (Node child : children) {
+      switch (child.getNodeType()) {
+        case Node.TEXT_NODE:
+          String text = child.getNodeValue();
+          if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
+            nodeContent.append(text);
+          }
+          break;
+        case Node.ELEMENT_NODE:
+          String nodeName = child.getNodeName();
+          nodeContent.append('<').append(nodeName).append('>');
+          buildTextWithMarkup(nodeContent, child);
+          nodeContent.append("</").append(nodeName).append('>');
+          break;
+        default:
+          // Skip the child
+      }
+    }
+    return nodeContent;
+  }
 
 }
 
