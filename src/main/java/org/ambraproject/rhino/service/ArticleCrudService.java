@@ -24,6 +24,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -71,12 +72,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of an article.
    *
-   * @param id     the identifier of the article
-   * @param format the desired metadata format
-   * @return the metadata
+   * @param response the response object to which to send the metadata
+   * @param id       the identifier of the article
+   * @param format   the desired metadata format
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
+  public abstract void readMetadata(HttpServletResponse response, DoiBasedIdentity id, MetadataFormat format)
+      throws IOException;
 
 }

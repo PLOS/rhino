@@ -28,6 +28,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.regex.Pattern;
+
 public class AssetIdentity extends DoiBasedIdentity {
 
   private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
@@ -90,14 +92,22 @@ public class AssetIdentity extends DoiBasedIdentity {
   }
 
   /**
+   * PLOS idiosyncrasy: this file extension is used for PNG images.
+   */
+  private static final Pattern PNG_THUMBNAIL = Pattern.compile("PNG_\\w", Pattern.CASE_INSENSITIVE);
+
+  /**
    * Get the content type for the data associated with the identified entity in the file store. The returned value is a
    * Spring object that maps onto a standard MIME type.
    *
    * @return the content type
    */
   public MediaType getContentType() {
-    if (getFileExtension().equalsIgnoreCase(XML_EXTENSION)) {
+    if (XML_EXTENSION.equalsIgnoreCase(getFileExtension())) {
       return MediaType.TEXT_XML;
+    }
+    if (PNG_THUMBNAIL.matcher(getFileExtension()).matches()) {
+      return MediaType.IMAGE_PNG;
     }
     String mimeType = MIMETYPES.getContentType(getFilePath());
     return MediaType.parseMediaType(mimeType);

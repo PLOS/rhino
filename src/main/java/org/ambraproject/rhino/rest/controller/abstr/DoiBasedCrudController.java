@@ -22,13 +22,12 @@ import com.google.common.io.Closeables;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.apache.commons.io.IOUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
@@ -52,20 +51,21 @@ public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends
 
   protected abstract I parse(HttpServletRequest request);
 
-  protected ResponseEntity<byte[]> respondWithStream(InputStream stream, AssetIdentity identity) throws IOException {
-    byte[] data;
+  protected void respondWithStream(InputStream readStream,
+                                   HttpServletResponse response,
+                                   AssetIdentity identity)
+      throws IOException {
+    response.setContentType(identity.getContentType().toString());
+
+    OutputStream responseStream = null;
     boolean threw = true;
     try {
-      data = IOUtils.toByteArray(stream); // TODO Avoid dumping into memory?
+      responseStream = response.getOutputStream();
+      IOUtils.copy(readStream, responseStream);
       threw = false;
     } finally {
-      Closeables.close(stream, threw);
+      Closeables.close(responseStream, threw);
     }
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(identity.getContentType());
-
-    return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
   }
 
 }
