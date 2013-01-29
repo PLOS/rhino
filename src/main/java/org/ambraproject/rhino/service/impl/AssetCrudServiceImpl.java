@@ -31,6 +31,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.WriteResult;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -70,9 +71,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   /*
    * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
    */
-  private WriteResult create(InputStream file,
-                             AssetIdentity assetId,
-                             Optional<ArticleIdentity> articleIdParam)
+  private WriteResult<ArticleAsset> create(InputStream file,
+                                           AssetIdentity assetId,
+                                           Optional<ArticleIdentity> articleIdParam)
       throws FileStoreException, IOException {
     // Require that the user identified the parent article
     if (!articleIdParam.isPresent()) {
@@ -98,16 +99,16 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     article.getAssets().add(asset);
 
     doUpload(file, article, asset, assetId);
-    return WriteResult.CREATED;
+    return new WriteResult<ArticleAsset>(asset, WriteResult.Action.CREATED);
   }
 
   /*
    * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
    */
-  private WriteResult update(InputStream file,
-                             AssetIdentity assetId,
-                             Optional<ArticleIdentity> articleIdParam,
-                             ArticleAsset asset)
+  private WriteResult<ArticleAsset> update(InputStream file,
+                                           AssetIdentity assetId,
+                                           Optional<ArticleIdentity> articleIdParam,
+                                           ArticleAsset asset)
       throws FileStoreException, IOException {
     // Look up the parent article, by the asset's preexisting association
     String assetDoi = asset.getDoi();
@@ -130,7 +131,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
 
     doUpload(file, article, asset, assetId);
-    return WriteResult.UPDATED;
+    return new WriteResult<ArticleAsset>(asset, WriteResult.Action.UPDATED);
   }
 
   /*

@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -39,13 +40,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param file       the XML data for the article
    * @param suppliedId the identifier supplied for the article, if any
-   * @return an indication of whether the article was created or updated
+   * @return an indication of which article was created or updated
    * @throws org.ambraproject.rhino.rest.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract WriteResult write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract WriteResult<Article> write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException, FileStoreException;
 
   /**
@@ -79,6 +80,18 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *          if the DOI does not belong to an article
    */
   public abstract void readMetadata(HttpServletResponse response, DoiBasedIdentity id, MetadataFormat format)
+      throws IOException;
+
+  /**
+   * Read the metadata of an article.
+   *
+   * @param response the response object to which to send the metadata
+   * @param article  the article
+   * @param format   the desired metadata format
+   * @throws org.ambraproject.rhino.rest.RestClientException
+   *          if the DOI does not belong to an article
+   */
+  public abstract void readMetadata(HttpServletResponse response, Article article, MetadataFormat format)
       throws IOException;
 
 }

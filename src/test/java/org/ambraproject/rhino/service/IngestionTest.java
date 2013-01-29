@@ -142,10 +142,10 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    DoiBasedCrudService.WriteResult writeResult =
+    WriteResult writeResult =
         articleCrudService.write(new TestFile(xmlFile).read(),
             Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
-    assertEquals(writeResult, DoiBasedCrudService.WriteResult.CREATED, "Service didn't report creating article");
+    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED, "Service didn't report creating article");
 
     Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria

@@ -18,8 +18,6 @@
 
 package org.ambraproject.rhino.service;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * Super-interface to CRUD services within the article namespace.
  * <p/>
@@ -44,36 +42,5 @@ public interface DoiBasedCrudService {
      */
     UPDATE_ONLY;
   }
-
-  /**
-   * An indication of whether a request that uploaded data (typically, PUT) created new data or updated existing data.
-   */
-  public static enum WriteResult {
-    /**
-     * A new entity was created.
-     */
-    CREATED(HttpStatus.CREATED),
-
-    /**
-     * An old entity was changed.
-     */
-    UPDATED(HttpStatus.OK);
-
-    private final HttpStatus status;
-
-    private WriteResult(HttpStatus status) {
-      this.status = status;
-    }
-
-    /**
-     * An HTTP status code that describes the operation.
-     *
-     * @return the status
-     */
-    public HttpStatus getStatus() {
-      return status;
-    }
-  }
-
 
 }
