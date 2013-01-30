@@ -209,9 +209,8 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
         case Node.ELEMENT_NODE:
           String nodeName = child.getNodeName();
           nodeContent.append('<').append(nodeName);
-          NamedNodeMap attributes = child.getAttributes();
-          for (int i = 0; i < attributes.getLength(); i++) {
-            Node attribute = attributes.item(i);
+          List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
+          for (Node attribute : attributes) {
             nodeContent.append(' ').append(attribute.toString());
           }
           nodeContent.append('>');
