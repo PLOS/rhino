@@ -73,9 +73,13 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
     asset.setDoi(assetId.getKey());
     AssetIdentity.setNoFile(asset);
+    asset.setContextElement(assetNode.getNodeName());
 
-    asset.setTitle(readString("caption/title", assetNode));
-    asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?
+    asset.setTitle(readString("label", assetNode));
+    Node captionNode = readNode("caption", assetNode);
+    if (captionNode != null) {
+      asset.setDescription(buildTextWithMarkup(captionNode));
+    }
 
     return asset;
   }
