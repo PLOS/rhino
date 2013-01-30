@@ -52,8 +52,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
@@ -400,7 +400,7 @@ public class IngestionTest extends BaseRhinoTest {
   private static ImmutableMap<AssetIdentity, ArticleAsset> mapUninitAssetsById(Collection<ArticleAsset> assets) {
     ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
-      assertTrue(asset.getExtension().isEmpty()); // assert that asset is uninitializedq
+      assertFalse(AssetIdentity.hasFile(asset));
       map.put(AssetIdentity.from(asset), asset);
     }
     return map.build();
