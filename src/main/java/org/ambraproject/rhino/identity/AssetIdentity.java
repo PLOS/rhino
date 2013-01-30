@@ -14,7 +14,7 @@ public class AssetIdentity extends DoiBasedIdentity {
 
   /**
    * Create an identifier that refers to an asset. The argument is an Ambra entity that <em>may</em> be associated with
-   * a particular file (i.e., it may have a non-null extension), but the returned object will not specify a file
+   * a particular file (i.e., it may have a non-empty extension), but the returned object will not specify a file
    * regardless.
    *
    * @param asset an Ambra asset entity
