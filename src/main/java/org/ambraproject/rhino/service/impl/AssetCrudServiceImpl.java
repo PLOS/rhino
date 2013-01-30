@@ -157,7 +157,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
 
     try {
-      asset = new AssetXml(articleXml, assetId).build(asset);
+      asset = new AssetXml(articleXml, assetId.forAsset()).build(asset);
     } catch (XmlContentException e) {
       throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST, e);
     }

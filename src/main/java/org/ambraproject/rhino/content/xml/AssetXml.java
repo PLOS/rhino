@@ -20,7 +20,7 @@ package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -34,7 +34,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
-  private final AssetFileIdentity assetId;
+  private final AssetIdentity assetId;
 
   /**
    * The Node passed to this constructor may be a full document or just the asset node. In the former case, this class
@@ -43,7 +43,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
    * @param xml
    * @param assetId
    */
-  public AssetXml(Node xml, AssetFileIdentity assetId) {
+  public AssetXml(Node xml, AssetIdentity assetId) {
     super(xml);
     this.assetId = Preconditions.checkNotNull(assetId);
   }
@@ -72,7 +72,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
     asset.setDoi(assetId.getKey());
-    asset.setExtension(assetId.getFileExtension());
+    asset.setExtension(null); // create an uninitialized asset
 
     asset.setTitle(readString("caption/title", assetNode));
     asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?

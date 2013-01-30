@@ -132,6 +132,15 @@ public class AssetFileIdentity extends DoiBasedIdentity {
   }
 
   /**
+   * Get the identity of the asset to which this file belongs.
+   *
+   * @return the asset's identity
+   */
+  public AssetIdentity forAsset() {
+    return AssetIdentity.create(getIdentifier());
+  }
+
+  /**
    * If this asset is an XML file, return the identity of the article to which it would belong <em>if</em> it is an
    * article's NLM DTD file.
    *

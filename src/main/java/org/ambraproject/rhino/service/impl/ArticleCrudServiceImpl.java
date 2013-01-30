@@ -32,7 +32,7 @@ import org.ambraproject.rhino.content.xml.AssetNode;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -238,11 +238,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private static ArticleAsset writeAsset(ArticleAsset asset, AssetNode assetNode) {
     String assetDoi = assetNode.getDoi();
-    String extension = "TIF"; // For now, assume all assets are *.tif figures; TODO: Handle other asset types
-    AssetFileIdentity assetFileIdentity = AssetFileIdentity.create(assetDoi, extension);
+    AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
 
     try {
-      return new AssetXml(assetNode.getNode(), assetFileIdentity).build(asset);
+      return new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
