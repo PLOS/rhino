@@ -5,8 +5,11 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -23,6 +26,7 @@ import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -49,6 +53,7 @@ import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
@@ -257,32 +262,53 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetLists(AssertionCollector results,
                                  Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
-    Map<AssetFileIdentity, ArticleAsset> actualAssetMap = mapAssetsById(actualList);
-    Set<AssetFileIdentity> actualAssetIds = actualAssetMap.keySet();
-    Map<AssetFileIdentity, ArticleAsset> expectedAssetMap = mapAssetsById(expectedList);
-    Set<AssetFileIdentity> expectedAssetIds = expectedAssetMap.keySet();
+    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
+    Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
+    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetFilesByAssetId(expectedList);
+    Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
 
-    for (AssetFileIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
+    for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
       results.compare(ArticleAsset.class, "doi", null, missingDoi);
     }
-    for (AssetFileIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
+    for (AssetIdentity extraDoi : Sets.difference(actualAssetIds, expectedAssetIds)) {
       results.compare(ArticleAsset.class, "doi", extraDoi, null);
     }
 
-    for (AssetFileIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
-      // An asset with the right DOI is in both sets; now compare its fields individually
-      compareAssets(results, actualAssetMap.get(assetDoi), actualAssetMap.get(assetDoi));
+    for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
+      // One created asset with a null extension and material from article XML
+      ArticleAsset actualAsset = actualAssetMap.get(assetDoi);
+
+      // Multiple assets corresponding to various uploaded files
+      Collection<ArticleAsset> expectedFileAssets = expectedAssetMap.get(assetDoi);
+
+      /*
+       * The relevant fields of the expected assets should all match each other. (If a counterexample is found,
+       * will have to change this test.) We want to test that the actual asset matches all of them.
+       */
+      for (ArticleAsset expectedAsset : expectedFileAssets) {
+        compareAssetFields(results, actualAsset, expectedAsset);
+      }
     }
   }
 
-  private void compareAssets(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
-    results.compare(ArticleAsset.class, "doi", actual.getDoi(), expected.getDoi());
+  /**
+   * Compare only those fields that can be gotten from article XML.
+   *
+   * @param results  the object into which to insert results
+   * @param actual   an actual asset with no information specific to an uploaded file
+   * @param expected an expected asset with an associated file
+   */
+  private void compareAssetFields(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
+    assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
+
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
-    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
-    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
     results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
-    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+
+    // These are skipped because they would require a file upload before we could know them.
+    //    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
+    //    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
+    //    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
   }
 
   private void compareCitationLists(AssertionCollector results,
@@ -371,11 +397,20 @@ public class IngestionTest extends BaseRhinoTest {
     return map.build();
   }
 
-  private static ImmutableMap<AssetFileIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
-    ImmutableMap.Builder<AssetFileIdentity, ArticleAsset> map = ImmutableMap.builder();
+  private static ImmutableMap<AssetIdentity, ArticleAsset> mapUninitAssetsById(Collection<ArticleAsset> assets) {
+    ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
-      AssetFileIdentity identity = AssetFileIdentity.from(asset);
-      map.put(identity, asset);
+      assertTrue(asset.getExtension().isEmpty()); // assert that asset is uninitializedq
+      map.put(AssetIdentity.from(asset), asset);
+    }
+    return map.build();
+  }
+
+  private static ImmutableMultimap<AssetIdentity, ArticleAsset> mapAssetFilesByAssetId(Collection<ArticleAsset> assets) {
+    ImmutableListMultimap.Builder<AssetIdentity, ArticleAsset> map = ImmutableListMultimap.builder();
+    for (ArticleAsset asset : assets) {
+      AssetFileIdentity fileIdentity = AssetFileIdentity.from(asset);
+      map.put(fileIdentity.forAsset(), asset);
     }
     return map.build();
   }

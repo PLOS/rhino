@@ -20,6 +20,7 @@ package org.ambraproject.rhino.identity;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -68,7 +69,9 @@ public class AssetFileIdentity extends DoiBasedIdentity {
   }
 
   public static AssetFileIdentity from(ArticleAsset asset) {
-    return AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
+    String extension = asset.getExtension();
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(extension), "Asset is not associated with a file");
+    return AssetFileIdentity.create(asset.getDoi(), extension);
   }
 
   /**
