@@ -72,7 +72,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
     asset.setDoi(assetId.getKey());
-    asset.setExtension(null); // create an uninitialized asset
+    asset.setExtension(""); // empty string denotes that the asset is uninitialized
 
     asset.setTitle(readString("caption/title", assetNode));
     asset.setTitle(readString("caption/p", assetNode)); // TODO Need to support multiple paragraphs?
