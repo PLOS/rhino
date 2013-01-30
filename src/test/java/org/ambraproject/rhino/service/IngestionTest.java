@@ -271,7 +271,7 @@ public class IngestionTest extends BaseRhinoTest {
 
     for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
       // An asset with the right DOI is in both sets; now compare its fields individually
-      compareAssets(results, actualAssetMap.get(assetDoi), actualAssetMap.get(assetDoi));
+      compareAssets(results, actualAssetMap.get(assetDoi), expectedAssetMap.get(assetDoi));
     }
   }
 
