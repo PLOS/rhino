@@ -184,8 +184,10 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
 
   /**
    * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
-   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
-   * their attributes are deleted. Text nodes containing only whitespace are deleted.
+   * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Text nodes containing
+   * only whitespace are deleted.
+   * <p/>
+   * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
    *
    * @param node the node containing the text we are retrieving
    * @return the marked-up node contents
@@ -206,7 +208,13 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
           break;
         case Node.ELEMENT_NODE:
           String nodeName = child.getNodeName();
-          nodeContent.append('<').append(nodeName).append('>');
+          nodeContent.append('<').append(nodeName);
+          NamedNodeMap attributes = child.getAttributes();
+          for (int i = 0; i < attributes.getLength(); i++) {
+            Node attribute = attributes.item(i);
+            nodeContent.append(' ').append(attribute.toString());
+          }
+          nodeContent.append('>');
           buildTextWithMarkup(nodeContent, child);
           nodeContent.append("</").append(nodeName).append('>');
           break;
