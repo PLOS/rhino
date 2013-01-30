@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 
+import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -47,6 +48,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,6 +56,7 @@ import java.util.Set;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
@@ -285,6 +288,7 @@ public class IngestionTest extends BaseRhinoTest {
        * The relevant fields of the expected assets should all match each other. (If a counterexample is found,
        * will have to change this test.) We want to test that the actual asset matches all of them.
        */
+      verifyExpectedAssets(expectedFileAssets);
       for (ArticleAsset expectedAsset : expectedFileAssets) {
         compareAssetFields(results, actualAsset, expectedAsset);
       }
@@ -309,6 +313,25 @@ public class IngestionTest extends BaseRhinoTest {
     //    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
     //    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
     //    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+  }
+
+  /**
+   * Assert that the fields checked in {@link #compareAssetFields} are the same among all expected assets with the same
+   * DOI. The test expects this condition to hold about its own case data, so if it fails, halt instead of logging a
+   * soft case failure.
+   *
+   * @param assets non-empty collection of expected assets
+   */
+  private void verifyExpectedAssets(Iterable<ArticleAsset> assets) {
+    Iterator<ArticleAsset> iterator = assets.iterator();
+    ArticleAsset first = iterator.next();
+    while (iterator.hasNext()) {
+      ArticleAsset next = iterator.next();
+      assertTrue(Objects.equal(first.getDoi(), next.getDoi()));
+      assertTrue(Objects.equal(first.getContextElement(), next.getContextElement()));
+      assertTrue(Objects.equal(first.getTitle(), next.getTitle()));
+      assertTrue(Objects.equal(first.getDescription(), next.getDescription()));
+    }
   }
 
   private void compareCitationLists(AssertionCollector results,
