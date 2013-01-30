@@ -19,49 +19,45 @@
 package org.ambraproject.rhino.util;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 
 /**
- * Adapts a {@link NodeList} to be a {@link List} compatible with the Java Collections Framework.
+ * Adapt a collection from the W3C DOM library to be a {@link List} compatible with the Java Collections Framework.
  */
-public class NodeListAdapter extends AbstractList<Node> {
-
-  private final NodeList nodes;
-
-  private NodeListAdapter(NodeList nodes) {
-    super();
-    this.nodes = Preconditions.checkNotNull(nodes);
-  }
+public abstract class NodeListAdapter extends AbstractList<Node> {
 
   /**
-   * Wrap a node list. The returned list is unmodifiable and supports all non-destructive operations. Any changes in the
-   * underlying list will be reflected in this object. (The {@link NodeList} contract implies, but does not explicitly
-   * guarantee, that such changes should not be possible.)
+   * Wrap a node list. The returned list is an unmodifiable view and supports all non-destructive operations. Any
+   * changes in the underlying list will be reflected in this object.
    *
    * @param nodes a DOM node list
    * @return a Java Collections Framework node list
    * @throws NullPointerException if {@code nodes} is null
    */
   public static List<Node> wrap(NodeList nodes) {
-    return new NodeListAdapter(nodes);
+    return new NodeListWrapper(nodes);
   }
 
   /**
-   * Make a copy of a node list. The returned list is guaranteed not to change regardless of the original list's
-   * behavior.
+   * Wrap a node map. The returned list is an unmodifiable view and supports all non-destructive operations. Any changes
+   * in the underlying map will be reflected in this object.
    *
-   * @param nodes a DOM node list
-   * @return an immutable Java Collections Framework node list
+   * @param nodes a DOM node map
+   * @return a Java Collections Framework node list
    * @throws NullPointerException if {@code nodes} is null
    */
-  public static ImmutableList<Node> copy(NodeList nodes) {
-    return ImmutableList.copyOf(wrap(nodes));
+  public static List<Node> wrap(NamedNodeMap nodes) {
+    return new NodeMapWrapper(nodes);
   }
+
+
+  abstract Node getImpl(int index);
 
   /**
    * {@inheritDoc}
@@ -71,19 +67,147 @@ public class NodeListAdapter extends AbstractList<Node> {
     // To match the List contract (nodes.item returns null on invalid index)
     Preconditions.checkElementIndex(index, size());
 
-    Node node = nodes.item(index);
+    Node node = getImpl(index);
     if (node == null) {
-      throw new NullPointerException("Delegate NodeList returned null for a valid index");
+      throw new NullPointerException("Delegate object returned null for a valid index");
     }
     return node;
   }
 
-  /**
-   * {@inheritDoc}
+
+  /*
+   * Nested subclasses only.
    */
+  private NodeListAdapter() {
+  }
+
+  private static class NodeListWrapper extends NodeListAdapter {
+    private final NodeList wrapped;
+
+    private NodeListWrapper(NodeList wrapped) {
+      this.wrapped = Preconditions.checkNotNull(wrapped);
+    }
+
+    @Override
+    protected Node getImpl(int index) {
+      return wrapped.item(index);
+    }
+
+    @Override
+    public int size() {
+      return wrapped.getLength();
+    }
+  }
+
+  private static class NodeMapWrapper extends NodeListAdapter {
+    private final NamedNodeMap wrapped;
+
+    private NodeMapWrapper(NamedNodeMap wrapped) {
+      this.wrapped = Preconditions.checkNotNull(wrapped);
+    }
+
+    @Override
+    protected Node getImpl(int index) {
+      return wrapped.item(index);
+    }
+
+    @Override
+    public int size() {
+      return wrapped.getLength();
+    }
+  }
+
+
+  // Fail fast on destructive operations
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
   @Override
-  public int size() {
-    return nodes.getLength();
+  public boolean add(Node node) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public void add(int index, Node element) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public boolean addAll(int index, Collection<? extends Node> c) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public void clear() {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public Node remove(int index) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  protected void removeRange(int fromIndex, int toIndex) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public Node set(int index, Node element) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public boolean remove(Object o) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public boolean retainAll(Collection<?> c) {
+    throw new UnsupportedOperationException("Unmodifiable");
+  }
+
+  /**
+   * @deprecated Unmodifiable
+   */
+  @Deprecated
+  @Override
+  public boolean removeAll(Collection<?> c) {
+    throw new UnsupportedOperationException("Unmodifiable");
   }
 
 }
