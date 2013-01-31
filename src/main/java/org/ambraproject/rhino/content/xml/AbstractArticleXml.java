@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -37,6 +36,7 @@ import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -185,7 +185,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   /**
    * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
    * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Text nodes containing
-   * only whitespace are deleted.
+   * only leading whitespace on a line are deleted. Ampersands are escaped.
    * <p/>
    * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
    *
@@ -213,11 +213,16 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     return nodeContent;
   }
 
+  private static final Pattern UNWANTED_WHITESPACE = Pattern.compile("\\n[ \\t]*");
+  private static final Pattern AMPERSAND = Pattern.compile("&", Pattern.LITERAL);
+
   private static void appendTextNode(StringBuilder nodeContent, Node child) {
     String text = child.getNodeValue();
-    if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
-      nodeContent.append(text);
+    if (UNWANTED_WHITESPACE.matcher(text).matches()) {
+      return;
     }
+    text = AMPERSAND.matcher(text).replaceAll("&amp;");
+    nodeContent.append(text);
   }
 
   private static void appendElementNode(StringBuilder nodeContent, Node child) {
