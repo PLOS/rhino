@@ -201,27 +201,35 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     for (Node child : children) {
       switch (child.getNodeType()) {
         case Node.TEXT_NODE:
-          String text = child.getNodeValue();
-          if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
-            nodeContent.append(text);
-          }
+          appendTextNode(nodeContent, child);
           break;
         case Node.ELEMENT_NODE:
-          String nodeName = child.getNodeName();
-          nodeContent.append('<').append(nodeName);
-          List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
-          for (Node attribute : attributes) {
-            nodeContent.append(' ').append(attribute.toString());
-          }
-          nodeContent.append('>');
-          buildTextWithMarkup(nodeContent, child);
-          nodeContent.append("</").append(nodeName).append('>');
+          appendElementNode(nodeContent, child);
           break;
         default:
-          // Skip the child
+          log.warn("Skipping node (name={}, type={})", child.getNodeName(), child.getNodeType());
       }
     }
     return nodeContent;
+  }
+
+  private static void appendTextNode(StringBuilder nodeContent, Node child) {
+    String text = child.getNodeValue();
+    if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
+      nodeContent.append(text);
+    }
+  }
+
+  private static void appendElementNode(StringBuilder nodeContent, Node child) {
+    String nodeName = child.getNodeName();
+    nodeContent.append('<').append(nodeName);
+    List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
+    for (Node attribute : attributes) {
+      nodeContent.append(' ').append(attribute.toString());
+    }
+    nodeContent.append('>');
+    buildTextWithMarkup(nodeContent, child);
+    nodeContent.append("</").append(nodeName).append('>');
   }
 
 }
