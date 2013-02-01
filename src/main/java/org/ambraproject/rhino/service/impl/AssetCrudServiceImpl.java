@@ -19,7 +19,10 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 import com.google.common.io.Closeables;
+import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -27,6 +30,7 @@ import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -55,17 +59,47 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public WriteResult upload(InputStream file, AssetFileIdentity assetId, Optional<ArticleIdentity> articleIdParam)
+  public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
       throws FileStoreException, IOException {
-    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
+    @SuppressWarnings("unchecked") List<ArticleAsset> assets =
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+            .add(Restrictions.eq("doi", assetFileId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY));
+    if (assets.isEmpty()) {
+      throw new RestClientException("No asset ingested with DOI: " + assetFileId.getIdentifier(),
+          HttpStatus.NOT_FOUND);
+    }
 
-    return (asset == null)
-        ? create(file, assetId, articleIdParam)
-        : update(file, assetId, articleIdParam, asset);
+    ArticleAsset existingAsset = assets.get(0);
+    boolean updating = (assets.size() == 1 && !AssetIdentity.hasFile(existingAsset));
+    ArticleAsset assetToPersist = updating ? existingAsset : copyArticleFields(existingAsset);
+    String assetFsid = assetFileId.getFsid();
+
+    if (updating) {
+      hibernateTemplate.update(assetToPersist);
+    } else {
+      hibernateTemplate.save(assetToPersist);
+    }
+
+    byte[] assetData = readClientInput(file);
+    write(assetData, assetFsid);
+    WriteResult.Action actionResult = (updating ? WriteResult.Action.UPDATED : WriteResult.Action.CREATED);
+    return new WriteResult<ArticleAsset>(assetToPersist, actionResult);
+  }
+
+  /**
+   * Copy all fields defined by article XML into a new asset and return it.
+   *
+   * @param oldAsset the asset to copy from
+   * @return the new asset
+   */
+  private static ArticleAsset copyArticleFields(ArticleAsset oldAsset) {
+    Preconditions.checkNotNull(oldAsset);
+    ArticleAsset newAsset = new ArticleAsset();
+    newAsset.setDoi(oldAsset.getDoi());
+    newAsset.setTitle(oldAsset.getTitle());
+    newAsset.setDescription(oldAsset.getDescription());
+    return newAsset;
   }
 
   /*

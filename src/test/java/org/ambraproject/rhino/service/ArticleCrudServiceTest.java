@@ -209,7 +209,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
-    assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
+    assetCrudService.upload(assetFileStream, assetId);
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria

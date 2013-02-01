@@ -32,18 +32,16 @@ import java.io.InputStream;
 public interface AssetCrudService extends DoiBasedCrudService {
 
   /**
-   * Create or update an article asset.
+   * Upload a file to be associated with a created asset.
    *
-   * @param file      the file data to associate with the new asset
-   * @param assetId   the identifier for the new asset
-   * @param articleId the identifier for the existing article to which the asset belongs
-   * @return an indication of whether the asset was created or updated
+   * @param file    the file data to associate with the new asset
+   * @param assetId the identifier for the existing asset with the new file's extension
+   * @return an indication of the result
    * @throws FileStoreException
    * @throws IOException
    */
   public abstract WriteResult<ArticleAsset> upload(InputStream file,
-                                                   AssetFileIdentity assetId,
-                                                   Optional<ArticleIdentity> articleId)
+                                                   AssetFileIdentity assetId)
       throws FileStoreException, IOException;
 
   /**
