@@ -61,20 +61,36 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
           HttpStatus.NOT_FOUND);
     }
 
+    /*
+     * Set up the Hibernate entity that we want to modify. If this is the first file to be uploaded, then there is a
+     * file-less asset that we need to modify. Else, create a new asset, but copy its article-defined fields over from
+     * an existing asset.
+     */
     ArticleAsset existingAsset = assets.get(0);
     boolean updating = (assets.size() == 1 && !AssetIdentity.hasFile(existingAsset));
     ArticleAsset assetToPersist = updating ? existingAsset : copyArticleFields(existingAsset);
-    assetToPersist.setExtension(assetFileId.getFileExtension());
-    String assetFsid = assetFileId.getFsid();
 
+    /*
+     * Pull the data into memory and write it to the file store. Must buffer the whole thing in memory, because we need
+     * to know the final size before we can open a stream to the file store. Also, we need to measure the size anyway
+     * to record as an asset field.
+     */
+    String assetFsid = assetFileId.getFsid();
+    byte[] assetData = readClientInput(file);
+    write(assetData, assetFsid);
+
+    // Set the asset entity's file-specific fields
+    assetToPersist.setExtension(assetFileId.getFileExtension());
+    assetToPersist.setSize(assetData.length);
+
+    // Persist to the database
     if (updating) {
       hibernateTemplate.update(assetToPersist);
     } else {
       hibernateTemplate.save(assetToPersist);
     }
 
-    byte[] assetData = readClientInput(file);
-    write(assetData, assetFsid);
+    // Return the result
     WriteResult.Action actionResult = (updating ? WriteResult.Action.UPDATED : WriteResult.Action.CREATED);
     return new WriteResult<ArticleAsset>(assetToPersist, actionResult);
   }
