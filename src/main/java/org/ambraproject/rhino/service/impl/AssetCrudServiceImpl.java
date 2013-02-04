@@ -64,6 +64,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     ArticleAsset existingAsset = assets.get(0);
     boolean updating = (assets.size() == 1 && !AssetIdentity.hasFile(existingAsset));
     ArticleAsset assetToPersist = updating ? existingAsset : copyArticleFields(existingAsset);
+    assetToPersist.setExtension(assetFileId.getFileExtension());
     String assetFsid = assetFileId.getFsid();
 
     if (updating) {

@@ -21,6 +21,7 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -86,16 +87,17 @@ public class AssetCrudController extends DoiBasedCrudController {
                                   @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
       throws IOException, FileStoreException {
     AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
+    WriteResult<ArticleAsset> result;
     InputStream fileContent = null;
     boolean threw = true;
     try {
       fileContent = assetFile.getInputStream();
-      assetCrudService.upload(fileContent, fileIdentity);
+      result = assetCrudService.upload(fileContent, fileIdentity);
       threw = false;
     } finally {
       Closeables.close(fileContent, threw);
     }
-    return respondWithStatus(HttpStatus.CREATED);
+    return respondWithStatus(result.getStatus());
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)

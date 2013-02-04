@@ -110,13 +110,15 @@ def run_test_on_article(case):
 
     # Temporarily hard-coding one asset case
     # TODO Generalize
-    with open('../resources/articles/journal.pone.0038869.g001.tif') as f:
-        upload_asset = requests.post(
-            SERVER_HOST + '/asset',
-            data={'doi': '10.1371/journal.pone.0038869.g001',
-                  'ext': 'tif'},
-            files={'file': f})
-    report('Upload asset', upload_asset)
+    path = '../resources/articles/journal.pone.0038869.g001.'
+    for ext in ['tif', 'png_s']:
+        with open(path + ext) as f:
+            upload_asset = requests.post(
+                SERVER_HOST + '/asset',
+                data={'doi': '10.1371/journal.pone.0038869.g001',
+                      'ext': ext},
+                files={'file': f})
+        report('Upload asset', upload_asset)
 
     delete = requests.delete(article_id)
     report('Delete article', delete)
