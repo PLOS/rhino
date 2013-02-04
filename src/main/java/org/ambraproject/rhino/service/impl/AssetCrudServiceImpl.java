@@ -34,6 +34,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -128,18 +129,19 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
+  public void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
+      throws IOException {
     assert format == MetadataFormat.JSON;
-    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
+    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", id.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
-    if (asset == null) {
+    if (assets.isEmpty()) {
       throw reportNotFound(id);
     }
-    return entityGson.toJson(asset);
+    writeJsonToResponse(response, assets);
   }
 
   /**

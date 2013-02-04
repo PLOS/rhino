@@ -24,6 +24,7 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -82,9 +83,10 @@ public class AssetCrudController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
-  public ResponseEntity<?> upload(@RequestParam(value = DOI_PARAM) String assetDoi,
-                                  @RequestParam(value = EXTENSION_PARAM) String extension,
-                                  @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
+  public void upload(HttpServletResponse response,
+                     @RequestParam(value = DOI_PARAM) String assetDoi,
+                     @RequestParam(value = EXTENSION_PARAM) String extension,
+                     @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
       throws IOException, FileStoreException {
     AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
     WriteResult<ArticleAsset> result;
@@ -97,7 +99,9 @@ public class AssetCrudController extends DoiBasedCrudController {
     } finally {
       Closeables.close(fileContent, threw);
     }
-    return respondWithStatus(result.getStatus());
+
+    response.setStatus(result.getStatus().value());
+    assetCrudService.readMetadata(response, fileIdentity.forAsset(), MetadataFormat.JSON);
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)

@@ -18,14 +18,13 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -69,6 +68,15 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
+  /**
+   * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
+   * asset.
+   *
+   * @param response the response to which the metadata should be written
+   * @param id       the identity of the asset to read
+   * @param format   the desired metadata format
+   */
+  public abstract void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
+      throws IOException;
 
 }

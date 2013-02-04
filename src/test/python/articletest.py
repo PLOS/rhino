@@ -120,6 +120,10 @@ def run_test_on_article(case):
                 files={'file': f})
         report('Upload asset', upload_asset)
 
+    asset_id = '{host}/asset-meta/{doi}.g001'.format(**url_args)
+    read_asset_meta = requests.get(asset_id)
+    report('Read asset metadata', read_asset_meta)
+
     delete = requests.delete(article_id)
     report('Delete article', delete)
 
