@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -53,23 +54,36 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
       throws FileStoreException, IOException {
-    @SuppressWarnings("unchecked") List<ArticleAsset> assets =
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetFileId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY));
-    if (assets.isEmpty()) {
-      throw new RestClientException("No asset ingested with DOI: " + assetFileId.getIdentifier(),
-          HttpStatus.NOT_FOUND);
-    }
+    // TODO Improve efficiency; loading and persisting the whole Article object is too slow
+    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.find(
+            // Find the article that contains an asset with the given DOI
+            "select article from Article article join article.assets asset where asset.doi = ?",
+            assetFileId.getKey()));
+    List<ArticleAsset> assets = article.getAssets();
 
     /*
      * Set up the Hibernate entity that we want to modify. If this is the first file to be uploaded, then there is a
      * file-less asset that we need to modify. Else, create a new asset, but copy its article-defined fields over from
      * an existing asset.
+     *
+     * TODO Shouldn't need the for-loop if Hibernate were used better here (see above)
      */
-    ArticleAsset existingAsset = assets.get(0);
-    boolean updating = (assets.size() == 1 && !AssetIdentity.hasFile(existingAsset));
-    ArticleAsset assetToPersist = updating ? existingAsset : copyArticleFields(existingAsset);
+    ArticleAsset assetToPersist = null;
+    for (ArticleAsset existingAsset : assets) {
+      if (existingAsset.getDoi().equals(assetFileId.getKey())) {
+        if (AssetIdentity.hasFile(existingAsset)) {
+          assetToPersist = copyArticleFields(existingAsset);
+          assets.add(assetToPersist);
+        } else {
+          assetToPersist = existingAsset;
+        }
+        break;
+      }
+    }
+    if (assetToPersist == null) {
+      throw new RuntimeException();
+    }
 
     /*
      * Pull the data into memory and write it to the file store. Must buffer the whole thing in memory, because we need
@@ -85,15 +99,10 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     assetToPersist.setSize(assetData.length);
 
     // Persist to the database
-    if (updating) {
-      hibernateTemplate.update(assetToPersist);
-    } else {
-      hibernateTemplate.save(assetToPersist);
-    }
+    hibernateTemplate.update(article);
 
     // Return the result
-    WriteResult.Action actionResult = (updating ? WriteResult.Action.UPDATED : WriteResult.Action.CREATED);
-    return new WriteResult<ArticleAsset>(assetToPersist, actionResult);
+    return new WriteResult<ArticleAsset>(assetToPersist, WriteResult.Action.CREATED);
   }
 
   /**
