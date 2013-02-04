@@ -18,17 +18,9 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Strings;
-import com.google.common.collect.Iterables;
-import com.google.common.io.Closeables;
 import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.content.xml.AssetXml;
-import org.ambraproject.rhino.content.xml.XmlContentException;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -41,7 +33,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -100,105 +91,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     newAsset.setTitle(oldAsset.getTitle());
     newAsset.setDescription(oldAsset.getDescription());
     return newAsset;
-  }
-
-  /*
-   * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
-   */
-  private WriteResult<ArticleAsset> create(InputStream file,
-                                           AssetFileIdentity assetId,
-                                           Optional<ArticleIdentity> articleIdParam)
-      throws FileStoreException, IOException {
-    // Require that the user identified the parent article
-    if (!articleIdParam.isPresent()) {
-      String message = String.format("Asset does not exist with DOI=\"%s\". "
-          + "Must provide an assetOf parameter when uploading a new asset.", assetId.getKey());
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-
-    // Look up the identified parent article
-    DoiBasedIdentity articleId = articleIdParam.get();
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", articleId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (article == null) {
-      String message = "Could not find article with DOI=" + articleId.getIdentifier();
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-
-    // Create the association now; the asset's state will be set in doUpload
-    ArticleAsset asset = new ArticleAsset();
-    article.getAssets().add(asset);
-
-    doUpload(file, article, asset, assetId);
-    return new WriteResult<ArticleAsset>(asset, WriteResult.Action.CREATED);
-  }
-
-  /*
-   * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
-   */
-  private WriteResult<ArticleAsset> update(InputStream file,
-                                           AssetFileIdentity assetId,
-                                           Optional<ArticleIdentity> articleIdParam,
-                                           ArticleAsset asset)
-      throws FileStoreException, IOException {
-    // Look up the parent article, by the asset's preexisting association
-    String assetDoi = asset.getDoi();
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-            .createCriteria("assets").add(Restrictions.eq("doi", assetDoi))
-        ));
-    if (article == null) {
-      throw new IllegalStateException("Orphan asset: " + assetId.getKey());
-    }
-    ArticleIdentity articleId = ArticleIdentity.create(article);
-
-    // If the user identified an article, throw an error if it was inconsistent
-    if (articleIdParam.isPresent() && !articleIdParam.get().equals(articleId)) {
-      String message = String.format(
-          "Provided ID for asset's article (%s) is inconsistent with asset's actual article (%s)",
-          articleIdParam.get().getIdentifier(), articleId.getIdentifier());
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-
-    doUpload(file, article, asset, assetId);
-    return new WriteResult<ArticleAsset>(asset, WriteResult.Action.UPDATED);
-  }
-
-  /*
-   * "Payload" behavior common to both create and update operations.
-   */
-  private void doUpload(InputStream file, Article article, ArticleAsset asset, AssetFileIdentity assetId)
-      throws FileStoreException, IOException {
-    // Get these first to fail faster in case of client error
-    String assetFsid = assetId.getFsid();
-    String articleFsid = ArticleIdentity.create(article).forXmlAsset().getFsid();
-
-    InputStream articleStream = null;
-    Document articleXml;
-    boolean threw = true;
-    try {
-      articleStream = fileStoreService.getFileInStream(articleFsid);
-      articleXml = parseXml(articleStream);
-      threw = false;
-    } catch (IOException e) {
-      throw new FileStoreException(e);
-    } finally {
-      Closeables.close(articleStream, threw);
-    }
-
-    try {
-      asset = new AssetXml(articleXml, assetId.forAsset()).build(asset);
-    } catch (XmlContentException e) {
-      throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST, e);
-    }
-    hibernateTemplate.update(article);
-
-    byte[] assetData = readClientInput(file);
-    write(assetData, assetFsid);
   }
 
   /**
