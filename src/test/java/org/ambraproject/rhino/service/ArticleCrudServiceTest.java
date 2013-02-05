@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
@@ -209,7 +210,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
-    assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
+    assetCrudService.upload(assetFileStream, assetId);
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -217,7 +218,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
             .add(Restrictions.eq("doi", assetId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
-    assertNotNull(stored);
+    assertNotNull(stored.getContextElement());
+    assertNotNull(stored.getContentType());
+    assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
   }
 
 }

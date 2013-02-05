@@ -18,15 +18,12 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Optional;
-import com.google.common.io.Closeables;
+import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.content.xml.AssetXml;
-import org.ambraproject.rhino.content.xml.XmlContentException;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -37,8 +34,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.w3c.dom.Document;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -55,116 +52,73 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public WriteResult upload(InputStream file, AssetFileIdentity assetId, Optional<ArticleIdentity> articleIdParam)
+  public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
       throws FileStoreException, IOException {
-    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-
-    return (asset == null)
-        ? create(file, assetId, articleIdParam)
-        : update(file, assetId, articleIdParam, asset);
-  }
-
-  /*
-   * An upload operation that needs to create a new asset. Validate input, then delegate to doUpload.
-   */
-  private WriteResult<ArticleAsset> create(InputStream file,
-                                           AssetFileIdentity assetId,
-                                           Optional<ArticleIdentity> articleIdParam)
-      throws FileStoreException, IOException {
-    // Require that the user identified the parent article
-    if (!articleIdParam.isPresent()) {
-      String message = String.format("Asset does not exist with DOI=\"%s\". "
-          + "Must provide an assetOf parameter when uploading a new asset.", assetId.getKey());
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-
-    // Look up the identified parent article
-    DoiBasedIdentity articleId = articleIdParam.get();
+    // TODO Improve efficiency; loading and persisting the whole Article object is too slow
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", articleId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (article == null) {
-      String message = "Could not find article with DOI=" + articleId.getIdentifier();
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+        hibernateTemplate.find(
+            // Find the article that contains an asset with the given DOI
+            "select article from Article article join article.assets asset where asset.doi = ?",
+            assetFileId.getKey()));
+    List<ArticleAsset> assets = article.getAssets();
+
+    /*
+     * Set up the Hibernate entity that we want to modify. If this is the first file to be uploaded, then there is a
+     * file-less asset that we need to modify. Else, create a new asset, but copy its article-defined fields over from
+     * an existing asset.
+     *
+     * TODO Shouldn't need the for-loop if Hibernate were used better here (see above)
+     */
+    ArticleAsset assetToPersist = null;
+    for (ArticleAsset existingAsset : assets) {
+      if (existingAsset.getDoi().equals(assetFileId.getKey())) {
+        if (AssetIdentity.hasFile(existingAsset)) {
+          assetToPersist = copyArticleFields(existingAsset);
+          assets.add(assetToPersist);
+        } else {
+          assetToPersist = existingAsset;
+        }
+        break;
+      }
+    }
+    if (assetToPersist == null) {
+      throw new RuntimeException();
     }
 
-    // Create the association now; the asset's state will be set in doUpload
-    ArticleAsset asset = new ArticleAsset();
-    article.getAssets().add(asset);
-
-    doUpload(file, article, asset, assetId);
-    return new WriteResult<ArticleAsset>(asset, WriteResult.Action.CREATED);
-  }
-
-  /*
-   * An upload operation that needs to update a preexisting asset. Validate input, then delegate to doUpload.
-   */
-  private WriteResult<ArticleAsset> update(InputStream file,
-                                           AssetFileIdentity assetId,
-                                           Optional<ArticleIdentity> articleIdParam,
-                                           ArticleAsset asset)
-      throws FileStoreException, IOException {
-    // Look up the parent article, by the asset's preexisting association
-    String assetDoi = asset.getDoi();
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-            .createCriteria("assets").add(Restrictions.eq("doi", assetDoi))
-        ));
-    if (article == null) {
-      throw new IllegalStateException("Orphan asset: " + assetId.getKey());
-    }
-    ArticleIdentity articleId = ArticleIdentity.create(article);
-
-    // If the user identified an article, throw an error if it was inconsistent
-    if (articleIdParam.isPresent() && !articleIdParam.get().equals(articleId)) {
-      String message = String.format(
-          "Provided ID for asset's article (%s) is inconsistent with asset's actual article (%s)",
-          articleIdParam.get().getIdentifier(), articleId.getIdentifier());
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-
-    doUpload(file, article, asset, assetId);
-    return new WriteResult<ArticleAsset>(asset, WriteResult.Action.UPDATED);
-  }
-
-  /*
-   * "Payload" behavior common to both create and update operations.
-   */
-  private void doUpload(InputStream file, Article article, ArticleAsset asset, AssetFileIdentity assetId)
-      throws FileStoreException, IOException {
-    // Get these first to fail faster in case of client error
-    String assetFsid = assetId.getFsid();
-    String articleFsid = ArticleIdentity.create(article).forXmlAsset().getFsid();
-
-    InputStream articleStream = null;
-    Document articleXml;
-    boolean threw = true;
-    try {
-      articleStream = fileStoreService.getFileInStream(articleFsid);
-      articleXml = parseXml(articleStream);
-      threw = false;
-    } catch (IOException e) {
-      throw new FileStoreException(e);
-    } finally {
-      Closeables.close(articleStream, threw);
-    }
-
-    try {
-      asset = new AssetXml(articleXml, assetId.forAsset()).build(asset);
-    } catch (XmlContentException e) {
-      throw new RestClientException(e.getMessage(), HttpStatus.BAD_REQUEST, e);
-    }
-    hibernateTemplate.update(article);
-
+    /*
+     * Pull the data into memory and write it to the file store. Must buffer the whole thing in memory, because we need
+     * to know the final size before we can open a stream to the file store. Also, we need to measure the size anyway
+     * to record as an asset field.
+     */
+    String assetFsid = assetFileId.getFsid();
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);
+
+    // Set the asset entity's file-specific fields
+    assetToPersist.setExtension(assetFileId.getFileExtension());
+    assetToPersist.setContentType(assetFileId.getContentType().toString());
+    assetToPersist.setSize(assetData.length);
+
+    // Persist to the database
+    hibernateTemplate.update(article);
+
+    // Return the result
+    return new WriteResult<ArticleAsset>(assetToPersist, WriteResult.Action.CREATED);
+  }
+
+  /**
+   * Copy all fields defined by article XML into a new asset and return it.
+   *
+   * @param oldAsset the asset to copy from
+   * @return the new asset
+   */
+  private static ArticleAsset copyArticleFields(ArticleAsset oldAsset) {
+    Preconditions.checkNotNull(oldAsset);
+    ArticleAsset newAsset = new ArticleAsset();
+    newAsset.setDoi(oldAsset.getDoi());
+    newAsset.setTitle(oldAsset.getTitle());
+    newAsset.setDescription(oldAsset.getDescription());
+    return newAsset;
   }
 
   /**
@@ -185,18 +139,19 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public String readMetadata(DoiBasedIdentity id, MetadataFormat format) {
+  public void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
+      throws IOException {
     assert format == MetadataFormat.JSON;
-    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
+    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", id.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
-    if (asset == null) {
+    if (assets.isEmpty()) {
       throw reportNotFound(id);
     }
-    return entityGson.toJson(asset);
+    writeJsonToResponse(response, assets);
   }
 
   /**

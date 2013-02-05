@@ -21,8 +21,10 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -35,6 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,9 +47,9 @@ import java.io.InputStream;
 @Controller
 public class AssetCrudController extends DoiBasedCrudController {
 
-  private static final String ASSET_NAMESPACE = "/asset/";
+  private static final String ASSET_ROOT = "/asset";
+  private static final String ASSET_NAMESPACE = ASSET_ROOT + "/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
-  private static final String PARENT_PARAM = "assetOf";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -64,35 +67,41 @@ public class AssetCrudController extends DoiBasedCrudController {
   }
 
 
+  private static final String DOI_PARAM = "doi";
+  private static final String EXTENSION_PARAM = "ext";
+  private static final String FILE_PARAM = "file";
+
   /**
-   * Dispatch an action to upload an asset.
+   * Dispatch an action to upload a file for an asset. When the client does this action, the asset ought to already
+   * exist as a database entity as a result of ingesting its parent article. The action uploads a data blob to put in
+   * the file store, and doesn't change any database data defined by article XML.
    *
-   * @param request  the HTTP request from a REST client
-   * @param parentId the DOI of the asset's parent article; required only if the asset is being newly created
-   * @return the HTTP response, to indicate success or describe an error
+   * @param assetDoi  the DOI of the asset to receive the file, which should already exist
+   * @param assetFile the blob of data to associate with the asset
+   * @return
    * @throws IOException
    * @throws FileStoreException
    */
-  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> upload(HttpServletRequest request,
-                                  @RequestParam(value = PARENT_PARAM, required = false) String parentId)
+  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
+  public void upload(HttpServletResponse response,
+                     @RequestParam(value = DOI_PARAM) String assetDoi,
+                     @RequestParam(value = EXTENSION_PARAM) String extension,
+                     @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
       throws IOException, FileStoreException {
-    AssetFileIdentity assetId = parse(request);
-    Optional<ArticleIdentity> articleId = (parentId == null)
-        ? Optional.<ArticleIdentity>absent()
-        : Optional.of(ArticleIdentity.create(parentId));
-
-    InputStream stream = null;
-    WriteResult result;
+    AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
+    WriteResult<ArticleAsset> result;
+    InputStream fileContent = null;
     boolean threw = true;
     try {
-      stream = request.getInputStream();
-      result = assetCrudService.upload(stream, assetId, articleId);
+      fileContent = assetFile.getInputStream();
+      result = assetCrudService.upload(fileContent, fileIdentity);
       threw = false;
     } finally {
-      Closeables.close(stream, threw);
+      Closeables.close(fileContent, threw);
     }
-    return respondWithStatus(result.getStatus());
+
+    response.setStatus(result.getStatus().value());
+    assetCrudService.readMetadata(response, fileIdentity.forAsset(), MetadataFormat.JSON);
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
