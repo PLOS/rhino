@@ -19,7 +19,7 @@
 package org.ambraproject.rhino.rest.controller.abstr;
 
 import com.google.common.io.Closeables;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.apache.commons.io.IOUtils;
 
@@ -33,7 +33,7 @@ import java.io.OutputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on entities identified by a {@link
  * org.ambraproject.rhino.identity.DoiBasedIdentity}.
  */
-public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends RestController {
+public abstract class DoiBasedCrudController extends RestController {
 
   protected static final String METADATA_FORMAT_PARAM = "format";
 
@@ -49,11 +49,13 @@ public abstract class DoiBasedCrudController<I extends DoiBasedIdentity> extends
     return getFullPathVariable(request, getNamespacePrefix());
   }
 
-  protected abstract I parse(HttpServletRequest request);
+  protected DoiBasedIdentity parse(HttpServletRequest request) {
+    return DoiBasedIdentity.create(getIdentifier(request));
+  }
 
   protected void respondWithStream(InputStream readStream,
                                    HttpServletResponse response,
-                                   AssetIdentity identity)
+                                   AssetFileIdentity identity)
       throws IOException {
     response.setContentType(identity.getContentType().toString());
 

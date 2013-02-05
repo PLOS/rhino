@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -37,6 +36,7 @@ import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -184,8 +184,10 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
 
   /**
    * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
-   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
-   * their attributes are deleted. Text nodes containing only whitespace are deleted.
+   * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Text nodes containing
+   * only leading whitespace on a line are deleted. Ampersands are escaped.
+   * <p/>
+   * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
    *
    * @param node the node containing the text we are retrieving
    * @return the marked-up node contents
@@ -199,22 +201,40 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     for (Node child : children) {
       switch (child.getNodeType()) {
         case Node.TEXT_NODE:
-          String text = child.getNodeValue();
-          if (!CharMatcher.WHITESPACE.matchesAllOf(text)) {
-            nodeContent.append(text);
-          }
+          appendTextNode(nodeContent, child);
           break;
         case Node.ELEMENT_NODE:
-          String nodeName = child.getNodeName();
-          nodeContent.append('<').append(nodeName).append('>');
-          buildTextWithMarkup(nodeContent, child);
-          nodeContent.append("</").append(nodeName).append('>');
+          appendElementNode(nodeContent, child);
           break;
         default:
-          // Skip the child
+          log.warn("Skipping node (name={}, type={})", child.getNodeName(), child.getNodeType());
       }
     }
     return nodeContent;
+  }
+
+  private static final Pattern UNWANTED_WHITESPACE = Pattern.compile("\\n[ \\t]*");
+  private static final Pattern AMPERSAND = Pattern.compile("&", Pattern.LITERAL);
+
+  private static void appendTextNode(StringBuilder nodeContent, Node child) {
+    String text = child.getNodeValue();
+    if (UNWANTED_WHITESPACE.matcher(text).matches()) {
+      return;
+    }
+    text = AMPERSAND.matcher(text).replaceAll("&amp;");
+    nodeContent.append(text);
+  }
+
+  private static void appendElementNode(StringBuilder nodeContent, Node child) {
+    String nodeName = child.getNodeName();
+    nodeContent.append('<').append(nodeName);
+    List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
+    for (Node attribute : attributes) {
+      nodeContent.append(' ').append(attribute.toString());
+    }
+    nodeContent.append('>');
+    buildTextWithMarkup(nodeContent, child);
+    nodeContent.append("</").append(nodeName).append('>');
   }
 
 }

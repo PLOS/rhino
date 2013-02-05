@@ -27,7 +27,7 @@ import com.google.common.base.Preconditions;
  * this case, the {@link #getIdentifier() identifier} is not a true DOI that a resolver would recognize. (However, such
  * asset IDs use the parent article's DOI as a prefix, so in that sense they are "DOI-based".)</li> </ol>
  */
-public abstract class DoiBasedIdentity {
+public class DoiBasedIdentity {
 
   protected static final String DOI_SCHEME_VALUE = "info:doi/";
   protected static final String XML_EXTENSION = "xml";
@@ -40,6 +40,10 @@ public abstract class DoiBasedIdentity {
 
     Preconditions.checkArgument(identifier.indexOf(':') < 0, "DOI must not have scheme prefix (\"info:doi/\")");
     Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
+  }
+
+  public static DoiBasedIdentity create(String identifier) {
+    return new DoiBasedIdentity(identifier);
   }
 
   /**

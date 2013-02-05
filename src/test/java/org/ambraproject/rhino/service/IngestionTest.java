@@ -1,12 +1,16 @@
 package org.ambraproject.rhino.service;
 
 
+import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -22,6 +26,7 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
@@ -43,12 +48,15 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
@@ -257,9 +265,9 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetLists(AssertionCollector results,
                                  Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
-    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapAssetsById(actualList);
+    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
     Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    Map<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetsById(expectedList);
+    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetFilesByAssetId(expectedList);
     Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
 
     for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
@@ -270,19 +278,60 @@ public class IngestionTest extends BaseRhinoTest {
     }
 
     for (AssetIdentity assetDoi : Sets.intersection(actualAssetIds, expectedAssetIds)) {
-      // An asset with the right DOI is in both sets; now compare its fields individually
-      compareAssets(results, actualAssetMap.get(assetDoi), expectedAssetMap.get(assetDoi));
+      // One created asset with a null extension and material from article XML
+      ArticleAsset actualAsset = actualAssetMap.get(assetDoi);
+
+      // Multiple assets corresponding to various uploaded files
+      Collection<ArticleAsset> expectedFileAssets = expectedAssetMap.get(assetDoi);
+
+      /*
+       * The relevant fields of the expected assets should all match each other. (If a counterexample is found,
+       * will have to change this test.) We want to test that the actual asset matches all of them.
+       */
+      verifyExpectedAssets(expectedFileAssets);
+      for (ArticleAsset expectedAsset : expectedFileAssets) {
+        compareAssetFields(results, actualAsset, expectedAsset);
+      }
     }
   }
 
-  private void compareAssets(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
-    results.compare(ArticleAsset.class, "doi", actual.getDoi(), expected.getDoi());
+  /**
+   * Compare only those fields that can be gotten from article XML.
+   *
+   * @param results  the object into which to insert results
+   * @param actual   an actual asset with no information specific to an uploaded file
+   * @param expected an expected asset with an associated file
+   */
+  private void compareAssetFields(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
+    assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
+
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
-    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
-    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
     results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
-    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+
+    // These are skipped because they would require a file upload before we could know them.
+    //    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
+    //    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
+    //    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+  }
+
+  /**
+   * Assert that the fields checked in {@link #compareAssetFields} are the same among all expected assets with the same
+   * DOI. The test expects this condition to hold about its own case data, so if it fails, halt instead of logging a
+   * soft case failure.
+   *
+   * @param assets non-empty collection of expected assets
+   */
+  private void verifyExpectedAssets(Iterable<ArticleAsset> assets) {
+    Iterator<ArticleAsset> iterator = assets.iterator();
+    ArticleAsset first = iterator.next();
+    while (iterator.hasNext()) {
+      ArticleAsset next = iterator.next();
+      assertTrue(Objects.equal(first.getDoi(), next.getDoi()));
+      assertTrue(Objects.equal(first.getContextElement(), next.getContextElement()));
+      assertTrue(Objects.equal(first.getTitle(), next.getTitle()));
+      assertTrue(Objects.equal(first.getDescription(), next.getDescription()));
+    }
   }
 
   private void compareCitationLists(AssertionCollector results,
@@ -371,11 +420,20 @@ public class IngestionTest extends BaseRhinoTest {
     return map.build();
   }
 
-  private static ImmutableMap<AssetIdentity, ArticleAsset> mapAssetsById(Collection<ArticleAsset> assets) {
+  private static ImmutableMap<AssetIdentity, ArticleAsset> mapUninitAssetsById(Collection<ArticleAsset> assets) {
     ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
-      AssetIdentity identity = AssetIdentity.from(asset);
-      map.put(identity, asset);
+      assertFalse(AssetIdentity.hasFile(asset));
+      map.put(AssetIdentity.from(asset), asset);
+    }
+    return map.build();
+  }
+
+  private static ImmutableMultimap<AssetIdentity, ArticleAsset> mapAssetFilesByAssetId(Collection<ArticleAsset> assets) {
+    ImmutableListMultimap.Builder<AssetIdentity, ArticleAsset> map = ImmutableListMultimap.builder();
+    for (ArticleAsset asset : assets) {
+      AssetFileIdentity fileIdentity = AssetFileIdentity.from(asset);
+      map.put(fileIdentity.forAsset(), asset);
     }
     return map.build();
   }

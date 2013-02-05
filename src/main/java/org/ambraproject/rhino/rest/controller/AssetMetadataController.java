@@ -18,19 +18,22 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.controller.abstr.StandAloneDoiCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class AssetMetadataController extends StandAloneDoiCrudController {
+@Controller
+public class AssetMetadataController extends DoiBasedCrudController {
 
   private static final String ASSET_META_NAMESPACE = "/asset-meta/";
   private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";
@@ -40,16 +43,21 @@ public class AssetMetadataController extends StandAloneDoiCrudController {
     return ASSET_META_NAMESPACE;
   }
 
+  @Override
+  protected AssetIdentity parse(HttpServletRequest request) {
+    return AssetIdentity.create(getIdentifier(request));
+  }
+
   @Autowired
   private AssetCrudService assetCrudService;
 
   @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<String> read(HttpServletRequest request,
-                                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format) {
-    DoiBasedIdentity id = parse(request);
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    AssetIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    String metadata = assetCrudService.readMetadata(id, mf);
-    return respondWithPlainText(metadata);
+    assetCrudService.readMetadata(response, id, mf);
   }
 
 }

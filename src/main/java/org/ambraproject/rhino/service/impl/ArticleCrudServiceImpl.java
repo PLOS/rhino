@@ -32,6 +32,7 @@ import org.ambraproject.rhino.content.xml.AssetNode;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -238,8 +239,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private static ArticleAsset writeAsset(ArticleAsset asset, AssetNode assetNode) {
     String assetDoi = assetNode.getDoi();
-    String extension = "TIF"; // For now, assume all assets are *.tif figures; TODO: Handle other asset types
-    AssetIdentity assetIdentity = AssetIdentity.create(assetDoi, extension);
+    AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
 
     try {
       return new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
@@ -304,8 +304,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     String fsid = id.forXmlAsset().getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 
-    hibernateTemplate.delete(article);
+    for (ArticleAsset asset : article.getAssets()) {
+      if (AssetIdentity.hasFile(asset)) {
+        String assetFsid = AssetFileIdentity.from(asset).getFsid();
+        fileStoreService.deleteFile(assetFsid);
+      }
+    }
     fileStoreService.deleteFile(fsid);
+    hibernateTemplate.delete(article);
   }
 
 }

@@ -20,7 +20,7 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.io.Closeables;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.StandAloneDoiCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class VolumeCrudController extends StandAloneDoiCrudController {
+public class VolumeCrudController extends DoiBasedCrudController {
 
   private static final String VOLUME_NAMESPACE = "/volume/";
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";

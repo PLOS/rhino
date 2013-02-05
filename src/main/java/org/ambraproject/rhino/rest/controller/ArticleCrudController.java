@@ -49,7 +49,7 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentity> {
+public class ArticleCrudController extends DoiBasedCrudController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
@@ -104,31 +104,6 @@ public class ArticleCrudController extends DoiBasedCrudController<ArticleIdentit
 
     // Report the written data, as JSON, in the response.
     articleCrudService.readMetadata(response, result.getWrittenObject(), MetadataFormat.JSON);
-  }
-
-  /**
-   * Dispatch an action to upload an article.
-   *
-   * @param request the HTTP request from a REST client
-   * @return the HTTP response, to indicate success or describe an error
-   * @throws IOException
-   * @throws FileStoreException
-   */
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> upload(HttpServletRequest request)
-      throws IOException, FileStoreException {
-    ArticleIdentity id = parse(request);
-    InputStream stream = null;
-    WriteResult result;
-    boolean threw = true;
-    try {
-      stream = request.getInputStream();
-      result = articleCrudService.write(stream, Optional.of(id), WriteMode.WRITE_ANY);
-      threw = false;
-    } finally {
-      Closeables.close(stream, threw);
-    }
-    return respondWithStatus(result.getStatus());
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)

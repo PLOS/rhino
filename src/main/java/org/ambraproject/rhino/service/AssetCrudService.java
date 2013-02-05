@@ -18,32 +18,29 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
 public interface AssetCrudService extends DoiBasedCrudService {
 
   /**
-   * Create or update an article asset.
+   * Upload a file to be associated with a created asset.
    *
-   * @param file      the file data to associate with the new asset
-   * @param assetId   the identifier for the new asset
-   * @param articleId the identifier for the existing article to which the asset belongs
-   * @return an indication of whether the asset was created or updated
+   * @param file    the file data to associate with the new asset
+   * @param assetId the identifier for the existing asset with the new file's extension
+   * @return an indication of the result
    * @throws FileStoreException
    * @throws IOException
    */
   public abstract WriteResult<ArticleAsset> upload(InputStream file,
-                                                   AssetIdentity assetId,
-                                                   Optional<ArticleIdentity> articleId)
+                                                   AssetFileIdentity assetId)
       throws FileStoreException, IOException;
 
   /**
@@ -52,7 +49,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id the identifier of the asset whose file is to be read
    * @return a stream containing the file data
    */
-  public abstract InputStream read(AssetIdentity id);
+  public abstract InputStream read(AssetFileIdentity id);
 
   /**
    * Delete an asset and its associated file.
@@ -60,7 +57,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id the identifier of the asset to delete
    * @throws FileStoreException
    */
-  public abstract void delete(AssetIdentity id) throws FileStoreException;
+  public abstract void delete(AssetFileIdentity id) throws FileStoreException;
 
   /**
    * Read the metadata of an asset.
@@ -71,6 +68,15 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract String readMetadata(DoiBasedIdentity id, MetadataFormat format);
+  /**
+   * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
+   * asset.
+   *
+   * @param response the response to which the metadata should be written
+   * @param id       the identity of the asset to read
+   * @param format   the desired metadata format
+   */
+  public abstract void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
+      throws IOException;
 
 }

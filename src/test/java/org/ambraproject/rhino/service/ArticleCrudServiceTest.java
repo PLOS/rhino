@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
@@ -30,7 +31,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.apache.commons.io.IOUtils;
@@ -200,7 +201,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
-    final AssetIdentity assetId = AssetIdentity.create(testAssetDoi, extension);
+    final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
     final ArticleIdentity articleId = ArticleIdentity.create(testArticleDoi);
 
     TestInputStream input = new TestFile(articleFile).read();
@@ -209,7 +210,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
-    assetCrudService.upload(assetFileStream, assetId, Optional.of(articleId));
+    assetCrudService.upload(assetFileStream, assetId);
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -217,7 +218,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
             .add(Restrictions.eq("doi", assetId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
-    assertNotNull(stored);
+    assertNotNull(stored.getContextElement());
+    assertNotNull(stored.getContentType());
+    assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
   }
 
 }

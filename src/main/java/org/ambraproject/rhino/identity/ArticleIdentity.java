@@ -20,7 +20,7 @@ package org.ambraproject.rhino.identity;
 
 import org.ambraproject.models.Article;
 
-public class ArticleIdentity extends StandAloneIdentity {
+public class ArticleIdentity extends DoiBasedIdentity {
 
   private ArticleIdentity(String identifier) {
     super(identifier);
@@ -61,8 +61,8 @@ public class ArticleIdentity extends StandAloneIdentity {
    *
    * @return an identity for the XML asset
    */
-  public AssetIdentity forXmlAsset() {
-    return AssetIdentity.create(getIdentifier(), XML_EXTENSION);
+  public AssetFileIdentity forXmlAsset() {
+    return AssetFileIdentity.create(getIdentifier(), XML_EXTENSION);
   }
 
 }

@@ -72,7 +72,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
     asset.setDoi(assetId.getKey());
-    asset.setExtension(assetId.getFileExtension());
+    AssetIdentity.setNoFile(asset);
     asset.setContextElement(assetNode.getNodeName());
 
     asset.setTitle(readString("label", assetNode));

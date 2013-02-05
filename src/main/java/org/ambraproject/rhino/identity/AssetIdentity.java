@@ -1,178 +1,73 @@
-/*
- * Copyright (c) 2006-2012 by Public Library of Science
- * http://plos.org
- * http://ambraproject.org
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.ambraproject.rhino.identity;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import org.ambraproject.filestore.FSIDMapper;
+import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.util.ImmutableMimetypesFileTypeMap;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
-import java.util.regex.Pattern;
-
+/**
+ * An identity for an asset, independent of its associated files (which may or may not be in the system).
+ * <p/>
+ * Rhino's model of assets, unlike previous versions of Ambra, permits an asset to exist in a state with no associated
+ * files, either temporarily (such as a figure asset that has been found in article XML, but not had its image files
+ * uploaded yet) or permanently (such as a future file-less asset such as an article correction). This class provides
+ * static methods for setting and checking this state on {@link ArticleAsset} entities.
+ */
 public class AssetIdentity extends DoiBasedIdentity {
 
-  private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
-
-  private final String extension; // non-empty and contains no uppercase letters
-
-  private AssetIdentity(String identifier, String extension) {
+  protected AssetIdentity(String identifier) {
     super(identifier);
-    Preconditions.checkArgument(StringUtils.isNotBlank(extension));
-    this.extension = extension.toLowerCase();
+  }
+
+  public static AssetIdentity create(String identifier) {
+    return new AssetIdentity(identifier);
   }
 
   /**
-   * Parse the identifier from a path. The input is from URL that a REST client would use to identify an entity.
+   * Create an identifier that refers to an asset. The argument is an Ambra entity that <em>may</em> be associated with
+   * a particular file (i.e., it may have a non-empty extension), but the returned object will not specify a file
+   * regardless.
    *
-   * @param path the full path variable from the URL that identifies the entity
-   * @return an identifier object for the entity
-   * @see org.ambraproject.rhino.rest.controller.abstr.RestController#getFullPathVariable
+   * @param asset an Ambra asset entity
+   * @return an identifier for the asset that ignored its associated file, if any
    */
-  public static AssetIdentity parse(String path) {
-    int dotIndex = path.lastIndexOf('.');
-    if (dotIndex < 0 || dotIndex + 1 >= path.length()) {
-      throw new IllegalArgumentException("Request URI does not have file extension");
-    }
-    String identifier = path.substring(0, dotIndex);
-    String extension = path.substring(dotIndex + 1);
-
-    return new AssetIdentity(identifier, extension);
-  }
-
-  public static AssetIdentity create(String identifier, String extension) {
-    return new AssetIdentity(removeScheme(identifier), extension);
-  }
-
   public static AssetIdentity from(ArticleAsset asset) {
-    return AssetIdentity.create(asset.getDoi(), asset.getExtension());
+    return AssetIdentity.create(removeScheme(asset.getDoi()));
+  }
+
+
+  /*
+   * The back-end representation for a "file-less" asset is that its extension field is equal to the empty string.
+   * We want that representation pulled into this class as much as possible. Extensions should never be null.
+   */
+
+  /**
+   * Check whether an asset entity has an associated file.
+   *
+   * @param asset the asset to check
+   * @return {@code true} if the asset is associated with a file with a known extension; {@code false} if it has been
+   *         marked as "file-less" by {@link #setNoFile}
+   * @throws NullPointerException if the asset has not either had its extension set or explicitly marked as fileless
+   *                              with {@link #setNoFile}
+   */
+  public static boolean hasFile(ArticleAsset asset) {
+    String extension = asset.getExtension();
+    Preconditions.checkNotNull(extension);
+    return !extension.isEmpty();
   }
 
   /**
-   * Get the file extension for the file associated with the identified asset in the file store. File extensions are
-   * treated as case-insensitive, so any letters in the returned value are lowercase.
+   * Mark an asset as having no associated file. This method may not be used to overwrite a non-empty extension that has
+   * already been set on the asset.
    *
-   * @return the file extension
+   * @param asset as asset with no file extension
+   * @throws IllegalArgumentException if the asset already has a file extension
    */
-  public String getFileExtension() {
-    return extension;
-  }
-
-  /**
-   * Return the virtual file path to the article or asset that this object identifies. The returned string would appear
-   * at the end of a RESTful URL that the client uses to refer to the article or asset. (That is, the identified object
-   * would have
-   * <pre>"http://" + theHostname + "/article/" + this.getFilePath()</pre>
-   * for a URL.)
-   *
-   * @return the file path
-   */
-  public String getFilePath() {
-    return getIdentifier() + '.' + getFileExtension();
-  }
-
-  /**
-   * PLOS idiosyncrasy: this file extension is used for PNG images.
-   */
-  private static final Pattern PNG_THUMBNAIL = Pattern.compile("PNG_\\w", Pattern.CASE_INSENSITIVE);
-
-  /**
-   * Get the content type for the data associated with the identified entity in the file store. The returned value is a
-   * Spring object that maps onto a standard MIME type.
-   *
-   * @return the content type
-   */
-  public MediaType getContentType() {
-    if (XML_EXTENSION.equalsIgnoreCase(getFileExtension())) {
-      return MediaType.TEXT_XML;
+  public static void setNoFile(ArticleAsset asset) {
+    String extension = asset.getExtension();
+    if (!Strings.isNullOrEmpty(extension)) {
+      throw new IllegalArgumentException("Asset is already initialized with extension=" + extension);
     }
-    if (PNG_THUMBNAIL.matcher(getFileExtension()).matches()) {
-      return MediaType.IMAGE_PNG;
-    }
-    String mimeType = MIMETYPES.getContentType(getFilePath());
-    return MediaType.parseMediaType(mimeType);
-  }
-
-  /**
-   * Get file store identifier for the data associated with the article or asset that this object identifies.
-   *
-   * @return the FSID (file store identifier)
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *          if the DOI can't be parsed and converted into an FSID
-   */
-  public String getFsid() {
-    String fsid = FSIDMapper.doiTofsid(getKey(), getFileExtension());
-    if (fsid.isEmpty()) {
-      throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
-    }
-    return fsid;
-  }
-
-  /**
-   * Get an identifier for this asset's metadata.
-   *
-   * @return the identifier
-   */
-  public StandAloneIdentity forMetadata() {
-    return StandAloneIdentity.create(getIdentifier());
-  }
-
-  /**
-   * If this asset is an XML file, return the identity of the article to which it would belong <em>if</em> it is an
-   * article's NLM DTD file.
-   *
-   * @return
-   */
-  public Optional<ArticleIdentity> forArticle() {
-    if (XML_EXTENSION.equalsIgnoreCase(extension)) {
-      return Optional.of(ArticleIdentity.create(getIdentifier()));
-    }
-    return Optional.absent();
-  }
-
-  @Override
-  public String toString() {
-    return getFilePath();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-
-    AssetIdentity that = (AssetIdentity) o;
-
-    if (extension != null ? !extension.equals(that.extension) : that.extension != null) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = super.hashCode();
-    result = 31 * result + (extension != null ? extension.hashCode() : 0);
-    return result;
+    asset.setExtension("");
   }
 
 }
