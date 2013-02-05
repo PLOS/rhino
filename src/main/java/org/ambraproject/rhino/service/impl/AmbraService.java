@@ -29,6 +29,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.CharEncoding;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -203,6 +204,7 @@ public abstract class AmbraService {
     Writer writer = null;
     boolean threw = true;
     try {
+      response.setCharacterEncoding(CharEncoding.UTF_8);
       writer = response.getWriter();
       writer = new BufferedWriter(writer);
       entityGson.toJson(entity, writer);

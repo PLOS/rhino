@@ -32,6 +32,8 @@ behavior for the services (but not the REST API).
 from __future__ import print_function
 from __future__ import with_statement
 
+import json
+
 try:
     import requests
 except ImportError, e:
@@ -90,6 +92,16 @@ def report(description, response):
         print(line)
     print()
 
+def interpret_article(article):
+    """Load JSON into a Python object and use some values from it."""
+    print('-' * _BANNER_WIDTH)
+    print('Interpret article metadata in Python')
+    print()
+    print('DOI:    ', article['doi'])
+    print('Title:  ', article['title'])
+    print('Authors:', [author['fullName'] for author in article['authors']])
+    print()
+
 def run_test_on_article(case):
     """Run the test for one article test case."""
     section('Running article test for', case.article_doi())
@@ -104,6 +116,7 @@ def run_test_on_article(case):
 
     read_meta = requests.get(article_id)
     report('Read article metadata', read_meta)
+    interpret_article(json.loads(read_meta.content))
 
     read_xml = requests.get(xml_asset_id)
     report('Read article XML', read_xml)
