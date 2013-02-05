@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -11,6 +12,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -340,8 +342,14 @@ public class IngestionTest extends BaseRhinoTest {
     actualList = ImmutableList.copyOf(actualList);
     expectedList = ImmutableList.copyOf(expectedList);
 
-    // Citations have no guaranteed, database-independent identity, so use list position to match them up.
-    // So far Hibernate produces these lists in an order that matches the XML. We depend on this for now.
+    /*
+     * Compare citations with matching "key" fields (nothing else identifies them uniquely). It may be valid for them
+     * to be represented out of order in these lists (dependent on Hibernate?), but all cases so far give them in order.
+     * If a counterexample is found, we can forcibly sort by key, but until then, assert that they are already ordered.
+     * (If any keys are skipped, it will show up as a soft failure in compareCitations.)
+     */
+    assertTrue(CITATION_BY_KEY.isStrictlyOrdered(actualList));
+    assertTrue(CITATION_BY_KEY.isStrictlyOrdered(expectedList));
     int commonSize = Math.min(actualList.size(), expectedList.size());
     for (int i = 0; i < commonSize; i++) {
       compareCitations(results, actualList.get(i), expectedList.get(i));
@@ -437,6 +445,18 @@ public class IngestionTest extends BaseRhinoTest {
     }
     return map.build();
   }
+
+  /**
+   * Orders {@link CitedArticle} objects by the numeric value of their {@code key} string. Throws an exception if
+   * applied to a CitedArticle whose key is null or otherwise can't be parsed as an integer.
+   */
+  private static final Ordering<CitedArticle> CITATION_BY_KEY = Ordering.natural().onResultOf(
+      new Function<CitedArticle, Comparable>() {
+        @Override
+        public Integer apply(CitedArticle input) {
+          return Integer.valueOf(input.getKey());
+        }
+      });
 
   private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
     List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());
