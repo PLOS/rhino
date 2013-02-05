@@ -60,15 +60,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public abstract void delete(AssetFileIdentity id) throws FileStoreException;
 
   /**
-   * Read the metadata of an asset.
-   *
-   * @param id     the identifier of the asset
-   * @param format the desired metadata format
-   * @return the metadata
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *          if the DOI does not belong to an article
-   */
-  /**
    * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
    * asset.
    *
