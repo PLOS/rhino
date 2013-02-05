@@ -98,17 +98,20 @@ public abstract class AmbraService {
    */
   protected static byte[] readClientInput(InputStream input) {
     Preconditions.checkNotNull(input);
+    byte[] data;
     try {
-      return IOUtils.toByteArray(input);
-    } catch (IOException e) {
-      throw new RestClientException("Could not read provided file", HttpStatus.BAD_REQUEST, e);
-    } finally {
+      boolean threw = true;
       try {
-        input.close();
-      } catch (IOException e) {
-        throw new RestClientException("Error closing file stream from client", HttpStatus.BAD_REQUEST, e);
+        data = IOUtils.toByteArray(input);
+        threw = false;
+      } finally {
+        Closeables.close(input, threw);
       }
+    } catch (IOException e) {
+      String message = "Error reading provided file: " + e.getMessage();
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
     }
+    return data;
   }
 
   /**
