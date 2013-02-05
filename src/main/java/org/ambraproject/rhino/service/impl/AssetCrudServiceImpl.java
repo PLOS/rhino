@@ -125,6 +125,25 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
+  public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException {
+    ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .add(Restrictions.eq("extension", id.getFileExtension()))
+        ));
+    if (asset == null) {
+      throw new RestClientException("Asset not found at: " + id, HttpStatus.NOT_FOUND);
+    }
+
+    String fsid = id.getFsid();
+    byte[] assetData = readClientInput(fileContent);
+    write(assetData, fsid);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public InputStream read(AssetFileIdentity assetId) {
     if (!assetExistsAt(assetId)) {
       throw reportNotFound(assetId);

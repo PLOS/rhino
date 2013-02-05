@@ -70,4 +70,12 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public abstract void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
       throws IOException;
 
+  /**
+   * Overwrite an existing asset's file with a new file.
+   *
+   * @param fileContent the file to write
+   * @param id          the identity of the asset
+   */
+  public abstract void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException;
+
 }

@@ -104,6 +104,21 @@ public class AssetCrudController extends DoiBasedCrudController {
     assetCrudService.readMetadata(response, fileIdentity.forAsset(), MetadataFormat.JSON);
   }
 
+  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
+  public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException, FileStoreException {
+    AssetFileIdentity id = parse(request);
+    InputStream fileContent = null;
+    boolean threw = true;
+    try {
+      fileContent = request.getInputStream();
+      assetCrudService.overwrite(fileContent, id);
+      threw = false;
+    } finally {
+      Closeables.close(fileContent, threw);
+    }
+    return reportOk();
+  }
+
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
