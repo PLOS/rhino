@@ -83,7 +83,7 @@ def report(description, response):
     print('Response size:', len(response.content))
     content_lines = list(response.iter_lines())
     for (line_number, line) in enumerate(content_lines):
-        if line_number > 4:
+        if line_number > 24:
             print('...')
             print(content_lines[-1])
             break
