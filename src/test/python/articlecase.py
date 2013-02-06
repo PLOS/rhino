@@ -31,13 +31,15 @@ class ArticleCase(object):
         """Create a test case for an article.
 
         The DOI is the actual DOI for the article; it should not have an
-        '.xml' extension. Each asset suffix can be appended to the DOI to
-        produce the quasi-DOI identifier of an asset that goes with the
-        article. The asset suffixes *should* have filename extensions.
+        '.xml' extension.
+
+        Each asset suffix is a pair containing the DOI suffix (article DOI
+        + suffix == asset DOI) and the asset's file extension.
         """
         self.path = path
         self.doi = doi
-        self.asset_suffixes = asset_suffixes
+        self.assets = [AssetCase(self, suffix, extension)
+                       for suffix, extension in asset_suffixes]
 
     def article_doi(self):
         """Return the article's actual DOI."""
@@ -47,20 +49,28 @@ class ArticleCase(object):
         """Return a local file path from this script to the article's data."""
         return os.path.join(self.path, self.doi + '.xml')
 
-    def assets(self):
-        """Generate the sequence of this article's assets.
-
-        Each yielded value is a (asset_id, asset_file) tuple. The ID is the
-        full RESTful identifier for the asset, and the file is the local
-        file path to the asset data.
-        """
-        for suffix in self.asset_suffixes:
-            if not suffix.startswith('.'):
-                suffix = '.' + suffix
-            asset_path = self.doi + suffix
-            asset_id = DOI_PREFIX + asset_path
-            asset_file = os.path.join(TEST_DATA_PATH, asset_path)
-            yield (asset_id, asset_file)
-
     def __str__(self):
         return 'TestArticle({0!r}, {1!r})'.format(self.doi, self.asset_suffixes)
+
+class AssetCase(object):
+    """One test case of an asset file to upload."""
+    def __init__(self, article, suffix, extension):
+        self.article = article
+        self.suffix = suffix
+        self.extension = extension
+
+    def path(self):
+        """Return a local file path from this script to the asset file."""
+        filename = '.'.join([self.article.doi, self.suffix, self.extension])
+        return os.path.join(self.article.path, filename)
+
+    def doi(self):
+        """Return the asset's DOI."""
+        return '.'.join([self.article.article_doi(), self.suffix])
+
+    def brief_name(self):
+        """Return an abbreviated name for this asset.
+
+        It does not repeat the parent article's DOI.
+        """
+        return '.'.join([self.suffix, self.extension])

@@ -121,24 +121,32 @@ def run_test_on_article(case):
     read_xml = requests.get(xml_asset_id)
     report('Read article XML', read_xml)
 
-    # Temporarily hard-coding one asset case
-    # TODO Generalize
-    path = '../resources/articles/journal.pone.0038869.g001.'
-    for ext in ['tif', 'png_s']:
-        with open(path + ext) as f:
-            upload_asset = requests.post(
-                SERVER_HOST + '/asset',
-                data={'doi': '10.1371/journal.pone.0038869.g001',
-                      'ext': ext},
-                files={'file': f})
-        report('Upload asset', upload_asset)
+    # Upload each asset
+    for asset_case in case.assets:
+        fields = {'doi': asset_case.doi(), 'ext': asset_case.extension}
+        with open(asset_case.path()) as f:
+            upload_asset = requests.post(SERVER_HOST + '/asset',
+                                         data=fields, files={'file': f})
+        report('Upload asset: ' + asset_case.brief_name(), upload_asset)
 
-    asset_id = '{host}/asset-meta/{doi}.g001'.format(**url_args)
-    read_asset_meta = requests.get(asset_id)
-    report('Read asset metadata', read_asset_meta)
+    # Read each asset
+    for asset_case in case.assets:
+        asset_id = '{host}/asset-meta/{doi}.{suffix}'.format(
+            suffix=asset_case.suffix, **url_args)
+        read_asset_meta = requests.get(asset_id)
+        report('Read asset metadata: ' + asset_case.brief_name(),
+               read_asset_meta)
 
     delete = requests.delete(article_id)
     report('Delete article', delete)
 
-run_test_on_article(ArticleCase(
-        '../resources/articles/', 'journal.pone.0038869'))
+CASES = [
+    ArticleCase('../resources/articles/', 'journal.pone.0038869',
+                [('g001', 'tif'),
+                 ('g001', 'png_s'),
+                 ('g002', 'tif'),
+                 ]),
+    ]
+
+for case in CASES:
+    run_test_on_article(case)
