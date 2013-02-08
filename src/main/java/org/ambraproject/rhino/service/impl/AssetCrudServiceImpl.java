@@ -18,7 +18,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.inject.internal.Preconditions;
+import com.google.common.base.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -32,15 +32,20 @@ import org.ambraproject.rhino.service.WriteResult;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
+
+  private static final Logger log = LoggerFactory.getLogger(AssetCrudServiceImpl.class);
 
   private boolean assetExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(ArticleAsset.class)
@@ -60,30 +65,14 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             // Find the article that contains an asset with the given DOI
             "select article from Article article join article.assets asset where asset.doi = ?",
             assetFileId.getKey()));
+    if (article == null) {
+      String message = "No article found that contains an asset with DOI = " + assetFileId.getIdentifier();
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+    }
     List<ArticleAsset> assets = article.getAssets();
 
-    /*
-     * Set up the Hibernate entity that we want to modify. If this is the first file to be uploaded, then there is a
-     * file-less asset that we need to modify. Else, create a new asset, but copy its article-defined fields over from
-     * an existing asset.
-     *
-     * TODO Shouldn't need the for-loop if Hibernate were used better here (see above)
-     */
-    ArticleAsset assetToPersist = null;
-    for (ArticleAsset existingAsset : assets) {
-      if (existingAsset.getDoi().equals(assetFileId.getKey())) {
-        if (AssetIdentity.hasFile(existingAsset)) {
-          assetToPersist = copyArticleFields(existingAsset);
-          assets.add(assetToPersist);
-        } else {
-          assetToPersist = existingAsset;
-        }
-        break;
-      }
-    }
-    if (assetToPersist == null) {
-      throw new RuntimeException();
-    }
+    // Set up the Hibernate entity that we want to modify
+    ArticleAsset assetToPersist = createAssetToAdd(assets, assetFileId);
 
     /*
      * Pull the data into memory and write it to the file store. Must buffer the whole thing in memory, because we need
@@ -104,6 +93,73 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
     // Return the result
     return new WriteResult<ArticleAsset>(assetToPersist, WriteResult.Action.CREATED);
+  }
+
+  /**
+   * Examine a persistent collection of existing asset entities and select or create one to represent a new file upload.
+   * If there is already a file-less asset with a matching DOI, this method finds and returns it. Else, it creates a new
+   * asset with the article-defined data initialized and modifies the given collection by adding it.
+   * <p/>
+   * It also does two kinds of data validation. If the DOI-and-extension pair being created already exists, throw a
+   * client error. If a file-less asset coexists with one or more assets that have file data, log a warning because this
+   * should not be possible.
+   * <p/>
+   * This method is pretty hairy. It should be possible to do all of this with direct queries on the needed assets,
+   * without loading and looping over the article's entire list of assets. This would require adding an asset to that
+   * list without loading the whole article, which is an open TODO.
+   *
+   * @param existingAssets the collection of existing assets associated with one article, to be modified
+   * @param idToCreate     the identity of the uploaded asset file that needs a new asset entity
+   * @return the asset entity to be modified and persisted for this file upload
+   * @throws RestClientException if the uploaded file collides with an existing file
+   */
+  private static ArticleAsset createAssetToAdd(final Collection<ArticleAsset> existingAssets,
+                                               final AssetFileIdentity idToCreate) {
+    final String keyToCreate = idToCreate.getKey();
+    ArticleAsset newAsset = null;
+    boolean creatingNewEntity = false;
+    for (ArticleAsset existingAsset : existingAssets) {
+      if (!keyToCreate.equals(existingAsset.getDoi())) {
+        continue; // Skip files that belong to other assets
+      }
+      if (!AssetIdentity.hasFile(existingAsset)) {
+        // This asset is uninitialized.
+        if (newAsset != null) {
+          // We previously matched an asset that had a file, and expected not to find this file-less one.
+          complainAboutUninitializedAsset(idToCreate);
+        }
+        // We will modify the file-less asset to give it a file. Won't insert a new asset object.
+        newAsset = existingAsset;
+        creatingNewEntity = false;
+      } else if (idToCreate.equals(AssetFileIdentity.from(existingAsset))) {
+        String message = "Asset already exists: " + idToCreate;
+        throw new RestClientException(message, HttpStatus.METHOD_NOT_ALLOWED);
+      } else if (newAsset == null) {
+        // Found an existing, initialized asset with a matching DOI.
+        // Will insert a new asset object to represent this file, copying the old one's article-defined fields.
+        newAsset = copyArticleFields(existingAsset);
+        creatingNewEntity = true;
+      } else if (!creatingNewEntity) {
+        // We previously matched a file-less asset, and expected not to find this one that has a file.
+        complainAboutUninitializedAsset(idToCreate);
+      }
+    }
+
+    if (newAsset == null) {
+      String message = String.format(
+          "No asset found with DOI=\"%s\" (must appear in an article that has been ingested)",
+          idToCreate.getIdentifier());
+      throw new RestClientException(message, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+    if (creatingNewEntity) {
+      existingAssets.add(newAsset);
+    }
+    return newAsset;
+  }
+
+  private static void complainAboutUninitializedAsset(AssetFileIdentity identity) {
+    log.warn("Illegal data state: An uninitialized ArticleAsset entity coexists "
+        + "with one or more asset files on DOI = {}", identity.getIdentifier());
   }
 
   /**
