@@ -116,7 +116,8 @@ def run_test_on_article(case):
 
     read_meta = requests.get(article_id)
     report('Read article metadata', read_meta)
-    interpret_article(json.loads(read_meta.content))
+    if (read_meta.status_code < 400):
+        interpret_article(json.loads(read_meta.content))
 
     read_xml = requests.get(xml_asset_id)
     report('Read article XML', read_xml)
