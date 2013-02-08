@@ -112,7 +112,7 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
   }
 
   private static final ImmutableList<String> SAMPLE_ARTICLES = ImmutableList.copyOf(new String[]{
-      "journal.pone.0038869",
+      "pone.0038869",
       // More can be filled in here
   });
 
@@ -120,14 +120,14 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
    * Each of these must belong to an article in SAMPLE_ARTICLES.
    */
   private static final ImmutableList<String> SAMPLE_ASSETS = ImmutableList.copyOf(new String[]{
-      "journal.pone.0038869.g002.tif",
+      "pone.0038869.g002.tif",
       // More can be filled in here
   });
 
   private static final Pattern ASSET_PATTERN = Pattern.compile("((.*)\\.[^.]+?)\\.([^.]+?)");
 
   private static final String prefixed(String doi) {
-    return "10.1371/" + doi;
+    return "10.1371/journal." + doi;
   }
 
   @DataProvider

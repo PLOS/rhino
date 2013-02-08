@@ -141,7 +141,7 @@ def run_test_on_article(case):
     report('Delete article', delete)
 
 CASES = [
-    ArticleCase('../resources/articles/', 'journal.pone.0038869',
+    ArticleCase('../resources/articles/', 'pone.0038869',
                 [('g001', 'tif'),
                  ('g001', 'png_s'),
                  ('g002', 'tif'),
