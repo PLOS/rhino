@@ -58,22 +58,35 @@ FETCH_XML_URL_TEMPLATE = (
     '?uri=info%3Adoi%2F10.1371%2Fjournal.{doi}&representation=XML'
     )
 
+CORPUS_PATH = '/home/rskonnord/corpus/' # TODO Remove hard-coding
+
 OUTPUT_PATH = 'zips'
 
 def make_zip(doi):
     manifest_xml = MANIFEST_TEMPLATE.format(doi=doi)
 
     fetch = requests.get(FETCH_XML_URL_TEMPLATE.format(doi=doi))
-    xml_path = os.path.join(OUTPUT_PATH, doi + '.xml')
+    xml_filename = doi + '.xml'
+    xml_path = os.path.join(OUTPUT_PATH, xml_filename)
     with open(xml_path, mode='w') as xml_file:
         xml_file.write(fetch.content)
 
-    compress = zipfile.ZIP_DEFLATED
     zip_path = os.path.join(OUTPUT_PATH, doi + '.zip')
+    input_path = os.path.join(CORPUS_PATH, doi)
     with zipfile.ZipFile(zip_path, mode='w') as zf:
-        zf.writestr('manifest.dtd', DTD_TEXT, compress_type=compress)
-        zf.writestr('MANIFEST.xml', manifest_xml, compress_type=compress)
-        zf.writestr(doi + '.xml', fetch.content, compress_type=compress)
+        for (dirpath, dirnames, filenames) in os.walk(input_path):
+            if '.git' in dirpath:
+                continue
+            for filename in sorted(filenames):
+                print('    Zipping ' + os.path.join(dirpath, filename))
+                if filename == xml_filename:
+                    data = fetch.content
+                else:
+                    with open(os.path.join(dirpath, filename)) as f:
+                        data = f.read()
+                zf.writestr(filename, data,
+                            compress_type=zipfile.ZIP_DEFLATED)
+    print('Created ' + zip_path)
 
 
 INTERESTING_ARTICLES = [
@@ -91,6 +104,7 @@ INTERESTING_ARTICLES = [
     'pone.0000000',
     'pone.0005723',
     'pone.0008519',
+    'pone.0008915',
     'pone.0016329',
     'pone.0016976',
     'pone.0026358',
