@@ -135,12 +135,17 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     }
   }
 
+  private static final Joiner ELOCATIONID_JOINER = Joiner.on(' ').skipNulls();
+
   /**
    * @return the value of the eLocationId property, retrieved from the XML
    */
   private String buildELocationId() {
     List<String> parts = readTextList("elocation-id | fpage");
-    return Joiner.on(" ").skipNulls().join(parts);
+    if (parts.isEmpty()) {
+      return null;
+    }
+    return ELOCATIONID_JOINER.join(parts);
   }
 
   private static final Pattern VOL_NUM_RE = Pattern.compile("(\\d{1,})");
