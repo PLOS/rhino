@@ -143,7 +143,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private String buildPages() {
     String pageCount = readString("/article/front/article-meta/counts/page-count/@count");
     if (Strings.isNullOrEmpty(pageCount)) {
-      return "";
+      return null;
     } else {
       return "1-" + pageCount;
     }
