@@ -198,13 +198,15 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
     results.compare(Article.class, "state", actual.getState(), expected.getState());
-    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
     results.compare(Article.class, "description", actual.getDescription(), expected.getDescription());
     results.compare(Article.class, "rights", actual.getRights(), expected.getRights());
     results.compare(Article.class, "language", actual.getLanguage(), expected.getLanguage());
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
+
+    // TODO: Test archiveName field when Rhino has a design for if and how to store the article as a .zip archive
+    //    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
 
     /*
      * Ambra uses uses null and "" for this value inconsistently, depending on whether the article was ingested before
@@ -229,16 +231,9 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareCategorySets(AssertionCollector results, Set<Category> actual, Set<Category> expected) {
-    // Category's equals and hashCode rely only on its path, so we can use simple set comparisons
-    for (Category missing : Sets.difference(expected, actual)) {
-      results.compare(Article.class, "categories", null, missing);
-    }
-    for (Category extra : Sets.difference(actual, expected)) {
-      results.compare(Article.class, "categories", extra, null);
-    }
-    for (Category match : Sets.intersection(actual, expected)) {
-      results.compare(Article.class, "categories", match, match);
-    }
+    /*
+     * Ignore this field. We rely on an external taxonomy server to set it, which in testing will set only dummy values.
+     */
   }
 
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
@@ -261,7 +256,9 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
-    // TODO
+    /*
+     * Ignore this field. No known cases where it would be defined by article XML.
+     */
   }
 
   private void compareAssetLists(AssertionCollector results,

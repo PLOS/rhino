@@ -22,7 +22,7 @@ import os
 """Test case representations for articles and assets."""
 
 
-DOI_PREFIX = '10.1371/'
+DOI_PREFIX = '10.1371/journal.'
 TEST_DATA_PATH = '../resources/articles/'
 
 class ArticleCase(object):

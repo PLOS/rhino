@@ -12,7 +12,7 @@
   "http://dx.doi.org/10.1371%2Fjournal.pone.0005723","collaborativeAuthors":[],
   "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
     "http://rdf.plos.org/RDF/articleType/research-article"],
-  "categories":[{"path": "/TopLevel1/term1"}, {"path": "/TopLevel2/term2"}],
+  "categories":[],
   "assets":[{"doi":"info:doi/10.1371/journal.pone.0005723","extension":
       "XML","contentType":"text/xml","title":
       "Complete Primate Skeleton from the Middle Eocene of Messel in Germany: Morphology and Paleobiology",
