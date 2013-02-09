@@ -132,25 +132,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     relateToJournals(article);
     populateCategories(article, doc);
-
-    List<AssetNode> assetNodes = xml.findAllAssetNodes();
-    List<ArticleAsset> assets = article.getAssets();
-    Map<String, ArticleAsset> assetMap;
-    if (assets == null) {
-      assets = Lists.newArrayListWithCapacity(assetNodes.size());
-      article.setAssets(assets);
-      assetMap = ImmutableMap.of();
-    } else {
-      assetMap = mapAssetsByDoi(assets);
-    }
-    for (AssetNode assetNode : assetNodes) {
-      ArticleAsset asset = assetMap.get(assetNode.getDoi());
-      if (asset == null) {
-        asset = new ArticleAsset();
-        assets.add(asset);
-      }
-      writeAsset(asset, assetNode);
-    }
+    initializeAssets(article, xml);
 
     if (creating) {
       hibernateTemplate.save(article);
@@ -217,6 +199,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       articleService.setArticleCategories(article, terms);
     } else {
       article.setCategories(new HashSet<Category>());
+    }
+  }
+
+  private void initializeAssets(Article article, ArticleXml xml) {
+    List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    List<ArticleAsset> assets = article.getAssets();
+    Map<String, ArticleAsset> assetMap;
+    if (assets == null) {
+      assets = Lists.newArrayListWithCapacity(assetNodes.size());
+      article.setAssets(assets);
+      assetMap = ImmutableMap.of();
+    } else {
+      assetMap = mapAssetsByDoi(assets);
+    }
+    for (AssetNode assetNode : assetNodes) {
+      ArticleAsset asset = assetMap.get(assetNode.getDoi());
+      if (asset == null) {
+        asset = new ArticleAsset();
+        assets.add(asset);
+      }
+      writeAsset(asset, assetNode);
     }
   }
 
