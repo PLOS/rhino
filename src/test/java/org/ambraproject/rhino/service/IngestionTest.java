@@ -198,13 +198,15 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
     results.compare(Article.class, "state", actual.getState(), expected.getState());
-    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
     results.compare(Article.class, "description", actual.getDescription(), expected.getDescription());
     results.compare(Article.class, "rights", actual.getRights(), expected.getRights());
     results.compare(Article.class, "language", actual.getLanguage(), expected.getLanguage());
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
+
+    // TODO: Test archiveName field when Rhino has a design for if and how to store the article as a .zip archive
+    //    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
 
     /*
      * Ambra uses uses null and "" for this value inconsistently, depending on whether the article was ingested before
