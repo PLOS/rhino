@@ -48,6 +48,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -93,6 +94,7 @@ public class IngestionTest extends BaseRhinoTest {
   @DataProvider
   public Object[][] generatedIngestionData() {
     File[] jsonFiles = DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
+    Arrays.sort(jsonFiles);
     List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
 
     // For each JSON file, expect a matching XML file. Ignore XML files without JSON files.
