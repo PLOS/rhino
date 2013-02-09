@@ -221,9 +221,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
       writeAsset(asset, assetNode);
     }
+    ArticleAsset xmlAsset = assetMap.get(ArticleIdentity.create(article).getIdentifier());
+    if (xmlAsset == null) {
+      xmlAsset = new ArticleAsset();
+      xmlAsset.setDoi(article.getDoi());
+      xmlAsset.setExtension("XML");
+      assets.add(xmlAsset);
+    }
+    xmlAsset.setTitle(article.getTitle());
+    xmlAsset.setDescription(article.getDescription());
+    xmlAsset.setContentType("text/xml");
+    xmlAsset.setSize(0); // TODO
   }
 
   private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
+    // TODO On re-ingest, multiple existing assets with same DOI? Probably needs to be a multimap.
     ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
       String doi = asset.getDoi();
