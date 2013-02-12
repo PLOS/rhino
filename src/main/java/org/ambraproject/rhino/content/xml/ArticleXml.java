@@ -95,9 +95,9 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   private void setFromXml(Article article) throws XmlContentException {
-    article.setTitle(readString("/article/front/article-meta/title-group/article-title"));
+    article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
-    article.setDescription(buildDescription(readNode("/article/front/article-meta/abstract")));
+    article.setDescription(buildXmlExcerpt(readNode("/article/front/article-meta/abstract")));
     article.setRights(buildRights());
     article.setPages(buildPages());
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
@@ -192,14 +192,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * Build a description field by partially reconstructing the node's content as XML. The output is text content between
-   * the node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
+   * Build a field of XML text by partially reconstructing the node's content. The output is text content between the
+   * node's two tags, including nested XML tags but not this node's outer tags. Nested tags show only the node name;
    * their attributes are deleted. Text nodes containing only whitespace are deleted.
    *
    * @param node the description node
    * @return the marked-up description
    */
-  private static String buildDescription(Node node) {
+  private static String buildXmlExcerpt(Node node) {
     return (node == null) ? null : buildTextWithMarkup(node);
   }
 
