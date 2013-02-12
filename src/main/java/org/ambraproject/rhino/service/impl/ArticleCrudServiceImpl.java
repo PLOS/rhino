@@ -22,6 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -30,6 +31,7 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNode;
 import org.ambraproject.rhino.content.xml.AssetXml;
+import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -58,6 +60,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipFile;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -98,6 +101,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     byte[] xmlData = readClientInput(file);
     Document doc = parseXml(xmlData);
+    return writeXml(doc, xmlData, suppliedId, mode);
+  }
+
+  private WriteResult<Article> writeXml(Document doc, byte[] xmlData,
+      Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -142,6 +150,45 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     write(xmlData, fsid);
     WriteResult.Action action = (creating ? WriteResult.Action.CREATED : WriteResult.Action.UPDATED);
     return new WriteResult<Article>(article, action);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public WriteResult<Article> writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
+      WriteMode mode) throws IOException, FileStoreException {
+    ZipFile zip = new ZipFile(filename);
+    Document manifestDoc = parseXml(readZipFile(zip, "MANIFEST.xml"));
+    ManifestXml manifest = new ManifestXml(manifestDoc);
+    byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
+    Document doc = parseXml(xmlData);
+    WriteResult<Article> result = writeXml(doc, xmlData, suppliedId, mode);
+
+    // TODO: process asset files
+
+    return result;
+  }
+
+  /**
+   * Reads and returns the contents of a file in a .zip archive.
+   *
+   * @param zipFile zip file
+   * @param filename name of the file within the archive to read
+   * @return contents of the file
+   * @throws IOException
+   */
+  private byte[] readZipFile(ZipFile zipFile, String filename) throws IOException {
+    InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
+    byte[] bytes;
+    boolean threw = true;
+    try {
+      bytes = readClientInput(is);
+      threw = false;
+    } finally {
+      Closeables.close(is, threw);
+    }
+    return bytes;
   }
 
   /**

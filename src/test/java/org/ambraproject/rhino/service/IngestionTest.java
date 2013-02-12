@@ -74,8 +74,10 @@ public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
 
   private static final File DATA_PATH = new File("src/test/resources/articles/");
+  private static final File ZIP_DATA_PATH = new File("src/test/resources/articles/zip/");
   private static final String JSON_SUFFIX = ".json";
   private static final String XML_SUFFIX = ".xml";
+  private static final String ZIP_SUFFIX = ".zip";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -108,6 +110,23 @@ public class IngestionTest extends BaseRhinoTest {
       cases.add(new Object[]{jsonFile, xmlFile});
     }
 
+    return cases.toArray(new Object[0][]);
+  }
+
+  @DataProvider
+  public Object[][] generatedZipIngestionData() {
+    File[] jsonFiles = ZIP_DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
+    Arrays.sort(jsonFiles);
+    List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
+    for (File jsonFile : jsonFiles) {
+      String jsonFilePath = jsonFile.getPath();
+      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
+      File zipFile = new File(zipPath);
+      if (!zipFile.exists()) {
+        fail("No .zip file to match JSON test case data: " + zipPath);
+      }
+      cases.add(new Object[]{jsonFile, zipFile});
+    }
     return cases.toArray(new Object[0][]);
   }
 
@@ -173,7 +192,31 @@ public class IngestionTest extends BaseRhinoTest {
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields");
   }
+/*
+  @Test(dataProvider = "generatedZipIngestionData")
+  public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
+    final Article expected = readReferenceCase(jsonFile);
+    WriteResult writeResult =
+        articleCrudService.writeArchive(zipFile.getCanonicalPath(),
+            Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED, "Service didn't report creating article");
 
+    Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Article.class)
+            .setFetchMode("journals", FetchMode.JOIN)
+            .add(Restrictions.eq("doi", expected.getDoi()))));
+    assertNotNull(actual, "Failed to create article with expected DOI");
+
+    AssertionCollector results = compareArticle(actual, expected);
+    log.info("{} successes", results.getSuccessCount());
+    Collection<AssertionCollector.Failure> failures = results.getFailures();
+    for (AssertionCollector.Failure failure : failures) {
+      log.error(failure.toString());
+    }
+    assertEquals(failures.size(), 0, "Mismatched Article fields");
+  }
+*/
   private AssertionCollector compareArticle(Article actual, Article expected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);

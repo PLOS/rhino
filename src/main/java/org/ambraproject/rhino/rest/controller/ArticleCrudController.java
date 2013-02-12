@@ -42,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -100,6 +101,34 @@ public class ArticleCrudController extends DoiBasedCrudController {
     } finally {
       Closeables.close(requestBody, threw);
     }
+    response.setStatus(HttpStatus.CREATED.value());
+
+    // Report the written data, as JSON, in the response.
+    articleCrudService.readMetadata(response, result.getWrittenObject(), MetadataFormat.JSON);
+  }
+
+  /**
+   * Create an article based on a POST containing an article .zip archive file.
+   * <p/>
+   * TODO: this method may never be used in production, since we've decided, at
+   * least for now, that we will use the ingest and ingested directories that
+   * the current admin app uses instead of posting zips directly.
+   *
+   * @param response response to the request
+   * @param requestFile body of the archive param, with the encoded article .zip file
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  @RequestMapping(value = "/zip", method = RequestMethod.POST)
+  public void zipUpload(HttpServletResponse response,
+      @RequestParam("archive") MultipartFile requestFile)
+      throws IOException, FileStoreException {
+
+    String archiveName = requestFile.getOriginalFilename();
+    String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
+    requestFile.transferTo(new File(zipFilename));
+    WriteResult<Article> result = articleCrudService.writeArchive(zipFilename,
+        Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.

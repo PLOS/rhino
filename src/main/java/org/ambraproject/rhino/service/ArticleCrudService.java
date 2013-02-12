@@ -50,6 +50,21 @@ public interface ArticleCrudService extends DoiBasedCrudService {
       throws IOException, FileStoreException;
 
   /**
+   * Create or update an article from supplied ,zip archive data. If no article exists
+   * with the given identity, a new article entity is created; else, the article is
+   * re-ingested and the new data replaces the old data in the file store.
+   *
+   * @param filename path to the local .zip file
+   * @param suppliedId the identifier supplied for the article, if any
+   * @return an indication of which article was created or updated
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  public abstract WriteResult<Article> writeArchive(String filename,
+      Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException;
+
+  /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
    *
    * @param id the identifier of the article
