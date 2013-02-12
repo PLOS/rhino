@@ -402,7 +402,7 @@ public class IngestionTest extends BaseRhinoTest {
       results.compare(field, "suffix", actualName.getSuffix(), expectedName.getSuffix());
     }
 
-    // If the sizes didn't match, report missing/extra citations as errors
+    // If the sizes didn't match, report missing/extra elements as errors
     for (int i = commonSize; i < actualList.size(); i++) {
       results.compare(parentType, fieldName, actualNames.get(i), null);
     }
