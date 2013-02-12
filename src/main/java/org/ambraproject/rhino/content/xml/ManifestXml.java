@@ -52,4 +52,11 @@ public class ManifestXml extends XmlToObject<Object> {
   public String getArticleXml() {
     return readString("//article/@main-entry");
   }
+
+  /**
+   * @return the URI of the "striking image" associated with this article
+   */
+  public String getStrkImgURI() {
+    return readString("//object[@strkImage='True']/@uri");
+  }
 }

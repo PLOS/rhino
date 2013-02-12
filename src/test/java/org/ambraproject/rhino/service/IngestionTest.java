@@ -5,6 +5,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
@@ -106,7 +107,14 @@ public class IngestionTest extends BaseRhinoTest {
       if (!xmlFile.exists()) {
         fail("No XML file to match JSON test case data: " + xmlPath);
       }
-      cases.add(new Object[]{jsonFile, xmlFile});
+
+      // Don't return any articles that have a zip archive.  Those will be returned
+      // instead by generatedZipIngestionData() for a different test.
+      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
+      File zipFile = new File(zipPath);
+      if (!zipFile.exists()) {
+        cases.add(new Object[]{jsonFile, xmlFile});
+      }
     }
 
     return cases.toArray(new Object[0][]);
@@ -121,10 +129,9 @@ public class IngestionTest extends BaseRhinoTest {
       String jsonFilePath = jsonFile.getPath();
       String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
       File zipFile = new File(zipPath);
-      if (!zipFile.exists()) {
-        fail("No .zip file to match JSON test case data: " + zipPath);
+      if (zipFile.exists()) {
+        cases.add(new Object[]{jsonFile, zipFile});
       }
-      cases.add(new Object[]{jsonFile, zipFile});
     }
     return cases.toArray(new Object[0][]);
   }
@@ -191,7 +198,7 @@ public class IngestionTest extends BaseRhinoTest {
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields");
   }
-/*
+
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = readReferenceCase(jsonFile);
@@ -206,16 +213,18 @@ public class IngestionTest extends BaseRhinoTest {
             .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", expected.getDoi()))));
     assertNotNull(actual, "Failed to create article with expected DOI");
-
     AssertionCollector results = compareArticle(actual, expected);
     log.info("{} successes", results.getSuccessCount());
+
+    // Do some additional comparisons that only make sense for an article ingested from an archive.
+    compareArchiveFields(results, actual, expected);
     Collection<AssertionCollector.Failure> failures = results.getFailures();
     for (AssertionCollector.Failure failure : failures) {
       log.error(failure.toString());
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields");
   }
-*/
+
   private AssertionCollector compareArticle(Article actual, Article expected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
@@ -247,14 +256,6 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
-
-    // TODO: Test archiveName field when Rhino has a design for if and how to store the article as a .zip archive
-    //    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
-
-    // Skip striking image field as long as it's not set as part of ingesting NLM DTD
-    //    results.compare(Article.class, "strkImgURI",
-    //        Strings.nullToEmpty(actual.getStrkImgURI()),
-    //        Strings.nullToEmpty(expected.getStrkImgURI()));
 
     // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
     // to convert that to a java.util.Date (which GSON returns) for the comparison.
@@ -454,6 +455,15 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
+  /**
+   * Tests some Article fields that are only populated if we ingest a .zip archive.
+   */
+  private void compareArchiveFields(AssertionCollector results, Article actual, Article expected) {
+    results.compare(Article.class, "archiveName", actual.getArchiveName(),
+        expected.getArchiveName());
+    results.compare(Article.class, "strkImgURI", Strings.nullToEmpty(actual.getStrkImgURI()),
+        Strings.nullToEmpty(expected.getStrkImgURI()));
+  }
 
   // Transformation helper methods
 

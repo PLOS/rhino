@@ -53,6 +53,7 @@ import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -101,11 +102,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     byte[] xmlData = readClientInput(file);
     Document doc = parseXml(xmlData);
-    return writeXml(doc, xmlData, suppliedId, mode);
+    WriteResult<Article> result = createArticleFromXml(doc, suppliedId, mode);
+    persistArticle(result, xmlData);
+    return result;
   }
 
-  private WriteResult<Article> writeXml(Document doc, byte[] xmlData,
-      Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+  /**
+   * Creates an Article instance based on the given Document.  Does not persist the Article;
+   * that is the responsibility of the caller.
+   *
+   * @param doc Document describing the article XML
+   * @param suppliedId the indentifier supplied for the article by the external caller, if any
+   * @param mode whether to attempt a create or update
+   * @return WriteResult wrapping the created Article
+   * @throws IOException
+   */
+  private WriteResult<Article> createArticleFromXml(Document doc,
+      Optional<ArticleIdentity> suppliedId, WriteMode mode) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -142,14 +155,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     populateCategories(article, doc);
     initializeAssets(article, xml);
 
-    if (creating) {
-      hibernateTemplate.save(article);
-    } else {
-      hibernateTemplate.update(article);
-    }
-    write(xmlData, fsid);
     WriteResult.Action action = (creating ? WriteResult.Action.CREATED : WriteResult.Action.UPDATED);
     return new WriteResult<Article>(article, action);
+  }
+
+  /**
+   * Saves both the hibernate entity and the filestore bytes representing an article.
+   *
+   * @param writeResult WriteResult wrapping the Article
+   * @param xmlData bytes of the article XML file to save
+   * @return FSID (filestore ID) that the xmlData was saved to
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  private String persistArticle(WriteResult<Article> writeResult, byte[] xmlData)
+      throws IOException, FileStoreException {
+    if (writeResult.getAction() == WriteResult.Action.CREATED) {
+      hibernateTemplate.save(writeResult.getWrittenObject());
+    } else {
+      hibernateTemplate.update(writeResult.getWrittenObject());
+    }
+    String doi = writeResult.getWrittenObject().getDoi();
+
+    // ArticleIdentity doesn't like this part of the DOI.
+    doi = doi.substring("info:doi/".length());
+    String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid();
+    write(xmlData, fsid);
+    return fsid;
   }
 
   /**
@@ -163,10 +195,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ManifestXml manifest = new ManifestXml(manifestDoc);
     byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
     Document doc = parseXml(xmlData);
-    WriteResult<Article> result = writeXml(doc, xmlData, suppliedId, mode);
+    WriteResult<Article> result = createArticleFromXml(doc, suppliedId, mode);
+    Article article = result.getWrittenObject();
+    article.setArchiveName(new File(filename).getName());
+    article.setStrkImgURI(manifest.getStrkImgURI());
 
     // TODO: process asset files
 
+    persistArticle(result, xmlData);
     return result;
   }
 
