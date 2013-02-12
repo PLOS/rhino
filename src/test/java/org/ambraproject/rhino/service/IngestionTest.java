@@ -73,7 +73,7 @@ public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
 
   private static final File DATA_PATH = new File("src/test/resources/articles/");
-  private static final File ZIP_DATA_PATH = new File("src/test/resources/articles/zip/");
+  private static final File ZIP_DATA_PATH = new File("src/test/resources/articles/");
   private static final String JSON_SUFFIX = ".json";
   private static final String XML_SUFFIX = ".xml";
   private static final String ZIP_SUFFIX = ".zip";
