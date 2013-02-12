@@ -119,9 +119,8 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
    * Parse a person's name from an article XML node. The returned object is useful for populating a {@link
    * org.ambraproject.models.ArticlePerson} or {@link org.ambraproject.models.CitedArticlePerson}.
    * <p/>
-   * This method expects to find a "name-style" attribute and "surname" and "given-names" subnodes. The "suffix" subnode
-   * is optional. The suffix will be represented by an empty string if the suffix node is omitted. In some cases, an
-   * empty suffix will need to be manually changed to null -- see {@link CitedArticleXml#emptySuffixToNull}.
+   * This method expects to find a "name-style" attribute and "surname" subnode. The "given-names" and "suffix" subnodes
+   * are optional. Omitted nodes are represented by an empty string.
    *
    * @param nameNode the node to parse
    * @return the name
