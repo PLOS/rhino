@@ -178,12 +178,13 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    WriteResult writeResult =
-        articleCrudService.write(new TestFile(xmlFile).read(),
+    Article actual = articleCrudService.write(new TestFile(xmlFile).read(),
             Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
-    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED, "Service didn't report creating article");
+    assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
+    assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
-    Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+    // Reload the article directly from hibernate, just to be sure.
+    actual = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .setFetchMode("journals", FetchMode.JOIN)
@@ -202,12 +203,13 @@ public class IngestionTest extends BaseRhinoTest {
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = readReferenceCase(jsonFile);
-    WriteResult writeResult =
-        articleCrudService.writeArchive(zipFile.getCanonicalPath(),
+    Article actual = articleCrudService.writeArchive(zipFile.getCanonicalPath(),
             Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
-    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED, "Service didn't report creating article");
+    assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
+    assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
-    Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+    // Reload the article directly from hibernate, just to be sure.
+    actual = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .setFetchMode("journals", FetchMode.JOIN)

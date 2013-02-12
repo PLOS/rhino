@@ -40,7 +40,6 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.WriteResult;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -95,30 +94,30 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public WriteResult<Article> write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+  public Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
     if (mode == null) {
       mode = WriteMode.WRITE_ANY;
     }
 
     byte[] xmlData = readClientInput(file);
     Document doc = parseXml(xmlData);
-    WriteResult<Article> result = createArticleFromXml(doc, suppliedId, mode);
-    persistArticle(result, xmlData);
-    return result;
+    Article article = populateArticleFromXml(doc, suppliedId, mode);
+    persistArticle(article, xmlData);
+    return article;
   }
 
   /**
-   * Creates an Article instance based on the given Document.  Does not persist the Article;
-   * that is the responsibility of the caller.
+   * Creates or updates an Article instance based on the given Document.  Does not persist
+   * the Article; that is the responsibility of the caller.
    *
    * @param doc Document describing the article XML
    * @param suppliedId the indentifier supplied for the article by the external caller, if any
    * @param mode whether to attempt a create or update
-   * @return WriteResult wrapping the created Article
+   * @return the created Article
    * @throws IOException
    */
-  private WriteResult<Article> createArticleFromXml(Document doc,
-      Optional<ArticleIdentity> suppliedId, WriteMode mode) {
+  private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
+      WriteMode mode) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -155,27 +154,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     populateCategories(article, doc);
     initializeAssets(article, xml);
 
-    WriteResult.Action action = (creating ? WriteResult.Action.CREATED : WriteResult.Action.UPDATED);
-    return new WriteResult<Article>(article, action);
+    return article;
   }
 
   /**
    * Saves both the hibernate entity and the filestore bytes representing an article.
    *
-   * @param writeResult WriteResult wrapping the Article
+   * @param article the new or updated Article instance to save
    * @param xmlData bytes of the article XML file to save
    * @return FSID (filestore ID) that the xmlData was saved to
    * @throws IOException
    * @throws FileStoreException
    */
-  private String persistArticle(WriteResult<Article> writeResult, byte[] xmlData)
+  private String persistArticle(Article article, byte[] xmlData)
       throws IOException, FileStoreException {
-    if (writeResult.getAction() == WriteResult.Action.CREATED) {
-      hibernateTemplate.save(writeResult.getWrittenObject());
+    if (article.getID() == null) {
+      hibernateTemplate.save(article);
     } else {
-      hibernateTemplate.update(writeResult.getWrittenObject());
+      hibernateTemplate.update(article);
     }
-    String doi = writeResult.getWrittenObject().getDoi();
+    String doi = article.getDoi();
 
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());
@@ -188,22 +186,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public WriteResult<Article> writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
+  public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
       WriteMode mode) throws IOException, FileStoreException {
     ZipFile zip = new ZipFile(filename);
     Document manifestDoc = parseXml(readZipFile(zip, "MANIFEST.xml"));
     ManifestXml manifest = new ManifestXml(manifestDoc);
     byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
     Document doc = parseXml(xmlData);
-    WriteResult<Article> result = createArticleFromXml(doc, suppliedId, mode);
-    Article article = result.getWrittenObject();
+    Article article = populateArticleFromXml(doc, suppliedId, mode);
     article.setArchiveName(new File(filename).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 
     // TODO: process asset files
 
-    persistArticle(result, xmlData);
-    return result;
+    persistArticle(article, xmlData);
+    return article;
   }
 
   /**

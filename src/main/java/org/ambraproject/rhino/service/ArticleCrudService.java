@@ -40,13 +40,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param file       the XML data for the article
    * @param suppliedId the identifier supplied for the article, if any
-   * @return an indication of which article was created or updated
+   * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract WriteResult<Article> write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException, FileStoreException;
 
   /**
@@ -56,12 +56,12 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param filename path to the local .zip file
    * @param suppliedId the identifier supplied for the article, if any
-   * @return an indication of which article was created or updated
+   * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract WriteResult<Article> writeArchive(String filename,
+  public abstract Article writeArchive(String filename,
       Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException;
 
   /**

@@ -91,7 +91,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
   public void create(HttpServletResponse response,
                      @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
       throws IOException, FileStoreException {
-    WriteResult<Article> result;
+    Article result;
     InputStream requestBody = null;
     boolean threw = true;
     try {
@@ -104,7 +104,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(response, result.getWrittenObject(), MetadataFormat.JSON);
+    articleCrudService.readMetadata(response, result, MetadataFormat.JSON);
   }
 
   /**
@@ -127,12 +127,12 @@ public class ArticleCrudController extends DoiBasedCrudController {
     String archiveName = requestFile.getOriginalFilename();
     String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
     requestFile.transferTo(new File(zipFilename));
-    WriteResult<Article> result = articleCrudService.writeArchive(zipFilename,
+    Article result = articleCrudService.writeArchive(zipFilename,
         Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(response, result.getWrittenObject(), MetadataFormat.JSON);
+    articleCrudService.readMetadata(response, result, MetadataFormat.JSON);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
