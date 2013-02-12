@@ -25,7 +25,6 @@ import com.google.common.collect.Lists;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.CitedArticleAuthor;
 import org.ambraproject.models.CitedArticleEditor;
-import org.ambraproject.models.CitedArticlePerson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -69,8 +68,13 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     citation.setPages(buildPages());
     citation.seteLocationID(buildELocationId());
 
-    citation.setAuthors(readAuthors(readNodeList("person-group[@person-group-type=\"author\"]/name")));
-    citation.setEditors(readEditors(readNodeList("person-group[@person-group-type=\"editor\"]/name")));
+    List<Node> authorNodes = readNodeList("person-group[@person-group-type=\"author\"]/name");
+    List<Node> editorNodes = readNodeList("person-group[@person-group-type=\"editor\"]/name");
+    if (authorNodes.isEmpty() && editorNodes.isEmpty()) {
+      authorNodes = readNodeList("name");
+    }
+    citation.setAuthors(readAuthors(authorNodes));
+    citation.setEditors(readEditors(editorNodes));
 
     // TODO Finish implementing
 
@@ -108,11 +112,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     if (titleNode == null) {
       titleNode = readNode("source");
     }
-    if (titleNode != null) {
-      return buildTextWithMarkup(titleNode);
-    } else {
-      return "";
-    }
+    return (titleNode == null) ? null : buildTextWithMarkup(titleNode);
   }
 
   /**
@@ -135,12 +135,17 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     }
   }
 
+  private static final Joiner ELOCATIONID_JOINER = Joiner.on(' ').skipNulls();
+
   /**
    * @return the value of the eLocationId property, retrieved from the XML
    */
   private String buildELocationId() {
     List<String> parts = readTextList("elocation-id | fpage");
-    return Joiner.on(" ").skipNulls().join(parts);
+    if (parts.isEmpty()) {
+      return null;
+    }
+    return ELOCATIONID_JOINER.join(parts);
   }
 
   private static final Pattern VOL_NUM_RE = Pattern.compile("(\\d{1,})");
@@ -202,7 +207,6 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
     for (Node authorNode : authorNodes) {
       CitedArticleAuthor author = parsePersonName(authorNode).copyTo(new CitedArticleAuthor());
-      author = emptySuffixToNull(author);
       authors.add(author);
     }
     return authors;
@@ -212,28 +216,9 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     List<CitedArticleEditor> editors = Lists.newArrayListWithCapacity(editorNodes.size());
     for (Node editorNode : editorNodes) {
       CitedArticleEditor editor = parsePersonName(editorNode).copyTo(new CitedArticleEditor());
-      editor = emptySuffixToNull(editor);
       editors.add(editor);
     }
     return editors;
-  }
-
-  /**
-   * Reproducing an Ambra quirk: {@link CitedArticlePerson} objects have a null suffix where {@link
-   * org.ambraproject.models.ArticlePerson} objects have an empty string.
-   * <p/>
-   * It would be better to always prefer empty strings over null, but we would need to be certain that it wouldn't
-   * introduce bugs to Ambra before we change behavior.
-   *
-   * @param person the object to modify
-   * @param <T>    the CitedArticlePerson type
-   * @return the same object, with a null suffix if its suffix was empty
-   */
-  private static <T extends CitedArticlePerson> T emptySuffixToNull(T person) {
-    if (person.getSuffix().isEmpty()) {
-      person.setSuffix(null);
-    }
-    return person;
   }
 
 }

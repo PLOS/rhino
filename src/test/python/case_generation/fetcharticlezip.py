@@ -60,7 +60,7 @@ FETCH_XML_URL_TEMPLATE = (
 
 CORPUS_PATH = '/home/rskonnord/corpus/' # TODO Remove hard-coding
 
-OUTPUT_PATH = 'zips'
+OUTPUT_PATH = 'output'
 
 def make_zip(doi):
     manifest_xml = MANIFEST_TEMPLATE.format(doi=doi)

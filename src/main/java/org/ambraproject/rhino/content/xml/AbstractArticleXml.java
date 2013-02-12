@@ -113,13 +113,14 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   private static final String WESTERN_NAME_STYLE = "western";
   private static final String EASTERN_NAME_STYLE = "eastern";
 
+  private static final Joiner NAME_JOINER = Joiner.on(' ').skipNulls();
+
   /**
    * Parse a person's name from an article XML node. The returned object is useful for populating a {@link
    * org.ambraproject.models.ArticlePerson} or {@link org.ambraproject.models.CitedArticlePerson}.
    * <p/>
-   * This method expects to find a "name-style" attribute and "surname" and "given-names" subnodes. The "suffix" subnode
-   * is optional. The suffix will be represented by an empty string if the suffix node is omitted. In some cases, an
-   * empty suffix will need to be manually changed to null -- see {@link CitedArticleXml#emptySuffixToNull}.
+   * This method expects to find a "name-style" attribute and "surname" subnode. The "given-names" and "suffix" subnodes
+   * are optional. Omitted nodes are represented by an empty string.
    *
    * @param nameNode the node to parse
    * @return the name
@@ -135,35 +136,20 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     if (surname == null) {
       throw new XmlContentException("Required surname is omitted");
     }
-    if (givenName == null) {
-      throw new XmlContentException("Required given name is omitted");
-    }
-    suffix = Strings.nullToEmpty(suffix);
 
-    String fullName;
+    String[] fullNameParts;
     if (WESTERN_NAME_STYLE.equals(nameStyle)) {
-      fullName = buildFullName(givenName, surname, suffix);
+      fullNameParts = new String[]{givenName, surname, suffix};
     } else if (EASTERN_NAME_STYLE.equals(nameStyle)) {
-      fullName = buildFullName(surname, givenName, suffix);
+      fullNameParts = new String[]{surname, givenName, suffix};
     } else {
       throw new XmlContentException("Invalid name-style: " + nameStyle);
     }
 
+    String fullName = NAME_JOINER.join(fullNameParts);
+    givenName = Strings.nullToEmpty(givenName);
+    suffix = Strings.nullToEmpty(suffix);
     return new PersonName(fullName, givenName, surname, suffix);
-  }
-
-  /*
-   * Preconditions: all arguments are non-null; firstName and lastName are non-empty; suffix may be empty
-   */
-  private static String buildFullName(String firstName, String lastName, String suffix) {
-    boolean hasSuffix = !suffix.isEmpty();
-    int expectedLength = 2 + firstName.length() + lastName.length() + (hasSuffix ? suffix.length() : -1);
-    StringBuilder name = new StringBuilder(expectedLength);
-    name.append(firstName).append(' ').append(lastName);
-    if (hasSuffix) {
-      name.append(' ').append(suffix);
-    }
-    return name.toString();
   }
 
   /**

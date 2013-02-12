@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.slf4j.Logger;
@@ -75,7 +76,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
     AssetIdentity.setNoFile(asset);
     asset.setContextElement(assetNode.getNodeName());
 
-    asset.setTitle(readString("label", assetNode));
+    asset.setTitle(Strings.nullToEmpty(readString("label", assetNode)));
     Node captionNode = readNode("caption", assetNode);
     if (captionNode != null) {
       asset.setDescription(buildTextWithMarkup(captionNode));
