@@ -28,6 +28,7 @@ import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.NodeListAdapter;
+import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriUtils;
@@ -200,14 +201,19 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   }
 
   private static final Pattern UNWANTED_WHITESPACE = Pattern.compile("\\n[ \\t]*");
-  private static final Pattern AMPERSAND = Pattern.compile("&", Pattern.LITERAL);
+
+  private static final StringReplacer XML_CHAR_ESCAPES = StringReplacer.builder()
+      .add("&", "&amp;")
+      .add("<", "&lt;")
+      .add(">", "&gt;")
+      .build();
 
   private static void appendTextNode(StringBuilder nodeContent, Node child) {
     String text = child.getNodeValue();
     if (UNWANTED_WHITESPACE.matcher(text).matches()) {
       return;
     }
-    text = AMPERSAND.matcher(text).replaceAll("&amp;");
+    text = XML_CHAR_ESCAPES.replace(text);
     nodeContent.append(text);
   }
 
