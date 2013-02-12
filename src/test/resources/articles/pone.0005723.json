@@ -11,14 +11,13 @@
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0005723","collaborativeAuthors":[],
   "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],
-  "categories":[],
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
   "assets":[{"doi":"info:doi/10.1371/journal.pone.0005723","extension":
       "XML","contentType":"text/xml","title":
       "Complete Primate Skeleton from the Middle Eocene of Messel in Germany: Morphology and Paleobiology",
       "description":
       "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eThe best European locality for complete Eocene mammal skeletons is Grube Messel, near Darmstadt, Germany. Although the site was surrounded by a para-tropical rain forest in the Eocene, primates are remarkably rare there, and only eight fragmentary specimens were known until now. Messel has now yielded a full primate skeleton. The specimen has an unusual history: it was privately collected and sold in two parts, with only the lesser part previously known. The second part, which has just come to light, shows the skeleton to be the most complete primate known in the fossil record.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology/Principal Findings\u003c/title\u003e\u003cp\u003eWe describe the morphology and investigate the paleobiology of the skeleton. The specimen is described as \u003citalic\u003eDarwinius masillae\u003c/italic\u003e n.gen. n.sp. belonging to the Cercamoniinae. Because the skeleton is lightly crushed and bones cannot be handled individually, imaging studies are of particular importance. Skull radiography shows a host of teeth developing within the juvenile face. Investigation of growth and proportion suggest that the individual was a weaned and independent-feeding female that died in her first year of life, and might have attained a body weight of 650–900 g had she lived to adulthood. She was an agile, nail-bearing, generalized arboreal quadruped living above the floor of the Messel rain forest.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions/Significance\u003c/title\u003e\u003cp\u003e\u003citalic\u003eDarwinius masillae\u003c/italic\u003e represents the most complete fossil primate ever found, including both skeleton, soft body outline and contents of the digestive tract. Study of all these features allows a fairly complete reconstruction of life history, locomotion, and diet. Any future study of Eocene-Oligocene primates should benefit from information preserved in the \u003citalic\u003eDarwinius\u003c/italic\u003e holotype. Of particular importance to phylogenetic studies, the absence of a toilet claw and a toothcomb demonstrates that \u003citalic\u003eDarwinius masillae\u003c/italic\u003e is not simply a fossil lemur, but part of a larger group of primates, Adapoidea, representative of the early haplorhine diversification.\u003c/p\u003e\u003c/sec\u003e",
-      "size":259827},{"doi":"info:doi/10.1371/journal.pone.0005723",
+      "size":261496},{"doi":"info:doi/10.1371/journal.pone.0005723",
       "extension":"PDF","contentType":"application/pdf","title":
       "Complete Primate Skeleton from the Middle Eocene of Messel in Germany: Morphology and Paleobiology",
       "description":
@@ -334,711 +333,736 @@
       "pages":"289-303","eLocationID":"289","journal":
       "Senckenbergiana lethaea","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[]},
-    {"key":"2","year":1977,"displayYear":"1977","volumeNumber":1,"volume":
-      "1","title":"Radiation of Eocene Adapidae in Europe.","pages":
-      "165-182","eLocationID":"165","journal":"Géobios, Mémoir special",
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""}],
+      "editors":[]},{"key":"2","year":1977,"displayYear":"1977",
+      "volumeNumber":1,"volume":"1","title":
+      "Radiation of Eocene Adapidae in Europe.","pages":"165-182",
+      "eLocationID":"165","journal":"Géobios, Mémoir special",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
-      "editors":[]},{"key":"3","year":1979,"displayYear":"1979",
+          "PD Gingerich","givenNames":"PD","surnames":"Gingerich","suffix":
+          ""}],"editors":[]},{"key":"3","year":1979,"displayYear":"1979",
       "volumeNumber":53,"volume":"53","title":
       "Phylogeny of middle Eocene Adapidae (Mammalia, Primates) in North America: \u003citalic\u003eSmilodectes\u003c/italic\u003e and \u003citalic\u003eNotharctus\u003c/italic\u003e.",
       "pages":"153-163","eLocationID":"153","journal":
       "Journal of Paleontology","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
-      "editors":[]},{"key":"4","year":1981,"displayYear":"1981a",
+          "PD Gingerich","givenNames":"PD","surnames":"Gingerich","suffix":
+          ""}],"editors":[]},{"key":"4","year":1981,"displayYear":"1981a",
       "volumeNumber":56,"volume":"56","title":
       "Cranial morphology and adaptations in Eocene Adapidae. 1. Sexual dimorphism in \u003citalic\u003eAdapis magnus\u003c/italic\u003e and \u003citalic\u003eAdapis parisiensis\u003c/italic\u003e.",
       "pages":"217-234","eLocationID":"217","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"PD Gingerich","givenNames":"PD","surnames":
-          "Gingerich"}],"editors":[]},{"key":"5","year":1975,"displayYear":
-      "1975","volumeNumber":24,"volume":"24(15)","title":
+          "Gingerich","suffix":""}],"editors":[]},{"key":"5","year":1975,
+      "displayYear":"1975","volumeNumber":24,"volume":"24(15)","title":
       "A new genus of Adapidae (Mammalia, Primates) from the late Eocene of southern France, and its significance for the origin of higher primates.",
       "pages":"163-170","eLocationID":"163","journal":
       "Contributions of the Museum of Paleontology of the University of Michigan",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
-      "editors":[]},{"key":"6","year":1980,"displayYear":"1980",
+          "PD Gingerich","givenNames":"PD","surnames":"Gingerich","suffix":
+          ""}],"editors":[]},{"key":"6","year":1980,"displayYear":"1980",
       "volumeNumber":110,"volume":"110(12)","title":
       "Beiträge zur Ernährungsbiologie eozäner Fledermäuse aus der “Grube Messel”.",
       "pages":"353-367","eLocationID":"353","journal":"Natur und Museum",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "G Richter","givenNames":"G","surnames":"Richter"},{"fullName":
-          "G Storch","givenNames":"G","surnames":"Storch"}],"editors":[]},{
-      "key":"7","year":1994,"displayYear":"1994","volumeNumber":124,
-      "volume":"124(3)","title":
+          "G Richter","givenNames":"G","surnames":"Richter","suffix":""},{
+          "fullName":"G Storch","givenNames":"G","surnames":"Storch",
+          "suffix":""}],"editors":[]},{"key":"7","year":1994,"displayYear":
+      "1994","volumeNumber":124,"volume":"124(3)","title":
       "Die eozänen Tiere von Messel – ertrunken, erstickt oder vergiftet?",
       "pages":"91-97","eLocationID":"91","journal":"Natur und Museum",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"},{"fullName":
-          "A Köster","givenNames":"A","surnames":"Köster"}],"editors":[]},{
-      "key":"8","year":2004,"displayYear":"2004","volumeNumber":78,"volume":
-      "78","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""},{
+          "fullName":"A Köster","givenNames":"A","surnames":"Köster",
+          "suffix":""}],"editors":[]},{"key":"8","year":2004,"displayYear":
+      "2004","volumeNumber":78,"volume":"78","title":
       "Cyanobacteria and seasonal death: A new taphonomic model for the Eocene Messel lake.",
       "pages":"345-352","eLocationID":"345","journal":
       "Paläontologische Zeitschrift","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"Wv Koenigswald","givenNames":"Wv","surnames":
-          "Koenigswald"},{"fullName":"A Braun","givenNames":"A","surnames":
-          "Braun"},{"fullName":"T Pfeiffer","givenNames":"T","surnames":
-          "Pfeiffer"}],"editors":[]},{"key":"9","year":1992,"displayYear":
-      "1992","title":
+          "Koenigswald","suffix":""},{"fullName":"A Braun","givenNames":
+          "A","surnames":"Braun","suffix":""},{"fullName":"T Pfeiffer",
+          "givenNames":"T","surnames":"Pfeiffer","suffix":""}],"editors":[]},
+    {"key":"9","year":1992,"displayYear":"1992","title":
       "Messel. An insight into the history of life and of the Earth",
       "publisherLocation":"Oxford","publisherName":"Clarendon Press","pages":
       "322","eLocationID":"322","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
-          "fullName":"S Schaal","givenNames":"S","surnames":"Schaal"},{
-          "fullName":"W Ziegler","givenNames":"W","surnames":"Ziegler"}]},{
-      "key":"10","year":1998,"displayYear":"1998","title":
-      "Ein Halbaffenmännchen.","publisherLocation":"Messel","publisherName":
-      "Ein Pompeji der Paläontologie","pages":
+          "fullName":"S Schaal","givenNames":"S","surnames":"Schaal",
+          "suffix":""},{"fullName":"W Ziegler","givenNames":"W","surnames":
+          "Ziegler","suffix":""}]},{"key":"10","year":1998,"displayYear":
+      "1998","title":"Ein Halbaffenmännchen.","publisherLocation":"Messel",
+      "publisherName":"Ein Pompeji der Paläontologie","pages":
       "112-113; Sigmaringen (Thorbecke)","eLocationID":"112",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "Wv Koenigswald","givenNames":"Wv","surnames":"Koenigswald"}],
-      "editors":[{"fullName":"Wv Koenigswald","givenNames":"Wv","surnames":
-          "Koenigswald"},{"fullName":"G Storch","givenNames":"G","surnames":
-          "Storch"}]},{"key":"11","year":2007,"displayYear":"2007","title":
+          "Wv Koenigswald","givenNames":"Wv","surnames":"Koenigswald",
+          "suffix":""}],"editors":[{"fullName":"Wv Koenigswald","givenNames":
+          "Wv","surnames":"Koenigswald","suffix":""},{"fullName":
+          "G Storch","givenNames":"G","surnames":"Storch","suffix":""}]},{
+      "key":"11","year":2007,"displayYear":"2007","title":
       "Messel – Treasures of the Eocene","publisherLocation":"Darmstadt",
       "publisherName":"Hessisches Landesmuseum","pages":"159","eLocationID":
       "159","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
-          "fullName":"G Gruber","givenNames":"G","surnames":"Gruber"},{
-          "fullName":"N Micklich","givenNames":"N","surnames":"Micklich"}]},{
-      "key":"12","year":2007,"displayYear":"2007","volumeNumber":127,
-      "volume":"127","title":
+          "fullName":"G Gruber","givenNames":"G","surnames":"Gruber",
+          "suffix":""},{"fullName":"N Micklich","givenNames":"N","surnames":
+          "Micklich","suffix":""}]},{"key":"12","year":2007,"displayYear":
+      "2007","volumeNumber":127,"volume":"127","title":
       "Eozäne Equoidea (Mammalia, Perissodactyla) aus der Grube Messel bei Darmstadt (Deutschland). Funde der Jahre 1969–2000.",
       "pages":"1-245","eLocationID":"1","journal":
       "Schweizerische Paläontologische Abhandlungen","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"JL Franzen","givenNames":"JL","surnames":
-          "Franzen"}],"editors":[]},{"key":"13","year":1979,"displayYear":
-      "1979","volumeNumber":53,"volume":"53(1/2)","title":
+          "Franzen","suffix":""}],"editors":[]},{"key":"13","year":1979,
+      "displayYear":"1979","volumeNumber":53,"volume":"53(1/2)","title":
       "Ein Lemurenrest aus dem eozänen Ölschiefer der Grube Messel bei Darmstadt.",
       "pages":"63-76","eLocationID":"63","journal":
       "Paläontologische Zeitschrift","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"Wv Koenigswald","givenNames":"Wv","surnames":
-          "Koenigswald"}],"editors":[]},{"key":"14","year":1985,
-      "displayYear":"1985","volumeNumber":42,"volume":"42","title":
+          "Koenigswald","suffix":""}],"editors":[]},{"key":"14","year":
+      1985,"displayYear":"1985","volumeNumber":42,"volume":"42","title":
       "Der dritte Lemurenrest aus dem mitteleozänen Ölschiefer der Grube Messel bei Darmstadt.",
       "pages":"145-148","eLocationID":"145","journal":"Carolinea",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "Wv Koenigswald","givenNames":"Wv","surnames":"Koenigswald"}],
-      "editors":[]},{"key":"15","year":1983,"displayYear":"1983","title":
+          "Wv Koenigswald","givenNames":"Wv","surnames":"Koenigswald",
+          "suffix":""}],"editors":[]},{"key":"15","year":1983,"displayYear":
+      "1983","title":
       "Ein neuer Primate aus dem Eozän von Messel. Paläontologische Gesellschaft, 53.",
       "pages":"31","eLocationID":"31","journal":
       "Jahresversammlung, Programm und Kurzfassungen der Vorträge",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[]},
-    {"key":"16","year":1987,"displayYear":"1987","volumeNumber":91,"volume":
-      "91","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""}],
+      "editors":[]},{"key":"16","year":1987,"displayYear":"1987",
+      "volumeNumber":91,"volume":"91","title":
       "Ein neuer Primate aus dem Mitteleozän der Grube Messel (Deutschland, S-Hessen).",
       "pages":"151-187","eLocationID":"151","journal":
       "Courier Forschungs-Institut Senckenberg","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"JL Franzen","givenNames":"JL","surnames":
-          "Franzen"}],"editors":[]},{"key":"17","year":1988,"displayYear":
-      "1988","volumeNumber":107,"volume":"107","title":
+          "Franzen","suffix":""}],"editors":[]},{"key":"17","year":1988,
+      "displayYear":"1988","volumeNumber":107,"volume":"107","title":
       "Ein weiterer Primatenfund aus der Grube Messel bei Darmstadt.",
       "pages":"275-289","eLocationID":"275","journal":
       "Courier Forschungs-Institut Senckenberg","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"JL Franzen","givenNames":"JL","surnames":
-          "Franzen"}],"editors":[]},{"key":"18","year":1994,"displayYear":
-      "1994","title":"The Messel primates and anthropoid origins.",
-      "publisherLocation":"New York","publisherName":"Plenum Press","pages":
-      "99-122","eLocationID":"99","collaborativeAuthors":[],"citationType":
+          "Franzen","suffix":""}],"editors":[]},{"key":"18","year":1994,
+      "displayYear":"1994","title":
+      "The Messel primates and anthropoid origins.","publisherLocation":
+      "New York","publisherName":"Plenum Press","pages":"99-122",
+      "eLocationID":"99","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[{
-          "fullName":"JF Fleagle","givenNames":"JF","surnames":"Fleagle"},{
-          "fullName":"RF Kay","givenNames":"RF","surnames":"Kay"}]},{"key":
-      "19","year":2000,"displayYear":"2000a","volumeNumber":80,"volume":
-      "80(1)","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""}],
+      "editors":[{"fullName":"JF Fleagle","givenNames":"JF","surnames":
+          "Fleagle","suffix":""},{"fullName":"RF Kay","givenNames":"RF",
+          "surnames":"Kay","suffix":""}]},{"key":"19","year":2000,
+      "displayYear":"2000a","volumeNumber":80,"volume":"80(1)","title":
       "\u003citalic\u003eEuropolemur kelleri\u003c/italic\u003e n.sp. von Messel und ein Nachtrag zu \u003citalic\u003eEuropolemur koenigswaldi\u003c/italic\u003e (Mammalia, Primates, Notharctidae, Cercamoniinae).",
       "pages":"275-287","eLocationID":"275","journal":
       "Senckenbergiana lethaea","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[]},
-    {"key":"20","year":2005,"displayYear":"2005","volumeNumber":91,"volume":
-      "91(4)","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""}],
+      "editors":[]},{"key":"20","year":2005,"displayYear":"2005",
+      "volumeNumber":91,"volume":"91(4)","title":
       "The implications of the numerical dating of the Messel fossil deposit (Eocene, Germany) for mammalian biochronology.",
       "pages":"329-335","eLocationID":"329","journal":
       "Annales de Paléontologie","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[]},
-    {"key":"21","year":2005,"displayYear":"2005","volumeNumber":255,"volume":
-      "255","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""}],
+      "editors":[]},{"key":"21","year":2005,"displayYear":"2005",
+      "volumeNumber":255,"volume":"255","title":
       "A numerical age for the Messel fossil deposit (UNESCO World Heritage Site) derived from \u003csup\u003e40\u003c/sup\u003eAr/\u003csup\u003e39\u003c/sup\u003eAr dating on a basaltic rock fragment.",
       "pages":"67-75","eLocationID":"67","journal":
       "Courier Forschungsinstitut Senckenberg","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"DF Mertz","givenNames":"DF","surnames":
-          "Mertz"},{"fullName":"PR Renne","givenNames":"PR","surnames":
-          "Renne"}],"editors":[]},{"key":"22","year":1994,"displayYear":
-      "1994","volumeNumber":175,"volume":"175","title":
+          "Mertz","suffix":""},{"fullName":"PR Renne","givenNames":"PR",
+          "surnames":"Renne","suffix":""}],"editors":[]},{"key":"22","year":
+      1994,"displayYear":"1994","volumeNumber":175,"volume":"175","title":
       "Die Primaten aus dem eozänen Geiseltal bei Halle/Saale (Deutschland).",
       "pages":"1-161","eLocationID":"1","journal":
       "Courier Forschungsinstitut Senckenberg","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"U Thalmann","givenNames":"U","surnames":
-          "Thalmann"}],"editors":[]},{"key":"23","year":1920,"displayYear":
-      "1920","volumeNumber":3,"volume":"3(2)","title":
+          "Thalmann","suffix":""}],"editors":[]},{"key":"23","year":1920,
+      "displayYear":"1920","volumeNumber":3,"volume":"3(2)","title":
       "On the structure and relations of \u003citalic\u003eNotharctus\u003c/italic\u003e, an american Eocene Primate. Studies on the Evolution of Primates, Part III.",
       "pages":"49-243","eLocationID":"49","journal":
       "Memoirs of the American Museum of Natural History (N.S.)",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WK Gregory","givenNames":"WK","surnames":"Gregory"}],"editors":[]},
-    {"key":"24","year":2003,"displayYear":"2003","volumeNumber":44,"volume":
-      "44","title":"First gut content of a fossil primate.","pages":
-      "373-378","eLocationID":"373","journal":"Journal of Human Evolution",
+          "WK Gregory","givenNames":"WK","surnames":"Gregory","suffix":""}],
+      "editors":[]},{"key":"24","year":2003,"displayYear":"2003",
+      "volumeNumber":44,"volume":"44","title":
+      "First gut content of a fossil primate.","pages":"373-378",
+      "eLocationID":"373","journal":"Journal of Human Evolution",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"},{"fullName":
-          "V Wilde","givenNames":"V","surnames":"Wilde"}],"editors":[]},{
-      "key":"25","year":2007,"displayYear":"2007","title":
-      "Illustrated veterinary anatomy nomenclature","publisherLocation":
-      "Stuttgart","publisherName":"Ferdinand Enke Verlag","pages":"614",
-      "eLocationID":"614","collaborativeAuthors":[],"citationType":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""},{
+          "fullName":"V Wilde","givenNames":"V","surnames":"Wilde","suffix":
+          ""}],"editors":[]},{"key":"25","year":2007,"displayYear":"2007",
+      "title":"Illustrated veterinary anatomy nomenclature",
+      "publisherLocation":"Stuttgart","publisherName":
+      "Ferdinand Enke Verlag","pages":"614","eLocationID":"614",
+      "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
-          "fullName":"O Schaller","givenNames":"O","surnames":"Schaller"}]},{
-      "key":"26","year":1970,"displayYear":"1970","volumeNumber":12,
-      "volume":"12(5)","title":
+          "fullName":"O Schaller","givenNames":"O","surnames":"Schaller",
+          "suffix":""}]},{"key":"26","year":1970,"displayYear":"1970",
+      "volumeNumber":12,"volume":"12(5)","title":
       "Les mammifères d\u0027Egerkingen et l\u0027histoire des faunes de l\u0027Eocène d\u0027Europe.",
       "pages":"886-893","eLocationID":"886","journal":
       "Bulletin de la Société géologique de France (7)",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J-L Hartenberger","givenNames":"J-L","surnames":"Hartenberger"}],
-      "editors":[]},{"key":"27","year":1862,"displayYear":"1862",
-      "volumeNumber":19,"volume":"19","title":
+          "J-L Hartenberger","givenNames":"J-L","surnames":"Hartenberger",
+          "suffix":""}],"editors":[]},{"key":"27","year":1862,"displayYear":
+      "1862","volumeNumber":19,"volume":"19","title":
       "Eocaene Säugethiere aus dem Gebiet des Schweizerischen Jura.","pages":
       "1-98","eLocationID":"1","journal":
       "Neue Denkschriften der allgemeinen Schweizerischen Gesellschaft für die gesammten Naturwissenschaften",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Rütimeyer","givenNames":"L","surnames":"Rütimeyer"}],"editors":[]},
-    {"key":"28","year":2008,"displayYear":"2008","title":
+          "L Rütimeyer","givenNames":"L","surnames":"Rütimeyer","suffix":
+          ""}],"editors":[]},{"key":"28","year":2008,"displayYear":"2008",
+      "title":
       "Morphological diversity in the skulls of large adapines (Primates, Adapiformes) and its systematic implications.",
       "publisherName":"Springer Science+Business Media B.V","pages":
       "285-313","eLocationID":"285","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "M Godinot","givenNames":"M","surnames":"Godinot"},{"fullName":
-          "S Couette","givenNames":"S","surnames":"Couette"}],"editors":[{
-          "fullName":"E Sargis","givenNames":"E","surnames":"Sargis"},{
-          "fullName":"M Dagosto","givenNames":"M","surnames":"Dagosto"}]},{
-      "key":"29","year":2008,"displayYear":"2008","volumeNumber":54,"volume":
-      "54","title":
+          "M Godinot","givenNames":"M","surnames":"Godinot","suffix":""},{
+          "fullName":"S Couette","givenNames":"S","surnames":"Couette",
+          "suffix":""}],"editors":[{"fullName":"E Sargis","givenNames":"E",
+          "surnames":"Sargis","suffix":""},{"fullName":"M Dagosto",
+          "givenNames":"M","surnames":"Dagosto","suffix":""}]},{"key":"29",
+      "year":2008,"displayYear":"2008","volumeNumber":54,"volume":"54",
+      "title":
       "Preliminary observations on increasing root length during the eruptive phase of tooth development in modern humans and great apes.",
       "pages":"258-271","eLocationID":"258","journal":
       "Journal of Human Evolution","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MC Dean","givenNames":"MC","surnames":"Dean"},{"fullName":
-          "P Vesey","givenNames":"P","surnames":"Vesey"}],"editors":[]},{
-      "key":"30","year":1996,"displayYear":"1996","volumeNumber":3182,
-      "volume":"3182","title":
+          "MC Dean","givenNames":"MC","surnames":"Dean","suffix":""},{
+          "fullName":"P Vesey","givenNames":"P","surnames":"Vesey","suffix":
+          ""}],"editors":[]},{"key":"30","year":1996,"displayYear":"1996",
+      "volumeNumber":3182,"volume":"3182","title":
       "The hand skeleton of \u003citalic\u003eNotharctus tenebrosus\u003c/italic\u003e (Primates, Notharctidae) and its significance for the origin of the primate hand.",
       "pages":"1-20","eLocationID":"1","journal":
       "American Museum Novitates","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MW Hamrick","givenNames":"MW","surnames":"Hamrick"},{"fullName":
-          "JP Alexander","givenNames":"JP","surnames":"Alexander"}],
-      "editors":[]},{"key":"31","year":1983,"displayYear":"1983","title":
+          "MW Hamrick","givenNames":"MW","surnames":"Hamrick","suffix":""},{
+          "fullName":"JP Alexander","givenNames":"JP","surnames":
+          "Alexander","suffix":""}],"editors":[]},{"key":"31","year":1983,
+      "displayYear":"1983","title":
       "La main d\u0027\u003citalic\u003eAdapis\u003c/italic\u003e (Primate, Adapidé).",
       "publisherName":"Ville de Montbéliard: Montbéliard","pages":
       "221-242","eLocationID":"221","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "M Godinot","givenNames":"M","surnames":"Godinot"},{"fullName":
-          "FK Jouffroy","givenNames":"FK","surnames":"Jouffroy"}],"editors":[
-        {"fullName":"E Buffetaut","givenNames":"E","surnames":"Buffetaut"},{
-          "fullName":"JM Mazin","givenNames":"JM","surnames":"Mazin"},{
-          "fullName":"E Salmon","givenNames":"E","surnames":"Salmon"}]},{
+          "M Godinot","givenNames":"M","surnames":"Godinot","suffix":""},{
+          "fullName":"FK Jouffroy","givenNames":"FK","surnames":"Jouffroy",
+          "suffix":""}],"editors":[{"fullName":"E Buffetaut","givenNames":
+          "E","surnames":"Buffetaut","suffix":""},{"fullName":"JM Mazin",
+          "givenNames":"JM","surnames":"Mazin","suffix":""},{"fullName":
+          "E Salmon","givenNames":"E","surnames":"Salmon","suffix":""}]},{
       "key":"32","year":1992,"displayYear":"1992","volumeNumber":22,"volume":
       "22","title":"Early euprimate hands in evolutionary perspective.",
       "pages":"267-283","eLocationID":"267","journal":
       "Journal of Human Evolution","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Godinot","givenNames":"M","surnames":"Godinot"}],"editors":[]},{
-      "key":"33","year":1974,"displayYear":"1974","title":
+          "M Godinot","givenNames":"M","surnames":"Godinot","suffix":""}],
+      "editors":[]},{"key":"33","year":1974,"displayYear":"1974","title":
       "The pes in Eocene Adapidae (Lemuriformes, Primates).",
       "publisherLocation":"New York","publisherName":"Academic Press",
       "pages":"261-29","eLocationID":"261","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"RL Decker","givenNames":"RL","surnames":"Decker"},{
-          "fullName":"FS Szalay","givenNames":"FS","surnames":"Szalay"}],
-      "editors":[{"fullName":"FA Jenkins","givenNames":"FA","surnames":
-          "Jenkins"}]},{"key":"34","year":1986,"displayYear":"1986",
-      "volumeNumber":15,"volume":"15","title":
-      "Anthropoid origins – the foot evidence.","pages":"421-430",
-      "eLocationID":"421","journal":"Journal of Human Evolution",
+          "fullName":"RL Decker","givenNames":"RL","surnames":"Decker",
+          "suffix":""},{"fullName":"FS Szalay","givenNames":"FS","surnames":
+          "Szalay","suffix":""}],"editors":[{"fullName":"FA Jenkins",
+          "givenNames":"FA","surnames":"Jenkins","suffix":""}]},{"key":
+      "34","year":1986,"displayYear":"1986","volumeNumber":15,"volume":
+      "15","title":"Anthropoid origins – the foot evidence.","pages":
+      "421-430","eLocationID":"421","journal":"Journal of Human Evolution",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DL Gebo","givenNames":"DL","surnames":"Gebo"}],"editors":[]},{
-      "key":"35","year":2003,"displayYear":"2003","volumeNumber":100,
-      "volume":"100","title":
+          "DL Gebo","givenNames":"DL","surnames":"Gebo","suffix":""}],
+      "editors":[]},{"key":"35","year":2003,"displayYear":"2003",
+      "volumeNumber":100,"volume":"100","title":
       "The anthropoid status of a primate from the late Middle Eocene Pondaung formation (Central Myanmar): Tarsal evidence.",
       "pages":"13173–13178","eLocationID":"23","journal":"PNAS",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Marivaux","givenNames":"L","surnames":"Marivaux"},{"fullName":
-          "Y Chaimanee","givenNames":"Y","surnames":"Chaimanee"},{"fullName":
-          "S Ducrocq","givenNames":"S","surnames":"Ducrocq"},{"fullName":
-          "B Marandat","givenNames":"B","surnames":"Marandat"},{"fullName":
-          "J Sudre","givenNames":"J","surnames":"Sudre"},{"fullName":
-          "AN Soe","givenNames":"AN","surnames":"Soe"},{"fullName":
-          "ST Tun","givenNames":"ST","surnames":"Tun"},{"fullName":
-          "W Htoon","givenNames":"W","surnames":"Htoon"},{"fullName":
-          "J-J Jaeger","givenNames":"J-J","surnames":"Jaeger"}],"editors":[]},
-    {"key":"36","year":1988,"displayYear":"1988","volumeNumber":17,"volume":
-      "17","title":
+          "L Marivaux","givenNames":"L","surnames":"Marivaux","suffix":""},{
+          "fullName":"Y Chaimanee","givenNames":"Y","surnames":"Chaimanee",
+          "suffix":""},{"fullName":"S Ducrocq","givenNames":"S","surnames":
+          "Ducrocq","suffix":""},{"fullName":"B Marandat","givenNames":"B",
+          "surnames":"Marandat","suffix":""},{"fullName":"J Sudre",
+          "givenNames":"J","surnames":"Sudre","suffix":""},{"fullName":
+          "AN Soe","givenNames":"AN","surnames":"Soe","suffix":""},{
+          "fullName":"ST Tun","givenNames":"ST","surnames":"Tun","suffix":
+          ""},{"fullName":"W Htoon","givenNames":"W","surnames":"Htoon",
+          "suffix":""},{"fullName":"J-J Jaeger","givenNames":"J-J",
+          "surnames":"Jaeger","suffix":""}],"editors":[]},{"key":"36","year":
+      1988,"displayYear":"1988","volumeNumber":17,"volume":"17","title":
       "Implications of postcranial evidence for the origin of Euprimates.",
       "pages":"35-56","eLocationID":"35","journal":
       "Journal of Human Evolution","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Dagosto","givenNames":"M","surnames":"Dagosto"}],"editors":[]},{
-      "key":"37","year":1990,"displayYear":"1990","volumeNumber":11,"volume":
-      "11","title":
+          "M Dagosto","givenNames":"M","surnames":"Dagosto","suffix":""}],
+      "editors":[]},{"key":"37","year":1990,"displayYear":"1990",
+      "volumeNumber":11,"volume":"11","title":
       "The phylogenetic position of \u003citalic\u003eMagharita stevensi\u003c/italic\u003e. Protoanthropoid or lemuroid?",
       "pages":"439-469","eLocationID":"439","journal":
       "International Journal of Primatology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"DT Rasmussen","givenNames":"DT","surnames":
-          "Rasmussen"}],"editors":[]},{"key":"38","year":1993,"displayYear":
-      "1993","volumeNumber":3,"volume":"3","title":
+          "Rasmussen","suffix":""}],"editors":[]},{"key":"38","year":1993,
+      "displayYear":"1993","volumeNumber":3,"volume":"3","title":
       "\u003citalic\u003eEuropolemur\u003c/italic\u003e completed.","pages":
       "113-130","eLocationID":"113","journal":"Kaupia",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"},{"fullName":
-          "E Frey","givenNames":"E","surnames":"Frey"}],"editors":[]},{"key":
-      "39","year":1983,"displayYear":"1983","volumeNumber":64,"volume":
-      "64(5/6)","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""},{
+          "fullName":"E Frey","givenNames":"E","surnames":"Frey","suffix":
+          ""}],"editors":[]},{"key":"39","year":1983,"displayYear":"1983",
+      "volumeNumber":64,"volume":"64(5/6)","title":
       "Weichteil Erhaltung durch lithifizierte Mikroorganismen bei mittel-eozänen Vertebraten aus den Ôlschiefern der Grube Messel bei Darmstadt.",
       "pages":"509-527","eLocationID":"509","journal":
       "Senckenbergiana Lethaea","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Wuttke","givenNames":"M","surnames":"Wuttke"}],"editors":[]},{
-      "key":"40","year":1987,"displayYear":"1987","volumeNumber":13,"volume":
-      "13","title":"Baculum length and copulatory behavior in primates.",
-      "pages":"51-60","eLocationID":"51","journal":
+          "M Wuttke","givenNames":"M","surnames":"Wuttke","suffix":""}],
+      "editors":[]},{"key":"40","year":1987,"displayYear":"1987",
+      "volumeNumber":13,"volume":"13","title":
+      "Baculum length and copulatory behavior in primates.","pages":
+      "51-60","eLocationID":"51","journal":
       "American Journal of Primatology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"AF Dixon","givenNames":"AF","surnames":
-          "Dixon"}],"editors":[]},{"key":"41","year":2000,"displayYear":
-      "2000","title":
+          "Dixon","suffix":""}],"editors":[]},{"key":"41","year":2000,
+      "displayYear":"2000","title":
       "‘Schultz\u0027s Rule’ and the evolution of tooth emergence and replaement in primates and ungulates.",
       "publisherLocation":"New York","publisherName":
       "Cambridge University Press","pages":"212-227","eLocationID":"212",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "BH Smith","givenNames":"BH","surnames":"Smith"}],"editors":[{
-          "fullName":"MFerguson Teaford","givenNames":"MFerguson","surnames":
-          "Teaford"},{"fullName":"M Smith","givenNames":"M","surnames":
-          "Smith"}]},{"key":"42","year":1971,"displayYear":"1971","title":
+          "BH Smith","givenNames":"BH","surnames":"Smith","suffix":""}],
+      "editors":[{"fullName":"MFerguson Teaford","givenNames":"MFerguson",
+          "surnames":"Teaford","suffix":""},{"fullName":"M Smith",
+          "givenNames":"M","surnames":"Smith","suffix":""}]},{"key":"42",
+      "year":1971,"displayYear":"1971","title":
       "Age changes in primates and their modification in man.",
       "publisherLocation":"Oxford","publisherName":"Pergamon Press","pages":
       "1-20","eLocationID":"1","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "AH Schultz","givenNames":"AH","surnames":"Schultz"}],"editors":[{
-          "fullName":"JM Tanner","givenNames":"JM","surnames":"Tanner"}]},{
-      "key":"43","year":1980,"displayYear":"1980","volumeNumber":21,"volume":
-      "21","title":
+          "AH Schultz","givenNames":"AH","surnames":"Schultz","suffix":""}],
+      "editors":[{"fullName":"JM Tanner","givenNames":"JM","surnames":
+          "Tanner","suffix":""}]},{"key":"43","year":1980,"displayYear":
+      "1980","volumeNumber":21,"volume":"21","title":
       "Epiphyseal union, tooth eruption, and sexual maturation in the common tree shrew, with reference to its systematic problem.",
       "pages":"1-19","eLocationID":"1","journal":"Primates",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "N Shigehara","givenNames":"N","surnames":"Shigehara"}],"editors":[]},
-    {"key":"44","year":1991,"displayYear":"1991","volumeNumber":12,"volume":
-      "12","title":
+          "N Shigehara","givenNames":"N","surnames":"Shigehara","suffix":
+          ""}],"editors":[]},{"key":"44","year":1991,"displayYear":"1991",
+      "volumeNumber":12,"volume":"12","title":
       "Age of weaning approximates emergence of the first permanent molar in non-human primates.",
       "pages":"163-164","eLocationID":"163","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"BH Smith","givenNames":"BH","surnames":
-          "Smith"}],"editors":[]},{"key":"45","year":2003,"displayYear":
-      "2003","volumeNumber":44,"volume":"44","title":
+          "Smith","suffix":""}],"editors":[]},{"key":"45","year":2003,
+      "displayYear":"2003","volumeNumber":44,"volume":"44","title":
       "Age at first molar emergence in early Miocene \u003citalic\u003eAfropithecus turkanensis\u003c/italic\u003e and life-history evolution in the Hominoidea.",
       "pages":"307-329","eLocationID":"307","journal":
       "Journal of Human Evolution","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Kelley","givenNames":"J","surnames":"Kelley"},{"fullName":
-          "TM Smith","givenNames":"TM","surnames":"Smith"}],"editors":[]},{
-      "key":"46","year":1989,"displayYear":"1989","volumeNumber":43,"volume":
-      "43","title":
+          "J Kelley","givenNames":"J","surnames":"Kelley","suffix":""},{
+          "fullName":"TM Smith","givenNames":"TM","surnames":"Smith",
+          "suffix":""}],"editors":[]},{"key":"46","year":1989,"displayYear":
+      "1989","volumeNumber":43,"volume":"43","title":
       "Dental development as a measure of life history in primates.","pages":
       "683-688","eLocationID":"683","journal":"Evolution",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "BH Smith","givenNames":"BH","surnames":"Smith"}],"editors":[]},{
-      "key":"47","year":1996,"displayYear":"1996","title":
+          "BH Smith","givenNames":"BH","surnames":"Smith","suffix":""}],
+      "editors":[]},{"key":"47","year":1996,"displayYear":"1996","title":
       "The Pictorial Guide to the Living Primates","publisherLocation":
       "East Hampton, N.Y.","publisherName":"Pogonias Press","pages":
       "viii + 263","eLocationID":"viii + 263","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"N Rowe","givenNames":"N","surnames":"Rowe"}],"editors":
-      []},{"key":"48","year":2008,"displayYear":"2008","title":
+          "fullName":"N Rowe","givenNames":"N","surnames":"Rowe","suffix":
+          ""}],"editors":[]},{"key":"48","year":2008,"displayYear":"2008",
+      "title":
       "Ontogeny of locomotion in \u003citalic\u003eSaimiri boliviensis\u003c/italic\u003e and \u003citalic\u003eCallithrix jacchus\u003c/italic\u003e: implications for primate locomotor ecology and evolution.",
       "pages":"300","eLocationID":"300","note":
       "Ph. D. dissertation. Stony Brook: State University of New York",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JW Young","givenNames":"JW","surnames":"Young"}],"editors":[]},{
-      "key":"49","year":2007,"displayYear":"2007","volumeNumber":69,"volume":
-      "69","title":
+          "JW Young","givenNames":"JW","surnames":"Young","suffix":""}],
+      "editors":[]},{"key":"49","year":2007,"displayYear":"2007",
+      "volumeNumber":69,"volume":"69","title":
       "Limb growth in captive \u003citalic\u003eGalago senegalensis\u003c/italic\u003e: getting in shape to be an adult.",
       "pages":"103-111","eLocationID":"103","journal":
       "American Journal of Primatology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"MS Schaefer","givenNames":"MS","surnames":
-          "Schaefer"},{"fullName":"LT Nash","givenNames":"LT","surnames":
-          "Nash"}],"editors":[]},{"key":"50","year":1994,"displayYear":
-      "1994","volumeNumber":37,"volume":"37","title":
+          "Schaefer","suffix":""},{"fullName":"LT Nash","givenNames":"LT",
+          "surnames":"Nash","suffix":""}],"editors":[]},{"key":"50","year":
+      1994,"displayYear":"1994","volumeNumber":37,"volume":"37","title":
       "Ages of eruption of primate teeth: A compendium for aging individuals and comparing life histories.",
       "pages":"177-231","eLocationID":"177","journal":
       "Yearbook of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"BH Smith","givenNames":"BH","surnames":
-          "Smith"},{"fullName":"TL Crummett","givenNames":"TL","surnames":
-          "Crummett"},{"fullName":"KL Brandt","givenNames":"KL","surnames":
-          "Brandt"}],"editors":[]},{"key":"51","year":1990,"displayYear":
-      "1990","title":
+          "Smith","suffix":""},{"fullName":"TL Crummett","givenNames":"TL",
+          "surnames":"Crummett","suffix":""},{"fullName":"KL Brandt",
+          "givenNames":"KL","surnames":"Brandt","suffix":""}],"editors":[]},{
+      "key":"51","year":1990,"displayYear":"1990","title":
       "Primate origins and evolution. A phylogenetic reconstruction",
       "publisherLocation":"London","publisherName":"Chapman and Hall",
       "pages":"1–804","eLocationID":"xiv","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"RD Martin","givenNames":"RD","surnames":"Martin"}],
-      "editors":[]},{"key":"52","year":2003,"displayYear":"2003",
-      "volumeNumber":29,"volume":"29","title":
+          "fullName":"RD Martin","givenNames":"RD","surnames":"Martin",
+          "suffix":""}],"editors":[]},{"key":"52","year":2003,"displayYear":
+      "2003","volumeNumber":29,"volume":"29","title":
       "Land-to-sea transition of early whales: evolution of Eocene Archaeoceti (Cetacea) in relation to skeletal proportions and locomotion of living semiaquatic mammals.",
       "pages":"429-454","eLocationID":"429","journal":"Paleobiology",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
-      "editors":[]},{"key":"53","year":1985,"displayYear":"1985","title":
-      "Growth and development of the pigtailed macaque","publisherLocation":
-      "Boca Raton","publisherName":"CRC Press","pages":"168","eLocationID":
-      "168","collaborativeAuthors":[],"citationType":
+          "PD Gingerich","givenNames":"PD","surnames":"Gingerich","suffix":
+          ""}],"editors":[]},{"key":"53","year":1985,"displayYear":"1985",
+      "title":"Growth and development of the pigtailed macaque",
+      "publisherLocation":"Boca Raton","publisherName":"CRC Press","pages":
+      "168","eLocationID":"168","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JE Sirianni","givenNames":"JE","surnames":"Sirianni"},{"fullName":
-          "DR Swindler","givenNames":"DR","surnames":"Swindler"}],"editors":[]},
-    {"key":"54","year":2006,"displayYear":"2006","volumeNumber":130,"volume":
-      "130","title":"Correlates of body mass evolution in primates.","pages":
-      "283-293","eLocationID":"283","journal":
+          "JE Sirianni","givenNames":"JE","surnames":"Sirianni","suffix":
+          ""},{"fullName":"DR Swindler","givenNames":"DR","surnames":
+          "Swindler","suffix":""}],"editors":[]},{"key":"54","year":2006,
+      "displayYear":"2006","volumeNumber":130,"volume":"130","title":
+      "Correlates of body mass evolution in primates.","pages":"283-293",
+      "eLocationID":"283","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"C Soligo","givenNames":"C","surnames":
-          "Soligo"}],"editors":[]},{"key":"55","year":1992,"displayYear":
-      "1992","volumeNumber":13,"volume":"13(3)","title":
+          "Soligo","suffix":""}],"editors":[]},{"key":"55","year":1992,
+      "displayYear":"1992","volumeNumber":13,"volume":"13(3)","title":
       "Estimating body size of Eocene primates: A comparison of results from dental and postcranial variables.",
       "pages":"307-344","eLocationID":"307","journal":
       "International Journal of Primatology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"M Dagosto","givenNames":"M","surnames":
-          "Dagosto"},{"fullName":"CJ Terranova","givenNames":"CJ","surnames":
-          "Terranova"}],"editors":[]},{"key":"56","year":1990,"displayYear":
-      "1990","volumeNumber":28,"volume":"28","title":
+          "Dagosto","suffix":""},{"fullName":"CJ Terranova","givenNames":
+          "CJ","surnames":"Terranova","suffix":""}],"editors":[]},{"key":
+      "56","year":1990,"displayYear":"1990","volumeNumber":28,"volume":
+      "28","title":
       "Prediction of body mass in mammalian species from long bone lengths and diameters.",
       "pages":"79-92","eLocationID":"79","journal":
       "Contributions from the Museum of Paleontology, University of Michigan",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
-      "editors":[]},{"key":"57","year":1982,"displayYear":"1982",
+          "PD Gingerich","givenNames":"PD","surnames":"Gingerich","suffix":
+          ""}],"editors":[]},{"key":"57","year":1982,"displayYear":"1982",
       "volumeNumber":58,"volume":"58","title":
       "Allometric scaling in the dentition of primates and prediction of body weight from tooth size in fossils.",
       "pages":"81-100","eLocationID":"81","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"PD Gingerich","givenNames":"PD","surnames":
-          "Gingerich"},{"fullName":"BH Smith","givenNames":"BH","surnames":
-          "Smith"},{"fullName":"KR Rosenberg","givenNames":"KR","surnames":
-          "Rosenberg"}],"editors":[]},{"key":"58","year":1975,"displayYear":
-      "1975","volumeNumber":43,"volume":"43","title":
-      "The functional adaptations of primate molar teeth.","pages":
-      "195-216","eLocationID":"195","journal":
+          "Gingerich","suffix":""},{"fullName":"BH Smith","givenNames":
+          "BH","surnames":"Smith","suffix":""},{"fullName":"KR Rosenberg",
+          "givenNames":"KR","surnames":"Rosenberg","suffix":""}],"editors":[]},
+    {"key":"58","year":1975,"displayYear":"1975","volumeNumber":43,"volume":
+      "43","title":"The functional adaptations of primate molar teeth.",
+      "pages":"195-216","eLocationID":"195","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"RF Kay","givenNames":"RF","surnames":"Kay"}],
-      "editors":[]},{"key":"59","year":1998,"displayYear":"1998",
-      "volumeNumber":69,"volume":"69","title":
+      "authors":[{"fullName":"RF Kay","givenNames":"RF","surnames":"Kay",
+          "suffix":""}],"editors":[]},{"key":"59","year":1998,"displayYear":
+      "1998","volumeNumber":69,"volume":"69","title":
       "A summary of adapiform systematics and phylogeny.","pages":
       "218-249","eLocationID":"218","journal":"Folia primatologica",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Godinot","givenNames":"M","surnames":"Godinot"}],"editors":[]},{
-      "key":"60","year":1995,"displayYear":"1995","volumeNumber":98,"volume":
-      "98","title":
+          "M Godinot","givenNames":"M","surnames":"Godinot","suffix":""}],
+      "editors":[]},{"key":"60","year":1995,"displayYear":"1995",
+      "volumeNumber":98,"volume":"98","title":
       "New notharctine (Primates, Adapiformes) skull from the Uintan (Middle Eocene) of San Diego County, California.",
       "pages":"447-470","eLocationID":"447","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"GF Gunnell","givenNames":"GF","surnames":
-          "Gunnell"}],"editors":[]},{"key":"61","year":1987,"displayYear":
-      "1987","volumeNumber":74,"volume":"74","title":
+          "Gunnell","suffix":""}],"editors":[]},{"key":"61","year":1987,
+      "displayYear":"1987","volumeNumber":74,"volume":"74","title":
       "Basicranial morphology and ontogeny of the extinct giant lemur \u003citalic\u003eMegaladapis\u003c/italic\u003e.",
       "pages":"233-255","eLocationID":"233","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"RDE MacPhee","givenNames":"RDE","surnames":
-          "MacPhee"}],"editors":[]},{"key":"62","year":1812,"displayYear":
-      "1812","volumeNumber":19,"volume":"19","title":
+          "MacPhee","suffix":""}],"editors":[]},{"key":"62","year":1812,
+      "displayYear":"1812","volumeNumber":19,"volume":"19","title":
       "Suite au tableau des Quadrumanes.","pages":"156-170","eLocationID":
       "156","journal":"Annales du Muséum d\u0027Histoire Naturelle, Paris",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
           "Saint-HilaireÉ Geoffroy","givenNames":"Saint-HilaireÉ","surnames":
-          "Geoffroy"}],"editors":[]},{"key":"63","year":1918,"displayYear":
-      "1918","volumeNumber":3,"volume":"3","title":
+          "Geoffroy","suffix":""}],"editors":[]},{"key":"63","year":1918,
+      "displayYear":"1918","volumeNumber":3,"volume":"3","title":
       "On the external characters of the lemurs and of \u003citalic\u003eTarsius\u003c/italic\u003e.",
       "pages":"19-53","eLocationID":"19","journal":
       "Proceedings of the Zoological Society of London",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RI Pocock","givenNames":"RI","surnames":"Pocock"}],"editors":[]},{
-      "key":"64","year":1897,"displayYear":"1897","title":
+          "RI Pocock","givenNames":"RI","surnames":"Pocock","suffix":""}],
+      "editors":[]},{"key":"64","year":1897,"displayYear":"1897","title":
       "The descent of the primates: Lectures delivered on the occasion of the sesquicentennial celebration of Princeton University",
       "publisherLocation":"New York","publisherName":
       "Charles Scribner\u0027s Sons","pages":"41","eLocationID":"41",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "AAW Hubrecht","givenNames":"AAW","surnames":"Hubrecht"}],
-      "editors":[]},{"key":"65","year":1915,"displayYear":"1915",
+          "AAW Hubrecht","givenNames":"AAW","surnames":"Hubrecht","suffix":
+          ""}],"editors":[]},{"key":"65","year":1915,"displayYear":"1915",
       "volumeNumber":26,"volume":"26","title":
       "I. On the relationship of the Eocene lemur \u003citalic\u003eNotharctus\u003c/italic\u003e to the Adapidae and to other primates. II. On the classification and phylogeny of the Lemuroidea.",
       "pages":"419-446","eLocationID":"419","journal":
       "Bulletin of the Geological Society of America","collaborativeAuthors":
       [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"WK Gregory","givenNames":"WK","surnames":
-          "Gregory"}],"editors":[]},{"key":"66","year":1919,"displayYear":
-      "1919","volumeNumber":1919,"volume":"1919","title":
+          "Gregory","suffix":""}],"editors":[]},{"key":"66","year":1919,
+      "displayYear":"1919","volumeNumber":1919,"volume":"1919","title":
       "Discussion on the zoological position and affinities of \u003citalic\u003eTarsius\u003c/italic\u003e.",
       "pages":"465-475","eLocationID":"465","journal":
       "Proceedings of the Zoological Society of London",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GE Smith","givenNames":"GE","surnames":"Smith"}],"editors":[]},{
-      "key":"67","year":1972,"displayYear":"1972","title":
+          "GE Smith","givenNames":"GE","surnames":"Smith","suffix":""}],
+      "editors":[]},{"key":"67","year":1972,"displayYear":"1972","title":
       "Primate evolution: an introduction to man\u0027s place in nature",
       "publisherLocation":"New York","publisherName":
       "The Macmillan Company","pages":"322","eLocationID":"322",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "EL Simons","givenNames":"EL","surnames":"Simons"}],"editors":[]},{
-      "key":"68","year":1985,"displayYear":"1985","volumeNumber":44,"volume":
-      "44","title":
+          "EL Simons","givenNames":"EL","surnames":"Simons","suffix":""}],
+      "editors":[]},{"key":"68","year":1985,"displayYear":"1985",
+      "volumeNumber":44,"volume":"44","title":
       "Anterior dentition of \u003citalic\u003eNotharctus\u003c/italic\u003e and the adapid-anthropoid hypothesis.",
       "pages":"15-39","eLocationID":"15","journal":"Folia Primatologica",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AL Rosenberger","givenNames":"AL","surnames":"Rosenberger"},{
-          "fullName":"E Strasser","givenNames":"E","surnames":"Strasser"},{
-          "fullName":"E Delson","givenNames":"E","surnames":"Delson"}],
-      "editors":[]},{"key":"69","year":1988,"displayYear":"1988",
-      "volumeNumber":9,"volume":"9","title":
+          "AL Rosenberger","givenNames":"AL","surnames":"Rosenberger",
+          "suffix":""},{"fullName":"E Strasser","givenNames":"E","surnames":
+          "Strasser","suffix":""},{"fullName":"E Delson","givenNames":"E",
+          "surnames":"Delson","suffix":""}],"editors":[]},{"key":"69","year":
+      1988,"displayYear":"1988","volumeNumber":9,"volume":"9","title":
       "The phylogenetic significance of strepsirhinism in Paleogene primates.",
       "pages":"83-96","eLocationID":"83","journal":
       "International Journal of Primatology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"KC Beard","givenNames":"KC","surnames":
-          "Beard"}],"editors":[]},{"key":"70","year":1998,"displayYear":
-      "1998","volumeNumber":105,"volume":"105","title":
+          "Beard","suffix":""}],"editors":[]},{"key":"70","year":1998,
+      "displayYear":"1998","volumeNumber":105,"volume":"105","title":
       "Morphological diversity of anatomical strepsirrhinism and the evolution fo the lemuriform toothcomb.",
       "pages":"355-367","eLocationID":"355","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"RJ Asher","givenNames":"RJ","surnames":
-          "Asher"}],"editors":[]},{"key":"71","year":1962,"displayYear":
-      "1962","volumeNumber":7,"volume":"7","title":
+          "Asher","suffix":""}],"editors":[]},{"key":"71","year":1962,
+      "displayYear":"1962","volumeNumber":7,"volume":"7","title":
       "A new Eocene primate genus, \u003citalic\u003eCantius\u003c/italic\u003e, and a revision of some allied European lemuroids.",
       "pages":"1-36","eLocationID":"1","journal":
       "Bulletin of the British Museum (Natural History), Geology",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "EL Simons","givenNames":"EL","surnames":"Simons"}],"editors":[]},{
-      "key":"72","year":1976,"displayYear":"1976","volumeNumber":156,
-      "volume":"156","title":
+          "EL Simons","givenNames":"EL","surnames":"Simons","suffix":""}],
+      "editors":[]},{"key":"72","year":1976,"displayYear":"1976",
+      "volumeNumber":156,"volume":"156","title":
       "Systematics of the Omomyidae (Tarsiiformes, Primates): taxonomy, phylogeny, and adaptations.",
       "pages":"159-450","eLocationID":"159","journal":
       "Bulletin of the American Museum of Natural History",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "FS Szalay","givenNames":"FS","surnames":"Szalay"}],"editors":[]},{
-      "key":"73","year":1986,"displayYear":"1986","volumeNumber":320,
-      "volume":"320","title":
+          "FS Szalay","givenNames":"FS","surnames":"Szalay","suffix":""}],
+      "editors":[]},{"key":"73","year":1986,"displayYear":"1986",
+      "volumeNumber":320,"volume":"320","title":
       "Early Eocene \u003citalic\u003eCantius torresi\u003c/italic\u003e– oldest primate of modern aspect from North America.",
       "pages":"319-321","eLocationID":"319","journal":"Nature",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PD Gingerich","givenNames":"PD","surnames":"Gingerich"}],
-      "editors":[]},{"key":"74","year":1999,"displayYear":"1999","title":
-      "Primate adaptation and evolution, second edition","publisherLocation":
-      "San Diego","publisherName":"Academic Press","pages":"528",
-      "eLocationID":"528","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JG Fleagle","givenNames":"JG","surnames":"Fleagle"}],"editors":[]},
-    {"key":"75","year":1953,"displayYear":"1953","title":
+          "PD Gingerich","givenNames":"PD","surnames":"Gingerich","suffix":
+          ""}],"editors":[]},{"key":"74","year":1999,"displayYear":"1999",
+      "title":"Primate adaptation and evolution, second edition",
+      "publisherLocation":"San Diego","publisherName":"Academic Press",
+      "pages":"528","eLocationID":"528","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
+          "fullName":"JG Fleagle","givenNames":"JG","surnames":"Fleagle",
+          "suffix":""}],"editors":[]},{"key":"75","year":1953,"displayYear":
+      "1953","title":
       "Primates: Comparative anatomy and taxonomy. I– Strepsirhini, a monograph",
       "publisherLocation":"Edinburgh","publisherName":
       "Edinburgh University Press","pages":"798","eLocationID":"798",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "WCO Hill","givenNames":"WCO","surnames":"Hill"}],"editors":[]},{
-      "key":"76","year":1955,"displayYear":"1955","title":
+          "WCO Hill","givenNames":"WCO","surnames":"Hill","suffix":""}],
+      "editors":[]},{"key":"76","year":1955,"displayYear":"1955","title":
       "Primates: Comparative anatomy and taxonomy. II– Haplorhini: Tarsioidea, a monograph",
       "publisherLocation":"Edinburgh","publisherName":
       "Edinburgh University Press","pages":"347","eLocationID":"347",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "WCO Hill","givenNames":"WCO","surnames":"Hill"}],"editors":[]},{
-      "key":"77","year":2005,"displayYear":"2005","volumeNumber":102,
-      "volume":"102","title":
+          "WCO Hill","givenNames":"WCO","surnames":"Hill","suffix":""}],
+      "editors":[]},{"key":"77","year":2005,"displayYear":"2005",
+      "volumeNumber":102,"volume":"102","title":
       "Anthropoid primates from the Oligocene of Pakistan (Bugti Hills): data on early anthropoid evolution and biogeography.",
       "pages":"8436-8441","eLocationID":"8436","journal":
       "Proceedings of the National Academy of Sciences USA",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Marivaux","givenNames":"L","surnames":"Marivaux"},{"fullName":
-          "P-O Antoine","givenNames":"P-O","surnames":"Antoine"},{"fullName":
-          "SRH Baqri","givenNames":"SRH","surnames":"Baqri"},{"fullName":
-          "M Benammi","givenNames":"M","surnames":"Benammi"},{"fullName":
-          "Y Chaimanee","givenNames":"Y","surnames":"Chaimanee"},{"fullName":
-          "J-Y Crochet","givenNames":"J-Y","surnames":"Crochet"},{"fullName":
-          "D de Franceschi","givenNames":"D","surnames":"de Franceschi"},{
-          "fullName":"N Iqbal","givenNames":"N","surnames":"Iqbal"},{
-          "fullName":"J-J Jaeger","givenNames":"J-J","surnames":"Jaeger"},{
-          "fullName":"G Métais","givenNames":"G","surnames":"Métais"},{
-          "fullName":"G Roohi","givenNames":"G","surnames":"Roohi"},{
-          "fullName":"J-L Welcomme","givenNames":"J-L","surnames":
-          "Welcomme"}],"editors":[]},{"key":"78","year":2008,"displayYear":
-      "2008","volumeNumber":105,"volume":"105","title":
+          "L Marivaux","givenNames":"L","surnames":"Marivaux","suffix":""},{
+          "fullName":"P-O Antoine","givenNames":"P-O","surnames":"Antoine",
+          "suffix":""},{"fullName":"SRH Baqri","givenNames":"SRH","surnames":
+          "Baqri","suffix":""},{"fullName":"M Benammi","givenNames":"M",
+          "surnames":"Benammi","suffix":""},{"fullName":"Y Chaimanee",
+          "givenNames":"Y","surnames":"Chaimanee","suffix":""},{"fullName":
+          "J-Y Crochet","givenNames":"J-Y","surnames":"Crochet","suffix":
+          ""},{"fullName":"D de Franceschi","givenNames":"D","surnames":
+          "de Franceschi","suffix":""},{"fullName":"N Iqbal","givenNames":
+          "N","surnames":"Iqbal","suffix":""},{"fullName":"J-J Jaeger",
+          "givenNames":"J-J","surnames":"Jaeger","suffix":""},{"fullName":
+          "G Métais","givenNames":"G","surnames":"Métais","suffix":""},{
+          "fullName":"G Roohi","givenNames":"G","surnames":"Roohi","suffix":
+          ""},{"fullName":"J-L Welcomme","givenNames":"J-L","surnames":
+          "Welcomme","suffix":""}],"editors":[]},{"key":"78","year":2008,
+      "displayYear":"2008","volumeNumber":105,"volume":"105","title":
       "The oldest asian record of Anthropoidea.","pages":"11093-11098",
       "eLocationID":"11093","journal":
       "Proceedings of the National Academy of Sciences USA",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Bajpai","givenNames":"S","surnames":"Bajpai"},{"fullName":
-          "RF Kay","givenNames":"RF","surnames":"Kay"},{"fullName":
-          "BA Williams","givenNames":"BA","surnames":"Williams"},{"fullName":
-          "DP Das","givenNames":"DP","surnames":"Das"},{"fullName":
-          "VV Kapur","givenNames":"VV","surnames":"Kapur"},{"fullName":
-          "BN Tiwari","givenNames":"BN","surnames":"Tiwari"}],"editors":[]},{
+          "S Bajpai","givenNames":"S","surnames":"Bajpai","suffix":""},{
+          "fullName":"RF Kay","givenNames":"RF","surnames":"Kay","suffix":
+          ""},{"fullName":"BA Williams","givenNames":"BA","surnames":
+          "Williams","suffix":""},{"fullName":"DP Das","givenNames":"DP",
+          "surnames":"Das","suffix":""},{"fullName":"VV Kapur","givenNames":
+          "VV","surnames":"Kapur","suffix":""},{"fullName":"BN Tiwari",
+          "givenNames":"BN","surnames":"Tiwari","suffix":""}],"editors":[]},{
       "key":"79","year":1968,"displayYear":"1968","title":
       "Physical growth and dental eruption in captive-bred squirrel monkeys,\u003citalic\u003eSaimiri sciureus\u003c/italic\u003e (Leticia, Columbia).",
       "publisherLocation":"New York \u0026 London","publisherName":
       "Academic Press","pages":"169-205","eLocationID":"169",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JO Long","givenNames":"JO","surnames":"Long"},{"fullName":
-          "RW Cooper","givenNames":"RW","surnames":"Cooper"}],"editors":[{
-          "fullName":"L Rosenblum","givenNames":"L","surnames":"Rosenblum"},{
-          "fullName":"R Cooper","givenNames":"R","surnames":"Cooper"}]},{
-      "key":"80","year":1979,"displayYear":"1979","volumeNumber":35,"volume":
-      "35","title":
+          "JO Long","givenNames":"JO","surnames":"Long","suffix":""},{
+          "fullName":"RW Cooper","givenNames":"RW","surnames":"Cooper",
+          "suffix":""}],"editors":[{"fullName":"L Rosenblum","givenNames":
+          "L","surnames":"Rosenblum","suffix":""},{"fullName":"R Cooper",
+          "givenNames":"R","surnames":"Cooper","suffix":""}]},{"key":"80",
+      "year":1979,"displayYear":"1979","volumeNumber":35,"volume":"35",
+      "title":
       "Physical growth and brain development of captive-bred male and female squirrel monkeys, \u003citalic\u003eSaimiri sciureus\u003c/italic\u003e.",
       "pages":"96-98","eLocationID":"96","journal":"Experientia",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SL Manocha","givenNames":"SL","surnames":"Manocha"}],"editors":[]},
-    {"key":"81","year":2000,"displayYear":"2000","volumeNumber":112,"volume":
-      "112","title":
+          "SL Manocha","givenNames":"SL","surnames":"Manocha","suffix":""}],
+      "editors":[]},{"key":"81","year":2000,"displayYear":"2000",
+      "volumeNumber":112,"volume":"112","title":
       "Growth of skeletal components in the young squirrel monkey (\u003citalic\u003eSaimiri sciureus boliviensis\u003c/italic\u003e): a longitudinal experiment.",
       "pages":"57-68","eLocationID":"57","journal":
       "American Journal of Physical Anthropology","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
       "authors":[{"fullName":"HM Pucciarelli","givenNames":"HM","surnames":
-          "Pucciarelli"},{"fullName":"MC Muñe","givenNames":"MC","surnames":
-          "Muñe"},{"fullName":"EE Oyhenart","givenNames":"EE","surnames":
-          "Oyhenart"},{"fullName":"AB Orden","givenNames":"AB","surnames":
-          "Orden"},{"fullName":"ME Villanueva","givenNames":"ME","surnames":
-          "Villanueva"},{"fullName":"RR Rodriguez","givenNames":"RR",
-          "surnames":"Rodriguez"},{"fullName":"ER Pons","givenNames":"ER",
-          "surnames":"Pons"}],"editors":[]},{"key":"82","year":1971,
-      "displayYear":"1971","volumeNumber":15,"volume":"15","title":
+          "Pucciarelli","suffix":""},{"fullName":"MC Muñe","givenNames":
+          "MC","surnames":"Muñe","suffix":""},{"fullName":"EE Oyhenart",
+          "givenNames":"EE","surnames":"Oyhenart","suffix":""},{"fullName":
+          "AB Orden","givenNames":"AB","surnames":"Orden","suffix":""},{
+          "fullName":"ME Villanueva","givenNames":"ME","surnames":
+          "Villanueva","suffix":""},{"fullName":"RR Rodriguez","givenNames":
+          "RR","surnames":"Rodriguez","suffix":""},{"fullName":"ER Pons",
+          "givenNames":"ER","surnames":"Pons","suffix":""}],"editors":[]},{
+      "key":"82","year":1971,"displayYear":"1971","volumeNumber":15,"volume":
+      "15","title":
       "Sequence of eruption of permanent teeth and epiphyseal union in New World monkeys.",
       "pages":"293","eLocationID":"293","journal":"Folia Primatologica",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "NC Tappen","givenNames":"NC","surnames":"Tappen"},{"fullName":
-          "A Severson","givenNames":"A","surnames":"Severson"}],"editors":[]},
-    {"key":"83","year":1997,"displayYear":"1997","volumeNumber":127,
-      "volume":"127(2)","title":
+          "NC Tappen","givenNames":"NC","surnames":"Tappen","suffix":""},{
+          "fullName":"A Severson","givenNames":"A","surnames":"Severson",
+          "suffix":""}],"editors":[]},{"key":"83","year":1997,"displayYear":
+      "1997","volumeNumber":127,"volume":"127(2)","title":
       "Ein Koprolith als Leckerbissen. Der siebte Primatenfund aus Messel.",
       "pages":"46-53","eLocationID":"46","journal":"Natur und Museum",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Franzen","givenNames":"JL","surnames":"Franzen"}],"editors":[]},
-    {"key":"84","year":1993,"displayYear":"1993","title":
+          "JL Franzen","givenNames":"JL","surnames":"Franzen","suffix":""}],
+      "editors":[]},{"key":"84","year":1993,"displayYear":"1993","title":
       "The oldest primate hands: Additional remarks and observations.",
       "publisherLocation":"New York","publisherName":"Springer-Verlag",
       "pages":"379-386","eLocationID":"379","collaborativeAuthors":[],
       "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"JL Franzen","givenNames":"JL","surnames":"Franzen"}],
-      "editors":[{"fullName":"H Preuschoft","givenNames":"H","surnames":
-          "Preuschoft"},{"fullName":"DJ Chivers","givenNames":"DJ",
-          "surnames":"Chivers"}]},{"key":"85","year":1991,"displayYear":
-      "1991","volumeNumber":6,"volume":"6(4)","title":
+          "fullName":"JL Franzen","givenNames":"JL","surnames":"Franzen",
+          "suffix":""}],"editors":[{"fullName":"H Preuschoft","givenNames":
+          "H","surnames":"Preuschoft","suffix":""},{"fullName":
+          "DJ Chivers","givenNames":"DJ","surnames":"Chivers","suffix":""}]},
+    {"key":"85","year":1991,"displayYear":"1991","volumeNumber":6,"volume":
+      "6(4)","title":
       "A survey of fossil primate hands and an evolutionary inquiry emphasizing early forms.",
       "pages":"307-354","eLocationID":"307","journal":"Human Evolution",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Godinot","givenNames":"M","surnames":"Godinot"},{"fullName":
-          "KC Beard","givenNames":"KC","surnames":"Beard"}],"editors":[]},{
-      "key":"86","year":1993,"displayYear":"1993","title":
-      "A survey of fossil primate hands.","publisherLocation":
+          "M Godinot","givenNames":"M","surnames":"Godinot","suffix":""},{
+          "fullName":"KC Beard","givenNames":"KC","surnames":"Beard",
+          "suffix":""}],"editors":[]},{"key":"86","year":1993,"displayYear":
+      "1993","title":"A survey of fossil primate hands.","publisherLocation":
       "Wien, New York","publisherName":"Springer-Verlag","pages":"335-378",
       "eLocationID":"335","collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "M Godinot","givenNames":"M","surnames":"Godinot"},{"fullName":
-          "KC Beard","givenNames":"KC","surnames":"Beard"}],"editors":[{
-          "fullName":"H Preuschoft","givenNames":"H","surnames":
-          "Preuschoft"},{"fullName":"DJ Chivers","givenNames":"DJ",
-          "surnames":"Chivers"}]},{"key":"87","year":2001,"displayYear":
-      "2001","volumeNumber":44,"volume":"44","title":
-      "Sexual dimorphism in primate evolution.","pages":"25-53",
-      "eLocationID":"25","journal":"Yearbook of Physical Anthropology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JM Plavcan","givenNames":"JM","surnames":"Plavcan"}],"editors":[]},
-    {"key":"88","year":2002,"displayYear":"2002","volumeNumber":99,"volume":
-      "99","title":
+          "M Godinot","givenNames":"M","surnames":"Godinot","suffix":""},{
+          "fullName":"KC Beard","givenNames":"KC","surnames":"Beard",
+          "suffix":""}],"editors":[{"fullName":"H Preuschoft","givenNames":
+          "H","surnames":"Preuschoft","suffix":""},{"fullName":
+          "DJ Chivers","givenNames":"DJ","surnames":"Chivers","suffix":""}]},
+    {"key":"87","year":2001,"displayYear":"2001","volumeNumber":44,"volume":
+      "44","title":"Sexual dimorphism in primate evolution.","pages":
+      "25-53","eLocationID":"25","journal":
+      "Yearbook of Physical Anthropology","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"JM Plavcan","givenNames":"JM","surnames":
+          "Plavcan","suffix":""}],"editors":[]},{"key":"88","year":2002,
+      "displayYear":"2002","volumeNumber":99,"volume":"99","title":
       "Dental microstructure and life history in subfossil Malagasy lemurs.",
       "pages":"6124-6129","eLocationID":"6124","journal":
       "Proceedings of the National Academy of Sciences USA",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GT Schwartz","givenNames":"GT","surnames":"Schwartz"},{"fullName":
-          "KE Samonds","givenNames":"KE","surnames":"Samonds"},{"fullName":
-          "LR Godfrey","givenNames":"LR","surnames":"Godfrey"},{"fullName":
-          "WL Jungers","givenNames":"WL","surnames":"Jungers"},{"fullName":
-          "EL Simons","givenNames":"EL","surnames":"Simons"}],"editors":[]},{
-      "key":"89","year":2001,"displayYear":"2001","volumeNumber":157,
-      "volume":"157","title":
+          "GT Schwartz","givenNames":"GT","surnames":"Schwartz","suffix":
+          ""},{"fullName":"KE Samonds","givenNames":"KE","surnames":
+          "Samonds","suffix":""},{"fullName":"LR Godfrey","givenNames":
+          "LR","surnames":"Godfrey","suffix":""},{"fullName":"WL Jungers",
+          "givenNames":"WL","surnames":"Jungers","suffix":""},{"fullName":
+          "EL Simons","givenNames":"EL","surnames":"Simons","suffix":""}],
+      "editors":[]},{"key":"89","year":2001,"displayYear":"2001",
+      "volumeNumber":157,"volume":"157","title":
       "SINE insertions in cladistic analyses and the phylogenetic affiliations of \u003citalic\u003eTarsius bancanus\u003c/italic\u003e to other primates.",
       "pages":"777-784","eLocationID":"777","journal":"Genetics",
       "collaborativeAuthors":[],"citationType":
       "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Schmitz","givenNames":"J","surnames":"Schmitz"},{"fullName":
-          "M Ohme","givenNames":"M","surnames":"Ohme"},{"fullName":
-          "H Zischler","givenNames":"H","surnames":"Zischler"}],"editors":[]}],
-  "relatedArticles":[],"authors":[{"fullName":"Jens L. Franzen","givenNames":
-      "Jens L.","surnames":"Franzen","suffix":""},{"fullName":
-      "Philip D. Gingerich","givenNames":"Philip D.","surnames":
-      "Gingerich","suffix":""},{"fullName":"Jörg Habersetzer","givenNames":
-      "Jörg","surnames":"Habersetzer","suffix":""},{"fullName":
-      "Jørn H. Hurum","givenNames":"Jørn H.","surnames":"Hurum","suffix":
-      ""},{"fullName":"Wighart von Koenigswald","givenNames":"Wighart",
-      "surnames":"von Koenigswald","suffix":""},{"fullName":
-      "B. Holly Smith","givenNames":"B. Holly","surnames":"Smith","suffix":
-      ""}],"editors":[{"fullName":"John Hawks","givenNames":"John",
-      "surnames":"Hawks","suffix":""}],"journals":[{"journalKey":"PLoSONE",
-      "eIssn":"1932-6203","title":"PLOS ONE","volumes":[]}]}
+          "J Schmitz","givenNames":"J","surnames":"Schmitz","suffix":""},{
+          "fullName":"M Ohme","givenNames":"M","surnames":"Ohme","suffix":
+          ""},{"fullName":"H Zischler","givenNames":"H","surnames":
+          "Zischler","suffix":""}],"editors":[]}],"relatedArticles":[],
+  "authors":[{"fullName":"Jens L. Franzen","givenNames":"Jens L.","surnames":
+      "Franzen","suffix":""},{"fullName":"Philip D. Gingerich","givenNames":
+      "Philip D.","surnames":"Gingerich","suffix":""},{"fullName":
+      "Jörg Habersetzer","givenNames":"Jörg","surnames":"Habersetzer",
+      "suffix":""},{"fullName":"Jørn H. Hurum","givenNames":"Jørn H.",
+      "surnames":"Hurum","suffix":""},{"fullName":
+      "Wighart von Koenigswald","givenNames":"Wighart","surnames":
+      "von Koenigswald","suffix":""},{"fullName":"B. Holly Smith",
+      "givenNames":"B. Holly","surnames":"Smith","suffix":""}],"editors":[{
+      "fullName":"John Hawks","givenNames":"John","surnames":"Hawks",
+      "suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
