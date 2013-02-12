@@ -112,11 +112,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     if (titleNode == null) {
       titleNode = readNode("source");
     }
-    if (titleNode != null) {
-      return buildTextWithMarkup(titleNode);
-    } else {
-      return "";
-    }
+    return (titleNode == null) ? null : buildTextWithMarkup(titleNode);
   }
 
   /**
