@@ -221,9 +221,20 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     String nodeName = child.getNodeName();
     nodeContent.append('<').append(nodeName);
     List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
+
+    // Search for xlink attributes and declare the xlink namespace if found
+    // TODO Better way? This is probably a symptom of needing to use a proper XML library here in the first place.
+    for (Node attribute : attributes) {
+      if (attribute.getNodeName().startsWith("xlink:")) {
+        nodeContent.append(" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+        break;
+      }
+    }
+
     for (Node attribute : attributes) {
       nodeContent.append(' ').append(attribute.toString());
     }
+
     nodeContent.append('>');
     buildTextWithMarkup(nodeContent, child);
     nodeContent.append("</").append(nodeName).append('>');
