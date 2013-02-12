@@ -68,8 +68,13 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     citation.setPages(buildPages());
     citation.seteLocationID(buildELocationId());
 
-    citation.setAuthors(readAuthors(readNodeList("person-group[@person-group-type=\"author\"]/name")));
-    citation.setEditors(readEditors(readNodeList("person-group[@person-group-type=\"editor\"]/name")));
+    List<Node> authorNodes = readNodeList("person-group[@person-group-type=\"author\"]/name");
+    List<Node> editorNodes = readNodeList("person-group[@person-group-type=\"editor\"]/name");
+    if (authorNodes.isEmpty() && editorNodes.isEmpty()) {
+      authorNodes = readNodeList("name");
+    }
+    citation.setAuthors(readAuthors(authorNodes));
+    citation.setEditors(readEditors(editorNodes));
 
     // TODO Finish implementing
 
