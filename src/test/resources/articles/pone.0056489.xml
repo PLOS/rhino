@@ -1,0 +1,1108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS ONE</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-26001</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0056489</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Ecology</subject>
+            <subj-group>
+              <subject>Biodiversity</subject>
+              <subject>Conservation science</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Plant science</subject>
+            <subj-group>
+              <subject>Plants</subject>
+              <subj-group>
+                <subject>Trees</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Plant genetics</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Population biology</subject>
+            <subj-group>
+              <subject>Population genetics</subject>
+              <subj-group>
+                <subject>Gene pool</subject>
+                <subject>Genetic polymorphism</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Population ecology</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Genetics and Genomics</subject>
+          <subject>Plant Biology</subject>
+          <subject>Ecology</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Old-Growth <italic>Platycladus orientalis</italic> as a Resource for Reproductive Capacity and Genetic Diversity</article-title>
+        <alt-title alt-title-type="running-head">P. orientalis as a Resource for Genetic Diversity</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zhu</surname>
+            <given-names>Lin</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Lou</surname>
+            <given-names>Anru</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>State Key Laboratory of Earth Surface Processes and Resource Ecology, College of Life Sciences of Beijing Normal University, Beijing, China</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Vendramin</surname>
+            <given-names>Giovanni G.</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>CNR, Italy</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">louanru@bnu.edu.cn</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: LZ AL. Performed the experiments: LZ. Analyzed the data: LZ AL. Contributed reagents/materials/analysis tools: AL. Wrote the paper: LZ AL.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <year>2013</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>8</day>
+        <month>2</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume>
+      <issue>2</issue>
+      <elocation-id>e56489</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>29</day>
+          <month>8</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>10</day>
+          <month>1</month>
+          <year>2013</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2013</copyright-year>
+        <copyright-holder>Zhu, Lou</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <sec>
+          <title>Aims</title>
+          <p><italic>Platycladus orientalis</italic> (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of <italic>P. orientalis</italic> to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of <italic>Platycladus orientalis.</italic></p>
+        </sec>
+        <sec>
+          <title>Methods</title>
+          <p>Samples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.</p>
+        </sec>
+        <sec>
+          <title>Important Findings</title>
+          <p>The old-growth artificial populations of <italic>P. orientalis</italic> have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.</p>
+        </sec>
+      </abstract>
+      <funding-group>
+        <funding-statement>This work was supported by the National Natural Science Foundation of China (project code: 31070374) and Specialized Research Fund for the Doctoral Program of Higher Education (20120003130003). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="7"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Old-growth tree populations are assumed to be potential resources of genetic diversity and high reproductive output; however, there is little relevant research and empirical evidence for this assertion <xref ref-type="bibr" rid="pone.0056489-Mosseler1">[1]</xref>, <xref ref-type="bibr" rid="pone.0056489-Reisch1">[2]</xref>, <xref ref-type="bibr" rid="pone.0056489-Konnert1">[3]</xref>. The research regarding old-growth trees has mostly concentrated on species diversity and distribution <xref ref-type="bibr" rid="pone.0056489-Dong1">[4]</xref>, <xref ref-type="bibr" rid="pone.0056489-Chen1">[5]</xref>, the relationship of the growth status and soil condition <xref ref-type="bibr" rid="pone.0056489-Nie1">[6]</xref>, <xref ref-type="bibr" rid="pone.0056489-Lu1">[7]</xref>, <xref ref-type="bibr" rid="pone.0056489-Lu2">[8]</xref>, cultivation, maintenance and rejuvenation <xref ref-type="bibr" rid="pone.0056489-Liang1">[9]</xref>, <xref ref-type="bibr" rid="pone.0056489-Zhang1">[10]</xref>. Studies of red spruce (<italic>Picea rubens</italic>) have shown positive relationships among the age, stem diameter, height and genetic and reproductive status of old-growth and older stands of <italic>P. rubens</italic>, and old-growth forests may serve as reservoirs of genetic diversity and seed sources to maintain populations under the pressures of climate change and population fragmentation <xref ref-type="bibr" rid="pone.0056489-Mosseler1">[1]</xref>. The gene pool of aged tree populations holds a variety of valuable genes, such as those for resistance and other genes that may be very useful for sustaining the health of the species or artificial breeding in the face of environmental changes <xref ref-type="bibr" rid="pone.0056489-Li1">[11]</xref>, <xref ref-type="bibr" rid="pone.0056489-Neale1">[12]</xref>.</p>
+      <p>A great number of imperial parks, tombs and ancient temples were established in Beijing, an old city with a long history as the capital of China. These sites provide a long-term stable environment (hundreds of years) for long-lived trees and protect the genetic diversity of these trees. Beijing City has the largest number of long-lived trees in the world. In a survey of ancient and famous trees in 2007, 28 families, 47 genera, 66 species and 39408 old-growth trees were found, 6122 of which were older than 300 years <xref ref-type="bibr" rid="pone.0056489-Chen1">[5]</xref>, including species of <italic>Ginkgo biloba</italic>, Chinese jujube (<italic>Ziziphus jujuba</italic>), <italic>Sophora japonica</italic>, <italic>Pinus tabulaeformis</italic>, and <italic>Pinus bungeana</italic>. The largest number of these trees (53.8%) consists of <italic>Platycladus orientalis</italic> (Cupressaceae), an evergreen tree species that originated in China, and that can live for centuries. Natural populations of <italic>Platycladus orientalis</italic> are rare and restricted to Beijing, Hebei, Shanxi and Shaanxi provinces <xref ref-type="bibr" rid="pone.0056489-Committee1">[13]</xref>. However, due to its ability to thrive under a very wide range of climate and soil conditions, <italic>P. orientalis</italic> is an afforestation tree species which is widespread and naturalized throughout China and as an introduced species in both North Korea and eastern Russia <xref ref-type="bibr" rid="pone.0056489-Committee1">[13]</xref>. Previous studies on <italic>P. orientalis</italic> have focused on its chemical components <xref ref-type="bibr" rid="pone.0056489-Asili1">[14]</xref> and its drought-resistance characteristics <xref ref-type="bibr" rid="pone.0056489-Li2">[15]</xref>. Direct investigation of the genetic diversity and other characteristics of old-growth and young <italic>P. orientalis</italic> populations can help to determine the differences between these populations and provide empirical evidence for the assertion that the old-growth populations are genetically diverse and potential sources for obtaining seeds for conservation and reintroduction purposes.</p>
+      <p>Here we use <italic>P. orientalis</italic> to investigate the levels of genetic diversity and reproductive traits in old and younger artificial populations and compare these levels to those observed in five natural populations. We hypothesize that older populations will harbor higher genetic diversity than younger populations. Through this study, we will better understand the importance of protecting old-growth trees, both for their cultural significance as a biological archive <xref ref-type="bibr" rid="pone.0056489-stlund1">[16]</xref> and for the gene pool that they represent. Furthermore, we will understand the role of these old populations in maintaining biodiversity. The objective of this study was to(1) compare the genetic diversity and reproductive traits (seed size and weight) of old-growth and younger populations of <italic>P. orientalis</italic> and to (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title>Reproductive Capacity</title>
+        <p>Of the 241 individuals (52.28%) of the old-growth populations, 126 produced cones, whereas only 69 of the 187 individuals (36.90%) of the 100-yr. age group displayed cones. In the 300-yr. age group, the proportion of individuals with cones was significantly higher than the 100-yr. age group (Chi-square test; χ<sup>2</sup>  =  10.047; <italic>p</italic>  =  0.002). There was no significant relationship between the average value of the DBH of a population and the percentage of individuals with cones in the artificial populations.</p>
+        <p>There were no significant differences in the seed weight between the eight sampled populations (data not shown), except for the TMA population, which was significantly longer (0.5845 ± 0.0101 cm, mean ± S.E.) and heavier (0.0247 ± 0.0006 g, Mean ± S.E.) than the other seven populations (<italic>p</italic> &lt; 0.05). Seed length (<italic>p</italic>  =  0.071; n  =  8; <italic>Spearman’s rho</italic>  =  0.667; marginally significant) and weight (<italic>p</italic>  =  0.037; n  =  8; <italic>Spearman’s rho</italic>  =  0.738) for these populations were positively correlated with the average values of the DBH (<xref ref-type="fig" rid="pone-0056489-g001">Fig. 1a, b</xref>): Older populations tended to produce heavier seeds.</p>
+        <fig id="pone-0056489-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056489.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Relationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of <italic>Platycladus orientalis</italic>(mean ± S.E.).</title>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056489.g001" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2b">
+        <title>Genetic diversity parameters</title>
+        <p>The genetic diversity parameters of these sampled populations are shown in <xref ref-type="table" rid="pone-0056489-t001">Table 1</xref>. The nine loci used were highly polymorphic. The old-growth population in Dingling Tomb exhibited the highest values for the parameters of the observed heterozygosity (Ho  =  0.805), expected heterozygosity (He  =  0.880), number of alleles (Na  =  15.111), number of effective alleles (Ne  =  9.586), Shannon’s information index (I  =  2.291) and number of private alleles (PA  =  9). The largest range of allele size was also detected in the 300-yr age group, the XSA population (allele range  =  55.889). Conversely, the lowest values for seven of the parameters were found in the artificial 100-yr. populations BDC (Ho  =  0.584), SGS (He  =  0.635, AR  =  4.213), DL (Na  =  7.222, I  =  1.599, PA  =  1) and DT (allele range  =  30.222); the lowest Ne was found in DJA (4.528).</p>
+        <table-wrap id="pone-0056489-t001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056489.t001</object-id>
+          <label>Table 1</label>
+          <caption>
+            <title>Genetic diversity parameters of the sampled populations of <italic>Platycladus orientalis.</italic></title>
+          </caption>
+          <alternatives>
+            <graphic id="pone-0056489-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056489.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Population</td>
+                  <td align="left" rowspan="1" colspan="1">Ho</td>
+                  <td align="left" rowspan="1" colspan="1">He</td>
+                  <td align="left" rowspan="1" colspan="1">N<sub>a</sub></td>
+                  <td align="left" rowspan="1" colspan="1">N<sub>e</sub></td>
+                  <td align="left" rowspan="1" colspan="1">F</td>
+                  <td align="left" rowspan="1" colspan="1">I</td>
+                  <td align="left" rowspan="1" colspan="1">A<sub>R</sub></td>
+                  <td align="left" rowspan="1" colspan="1">No. ofPrivate Alleles</td>
+                  <td align="left" rowspan="1" colspan="1">Allele range</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">GROUP 1</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">HLS</td>
+                  <td align="left" rowspan="1" colspan="1">0.638</td>
+                  <td align="left" rowspan="1" colspan="1">0.758</td>
+                  <td align="left" rowspan="1" colspan="1">8.222</td>
+                  <td align="left" rowspan="1" colspan="1">4.712</td>
+                  <td align="left" rowspan="1" colspan="1">0.173</td>
+                  <td align="left" rowspan="1" colspan="1">1.685</td>
+                  <td align="left" rowspan="1" colspan="1">4.325</td>
+                  <td align="left" rowspan="1" colspan="1">6.000</td>
+                  <td align="left" rowspan="1" colspan="1">35.889</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">JF</td>
+                  <td align="left" rowspan="1" colspan="1">0.646</td>
+                  <td align="left" rowspan="1" colspan="1">0.790</td>
+                  <td align="left" rowspan="1" colspan="1">11.111</td>
+                  <td align="left" rowspan="1" colspan="1">6.189</td>
+                  <td align="left" rowspan="1" colspan="1">0.201</td>
+                  <td align="left" rowspan="1" colspan="1">1.943</td>
+                  <td align="left" rowspan="1" colspan="1">4.894</td>
+                  <td align="left" rowspan="1" colspan="1">9.000</td>
+                  <td align="left" rowspan="1" colspan="1">36.889</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SGS</td>
+                  <td align="left" rowspan="1" colspan="1">0.635</td>
+                  <td align="left" rowspan="1" colspan="1">0.635</td>
+                  <td align="left" rowspan="1" colspan="1">8.778</td>
+                  <td align="left" rowspan="1" colspan="1">4.587</td>
+                  <td align="left" rowspan="1" colspan="1">0.059</td>
+                  <td align="left" rowspan="1" colspan="1">1.619</td>
+                  <td align="left" rowspan="1" colspan="1">4.213</td>
+                  <td align="left" rowspan="1" colspan="1">4.000</td>
+                  <td align="left" rowspan="1" colspan="1">35.222</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">BDC</td>
+                  <td align="left" rowspan="1" colspan="1">0.584</td>
+                  <td align="left" rowspan="1" colspan="1">0.748</td>
+                  <td align="left" rowspan="1" colspan="1">10.667</td>
+                  <td align="left" rowspan="1" colspan="1">5.552</td>
+                  <td align="left" rowspan="1" colspan="1">0.234</td>
+                  <td align="left" rowspan="1" colspan="1">1.839</td>
+                  <td align="left" rowspan="1" colspan="1">4.670</td>
+                  <td align="left" rowspan="1" colspan="1">4.000</td>
+                  <td align="left" rowspan="1" colspan="1">38.556</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">DL</td>
+                  <td align="left" rowspan="1" colspan="1">0.526</td>
+                  <td align="left" rowspan="1" colspan="1">0.723</td>
+                  <td align="left" rowspan="1" colspan="1">7.222</td>
+                  <td align="left" rowspan="1" colspan="1">4.651</td>
+                  <td align="left" rowspan="1" colspan="1">0.274</td>
+                  <td align="left" rowspan="1" colspan="1">1.599</td>
+                  <td align="left" rowspan="1" colspan="1">4.461</td>
+                  <td align="left" rowspan="1" colspan="1">1.000</td>
+                  <td align="left" rowspan="1" colspan="1">30.556</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">DT</td>
+                  <td align="left" rowspan="1" colspan="1">0.481</td>
+                  <td align="left" rowspan="1" colspan="1">0.728</td>
+                  <td align="left" rowspan="1" colspan="1">9.111</td>
+                  <td align="left" rowspan="1" colspan="1">4.646</td>
+                  <td align="left" rowspan="1" colspan="1">0.349</td>
+                  <td align="left" rowspan="1" colspan="1">1.690</td>
+                  <td align="left" rowspan="1" colspan="1">4.338</td>
+                  <td align="left" rowspan="1" colspan="1">4.000</td>
+                  <td align="left" rowspan="1" colspan="1">30.222</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">RT</td>
+                  <td align="left" rowspan="1" colspan="1">0.597</td>
+                  <td align="left" rowspan="1" colspan="1">0.718</td>
+                  <td align="left" rowspan="1" colspan="1">10.222</td>
+                  <td align="left" rowspan="1" colspan="1">4.722</td>
+                  <td align="left" rowspan="1" colspan="1">0.193</td>
+                  <td align="left" rowspan="1" colspan="1">1.716</td>
+                  <td align="left" rowspan="1" colspan="1">4.346</td>
+                  <td align="left" rowspan="1" colspan="1">3.000</td>
+                  <td align="left" rowspan="1" colspan="1">39.444</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Mean</td>
+                  <td align="left" rowspan="1" colspan="1">0.587</td>
+                  <td align="left" rowspan="1" colspan="1">0.729</td>
+                  <td align="left" rowspan="1" colspan="1">9.333</td>
+                  <td align="left" rowspan="1" colspan="1">5.008</td>
+                  <td align="left" rowspan="1" colspan="1">0.212</td>
+                  <td align="left" rowspan="1" colspan="1">1.727</td>
+                  <td align="left" rowspan="1" colspan="1">4.464</td>
+                  <td align="left" rowspan="1" colspan="1">4.429</td>
+                  <td align="left" rowspan="1" colspan="1">35.254</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SE</td>
+                  <td align="left" rowspan="1" colspan="1">0.058</td>
+                  <td align="left" rowspan="1" colspan="1">0.045</td>
+                  <td align="left" rowspan="1" colspan="1">1.297</td>
+                  <td align="left" rowspan="1" colspan="1">0.573</td>
+                  <td align="left" rowspan="1" colspan="1">0.083</td>
+                  <td align="left" rowspan="1" colspan="1">0.114</td>
+                  <td align="left" rowspan="1" colspan="1">0.220</td>
+                  <td align="left" rowspan="1" colspan="1">2.321</td>
+                  <td align="left" rowspan="1" colspan="1">3.358</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">GROUP 2</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">WFA</td>
+                  <td align="left" rowspan="1" colspan="1">0.704</td>
+                  <td align="left" rowspan="1" colspan="1">0.775</td>
+                  <td align="left" rowspan="1" colspan="1">13.000</td>
+                  <td align="left" rowspan="1" colspan="1">5.613</td>
+                  <td align="left" rowspan="1" colspan="1">0.110</td>
+                  <td align="left" rowspan="1" colspan="1">1.997</td>
+                  <td align="left" rowspan="1" colspan="1">4.938</td>
+                  <td align="left" rowspan="1" colspan="1">1.000</td>
+                  <td align="left" rowspan="1" colspan="1">41.778</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">DLA</td>
+                  <td align="left" rowspan="1" colspan="1">0.805</td>
+                  <td align="left" rowspan="1" colspan="1">0.880</td>
+                  <td align="left" rowspan="1" colspan="1">15.111</td>
+                  <td align="left" rowspan="1" colspan="1">9.586</td>
+                  <td align="left" rowspan="1" colspan="1">0.089</td>
+                  <td align="left" rowspan="1" colspan="1">2.391</td>
+                  <td align="left" rowspan="1" colspan="1">5.863</td>
+                  <td align="left" rowspan="1" colspan="1">9.000</td>
+                  <td align="left" rowspan="1" colspan="1">44.889</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">DTA</td>
+                  <td align="left" rowspan="1" colspan="1">0.708</td>
+                  <td align="left" rowspan="1" colspan="1">0.808</td>
+                  <td align="left" rowspan="1" colspan="1">11.667</td>
+                  <td align="left" rowspan="1" colspan="1">6.561</td>
+                  <td align="left" rowspan="1" colspan="1">0.156</td>
+                  <td align="left" rowspan="1" colspan="1">2.029</td>
+                  <td align="left" rowspan="1" colspan="1">5.091</td>
+                  <td align="left" rowspan="1" colspan="1">8.000</td>
+                  <td align="left" rowspan="1" colspan="1">47.778</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">TMA</td>
+                  <td align="left" rowspan="1" colspan="1">0.739</td>
+                  <td align="left" rowspan="1" colspan="1">0.843</td>
+                  <td align="left" rowspan="1" colspan="1">14.000</td>
+                  <td align="left" rowspan="1" colspan="1">7.686</td>
+                  <td align="left" rowspan="1" colspan="1">0.137</td>
+                  <td align="left" rowspan="1" colspan="1">2.208</td>
+                  <td align="left" rowspan="1" colspan="1">5.401</td>
+                  <td align="left" rowspan="1" colspan="1">6.000</td>
+                  <td align="left" rowspan="1" colspan="1">49.778</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">ZSA</td>
+                  <td align="left" rowspan="1" colspan="1">0.789</td>
+                  <td align="left" rowspan="1" colspan="1">0.846</td>
+                  <td align="left" rowspan="1" colspan="1">14.444</td>
+                  <td align="left" rowspan="1" colspan="1">7.816</td>
+                  <td align="left" rowspan="1" colspan="1">0.083</td>
+                  <td align="left" rowspan="1" colspan="1">2.232</td>
+                  <td align="left" rowspan="1" colspan="1">5.457</td>
+                  <td align="left" rowspan="1" colspan="1">7.000</td>
+                  <td align="left" rowspan="1" colspan="1">46.556</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">DJA</td>
+                  <td align="left" rowspan="1" colspan="1">0.682</td>
+                  <td align="left" rowspan="1" colspan="1">0.763</td>
+                  <td align="left" rowspan="1" colspan="1">9.889</td>
+                  <td align="left" rowspan="1" colspan="1">4.528</td>
+                  <td align="left" rowspan="1" colspan="1">0.111</td>
+                  <td align="left" rowspan="1" colspan="1">1.760</td>
+                  <td align="left" rowspan="1" colspan="1">4.394</td>
+                  <td align="left" rowspan="1" colspan="1">5.000</td>
+                  <td align="left" rowspan="1" colspan="1">49.333</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">RTA</td>
+                  <td align="left" rowspan="1" colspan="1">0.767</td>
+                  <td align="left" rowspan="1" colspan="1">0.786</td>
+                  <td align="left" rowspan="1" colspan="1">9.667</td>
+                  <td align="left" rowspan="1" colspan="1">6.096</td>
+                  <td align="left" rowspan="1" colspan="1">0.025</td>
+                  <td align="left" rowspan="1" colspan="1">1.906</td>
+                  <td align="left" rowspan="1" colspan="1">5.170</td>
+                  <td align="left" rowspan="1" colspan="1">2.000</td>
+                  <td align="left" rowspan="1" colspan="1">43.444</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">XSA</td>
+                  <td align="left" rowspan="1" colspan="1">0.791</td>
+                  <td align="left" rowspan="1" colspan="1">0.815</td>
+                  <td align="left" rowspan="1" colspan="1">10.444</td>
+                  <td align="left" rowspan="1" colspan="1">6.398</td>
+                  <td align="left" rowspan="1" colspan="1">0.032</td>
+                  <td align="left" rowspan="1" colspan="1">2.002</td>
+                  <td align="left" rowspan="1" colspan="1">5.287</td>
+                  <td align="left" rowspan="1" colspan="1">5.000</td>
+                  <td align="left" rowspan="1" colspan="1">55.889</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">TTA</td>
+                  <td align="left" rowspan="1" colspan="1">0.739</td>
+                  <td align="left" rowspan="1" colspan="1">0.791</td>
+                  <td align="left" rowspan="1" colspan="1">10.667</td>
+                  <td align="left" rowspan="1" colspan="1">5.681</td>
+                  <td align="left" rowspan="1" colspan="1">0.074</td>
+                  <td align="left" rowspan="1" colspan="1">1.944</td>
+                  <td align="left" rowspan="1" colspan="1">5.000</td>
+                  <td align="left" rowspan="1" colspan="1">4.000</td>
+                  <td align="left" rowspan="1" colspan="1">47.556</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Mean</td>
+                  <td align="left" rowspan="1" colspan="1">0.747</td>
+                  <td align="left" rowspan="1" colspan="1">0.812</td>
+                  <td align="left" rowspan="1" colspan="1">12.099</td>
+                  <td align="left" rowspan="1" colspan="1">6.663</td>
+                  <td align="left" rowspan="1" colspan="1">0.091</td>
+                  <td align="left" rowspan="1" colspan="1">2.052</td>
+                  <td align="left" rowspan="1" colspan="1">5.178</td>
+                  <td align="left" rowspan="1" colspan="1">5.222</td>
+                  <td align="left" rowspan="1" colspan="1">47.445</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SE</td>
+                  <td align="left" rowspan="1" colspan="1">0.041</td>
+                  <td align="left" rowspan="1" colspan="1">0.036</td>
+                  <td align="left" rowspan="1" colspan="1">1.966</td>
+                  <td align="left" rowspan="1" colspan="1">1.412</td>
+                  <td align="left" rowspan="1" colspan="1">0.041</td>
+                  <td align="left" rowspan="1" colspan="1">0.181</td>
+                  <td align="left" rowspan="1" colspan="1">0.383</td>
+                  <td align="left" rowspan="1" colspan="1">2.485</td>
+                  <td align="left" rowspan="1" colspan="1">3.886</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">GROUP 3</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">ZF1<xref ref-type="table-fn" rid="nt101">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">0.759</td>
+                  <td align="left" rowspan="1" colspan="1">0.820</td>
+                  <td align="left" rowspan="1" colspan="1">11.556</td>
+                  <td align="left" rowspan="1" colspan="1">7.696</td>
+                  <td align="left" rowspan="1" colspan="1">0.082</td>
+                  <td align="left" rowspan="1" colspan="1">2.017</td>
+                  <td align="left" rowspan="1" colspan="1">5.282</td>
+                  <td align="left" rowspan="1" colspan="1">6.000</td>
+                  <td align="left" rowspan="1" colspan="1">43.222</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">ZF2<xref ref-type="table-fn" rid="nt101">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">0.740</td>
+                  <td align="left" rowspan="1" colspan="1">0.812</td>
+                  <td align="left" rowspan="1" colspan="1">13.000</td>
+                  <td align="left" rowspan="1" colspan="1">8.321</td>
+                  <td align="left" rowspan="1" colspan="1">0.074</td>
+                  <td align="left" rowspan="1" colspan="1">2.131</td>
+                  <td align="left" rowspan="1" colspan="1">5.351</td>
+                  <td align="left" rowspan="1" colspan="1">7.000</td>
+                  <td align="left" rowspan="1" colspan="1">41.889</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SF<xref ref-type="table-fn" rid="nt101">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">0.745</td>
+                  <td align="left" rowspan="1" colspan="1">0.829</td>
+                  <td align="left" rowspan="1" colspan="1">10.778</td>
+                  <td align="left" rowspan="1" colspan="1">7.138</td>
+                  <td align="left" rowspan="1" colspan="1">0.097</td>
+                  <td align="left" rowspan="1" colspan="1">2.060</td>
+                  <td align="left" rowspan="1" colspan="1">5.332</td>
+                  <td align="left" rowspan="1" colspan="1">7.000</td>
+                  <td align="left" rowspan="1" colspan="1">35.111</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Mean</td>
+                  <td align="left" rowspan="1" colspan="1">0.748</td>
+                  <td align="left" rowspan="1" colspan="1">0.820</td>
+                  <td align="left" rowspan="1" colspan="1">11.778</td>
+                  <td align="left" rowspan="1" colspan="1">7.718</td>
+                  <td align="left" rowspan="1" colspan="1">0.084</td>
+                  <td align="left" rowspan="1" colspan="1">2.069</td>
+                  <td align="left" rowspan="1" colspan="1">5.322</td>
+                  <td align="left" rowspan="1" colspan="1">6.667</td>
+                  <td align="left" rowspan="1" colspan="1">40.074</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SE</td>
+                  <td align="left" rowspan="1" colspan="1">0.008</td>
+                  <td align="left" rowspan="1" colspan="1">0.007</td>
+                  <td align="left" rowspan="1" colspan="1">0.921</td>
+                  <td align="left" rowspan="1" colspan="1">0.483</td>
+                  <td align="left" rowspan="1" colspan="1">0.010</td>
+                  <td align="left" rowspan="1" colspan="1">0.047</td>
+                  <td align="left" rowspan="1" colspan="1">0.029</td>
+                  <td align="left" rowspan="1" colspan="1">0.471</td>
+                  <td align="left" rowspan="1" colspan="1">3.551</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">GROUP 4</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SFA<xref ref-type="table-fn" rid="nt101">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">0.789</td>
+                  <td align="left" rowspan="1" colspan="1">0.830</td>
+                  <td align="left" rowspan="1" colspan="1">9.556</td>
+                  <td align="left" rowspan="1" colspan="1">5.893</td>
+                  <td align="left" rowspan="1" colspan="1">0.018</td>
+                  <td align="left" rowspan="1" colspan="1">1.861</td>
+                  <td align="left" rowspan="1" colspan="1">5.229</td>
+                  <td align="left" rowspan="1" colspan="1">8.000</td>
+                  <td align="left" rowspan="1" colspan="1">31.000</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">ZFA<xref ref-type="table-fn" rid="nt101">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">0.701</td>
+                  <td align="left" rowspan="1" colspan="1">0.834</td>
+                  <td align="left" rowspan="1" colspan="1">8.333</td>
+                  <td align="left" rowspan="1" colspan="1">5.910</td>
+                  <td align="left" rowspan="1" colspan="1">0.101</td>
+                  <td align="left" rowspan="1" colspan="1">1.870</td>
+                  <td align="left" rowspan="1" colspan="1">5.209</td>
+                  <td align="left" rowspan="1" colspan="1">2.000</td>
+                  <td align="left" rowspan="1" colspan="1">47.889</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Mean</td>
+                  <td align="left" rowspan="1" colspan="1">0.745</td>
+                  <td align="left" rowspan="1" colspan="1">0.832</td>
+                  <td align="left" rowspan="1" colspan="1">8.945</td>
+                  <td align="left" rowspan="1" colspan="1">5.902</td>
+                  <td align="left" rowspan="1" colspan="1">0.060</td>
+                  <td align="left" rowspan="1" colspan="1">1.866</td>
+                  <td align="left" rowspan="1" colspan="1">5.219</td>
+                  <td align="left" rowspan="1" colspan="1">5.000</td>
+                  <td align="left" rowspan="1" colspan="1">39.445</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SE</td>
+                  <td align="left" rowspan="1" colspan="1">0.044</td>
+                  <td align="left" rowspan="1" colspan="1">0.002</td>
+                  <td align="left" rowspan="1" colspan="1">0.611</td>
+                  <td align="left" rowspan="1" colspan="1">0.009</td>
+                  <td align="left" rowspan="1" colspan="1">0.042</td>
+                  <td align="left" rowspan="1" colspan="1">0.005</td>
+                  <td align="left" rowspan="1" colspan="1">0.010</td>
+                  <td align="left" rowspan="1" colspan="1">3.000</td>
+                  <td align="left" rowspan="1" colspan="1">8.444</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt101">
+              <label>*</label>
+              <p>Natural populations.</p>
+            </fn>
+            <fn id="nt102">
+              <label/>
+              <p>Group 1: 100-yr. artificial populations (Group 1); Group 2: 300-yr. artificial populations; Group 3: 100-yr. natural populations; Group 4: 300-yr. natural populations. Ho  =  Observed heterozygosity; He  =  Expected heterozygosity; Na  =  the average number of alleles; Ne  =  effective number of alleles; F  =  inbreeding coefficient; I  =  Shannon’s information index; A<sub>R</sub>  =  allele richness.</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+        <p>There was no difference between the old-growth artificial tree populations (Group 2) and natural populations (Groups 3 and 4) for the Ho, He, Na, Ne, I and AR parameters (<italic>p</italic> &gt; 0.1). The allele range of Group 2 was significantly higher than that of the other three groups (<italic>p</italic> &lt; 0.05). The Ho, H<sub>E</sub>, N<sub>A</sub>, N<sub>E</sub>, I and A<sub>R</sub> values for Group 1 were significantly lower than those of the other groups (<italic>p</italic> &lt; 0.05), but no difference was detected in the allele range between Group 1 and natural Groups 3 and 4. The private alleles of these groups did not differ significantly.</p>
+        <p>The results of the DBH measurements indicate that values of the natural old-growth populations (Group 4) were not as large as the ancient artificial individuals of <italic>P. orientalis</italic>, probably because of environmental stress, such as drought and competition with other species. No relationship was found between the DBH and genetic diversity parameters. In the artificial populations, conversely, significant correlations were found between the population average values of the DBH and the average genetic diversity parameter values of the number of effective alleles (<italic>Spearman’s rho</italic>  =  0.467; n  =  16; <italic>p</italic>  =  0.012), Shannon’s information index (<italic>Spearman’s rho</italic>  =  0.683; n  =  16; <italic>p</italic>  =  0.000), allele richness (<italic>Spearman’s rho</italic>  =  0.567; n  =  16; <italic>p</italic>  =  0.002) and allele range (<italic>Spearman’s rho</italic>  =  0.450; n  =  16; <italic>p</italic>  =  0.015) (<xref ref-type="fig" rid="pone-0056489-g002">Fig. 2a, b, c and d</xref>). There was a strong positive relationship between the observed heterozygosity and population averages of the DBH (<italic>Spearman’s rho</italic>  =  0.510; n  =  16; <italic>p</italic>  =  0.006) (<xref ref-type="fig" rid="pone-0056489-g003">Fig. 3</xref>).</p>
+        <fig id="pone-0056489-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056489.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Relationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon’s information index (B), allele richness (C) and allele range (D) in artificial populations of <italic>Platycladus orientalis</italic>(mean ± S.E.).</title>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056489.g002" position="float" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0056489-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056489.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Relationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of <italic>Platycladus orientalis</italic>(Mean ± S.E.).</title>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056489.g003" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>Old-growth tree populations can provide long-term stable environments for other species, such as animals and other plants, and forests can play an important role in the soil and water retention <xref ref-type="bibr" rid="pone.0056489-Troeh1">[17]</xref>. However, the role of these tree populations as genetic diversity reservoirs and seed sources has not been well considered and investigated <xref ref-type="bibr" rid="pone.0056489-Mosseler1">[1]</xref>. In this study, we focused on the comparison of old-growth and young populations of <italic>P. orientalis</italic>. According to our results for seed trait measurements and microsatellite experiments, the 300-yr. artificial age group exhibited the highest reproductive traits and can represent most of the genetic diversity of this species. In addition, the 300-yr. artificial age group and the natural groups showed much higher levels of genetic diversity than the artificial 100-yr. age group.</p>
+      <sec id="s3a">
+        <title>Relationship between the population DBH and Reproductive Capacity</title>
+        <p>Factors affecting reproductive success include fruit yield, seed weight and size, and seed quality directly determining the perpetuation of seed plant species <xref ref-type="bibr" rid="pone.0056489-Stanton1">[18]</xref>. Our examination of the cone set revealed that the natural populations did not reproduce as well as the artificial populations, probably because of the lack of water and the competition from other species. The sampled natural populations on the Zhuifeng and Shangfang mountains coexisted with Chinese pine (<italic>Pinus tabulaeformis</italic>) and <italic>Robinia pseudoacacia</italic> forests and some forest shrub, with some of the <italic>P. orientalis</italic> trees even growing on rocks. Therefore, their growth status, as based on the diameter at breast height and crown, and reproductive output, as based on the cone set, were lower than the artificial trees in the parks and other urban locations, which have adequate space, water and nutrients and were very well protected. Although the fruit-setting percentage of tree populations may have a positive relationship with the DBH <xref ref-type="bibr" rid="pone.0056489-Xu1">[19]</xref>, in the present study, there was no obvious correlation between the proportion of individuals with cones and the DBH of a population. However, the cone set was significantly higher in the 300-yr. than the 100-yr. artificial population, indicating that the reproductive capacity of the Group 2 was greater than Group 1.</p>
+        <p>Seed weight and size have a significant impact on seed germination, whereby the larger or heavier the seed is, the earlier and faster it germinates, which can be associated with higher reproductive fitness <xref ref-type="bibr" rid="pone.0056489-Stanton1">[18]</xref>, <xref ref-type="bibr" rid="pone.0056489-Greipsson1">[20]</xref>, <xref ref-type="bibr" rid="pone.0056489-Orellana1">[21]</xref>. In our study, seed length and weight were positively correlated with DBH; in other words, the seeds sampled from the old-growth artificial populations were longer and heavier. Therefore, the 300-yr. age artificial group in the parks and tombs exhibited higher reproductive success. In future studies, seed germination experiments should be conducted to examine seedling traits to understand better the reproductive characteristics of different age groups of <italic>P. orientalis</italic>.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Relationship between population DBH and Genetic diversity parameters</title>
+        <p>In long-living forests, the genetic diversity parameters could be significantly correlated with the tree growth traits, such as the DBH and height <xref ref-type="bibr" rid="pone.0056489-Mosseler1">[1]</xref>. In our study, five of the genetic diversity parameters (N<sub>E</sub>, A<sub>R</sub>, I, allele range and Ho; <xref ref-type="fig" rid="pone-0056489-g002">Figs. 2</xref> and <xref ref-type="fig" rid="pone-0056489-g003">3</xref>) were positively correlated with the DBH for the artificial old-growth populations (Group 2) in the parks and temples, sites where the living conditions were probably more benign than in natural populations. These results supported the relationship between the <italic>P. orientalis</italic> population growth and genetic diversity. The higher genetic diversity in the artificial 300-yr. age group showed that the resources of individuals in these populations may be quite extensive <xref ref-type="bibr" rid="pone.0056489-Li3">[22]</xref>.</p>
+        <p>Almost all of the mean values for the genetic diversity parameters of the old-growth artificial populations were similar to those in the natural populations (except for the allele range, which was remarkably larger than in the natural populations), indicating that these ancient artificial populations contain similar levels of the genetic diversity of natural populations of <italic>P. orientalis</italic>. In contrast, the genetic diversity parameters for the artificial young populations were significantly lower than other populations, indicating that, although the number of artificial young <italic>P. orientalis</italic> was the largest, in terms of the genetic diversity, this group was much less important than the old-growth and natural populations.</p>
+        <p>None of the genetic estimates obtained for the natural 100-yr. and 300-yr. age groups were notably different, and there were no relationships found between these estimates and the population average height or DBH, which may have resulted from the small number of sampled natural individuals. In Beijing, the amount of natural populations were limited, despite the large numbers of individuals of <italic>P. orientalis</italic> <xref ref-type="bibr" rid="pone.0056489-Chen1">[5]</xref>. Therefore, the artificial populations play an important role in sustaining the species.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Importance of parks and temples in the protection of old-growth trees and their reproductive capacity and genetic diversity</title>
+        <p>As the number of people living in large cities increases with the modern-day urbanization process, the restoration, protection and enhancement of the biodiversity in urban areas become more important <xref ref-type="bibr" rid="pone.0056489-Savard1">[23]</xref>. The biodiversity in urban areas has a positive impact on the residents’ education; some research has shown that people who are exposed to environments with natural elements, such as flowers, trees and birds, will pay more attention to environmental issues <xref ref-type="bibr" rid="pone.0056489-Rohde1">[24]</xref>. The urban ecosystem is of great significance in the global genetic diversity and structure. For instance, rare plant or animal species can be raised in cities, thus protecting the genetic information of these species <xref ref-type="bibr" rid="pone.0056489-Savard1">[23]</xref>. In such a large city with a long history as Beijing, many ancient temples, tombs, royal gardens and parks, and old tree populations and other in situ conservation sites of plant resources can enlarge the effective population size and enhance the gene flow between isolated populations <xref ref-type="bibr" rid="pone.0056489-Roberts1">[25]</xref>. If the plant populations within these city areas contain genetic variations that have been long lost in natural populations, then the preservation of artificial populations will be particularly necessary <xref ref-type="bibr" rid="pone.0056489-Roberts1">[25]</xref>. In our study, the ancient artificial populations contained a number of private alleles; in particular, population DLA exhibited nine private alleles, more than any natural population. Moreover, the estimates of the allele range in the artificial old-growth populations were the largest across all of the populations. From these results, we can infer that the long-living artificial populations may hold valuable genes that do not exist in nature.</p>
+        <p>The potential negative influences of artificially cultivated plants on the gene pool of the species also require attention: the genetic contamination of natural populations may produce negative effects on the fitness of the natural plants as a result of outbreeding depression <xref ref-type="bibr" rid="pone.0056489-Templeton1">[26]</xref>, <xref ref-type="bibr" rid="pone.0056489-Ellstrand1">[27]</xref>, <xref ref-type="bibr" rid="pone.0056489-Allendorf1">[28]</xref>. Nonetheless, research regarding this aspect showed that this kind of contamination was rare or nonexistent <xref ref-type="bibr" rid="pone.0056489-Roberts1">[25]</xref>.</p>
+        <p>None of the genetic diversity parameters obtained from the old-growth artificial populations sampled in our study differed from those of the natural populations, and some of them showed an even higher level of genetic diversity than the populations in nature. Moreover, the artificial 300-yr. age group had a greater reproductive capacity than the young artificial and natural populations. These results suggest that the old-growth <italic>P. orientalis</italic> populations in the urban areas can serve as reservoirs for genetic diversity and seed sources for this species <xref ref-type="bibr" rid="pone.0056489-Vaughton1">[29]</xref>. These populations are of great importance and necessity, and maintain a high level of genetic diversity for the species, possibly serving as a buffer against the loss of genetic variation in the natural populations <xref ref-type="bibr" rid="pone.0056489-Roberts1">[25]</xref>.</p>
+        <p>As garden plants, the artificial populations maintained alleles similar to the nearby natural populations and may hold a higher level of genetic diversity <xref ref-type="bibr" rid="pone.0056489-Roberts1">[25]</xref>. In population DLA, Ho, Ne, allele richness and I values were the highest in the 300-yr. population. These results may be explained by the seed resources: these trees were planted hundreds, even a thousand years ago, and their seeds may have been recruited from the soil-stored seed bank that was established prior to urbanization or from the populations far from the city <xref ref-type="bibr" rid="pone.0056489-England1">[30]</xref>.</p>
+        <p>These royal gardens, imperial tombs and ancient temples are in a solemn atmosphere and thus they protected these old trees which have been given extraordinary significance from deforestation, and indirectly protected their valuable genes. These urban areas play an important role in maintaining seed availability and genetic diversity of <italic>Platycladus orientalis</italic>.</p>
+      </sec>
+    </sec>
+    <sec id="s4" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s4a">
+        <title><italic>Platycladus orientalis</italic> Populations and Seeds Sampling</title>
+        <p>According to the records from the parks and temples <xref ref-type="bibr" rid="pone.0056489-Anami1">[31]</xref>, we studied seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.; tagged by the Beijing Municipal Bureau of Landscape and Forestry) artificial populations. The living-conditions of these artificial populations were similar in population density, temperature and light intensity. For comparison, three young and two old-growth natural populations in the Beijing area were sampled in 2011 (<xref ref-type="table" rid="pone-0056489-t002">Table 2</xref>); the small number of sampled natural populations was because the natural populations were rare in Beijing. The cone set (the proportion of reproductive individuals in a population) and diameters at breast height (DBH) of individuals were recorded. The seed lengths and weights of four young artificial populations and four old-growth artificial populations, which were randomly selected (<xref ref-type="table" rid="pone-0056489-t003">Table 3</xref>), were measured using the sampling strategy of randomly selecting approximately 10 individuals in a population and collecting five cones from each chosen individual. There were four groups of populations: 100-yr. artificial populations (Group 1), 300-yr. artificial populations (Group 2), 100-yr. natural populations (Group 3) and 300-yr. natural populations (Group 4).</p>
+        <table-wrap id="pone-0056489-t002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056489.t002</object-id>
+          <label>Table 2</label>
+          <caption>
+            <title>Sampling sites, age groups and number of individuals of <italic>Platycladus orientalis</italic> populations in Beijing.</title>
+          </caption>
+          <alternatives>
+            <graphic id="pone-0056489-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056489.t002" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Age Group</td>
+                  <td align="left" rowspan="1" colspan="1">Site</td>
+                  <td align="left" rowspan="1" colspan="1">Abbreviation</td>
+                  <td align="left" rowspan="1" colspan="1">Number of Samples</td>
+                  <td align="left" rowspan="1" colspan="1">Latitude and Longitude</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">300 yr</td>
+                  <td align="left" rowspan="1" colspan="1">Zhongshan Park</td>
+                  <td align="left" rowspan="1" colspan="1">ZSA</td>
+                  <td align="left" rowspan="1" colspan="1">30</td>
+                  <td align="left" rowspan="1" colspan="1">39°54’40.6”N, 116°23’41.0”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">The Altar to the Sun</td>
+                  <td align="left" rowspan="1" colspan="1">RTA</td>
+                  <td align="left" rowspan="1" colspan="1">11</td>
+                  <td align="left" rowspan="1" colspan="1">39°54’52.8”N, 116°26’12.1”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Temple of Earth</td>
+                  <td align="left" rowspan="1" colspan="1">DTA</td>
+                  <td align="left" rowspan="1" colspan="1">31</td>
+                  <td align="left" rowspan="1" colspan="1">39°57’22.6”N, 116°24’55.9”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Dajue Temple</td>
+                  <td align="left" rowspan="1" colspan="1">DJA</td>
+                  <td align="left" rowspan="1" colspan="1">29</td>
+                  <td align="left" rowspan="1" colspan="1">40°03’17.2”N, 116°07’01.0”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Wofo Temple</td>
+                  <td align="left" rowspan="1" colspan="1">WFA</td>
+                  <td align="left" rowspan="1" colspan="1">31</td>
+                  <td align="left" rowspan="1" colspan="1">40°00’06.7”N, 116°12’29.6”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Xiangshan Park</td>
+                  <td align="left" rowspan="1" colspan="1">XSA</td>
+                  <td align="left" rowspan="1" colspan="1">16</td>
+                  <td align="left" rowspan="1" colspan="1">39°59’09.2”N, 116°11’35.1”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">The Ancestral Temple</td>
+                  <td align="left" rowspan="1" colspan="1">TMA</td>
+                  <td align="left" rowspan="1" colspan="1">39</td>
+                  <td align="left" rowspan="1" colspan="1">39°54’41.8”N, 116°23’59.8”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Dingling Tomb</td>
+                  <td align="left" rowspan="1" colspan="1">DLA</td>
+                  <td align="left" rowspan="1" colspan="1">24</td>
+                  <td align="left" rowspan="1" colspan="1">40°17’49.8”N, 116°13’20.8”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Temple of Heaven</td>
+                  <td align="left" rowspan="1" colspan="1">TTA</td>
+                  <td align="left" rowspan="1" colspan="1">30</td>
+                  <td align="left" rowspan="1" colspan="1">39°53’01.3”N, 116°24’46.2”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Zhuifeng</td>
+                  <td align="left" rowspan="1" colspan="1">ZFA<xref ref-type="table-fn" rid="nt103">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">15</td>
+                  <td align="left" rowspan="1" colspan="1">40°25’57.1”N, 117°08’27.2”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Shangfang</td>
+                  <td align="left" rowspan="1" colspan="1">SFA<xref ref-type="table-fn" rid="nt103">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">10</td>
+                  <td align="left" rowspan="1" colspan="1">39°40’40.0”N, 115°49’43.7”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">100 yr</td>
+                  <td align="left" rowspan="1" colspan="1">The Altar to the Sun</td>
+                  <td align="left" rowspan="1" colspan="1">RT</td>
+                  <td align="left" rowspan="1" colspan="1">25</td>
+                  <td align="left" rowspan="1" colspan="1">39°54’51.3”N, 116°26’40.2”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Temple of Earth</td>
+                  <td align="left" rowspan="1" colspan="1">DT</td>
+                  <td align="left" rowspan="1" colspan="1">30</td>
+                  <td align="left" rowspan="1" colspan="1">39°57’08.1”N, 116°24’47.6”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Dingling Tomb</td>
+                  <td align="left" rowspan="1" colspan="1">DL</td>
+                  <td align="left" rowspan="1" colspan="1">24</td>
+                  <td align="left" rowspan="1" colspan="1">40°17’39.7”N, 116°13’32.2”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Badachu</td>
+                  <td align="left" rowspan="1" colspan="1">BDC</td>
+                  <td align="left" rowspan="1" colspan="1">30</td>
+                  <td align="left" rowspan="1" colspan="1">39°56’33.7”N, 116°11’24.5”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Jiufeng</td>
+                  <td align="left" rowspan="1" colspan="1">JF</td>
+                  <td align="left" rowspan="1" colspan="1">30</td>
+                  <td align="left" rowspan="1" colspan="1">40°03’39.2”N, 116°05’44.7”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Hongluo</td>
+                  <td align="left" rowspan="1" colspan="1">HLS</td>
+                  <td align="left" rowspan="1" colspan="1">25</td>
+                  <td align="left" rowspan="1" colspan="1">40°23’41.9”N, 116°37’18.5”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Shugu</td>
+                  <td align="left" rowspan="1" colspan="1">SGS</td>
+                  <td align="left" rowspan="1" colspan="1">22</td>
+                  <td align="left" rowspan="1" colspan="1">40°18’56.3”N, 116°48’56.5”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Zhuifeng 1</td>
+                  <td align="left" rowspan="1" colspan="1">ZF1<xref ref-type="table-fn" rid="nt103">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">20</td>
+                  <td align="left" rowspan="1" colspan="1">40°25’37.0”N, 117°08’16.9”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Zhuifeng 2</td>
+                  <td align="left" rowspan="1" colspan="1">ZF2<xref ref-type="table-fn" rid="nt103">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">23</td>
+                  <td align="left" rowspan="1" colspan="1">40°26’58.0”N, 117°07’29.5”E</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Mt. Shangfang</td>
+                  <td align="left" rowspan="1" colspan="1">SF<xref ref-type="table-fn" rid="nt103">*</xref></td>
+                  <td align="left" rowspan="1" colspan="1">20</td>
+                  <td align="left" rowspan="1" colspan="1">39°40’35.7”N, 115°49’42.1”E</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt103">
+              <label>*</label>
+              <p>Natural populations.</p>
+            </fn>
+            <fn id="nt104">
+              <label/>
+              <p>Population name ending with an “A” means the population was old-growth (300-yr.); otherwise the population was young (100-yr.).</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+        <table-wrap id="pone-0056489-t003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056489.t003</object-id>
+          <label>Table 3</label>
+          <caption>
+            <title>Number and location of the trees used for cone collection in the artificial populations of <italic>Platycladus orientalis</italic>.</title>
+          </caption>
+          <alternatives>
+            <graphic id="pone-0056489-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056489.t003" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td colspan="4" align="left" rowspan="1">300 yrs.</td>
+                  <td colspan="4" align="left" rowspan="1">100 yrs.</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">WFA</td>
+                  <td align="left" rowspan="1" colspan="1">TMA</td>
+                  <td align="left" rowspan="1" colspan="1">ZSA</td>
+                  <td align="left" rowspan="1" colspan="1">DJA</td>
+                  <td align="left" rowspan="1" colspan="1">DT</td>
+                  <td align="left" rowspan="1" colspan="1">RT</td>
+                  <td align="left" rowspan="1" colspan="1">SGS</td>
+                  <td align="left" rowspan="1" colspan="1">JF</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Number of individuals</td>
+                  <td align="left" rowspan="1" colspan="1">9</td>
+                  <td align="left" rowspan="1" colspan="1">10</td>
+                  <td align="left" rowspan="1" colspan="1">8</td>
+                  <td align="left" rowspan="1" colspan="1">8</td>
+                  <td align="left" rowspan="1" colspan="1">9</td>
+                  <td align="left" rowspan="1" colspan="1">7</td>
+                  <td align="left" rowspan="1" colspan="1">8</td>
+                  <td align="left" rowspan="1" colspan="1">9</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Total</td>
+                  <td colspan="4" align="left" rowspan="1">35</td>
+                  <td colspan="4" align="left" rowspan="1">33</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Number of cones</td>
+                  <td align="left" rowspan="1" colspan="1">47</td>
+                  <td align="left" rowspan="1" colspan="1">51</td>
+                  <td align="left" rowspan="1" colspan="1">45</td>
+                  <td align="left" rowspan="1" colspan="1">44</td>
+                  <td align="left" rowspan="1" colspan="1">45</td>
+                  <td align="left" rowspan="1" colspan="1">34</td>
+                  <td align="left" rowspan="1" colspan="1">39</td>
+                  <td align="left" rowspan="1" colspan="1">41</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Total</td>
+                  <td colspan="4" align="left" rowspan="1">187</td>
+                  <td colspan="4" align="left" rowspan="1">159</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+        </table-wrap>
+      </sec>
+      <sec id="s4b">
+        <title>Genetic Diversity Analysis</title>
+        <p>Total genomic DNA was extracted from silica gel–dried leaves from individuals’ specimen of <italic>P. orientalis</italic> with a Plant Genomic DNA Kit (Tiangen Biotech, Beijing, China). Nine microsatellite loci and the same PCR condition as in reference <xref ref-type="bibr" rid="pone.0056489-Zhu1">[32]</xref> were used to analyze the genetic diversity parameters, including the average number of alleles (Na), effective number of alleles (Ne), Shannon’s information index (I), observed heterozygosity (Ho), expected heterozygosity (He), allele richness (A<sub>R</sub>) and allele range. These parameters were calculated using FSTAT version 2.9.3 <xref ref-type="bibr" rid="pone.0056489-Goudet1">[33]</xref>and GenAlex v 6.41 <xref ref-type="bibr" rid="pone.0056489-Peakall1">[34]</xref>.</p>
+      </sec>
+      <sec id="s4c">
+        <title>Statistical Analysis</title>
+        <p>The average numbers of the population trait - DBH were calculated. To determine whether older populations harbor higher genetic diversity, we estimated the correlation between DBH, a proxy of age in this species, and genetic diversity parameters using bivariate correlations in SPSS version 16.0. The relationships among the population average DBH and seed size were also analyzed by bivariate correlations. The differences in genetic diversity parameters between the age groups were analyzed using a one-way ANOVA, followed by post-hoc pairwise comparisons between groups using a Bonferroni correction. The differences among groups for reproductive capacity were examined using the Chi-square test.</p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank A. B. Zhao, J. L. Zhao, and Y. Li for assistance in the field, and M. Vallejo-Marin for comments and suggestions.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0056489-Mosseler1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mosseler</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Major</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Rajora</surname><given-names>OP</given-names></name> (<year>2003</year>) <article-title>Old-growth red spruce forests as reservoirs of genetic diversity and reproductive fitness</article-title>. <source>Theor Appl Genet</source> <volume>106</volume>: <fpage>931</fpage>–<lpage>937</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Reisch1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reisch</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Mayer</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Rüther</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Nelle</surname><given-names>O</given-names></name> (<year>2007</year>) <article-title>Forest history affects genetic diversity – molecular variation of Dryopteris dilatata(Dryopteridaceae) in ancient and recent forests</article-title>. <source>Nordic Journal of Botany</source> <volume>25</volume>: <fpage>366</fpage>–<lpage>371</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Konnert1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Konnert</surname><given-names>M</given-names></name> (<year>1991</year>) <article-title>Comparison of the genetic structure of different generations of naturally regenerated spruce stands in the Black Forest</article-title>. <source>Silvae Genetica</source> <volume>40</volume>: <fpage>60</fpage>–<lpage>65</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Dong1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dong</surname><given-names>Y</given-names></name> (<year>1989</year>) <article-title>Value of Ancient Tree sources and the Protection Issues in Shanxi</article-title>. <source>Journal of Beijing Forestry University</source> <volume>11</volume>: <fpage>11</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Chen1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>X</given-names></name> (<year>2010</year>) <article-title>Diversity of Ancient tree in Beijing</article-title>. <source>Science Technology and Engineering</source> <volume>10</volume>: <fpage>5</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Nie1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nie</surname><given-names>LS</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>DZ</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>BG</given-names></name> (<year>2005</year>) <article-title>Relationship between soil conditions and declining grouth rate of aged Pinus tabulaeformis at Jietai Temple of Beijing</article-title>. <source>Journal of Beijing Forestry University</source> <volume>27</volume>: <fpage>5</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Lu1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Xi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>ZM</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>XP</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Analysis on Soil Physical Properties of the Old Trees in Beijing</article-title>. <source>Research of Soil and Water Conservation</source> <volume>18</volume>: <fpage>4</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Lu2">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lu</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Xi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>ZM</given-names></name> (<year>2011</year>) <article-title>Effects of Tree Species and Age Levels on the Soil Physical Properties of Ancient Trees in Beijing</article-title>. <source>Environmental Science &amp; Technology</source> <volume>34</volume>: <fpage>5</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Liang1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liang</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>JY</given-names></name>, <name name-style="western"><surname>Xin</surname><given-names>ZX</given-names></name> (<year>2008</year>) <article-title>Technologies on Rejuvenation of Old and Famous Trees in Tianshui</article-title>. <source>Shaanxi Forest Science and Technology</source> <volume>2</volume>: <fpage>4</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Zhang1">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name> (<year>2009</year>) <article-title>Cultivation and Conservation of Ancient and Famous Trees in the Royal Garden in Beijing</article-title>. <source>Journal of Sanmenxia Polytechnic</source> <volume>8</volume>: <fpage>5</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Li1">
+        <label>11</label>
+        <mixed-citation publication-type="jounal" xlink:type="simple">Li H (2009) RAPD Analysis of Genetic Diversity and In - Vitro Conservation of Ancient Litchi Trees in Fuzhou City. Thesis for Master's Degree of Fujian Agriculture and Forestry University.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Neale1">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Neale</surname><given-names>DB</given-names></name>, <name name-style="western"><surname>Kremer</surname><given-names>A</given-names></name> (<year>2011</year>) <article-title>Forest tree genomics: growing resources and applications</article-title>. <source>Nat Rev Genet</source> <volume>12</volume>: <fpage>111</fpage>–<lpage>122</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Committee1">
+        <label>13</label>
+        <mixed-citation publication-type="book" xlink:type="simple">Committee FoCE (1999) Flora of China (Cycadaceae through Fagaceae). Beijing: Science Press. 3 p.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Asili1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Asili</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lambert</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ziegler</surname><given-names>HL</given-names></name>, <name name-style="western"><surname>Sairafianpour</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Witt</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Labdanes and Isopimaranes from Platycladus orientalis and Their Effects on Erythrocyte Membrane and on Plasmodium falciparum Growth in the Erythrocyte Host Cells</article-title>. <source>Journal of Natural Products</source> <volume>67</volume>: <fpage>631</fpage>–<lpage>637</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Li2">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>JY</given-names></name> (<year>1989</year>) <article-title>An Application of PV Technique to Study Drought Resistance of Pinus tabulaeformis and Platycladus orientalis Seedlings</article-title>. <source>Journal of Beijing Forestry University</source> <volume>11</volume>: <fpage>9</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-stlund1">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Östlund</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Zackrisson</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Hörnberg</surname><given-names>G</given-names></name> (<year>2002</year>) <article-title>Trees on the Border between Nature and Culture: Culturally Modified Trees in Boreal Sweden</article-title>. <source>Environmental History</source> <volume>7</volume>: <fpage>21</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Troeh1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Troeh</surname><given-names>FR</given-names></name>, <name name-style="western"><surname>Hobbs</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Donahue</surname><given-names>RL</given-names></name> (<year>1981</year>) <article-title>Soil and Water Conservation for Productivity and Environmental Protection</article-title>. <source>Soil Science</source> <volume>132</volume>: <fpage>189</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Stanton1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stanton</surname><given-names>ML</given-names></name> (<year>1994</year>) <article-title>Seed Variation in Wild Radish: Effect of Seed Size on Components of Seedling and Adult Fitness</article-title>. <source>Ecology</source> <volume>65</volume>: <fpage>8</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Xu1">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Dai</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Shan</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Dai</surname><given-names>L</given-names></name> (<year>1992</year>) <article-title>Cone setting situation of Larix gmelinii in Daxinganling Tuqiang Forestry Bureau in 1989</article-title>. <source>Chinese Journal of Ecology</source> <volume>11</volume>: <fpage>5</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Greipsson1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Greipsson</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Davy</surname><given-names>AJ</given-names></name> (<year>1995</year>) <article-title>Seed Mass and Germination Behaviour in Populations of the Dune-building Grass Leymus arenarius</article-title>. <source>Annals of Botany</source> <volume>76</volume>: <fpage>493</fpage>–<lpage>501</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Orellana1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Orellana</surname><given-names>MR</given-names></name>, <name name-style="western"><surname>Rovira</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Blanché</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Bosch</surname><given-names>M</given-names></name> (<year>2005</year>) <article-title>Pollination and reproductive success in the gynodioecious endemic Thymus loscosii(Lamiaceae)</article-title>. <source>Canadian Journal of Botany</source> <volume>83</volume>: <fpage>183</fpage>–<lpage>193</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Li3">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Lai</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Xu</surname><given-names>W</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>RAPD Analysis of Genetic Diversity of Ancient Litchi Trees</article-title>. <source>Chinese Journal of Tropical Crops</source> <volume>30</volume>: <fpage>6</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Savard1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Savard</surname><given-names>J-PL</given-names></name>, <name name-style="western"><surname>Clergeau</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Mennechez</surname><given-names>G</given-names></name> (<year>2000</year>) <article-title>Biodiversity concepts and urban ecosystems</article-title>. <source>Landscape and Urban Planning</source> <volume>48</volume>: <fpage>131</fpage>–<lpage>142</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Rohde1">
+        <label>24</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Rohde CLE, Kendle AD (1994) Human well-being, natural landscape and wildlife in urban areas. A review. English Nature Science <volume>22</volume>..</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Roberts1">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roberts</surname><given-names>DG</given-names></name>, <name name-style="western"><surname>Ayre</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Whelan</surname><given-names>RJ</given-names></name> (<year>2007</year>) <article-title>Urban plants as genetic reservoirs or threats to the integrity of bushland plant populations</article-title>. <source>Conserv Biol</source> <volume>21</volume>: <fpage>842</fpage>–<lpage>852</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Templeton1">
+        <label>26</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Templeton AR (1986) Coadaptation and outbreeding depression. Conservation biology: the science of scarcity and diversity.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Ellstrand1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ellstrand</surname><given-names>NC</given-names></name>, <name name-style="western"><surname>Devlin</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Marshall</surname><given-names>DL</given-names></name> (<year>1989</year>) <article-title>Gene flow by pollen into small populations: Data from experimental and natural stands of wild radish</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>86</volume>: <fpage>9044</fpage>–<lpage>9047</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Allendorf1">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Allendorf</surname><given-names>FW</given-names></name>, <name name-style="western"><surname>Leary</surname><given-names>RF</given-names></name>, <name name-style="western"><surname>Spruell</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Wenburg</surname><given-names>JK</given-names></name> (<year>2001</year>) <article-title>The problems with hybrids: setting conservation guidelines</article-title>. <source>Trends in Ecology &amp; Evolution</source> <volume>16</volume>: <fpage>613</fpage>–<lpage>622</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Vaughton1">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vaughton</surname><given-names>G</given-names></name> (<year>1998</year>) <article-title>Soil seed bank dynamics in the rare obligate seeding shrub, Grevillea barklyana(Proteaceae)</article-title>. <source>Australian Journal of Ecology</source> <volume>23</volume>: <fpage>10</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-England1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>England</surname><given-names>PR</given-names></name>, <name name-style="western"><surname>Whelan</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Ayre</surname><given-names>DJ</given-names></name> (<year>2003</year>) <article-title>Effects of seed bank disturbance on the fine-scale genetic structure of populations of the rare shrub Grevillea macleayana</article-title>. <source>Heredity (Edinb)</source> <volume>91</volume>: <fpage>475</fpage>–<lpage>480</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Anami1">
+        <label>31</label>
+        <mixed-citation publication-type="book" xlink:type="simple">Anami VS (2007) Witnesses to time.  The magnificent trees of Beijing.Beijing: SDX Joint Publishing Company.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Zhu1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhu</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Lou</surname><given-names>AR</given-names></name> (<year>2012</year>) <article-title>Development and characterization of nine highly polymorphic microsatellite primers for Platycladus orientalis (Cupressaceae)</article-title>. <source>American Journal of Botany</source> <volume>99</volume>: <fpage>e280</fpage>–<lpage>e282</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Goudet1">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goudet</surname><given-names>J</given-names></name> (<year>1995</year>) <article-title>FSTAT (Version 1.2): A Computer Program to Calculate F-Statistics</article-title>. <source>Journal of Heredity</source> <volume>86</volume>: <fpage>485</fpage>–<lpage>486</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056489-Peakall1">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peakall</surname><given-names>ROD</given-names></name>, <name name-style="western"><surname>Smouse</surname><given-names>PE</given-names></name> (<year>2006</year>) <article-title>genalex 6: genetic analysis in Excel. Population genetic software for teaching and research</article-title>. <source>Molecular Ecology Notes</source> <volume>6</volume>: <fpage>288</fpage>–<lpage>295</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
