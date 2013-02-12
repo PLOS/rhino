@@ -1,0 +1,315 @@
+{"doi":"info:doi/10.1371/journal.pbio.0040088","title":
+  "Relaxed Phylogenetics and Dating with Confidence","eIssn":"1545-7885",
+  "state":1,"archiveName":"pbio.0040088.zip","description":
+  "\u003cp\u003eThis new method can simultaneously infer phylogeny and estimate the molecular clock. The          authors run their method on several large alignments to show its phylogenetic accuracy and          ability to infer a timescale to evolution.\u003c/p\u003e",
+  "rights":
+  "Drummond et al. This is an open-access article distributed under the\n        terms of the Creative Commons Attribution License, which permits unrestricted use,\n        distribution, and reproduction in any medium, provided the original author and source are\n        credited.",
+  "language":"en","format":"text/xml","eLocationId":"e88","strkImgURI":"",
+  "date":"Mar 14, 2006 12:00:00 AM","volume":"4","issue":"5","journal":
+  "PLoS Biol","publisherLocation":"San Francisco, USA","publisherName":
+  "Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pbio.0040088","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pbio.0040088","extension":
+      "XML","contentType":"text/xml","title":
+      "Relaxed Phylogenetics and Dating with Confidence","description":
+      "\u003cp\u003eThis new method can simultaneously infer phylogeny and estimate the molecular clock. The          authors run their method on several large alignments to show its phylogenetic accuracy and          ability to infer a timescale to evolution.\u003c/p\u003e",
+      "size":182639},{"doi":"info:doi/10.1371/journal.pbio.0040088",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Relaxed Phylogenetics and Dating with Confidence","description":
+      "\u003cp\u003eThis new method can simultaneously infer phylogeny and estimate the molecular clock. The          authors run their method on several large alignments to show its phylogenetic accuracy and          ability to infer a timescale to evolution.\u003c/p\u003e",
+      "size":322550},{"doi":"info:doi/10.1371/journal.pbio.0040088.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Rooted Binary Tree Used for Simulating Sequence Evolution\u003c/title\u003e\u003cp\u003eThe timescale is drawn in arbitrary time units. Apart from the branch leading to the\n              outgroup, sequence O, all branches are five time units in length.\u003c/p\u003e",
+      "size":78232},{"doi":"info:doi/10.1371/journal.pbio.0040088.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Rooted Binary Tree Used for Simulating Sequence Evolution\u003c/title\u003e\u003cp\u003eThe timescale is drawn in arbitrary time units. Apart from the branch leading to the\n              outgroup, sequence O, all branches are five time units in length.\u003c/p\u003e",
+      "size":4181},{"doi":"info:doi/10.1371/journal.pbio.0040088.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Rooted Binary Tree Used for Simulating Sequence Evolution\u003c/title\u003e\u003cp\u003eThe timescale is drawn in arbitrary time units. Apart from the branch leading to the\n              outgroup, sequence O, all branches are five time units in length.\u003c/p\u003e",
+      "size":31493},{"doi":"info:doi/10.1371/journal.pbio.0040088.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Rooted Binary Tree Used for Simulating Sequence Evolution\u003c/title\u003e\u003cp\u003eThe timescale is drawn in arbitrary time units. Apart from the branch leading to the\n              outgroup, sequence O, all branches are five time units in length.\u003c/p\u003e",
+      "size":21555},{"doi":"info:doi/10.1371/journal.pbio.0040088.t001",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 1","description":
+      "\u003ctitle\u003eThe Proportion of Datasets (50 Simulations for Each of Five Models) for Which the\n              True Rate Was within the 95% HPD Limits at the Given Branch\u003c/title\u003e",
+      "size":240247},{"doi":"info:doi/10.1371/journal.pbio.0040088.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eThe Proportion of Datasets (50 Simulations for Each of Five Models) for Which the\n              True Rate Was within the 95% HPD Limits at the Given Branch\u003c/title\u003e",
+      "size":5650},{"doi":"info:doi/10.1371/journal.pbio.0040088.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eThe Proportion of Datasets (50 Simulations for Each of Five Models) for Which the\n              True Rate Was within the 95% HPD Limits at the Given Branch\u003c/title\u003e",
+      "size":148329},{"doi":"info:doi/10.1371/journal.pbio.0040088.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eThe Proportion of Datasets (50 Simulations for Each of Five Models) for Which the\n              True Rate Was within the 95% HPD Limits at the Given Branch\u003c/title\u003e",
+      "size":192433},{"doi":"info:doi/10.1371/journal.pbio.0040088.t002",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 2","description":
+      "\u003ctitle\u003eRate and Variance Estimates for Two Viral Datasets (Human Influenza A Virus and\n              Dengue Type-4 Virus)\u003c/title\u003e",
+      "size":185232},{"doi":"info:doi/10.1371/journal.pbio.0040088.t002",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eRate and Variance Estimates for Two Viral Datasets (Human Influenza A Virus and\n              Dengue Type-4 Virus)\u003c/title\u003e",
+      "size":3031},{"doi":"info:doi/10.1371/journal.pbio.0040088.t002",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eRate and Variance Estimates for Two Viral Datasets (Human Influenza A Virus and\n              Dengue Type-4 Virus)\u003c/title\u003e",
+      "size":69443},{"doi":"info:doi/10.1371/journal.pbio.0040088.t002",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eRate and Variance Estimates for Two Viral Datasets (Human Influenza A Virus and\n              Dengue Type-4 Virus)\u003c/title\u003e",
+      "size":45500},{"doi":"info:doi/10.1371/journal.pbio.0040088.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eA Tree of 69 Influenza A Virus Sequences Drawn Randomly from the Posterior\n              Distribution\u003c/title\u003e\u003cp\u003eThe divergence times correspond to the mean posterior estimate of their age in years.\n              The yellow bars represent the 95% HPD interval for the divergence time\n              estimates. Both the mean and 95% HPD of the divergence times were\n              calculated conditional on the existence of the clade defined by the divergence. Each\n              node in the tree that has a posterior probability greater than 0.5 is labeled with its\n              posterior probability. The sampling times of the tips were assumed to be known\n              exactly. Branches colored in red had a posterior rate greater than the average rate,\n              whereas branches colored in blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":939912},{"doi":"info:doi/10.1371/journal.pbio.0040088.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eA Tree of 69 Influenza A Virus Sequences Drawn Randomly from the Posterior\n              Distribution\u003c/title\u003e\u003cp\u003eThe divergence times correspond to the mean posterior estimate of their age in years.\n              The yellow bars represent the 95% HPD interval for the divergence time\n              estimates. Both the mean and 95% HPD of the divergence times were\n              calculated conditional on the existence of the clade defined by the divergence. Each\n              node in the tree that has a posterior probability greater than 0.5 is labeled with its\n              posterior probability. The sampling times of the tips were assumed to be known\n              exactly. Branches colored in red had a posterior rate greater than the average rate,\n              whereas branches colored in blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":11201},{"doi":"info:doi/10.1371/journal.pbio.0040088.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eA Tree of 69 Influenza A Virus Sequences Drawn Randomly from the Posterior\n              Distribution\u003c/title\u003e\u003cp\u003eThe divergence times correspond to the mean posterior estimate of their age in years.\n              The yellow bars represent the 95% HPD interval for the divergence time\n              estimates. Both the mean and 95% HPD of the divergence times were\n              calculated conditional on the existence of the clade defined by the divergence. Each\n              node in the tree that has a posterior probability greater than 0.5 is labeled with its\n              posterior probability. The sampling times of the tips were assumed to be known\n              exactly. Branches colored in red had a posterior rate greater than the average rate,\n              whereas branches colored in blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":194518},{"doi":"info:doi/10.1371/journal.pbio.0040088.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eA Tree of 69 Influenza A Virus Sequences Drawn Randomly from the Posterior\n              Distribution\u003c/title\u003e\u003cp\u003eThe divergence times correspond to the mean posterior estimate of their age in years.\n              The yellow bars represent the 95% HPD interval for the divergence time\n              estimates. Both the mean and 95% HPD of the divergence times were\n              calculated conditional on the existence of the clade defined by the divergence. Each\n              node in the tree that has a posterior probability greater than 0.5 is labeled with its\n              posterior probability. The sampling times of the tips were assumed to be known\n              exactly. Branches colored in red had a posterior rate greater than the average rate,\n              whereas branches colored in blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":645548},{"doi":"info:doi/10.1371/journal.pbio.0040088.t003",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 3","description":
+      "\u003ctitle\u003ePrior Probability Distributions and Posterior Probability Densities of the\n              Marsupial Calibrations\u003c/title\u003e",
+      "size":125975},{"doi":"info:doi/10.1371/journal.pbio.0040088.t003",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003ePrior Probability Distributions and Posterior Probability Densities of the\n              Marsupial Calibrations\u003c/title\u003e",
+      "size":2717},{"doi":"info:doi/10.1371/journal.pbio.0040088.t003",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003ePrior Probability Distributions and Posterior Probability Densities of the\n              Marsupial Calibrations\u003c/title\u003e",
+      "size":69263},{"doi":"info:doi/10.1371/journal.pbio.0040088.t003",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003ePrior Probability Distributions and Posterior Probability Densities of the\n              Marsupial Calibrations\u003c/title\u003e",
+      "size":99449},{"doi":"info:doi/10.1371/journal.pbio.0040088.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eThe Analysis of 17 Marsupials and Seven Placental Mammals\u003c/title\u003e\u003cp\u003e(A) The combined prior distribution of divergence times for the MAP tree topology.\n              The green bars represent the 95% HPD interval for the divergence times. (B)\n              The posterior distribution of the divergence times. The divergence times correspond to\n              the mean posterior estimate of their age in millions of years. The yellow bars\n              represent the 95% HPD interval for the divergence time estimates. Both the\n              mean and 95% HPD of the divergence times were calculated conditional on the\n              existence of the clade defined by the divergence. Each node in the tree is labeled\n              with its posterior probability if it is greater than 0.5. The three nodes with\n              normally distributed calibration priors are indicated by orange bars. Branches colored\n              in red had a posterior rate greater than the average rate, whereas branches colored in\n              blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":732860},{"doi":"info:doi/10.1371/journal.pbio.0040088.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eThe Analysis of 17 Marsupials and Seven Placental Mammals\u003c/title\u003e\u003cp\u003e(A) The combined prior distribution of divergence times for the MAP tree topology.\n              The green bars represent the 95% HPD interval for the divergence times. (B)\n              The posterior distribution of the divergence times. The divergence times correspond to\n              the mean posterior estimate of their age in millions of years. The yellow bars\n              represent the 95% HPD interval for the divergence time estimates. Both the\n              mean and 95% HPD of the divergence times were calculated conditional on the\n              existence of the clade defined by the divergence. Each node in the tree is labeled\n              with its posterior probability if it is greater than 0.5. The three nodes with\n              normally distributed calibration priors are indicated by orange bars. Branches colored\n              in red had a posterior rate greater than the average rate, whereas branches colored in\n              blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":19021},{"doi":"info:doi/10.1371/journal.pbio.0040088.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eThe Analysis of 17 Marsupials and Seven Placental Mammals\u003c/title\u003e\u003cp\u003e(A) The combined prior distribution of divergence times for the MAP tree topology.\n              The green bars represent the 95% HPD interval for the divergence times. (B)\n              The posterior distribution of the divergence times. The divergence times correspond to\n              the mean posterior estimate of their age in millions of years. The yellow bars\n              represent the 95% HPD interval for the divergence time estimates. Both the\n              mean and 95% HPD of the divergence times were calculated conditional on the\n              existence of the clade defined by the divergence. Each node in the tree is labeled\n              with its posterior probability if it is greater than 0.5. The three nodes with\n              normally distributed calibration priors are indicated by orange bars. Branches colored\n              in red had a posterior rate greater than the average rate, whereas branches colored in\n              blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":153430},{"doi":"info:doi/10.1371/journal.pbio.0040088.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eThe Analysis of 17 Marsupials and Seven Placental Mammals\u003c/title\u003e\u003cp\u003e(A) The combined prior distribution of divergence times for the MAP tree topology.\n              The green bars represent the 95% HPD interval for the divergence times. (B)\n              The posterior distribution of the divergence times. The divergence times correspond to\n              the mean posterior estimate of their age in millions of years. The yellow bars\n              represent the 95% HPD interval for the divergence time estimates. Both the\n              mean and 95% HPD of the divergence times were calculated conditional on the\n              existence of the clade defined by the divergence. Each node in the tree is labeled\n              with its posterior probability if it is greater than 0.5. The three nodes with\n              normally distributed calibration priors are indicated by orange bars. Branches colored\n              in red had a posterior rate greater than the average rate, whereas branches colored in\n              blue had a lower-than-average rate.\u003c/p\u003e",
+      "size":566543},{"doi":"info:doi/10.1371/journal.pbio.0040088.g004",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eThe “True” Phylogenies for the Large Datasets\u003c/title\u003e\u003cp\u003eThe datasets are as follows: (A) bacterial, (B) yeast, (C) plant, (D) metazoan, and\n              (E) primate.\u003c/p\u003e",
+      "size":232344},{"doi":"info:doi/10.1371/journal.pbio.0040088.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eThe “True” Phylogenies for the Large Datasets\u003c/title\u003e\u003cp\u003eThe datasets are as follows: (A) bacterial, (B) yeast, (C) plant, (D) metazoan, and\n              (E) primate.\u003c/p\u003e",
+      "size":15222},{"doi":"info:doi/10.1371/journal.pbio.0040088.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eThe “True” Phylogenies for the Large Datasets\u003c/title\u003e\u003cp\u003eThe datasets are as follows: (A) bacterial, (B) yeast, (C) plant, (D) metazoan, and\n              (E) primate.\u003c/p\u003e",
+      "size":50131},{"doi":"info:doi/10.1371/journal.pbio.0040088.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eThe “True” Phylogenies for the Large Datasets\u003c/title\u003e\u003cp\u003eThe datasets are as follows: (A) bacterial, (B) yeast, (C) plant, (D) metazoan, and\n              (E) primate.\u003c/p\u003e",
+      "size":151553},{"doi":"info:doi/10.1371/journal.pbio.0040088.t004",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 4","description":
+      "\u003ctitle\u003eAccuracy and Precision of Phylogenetic Inference Using Three Bayesian Methods:\n              CLOC, UCLN, and UF\u003c/title\u003e",
+      "size":108147},{"doi":"info:doi/10.1371/journal.pbio.0040088.t004",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eAccuracy and Precision of Phylogenetic Inference Using Three Bayesian Methods:\n              CLOC, UCLN, and UF\u003c/title\u003e",
+      "size":3248},{"doi":"info:doi/10.1371/journal.pbio.0040088.t004",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eAccuracy and Precision of Phylogenetic Inference Using Three Bayesian Methods:\n              CLOC, UCLN, and UF\u003c/title\u003e",
+      "size":59371},{"doi":"info:doi/10.1371/journal.pbio.0040088.t004",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eAccuracy and Precision of Phylogenetic Inference Using Three Bayesian Methods:\n              CLOC, UCLN, and UF\u003c/title\u003e",
+      "size":85305},{"doi":"info:doi/10.1371/journal.pbio.0040088.e001",
+      "contextElement":"disp-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1654},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e001","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1361},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e002","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1032},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e002","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":837},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e003","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1416},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e003","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1166},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e004","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1608},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e004","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1331},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e005","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":3012},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e005","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":2533},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e006","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1590},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e006","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1331},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.g005","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 5",
+      "description":
+      "\u003ctitle\u003eA Lognormal Distribution Discretized into 12 Rate Categories\u003c/title\u003e\u003cp\u003eEach of the 12 categories has equal probability ( \u003citalic\u003ep\u003c/italic\u003e \u003d 1/12). The\n                \u003citalic\u003ei\u003c/italic\u003e\u003csup\u003eth\u003c/sup\u003e rate category (numbered from left to right)\n              corresponds to the (I − 0.5)/12 quantile of the lognormal distribution. \u003c/p\u003e",
+      "size":156700},{"doi":"info:doi/10.1371/journal.pbio.0040088.g005",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eA Lognormal Distribution Discretized into 12 Rate Categories\u003c/title\u003e\u003cp\u003eEach of the 12 categories has equal probability ( \u003citalic\u003ep\u003c/italic\u003e \u003d 1/12). The\n                \u003citalic\u003ei\u003c/italic\u003e\u003csup\u003eth\u003c/sup\u003e rate category (numbered from left to right)\n              corresponds to the (I − 0.5)/12 quantile of the lognormal distribution. \u003c/p\u003e",
+      "size":4468},{"doi":"info:doi/10.1371/journal.pbio.0040088.g005",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eA Lognormal Distribution Discretized into 12 Rate Categories\u003c/title\u003e\u003cp\u003eEach of the 12 categories has equal probability ( \u003citalic\u003ep\u003c/italic\u003e \u003d 1/12). The\n                \u003citalic\u003ei\u003c/italic\u003e\u003csup\u003eth\u003c/sup\u003e rate category (numbered from left to right)\n              corresponds to the (I − 0.5)/12 quantile of the lognormal distribution. \u003c/p\u003e",
+      "size":41501},{"doi":"info:doi/10.1371/journal.pbio.0040088.g005",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eA Lognormal Distribution Discretized into 12 Rate Categories\u003c/title\u003e\u003cp\u003eEach of the 12 categories has equal probability ( \u003citalic\u003ep\u003c/italic\u003e \u003d 1/12). The\n                \u003citalic\u003ei\u003c/italic\u003e\u003csup\u003eth\u003c/sup\u003e rate category (numbered from left to right)\n              corresponds to the (I − 0.5)/12 quantile of the lognormal distribution. \u003c/p\u003e",
+      "size":68434},{"doi":"info:doi/10.1371/journal.pbio.0040088.e007",
+      "contextElement":"disp-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1622},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e007","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1353},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.ex001","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":554},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.ex001","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":432},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.ex002","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":7224},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.ex002","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":6266},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e008","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1608},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.e008","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1354},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.ex003","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":782},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.ex003","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pbio.0040088.sd001","contextElement":
+      "supplementary-material","extension":"DOC","contentType":
+      "application/msword","title":"Protocol S1","description":
+      "\u003ctitle\u003eRelaxed Phylogenetics and Dating with Confidence\u003c/title\u003e\u003cp\u003e(167 KB DOC).\u003c/p\u003e",
+      "size":171008}],"citedArticles":[{"key":"1","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"2","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"3","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"4","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"5","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"6","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"7","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"8","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"9","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"10","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"11","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"12","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"13","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"14","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"15","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"16","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"17","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"18","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"19","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"20","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"21","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"22","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"23","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"24","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"25","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"26","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"27","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"28","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"29","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"30","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"31","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"32","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"33","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"34","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"35","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"36","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"37","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"38","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"39","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"40","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"41","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"42","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"43","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"44","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"45","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"46","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"47","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"48","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"49","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"50","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"51","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"52","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"53","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"54","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"55","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"56","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"57","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"58","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"59","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"60","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"61","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"62","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"63","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"64","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"65","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"66","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"67","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"68","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"69","collaborativeAuthors":[],
+      "authors":[],"editors":[]}],"relatedArticles":[{"otherArticleDoi":
+      "info:doi/10.1371/journal.pbio.0040106","type":"companion"},{
+      "otherArticleDoi":"info:doi/10.1371/journal.pbio.0040151","type":
+      "companion"}],"authors":[{"fullName":"Alexei J Drummond","givenNames":
+      "Alexei J","surnames":"Drummond","suffix":""},{"fullName":
+      "Simon Y. W Ho","givenNames":"Simon Y. W","surnames":"Ho","suffix":
+      ""},{"fullName":"Matthew J Phillips","givenNames":"Matthew J",
+      "surnames":"Phillips","suffix":""},{"fullName":"Andrew Rambaut",
+      "givenNames":"Andrew","surnames":"Rambaut","suffix":""}],"editors":[{
+      "fullName":"David Penny","givenNames":"David","surnames":"Penny",
+      "suffix":""}],"journals":[{"eIssn":"1545-7885"}]}
