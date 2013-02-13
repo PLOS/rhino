@@ -43,13 +43,22 @@ import java.util.regex.Pattern;
  *
  * @param <T> the type of entity that can be build from this XML element
  */
-public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObject<T> {
+public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObject {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 
   protected AbstractArticleXml(Node xml) {
     super(xml);
   }
+
+  /**
+   * Build an object from the XML supplied to this object.
+   *
+   * @param obj the object to modify, typically empty or mostly empty
+   * @return the same object with values inserted
+   * @throws XmlContentException if the supplied XML omits a required element or does not have the expected structure
+   */
+  public abstract T build(T obj) throws XmlContentException;
 
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
