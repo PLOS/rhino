@@ -97,7 +97,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private void setFromXml(Article article) throws XmlContentException {
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
-    article.setDescription(buildXmlExcerpt(readNode("/article/front/article-meta/abstract")));
+    article.setDescription(buildXmlExcerpt(findAbstractNode()));
     article.setRights(buildRights());
     article.setPages(buildPages());
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
@@ -121,6 +121,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     collaborativeAuthors = Lists.newArrayList(collaborativeAuthors); // copy to simpler implementation
     article.setCollaborativeAuthors(collaborativeAuthors);
     article.setUrl(buildUrl());
+  }
+
+  private Node findAbstractNode() {
+    Node abstractNode = readNode("/article/front/article-meta/abstract[@abstract-type=\"toc\"]");
+    if (abstractNode != null) {
+      return abstractNode;
+    }
+    return readNode("/article/front/article-meta/abstract");
   }
 
   /**
