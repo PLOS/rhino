@@ -20,6 +20,8 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
+import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
@@ -103,5 +105,10 @@ public class TestConfiguration extends BaseConfiguration {
 
     // TODO: service.setPermissionsService if it's ever needed.
     return service;
+  }
+
+  @Bean
+  public AssetCrudService assetService() {
+    return new AssetCrudServiceImpl();
   }
 }

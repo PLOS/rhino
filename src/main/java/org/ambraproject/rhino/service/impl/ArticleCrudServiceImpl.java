@@ -40,6 +40,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.AssetCrudService;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -47,6 +48,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
@@ -56,10 +58,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
@@ -68,6 +72,8 @@ import java.util.zip.ZipFile;
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+
+  private AssetCrudService assetService;
 
   private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
@@ -196,15 +202,43 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Article article = populateArticleFromXml(doc, suppliedId, mode);
     article.setArchiveName(new File(filename).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
-    addAssetFiles(article, zip);
 
+    // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
+    // Article to be persisted at this point.
     persistArticle(article, xmlData);
+    addAssetFiles(article, zip);
     return article;
   }
 
   private void addAssetFiles(Article article, ZipFile zipFile)
       throws IOException, FileStoreException {
 
+    // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
+
+    Enumeration<? extends ZipEntry> entries = zipFile.entries();
+    while (entries.hasMoreElements()) {
+      ZipEntry entry = entries.nextElement();
+      if (!entry.getName().toLowerCase().startsWith("manifest.")) {
+        String[] fields = entry.getName().split("\\.");
+
+        // Not sure why, but the existing admin code always converts the extension to UPPER.
+        String extension = fields[fields.length - 1].toUpperCase();
+
+        // Need to exlude both ".xml" and ".xml.orig".
+        if (!"XML".equals(extension) && !"ORIG".equals(extension)) {
+          String doi = "info:doi/10.1371/journal."
+              + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
+          InputStream is = zipFile.getInputStream(entry);
+          boolean threw = true;
+          try {
+            assetService.upload(is, AssetFileIdentity.create(doi, extension));
+            threw = false;
+          } finally {
+            Closeables.close(is, threw);
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -413,4 +447,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     hibernateTemplate.delete(article);
   }
 
+  @Required
+  public void setAssetService(AssetCrudService assetService) {
+    this.assetService = assetService;
+  }
 }

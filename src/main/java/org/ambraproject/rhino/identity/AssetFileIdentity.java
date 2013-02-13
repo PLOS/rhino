@@ -43,7 +43,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
   private AssetFileIdentity(String identifier, String extension) {
     super(identifier);
     Preconditions.checkArgument(StringUtils.isNotBlank(extension));
-    this.extension = extension.toLowerCase();
+    this.extension = extension;
   }
 
   /**

@@ -109,4 +109,5 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void readMetadata(HttpServletResponse response, Article article, MetadataFormat format)
       throws IOException;
 
+  public abstract void setAssetService(AssetCrudService assetService);
 }
