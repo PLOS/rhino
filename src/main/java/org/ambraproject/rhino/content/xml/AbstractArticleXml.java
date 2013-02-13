@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  *
  * @param <T> the type of entity that can be build from this XML element
  */
-public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObject {
+public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathReader {
 
   private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
 

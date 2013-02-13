@@ -37,12 +37,12 @@ import java.util.List;
  * <p/>
  * Instances of this class are not thread-safe because they hold an instance of {@link XPath} to use.
  */
-public abstract class XmlToObject {
+public abstract class XpathReader {
 
   private final Node xml;
   private final XPath xPath;
 
-  protected XmlToObject(Node xml) {
+  protected XpathReader(Node xml) {
     this.xml = Preconditions.checkNotNull(xml);
 
     // XPath isn't thread-safe, so we need one per instance of this class
