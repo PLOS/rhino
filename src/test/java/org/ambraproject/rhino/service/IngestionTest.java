@@ -346,7 +346,11 @@ public class IngestionTest extends BaseRhinoTest {
     assertTrue(CITATION_BY_KEY.isStrictlyOrdered(expectedList));
     int commonSize = Math.min(actualList.size(), expectedList.size());
     for (int i = 0; i < commonSize; i++) {
-      compareCitations(results, actualList.get(i), expectedList.get(i));
+      CitedArticle expectedCitation = expectedList.get(i);
+      if (isEmptyCitation(expectedCitation)) {
+        continue; // Apparently these occur because of an Admin bug. Assume the actual data is correct.
+      }
+      compareCitations(results, actualList.get(i), expectedCitation);
     }
 
     // If the sizes didn't match, report missing/extra citations as errors
@@ -382,6 +386,15 @@ public class IngestionTest extends BaseRhinoTest {
 
     comparePersonLists(results, CitedArticle.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
+  }
+
+  private static boolean isEmptyCitation(CitedArticle c) {
+    return c.getCitationType() == null && c.getYear() == null && c.getDisplayYear() == null && c.getMonth() == null
+        && c.getDay() == null && c.getVolume() == null && c.getVolumeNumber() == null
+        && c.getPublisherLocation() == null && c.getPublisherName() == null && c.getPages() == null
+        && c.geteLocationID() == null && c.getJournal() == null && c.getIssue() == null && c.getUrl() == null
+        && c.getDoi() == null && c.getNote() == null && c.getTitle() == null && c.getSummary() == null
+        && c.getAuthors().isEmpty() && c.getEditors().isEmpty() && c.getCollaborativeAuthors().isEmpty();
   }
 
   private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,

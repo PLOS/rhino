@@ -110,8 +110,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
     article.setTypes(buildArticleTypes());
-    article.setCitedArticles(parseCitations(readNodeList(
-        "/article/back/ref-list/ref/(element-citation|mixed-citation)")));
+    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list/ref")));
     article.setAuthors(readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
     article.setEditors(readEditors(readNodeList(
@@ -254,12 +253,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return editors;
   }
 
-  private List<CitedArticle> parseCitations(List<Node> citationNodes) throws XmlContentException {
-    List<CitedArticle> citations = Lists.newArrayListWithCapacity(citationNodes.size());
-    int key = 1;
-    for (Node citationNode : citationNodes) {
-      CitedArticle citation = new CitedArticleXml(citationNode).build(new CitedArticle());
-      citation.setKey(Integer.toString(key++));
+  private List<CitedArticle> parseCitations(List<Node> refNodes) throws XmlContentException {
+    List<CitedArticle> citations = Lists.newArrayListWithCapacity(refNodes.size());
+    for (Node refNode : refNodes) {
+      CitedArticle citation = new CitedArticle();
+      citation.setKey(readString("label", refNode));
+
+      Node citationNode = readNode("(element-citation|mixed-citation|nlm-citation)", refNode);
+      citation = new CitedArticleXml(citationNode).build(citation);
       citations.add(citation);
     }
     return citations;
