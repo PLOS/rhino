@@ -179,11 +179,8 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   }
 
   /**
-   * As a fallback for parsing the display year into an integer, if there is one uninterrupted sequence of digits,
-   * assume that it is the year.  This deals with a bug known from {@code pone.0005723.xml}, where display years have
-   * one-letter suffixes (e.g., "2000b").
-   * <p/>
-   * TODO: Better solution; find out how Admin would handle this
+   * As a fallback for parsing the display year into an integer, treat an uninterrupted sequence of four or more digits
+   * as the year.
    *
    * @param displayYear the display year given as text in the article XML
    * @return the year as a number, if exactly one sequence of digits is found in the displayYear; else {@code null}
@@ -191,16 +188,28 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   private Integer parseYearFallback(String displayYear) {
     Matcher matcher = YEAR_FALLBACK.matcher(displayYear);
     if (!matcher.find()) {
-      return null; // displayYear contains no sequence of digits
+      return null; // displayYear contains no sequence of four digits
     }
     String displayYearSub = matcher.group();
+
     if (matcher.find()) {
-      return null; // displayYear contains more than one sequence of digits; we don't know which is the year
+      // Multiple year substrings were found. Admin's existing behavior is to concatenate the digits into a number.
+      // Obviously this is not sensible, but we'll reproduce it here until we (TODO) settle on something better.
+      StringBuilder sb = new StringBuilder().append(displayYearSub).append(matcher.group());
+      while (matcher.find()) {
+        sb.append(matcher.group());
+      }
+      displayYearSub = sb.toString();
     }
-    return Integer.valueOf(displayYearSub); // YEAR_FALLBACK should guarantee that this parses validly
+
+    try {
+      return Integer.valueOf(displayYearSub);
+    } catch (NumberFormatException e) {
+      return null; // in case so many digits were matched that the number overflows
+    }
   }
 
-  private static final Pattern YEAR_FALLBACK = Pattern.compile("\\d+");
+  private static final Pattern YEAR_FALLBACK = Pattern.compile("\\d{4,}");
 
   private List<CitedArticleAuthor> readAuthors(List<Node> authorNodes) throws XmlContentException {
     List<CitedArticleAuthor> authors = Lists.newArrayListWithCapacity(authorNodes.size());
