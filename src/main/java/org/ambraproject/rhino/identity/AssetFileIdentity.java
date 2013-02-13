@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 /**
  * An identifier for one file that corresponds to an asset. It is uniquely identified by a DOI and file extension.
  */
-public class AssetFileIdentity extends DoiBasedIdentity {
+public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<AssetFileIdentity> {
 
   private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
 
@@ -219,4 +219,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     return result;
   }
 
+  @Override
+  public int compareTo(AssetFileIdentity that) {
+    return (getIdentifier() + extension).compareTo(that.getIdentifier() + that.extension);
+  }
 }
