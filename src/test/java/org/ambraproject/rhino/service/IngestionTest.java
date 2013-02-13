@@ -249,19 +249,17 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
     // We care only about eIssn, because that's the only part given in article XML.
     // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
-    Map<String, Journal> actualMap = mapJournalsByEissn(actualSet);
-    Set<String> actualKeys = actualMap.keySet();
-    Map<String, Journal> expectedMap = mapJournalsByEissn(expectedSet);
-    Set<String> expectedKeys = expectedMap.keySet();
+    Set<String> actualEissns = mapJournalsByEissn(actualSet).keySet();
+    Set<String> expectedEissns = mapJournalsByEissn(expectedSet).keySet();
 
-    for (String missing : Sets.difference(expectedKeys, actualKeys)) {
+    for (String missing : Sets.difference(expectedEissns, actualEissns)) {
       results.compare(Journal.class, "eIssn", null, missing);
     }
-    for (String extra : Sets.difference(actualKeys, expectedKeys)) {
+    for (String extra : Sets.difference(actualEissns, expectedEissns)) {
       results.compare(Journal.class, "eIssn", extra, null);
     }
-    for (String key : Sets.intersection(actualKeys, expectedKeys)) {
-      results.compare(Journal.class, "eIssn", key, key);
+    for (String eissn : Sets.intersection(actualEissns, expectedEissns)) {
+      results.compare(Journal.class, "eIssn", eissn, eissn);
     }
   }
 
