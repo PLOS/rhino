@@ -194,16 +194,14 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
   @Test(dataProvider = "sampleAssets")
   public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
       throws IOException, FileStoreException {
-    String testArticleDoi = articleDoi + ".testCreateAsset"; // Avoid collisions with canonical sample data
-    String testAssetDoi = assetDoi.replace(articleDoi, testArticleDoi);
+    String testAssetDoi = assetDoi.replace(articleDoi, articleDoi);
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
     final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
-    final ArticleIdentity articleId = ArticleIdentity.create(testArticleDoi);
-
+    final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
     TestInputStream input = new TestFile(articleFile).read();
-    input = alterStream(input, articleDoi, testArticleDoi);
+    input = alterStream(input, articleDoi, articleDoi);
     Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
