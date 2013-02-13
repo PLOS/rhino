@@ -2,7 +2,6 @@ package org.ambraproject.rhino.service;
 
 
 import com.google.common.base.CharMatcher;
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -12,7 +11,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -183,7 +181,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
     compareAssetLists(results, actual.getAssets(), expected.getAssets());
-    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
+    compareCitations(results, actual.getCitedArticles(), expected.getCitedArticles());
     return results;
   }
 
@@ -345,27 +343,41 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
+  private void compareCitations(AssertionCollector results,
+                                List<CitedArticle> actualList, List<CitedArticle> expectedList) {
+    for (CitedArticle expectedCitation : expectedList) {
+      if (expectedCitation.getKey() == null) {
+        // At least one expected case has null keys. Fall back on comparing by order.
+        compareCitationLists(results, actualList, expectedList);
+        return;
+      }
+    }
+
+    Map<String, CitedArticle> actualMap = mapCitationsByKey(actualList);
+    Set<String> actualKeys = actualMap.keySet();
+    Map<String, CitedArticle> expectedMap = mapCitationsByKey(expectedList);
+    Set<String> expectedKeys = expectedMap.keySet();
+
+    for (String key : Sets.intersection(actualKeys, expectedKeys)) {
+      compareCitations(results, actualMap.get(key), expectedMap.get(key));
+    }
+    for (String extra : Sets.difference(actualKeys, expectedKeys)) {
+      results.compare(Article.class, "citedArticles", actualMap.get(extra), null);
+    }
+    for (String missing : Sets.difference(expectedKeys, actualKeys)) {
+      results.compare(Article.class, "citedArticles", null, expectedMap.get(missing));
+    }
+  }
+
   private void compareCitationLists(AssertionCollector results,
                                     List<CitedArticle> actualList, List<CitedArticle> expectedList) {
     // Ensure no problems with random access or delayed evaluation
     actualList = ImmutableList.copyOf(actualList);
     expectedList = ImmutableList.copyOf(expectedList);
 
-    /*
-     * Compare citations with matching "key" fields (nothing else identifies them uniquely). It may be valid for them
-     * to be represented out of order in these lists (dependent on Hibernate?), but all cases so far give them in order.
-     * If a counterexample is found, we can forcibly sort by key, but until then, assert that they are already ordered.
-     * (If any keys are skipped, it will show up as a soft failure in compareCitations.)
-     */
-    assertTrue(CITATION_BY_KEY.isStrictlyOrdered(actualList));
-    assertTrue(CITATION_BY_KEY.isStrictlyOrdered(expectedList));
     int commonSize = Math.min(actualList.size(), expectedList.size());
     for (int i = 0; i < commonSize; i++) {
-      CitedArticle expectedCitation = expectedList.get(i);
-      if (isEmptyCitation(expectedCitation)) {
-        continue; // Apparently these occur because of an Admin bug. Assume the actual data is correct.
-      }
-      compareCitations(results, actualList.get(i), expectedCitation);
+      compareCitations(results, actualList.get(i), expectedList.get(i));
     }
 
     // If the sizes didn't match, report missing/extra citations as errors
@@ -378,6 +390,10 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareCitations(AssertionCollector results, CitedArticle actual, CitedArticle expected) {
+    if (isEmptyCitation(expected)) {
+      return; // Apparently these occur because of an Admin bug. Assume the actual data is correct.
+    }
+
     results.compare(CitedArticle.class, "key", actual.getKey(), expected.getKey());
     results.compare(CitedArticle.class, "year", actual.getYear(), expected.getYear());
     results.compare(CitedArticle.class, "displayYear", actual.getDisplayYear(), expected.getDisplayYear());
@@ -467,17 +483,13 @@ public class IngestionTest extends BaseRhinoTest {
     return map.build();
   }
 
-  /**
-   * Orders {@link CitedArticle} objects by the numeric value of their {@code key} string. Throws an exception if
-   * applied to a CitedArticle whose key is null or otherwise can't be parsed as an integer.
-   */
-  private static final Ordering<CitedArticle> CITATION_BY_KEY = Ordering.natural().onResultOf(
-      new Function<CitedArticle, Comparable>() {
-        @Override
-        public Integer apply(CitedArticle input) {
-          return Integer.valueOf(input.getKey());
-        }
-      });
+  private static ImmutableMap<String, CitedArticle> mapCitationsByKey(Collection<CitedArticle> citations) {
+    ImmutableMap.Builder<String, CitedArticle> map = ImmutableMap.builder();
+    for (CitedArticle citation : citations) {
+      map.put(citation.getKey(), citation);
+    }
+    return map.build();
+  }
 
   private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
     List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());
