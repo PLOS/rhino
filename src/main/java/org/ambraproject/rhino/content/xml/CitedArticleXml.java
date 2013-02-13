@@ -58,6 +58,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     citation.setPublisherLocation(readString("publisher-loc"));
     citation.setPublisherName(readString("publisher-name"));
     citation.setNote(readString("comment"));
+    citation.setDoi(readString("ext-link"));
 
     String displayYear = readString("year");
     citation.setDisplayYear(displayYear);
@@ -75,8 +76,6 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     }
     citation.setAuthors(readAuthors(authorNodes));
     citation.setEditors(readEditors(editorNodes));
-
-    // TODO Finish implementing
 
     return citation;
   }
