@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
@@ -187,6 +188,20 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   /**
+   * Compare two text values in which substrings of whitespace are interchangeable. The typical case is HMTL text or XML
+   * text that will be transformed into HTML.
+   */
+  private static boolean compareMarkupText(AssertionCollector results,
+                                           Class<?> objectType, String fieldName,
+                                           CharSequence actual, CharSequence expected) {
+    return results.compare(objectType, fieldName, collapseWhitespace(actual), collapseWhitespace(expected));
+  }
+
+  private static String collapseWhitespace(CharSequence text) {
+    return (text == null) ? null : CharMatcher.WHITESPACE.collapseFrom(text, ' ');
+  }
+
+  /**
    * Compare simple (non-associative) fields.
    *
    * @param results
@@ -195,11 +210,11 @@ public class IngestionTest extends BaseRhinoTest {
    */
   private void compareArticleFields(AssertionCollector results, Article actual, Article expected) {
     results.compare(Article.class, "doi", actual.getDoi(), expected.getDoi());
-    results.compare(Article.class, "title", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, Article.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
     results.compare(Article.class, "state", actual.getState(), expected.getState());
-    results.compare(Article.class, "description", actual.getDescription(), expected.getDescription());
-    results.compare(Article.class, "rights", actual.getRights(), expected.getRights());
+    compareMarkupText(results, Article.class, "description", actual.getDescription(), expected.getDescription());
+    compareMarkupText(results, Article.class, "rights", actual.getRights(), expected.getRights());
     results.compare(Article.class, "language", actual.getLanguage(), expected.getLanguage());
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
@@ -302,8 +317,8 @@ public class IngestionTest extends BaseRhinoTest {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
-    results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
-    results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
+    compareMarkupText(results, ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
 
     // These are skipped because they would require a file upload before we could know them.
     //    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
@@ -371,13 +386,13 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(CitedArticle.class, "volumeNumber", actual.getVolumeNumber(), expected.getVolumeNumber());
     results.compare(CitedArticle.class, "volume", actual.getVolume(), expected.getVolume());
     results.compare(CitedArticle.class, "issue", actual.getIssue(), expected.getIssue());
-    results.compare(CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(CitedArticle.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     results.compare(CitedArticle.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
     results.compare(CitedArticle.class, "pages", actual.getPages(), expected.getPages());
     results.compare(CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
     results.compare(CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
-    results.compare(CitedArticle.class, "note", actual.getNote(), expected.getNote());
+    compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
     results.compare(CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(CitedArticle.class, "url", actual.getUrl(), expected.getUrl());
     results.compare(CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
