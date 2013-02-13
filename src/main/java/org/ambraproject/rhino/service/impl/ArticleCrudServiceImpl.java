@@ -196,11 +196,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Article article = populateArticleFromXml(doc, suppliedId, mode);
     article.setArchiveName(new File(filename).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
-
-    // TODO: process asset files
+    addAssetFiles(article, zip);
 
     persistArticle(article, xmlData);
     return article;
+  }
+
+  private void addAssetFiles(Article article, ZipFile zipFile)
+      throws IOException, FileStoreException {
+
   }
 
   /**

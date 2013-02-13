@@ -48,9 +48,12 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -191,7 +194,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
-    AssertionCollector results = compareArticle(actual, expected);
+    AssertionCollector results = compareArticle(actual, expected, false);
     log.info("{} successes", results.getSuccessCount());
     Collection<AssertionCollector.Failure> failures = results.getFailures();
     for (AssertionCollector.Failure failure : failures) {
@@ -215,7 +218,7 @@ public class IngestionTest extends BaseRhinoTest {
             .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", expected.getDoi()))));
     assertNotNull(actual, "Failed to create article with expected DOI");
-    AssertionCollector results = compareArticle(actual, expected);
+    AssertionCollector results = compareArticle(actual, expected, true);
     log.info("{} successes", results.getSuccessCount());
 
     // Do some additional comparisons that only make sense for an article ingested from an archive.
@@ -227,7 +230,8 @@ public class IngestionTest extends BaseRhinoTest {
     assertEquals(failures.size(), 0, "Mismatched Article fields");
   }
 
-  private AssertionCollector compareArticle(Article actual, Article expected) {
+  private AssertionCollector compareArticle(Article actual, Article expected,
+      boolean assetFilesExpected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
@@ -235,7 +239,11 @@ public class IngestionTest extends BaseRhinoTest {
     compareCategorySets(results, actual.getCategories(), expected.getCategories());
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
-    compareAssetLists(results, actual.getAssets(), expected.getAssets());
+    if (assetFilesExpected) {
+//      compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
+    } else {
+      compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
+    }
     compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
     return results;
   }
@@ -304,8 +312,8 @@ public class IngestionTest extends BaseRhinoTest {
      */
   }
 
-  private void compareAssetLists(AssertionCollector results,
-                                 Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
+  private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
+      Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
     Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
     Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
@@ -332,9 +340,79 @@ public class IngestionTest extends BaseRhinoTest {
        */
       verifyExpectedAssets(expectedFileAssets);
       for (ArticleAsset expectedAsset : expectedFileAssets) {
-        compareAssetFields(results, actualAsset, expectedAsset);
+        compareAssetFields(results, actualAsset, expectedAsset, false);
       }
     }
+  }
+
+  /**
+   * Helper class that interprets an asset's identity as doi + extension, which is useful
+   * when comparing assets after files have been uploaded.
+   * <p/>
+   * TODO: move out of the test if this is useful elsewhere.
+   */
+  private static class ArticleAssetFile implements Comparable<ArticleAssetFile> {
+    ArticleAsset asset;
+    private String key;
+
+    ArticleAssetFile(ArticleAsset asset) {
+      this.asset = asset;
+      key = String.format("%s.%s", asset.getDoi(), Strings.nullToEmpty(asset.getExtension()));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (!(o instanceof ArticleAssetFile)) {
+        return false;
+      }
+      ArticleAssetFile that = (ArticleAssetFile) o;
+      return key.equals(that.key);
+    }
+
+    @Override
+    public int hashCode() {
+      return key.hashCode();
+    }
+
+    @Override
+    public int compareTo(ArticleAssetFile that) {
+      return key.compareTo(that.key);
+    }
+
+    @Override
+    public String toString() {
+      return key;
+    }
+  }
+
+  private void compareAssetsWithExpectedFiles(AssertionCollector results,
+      Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
+    List<ArticleAssetFile> actualSorted = sortAssets(actual);
+    Set<ArticleAssetFile> actualSet = new HashSet<ArticleAssetFile>(actualSorted);
+    List<ArticleAssetFile> expectedSorted = sortAssets(expected);
+    Set<ArticleAssetFile> expectedSet = new HashSet<ArticleAssetFile>(expectedSorted);
+
+    for (ArticleAssetFile missing : Sets.difference(expectedSet, actualSet)) {
+      results.compare(ArticleAsset.class, "doi/extension", null, missing);
+    }
+    for (ArticleAssetFile extra : Sets.difference(actualSet, expectedSet)) {
+      results.compare(ArticleAsset.class, "doi/extension", extra, null);
+    }
+
+    if (actualSorted.size() == expectedSorted.size()) {
+      for (int i = 0; i < actualSorted.size(); i++) {
+        compareAssetFields(results, actualSorted.get(i).asset, expectedSorted.get(i).asset, true);
+      }
+    }
+  }
+
+  private List<ArticleAssetFile> sortAssets(Collection<ArticleAsset> assets) {
+    List<ArticleAssetFile> results = new ArrayList<ArticleAssetFile>(assets.size());
+    for (ArticleAsset asset : assets) {
+      results.add(new ArticleAssetFile(asset));
+    }
+    Collections.sort(results);
+    return results;
   }
 
   /**
@@ -344,17 +422,19 @@ public class IngestionTest extends BaseRhinoTest {
    * @param actual   an actual asset with no information specific to an uploaded file
    * @param expected an expected asset with an associated file
    */
-  private void compareAssetFields(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
+  private void compareAssetFields(AssertionCollector results, ArticleAsset actual,
+      ArticleAsset expected, boolean assetFileExpected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
     results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
 
-    // These are skipped because they would require a file upload before we could know them.
-    //    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
-    //    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
-    //    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+    if (assetFileExpected) {
+      results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
+      results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
+      results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+    }
   }
 
   /**
