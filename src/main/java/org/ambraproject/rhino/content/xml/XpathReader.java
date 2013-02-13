@@ -33,32 +33,21 @@ import javax.xml.xpath.XPathFactory;
 import java.util.List;
 
 /**
- * A node of XML data that can be used to build an object.
+ * A container for a node of XML data that reads it with XPath queries.
  * <p/>
  * Instances of this class are not thread-safe because they hold an instance of {@link XPath} to use.
- *
- * @param <T> the type of object to build
  */
-public abstract class XmlToObject<T> {
+public abstract class XpathReader {
 
   private final Node xml;
   private final XPath xPath;
 
-  protected XmlToObject(Node xml) {
+  protected XpathReader(Node xml) {
     this.xml = Preconditions.checkNotNull(xml);
 
     // XPath isn't thread-safe, so we need one per instance of this class
     this.xPath = XPathFactory.newInstance().newXPath();
   }
-
-  /**
-   * Build an object from the XML supplied to this object.
-   *
-   * @param obj the object to modify, typically empty or mostly empty
-   * @return the same object with values inserted
-   * @throws XmlContentException if the supplied XML omits a required element or does not have the expected structure
-   */
-  public abstract T build(T obj) throws XmlContentException;
 
   protected String readString(String query) {
     return readString(query, xml);
