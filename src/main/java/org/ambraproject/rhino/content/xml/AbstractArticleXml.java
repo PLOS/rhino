@@ -54,7 +54,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
 
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
-  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of("supplementary-material", "inline-graphic");
+  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of("supplementary-material", "inline-formula");
 
   // An XPath expression that will match any node with one of the names above
   private static final String ASSET_EXPRESSION = String.format("//(%s)",
@@ -89,6 +89,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     }
     if (doi == null) {
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
+      return null;
     }
     return DoiBasedIdentity.removeScheme(doi);
   }
@@ -100,14 +101,22 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
    */
   private static String parseAssetWithHref(Node assetNode) {
     NamedNodeMap attributes = assetNode.getAttributes();
-    if (attributes == null) {
-      return null;
+    if (attributes != null) {
+      Node hrefAttr = attributes.getNamedItem("xlink:href");
+      if (hrefAttr != null) {
+        return hrefAttr.getTextContent();
+      }
     }
-    Node hrefAttr = attributes.getNamedItem("xlink:href");
-    if (hrefAttr == null) {
-      return null;
+
+    // If href wasn't found, seek it recursively in the child nodes.
+    // This is a normal case for <inline-formula id="..."><inline-graphic xlink:href="..."/></inline-formula>
+    for (Node child : NodeListAdapter.wrap(assetNode.getChildNodes())) {
+      String fromChild = parseAssetWithHref(child);
+      if (fromChild != null) {
+        return fromChild;
+      }
     }
-    return hrefAttr.getTextContent();
+    return null;
   }
 
   // Legal values for the "name-style" attribute of a <name> node
