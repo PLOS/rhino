@@ -172,9 +172,8 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     try {
       return Integer.valueOf(displayYear);
     } catch (NumberFormatException e) {
-      log.error("Year is not a number: " + displayYear, e);
+      // Test data suggests this is normal input. TODO: Report a warning to the client?
       return parseYearFallback(displayYear);
-      // TODO: Report to client?
     }
   }
 
