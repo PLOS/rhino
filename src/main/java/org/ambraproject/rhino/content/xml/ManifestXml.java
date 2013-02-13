@@ -17,13 +17,8 @@ import org.w3c.dom.Node;
 
 /**
  * Represents the manifest of an article .zip archive.
- * <p/>
- * This class is different from the other classes in this package in that it is not
- * parameterized on a subclass of org.ambraproject.models.AmbraEntity.  This is
- * because there is no persistent representation of a manifest beyond the zip file.
- * We're extending XmlToObject here only to make use of its XPath utilities.
  */
-public class ManifestXml extends XmlToObject<Object> {
+public class ManifestXml extends XpathReader {
 
   /**
    * Constructor.
@@ -32,18 +27,6 @@ public class ManifestXml extends XmlToObject<Object> {
    */
   public ManifestXml(Node xml) {
     super(xml);
-  }
-
-  /**
-   * We extend this method only because we must to create a concrete subclass.
-   * It should never be called.
-   *
-   * @param obj irrelevant
-   * @return never
-   * @throws UnsupportedOperationException
-   */
-  public Object build(Object obj) {
-    throw new UnsupportedOperationException();
   }
 
   /**
