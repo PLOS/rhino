@@ -55,7 +55,8 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
 
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
-  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of("supplementary-material", "inline-formula");
+  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
+      "supplementary-material", "inline-formula", "disp-formula");
 
   // An XPath expression that will match any node with one of the names above
   private static final String ASSET_EXPRESSION = String.format("//(%s)",
