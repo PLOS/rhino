@@ -181,7 +181,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
     compareAssetLists(results, actual.getAssets(), expected.getAssets());
-    compareCitations(results, actual.getCitedArticles(), expected.getCitedArticles());
+    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
     return results;
   }
 
@@ -341,12 +341,12 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-  private void compareCitations(AssertionCollector results,
-                                List<CitedArticle> actualList, List<CitedArticle> expectedList) {
+  private void compareCitationLists(AssertionCollector results,
+                                    List<CitedArticle> actualList, List<CitedArticle> expectedList) {
     for (CitedArticle expectedCitation : expectedList) {
       if (expectedCitation.getKey() == null) {
         // At least one expected case has null keys. Fall back on comparing by order.
-        compareCitationLists(results, actualList, expectedList);
+        compareCitationListsByIndex(results, actualList, expectedList);
         return;
       }
     }
@@ -367,8 +367,8 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-  private void compareCitationLists(AssertionCollector results,
-                                    List<CitedArticle> actualList, List<CitedArticle> expectedList) {
+  private void compareCitationListsByIndex(AssertionCollector results,
+                                           List<CitedArticle> actualList, List<CitedArticle> expectedList) {
     // Ensure no problems with random access or delayed evaluation
     actualList = ImmutableList.copyOf(actualList);
     expectedList = ImmutableList.copyOf(expectedList);
