@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -181,7 +182,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
   /**
    * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
    * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Text nodes containing
-   * only leading whitespace on a line are deleted. Ampersands are escaped.
+   * only leading whitespace on a line are deleted; other whitespace may be changed. Markup characters are escaped.
    * <p/>
    * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
    *
@@ -209,6 +210,11 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     return nodeContent;
   }
 
+  /*
+   * This is how Ambra Admin matches XML text nodes that are assumed to be non-text-significant whitespace between
+   * structural XML elements. Technically it's not 100% safe (it could conceivably remove space from between words), but
+   * we'll reproduce the behavior for now to match the Admin test data.
+   */
   private static final Pattern UNWANTED_WHITESPACE = Pattern.compile("\\n[ \\t]*");
 
   private static final StringReplacer XML_CHAR_ESCAPES = StringReplacer.builder()
@@ -222,6 +228,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XmlToObj
     if (UNWANTED_WHITESPACE.matcher(text).matches()) {
       return;
     }
+    text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
     text = XML_CHAR_ESCAPES.replace(text);
     nodeContent.append(text);
   }
