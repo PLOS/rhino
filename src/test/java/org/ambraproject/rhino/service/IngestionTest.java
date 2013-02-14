@@ -58,6 +58,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -255,12 +256,27 @@ public class IngestionTest extends BaseRhinoTest {
   private static boolean compareMarkupText(AssertionCollector results,
                                            Class<?> objectType, String fieldName,
                                            CharSequence actual, CharSequence expected) {
-    return results.compare(objectType, fieldName, collapseWhitespace(actual), collapseWhitespace(expected));
+    actual = collapseWhitespace(actual);
+    expected = collapseWhitespace(expected);
+    if (actual == null || expected == null || actual.equals(expected)) {
+      // If they match like this (or either is null), just compare them as-is
+      return results.compare(objectType, fieldName, actual, expected);
+    }
+
+    // Else, be more permissive.
+    // We don't mind if actual includes whitespace between tags that was missing from expected.
+    // TODO: Make this fail if actual deletes whitespace that was included in expected.
+    actual = WHITESPACE_BETWEEN_TAGS.matcher(actual).replaceAll(NOTHING_BETWEEN_TAGS);
+    expected = WHITESPACE_BETWEEN_TAGS.matcher(expected).replaceAll(NOTHING_BETWEEN_TAGS);
+    return results.compare(objectType, fieldName, actual, expected);
   }
 
   private static String collapseWhitespace(CharSequence text) {
     return (text == null) ? null : CharMatcher.WHITESPACE.collapseFrom(text, ' ');
   }
+
+  private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s*<");
+  private static final String NOTHING_BETWEEN_TAGS = "><";
 
   /**
    * Compare simple (non-associative) fields.
