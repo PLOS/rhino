@@ -22,13 +22,16 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.config.TestConfiguration;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
 import java.io.ByteArrayInputStream;
@@ -36,6 +39,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -128,6 +132,21 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
 
   private static final String prefixed(String doi) {
     return "10.1371/journal." + doi;
+  }
+
+  /**
+   * Clear out old persistent values.
+   * <p/>
+   * Really, the entire persistent environment should be reset on every test. Deleting values that we expected to be
+   * created by type is a kludge.
+   */
+  @BeforeMethod
+  public void deleteEntities() {
+    Collection<Class<?>> typesToDelete = ImmutableList.<Class<?>>of(Article.class);
+    for (Class<?> typeToDelete : typesToDelete) {
+      List<?> allObjects = hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class));
+      hibernateTemplate.deleteAll(allObjects);
+    }
   }
 
   @DataProvider
