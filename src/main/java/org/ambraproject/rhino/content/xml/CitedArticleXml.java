@@ -76,6 +76,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     }
     citation.setAuthors(readAuthors(authorNodes));
     citation.setEditors(readEditors(editorNodes));
+    citation.setCollaborativeAuthors(Lists.newArrayList(readTextList("collab")));
 
     return citation;
   }
