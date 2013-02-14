@@ -20,6 +20,9 @@ package org.ambraproject.rhino.identity;
 
 import com.google.common.base.Preconditions;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
  * <li>The entity is an article, in which case the {@link #getIdentifier() identifier} is the article's actual DOI that
@@ -57,6 +60,25 @@ public class DoiBasedIdentity {
     return doi.startsWith(DOI_SCHEME_VALUE) ? doi.substring(DOI_SCHEME_VALUE.length()) : doi;
   }
 
+  private static final Pattern SHORT_IDENTIFIER_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}");
+
+  /**
+   * Returns the "short form" of the DOI that is used internally at PLOS
+   * for a variety of purposes.
+   * <p/>
+   * For example, "info:doi/10.1371/journal.ppat.1003156" returns "ppat.1003156"
+   *
+   * @param doi a PLOS DOI
+   * @return the short form
+   */
+  public static String getShortIdentifier(String doi) {
+    Preconditions.checkNotNull(doi);
+    Matcher m = SHORT_IDENTIFIER_RE.matcher(doi);
+    if (!m.find()) {
+      throw new IllegalArgumentException("Not a valid PLOS DOI: " + doi);
+    }
+    return m.group();
+  }
 
   /**
    * Return the DOI or DOI-like identifier for the article or asset that this object identifies. The return value will

@@ -110,7 +110,9 @@ public class RhinoConfiguration extends BaseConfiguration {
 
   @Bean
   public ArticleCrudService articleCrudService() {
-    return new ArticleCrudServiceImpl();
+    ArticleCrudService service = new ArticleCrudServiceImpl();
+    service.setAssetService(assetCrudService());
+    return service;
   }
 
   @Bean

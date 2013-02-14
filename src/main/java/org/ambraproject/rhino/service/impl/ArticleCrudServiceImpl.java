@@ -22,6 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -30,6 +31,7 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNode;
 import org.ambraproject.rhino.content.xml.AssetXml;
+import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -38,7 +40,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.WriteResult;
+import org.ambraproject.rhino.service.AssetCrudService;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -46,18 +48,23 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -65,6 +72,8 @@ import java.util.Set;
 public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
+
+  private AssetCrudService assetService;
 
   private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
@@ -91,13 +100,31 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public WriteResult<Article> write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+  public Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
     if (mode == null) {
       mode = WriteMode.WRITE_ANY;
     }
 
     byte[] xmlData = readClientInput(file);
     Document doc = parseXml(xmlData);
+    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
+    persistArticle(article, xmlData);
+    return article;
+  }
+
+  /**
+   * Creates or updates an Article instance based on the given Document.  Does not persist
+   * the Article; that is the responsibility of the caller.
+   *
+   * @param doc Document describing the article XML
+   * @param suppliedId the indentifier supplied for the article by the external caller, if any
+   * @param mode whether to attempt a create or update
+   * @param xmlDataLength the number of bytes in the uploaded XML file
+   * @return the created Article
+   * @throws IOException
+   */
+  private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
+      WriteMode mode, int xmlDataLength) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -132,16 +159,108 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     relateToJournals(article);
     populateCategories(article, doc);
-    initializeAssets(article, xml);
+    initializeAssets(article, xml, xmlDataLength);
 
-    if (creating) {
+    return article;
+  }
+
+  /**
+   * Saves both the hibernate entity and the filestore bytes representing an article.
+   *
+   * @param article the new or updated Article instance to save
+   * @param xmlData bytes of the article XML file to save
+   * @return FSID (filestore ID) that the xmlData was saved to
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  private String persistArticle(Article article, byte[] xmlData)
+      throws IOException, FileStoreException {
+    if (article.getID() == null) {
       hibernateTemplate.save(article);
     } else {
       hibernateTemplate.update(article);
     }
+    String doi = article.getDoi();
+
+    // ArticleIdentity doesn't like this part of the DOI.
+    doi = doi.substring("info:doi/".length());
+    String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid();
     write(xmlData, fsid);
-    WriteResult.Action action = (creating ? WriteResult.Action.CREATED : WriteResult.Action.UPDATED);
-    return new WriteResult<Article>(article, action);
+    return fsid;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
+      WriteMode mode) throws IOException, FileStoreException {
+    ZipFile zip = new ZipFile(filename);
+    Document manifestDoc = parseXml(readZipFile(zip, "MANIFEST.xml"));
+    ManifestXml manifest = new ManifestXml(manifestDoc);
+    byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
+    Document doc = parseXml(xmlData);
+    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
+    article.setArchiveName(new File(filename).getName());
+    article.setStrkImgURI(manifest.getStrkImgURI());
+
+    // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
+    // Article to be persisted at this point.
+    persistArticle(article, xmlData);
+    addAssetFiles(article, zip);
+    return article;
+  }
+
+  private void addAssetFiles(Article article, ZipFile zipFile)
+      throws IOException, FileStoreException {
+
+    // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
+
+    Enumeration<? extends ZipEntry> entries = zipFile.entries();
+    while (entries.hasMoreElements()) {
+      ZipEntry entry = entries.nextElement();
+      if (!entry.getName().toLowerCase().startsWith("manifest.")) {
+        String[] fields = entry.getName().split("\\.");
+
+        // Not sure why, but the existing admin code always converts the extension to UPPER.
+        String extension = fields[fields.length - 1].toUpperCase();
+
+        // Need to exlude both ".xml" and ".xml.orig".
+        if (!"XML".equals(extension) && !"ORIG".equals(extension)) {
+          String doi = "info:doi/10.1371/journal."
+              + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
+          InputStream is = zipFile.getInputStream(entry);
+          boolean threw = true;
+          try {
+            assetService.upload(is, AssetFileIdentity.create(doi, extension));
+            threw = false;
+          } finally {
+            Closeables.close(is, threw);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Reads and returns the contents of a file in a .zip archive.
+   *
+   * @param zipFile zip file
+   * @param filename name of the file within the archive to read
+   * @return contents of the file
+   * @throws IOException
+   */
+  private byte[] readZipFile(ZipFile zipFile, String filename) throws IOException {
+    InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
+    byte[] bytes;
+    boolean threw = true;
+    try {
+      bytes = readClientInput(is);
+      threw = false;
+    } finally {
+      Closeables.close(is, threw);
+    }
+    return bytes;
   }
 
   /**
@@ -202,7 +321,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private void initializeAssets(Article article, ArticleXml xml) {
+  private void initializeAssets(Article article, ArticleXml xml, int xmlDataLength) {
     List<AssetNode> assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
     Map<String, ArticleAsset> assetMap;
@@ -231,7 +350,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     xmlAsset.setTitle(article.getTitle());
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
-    xmlAsset.setSize(0); // TODO
+    xmlAsset.setSize(xmlDataLength);
   }
 
   private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
@@ -329,4 +448,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     hibernateTemplate.delete(article);
   }
 
+  @Required
+  public void setAssetService(AssetCrudService assetService) {
+    this.assetService = assetService;
+  }
 }

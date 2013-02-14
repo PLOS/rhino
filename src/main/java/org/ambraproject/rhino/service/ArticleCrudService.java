@@ -40,14 +40,29 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param file       the XML data for the article
    * @param suppliedId the identifier supplied for the article, if any
-   * @return an indication of which article was created or updated
+   * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException
    *                            if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract WriteResult<Article> write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException, FileStoreException;
+
+  /**
+   * Create or update an article from supplied ,zip archive data. If no article exists
+   * with the given identity, a new article entity is created; else, the article is
+   * re-ingested and the new data replaces the old data in the file store.
+   *
+   * @param filename path to the local .zip file
+   * @param suppliedId the identifier supplied for the article, if any
+   * @return the created or update Article
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  public abstract Article writeArchive(String filename,
+      Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException;
 
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
@@ -94,4 +109,5 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void readMetadata(HttpServletResponse response, Article article, MetadataFormat format)
       throws IOException;
 
+  public abstract void setAssetService(AssetCrudService assetService);
 }

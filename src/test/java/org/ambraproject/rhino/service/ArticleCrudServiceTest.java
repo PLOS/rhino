@@ -139,8 +139,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertArticleExistence(articleId, false);
 
     TestInputStream input = TestInputStream.of(sampleData);
-    WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
-    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
+    Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -182,8 +181,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = TestInputStream.of(updated);
-    writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
-    assertEquals(writeResult.getAction(), WriteResult.Action.UPDATED);
+    article = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -196,18 +194,15 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
   @Test(dataProvider = "sampleAssets")
   public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
       throws IOException, FileStoreException {
-    String testArticleDoi = articleDoi + ".testCreateAsset"; // Avoid collisions with canonical sample data
-    String testAssetDoi = assetDoi.replace(articleDoi, testArticleDoi);
+    String testAssetDoi = assetDoi.replace(articleDoi, articleDoi);
 
     String assetFilePath = assetFile.getPath();
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
     final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
-    final ArticleIdentity articleId = ArticleIdentity.create(testArticleDoi);
-
+    final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
     TestInputStream input = new TestFile(articleFile).read();
-    input = alterStream(input, articleDoi, testArticleDoi);
-    WriteResult writeResult = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
-    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED);
+    input = alterStream(input, articleDoi, articleDoi);
+    Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
 
     TestInputStream assetFileStream = new TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId);
