@@ -29,21 +29,26 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * An identifier for one file that corresponds to an asset. It is uniquely identified by a DOI and file extension.
  */
-public class AssetFileIdentity extends DoiBasedIdentity {
+public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<AssetFileIdentity> {
 
   private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
 
-  private final String extension; // non-empty and contains no uppercase letters
+  private static final String TIFF_EXTENSION = "tif";
+
+  private static final String PDF_EXTENSION = "pdf";
+
+  private final String extension;
 
   private AssetFileIdentity(String identifier, String extension) {
     super(identifier);
     Preconditions.checkArgument(StringUtils.isNotBlank(extension));
-    this.extension = extension.toLowerCase();
+    this.extension = extension;
   }
 
   /**
@@ -115,8 +120,41 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     if (PNG_THUMBNAIL.matcher(getFileExtension()).matches()) {
       return MediaType.IMAGE_PNG;
     }
+    if (TIFF_EXTENSION.equalsIgnoreCase(getFileExtension())) {
+      return new MediaType("image", "tiff");
+    }
+    if (PDF_EXTENSION.equalsIgnoreCase(getFileExtension())) {
+      return new MediaType("application", "pdf");
+    }
     String mimeType = MIMETYPES.getContentType(getFilePath());
     return MediaType.parseMediaType(mimeType);
+  }
+
+  private static final Pattern DOI_TO_CONTEXT_ELEMENT_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.?([tg]\\d+)?");
+
+  /**
+   * @return the contextElement property associated with this asset file.  This has only
+   * three values: "fig", "table-wrap", or null, for figures, tables, or everything else.
+   */
+  public String getContextElement() {
+    Matcher m = DOI_TO_CONTEXT_ELEMENT_RE.matcher(getIdentifier());
+    if (!m.find()) {
+      return null;
+    }
+    String extra = m.group(1);
+    if (extra == null) {
+      return null;
+    }
+    switch (extra.charAt(0)) {
+      case 'g':
+        return "fig";
+
+      case 't':
+        return "table-wrap";
+
+      default:
+        return null;
+    }
   }
 
   /**
@@ -181,4 +219,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     return result;
   }
 
+  @Override
+  public int compareTo(AssetFileIdentity that) {
+    return (getIdentifier() + extension).compareTo(that.getIdentifier() + that.extension);
+  }
 }

@@ -5,6 +5,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
@@ -47,9 +48,13 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -73,8 +78,10 @@ public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
 
   private static final File DATA_PATH = new File("src/test/resources/articles/");
+  private static final File ZIP_DATA_PATH = new File("src/test/resources/articles/");
   private static final String JSON_SUFFIX = ".json";
   private static final String XML_SUFFIX = ".xml";
+  private static final String ZIP_SUFFIX = ".zip";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -104,9 +111,32 @@ public class IngestionTest extends BaseRhinoTest {
       if (!xmlFile.exists()) {
         fail("No XML file to match JSON test case data: " + xmlPath);
       }
-      cases.add(new Object[]{jsonFile, xmlFile});
+
+      // Don't return any articles that have a zip archive.  Those will be returned
+      // instead by generatedZipIngestionData() for a different test.
+      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
+      File zipFile = new File(zipPath);
+      if (!zipFile.exists()) {
+        cases.add(new Object[]{jsonFile, xmlFile});
+      }
     }
 
+    return cases.toArray(new Object[0][]);
+  }
+
+  @DataProvider
+  public Object[][] generatedZipIngestionData() {
+    File[] jsonFiles = ZIP_DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
+    Arrays.sort(jsonFiles);
+    List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
+    for (File jsonFile : jsonFiles) {
+      String jsonFilePath = jsonFile.getPath();
+      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
+      File zipFile = new File(zipPath);
+      if (zipFile.exists()) {
+        cases.add(new Object[]{jsonFile, zipFile});
+      }
+    }
     return cases.toArray(new Object[0][]);
   }
 
@@ -152,19 +182,20 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    WriteResult writeResult =
-        articleCrudService.write(new TestFile(xmlFile).read(),
+    Article actual = articleCrudService.write(new TestFile(xmlFile).read(),
             Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
-    assertEquals(writeResult.getAction(), WriteResult.Action.CREATED, "Service didn't report creating article");
+    assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
+    assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
-    Article actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+    // Reload the article directly from hibernate, just to be sure.
+    actual = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .setFetchMode("journals", FetchMode.JOIN)
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
-    AssertionCollector results = compareArticle(actual, expected);
+    AssertionCollector results = compareArticle(actual, expected, false);
     log.info("{} successes", results.getSuccessCount());
     Collection<AssertionCollector.Failure> failures = results.getFailures();
     for (AssertionCollector.Failure failure : failures) {
@@ -173,7 +204,35 @@ public class IngestionTest extends BaseRhinoTest {
     assertEquals(failures.size(), 0, "Mismatched Article fields");
   }
 
-  private AssertionCollector compareArticle(Article actual, Article expected) {
+  @Test(dataProvider = "generatedZipIngestionData")
+  public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
+    final Article expected = readReferenceCase(jsonFile);
+    Article actual = articleCrudService.writeArchive(zipFile.getCanonicalPath(),
+            Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
+    assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
+
+    // Reload the article directly from hibernate, just to be sure.
+    actual = (Article) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Article.class)
+            .setFetchMode("journals", FetchMode.JOIN)
+            .add(Restrictions.eq("doi", expected.getDoi()))));
+    assertNotNull(actual, "Failed to create article with expected DOI");
+    AssertionCollector results = compareArticle(actual, expected, true);
+    log.info("{} successes", results.getSuccessCount());
+
+    // Do some additional comparisons that only make sense for an article ingested from an archive.
+    compareArchiveFields(results, actual, expected);
+    Collection<AssertionCollector.Failure> failures = results.getFailures();
+    for (AssertionCollector.Failure failure : failures) {
+      log.error(failure.toString());
+    }
+    assertEquals(failures.size(), 0, "Mismatched Article fields");
+  }
+
+  private AssertionCollector compareArticle(Article actual, Article expected,
+      boolean assetFilesExpected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
@@ -181,7 +240,11 @@ public class IngestionTest extends BaseRhinoTest {
     compareCategorySets(results, actual.getCategories(), expected.getCategories());
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
-    compareAssetLists(results, actual.getAssets(), expected.getAssets());
+    if (assetFilesExpected) {
+      compareAssetsWithExpectedFiles(results, actual.getAssets(), expected.getAssets());
+    } else {
+      compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
+    }
     compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
     return results;
   }
@@ -204,14 +267,6 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
     results.compare(Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
-
-    // TODO: Test archiveName field when Rhino has a design for if and how to store the article as a .zip archive
-    //    results.compare(Article.class, "archiveName", actual.getArchiveName(), expected.getArchiveName());
-
-    // Skip striking image field as long as it's not set as part of ingesting NLM DTD
-    //    results.compare(Article.class, "strkImgURI",
-    //        Strings.nullToEmpty(actual.getStrkImgURI()),
-    //        Strings.nullToEmpty(expected.getStrkImgURI()));
 
     // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
     // to convert that to a java.util.Date (which GSON returns) for the comparison.
@@ -258,8 +313,8 @@ public class IngestionTest extends BaseRhinoTest {
      */
   }
 
-  private void compareAssetLists(AssertionCollector results,
-                                 Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
+  private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
+      Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
     Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
     Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
@@ -286,9 +341,56 @@ public class IngestionTest extends BaseRhinoTest {
        */
       verifyExpectedAssets(expectedFileAssets);
       for (ArticleAsset expectedAsset : expectedFileAssets) {
-        compareAssetFields(results, actualAsset, expectedAsset);
+        compareAssetFields(results, actualAsset, expectedAsset, false);
       }
     }
+  }
+
+  private void compareAssetsWithExpectedFiles(AssertionCollector results,
+      Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
+    SortAssetsReturnValue actualReturnValue = sortAssets(actual);
+    List<AssetFileIdentity> actualSorted = actualReturnValue.sortedList;
+    Map<AssetFileIdentity, ArticleAsset> actualAssetMap = actualReturnValue.assetMap;
+    Set<AssetFileIdentity> actualSet = new HashSet<AssetFileIdentity>(actualSorted);
+
+    SortAssetsReturnValue expectedReturnValue = sortAssets(expected);
+    List<AssetFileIdentity> expectedSorted = expectedReturnValue.sortedList;
+    Map<AssetFileIdentity, ArticleAsset> expectedAssetMap = expectedReturnValue.assetMap;
+    Set<AssetFileIdentity> expectedSet = new HashSet<AssetFileIdentity>(expectedSorted);
+
+    for (AssetFileIdentity missing : Sets.difference(expectedSet, actualSet)) {
+      results.compare(ArticleAsset.class, "doi/extension", null, missing);
+    }
+    for (AssetFileIdentity extra : Sets.difference(actualSet, expectedSet)) {
+      results.compare(ArticleAsset.class, "doi/extension", extra, null);
+    }
+
+    if (actualSorted.size() == expectedSorted.size()) {
+      for (int i = 0; i < actualSorted.size(); i++) {
+        compareAssetFields(results, actualAssetMap.get(actualSorted.get(i)),
+            expectedAssetMap.get(expectedSorted.get(i)), true);
+      }
+    }
+  }
+
+  private static class SortAssetsReturnValue {
+    List<AssetFileIdentity> sortedList;
+    Map<AssetFileIdentity, ArticleAsset> assetMap;
+  }
+
+  private SortAssetsReturnValue sortAssets(Collection<ArticleAsset> assets) {
+    List<AssetFileIdentity> sortedList = new ArrayList<AssetFileIdentity>(assets.size());
+    Map<AssetFileIdentity, ArticleAsset> assetMap = new HashMap<AssetFileIdentity, ArticleAsset>();
+    for (ArticleAsset asset : assets) {
+      AssetFileIdentity afi = AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
+      sortedList.add(afi);
+      assetMap.put(afi, asset);
+    }
+    Collections.sort(sortedList);
+    SortAssetsReturnValue results = new SortAssetsReturnValue();
+    results.sortedList = sortedList;
+    results.assetMap = assetMap;
+    return results;
   }
 
   /**
@@ -298,17 +400,19 @@ public class IngestionTest extends BaseRhinoTest {
    * @param actual   an actual asset with no information specific to an uploaded file
    * @param expected an expected asset with an associated file
    */
-  private void compareAssetFields(AssertionCollector results, ArticleAsset actual, ArticleAsset expected) {
+  private void compareAssetFields(AssertionCollector results, ArticleAsset actual,
+      ArticleAsset expected, boolean assetFileExpected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
     results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
 
-    // These are skipped because they would require a file upload before we could know them.
-    //    results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
-    //    results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
-    //    results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+    if (assetFileExpected) {
+      results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
+      results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
+      results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+    }
   }
 
   /**
@@ -411,6 +515,15 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
+  /**
+   * Tests some Article fields that are only populated if we ingest a .zip archive.
+   */
+  private void compareArchiveFields(AssertionCollector results, Article actual, Article expected) {
+    results.compare(Article.class, "archiveName", actual.getArchiveName(),
+        expected.getArchiveName());
+    results.compare(Article.class, "strkImgURI", Strings.nullToEmpty(actual.getStrkImgURI()),
+        Strings.nullToEmpty(expected.getStrkImgURI()));
+  }
 
   // Transformation helper methods
 
