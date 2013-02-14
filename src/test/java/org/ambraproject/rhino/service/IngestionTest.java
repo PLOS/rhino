@@ -411,7 +411,7 @@ public class IngestionTest extends BaseRhinoTest {
     if (assetFileExpected) {
       results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
       results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
-//      results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+      results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
     }
   }
 

@@ -107,7 +107,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     byte[] xmlData = readClientInput(file);
     Document doc = parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, suppliedId, mode);
+    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
     persistArticle(article, xmlData);
     return article;
   }
@@ -119,11 +119,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param doc Document describing the article XML
    * @param suppliedId the indentifier supplied for the article by the external caller, if any
    * @param mode whether to attempt a create or update
+   * @param xmlDataLength the number of bytes in the uploaded XML file
    * @return the created Article
    * @throws IOException
    */
   private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
-      WriteMode mode) {
+      WriteMode mode, int xmlDataLength) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -158,7 +159,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     relateToJournals(article);
     populateCategories(article, doc);
-    initializeAssets(article, xml);
+    initializeAssets(article, xml, xmlDataLength);
 
     return article;
   }
@@ -199,7 +200,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ManifestXml manifest = new ManifestXml(manifestDoc);
     byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
     Document doc = parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, suppliedId, mode);
+    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
     article.setArchiveName(new File(filename).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 
@@ -320,7 +321,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private void initializeAssets(Article article, ArticleXml xml) {
+  private void initializeAssets(Article article, ArticleXml xml, int xmlDataLength) {
     List<AssetNode> assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
     Map<String, ArticleAsset> assetMap;
@@ -349,7 +350,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     xmlAsset.setTitle(article.getTitle());
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
-    xmlAsset.setSize(0); // TODO
+    xmlAsset.setSize(xmlDataLength);
   }
 
   private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
