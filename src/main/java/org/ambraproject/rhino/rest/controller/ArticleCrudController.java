@@ -116,19 +116,26 @@ public class ArticleCrudController extends DoiBasedCrudController {
    *
    * @param response response to the request
    * @param requestFile body of the archive param, with the encoded article .zip file
+   * @param forceReingest if present, re-ingestion of an existing article is allowed;
+   *     otherwise, if the article already exists, it is an error
    * @throws IOException
    * @throws FileStoreException
    */
   @RequestMapping(value = "/zip", method = RequestMethod.POST)
   public void zipUpload(HttpServletResponse response,
-      @RequestParam("archive") MultipartFile requestFile)
+      @RequestParam("archive") MultipartFile requestFile,
+      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     String archiveName = requestFile.getOriginalFilename();
     String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
     requestFile.transferTo(new File(zipFilename));
     Article result = articleCrudService.writeArchive(zipFilename,
-        Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
+        Optional.<ArticleIdentity>absent(),
+
+        // If forceReingest is the empty string, the parameter was present.  Only
+        // treat null as false.
+        forceReingest == null ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
