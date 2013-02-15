@@ -139,7 +139,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     rightsStr.append(readString("/article/front/article-meta/permissions/copyright-holder"))
         .append(". ")
         .append(readString("/article/front/article-meta/permissions/license/license-p"));
-    return rightsStr.toString();
+    return rightsStr.toString().trim();
   }
 
   /**
