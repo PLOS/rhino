@@ -335,9 +335,22 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
-    /*
-     * Ignore this field. No known cases where it would be defined by article XML.
-     */
+    Map<String, ArticleRelationship> actualMap = mapRelationshipsByDoi(actual);
+    Set<String> actualDois = actualMap.keySet();
+    Map<String, ArticleRelationship> expectedMap = mapRelationshipsByDoi(expected);
+    Set<String> expectedDois = expectedMap.keySet();
+
+    for (String missingDoi : Sets.difference(expectedDois, actualDois)) {
+      results.compare(ArticleRelationship.class, "otherArticleDoi", null, missingDoi);
+    }
+    for (String extraDoi : Sets.difference(actualDois, expectedDois)) {
+      results.compare(ArticleRelationship.class, "otherArticleDoi", extraDoi, null);
+    }
+
+    for (String doi : Sets.intersection(actualDois, expectedDois)) {
+      results.compare(ArticleRelationship.class, "otherArticleDoi", doi, doi);
+      results.compare(ArticleRelationship.class, "type", actualMap.get(doi).getType(), expectedMap.get(doi).getType());
+    }
   }
 
   private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
@@ -589,6 +602,14 @@ public class IngestionTest extends BaseRhinoTest {
     ImmutableMap.Builder<String, Journal> map = ImmutableMap.builder();
     for (Journal journal : journals) {
       map.put(journal.geteIssn(), journal);
+    }
+    return map.build();
+  }
+
+  private static ImmutableMap<String, ArticleRelationship> mapRelationshipsByDoi(Collection<ArticleRelationship> relationships) {
+    ImmutableMap.Builder<String, ArticleRelationship> map = ImmutableMap.builder();
+    for (ArticleRelationship relationship : relationships) {
+      map.put(relationship.getOtherArticleDoi(), relationship);
     }
     return map.build();
   }
