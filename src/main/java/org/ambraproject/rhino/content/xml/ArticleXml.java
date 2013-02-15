@@ -24,6 +24,7 @@ import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
+import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.slf4j.Logger;
@@ -119,6 +120,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setCollaborativeAuthors(Lists.newArrayList(readTextList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
     article.setUrl(buildUrl());
+
+    article.setRelatedArticles(buildRelatedArticles(readNodeList("//related-article")));
   }
 
   private Node findAbstractNode() {
@@ -270,6 +273,17 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       citations.add(citation);
     }
     return citations;
+  }
+
+  private List<ArticleRelationship> buildRelatedArticles(List<Node> relatedArticleNodes) {
+    List<ArticleRelationship> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
+    for (Node relatedArticleNode : relatedArticleNodes) {
+      ArticleRelationship relatedArticle = new ArticleRelationship();
+      relatedArticle.setType(readString("@related-article-type", relatedArticleNode));
+      relatedArticle.setOtherArticleDoi(readHrefAttribute(relatedArticleNode));
+      relatedArticles.add(relatedArticle);
+    }
+    return relatedArticles;
   }
 
 }

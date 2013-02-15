@@ -38,7 +38,6 @@ import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -92,7 +91,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     if (ASSET_WITH_OBJID.contains(nodeName)) {
       doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
     } else if (ASSET_WITH_HREF.contains(nodeName)) {
-      doi = parseAssetWithHref(assetNode);
+      doi = readHrefAttribute(assetNode);
     } else {
       String message = String.format("Received a node of type \"%s\"; expected one of: %s",
           nodeName, ASSET_EXPRESSION);
@@ -105,12 +104,12 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     return DoiBasedIdentity.removeScheme(doi);
   }
 
-  /*
-   * Read the "xlink:href" attribute from a <supplementary-material> or <inline-graphic> node.
-   *
+  /**
+   * Read the "xlink:href" attribute from a node.
+   * <p/>
    * TODO: Use XPath instead and handle the XML namespace properly.
    */
-  private static String parseAssetWithHref(Node assetNode) {
+  protected static String readHrefAttribute(Node assetNode) {
     NamedNodeMap attributes = assetNode.getAttributes();
     if (attributes != null) {
       Node hrefAttr = attributes.getNamedItem("xlink:href");
@@ -122,7 +121,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     // If href wasn't found, seek it recursively in the child nodes.
     // This is a normal case for <inline-formula id="..."><inline-graphic xlink:href="..."/></inline-formula>
     for (Node child : NodeListAdapter.wrap(assetNode.getChildNodes())) {
-      String fromChild = parseAssetWithHref(child);
+      String fromChild = readHrefAttribute(child);
       if (fromChild != null) {
         return fromChild;
       }
