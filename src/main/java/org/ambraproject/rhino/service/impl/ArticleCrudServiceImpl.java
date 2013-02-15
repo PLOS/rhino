@@ -113,18 +113,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Creates or updates an Article instance based on the given Document.  Does not persist
-   * the Article; that is the responsibility of the caller.
+   * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
+   * responsibility of the caller.
    *
-   * @param doc Document describing the article XML
-   * @param suppliedId the indentifier supplied for the article by the external caller, if any
-   * @param mode whether to attempt a create or update
+   * @param doc           Document describing the article XML
+   * @param suppliedId    the indentifier supplied for the article by the external caller, if any
+   * @param mode          whether to attempt a create or update
    * @param xmlDataLength the number of bytes in the uploaded XML file
    * @return the created Article
    * @throws IOException
    */
   private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
-      WriteMode mode, int xmlDataLength) {
+                                         WriteMode mode, int xmlDataLength) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -194,7 +194,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
-      WriteMode mode) throws IOException, FileStoreException {
+                              WriteMode mode) throws IOException, FileStoreException {
     ZipFile zip = new ZipFile(filename);
     Document manifestDoc = parseXml(readZipFile(zip, "MANIFEST.xml"));
     ManifestXml manifest = new ManifestXml(manifestDoc);
@@ -245,7 +245,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   /**
    * Reads and returns the contents of a file in a .zip archive.
    *
-   * @param zipFile zip file
+   * @param zipFile  zip file
    * @param filename name of the file within the archive to read
    * @return contents of the file
    * @throws IOException
