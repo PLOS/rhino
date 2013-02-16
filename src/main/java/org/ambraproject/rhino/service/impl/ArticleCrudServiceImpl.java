@@ -26,6 +26,7 @@ import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
@@ -160,6 +161,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     relateToJournals(article);
     populateCategories(article, doc);
     initializeAssets(article, xml, xmlDataLength);
+    populateRelatedArticles(article);
 
     return article;
   }
@@ -351,6 +353,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
     xmlAsset.setSize(xmlDataLength);
+  }
+
+  private void populateRelatedArticles(Article article) {
+    for (ArticleRelationship relationship : article.getRelatedArticles()) {
+      String otherArticleDoi = relationship.getOtherArticleDoi();
+      Article otherArticle = (Article) DataAccessUtils.uniqueResult((List<?>) hibernateTemplate.findByCriteria(
+          DetachedCriteria.forClass(Article.class)
+              .add(Restrictions.eq("doi", otherArticleDoi))
+      ));
+      if (otherArticle != null) {
+        relationship.setOtherArticleID(otherArticle.getID());
+      }
+      /*
+       * The article not being in our system is documented as a valid use case (see Javadoc on ArticleRelationship).
+       * TODO: Do we want to send a warning to the client just in case?
+       *
+       * TODO: Set relationship.parentArticle?
+       */
+    }
   }
 
   private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
