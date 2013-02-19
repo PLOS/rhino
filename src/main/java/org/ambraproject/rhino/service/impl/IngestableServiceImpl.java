@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.inject.internal.Preconditions;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestableService;
 import org.apache.commons.configuration.Configuration;
@@ -21,6 +22,7 @@ import org.topazproject.ambra.configuration.ConfigurationStore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +36,12 @@ import java.util.regex.Pattern;
  */
 public class IngestableServiceImpl extends AmbraService implements IngestableService {
 
+  private static final String INGEST_SOURCE_DIR_KEY
+      = "ambra.services.documentManagement.ingestSourceDir";
+
+  private static final String INGEST_DEST_DIR_KEY
+      = "ambra.services.documentManagement.ingestDestinationDir";
+
   private static final Pattern ARCHIVE_FILE_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.zip");
 
   private Configuration config = ConfigurationStore.getInstance().getConfiguration();
@@ -44,8 +52,7 @@ public class IngestableServiceImpl extends AmbraService implements IngestableSer
   @Override
   public void read(HttpServletResponse response, MetadataFormat format) throws IOException {
     Preconditions.checkArgument(format == MetadataFormat.JSON);
-    File ingestDir = new File(config.getString(
-        "ambra.services.documentManagement.ingestSourceDir"));
+    File ingestDir = new File(config.getString(INGEST_SOURCE_DIR_KEY));
     File[] archives = ingestDir.listFiles(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
@@ -64,5 +71,39 @@ public class IngestableServiceImpl extends AmbraService implements IngestableSer
     }
     Collections.sort(results);
     writeJsonToResponse(response, results);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public File getIngestableArchive(ArticleIdentity articleIdentity) throws IOException {
+    return getIngestSourceArchive(articleIdentity);
+  }
+
+  private File getIngestSourceArchive(ArticleIdentity articleIdentity) throws IOException {
+    String doi = articleIdentity.getIdentifier();
+    File result = new File(config.getString(INGEST_SOURCE_DIR_KEY) + File.separator
+        + doi.substring(doi.length() - "pfoo.1234567".length()) + ".zip");
+    if (!result.canRead()) {
+      throw new FileNotFoundException("Archive not found: " + result.getCanonicalPath());
+    }
+    return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public File archiveIngested(ArticleIdentity articleIdentity) throws IOException {
+    File source = getIngestSourceArchive(articleIdentity);
+    String doi = articleIdentity.getIdentifier();
+    File dest = new File(config.getString(INGEST_DEST_DIR_KEY) + File.separator
+        + doi.substring(doi.length() - "pfoo.1234567".length()) + ".zip");
+    if (!source.renameTo(dest)) {
+      throw new IOException(String.format("Could not move %s to %s", source.getCanonicalPath(),
+          dest.getCanonicalPath()));
+    }
+    return dest;
   }
 }
