@@ -357,6 +357,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   private void populateRelatedArticles(Article article) {
     for (ArticleRelationship relationship : article.getRelatedArticles()) {
+      relationship.setParentArticle(article);
+
       String otherArticleDoi = relationship.getOtherArticleDoi();
       Article otherArticle = (Article) DataAccessUtils.uniqueResult((List<?>) hibernateTemplate.findByCriteria(
           DetachedCriteria.forClass(Article.class)
@@ -368,8 +370,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       /*
        * The article not being in our system is documented as a valid use case (see Javadoc on ArticleRelationship).
        * TODO: Do we want to send a warning to the client just in case?
-       *
-       * TODO: Set relationship.parentArticle?
        */
     }
   }
