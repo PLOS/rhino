@@ -44,6 +44,8 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -51,13 +53,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -321,17 +324,38 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private void initializeAssets(Article article, ArticleXml xml, int xmlDataLength) {
+  private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
     List<AssetNode> assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
     Map<String, ArticleAsset> assetMap;
-    if (assets == null) {
+    if (assets == null) {  // create
       assets = Lists.newArrayListWithCapacity(assetNodes.size());
       article.setAssets(assets);
-      assetMap = ImmutableMap.of();
-    } else {
-      assetMap = mapAssetsByDoi(assets);
+    } else {  // update
+
+      // Ugly hack copied from the old admin code.  The problem is that hibernate, when it
+      // eventually commits this transaction, will insert new articleAsset rows before it
+      // deletes the old ones, leading to a MySQL unique constraint violation.  I've tried
+      // many, many variations of doing this in hibernate only, without falling back to
+      // JDBC, involving flushing and clearing the session in various orders.  However
+      // they all lead to either unique constraint violations or optimistic locking
+      // exceptions.
+      hibernateTemplate.execute(new HibernateCallback() {
+        @Override
+        public Object doInHibernate(Session session) throws HibernateException, SQLException {
+          session.createSQLQuery(
+              "update articleAsset " +
+                  "set doi = concat('old-', doi), " +
+                  "extension = concat('old-', extension) " +
+                  "where articleID = :articleID"
+          ).setParameter("articleID", article.getID())
+              .executeUpdate();
+          return null;
+        }
+      });
+      assets.clear();
     }
+    assetMap = ImmutableMap.of();
     for (AssetNode assetNode : assetNodes) {
       ArticleAsset asset = assetMap.get(assetNode.getDoi());
       if (asset == null) {
@@ -351,17 +375,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
     xmlAsset.setSize(xmlDataLength);
-  }
-
-  private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
-    // TODO On re-ingest, multiple existing assets with same DOI? Probably needs to be a multimap.
-    ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
-    for (ArticleAsset asset : assets) {
-      String doi = asset.getDoi();
-      doi = DoiBasedIdentity.removeScheme(doi);
-      map.put(doi, asset);
-    }
-    return map.build();
   }
 
   /**

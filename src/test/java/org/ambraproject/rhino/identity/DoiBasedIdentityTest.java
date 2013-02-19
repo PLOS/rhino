@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.identity;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -22,6 +23,45 @@ import static org.testng.Assert.fail;
  *
  */
 public class DoiBasedIdentityTest {
+
+  @DataProvider
+  public Object[][] badDois() {
+    Object[] bad = new Object[] {
+        "",
+        "info:",
+        "info:doi/10.1371/",
+        "info:doi/10.1371/journal.pone.",
+        "info:doi/10.1371/journal.pone.1234",
+        "info:doi/10.1371/journal.pone.005305",
+        "info:doi/10.1371/image.pntd.v07.i01",
+        "10.1371",
+        "10.1371/",
+        "10.1371/journal.",
+        "10.1371/journal.crap.0056866",
+    };
+    Object[][] results = new Object[bad.length][];
+    for (int i = 0; i < bad.length; i++) {
+      results[i] = new Object[] {bad[i]};
+    }
+    return results;
+  }
+
+  @Test
+  public void testCreate() {
+    assertEquals(DoiBasedIdentity.create("info:doi/10.1371/journal.pone.0056866").getIdentifier(),
+        "10.1371/journal.pone.0056866");
+    assertEquals(DoiBasedIdentity.create("10.1371/journal.pone.0056866").getIdentifier(),
+        "10.1371/journal.pone.0056866");
+    assertEquals(DoiBasedIdentity.create("10.1371/journal.pone.0055747.t004").getIdentifier(),
+        "10.1371/journal.pone.0055747.t004");
+    assertEquals(DoiBasedIdentity.create("info:doi/10.1371/volume.pgen.v05").getIdentifier(),
+        "10.1371/volume.pgen.v05");
+  }
+
+  @Test(dataProvider = "badDois", expectedExceptions = {IllegalArgumentException.class})
+  public void testCreate_error(String doi) {
+    DoiBasedIdentity.create(doi);
+  }
 
   @Test
   public void testGetShortIdentifier() {
@@ -35,26 +75,8 @@ public class DoiBasedIdentityTest {
         "pcbi.1002905");
   }
 
-  @Test
-  public void testGetShortIdentifier_error() {
-
-    // Not using expectedExceptions on the @Test annotation here since we want
-    // to test a bunch of cases.
-    getShortIdentifierWithExpectedException("");
-    getShortIdentifierWithExpectedException("info:");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/journal.pone.");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/journal.pone.1234");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/journal.pone.005305");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/image.pntd.v07.i01");
-  }
-
-  private void getShortIdentifierWithExpectedException(String s) {
-    try {
-      DoiBasedIdentity.getShortIdentifier(s);
-    } catch (IllegalArgumentException iae) {
-      return;
-    }
-    fail("getShortIdentifier did not throw IllegalArgumentException for " + s);
+  @Test(dataProvider = "badDois", expectedExceptions = {IllegalArgumentException.class})
+  public void testGetShortIdentifier_error(String doi) {
+    DoiBasedIdentity.getShortIdentifier(doi);
   }
 }

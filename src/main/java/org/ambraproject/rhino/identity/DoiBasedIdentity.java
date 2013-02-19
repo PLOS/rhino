@@ -37,14 +37,49 @@ public class DoiBasedIdentity {
 
   private final String identifier; // non-null, non-empty, doesn't contain ':'
 
-  protected DoiBasedIdentity(String identifier) {
-    super();
-    this.identifier = Preconditions.checkNotNull(identifier);
+  // TODO: this will probably have to be modified/expanded as we complete the code.
+  private static final Pattern PLOS_JOURNAL_DOI_RE = Pattern.compile(
+      "10\\.1371\\/journal\\.p[a-z]{3}\\.\\d{7}(\\.[a-z]\\d+)?");
+  private static final Pattern PLOS_VOLUME_DOI_RE = Pattern.compile(
+      "10\\.1371\\/volume\\.p[a-z]{3}\\.v\\d+");
+  private static final Pattern[] PLOS_DOI_RES = new Pattern[] {
+      PLOS_JOURNAL_DOI_RE,
+      PLOS_VOLUME_DOI_RE,
+  };
 
-    Preconditions.checkArgument(identifier.indexOf(':') < 0, "DOI must not have scheme prefix (\"info:doi/\")");
+  /**
+   * Constructor.
+   *
+   * @param identifier the DOI for this resource
+   * @throws IllegalArgumentException if the DOI is not a valid PLOS DOI
+   */
+  protected DoiBasedIdentity(String identifier) {
+    identifier = Preconditions.checkNotNull(identifier).trim();
     Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
+    if (identifier.startsWith("info:doi/")) {
+      identifier = identifier.substring("info:doi/".length());
+    }
+    boolean valid = false;
+    for (Pattern pattern : PLOS_DOI_RES) {
+      Matcher m = pattern.matcher(identifier);
+      if (m.matches()) {
+        valid = true;
+        break;
+      }
+    }
+    if (!valid) {
+      throw new IllegalArgumentException("Bad identifier: " + identifier);
+    }
+    this.identifier = identifier;
   }
 
+  /**
+   * Creates a DoiBasedIdentity for the given DOI.  Note that this DOI is PLOS-specific.
+   *
+   * @param identifier the DOI for this resource
+   * @return the identity
+   * @throws IllegalArgumentException if the DOI is not a valid PLOS DOI
+   */
   public static DoiBasedIdentity create(String identifier) {
     return new DoiBasedIdentity(identifier);
   }
