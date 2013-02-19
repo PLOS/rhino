@@ -16,7 +16,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.inject.internal.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.service.IngestableService;
+import org.ambraproject.rhino.service.IngestibleService;
 import org.apache.commons.configuration.Configuration;
 import org.topazproject.ambra.configuration.ConfigurationStore;
 
@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 /**
  * {@inheritDoc}
  */
-public class IngestibleServiceImpl extends AmbraService implements IngestableService {
+public class IngestibleServiceImpl extends AmbraService implements IngestibleService {
 
   private static final String INGEST_SOURCE_DIR_KEY
       = "ambra.services.documentManagement.ingestSourceDir";
@@ -77,7 +77,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestableSer
    * {@inheritDoc}
    */
   @Override
-  public File getIngestableArchive(ArticleIdentity articleIdentity) throws IOException {
+  public File getIngestibleArchive(ArticleIdentity articleIdentity) throws IOException {
     return getIngestSourceArchive(articleIdentity);
   }
 
