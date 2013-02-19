@@ -24,10 +24,10 @@ import java.io.IOException;
  * Service that deals with article .zip archives in the ingest source directory (defined by the
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
-public interface IngestableService {
+public interface IngestibleService {
 
   /**
-   * Writes a list of all ingestable archives to the response.
+   * Writes a list of all ingestible archives to the response.
    *
    * @param response HttpServletResponse
    * @param format   specifies the format of the response.  Currently only JSON is supported.
@@ -42,7 +42,7 @@ public interface IngestableService {
    * @return File pointing to the .zip archive
    * @throws java.io.FileNotFoundException if the archive does not exist
    */
-  File getIngestableArchive(ArticleIdentity articleIdentity) throws IOException;
+  File getIngestibleArchive(ArticleIdentity articleIdentity) throws IOException;
 
   /**
    * Moves the archive from the ingest directory to the ingested directory. Should be called immediately after an

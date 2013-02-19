@@ -21,7 +21,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.IngestableService;
+import org.ambraproject.rhino.service.IngestibleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -39,21 +39,21 @@ import java.io.IOException;
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
-public class IngestableController extends DoiBasedCrudController {
+public class IngestibleController extends DoiBasedCrudController {
 
-  private static final String INGESTABLE_ROOT = "/ingestable";
-  private static final String INGESTABLE_NAMESPACE = INGESTABLE_ROOT + "/";
-  private static final String INGESTABLE_TEMPLATE = INGESTABLE_NAMESPACE + "**";
+  private static final String INGESTIBLE_ROOT = "/ingestible";
+  private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
+  private static final String INGESTIBLE_TEMPLATE = INGESTIBLE_NAMESPACE + "**";
 
   @Autowired
   private ArticleCrudService articleCrudService;
 
   @Autowired
-  private IngestableService ingestableService;
+  private IngestibleService ingestibleService;
 
   @Override
   protected String getNamespacePrefix() {
-    return INGESTABLE_NAMESPACE;
+    return INGESTIBLE_NAMESPACE;
   }
 
   @Override
@@ -62,19 +62,19 @@ public class IngestableController extends DoiBasedCrudController {
   }
 
   /**
-   * Method that lists all ingestable archives in the ingest source directory.
+   * Method that lists all ingestible archives in the ingest source directory.
    *
    * @param response HttpServletResponse
    * @param format   format of the response.  Currently only JSON is supported.
    * @throws IOException
    */
-  @RequestMapping(value = INGESTABLE_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = INGESTIBLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
 
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ingestableService.read(response, mf);
+    ingestibleService.read(response, mf);
   }
 
   /**
@@ -87,19 +87,19 @@ public class IngestableController extends DoiBasedCrudController {
    * @throws IOException
    * @throws FileStoreException
    */
-  @RequestMapping(value = INGESTABLE_ROOT, method = RequestMethod.POST)
+  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletResponse response, @RequestParam(value = "doi") String doi,
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     ArticleIdentity ai = ArticleIdentity.create(doi);
-    File archive = ingestableService.getIngestableArchive(ai);
+    File archive = ingestibleService.getIngestibleArchive(ai);
     Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), Optional.of(ai),
 
         // If forceReingest is the empty string, the parameter was present.  Only
         // treat null as false.
         forceReingest == null ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY);
-    ingestableService.archiveIngested(ai);
+    ingestibleService.archiveIngested(ai);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
