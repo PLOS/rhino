@@ -133,8 +133,8 @@ public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<As
   private static final Pattern DOI_TO_CONTEXT_ELEMENT_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.?([tg]\\d+)?");
 
   /**
-   * @return the contextElement property associated with this asset file.  This has only
-   * three values: "fig", "table-wrap", or null, for figures, tables, or everything else.
+   * @return the contextElement property associated with this asset file.  This has only three values: "fig",
+   *         "table-wrap", or null, for figures, tables, or everything else.
    */
   public String getContextElement() {
     Matcher m = DOI_TO_CONTEXT_ELEMENT_RE.matcher(getIdentifier());

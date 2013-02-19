@@ -42,7 +42,7 @@ public class DoiBasedIdentity {
       "10\\.1371\\/journal\\.p[a-z]{3}\\.\\d{7}(\\.[a-z]\\d+)?");
   private static final Pattern PLOS_VOLUME_DOI_RE = Pattern.compile(
       "10\\.1371\\/volume\\.p[a-z]{3}\\.v\\d+");
-  private static final Pattern[] PLOS_DOI_RES = new Pattern[] {
+  private static final Pattern[] PLOS_DOI_RES = new Pattern[]{
       PLOS_JOURNAL_DOI_RE,
       PLOS_VOLUME_DOI_RE,
   };
@@ -98,8 +98,7 @@ public class DoiBasedIdentity {
   private static final Pattern SHORT_IDENTIFIER_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}");
 
   /**
-   * Returns the "short form" of the DOI that is used internally at PLOS
-   * for a variety of purposes.
+   * Returns the "short form" of the DOI that is used internally at PLOS for a variety of purposes.
    * <p/>
    * For example, "info:doi/10.1371/journal.ppat.1003156" returns "ppat.1003156"
    *

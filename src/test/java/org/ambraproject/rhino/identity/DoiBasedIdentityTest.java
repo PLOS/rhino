@@ -17,7 +17,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 
 /**
  *
@@ -26,7 +25,7 @@ public class DoiBasedIdentityTest {
 
   @DataProvider
   public Object[][] badDois() {
-    Object[] bad = new Object[] {
+    Object[] bad = new Object[]{
         "",
         "info:",
         "info:doi/10.1371/",
@@ -41,7 +40,7 @@ public class DoiBasedIdentityTest {
     };
     Object[][] results = new Object[bad.length][];
     for (int i = 0; i < bad.length; i++) {
-      results[i] = new Object[] {bad[i]};
+      results[i] = new Object[]{bad[i]};
     }
     return results;
   }

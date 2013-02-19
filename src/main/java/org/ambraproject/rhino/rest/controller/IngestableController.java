@@ -20,7 +20,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Controller enabling access to the ambra ingest directory (whose location is defined
- * by the ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
+ * Controller enabling access to the ambra ingest directory (whose location is defined by the
+ * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
 public class IngestableController extends DoiBasedCrudController {
@@ -66,12 +65,12 @@ public class IngestableController extends DoiBasedCrudController {
    * Method that lists all ingestable archives in the ingest source directory.
    *
    * @param response HttpServletResponse
-   * @param format format of the response.  Currently only JSON is supported.
+   * @param format   format of the response.  Currently only JSON is supported.
    * @throws IOException
    */
   @RequestMapping(value = INGESTABLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletResponse response,
-      @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
 
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
@@ -81,16 +80,16 @@ public class IngestableController extends DoiBasedCrudController {
   /**
    * Ingests an archive present in the ingest source directory.
    *
-   * @param response HttpServletResponse
-   * @param doi a DOI corresponding to an article whose .zip archive is present
-   *     in the ingest source directory
+   * @param response      HttpServletResponse
+   * @param doi           a DOI corresponding to an article whose .zip archive is present in the ingest source
+   *                      directory
    * @param forceReingest if present, we will reingest the article if it already exists
    * @throws IOException
    * @throws FileStoreException
    */
   @RequestMapping(value = INGESTABLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletResponse response, @RequestParam(value = "doi") String doi,
-      @RequestParam(value = "force_reingest", required = false) String forceReingest)
+                     @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     ArticleIdentity ai = ArticleIdentity.create(doi);

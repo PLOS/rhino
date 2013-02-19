@@ -185,7 +185,7 @@ public class IngestionTest extends BaseRhinoTest {
     final String caseDoi = expected.getDoi();
 
     Article actual = articleCrudService.write(new TestFile(xmlFile).read(),
-            Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -210,7 +210,7 @@ public class IngestionTest extends BaseRhinoTest {
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = readReferenceCase(jsonFile);
     Article actual = articleCrudService.writeArchive(zipFile.getCanonicalPath(),
-            Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -260,7 +260,7 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private AssertionCollector compareArticle(Article actual, Article expected,
-      boolean assetFilesExpected) {
+                                            boolean assetFilesExpected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
@@ -342,7 +342,7 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
-      Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
+                                                 Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
     Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
     Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
@@ -375,7 +375,7 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareAssetsWithExpectedFiles(AssertionCollector results,
-      Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
+                                              Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
     SortAssetsReturnValue actualReturnValue = sortAssets(actual);
     List<AssetFileIdentity> actualSorted = actualReturnValue.sortedList;
     Map<AssetFileIdentity, ArticleAsset> actualAssetMap = actualReturnValue.assetMap;
@@ -429,7 +429,7 @@ public class IngestionTest extends BaseRhinoTest {
    * @param expected an expected asset with an associated file
    */
   private void compareAssetFields(AssertionCollector results, ArticleAsset actual,
-      ArticleAsset expected, boolean assetFileExpected) {
+                                  ArticleAsset expected, boolean assetFileExpected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());

@@ -21,8 +21,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Service that deals with article .zip archives in the ingest source directory
- * (defined by the ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
+ * Service that deals with article .zip archives in the ingest source directory (defined by the
+ * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 public interface IngestableService {
 
@@ -30,7 +30,7 @@ public interface IngestableService {
    * Writes a list of all ingestable archives to the response.
    *
    * @param response HttpServletResponse
-   * @param format specifies the format of the response.  Currently only JSON is supported.
+   * @param format   specifies the format of the response.  Currently only JSON is supported.
    * @throws IOException
    */
   void read(HttpServletResponse response, MetadataFormat format) throws IOException;
@@ -45,9 +45,8 @@ public interface IngestableService {
   File getIngestableArchive(ArticleIdentity articleIdentity) throws IOException;
 
   /**
-   * Moves the archive from the ingest directory to the ingested directory.
-   * Should be called immediately after an archive is ingested from the ingest
-   * directory.
+   * Moves the archive from the ingest directory to the ingested directory. Should be called immediately after an
+   * archive is ingested from the ingest directory.
    *
    * @param articleIdentity specifies the article that was just ingested
    * @return the File in the ingested directory where the archive was moved to
