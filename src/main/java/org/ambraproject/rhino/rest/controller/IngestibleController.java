@@ -18,10 +18,12 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.util.PlosDoiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -92,8 +95,17 @@ public class IngestibleController extends DoiBasedCrudController {
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
+    if (!PlosDoiUtils.validate(doi)) {
+      throw new RestClientException("Invalid DOI: " + doi, HttpStatus.METHOD_NOT_ALLOWED);
+    }
     ArticleIdentity ai = ArticleIdentity.create(doi);
-    File archive = ingestibleService.getIngestibleArchive(ai);
+    File archive;
+    try {
+      archive = ingestibleService.getIngestibleArchive(ai);
+    } catch (FileNotFoundException fnfe) {
+      throw new RestClientException("Could not find zip archive for: " + doi,
+          HttpStatus.METHOD_NOT_ALLOWED, fnfe);
+    }
     Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), Optional.of(ai),
 
         // If forceReingest is the empty string, the parameter was present.  Only

@@ -20,9 +20,6 @@ package org.ambraproject.rhino.identity;
 
 import com.google.common.base.Preconditions;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
  * <li>The entity is an article, in which case the {@link #getIdentifier() identifier} is the article's actual DOI that
@@ -37,21 +34,10 @@ public class DoiBasedIdentity {
 
   private final String identifier; // non-null, non-empty, doesn't contain ':'
 
-  // TODO: this will probably have to be modified/expanded as we complete the code.
-  private static final Pattern PLOS_JOURNAL_DOI_RE = Pattern.compile(
-      "10\\.1371\\/journal\\.p[a-z]{3}\\.\\d{7}(\\.[a-z]\\d+)?");
-  private static final Pattern PLOS_VOLUME_DOI_RE = Pattern.compile(
-      "10\\.1371\\/volume\\.p[a-z]{3}\\.v\\d+");
-  private static final Pattern[] PLOS_DOI_RES = new Pattern[]{
-      PLOS_JOURNAL_DOI_RE,
-      PLOS_VOLUME_DOI_RE,
-  };
-
   /**
    * Constructor.
    *
    * @param identifier the DOI for this resource
-   * @throws IllegalArgumentException if the DOI is not a valid PLOS DOI
    */
   protected DoiBasedIdentity(String identifier) {
     identifier = Preconditions.checkNotNull(identifier).trim();
@@ -59,26 +45,14 @@ public class DoiBasedIdentity {
     if (identifier.startsWith("info:doi/")) {
       identifier = identifier.substring("info:doi/".length());
     }
-    boolean valid = false;
-    for (Pattern pattern : PLOS_DOI_RES) {
-      Matcher m = pattern.matcher(identifier);
-      if (m.matches()) {
-        valid = true;
-        break;
-      }
-    }
-    if (!valid) {
-      throw new IllegalArgumentException("Bad identifier: " + identifier);
-    }
     this.identifier = identifier;
   }
 
   /**
-   * Creates a DoiBasedIdentity for the given DOI.  Note that this DOI is PLOS-specific.
+   * Creates a DoiBasedIdentity for the given DOI.
    *
    * @param identifier the DOI for this resource
    * @return the identity
-   * @throws IllegalArgumentException if the DOI is not a valid PLOS DOI
    */
   public static DoiBasedIdentity create(String identifier) {
     return new DoiBasedIdentity(identifier);
@@ -93,25 +67,6 @@ public class DoiBasedIdentity {
    */
   public static String removeScheme(String doi) {
     return doi.startsWith(DOI_SCHEME_VALUE) ? doi.substring(DOI_SCHEME_VALUE.length()) : doi;
-  }
-
-  private static final Pattern SHORT_IDENTIFIER_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}");
-
-  /**
-   * Returns the "short form" of the DOI that is used internally at PLOS for a variety of purposes.
-   * <p/>
-   * For example, "info:doi/10.1371/journal.ppat.1003156" returns "ppat.1003156"
-   *
-   * @param doi a PLOS DOI
-   * @return the short form
-   */
-  public static String getShortIdentifier(String doi) {
-    Preconditions.checkNotNull(doi);
-    Matcher m = SHORT_IDENTIFIER_RE.matcher(doi);
-    if (!m.find()) {
-      throw new IllegalArgumentException("Not a valid PLOS DOI: " + doi);
-    }
-    return m.group();
   }
 
   /**
