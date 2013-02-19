@@ -52,7 +52,7 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
 
   @Test
   public void testCreate() {
-    DoiBasedIdentity volumeId = DoiBasedIdentity.create("testVolume");
+    DoiBasedIdentity volumeId = DoiBasedIdentity.create("10.1371/volume.pmed.v05");
     String displayName = "volumeDisplay";
 
     Journal testJournal = getTestJournal();
