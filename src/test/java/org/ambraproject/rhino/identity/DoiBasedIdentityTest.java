@@ -23,28 +23,6 @@ import static org.testng.Assert.assertEquals;
  */
 public class DoiBasedIdentityTest {
 
-  @DataProvider
-  public Object[][] badDois() {
-    Object[] bad = new Object[]{
-        "",
-        "info:",
-        "info:doi/10.1371/",
-        "info:doi/10.1371/journal.pone.",
-        "info:doi/10.1371/journal.pone.1234",
-        "info:doi/10.1371/journal.pone.005305",
-        "info:doi/10.1371/image.pntd.v07.i01",
-        "10.1371",
-        "10.1371/",
-        "10.1371/journal.",
-        "10.1371/journal.crap.0056866",
-    };
-    Object[][] results = new Object[bad.length][];
-    for (int i = 0; i < bad.length; i++) {
-      results[i] = new Object[]{bad[i]};
-    }
-    return results;
-  }
-
   @Test
   public void testCreate() {
     assertEquals(DoiBasedIdentity.create("info:doi/10.1371/journal.pone.0056866").getIdentifier(),
@@ -55,27 +33,5 @@ public class DoiBasedIdentityTest {
         "10.1371/journal.pone.0055747.t004");
     assertEquals(DoiBasedIdentity.create("info:doi/10.1371/volume.pgen.v05").getIdentifier(),
         "10.1371/volume.pgen.v05");
-  }
-
-  @Test(dataProvider = "badDois", expectedExceptions = {IllegalArgumentException.class})
-  public void testCreate_error(String doi) {
-    DoiBasedIdentity.create(doi);
-  }
-
-  @Test
-  public void testGetShortIdentifier() {
-    assertEquals(DoiBasedIdentity.getShortIdentifier("info:doi/10.1371/journal.pone.0053052"),
-        "pone.0053052");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("10.1371/journal.pgen.1003285"),
-        "pgen.1003285");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("pntd.0002035"), "pntd.0002035");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("journal.ppat.1003160"), "ppat.1003160");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("info:doi/10.1371/journal.pcbi.1002905.g002"),
-        "pcbi.1002905");
-  }
-
-  @Test(dataProvider = "badDois", expectedExceptions = {IllegalArgumentException.class})
-  public void testGetShortIdentifier_error(String doi) {
-    DoiBasedIdentity.getShortIdentifier(doi);
   }
 }
