@@ -39,7 +39,7 @@ import java.io.IOException;
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
-public class IngestableController extends DoiBasedCrudController {
+public class IngestibleController extends DoiBasedCrudController {
 
   private static final String INGESTABLE_ROOT = "/ingestable";
   private static final String INGESTABLE_NAMESPACE = INGESTABLE_ROOT + "/";

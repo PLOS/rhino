@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 /**
  * {@inheritDoc}
  */
-public class IngestableServiceImpl extends AmbraService implements IngestableService {
+public class IngestibleServiceImpl extends AmbraService implements IngestableService {
 
   private static final String INGEST_SOURCE_DIR_KEY
       = "ambra.services.documentManagement.ingestSourceDir";

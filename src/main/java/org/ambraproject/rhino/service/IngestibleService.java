@@ -24,7 +24,7 @@ import java.io.IOException;
  * Service that deals with article .zip archives in the ingest source directory (defined by the
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
-public interface IngestableService {
+public interface IngestibleService {
 
   /**
    * Writes a list of all ingestable archives to the response.
