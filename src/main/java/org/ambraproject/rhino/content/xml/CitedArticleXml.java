@@ -58,7 +58,9 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     citation.setPublisherLocation(readString("publisher-loc"));
     citation.setPublisherName(readString("publisher-name"));
     citation.setNote(readString("comment"));
-    citation.setDoi(readString("ext-link"));
+
+    String link = readString("ext-link");
+    citation.setDoi((link != null) && EXT_LINK_DOI.matcher(link).find() ? link : null);
 
     String displayYear = readString("year");
     citation.setDisplayYear(displayYear);
@@ -80,6 +82,12 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
 
     return citation;
   }
+
+  /**
+   * Pattern describing what is considered a DOI (as opposed to another kind of URI) if it appears in the "ext-link"
+   * element of a citation.
+   */
+  private static final Pattern EXT_LINK_DOI = Pattern.compile("^\\d+\\.\\d+\\/");
 
   /**
    * Sets the citationType and journal properties of a CitedArticle appropriately based on the XML.
