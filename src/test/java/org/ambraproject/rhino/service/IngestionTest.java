@@ -315,7 +315,12 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s+<");
-  private static final Pattern SELF_CLOSING_TAG = Pattern.compile("<([^>\\s]+)(\\s+[^>]*)?\\s*/>");
+  private static final Pattern SELF_CLOSING_TAG = Pattern.compile(""
+      + "<"
+      + "([^>\\s]+)" // Tag name.
+      + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
+      + "/>"
+  );
 
   private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
                                          List<? extends CharSequence> actual, List<? extends CharSequence> expected) {
