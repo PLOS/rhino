@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -27,6 +28,7 @@ import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.util.NodeListAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -117,7 +119,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setEditors(readEditors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
 
-    article.setCollaborativeAuthors(Lists.newArrayList(readTextList(
+    article.setCollaborativeAuthors(parseCollaborativeAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
     article.setUrl(buildUrl());
 
@@ -273,6 +275,30 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       citations.add(citation);
     }
     return citations;
+  }
+
+  /**
+   * Convert each collab node to its text content, excluding any text that appears inside a nested "contrib-group"
+   * element.
+   * <p/>
+   * TODO: Find a way to do this with just XPath?
+   *
+   * @param collabNodes XML nodes representing "collab" elements
+   * @return a list of their text content
+   */
+  private List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
+    List<String> collabStrings = Lists.newArrayListWithCapacity(collabNodes.size());
+    for (Node collabNode : collabNodes) {
+      StringBuilder text = new StringBuilder();
+      for (Node child : NodeListAdapter.wrap(collabNode.getChildNodes())) {
+        if (!"contrib-group".equals(child.getNodeName())) {
+          text.append(child.getTextContent());
+        }
+      }
+      String result = CharMatcher.WHITESPACE.trimAndCollapseFrom(text.toString(), ' ');
+      collabStrings.add(result);
+    }
+    return collabStrings;
   }
 
   private List<ArticleRelationship> buildRelatedArticles(List<Node> relatedArticleNodes) {
