@@ -1,0 +1,678 @@
+{"doi":"info:doi/10.1371/journal.pgen.1002912","title":
+  "Advances in Quantitative Trait Analysis in Yeast","eIssn":"1553-7404",
+  "state":1,"archiveName":"pgen.1002912.zip","description":
+  "\u003cp\u003eUnderstanding the genetic mechanisms underlying complex traits is one of the next frontiers in biology. The budding yeast \u003citalic\u003eSaccharomyces cerevisiae\u003c/italic\u003e has become an important model for elucidating the mechanisms that govern natural genetic and phenotypic variation. This success is partially due to its intrinsic biological features, such as the short sexual generation time, high meiotic recombination rate, and small genome size. Precise reverse genetics technologies allow the high throughput manipulation of genetic information with exquisite precision, offering the unique opportunity to experimentally measure the phenotypic effect of genetic variants. Population genomic and phenomic studies have revealed widespread variation between diverged populations, characteristic of man-made environments, as well as geographic clusters of wild strains along with naturally occurring recombinant strains (mosaics). Here, we review these recent studies and provide a perspective on how these previously unappreciated levels of variation can help to bridge our understanding of the genotype-phenotype gap, keeping budding yeast at the forefront of genetic studies. Not only are quantitative trait loci (QTL) being mapped with high resolution down to the nucleotide, for the first time QTLs of modest effect and complex interactions between these QTLs and between QTLs and the environment are being determined experimentally at unprecedented levels using next generation techniques of deep sequencing selected pools of individuals as well as multi-generational crosses.\u003c/p\u003e",
+  "rights":
+  "Liti, Louis. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-7","eLocationId":
+  "e1002912","strkImgURI":"","date":"Aug 16, 2012 12:00:00 AM","volume":
+  "8","issue":"8","journal":"PLoS Genet","publisherLocation":
+  "San Francisco, USA","publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pgen.1002912","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Review",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pgen.1002912","extension":
+      "XML","contentType":"text/xml","title":
+      "Advances in Quantitative Trait Analysis in Yeast","description":
+      "\u003cp\u003eUnderstanding the genetic mechanisms underlying complex traits is one of the next frontiers in biology. The budding yeast \u003citalic\u003eSaccharomyces cerevisiae\u003c/italic\u003e has become an important model for elucidating the mechanisms that govern natural genetic and phenotypic variation. This success is partially due to its intrinsic biological features, such as the short sexual generation time, high meiotic recombination rate, and small genome size. Precise reverse genetics technologies allow the high throughput manipulation of genetic information with exquisite precision, offering the unique opportunity to experimentally measure the phenotypic effect of genetic variants. Population genomic and phenomic studies have revealed widespread variation between diverged populations, characteristic of man-made environments, as well as geographic clusters of wild strains along with naturally occurring recombinant strains (mosaics). Here, we review these recent studies and provide a perspective on how these previously unappreciated levels of variation can help to bridge our understanding of the genotype-phenotype gap, keeping budding yeast at the forefront of genetic studies. Not only are quantitative trait loci (QTL) being mapped with high resolution down to the nucleotide, for the first time QTLs of modest effect and complex interactions between these QTLs and between QTLs and the environment are being determined experimentally at unprecedented levels using next generation techniques of deep sequencing selected pools of individuals as well as multi-generational crosses.\u003c/p\u003e",
+      "size":83476},{"doi":"info:doi/10.1371/journal.pgen.1002912",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Advances in Quantitative Trait Analysis in Yeast","description":
+      "\u003cp\u003eUnderstanding the genetic mechanisms underlying complex traits is one of the next frontiers in biology. The budding yeast \u003citalic\u003eSaccharomyces cerevisiae\u003c/italic\u003e has become an important model for elucidating the mechanisms that govern natural genetic and phenotypic variation. This success is partially due to its intrinsic biological features, such as the short sexual generation time, high meiotic recombination rate, and small genome size. Precise reverse genetics technologies allow the high throughput manipulation of genetic information with exquisite precision, offering the unique opportunity to experimentally measure the phenotypic effect of genetic variants. Population genomic and phenomic studies have revealed widespread variation between diverged populations, characteristic of man-made environments, as well as geographic clusters of wild strains along with naturally occurring recombinant strains (mosaics). Here, we review these recent studies and provide a perspective on how these previously unappreciated levels of variation can help to bridge our understanding of the genotype-phenotype gap, keeping budding yeast at the forefront of genetic studies. Not only are quantitative trait loci (QTL) being mapped with high resolution down to the nucleotide, for the first time QTLs of modest effect and complex interactions between these QTLs and between QTLs and the environment are being determined experimentally at unprecedented levels using next generation techniques of deep sequencing selected pools of individuals as well as multi-generational crosses.\u003c/p\u003e",
+      "size":601918},{"doi":"info:doi/10.1371/journal.pgen.1002912.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eExperimental measures of natural variation.\u003c/title\u003e\u003cp\u003eYeasts offer a unique opportunity to engineer changes to measure the impact of phenotypic variants on traits. (A) Reciprocal hemizygosity has high throughput and can be used to test a large number of candidates. Hybrids that differ only in which of two alleles is present/deleted are compared. Deletion collections of multiple strains will soon be available allowing genome-wide systematic studies using hybrids to test all candidates easily or even for discovery of phenotypic effects directly. (B) Allele swapping is less high throughput but allows testing phenotypic effects of specific alleles in different genetic backgrounds. This is more precise than reciprocal hemizygosity. (C) Site-directed mutagenesis is a rapid and precise way of testing known and novel base changes for phenotypic effects. (D) Synthetic biology has the potential of simultaneously testing multiple variants, both natural or artificial, in a single gene \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Hietpas1\"\u003e[55]\u003c/xref\u003e or scattered through the genome \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Dymond1\"\u003e[47]\u003c/xref\u003e.\u003c/p\u003e",
+      "size":659686},{"doi":"info:doi/10.1371/journal.pgen.1002912.g001",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eExperimental measures of natural variation.\u003c/title\u003e\u003cp\u003eYeasts offer a unique opportunity to engineer changes to measure the impact of phenotypic variants on traits. (A) Reciprocal hemizygosity has high throughput and can be used to test a large number of candidates. Hybrids that differ only in which of two alleles is present/deleted are compared. Deletion collections of multiple strains will soon be available allowing genome-wide systematic studies using hybrids to test all candidates easily or even for discovery of phenotypic effects directly. (B) Allele swapping is less high throughput but allows testing phenotypic effects of specific alleles in different genetic backgrounds. This is more precise than reciprocal hemizygosity. (C) Site-directed mutagenesis is a rapid and precise way of testing known and novel base changes for phenotypic effects. (D) Synthetic biology has the potential of simultaneously testing multiple variants, both natural or artificial, in a single gene \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Hietpas1\"\u003e[55]\u003c/xref\u003e or scattered through the genome \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Dymond1\"\u003e[47]\u003c/xref\u003e.\u003c/p\u003e",
+      "size":37191},{"doi":"info:doi/10.1371/journal.pgen.1002912.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eExperimental measures of natural variation.\u003c/title\u003e\u003cp\u003eYeasts offer a unique opportunity to engineer changes to measure the impact of phenotypic variants on traits. (A) Reciprocal hemizygosity has high throughput and can be used to test a large number of candidates. Hybrids that differ only in which of two alleles is present/deleted are compared. Deletion collections of multiple strains will soon be available allowing genome-wide systematic studies using hybrids to test all candidates easily or even for discovery of phenotypic effects directly. (B) Allele swapping is less high throughput but allows testing phenotypic effects of specific alleles in different genetic backgrounds. This is more precise than reciprocal hemizygosity. (C) Site-directed mutagenesis is a rapid and precise way of testing known and novel base changes for phenotypic effects. (D) Synthetic biology has the potential of simultaneously testing multiple variants, both natural or artificial, in a single gene \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Hietpas1\"\u003e[55]\u003c/xref\u003e or scattered through the genome \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Dymond1\"\u003e[47]\u003c/xref\u003e.\u003c/p\u003e",
+      "size":4521},{"doi":"info:doi/10.1371/journal.pgen.1002912.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eExperimental measures of natural variation.\u003c/title\u003e\u003cp\u003eYeasts offer a unique opportunity to engineer changes to measure the impact of phenotypic variants on traits. (A) Reciprocal hemizygosity has high throughput and can be used to test a large number of candidates. Hybrids that differ only in which of two alleles is present/deleted are compared. Deletion collections of multiple strains will soon be available allowing genome-wide systematic studies using hybrids to test all candidates easily or even for discovery of phenotypic effects directly. (B) Allele swapping is less high throughput but allows testing phenotypic effects of specific alleles in different genetic backgrounds. This is more precise than reciprocal hemizygosity. (C) Site-directed mutagenesis is a rapid and precise way of testing known and novel base changes for phenotypic effects. (D) Synthetic biology has the potential of simultaneously testing multiple variants, both natural or artificial, in a single gene \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Hietpas1\"\u003e[55]\u003c/xref\u003e or scattered through the genome \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Dymond1\"\u003e[47]\u003c/xref\u003e.\u003c/p\u003e",
+      "size":84716},{"doi":"info:doi/10.1371/journal.pgen.1002912.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eExperimental measures of natural variation.\u003c/title\u003e\u003cp\u003eYeasts offer a unique opportunity to engineer changes to measure the impact of phenotypic variants on traits. (A) Reciprocal hemizygosity has high throughput and can be used to test a large number of candidates. Hybrids that differ only in which of two alleles is present/deleted are compared. Deletion collections of multiple strains will soon be available allowing genome-wide systematic studies using hybrids to test all candidates easily or even for discovery of phenotypic effects directly. (B) Allele swapping is less high throughput but allows testing phenotypic effects of specific alleles in different genetic backgrounds. This is more precise than reciprocal hemizygosity. (C) Site-directed mutagenesis is a rapid and precise way of testing known and novel base changes for phenotypic effects. (D) Synthetic biology has the potential of simultaneously testing multiple variants, both natural or artificial, in a single gene \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Hietpas1\"\u003e[55]\u003c/xref\u003e or scattered through the genome \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Dymond1\"\u003e[47]\u003c/xref\u003e.\u003c/p\u003e",
+      "size":172605},{"doi":"info:doi/10.1371/journal.pgen.1002912.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eMapping QTLs and modifiers.\u003c/title\u003e\u003cp\u003e(A) QTL mapping has evolved from the classical approach of individual segregant analysis to the X-QTLs and iQTLs approaches with higher mapping sensitivity and resolution. Analysis of time series data in iQTLs allows dynamic monitoring of allele frequency values \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Illingworth1\"\u003e[56]\u003c/xref\u003e. (B) A possible approach to map genetic modifiers using iQTLs. A conditional essential gene, \u003citalic\u003ey\u003c/italic\u003e, is deleted from its original chromosomal location and maintained on a plasmid. This hybrid is intercrossed multiple times to allow reshuffling of parental genomes. Upon loss of gene \u003citalic\u003ey\u003c/italic\u003e, viability relies on the presence of genetic modifier/s, and allelic combinations that result in lethality (dashed cells) will decrease in allele frequency. These modifiers can be detected by comparing allele frequencies of the pool before and after the plasmid loss. When many modifiers are involved, the lethal combinations will be present in low frequency, making them difficult to detect. Further rounds of intercrosses, after loss of gene \u003citalic\u003ey\u003c/italic\u003e, will allow reshuffling of alleles and the generation of more cells with unviable combinations.\u003c/p\u003e",
+      "size":678744},{"doi":"info:doi/10.1371/journal.pgen.1002912.g002",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eMapping QTLs and modifiers.\u003c/title\u003e\u003cp\u003e(A) QTL mapping has evolved from the classical approach of individual segregant analysis to the X-QTLs and iQTLs approaches with higher mapping sensitivity and resolution. Analysis of time series data in iQTLs allows dynamic monitoring of allele frequency values \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Illingworth1\"\u003e[56]\u003c/xref\u003e. (B) A possible approach to map genetic modifiers using iQTLs. A conditional essential gene, \u003citalic\u003ey\u003c/italic\u003e, is deleted from its original chromosomal location and maintained on a plasmid. This hybrid is intercrossed multiple times to allow reshuffling of parental genomes. Upon loss of gene \u003citalic\u003ey\u003c/italic\u003e, viability relies on the presence of genetic modifier/s, and allelic combinations that result in lethality (dashed cells) will decrease in allele frequency. These modifiers can be detected by comparing allele frequencies of the pool before and after the plasmid loss. When many modifiers are involved, the lethal combinations will be present in low frequency, making them difficult to detect. Further rounds of intercrosses, after loss of gene \u003citalic\u003ey\u003c/italic\u003e, will allow reshuffling of alleles and the generation of more cells with unviable combinations.\u003c/p\u003e",
+      "size":57302},{"doi":"info:doi/10.1371/journal.pgen.1002912.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eMapping QTLs and modifiers.\u003c/title\u003e\u003cp\u003e(A) QTL mapping has evolved from the classical approach of individual segregant analysis to the X-QTLs and iQTLs approaches with higher mapping sensitivity and resolution. Analysis of time series data in iQTLs allows dynamic monitoring of allele frequency values \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Illingworth1\"\u003e[56]\u003c/xref\u003e. (B) A possible approach to map genetic modifiers using iQTLs. A conditional essential gene, \u003citalic\u003ey\u003c/italic\u003e, is deleted from its original chromosomal location and maintained on a plasmid. This hybrid is intercrossed multiple times to allow reshuffling of parental genomes. Upon loss of gene \u003citalic\u003ey\u003c/italic\u003e, viability relies on the presence of genetic modifier/s, and allelic combinations that result in lethality (dashed cells) will decrease in allele frequency. These modifiers can be detected by comparing allele frequencies of the pool before and after the plasmid loss. When many modifiers are involved, the lethal combinations will be present in low frequency, making them difficult to detect. Further rounds of intercrosses, after loss of gene \u003citalic\u003ey\u003c/italic\u003e, will allow reshuffling of alleles and the generation of more cells with unviable combinations.\u003c/p\u003e",
+      "size":6368},{"doi":"info:doi/10.1371/journal.pgen.1002912.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eMapping QTLs and modifiers.\u003c/title\u003e\u003cp\u003e(A) QTL mapping has evolved from the classical approach of individual segregant analysis to the X-QTLs and iQTLs approaches with higher mapping sensitivity and resolution. Analysis of time series data in iQTLs allows dynamic monitoring of allele frequency values \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Illingworth1\"\u003e[56]\u003c/xref\u003e. (B) A possible approach to map genetic modifiers using iQTLs. A conditional essential gene, \u003citalic\u003ey\u003c/italic\u003e, is deleted from its original chromosomal location and maintained on a plasmid. This hybrid is intercrossed multiple times to allow reshuffling of parental genomes. Upon loss of gene \u003citalic\u003ey\u003c/italic\u003e, viability relies on the presence of genetic modifier/s, and allelic combinations that result in lethality (dashed cells) will decrease in allele frequency. These modifiers can be detected by comparing allele frequencies of the pool before and after the plasmid loss. When many modifiers are involved, the lethal combinations will be present in low frequency, making them difficult to detect. Further rounds of intercrosses, after loss of gene \u003citalic\u003ey\u003c/italic\u003e, will allow reshuffling of alleles and the generation of more cells with unviable combinations.\u003c/p\u003e",
+      "size":129467},{"doi":"info:doi/10.1371/journal.pgen.1002912.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eMapping QTLs and modifiers.\u003c/title\u003e\u003cp\u003e(A) QTL mapping has evolved from the classical approach of individual segregant analysis to the X-QTLs and iQTLs approaches with higher mapping sensitivity and resolution. Analysis of time series data in iQTLs allows dynamic monitoring of allele frequency values \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pgen.1002912-Illingworth1\"\u003e[56]\u003c/xref\u003e. (B) A possible approach to map genetic modifiers using iQTLs. A conditional essential gene, \u003citalic\u003ey\u003c/italic\u003e, is deleted from its original chromosomal location and maintained on a plasmid. This hybrid is intercrossed multiple times to allow reshuffling of parental genomes. Upon loss of gene \u003citalic\u003ey\u003c/italic\u003e, viability relies on the presence of genetic modifier/s, and allelic combinations that result in lethality (dashed cells) will decrease in allele frequency. These modifiers can be detected by comparing allele frequencies of the pool before and after the plasmid loss. When many modifiers are involved, the lethal combinations will be present in low frequency, making them difficult to detect. Further rounds of intercrosses, after loss of gene \u003citalic\u003ey\u003c/italic\u003e, will allow reshuffling of alleles and the generation of more cells with unviable combinations.\u003c/p\u003e",
+      "size":217974},{"doi":"info:doi/10.1371/journal.pgen.1002912.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eLinked quantitative trait loci (QTLs) can arise through normal population genetic processes.\u003c/title\u003e\u003cp\u003eFor any given phenotype there are many loci where mutations can have an effect. Different populations will experience mutations in different loci affecting the same phenotype. These mutations can affect a phenotype in a positive (+) or negative (−) way and if nearly neutral ( \u003d ) will remain segregating within a population for awhile. As other mutations occur, advantageous combinations can result with better fitness than either mutation alone or the original parental alleles. Multiple mutations with effects upon a trait will be broken up by recombination if not linked and one or more can therefore be lost. Linked mutations can become fixed as blocks of larger collections of QTLs if the combination of alleles is beneficial. Different populations may evolve different “super”-QTLs, which are revealed when the populations interbreed. Offspring will express a range of phenotypes depending on which QTLs are inherited and how much recombination breaks up the linked groups. Multiple rounds of interbreeding can further break up the linked QTLs revealing individual loci, as illustrated in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pgen-1002912-g002\"\u003eFigure 2\u003c/xref\u003e.\u003c/p\u003e",
+      "size":419030},{"doi":"info:doi/10.1371/journal.pgen.1002912.g003",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eLinked quantitative trait loci (QTLs) can arise through normal population genetic processes.\u003c/title\u003e\u003cp\u003eFor any given phenotype there are many loci where mutations can have an effect. Different populations will experience mutations in different loci affecting the same phenotype. These mutations can affect a phenotype in a positive (+) or negative (−) way and if nearly neutral ( \u003d ) will remain segregating within a population for awhile. As other mutations occur, advantageous combinations can result with better fitness than either mutation alone or the original parental alleles. Multiple mutations with effects upon a trait will be broken up by recombination if not linked and one or more can therefore be lost. Linked mutations can become fixed as blocks of larger collections of QTLs if the combination of alleles is beneficial. Different populations may evolve different “super”-QTLs, which are revealed when the populations interbreed. Offspring will express a range of phenotypes depending on which QTLs are inherited and how much recombination breaks up the linked groups. Multiple rounds of interbreeding can further break up the linked QTLs revealing individual loci, as illustrated in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pgen-1002912-g002\"\u003eFigure 2\u003c/xref\u003e.\u003c/p\u003e",
+      "size":35178},{"doi":"info:doi/10.1371/journal.pgen.1002912.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eLinked quantitative trait loci (QTLs) can arise through normal population genetic processes.\u003c/title\u003e\u003cp\u003eFor any given phenotype there are many loci where mutations can have an effect. Different populations will experience mutations in different loci affecting the same phenotype. These mutations can affect a phenotype in a positive (+) or negative (−) way and if nearly neutral ( \u003d ) will remain segregating within a population for awhile. As other mutations occur, advantageous combinations can result with better fitness than either mutation alone or the original parental alleles. Multiple mutations with effects upon a trait will be broken up by recombination if not linked and one or more can therefore be lost. Linked mutations can become fixed as blocks of larger collections of QTLs if the combination of alleles is beneficial. Different populations may evolve different “super”-QTLs, which are revealed when the populations interbreed. Offspring will express a range of phenotypes depending on which QTLs are inherited and how much recombination breaks up the linked groups. Multiple rounds of interbreeding can further break up the linked QTLs revealing individual loci, as illustrated in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pgen-1002912-g002\"\u003eFigure 2\u003c/xref\u003e.\u003c/p\u003e",
+      "size":5720},{"doi":"info:doi/10.1371/journal.pgen.1002912.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eLinked quantitative trait loci (QTLs) can arise through normal population genetic processes.\u003c/title\u003e\u003cp\u003eFor any given phenotype there are many loci where mutations can have an effect. Different populations will experience mutations in different loci affecting the same phenotype. These mutations can affect a phenotype in a positive (+) or negative (−) way and if nearly neutral ( \u003d ) will remain segregating within a population for awhile. As other mutations occur, advantageous combinations can result with better fitness than either mutation alone or the original parental alleles. Multiple mutations with effects upon a trait will be broken up by recombination if not linked and one or more can therefore be lost. Linked mutations can become fixed as blocks of larger collections of QTLs if the combination of alleles is beneficial. Different populations may evolve different “super”-QTLs, which are revealed when the populations interbreed. Offspring will express a range of phenotypes depending on which QTLs are inherited and how much recombination breaks up the linked groups. Multiple rounds of interbreeding can further break up the linked QTLs revealing individual loci, as illustrated in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pgen-1002912-g002\"\u003eFigure 2\u003c/xref\u003e.\u003c/p\u003e",
+      "size":54275},{"doi":"info:doi/10.1371/journal.pgen.1002912.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eLinked quantitative trait loci (QTLs) can arise through normal population genetic processes.\u003c/title\u003e\u003cp\u003eFor any given phenotype there are many loci where mutations can have an effect. Different populations will experience mutations in different loci affecting the same phenotype. These mutations can affect a phenotype in a positive (+) or negative (−) way and if nearly neutral ( \u003d ) will remain segregating within a population for awhile. As other mutations occur, advantageous combinations can result with better fitness than either mutation alone or the original parental alleles. Multiple mutations with effects upon a trait will be broken up by recombination if not linked and one or more can therefore be lost. Linked mutations can become fixed as blocks of larger collections of QTLs if the combination of alleles is beneficial. Different populations may evolve different “super”-QTLs, which are revealed when the populations interbreed. Offspring will express a range of phenotypes depending on which QTLs are inherited and how much recombination breaks up the linked groups. Multiple rounds of interbreeding can further break up the linked QTLs revealing individual loci, as illustrated in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pgen-1002912-g002\"\u003eFigure 2\u003c/xref\u003e.\u003c/p\u003e",
+      "size":53987}],"citedArticles":[{"key":"1","year":2007,"displayYear":
+      "2007","volumeNumber":24,"volume":"24","title":
+      "A history of research on yeasts 10: foundations of yeast genetics",
+      "pages":"799-845","eLocationID":"799","journal":"Yeast",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JA Barnett","givenNames":"JA","surnames":"Barnett","suffix":""}],
+      "editors":[]},{"key":"2","year":2009,"displayYear":"2009",
+      "volumeNumber":10,"volume":"10","title":
+      "The genetics of quantitative traits: challenges and prospects",
+      "pages":"565-577","eLocationID":"565","journal":"Nat Rev Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TF Mackay","givenNames":"TF","surnames":"Mackay","suffix":""},{
+          "fullName":"EA Stone","givenNames":"EA","surnames":"Stone",
+          "suffix":""},{"fullName":"JF Ayroles","givenNames":"JF","surnames":
+          "Ayroles","suffix":""}],"editors":[]},{"key":"3","year":2011,
+      "displayYear":"2011","volumeNumber":1810,"volume":"1810","title":
+      "From sequence to function: insights from natural variation in budding yeasts",
+      "pages":"959-966","eLocationID":"959","journal":
+      "Biochim Biophys Acta","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CA Nieduszynski","givenNames":"CA","surnames":"Nieduszynski",
+          "suffix":""},{"fullName":"G Liti","givenNames":"G","surnames":
+          "Liti","suffix":""}],"editors":[]},{"key":"4","year":2002,
+      "displayYear":"2002","volumeNumber":296,"volume":"296","title":
+      "Genetic dissection of transcriptional regulation in budding yeast",
+      "pages":"752-755","eLocationID":"752","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RB Brem","givenNames":"RB","surnames":"Brem","suffix":""},{
+          "fullName":"G Yvert","givenNames":"G","surnames":"Yvert","suffix":
+          ""},{"fullName":"R Clinton","givenNames":"R","surnames":
+          "Clinton","suffix":""},{"fullName":"L Kruglyak","givenNames":"L",
+          "surnames":"Kruglyak","suffix":""}],"editors":[]},{"key":"5",
+      "year":2002,"displayYear":"2002","volumeNumber":416,"volume":"416",
+      "title":
+      "Dissecting the architecture of a quantitative trait locus in yeast",
+      "pages":"326-330","eLocationID":"326","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "LM Steinmetz","givenNames":"LM","surnames":"Steinmetz","suffix":
+          ""},{"fullName":"H Sinha","givenNames":"H","surnames":"Sinha",
+          "suffix":""},{"fullName":"DR Richards","givenNames":"DR",
+          "surnames":"Richards","suffix":""},{"fullName":"JI Spiegelman",
+          "givenNames":"JI","surnames":"Spiegelman","suffix":""},{"fullName":
+          "PJ Oefner","givenNames":"PJ","surnames":"Oefner","suffix":""}],
+      "editors":[]},{"key":"6","year":2003,"displayYear":"2003",
+      "volumeNumber":35,"volume":"35","title":
+      "Trans-acting regulatory variation in Saccharomyces cerevisiae and the role of transcription factors",
+      "pages":"57-64","eLocationID":"57","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Yvert","givenNames":"G","surnames":"Yvert","suffix":""},{
+          "fullName":"RB Brem","givenNames":"RB","surnames":"Brem","suffix":
+          ""},{"fullName":"J Whittle","givenNames":"J","surnames":
+          "Whittle","suffix":""},{"fullName":"JM Akey","givenNames":"JM",
+          "surnames":"Akey","suffix":""},{"fullName":"E Foss","givenNames":
+          "E","surnames":"Foss","suffix":""}],"editors":[]},{"key":"7",
+      "year":2009,"displayYear":"2009","volumeNumber":326,"volume":"326",
+      "title":
+      "Dissecting the genetic basis of resistance to malaria parasites in Anopheles gambiae",
+      "pages":"147-150","eLocationID":"147","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SA Blandin","givenNames":"SA","surnames":"Blandin","suffix":""},{
+          "fullName":"R Wang-Sattler","givenNames":"R","surnames":
+          "Wang-Sattler","suffix":""},{"fullName":"M Lamacchia","givenNames":
+          "M","surnames":"Lamacchia","suffix":""},{"fullName":"J Gagneur",
+          "givenNames":"J","surnames":"Gagneur","suffix":""},{"fullName":
+          "G Lycett","givenNames":"G","surnames":"Lycett","suffix":""}],
+      "editors":[]},{"key":"8","year":2009,"displayYear":"2009",
+      "volumeNumber":323,"volume":"323","title":
+      "Genetic interactions between transcription factors cause natural variation in yeast",
+      "pages":"498-501","eLocationID":"498","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Gerke","givenNames":"J","surnames":"Gerke","suffix":""},{
+          "fullName":"K Lorenz","givenNames":"K","surnames":"Lorenz",
+          "suffix":""},{"fullName":"B Cohen","givenNames":"B","surnames":
+          "Cohen","suffix":""}],"editors":[]},{"key":"9","year":2005,
+      "displayYear":"2005","volumeNumber":1,"volume":"1","title":
+      "Evidence for domesticated and wild populations of Saccharomyces cerevisiae",
+      "pages":"e5","eLocationID":"e5","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.0010005",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"JC Fay","givenNames":"JC","surnames":"Fay",
+          "suffix":""},{"fullName":"JA Benavides","givenNames":"JA",
+          "surnames":"Benavides","suffix":""}],"editors":[]},{"key":"10",
+      "year":2007,"displayYear":"2007","volumeNumber":16,"volume":"16",
+      "title":
+      "Bread, beer and wine: Saccharomyces cerevisiae diversity reflects human history",
+      "pages":"2091-2102","eLocationID":"2091","journal":"Mol Ecol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JL Legras","givenNames":"JL","surnames":"Legras","suffix":""},{
+          "fullName":"D Merdinoglu","givenNames":"D","surnames":
+          "Merdinoglu","suffix":""},{"fullName":"JM Cornuet","givenNames":
+          "JM","surnames":"Cornuet","suffix":""},{"fullName":"F Karst",
+          "givenNames":"F","surnames":"Karst","suffix":""}],"editors":[]},{
+      "key":"11","year":2008,"displayYear":"2008","volumeNumber":74,"volume":
+      "74","title":
+      "Natural populations of Saccharomyces kudriavzevii in Portugal are associated with oak bark and are sympatric with S. cerevisiae and S. paradoxus",
+      "pages":"2144-2152","eLocationID":"2144","journal":
+      "Appl Environ Microbiol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JP Sampaio","givenNames":"JP","surnames":"Sampaio","suffix":""},{
+          "fullName":"P Goncalves","givenNames":"P","surnames":"Goncalves",
+          "suffix":""}],"editors":[]},{"key":"12","year":2002,"displayYear":
+      "2002","volumeNumber":1,"volume":"1","title":
+      "Saccharomyces cerevisiae and Saccharomyces paradoxus coexist in a natural woodland site in North America and display different levels of reproductive isolation from European conspecifics",
+      "pages":"299-306","eLocationID":"299","journal":"FEMS Yeast Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PD Sniegowski","givenNames":"PD","surnames":"Sniegowski","suffix":
+          ""},{"fullName":"PG Dombrowski","givenNames":"PG","surnames":
+          "Dombrowski","suffix":""},{"fullName":"E Fingerman","givenNames":
+          "E","surnames":"Fingerman","suffix":""}],"editors":[]},{"key":
+      "13","year":2009,"displayYear":"2009","volumeNumber":458,"volume":
+      "458","title":"Population genomics of domestic and wild yeasts",
+      "pages":"337-341","eLocationID":"337","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Liti","givenNames":"G","surnames":"Liti","suffix":""},{
+          "fullName":"DM Carter","givenNames":"DM","surnames":"Carter",
+          "suffix":""},{"fullName":"AM Moses","givenNames":"AM","surnames":
+          "Moses","suffix":""},{"fullName":"J Warringer","givenNames":"J",
+          "surnames":"Warringer","suffix":""},{"fullName":"L Parts",
+          "givenNames":"L","surnames":"Parts","suffix":""}],"editors":[]},{
+      "key":"14","year":2011,"displayYear":"2011","volumeNumber":20,"volume":
+      "20","title":
+      "Assessing the complex architecture of polygenic traits in diverged yeast populations",
+      "pages":"1401-1413","eLocationID":"1401","journal":"Mol Ecol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "FA Cubillos","givenNames":"FA","surnames":"Cubillos","suffix":
+          ""},{"fullName":"E Billi","givenNames":"E","surnames":"Billi",
+          "suffix":""},{"fullName":"E Zorgo","givenNames":"E","surnames":
+          "Zorgo","suffix":""},{"fullName":"L Parts","givenNames":"L",
+          "surnames":"Parts","suffix":""},{"fullName":"P Fargier",
+          "givenNames":"P","surnames":"Fargier","suffix":""}],"editors":[]},{
+      "key":"15","year":2007,"displayYear":"2007","volumeNumber":104,
+      "volume":"104","title":
+      "Genetic variation in the cysteine biosynthesis pathway causes sensitivity to pharmacological compounds",
+      "pages":"19387-19391","eLocationID":"19387","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "HS Kim","givenNames":"HS","surnames":"Kim","suffix":""},{
+          "fullName":"JC Fay","givenNames":"JC","surnames":"Fay","suffix":
+          ""}],"editors":[]},{"key":"16","year":2009,"displayYear":"2009",
+      "volumeNumber":5,"volume":"5","title":
+      "Segregating YKU80 and TLC1 alleles underlying natural variation in telomere properties in wild yeast",
+      "pages":"e1000659","eLocationID":"e1000659","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1000659",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"G Liti","givenNames":"G","surnames":"Liti",
+          "suffix":""},{"fullName":"S Haricharan","givenNames":"S",
+          "surnames":"Haricharan","suffix":""},{"fullName":"FA Cubillos",
+          "givenNames":"FA","surnames":"Cubillos","suffix":""},{"fullName":
+          "AL Tierney","givenNames":"AL","surnames":"Tierney","suffix":""},{
+          "fullName":"S Sharp","givenNames":"S","surnames":"Sharp","suffix":
+          ""}],"editors":[]},{"key":"17","year":2008,"displayYear":"2008",
+      "volumeNumber":319,"volume":"319","title":
+      "Widespread genetic incompatibility in C. elegans maintained by balancing selection",
+      "pages":"589-594","eLocationID":"589","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "HS Seidel","givenNames":"HS","surnames":"Seidel","suffix":""},{
+          "fullName":"MV Rockman","givenNames":"MV","surnames":"Rockman",
+          "suffix":""},{"fullName":"L Kruglyak","givenNames":"L","surnames":
+          "Kruglyak","suffix":""}],"editors":[]},{"key":"18","year":2011,
+      "displayYear":"2011","volumeNumber":27,"volume":"27","title":
+      "Molecular mechanisms of epistasis within and between genes","pages":
+      "323-331","eLocationID":"323","journal":"Trends Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "B Lehner","givenNames":"B","surnames":"Lehner","suffix":""}],
+      "editors":[]},{"key":"19","year":2006,"displayYear":"2006",
+      "volumeNumber":2,"volume":"2","title":
+      "Complex genetic interactions in a quantitative trait locus","pages":
+      "e13","eLocationID":"e13","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.0020013",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"H Sinha","givenNames":"H","surnames":"Sinha",
+          "suffix":""},{"fullName":"BP Nicholson","givenNames":"BP",
+          "surnames":"Nicholson","suffix":""},{"fullName":"LM Steinmetz",
+          "givenNames":"LM","surnames":"Steinmetz","suffix":""},{"fullName":
+          "JH McCusker","givenNames":"JH","surnames":"McCusker","suffix":
+          ""}],"editors":[]},{"key":"20","year":2006,"displayYear":"2006",
+      "volumeNumber":443,"volume":"443","title":
+      "Amplification of histone genes by circular chromosome formation in Saccharomyces cerevisiae",
+      "pages":"1003-1007","eLocationID":"1003","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DE Libuda","givenNames":"DE","surnames":"Libuda","suffix":""},{
+          "fullName":"F Winston","givenNames":"F","surnames":"Winston",
+          "suffix":""}],"editors":[]},{"key":"21","year":2010,"displayYear":
+      "2010","volumeNumber":328,"volume":"328","title":
+      "Genotype to phenotype: a complex problem","pages":"469","eLocationID":
+      "469","journal":"Science","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RD Dowell","givenNames":"RD","surnames":"Dowell","suffix":""},{
+          "fullName":"O Ryan","givenNames":"O","surnames":"Ryan","suffix":
+          ""},{"fullName":"A Jansen","givenNames":"A","surnames":"Jansen",
+          "suffix":""},{"fullName":"D Cheung","givenNames":"D","surnames":
+          "Cheung","suffix":""},{"fullName":"S Agarwala","givenNames":"S",
+          "surnames":"Agarwala","suffix":""}],"editors":[]},{"key":"22",
+      "year":2010,"displayYear":"2010","volumeNumber":6,"volume":"6","title":
+      
+      "Environmental and genetic determinants of colony morphology in yeast",
+      "pages":"e1000823","eLocationID":"e1000823","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1000823",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"JA Granek","givenNames":"JA","surnames":
+          "Granek","suffix":""},{"fullName":"PM Magwene","givenNames":"PM",
+          "surnames":"Magwene","suffix":""}],"editors":[]},{"key":"23",
+      "year":2011,"displayYear":"2011","volumeNumber":7,"volume":"7","title":
+      
+      "Environment-responsive transcription factors bind subtelomeric elements and regulate gene silencing",
+      "pages":"455","eLocationID":"455","journal":"Mol Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JJ Smith","givenNames":"JJ","surnames":"Smith","suffix":""},{
+          "fullName":"LR Miller","givenNames":"LR","surnames":"Miller",
+          "suffix":""},{"fullName":"R Kreisberg","givenNames":"R","surnames":
+          "Kreisberg","suffix":""},{"fullName":"L Vazquez","givenNames":
+          "L","surnames":"Vazquez","suffix":""},{"fullName":"Y Wan",
+          "givenNames":"Y","surnames":"Wan","suffix":""}],"editors":[]},{
+      "key":"24","year":2010,"displayYear":"2010","volumeNumber":330,
+      "volume":"330","title":
+      "Hsp90 and environmental stress transform the adaptive value of natural genetic variation",
+      "pages":"1820-1824","eLocationID":"1820","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DF Jarosz","givenNames":"DF","surnames":"Jarosz","suffix":""},{
+          "fullName":"S Lindquist","givenNames":"S","surnames":"Lindquist",
+          "suffix":""}],"editors":[]},{"key":"25","year":2010,"displayYear":
+      "2010","volumeNumber":6,"volume":"6","title":
+      "Natural single-nucleosome epi-polymorphisms in yeast","pages":
+      "e1000913","eLocationID":"e1000913","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1000913",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"M Nagarajan","givenNames":"M","surnames":
+          "Nagarajan","suffix":""},{"fullName":"JB Veyrieras","givenNames":
+          "JB","surnames":"Veyrieras","suffix":""},{"fullName":
+          "M de Dieuleveult","givenNames":"M","surnames":"de Dieuleveult",
+          "suffix":""},{"fullName":"H Bottin","givenNames":"H","surnames":
+          "Bottin","suffix":""},{"fullName":"S Fehrmann","givenNames":"S",
+          "surnames":"Fehrmann","suffix":""}],"editors":[]},{"key":"26",
+      "year":2006,"displayYear":"2006","volumeNumber":2,"volume":"2","title":
+      
+      "Four linked genes participate in controlling sporulation efficiency in budding yeast",
+      "pages":"e195","eLocationID":"e195","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.0020195",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"G Ben-Ari","givenNames":"G","surnames":
+          "Ben-Ari","suffix":""},{"fullName":"D Zenvirth","givenNames":"D",
+          "surnames":"Zenvirth","suffix":""},{"fullName":"A Sherman",
+          "givenNames":"A","surnames":"Sherman","suffix":""},{"fullName":
+          "L David","givenNames":"L","surnames":"David","suffix":""},{
+          "fullName":"M Klutstein","givenNames":"M","surnames":"Klutstein",
+          "suffix":""}],"editors":[]},{"key":"27","year":2005,"displayYear":
+      "2005","volumeNumber":37,"volume":"37","title":
+      "Quantitative trait loci mapped to single-nucleotide resolution in yeast",
+      "pages":"1333-1340","eLocationID":"1333","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AM Deutschbauer","givenNames":"AM","surnames":"Deutschbauer",
+          "suffix":""},{"fullName":"RW Davis","givenNames":"RW","surnames":
+          "Davis","suffix":""}],"editors":[]},{"key":"28","year":2012,
+      "displayYear":"2012","volumeNumber":22,"volume":"22","title":
+      "Identification of novel causative genes determining the complex trait of high ethanol tolerance in yeast using pooled-segregant whole-genome sequence analysis",
+      "pages":"975-984","eLocationID":"975","journal":"Genome Research",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Swinnen","givenNames":"S","surnames":"Swinnen","suffix":""},{
+          "fullName":"K Schaerlaekens","givenNames":"K","surnames":
+          "Schaerlaekens","suffix":""},{"fullName":"T Pais","givenNames":
+          "T","surnames":"Pais","suffix":""},{"fullName":"J Claesen",
+          "givenNames":"J","surnames":"Claesen","suffix":""},{"fullName":
+          "G Hubmann","givenNames":"G","surnames":"Hubmann","suffix":""}],
+      "editors":[]},{"key":"29","year":2005,"displayYear":"2005",
+      "volumeNumber":435,"volume":"435","title":
+      "Epistasis and balanced polymorphism influencing complex trait variation",
+      "pages":"95-98","eLocationID":"95","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Kroymann","givenNames":"J","surnames":"Kroymann","suffix":""},{
+          "fullName":"T Mitchell-Olds","givenNames":"T","surnames":
+          "Mitchell-Olds","suffix":""}],"editors":[]},{"key":"30","year":
+      2011,"displayYear":"2011","volumeNumber":477,"volume":"477","title":
+      "Chromosomal rearrangements maintain a polymorphic supergene controlling butterfly mimicry",
+      "pages":"203-206","eLocationID":"203","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Joron","givenNames":"M","surnames":"Joron","suffix":""},{
+          "fullName":"L Frezal","givenNames":"L","surnames":"Frezal",
+          "suffix":""},{"fullName":"RT Jones","givenNames":"RT","surnames":
+          "Jones","suffix":""},{"fullName":"NL Chamberlain","givenNames":
+          "NL","surnames":"Chamberlain","suffix":""},{"fullName":"SF Lee",
+          "givenNames":"SF","surnames":"Lee","suffix":""}],"editors":[]},{
+      "key":"31","year":2011,"displayYear":"2011","volumeNumber":12,"volume":
+      "12","title":
+      "Ranking insertion, deletion and nonsense mutations based on their effect on genetic information",
+      "pages":"299","eLocationID":"299","journal":"BMC Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Zia","givenNames":"A","surnames":"Zia","suffix":""},{"fullName":
+          "AM Moses","givenNames":"AM","surnames":"Moses","suffix":""}],
+      "editors":[]},{"key":"32","year":2011,"displayYear":"2011",
+      "volumeNumber":7,"volume":"7","title":
+      "Trait variation in yeast is defined by population history","pages":
+      "e1002111","eLocationID":"e1002111","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1002111",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"J Warringer","givenNames":"J","surnames":
+          "Warringer","suffix":""},{"fullName":"E Zorgo","givenNames":"E",
+          "surnames":"Zorgo","suffix":""},{"fullName":"FA Cubillos",
+          "givenNames":"FA","surnames":"Cubillos","suffix":""},{"fullName":
+          "A Zia","givenNames":"A","surnames":"Zia","suffix":""},{"fullName":
+          "A Gjuvsland","givenNames":"A","surnames":"Gjuvsland","suffix":
+          ""}],"editors":[]},{"key":"33","year":2011,"displayYear":"2011",
+      "volumeNumber":12,"volume":"12","title":
+      "Genome-wide association studies in plants: the missing heritability is in the field",
+      "pages":"232","eLocationID":"232","journal":"Genome Biology",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "B Brachi","givenNames":"B","surnames":"Brachi","suffix":""},{
+          "fullName":"GP Morris","givenNames":"GP","surnames":"Morris",
+          "suffix":""},{"fullName":"JO Borevitz","givenNames":"JO",
+          "surnames":"Borevitz","suffix":""}],"editors":[]},{"key":"34",
+      "year":2009,"displayYear":"2009","volumeNumber":458,"volume":"458",
+      "title":
+      "Comprehensive polymorphism survey elucidates population structure of Saccharomyces cerevisiae",
+      "pages":"342-345","eLocationID":"342","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Schacherer","givenNames":"J","surnames":"Schacherer","suffix":
+          ""},{"fullName":"JA Shapiro","givenNames":"JA","surnames":
+          "Shapiro","suffix":""},{"fullName":"DM Ruderfer","givenNames":
+          "DM","surnames":"Ruderfer","suffix":""},{"fullName":"L Kruglyak",
+          "givenNames":"L","surnames":"Kruglyak","suffix":""}],"editors":[]},
+    {"key":"35","year":2011,"displayYear":"2011","volumeNumber":1,"volume":
+      "1","title":
+      "Deciphering the molecular basis of wine yeast fermentation traits using a combined genetic and genomic approach",
+      "pages":"263-281","eLocationID":"263","journal":"G3",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Ambroset","givenNames":"C","surnames":"Ambroset","suffix":""},{
+          "fullName":"M Petit","givenNames":"M","surnames":"Petit","suffix":
+          ""},{"fullName":"C Brion","givenNames":"C","surnames":"Brion",
+          "suffix":""},{"fullName":"I Sanchez","givenNames":"I","surnames":
+          "Sanchez","suffix":""},{"fullName":"P Delobel","givenNames":"P",
+          "surnames":"Delobel","suffix":""}],"editors":[]},{"key":"36",
+      "year":2008,"displayYear":"2008","volumeNumber":4,"volume":"4","title":
+      
+      "Cell-to-cell stochastic variation in gene expression is a complex genetic trait",
+      "pages":"e1000049","eLocationID":"e1000049","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1000049",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"J Ansel","givenNames":"J","surnames":"Ansel",
+          "suffix":""},{"fullName":"H Bottin","givenNames":"H","surnames":
+          "Bottin","suffix":""},{"fullName":"C Rodriguez-Beltran",
+          "givenNames":"C","surnames":"Rodriguez-Beltran","suffix":""},{
+          "fullName":"C Damon","givenNames":"C","surnames":"Damon","suffix":
+          ""},{"fullName":"M Nagarajan","givenNames":"M","surnames":
+          "Nagarajan","suffix":""}],"editors":[]},{"key":"37","year":2008,
+      "displayYear":"2008","volumeNumber":4,"volume":"4","title":
+      "Identification and dissection of a complex DNA repair sensitivity phenotype in Baker\u0027s yeast",
+      "pages":"e1000123","eLocationID":"e1000123","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1000123",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"A Demogines","givenNames":"A","surnames":
+          "Demogines","suffix":""},{"fullName":"E Smith","givenNames":"E",
+          "surnames":"Smith","suffix":""},{"fullName":"L Kruglyak",
+          "givenNames":"L","surnames":"Kruglyak","suffix":""},{"fullName":
+          "E Alani","givenNames":"E","surnames":"Alani","suffix":""}],
+      "editors":[]},{"key":"38","year":2007,"displayYear":"2007",
+      "volumeNumber":7,"volume":"7","title":
+      "Single QTL mapping and nucleotide-level resolution of a physiologic trait in wine Saccharomyces cerevisiae strains",
+      "pages":"941-952","eLocationID":"941","journal":
+      "FEMS Yeast Research","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Marullo","givenNames":"P","surnames":"Marullo","suffix":""},{
+          "fullName":"M Aigle","givenNames":"M","surnames":"Aigle","suffix":
+          ""},{"fullName":"M Bely","givenNames":"M","surnames":"Bely",
+          "suffix":""},{"fullName":"I Masneuf-Pomarede","givenNames":"I",
+          "surnames":"Masneuf-Pomarede","suffix":""},{"fullName":
+          "P Durrens","givenNames":"P","surnames":"Durrens","suffix":""}],
+      "editors":[]},{"key":"39","year":2007,"displayYear":"2007",
+      "volumeNumber":3,"volume":"3","title":
+      "Genetic complexity and quantitative trait loci mapping of yeast morphological traits",
+      "pages":"e31","eLocationID":"e31","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.0030031",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"S Nogami","givenNames":"S","surnames":
+          "Nogami","suffix":""},{"fullName":"Y Ohya","givenNames":"Y",
+          "surnames":"Ohya","suffix":""},{"fullName":"G Yvert","givenNames":
+          "G","surnames":"Yvert","suffix":""}],"editors":[]},{"key":"40",
+      "year":2010,"displayYear":"2010","volumeNumber":6,"volume":"6","title":
+      "Different sets of QTLs influence fitness variation in yeast","pages":
+      "346","eLocationID":"346","journal":"Mol Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "GH Romano","givenNames":"GH","surnames":"Romano","suffix":""},{
+          "fullName":"Y Gurvich","givenNames":"Y","surnames":"Gurvich",
+          "suffix":""},{"fullName":"O Lavi","givenNames":"O","surnames":
+          "Lavi","suffix":""},{"fullName":"I Ulitsky","givenNames":"I",
+          "surnames":"Ulitsky","suffix":""},{"fullName":"R Shamir",
+          "givenNames":"R","surnames":"Shamir","suffix":""}],"editors":[]},{
+      "key":"41","year":2008,"displayYear":"2008","volumeNumber":180,
+      "volume":"180","title":
+      "Sequential elimination of major-effect contributors identifies additional quantitative trait loci conditioning high-temperature growth in yeast",
+      "pages":"1661-1670","eLocationID":"1661","journal":"Genetics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "H Sinha","givenNames":"H","surnames":"Sinha","suffix":""},{
+          "fullName":"L David","givenNames":"L","surnames":"David","suffix":
+          ""},{"fullName":"RC Pascon","givenNames":"RC","surnames":
+          "Pascon","suffix":""},{"fullName":"S Clauder-Munster","givenNames":
+          "S","surnames":"Clauder-Munster","suffix":""},{"fullName":
+          "S Krishnakumar","givenNames":"S","surnames":"Krishnakumar",
+          "suffix":""}],"editors":[]},{"key":"42","year":2012,"displayYear":
+      "2012","volumeNumber":8,"volume":"8","title":
+      "Genetic architecture of highly complex chemical resistance traits across four yeast strains",
+      "pages":"e1002570","eLocationID":"e1002570","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1002570",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"IM Ehrenreich","givenNames":"IM","surnames":
+          "Ehrenreich","suffix":""},{"fullName":"J Bloom","givenNames":"J",
+          "surnames":"Bloom","suffix":""},{"fullName":"N Torabi",
+          "givenNames":"N","surnames":"Torabi","suffix":""},{"fullName":
+          "X Wang","givenNames":"X","surnames":"Wang","suffix":""},{
+          "fullName":"Y Jia","givenNames":"Y","surnames":"Jia","suffix":""}],
+      "editors":[]},{"key":"43","year":2010,"displayYear":"2010",
+      "volumeNumber":464,"volume":"464","title":
+      "Dissection of genetically complex traits with extremely large pools of yeast segregants",
+      "pages":"1039-1042","eLocationID":"1039","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "IM Ehrenreich","givenNames":"IM","surnames":"Ehrenreich","suffix":
+          ""},{"fullName":"N Torabi","givenNames":"N","surnames":"Torabi",
+          "suffix":""},{"fullName":"Y Jia","givenNames":"Y","surnames":
+          "Jia","suffix":""},{"fullName":"J Kent","givenNames":"J",
+          "surnames":"Kent","suffix":""},{"fullName":"S Martis","givenNames":
+          "S","surnames":"Martis","suffix":""}],"editors":[]},{"key":"44",
+      "year":2011,"displayYear":"2011","volumeNumber":21,"volume":"21",
+      "title":
+      "Revealing the genetic structure of a trait by sequencing a population under selection",
+      "pages":"1131-1138","eLocationID":"1131","journal":"Genome Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Parts","givenNames":"L","surnames":"Parts","suffix":""},{
+          "fullName":"FA Cubillos","givenNames":"FA","surnames":"Cubillos",
+          "suffix":""},{"fullName":"J Warringer","givenNames":"J","surnames":
+          "Warringer","suffix":""},{"fullName":"K Jain","givenNames":"K",
+          "surnames":"Jain","suffix":""},{"fullName":"F Salinas",
+          "givenNames":"F","surnames":"Salinas","suffix":""}],"editors":[]},{
+      "key":"45","year":2006,"displayYear":"2006","volumeNumber":4,"volume":
+      "4","title":
+      "High-resolution mutation mapping reveals parallel experimental evolution in yeast",
+      "pages":"e256","eLocationID":"e256","journal":"PLoS Biol",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pbio.0040256",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"AV Segre","givenNames":"AV","surnames":
+          "Segre","suffix":""},{"fullName":"AW Murray","givenNames":"AW",
+          "surnames":"Murray","suffix":""},{"fullName":"JY Leu","givenNames":
+          "JY","surnames":"Leu","suffix":""}],"editors":[]},{"key":"46",
+      "year":2010,"displayYear":"2010","volumeNumber":6,"volume":"6","title":
+      
+      "Bulk segregant analysis by high-throughput sequencing reveals a novel xylose utilization gene from Saccharomyces cerevisiae",
+      "pages":"e1000942","eLocationID":"e1000942","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1000942",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"JW Wenger","givenNames":"JW","surnames":
+          "Wenger","suffix":""},{"fullName":"K Schwartz","givenNames":"K",
+          "surnames":"Schwartz","suffix":""},{"fullName":"G Sherlock",
+          "givenNames":"G","surnames":"Sherlock","suffix":""}],"editors":[]},
+    {"key":"47","year":2011,"displayYear":"2011","volumeNumber":477,"volume":
+      "477","title":
+      "Synthetic chromosome arms function in yeast and generate phenotypic diversity by design",
+      "pages":"471-476","eLocationID":"471","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JS Dymond","givenNames":"JS","surnames":"Dymond","suffix":""},{
+          "fullName":"SM Richardson","givenNames":"SM","surnames":
+          "Richardson","suffix":""},{"fullName":"CE Coombes","givenNames":
+          "CE","surnames":"Coombes","suffix":""},{"fullName":"T Babatz",
+          "givenNames":"T","surnames":"Babatz","suffix":""},{"fullName":
+          "H Muller","givenNames":"H","surnames":"Muller","suffix":""}],
+      "editors":[]},{"key":"48","year":2011,"displayYear":"2011",
+      "volumeNumber":43,"volume":"43","title":
+      "Predicting phenotypic variation in yeast from individual genome sequences",
+      "pages":"1270-1274","eLocationID":"1270","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Jelier","givenNames":"R","surnames":"Jelier","suffix":""},{
+          "fullName":"JI Semple","givenNames":"JI","surnames":"Semple",
+          "suffix":""},{"fullName":"R Garcia-Verdugo","givenNames":"R",
+          "surnames":"Garcia-Verdugo","suffix":""},{"fullName":"B Lehner",
+          "givenNames":"B","surnames":"Lehner","suffix":""}],"editors":[]},{
+      "key":"49","year":2011,"displayYear":"2011","volumeNumber":28,"volume":
+      "28","title":
+      "A new yeast genetic resource for analysis and breeding","pages":
+      "63-80","eLocationID":"63","journal":"Yeast","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"WE Timberlake","givenNames":"WE","surnames":
+          "Timberlake","suffix":""},{"fullName":"MA Frizzell","givenNames":
+          "MA","surnames":"Frizzell","suffix":""},{"fullName":
+          "KD Richards","givenNames":"KD","surnames":"Richards","suffix":
+          ""},{"fullName":"RC Gardner","givenNames":"RC","surnames":
+          "Gardner","suffix":""}],"editors":[]},{"key":"50","year":2012,
+      "displayYear":"2012","title":
+      "Life history shapes trait heredity by promoting accumulation of loss-of-function alleles in yeast",
+      "journal":"Mol Biol Evol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Zorgo","givenNames":"E","surnames":"Zorgo","suffix":""},{
+          "fullName":"A Gjuvsland","givenNames":"A","surnames":"Gjuvsland",
+          "suffix":""},{"fullName":"FA Cubillos","givenNames":"FA",
+          "surnames":"Cubillos","suffix":""},{"fullName":"EJ Louis",
+          "givenNames":"EJ","surnames":"Louis","suffix":""},{"fullName":
+          "G Liti","givenNames":"G","surnames":"Liti","suffix":""}],
+      "editors":[]},{"key":"51","year":2011,"displayYear":"2011",
+      "volumeNumber":108,"volume":"108","title":
+      "Outcrossing, mitotic recombination, and life-history trade-offs shape genome evolution in Saccharomyces cerevisiae",
+      "pages":"1987-1992","eLocationID":"1987","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PM Magwene","givenNames":"PM","surnames":"Magwene","suffix":""},{
+          "fullName":"O Kayikci","givenNames":"O","surnames":"Kayikci",
+          "suffix":""},{"fullName":"JA Granek","givenNames":"JA","surnames":
+          "Granek","suffix":""},{"fullName":"JM Reininga","givenNames":
+          "JM","surnames":"Reininga","suffix":""},{"fullName":"Z Scholl",
+          "givenNames":"Z","surnames":"Scholl","suffix":""}],"editors":[]},{
+      "key":"52","year":2011,"displayYear":"2011","volumeNumber":7,"volume":
+      "7","title":
+      "Population-based resequencing of experimentally evolved populations reveals the genetic basis of body size variation in Drosophila melanogaster",
+      "pages":"e1001336","eLocationID":"e1001336","journal":"PLoS Genet",
+      "collaborativeAuthors":[],"doi":"10.1371/journal.pgen.1001336",
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"TL Turner","givenNames":"TL","surnames":
+          "Turner","suffix":""},{"fullName":"AD Stewart","givenNames":"AD",
+          "surnames":"Stewart","suffix":""},{"fullName":"AT Fields",
+          "givenNames":"AT","surnames":"Fields","suffix":""},{"fullName":
+          "WR Rice","givenNames":"WR","surnames":"Rice","suffix":""},{
+          "fullName":"AM Tarone","givenNames":"AM","surnames":"Tarone",
+          "suffix":""}],"editors":[]},{"key":"53","year":2012,"displayYear":
+      "2012","volumeNumber":13,"volume":"13","title":
+      "The generation of chromosomal deletions to provide extensive coverage and subdivision of the Drosophila melanogaster genome",
+      "pages":"R21","eLocationID":"R21","journal":"Genome Biology",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RK Cook","givenNames":"RK","surnames":"Cook","suffix":""},{
+          "fullName":"SJ Christensen","givenNames":"SJ","surnames":
+          "Christensen","suffix":""},{"fullName":"JA Deal","givenNames":
+          "JA","surnames":"Deal","suffix":""},{"fullName":"RA Coburn",
+          "givenNames":"RA","surnames":"Coburn","suffix":""},{"fullName":
+          "ME Deal","givenNames":"ME","surnames":"Deal","suffix":""}],
+      "editors":[]},{"key":"54","year":2009,"displayYear":"2009",
+      "volumeNumber":461,"volume":"461","title":
+      "Finding the missing heritability of complex diseases","pages":
+      "747-753","eLocationID":"747","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TA Manolio","givenNames":"TA","surnames":"Manolio","suffix":""},{
+          "fullName":"FS Collins","givenNames":"FS","surnames":"Collins",
+          "suffix":""},{"fullName":"NJ Cox","givenNames":"NJ","surnames":
+          "Cox","suffix":""},{"fullName":"DB Goldstein","givenNames":"DB",
+          "surnames":"Goldstein","suffix":""},{"fullName":"LA Hindorff",
+          "givenNames":"LA","surnames":"Hindorff","suffix":""}],"editors":[]},
+    {"key":"55","year":2011,"displayYear":"2011","volumeNumber":108,"volume":
+      "108","title":"Experimental illumination of a fitness landscape",
+      "pages":"7896-7901","eLocationID":"7896","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RT Hietpas","givenNames":"RT","surnames":"Hietpas","suffix":""},{
+          "fullName":"JD Jensen","givenNames":"JD","surnames":"Jensen",
+          "suffix":""},{"fullName":"DN Bolon","givenNames":"DN","surnames":
+          "Bolon","suffix":""}],"editors":[]},{"key":"56","year":2011,
+      "displayYear":"2011","volumeNumber":29,"volume":"29","title":
+      "Quantifying selection acting on a complex trait using allele frequency time-series data",
+      "pages":"1187-1197","eLocationID":"1187","journal":"Mol Biol Evol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CJ Illingworth","givenNames":"CJ","surnames":"Illingworth",
+          "suffix":""},{"fullName":"L Parts","givenNames":"L","surnames":
+          "Parts","suffix":""},{"fullName":"S Schiffels","givenNames":"S",
+          "surnames":"Schiffels","suffix":""},{"fullName":"G Liti",
+          "givenNames":"G","surnames":"Liti","suffix":""},{"fullName":
+          "V Mustonen","givenNames":"V","surnames":"Mustonen","suffix":""}],
+      "editors":[]}],"relatedArticles":[{"otherArticleDoi":
+      "info:doi/10.1371/journal.pgen.1002644","type":"companion"}],"authors":
+  [{"fullName":"Gianni Liti","givenNames":"Gianni","surnames":"Liti",
+      "suffix":""},{"fullName":"Edward J. Louis","givenNames":"Edward J.",
+      "surnames":"Louis","suffix":""}],"editors":[{"fullName":
+      "Justin C. Fay","givenNames":"Justin C.","surnames":"Fay","suffix":
+      ""}],"journals":[{"eIssn":"1553-7404"}]}

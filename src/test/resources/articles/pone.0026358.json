@@ -1,0 +1,537 @@
+{"doi":"info:doi/10.1371/journal.pone.0026358","title":
+  "Benefit from B-Lymphocyte Depletion Using the Anti-CD20 Antibody Rituximab in Chronic Fatigue Syndrome. A Double-Blind and Placebo-Controlled Study",
+  "eIssn":"1932-6203","state":1,"archiveName":"pone.0026358.zip",
+  "description":
+  "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eChronic fatigue syndrome (CFS) is a disease of unknown aetiology. Major CFS symptom relief during cancer chemotherapy in a patient with synchronous CFS and lymphoma spurred a pilot study of B-lymphocyte depletion using the anti-CD20 antibody Rituximab, which demonstrated significant clinical response in three CFS patients.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eIn this double-blind, placebo-controlled phase II study (NCT00848692), 30 CFS patients were randomised to either Rituximab 500 mg/m\u003csup\u003e2\u003c/sup\u003e or saline, given twice two weeks apart, with follow-up for 12 months. Xenotropic murine leukemia virus-related virus (XMRV) was not detected in any of the patients.\u003c/p\u003e\u003cp\u003eThe responses generally affected all CFS symptoms. Major or moderate overall response, defined as lasting improvements in self-reported Fatigue score during follow-up, was seen in 10 out of 15 patients (67%) in the Rituximab group and in two out of 15 patients (13%) in the Placebo group (p \u003d 0.003). Mean response duration within the follow-up period for the 10 responders to Rituximab was 25 weeks (range 8–44). Four Rituximab patients had clinical response durations past the study period. General linear models for repeated measures of Fatigue scores during follow-up showed a significant interaction between time and intervention group (p \u003d 0.018 for self-reported, and p \u003d 0.024 for physician-assessed), with differences between the Rituximab and Placebo groups between 6–10 months after intervention. The primary end-point, defined as effect on self-reported Fatigue score 3 months after intervention, was negative. There were no serious adverse events. Two patients in the Rituximab group with pre-existing psoriasis experienced moderate psoriasis worsening.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eThe delayed responses starting from 2–7 months after Rituximab treatment, in spite of rapid B-cell depletion, suggests that CFS is an autoimmune disease and may be consistent with the gradual elimination of autoantibodies preceding clinical responses. The present findings will impact future research efforts in CFS.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eTrial registration\u003c/title\u003e\u003cp\u003eClinicalTrials.gov \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://clinicaltrials.gov/ct2/show/NCT00848692\" xlink:type\u003d\"simple\"\u003eNCT00848692\u003c/ext-link\u003e\u003c/p\u003e\u003c/sec\u003e",
+  "rights":
+  "Fluge et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-13","eLocationId":
+  "e26358","strkImgURI":"","date":"Oct 19, 2011 12:00:00 AM","volume":"6",
+  "issue":"10","journal":"PLoS ONE","publisherLocation":
+  "San Francisco, USA","publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0026358","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0026358","extension":
+      "XML","contentType":"text/xml","title":
+      "Benefit from B-Lymphocyte Depletion Using the Anti-CD20 Antibody Rituximab in Chronic Fatigue Syndrome. A Double-Blind and Placebo-Controlled Study",
+      "description":
+      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eChronic fatigue syndrome (CFS) is a disease of unknown aetiology. Major CFS symptom relief during cancer chemotherapy in a patient with synchronous CFS and lymphoma spurred a pilot study of B-lymphocyte depletion using the anti-CD20 antibody Rituximab, which demonstrated significant clinical response in three CFS patients.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eIn this double-blind, placebo-controlled phase II study (NCT00848692), 30 CFS patients were randomised to either Rituximab 500 mg/m\u003csup\u003e2\u003c/sup\u003e or saline, given twice two weeks apart, with follow-up for 12 months. Xenotropic murine leukemia virus-related virus (XMRV) was not detected in any of the patients.\u003c/p\u003e\u003cp\u003eThe responses generally affected all CFS symptoms. Major or moderate overall response, defined as lasting improvements in self-reported Fatigue score during follow-up, was seen in 10 out of 15 patients (67%) in the Rituximab group and in two out of 15 patients (13%) in the Placebo group (p \u003d 0.003). Mean response duration within the follow-up period for the 10 responders to Rituximab was 25 weeks (range 8–44). Four Rituximab patients had clinical response durations past the study period. General linear models for repeated measures of Fatigue scores during follow-up showed a significant interaction between time and intervention group (p \u003d 0.018 for self-reported, and p \u003d 0.024 for physician-assessed), with differences between the Rituximab and Placebo groups between 6–10 months after intervention. The primary end-point, defined as effect on self-reported Fatigue score 3 months after intervention, was negative. There were no serious adverse events. Two patients in the Rituximab group with pre-existing psoriasis experienced moderate psoriasis worsening.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eThe delayed responses starting from 2–7 months after Rituximab treatment, in spite of rapid B-cell depletion, suggests that CFS is an autoimmune disease and may be consistent with the gradual elimination of autoantibodies preceding clinical responses. The present findings will impact future research efforts in CFS.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eTrial registration\u003c/title\u003e\u003cp\u003eClinicalTrials.gov \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://clinicaltrials.gov/ct2/show/NCT00848692\" xlink:type\u003d\"simple\"\u003eNCT00848692\u003c/ext-link\u003e\u003c/p\u003e\u003c/sec\u003e",
+      "size":133861},{"doi":"info:doi/10.1371/journal.pone.0026358",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Benefit from B-Lymphocyte Depletion Using the Anti-CD20 Antibody Rituximab in Chronic Fatigue Syndrome. A Double-Blind and Placebo-Controlled Study",
+      "description":
+      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eChronic fatigue syndrome (CFS) is a disease of unknown aetiology. Major CFS symptom relief during cancer chemotherapy in a patient with synchronous CFS and lymphoma spurred a pilot study of B-lymphocyte depletion using the anti-CD20 antibody Rituximab, which demonstrated significant clinical response in three CFS patients.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eIn this double-blind, placebo-controlled phase II study (NCT00848692), 30 CFS patients were randomised to either Rituximab 500 mg/m\u003csup\u003e2\u003c/sup\u003e or saline, given twice two weeks apart, with follow-up for 12 months. Xenotropic murine leukemia virus-related virus (XMRV) was not detected in any of the patients.\u003c/p\u003e\u003cp\u003eThe responses generally affected all CFS symptoms. Major or moderate overall response, defined as lasting improvements in self-reported Fatigue score during follow-up, was seen in 10 out of 15 patients (67%) in the Rituximab group and in two out of 15 patients (13%) in the Placebo group (p \u003d 0.003). Mean response duration within the follow-up period for the 10 responders to Rituximab was 25 weeks (range 8–44). Four Rituximab patients had clinical response durations past the study period. General linear models for repeated measures of Fatigue scores during follow-up showed a significant interaction between time and intervention group (p \u003d 0.018 for self-reported, and p \u003d 0.024 for physician-assessed), with differences between the Rituximab and Placebo groups between 6–10 months after intervention. The primary end-point, defined as effect on self-reported Fatigue score 3 months after intervention, was negative. There were no serious adverse events. Two patients in the Rituximab group with pre-existing psoriasis experienced moderate psoriasis worsening.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eThe delayed responses starting from 2–7 months after Rituximab treatment, in spite of rapid B-cell depletion, suggests that CFS is an autoimmune disease and may be consistent with the gradual elimination of autoantibodies preceding clinical responses. The present findings will impact future research efforts in CFS.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eTrial registration\u003c/title\u003e\u003cp\u003eClinicalTrials.gov \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://clinicaltrials.gov/ct2/show/NCT00848692\" xlink:type\u003d\"simple\"\u003eNCT00848692\u003c/ext-link\u003e\u003c/p\u003e\u003c/sec\u003e",
+      "size":1000124},{"doi":"info:doi/10.1371/journal.pone.0026358.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eStudy flow-diagram.\u003c/title\u003e\u003cp\u003eApproximately 60 patients with CFS diagnosed by a neurologist were identified from the hospital files and contacted by telephone for an interview, and 36 of these were invited for a further thorough assessment. During 12 months follow-up, one out of 15 patients in the placebo group was excluded from further analysis after 28 weeks due to pregnancy, and one after 42 weeks due to study withdrawal and patient\u0027s decision to start alternative therapy.\u003c/p\u003e",
+      "size":460516},{"doi":"info:doi/10.1371/journal.pone.0026358.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eStudy flow-diagram.\u003c/title\u003e\u003cp\u003eApproximately 60 patients with CFS diagnosed by a neurologist were identified from the hospital files and contacted by telephone for an interview, and 36 of these were invited for a further thorough assessment. During 12 months follow-up, one out of 15 patients in the placebo group was excluded from further analysis after 28 weeks due to pregnancy, and one after 42 weeks due to study withdrawal and patient\u0027s decision to start alternative therapy.\u003c/p\u003e",
+      "size":15523},{"doi":"info:doi/10.1371/journal.pone.0026358.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eStudy flow-diagram.\u003c/title\u003e\u003cp\u003eApproximately 60 patients with CFS diagnosed by a neurologist were identified from the hospital files and contacted by telephone for an interview, and 36 of these were invited for a further thorough assessment. During 12 months follow-up, one out of 15 patients in the placebo group was excluded from further analysis after 28 weeks due to pregnancy, and one after 42 weeks due to study withdrawal and patient\u0027s decision to start alternative therapy.\u003c/p\u003e",
+      "size":87579},{"doi":"info:doi/10.1371/journal.pone.0026358.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eStudy flow-diagram.\u003c/title\u003e\u003cp\u003eApproximately 60 patients with CFS diagnosed by a neurologist were identified from the hospital files and contacted by telephone for an interview, and 36 of these were invited for a further thorough assessment. During 12 months follow-up, one out of 15 patients in the placebo group was excluded from further analysis after 28 weeks due to pregnancy, and one after 42 weeks due to study withdrawal and patient\u0027s decision to start alternative therapy.\u003c/p\u003e",
+      "size":335536},{"doi":"info:doi/10.1371/journal.pone.0026358.t001",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 1","description":
+      "\u003ctitle\u003eDemographic and CFS disease characteristics for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":340496},{"doi":"info:doi/10.1371/journal.pone.0026358.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eDemographic and CFS disease characteristics for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":1640},{"doi":"info:doi/10.1371/journal.pone.0026358.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eDemographic and CFS disease characteristics for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":35097},{"doi":"info:doi/10.1371/journal.pone.0026358.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eDemographic and CFS disease characteristics for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":79922},{"doi":"info:doi/10.1371/journal.pone.0026358.t002",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 2","description":
+      "\u003ctitle\u003eBaseline self-reported symptom scores, RNase L genotype, and XMRV status, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":323734},{"doi":"info:doi/10.1371/journal.pone.0026358.t002",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eBaseline self-reported symptom scores, RNase L genotype, and XMRV status, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":1520},{"doi":"info:doi/10.1371/journal.pone.0026358.t002",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eBaseline self-reported symptom scores, RNase L genotype, and XMRV status, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":31078},{"doi":"info:doi/10.1371/journal.pone.0026358.t002",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eBaseline self-reported symptom scores, RNase L genotype, and XMRV status, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":72555},{"doi":"info:doi/10.1371/journal.pone.0026358.t003",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 3","description":
+      "\u003ctitle\u003eClinical responses in the Rituximab and Placebo groups, and response durations for patients with significant responses, derived from self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e during 12 months follow-up.\u003c/title\u003e",
+      "size":262182},{"doi":"info:doi/10.1371/journal.pone.0026358.t003",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eClinical responses in the Rituximab and Placebo groups, and response durations for patients with significant responses, derived from self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e during 12 months follow-up.\u003c/title\u003e",
+      "size":1367},{"doi":"info:doi/10.1371/journal.pone.0026358.t003",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eClinical responses in the Rituximab and Placebo groups, and response durations for patients with significant responses, derived from self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e during 12 months follow-up.\u003c/title\u003e",
+      "size":31642},{"doi":"info:doi/10.1371/journal.pone.0026358.t003",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eClinical responses in the Rituximab and Placebo groups, and response durations for patients with significant responses, derived from self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e during 12 months follow-up.\u003c/title\u003e",
+      "size":69635},{"doi":"info:doi/10.1371/journal.pone.0026358.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eFatigue scores in Rituximab and Placebo groups, self-reported and physician-assessed.\u003c/title\u003e\u003cp\u003eIn panel A, the self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated for each patient every second week, from the mean of the four symptoms: Fatigue, Post-exertional exhaustion, Need for rest, Daily functioning. Then the mean values in \u003citalic\u003eFatigue scores\u003c/italic\u003e for the time intervals during follow-up were plotted. In panel C, the physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated from the mean of the same four symptoms, registered by the physician at the visits in the outpatient clinic. In panel B and D, estimated marginal means for self-reported and physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up are shown. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). The differences in distribution of \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up, between the Rituximab and Placebo groups, were assessed by General Linear Model (GLM) for repeated measures, analysing the effects of time, the interaction time by intervention group, and the overall difference between intervention groups. Below panels C and D, the estimates for differences in mean \u003citalic\u003eFatigue scores\u003c/italic\u003e between the Rituximab and Placebo groups at the specific time intervals during follow-up, with 95% CI and p-values from the GLM (tests of within-subjects contrasts) are presented. In addition, Holm-Bonferroni step-down adjusted p-values for these time intervals are shown (five comparisons).\u003c/p\u003e",
+      "size":429712},{"doi":"info:doi/10.1371/journal.pone.0026358.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eFatigue scores in Rituximab and Placebo groups, self-reported and physician-assessed.\u003c/title\u003e\u003cp\u003eIn panel A, the self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated for each patient every second week, from the mean of the four symptoms: Fatigue, Post-exertional exhaustion, Need for rest, Daily functioning. Then the mean values in \u003citalic\u003eFatigue scores\u003c/italic\u003e for the time intervals during follow-up were plotted. In panel C, the physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated from the mean of the same four symptoms, registered by the physician at the visits in the outpatient clinic. In panel B and D, estimated marginal means for self-reported and physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up are shown. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). The differences in distribution of \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up, between the Rituximab and Placebo groups, were assessed by General Linear Model (GLM) for repeated measures, analysing the effects of time, the interaction time by intervention group, and the overall difference between intervention groups. Below panels C and D, the estimates for differences in mean \u003citalic\u003eFatigue scores\u003c/italic\u003e between the Rituximab and Placebo groups at the specific time intervals during follow-up, with 95% CI and p-values from the GLM (tests of within-subjects contrasts) are presented. In addition, Holm-Bonferroni step-down adjusted p-values for these time intervals are shown (five comparisons).\u003c/p\u003e",
+      "size":23704},{"doi":"info:doi/10.1371/journal.pone.0026358.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eFatigue scores in Rituximab and Placebo groups, self-reported and physician-assessed.\u003c/title\u003e\u003cp\u003eIn panel A, the self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated for each patient every second week, from the mean of the four symptoms: Fatigue, Post-exertional exhaustion, Need for rest, Daily functioning. Then the mean values in \u003citalic\u003eFatigue scores\u003c/italic\u003e for the time intervals during follow-up were plotted. In panel C, the physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated from the mean of the same four symptoms, registered by the physician at the visits in the outpatient clinic. In panel B and D, estimated marginal means for self-reported and physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up are shown. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). The differences in distribution of \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up, between the Rituximab and Placebo groups, were assessed by General Linear Model (GLM) for repeated measures, analysing the effects of time, the interaction time by intervention group, and the overall difference between intervention groups. Below panels C and D, the estimates for differences in mean \u003citalic\u003eFatigue scores\u003c/italic\u003e between the Rituximab and Placebo groups at the specific time intervals during follow-up, with 95% CI and p-values from the GLM (tests of within-subjects contrasts) are presented. In addition, Holm-Bonferroni step-down adjusted p-values for these time intervals are shown (five comparisons).\u003c/p\u003e",
+      "size":109598},{"doi":"info:doi/10.1371/journal.pone.0026358.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eFatigue scores in Rituximab and Placebo groups, self-reported and physician-assessed.\u003c/title\u003e\u003cp\u003eIn panel A, the self-reported \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated for each patient every second week, from the mean of the four symptoms: Fatigue, Post-exertional exhaustion, Need for rest, Daily functioning. Then the mean values in \u003citalic\u003eFatigue scores\u003c/italic\u003e for the time intervals during follow-up were plotted. In panel C, the physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e were calculated from the mean of the same four symptoms, registered by the physician at the visits in the outpatient clinic. In panel B and D, estimated marginal means for self-reported and physician-assessed \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up are shown. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). The differences in distribution of \u003citalic\u003eFatigue scores\u003c/italic\u003e during follow-up, between the Rituximab and Placebo groups, were assessed by General Linear Model (GLM) for repeated measures, analysing the effects of time, the interaction time by intervention group, and the overall difference between intervention groups. Below panels C and D, the estimates for differences in mean \u003citalic\u003eFatigue scores\u003c/italic\u003e between the Rituximab and Placebo groups at the specific time intervals during follow-up, with 95% CI and p-values from the GLM (tests of within-subjects contrasts) are presented. In addition, Holm-Bonferroni step-down adjusted p-values for these time intervals are shown (five comparisons).\u003c/p\u003e",
+      "size":250145},{"doi":"info:doi/10.1371/journal.pone.0026358.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCFS symptom changes during follow-up for patients in the Rituximab group with significant responses.\u003c/title\u003e\u003cp\u003eIn panels A–J, changes in \u003citalic\u003eFatigue score\u003c/italic\u003e (black), \u003citalic\u003eCognitive score\u003c/italic\u003e (red), \u003citalic\u003ePain score\u003c/italic\u003e (green), \u003citalic\u003e“Other symptoms” score\u003c/italic\u003e (orange), and \u003citalic\u003e“CFS overall” score\u003c/italic\u003e (blue), during 12 months follow-up are shown for the 10 patients in the Rituximab group with significant improvement. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). Also shown are the B-cell numbers from immunophenotyping of peripheral blood mononuclear cells during follow-up (×10\u003csup\u003e6\u003c/sup\u003e/L).\u003c/p\u003e",
+      "size":1519684},{"doi":"info:doi/10.1371/journal.pone.0026358.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCFS symptom changes during follow-up for patients in the Rituximab group with significant responses.\u003c/title\u003e\u003cp\u003eIn panels A–J, changes in \u003citalic\u003eFatigue score\u003c/italic\u003e (black), \u003citalic\u003eCognitive score\u003c/italic\u003e (red), \u003citalic\u003ePain score\u003c/italic\u003e (green), \u003citalic\u003e“Other symptoms” score\u003c/italic\u003e (orange), and \u003citalic\u003e“CFS overall” score\u003c/italic\u003e (blue), during 12 months follow-up are shown for the 10 patients in the Rituximab group with significant improvement. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). Also shown are the B-cell numbers from immunophenotyping of peripheral blood mononuclear cells during follow-up (×10\u003csup\u003e6\u003c/sup\u003e/L).\u003c/p\u003e",
+      "size":20869},{"doi":"info:doi/10.1371/journal.pone.0026358.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCFS symptom changes during follow-up for patients in the Rituximab group with significant responses.\u003c/title\u003e\u003cp\u003eIn panels A–J, changes in \u003citalic\u003eFatigue score\u003c/italic\u003e (black), \u003citalic\u003eCognitive score\u003c/italic\u003e (red), \u003citalic\u003ePain score\u003c/italic\u003e (green), \u003citalic\u003e“Other symptoms” score\u003c/italic\u003e (orange), and \u003citalic\u003e“CFS overall” score\u003c/italic\u003e (blue), during 12 months follow-up are shown for the 10 patients in the Rituximab group with significant improvement. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). Also shown are the B-cell numbers from immunophenotyping of peripheral blood mononuclear cells during follow-up (×10\u003csup\u003e6\u003c/sup\u003e/L).\u003c/p\u003e",
+      "size":117666},{"doi":"info:doi/10.1371/journal.pone.0026358.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCFS symptom changes during follow-up for patients in the Rituximab group with significant responses.\u003c/title\u003e\u003cp\u003eIn panels A–J, changes in \u003citalic\u003eFatigue score\u003c/italic\u003e (black), \u003citalic\u003eCognitive score\u003c/italic\u003e (red), \u003citalic\u003ePain score\u003c/italic\u003e (green), \u003citalic\u003e“Other symptoms” score\u003c/italic\u003e (orange), and \u003citalic\u003e“CFS overall” score\u003c/italic\u003e (blue), during 12 months follow-up are shown for the 10 patients in the Rituximab group with significant improvement. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). Also shown are the B-cell numbers from immunophenotyping of peripheral blood mononuclear cells during follow-up (×10\u003csup\u003e6\u003c/sup\u003e/L).\u003c/p\u003e",
+      "size":1189314},{"doi":"info:doi/10.1371/journal.pone.0026358.t004",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 4","description":
+      "\u003ctitle\u003eSF-36 scores, baseline levels (0–100) and maximum changes (%) during follow-up, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":507682},{"doi":"info:doi/10.1371/journal.pone.0026358.t004",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eSF-36 scores, baseline levels (0–100) and maximum changes (%) during follow-up, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":2263},{"doi":"info:doi/10.1371/journal.pone.0026358.t004",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eSF-36 scores, baseline levels (0–100) and maximum changes (%) during follow-up, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":55156},{"doi":"info:doi/10.1371/journal.pone.0026358.t004",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eSF-36 scores, baseline levels (0–100) and maximum changes (%) during follow-up, for patients in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":129579},{"doi":"info:doi/10.1371/journal.pone.0026358.t005",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 5","description":
+      "\u003ctitle\u003eInfusion-related complaints during or the first 24 hours after infusion, and side-effects during 12 months follow-up, in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":240894},{"doi":"info:doi/10.1371/journal.pone.0026358.t005",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eInfusion-related complaints during or the first 24 hours after infusion, and side-effects during 12 months follow-up, in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":1212},{"doi":"info:doi/10.1371/journal.pone.0026358.t005",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eInfusion-related complaints during or the first 24 hours after infusion, and side-effects during 12 months follow-up, in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":17483},{"doi":"info:doi/10.1371/journal.pone.0026358.t005",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eInfusion-related complaints during or the first 24 hours after infusion, and side-effects during 12 months follow-up, in the Rituximab and Placebo groups.\u003c/title\u003e",
+      "size":42931},{"doi":"info:doi/10.1371/journal.pone.0026358.g004",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eB-lymphocytes during follow-up.\u003c/title\u003e\u003cp\u003eB-cell numbers from immunophenotyping of peripheral blood during follow-up are shown, for patients in the Placebo group (black, n \u003d 15), patients in the Rituximab group with significant response (red, n \u003d 10), and patients in the Rituximab group with no response (blue, n \u003d 5). The B-cell value zero was substituted by 0.1 (to be able to plot on the log scale). B-lymphocyte counts ×10\u003csup\u003e6\u003c/sup\u003e/L (normal range 110–449). The error bars denote mean ± SEM.\u003c/p\u003e",
+      "size":329056},{"doi":"info:doi/10.1371/journal.pone.0026358.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eB-lymphocytes during follow-up.\u003c/title\u003e\u003cp\u003eB-cell numbers from immunophenotyping of peripheral blood during follow-up are shown, for patients in the Placebo group (black, n \u003d 15), patients in the Rituximab group with significant response (red, n \u003d 10), and patients in the Rituximab group with no response (blue, n \u003d 5). The B-cell value zero was substituted by 0.1 (to be able to plot on the log scale). B-lymphocyte counts ×10\u003csup\u003e6\u003c/sup\u003e/L (normal range 110–449). The error bars denote mean ± SEM.\u003c/p\u003e",
+      "size":17191},{"doi":"info:doi/10.1371/journal.pone.0026358.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eB-lymphocytes during follow-up.\u003c/title\u003e\u003cp\u003eB-cell numbers from immunophenotyping of peripheral blood during follow-up are shown, for patients in the Placebo group (black, n \u003d 15), patients in the Rituximab group with significant response (red, n \u003d 10), and patients in the Rituximab group with no response (blue, n \u003d 5). The B-cell value zero was substituted by 0.1 (to be able to plot on the log scale). B-lymphocyte counts ×10\u003csup\u003e6\u003c/sup\u003e/L (normal range 110–449). The error bars denote mean ± SEM.\u003c/p\u003e",
+      "size":68636},{"doi":"info:doi/10.1371/journal.pone.0026358.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eB-lymphocytes during follow-up.\u003c/title\u003e\u003cp\u003eB-cell numbers from immunophenotyping of peripheral blood during follow-up are shown, for patients in the Placebo group (black, n \u003d 15), patients in the Rituximab group with significant response (red, n \u003d 10), and patients in the Rituximab group with no response (blue, n \u003d 5). The B-cell value zero was substituted by 0.1 (to be able to plot on the log scale). B-lymphocyte counts ×10\u003csup\u003e6\u003c/sup\u003e/L (normal range 110–449). The error bars denote mean ± SEM.\u003c/p\u003e",
+      "size":296032},{"doi":"info:doi/10.1371/journal.pone.0026358.s001",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Text S1","description":
+      "\u003cp\u003e\u003cbold\u003eMaterials and Methods\u003c/bold\u003e\u003cbold\u003e (DNA and RNA purification, and cDNA synthesis.\u003c/bold\u003e Quantitative PCR for XMRV detection. XMRV and MLV PCR. Viral amplification. RNase L Genotyping).\u003c/p\u003e\u003cp\u003e(PDF)\u003c/p\u003e",
+      "size":90649},{"doi":"info:doi/10.1371/journal.pone.0026358.s002",
+      "contextElement":"supplementary-material","extension":"TIF",
+      "contentType":"image/tiff","title":"Figure S1","description":
+      "\u003cp\u003e\u003cbold\u003eScheme for patient\u0027s self-reported baseline CFS symptoms.\u003c/bold\u003e Before intervention, the patients assessed their CFS disease and recorded their symptoms the last three months according to a visual analogue, scale 1–10 (1: no symptom; 5: moderate symptom; 10: very severe symptom).\u003c/p\u003e\u003cp\u003e(TIF)\u003c/p\u003e",
+      "size":368964},{"doi":"info:doi/10.1371/journal.pone.0026358.s003",
+      "contextElement":"supplementary-material","extension":"TIF",
+      "contentType":"image/tiff","title":"Figure S2","description":
+      "\u003cp\u003e\u003cbold\u003eScheme for patient\u0027s self-reported CFS symptom change during follow-up.\u003c/bold\u003e During 12 months follow-up, the patients recorded symptom changes the preceding two weeks, as compared to baseline. The visual analogue scale for the follow-up scheme was 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement).\u003c/p\u003e\u003cp\u003e(TIF)\u003c/p\u003e",
+      "size":435944},{"doi":"info:doi/10.1371/journal.pone.0026358.s004",
+      "contextElement":"supplementary-material","extension":"TIF",
+      "contentType":"image/tiff","title":"Figure S3","description":
+      "\u003cp\u003e\u003cbold\u003eScheme for physician-assessed CFS symptoms, at baseline and during follow-up.\u003c/bold\u003e The patients were assessed at the outpatient clinic before intervention, and at 2, 3, 4, 6, 8, 10, and 12 months follow-up. The physicians assessed the patients CFS disease and recorded the symptoms according to visual analogue scales. Before intervention, the scale was 1–10 (1: no symptom; 5: moderate symptom; 10: very severe symptom). During 12 months follow-up, the physicians assessed patients symptom changes as compared to baseline, scale 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement).\u003c/p\u003e\u003cp\u003e(TIF)\u003c/p\u003e",
+      "size":382012},{"doi":"info:doi/10.1371/journal.pone.0026358.s005",
+      "contextElement":"supplementary-material","extension":"TIF",
+      "contentType":"image/tiff","title":"Figure S4","description":
+      "\u003cp\u003e\u003cbold\u003eCFS symptom changes during follow-up, for the two patients in the Placebo group with significant improvement.\u003c/bold\u003e In panels A and B, changes in \u003citalic\u003eFatigue score\u003c/italic\u003e (black), \u003citalic\u003eCognitive score\u003c/italic\u003e (red), \u003citalic\u003ePain score\u003c/italic\u003e (green), \u003citalic\u003e“Other symptoms” score\u003c/italic\u003e (orange), and \u003citalic\u003e“CFS overall” score\u003c/italic\u003e (blue), during 12 months follow-up are shown for the two patients in the Placebo group with significant improvement. The scales on Y-axes were 0–6 (0: Major worsening; 1: Moderate worsening; 2: Slight worsening; 3: No change; 4: Slight improvement; 5: Moderate improvement; 6: Major improvement). Also shown are the B-cell numbers from immunophenotyping of peripheral blood mononuclear cells during follow-up (×10\u003csup\u003e6\u003c/sup\u003e/L).\u003c/p\u003e\u003cp\u003e(TIF)\u003c/p\u003e",
+      "size":204236},{"doi":"info:doi/10.1371/journal.pone.0026358.s006",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Table S1","description":
+      "\u003cp\u003e\n            \u003cbold\u003ePrimers and probes for detection of Xenotropic murine leukemia virus-related virus (XMRV) and MLV-related virus.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(PDF)\u003c/p\u003e",
+      "size":96521},{"doi":"info:doi/10.1371/journal.pone.0026358.s007",
+      "contextElement":"supplementary-material","extension":"DOC",
+      "contentType":"application/msword","title":"Table S2","description":
+      "\u003cp\u003e\n            \u003cbold\u003eEffects of intervention group (Rituximab versus Placebo) on \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eFatigue score\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e during 12 months follow-up, using General Linear Model for repeated measures, with separate analyses for self-reported and physician-assessed symptoms.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
+      "size":52736},{"doi":"info:doi/10.1371/journal.pone.0026358.s008",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Protocol S1","description":
+      "\u003cp\u003e\n            \u003cbold\u003eTrial Protocol.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(PDF)\u003c/p\u003e",
+      "size":868194},{"doi":"info:doi/10.1371/journal.pone.0026358.s009",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Checklist S1","description":
+      "\u003cp\u003e\n            \u003cbold\u003eCONSORT Checklist.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(PDF)\u003c/p\u003e",
+      "size":696017}],"citedArticles":[{"key":"1","year":2006,"displayYear":
+      "2006","volumeNumber":37,"volume":"37","title":
+      "Chronic fatigue syndrome.","pages":"139-150","eLocationID":"139",
+      "journal":"J Clin Virol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "LD Devanur","givenNames":"LD","surnames":"Devanur","suffix":""},{
+          "fullName":"JR Kerr","givenNames":"JR","surnames":"Kerr","suffix":
+          ""}],"editors":[]},{"key":"2","year":2010,"displayYear":"2010",
+      "volumeNumber":23,"volume":"23","title":
+      "Chronic fatigue syndrome/myalgic encephalomyelitis: an update.",
+      "pages":"981-989","eLocationID":"981","journal":
+      "Int J Immunopathol Pharmacol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"E Capelli","givenNames":"E","surnames":
+          "Capelli","suffix":""},{"fullName":"R Zola","givenNames":"R",
+          "surnames":"Zola","suffix":""},{"fullName":"L Lorusso",
+          "givenNames":"L","surnames":"Lorusso","suffix":""},{"fullName":
+          "L Venturini","givenNames":"L","surnames":"Venturini","suffix":
+          ""},{"fullName":"F Sardi","givenNames":"F","surnames":"Sardi",
+          "suffix":""}],"editors":[]},{"key":"3","year":2011,"displayYear":
+      "2011","volumeNumber":9,"volume":"9","title":
+      "Prevalence of myalgic encephalomyelitis/chronic fatigue syndrome (ME/CFS) in three regions of England: a repeated cross-sectional study in primary care.",
+      "pages":"91","eLocationID":"91","journal":"BMC Med",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "LC Nacul","givenNames":"LC","surnames":"Nacul","suffix":""},{
+          "fullName":"EM Lacerda","givenNames":"EM","surnames":"Lacerda",
+          "suffix":""},{"fullName":"D Pheby","givenNames":"D","surnames":
+          "Pheby","suffix":""},{"fullName":"P Campion","givenNames":"P",
+          "surnames":"Campion","suffix":""},{"fullName":"M Molokhia",
+          "givenNames":"M","surnames":"Molokhia","suffix":""}],"editors":[]},
+    {"key":"4","year":2009,"displayYear":"2009","volumeNumber":9,"volume":
+      "9","title":
+      "Clinical impact of B-cell depletion with the anti-CD20 antibody rituximab in chronic fatigue syndrome: a preliminary case series.",
+      "pages":"28","eLocationID":"28","journal":"BMC Neurol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "O Fluge","givenNames":"O","surnames":"Fluge","suffix":""},{
+          "fullName":"O Mella","givenNames":"O","surnames":"Mella","suffix":
+          ""}],"editors":[]},{"key":"5","year":1994,"displayYear":"1994",
+      "volumeNumber":121,"volume":"121","title":
+      "The chronic fatigue syndrome: a comprehensive approach to its definition and study. International Chronic Fatigue Syndrome Study Group.",
+      "pages":"953-959","eLocationID":"953","journal":"Ann Intern Med",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "K Fukuda","givenNames":"K","surnames":"Fukuda","suffix":""},{
+          "fullName":"SE Straus","givenNames":"SE","surnames":"Straus",
+          "suffix":""},{"fullName":"I Hickie","givenNames":"I","surnames":
+          "Hickie","suffix":""},{"fullName":"MC Sharpe","givenNames":"MC",
+          "surnames":"Sharpe","suffix":""},{"fullName":"JG Dobbins",
+          "givenNames":"JG","surnames":"Dobbins","suffix":""}],"editors":[]},
+    {"key":"6","year":2004,"displayYear":"2004","volumeNumber":292,"volume":
+      "292","title":
+      "Effect of galantamine hydrobromide in chronic fatigue syndrome: a randomized controlled trial.",
+      "pages":"1195-1204","eLocationID":"1195","journal":"Jama",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CV Blacker","givenNames":"CV","surnames":"Blacker","suffix":""},{
+          "fullName":"DT Greenwood","givenNames":"DT","surnames":
+          "Greenwood","suffix":""},{"fullName":"KA Wesnes","givenNames":
+          "KA","surnames":"Wesnes","suffix":""},{"fullName":"R Wilson",
+          "givenNames":"R","surnames":"Wilson","suffix":""},{"fullName":
+          "C Woodward","givenNames":"C","surnames":"Woodward","suffix":""}],
+      "editors":[]},{"key":"7","year":2010,"displayYear":"2010",
+      "volumeNumber":24,"volume":"24","title":
+      "Postinfectious and chronic fatigue syndromes: clinical experience from a tertiary-referral centre in Norway.",
+      "pages":"185-188","eLocationID":"185","journal":"In Vivo",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "H Naess","givenNames":"H","surnames":"Naess","suffix":""},{
+          "fullName":"E Sundal","givenNames":"E","surnames":"Sundal",
+          "suffix":""},{"fullName":"KM Myhr","givenNames":"KM","surnames":
+          "Myhr","suffix":""},{"fullName":"HI Nyland","givenNames":"HI",
+          "surnames":"Nyland","suffix":""}],"editors":[]},{"key":"8","year":
+      2003,"displayYear":"2003","volumeNumber":11,"volume":"11","title":
+      "Myalgic encephalomyelitis/chronic fatigue syndrome: clinical working case definition, diagnostic and treatment protocols.",
+      "pages":"7-36","eLocationID":"7","journal":"J Chronic Fatigue Syndr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "BM Carruthers","givenNames":"BM","surnames":"Carruthers","suffix":
+          ""},{"fullName":"AK Jain","givenNames":"AK","surnames":"Jain",
+          "suffix":""},{"fullName":"KL De Meirleir","givenNames":"KL",
+          "surnames":"De Meirleir","suffix":""},{"fullName":"DL Peterson",
+          "givenNames":"DL","surnames":"Peterson","suffix":""},{"fullName":
+          "NG Klimas","givenNames":"NG","surnames":"Klimas","suffix":""}],
+      "editors":[]},{"key":"9","year":2010,"displayYear":"2010",
+      "volumeNumber":6,"volume":"6","title":
+      "B cells as therapeutic targets in SLE.","pages":"326-337",
+      "eLocationID":"326","journal":"Nat Rev Rheumatol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "I Sanz","givenNames":"I","surnames":"Sanz","suffix":""},{
+          "fullName":"FE Lee","givenNames":"FE","surnames":"Lee","suffix":
+          ""}],"editors":[]},{"key":"10","year":2009,"displayYear":"2009",
+      "volumeNumber":1173,"volume":"1173","title":
+      "Infection, vaccination, and autoantibodies in chronic fatigue syndrome, cause or coincidence?",
+      "pages":"600-609","eLocationID":"600","journal":"Ann N Y Acad Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "OD Ortega-Hernandez","givenNames":"OD","surnames":
+          "Ortega-Hernandez","suffix":""},{"fullName":"Y Shoenfeld",
+          "givenNames":"Y","surnames":"Shoenfeld","suffix":""}],"editors":[]},
+    {"key":"11","year":2007,"displayYear":"2007","volumeNumber":32,"volume":
+      "32","title":"Molecular mimicry and auto-immunity.","pages":
+      "111-118","eLocationID":"111","journal":"Clin Rev Allergy Immunol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Blank","givenNames":"M","surnames":"Blank","suffix":""},{
+          "fullName":"O Barzilai","givenNames":"O","surnames":"Barzilai",
+          "suffix":""},{"fullName":"Y Shoenfeld","givenNames":"Y","surnames":
+          "Shoenfeld","suffix":""}],"editors":[]},{"key":"12","year":2010,
+      "displayYear":"2010","volumeNumber":24,"volume":"24","title":
+      "A formal analysis of cytokine networks in chronic fatigue syndrome.",
+      "pages":"1209-1217","eLocationID":"1209","journal":
+      "Brain Behav Immun","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Broderick","givenNames":"G","surnames":"Broderick","suffix":
+          ""},{"fullName":"J Fuite","givenNames":"J","surnames":"Fuite",
+          "suffix":""},{"fullName":"A Kreitz","givenNames":"A","surnames":
+          "Kreitz","suffix":""},{"fullName":"SD Vernon","givenNames":"SD",
+          "surnames":"Vernon","suffix":""},{"fullName":"N Klimas",
+          "givenNames":"N","surnames":"Klimas","suffix":""}],"editors":[]},{
+      "key":"13","year":2004,"displayYear":"2004","volumeNumber":135,
+      "volume":"135","title":
+      "High levels of type 2 cytokine-producing cells in chronic fatigue syndrome.",
+      "pages":"294-302","eLocationID":"294","journal":"Clin Exp Immunol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Skowera","givenNames":"A","surnames":"Skowera","suffix":""},{
+          "fullName":"A Cleare","givenNames":"A","surnames":"Cleare",
+          "suffix":""},{"fullName":"D Blair","givenNames":"D","surnames":
+          "Blair","suffix":""},{"fullName":"L Bevis","givenNames":"L",
+          "surnames":"Bevis","suffix":""},{"fullName":"SC Wessely",
+          "givenNames":"SC","surnames":"Wessely","suffix":""}],"editors":[]},
+    {"key":"14","year":2008,"displayYear":"2008","volumeNumber":4,"volume":
+      "4","title":
+      "Evidence of inflammatory immune signaling in chronic fatigue syndrome: A pilot study of gene expression in peripheral blood.",
+      "pages":"44","eLocationID":"44","journal":"Behav Brain Funct",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AL Aspler","givenNames":"AL","surnames":"Aspler","suffix":""},{
+          "fullName":"C Bolshin","givenNames":"C","surnames":"Bolshin",
+          "suffix":""},{"fullName":"SD Vernon","givenNames":"SD","surnames":
+          "Vernon","suffix":""},{"fullName":"G Broderick","givenNames":"G",
+          "surnames":"Broderick","suffix":""}],"editors":[]},{"key":"15",
+      "year":2010,"displayYear":"2010","volumeNumber":237,"volume":"237",
+      "title":
+      "B-cell targeted therapies in human autoimmune diseases: an updated perspective.",
+      "pages":"264-283","eLocationID":"264","journal":"Immunol Rev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MJ Townsend","givenNames":"MJ","surnames":"Townsend","suffix":
+          ""},{"fullName":"JG Monroe","givenNames":"JG","surnames":
+          "Monroe","suffix":""},{"fullName":"AC Chan","givenNames":"AC",
+          "surnames":"Chan","suffix":""}],"editors":[]},{"key":"16","year":
+      2008,"displayYear":"2008","volumeNumber":34,"volume":"34","title":
+      "Rituximab: beyond simple B cell depletion.","pages":"74-79",
+      "eLocationID":"74","journal":"Clin Rev Allergy Immunol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Kessel","givenNames":"A","surnames":"Kessel","suffix":""},{
+          "fullName":"I Rosner","givenNames":"I","surnames":"Rosner",
+          "suffix":""},{"fullName":"E Toubi","givenNames":"E","surnames":
+          "Toubi","suffix":""}],"editors":[]},{"key":"17","year":2010,
+      "displayYear":"2010","volumeNumber":5,"volume":"5","title":
+      "Long-lived plasma cells and memory B cells produce pathogenic anti-GAD65 autoantibodies in Stiff Person Syndrome.",
+      "pages":"e10838","eLocationID":"e10838","journal":"PLoS One",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Rizzi","givenNames":"M","surnames":"Rizzi","suffix":""},{
+          "fullName":"R Knoth","givenNames":"R","surnames":"Knoth","suffix":
+          ""},{"fullName":"CS Hampe","givenNames":"CS","surnames":"Hampe",
+          "suffix":""},{"fullName":"P Lorenz","givenNames":"P","surnames":
+          "Lorenz","suffix":""},{"fullName":"ML Gougeon","givenNames":"ML",
+          "surnames":"Gougeon","suffix":""}],"editors":[]},{"key":"18",
+      "year":2010,"displayYear":"2010","volumeNumber":2,"volume":"2","title":
+      
+      "Subset-directed antiviral treatment of 142 herpesvirus patients with chronic fatigue syndrome.",
+      "pages":"47-57","eLocationID":"47","journal":
+      "Virus adaptation and treatment","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"AM Lerner","givenNames":"AM","surnames":
+          "Lerner","suffix":""},{"fullName":"S Beqai","givenNames":"S",
+          "surnames":"Beqai","suffix":""},{"fullName":"JT Fitzgerald",
+          "givenNames":"JT","surnames":"Fitzgerald","suffix":""},{"fullName":
+          "K Gill","givenNames":"K","surnames":"Gill","suffix":""},{
+          "fullName":"C Gill","givenNames":"C","surnames":"Gill","suffix":
+          ""}],"editors":[]},{"key":"19","year":2006,"displayYear":"2006",
+      "volumeNumber":37,"volume":"37","title":
+      "Use of valganciclovir in patients with elevated antibody titers against Human Herpesvirus-6 (HHV-6) and Epstein-Barr Virus (EBV) who were experiencing central nervous system dysfunction including long-standing fatigue.",
+      "pages":"S33-38","eLocationID":"S33","journal":"J Clin Virol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AM Kogelnik","givenNames":"AM","surnames":"Kogelnik","suffix":
+          ""},{"fullName":"K Loomis","givenNames":"K","surnames":"Loomis",
+          "suffix":""},{"fullName":"M Hoegh-Petersen","givenNames":"M",
+          "surnames":"Hoegh-Petersen","suffix":""},{"fullName":"F Rosso",
+          "givenNames":"F","surnames":"Rosso","suffix":""},{"fullName":
+          "C Hischier","givenNames":"C","surnames":"Hischier","suffix":""}],
+      "editors":[]},{"key":"20","year":2011,"displayYear":"2011",
+      "volumeNumber":25,"volume":"25","title":
+      "A short review on the psychoneuroimmunology of posttraumatic stress disorder: from risk factors to medical comorbidities.",
+      "pages":"6-13","eLocationID":"6","journal":"Brain Behav Immun",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TW Pace","givenNames":"TW","surnames":"Pace","suffix":""},{
+          "fullName":"CM Heim","givenNames":"CM","surnames":"Heim","suffix":
+          ""}],"editors":[]},{"key":"21","year":2009,"displayYear":"2009",
+      "volumeNumber":9,"volume":"9","title":
+      "A review of the current use of rituximab in autoimmune diseases.",
+      "pages":"10-25","eLocationID":"10","journal":"Int Immunopharmacol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "HM Gurcan","givenNames":"HM","surnames":"Gurcan","suffix":""},{
+          "fullName":"DB Keskin","givenNames":"DB","surnames":"Keskin",
+          "suffix":""},{"fullName":"JN Stern","givenNames":"JN","surnames":
+          "Stern","suffix":""},{"fullName":"MA Nitzberg","givenNames":"MA",
+          "surnames":"Nitzberg","suffix":""},{"fullName":"H Shekhani",
+          "givenNames":"H","surnames":"Shekhani","suffix":""}],"editors":[]},
+    {"key":"22","year":2010,"displayYear":"2010","volumeNumber":62,"volume":
+      "62","title":"Safety of rituximab in rheumatoid arthritis.","pages":
+      "101-106","eLocationID":"101","journal":"Reumatismo",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Covelli","givenNames":"M","surnames":"Covelli","suffix":""},{
+          "fullName":"P Sarzi-Puttini","givenNames":"P","surnames":
+          "Sarzi-Puttini","suffix":""},{"fullName":"F Atzeni","givenNames":
+          "F","surnames":"Atzeni","suffix":""},{"fullName":"P Macchioni",
+          "givenNames":"P","surnames":"Macchioni","suffix":""}],"editors":[]},
+    {"key":"23","year":2010,"displayYear":"2010","volumeNumber":149,"volume":
+      "149","title":
+      "The effect of rituximab on humoral and cell mediated immunity and infection in the treatment of autoimmune diseases.",
+      "pages":"3-13","eLocationID":"3","journal":"Br J Haematol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "N Cooper","givenNames":"N","surnames":"Cooper","suffix":""},{
+          "fullName":"DM Arnold","givenNames":"DM","surnames":"Arnold",
+          "suffix":""}],"editors":[]},{"key":"24","year":2009,"displayYear":
+      "2009","volumeNumber":113,"volume":"113","title":
+      "Progressive multifocal leukoencephalopathy after rituximab therapy in HIV-negative patients: a report of 57 cases from the Research on Adverse Drug Events and Reports project.",
+      "pages":"4834-4840","eLocationID":"4834","journal":"Blood",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "KR Carson","givenNames":"KR","surnames":"Carson","suffix":""},{
+          "fullName":"AM Evens","givenNames":"AM","surnames":"Evens",
+          "suffix":""},{"fullName":"EA Richey","givenNames":"EA","surnames":
+          "Richey","suffix":""},{"fullName":"TM Habermann","givenNames":
+          "TM","surnames":"Habermann","suffix":""},{"fullName":"D Focosi",
+          "givenNames":"D","surnames":"Focosi","suffix":""}],"editors":[]},{
+      "key":"25","year":2009,"displayYear":"2009","volumeNumber":326,
+      "volume":"326","title":
+      "Detection of an Infectious Retrovirus, XMRV, in Blood Cells of Patients with Chronic Fatigue Syndrome.",
+      "pages":"585-589","eLocationID":"585","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "VC Lombardi","givenNames":"VC","surnames":"Lombardi","suffix":
+          ""},{"fullName":"FW Ruscetti","givenNames":"FW","surnames":
+          "Ruscetti","suffix":""},{"fullName":"J Das Gupta","givenNames":
+          "J","surnames":"Das Gupta","suffix":""},{"fullName":"MA Pfost",
+          "givenNames":"MA","surnames":"Pfost","suffix":""},{"fullName":
+          "KS Hagen","givenNames":"KS","surnames":"Hagen","suffix":""}],
+      "editors":[]},{"key":"26","year":2010,"displayYear":"2010",
+      "volumeNumber":107,"volume":"107","title":
+      "Detection of MLV-related virus gene sequences in blood of patients with chronic fatigue syndrome and healthy blood donors.",
+      "pages":"15874-15879","eLocationID":"15874","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SC Lo","givenNames":"SC","surnames":"Lo","suffix":""},{"fullName":
+          "N Pripuzova","givenNames":"N","surnames":"Pripuzova","suffix":
+          ""},{"fullName":"B Li","givenNames":"B","surnames":"Li","suffix":
+          ""},{"fullName":"AL Komaroff","givenNames":"AL","surnames":
+          "Komaroff","suffix":""},{"fullName":"GC Hung","givenNames":"GC",
+          "surnames":"Hung","suffix":""}],"editors":[]},{"key":"27","year":
+      2011,"displayYear":"2011","volumeNumber":8,"volume":"8","title":
+      "Serologic and PCR testing of persons with chronic fatigue syndrome in the United States shows no association with xenotropic or polytropic murine leukemia virus-related viruses.",
+      "pages":"12","eLocationID":"12","journal":"Retrovirology",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "BC Satterfield","givenNames":"BC","surnames":"Satterfield",
+          "suffix":""},{"fullName":"RA Garcia","givenNames":"RA","surnames":
+          "Garcia","suffix":""},{"fullName":"H Jia","givenNames":"H",
+          "surnames":"Jia","suffix":""},{"fullName":"S Tang","givenNames":
+          "S","surnames":"Tang","suffix":""},{"fullName":"H Zheng",
+          "givenNames":"H","surnames":"Zheng","suffix":""}],"editors":[]},{
+      "key":"28","year":2011,"displayYear":"2011","volumeNumber":85,"volume":
+      "85","title":
+      "Absence of XMRV Retrovirus and Other Murine Leukemia Virus-Related Viruses in Patients with Chronic Fatigue Syndrome.",
+      "pages":"7195-7202","eLocationID":"7195","journal":"J Virol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CH Shin","givenNames":"CH","surnames":"Shin","suffix":""},{
+          "fullName":"L Bateman","givenNames":"L","surnames":"Bateman",
+          "suffix":""},{"fullName":"R Schlaberg","givenNames":"R","surnames":
+          "Schlaberg","suffix":""},{"fullName":"AM Bunker","givenNames":
+          "AM","surnames":"Bunker","suffix":""},{"fullName":"CJ Leonard",
+          "givenNames":"CJ","surnames":"Leonard","suffix":""}],"editors":[]},
+    {"key":"29","year":2011,"displayYear":"2011","volumeNumber":333,"volume":
+      "333","title":"Recombinant origin of the retrovirus XMRV.","pages":
+      "97-101","eLocationID":"97","journal":"Science","collaborativeAuthors":
+      [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"T Paprotka","givenNames":"T","surnames":
+          "Paprotka","suffix":""},{"fullName":"KA Delviks-Frankenberry",
+          "givenNames":"KA","surnames":"Delviks-Frankenberry","suffix":""},{
+          "fullName":"O Cingoz","givenNames":"O","surnames":"Cingoz",
+          "suffix":""},{"fullName":"A Martinez","givenNames":"A","surnames":
+          "Martinez","suffix":""},{"fullName":"HJ Kung","givenNames":"HJ",
+          "surnames":"Kung","suffix":""}],"editors":[]},{"key":"30","year":
+      2011,"displayYear":"2011","volumeNumber":333,"volume":"333","title":
+      "No evidence of murine-like gammaretroviruses in CFS patients previously identified as XMRV-infected.",
+      "pages":"94-97","eLocationID":"94","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "K Knox","givenNames":"K","surnames":"Knox","suffix":""},{
+          "fullName":"D Carrigan","givenNames":"D","surnames":"Carrigan",
+          "suffix":""},{"fullName":"G Simmons","givenNames":"G","surnames":
+          "Simmons","suffix":""},{"fullName":"F Teque","givenNames":"F",
+          "surnames":"Teque","suffix":""},{"fullName":"Y Zhou","givenNames":
+          "Y","surnames":"Zhou","suffix":""}],"editors":[]}],
+  "relatedArticles":[],"authors":[{"fullName":"Øystein Fluge","givenNames":
+      "Øystein","surnames":"Fluge","suffix":""},{"fullName":"Ove Bruland",
+      "givenNames":"Ove","surnames":"Bruland","suffix":""},{"fullName":
+      "Kristin Risa","givenNames":"Kristin","surnames":"Risa","suffix":""},{
+      "fullName":"Anette Storstein","givenNames":"Anette","surnames":
+      "Storstein","suffix":""},{"fullName":"Einar K. Kristoffersen",
+      "givenNames":"Einar K.","surnames":"Kristoffersen","suffix":""},{
+      "fullName":"Dipak Sapkota","givenNames":"Dipak","surnames":"Sapkota",
+      "suffix":""},{"fullName":"Halvor Næss","givenNames":"Halvor",
+      "surnames":"Næss","suffix":""},{"fullName":"Olav Dahl","givenNames":
+      "Olav","surnames":"Dahl","suffix":""},{"fullName":"Harald Nyland",
+      "givenNames":"Harald","surnames":"Nyland","suffix":""},{"fullName":
+      "Olav Mella","givenNames":"Olav","surnames":"Mella","suffix":""}],
+  "editors":[{"fullName":"Markus Reindl","givenNames":"Markus","surnames":
+      "Reindl","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}

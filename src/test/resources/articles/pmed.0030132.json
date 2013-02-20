@@ -1,0 +1,78 @@
+{"doi":"info:doi/10.1371/journal.pmed.0030132","title":
+  "Bigger and Better: How Pfizer Redefined Erectile Dysfunction","eIssn":
+  "1549-1676","state":1,"archiveName":"pmed.0030132.zip","description":
+  "\u003cp\u003eLexchin examines how Pfizer transformed sildenafil from an effective product for erectile dysfunction due to illness or injury into a drug that healthy men can use to enhance their erections.\u003c/p\u003e",
+  "rights":
+  "Joel Lexchin. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","eLocationId":"e132","strkImgURI":"",
+  "date":"Apr 11, 2006 12:00:00 AM","volume":"3","issue":"4","journal":
+  "PLoS Med","publisherLocation":"San Francisco, USA","publisherName":
+  "Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pmed.0030132","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Essay",
+    "http://rdf.plos.org/RDF/articleType/discussion"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pmed.0030132","extension":
+      "XML","contentType":"text/xml","title":
+      "Bigger and Better: How Pfizer Redefined Erectile Dysfunction",
+      "description":
+      "\u003cp\u003eLexchin examines how Pfizer transformed sildenafil from an effective product for erectile dysfunction due to illness or injury into a drug that healthy men can use to enhance their erections.\u003c/p\u003e",
+      "size":39686},{"doi":"info:doi/10.1371/journal.pmed.0030132",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Bigger and Better: How Pfizer Redefined Erectile Dysfunction",
+      "description":
+      "\u003cp\u003eLexchin examines how Pfizer transformed sildenafil from an effective product for erectile dysfunction due to illness or injury into a drug that healthy men can use to enhance their erections.\u003c/p\u003e",
+      "size":186414},{"doi":
+      "info:doi/10.1371/journal.pmed.0030132.disease_logo","contextElement":
+      "p","extension":"PNG","contentType":"image/png","title":"",
+      "description":"","size":25881},{"doi":
+      "info:doi/10.1371/journal.pmed.0030132.g001","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 1",
+      "description":
+      "\u003ctitle\u003ePfizer Hired 39-Year-Old Baseball Player Rafael Palmeiro as a Spokesman for Viagra\u003c/title\u003e",
+      "size":796080},{"doi":"info:doi/10.1371/journal.pmed.0030132.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePfizer Hired 39-Year-Old Baseball Player Rafael Palmeiro as a Spokesman for Viagra\u003c/title\u003e",
+      "size":11802},{"doi":"info:doi/10.1371/journal.pmed.0030132.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePfizer Hired 39-Year-Old Baseball Player Rafael Palmeiro as a Spokesman for Viagra\u003c/title\u003e",
+      "size":782946},{"doi":"info:doi/10.1371/journal.pmed.0030132.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePfizer Hired 39-Year-Old Baseball Player Rafael Palmeiro as a Spokesman for Viagra\u003c/title\u003e",
+      "size":918048},{"doi":"info:doi/10.1371/journal.pmed.0030132.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"","description":
+      "\u003ctitle\u003e(Illustration: Giovanni Maki)\u003c/title\u003e",
+      "size":3417724},{"doi":"info:doi/10.1371/journal.pmed.0030132.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003e(Illustration: Giovanni Maki)\u003c/title\u003e",
+      "size":8401},{"doi":"info:doi/10.1371/journal.pmed.0030132.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003e(Illustration: Giovanni Maki)\u003c/title\u003e",
+      "size":214778},{"doi":"info:doi/10.1371/journal.pmed.0030132.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003e(Illustration: Giovanni Maki)\u003c/title\u003e",
+      "size":2944886}],"citedArticles":[{"key":"1","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"2","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"3","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"4","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"5","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"6","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"7","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"8","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"9","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"10","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"11","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"12","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"13","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"14","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"15","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"16","collaborativeAuthors":[],
+      "authors":[],"editors":[]}],"relatedArticles":[],"authors":[{
+      "fullName":"Joel Lexchin","givenNames":"Joel","surnames":"Lexchin",
+      "suffix":""}],"editors":[],"journals":[{"eIssn":"1549-1676"}]}

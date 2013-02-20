@@ -26,6 +26,7 @@ import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
@@ -61,6 +62,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -163,6 +165,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     relateToJournals(article);
     populateCategories(article, doc);
     initializeAssets(article, xml, xmlDataLength);
+    populateRelatedArticles(article);
 
     return article;
   }
@@ -375,6 +378,36 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
     xmlAsset.setSize(xmlDataLength);
+  }
+
+  private void populateRelatedArticles(Article article) {
+    for (ArticleRelationship relationship : article.getRelatedArticles()) {
+      relationship.setParentArticle(article);
+
+      String otherArticleDoi = relationship.getOtherArticleDoi();
+      Article otherArticle = (Article) DataAccessUtils.uniqueResult((List<?>) hibernateTemplate.findByCriteria(
+          DetachedCriteria.forClass(Article.class)
+              .add(Restrictions.eq("doi", otherArticleDoi))
+      ));
+      if (otherArticle != null) {
+        relationship.setOtherArticleID(otherArticle.getID());
+      }
+      /*
+       * The article not being in our system is documented as a valid use case (see Javadoc on ArticleRelationship).
+       * TODO: Do we want to send a warning to the client just in case?
+       */
+    }
+  }
+
+  private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
+    // TODO On re-ingest, multiple existing assets with same DOI? Probably needs to be a multimap.
+    ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
+    for (ArticleAsset asset : assets) {
+      String doi = asset.getDoi();
+      doi = DoiBasedIdentity.removeScheme(doi);
+      map.put(doi, asset);
+    }
+    return map.build();
   }
 
   /**

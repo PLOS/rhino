@@ -1,0 +1,36 @@
+{"doi":"info:doi/10.1371/journal.pmed.0020402","title":
+  "Tackling Inherited Blindness","eIssn":"1549-1676","state":1,"archiveName":
+  "pmed.0020402.zip","rights":
+  "Public Library of Science. This is an open-access article distributed under the terms of the Creative Commons Public Domain Declaration, which stipulates that, once placed in the public domain, this work may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
+  "language":"en","format":"text/xml","eLocationId":"e402","strkImgURI":"",
+  "date":"Nov 1, 2005 12:00:00 AM","volume":"2","issue":"11","journal":
+  "PLoS Med","publisherLocation":"San Francisco, USA","publisherName":
+  "Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pmed.0020402","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Synopsis",
+    "http://rdf.plos.org/RDF/articleType/article-commentary"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pmed.0020402","extension":
+      "XML","contentType":"text/xml","title":
+      "Tackling Inherited Blindness","size":9087},{"doi":
+      "info:doi/10.1371/journal.pmed.0020402","extension":"PDF",
+      "contentType":"application/pdf","title":
+      "Tackling Inherited Blindness","size":371370},{"doi":
+      "info:doi/10.1371/journal.pmed.0020402.g001","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"","description":
+      "\u003ctitle\u003ePharmacological and rAAV Gene Therapy Rescue of the Retinoid Cycle\u003c/title\u003e",
+      "size":1071752},{"doi":"info:doi/10.1371/journal.pmed.0020402.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003ePharmacological and rAAV Gene Therapy Rescue of the Retinoid Cycle\u003c/title\u003e",
+      "size":6735},{"doi":"info:doi/10.1371/journal.pmed.0020402.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003ePharmacological and rAAV Gene Therapy Rescue of the Retinoid Cycle\u003c/title\u003e",
+      "size":105305},{"doi":"info:doi/10.1371/journal.pmed.0020402.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003ePharmacological and rAAV Gene Therapy Rescue of the Retinoid Cycle\u003c/title\u003e",
+      "size":549257}],"citedArticles":[],"relatedArticles":[{
+      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0020333","type":
+      "companion"}],"authors":[],"editors":[],"journals":[{"eIssn":
+      "1549-1676"}]}

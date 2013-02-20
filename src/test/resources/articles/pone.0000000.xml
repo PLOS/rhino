@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+   <front>
+      <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+            <publisher-name>Public Library of Science</publisher-name>
+            <publisher-loc>San Francisco, USA</publisher-loc>
+         </publisher></journal-meta>
+      <article-meta><article-id pub-id-type="publisher-id">06-PONE-RA-00169</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0000000</article-id><article-categories>
+            <subj-group subj-group-type="heading">
+               <subject>Research Article</subject>
+            </subj-group>
+            <subj-group subj-group-type="Discipline">
+               <subject>Radiology and Medical Imaging</subject>
+               <subject>Cardiovascular Disorders/Cardiac Surgery and Transplantations</subject>
+            </subj-group>
+         </article-categories><title-group><article-title>PLoS Journals Sandbox: A Place to Learn and Play</article-title><alt-title alt-title-type="running-head">PLoS Journals Sandbox</alt-title></title-group><contrib-group>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Baehr</surname>
+                  <given-names>Mike</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+               <xref ref-type="aff" rid="aff2">
+                  <sup>2</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Cave</surname>
+                  <given-names>Richard</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+               <xref ref-type="aff" rid="aff2">
+                  <sup>2</sup>
+               </xref>
+               <xref ref-type="corresp" rid="n101">
+                  <sup>*</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Dickey</surname>
+                  <given-names>Eddie</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Harney</surname>
+                  <given-names>James</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Kudlick</surname>
+                  <given-names>Alex</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Mclaughlin</surname>
+                  <given-names>Zoe</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>O'Connor</surname>
+                  <given-names>Bill</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Osowski</surname>
+                  <given-names>Joe</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Singh</surname>
+                  <given-names>Mamta</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Song</surname>
+                  <given-names>Jennifer</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Sterling</surname>
+                  <given-names>Scott</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Toomey</surname>
+                  <given-names>Sebastian</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+               <xref ref-type="aff" rid="aff2">
+                  <sup>2</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Yao</surname>
+                  <given-names>Jackie</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+            </contrib>
+         </contrib-group><aff id="aff1"><label>1</label><addr-line>Public Library of Science, San Francisco, California, United States of America</addr-line></aff><aff id="aff2"><label>2</label><addr-line>Public Library of Science, Ocean Beach Surfing
+               Annex, San Francisco, California, United States of America</addr-line></aff><contrib-group>
+            <contrib contrib-type="editor" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Binfield</surname>
+                  <given-names>Pete</given-names>
+               </name>
+               <role>Academic Editor</role>
+               <xref ref-type="aff" rid="edit1"/>
+            </contrib>
+         </contrib-group><aff id="edit1">Public Library of Science, United States of America</aff><author-notes>
+            <corresp id="n101">* To whom correspondence should be addressed. E-mail:<email xlink:type="simple">webmaster@plos.org</email>
+            </corresp>
+            <fn fn-type="con">
+               <p>Conceived and designed the experiments: PB MP RC. Analyzed the data: The
+                  Scientific Community. Wrote the paper: PB MP RC.</p>
+            </fn>
+         <fn fn-type="conflict">
+            <p>The authors have declared that no competing interests exist.</p>
+         </fn></author-notes><pub-date pub-type="ppub">
+            <day>20</day>
+            <month>12</month>
+            <year>2006</year>
+         </pub-date><pub-date pub-type="epub">
+            <day>20</day>
+            <month>12</month>
+            <year>2006</year>
+         </pub-date><volume>1</volume><issue>1</issue><elocation-id>e0</elocation-id><history>
+            <date date-type="received">
+               <day>20</day>
+               <month>12</month>
+               <year>2006</year>
+            </date>
+            <date date-type="accepted">
+               <day>20</day>
+               <month>12</month>
+               <year>2006</year>
+            </date>
+         </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2006</copyright-year><copyright-holder>Public Library of Science</copyright-holder><license><license-p>This is an open-access article distributed
+            under the terms of the Creative Commons Attribution License, which permits unrestricted
+            use, distribution, and reproduction in any medium, provided the original author and
+            source are credited.</license-p></license></permissions><abstract>
+            <sec>
+               <title>Background</title>
+               <p>One of the core concepts of the PLoS journals is that what happens after a paper
+                  is published is as important as what occurred before it was published. To support
+                  that, PLoS is encouraging ongoing review and discussion of articles with a number
+                  of post-publication tools. These tools allow you to add notes and publicly comment
+                  on the online articles. This article describes the post-publication tools of the
+                  PLoS journals and provides a place for you to experiment and play. The commentary
+                  left on this sandbox article, and the text itself, will be removed on a periodic
+                  basis.</p>
+               <p>So have a go and tell us what you think!</p>
+            </sec>
+         </abstract><funding-group><funding-statement>The development of the Ambra 1.0 publishing system and Topaz 1.0 Object Triple Mapping 
+               was funded by a grant from the Gordon and Betty Moore Foundation.</funding-statement></funding-group><counts>
+            <page-count count="2"/>
+         </counts></article-meta>
+   </front>
+   <body>
+      <sec id="s1">
+         <title>Introduction</title>
+         <p>The PLoS Web site employs a system for the assessment of articles that combines pre- and
+            post-publication peer review <xref ref-type="bibr" rid="pone.0000000-PLoS1">[1]</xref>.</p>
+         <sec id="s1a">
+            <title>Notes, Comments and Ratings</title>
+            <p>There are three major components to the post-publication review:</p>
+            <list list-type="number">
+               <list-item>
+                  <p>Notes: Notes apply to a specific point in the Web version of the article text
+                     and should be used to highlight a minor point, to make additions or
+                     clarifications, or to identify and link to material, including more extensive
+                     discussions, presented elsewhere. There isn’t a word limit on these notes, but
+                     when highlighted, the note is truncated after a few lines with a link through
+                     to the full note. Anyone, including authors, can reply to a note so that a
+                     conversation can develop around a specific point in the article.</p>
+               </list-item>
+               <list-item>
+                  <p>Comments: Comments are of a more general nature and can also be added to the
+                     article, leading to threaded discussions concerning the content, conclusions,
+                     and consequences of a specific article. Comments are not attached to any
+                     specific part of the article and they can be extended by replying to any
+                     comment in the discussion thread. This allows for multiple branching threads of
+                     discussion.</p>
+               </list-item>
+               <list-item>
+                  <p>Ratings: Users can assign individual ratings to articles, which are then
+                     aggregated to provide overall ratings and rankings of articles. Users are not
+                     allowed to rate more than once, but can revise their rating. For more details,
+                     see <xref ref-type="bibr" rid="pone.0000000-PLoS2">[2]</xref>.</p>
+               </list-item>
+            </list>
+            <p>Authors of all Notes, Comments, and Ratings will be identified. </p>
+         </sec>
+      </sec>
+      <sec id="s2">
+         <title>Method</title>
+         <sec id="s2a">
+            <title>Who Can Contribute?</title>
+            <p>All registered users are able to add Notes, Comments, and Ratings to any article.
+               Anyone can register as a user. Users are required to unambiguously identify
+               themselves and to supply a valid e-mail address in order to register. Registration
+               information will be kept strictly confidential by PLoS staff unless otherwise
+               indicated. PLoS reserves the right to suspend the privileges of any registered user.
+               Discussions and ratings are not anonymous. Please view the PLoS Privacy Statement
+                  <xref ref-type="bibr" rid="pone.0000000-PLoS3">[3]</xref> and the Terms of Use
+                  <xref ref-type="bibr" rid="pone.0000000-PLoS4">[4]</xref>summary for more
+               information.</p>
+         </sec>
+         <sec id="s2b">
+            <title>How to Add and View Notes</title>
+            <p>To make a Note, first make sure you are logged into the Web site. Highlight the text
+               to be annotated, and then click the "Add a note to the text" link in the right-hand
+               navigation menu of the article. The drop-down list should already have “Note”
+               selected. If it is not, then select “Note” from the drop-down list. Enter a title and
+               text for your Note in the appropriate boxes. When you are satisfied with the text,
+               click "Post" to attach the Note to the article. Any correctly formed URLs in the Note
+               text field will automatically become working links. </p>
+            <p>Notes can be started at any point within the text, but for ease of reading we ask
+               that you do not begin Notes in the middle of words. We advise that longer Notes are
+               first written in a word-processing program that allows for spell checking before they
+               are copied and pasted into the Note field.</p>
+            <p>Notes are represented by the small blue "clouds" within the online text. The number
+               in the cloud indicates the number of Notes that begin at that point in the text. To
+               see what selection of text is associated with a Note, run the cursor over the cloud,
+               and the text will be transiently highlighted. Click on the cloud to view the title,
+               date, contributor, and first 250 text characters of a Note. To view the complete text
+               of a Note or the citation information of a Note, click the "View/respond to this"
+               link to view the full text.</p>
+         </sec>
+         <sec id="s2c">
+            <title>How to Add and View Comments</title>
+            <p>To add a general Comment about the article as a whole, first make sure you are logged
+               into the Web site. To create a Comment, click the "Make a general comment" link in
+               the right-hand navigation menu of the article. Enter a title and text for your
+               comment in the appropriate boxes.</p>
+            <p>We advise that Comments are first written in a word-processing program that allows
+               for spell checking before they are copied and pasted into the Comment field. When you
+               are satisfied with the text, click "Post" to attach the Comment to the article. Any
+               correctly formed URLs in the Comment text field will automatically become working
+               links.</p>
+            <p> To view all Comments and Notes on an article, along with any replies, click the
+               "View/join ongoing discussions" link in the right-hand navigation menu of the
+               article. </p>
+         </sec>
+         <sec id="s2d">
+            <title>How to Add and View Corrections</title>
+            <p>Authors and other users can post two kinds of Corrections: Minor Corrections and
+               Formal Corrections. Minor Corrections indicate small errors and clarifications to the
+               article, whereas Formal Corrections are reserved for errors that significantly affect
+               the utility or understanding of the article. Formal Corrections are also sent to
+               PubMed Central and PubMed. In both cases, the decision to indicate a posting as a
+               Minor or Formal Correction is the responsibility of PLoS staff.</p>
+            <p>To make a Correction, first make sure you are logged into the Web site. Highlight the
+               text to be corrected, and then click the "Add a note to the text" link in the
+               right-hand navigation menu of the article. Select “Correction” from the drop-down
+               list. Enter a title and text for your Correction in the appropriate boxes. When you
+               are satisfied with the text, click "Post" to attach the Correction to the
+               article.</p>
+            <p>The Correction will initially appear as a Note but will be promptly reviewed by PLoS
+               staff. After the Note is reviewed, it will either stay as a Note or be changed to a
+               Minor Correction or Formal Correction.</p>
+            <p>Once a Note is changed to a Correction, the Correction is represented by a small red
+               triangle "cloud" within the online text. The number in the cloud indicates the number
+               of Corrections that begin at that point in the text. To see what selection of text is
+               associated with a Correction, run the cursor over the cloud, and the text will be
+               transiently highlighted. Click on the cloud to view the title, date, contributor, and
+               first 250 text characters of a Correction. To view the complete text of a Correction
+               or the citation information of a Correction, click the "View/respond to this" link to
+               view the full text.</p>
+            <p>Formal Corrections are also listed above the title of the article.. The title of the
+               Formal Correction and a link to the Formal Corrections will appear in this block.</p>
+         </sec>
+         <sec id="s2e">
+            <title>Responding to Notes, Comments, and Corrections</title>
+            <p>To respond to a Note, Comment or Correction, click the "Respond to this Posting" link
+               in the bottom-right corner of the window. Enter a title and text for your response in
+               the appropriate boxes. We advise that responses first are written in a
+               word-processing program that allows for spell checking before they are copied and
+               pasted into the comment field. When you are satisfied with the text, click "Post" to
+               attach the response to the Note, Comment or Correction. Any correctly formed URLs in
+               the response text field will automatically become working links.</p>
+            <p>Following this procedure, an unlimited number of branching threads can be anchored to
+               an initial Note, Comment or Correction. If any contribution is removed following
+               moderation, all subsequent responses along its thread will also be removed. </p>
+         </sec>
+         <sec id="s2f">
+            <title>Rating Categories</title>
+            <p>The PLoS Web site allows users to rate articles for subjective "quality". Scientific
+               work can be measured on a number of scales. To reflect this, research articles can be
+               rated in three separate categories: Insight, Reliability, and Style. Rating is done
+               on a 1 to 5 scale with 1 being the lowest and 5 the highest rating.</p>
+            <list list-type="number">
+               <list-item>
+                  <p>Insight: This provides a measure of how thought-provoking a user found an
+                     article or how much it advances our scientific understanding. The scale for
+                     Insight ranges from 1, Bland, a report which provides no more than an
+                     incremental advance on the published literature; to 5, Profound, a report which
+                     substantially deepens or alters current thinking.</p>
+               </list-item>
+               <list-item>
+                  <p>Reliability: This provides a measure of how secure a user feels the results and
+                     conclusion in a study are. The scale for Reliability ranges from 1, Tenuous,
+                     the study is preliminary and will need confirmation; to 5, Unassailable, the
+                     results are of high quality, the reasoning is tight, and the conclusions are
+                     completely solid.</p>
+               </list-item>
+               <list-item>
+                  <p>Style: This provides a measure of how well performed and presented a user
+                     considers a study to be. The scale for Style ranges from 1, Crude, the
+                     technical accomplishment and presentation of the study is adequate at best; to
+                     5, Elegant, the study satisfyingly presents the results of technically
+                     accomplished and expertly executed experiments.</p>
+               </list-item>
+            </list>
+            <p>Users can rate research articles in any or all categories; the ratings given are
+               combined to give an overall rating from that user. Note that Front Matter articles,
+               such as Editorials, Perspectives, and Reviews, can only be given a single overall
+               rating.</p>
+            <p>Ratings from all users are combined to give average ratings in each category and a
+               combined overall rating. The number of users who have rated an article is also
+               displayed.</p>
+            <p>Users can also supply comments to accompany their rating of an article. These can be
+               used to explain the ratings given. Unlike other forms of comment, rating comments
+               cannot be used as the beginning of a discussion thread. The comment field is
+               optional; however, comments cannot be made unless the user also rates the article in
+               at least one category.</p>
+            <fig id="pone-0000000-g001" position="float">
+               <object-id pub-id-type="doi">10.1371/journal.pone.0000000.g001</object-id>
+               <label>Figure 1</label>
+               <caption>
+                  <title>PLoS Development Team</title>
+                  <p>The PLoS development team at the release of Ambra 2.0 on November 11, 2011. 
+                     From left to right: Richard Cave, Alex Kudlick, Scott Sterling, Mike Baehr, 
+                     Jennifer Song, Eddie Dickey, Bill O'Connor, Joe Osowski, Zoe Mclaughlin</p>
+               </caption>
+               <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000000.g001" xlink:type="simple"/>
+            </fig>
+         </sec>
+         <sec id="s2g">
+            <title>Viewing Ratings and Rating Comments</title>
+            <p>The overall "Average Rating" for an article is displayed in the right hand navigation
+               menu for all articles. Clicking on "See all categories" reveals the average rating in
+               each category. Also displayed is the number of users who have rated the article;
+               "User Ratings" links to a page containing the individual ratings from each user as
+               well as any comments they have included. </p>
+            <p>Ratings in all and any category are displayed on articles whether they have been
+               rated or not. However, when compiling lists based on ratings, PLoS will only include
+               articles rated by more than 10 users. </p>
+         </sec>
+         <sec id="s2h">
+            <title>How to Rate</title>
+            <p>To rate an article first make sure you are logged into the Web site. Then, click the
+               "Rate This Article" link in the right hand navigation menu of the article to be
+               rated. This will open a separate window within which you can select your desired
+               number of rating stars for the study and enter any comments that you may wish to
+               accompany your rating. Once completed, you will be returned to the article. Ratings
+               and rating comments can be modified at any time by following the 'edit my rating'
+               link in the right hand navigation menu. </p>
+         </sec>
+         <sec id="s2i">
+            <title>Good Practice</title>
+            <p>All contributions must conform to the norms of civilized scientific discussion. Any
+               contributions that do not meet these standards will be removed. Any users who
+               consistently transgress these conventions will have their user privileges
+               removed.</p>
+            <p>A partial list of discussion standards includes the following:</p>
+            <list list-type="number">
+               <list-item><p>Language that is insulting, inflammatory, or obscene will not be
+                  tolerated.</p></list-item>
+               <list-item><p>Unsupported assertions or statements should be avoided. Comments must be
+                  evidence-based, not authority-based.</p></list-item>
+               <list-item><p>When previously published studies are cited, they must be accurately
+                  referenced and, where possible, a DOI and link to a publicly accessible version
+                  supplied.</p></list-item>
+               <list-item><p>Unpublished data should be provided with sufficient methodological detail
+                  for those data to be assessed. Alternatively, a permanent Web link to such
+                  information should be provided.</p></list-item>
+               <list-item><p>Arguments based on belief are to be avoided. For example the assertion, "I
+                  don't believe the results in Figure 2." must be supported.</p></list-item>
+               <list-item><p>Discussions should be confined to the demonstrable content of articles and
+                  should avoid speculation about the motivations or prejudices of
+                  authors.</p></list-item>
+            </list>
+         </sec>
+         <sec id="s2j">
+            <title>Requesting Review of Inappropriate Content</title>
+            <p>To request review of a comment you believe to be inappropriate, or if you suspect
+               that the rating system is being abused, click the "Request review" link in the
+               bottom-right corner of the rating. Indicate why the rating should be reviewed
+               ("Spam," "Offensive," "Inappropriate," or "Other"), enter additional information in
+               the text box, and click "Submit". PLoS staff will investigate the concern, which may
+               involve consulting external experts if necessary. Any comments that PLoS staff deem
+               to be inappropriate will be removed. Any users who consistently posts inappropriate
+               material will have their user privileges removed. </p>
+            <p>PLoS is the final arbiter of the suitability of content for inclusion in the PLoS Web
+               sites.</p>
+         </sec>
+      </sec>
+      <sec id="s3">
+         <title>Commentary and Ratings F.A.Q.</title>
+         <sec id="s3a">
+            <title>Question 1: I have just read a peer-reviewed article in one of the PLoS journals.
+               What do I do next?</title>
+            <p>Rate the article - tell us what you think of it by giving it a star ranking (1-5).
+               Post a note and/or a comment onthe article. This will help build on the article's
+               research and start a discussion with your peers.</p>
+         </sec>
+         <sec id="s3b">
+            <title>Question 2: But I am not an expert in the field!</title>
+            <p>That is perfectly OK - nobody can be an expert on everything. But you have read this
+               article because you were interested in the topic and understood some, most, or all of
+               the article. Thus, you are an educated, informed reader. A comment or question that
+               you post will be worthwhile and of interest to others.</p>
+            <p>The authors, referees and academic editors of PLoS articles are encouraged to respond
+               to your c omments and questions. They have put a lot of hard work into the manuscript
+               and will appreciate compliments as well as polite criticisms and questions from both
+               experts and non-experts.</p>
+            <p>Comments that are entirely off-topic, or offensive, or posted by purveyors of
+               pseudo/non/anti-science, will be deleted. If you notice an inappropriate comment,
+               please flag the comment so that we can evaluate it and act accordingly.</p>
+         </sec>
+         <sec id="s3c">
+            <title>Question 3: Q: I think the article is well done, well written and complete. I
+               have nothing to ask, critique or add to it. I also think that the paper adds another
+               piece to the puzzle, is not controversial and does not challenge existing theory.
+               Good, but not exciting. Should I say anything?</title>
+            <p>Yes. PLoS welcomes such articles. You may choose to rate the article high on
+               Reliability and Style and lower on Insight if that is how you feel. But do post a
+               comment stating your opinion nonetheless. Congratulate the authors on good work and
+               note that you think it is a valuable addition to the existing body of knowledge
+               without being revolutionary. </p>
+         </sec>
+         <sec id="s3d">
+            <title>Question 4: I think the article is challenging the current dogma in ways that
+               make me excited about the new view. But I may have quibbles with some
+               details.</title>
+            <p>Rate the article, perhaps giving somewhat lower marks on Reliability and Style and
+               higher on Insight, if that is how you feel. Post a comment that shows your excitement
+               about the work, as well as voices your minor concerns.</p>
+         </sec>
+         <sec id="s3e">
+            <title>Question 5: I think the article has a major problem, but I am afraid to challenge
+               a big name in my field.</title>
+            <p>Your nervousness is understandable. But if you believe that you have identified a
+               real problem with the article and you feel confident , it is likely that other
+               readers will feel the same. Be the first one to comment about it (try to use
+               non-confrontational language such as 'could' not 'should' etc) and read the responses
+               of others who may agree or disagree with you. On the PLoS journals, everyone is equal
+               and everyone is expected to treat others with equal respect. Courage to challenge
+               authorities will gain you a fair reputation among your peers.</p>
+         </sec>
+         <sec id="s3f">
+            <title>Question 6: What is in it for me? Why should I spend my time and expose myself to
+               do this?</title>
+            <p>Think of it in a long-term perspective. Post-publication review is likely to spread
+               over time and become ubiquitous. Within a year or so, all PLoS journals will have
+               this functionality. Other publishers are likely to follow suit. People who comment
+               frequently and write valuable comments will build reputations over time. If you rate,
+               note and comment on PLoS papers now, you will be one of the early adopters and will
+               be recognized and respected for this in the future. </p>
+            <p>Within a few months, there will be a new functionality implemented on PLoS articles,
+               whereby users will be able to rate each others' comments. Hopefully, this rating
+               system will be universal over all Open Access journals with post-publication reviews.
+               Frequent quality commenting will help you build up a high rating score from your
+               fellow commentators. In the future, this score will be a number that you could
+               include in your CV and use for promotions, getting jobs, etc. Also, prolific
+               commenting may result in offers for future scientific collaboration or employment.
+               This has already happened to prolific commenters on science blogs and is even more
+               likely to happen to prolific commenters on peer-reviewed articles.</p>
+         </sec>
+      </sec>
+      <sec id="s4">
+         <title>More Information</title>
+         <sec id="s4a">
+            <title/>
+            <p>For more information about notes, commenting and rating papers, including the
+               technical details, see the <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/commentGuidelines.action" xlink:type="simple">Comment Guidelines</ext-link> and <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/ratingGuidelines.action" xlink:type="simple">Rating Guidelines</ext-link>. </p>
+            <p>Then charge ahead and get started - join the community!</p>
+         </sec>
+      </sec>
+   </body>
+   <back>
+      <ack>
+         <p>We acknowledge the guidance of Drs H. Varmus, P. Brown, M. Eisen, J. Omura, past
+            members of the Topaz development team and the past/present staff at PLoS<xref ref-type="bibr" rid="pone.0000000-PLoS2">[5]</xref>. Special thanks to past contributors from the Topaz development team 
+            (Stephen Cheng, Eric Brown, Joycelyn Chung, Amit Kapoor, Pradeep Krishnan, Ronald Tschalär, Ed Yoon) and from PLoS 
+            (Susanne DeRisi, Dragisa Krsmanovic, Mark Patterson, Nick Peterson, Margaret Shear, Russell Uman, Bora Zivkovic).</p>
+      </ack>
+      <ref-list>
+         <title>References</title>
+         <ref id="pone.0000000-PLoS1">
+            <element-citation publication-type="book" xlink:type="simple">
+               <collab xlink:type="simple">Public Library of Science</collab>
+               <year>2008</year>
+               <comment>PLoS Guildelines for Commenting, <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/commentGuidelines.action" xlink:type="simple">http://www.plosone.org/static/commentGuidelines.action</ext-link></comment>
+            </element-citation>
+         </ref>
+         <ref id="pone.0000000-PLoS2">
+            <element-citation publication-type="book" xlink:type="simple">
+               <collab xlink:type="simple">Public Library of Science</collab>
+               <year>2008</year>
+               <comment>PLoS Guidelines for Rating, <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/privacy.action" xlink:type="simple">http://www.plosone.org/static/ratingGuidelines.action</ext-link></comment>
+            </element-citation>
+         </ref>
+         <ref id="pone.0000000-PLoS3">
+            <element-citation publication-type="book" xlink:type="simple">
+               <collab xlink:type="simple">Public Library of Science</collab>
+               <year>2008</year>
+               <comment>PLoS Privacy Statement, <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/privacy.action" xlink:type="simple">http://www.plosone.org/static/privacy.action</ext-link></comment>
+            </element-citation>
+         </ref>
+         <ref id="pone.0000000-PLoS4">
+            <element-citation publication-type="book" xlink:type="simple">
+               <collab xlink:type="simple">Public Library of Science</collab>
+               <year>2008</year>
+               <comment>PLoS Terms of Use, <ext-link ext-link-type="uri" xlink:href="http://www.plosone.org/static/terms.action" xlink:type="simple">http://www.plosone.org/static/terms.action</ext-link></comment>
+            </element-citation>
+         </ref>
+         <ref id="pone.0000000-PLoS5">
+            <element-citation publication-type="book" xlink:type="simple">
+               <collab xlink:type="simple">Public Library of Science</collab>
+               <year>2008</year>
+               <comment>PLoS Staff, <ext-link ext-link-type="uri" xlink:href="http://www.plos.org/about/people/staff/" xlink:type="simple">http://www.plos.org/about/people/staff/</ext-link></comment>
+            </element-citation>
+         </ref>
+      </ref-list>
+      
+   </back>
+</article>

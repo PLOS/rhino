@@ -1,0 +1,59 @@
+{"doi":"info:doi/10.1371/journal.pmed.0020007","title":
+  "Educating the Brain to Avoid Dementia: Can Mental Exercise Prevent Alzheimer Disease?",
+  "eIssn":"1549-1676","state":1,"archiveName":"pmed.0020007.zip",
+  "description":
+  "\u003cp\u003ePhysicians often recommend to older adults that they should engage in mentally stimulating activity to reduce the risk of dementia. But is this recommendation based on sound evidence?\u003c/p\u003e",
+  "rights":
+  "Margaret Gatz. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.",
+  "language":"en","format":"text/xml","eLocationId":"e7","strkImgURI":"",
+  "date":"Jan 25, 2005 12:00:00 AM","volume":"2","issue":"1","journal":
+  "PLoS Med","publisherLocation":"San Francisco, USA","publisherName":
+  "Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pmed.0020007","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Best%20Practice",
+    "http://rdf.plos.org/RDF/articleType/discussion"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pmed.0020007","extension":
+      "XML","contentType":"text/xml","title":
+      "Educating the Brain to Avoid Dementia: Can Mental Exercise Prevent Alzheimer Disease?",
+      "description":
+      "\u003cp\u003ePhysicians often recommend to older adults that they should engage in mentally stimulating activity to reduce the risk of dementia. But is this recommendation based on sound evidence?\u003c/p\u003e",
+      "size":32076},{"doi":"info:doi/10.1371/journal.pmed.0020007",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Educating the Brain to Avoid Dementia: Can Mental Exercise Prevent Alzheimer Disease?",
+      "description":
+      "\u003cp\u003ePhysicians often recommend to older adults that they should engage in mentally stimulating activity to reduce the risk of dementia. But is this recommendation based on sound evidence?\u003c/p\u003e",
+      "size":148096},{"doi":"info:doi/10.1371/journal.pmed.0020007.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"","description":
+      "\u003ctitle\u003eHow effective is mental exercise in holding back dementia?\u003c/title\u003e\u003cp\u003e(Illustration: Sapna Khandwala, Public Library of Science)\u003c/p\u003e",
+      "size":552680},{"doi":"info:doi/10.1371/journal.pmed.0020007.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003eHow effective is mental exercise in holding back dementia?\u003c/title\u003e\u003cp\u003e(Illustration: Sapna Khandwala, Public Library of Science)\u003c/p\u003e",
+      "size":9154},{"doi":"info:doi/10.1371/journal.pmed.0020007.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003eHow effective is mental exercise in holding back dementia?\u003c/title\u003e\u003cp\u003e(Illustration: Sapna Khandwala, Public Library of Science)\u003c/p\u003e",
+      "size":68512},{"doi":"info:doi/10.1371/journal.pmed.0020007.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"","description":
+      "\u003ctitle\u003eHow effective is mental exercise in holding back dementia?\u003c/title\u003e\u003cp\u003e(Illustration: Sapna Khandwala, Public Library of Science)\u003c/p\u003e",
+      "size":113413}],"citedArticles":[{"key":"1","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"2","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"3","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"4","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"5","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"6","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"7","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"8","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"9","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"10","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"11","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"12","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"13","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"14","collaborativeAuthors":[],
+      "authors":[],"editors":[]},{"key":"15","collaborativeAuthors":[],
+      "authors":[],"editors":[]}],"relatedArticles":[{"otherArticleDoi":
+      "info:doi/10.1371/journal.pmed.0020031","type":"companion"}],"authors":
+  [{"fullName":"Margaret Gatz","givenNames":"Margaret","surnames":"Gatz",
+      "suffix":""}],"editors":[],"journals":[{"eIssn":"1549-1676"}]}

@@ -18,16 +18,19 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.ListMultimap;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.NodeListAdapter;
+import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriUtils;
@@ -35,8 +38,10 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Map;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -60,9 +65,19 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    */
   public abstract T build(T obj) throws XmlContentException;
 
+  protected static String standardizeWhitespace(CharSequence text) {
+    return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
+  }
+
+  @Override
+  protected String getTextFromNode(Node node) {
+    return standardizeWhitespace(super.getTextFromNode(node));
+  }
+
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
-  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of("supplementary-material", "inline-graphic");
+  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
+      "supplementary-material", "inline-formula", "disp-formula", "graphic");
 
   // An XPath expression that will match any node with one of the names above
   private static final String ASSET_EXPRESSION = String.format("//(%s)",
@@ -75,12 +90,33 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    * @return the list of asset nodes
    */
   protected List<AssetNode> findAllAssetNodes() {
-    List<Node> raw = readNodeList(ASSET_EXPRESSION);
-    List<AssetNode> wrapped = Lists.newArrayListWithCapacity(raw.size());
-    for (Node node : raw) {
-      wrapped.add(new AssetNode(node, getAssetDoi(node)));
+    // Find all nodes of an asset type and wrap them
+    List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
+    ListMultimap<String, AssetNode> wrappedNodes = LinkedListMultimap.create(rawNodes.size());
+    for (Node node : rawNodes) {
+      AssetNode wrappedNode = new AssetNode(node, getAssetDoi(node));
+      wrappedNodes.put(wrappedNode.getDoi(), wrappedNode);
     }
-    return ImmutableList.copyOf(wrapped);
+
+    // Remove <graphic> nodes that don't share a DOI with another asset.
+    // (Why not just add them separately? Doing it this way preserves document order.)
+    for (Map.Entry<String, Collection<AssetNode>> entry : wrappedNodes.asMap().entrySet()) {
+      Collection<AssetNode> nodes = entry.getValue();
+      if (nodes.size() <= 1) {
+        continue; // The DOI is unique, so keep the one node even if it is a <graphic>
+      }
+      for (Iterator<AssetNode> iterator = nodes.iterator(); iterator.hasNext(); ) {
+        AssetNode wrappedNode = iterator.next();
+        if ("graphic".equals(wrappedNode.getNode().getNodeName())) {
+          iterator.remove();
+        }
+      }
+      if (nodes.size() > 1) {
+        log.error("Multiple assets with DOI=" + entry.getKey()); // TODO Throw exception to client
+      }
+    }
+
+    return ImmutableList.copyOf(wrappedNodes.values());
   }
 
   protected String getAssetDoi(Node assetNode) {
@@ -89,7 +125,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     if (ASSET_WITH_OBJID.contains(nodeName)) {
       doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
     } else if (ASSET_WITH_HREF.contains(nodeName)) {
-      doi = parseAssetWithHref(assetNode);
+      doi = readHrefAttribute(assetNode);
     } else {
       String message = String.format("Received a node of type \"%s\"; expected one of: %s",
           nodeName, ASSET_EXPRESSION);
@@ -97,25 +133,34 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     }
     if (doi == null) {
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
+      return null;
     }
     return DoiBasedIdentity.removeScheme(doi);
   }
 
-  /*
-   * Read the "xlink:href" attribute from a <supplementary-material> or <inline-graphic> node.
-   *
+  /**
+   * Read the "xlink:href" attribute from a node.
+   * <p/>
    * TODO: Use XPath instead and handle the XML namespace properly.
    */
-  private static String parseAssetWithHref(Node assetNode) {
+  protected static String readHrefAttribute(Node assetNode) {
     NamedNodeMap attributes = assetNode.getAttributes();
-    if (attributes == null) {
-      return null;
+    if (attributes != null) {
+      Node hrefAttr = attributes.getNamedItem("xlink:href");
+      if (hrefAttr != null) {
+        return hrefAttr.getTextContent();
+      }
     }
-    Node hrefAttr = attributes.getNamedItem("xlink:href");
-    if (hrefAttr == null) {
-      return null;
+
+    // If href wasn't found, seek it recursively in the child nodes.
+    // This is a normal case for <inline-formula id="..."><inline-graphic xlink:href="..."/></inline-formula>
+    for (Node child : NodeListAdapter.wrap(assetNode.getChildNodes())) {
+      String fromChild = readHrefAttribute(child);
+      if (fromChild != null) {
+        return fromChild;
+      }
     }
-    return hrefAttr.getTextContent();
+    return null;
   }
 
   // Legal values for the "name-style" attribute of a <name> node
@@ -179,8 +224,8 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
 
   /**
    * Build a text field by partially reconstructing the node's content as XML. The output is text content between the
-   * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Text nodes containing
-   * only leading whitespace on a line are deleted. Ampersands are escaped.
+   * node's two tags, including nested XML tags with attributes, but not this node's outer tags. Continuous substrings
+   * of whitespace may be substituted with other whitespace. Markup characters are escaped.
    * <p/>
    * This method is used instead of an appropriate XML library in order to match the behavior of legacy code, for now.
    *
@@ -188,7 +233,8 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    * @return the marked-up node contents
    */
   protected static String buildTextWithMarkup(Node node) {
-    return buildTextWithMarkup(new StringBuilder(), node).toString();
+    String text = buildTextWithMarkup(new StringBuilder(), node).toString();
+    return standardizeWhitespace(text);
   }
 
   private static StringBuilder buildTextWithMarkup(StringBuilder nodeContent, Node node) {
@@ -208,15 +254,15 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     return nodeContent;
   }
 
-  private static final Pattern UNWANTED_WHITESPACE = Pattern.compile("\\n[ \\t]*");
-  private static final Pattern AMPERSAND = Pattern.compile("&", Pattern.LITERAL);
+  private static final StringReplacer XML_CHAR_ESCAPES = StringReplacer.builder()
+      .add("&", "&amp;")
+      .add("<", "&lt;")
+      .add(">", "&gt;")
+      .build();
 
   private static void appendTextNode(StringBuilder nodeContent, Node child) {
     String text = child.getNodeValue();
-    if (UNWANTED_WHITESPACE.matcher(text).matches()) {
-      return;
-    }
-    text = AMPERSAND.matcher(text).replaceAll("&amp;");
+    text = XML_CHAR_ESCAPES.replace(text);
     nodeContent.append(text);
   }
 
@@ -224,9 +270,20 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     String nodeName = child.getNodeName();
     nodeContent.append('<').append(nodeName);
     List<Node> attributes = NodeListAdapter.wrap(child.getAttributes());
+
+    // Search for xlink attributes and declare the xlink namespace if found
+    // TODO Better way? This is probably a symptom of needing to use a proper XML library here in the first place.
+    for (Node attribute : attributes) {
+      if (attribute.getNodeName().startsWith("xlink:")) {
+        nodeContent.append(" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+        break;
+      }
+    }
+
     for (Node attribute : attributes) {
       nodeContent.append(' ').append(attribute.toString());
     }
+
     nodeContent.append('>');
     buildTextWithMarkup(nodeContent, child);
     nodeContent.append("</").append(nodeName).append('>');

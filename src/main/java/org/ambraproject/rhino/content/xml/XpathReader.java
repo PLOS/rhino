@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.ambraproject.rhino.util.NodeListAdapter;
@@ -49,6 +48,17 @@ public abstract class XpathReader {
     this.xPath = XPathFactory.newInstance().newXPath();
   }
 
+  /**
+   * Define default text formatting for this object. By default, just calls {@link org.w3c.dom.Node#getTextContent()}.
+   * Override for something different. Returns null on null input.
+   *
+   * @param node an XML node
+   * @return the node's text content with optional formatting
+   */
+  protected String getTextFromNode(Node node) {
+    return (node == null) ? null : node.getTextContent();
+  }
+
   protected String readString(String query) {
     return readString(query, xml);
   }
@@ -58,7 +68,7 @@ public abstract class XpathReader {
     if (stringNode == null) {
       return null;
     }
-    String text = stringNode.getTextContent();
+    String text = getTextFromNode(stringNode);
     return (StringUtils.isBlank(text) ? null : text);
   }
 
@@ -88,15 +98,13 @@ public abstract class XpathReader {
     return NodeListAdapter.wrap(nodeList);
   }
 
-  private static final Function<Node, String> GET_TEXT_CONTENT = new Function<Node, String>() {
-    @Override
-    public String apply(Node input) {
-      return input.getTextContent();
-    }
-  };
-
   protected List<String> readTextList(String query) {
-    return Lists.transform(readNodeList(query), GET_TEXT_CONTENT);
+    List<Node> nodeList = readNodeList(query);
+    List<String> textList = Lists.newArrayListWithCapacity(nodeList.size());
+    for (Node node : nodeList) {
+      textList.add(getTextFromNode(node));
+    }
+    return textList;
   }
 
 }

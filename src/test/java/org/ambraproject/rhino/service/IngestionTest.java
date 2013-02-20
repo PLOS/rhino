@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service;
 
 
-import com.google.common.base.Function;
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -12,7 +12,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -61,6 +60,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -278,6 +278,65 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   /**
+   * Compare two snippets of XML code, typically XML text that will be transformed into HTML.
+   */
+  private static boolean compareMarkupText(AssertionCollector results,
+                                           Class<?> objectType, String fieldName,
+                                           CharSequence actual, CharSequence expected) {
+    if (actual == null || expected == null || actual.equals(expected)) {
+      // If they match like this (or either is null), just compare them as-is
+      return results.compare(objectType, fieldName, actual, expected);
+    }
+
+    // Else, be more permissive with XML formatting.
+    // We don't mind if actual includes whitespace between tags that was missing from expected.
+    // TODO: Make this fail if actual deletes whitespace that was included in expected.
+    return results.compare(objectType, fieldName, massageXml(actual), massageXml(expected));
+  }
+
+  /**
+   * Change XML text to an equivalent form, for comparison.
+   * <p/>
+   * Expands self-closing tags. Collapses whitespace; trims leading and trailing whitespace.
+   * <p/>
+   * Removes whitespace from between tags. This does not produce strictly equivalent XML but it is close enough for test
+   * comparisons (but see the comment in {@link #compareMarkupText}).
+   * <p/>
+   * This should be replaced with proper use of the XML library if it gets too hairy.
+   *
+   * @param text XML text
+   * @return "massaged" equivalent text
+   */
+  private static String massageXml(CharSequence text) {
+    text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
+    text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
+    text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
+    return text.toString();
+  }
+
+  private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s+<");
+  private static final Pattern SELF_CLOSING_TAG = Pattern.compile(""
+      + "<"
+      + "([^>\\s]+)" // Tag name.
+      + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
+      + "/>"
+  );
+
+  private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
+                                         List<? extends CharSequence> actual, List<? extends CharSequence> expected) {
+    // Force random access and assert no null elements
+    actual = ImmutableList.copyOf(actual);
+    expected = ImmutableList.copyOf(expected);
+
+    int maxIndex = Math.max(actual.size(), expected.size());
+    for (int i = 0; i < maxIndex; i++) {
+      CharSequence actualElement = (i < actual.size()) ? actual.get(i) : null;
+      CharSequence expectedElement = (i < expected.size()) ? expected.get(i) : null;
+      compareMarkupText(results, objectType, String.format("%s[%d]", fieldName, i), actualElement, expectedElement);
+    }
+  }
+
+  /**
    * Compare simple (non-associative) fields.
    *
    * @param results
@@ -286,11 +345,11 @@ public class IngestionTest extends BaseRhinoTest {
    */
   private void compareArticleFields(AssertionCollector results, Article actual, Article expected) {
     results.compare(Article.class, "doi", actual.getDoi(), expected.getDoi());
-    results.compare(Article.class, "title", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, Article.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
     results.compare(Article.class, "state", actual.getState(), expected.getState());
-    results.compare(Article.class, "description", actual.getDescription(), expected.getDescription());
-    results.compare(Article.class, "rights", actual.getRights(), expected.getRights());
+    compareMarkupText(results, Article.class, "description", actual.getDescription(), expected.getDescription());
+    compareMarkupText(results, Article.class, "rights", actual.getRights(), expected.getRights());
     results.compare(Article.class, "language", actual.getLanguage(), expected.getLanguage());
     results.compare(Article.class, "format", actual.getFormat(), expected.getFormat());
     results.compare(Article.class, "pages", actual.getPages(), expected.getPages());
@@ -306,7 +365,7 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     results.compare(Article.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
     results.compare(Article.class, "url", actual.getUrl(), expected.getUrl());
-    results.compare(Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    compareMarkupLists(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
   }
 
@@ -319,26 +378,37 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
     // We care only about eIssn, because that's the only part given in article XML.
     // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
-    Map<String, Journal> actualMap = mapJournalsByEissn(actualSet);
-    Set<String> actualKeys = actualMap.keySet();
-    Map<String, Journal> expectedMap = mapJournalsByEissn(expectedSet);
-    Set<String> expectedKeys = expectedMap.keySet();
+    Set<String> actualEissns = mapJournalsByEissn(actualSet).keySet();
+    Set<String> expectedEissns = mapJournalsByEissn(expectedSet).keySet();
 
-    for (String missing : Sets.difference(expectedKeys, actualKeys)) {
+    for (String missing : Sets.difference(expectedEissns, actualEissns)) {
       results.compare(Journal.class, "eIssn", null, missing);
     }
-    for (String extra : Sets.difference(actualKeys, expectedKeys)) {
+    for (String extra : Sets.difference(actualEissns, expectedEissns)) {
       results.compare(Journal.class, "eIssn", extra, null);
     }
-    for (String key : Sets.intersection(actualKeys, expectedKeys)) {
-      results.compare(Journal.class, "eIssn", key, key);
+    for (String eissn : Sets.intersection(actualEissns, expectedEissns)) {
+      results.compare(Journal.class, "eIssn", eissn, eissn);
     }
   }
 
   private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
-    /*
-     * Ignore this field. No known cases where it would be defined by article XML.
-     */
+    Map<String, ArticleRelationship> actualMap = mapRelationshipsByDoi(actual);
+    Set<String> actualDois = actualMap.keySet();
+    Map<String, ArticleRelationship> expectedMap = mapRelationshipsByDoi(expected);
+    Set<String> expectedDois = expectedMap.keySet();
+
+    for (String missingDoi : Sets.difference(expectedDois, actualDois)) {
+      results.compare(ArticleRelationship.class, "otherArticleDoi", null, missingDoi);
+    }
+    for (String extraDoi : Sets.difference(actualDois, expectedDois)) {
+      results.compare(ArticleRelationship.class, "otherArticleDoi", extraDoi, null);
+    }
+
+    for (String doi : Sets.intersection(actualDois, expectedDois)) {
+      results.compare(ArticleRelationship.class, "otherArticleDoi", doi, doi);
+      results.compare(ArticleRelationship.class, "type", actualMap.get(doi).getType(), expectedMap.get(doi).getType());
+    }
   }
 
   private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
@@ -433,8 +503,8 @@ public class IngestionTest extends BaseRhinoTest {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
     results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
-    results.compare(ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
-    results.compare(ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
+    compareMarkupText(results, ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
 
     if (assetFileExpected) {
       results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
@@ -464,18 +534,36 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void compareCitationLists(AssertionCollector results,
                                     List<CitedArticle> actualList, List<CitedArticle> expectedList) {
+    for (CitedArticle expectedCitation : expectedList) {
+      if (expectedCitation.getKey() == null) {
+        // At least one expected case has null keys. Fall back on comparing by order.
+        compareCitationListsByIndex(results, actualList, expectedList);
+        return;
+      }
+    }
+
+    Map<String, CitedArticle> actualMap = mapCitationsByKey(actualList);
+    Set<String> actualKeys = actualMap.keySet();
+    Map<String, CitedArticle> expectedMap = mapCitationsByKey(expectedList);
+    Set<String> expectedKeys = expectedMap.keySet();
+
+    for (String key : Sets.intersection(actualKeys, expectedKeys)) {
+      compareCitations(results, actualMap.get(key), expectedMap.get(key));
+    }
+    for (String extra : Sets.difference(actualKeys, expectedKeys)) {
+      results.compare(Article.class, "citedArticles", actualMap.get(extra), null);
+    }
+    for (String missing : Sets.difference(expectedKeys, actualKeys)) {
+      results.compare(Article.class, "citedArticles", null, expectedMap.get(missing));
+    }
+  }
+
+  private void compareCitationListsByIndex(AssertionCollector results,
+                                           List<CitedArticle> actualList, List<CitedArticle> expectedList) {
     // Ensure no problems with random access or delayed evaluation
     actualList = ImmutableList.copyOf(actualList);
     expectedList = ImmutableList.copyOf(expectedList);
 
-    /*
-     * Compare citations with matching "key" fields (nothing else identifies them uniquely). It may be valid for them
-     * to be represented out of order in these lists (dependent on Hibernate?), but all cases so far give them in order.
-     * If a counterexample is found, we can forcibly sort by key, but until then, assert that they are already ordered.
-     * (If any keys are skipped, it will show up as a soft failure in compareCitations.)
-     */
-    assertTrue(CITATION_BY_KEY.isStrictlyOrdered(actualList));
-    assertTrue(CITATION_BY_KEY.isStrictlyOrdered(expectedList));
     int commonSize = Math.min(actualList.size(), expectedList.size());
     for (int i = 0; i < commonSize; i++) {
       compareCitations(results, actualList.get(i), expectedList.get(i));
@@ -491,6 +579,10 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareCitations(AssertionCollector results, CitedArticle actual, CitedArticle expected) {
+    if (isEmptyCitation(expected)) {
+      return; // Apparently these occur because of an Admin bug. Assume the actual data is correct.
+    }
+
     results.compare(CitedArticle.class, "key", actual.getKey(), expected.getKey());
     results.compare(CitedArticle.class, "year", actual.getYear(), expected.getYear());
     results.compare(CitedArticle.class, "displayYear", actual.getDisplayYear(), expected.getDisplayYear());
@@ -499,14 +591,14 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(CitedArticle.class, "volumeNumber", actual.getVolumeNumber(), expected.getVolumeNumber());
     results.compare(CitedArticle.class, "volume", actual.getVolume(), expected.getVolume());
     results.compare(CitedArticle.class, "issue", actual.getIssue(), expected.getIssue());
-    results.compare(CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
     results.compare(CitedArticle.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     results.compare(CitedArticle.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
     results.compare(CitedArticle.class, "pages", actual.getPages(), expected.getPages());
     results.compare(CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
     results.compare(CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
-    results.compare(CitedArticle.class, "note", actual.getNote(), expected.getNote());
-    results.compare(CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
+    compareMarkupLists(results, CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(CitedArticle.class, "url", actual.getUrl(), expected.getUrl());
     results.compare(CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
     results.compare(CitedArticle.class, "summary", actual.getSummary(), expected.getSummary());
@@ -514,6 +606,15 @@ public class IngestionTest extends BaseRhinoTest {
 
     comparePersonLists(results, CitedArticle.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
+  }
+
+  private static boolean isEmptyCitation(CitedArticle c) {
+    return c.getCitationType() == null && c.getYear() == null && c.getDisplayYear() == null && c.getMonth() == null
+        && c.getDay() == null && c.getVolume() == null && c.getVolumeNumber() == null
+        && c.getPublisherLocation() == null && c.getPublisherName() == null && c.getPages() == null
+        && c.geteLocationID() == null && c.getJournal() == null && c.getIssue() == null && c.getUrl() == null
+        && c.getDoi() == null && c.getNote() == null && c.getTitle() == null && c.getSummary() == null
+        && c.getAuthors().isEmpty() && c.getEditors().isEmpty() && c.getCollaborativeAuthors().isEmpty();
   }
 
   private void comparePersonLists(AssertionCollector results, Class<?> parentType, String fieldName,
@@ -534,7 +635,7 @@ public class IngestionTest extends BaseRhinoTest {
       results.compare(field, "suffix", actualName.getSuffix(), expectedName.getSuffix());
     }
 
-    // If the sizes didn't match, report missing/extra citations as errors
+    // If the sizes didn't match, report missing/extra elements as errors
     for (int i = commonSize; i < actualList.size(); i++) {
       results.compare(parentType, fieldName, actualNames.get(i), null);
     }
@@ -563,6 +664,14 @@ public class IngestionTest extends BaseRhinoTest {
     return map.build();
   }
 
+  private static ImmutableMap<String, ArticleRelationship> mapRelationshipsByDoi(Collection<ArticleRelationship> relationships) {
+    ImmutableMap.Builder<String, ArticleRelationship> map = ImmutableMap.builder();
+    for (ArticleRelationship relationship : relationships) {
+      map.put(relationship.getOtherArticleDoi(), relationship);
+    }
+    return map.build();
+  }
+
   private static ImmutableMap<AssetIdentity, ArticleAsset> mapUninitAssetsById(Collection<ArticleAsset> assets) {
     ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
     for (ArticleAsset asset : assets) {
@@ -580,17 +689,13 @@ public class IngestionTest extends BaseRhinoTest {
     return map.build();
   }
 
-  /**
-   * Orders {@link CitedArticle} objects by the numeric value of their {@code key} string. Throws an exception if
-   * applied to a CitedArticle whose key is null or otherwise can't be parsed as an integer.
-   */
-  private static final Ordering<CitedArticle> CITATION_BY_KEY = Ordering.natural().onResultOf(
-      new Function<CitedArticle, Comparable>() {
-        @Override
-        public Integer apply(CitedArticle input) {
-          return Integer.valueOf(input.getKey());
-        }
-      });
+  private static ImmutableMap<String, CitedArticle> mapCitationsByKey(Collection<CitedArticle> citations) {
+    ImmutableMap.Builder<String, CitedArticle> map = ImmutableMap.builder();
+    for (CitedArticle citation : citations) {
+      map.put(citation.getKey(), citation);
+    }
+    return map.build();
+  }
 
   private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
     List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());

@@ -1,0 +1,81 @@
+{"doi":"info:doi/10.1371/journal.pone.0000000","title":
+  "PLoS Journals Sandbox: A Place to Learn and Play","eIssn":"1932-6203",
+  "state":1,"archiveName":"pone.0000000.zip","description":
+  "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eOne of the core concepts of the PLoS journals is that what happens after a paper                  is published is as important as what occurred before it was published. To support                  that, PLoS is encouraging ongoing review and discussion of articles with a number                  of post-publication tools. These tools allow you to add notes and publicly comment                  on the online articles. This article describes the post-publication tools of the                  PLoS journals and provides a place for you to experiment and play. The commentary                  left on this sandbox article, and the text itself, will be removed on a periodic                  basis.\u003c/p\u003e\u003cp\u003eSo have a go and tell us what you think!\u003c/p\u003e\u003c/sec\u003e",
+  "rights":
+  "Public Library of Science. This is an open-access article distributed\n            under the terms of the Creative Commons Attribution License, which permits unrestricted\n            use, distribution, and reproduction in any medium, provided the original author and\n            source are credited.",
+  "language":"en","format":"text/xml","pages":"1-2","eLocationId":"e0",
+  "strkImgURI":"","date":"Dec 20, 2006 12:00:00 AM","volume":"1","issue":
+  "1","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
+  "publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0000000","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0000000","extension":
+      "XML","contentType":"text/xml","title":
+      "PLoS Journals Sandbox: A Place to Learn and Play","description":
+      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eOne of the core concepts of the PLoS journals is that what happens after a paper                  is published is as important as what occurred before it was published. To support                  that, PLoS is encouraging ongoing review and discussion of articles with a number                  of post-publication tools. These tools allow you to add notes and publicly comment                  on the online articles. This article describes the post-publication tools of the                  PLoS journals and provides a place for you to experiment and play. The commentary                  left on this sandbox article, and the text itself, will be removed on a periodic                  basis.\u003c/p\u003e\u003cp\u003eSo have a go and tell us what you think!\u003c/p\u003e\u003c/sec\u003e",
+      "size":37329},{"doi":"info:doi/10.1371/journal.pone.0000000",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "PLoS Journals Sandbox: A Place to Learn and Play","description":
+      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eOne of the core concepts of the PLoS journals is that what happens after a paper                  is published is as important as what occurred before it was published. To support                  that, PLoS is encouraging ongoing review and discussion of articles with a number                  of post-publication tools. These tools allow you to add notes and publicly comment                  on the online articles. This article describes the post-publication tools of the                  PLoS journals and provides a place for you to experiment and play. The commentary                  left on this sandbox article, and the text itself, will be removed on a periodic                  basis.\u003c/p\u003e\u003cp\u003eSo have a go and tell us what you think!\u003c/p\u003e\u003c/sec\u003e",
+      "size":2012},{"doi":"info:doi/10.1371/journal.pone.0000000.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePLoS Development Team\u003c/title\u003e\u003cp\u003eThe PLoS development team at the release of Ambra 2.0 on November 11, 2011. \n                     From left to right: Richard Cave, Alex Kudlick, Scott Sterling, Mike Baehr, \n                     Jennifer Song, Eddie Dickey, Bill O\u0027Connor, Joe Osowski, Zoe Mclaughlin\u003c/p\u003e",
+      "size":1783200},{"doi":"info:doi/10.1371/journal.pone.0000000.g001",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePLoS Development Team\u003c/title\u003e\u003cp\u003eThe PLoS development team at the release of Ambra 2.0 on November 11, 2011. \n                     From left to right: Richard Cave, Alex Kudlick, Scott Sterling, Mike Baehr, \n                     Jennifer Song, Eddie Dickey, Bill O\u0027Connor, Joe Osowski, Zoe Mclaughlin\u003c/p\u003e",
+      "size":158820},{"doi":"info:doi/10.1371/journal.pone.0000000.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePLoS Development Team\u003c/title\u003e\u003cp\u003eThe PLoS development team at the release of Ambra 2.0 on November 11, 2011. \n                     From left to right: Richard Cave, Alex Kudlick, Scott Sterling, Mike Baehr, \n                     Jennifer Song, Eddie Dickey, Bill O\u0027Connor, Joe Osowski, Zoe Mclaughlin\u003c/p\u003e",
+      "size":10761},{"doi":"info:doi/10.1371/journal.pone.0000000.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePLoS Development Team\u003c/title\u003e\u003cp\u003eThe PLoS development team at the release of Ambra 2.0 on November 11, 2011. \n                     From left to right: Richard Cave, Alex Kudlick, Scott Sterling, Mike Baehr, \n                     Jennifer Song, Eddie Dickey, Bill O\u0027Connor, Joe Osowski, Zoe Mclaughlin\u003c/p\u003e",
+      "size":542668},{"doi":"info:doi/10.1371/journal.pone.0000000.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePLoS Development Team\u003c/title\u003e\u003cp\u003eThe PLoS development team at the release of Ambra 2.0 on November 11, 2011. \n                     From left to right: Richard Cave, Alex Kudlick, Scott Sterling, Mike Baehr, \n                     Jennifer Song, Eddie Dickey, Bill O\u0027Connor, Joe Osowski, Zoe Mclaughlin\u003c/p\u003e",
+      "size":975513}],"citedArticles":[{"year":2008,"displayYear":"2008",
+      "note":
+      "PLoS Guildelines for Commenting, http://www.plosone.org/static/commentGuidelines.action",
+      "collaborativeAuthors":["Public Library of Science"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
+    {"year":2008,"displayYear":"2008","note":
+      "PLoS Guidelines for Rating, http://www.plosone.org/static/ratingGuidelines.action",
+      "collaborativeAuthors":["Public Library of Science"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
+    {"year":2008,"displayYear":"2008","note":
+      "PLoS Privacy Statement, http://www.plosone.org/static/privacy.action",
+      "collaborativeAuthors":["Public Library of Science"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
+    {"year":2008,"displayYear":"2008","note":
+      "PLoS Terms of Use, http://www.plosone.org/static/terms.action",
+      "collaborativeAuthors":["Public Library of Science"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
+    {"year":2008,"displayYear":"2008","note":
+      "PLoS Staff, http://www.plos.org/about/people/staff/",
+      "collaborativeAuthors":["Public Library of Science"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]}],
+  "relatedArticles":[],"authors":[{"fullName":"Mike Baehr","givenNames":
+      "Mike","surnames":"Baehr","suffix":""},{"fullName":"Richard Cave",
+      "givenNames":"Richard","surnames":"Cave","suffix":""},{"fullName":
+      "Eddie Dickey","givenNames":"Eddie","surnames":"Dickey","suffix":""},{
+      "fullName":"James Harney","givenNames":"James","surnames":"Harney",
+      "suffix":""},{"fullName":"Alex Kudlick","givenNames":"Alex","surnames":
+      "Kudlick","suffix":""},{"fullName":"Zoe Mclaughlin","givenNames":
+      "Zoe","surnames":"Mclaughlin","suffix":""},{"fullName":
+      "Bill O\u0027Connor","givenNames":"Bill","surnames":"O\u0027Connor",
+      "suffix":""},{"fullName":"Joe Osowski","givenNames":"Joe","surnames":
+      "Osowski","suffix":""},{"fullName":"Mamta Singh","givenNames":
+      "Mamta","surnames":"Singh","suffix":""},{"fullName":"Jennifer Song",
+      "givenNames":"Jennifer","surnames":"Song","suffix":""},{"fullName":
+      "Scott Sterling","givenNames":"Scott","surnames":"Sterling","suffix":
+      ""},{"fullName":"Sebastian Toomey","givenNames":"Sebastian","surnames":
+      "Toomey","suffix":""},{"fullName":"Jackie Yao","givenNames":"Jackie",
+      "surnames":"Yao","suffix":""}],"editors":[{"fullName":
+      "Pete Binfield","givenNames":"Pete","surnames":"Binfield","suffix":
+      ""}],"journals":[{"eIssn":"1932-6203"}]}
