@@ -13,10 +13,10 @@
 
 package org.ambraproject.rhino.identity;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 
 /**
  *
@@ -24,37 +24,14 @@ import static org.testng.Assert.fail;
 public class DoiBasedIdentityTest {
 
   @Test
-  public void testGetShortIdentifier() {
-    assertEquals(DoiBasedIdentity.getShortIdentifier("info:doi/10.1371/journal.pone.0053052"),
-        "pone.0053052");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("10.1371/journal.pgen.1003285"),
-        "pgen.1003285");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("pntd.0002035"), "pntd.0002035");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("journal.ppat.1003160"), "ppat.1003160");
-    assertEquals(DoiBasedIdentity.getShortIdentifier("info:doi/10.1371/journal.pcbi.1002905.g002"),
-        "pcbi.1002905");
-  }
-
-  @Test
-  public void testGetShortIdentifier_error() {
-
-    // Not using expectedExceptions on the @Test annotation here since we want
-    // to test a bunch of cases.
-    getShortIdentifierWithExpectedException("");
-    getShortIdentifierWithExpectedException("info:");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/journal.pone.");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/journal.pone.1234");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/journal.pone.005305");
-    getShortIdentifierWithExpectedException("info:doi/10.1371/image.pntd.v07.i01");
-  }
-
-  private void getShortIdentifierWithExpectedException(String s) {
-    try {
-      DoiBasedIdentity.getShortIdentifier(s);
-    } catch (IllegalArgumentException iae) {
-      return;
-    }
-    fail("getShortIdentifier did not throw IllegalArgumentException for " + s);
+  public void testCreate() {
+    assertEquals(DoiBasedIdentity.create("info:doi/10.1371/journal.pone.0056866").getIdentifier(),
+        "10.1371/journal.pone.0056866");
+    assertEquals(DoiBasedIdentity.create("10.1371/journal.pone.0056866").getIdentifier(),
+        "10.1371/journal.pone.0056866");
+    assertEquals(DoiBasedIdentity.create("10.1371/journal.pone.0055747.t004").getIdentifier(),
+        "10.1371/journal.pone.0055747.t004");
+    assertEquals(DoiBasedIdentity.create("info:doi/10.1371/volume.pgen.v05").getIdentifier(),
+        "10.1371/volume.pgen.v05");
   }
 }

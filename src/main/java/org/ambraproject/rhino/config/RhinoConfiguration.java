@@ -25,10 +25,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.hibernate.SessionFactory;
@@ -130,4 +132,8 @@ public class RhinoConfiguration extends BaseConfiguration {
     return new IssueCrudServiceImpl();
   }
 
+  @Bean
+  public IngestibleService ingestibleService() {
+    return new IngestibleServiceImpl();
+  }
 }

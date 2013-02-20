@@ -28,7 +28,6 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,25 +109,31 @@ public class ArticleCrudController extends DoiBasedCrudController {
   /**
    * Create an article based on a POST containing an article .zip archive file.
    * <p/>
-   * TODO: this method may never be used in production, since we've decided, at
-   * least for now, that we will use the ingest and ingested directories that
-   * the current admin app uses instead of posting zips directly.
+   * TODO: this method may never be used in production, since we've decided, at least for now, that we will use the
+   * ingest and ingested directories that the current admin app uses instead of posting zips directly.
    *
-   * @param response response to the request
-   * @param requestFile body of the archive param, with the encoded article .zip file
+   * @param response      response to the request
+   * @param requestFile   body of the archive param, with the encoded article .zip file
+   * @param forceReingest if present, re-ingestion of an existing article is allowed; otherwise, if the article already
+   *                      exists, it is an error
    * @throws IOException
    * @throws FileStoreException
    */
   @RequestMapping(value = "/zip", method = RequestMethod.POST)
   public void zipUpload(HttpServletResponse response,
-      @RequestParam("archive") MultipartFile requestFile)
+                        @RequestParam("archive") MultipartFile requestFile,
+                        @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     String archiveName = requestFile.getOriginalFilename();
     String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
     requestFile.transferTo(new File(zipFilename));
     Article result = articleCrudService.writeArchive(zipFilename,
-        Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
+        Optional.<ArticleIdentity>absent(),
+
+        // If forceReingest is the empty string, the parameter was present.  Only
+        // treat null as false.
+        forceReingest == null ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.

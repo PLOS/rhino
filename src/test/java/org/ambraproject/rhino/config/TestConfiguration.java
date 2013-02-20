@@ -27,11 +27,13 @@ import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
 import org.ambraproject.service.article.DummyArticleClassifier;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.topazproject.ambra.configuration.ConfigurationStore;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -41,6 +43,19 @@ import java.util.Properties;
 @Configuration
 @Import(RhinoConfiguration.class)
 public class TestConfiguration extends BaseConfiguration {
+
+  static {
+    try {
+
+      // In a servlet container, this gets called at webapp load time.
+      // See org.topazproject.ambra.configuration.WebAppListener.  Here, we
+      // have to call it in a lowly static initializer, before Spring creates
+      // its beans.
+      ConfigurationStore.getInstance().loadDefaultConfiguration();
+    } catch (ConfigurationException ce) {
+      throw new RuntimeException(ce);
+    }
+  }
 
   /**
    * Dummy object for sanity-checking the unit test configuration.

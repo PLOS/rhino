@@ -129,12 +129,11 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
   @Test(dataProvider = "sampleArticles")
   public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
-    String testDoi = doi + ".testCrud"; // Avoid collisions with canonical sample data
-    final ArticleIdentity articleId = ArticleIdentity.create(testDoi);
+    final ArticleIdentity articleId = ArticleIdentity.create(doi);
     final String key = articleId.getKey();
 
     final TestFile sampleFile = new TestFile(fileLocation);
-    final byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, testDoi));
+    final byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
 
     assertArticleExistence(articleId, false);
 

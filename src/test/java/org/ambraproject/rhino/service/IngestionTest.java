@@ -29,6 +29,7 @@ import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -38,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -229,6 +231,32 @@ public class IngestionTest extends BaseRhinoTest {
       log.error(failure.toString());
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields");
+  }
+
+  @Test
+  public void testReingestion() throws Exception {
+    createTestJournal("1932-6203");
+    long start = System.currentTimeMillis();
+    String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip";
+    Article first = articleCrudService.writeArchive(zipPath,
+        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    assertTrue(first.getID() > 0, "Article doesn't have a database ID");
+    assertTrue(first.getCreated().getTime() >= start);
+
+    try {
+      Article second = articleCrudService.writeArchive(zipPath,
+          Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+      fail("Article creation succeeded for second ingestion in CREATE_ONLY mode");
+    } catch (RestClientException expected) {
+      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    Article second = articleCrudService.writeArchive(zipPath,
+        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.WRITE_ANY);
+
+    // TODO: figure out how to detect that second was re-ingested.  Don't want to
+    // use modification time since the test might run in less than one clock tick.
+    assertTrue(first.getID() > 0, "Article doesn't have a database ID");
   }
 
   private AssertionCollector compareArticle(Article actual, Article expected,
