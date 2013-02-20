@@ -278,37 +278,47 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   /**
-   * Compare two text values in which substrings of whitespace are interchangeable. The typical case is HMTL text or XML
-   * text that will be transformed into HTML.
+   * Compare two snippets of XML code, typically XML text that will be transformed into HTML.
    */
   private static boolean compareMarkupText(AssertionCollector results,
                                            Class<?> objectType, String fieldName,
                                            CharSequence actual, CharSequence expected) {
-    actual = collapseWhitespace(actual);
-    expected = collapseWhitespace(expected);
     if (actual == null || expected == null || actual.equals(expected)) {
       // If they match like this (or either is null), just compare them as-is
       return results.compare(objectType, fieldName, actual, expected);
     }
 
-    // Else, be more permissive.
+    // Else, be more permissive with XML formatting.
     // We don't mind if actual includes whitespace between tags that was missing from expected.
     // TODO: Make this fail if actual deletes whitespace that was included in expected.
-    actual = WHITESPACE_BETWEEN_TAGS.matcher(actual).replaceAll(NOTHING_BETWEEN_TAGS);
-    expected = WHITESPACE_BETWEEN_TAGS.matcher(expected).replaceAll(NOTHING_BETWEEN_TAGS);
-    return results.compare(objectType, fieldName, actual, expected);
+    return results.compare(objectType, fieldName, massageXml(actual), massageXml(expected));
   }
 
-  private static String collapseWhitespace(CharSequence text) {
-    return (text == null) ? null : CharMatcher.WHITESPACE.collapseFrom(text, ' ');
+  /**
+   * Change XML text to an equivalent form, for comparison.
+   * <p/>
+   * Expands self-closing tags. Collapses whitespace; trims leading and trailing whitespace.
+   * <p/>
+   * Removes whitespace from between tags. This does not produce strictly equivalent XML but it is close enough for test
+   * comparisons (but see the comment in {@link #compareMarkupText}).
+   * <p/>
+   * This should be replaced with proper use of the XML library if it gets too hairy.
+   *
+   * @param text XML text
+   * @return "massaged" equivalent text
+   */
+  private static String massageXml(CharSequence text) {
+    text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
+    text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
+    text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
+    return text.toString();
   }
 
-  private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s*<");
-  private static final String NOTHING_BETWEEN_TAGS = "><";
+  private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s+<");
+  private static final Pattern SELF_CLOSING_TAG = Pattern.compile("<([^>\\s]+)(\\s+[^>]*)?\\s*/>");
 
-  private static void compareMarkupText(AssertionCollector results,
-                                        Class<?> objectType, String fieldName,
-                                        List<? extends CharSequence> actual, List<? extends CharSequence> expected) {
+  private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
+                                         List<? extends CharSequence> actual, List<? extends CharSequence> expected) {
     // Force random access and assert no null elements
     actual = ImmutableList.copyOf(actual);
     expected = ImmutableList.copyOf(expected);
@@ -350,7 +360,7 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     results.compare(Article.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
     results.compare(Article.class, "url", actual.getUrl(), expected.getUrl());
-    compareMarkupText(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    compareMarkupLists(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
   }
 
@@ -583,7 +593,7 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
     results.compare(CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
     compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
-    compareMarkupText(results, CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    compareMarkupLists(results, CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(CitedArticle.class, "url", actual.getUrl(), expected.getUrl());
     results.compare(CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
     results.compare(CitedArticle.class, "summary", actual.getSummary(), expected.getSummary());
