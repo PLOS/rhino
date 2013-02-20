@@ -24,7 +24,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.ListMultimap;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -37,7 +38,10 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -64,7 +68,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
   protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
-      "supplementary-material", "inline-formula", "disp-formula");
+      "supplementary-material", "inline-formula", "disp-formula", "graphic");
 
   // An XPath expression that will match any node with one of the names above
   private static final String ASSET_EXPRESSION = String.format("//(%s)",
@@ -77,12 +81,33 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    * @return the list of asset nodes
    */
   protected List<AssetNode> findAllAssetNodes() {
-    List<Node> raw = readNodeList(ASSET_EXPRESSION);
-    List<AssetNode> wrapped = Lists.newArrayListWithCapacity(raw.size());
-    for (Node node : raw) {
-      wrapped.add(new AssetNode(node, getAssetDoi(node)));
+    // Find all nodes of an asset type and wrap them
+    List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
+    ListMultimap<String, AssetNode> wrappedNodes = LinkedListMultimap.create(rawNodes.size());
+    for (Node node : rawNodes) {
+      AssetNode wrappedNode = new AssetNode(node, getAssetDoi(node));
+      wrappedNodes.put(wrappedNode.getDoi(), wrappedNode);
     }
-    return ImmutableList.copyOf(wrapped);
+
+    // Remove <graphic> nodes that don't share a DOI with another asset.
+    // (Why not just add them separately? Doing it this way preserves document order.)
+    for (Map.Entry<String, Collection<AssetNode>> entry : wrappedNodes.asMap().entrySet()) {
+      Collection<AssetNode> nodes = entry.getValue();
+      if (nodes.size() <= 1) {
+        continue; // The DOI is unique, so keep the one node even if it is a <graphic>
+      }
+      for (Iterator<AssetNode> iterator = nodes.iterator(); iterator.hasNext(); ) {
+        AssetNode wrappedNode = iterator.next();
+        if ("graphic".equals(wrappedNode.getNode().getNodeName())) {
+          iterator.remove();
+        }
+      }
+      if (nodes.size() > 1) {
+        log.error("Multiple assets with DOI=" + entry.getKey()); // TODO Throw exception to client
+      }
+    }
+
+    return ImmutableList.copyOf(wrappedNodes.values());
   }
 
   protected String getAssetDoi(Node assetNode) {
