@@ -306,6 +306,21 @@ public class IngestionTest extends BaseRhinoTest {
   private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s*<");
   private static final String NOTHING_BETWEEN_TAGS = "><";
 
+  private static void compareMarkupText(AssertionCollector results,
+                                        Class<?> objectType, String fieldName,
+                                        List<? extends CharSequence> actual, List<? extends CharSequence> expected) {
+    // Force random access and assert no null elements
+    actual = ImmutableList.copyOf(actual);
+    expected = ImmutableList.copyOf(expected);
+
+    int maxIndex = Math.max(actual.size(), expected.size());
+    for (int i = 0; i < maxIndex; i++) {
+      CharSequence actualElement = (i < actual.size()) ? actual.get(i) : null;
+      CharSequence expectedElement = (i < expected.size()) ? expected.get(i) : null;
+      compareMarkupText(results, objectType, String.format("%s[%d]", fieldName, i), actualElement, expectedElement);
+    }
+  }
+
   /**
    * Compare simple (non-associative) fields.
    *
@@ -335,7 +350,7 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(Article.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     results.compare(Article.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
     results.compare(Article.class, "url", actual.getUrl(), expected.getUrl());
-    results.compare(Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    compareMarkupText(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(Article.class, "types", actual.getTypes(), expected.getTypes());
   }
 
@@ -568,7 +583,7 @@ public class IngestionTest extends BaseRhinoTest {
     results.compare(CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
     results.compare(CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
     compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
-    results.compare(CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
+    compareMarkupText(results, CitedArticle.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     results.compare(CitedArticle.class, "url", actual.getUrl(), expected.getUrl());
     results.compare(CitedArticle.class, "doi", actual.getDoi(), expected.getDoi());
     results.compare(CitedArticle.class, "summary", actual.getSummary(), expected.getSummary());

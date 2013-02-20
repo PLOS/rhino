@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -295,7 +294,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
           text.append(child.getTextContent());
         }
       }
-      String result = CharMatcher.WHITESPACE.trimAndCollapseFrom(text.toString(), ' ');
+      String result = standardizeWhitespace(text.toString());
       collabStrings.add(result);
     }
     return collabStrings;

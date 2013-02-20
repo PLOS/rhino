@@ -65,6 +65,15 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    */
   public abstract T build(T obj) throws XmlContentException;
 
+  protected static String standardizeWhitespace(CharSequence text) {
+    return (text == null) ? null : CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
+  }
+
+  @Override
+  protected String getTextFromNode(Node node) {
+    return standardizeWhitespace(super.getTextFromNode(node));
+  }
+
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
   protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
@@ -225,7 +234,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    */
   protected static String buildTextWithMarkup(Node node) {
     String text = buildTextWithMarkup(new StringBuilder(), node).toString();
-    return CharMatcher.WHITESPACE.trimAndCollapseFrom(text, ' ');
+    return standardizeWhitespace(text);
   }
 
   private static StringBuilder buildTextWithMarkup(StringBuilder nodeContent, Node node) {
