@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
@@ -125,12 +126,26 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setRelatedArticles(buildRelatedArticles(readNodeList("//related-article")));
   }
 
+  /**
+   * Queries for where the article abstract is found, ordered by priority. If more than one matches to a node, the first
+   * one should be stored as the article abstract.
+   */
+  private static final ImmutableList<String> QUERIES_FOR_ABSTRACT = ImmutableList.of(
+      "/article/front/article-meta/abstract[@abstract-type=\"toc\"]",
+      "/article/front/article-meta/abstract[@abstract-type=\"summary\"]",
+      "/article/front/article-meta/abstract");
+
+  /**
+   * @return the node containing the article abstract
+   */
   private Node findAbstractNode() {
-    Node abstractNode = readNode("/article/front/article-meta/abstract[@abstract-type=\"toc\"]");
-    if (abstractNode != null) {
-      return abstractNode;
+    for (String query : QUERIES_FOR_ABSTRACT) {
+      Node node = readNode(query);
+      if (node != null) {
+        return node;
+      }
     }
-    return readNode("/article/front/article-meta/abstract");
+    return null;
   }
 
   /**
