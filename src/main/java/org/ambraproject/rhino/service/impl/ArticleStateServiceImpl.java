@@ -17,11 +17,13 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -57,11 +59,16 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   }
 
   private Article loadArticle(ArticleIdentity articleId) {
-    return (Article) DataAccessUtils.uniqueResult((List<?>)
+    Article result = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .add(Restrictions.eq("doi", articleId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
+    if (result == null) {
+      throw new RestClientException("Article not found: " + articleId.getIdentifier(),
+          HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 }
