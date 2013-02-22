@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
@@ -20,7 +21,6 @@ import org.ambraproject.rhino.service.ArticleStateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,5 +70,21 @@ public class ArticleStateController extends DoiBasedCrudController {
 
     ArticleIdentity id = parse(request);
     articleStateService.read(response, id, MetadataFormat.getFromParameter(format, true));
+  }
+
+  /**
+   * Sets the state of an article based on JSON in the request.
+   *
+   * @param request HttpServletRequest
+   * @param response HttpServletResponse
+   * @throws IOException
+   */
+  @RequestMapping(value = ARTICLE_STATE_TEMPLATE, method = RequestMethod.PUT)
+  public void write(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    ArticleIdentity id = parse(request);
+    ArticleState state = readJsonFromRequest(request, ArticleState.class);
+    articleStateService.write(id, state);
+    articleStateService.read(response, id, MetadataFormat.JSON);
   }
 }

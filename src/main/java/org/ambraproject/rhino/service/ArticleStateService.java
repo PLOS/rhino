@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 
@@ -34,4 +35,12 @@ public interface ArticleStateService {
    */
   void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
       throws IOException;
+
+  /**
+   * Writes an ArticleState object to the persistent article identified by articleId.
+   *
+   * @param articleId identifies the article whose state we are updating
+   * @param state state to be written
+   */
+  void write(ArticleIdentity articleId, ArticleState state);
 }

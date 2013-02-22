@@ -38,16 +38,30 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   @Override
   public void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
       throws IOException {
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", articleId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+    Article article = loadArticle(articleId);
     ArticleState state = new ArticleState();
     state.setPublished(article.getState() == 0);
 
     assert format == MetadataFormat.JSON;
     writeJsonToResponse(response, state);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void write(ArticleIdentity articleId, ArticleState state) {
+    Article article = loadArticle(articleId);
+    article.setState(state.isPublished() ? 0 : 1);
+    hibernateTemplate.update(article);
+  }
+
+  private Article loadArticle(ArticleIdentity articleId) {
+    return (Article) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Article.class)
+            .add(Restrictions.eq("doi", articleId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
   }
 }
