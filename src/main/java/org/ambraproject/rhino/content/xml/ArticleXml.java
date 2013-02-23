@@ -239,9 +239,9 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   private Date parseDate(Node dateNode) throws XmlContentException {
     int year, month, day;
     try {
-      year = Integer.parseInt(readString("year", dateNode));
-      month = Integer.parseInt(readString("month", dateNode));
-      day = Integer.parseInt(readString("day", dateNode));
+      year = Integer.parseInt(readString("child::year", dateNode));
+      month = Integer.parseInt(readString("child::month", dateNode));
+      day = Integer.parseInt(readString("child::day", dateNode));
     } catch (NumberFormatException e) {
       throw new XmlContentException("Expected numbers for date fields", e);
     }
@@ -282,9 +282,9 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     List<CitedArticle> citations = Lists.newArrayListWithCapacity(refNodes.size());
     for (Node refNode : refNodes) {
       CitedArticle citation = new CitedArticle();
-      citation.setKey(readString("label", refNode));
+      citation.setKey(readString("child::label", refNode));
 
-      Node citationNode = readNode("(element-citation|mixed-citation|nlm-citation)", refNode);
+      Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
       citation = new CitedArticleXml(citationNode).build(citation);
       citations.add(citation);
     }
@@ -319,7 +319,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     List<ArticleRelationship> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
       ArticleRelationship relatedArticle = new ArticleRelationship();
-      relatedArticle.setType(readString("@related-article-type", relatedArticleNode));
+      relatedArticle.setType(readString("attribute::related-article-type", relatedArticleNode));
       relatedArticle.setOtherArticleDoi(readHrefAttribute(relatedArticleNode));
       relatedArticles.add(relatedArticle);
     }

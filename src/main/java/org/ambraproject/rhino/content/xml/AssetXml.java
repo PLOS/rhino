@@ -83,8 +83,8 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
     }
     asset.setContextElement(contextNode.getNodeName());
 
-    asset.setTitle(Strings.nullToEmpty(readString("label", assetNode)));
-    Node captionNode = readNode("caption", assetNode);
+    asset.setTitle(Strings.nullToEmpty(readString("child::label", assetNode)));
+    Node captionNode = readNode("child::caption", assetNode);
     asset.setDescription((captionNode != null) ? buildTextWithMarkup(captionNode) : "");
 
     return asset;
