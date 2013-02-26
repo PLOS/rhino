@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
@@ -62,11 +61,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -330,7 +327,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
     List<AssetNode> assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
-    Map<String, ArticleAsset> assetMap;
     if (assets == null) {  // create
       assets = Lists.newArrayListWithCapacity(assetNodes.size());
       article.setAssets(assets);
@@ -358,26 +354,19 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       assets.clear();
     }
-    assetMap = ImmutableMap.of();
     for (AssetNode assetNode : assetNodes) {
-      ArticleAsset asset = assetMap.get(assetNode.getDoi());
-      if (asset == null) {
-        asset = new ArticleAsset();
-        assets.add(asset);
-      }
+      ArticleAsset asset = new ArticleAsset();
       writeAsset(asset, assetNode);
+      assets.add(asset);
     }
-    ArticleAsset xmlAsset = assetMap.get(ArticleIdentity.create(article).getIdentifier());
-    if (xmlAsset == null) {
-      xmlAsset = new ArticleAsset();
-      xmlAsset.setDoi(article.getDoi());
-      xmlAsset.setExtension("XML");
-      assets.add(xmlAsset);
-    }
+    ArticleAsset xmlAsset = new ArticleAsset();
+    xmlAsset.setDoi(article.getDoi());
+    xmlAsset.setExtension("XML");
     xmlAsset.setTitle(article.getTitle());
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
     xmlAsset.setSize(xmlDataLength);
+    assets.add(xmlAsset);
   }
 
   private void populateRelatedArticles(Article article) {
@@ -397,17 +386,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
        * TODO: Do we want to send a warning to the client just in case?
        */
     }
-  }
-
-  private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
-    // TODO On re-ingest, multiple existing assets with same DOI? Probably needs to be a multimap.
-    ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
-    for (ArticleAsset asset : assets) {
-      String doi = asset.getDoi();
-      doi = DoiBasedIdentity.removeScheme(doi);
-      map.put(doi, asset);
-    }
-    return map.build();
   }
 
   /**
