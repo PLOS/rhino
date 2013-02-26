@@ -92,8 +92,9 @@ def report(description, response):
         print(line)
     print()
 
-def interpret_article(article):
+def interpret_article(response):
     """Load JSON into a Python object and use some values from it."""
+    article = json.loads(response.content)
     print('-' * _BANNER_WIDTH)
     print('Interpret article metadata in Python')
     print()
@@ -117,7 +118,7 @@ def run_test_on_article(case):
     read_meta = requests.get(article_id)
     report('Read article metadata', read_meta)
     if (read_meta.status_code < 400):
-        interpret_article(json.loads(read_meta.content))
+        interpret_article(read_meta)
 
     read_xml = requests.get(xml_asset_id)
     report('Read article XML', read_xml)
