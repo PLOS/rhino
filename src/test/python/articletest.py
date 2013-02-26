@@ -100,7 +100,9 @@ def interpret_article(response):
     print()
     print('DOI:    ', article['doi'])
     print('Title:  ', article['title'])
-    print('Authors:', [author['fullName'] for author in article['authors']])
+    print('Authors:')
+    for author in article['authors']:
+        print('    ' + author['fullName'])
     print()
 
 def run_test_on_article(case):
