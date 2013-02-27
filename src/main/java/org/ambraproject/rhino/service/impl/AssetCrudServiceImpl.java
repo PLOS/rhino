@@ -19,8 +19,8 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -30,16 +30,22 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,22 +63,14 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
+  public WriteResult<ArticleAsset> upload(InputStream file, final AssetFileIdentity assetFileId)
       throws FileStoreException, IOException {
-    // TODO Improve efficiency; loading and persisting the whole Article object is too slow
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.find(
-            // Find the article that contains an asset with the given DOI
-            "select article from Article article join article.assets asset where asset.doi = ?",
-            assetFileId.getKey()));
-    if (article == null) {
-      String message = "No article found that contains an asset with DOI = " + assetFileId.getIdentifier();
-      throw new RestClientException(message, HttpStatus.NOT_FOUND);
-    }
-    List<ArticleAsset> assets = article.getAssets();
+    List<ArticleAsset> assets = (List<ArticleAsset>) hibernateTemplate.findByCriteria(
+        DetachedCriteria.forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", assetFileId.getKey())));
 
     // Set up the Hibernate entity that we want to modify
-    ArticleAsset assetToPersist = createAssetToAdd(assets, assetFileId);
+    ArticleAsset assetToPersist = createAssetToAdd(assetFileId, assets);
 
     /*
      * Pull the data into memory and write it to the file store. Must buffer the whole thing in memory, because we need
@@ -90,7 +88,11 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     assetToPersist.setSize(assetData.length);
 
     // Persist to the database
-    hibernateTemplate.update(article);
+    if (assets.contains(assetToPersist)) {
+      hibernateTemplate.update(assetToPersist);
+    } else {
+      saveAssetForcingParentArticle(assetToPersist);
+    }
 
     // Return the result
     return new WriteResult<ArticleAsset>(assetToPersist, WriteResult.Action.CREATED);
@@ -104,24 +106,20 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * It also does two kinds of data validation. If the DOI-and-extension pair being created already exists, throw a
    * client error. If a file-less asset coexists with one or more assets that have file data, log a warning because this
    * should not be possible.
-   * <p/>
-   * This method is pretty hairy. It should be possible to do all of this with direct queries on the needed assets,
-   * without loading and looping over the article's entire list of assets. This would require adding an asset to that
-   * list without loading the whole article, which is an open TODO.
    *
-   * @param existingAssets the collection of existing assets associated with one article, to be modified
    * @param idToCreate     the identity of the uploaded asset file that needs a new asset entity
+   * @param existingAssets the collection of existing assets that have the same DOI as the new asset entity
    * @return the asset entity to be modified and persisted for this file upload
    * @throws RestClientException if the uploaded file collides with an existing file
    */
-  private static ArticleAsset createAssetToAdd(final Collection<ArticleAsset> existingAssets,
-                                               final AssetFileIdentity idToCreate) {
+  private static ArticleAsset createAssetToAdd(final AssetFileIdentity idToCreate,
+                                               final Collection<ArticleAsset> existingAssets) {
     final String keyToCreate = idToCreate.getKey();
     ArticleAsset newAsset = null;
     boolean creatingNewEntity = false;
     for (ArticleAsset existingAsset : existingAssets) {
       if (!keyToCreate.equals(existingAsset.getDoi())) {
-        continue; // Skip files that belong to other assets
+        throw new IllegalArgumentException("Should have only assets with the same DOI");
       }
       if (!AssetIdentity.hasFile(existingAsset)) {
         // This asset is uninitialized.
@@ -152,9 +150,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
           idToCreate.getIdentifier());
       throw new RestClientException(message, HttpStatus.METHOD_NOT_ALLOWED);
     }
-    if (creatingNewEntity) {
-      existingAssets.add(newAsset);
-    }
     return newAsset;
   }
 
@@ -176,6 +171,58 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     newAsset.setTitle(oldAsset.getTitle());
     newAsset.setDescription(oldAsset.getDescription());
     return newAsset;
+  }
+
+  /**
+   * Efficiently save an asset. The argument must be a new asset that hasn't been persisted to Hibernate yet that shares
+   * a DOI with at least one other existing asset. If the parent is {@code article}, then this method is equivalent to
+   * <pre>
+   *   article.getAssets().add(asset);
+   *   hibernateTemplate.update(article);
+   * </pre>
+   * But, it uses raw SQL to hack around the costs of doing it that way.
+   *
+   * @param asset a new asset
+   */
+  private void saveAssetForcingParentArticle(ArticleAsset asset) {
+    final String assetDoi = asset.getDoi();
+    final String extension = asset.getExtension();
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(assetDoi));
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(extension));
+    Preconditions.checkNotNull(asset);
+
+    Object[] result = (Object[]) DataAccessUtils.uniqueResult(
+        hibernateTemplate.execute(new HibernateCallback<List<?>>() {
+          @Override
+          public List<?> doInHibernate(Session session) throws HibernateException, SQLException {
+            SQLQuery query = session.createSQLQuery(""
+                + "SELECT "
+                + "  (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :doi AND extension != :extension) as parentArticleId, "
+                + "  (SELECT MAX(sortOrder) FROM articleAsset WHERE articleID = parentArticleId)");
+            query.setParameter("doi", assetDoi);
+            query.setParameter("extension", extension);
+            return query.list();
+          }
+        }));
+    final BigInteger parentArticleId = (BigInteger) result[0];
+    final int newSortOrder = ((Integer) result[1]) + 1;
+
+    hibernateTemplate.save(asset);
+
+    hibernateTemplate.execute(new HibernateCallback<Integer>() {
+      @Override
+      public Integer doInHibernate(Session session) throws HibernateException, SQLException {
+        SQLQuery query = session.createSQLQuery(""
+            + "UPDATE articleAsset "
+            + "SET articleID = :parentArticleId, sortOrder = :newSortOrder "
+            + "WHERE doi = :doi AND extension = :extension");
+        query.setParameter("parentArticleId", parentArticleId);
+        query.setParameter("newSortOrder", newSortOrder);
+        query.setParameter("doi", assetDoi);
+        query.setParameter("extension", extension);
+        return query.executeUpdate();
+      }
+    });
   }
 
   /**
