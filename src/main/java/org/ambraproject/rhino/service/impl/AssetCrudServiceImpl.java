@@ -63,7 +63,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public WriteResult<ArticleAsset> upload(InputStream file, final AssetFileIdentity assetFileId)
+  public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
       throws FileStoreException, IOException {
     List<ArticleAsset> assets = (List<ArticleAsset>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(ArticleAsset.class)
@@ -187,7 +187,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   private void saveAssetForcingParentArticle(ArticleAsset asset) {
     final String assetDoi = asset.getDoi();
     Preconditions.checkArgument(!Strings.isNullOrEmpty(assetDoi));
-    Preconditions.checkNotNull(asset);
 
     Object[] result = (Object[]) DataAccessUtils.uniqueResult(
         hibernateTemplate.execute(new HibernateCallback<List<?>>() {
@@ -195,22 +194,29 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
           public List<?> doInHibernate(Session session) throws HibernateException, SQLException {
             SQLQuery query = session.createSQLQuery(""
                 + "SELECT "
-                + "  (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :doi) as parentArticleId, "
+
+                // Find the parent article that is (presumed) common to all other asset files
+                // with the same DOI as the new one (they have different extensions).
+                + "  (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :doi) AS parentArticleId, "
+
+                // Hibernate maintains the article's assets as a List field. Get the max index so we can insert a new one.
                 + "  (SELECT MAX(sortOrder) FROM articleAsset WHERE articleID = parentArticleId)");
             query.setParameter("doi", assetDoi);
             return query.list();
           }
         }));
-    final BigInteger parentArticleId = (BigInteger) result[0];
-    final int newSortOrder = ((Integer) result[1]) + 1;
+    final BigInteger parentArticleId = Preconditions.checkNotNull((BigInteger) result[0]);
+    int maxSortOrder = (Integer) result[1];
+    final int newSortOrder = maxSortOrder + 1;
 
     hibernateTemplate.save(asset);
-    final Long newAssetId = asset.getID();
+    final Long newAssetId = Preconditions.checkNotNull(asset.getID());
 
     hibernateTemplate.execute(new HibernateCallback<Integer>() {
       @Override
       public Integer doInHibernate(Session session) throws HibernateException, SQLException {
         SQLQuery query = session.createSQLQuery(""
+            // Insert the new asset into the article's "assets" list as Hibernate would.
             + "UPDATE articleAsset "
             + "SET articleID = :parentArticleId, sortOrder = :newSortOrder "
             + "WHERE articleAssetID = :newAssetId");
