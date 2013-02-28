@@ -186,9 +186,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   private void saveAssetForcingParentArticle(ArticleAsset asset) {
     final String assetDoi = asset.getDoi();
-    final String extension = asset.getExtension();
     Preconditions.checkArgument(!Strings.isNullOrEmpty(assetDoi));
-    Preconditions.checkArgument(!Strings.isNullOrEmpty(extension));
     Preconditions.checkNotNull(asset);
 
     Object[] result = (Object[]) DataAccessUtils.uniqueResult(
@@ -197,10 +195,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
           public List<?> doInHibernate(Session session) throws HibernateException, SQLException {
             SQLQuery query = session.createSQLQuery(""
                 + "SELECT "
-                + "  (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :doi AND extension != :extension) as parentArticleId, "
+                + "  (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :doi) as parentArticleId, "
                 + "  (SELECT MAX(sortOrder) FROM articleAsset WHERE articleID = parentArticleId)");
             query.setParameter("doi", assetDoi);
-            query.setParameter("extension", extension);
             return query.list();
           }
         }));
@@ -208,6 +205,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     final int newSortOrder = ((Integer) result[1]) + 1;
 
     hibernateTemplate.save(asset);
+    final Long newAssetId = asset.getID();
 
     hibernateTemplate.execute(new HibernateCallback<Integer>() {
       @Override
@@ -215,11 +213,10 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
         SQLQuery query = session.createSQLQuery(""
             + "UPDATE articleAsset "
             + "SET articleID = :parentArticleId, sortOrder = :newSortOrder "
-            + "WHERE doi = :doi AND extension = :extension");
+            + "WHERE articleAssetID = :newAssetId");
         query.setParameter("parentArticleId", parentArticleId);
         query.setParameter("newSortOrder", newSortOrder);
-        query.setParameter("doi", assetDoi);
-        query.setParameter("extension", extension);
+        query.setParameter("newAssetId", newAssetId);
         return query.executeUpdate();
       }
     });
