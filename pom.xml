@@ -45,9 +45,11 @@
     <org.springframework-version>3.1.0.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.5.10</org.slf4j-version>
-    <ambra.version>2.5.3-SNAPSHOT</ambra.version>
+    <ambra.version>2.5.4-TNG-52</ambra.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <filestore.version>1.0.1</filestore.version>
+    <camel.version>2.6.0</camel.version>
+    <activemq.version>5.2.0</activemq.version>
   </properties>
 
   <repositories>
@@ -156,6 +158,12 @@
           <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>ambra-queue</artifactId>
+      <version>${ambra.version}</version>
     </dependency>
 
     <dependency>
@@ -319,6 +327,34 @@
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
+    </dependency>
+
+    <!--camel stuff-->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-core</artifactId>
+      <version>${camel.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jms</artifactId>
+      <version>${camel.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring</artifactId>
+      <version>${camel.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-camel</artifactId>
+      <version>${activemq.version}</version>
     </dependency>
 
     <!-- Test -->

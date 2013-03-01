@@ -42,6 +42,8 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.service.article.NoSuchArticleIdException;
+import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -187,6 +189,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       hibernateTemplate.update(article);
     }
     String doi = article.getDoi();
+
+    try {
+
+      // This method needs the article to have already been persisted to the DB.
+      syndicationService.createSyndications(doi);
+    } catch (NoSuchArticleIdException nsaide) {
+
+      // Should never happen, since we have already loaded this article.
+      throw new RuntimeException(nsaide);
+    }
 
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());

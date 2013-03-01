@@ -20,12 +20,19 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
+import org.ambraproject.queue.MessageService;
+import org.ambraproject.queue.MessageServiceImpl;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.DummyMessageSender;
+import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
 import org.ambraproject.service.article.DummyArticleClassifier;
+import org.ambraproject.service.syndication.SyndicationService;
+import org.ambraproject.service.syndication.impl.SyndicationServiceImpl;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -125,5 +132,16 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public AssetCrudService assetService() {
     return new AssetCrudServiceImpl();
+  }
+
+  @Bean
+  public SyndicationService syndicationService() throws IOException {
+    SyndicationServiceImpl service = new SyndicationServiceImpl();
+    service.setSessionFactory(sessionFactory(dataSource()).getObject());
+    service.setAmbraConfiguration(ConfigurationStore.getInstance().getConfiguration());
+    MessageServiceImpl messageService = new MessageServiceImpl();
+    messageService.setAmbraConfiguration(ConfigurationStore.getInstance().getConfiguration());
+    messageService.setSender(new DummyMessageSender());
+    return service;
   }
 }
