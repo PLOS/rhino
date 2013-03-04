@@ -23,7 +23,61 @@ package org.ambraproject.rhino.content;
  */
 public class ArticleState {
 
+  /**
+   * Represents legal syndication targets.
+   * <p/>
+   * In the old codebase, this is loaded from ambra.xml.  That seems like overkill
+   * considering that we only have two of these, and they change rarely.
+   */
+  public enum SyndicationTarget {
+    CROSSREF,
+    PMC;
+  }
+
+  /**
+   * Represents legal states for a syndication attempt to be in.  This is
+   * an enum-duplication of the Syndication.status property.
+   */
+  public enum SyndicationState {
+    PENDING,
+    IN_PROGRESS,
+    SUCCESS,
+    FAILURE;
+  }
+
   private boolean published;
+
+  private SyndicationState crossRefSyndicationState;
+
+  private SyndicationState pmcSyndicationState;
+
+  public SyndicationState getSyndicationState(SyndicationTarget target) {
+    switch (target) {
+      case CROSSREF:
+        return crossRefSyndicationState;
+
+      case PMC:
+        return pmcSyndicationState;
+
+      default:
+        throw new IllegalArgumentException("Unexpected syndication target " + target);
+    }
+  }
+
+  public void setSyndicationState(SyndicationTarget target, SyndicationState state) {
+    switch (target) {
+      case CROSSREF:
+        setCrossRefSyndicationState(state);
+        break;
+
+      case PMC:
+        setPmcSyndicationState(state);
+        break;
+
+      default:
+        throw new IllegalArgumentException("Unexpected syndication target " + target);
+    }
+  }
 
   public boolean isPublished() {
     return published;
@@ -31,5 +85,21 @@ public class ArticleState {
 
   public void setPublished(boolean published) {
     this.published = published;
+  }
+
+  public SyndicationState getCrossRefSyndicationState() {
+    return crossRefSyndicationState;
+  }
+
+  public void setCrossRefSyndicationState(SyndicationState crossRefSyndicationState) {
+    this.crossRefSyndicationState = crossRefSyndicationState;
+  }
+
+  public SyndicationState getPmcSyndicationState() {
+    return pmcSyndicationState;
+  }
+
+  public void setPmcSyndicationState(SyndicationState pmcSyndicationState) {
+    this.pmcSyndicationState = pmcSyndicationState;
   }
 }

@@ -14,11 +14,13 @@
 package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleStateService;
+import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -35,6 +37,21 @@ import java.util.List;
 public class ArticleStateServiceImpl extends AmbraService implements ArticleStateService {
 
   /**
+   * Helper method to set the syndication state for the appropriate target based on
+   * the status property of the Syndication object.
+   *
+   * @param state ArticleState object that will be modified
+   * @param syndication Syndication we are reading from
+   */
+  private void setSyndicationState(ArticleState state, Syndication syndication) {
+    ArticleState.SyndicationTarget target
+        = ArticleState.SyndicationTarget.valueOf(syndication.getTarget());
+    ArticleState.SyndicationState syndicationState
+        = ArticleState.SyndicationState.valueOf(syndication.getStatus());
+    state.setSyndicationState(target, syndicationState);
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -43,6 +60,17 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     Article article = loadArticle(articleId);
     ArticleState state = new ArticleState();
     state.setPublished(article.getState() == 0);
+    List<Syndication> syndications;
+    try {
+      syndications = syndicationService.getSyndications(article.getDoi());
+    } catch (NoSuchArticleIdException nsaide) {
+
+      // Should never happen since we just loaded the article.
+      throw new RuntimeException(nsaide);
+    }
+    for (Syndication syndication : syndications) {
+      setSyndicationState(state, syndication);
+    }
 
     assert format == MetadataFormat.JSON;
     writeJsonToResponse(response, state);
@@ -55,6 +83,23 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   public void write(ArticleIdentity articleId, ArticleState state) {
     Article article = loadArticle(articleId);
     article.setState(state.isPublished() ? 0 : 1);
+    for (ArticleState.SyndicationTarget target : ArticleState.SyndicationTarget.values()) {
+
+      // TODO: should we always re-attempt the syndication, as we do here, if it's
+      // IN_PROGRESS?  Or base it on the Syndication.status of the appropriate target?
+      // Not sure yet.
+      if (state.getSyndicationState(target) == ArticleState.SyndicationState.IN_PROGRESS) {
+        try {
+          syndicationService.syndicate(article.getDoi(), target.toString());
+        } catch (NoSuchArticleIdException nsaide) {
+
+          // Should never happen since we just loaded the article.
+          throw new RuntimeException(nsaide);
+        }
+      }
+
+      // TODO: un-syndicate, if necessary.
+    }
     hibernateTemplate.update(article);
   }
 
