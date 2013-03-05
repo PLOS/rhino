@@ -502,13 +502,13 @@ public class IngestionTest extends BaseRhinoTest {
                                   ArticleAsset expected, boolean assetFileExpected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
-//    results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
+    results.compare(ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
     compareMarkupText(results, ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
     compareMarkupText(results, ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
 
     if (assetFileExpected) {
       results.compare(ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
-//      results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
+      results.compare(ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
       results.compare(ArticleAsset.class, "size", actual.getSize(), expected.getSize());
     }
   }
