@@ -116,6 +116,15 @@ INTERESTING_ARTICLES = [
     ]
 """From https://developer.plos.org/confluence/display/Ambra2/Interesting+articles"""
 
-for doi in INTERESTING_ARTICLES:
+#for doi in INTERESTING_ARTICLES:
+#    make_zip(doi)
+#make_zip('pone.0038869')
+
+ARTICLES_FOR_TNG53 = [
+    'pcbi.1001051',
+    'pcbi.1001083',
+    'pcbi.1002484',
+    'ppat.0020025',
+    ]
+for doi in ARTICLES_FOR_TNG53:
     make_zip(doi)
-make_zip('pone.0038869')

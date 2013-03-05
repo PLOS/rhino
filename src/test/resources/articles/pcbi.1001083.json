@@ -1,0 +1,1269 @@
+{"doi":"info:doi/10.1371/journal.pcbi.1001083","title":
+  "Automatic Design of Digital Synthetic Gene Circuits","eIssn":
+  "1553-7358","state":1,"archiveName":"pcbi.1001083.zip","description":
+  "\u003ctitle\u003eAuthor Summary\u003c/title\u003e\u003cp\u003eSynthetic Biology is a novel discipline that aims at the construction of new biological systems able to perform specific tasks. Following the example of electrical engineering, most of the synthetic systems so far realized look like circuits where smaller DNA-encoded components are interconnected by the exchange of different kinds of molecules. According to this modular approach, we developed, in a previous work, a tool for the visual design of new genetic circuits whose components are displayed on the computer screen and connected through hypothetical wires where molecules flow. Here, we present an extension of this tool that automatically computes the structure of a digital gene circuit–where the inputs and the output take only 0/1 values–by applying procedures commonly used in electrical engineering to biology. In this way, our method generalizes and simplifies the design of genetic circuits far more complex than the ones so far realized. Moreover, different from other currently used methods, our approach limits the use of optimization procedures and drastically reduces the computational time necessary to derive the circuit structure. Future improvements can be achieved by exploiting some more biological mechanisms able to mimic Boolean behavior, without a substantial growth of the algorithmic complexity.\u003c/p\u003e",
+  "rights":
+  "Marchisio, Stelling. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-13","eLocationId":
+  "e1001083","strkImgURI":"","date":"Feb 17, 2011 12:00:00 AM","volume":
+  "7","issue":"2","journal":"PLoS Comput Biol","publisherLocation":
+  "San Francisco, USA","publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pcbi.1001083","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pcbi.1001083","extension":
+      "XML","contentType":"text/xml","title":
+      "Automatic Design of Digital Synthetic Gene Circuits","description":
+      "\u003ctitle\u003eAuthor Summary\u003c/title\u003e\u003cp\u003eSynthetic Biology is a novel discipline that aims at the construction of new biological systems able to perform specific tasks. Following the example of electrical engineering, most of the synthetic systems so far realized look like circuits where smaller DNA-encoded components are interconnected by the exchange of different kinds of molecules. According to this modular approach, we developed, in a previous work, a tool for the visual design of new genetic circuits whose components are displayed on the computer screen and connected through hypothetical wires where molecules flow. Here, we present an extension of this tool that automatically computes the structure of a digital gene circuit–where the inputs and the output take only 0/1 values–by applying procedures commonly used in electrical engineering to biology. In this way, our method generalizes and simplifies the design of genetic circuits far more complex than the ones so far realized. Moreover, different from other currently used methods, our approach limits the use of optimization procedures and drastically reduces the computational time necessary to derive the circuit structure. Future improvements can be achieved by exploiting some more biological mechanisms able to mimic Boolean behavior, without a substantial growth of the algorithmic complexity.\u003c/p\u003e",
+      "size":128745},{"doi":"info:doi/10.1371/journal.pcbi.1001083",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Automatic Design of Digital Synthetic Gene Circuits","description":
+      "\u003ctitle\u003eAuthor Summary\u003c/title\u003e\u003cp\u003eSynthetic Biology is a novel discipline that aims at the construction of new biological systems able to perform specific tasks. Following the example of electrical engineering, most of the synthetic systems so far realized look like circuits where smaller DNA-encoded components are interconnected by the exchange of different kinds of molecules. According to this modular approach, we developed, in a previous work, a tool for the visual design of new genetic circuits whose components are displayed on the computer screen and connected through hypothetical wires where molecules flow. Here, we present an extension of this tool that automatically computes the structure of a digital gene circuit–where the inputs and the output take only 0/1 values–by applying procedures commonly used in electrical engineering to biology. In this way, our method generalizes and simplifies the design of genetic circuits far more complex than the ones so far realized. Moreover, different from other currently used methods, our approach limits the use of optimization procedures and drastically reduces the computational time necessary to derive the circuit structure. Future improvements can be achieved by exploiting some more biological mechanisms able to mimic Boolean behavior, without a substantial growth of the algorithmic complexity.\u003c/p\u003e",
+      "size":1456883},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e001",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":580},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e001","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e002","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":756},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e002","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":624},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e003","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e003","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e004","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e004","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e005","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e005","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e006","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e006","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e007","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e007","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e008","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e008","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g001","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 1",
+      "description":
+      "\u003ctitle\u003eBiological Boolean gates.\u003c/title\u003e\u003cp\u003eThe simple composition of standard biological parts permits to build Boolean gates with different numbers of inputs. (A) Configuration of a two-input AND gate. A constitutive promoter is flanked by an RBS with two hairpins, one of which coincides with a riboswitch. These mRNA structures prevent ribosomes from binding the RBS and represent the targets of two different inputs: a chemical, which binds the riboswitch, and a small RNA, which is complementary to the other hairpin. Only both inputs together remove all structural hurdles and allow translation initiation. This confers an overall AND logic function to the construct. (B) Configuration of a three-input NOR gate. The RBS contains a tandem riboswitch that, in its ground state, does not form an obstacle for ribosome binding. However, when at least one input signal (chemical) reaches the corresponding aptamer, the riboswitch changes its configuration and closes the access to the RBS. Additionally, the promoter is controlled by a repressor. Hence, RNA polymerase can start transcription only when no negative transcription factor is synthesized. Overall, this gene produces a reporter protein only when all the three inputs are absent. Thus, it performs a NOR logic operation. (C) Formal symbols of standard biological parts, pools, and Boolean gates employed throughout.\u003c/p\u003e",
+      "size":380308},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eBiological Boolean gates.\u003c/title\u003e\u003cp\u003eThe simple composition of standard biological parts permits to build Boolean gates with different numbers of inputs. (A) Configuration of a two-input AND gate. A constitutive promoter is flanked by an RBS with two hairpins, one of which coincides with a riboswitch. These mRNA structures prevent ribosomes from binding the RBS and represent the targets of two different inputs: a chemical, which binds the riboswitch, and a small RNA, which is complementary to the other hairpin. Only both inputs together remove all structural hurdles and allow translation initiation. This confers an overall AND logic function to the construct. (B) Configuration of a three-input NOR gate. The RBS contains a tandem riboswitch that, in its ground state, does not form an obstacle for ribosome binding. However, when at least one input signal (chemical) reaches the corresponding aptamer, the riboswitch changes its configuration and closes the access to the RBS. Additionally, the promoter is controlled by a repressor. Hence, RNA polymerase can start transcription only when no negative transcription factor is synthesized. Overall, this gene produces a reporter protein only when all the three inputs are absent. Thus, it performs a NOR logic operation. (C) Formal symbols of standard biological parts, pools, and Boolean gates employed throughout.\u003c/p\u003e",
+      "size":16408},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eBiological Boolean gates.\u003c/title\u003e\u003cp\u003eThe simple composition of standard biological parts permits to build Boolean gates with different numbers of inputs. (A) Configuration of a two-input AND gate. A constitutive promoter is flanked by an RBS with two hairpins, one of which coincides with a riboswitch. These mRNA structures prevent ribosomes from binding the RBS and represent the targets of two different inputs: a chemical, which binds the riboswitch, and a small RNA, which is complementary to the other hairpin. Only both inputs together remove all structural hurdles and allow translation initiation. This confers an overall AND logic function to the construct. (B) Configuration of a three-input NOR gate. The RBS contains a tandem riboswitch that, in its ground state, does not form an obstacle for ribosome binding. However, when at least one input signal (chemical) reaches the corresponding aptamer, the riboswitch changes its configuration and closes the access to the RBS. Additionally, the promoter is controlled by a repressor. Hence, RNA polymerase can start transcription only when no negative transcription factor is synthesized. Overall, this gene produces a reporter protein only when all the three inputs are absent. Thus, it performs a NOR logic operation. (C) Formal symbols of standard biological parts, pools, and Boolean gates employed throughout.\u003c/p\u003e",
+      "size":233307},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eBiological Boolean gates.\u003c/title\u003e\u003cp\u003eThe simple composition of standard biological parts permits to build Boolean gates with different numbers of inputs. (A) Configuration of a two-input AND gate. A constitutive promoter is flanked by an RBS with two hairpins, one of which coincides with a riboswitch. These mRNA structures prevent ribosomes from binding the RBS and represent the targets of two different inputs: a chemical, which binds the riboswitch, and a small RNA, which is complementary to the other hairpin. Only both inputs together remove all structural hurdles and allow translation initiation. This confers an overall AND logic function to the construct. (B) Configuration of a three-input NOR gate. The RBS contains a tandem riboswitch that, in its ground state, does not form an obstacle for ribosome binding. However, when at least one input signal (chemical) reaches the corresponding aptamer, the riboswitch changes its configuration and closes the access to the RBS. Additionally, the promoter is controlled by a repressor. Hence, RNA polymerase can start transcription only when no negative transcription factor is synthesized. Overall, this gene produces a reporter protein only when all the three inputs are absent. Thus, it performs a NOR logic operation. (C) Formal symbols of standard biological parts, pools, and Boolean gates employed throughout.\u003c/p\u003e",
+      "size":281031},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e009",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":2444},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e009","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":2054},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e010","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":2300},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e010","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1924},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e011","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":584},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e011","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":470},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e012","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":622},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e012","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":502},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e013","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":642},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e013","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":526},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e014","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":704},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e014","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":591},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e015","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":678},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e015","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":520},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e016","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":692},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e016","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":561},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e017","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":670},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e017","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":544},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e018","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":678},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e018","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":520},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e019","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":692},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e019","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":561},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e020","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":670},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e020","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":544},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e021","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":678},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e021","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":520},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e022","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":670},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e022","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":544},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g002","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 2",
+      "description":
+      "\u003ctitle\u003eConversion of a truth table into a circuit scheme via the Karnaugh map method.\u003c/title\u003e\u003cp\u003eA Karnaugh map can be considered as a particular rearrangement of a truth table. Here, three Boolean variables (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e015\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e016\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e017\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) are taken into account. The values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e018\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e are written on the rows of the Karnaugh map, whereas the values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e019\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e020\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e lie on its columns. The Karnaugh map method permits to derive both the SOP and POS form of the Boolean expression associated with any truth table. Here, only the SOP calculation is shown (see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi.1001083.s006\"\u003eText S1\u003c/xref\u003e for a more detailed explanation of the method). The circuit scheme follows straightforwardly: each variable that is negated in one or more clauses (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e021\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e022\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in the example) demands a NOT gate in the input layer. Every clause corresponds to an AND gate of the internal layer. An OR gate in the final layer gathers and sums the binary outputs of the internal AND gates. In the example, chemicals, sRNAs and transcription factors regulate the three AND gates that produce a unique kind of activator able to control the final OR gate.\u003c/p\u003e",
+      "size":135288},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eConversion of a truth table into a circuit scheme via the Karnaugh map method.\u003c/title\u003e\u003cp\u003eA Karnaugh map can be considered as a particular rearrangement of a truth table. Here, three Boolean variables (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e015\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e016\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e017\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) are taken into account. The values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e018\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e are written on the rows of the Karnaugh map, whereas the values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e019\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e020\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e lie on its columns. The Karnaugh map method permits to derive both the SOP and POS form of the Boolean expression associated with any truth table. Here, only the SOP calculation is shown (see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi.1001083.s006\"\u003eText S1\u003c/xref\u003e for a more detailed explanation of the method). The circuit scheme follows straightforwardly: each variable that is negated in one or more clauses (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e021\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e022\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in the example) demands a NOT gate in the input layer. Every clause corresponds to an AND gate of the internal layer. An OR gate in the final layer gathers and sums the binary outputs of the internal AND gates. In the example, chemicals, sRNAs and transcription factors regulate the three AND gates that produce a unique kind of activator able to control the final OR gate.\u003c/p\u003e",
+      "size":6778},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eConversion of a truth table into a circuit scheme via the Karnaugh map method.\u003c/title\u003e\u003cp\u003eA Karnaugh map can be considered as a particular rearrangement of a truth table. Here, three Boolean variables (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e015\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e016\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e017\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) are taken into account. The values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e018\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e are written on the rows of the Karnaugh map, whereas the values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e019\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e020\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e lie on its columns. The Karnaugh map method permits to derive both the SOP and POS form of the Boolean expression associated with any truth table. Here, only the SOP calculation is shown (see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi.1001083.s006\"\u003eText S1\u003c/xref\u003e for a more detailed explanation of the method). The circuit scheme follows straightforwardly: each variable that is negated in one or more clauses (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e021\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e022\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in the example) demands a NOT gate in the input layer. Every clause corresponds to an AND gate of the internal layer. An OR gate in the final layer gathers and sums the binary outputs of the internal AND gates. In the example, chemicals, sRNAs and transcription factors regulate the three AND gates that produce a unique kind of activator able to control the final OR gate.\u003c/p\u003e",
+      "size":85683},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eConversion of a truth table into a circuit scheme via the Karnaugh map method.\u003c/title\u003e\u003cp\u003eA Karnaugh map can be considered as a particular rearrangement of a truth table. Here, three Boolean variables (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e015\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e016\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e017\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) are taken into account. The values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e018\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e are written on the rows of the Karnaugh map, whereas the values of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e019\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e020\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e lie on its columns. The Karnaugh map method permits to derive both the SOP and POS form of the Boolean expression associated with any truth table. Here, only the SOP calculation is shown (see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi.1001083.s006\"\u003eText S1\u003c/xref\u003e for a more detailed explanation of the method). The circuit scheme follows straightforwardly: each variable that is negated in one or more clauses (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e021\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e022\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in the example) demands a NOT gate in the input layer. Every clause corresponds to an AND gate of the internal layer. An OR gate in the final layer gathers and sums the binary outputs of the internal AND gates. In the example, chemicals, sRNAs and transcription factors regulate the three AND gates that produce a unique kind of activator able to control the final OR gate.\u003c/p\u003e",
+      "size":80480},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e023",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e023","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e024","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e024","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g003","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 3",
+      "description":
+      "\u003ctitle\u003eWorkflow for digital gene circuit design.\u003c/title\u003e\u003cp\u003eThe overall procedure of constructing a digital, synthetic, gene circuit starts with the network automatic design that uses our computational tool based on the Karnaugh map method (blue boxes). A solution, normally the least complex one, undergoes other simulations to check and, if necessary, improve its performance and robustness (orange boxes). Finally, if the (optimized) solution meets the necessary requisites for a faithful reproduction of the corresponding truth table, it is implemented in the lab, otherwise another circuit solution has to be taken into account.\u003c/p\u003e",
+      "size":140556},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eWorkflow for digital gene circuit design.\u003c/title\u003e\u003cp\u003eThe overall procedure of constructing a digital, synthetic, gene circuit starts with the network automatic design that uses our computational tool based on the Karnaugh map method (blue boxes). A solution, normally the least complex one, undergoes other simulations to check and, if necessary, improve its performance and robustness (orange boxes). Finally, if the (optimized) solution meets the necessary requisites for a faithful reproduction of the corresponding truth table, it is implemented in the lab, otherwise another circuit solution has to be taken into account.\u003c/p\u003e",
+      "size":13776},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eWorkflow for digital gene circuit design.\u003c/title\u003e\u003cp\u003eThe overall procedure of constructing a digital, synthetic, gene circuit starts with the network automatic design that uses our computational tool based on the Karnaugh map method (blue boxes). A solution, normally the least complex one, undergoes other simulations to check and, if necessary, improve its performance and robustness (orange boxes). Finally, if the (optimized) solution meets the necessary requisites for a faithful reproduction of the corresponding truth table, it is implemented in the lab, otherwise another circuit solution has to be taken into account.\u003c/p\u003e",
+      "size":56897},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eWorkflow for digital gene circuit design.\u003c/title\u003e\u003cp\u003eThe overall procedure of constructing a digital, synthetic, gene circuit starts with the network automatic design that uses our computational tool based on the Karnaugh map method (blue boxes). A solution, normally the least complex one, undergoes other simulations to check and, if necessary, improve its performance and robustness (orange boxes). Finally, if the (optimized) solution meets the necessary requisites for a faithful reproduction of the corresponding truth table, it is implemented in the lab, otherwise another circuit solution has to be taken into account.\u003c/p\u003e",
+      "size":73132},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e025",
+      "contextElement":"disp-formula","extension":"TIF","contentType":
+      "image/tiff","title":"(1)","description":"","size":3914},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e025","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "(1)","description":"","size":3236},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e026","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":958},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e026","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":804},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e027","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":918},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e027","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":757},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e028","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":870},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e028","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":726},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e029","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":926},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e029","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":751},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e030","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1306},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e030","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1114},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e031","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1282},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e031","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e032","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":684},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e032","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":557},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g004","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 4",
+      "description":
+      "\u003ctitle\u003eExample circuit (test case A).\u003c/title\u003e\u003cp\u003eTest case A corresponds to the most complex Boolean formulas generated by our tool. (A) Truth table and Karnaugh map. (B) Solution distribution according to the complexity score. (C) Solution 1 scheme–the least complex one for test case A.\u003c/p\u003e",
+      "size":1157800},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eExample circuit (test case A).\u003c/title\u003e\u003cp\u003eTest case A corresponds to the most complex Boolean formulas generated by our tool. (A) Truth table and Karnaugh map. (B) Solution distribution according to the complexity score. (C) Solution 1 scheme–the least complex one for test case A.\u003c/p\u003e",
+      "size":21175},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eExample circuit (test case A).\u003c/title\u003e\u003cp\u003eTest case A corresponds to the most complex Boolean formulas generated by our tool. (A) Truth table and Karnaugh map. (B) Solution distribution according to the complexity score. (C) Solution 1 scheme–the least complex one for test case A.\u003c/p\u003e",
+      "size":227430},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eExample circuit (test case A).\u003c/title\u003e\u003cp\u003eTest case A corresponds to the most complex Boolean formulas generated by our tool. (A) Truth table and Karnaugh map. (B) Solution distribution according to the complexity score. (C) Solution 1 scheme–the least complex one for test case A.\u003c/p\u003e",
+      "size":1020087},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e033",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":992},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e033","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":812},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e034","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":2440},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e034","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":2037},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e035","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":612},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e035","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":490},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e036","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":952},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e036","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":764},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e037","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1424},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e037","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1156},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e038","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1430},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e038","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1208},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e039","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1482},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e039","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1236},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e040","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1288},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e040","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1105},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g005","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 5",
+      "description":
+      "\u003ctitle\u003eComparison of a RNAi-based with an automatically designed circuit.\u003c/title\u003e\u003cp\u003eThe Boolean formula \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e034\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e is here represented both (A) as the circuit provided by Rinaudo \u003citalic\u003eet al.\u003c/italic\u003e \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi.1001083-Rinaudo1\"\u003e[23]\u003c/xref\u003e with \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e035\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e different siRNAs and (B) as one of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e036\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e solutions computed by our tool, using two activators and one sRNA. Notice that \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e037\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e038\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e correspond to \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e039\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e040\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, respectively. Dashed lines indicate either protein synthesis or input signal conversion into a regulatory factor (NOT operation). For a better comparison with Rinaudo\u0027s scheme, we do not include the input layer in (B).\u003c/p\u003e",
+      "size":159388},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g005",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eComparison of a RNAi-based with an automatically designed circuit.\u003c/title\u003e\u003cp\u003eThe Boolean formula \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e034\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e is here represented both (A) as the circuit provided by Rinaudo \u003citalic\u003eet al.\u003c/italic\u003e \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi.1001083-Rinaudo1\"\u003e[23]\u003c/xref\u003e with \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e035\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e different siRNAs and (B) as one of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e036\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e solutions computed by our tool, using two activators and one sRNA. Notice that \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e037\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e038\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e correspond to \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e039\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e040\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, respectively. Dashed lines indicate either protein synthesis or input signal conversion into a regulatory factor (NOT operation). For a better comparison with Rinaudo\u0027s scheme, we do not include the input layer in (B).\u003c/p\u003e",
+      "size":8812},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g005",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eComparison of a RNAi-based with an automatically designed circuit.\u003c/title\u003e\u003cp\u003eThe Boolean formula \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e034\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e is here represented both (A) as the circuit provided by Rinaudo \u003citalic\u003eet al.\u003c/italic\u003e \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi.1001083-Rinaudo1\"\u003e[23]\u003c/xref\u003e with \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e035\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e different siRNAs and (B) as one of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e036\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e solutions computed by our tool, using two activators and one sRNA. Notice that \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e037\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e038\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e correspond to \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e039\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e040\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, respectively. Dashed lines indicate either protein synthesis or input signal conversion into a regulatory factor (NOT operation). For a better comparison with Rinaudo\u0027s scheme, we do not include the input layer in (B).\u003c/p\u003e",
+      "size":103848},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g005",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eComparison of a RNAi-based with an automatically designed circuit.\u003c/title\u003e\u003cp\u003eThe Boolean formula \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e034\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e is here represented both (A) as the circuit provided by Rinaudo \u003citalic\u003eet al.\u003c/italic\u003e \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi.1001083-Rinaudo1\"\u003e[23]\u003c/xref\u003e with \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e035\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e different siRNAs and (B) as one of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e036\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e solutions computed by our tool, using two activators and one sRNA. Notice that \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e037\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e038\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e correspond to \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e039\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e040\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, respectively. Dashed lines indicate either protein synthesis or input signal conversion into a regulatory factor (NOT operation). For a better comparison with Rinaudo\u0027s scheme, we do not include the input layer in (B).\u003c/p\u003e",
+      "size":100619},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e041",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":952},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e041","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":764},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e042","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1006},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e042","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":857},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e043","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":992},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e043","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":827},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e044","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":576},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e044","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":450},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e045","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e045","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e046","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e046","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e047","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":622},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e047","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":485},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e048","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1264},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e048","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1087},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e049","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1154},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e049","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":975},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e050","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e050","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e051","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e051","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e052","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e052","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e053","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e053","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e054","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e054","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e055","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e055","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e056","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e056","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g006","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 6",
+      "description":
+      "\u003ctitle\u003eCircuit performance.\u003c/title\u003e\u003cp\u003e(A) The parameters used to estimate the quality of a digital circuit are reported on the plot of a generic solution (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the two red lines, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs on the green surface). (B) Test case A solution \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e simulation. Only the results of four (out of sixteen) truth table entries are shown. All the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e053\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the red lines and all the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e054\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs between the green ones. Every simulation consisted of two steps. First, the system reached a first steady state in the absence of chemicals (not shown). Afterwards, input signals were sent to the circuit. As a response, the network varied the reporter protein production and settled to a new steady state that describes the output (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e055\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e or \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e056\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) of the corresponding entry in the truth table. (C) Signal separation and transient for eight different solution of test case A. Transients have been rescaled with respect to the solution 1 value.\u003c/p\u003e",
+      "size":170080},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g006",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eCircuit performance.\u003c/title\u003e\u003cp\u003e(A) The parameters used to estimate the quality of a digital circuit are reported on the plot of a generic solution (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the two red lines, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs on the green surface). (B) Test case A solution \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e simulation. Only the results of four (out of sixteen) truth table entries are shown. All the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e053\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the red lines and all the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e054\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs between the green ones. Every simulation consisted of two steps. First, the system reached a first steady state in the absence of chemicals (not shown). Afterwards, input signals were sent to the circuit. As a response, the network varied the reporter protein production and settled to a new steady state that describes the output (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e055\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e or \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e056\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) of the corresponding entry in the truth table. (C) Signal separation and transient for eight different solution of test case A. Transients have been rescaled with respect to the solution 1 value.\u003c/p\u003e",
+      "size":16978},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g006",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eCircuit performance.\u003c/title\u003e\u003cp\u003e(A) The parameters used to estimate the quality of a digital circuit are reported on the plot of a generic solution (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the two red lines, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs on the green surface). (B) Test case A solution \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e simulation. Only the results of four (out of sixteen) truth table entries are shown. All the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e053\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the red lines and all the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e054\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs between the green ones. Every simulation consisted of two steps. First, the system reached a first steady state in the absence of chemicals (not shown). Afterwards, input signals were sent to the circuit. As a response, the network varied the reporter protein production and settled to a new steady state that describes the output (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e055\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e or \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e056\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) of the corresponding entry in the truth table. (C) Signal separation and transient for eight different solution of test case A. Transients have been rescaled with respect to the solution 1 value.\u003c/p\u003e",
+      "size":108150},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g006",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eCircuit performance.\u003c/title\u003e\u003cp\u003e(A) The parameters used to estimate the quality of a digital circuit are reported on the plot of a generic solution (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the two red lines, \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs on the green surface). (B) Test case A solution \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e simulation. Only the results of four (out of sixteen) truth table entries are shown. All the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e053\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs lie between the red lines and all the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e054\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e outputs between the green ones. Every simulation consisted of two steps. First, the system reached a first steady state in the absence of chemicals (not shown). Afterwards, input signals were sent to the circuit. As a response, the network varied the reporter protein production and settled to a new steady state that describes the output (\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e055\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e or \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e056\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) of the corresponding entry in the truth table. (C) Signal separation and transient for eight different solution of test case A. Transients have been rescaled with respect to the solution 1 value.\u003c/p\u003e",
+      "size":107901},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e057",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e057","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e058","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e058","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e059","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1180},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e059","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":971},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e060","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e060","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e061","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e061","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e062","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1472},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e062","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1227},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e063","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":988},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e063","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":806},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e064","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":806},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e064","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":686},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e065","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1006},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e065","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":850},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e066","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":848},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e066","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":687},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e067","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":612},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e067","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":489},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e068","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":772},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e068","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":633},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e069","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1006},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e069","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":850},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e070","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1430},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e070","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1188},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e071","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1156},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e071","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":985},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e072","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":902},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e072","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":726},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e073","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e073","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":507},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e074","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":936},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e074","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":775},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e075","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":612},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e075","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":489},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e076","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":902},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e076","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":726},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e077","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":592},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e077","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":474},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e078","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e078","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":507},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.g007","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 7",
+      "description":
+      "\u003ctitle\u003eCircuit robustness.\u003c/title\u003e\u003cp\u003eFraction of valid test case A solutions (out of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e078\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) for different promoter and RBS leakage rates. Leakage rate is expressed as a percentage of the fixed transcription/translation rate of the gates that belongs to the circuit internal gates.\u003c/p\u003e",
+      "size":66144},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g007",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eCircuit robustness.\u003c/title\u003e\u003cp\u003eFraction of valid test case A solutions (out of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e078\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) for different promoter and RBS leakage rates. Leakage rate is expressed as a percentage of the fixed transcription/translation rate of the gates that belongs to the circuit internal gates.\u003c/p\u003e",
+      "size":7885},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g007",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eCircuit robustness.\u003c/title\u003e\u003cp\u003eFraction of valid test case A solutions (out of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e078\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) for different promoter and RBS leakage rates. Leakage rate is expressed as a percentage of the fixed transcription/translation rate of the gates that belongs to the circuit internal gates.\u003c/p\u003e",
+      "size":68652},{"doi":"info:doi/10.1371/journal.pcbi.1001083.g007",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eCircuit robustness.\u003c/title\u003e\u003cp\u003eFraction of valid test case A solutions (out of \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e078\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e) for different promoter and RBS leakage rates. Leakage rate is expressed as a percentage of the fixed transcription/translation rate of the gates that belongs to the circuit internal gates.\u003c/p\u003e",
+      "size":31869},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e079",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":988},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e079","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":806},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e080","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":834},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e080","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":692},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e081","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e081","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":355},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e082","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e082","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":480},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e083","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e083","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":501},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e084","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":962},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e084","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":785},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e085","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":972},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e085","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":826},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.s001","contextElement":
+      "supplementary-material","extension":"TIF","contentType":
+      "image/tiff","title":"Figure S1","description":
+      "\u003cp\u003eDifferent three-layer implementations of an XOR gate in electronics. (A) SOP representation: AND-OR and NAND-NAND logic. (B) POS representation: OR-AND and NOR-NOR logic. In both cases, one logic can be derived from the other one through De Morgan\u0027s laws: \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e086\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e and \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" xlink:href\u003d\"info:doi/10.1371/journal.pcbi.1001083.e087\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e.\u003c/p\u003e\u003cp\u003e(0.21 MB TIF)\u003c/p\u003e",
+      "size":205936},{"doi":"info:doi/10.1371/journal.pcbi.1001083.e086",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1730},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e086","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1502},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e087","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1780},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.e087","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1531},{"doi":
+      "info:doi/10.1371/journal.pcbi.1001083.s002","contextElement":
+      "supplementary-material","extension":"PDF","contentType":
+      "application/pdf","title":"Figure S2","description":
+      "\u003cp\u003eSchemes of YES (A) and NOT (B,C) input gates both in SOP and POS representation. Notice that the standard biological part (promoter or RBS) where the gate output acts is shown at the bottom-right corner of each gate.\u003c/p\u003e\u003cp\u003e(0.05 MB PDF)\u003c/p\u003e",
+      "size":46184},{"doi":"info:doi/10.1371/journal.pcbi.1001083.s003",
+      "contextElement":"supplementary-material","extension":"TXT",
+      "contentType":"text/plain","title":"Protocol S1","description":
+      "\u003cp\u003eMatlab file - test case A, solution 1.\u003c/p\u003e\u003cp\u003e(0.18 MB TXT)\u003c/p\u003e",
+      "size":177990},{"doi":"info:doi/10.1371/journal.pcbi.1001083.s004",
+      "contextElement":"supplementary-material","extension":"TXT",
+      "contentType":"text/plain","title":"Protocol S2","description":
+      "\u003cp\u003eMatlab file - test case A, solution 1 simulation.\u003c/p\u003e\u003cp\u003e(0.00 MB TXT)\u003c/p\u003e",
+      "size":1814},{"doi":"info:doi/10.1371/journal.pcbi.1001083.s005",
+      "contextElement":"supplementary-material","extension":"XML",
+      "contentType":"text/xml","title":"Protocol S3","description":
+      "\u003cp\u003eSBML file - test case A, solution 1.\u003c/p\u003e\u003cp\u003e(0.45 MB XML)\u003c/p\u003e",
+      "size":445366},{"doi":"info:doi/10.1371/journal.pcbi.1001083.s006",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Text S1","description":
+      "\u003cp\u003eAutomatic design of digital synthetic gene circuits. Additional background, methods, and results.\u003c/p\u003e\u003cp\u003e(2.77 MB PDF)\u003c/p\u003e",
+      "size":2768608}],"citedArticles":[{"key":"1","year":2005,"displayYear":
+      "2005","volumeNumber":438,"volume":"438","title":
+      "Foundations for engineering biology.","pages":"449-453","eLocationID":
+      "449","journal":"Nature","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Endy","givenNames":"D","surnames":"Endy","suffix":""}],
+      "editors":[]},{"key":"2","year":2009,"displayYear":"2009",
+      "volumeNumber":20,"volume":"20","title":
+      "Computational design tools for synthetic biology.","pages":
+      "479-485","eLocationID":"479","journal":"Curr Opin Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MA Marchisio","givenNames":"MA","surnames":"Marchisio","suffix":
+          ""},{"fullName":"J Stelling","givenNames":"J","surnames":
+          "Stelling","suffix":""}],"editors":[]},{"key":"3","year":2004,
+      "displayYear":"2004","title":
+      "BioJADE: A Design and Simulation Tool for Synthetic Biological Systems.",
+      "note":"Technical report, MIT, Cambridge, MA","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
+          "fullName":"JA Goler","givenNames":"JA","surnames":"Goler",
+          "suffix":""}],"editors":[]},{"key":"4","year":2008,"displayYear":
+      "2008","volumeNumber":24,"volume":"24","title":
+      "Computational design of synthetic gene circuits with composable parts.",
+      "pages":"1903-1910","eLocationID":"1903","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MA Marchisio","givenNames":"MA","surnames":"Marchisio","suffix":
+          ""},{"fullName":"J Stelling","givenNames":"J","surnames":
+          "Stelling","suffix":""}],"editors":[]},{"key":"5","year":2009,
+      "displayYear":"2009","volumeNumber":3,"volume":"3","title":
+      "Tinkercell: modular cad tool for synthetic biology.","pages":"19",
+      "eLocationID":"19","journal":"J Biol Eng","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"D Chandran","givenNames":"D","surnames":
+          "Chandran","suffix":""},{"fullName":"FT Bergmann","givenNames":
+          "FT","surnames":"Bergmann","suffix":""},{"fullName":"HM Sauro",
+          "givenNames":"HM","surnames":"Sauro","suffix":""}],"editors":[]},{
+      "key":"6","year":2004,"displayYear":"2004","volumeNumber":101,"volume":
+      "101","title":
+      "Design of genetic networks with specified functions by evolution in silico.",
+      "pages":"580-585","eLocationID":"580","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P François","givenNames":"P","surnames":"François","suffix":""},{
+          "fullName":"V Hakim","givenNames":"V","surnames":"Hakim","suffix":
+          ""}],"editors":[]},{"key":"7","year":2007,"displayYear":"2007",
+      "volumeNumber":23,"volume":"23","title":
+      "Genetdes: automatic design of transcriptional networks.","pages":
+      "1857-1858","eLocationID":"1857","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Rodrigo","givenNames":"G","surnames":"Rodrigo","suffix":""},{
+          "fullName":"J Carrera","givenNames":"J","surnames":"Carrera",
+          "suffix":""},{"fullName":"A Jaramillo","givenNames":"A","surnames":
+          "Jaramillo","suffix":""}],"editors":[]},{"key":"8","year":2008,
+      "displayYear":"2008","volumeNumber":2,"volume":"2","title":
+      "Optcircuit: an optimization based method for computational design of genetic circuits.",
+      "pages":"24","eLocationID":"24","journal":"BMC Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MS Dasika","givenNames":"MS","surnames":"Dasika","suffix":""},{
+          "fullName":"CD Maranas","givenNames":"CD","surnames":"Maranas",
+          "suffix":""}],"editors":[]},{"key":"9","year":2003,"displayYear":
+      "2003","volumeNumber":334,"volume":"334","title":
+      "The coherent feedforward loop serves as a sign-sensitive delay element in transcription networks.",
+      "pages":"197-204","eLocationID":"197","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Mangan","givenNames":"S","surnames":"Mangan","suffix":""},{
+          "fullName":"A Zaslaver","givenNames":"A","surnames":"Zaslaver",
+          "suffix":""},{"fullName":"U Alon","givenNames":"U","surnames":
+          "Alon","suffix":""}],"editors":[]},{"key":"10","year":2005,
+      "displayYear":"2005","volumeNumber":1,"volume":"1","title":
+      "A coherent feed-forward loop with a sum input function prolongs flagella expression in escherichia coli.",
+      "pages":"2005.0006","eLocationID":"2005.0006","journal":
+      "Mol Syst Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Kalir","givenNames":"S","surnames":"Kalir","suffix":""},{
+          "fullName":"S Mangan","givenNames":"S","surnames":"Mangan",
+          "suffix":""},{"fullName":"U Alon","givenNames":"U","surnames":
+          "Alon","suffix":""}],"editors":[]},{"key":"11","year":2006,
+      "displayYear":"2006","volumeNumber":356,"volume":"356","title":
+      "The incoherent feed-forward loop accelerates the response-time of the gal system of escherichia coli.",
+      "pages":"1073-1081","eLocationID":"1073","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Mangan","givenNames":"S","surnames":"Mangan","suffix":""},{
+          "fullName":"S Itzkovitz","givenNames":"S","surnames":"Itzkovitz",
+          "suffix":""},{"fullName":"A Zaslaver","givenNames":"A","surnames":
+          "Zaslaver","suffix":""},{"fullName":"U Alon","givenNames":"U",
+          "surnames":"Alon","suffix":""}],"editors":[]},{"key":"12","year":
+      2004,"displayYear":"2004","volumeNumber":2,"volume":"2","title":
+      "The program of gene transcription for a single differentiating cell type during sporulation in bacillus subtilis.",
+      "pages":"e328","eLocationID":"e328","journal":"PLoS Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Eichenberger","givenNames":"P","surnames":"Eichenberger",
+          "suffix":""},{"fullName":"M Fujita","givenNames":"M","surnames":
+          "Fujita","suffix":""},{"fullName":"ST Jensen","givenNames":"ST",
+          "surnames":"Jensen","suffix":""},{"fullName":"EM Conlon",
+          "givenNames":"EM","surnames":"Conlon","suffix":""},{"fullName":
+          "DZ Rudner","givenNames":"DZ","surnames":"Rudner","suffix":""}],
+      "editors":[]},{"key":"13","year":2004,"displayYear":"2004",
+      "volumeNumber":70,"volume":"70","title":
+      "Topological generalizations of network motifs.","pages":"031909",
+      "eLocationID":"031909","journal":
+      "Phys Rev E Stat Nonlin Soft Matter Phys","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"N Kashtan","givenNames":"N","surnames":
+          "Kashtan","suffix":""},{"fullName":"S Itzkovitz","givenNames":
+          "S","surnames":"Itzkovitz","suffix":""},{"fullName":"R Milo",
+          "givenNames":"R","surnames":"Milo","suffix":""},{"fullName":
+          "U Alon","givenNames":"U","surnames":"Alon","suffix":""}],
+      "editors":[]},{"key":"14","year":2006,"displayYear":"2006","title":
+      "An Introduction to Systems Biology","publisherLocation":
+      "Boca Raton, FL, USA","publisherName":
+      "Chapman \u0026 Hall/CRC Press","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
+          "fullName":"U Alon","givenNames":"U","surnames":"Alon","suffix":
+          ""}],"editors":[]},{"key":"15","year":2010,"displayYear":"2010",
+      "volumeNumber":11,"volume":"11","title":
+      "Synthetic biology: applications come of age.","pages":"367-379",
+      "eLocationID":"367","journal":"Nat Rev Genet","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"AS Khalil","givenNames":"AS","surnames":
+          "Khalil","suffix":""},{"fullName":"JJ Collins","givenNames":"JJ",
+          "surnames":"Collins","suffix":""}],"editors":[]},{"key":"16",
+      "year":2006,"displayYear":"2006","volumeNumber":355,"volume":"355",
+      "title":
+      "Environmentally controlled invasion of cancer cells by engineered bacteria.",
+      "pages":"619-627","eLocationID":"619","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JC Anderson","givenNames":"JC","surnames":"Anderson","suffix":
+          ""},{"fullName":"EJ Clarke","givenNames":"EJ","surnames":
+          "Clarke","suffix":""},{"fullName":"AP Arkin","givenNames":"AP",
+          "surnames":"Arkin","suffix":""},{"fullName":"CA Voigt",
+          "givenNames":"CA","surnames":"Voigt","suffix":""}],"editors":[]},{
+      "key":"17","year":2008,"displayYear":"2008","volumeNumber":237,
+      "volume":"237","title":
+      "Towards molecular computers that operate in a biological environment.",
+      "pages":"1165-1172","eLocationID":"1165","journal":"Phisica D",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Kahan","givenNames":"M","surnames":"Kahan","suffix":""},{
+          "fullName":"B Gil","givenNames":"B","surnames":"Gil","suffix":""},{
+          "fullName":"R Adar","givenNames":"R","surnames":"Adar","suffix":
+          ""},{"fullName":"E Shapiro","givenNames":"E","surnames":
+          "Shapiro","suffix":""}],"editors":[]},{"key":"18","year":2002,
+      "displayYear":"2002","title":
+      "The device physics of cellular logic gates.","pages":"54-61",
+      "eLocationID":"54","note":
+      "In: Proceedings of NSC-1: The First Workshop on Non-Silicon Computing; 3 February 2002; Cambridge, MA, USA",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "R Weiss","givenNames":"R","surnames":"Weiss","suffix":""},{
+          "fullName":"S Basu","givenNames":"S","surnames":"Basu","suffix":
+          ""}],"editors":[]},{"key":"19","year":2003,"displayYear":"2003",
+      "volumeNumber":21,"volume":"21","title":
+      "A deoxyribozyme-based molecular automaton.","pages":"1069-1074",
+      "eLocationID":"1069","journal":"Nat Biotechnol","collaborativeAuthors":
+      [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"MN Stojanovic","givenNames":"MN","surnames":
+          "Stojanovic","suffix":""},{"fullName":"D Stefanovic","givenNames":
+          "D","surnames":"Stefanovic","suffix":""}],"editors":[]},{"key":
+      "20","year":2006,"displayYear":"2006","volumeNumber":314,"volume":
+      "314","title":"Enzyme-free nucleic acid logic circuits.","pages":
+      "1585-1588","eLocationID":"1585","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Seelig","givenNames":"G","surnames":"Seelig","suffix":""},{
+          "fullName":"D Soloveichik","givenNames":"D","surnames":
+          "Soloveichik","suffix":""},{"fullName":"DY Zhang","givenNames":
+          "DY","surnames":"Zhang","suffix":""},{"fullName":"E Winfree",
+          "givenNames":"E","surnames":"Winfree","suffix":""}],"editors":[]},{
+      "key":"21","year":2007,"displayYear":"2007","volumeNumber":3,"volume":
+      "3","title":
+      "Environmental signal integration by a modular and gate.","pages":
+      "133","eLocationID":"133","journal":"Mol Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JC Anderson","givenNames":"JC","surnames":"Anderson","suffix":
+          ""},{"fullName":"CA Voigt","givenNames":"CA","surnames":"Voigt",
+          "suffix":""},{"fullName":"AP Arkin","givenNames":"AP","surnames":
+          "Arkin","suffix":""}],"editors":[]},{"key":"22","year":2007,
+      "displayYear":"2007","volumeNumber":129,"volume":"129","title":
+      "Modular multi-level circuits from immobilized dna-based logic gates.",
+      "pages":"14875-14879","eLocationID":"14875","journal":
+      "J Am Chem Soc","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "BM Frezza","givenNames":"BM","surnames":"Frezza","suffix":""},{
+          "fullName":"SL Cockroft","givenNames":"SL","surnames":"Cockroft",
+          "suffix":""},{"fullName":"MR Ghadiri","givenNames":"MR","surnames":
+          "Ghadiri","suffix":""}],"editors":[]},{"key":"23","year":2007,
+      "displayYear":"2007","volumeNumber":25,"volume":"25","title":
+      "A universal rnai-based logic evaluator that operates in mammalian cells.",
+      "pages":"795-801","eLocationID":"795","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "K Rinaudo","givenNames":"K","surnames":"Rinaudo","suffix":""},{
+          "fullName":"L Bleris","givenNames":"L","surnames":"Bleris",
+          "suffix":""},{"fullName":"R Maddamsetti","givenNames":"R",
+          "surnames":"Maddamsetti","suffix":""},{"fullName":
+          "S Subramanian","givenNames":"S","surnames":"Subramanian","suffix":
+          ""},{"fullName":"R Weiss","givenNames":"R","surnames":"Weiss",
+          "suffix":""}],"editors":[]},{"key":"24","year":2005,"displayYear":
+      "2005","volumeNumber":15,"volume":"15","title":
+      "Transcriptional regulation by the numbers: applications.","pages":
+      "125-135","eLocationID":"125","journal":"Curr Opin Genet Dev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Bintu","givenNames":"L","surnames":"Bintu","suffix":""},{
+          "fullName":"NE Buchler","givenNames":"NE","surnames":"Buchler",
+          "suffix":""},{"fullName":"HG Garcia","givenNames":"HG","surnames":
+          "Garcia","suffix":""},{"fullName":"U Gerland","givenNames":"U",
+          "surnames":"Gerland","suffix":""},{"fullName":"T Hwa","givenNames":
+          "T","surnames":"Hwa","suffix":""}],"editors":[]},{"key":"25",
+      "year":2005,"displayYear":"2005","volumeNumber":15,"volume":"15",
+      "title":"Transcriptional regulation by the numbers: models.","pages":
+      "116-124","eLocationID":"116","journal":"Curr Opin Genet Dev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Bintu","givenNames":"L","surnames":"Bintu","suffix":""},{
+          "fullName":"NE Buchler","givenNames":"NE","surnames":"Buchler",
+          "suffix":""},{"fullName":"HG Garcia","givenNames":"HG","surnames":
+          "Garcia","suffix":""},{"fullName":"U Gerland","givenNames":"U",
+          "surnames":"Gerland","suffix":""},{"fullName":"T Hwa","givenNames":
+          "T","surnames":"Hwa","suffix":""}],"editors":[]},{"key":"26",
+      "year":2008,"displayYear":"2008","volumeNumber":582,"volume":"582",
+      "title":
+      "Mining logic gates in prokaryotic transcriptional regulation networks.",
+      "pages":"1237-1244","eLocationID":"1237","journal":"FEBS Lett",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Silva-Rocha","givenNames":"R","surnames":"Silva-Rocha","suffix":
+          ""},{"fullName":"V de Lorenzo","givenNames":"V","surnames":
+          "de Lorenzo","suffix":""}],"editors":[]},{"key":"27","year":2004,
+      "displayYear":"2004","volumeNumber":87,"volume":"87","title":
+      "Biologic gates enable logical transcription control in mammalian cells.",
+      "pages":"478-484","eLocationID":"478","journal":"Biotechnol Bioeng",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "BP Kramer","givenNames":"BP","surnames":"Kramer","suffix":""},{
+          "fullName":"C Fischer","givenNames":"C","surnames":"Fischer",
+          "suffix":""},{"fullName":"M Fussenegger","givenNames":"M",
+          "surnames":"Fussenegger","suffix":""}],"editors":[]},{"key":"28",
+      "year":2009,"displayYear":"2009","volumeNumber":37,"volume":"37",
+      "title":
+      "Engineering transcription factors with novel dna-binding specificity using comparative genomics.",
+      "pages":"2493-2503","eLocationID":"2493","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TA Desai","givenNames":"TA","surnames":"Desai","suffix":""},{
+          "fullName":"DA Rodionov","givenNames":"DA","surnames":"Rodionov",
+          "suffix":""},{"fullName":"MS Gelfand","givenNames":"MS","surnames":
+          "Gelfand","suffix":""},{"fullName":"EJ Alm","givenNames":"EJ",
+          "surnames":"Alm","suffix":""},{"fullName":"CV Rao","givenNames":
+          "CV","surnames":"Rao","suffix":""}],"editors":[]},{"key":"29",
+      "year":2005,"displayYear":"2005","volumeNumber":40,"volume":"40",
+      "title":"Bacterial small rna regulators.","pages":"93-113",
+      "eLocationID":"93","journal":"Crit Rev Biochem Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "N Majdalani","givenNames":"N","surnames":"Majdalani","suffix":
+          ""},{"fullName":"CK Vanderpool","givenNames":"CK","surnames":
+          "Vanderpool","suffix":""},{"fullName":"S Gottesman","givenNames":
+          "S","surnames":"Gottesman","suffix":""}],"editors":[]},{"key":
+      "30","year":2006,"displayYear":"2006","volumeNumber":24,"volume":
+      "24","title":"RNA synthetic biology.","pages":"545-554","eLocationID":
+      "545","journal":"Nat Biotechnol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"FJ Isaacs","givenNames":"FJ","surnames":
+          "Isaacs","suffix":""},{"fullName":"DJ Dwyer","givenNames":"DJ",
+          "surnames":"Dwyer","suffix":""},{"fullName":"JJ Collins",
+          "givenNames":"JJ","surnames":"Collins","suffix":""}],"editors":[]},
+    {"key":"31","year":2006,"displayYear":"2006","volumeNumber":314,"volume":
+      "314","title":
+      "Tandem riboswitch architectures exhibit complex gene control functions.",
+      "pages":"300-304","eLocationID":"300","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "N Sudarsan","givenNames":"N","surnames":"Sudarsan","suffix":""},{
+          "fullName":"MC Hammond","givenNames":"MC","surnames":"Hammond",
+          "suffix":""},{"fullName":"KF Block","givenNames":"KF","surnames":
+          "Block","suffix":""},{"fullName":"R Welz","givenNames":"R",
+          "surnames":"Welz","suffix":""},{"fullName":"JE Barrick",
+          "givenNames":"JE","surnames":"Barrick","suffix":""}],"editors":[]},
+    {"key":"32","year":2007,"displayYear":"2007","volumeNumber":8,"volume":
+      "8","title":
+      "Ribozymes, riboswitches and beyond: regulation of gene expression without proteins.",
+      "pages":"776-790","eLocationID":"776","journal":"Nat Rev Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Serganov","givenNames":"A","surnames":"Serganov","suffix":""},{
+          "fullName":"DJ Patel","givenNames":"DJ","surnames":"Patel",
+          "suffix":""}],"editors":[]},{"key":"33","year":2008,"displayYear":
+      "2008","volumeNumber":322,"volume":"322","title":
+      "Higher-order cellular information processing with synthetic rna devices.",
+      "pages":"456-460","eLocationID":"456","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MN Win","givenNames":"MN","surnames":"Win","suffix":""},{
+          "fullName":"CD Smolke","givenNames":"CD","surnames":"Smolke",
+          "suffix":""}],"editors":[]},{"key":"34","year":2009,"displayYear":
+      "2009","title":"Synthetic gene network computational design.","pages":
+      "309-312","eLocationID":"309","note":
+      "In: Proceedings of the IEEE International Symposium on Circuits and Systems, ISCAS 2009; 24–27 May 2009; Taipei, Taiwan",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "MA Marchisio","givenNames":"MA","surnames":"Marchisio","suffix":
+          ""},{"fullName":"J Stelling","givenNames":"J","surnames":
+          "Stelling","suffix":""}],"editors":[]},{"key":"35","year":2003,
+      "displayYear":"2003","volumeNumber":19,"volume":"19","title":
+      "Modular modeling of cellular systems with ProMoT/Diva.","pages":
+      "1169-1176","eLocationID":"1169","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Ginkel","givenNames":"M","surnames":"Ginkel","suffix":""},{
+          "fullName":"A Kremling","givenNames":"A","surnames":"Kremling",
+          "suffix":""},{"fullName":"T Nutsch","givenNames":"T","surnames":
+          "Nutsch","suffix":""},{"fullName":"R Rehner","givenNames":"R",
+          "surnames":"Rehner","suffix":""},{"fullName":"ED Gilles",
+          "givenNames":"ED","surnames":"Gilles","suffix":""}],"editors":[]},{
+      "key":"36","year":2009,"displayYear":"2009","volumeNumber":25,"volume":
+      "25","title":"Promot: modular modeling for systems biology.","pages":
+      "687-689","eLocationID":"687","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Mirschel","givenNames":"S","surnames":"Mirschel","suffix":""},{
+          "fullName":"K Steinmetz","givenNames":"K","surnames":"Steinmetz",
+          "suffix":""},{"fullName":"M Rempel","givenNames":"M","surnames":
+          "Rempel","suffix":""},{"fullName":"M Ginkel","givenNames":"M",
+          "surnames":"Ginkel","suffix":""},{"fullName":"ED Gilles",
+          "givenNames":"ED","surnames":"Gilles","suffix":""}],"editors":[]},{
+      "key":"37","year":2007,"displayYear":"2007","volumeNumber":1,"volume":
+      "1","title":"Design of a biological half adder.","pages":"53-58",
+      "eLocationID":"53","journal":"IET Synthetic Biology",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Terzer","givenNames":"M","surnames":"Terzer","suffix":""},{
+          "fullName":"M Jovanovic","givenNames":"M","surnames":"Jovanovic",
+          "suffix":""},{"fullName":"A Choutko","givenNames":"A","surnames":
+          "Choutko","suffix":""},{"fullName":"O Nikolayeva","givenNames":
+          "O","surnames":"Nikolayeva","suffix":""},{"fullName":"A Korn",
+          "givenNames":"A","surnames":"Korn","suffix":""}],"editors":[]},{
+      "key":"38","year":2009,"displayYear":"2009","volumeNumber":20,"volume":
+      "20","title":"Rna-based computation in live cells.","pages":
+      "471-478","eLocationID":"471","journal":"Curr Opin Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "Y Benenson","givenNames":"Y","surnames":"Benenson","suffix":""}],
+      "editors":[]},{"key":"39","year":2004,"displayYear":"2004",
+      "volumeNumber":22,"volume":"22","title":
+      "Engineered riboregulators enable post-transcriptional control of gene expression.",
+      "pages":"841-847","eLocationID":"841","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "FJ Isaacs","givenNames":"FJ","surnames":"Isaacs","suffix":""},{
+          "fullName":"DJ Dwyer","givenNames":"DJ","surnames":"Dwyer",
+          "suffix":""},{"fullName":"C Ding","givenNames":"C","surnames":
+          "Ding","suffix":""},{"fullName":"DD Pervouchine","givenNames":
+          "DD","surnames":"Pervouchine","suffix":""},{"fullName":
+          "CR Cantor","givenNames":"CR","surnames":"Cantor","suffix":""}],
+      "editors":[]},{"key":"40","year":2004,"displayYear":"2004",
+      "volumeNumber":306,"volume":"306","title":
+      "A glycine-dependent riboswitch that uses cooperative binding to control gene expression.",
+      "pages":"275-279","eLocationID":"275","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Mandal","givenNames":"M","surnames":"Mandal","suffix":""},{
+          "fullName":"M Lee","givenNames":"M","surnames":"Lee","suffix":""},{
+          "fullName":"JE Barrick","givenNames":"JE","surnames":"Barrick",
+          "suffix":""},{"fullName":"Z Weinberg","givenNames":"Z","surnames":
+          "Weinberg","suffix":""},{"fullName":"GM Emilsson","givenNames":
+          "GM","surnames":"Emilsson","suffix":""}],"editors":[]},{"key":
+      "41","year":2002,"displayYear":"2002","volumeNumber":419,"volume":
+      "419","title":
+      "Thiamine derivatives bind messenger rnas directly to regulate bacterial gene expression.",
+      "pages":"952-956","eLocationID":"952","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "W Winkler","givenNames":"W","surnames":"Winkler","suffix":""},{
+          "fullName":"A Nahvi","givenNames":"A","surnames":"Nahvi","suffix":
+          ""},{"fullName":"RR Breaker","givenNames":"RR","surnames":
+          "Breaker","suffix":""}],"editors":[]},{"key":"42","year":2008,
+      "displayYear":"2008","volumeNumber":319,"volume":"319","title":
+      "Complex riboswitches.","pages":"1795-1797","eLocationID":"1795",
+      "journal":"Science","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RR Breaker","givenNames":"RR","surnames":"Breaker","suffix":""}],
+      "editors":[]},{"key":"43","year":2005,"displayYear":"2005",
+      "volumeNumber":23,"volume":"23","title":
+      "Programmable ligand-controlled riboregulators of eukaryotic gene expression.",
+      "pages":"337-343","eLocationID":"337","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TS Bayer","givenNames":"TS","surnames":"Bayer","suffix":""},{
+          "fullName":"CD Smolke","givenNames":"CD","surnames":"Smolke",
+          "suffix":""}],"editors":[]},{"key":"44","year":2009,"displayYear":
+      "2009","volumeNumber":5,"volume":"5","title":
+      "Design principles for riboswitch function.","pages":"e1000363",
+      "eLocationID":"e1000363","journal":"PLoS Comput Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CL Beisel","givenNames":"CL","surnames":"Beisel","suffix":""},{
+          "fullName":"CD Smolke","givenNames":"CD","surnames":"Smolke",
+          "suffix":""}],"editors":[]},{"key":"45","year":1953,"displayYear":
+      "1953","volumeNumber":72,"volume":"72","issue":"9","title":
+      "The map method for synthesis of combinational logic circuits.",
+      "pages":"593-599","eLocationID":"593","journal":
+      "Transactions of the American Institute of Electrical Engineers",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Karnaugh","givenNames":"M","surnames":"Karnaugh","suffix":""}],
+      "editors":[]},{"key":"46","year":2007,"displayYear":"2007","title":
+      "Lessons In Electric Circuits (Volume IV-Digital).","note":
+      "Available: http://www.ibiblio.org/obp/electricCircuits",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "TR Kuphaldt","givenNames":"TR","surnames":"Kuphaldt","suffix":
+          ""}],"editors":[]},{"key":"47","year":2007,"displayYear":"2007",
+      "volumeNumber":4,"volume":"4","title":
+      "Single-cell quantification of molecules and rates using open-source microscope-based cytometry.",
+      "pages":"175-181","eLocationID":"175","journal":"Nat Methods",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Gordon","givenNames":"A","surnames":"Gordon","suffix":""},{
+          "fullName":"A Colman-Lerner","givenNames":"A","surnames":
+          "Colman-Lerner","suffix":""},{"fullName":"TE Chin","givenNames":
+          "TE","surnames":"Chin","suffix":""},{"fullName":"KR Benjamin",
+          "givenNames":"KR","surnames":"Benjamin","suffix":""},{"fullName":
+          "RC Yu","givenNames":"RC","surnames":"Yu","suffix":""}],"editors":[]},
+    {"key":"48","year":2000,"displayYear":"2000","volumeNumber":403,"volume":
+      "403","title":
+      "A synthetic oscillatory network of transcriptional regulators.",
+      "pages":"335-338","eLocationID":"335","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MB Elowitz","givenNames":"MB","surnames":"Elowitz","suffix":""},{
+          "fullName":"S Leibler","givenNames":"S","surnames":"Leibler",
+          "suffix":""}],"editors":[]},{"key":"49","year":2005,"displayYear":
+      "2005","volumeNumber":44,"volume":"44","title":
+      "The kinetics of ligand binding by an adenine-sensing riboswitch.",
+      "pages":"13404-13414","eLocationID":"13404","journal":"Biochemistry",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JK Wickiser","givenNames":"JK","surnames":"Wickiser","suffix":
+          ""},{"fullName":"MT Cheah","givenNames":"MT","surnames":"Cheah",
+          "suffix":""},{"fullName":"RR Breaker","givenNames":"RR","surnames":
+          "Breaker","suffix":""},{"fullName":"DM Crothers","givenNames":
+          "DM","surnames":"Crothers","suffix":""}],"editors":[]},{"key":
+      "50","year":2007,"displayYear":"2007","volumeNumber":8,"volume":"8",
+      "title":
+      "Ligand-induced folding of the adenosine deaminase a-riboswitch and implications on riboswitch translational control.",
+      "pages":"896-902","eLocationID":"896","journal":"Chembiochem",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Rieder","givenNames":"R","surnames":"Rieder","suffix":""},{
+          "fullName":"K Lang","givenNames":"K","surnames":"Lang","suffix":
+          ""},{"fullName":"D Graber","givenNames":"D","surnames":"Graber",
+          "suffix":""},{"fullName":"R Micura","givenNames":"R","surnames":
+          "Micura","suffix":""}],"editors":[]},{"key":"51","year":1999,
+      "displayYear":"1999","volumeNumber":294,"volume":"294","title":
+      "Antisense RNA regulation in prokaryotes: rapid RNA/RNA interaction facilitated by a general U-turn loop structure.",
+      "pages":"1115-1125","eLocationID":"1115","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Franch","givenNames":"T","surnames":"Franch","suffix":""},{
+          "fullName":"M Petersen","givenNames":"M","surnames":"Petersen",
+          "suffix":""},{"fullName":"EG Wagner","givenNames":"EG","surnames":
+          "Wagner","suffix":""},{"fullName":"JP Jacobsen","givenNames":
+          "JP","surnames":"Jacobsen","suffix":""},{"fullName":"K Gerdes",
+          "givenNames":"K","surnames":"Gerdes","suffix":""}],"editors":[]},{
+      "key":"52","year":2006,"displayYear":"2006","volumeNumber":24,"volume":
+      "24","title":"Deviant effects in molecular reaction pathways.","pages":
+      "1235-1240","eLocationID":"1235","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MS Samoilov","givenNames":"MS","surnames":"Samoilov","suffix":
+          ""},{"fullName":"AP Arkin","givenNames":"AP","surnames":"Arkin",
+          "suffix":""}],"editors":[]},{"key":"53","year":2006,"displayYear":
+      "2006","title":"Logic Synthesis and Verification Algorithms",
+      "publisherLocation":"Secaucus, NJ, USA","publisherName":
+      "Springer-Verlag New York, Inc","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
+          "fullName":"GD Hachtel","givenNames":"GD","surnames":"Hachtel",
+          "suffix":""},{"fullName":"F Somenzi","givenNames":"F","surnames":
+          "Somenzi","suffix":""}],"editors":[]},{"key":"54","year":2009,
+      "displayYear":"2009","volumeNumber":27,"volume":"27","title":
+      "Diversity-based, model-guided construction of synthetic gene networks with predicted functions.",
+      "pages":"465-471","eLocationID":"465","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Ellis","givenNames":"T","surnames":"Ellis","suffix":""},{
+          "fullName":"X Wang","givenNames":"X","surnames":"Wang","suffix":
+          ""},{"fullName":"JJ Collins","givenNames":"JJ","surnames":
+          "Collins","suffix":""}],"editors":[]},{"key":"55","year":2009,
+      "displayYear":"2009","volumeNumber":5,"volume":"5","title":
+      "Advancing high-throughput gene synthesis technology.","pages":
+      "714-722","eLocationID":"714","journal":"Mol Biosyst",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Tian","givenNames":"J","surnames":"Tian","suffix":""},{
+          "fullName":"K Ma","givenNames":"K","surnames":"Ma","suffix":""},{
+          "fullName":"I Saaem","givenNames":"I","surnames":"Saaem","suffix":
+          ""}],"editors":[]},{"key":"56","year":2009,"displayYear":"2009",
+      "volumeNumber":4,"volume":"4","title":
+      "Golden gate shuffling: a one-pot dna shuffling method based on type iis restriction enzymes.",
+      "pages":"e5553","eLocationID":"e5553","journal":"PLoS One",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Engler","givenNames":"C","surnames":"Engler","suffix":""},{
+          "fullName":"R Gruetzner","givenNames":"R","surnames":"Gruetzner",
+          "suffix":""},{"fullName":"R Kandzia","givenNames":"R","surnames":
+          "Kandzia","suffix":""},{"fullName":"S Marillonnet","givenNames":
+          "S","surnames":"Marillonnet","suffix":""}],"editors":[]},{"key":
+      "57","year":2009,"displayYear":"2009","volumeNumber":6,"volume":"6",
+      "title":
+      "Enzymatic assembly of dna molecules up to several hundred kilobases.",
+      "pages":"343-345","eLocationID":"343","journal":"Nat Methods",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DG Gibson","givenNames":"DG","surnames":"Gibson","suffix":""},{
+          "fullName":"L Young","givenNames":"L","surnames":"Young","suffix":
+          ""},{"fullName":"RY Chuang","givenNames":"RY","surnames":
+          "Chuang","suffix":""},{"fullName":"JC Venter","givenNames":"JC",
+          "surnames":"Venter","suffix":""},{"fullName":"CA Hutchison",
+          "givenNames":"CA","surnames":"Hutchison","suffix":""}],"editors":[]},
+    {"key":"58","year":2009,"displayYear":"2009","volumeNumber":27,"volume":
+      "27","title":
+      "Automated design of synthetic ribosome binding sites to control protein expression.",
+      "pages":"946-950","eLocationID":"946","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "HM Salis","givenNames":"HM","surnames":"Salis","suffix":""},{
+          "fullName":"EA Mirsky","givenNames":"EA","surnames":"Mirsky",
+          "suffix":""},{"fullName":"CA Voigt","givenNames":"CA","surnames":
+          "Voigt","suffix":""}],"editors":[]},{"key":"59","year":2003,
+      "displayYear":"2003","volumeNumber":19,"volume":"19","title":
+      "The systems biology markup language (SBML): a medium for representation and exchange of biochemical network models.",
+      "pages":"524-531","eLocationID":"524","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Hucka","givenNames":"M","surnames":"Hucka","suffix":""},{
+          "fullName":"A Finney","givenNames":"A","surnames":"Finney",
+          "suffix":""},{"fullName":"H Sauro","givenNames":"H","surnames":
+          "Sauro","suffix":""},{"fullName":"H Bolouri","givenNames":"H",
+          "surnames":"Bolouri","suffix":""},{"fullName":"J Doyle",
+          "givenNames":"J","surnames":"Doyle","suffix":""}],"editors":[]},{
+      "key":"60","year":2006,"displayYear":"2006","volumeNumber":22,"volume":
+      "22","title":"COPASI–a COmplex PAthway SImulator.","pages":
+      "3067-3074","eLocationID":"3067","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Hoops","givenNames":"S","surnames":"Hoops","suffix":""},{
+          "fullName":"S Sahle","givenNames":"S","surnames":"Sahle","suffix":
+          ""},{"fullName":"R Gauges","givenNames":"R","surnames":"Gauges",
+          "suffix":""},{"fullName":"C Lee","givenNames":"C","surnames":
+          "Lee","suffix":""},{"fullName":"J Pahle","givenNames":"J",
+          "surnames":"Pahle","suffix":""}],"editors":[]},{"key":"61","year":
+      1999,"displayYear":"1999","title":
+      "Efficient Exact Stochastic Simulation of Chemical Systems with Many Species and Many Channels.",
+      "note":
+      "Caltech Parallel and Distributed Group technical report 026, Caltech, Pasadena, CA, USA",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "MA Gibson","givenNames":"MA","surnames":"Gibson","suffix":""},{
+          "fullName":"J Bruck","givenNames":"J","surnames":"Bruck","suffix":
+          ""}],"editors":[]},{"key":"62","year":2005,"displayYear":"2005",
+      "title":
+      "Javaeva: A java based framework for evolutionary algorithms.","note":
+      "Technical Report WSI-2005-06, Wilhelm-Schickard-Institut für Informatik (WSI), Centre for Bioinformatics Tübingen (ZBIT), Eberhard-Karls-University Tübingen, Germany",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "F Streichert","givenNames":"F","surnames":"Streichert","suffix":
+          ""},{"fullName":"H Ulmer","givenNames":"H","surnames":"Ulmer",
+          "suffix":""}],"editors":[]},{"key":"63","year":2006,"displayYear":
+      "2006","volumeNumber":22,"volume":"22","title":
+      "Systems biology toolbox for matlab: a computational platform for research in systems biology.",
+      "pages":"514-515","eLocationID":"514","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "H Schmidt","givenNames":"H","surnames":"Schmidt","suffix":""},{
+          "fullName":"M Jirstrand","givenNames":"M","surnames":"Jirstrand",
+          "suffix":""}],"editors":[]}],"relatedArticles":[],"authors":[{
+      "fullName":"Mario A. Marchisio","givenNames":"Mario A.","surnames":
+      "Marchisio","suffix":""},{"fullName":"Jörg Stelling","givenNames":
+      "Jörg","surnames":"Stelling","suffix":""}],"editors":[{"fullName":
+      "Jason A. Papin","givenNames":"Jason A.","surnames":"Papin","suffix":
+      ""}],"journals":[{"eIssn":"1553-7358"}]}
