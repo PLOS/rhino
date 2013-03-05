@@ -632,7 +632,7 @@ public class IngestionTest extends BaseRhinoTest {
       results.compare(field, "fullName", actualName.getFullName(), expectedName.getFullName());
       results.compare(field, "givenNames", actualName.getGivenNames(), expectedName.getGivenNames());
       results.compare(field, "surname", actualName.getSurname(), expectedName.getSurname());
-//      results.compare(field, "suffix", actualName.getSuffix(), expectedName.getSuffix());
+      results.compare(field, "suffix", actualName.getSuffix(), expectedName.getSuffix());
     }
 
     // If the sizes didn't match, report missing/extra elements as errors
