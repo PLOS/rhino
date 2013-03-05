@@ -255,9 +255,9 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
   }
 
   private static final StringReplacer XML_CHAR_ESCAPES = StringReplacer.builder()
-      .add("&", "&amp;")
-      .add("<", "&lt;")
-      .add(">", "&gt;")
+      .replaceExact("&", "&amp;")
+      .replaceExact("<", "&lt;")
+      .replaceExact(">", "&gt;")
       .build();
 
   private static void appendTextNode(StringBuilder nodeContent, Node child) {

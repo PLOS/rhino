@@ -48,37 +48,37 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   public CitedArticle build(CitedArticle citation) throws XmlContentException {
     setTypeAndJournal(citation);
     citation.setTitle(buildTitle());
-    String volume = readString("volume");
+    String volume = readString("child::volume");
     citation.setVolume(volume);
     Integer volumeNumber = parseVolumeNumber(volume);
     if (volumeNumber != null) {
       citation.setVolumeNumber(volumeNumber);
     }
-    citation.setIssue(readString("issue"));
-    citation.setPublisherLocation(readString("publisher-loc"));
-    citation.setPublisherName(readString("publisher-name"));
-    citation.setNote(readString("comment"));
+    citation.setIssue(readString("child::issue"));
+    citation.setPublisherLocation(readString("child::publisher-loc"));
+    citation.setPublisherName(readString("child::publisher-name"));
+    citation.setNote(readString("child::comment"));
 
-    String link = readString("ext-link");
+    String link = readString("child::ext-link");
     citation.setDoi((link != null) && EXT_LINK_DOI.matcher(link).find() ? link : null);
 
-    String displayYear = readString("year");
+    String displayYear = readString("child::year");
     citation.setDisplayYear(displayYear);
     citation.setYear(parseYear(displayYear));
-    citation.setMonth(readString("month"));
-    citation.setDay(readString("day"));
+    citation.setMonth(readString("child::month"));
+    citation.setDay(readString("child::day"));
 
     citation.setPages(buildPages());
     citation.seteLocationID(buildELocationId());
 
-    List<Node> authorNodes = readNodeList("person-group[@person-group-type=\"author\"]/name");
-    List<Node> editorNodes = readNodeList("person-group[@person-group-type=\"editor\"]/name");
+    List<Node> authorNodes = readNodeList("child::person-group[@person-group-type=\"author\"]/name");
+    List<Node> editorNodes = readNodeList("child::person-group[@person-group-type=\"editor\"]/name");
     if (authorNodes.isEmpty() && editorNodes.isEmpty()) {
-      authorNodes = readNodeList("name");
+      authorNodes = readNodeList("child::name");
     }
     citation.setAuthors(readAuthors(authorNodes));
     citation.setEditors(readEditors(editorNodes));
-    citation.setCollaborativeAuthors(Lists.newArrayList(readTextList("collab")));
+    citation.setCollaborativeAuthors(Lists.newArrayList(readTextList("child::collab")));
 
     return citation;
   }
@@ -93,7 +93,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
    * Sets the citationType and journal properties of a CitedArticle appropriately based on the XML.
    */
   private void setTypeAndJournal(CitedArticle citation) {
-    String type = readString("@publication-type");
+    String type = readString("attribute::publication-type");
     if (Strings.isNullOrEmpty(type)) {
       return;
     }
@@ -101,7 +101,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     // pmc2obj-v3.xslt lines 730-739
     if ("journal".equals(type)) {
       type = "Article";
-      citation.setJournal(readString("source[1]"));
+      citation.setJournal(readString("child::source[1]"));
     } else if ("book".equals(type)) {
       type = "Book";
     } else {
@@ -116,9 +116,9 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   private String buildTitle() {
 
     // pmc2obj-v3.xslt lines 348-350
-    Node titleNode = readNode("article-title");
+    Node titleNode = readNode("child::article-title");
     if (titleNode == null) {
-      titleNode = readNode("source");
+      titleNode = readNode("child::source");
     }
     return (titleNode == null) ? null : buildTextWithMarkup(titleNode);
   }
@@ -129,12 +129,12 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
   private String buildPages() {
 
     // pmc2obj-v3.xslt lines 353-356
-    String range = readString("page-range");
+    String range = readString("child::page-range");
     if (!Strings.isNullOrEmpty(range)) {
       return range;
     } else {
-      String fpage = readString("fpage");
-      String lpage = readString("lpage");
+      String fpage = readString("child::fpage");
+      String lpage = readString("child::lpage");
       if (!Strings.isNullOrEmpty(lpage)) {
         return fpage + "-" + lpage;
       } else {
@@ -149,7 +149,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
    * @return the value of the eLocationId property, retrieved from the XML
    */
   private String buildELocationId() {
-    List<String> parts = readTextList("elocation-id | fpage");
+    List<String> parts = readTextList("child::elocation-id | child::fpage");
     if (parts.isEmpty()) {
       return null;
     }

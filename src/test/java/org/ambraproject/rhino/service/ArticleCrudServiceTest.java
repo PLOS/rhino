@@ -34,6 +34,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -217,4 +218,17 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
   }
 
+  @Test
+  public void testShouldSaveAssetFile() {
+    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.g001.tif"));
+    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003193.g002.PNG_M"));
+    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pcbi.1002867.pdf"));
+    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0055746.s005.doc"));
+
+    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("manifest.dtd"));
+    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("MANIFEST.xml"));
+    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml"));
+    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003188.xml.meta"));
+    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml.orig"));
+  }
 }

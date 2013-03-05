@@ -18,11 +18,12 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
+import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -64,12 +65,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -229,6 +230,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return article;
   }
 
+  private static final Pattern ZIP_ENTRY_EXCLUDE_RE = Pattern.compile("\\.xml(\\.\\w+)?");
+
+  /**
+   * Determines if we should save a file contained within an article archive as an asset.
+   *
+   * @param filename the name of a file within a .zip archive
+   * @return true if this file should be persisted as an asset
+   */
+  @VisibleForTesting
+  public static boolean shouldSaveAssetFile(String filename) {
+    Preconditions.checkNotNull(filename);
+    filename = filename.toLowerCase().trim();
+    if (filename.startsWith("manifest.")) {
+      return false;
+    }
+    Matcher matcher = ZIP_ENTRY_EXCLUDE_RE.matcher(filename);
+    return !matcher.find();
+  }
+
   private void addAssetFiles(Article article, ZipFile zipFile)
       throws IOException, FileStoreException {
 
@@ -237,24 +257,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Enumeration<? extends ZipEntry> entries = zipFile.entries();
     while (entries.hasMoreElements()) {
       ZipEntry entry = entries.nextElement();
-      if (!entry.getName().toLowerCase().startsWith("manifest.")) {
+      if (shouldSaveAssetFile(entry.getName())) {
         String[] fields = entry.getName().split("\\.");
 
         // Not sure why, but the existing admin code always converts the extension to UPPER.
         String extension = fields[fields.length - 1].toUpperCase();
-
-        // Need to exlude both ".xml" and ".xml.orig".
-        if (!"XML".equals(extension) && !"ORIG".equals(extension)) {
-          String doi = "info:doi/10.1371/journal."
-              + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
-          InputStream is = zipFile.getInputStream(entry);
-          boolean threw = true;
-          try {
-            assetService.upload(is, AssetFileIdentity.create(doi, extension));
-            threw = false;
-          } finally {
-            Closeables.close(is, threw);
-          }
+        String doi = "info:doi/10.1371/journal."
+            + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
+        InputStream is = zipFile.getInputStream(entry);
+        boolean threw = true;
+        try {
+          assetService.upload(is, AssetFileIdentity.create(doi, extension));
+          threw = false;
+        } finally {
+          Closeables.close(is, threw);
         }
       }
     }
@@ -342,7 +358,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
     List<AssetNode> assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
-    Map<String, ArticleAsset> assetMap;
     if (assets == null) {  // create
       assets = Lists.newArrayListWithCapacity(assetNodes.size());
       article.setAssets(assets);
@@ -370,26 +385,19 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       assets.clear();
     }
-    assetMap = ImmutableMap.of();
     for (AssetNode assetNode : assetNodes) {
-      ArticleAsset asset = assetMap.get(assetNode.getDoi());
-      if (asset == null) {
-        asset = new ArticleAsset();
-        assets.add(asset);
-      }
+      ArticleAsset asset = new ArticleAsset();
       writeAsset(asset, assetNode);
+      assets.add(asset);
     }
-    ArticleAsset xmlAsset = assetMap.get(ArticleIdentity.create(article).getIdentifier());
-    if (xmlAsset == null) {
-      xmlAsset = new ArticleAsset();
-      xmlAsset.setDoi(article.getDoi());
-      xmlAsset.setExtension("XML");
-      assets.add(xmlAsset);
-    }
+    ArticleAsset xmlAsset = new ArticleAsset();
+    xmlAsset.setDoi(article.getDoi());
+    xmlAsset.setExtension("XML");
     xmlAsset.setTitle(article.getTitle());
     xmlAsset.setDescription(article.getDescription());
     xmlAsset.setContentType("text/xml");
     xmlAsset.setSize(xmlDataLength);
+    assets.add(xmlAsset);
   }
 
   private void populateRelatedArticles(Article article) {
@@ -409,17 +417,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
        * TODO: Do we want to send a warning to the client just in case?
        */
     }
-  }
-
-  private ImmutableMap<String, ArticleAsset> mapAssetsByDoi(Collection<ArticleAsset> assets) {
-    // TODO On re-ingest, multiple existing assets with same DOI? Probably needs to be a multimap.
-    ImmutableMap.Builder<String, ArticleAsset> map = ImmutableMap.builder();
-    for (ArticleAsset asset : assets) {
-      String doi = asset.getDoi();
-      doi = DoiBasedIdentity.removeScheme(doi);
-      map.put(doi, asset);
-    }
-    return map.build();
   }
 
   /**

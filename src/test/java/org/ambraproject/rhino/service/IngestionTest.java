@@ -107,13 +107,13 @@ public class IngestionTest extends BaseRhinoTest {
     Arrays.sort(jsonFiles);
     List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
 
-    // For each JSON file, expect a matching XML file. Ignore XML files without JSON files.
+    // Only add to the test if both the .json and .xml file exist.
     for (File jsonFile : jsonFiles) {
       String jsonFilePath = jsonFile.getPath();
       String xmlPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + XML_SUFFIX;
       File xmlFile = new File(xmlPath);
       if (!xmlFile.exists()) {
-        fail("No XML file to match JSON test case data: " + xmlPath);
+        continue;
       }
 
       // Don't return any articles that have a zip archive.  Those will be returned
@@ -205,7 +205,7 @@ public class IngestionTest extends BaseRhinoTest {
     for (AssertionCollector.Failure failure : failures) {
       log.error(failure.toString());
     }
-    assertEquals(failures.size(), 0, "Mismatched Article fields");
+    assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
   }
 
   @Test(dataProvider = "generatedZipIngestionData")
@@ -232,7 +232,7 @@ public class IngestionTest extends BaseRhinoTest {
     for (AssertionCollector.Failure failure : failures) {
       log.error(failure.toString());
     }
-    assertEquals(failures.size(), 0, "Mismatched Article fields");
+    assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
   }
 
   @Test
