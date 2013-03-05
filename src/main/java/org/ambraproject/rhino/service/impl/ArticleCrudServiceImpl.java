@@ -18,10 +18,12 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
+import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -65,6 +67,8 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -214,6 +218,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return article;
   }
 
+  private static final Pattern ZIP_ENTRY_EXCLUDE_RE = Pattern.compile("\\.xml(\\.\\w+)?");
+
+  /**
+   * Determines if we should save a file contained within an article archive as an asset.
+   *
+   * @param filename the name of a file within a .zip archive
+   * @return true if this file should be persisted as an asset
+   */
+  @VisibleForTesting
+  public static boolean shouldSaveAssetFile(String filename) {
+    Preconditions.checkNotNull(filename);
+    filename = filename.toLowerCase().trim();
+    if (filename.startsWith("manifest.")) {
+      return false;
+    }
+    Matcher matcher = ZIP_ENTRY_EXCLUDE_RE.matcher(filename);
+    return !matcher.find();
+  }
+
   private void addAssetFiles(Article article, ZipFile zipFile)
       throws IOException, FileStoreException {
 
@@ -222,24 +245,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Enumeration<? extends ZipEntry> entries = zipFile.entries();
     while (entries.hasMoreElements()) {
       ZipEntry entry = entries.nextElement();
-      if (!entry.getName().toLowerCase().startsWith("manifest.")) {
+      if (shouldSaveAssetFile(entry.getName())) {
         String[] fields = entry.getName().split("\\.");
 
         // Not sure why, but the existing admin code always converts the extension to UPPER.
         String extension = fields[fields.length - 1].toUpperCase();
-
-        // Need to exlude both ".xml" and ".xml.orig".
-        if (!"XML".equals(extension) && !"ORIG".equals(extension)) {
-          String doi = "info:doi/10.1371/journal."
-              + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
-          InputStream is = zipFile.getInputStream(entry);
-          boolean threw = true;
-          try {
-            assetService.upload(is, AssetFileIdentity.create(doi, extension));
-            threw = false;
-          } finally {
-            Closeables.close(is, threw);
-          }
+        String doi = "info:doi/10.1371/journal."
+            + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
+        InputStream is = zipFile.getInputStream(entry);
+        boolean threw = true;
+        try {
+          assetService.upload(is, AssetFileIdentity.create(doi, extension));
+          threw = false;
+        } finally {
+          Closeables.close(is, threw);
         }
       }
     }
