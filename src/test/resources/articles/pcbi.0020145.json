@@ -1,0 +1,539 @@
+{"doi":"info:doi/10.1371/journal.pcbi.0020145","title":
+  "Identification of the Proliferation/Differentiation Switch in the Cellular Network of Multicellular Organisms",
+  "eIssn":"1553-7358","state":1,"archiveName":"pcbi.0020145.zip",
+  "description":
+  "\u003cp\u003eThe protein–protein interaction networks, or interactome networks, have been shown to have dynamic modular structures, yet the functional connections between and among the modules are less well understood. Here, using a new pipeline to integrate the interactome and the transcriptome, we identified a pair of transcriptionally anticorrelated modules, each consisting of hundreds of genes in multicellular interactome networks across different individuals and populations. The two modules are associated with cellular proliferation and differentiation, respectively. The proliferation module is conserved among eukaryotic organisms, whereas the differentiation module is specific to multicellular organisms. Upon differentiation of various tissues and cell lines from different organisms, the expression of the proliferation module is more uniformly suppressed, while the differentiation module is upregulated in a tissue- and species-specific manner. Our results indicate that even at the tissue and organism levels, proliferation and differentiation modules may correspond to two alternative states of the molecular network and may reflect a universal symbiotic relationship in a multicellular organism. Our analyses further predict that the proteins mediating the interactions between these modules may serve as modulators at the proliferation/differentiation switch.\u003c/p\u003e",
+  "rights":
+  "Xia et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-16","eLocationId":"e145",
+  "strkImgURI":"","date":"Nov 24, 2006 12:00:00 AM","volume":"2","issue":
+  "11","journal":"PLoS Comput Biol","publisherLocation":
+  "San Francisco, USA","publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pcbi.0020145","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pcbi.0020145","extension":
+      "XML","contentType":"text/xml","title":
+      "Identification of the Proliferation/Differentiation Switch in the Cellular Network of Multicellular Organisms",
+      "description":
+      "\u003cp\u003eThe protein–protein interaction networks, or interactome networks, have been shown to have dynamic modular structures, yet the functional connections between and among the modules are less well understood. Here, using a new pipeline to integrate the interactome and the transcriptome, we identified a pair of transcriptionally anticorrelated modules, each consisting of hundreds of genes in multicellular interactome networks across different individuals and populations. The two modules are associated with cellular proliferation and differentiation, respectively. The proliferation module is conserved among eukaryotic organisms, whereas the differentiation module is specific to multicellular organisms. Upon differentiation of various tissues and cell lines from different organisms, the expression of the proliferation module is more uniformly suppressed, while the differentiation module is upregulated in a tissue- and species-specific manner. Our results indicate that even at the tissue and organism levels, proliferation and differentiation modules may correspond to two alternative states of the molecular network and may reflect a universal symbiotic relationship in a multicellular organism. Our analyses further predict that the proteins mediating the interactions between these modules may serve as modulators at the proliferation/differentiation switch.\u003c/p\u003e",
+      "size":133513},{"doi":"info:doi/10.1371/journal.pcbi.0020145",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Identification of the Proliferation/Differentiation Switch in the Cellular Network of Multicellular Organisms",
+      "description":
+      "\u003cp\u003eThe protein–protein interaction networks, or interactome networks, have been shown to have dynamic modular structures, yet the functional connections between and among the modules are less well understood. Here, using a new pipeline to integrate the interactome and the transcriptome, we identified a pair of transcriptionally anticorrelated modules, each consisting of hundreds of genes in multicellular interactome networks across different individuals and populations. The two modules are associated with cellular proliferation and differentiation, respectively. The proliferation module is conserved among eukaryotic organisms, whereas the differentiation module is specific to multicellular organisms. Upon differentiation of various tissues and cell lines from different organisms, the expression of the proliferation module is more uniformly suppressed, while the differentiation module is upregulated in a tissue- and species-specific manner. Our results indicate that even at the tissue and organism levels, proliferation and differentiation modules may correspond to two alternative states of the molecular network and may reflect a universal symbiotic relationship in a multicellular organism. Our analyses further predict that the proteins mediating the interactions between these modules may serve as modulators at the proliferation/differentiation switch.\u003c/p\u003e",
+      "size":1888468},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Analysis Pipeline Used to Reveal the Anti-Correlated Modules\u003c/title\u003e\u003cp\u003eThe analysis includes two major steps: step 1, calculating pairwise PCC for the transcriptional profiles of each pair of genes engaged in a PPI to extract the NP network from the PPI network; and step 2, applying hierarchical clustering to the genes in the NP network (step 2.1), then manually dissecting the largest anti-correlated clusters, or scanning from the top of the hierarchical tree for clusters that have \u0026lt;1% intracluster anti-correlated interactions (step 2.2) to approximate the goal of obtaining modules within which the expression profiles of genes are similar and correlated interactions are maximally enclosed, and in between which anti-correlated interactions are optimally distributed. A more detailed textual flowchart is available in \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-sg001\"\u003eFigure S1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":383940},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Analysis Pipeline Used to Reveal the Anti-Correlated Modules\u003c/title\u003e\u003cp\u003eThe analysis includes two major steps: step 1, calculating pairwise PCC for the transcriptional profiles of each pair of genes engaged in a PPI to extract the NP network from the PPI network; and step 2, applying hierarchical clustering to the genes in the NP network (step 2.1), then manually dissecting the largest anti-correlated clusters, or scanning from the top of the hierarchical tree for clusters that have \u0026lt;1% intracluster anti-correlated interactions (step 2.2) to approximate the goal of obtaining modules within which the expression profiles of genes are similar and correlated interactions are maximally enclosed, and in between which anti-correlated interactions are optimally distributed. A more detailed textual flowchart is available in \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-sg001\"\u003eFigure S1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":14672},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Analysis Pipeline Used to Reveal the Anti-Correlated Modules\u003c/title\u003e\u003cp\u003eThe analysis includes two major steps: step 1, calculating pairwise PCC for the transcriptional profiles of each pair of genes engaged in a PPI to extract the NP network from the PPI network; and step 2, applying hierarchical clustering to the genes in the NP network (step 2.1), then manually dissecting the largest anti-correlated clusters, or scanning from the top of the hierarchical tree for clusters that have \u0026lt;1% intracluster anti-correlated interactions (step 2.2) to approximate the goal of obtaining modules within which the expression profiles of genes are similar and correlated interactions are maximally enclosed, and in between which anti-correlated interactions are optimally distributed. A more detailed textual flowchart is available in \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-sg001\"\u003eFigure S1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":60580},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eThe Analysis Pipeline Used to Reveal the Anti-Correlated Modules\u003c/title\u003e\u003cp\u003eThe analysis includes two major steps: step 1, calculating pairwise PCC for the transcriptional profiles of each pair of genes engaged in a PPI to extract the NP network from the PPI network; and step 2, applying hierarchical clustering to the genes in the NP network (step 2.1), then manually dissecting the largest anti-correlated clusters, or scanning from the top of the hierarchical tree for clusters that have \u0026lt;1% intracluster anti-correlated interactions (step 2.2) to approximate the goal of obtaining modules within which the expression profiles of genes are similar and correlated interactions are maximally enclosed, and in between which anti-correlated interactions are optimally distributed. A more detailed textual flowchart is available in \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-sg001\"\u003eFigure S1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":79587},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThe Transcriptionally Anti-Correlated Modules in the NP Network\u003c/title\u003e\u003cp\u003e(A) Two of the four major gene clusters, the D and P clusters, among genes in the NP network are anti-correlated. Human brain samples were clustered on the horizontal dimension according to their expression similarity. Genes were clustered on the vertical dimension. When the D gene cluster is upregulated, the P gene cluster is downregulated, and vice versa.\u003c/p\u003e\u003cp\u003e(B) The NP network is reorganized to display the extensive anti-correlated interactions from D towards both the P and N modules, which are themselves linked by only correlated interactions, and the few anti-correlated interactions within the D module that separate the module into subgroups DS1 to DS4. Red edges represent correlated interactions; green edges, anti-correlated interactions. Nodes in the largest component of the network are shown in larger size. The most enriched biological functions of each cluster are listed beside the module labels.\u003c/p\u003e\u003cp\u003e(C) The number of anti-correlated and correlated interactions within and between the D, P, N, and S modules. Red denotes correlated interactions; green, anti-correlated interactions. Color intensity indicates the proportion of interactions among the total correlated or anti-correlated interactions.\u003c/p\u003e\u003cp\u003e(D) Evolutionary origins of P and D modules. Both the human and fruit fly P modules are more conserved from the single-cellular organism yeast to the multicellular organisms, whereas the D modules are more specific for multicellular organisms, with the human D module especially specific for human and mouse. Human genes in each module are divided into five different categories: those that are conserved among yeast, worm, fly, mouse, and human (purple); those that are conserved among worm, fly, mouse, and human (blue); and so on (green and pink); those that are only found in human are red. Fly genes are divided into those that are conserved among yeast, worm, and fly; among worm and fly; and those that are fly-specific. SC, CE, DM, RN, MM, and HS stand for yeast \u003citalic\u003eSaccharomyces cerevisiae,\u003c/italic\u003e fly \u003citalic\u003eDrosophila melanogaster,\u003c/italic\u003e worm \u003citalic\u003eCaenorhabditis elegans,\u003c/italic\u003e rat \u003citalic\u003eRattus norvegicus,\u003c/italic\u003e mouse \u003citalic\u003eMus musculus,\u003c/italic\u003e and human \u003citalic\u003eHomo sapiens,\u003c/italic\u003e respectively. HF and LF stand for “high food” and “low food”, respectively.\u003c/p\u003e",
+      "size":2804556},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThe Transcriptionally Anti-Correlated Modules in the NP Network\u003c/title\u003e\u003cp\u003e(A) Two of the four major gene clusters, the D and P clusters, among genes in the NP network are anti-correlated. Human brain samples were clustered on the horizontal dimension according to their expression similarity. Genes were clustered on the vertical dimension. When the D gene cluster is upregulated, the P gene cluster is downregulated, and vice versa.\u003c/p\u003e\u003cp\u003e(B) The NP network is reorganized to display the extensive anti-correlated interactions from D towards both the P and N modules, which are themselves linked by only correlated interactions, and the few anti-correlated interactions within the D module that separate the module into subgroups DS1 to DS4. Red edges represent correlated interactions; green edges, anti-correlated interactions. Nodes in the largest component of the network are shown in larger size. The most enriched biological functions of each cluster are listed beside the module labels.\u003c/p\u003e\u003cp\u003e(C) The number of anti-correlated and correlated interactions within and between the D, P, N, and S modules. Red denotes correlated interactions; green, anti-correlated interactions. Color intensity indicates the proportion of interactions among the total correlated or anti-correlated interactions.\u003c/p\u003e\u003cp\u003e(D) Evolutionary origins of P and D modules. Both the human and fruit fly P modules are more conserved from the single-cellular organism yeast to the multicellular organisms, whereas the D modules are more specific for multicellular organisms, with the human D module especially specific for human and mouse. Human genes in each module are divided into five different categories: those that are conserved among yeast, worm, fly, mouse, and human (purple); those that are conserved among worm, fly, mouse, and human (blue); and so on (green and pink); those that are only found in human are red. Fly genes are divided into those that are conserved among yeast, worm, and fly; among worm and fly; and those that are fly-specific. SC, CE, DM, RN, MM, and HS stand for yeast \u003citalic\u003eSaccharomyces cerevisiae,\u003c/italic\u003e fly \u003citalic\u003eDrosophila melanogaster,\u003c/italic\u003e worm \u003citalic\u003eCaenorhabditis elegans,\u003c/italic\u003e rat \u003citalic\u003eRattus norvegicus,\u003c/italic\u003e mouse \u003citalic\u003eMus musculus,\u003c/italic\u003e and human \u003citalic\u003eHomo sapiens,\u003c/italic\u003e respectively. HF and LF stand for “high food” and “low food”, respectively.\u003c/p\u003e",
+      "size":15579},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThe Transcriptionally Anti-Correlated Modules in the NP Network\u003c/title\u003e\u003cp\u003e(A) Two of the four major gene clusters, the D and P clusters, among genes in the NP network are anti-correlated. Human brain samples were clustered on the horizontal dimension according to their expression similarity. Genes were clustered on the vertical dimension. When the D gene cluster is upregulated, the P gene cluster is downregulated, and vice versa.\u003c/p\u003e\u003cp\u003e(B) The NP network is reorganized to display the extensive anti-correlated interactions from D towards both the P and N modules, which are themselves linked by only correlated interactions, and the few anti-correlated interactions within the D module that separate the module into subgroups DS1 to DS4. Red edges represent correlated interactions; green edges, anti-correlated interactions. Nodes in the largest component of the network are shown in larger size. The most enriched biological functions of each cluster are listed beside the module labels.\u003c/p\u003e\u003cp\u003e(C) The number of anti-correlated and correlated interactions within and between the D, P, N, and S modules. Red denotes correlated interactions; green, anti-correlated interactions. Color intensity indicates the proportion of interactions among the total correlated or anti-correlated interactions.\u003c/p\u003e\u003cp\u003e(D) Evolutionary origins of P and D modules. Both the human and fruit fly P modules are more conserved from the single-cellular organism yeast to the multicellular organisms, whereas the D modules are more specific for multicellular organisms, with the human D module especially specific for human and mouse. Human genes in each module are divided into five different categories: those that are conserved among yeast, worm, fly, mouse, and human (purple); those that are conserved among worm, fly, mouse, and human (blue); and so on (green and pink); those that are only found in human are red. Fly genes are divided into those that are conserved among yeast, worm, and fly; among worm and fly; and those that are fly-specific. SC, CE, DM, RN, MM, and HS stand for yeast \u003citalic\u003eSaccharomyces cerevisiae,\u003c/italic\u003e fly \u003citalic\u003eDrosophila melanogaster,\u003c/italic\u003e worm \u003citalic\u003eCaenorhabditis elegans,\u003c/italic\u003e rat \u003citalic\u003eRattus norvegicus,\u003c/italic\u003e mouse \u003citalic\u003eMus musculus,\u003c/italic\u003e and human \u003citalic\u003eHomo sapiens,\u003c/italic\u003e respectively. HF and LF stand for “high food” and “low food”, respectively.\u003c/p\u003e",
+      "size":249856},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThe Transcriptionally Anti-Correlated Modules in the NP Network\u003c/title\u003e\u003cp\u003e(A) Two of the four major gene clusters, the D and P clusters, among genes in the NP network are anti-correlated. Human brain samples were clustered on the horizontal dimension according to their expression similarity. Genes were clustered on the vertical dimension. When the D gene cluster is upregulated, the P gene cluster is downregulated, and vice versa.\u003c/p\u003e\u003cp\u003e(B) The NP network is reorganized to display the extensive anti-correlated interactions from D towards both the P and N modules, which are themselves linked by only correlated interactions, and the few anti-correlated interactions within the D module that separate the module into subgroups DS1 to DS4. Red edges represent correlated interactions; green edges, anti-correlated interactions. Nodes in the largest component of the network are shown in larger size. The most enriched biological functions of each cluster are listed beside the module labels.\u003c/p\u003e\u003cp\u003e(C) The number of anti-correlated and correlated interactions within and between the D, P, N, and S modules. Red denotes correlated interactions; green, anti-correlated interactions. Color intensity indicates the proportion of interactions among the total correlated or anti-correlated interactions.\u003c/p\u003e\u003cp\u003e(D) Evolutionary origins of P and D modules. Both the human and fruit fly P modules are more conserved from the single-cellular organism yeast to the multicellular organisms, whereas the D modules are more specific for multicellular organisms, with the human D module especially specific for human and mouse. Human genes in each module are divided into five different categories: those that are conserved among yeast, worm, fly, mouse, and human (purple); those that are conserved among worm, fly, mouse, and human (blue); and so on (green and pink); those that are only found in human are red. Fly genes are divided into those that are conserved among yeast, worm, and fly; among worm and fly; and those that are fly-specific. SC, CE, DM, RN, MM, and HS stand for yeast \u003citalic\u003eSaccharomyces cerevisiae,\u003c/italic\u003e fly \u003citalic\u003eDrosophila melanogaster,\u003c/italic\u003e worm \u003citalic\u003eCaenorhabditis elegans,\u003c/italic\u003e rat \u003citalic\u003eRattus norvegicus,\u003c/italic\u003e mouse \u003citalic\u003eMus musculus,\u003c/italic\u003e and human \u003citalic\u003eHomo sapiens,\u003c/italic\u003e respectively. HF and LF stand for “high food” and “low food”, respectively.\u003c/p\u003e",
+      "size":935669},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t001",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 1","description":
+      "\u003cp\u003eGO Terms Overrepresented in Each of the Gene Expression Clusters\u003c/p\u003e",
+      "size":1238063},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003cp\u003eGO Terms Overrepresented in Each of the Gene Expression Clusters\u003c/p\u003e",
+      "size":9347},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003cp\u003eGO Terms Overrepresented in Each of the Gene Expression Clusters\u003c/p\u003e",
+      "size":76793},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003cp\u003eGO Terms Overrepresented in Each of the Gene Expression Clusters\u003c/p\u003e",
+      "size":1002602},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t002",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 2","description":
+      "\u003cp\u003eProbability of Obtaining P–D Partition\u003c/p\u003e",
+      "size":803614},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t002",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003cp\u003eProbability of Obtaining P–D Partition\u003c/p\u003e",
+      "size":5164},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t002",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003cp\u003eProbability of Obtaining P–D Partition\u003c/p\u003e",
+      "size":123995},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t002",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003cp\u003eProbability of Obtaining P–D Partition\u003c/p\u003e",
+      "size":624137},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eP and D Modules Correspond to the Proliferation/Differentiation Switch\u003c/title\u003e\u003cp\u003e(A) The suppression of P and induction of D expression upon cellular differentiation. The expression levels of genes in the human brain P, D, N, and S modules and fly P and D modules under high-food (HF) or low-food (LF) conditions (listed in column headers) are compared between the undifferentiated and differentiated samples (listed in row headers) by paired Student \u003citalic\u003et\u003c/italic\u003e-test. Red and green colors indicate an increase and a decrease in the differentiated samples, respectively. The color intensity represents the –log (\u003citalic\u003ep-\u003c/italic\u003evalue) of the Student \u003citalic\u003et\u003c/italic\u003e test between the undifferentiated and differentiated samples. See text and \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-st002\"\u003eTable S2\u003c/xref\u003e for details about the cell lines and differentiation conditions.\u003c/p\u003e\u003cp\u003e(B) The average expression level of P and D genes during the time course of the cell differentiation process of the human endometrial stroma cell (left column plots), the mouse myoblast (middle column plots), and the rat chondrocyte (right column plots). The plots in the top row are the average expression of human brain P and D genes (left column) or their mouse (middle column) or rat (right column) homologs upon induction of differentiation; plots in the middle and bottom rows are those of the human, mouse, and rat homologs of the fly genes in P and D modules derived under high- and low-food conditions, respectively. The expression levels of P and D modules are indicated by the green and lavender lines, respectively. The suppression of P and induction of D can occur during a short window. The proliferation/differentiation time window has been marked by a red line for human endometrial stroma cell differentiation (left column plots) as annotated by the original paper [\u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi-0020145-b033\"\u003e33\u003c/xref\u003e] where the experiments are published. The other experiments presented in panel A but not here include only single timepoints.\u003c/p\u003e",
+      "size":1444396},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eP and D Modules Correspond to the Proliferation/Differentiation Switch\u003c/title\u003e\u003cp\u003e(A) The suppression of P and induction of D expression upon cellular differentiation. The expression levels of genes in the human brain P, D, N, and S modules and fly P and D modules under high-food (HF) or low-food (LF) conditions (listed in column headers) are compared between the undifferentiated and differentiated samples (listed in row headers) by paired Student \u003citalic\u003et\u003c/italic\u003e-test. Red and green colors indicate an increase and a decrease in the differentiated samples, respectively. The color intensity represents the –log (\u003citalic\u003ep-\u003c/italic\u003evalue) of the Student \u003citalic\u003et\u003c/italic\u003e test between the undifferentiated and differentiated samples. See text and \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-st002\"\u003eTable S2\u003c/xref\u003e for details about the cell lines and differentiation conditions.\u003c/p\u003e\u003cp\u003e(B) The average expression level of P and D genes during the time course of the cell differentiation process of the human endometrial stroma cell (left column plots), the mouse myoblast (middle column plots), and the rat chondrocyte (right column plots). The plots in the top row are the average expression of human brain P and D genes (left column) or their mouse (middle column) or rat (right column) homologs upon induction of differentiation; plots in the middle and bottom rows are those of the human, mouse, and rat homologs of the fly genes in P and D modules derived under high- and low-food conditions, respectively. The expression levels of P and D modules are indicated by the green and lavender lines, respectively. The suppression of P and induction of D can occur during a short window. The proliferation/differentiation time window has been marked by a red line for human endometrial stroma cell differentiation (left column plots) as annotated by the original paper [\u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi-0020145-b033\"\u003e33\u003c/xref\u003e] where the experiments are published. The other experiments presented in panel A but not here include only single timepoints.\u003c/p\u003e",
+      "size":10868},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eP and D Modules Correspond to the Proliferation/Differentiation Switch\u003c/title\u003e\u003cp\u003e(A) The suppression of P and induction of D expression upon cellular differentiation. The expression levels of genes in the human brain P, D, N, and S modules and fly P and D modules under high-food (HF) or low-food (LF) conditions (listed in column headers) are compared between the undifferentiated and differentiated samples (listed in row headers) by paired Student \u003citalic\u003et\u003c/italic\u003e-test. Red and green colors indicate an increase and a decrease in the differentiated samples, respectively. The color intensity represents the –log (\u003citalic\u003ep-\u003c/italic\u003evalue) of the Student \u003citalic\u003et\u003c/italic\u003e test between the undifferentiated and differentiated samples. See text and \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-st002\"\u003eTable S2\u003c/xref\u003e for details about the cell lines and differentiation conditions.\u003c/p\u003e\u003cp\u003e(B) The average expression level of P and D genes during the time course of the cell differentiation process of the human endometrial stroma cell (left column plots), the mouse myoblast (middle column plots), and the rat chondrocyte (right column plots). The plots in the top row are the average expression of human brain P and D genes (left column) or their mouse (middle column) or rat (right column) homologs upon induction of differentiation; plots in the middle and bottom rows are those of the human, mouse, and rat homologs of the fly genes in P and D modules derived under high- and low-food conditions, respectively. The expression levels of P and D modules are indicated by the green and lavender lines, respectively. The suppression of P and induction of D can occur during a short window. The proliferation/differentiation time window has been marked by a red line for human endometrial stroma cell differentiation (left column plots) as annotated by the original paper [\u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi-0020145-b033\"\u003e33\u003c/xref\u003e] where the experiments are published. The other experiments presented in panel A but not here include only single timepoints.\u003c/p\u003e",
+      "size":113056},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eP and D Modules Correspond to the Proliferation/Differentiation Switch\u003c/title\u003e\u003cp\u003e(A) The suppression of P and induction of D expression upon cellular differentiation. The expression levels of genes in the human brain P, D, N, and S modules and fly P and D modules under high-food (HF) or low-food (LF) conditions (listed in column headers) are compared between the undifferentiated and differentiated samples (listed in row headers) by paired Student \u003citalic\u003et\u003c/italic\u003e-test. Red and green colors indicate an increase and a decrease in the differentiated samples, respectively. The color intensity represents the –log (\u003citalic\u003ep-\u003c/italic\u003evalue) of the Student \u003citalic\u003et\u003c/italic\u003e test between the undifferentiated and differentiated samples. See text and \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pcbi-0020145-st002\"\u003eTable S2\u003c/xref\u003e for details about the cell lines and differentiation conditions.\u003c/p\u003e\u003cp\u003e(B) The average expression level of P and D genes during the time course of the cell differentiation process of the human endometrial stroma cell (left column plots), the mouse myoblast (middle column plots), and the rat chondrocyte (right column plots). The plots in the top row are the average expression of human brain P and D genes (left column) or their mouse (middle column) or rat (right column) homologs upon induction of differentiation; plots in the middle and bottom rows are those of the human, mouse, and rat homologs of the fly genes in P and D modules derived under high- and low-food conditions, respectively. The expression levels of P and D modules are indicated by the green and lavender lines, respectively. The suppression of P and induction of D can occur during a short window. The proliferation/differentiation time window has been marked by a red line for human endometrial stroma cell differentiation (left column plots) as annotated by the original paper [\u003cxref ref-type\u003d\"bibr\" rid\u003d\"pcbi-0020145-b033\"\u003e33\u003c/xref\u003e] where the experiments are published. The other experiments presented in panel A but not here include only single timepoints.\u003c/p\u003e",
+      "size":280642},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t003",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 3","description":
+      "\u003cp\u003eGO Terms Overrepresented in the Interface and Core (Noninterface) of the P and D Modules\u003c/p\u003e",
+      "size":573843},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t003",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003cp\u003eGO Terms Overrepresented in the Interface and Core (Noninterface) of the P and D Modules\u003c/p\u003e",
+      "size":5054},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t003",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003cp\u003eGO Terms Overrepresented in the Interface and Core (Noninterface) of the P and D Modules\u003c/p\u003e",
+      "size":116868},{"doi":"info:doi/10.1371/journal.pcbi.0020145.t003",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003cp\u003eGO Terms Overrepresented in the Interface and Core (Noninterface) of the P and D Modules\u003c/p\u003e",
+      "size":462564},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g004",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eRegulatory Roles of the Protein Interactions between P–D Modules\u003c/title\u003e\u003cp\u003e(A) The average degree \u003citalic\u003ek\u003c/italic\u003e of the nodes at the human brain and fly P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(B) The percentage of proto-oncogenes and tumor suppressor genes at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(C) The percentage of genes located in feedback loops at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(D) Network consisting of only the feedback loops traversing protein interaction interfaces and inside the modules (cores). Solid edges represent directional protein interactions; dashed edges, transcriptional regulations. Red and green edges represent transcriptional correlations and anti-correlations, respectively.\u003c/p\u003e\u003cp\u003e(E) Feedback pathways potentially controlling P/D switch in the adult human brain. Feedback loops of three or more nodes that traverse the P–D interface are listed. Pathways 5, 8, 9, and 10 are related; 6 and 7 are also related, and they are between all three modules. The font colors for D, P, and N genes are lavender, green, and light green, respectively. Correlated and anti-correlated interactions are shown as red and green arrows, respectively; the arrow points from an upstream to a downstream gene.\u003c/p\u003e",
+      "size":1648484},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eRegulatory Roles of the Protein Interactions between P–D Modules\u003c/title\u003e\u003cp\u003e(A) The average degree \u003citalic\u003ek\u003c/italic\u003e of the nodes at the human brain and fly P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(B) The percentage of proto-oncogenes and tumor suppressor genes at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(C) The percentage of genes located in feedback loops at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(D) Network consisting of only the feedback loops traversing protein interaction interfaces and inside the modules (cores). Solid edges represent directional protein interactions; dashed edges, transcriptional regulations. Red and green edges represent transcriptional correlations and anti-correlations, respectively.\u003c/p\u003e\u003cp\u003e(E) Feedback pathways potentially controlling P/D switch in the adult human brain. Feedback loops of three or more nodes that traverse the P–D interface are listed. Pathways 5, 8, 9, and 10 are related; 6 and 7 are also related, and they are between all three modules. The font colors for D, P, and N genes are lavender, green, and light green, respectively. Correlated and anti-correlated interactions are shown as red and green arrows, respectively; the arrow points from an upstream to a downstream gene.\u003c/p\u003e",
+      "size":11157},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eRegulatory Roles of the Protein Interactions between P–D Modules\u003c/title\u003e\u003cp\u003e(A) The average degree \u003citalic\u003ek\u003c/italic\u003e of the nodes at the human brain and fly P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(B) The percentage of proto-oncogenes and tumor suppressor genes at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(C) The percentage of genes located in feedback loops at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(D) Network consisting of only the feedback loops traversing protein interaction interfaces and inside the modules (cores). Solid edges represent directional protein interactions; dashed edges, transcriptional regulations. Red and green edges represent transcriptional correlations and anti-correlations, respectively.\u003c/p\u003e\u003cp\u003e(E) Feedback pathways potentially controlling P/D switch in the adult human brain. Feedback loops of three or more nodes that traverse the P–D interface are listed. Pathways 5, 8, 9, and 10 are related; 6 and 7 are also related, and they are between all three modules. The font colors for D, P, and N genes are lavender, green, and light green, respectively. Correlated and anti-correlated interactions are shown as red and green arrows, respectively; the arrow points from an upstream to a downstream gene.\u003c/p\u003e",
+      "size":132916},{"doi":"info:doi/10.1371/journal.pcbi.0020145.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eRegulatory Roles of the Protein Interactions between P–D Modules\u003c/title\u003e\u003cp\u003e(A) The average degree \u003citalic\u003ek\u003c/italic\u003e of the nodes at the human brain and fly P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(B) The percentage of proto-oncogenes and tumor suppressor genes at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(C) The percentage of genes located in feedback loops at the human brain P–D protein interaction interfaces and inside the modules (cores).\u003c/p\u003e\u003cp\u003e(D) Network consisting of only the feedback loops traversing protein interaction interfaces and inside the modules (cores). Solid edges represent directional protein interactions; dashed edges, transcriptional regulations. Red and green edges represent transcriptional correlations and anti-correlations, respectively.\u003c/p\u003e\u003cp\u003e(E) Feedback pathways potentially controlling P/D switch in the adult human brain. Feedback loops of three or more nodes that traverse the P–D interface are listed. Pathways 5, 8, 9, and 10 are related; 6 and 7 are also related, and they are between all three modules. The font colors for D, P, and N genes are lavender, green, and light green, respectively. Correlated and anti-correlated interactions are shown as red and green arrows, respectively; the arrow points from an upstream to a downstream gene.\u003c/p\u003e",
+      "size":358160},{"doi":"info:doi/10.1371/journal.pcbi.0020145.sg001",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Figure S1","description":
+      "\u003ctitle\u003eA More Detailed Textual Flowchart of the Pipeline for Revealing Anti-Correlated Modules\u003c/title\u003e\u003cp\u003e(240 KB PDF)\u003c/p\u003e",
+      "size":246771},{"doi":"info:doi/10.1371/journal.pcbi.0020145.sg002",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Figure S2","description":
+      "\u003ctitle\u003eThe SD and SN Modules and the Interaction Distribution in the SD–SN and DS1–4 Coexpressed Modules\u003c/title\u003e\u003cp\u003e(A) SD and SN clusters. The gene expressions of these two clusters are also anti-correlated between two sample clusters across 63% of the samples. The two sample clusters are different from those giving rise to D and P gene differential expressions. The average expression intensities of the genes in the SD and SN modules are also anti-correlated across different individuals with a PCC of −0.744.\u003c/p\u003e\u003cp\u003e(B) Number of correlated and anti-correlated interactions within and between the SD and SN modules.\u003c/p\u003e\u003cp\u003e(C) Number of anti-correlated and correlated interactions within and between DS1 to DS4 modules, and those between the D submodules and the other major modules (P, N, and S modules).\u003c/p\u003e\u003cp\u003e(382 KB PDF)\u003c/p\u003e",
+      "size":391279},{"doi":"info:doi/10.1371/journal.pcbi.0020145.sg003",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Figure S3","description":
+      "\u003ctitle\u003eOverlaps of HPRD Modules to Those Derived from the Extended Minus HPRD PPI Network\u003c/title\u003e\u003cp\u003eEven though there is not a single edge or interaction in common between this network and the HPRD network, three modules derived from it share significant overlaps to P, D, and N modules, respectively.\u003c/p\u003e\u003cp\u003e(337 KB PDF)\u003c/p\u003e",
+      "size":345397},{"doi":"info:doi/10.1371/journal.pcbi.0020145.sg004",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Figure S4","description":
+      "\u003ctitle\u003eThe P–D Partition Does Not Depend on a PPI Network or PCC Cutoffs, but the Right |PCC| Cutoff Can Facilitate its Identification\u003c/title\u003e\u003cp\u003e(A) Hierarchical clustering followed by an automated exhaustive search (for clusters that contain less than 1% of interactions of PCC \u0026lt; 0) identified anti-correlated modules of sizes ranging from 100 to 1,200 genes that significantly overlap the original P and D modules when a more comprehensive PPI network and various PCC cutoffs (including no PCC cutoff) were used to extract NP network. Even without integrating a PPI network, a careful manual search can identify loosely aggregated gene expression clusters of 783 and 1,276 genes that significantly overlap with the P and D modules. When the PCC cutoff is \u0026gt;0.7, no gene cluster that has more than 100 genes can be identified as significantly overlapping with the D module. Input gene sets together with the number of genes in each set (in parentheses) are listed as the row headers on the left. The sizes of the clusters identified under various PCC cutoffs or without a PPI network are listed as the row headers on the right, and those of the original P, D, N, and S modules are listed on the column headers on the top. The number of genes overlapping between the original and latter examined clusters is indicated in each cell of the matrix; the intensity of the background color of a cell reflects the overlap significance as –log (\u003citalic\u003ep-\u003c/italic\u003evalue) by Fisher exact test normalized by standard deviation among all the cluster overlaps examined, which equals 44. (B) The fractions of P–D genes within the NP network at various |PCC| cutoffs used to extract the NP network from the extended PPI network. A maximal fraction is achieved at |PCC| cutoffs of 0.45 and 0.5 (yellow bars). Because some N module genes are merged into the P modules at |PCC| cutoffs of 0.45 and 0.5, the fractions of the module genes that overlap with the original NP network P and D modules are also plotted to exclude the potential bias introduced by the inclusion of some N genes. The fraction of P and D module genes overlapping with the original P and D modules (blue bars) display a similar trend to the fraction of total genes in each module (yellow bars).\u003c/p\u003e\u003cp\u003e(342 KB PDF)\u003c/p\u003e",
+      "size":350455},{"doi":"info:doi/10.1371/journal.pcbi.0020145.sg005",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Figure S5","description":
+      "\u003ctitle\u003eThe P–D Protein Interaction Interface\u003c/title\u003e\u003cp\u003eThe cores of the modules are represented as big squares on either side of the interfaces.\u003c/p\u003e\u003cp\u003e(239 KB PDF)\u003c/p\u003e",
+      "size":244929},{"doi":"info:doi/10.1371/journal.pcbi.0020145.st001",
+      "contextElement":"supplementary-material","extension":"XLS",
+      "contentType":"application/vnd.ms-excel","title":"Table S1",
+      "description":
+      "\u003ctitle\u003eGene List of Each Module\u003c/title\u003e\u003cp\u003e(161 KB XLS)\u003c/p\u003e",
+      "size":164864},{"doi":"info:doi/10.1371/journal.pcbi.0020145.st002",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Table S2","description":
+      "\u003ctitle\u003eSample Information of Cell Differentiation Induction Experiments\u003c/title\u003e\u003cp\u003e(137 KB PDF)\u003c/p\u003e",
+      "size":141028},{"doi":"info:doi/10.1371/journal.pcbi.0020145.sd001",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Text S1","description":
+      "\u003ctitle\u003eThe P–D Partition Is a Feature of the Expression Pattern in the Cellular Network\u003c/title\u003e\u003cp\u003e(11 KB PDF)\u003c/p\u003e",
+      "size":12108}],"citedArticles":[{"key":"1","year":2006,"displayYear":
+      "2006","volumeNumber":38,"volume":"38","title":
+      "The role of microRNA-1 and microRNA-133 in skeletal muscle proliferation and differentiation.",
+      "pages":"228-233","eLocationID":"228","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JF Chen","givenNames":"JF","surnames":"Chen","suffix":""},{
+          "fullName":"EM Mandel","givenNames":"EM","surnames":"Mandel",
+          "suffix":""},{"fullName":"JM Thomson","givenNames":"JM","surnames":
+          "Thomson","suffix":""},{"fullName":"Q Wu","givenNames":"Q",
+          "surnames":"Wu","suffix":""},{"fullName":"TE Callis","givenNames":
+          "TE","surnames":"Callis","suffix":""}],"editors":[]},{"key":"2",
+      "year":2001,"displayYear":"2001","volumeNumber":4,"volume":"4","title":
+      "Shc signaling in differentiating neural progenitor cells.","pages":
+      "579-586","eLocationID":"579","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Conti","givenNames":"L","surnames":"Conti","suffix":""},{
+          "fullName":"S Sipione","givenNames":"S","surnames":"Sipione",
+          "suffix":""},{"fullName":"L Magrassi","givenNames":"L","surnames":
+          "Magrassi","suffix":""},{"fullName":"L Bonfanti","givenNames":
+          "L","surnames":"Bonfanti","suffix":""},{"fullName":"D Rigamonti",
+          "givenNames":"D","surnames":"Rigamonti","suffix":""}],"editors":[]},
+    {"key":"3","year":1999,"displayYear":"1999","volumeNumber":274,"volume":
+      "274","title":
+      "Differential effects of cAMP in neurons and astrocytes. Role of B-raf.",
+      "pages":"25842-25848","eLocationID":"25842","journal":"J Biol Chem",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "LL Dugan","givenNames":"LL","surnames":"Dugan","suffix":""},{
+          "fullName":"JS Kim","givenNames":"JS","surnames":"Kim","suffix":
+          ""},{"fullName":"Y Zhang","givenNames":"Y","surnames":"Zhang",
+          "suffix":""},{"fullName":"RD Bart","givenNames":"RD","surnames":
+          "Bart","suffix":""},{"fullName":"Y Sun","givenNames":"Y",
+          "surnames":"Sun","suffix":""}],"editors":[]},{"key":"4","year":
+      1999,"displayYear":"1999","volumeNumber":10,"volume":"10","title":
+      "Modulation of cell proliferation and differentiation through substrate-dependent changes in fibronectin conformation.",
+      "pages":"785-798","eLocationID":"785","journal":"Mol Biol Cell",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AJ Garcia","givenNames":"AJ","surnames":"Garcia","suffix":""},{
+          "fullName":"MD Vega","givenNames":"MD","surnames":"Vega","suffix":
+          ""},{"fullName":"D Boettiger","givenNames":"D","surnames":
+          "Boettiger","suffix":""}],"editors":[]},{"key":"5","year":1942,
+      "displayYear":"1942","volumeNumber":150,"volume":"150","title":
+      "Canalization of development and the inheritance of acquired characters.",
+      "pages":"563-565","eLocationID":"563","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CH Waddington","givenNames":"CH","surnames":"Waddington","suffix":
+          ""}],"editors":[]},{"key":"6","year":2005,"displayYear":"2005",
+      "volumeNumber":436,"volume":"436","title":
+      "Predictive models of molecular machines involved in \u003cnamed-content xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" content-type\u003d\"genus-species\" xlink:type\u003d\"simple\"\u003eCaenorhabditis elegans\u003c/named-content\u003e early embryogenesis.",
+      "pages":"861-865","eLocationID":"861","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "KC Gunsalus","givenNames":"KC","surnames":"Gunsalus","suffix":
+          ""},{"fullName":"H Ge","givenNames":"H","surnames":"Ge","suffix":
+          ""},{"fullName":"AJ Schetter","givenNames":"AJ","surnames":
+          "Schetter","suffix":""},{"fullName":"DS Goldberg","givenNames":
+          "DS","surnames":"Goldberg","suffix":""},{"fullName":"JD Han",
+          "givenNames":"JD","surnames":"Han","suffix":""}],"editors":[]},{
+      "key":"7","year":2004,"displayYear":"2004","volumeNumber":430,"volume":
+      "430","title":
+      "Evidence for dynamically organized modularity in the yeast protein–protein interaction network.",
+      "pages":"88-93","eLocationID":"88","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JD Han","givenNames":"JD","surnames":"Han","suffix":""},{
+          "fullName":"N Bertin","givenNames":"N","surnames":"Bertin",
+          "suffix":""},{"fullName":"T Hao","givenNames":"T","surnames":
+          "Hao","suffix":""},{"fullName":"DS Goldberg","givenNames":"DS",
+          "surnames":"Goldberg","suffix":""},{"fullName":"GF Berriz",
+          "givenNames":"GF","surnames":"Berriz","suffix":""}],"editors":[]},{
+      "key":"8","year":2004,"displayYear":"2004","volumeNumber":118,"volume":
+      "118","title":"Robustness of cellular functions.","pages":"675-685",
+      "eLocationID":"675","journal":"Cell","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"J Stelling","givenNames":"J","surnames":
+          "Stelling","suffix":""},{"fullName":"U Sauer","givenNames":"U",
+          "surnames":"Sauer","suffix":""},{"fullName":"Z Szallasi",
+          "givenNames":"Z","surnames":"Szallasi","suffix":""},{"fullName":
+          "FJ Doyle III","givenNames":"FJ","surnames":"Doyle","suffix":
+          "III"},{"fullName":"J Doyle","givenNames":"J","surnames":"Doyle",
+          "suffix":""}],"editors":[]},{"key":"9","year":2004,"displayYear":
+      "2004","volumeNumber":429,"volume":"429","title":
+      "Gene regulation and DNA damage in the ageing human brain.","pages":
+      "883-891","eLocationID":"883","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Lu","givenNames":"T","surnames":"Lu","suffix":""},{"fullName":
+          "Y Pan","givenNames":"Y","surnames":"Pan","suffix":""},{"fullName":
+          "SY Kao","givenNames":"SY","surnames":"Kao","suffix":""},{
+          "fullName":"C Li","givenNames":"C","surnames":"Li","suffix":""},{
+          "fullName":"I Kohane","givenNames":"I","surnames":"Kohane",
+          "suffix":""}],"editors":[]},{"key":"10","year":2003,"displayYear":
+      "2003","volumeNumber":19,"volume":"19","title":
+      "Diametrical clustering for identifying anti-correlated gene clusters.",
+      "pages":"1612-1619","eLocationID":"1612","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "IS Dhillon","givenNames":"IS","surnames":"Dhillon","suffix":""},{
+          "fullName":"EM Marcotte","givenNames":"EM","surnames":"Marcotte",
+          "suffix":""},{"fullName":"U Roshan","givenNames":"U","surnames":
+          "Roshan","suffix":""}],"editors":[]},{"key":"11","year":2003,
+      "displayYear":"2003","volumeNumber":19,"volume":"19","title":
+      "Prediction of regulatory networks: Genome-wide identification of transcription factor targets from gene expression data.",
+      "pages":"1917-1926","eLocationID":"1917","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Qian","givenNames":"J","surnames":"Qian","suffix":""},{
+          "fullName":"J Lin","givenNames":"J","surnames":"Lin","suffix":""},{
+          "fullName":"NM Luscombe","givenNames":"NM","surnames":"Luscombe",
+          "suffix":""},{"fullName":"H Yu","givenNames":"H","surnames":"Yu",
+          "suffix":""},{"fullName":"M Gerstein","givenNames":"M","surnames":
+          "Gerstein","suffix":""}],"editors":[]},{"key":"12","year":2005,
+      "displayYear":"2005","volumeNumber":23,"volume":"23","title":
+      "How does gene expression clustering work?","pages":"1499-1501",
+      "eLocationID":"1499","journal":"Nat Biotechnol","collaborativeAuthors":
+      [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"P D\u0027Haeseleer","givenNames":"P",
+          "surnames":"D\u0027Haeseleer","suffix":""}],"editors":[]},{"key":
+      "13","year":2002,"displayYear":"2002","volumeNumber":12,"volume":
+      "12","title":
+      "Relating whole-genome expression data with protein–protein interactions.",
+      "pages":"37-46","eLocationID":"37","journal":"Genome Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Jansen","givenNames":"R","surnames":"Jansen","suffix":""},{
+          "fullName":"D Greenbaum","givenNames":"D","surnames":"Greenbaum",
+          "suffix":""},{"fullName":"M Gerstein","givenNames":"M","surnames":
+          "Gerstein","suffix":""}],"editors":[]},{"key":"14","year":2003,
+      "displayYear":"2003","volumeNumber":13,"volume":"13","title":
+      "Development of human protein reference database as an initial platform for approaching systems biology in humans.",
+      "pages":"2363-2371","eLocationID":"2363","journal":"Genome Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Peri","givenNames":"S","surnames":"Peri","suffix":""},{
+          "fullName":"JD Navarro","givenNames":"JD","surnames":"Navarro",
+          "suffix":""},{"fullName":"R Amanchy","givenNames":"R","surnames":
+          "Amanchy","suffix":""},{"fullName":"TZ Kristiansen","givenNames":
+          "TZ","surnames":"Kristiansen","suffix":""},{"fullName":
+          "CK Jonnalagadda","givenNames":"CK","surnames":"Jonnalagadda",
+          "suffix":""}],"editors":[]},{"key":"15","year":1998,"displayYear":
+      "1998","volumeNumber":95,"volume":"95","title":
+      "Cluster analysis and display of genome-wide expression patterns.",
+      "pages":"14863-14868","eLocationID":"14863","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MB Eisen","givenNames":"MB","surnames":"Eisen","suffix":""},{
+          "fullName":"PT Spellman","givenNames":"PT","surnames":"Spellman",
+          "suffix":""},{"fullName":"PO Brown","givenNames":"PO","surnames":
+          "Brown","suffix":""},{"fullName":"D Botstein","givenNames":"D",
+          "surnames":"Botstein","suffix":""}],"editors":[]},{"key":"16",
+      "year":2004,"displayYear":"2004","volumeNumber":20,"volume":"20",
+      "title":"Open source clustering software.","pages":"1453-1454",
+      "eLocationID":"1453","journal":"Bioinformatics","collaborativeAuthors":
+      [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"MJ de Hoon","givenNames":"MJ","surnames":
+          "de Hoon","suffix":""},{"fullName":"S Imoto","givenNames":"S",
+          "surnames":"Imoto","suffix":""},{"fullName":"J Nolan","givenNames":
+          "J","surnames":"Nolan","suffix":""},{"fullName":"S Miyano",
+          "givenNames":"S","surnames":"Miyano","suffix":""}],"editors":[]},{
+      "key":"17","year":2004,"displayYear":"2004","volumeNumber":20,"volume":
+      "20","title":
+      "Java Treeview—Extensible visualization of microarray data.","pages":
+      "3246-3248","eLocationID":"3246","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AJ Saldanha","givenNames":"AJ","surnames":"Saldanha","suffix":
+          ""}],"editors":[]},{"key":"18","year":2003,"displayYear":"2003",
+      "volumeNumber":34,"volume":"34","title":
+      "Module networks: Identifying regulatory modules and their condition-specific regulators from gene expression data.",
+      "pages":"166-176","eLocationID":"166","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Segal","givenNames":"E","surnames":"Segal","suffix":""},{
+          "fullName":"M Shapira","givenNames":"M","surnames":"Shapira",
+          "suffix":""},{"fullName":"A Regev","givenNames":"A","surnames":
+          "Regev","suffix":""},{"fullName":"D Pe\u0027er","givenNames":"D",
+          "surnames":"Pe\u0027er","suffix":""},{"fullName":"D Botstein",
+          "givenNames":"D","surnames":"Botstein","suffix":""}],"editors":[]},
+    {"key":"19","year":2005,"displayYear":"2005","volumeNumber":437,"volume":
+      "437","title":
+      "Towards a proteome-scale map of the human protein–protein interaction network.",
+      "pages":"1173-1178","eLocationID":"1173","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JF Rual","givenNames":"JF","surnames":"Rual","suffix":""},{
+          "fullName":"K Venkatesan","givenNames":"K","surnames":
+          "Venkatesan","suffix":""},{"fullName":"T Hao","givenNames":"T",
+          "surnames":"Hao","suffix":""},{"fullName":"T Hirozane-Kishikawa",
+          "givenNames":"T","surnames":"Hirozane-Kishikawa","suffix":""},{
+          "fullName":"A Dricot","givenNames":"A","surnames":"Dricot",
+          "suffix":""}],"editors":[]},{"key":"20","year":2005,"displayYear":
+      "2005","volumeNumber":122,"volume":"122","title":
+      "A human protein–protein interaction network: A resource for annotating the proteome.",
+      "pages":"957-968","eLocationID":"957","journal":"Cell",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "U Stelzl","givenNames":"U","surnames":"Stelzl","suffix":""},{
+          "fullName":"U Worm","givenNames":"U","surnames":"Worm","suffix":
+          ""},{"fullName":"M Lalowski","givenNames":"M","surnames":
+          "Lalowski","suffix":""},{"fullName":"C Haenig","givenNames":"C",
+          "surnames":"Haenig","suffix":""},{"fullName":"FH Brembeck",
+          "givenNames":"FH","surnames":"Brembeck","suffix":""}],"editors":[]},
+    {"key":"21","year":2002,"displayYear":"2002","volumeNumber":12,"volume":
+      "12","title":
+      "Genome-wide transcript profiles in aging and calorically restricted \u003cnamed-content xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" content-type\u003d\"genus-species\" xlink:type\u003d\"simple\"\u003eDrosophila melanogaster\u003c/named-content\u003e.",
+      "pages":"712-723","eLocationID":"712","journal":"Curr Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SD Pletcher","givenNames":"SD","surnames":"Pletcher","suffix":
+          ""},{"fullName":"SJ MacDonald","givenNames":"SJ","surnames":
+          "MacDonald","suffix":""},{"fullName":"R Marguerie","givenNames":
+          "R","surnames":"Marguerie","suffix":""},{"fullName":"U Certa",
+          "givenNames":"U","surnames":"Certa","suffix":""},{"fullName":
+          "SC Stearns","givenNames":"SC","surnames":"Stearns","suffix":""}],
+      "editors":[]},{"key":"22","year":2002,"displayYear":"2002",
+      "volumeNumber":3,"volume":"3","title":
+      "A genomic switch at the transition from cell proliferation to terminal differentiation in the \u003citalic\u003eDrosophila\u003c/italic\u003e eye.",
+      "pages":"511-521","eLocationID":"511","journal":"Dev Cell",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "H Jasper","givenNames":"H","surnames":"Jasper","suffix":""},{
+          "fullName":"V Benes","givenNames":"V","surnames":"Benes","suffix":
+          ""},{"fullName":"A Atzberger","givenNames":"A","surnames":
+          "Atzberger","suffix":""},{"fullName":"S Sauer","givenNames":"S",
+          "surnames":"Sauer","suffix":""},{"fullName":"W Ansorge",
+          "givenNames":"W","surnames":"Ansorge","suffix":""}],"editors":[]},{
+      "key":"23","year":2000,"displayYear":"2000","volumeNumber":403,
+      "volume":"403","title":
+      "Construction of a genetic toggle switch in \u003cnamed-content xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" content-type\u003d\"genus-species\" xlink:type\u003d\"simple\"\u003eEscherichia coli\u003c/named-content\u003e.",
+      "pages":"339-342","eLocationID":"339","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TS Gardner","givenNames":"TS","surnames":"Gardner","suffix":""},{
+          "fullName":"CR Cantor","givenNames":"CR","surnames":"Cantor",
+          "suffix":""},{"fullName":"JJ Collins","givenNames":"JJ","surnames":
+          "Collins","suffix":""}],"editors":[]},{"key":"24","year":2005,
+      "displayYear":"2005","volumeNumber":310,"volume":"310","title":
+      "Logic of the yeast metabolic cycle: Temporal compartmentalization of cellular processes.",
+      "pages":"1152-1158","eLocationID":"1152","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "BP Tu","givenNames":"BP","surnames":"Tu","suffix":""},{"fullName":
+          "A Kudlicki","givenNames":"A","surnames":"Kudlicki","suffix":""},{
+          "fullName":"M Rowicka","givenNames":"M","surnames":"Rowicka",
+          "suffix":""},{"fullName":"SL McKnight","givenNames":"SL",
+          "surnames":"McKnight","suffix":""}],"editors":[]},{"key":"25",
+      "year":2005,"displayYear":"2005","volumeNumber":23,"volume":"23",
+      "title":
+      "Effect of sampling on topology predictions of protein–protein interaction networks.",
+      "pages":"839-844","eLocationID":"839","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JD Han","givenNames":"JD","surnames":"Han","suffix":""},{
+          "fullName":"D Dupuy","givenNames":"D","surnames":"Dupuy","suffix":
+          ""},{"fullName":"N Bertin","givenNames":"N","surnames":"Bertin",
+          "suffix":""},{"fullName":"ME Cusick","givenNames":"ME","surnames":
+          "Cusick","suffix":""},{"fullName":"M Vidal","givenNames":"M",
+          "surnames":"Vidal","suffix":""}],"editors":[]},{"key":"26","year":
+      2005,"displayYear":"2005","volumeNumber":15,"volume":"15","title":
+      "Protein interaction mapping: A \u003citalic\u003eDrosophila\u003c/italic\u003e case study.",
+      "pages":"376-384","eLocationID":"376","journal":"Genome Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Formstecher","givenNames":"E","surnames":"Formstecher","suffix":
+          ""},{"fullName":"S Aresta","givenNames":"S","surnames":"Aresta",
+          "suffix":""},{"fullName":"V Collura","givenNames":"V","surnames":
+          "Collura","suffix":""},{"fullName":"A Hamburger","givenNames":
+          "A","surnames":"Hamburger","suffix":""},{"fullName":"A Meil",
+          "givenNames":"A","surnames":"Meil","suffix":""}],"editors":[]},{
+      "key":"27","year":2003,"displayYear":"2003","volumeNumber":302,
+      "volume":"302","title":
+      "A protein interaction map of \u003cnamed-content xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" content-type\u003d\"genus-species\" xlink:type\u003d\"simple\"\u003eDrosophila melanogaster\u003c/named-content\u003e.",
+      "pages":"1727-1736","eLocationID":"1727","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Giot","givenNames":"L","surnames":"Giot","suffix":""},{
+          "fullName":"JS Bader","givenNames":"JS","surnames":"Bader",
+          "suffix":""},{"fullName":"C Brouwer","givenNames":"C","surnames":
+          "Brouwer","suffix":""},{"fullName":"A Chaudhuri","givenNames":
+          "A","surnames":"Chaudhuri","suffix":""},{"fullName":"B Kuang",
+          "givenNames":"B","surnames":"Kuang","suffix":""}],"editors":[]},{
+      "key":"28","year":2000,"displayYear":"2000","volumeNumber":25,"volume":
+      "25","title":
+      "Gene ontology: Tool for the unification of biology. The Gene Ontology Consortium.",
+      "pages":"25-29","eLocationID":"25","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Ashburner","givenNames":"M","surnames":"Ashburner","suffix":
+          ""},{"fullName":"CA Ball","givenNames":"CA","surnames":"Ball",
+          "suffix":""},{"fullName":"JA Blake","givenNames":"JA","surnames":
+          "Blake","suffix":""},{"fullName":"D Botstein","givenNames":"D",
+          "surnames":"Botstein","suffix":""},{"fullName":"H Butler",
+          "givenNames":"H","surnames":"Butler","suffix":""}],"editors":[]},{
+      "key":"29","year":1995,"displayYear":"1995","volumeNumber":57,"volume":
+      "57","title":
+      "Controlling the false discovery rate—A practical and powerful approach to multiple testing.",
+      "pages":"289-300","eLocationID":"289","journal":
+      "J Royal Stat Soc Ser B Methodol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"Y Benjamini","givenNames":"Y","surnames":
+          "Benjamini","suffix":""},{"fullName":"Y Hochberg","givenNames":
+          "Y","surnames":"Hochberg","suffix":""}],"editors":[]},{"key":
+      "30","year":2001,"displayYear":"2001","volumeNumber":276,"volume":
+      "276","title":
+      "Analyses of p53 target genes in the human genome by bioinformatic and microarray approaches.",
+      "pages":"43604-43610","eLocationID":"43604","journal":"J Biol Chem",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Wang","givenNames":"L","surnames":"Wang","suffix":""},{
+          "fullName":"Q Wu","givenNames":"Q","surnames":"Wu","suffix":""},{
+          "fullName":"P Qiu","givenNames":"P","surnames":"Qiu","suffix":""},{
+          "fullName":"A Mirza","givenNames":"A","surnames":"Mirza","suffix":
+          ""},{"fullName":"M McGuirk","givenNames":"M","surnames":
+          "McGuirk","suffix":""}],"editors":[]},{"key":"31","year":2003,
+      "displayYear":"2003","volumeNumber":13,"volume":"13","title":
+      "Cytoscape: A software environment for integrated models of biomolecular interaction networks.",
+      "pages":"2498-2504","eLocationID":"2498","journal":"Genome Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Shannon","givenNames":"P","surnames":"Shannon","suffix":""},{
+          "fullName":"A Markiel","givenNames":"A","surnames":"Markiel",
+          "suffix":""},{"fullName":"O Ozier","givenNames":"O","surnames":
+          "Ozier","suffix":""},{"fullName":"NS Baliga","givenNames":"NS",
+          "surnames":"Baliga","suffix":""},{"fullName":"JT Wang",
+          "givenNames":"JT","surnames":"Wang","suffix":""}],"editors":[]},{
+      "key":"32","year":2002,"displayYear":"2002","volumeNumber":298,
+      "volume":"298","title":
+      "Network motifs: Simple building blocks of complex networks.","pages":
+      "824-827","eLocationID":"824","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Milo","givenNames":"R","surnames":"Milo","suffix":""},{
+          "fullName":"S Shen-Orr","givenNames":"S","surnames":"Shen-Orr",
+          "suffix":""},{"fullName":"S Itzkovitz","givenNames":"S","surnames":
+          "Itzkovitz","suffix":""},{"fullName":"N Kashtan","givenNames":
+          "N","surnames":"Kashtan","suffix":""},{"fullName":"D Chklovskii",
+          "givenNames":"D","surnames":"Chklovskii","suffix":""}],"editors":[]},
+    {"key":"33","year":2003,"displayYear":"2003","volumeNumber":16,"volume":
+      "16","title":
+      "Activation of the protein kinase: A pathway in human endometrial stromal cells reveals sequential categorical gene regulation.",
+      "pages":"47-66","eLocationID":"47","journal":"Physiol Genomics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "EP Tierney","givenNames":"EP","surnames":"Tierney","suffix":""},{
+          "fullName":"S Tulac","givenNames":"S","surnames":"Tulac","suffix":
+          ""},{"fullName":"ST Huang","givenNames":"ST","surnames":"Huang",
+          "suffix":""},{"fullName":"LC Giudice","givenNames":"LC","surnames":
+          "Giudice","suffix":""}],"editors":[]}],"relatedArticles":[],
+  "authors":[{"fullName":"Kai Xia","givenNames":"Kai","surnames":"Xia",
+      "suffix":""},{"fullName":"Huiling Xue","givenNames":"Huiling",
+      "surnames":"Xue","suffix":""},{"fullName":"Dong Dong","givenNames":
+      "Dong","surnames":"Dong","suffix":""},{"fullName":"Shanshan Zhu",
+      "givenNames":"Shanshan","surnames":"Zhu","suffix":""},{"fullName":
+      "Jiamu Wang","givenNames":"Jiamu","surnames":"Wang","suffix":""},{
+      "fullName":"Qingpeng Zhang","givenNames":"Qingpeng","surnames":
+      "Zhang","suffix":""},{"fullName":"Lei Hou","givenNames":"Lei",
+      "surnames":"Hou","suffix":""},{"fullName":"Hua Chen","givenNames":
+      "Hua","surnames":"Chen","suffix":""},{"fullName":"Ran Tao",
+      "givenNames":"Ran","surnames":"Tao","suffix":""},{"fullName":
+      "Zheng Huang","givenNames":"Zheng","surnames":"Huang","suffix":""},{
+      "fullName":"Zheng  Fu","givenNames":"Zheng","surnames":"Fu","suffix":
+      ""},{"fullName":"Ye-Guang Chen","givenNames":"Ye-Guang","surnames":
+      "Chen","suffix":""},{"fullName":"Jing-Dong J Han","givenNames":
+      "Jing-Dong J","surnames":"Han","suffix":""}],"editors":[{"fullName":
+      "Diana Murray","givenNames":"Diana","surnames":"Murray","suffix":""}],
+  "journals":[{"eIssn":"1553-7358"}]}

@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-10-04529</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0019704</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Ecology</subject>
+            <subj-group>
+              <subject>Ecological environments</subject>
+              <subj-group>
+                <subject>Terrestrial environments</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Biodiversity</subject>
+              <subject>Conservation science</subject>
+              <subject>Ecological economics</subject>
+              <subject>Environmental protection</subject>
+              <subject>Global change ecology</subject>
+              <subject>Spatial and landscape ecology</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Earth sciences</subject>
+          <subj-group>
+            <subject>Environmental sciences</subject>
+            <subj-group>
+              <subject>Environmental economics</subject>
+              <subject>Environmental geography</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Ecology</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Allocating Logging Rights in Peruvian Amazonia—Does It Matter to Be Local?</article-title><alt-title alt-title-type="running-head">Allocating Logging Rights in Peruvian Amazonia</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Salo</surname>
+            <given-names>Matti</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Helle</surname>
+            <given-names>Samuli</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Toivonen</surname>
+            <given-names>Tuuli</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Biology, University of Turku, Turku, Finland</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Geosciences and Geography, University of Helsinki, Helsinki, Finland</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Gursky-Doyen</surname>
+            <given-names>Sharon</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">Texas A&amp;M University, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">mattsal@utu.fi</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: MS. Analyzed the data: MS SH TT. Wrote the paper: MS. Collected the primary data: MS. Carried out the analysis: SH TT MS.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>11</day>
+        <month>5</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>5</issue><elocation-id>e19704</elocation-id><history>
+        <date date-type="received">
+          <day>5</day>
+          <month>11</month>
+          <year>2010</year>
+        </date>
+        <date date-type="accepted">
+          <day>14</day>
+          <month>4</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Salo et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <sec>
+          <title>Background</title>
+          <p>The fate of tropical forests is a global concern, yet many far-reaching decisions affecting forest resources are made locally. We explore allocation of logging rights using a case study from Loreto, Peruvian Amazonia, where millions of hectares of tropical rainforest were offered for concession in a competitive tendering process that addressed issues related to locality.</p>
+        </sec>
+        <sec>
+          <title>Methodology/Principal Findings</title>
+          <p>After briefly presenting the study area and the tendering process, we identify and define local and non-local actors taking part in the concession process. We then analyse their tenders, results of the tendering, and attributes of the concession areas. Our results show that there was more offer than demand for concession land in the tendering. The number of tenders the concession areas received was related to their size and geographic location in relation to the major cities, but not to their estimated timber volumes or median distances from transport routes. Small and Loreto-based actors offered lower yearly area-based fees compared to larger ones, but the offers did not significantly affect the results of the tenders. Local experience in the form of logging history or residence near the solicited concession areas, as well as being registered in the region of Loreto, improved the success of the tenders.</p>
+        </sec>
+        <sec>
+          <title>Conclusions/Significance</title>
+          <p>The allocation process left a considerable number of forest areas under the management of small and local actors, and if Peru is to reach its goal of zero deforestation rate by safeguarding 75 per cent of its forests by 2020, the small and the local actors need to be integrated to the forest regime as important constituents of its legitimacy.</p>
+        </sec>
+      </abstract><funding-group><funding-statement>Alfred Kordelinin Säätiö, Turun Yliopistosäätiö, the Academy of Finland (grant no: 207270 to SH), Oskar Öflunds Stiftelse, Kone Foundation, and Finnish Society of Forest Science financially supported the study. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="9"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The fate of tropical forests is a global environmental issue <xref ref-type="bibr" rid="pone.0019704-Malhi1">[1]</xref>, yet many far-reaching decisions concerning forest resources are made at local level <xref ref-type="bibr" rid="pone.0019704-Persha1">[2]</xref>. Peru possesses the fourth largest tropical rainforests on Earth. The country has recently set the ambitious goals of safeguarding 75 per cent of its forests, and reducing deforestation rate to zero by 2020, through the “National Programme of Forest Conservation for Climate Change Mitigation” <xref ref-type="bibr" rid="pone.0019704-Peru1">[3]</xref>. However, the combination of extensive forests, sparsely distributed valuable timber, difficult physical access, high level of poverty, widespread unemployment, and insufficient funding for control and monitoring have made it difficult for Peruvian authorities to efficiently enforce formal rules regulating access, logging activities, and forest management <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>–<xref ref-type="bibr" rid="pone.0019704-Chirinos1">[6]</xref>.</p>
+      <p>In Peru, all natural resources, including forests, are owned by the state as a part of the national wealth. Up until the early 2000s, the Peruvian access regime to forest resources was in effect based on, and ideally suited for, migratory selective harvest; logging permits were short in duration and small in extent <xref ref-type="bibr" rid="pone.0019704-Barrantes1">[7]</xref>. A new forest law passed in 2000 <xref ref-type="bibr" rid="pone.0019704-Peru2">[8]</xref> and implemented during the 2000s pursued to change this habit by e.g. introducing long term forest concessions as the main access mechanism to forests <xref ref-type="bibr" rid="pone.0019704-Smith1">[5]</xref>, <xref ref-type="bibr" rid="pone.0019704-Salo1">[9]</xref>. Since then, however, the Peruvian forest regime has been in a constant turmoil; new reforms have been implemented and new forest values, such as ecosystem services, introduced <xref ref-type="bibr" rid="pone.0019704-Hiedanp1">[10]</xref>. Renegotiation of power-relations between the state, private, and communal actors has also led to major protests against regime changes perceived unjust by local communities <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>–<xref ref-type="bibr" rid="pone.0019704-Smith1">[5]</xref>, <xref ref-type="bibr" rid="pone.0019704-Salo1">[9]</xref>, <xref ref-type="bibr" rid="pone.0019704-Hughes1">[11]</xref>. We argue that lack of locally perceived legitimacy is one of the most important underlying reasons for the troublesome implementation of the recent forest sector reforms in Peru.</p>
+      <p>In any case, more than 7 million hectares of forest concessions have to date been allocated in separate competitive tenderings in different Amazonian regions of Peru <xref ref-type="bibr" rid="pone.0019704-Smith1">[5]</xref>, <xref ref-type="bibr" rid="pone.0019704-Salo1">[9]</xref>, and they are likely to remain a central part of any future access regime. Forest concessions are formal contracts between forest owner (in the Peruvian case this is the state) and another party (concession holder, concessionaire), by which the concession holder leases a right to exploit forest resources, accompanied by the obligation to manage them according to legally established principles and methods within a specified area and a specified time-frame <xref ref-type="bibr" rid="pone.0019704-Gray1">[12]</xref>. The success or failure of the Peruvian concessions potentially has substantial long-term effects on forest disturbance rates and biological diversity in the region <xref ref-type="bibr" rid="pone.0019704-Oliveira1">[13]</xref>, considering that the concession period is 40 years, which, in the moment of expiration, can be renewed by the parties <xref ref-type="bibr" rid="pone.0019704-Peru2">[8]</xref>.</p>
+      <p>In this study, we examine the allocation process of logging rights through forest concessions in Loreto, Peruvian Amazonia, where more than 4 million hectares of tropical lowland rainforest were offered for tender in a competitive allocation process (tendering) in the year 2004. We first briefly describe the study area and the concession allocation process in Loreto in 2004. In continuation, we analyse a number of data sets describing the concession areas (hereafter concession units), as well as actors that took part in the tendering, their tenders, and the results of the process. In order to explore the role of locality in the allocation process, we test which attributes of the concession units were related to the number of tenders they received, and then assess the differences between local and non-local actors regarding their economic offers and their success in the tendering. Finally, we discuss the implications of locality on the current and future forest governance and its legitimacy in Amazonia.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s2a">
+        <title>Study area and allocation process</title>
+        <p>Loreto is the largest of the 25 Peruvian regions with an extension of 368,900 km<sup>2</sup>, equalling the size of Germany, and comprising more than 28 percent of the Peruvian territory (<xref ref-type="fig" rid="pone-0019704-g001">Figure 1</xref>). The tropical lowland rainforests covering the area are among the most diverse ecosystems on Earth <xref ref-type="bibr" rid="pone.0019704-Bass1">[14]</xref>, and harbour a particularly high diversity of trees <xref ref-type="bibr" rid="pone.0019704-Pitman1">[15]</xref>. Despite its size, Loreto's human population is less than 1 million (&lt;4 percent of all Peruvians), of which c. 500,000 live in and around the region's capital city Iquitos. Loreto is geographically and culturally relatively isolated and has a strong regional identity <xref ref-type="bibr" rid="pone.0019704-Chirif1">[16]</xref>. It also has a tradition of export-led forestry <xref ref-type="bibr" rid="pone.0019704-TelloFernndez1">[17]</xref>. Although long distances and the almost complete lack of terrestrial roads form a constant challenge, forestry is one of the most important economic activities in the region. According to Tello Fernández et al. <xref ref-type="bibr" rid="pone.0019704-TelloFernndez1">[17]</xref>, forestry contributes to around 50 per cent of rural jobs, and forms more than 70 per cent of the value of all exports in Loreto.</p>
+        <fig id="pone-0019704-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019704.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Forest concession units in Loreto, and the number of tenders (concession dapplicants) they received in the allocation process 2004.</title>
+            <p>The cities of Iquitos and Pucallpa are marked with red squares. The concession Blocks are marked with dashed-line ovals indicated with letters A, B, and C.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.g001" xlink:type="simple"/>
+        </fig>
+        <p>In Loreto the forest areas eligible for concession were delimited in 2001 <xref ref-type="bibr" rid="pone.0019704-Salo1">[9]</xref>. The tendering was opened in June 2002, and suspended the next month <xref ref-type="bibr" rid="pone.0019704-Peru3">[18]</xref> mainly due to strong criticism from local timber companies <xref ref-type="bibr" rid="pone.0019704-Smith1">[5]</xref>. The companies' concern was based on at least two obvious reasons: first, new competitors would potentially either enter, or emerge within, the region; and second, the cost of forest management and timber extraction would potentially increase, due to new legal requirements. There was no legal restriction for foreign participation in the concession process, however the tenderings' scoring system, favouring residence or former logging contracts near the solicited concession areas, in addition to tight schedules, hindered international participation. This subtle exclusion of foreigners and the consequent inclusion of the largely informal local small-scale extractors into the formal access-regime was apparently one way to legitimise the reform.</p>
+        <p>The tendering was reopened in November 2003. Overall, 749 concession units with a total area of 4,644,163 hectares, were offered, the average size of a concession unit being 6,200 hectares (min = 5,000 ha, max = 9,944 ha). The base documents of the tendering were available at a cost of 30 Peruvian nuevos soles (c. 8.50 USD), and a total of 726 base documents were sold. Each applicant submitted a technical tender and an economic offer. The technical tender included information on the applicant's experience and locality, available assets, and work plan, with a maximum score of 100 points. An important feature of the scoring system was that it explicitly favoured local actors; the closer to the solicited concession unit the applicant resided or had past logging contracts, the higher the score obtained.</p>
+        <p>The economic offer, in turn, was the yearly area-based fee the applicant promised to pay for the total of the concession area. The score of the economic offer was calculated by dividing each offer by the highest bid in the same unit and multiplying the quotient by 100; the maximum score thus being 100. The base value (starting price) of the area-based concession fee was 0.40 USD/ha/year <xref ref-type="bibr" rid="pone.0019704-Peru4">[19]</xref>, which was uniform in all of the concession units nationwide regardless of their location or production potential.</p>
+        <p>In order to weight the technical tender in comparison to the economic offer, the technical tender was valued as having a weight of 90 per cent of the total score of the applicant, while the economic offer was worth 10 per cent. This decision was made in order to avoid the tendering turning into an auction, which would arguably discriminate against local actors with limited capital assets. An auction could also potentially form an incentive for unrealistically high offers that had been seen in former allocation processes in Madre de Dios and Ucayali regions, where the first tenderings gave more weight to the economic offer <xref ref-type="bibr" rid="pone.0019704-Hidalgo1">[20]</xref>.</p>
+        <p>The total number of actors taking part in the tendering was 328, and 64 per cent (n = 211) of them won a concession. The most numerous group of the participants were individuals (70 per cent, n = 230), whereas companies constituted a quarter of the applicants (25 per cent, n = 82), the remainder being partnerships (associations of two or more individuals committed to form a formal association or company in case of winning a concession; 5 per cent, n = 15) and one Non-Governmental Organisation (NGO). The tendering was concluded in May 2004, and the vast majority, 98 per cent (n = 206), proceeded to sign a concession contract within the next year.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Data and variables used in the analysis of the tendering</title>
+        <p>We first classified the actors' locality in order to test differences between locals' and outsiders' behaviour and success in the tendering. The distinction between locals and outsiders is common in literature, but as a concept it is often troublesome and vaguely elaborated <xref ref-type="bibr" rid="pone.0019704-Moseley1">[21]</xref>. We used a combination of two different criteria derived from separate sources. First, we made a distinction between actors that were registered in Loreto and the ones that were registered outside the region; and second, we classified the same actors in two groups according to their direct experience related to the surroundings of the concession units that they solicited. For the analysis, we cross-classified the applicants taking part in the tendering into four locality classes as presented in <xref ref-type="table" rid="pone-0019704-t001">Table 1</xref>.</p>
+        <table-wrap id="pone-0019704-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019704.t001</object-id><label>Table 1</label><caption>
+            <title>Classification of the locality of the applicants based on INRENA tendering data and SUNAT database <xref ref-type="bibr" rid="pone.0019704-SUNAT1">[22]</xref>.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019704-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.t001" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>SUNAT ‘Loretans’</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>SUNAT ‘outsiders’</italic>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>INRENA ‘locals’</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">local Loretans</td>
+                <td align="left" colspan="1" rowspan="1">local outsiders</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>INRENA ‘non-locals’</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">non-local Loretans</td>
+                <td align="left" colspan="1" rowspan="1">non-local outsiders</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>For the first classification, we used the internet database of the Peruvian taxation authorities, SUNAT (Superintendencia Nacional de Administración Tributaria) <xref ref-type="bibr" rid="pone.0019704-SUNAT1">[22]</xref>. We retrieved the data using the name of the applicant (individual, company, or partnership) as a key word, and as a result we created a data set with the registered office or domicile of all formalised economic actors taking part in the tendering. All applicants with an office or domicile registered by SUNAT in the region of Loreto were labelled ‘Loretans’ and the ones registered in any other region or outside Peru were labelled ‘outsiders’.</p>
+        <p>The second classification was based on the tendering data provided by INRENA (Instituto Nacional de Recursos Naturales), an institution under the Ministry of Agriculture and at the time of the tendering directly responsible for the management of renewable natural resources. In our classification all participants either residing or with past logging contracts within the watershed where they solicited a concession unit were labelled ‘locals’, whereas all the rest were labelled ‘non-locals’. We refer to “watersheds” as a category used by the forest authorities in order to classify the applicants. We chose the watershed level, as used by INRENA in the tendering scoring system, to be the appropriate spatial resolution for this classification because Loreto lacks a large-scale terrestrial road network and practically all timber logged is transported fluvially. Thus the mouths of the rivers are currently the most feasible, if not the only, locations for systematically controlling the transportation of logged timber.</p>
+        <p>In the analysis, we first wanted to explore the general popularity of the different concession units by measuring the concession popularity as the number of tenders the units received. In order to study the effects of the geographical location of the units, we attached six attributes to the concession units: concession Block, surface area (in hectares), skidding distance (km), distance to closest city (km), closest city (Iquitos or Pucallpa), and estimated timber volume (m<sup>3</sup>) (<xref ref-type="table" rid="pone-0019704-t002">Table 2</xref>). The division of concession Blocks is shown in <xref ref-type="fig" rid="pone-0019704-g001">Figure 1</xref>. Skidding distance describes the median Euclidean distance to the nearest river, which we use as a proxy for the cost of transporting felled logs to the primary transport routes formed by rivers. The skidding distance was defined based on a river data set manually digitised from 30-meter resolution Landsat TM imagery by a Finnish-Peruvian environmental cooperation project, Biodamaz <xref ref-type="bibr" rid="pone.0019704-IIAPBiodamaz1">[23]</xref>. Although river access depends ultimately on water levels in tributary waterways, of which many are too small to be included in our data, our analysis is more realistic and detailed than the analyses using the distance as the crow flies as a proxy for accessibility. The same river network data was used to measure the distances from the concession units to the main timber trade centres, the cities of Iquitos and Pucallpa. The distance from both cities along the river network were calculated using the cost-distance function of ArcGIS 9.2, and the resulting distance to the closest of these cities was stored as the variable ‘distance to closest city’. In addition, the variable ‘closest city’ had a value of either Iquitos or Pucallpa, depending on which of these two cities was closer, via river, to the concession unit in question.</p>
+        <table-wrap id="pone-0019704-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019704.t002</object-id><label>Table 2</label><caption>
+            <title>Attributes of the applicants and the concession units used as explanatory variables in the models.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019704-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.t002" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Attribute (explanatory variable)</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Classes/units</italic>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>Applicants</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>locality</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>local Loretans, non-local Loretans, local outsiders, non-local outsiders</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>scale</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>small extractors, medium-sized actors</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>type</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>individuals, companies, partnerships</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>area-based fee</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>USD/ha/year</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>Concession units</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>concession Block</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>A, B, C (see </italic>
+                  <xref ref-type="fig" rid="pone-0019704-g001">
+                    <italic>Figure 1</italic>
+                  </xref>
+                  <italic>)</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>concession unit area</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>≤6004 ha, &gt;6004* ha (*median)</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>skidding distance</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>≤6.65 km, &gt;6.65* km (*median)</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>distance to closest city</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>&lt;500 km, 500–700 km, &gt;700 km</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>closest city</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Iquitos, Pucallpa</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>estimated timber volume/ha</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>&lt;80 m<sup>3</sup>, 80 m<sup>3</sup></italic>
+                </td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>The base documents of the tendering provided a description of forest types found within the concession units, and the area these types covered in each of the units. This information was based on inventories carried out by INRENA <xref ref-type="bibr" rid="pone.0019704-INRENA1">[24]</xref> and contained volumetric estimations of timber resources technically available in different forest types. The data provided theoretical upper and lower limits for timber volumes, and we used the lower figures to calculate an estimate of minimum timber volume per hectare technically available for each concession unit. We acknowledge limitations in the quality of this data set due to the preliminary nature of its analysis and inaccurate input data used. However, we included the variable ‘estimated timber volume’ in our models because the data was publicly available for all the applicants, and thus potentially influenced their decisions.</p>
+        <p>We were also interested in the variables related to the applicants' economic offers, and to their probabilities of winning a concession. Thus, we selected the yearly area-based fee offered and the result of the tender as response variables in our analyses. We decided to study the economic offer, expressed as an area-based fee per year, because it reflects the actor's willingness to pay for the concession rights in the long term. The actor's success, expressed as the probability of winning a concession, was studied because it can be used to assess the tendering system's potential bias towards local actors. ‘Area-based fee’ was also used as an explanatory variable when the probability of winning was modelled. The variables stored as attributes of the applicants and the concession units are presented in <xref ref-type="table" rid="pone-0019704-t002">Table 2</xref>.</p>
+        <p>Due to the type and the scale of the actors taking part in the tendering being potentially related to the economic offers they make, we classified the applicants according to scale and type. The participants could either solicit only one concession unit, or more than one. In the former case the applicant belonged to the scale class ‘small extractors’ and in the latter to the class ‘medium-sized actors’. In the tendering scoring system, small extractors were favoured by higher scores. Furthermore, the variable ‘type of actor’ was classified into three categories: ‘individual’, ‘company’, and ‘partnership’. The economic offer of the applicant in USD/ha/year was stored as variable ‘area-based fee’. Moreover, in addition to the attributes of the applicants, we wanted to capture the possible effects of the geographic location, size, and accessibility of the concession units on the economic offers the participants made, and therefore we used the variables based on the concession units' attributes described above.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Statistical analyses</title>
+        <p>In order to study the behaviour of the different actors taking part in the tendering, we examined whether the explanatory variables (<xref ref-type="table" rid="pone-0019704-t002">Table 2</xref>) were associated with the number of tenders per concession unit, the area-based fees offered by the applicants, and the applicants' probability in winning the solicited concession unit. The associations between the explanatory variables and the number of tenders the concession units received, and the area-based fee offered by the applicants, were examined with regression models assuming Poisson distributed errors and log link function, since these responses were count variables. The influence of the explanatory variables on whether the applicant won the concession unit or not was examined using logistic regression model, with binomial errors and logit link function. When needed, Pearson's χ<sup>2</sup> was used to rescale the parameter covariance matrix to adjust for any under- or overdispersion.</p>
+        <p>Prior to the analyses, the variables of ‘concession unit area’, ‘median skidding distance’, and ‘estimated timber volume’ were divided in two categories, based on the variables' median values (to distinguish between large and small, close and remote, and abundant and scarce units). Meanwhile, the variable ‘distance to the closest city’ was divided in three classes, to detect the possible effect of remoteness (implying less extraction pressure and thus more available timber on the one hand, and more difficult access on the other, which we hypothesised could favour intermediate distances). The breaking points of these classes are presented in the <xref ref-type="table" rid="pone-0019704-t002">Table 2</xref>. All concession units were included in the analysis of popularity, but only the units that received tenders were included in the analyses of economic offers and tendering success. To account for the facts that some applicants made a tender for several concessions, and several concession units had multiple applicants, we applied Generalized Estimating Equations (GEE) to account for the respective correlation structure in the models for the area-based fees offered by the applicants, and for the probability of the applicants for winning the solicited concession unit <xref ref-type="bibr" rid="pone.0019704-Lipsitz1">[25]</xref>. Unstructured working correlation matrix, with concession identity nested within applicant identity, was used to accomodate these correlations <xref ref-type="bibr" rid="pone.0019704-Lipsitz1">[25]</xref>. Statistical inference was based on Score test <xref ref-type="bibr" rid="pone.0019704-Lipsitz1">[25]</xref>. No stepwise model reduction was applied because such methods dramatically increase the rate of type I errors <xref ref-type="bibr" rid="pone.0019704-Mundry1">[26]</xref>, and because our aim here was to obtain the most accurate point estimates and their confidence intervals (CI) <xref ref-type="bibr" rid="pone.0019704-Harrell1">[27]</xref>. In the case of statistically significant association between categorical variables having more than two levels and the response, statistical interpretation of the group-differences was based on the 95% confidence intervals of the means. For example, if the 95% confidence intervals of means overlap half the length of one arm, this corresponds approximately to statistical significance at p = 0.05 <xref ref-type="bibr" rid="pone.0019704-Cumming1">[28]</xref>. All analyses were conducted with SAS statistical software version 9.2 (SAS Institute Inc, Cary, North Carolina, USA).</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <sec id="s3a">
+        <title>Demand and offer of forest land: popularity of concession units</title>
+        <p>The allocation process revealed that there was more offer than demand for concession units in Loreto; up to 37 per cent (n = 277) of all the units did not receive a tender at all and only 27 per cent (n = 200) of the units were subject to competition between two or more applicants. A mere 4 per cent of the units received tenders from more than 3 applicants, the maximum being 10 tenders per unit (<xref ref-type="fig" rid="pone-0019704-g001">Figures 1</xref> and <xref ref-type="fig" rid="pone-0019704-g002">2</xref>).</p>
+        <fig id="pone-0019704-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019704.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>The distribution of the number of tenders received by the concession units (min 0; max 10).</title>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.g002" xlink:type="simple"/>
+        </fig>
+        <p>According to our analysis, the geographical location and the total area of the concession units had a significant effect on their popularity (<xref ref-type="table" rid="pone-0019704-t003">Table 3</xref>; concession Blocks presented in <xref ref-type="fig" rid="pone-0019704-g001">Figure 1</xref>). Units in Block B were the most popular, having on average 1.23 tenders per unit (95% confidence intervals [CIs] = 0.96, 1.59), whereas units in Blocks A and C received on average 0.76 tenders (95% CIs = 0.58, 0.99) and 1.06 (95% CIs = 0.87, 1.29) per unit, respectively. Larger concession units received more tenders than smaller ones (<xref ref-type="table" rid="pone-0019704-t003">Table 3</xref>). That is, large concession units had on average 1.10 tenders (95% CIs = 0.88, 1.37) compared to, an average of 0.91 tenders (95% CIs = 0.74, 1.11) in small units.</p>
+        <table-wrap id="pone-0019704-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019704.t003</object-id><label>Table 3</label><caption>
+            <title>The effect of explanatory variables on the number of tenders received by the concession units.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019704-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.t003" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Predictor</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>df<sub>num,den</sub></italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>F</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>P</italic>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Distance to the closest city</td>
+                <td align="left" colspan="1" rowspan="1">2, 739</td>
+                <td align="left" colspan="1" rowspan="1">6.15</td>
+                <td align="left" colspan="1" rowspan="1">0.0023</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Closest city</td>
+                <td align="left" colspan="1" rowspan="1">1, 739</td>
+                <td align="left" colspan="1" rowspan="1">0.07</td>
+                <td align="left" colspan="1" rowspan="1">0.80</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Concession Block</td>
+                <td align="left" colspan="1" rowspan="1">2, 739</td>
+                <td align="left" colspan="1" rowspan="1">10.14</td>
+                <td align="left" colspan="1" rowspan="1">&lt;0.0001</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Concession unit area</td>
+                <td align="left" colspan="1" rowspan="1">1, 739</td>
+                <td align="left" colspan="1" rowspan="1">5.12</td>
+                <td align="left" colspan="1" rowspan="1">0.024</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Estimated timber volume/ha</td>
+                <td align="left" colspan="1" rowspan="1">1, 739</td>
+                <td align="left" colspan="1" rowspan="1">0.35</td>
+                <td align="left" colspan="1" rowspan="1">0.55</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Median skidding distance</td>
+                <td align="left" colspan="1" rowspan="1">1, 739</td>
+                <td align="left" colspan="1" rowspan="1">0.60</td>
+                <td align="left" colspan="1" rowspan="1">0.44</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>The river distance to the closest city (Iquitos or Pucallpa) was also significantly related to the popularity of a given concession unit (<xref ref-type="table" rid="pone-0019704-t003">Table 3</xref>). Concession units at intermediate distances (500–700 km) from cities received the highest number of tenders (on average 1.28 tenders per unit, 95% CIs = 1.02, 1.62), while the units located closer (on average 0.96 tenders per unit, 95% CIs = 0.79, 1.16) or further from the cities (on average 0.81 tenders per unit 95% CIs = 0.60, 1.07) were less popular. This is consistent with our hypothesis of preference for intermediate distances because of proximity to cities, implying more extraction pressure – and as a consequence less timber left – on the one hand, and growing distance implying more difficult access, on the other. Meanwhile, whether the concession unit was located closer to Iquitos or Pucallpa, estimated timber volumes and median skidding distances of the concession units were not statistically related to the number of tenders they received (<xref ref-type="table" rid="pone-0019704-t003">Table 3</xref>).</p>
+      </sec>
+      <sec id="s3b">
+        <title>Willingness to pay: area-based fees</title>
+        <p>The highest area-based fee offered was 1.48 USD/ha/year, and the highest winning offer was 1.30 USD/ha/year. The offered area-based fees were related to the locality of the applicants (<xref ref-type="table" rid="pone-0019704-t004">Table 4</xref>). <xref ref-type="fig" rid="pone-0019704-g003">Figure 3</xref> shows that, on average, non-local outsiders offered the highest yearly fees per hectare of concession, contrasting to the non-local Loretans who offered the lowest fees. The economic offers were also related to the scale of actor (<xref ref-type="table" rid="pone-0019704-t004">Table 4</xref>); small extractors offered, on average, lower area-based fees than medium-sized actors (0.52 USD/ha/year [95% CIs = 0.48, 0.57] vs. 0.64 USD/ha/year [95% CIs = 0.60, 0.68], respectively). The type of applicant was also associated with the area-based fees offered (<xref ref-type="table" rid="pone-0019704-t004">Table 4</xref>): partnerships (0.60 USD/ha/year [95% CIs = 0.55, 0.65] and individuals (0.59 USD/ha/year [95% CIs = 0.55, 0.63] made almost equally high offers, whereas companies offered less (0.55 USD/ha/year [95% CIs = 0.50, 0.59].</p>
+        <fig id="pone-0019704-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019704.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>The differences between the offered area-based fees (USD/ha/year) of the four locality groups studied.</title>
+            <p>Squares represent estimated marginal means and error bars their 95% confidence limits.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.g003" xlink:type="simple"/>
+        </fig>
+        <table-wrap id="pone-0019704-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019704.t004</object-id><label>Table 4</label><caption>
+            <title>The effect of explanatory variables on the area-based fees (USD/ha/year) offered by the applicants.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019704-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.t004" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Predictor</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>df</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">χ<sup>2</sup></td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>P</italic>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Locality</td>
+                <td align="left" colspan="1" rowspan="1">3</td>
+                <td align="left" colspan="1" rowspan="1">52.8</td>
+                <td align="left" colspan="1" rowspan="1">&lt;0.0001</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Type of actor</td>
+                <td align="left" colspan="1" rowspan="1">2</td>
+                <td align="left" colspan="1" rowspan="1">7.85</td>
+                <td align="left" colspan="1" rowspan="1">0.02</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Scale of actor</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">30.0</td>
+                <td align="left" colspan="1" rowspan="1">&lt;0.0001</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Closest city</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">6.62</td>
+                <td align="left" colspan="1" rowspan="1">0.01</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Concession Block</td>
+                <td align="left" colspan="1" rowspan="1">2</td>
+                <td align="left" colspan="1" rowspan="1">17.2</td>
+                <td align="left" colspan="1" rowspan="1">0.0002</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Concession unit area</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">1.69</td>
+                <td align="left" colspan="1" rowspan="1">0.19</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Median skidding distance</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">0.41</td>
+                <td align="left" colspan="1" rowspan="1">0.52</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Estimated timber volume/ha</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">4.78</td>
+                <td align="left" colspan="1" rowspan="1">0.029</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Distance to the closest city</td>
+                <td align="left" colspan="1" rowspan="1">2</td>
+                <td align="left" colspan="1" rowspan="1">8.87</td>
+                <td align="left" colspan="1" rowspan="1">0.012</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>Concession units in certain Blocks received higher offers than units in other Blocks (<xref ref-type="table" rid="pone-0019704-t004">Table 4</xref>). The units in Block C received the highest offers; an average of 0.65 USD/ha/year (95% CIs = 0.62, 0.72, whereas units in Blocks A and B received on average offers of 0.52 (95% CIs = 0.47, 0.58) and 0.55 USD/ha/year (95% CIs = 0.50, 0.61), respectively. Distance to the closest city also had a significant effect on the area-based fees offered (<xref ref-type="table" rid="pone-0019704-t004">Table 4</xref>); concession units with short (0.60 USD/ha/year [95% CIs = 0.56, 0.64] and intermediate (0.60 USD/ha/year [95% CIs = 0.56, 0.65] distances from the closest city received, on average, higher offers than those located further (0.53 USD/ha/year [95% CIs = 0.48, 0.59]). Whether the closest city was Iquitos or Pucallpa influenced area-based fees as well, since in the case of Iquitos the area-based fees were, on average, lower (0.53 USD/ha/year [95% CIs = 0.51, 0.55]) than in the case of Pucallpa (on average 0.63 USD/ha/year [95% CIs = 0.55, 0.71]). Moreover, higher estimated timber volumes per hectare attracted somewhat higher offers than lower ones (0.60 [95% CIs = 0.57, 0.64] USD/ha/year vs. 0.55 [95% CIs = 0.50, 0.61]). Neither the distance to the river network (median skidding distance) nor the concession unit area were statistically related to the area-based fees offered.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Winners and losers: success of tenders</title>
+        <p><xref ref-type="table" rid="pone-0019704-t005">Table 5</xref> shows that Local Loretans won more than half (1.56 million ha) of all the concession land that was finally allocated in the tendering (2.58 million ha). There was a statistically significant relationship between the locality and the success of the applicants (<xref ref-type="table" rid="pone-0019704-t006">Table 6</xref>). Local Loretans had the highest probability of winning, compared to non-local Loretans, local outsiders, and non-local outsiders (<xref ref-type="fig" rid="pone-0019704-g004">Figure 4</xref>). It thus seems that in addition to applicants having previous ties to the forest areas they solicited, Loretans in general benefitted from the tendering's scoring system. Applicants registered outside Loreto, whether or not they were considered locals, seemed to have lower probabilities of winning a concession.</p>
+        <fig id="pone-0019704-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0019704.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>The differences between the probabilities (%) of the applicants for winning a concession unit in the four locality groups studied.</title>
+            <p>Squares represent estimated marginal means and error bars their 95% confidence limits.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.g004" xlink:type="simple"/>
+        </fig>
+        <table-wrap id="pone-0019704-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019704.t005</object-id><label>Table 5</label><caption>
+            <title>The number of concession units and concession area (hectares) applied and won by applicants representing different locality and scale classes.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019704-t005-5" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.t005" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">Units applied</td>
+                <td align="left" colspan="1" rowspan="1">Units won</td>
+                <td align="left" colspan="1" rowspan="1">Win%</td>
+                <td align="left" colspan="1" rowspan="1">Hectares applied</td>
+                <td align="left" colspan="1" rowspan="1">Hectares won</td>
+                <td align="left" colspan="1" rowspan="1">Win%</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>Locality</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Local Loretans</td>
+                <td align="left" colspan="1" rowspan="1">380</td>
+                <td align="left" colspan="1" rowspan="1">250</td>
+                <td align="left" colspan="1" rowspan="1">66</td>
+                <td align="left" colspan="1" rowspan="1">2.376,520</td>
+                <td align="left" colspan="1" rowspan="1">1.564,015</td>
+                <td align="left" colspan="1" rowspan="1">66</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Non-local Loretans</td>
+                <td align="left" colspan="1" rowspan="1">156</td>
+                <td align="left" colspan="1" rowspan="1">89</td>
+                <td align="left" colspan="1" rowspan="1">57</td>
+                <td align="left" colspan="1" rowspan="1">973,099</td>
+                <td align="left" colspan="1" rowspan="1">536,962</td>
+                <td align="left" colspan="1" rowspan="1">55</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Local outsiders</td>
+                <td align="left" colspan="1" rowspan="1">100</td>
+                <td align="left" colspan="1" rowspan="1">42</td>
+                <td align="left" colspan="1" rowspan="1">42</td>
+                <td align="left" colspan="1" rowspan="1">668,699</td>
+                <td align="left" colspan="1" rowspan="1">276,101</td>
+                <td align="left" colspan="1" rowspan="1">41</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Non-local outsiders</td>
+                <td align="left" colspan="1" rowspan="1">131</td>
+                <td align="left" colspan="1" rowspan="1">32</td>
+                <td align="left" colspan="1" rowspan="1">24</td>
+                <td align="left" colspan="1" rowspan="1">827,845</td>
+                <td align="left" colspan="1" rowspan="1">206,731</td>
+                <td align="left" colspan="1" rowspan="1">25</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Total</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>767</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>413</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>54</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>4.846,163</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>2.583,809</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>53</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <bold>Scale</bold>
+                </td>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Small</td>
+                <td align="left" colspan="1" rowspan="1">227</td>
+                <td align="left" colspan="1" rowspan="1">126</td>
+                <td align="left" colspan="1" rowspan="1">56</td>
+                <td align="left" colspan="1" rowspan="1">1.483,923</td>
+                <td align="left" colspan="1" rowspan="1">821,621</td>
+                <td align="left" colspan="1" rowspan="1">55</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Medium-scale</td>
+                <td align="left" colspan="1" rowspan="1">591</td>
+                <td align="left" colspan="1" rowspan="1">299</td>
+                <td align="left" colspan="1" rowspan="1">51</td>
+                <td align="left" colspan="1" rowspan="1">3.680,719</td>
+                <td align="left" colspan="1" rowspan="1">1.840,677</td>
+                <td align="left" colspan="1" rowspan="1">50</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Total</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>818</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>425</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>52</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>5.164,642</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>2.662,298</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>52</italic>
+                </td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <table-wrap id="pone-0019704-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019704.t006</object-id><label>Table 6</label><caption>
+            <title>The effect of explanatory variables on whether or not the applicant's tender won the race for a concession.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019704-t006-6" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019704.t006" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Predictor</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>df</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">χ<sup>2</sup></td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>P</italic>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Locality</td>
+                <td align="left" colspan="1" rowspan="1">3</td>
+                <td align="left" colspan="1" rowspan="1">19.55</td>
+                <td align="left" colspan="1" rowspan="1">0.0002</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Type of actor</td>
+                <td align="left" colspan="1" rowspan="1">2</td>
+                <td align="left" colspan="1" rowspan="1">0.11</td>
+                <td align="left" colspan="1" rowspan="1">0.95</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Scale of actor</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">2.45</td>
+                <td align="left" colspan="1" rowspan="1">0.12</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Area-based fee</td>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">0.37</td>
+                <td align="left" colspan="1" rowspan="1">0.55</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+        <p>Although medium-sized actors won the majority of the concession land (1.84 million ha), a considerable area (0.82 million ha) was also allocated to those small-scale extractors only soliciting one concession unit (<xref ref-type="table" rid="pone-0019704-t005">Table 5</xref>). Neither the area-based fees offered by the applicants, nor the type or scale of actor, were statistically related to the applicants' success (<xref ref-type="table" rid="pone-0019704-t006">Table 6</xref>).</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>Our analysis revealed three general tendencies in the forest concession allocation process of Loreto. First, there was little true competition in the tendering; second, the area-based fees offered did not significantly affect the results of the tenders; and third, the Loreto-based applicants had a higher probability of winning a concession unit than those based outside Loreto.</p>
+      <p>In the end, only a quarter of all the offered concession units were subject to two or more competing tenders. However, without the rules of the game clearly favouring the small and the local, the process could arguably have lost its legitimacy before it was even initiated. Previous examples show that it would have also been possible to restrict the participation in the process only to small actors, as was the case in two tenderings organized in the Madre de Dios and Ucayali regions in 2003 <xref ref-type="bibr" rid="pone.0019704-Hidalgo1">[20]</xref>. In Loreto, however, the allocation system turned out to emphasise the local experience of the participants rather than their size. Actors registered in Loreto and with local experience in the form of previous logging contracts, or residence near the solicited concession units, achieved the largest share of the units and concession area. This indicates that the allocation method in general, and the scoring system in particular, were successfully designed to serve the purpose of favouring applicants that had already established ties with the offered forest areas.</p>
+      <p>While this was one way in which the process succeeded in achieving at least some degree of legitimacy within the region, the tendering simultaneously failed to fundamentally change the power-relations regulating access to timber resources in Peruvian Amazonia <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>–<xref ref-type="bibr" rid="pone.0019704-Smith1">[5]</xref>, <xref ref-type="bibr" rid="pone.0019704-Dourojeanni1">[29]</xref>–<xref ref-type="bibr" rid="pone.0019704-Derecho1">[31]</xref>. What was important for the forest industrialists was to guarantee a steady flow of timber, and local small-scale extractors depending on locally organized chains of trade are vital for this kind of supply. What these small-scale extractors needed was to bolster their direct access to the forest. Although the allocation process left large areas of forest in the hands of small actors, it is not certain to which degree things have changed in the field. According to a recent report published by the Environmental Investigation Agency <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>, with the concessions in function for several years now, it is still commonplace in Loreto that urban timber merchants equip small-scale extractors by advance payments which frequently feed a circle of debt and impoverishment.</p>
+      <p>Another anxiety that was frequently voiced before the tendering was that of forest inventories, operative plans, and management planning required by the forest law, proving to be prohibitively costly and thus making concessions not attainable for small extractors <xref ref-type="bibr" rid="pone.0019704-La1">[32]</xref>. This viewpoint cannot be ruled out as an explanation for the low level of competition in the tendering. Furthermore, the possibility of small and local actors being used only as legal representatives of larger timber merchants or companies cannot be straightforwardly ruled out, but according to our analysis, the fear of large national or foreign capital overwhelming small and local applicants – a common concern before the tendering <xref ref-type="bibr" rid="pone.0019704-Iquitos1">[33]</xref> – proved to be unfounded. While the concession rights are transferable, i.e. the contracts can be further traded, the commitment of local actors can be reinforced through new options based on a wider variety of forest values. New approaches embedded in the future forest regime could contribute positively to the Peruvian efforts to halt forest degradation in and around logging areas. There are several experiences that can be studied to identify such approaches.</p>
+      <sec id="s4a">
+        <title>Policy implications</title>
+        <p>Most Amazonian countries face problems similar to those of Peru, and many have undergone forest regime reforms during the last 15 years. In Ecuador and Colombia, the forest regime is in need of reform, but the lack of detailed analyses of their particular characteristics hinders comparisons to other Amazonian countries' forest sector reforms. Neither of these two countries currently applies long-term forest concessions as a major administrative arrangement. In Colombia, a new forest law decreed in 2006 introduced a system based on forest concessions, but the law was declared inconstitutional and revoked in 2008 because its preparation did not adequately address issues related to consultation of local and indigenous communities <xref ref-type="bibr" rid="pone.0019704-ArcilaRueda1">[34]</xref>. In Ecuador, the forest policy development has recently been described as unpredictable <xref ref-type="bibr" rid="pone.0019704-Ebeling1">[35]</xref>. In Bolivia and Brazil, large scale forest concessions have been implemented, and their reforms have received more attention internationally <xref ref-type="bibr" rid="pone.0019704-Ebeling1">[35]</xref>–<xref ref-type="bibr" rid="pone.0019704-Bauch1">[36]</xref>, but comparative studies between Amazonian countries are still largely lacking.</p>
+        <p>Recently, major efforts to reshape the forest sector in Peru have been a consequence of international agreements binding the Peruvian government to reform forest legislation while also implementing and enforcing the current rules more efficiently <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>, <xref ref-type="bibr" rid="pone.0019704-Hiedanp1">[10]</xref>, <xref ref-type="bibr" rid="pone.0019704-Blundell1">[37]</xref>–<xref ref-type="bibr" rid="pone.0019704-Youatt1">[38]</xref>. Particularly the free trade agreement between Peru and the US has driven changes in the Peruvian legislation <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>. A package of laws related to the free trade agreement, including a new forest law, was approved in 2008. The new law (‘Legislative decree 1090’) included mechanisms aimed at opening Amazonia for new investment, such as forest concessions solicited through private initiative, and it also enabled drastic changes in land-use designations. In Amazonia, and particularly among the region's indigenous population, these changes were commonly seen as intended to facilitate the privatisation of indigenous peoples' traditional lands. Consequently, protests culminating in tragic acts of violence in northern Peru between state agents and indigenous protesters in June 2009 forced the government to revoke the most controversial of these laws, including the forest law <xref ref-type="bibr" rid="pone.0019704-Hiedanp1">[10]</xref>.</p>
+        <p>Currently, a draft of a new forest law is being discussed in a process claimed by the government to be more participatory than the previous one <xref ref-type="bibr" rid="pone.0019704-Environmental1">[4]</xref>, <xref ref-type="bibr" rid="pone.0019704-Peru5">[39]</xref>, yet controversies still remain as to the implementation of the reform, not least regarding the indigenous and local communities' land rights issues and the concessionaires' ability and willingness to follow the law <xref ref-type="bibr" rid="pone.0019704-International1">[40]</xref>. As a part of any future regime, Peru is in need of new approaches integrating wider environmental values also to the forest concession mechanism. Today, fortunately, there is more diversity than ever of possible additional values that can be directly linked to sustainable forest management. Peruvian forest concessions are intended to be a long-term commitment to forest management; in addition to the timber and non-timber resources that the forests under concession contain, they also entail vital, albeit hard-to-value, ecosystem services <xref ref-type="bibr" rid="pone.0019704-Hiedanp1">[10]</xref>, <xref ref-type="bibr" rid="pone.0019704-Baker1">[41]</xref>.</p>
+        <p>Forest concessions will most likely form an important part of the National Programme of Forest Conservation for Climate Change Mitigation <xref ref-type="bibr" rid="pone.0019704-Peru1">[3]</xref>, promoted by the Peruvian government. The kind of arrangements that will be applied as a part of the Peruvian programme in areas surrounding the forest concessions will certainly affect their feasibility, and vice versa. The Peruvian programme aims at safeguarding the forest cover in an area of 54 million hectares, representing 75 per cent of Peruvian forests. The programme is also planned to include direct area-based payments to its main beneficiaries for conserving forests in their possession. The beneficiaries are defined as “[…] the entitled native and rural communities and population that lives in and around the tropical Amazonian and dry forests of the country” <xref ref-type="bibr" rid="pone.0019704-Peru1">[3]</xref>. It remains to be seen how this will be achieved, and what the role of local small scale forest concessionaires will be in this deal.</p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We would like to thank Jukka Salo, Risto Kalliola, Anders Sirén, and Sanna-Kaisa Juvonen, and Aili Pyhälä for their important comments on different versions of the manuscript.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0019704-Malhi1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Malhi</surname><given-names>Y</given-names></name><name name-style="western"><surname>Roberts</surname><given-names>J</given-names></name><name name-style="western"><surname>Betts</surname><given-names>R</given-names></name><name name-style="western"><surname>Killeen</surname><given-names>T</given-names></name><name name-style="western"><surname>Li</surname><given-names>W</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Climate change, deforestation, and the fate of the Amazon.</article-title>             <source>Science</source>             <volume>319</volume>             <fpage>169</fpage>             <lpage>172</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Persha1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Persha</surname><given-names>L</given-names></name><name name-style="western"><surname>Agrawal</surname><given-names>A</given-names></name><name name-style="western"><surname>Chhatre</surname><given-names>A</given-names></name></person-group>             <year>2011</year>             <article-title>Social and Ecological Synergy: Local Rulemaking, Forest Livelihoods, and Biodiversity Conservation.</article-title>             <source>Science</source>             <volume>331</volume>             <fpage>1606</fpage>             <lpage>1608</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Peru1">
+        <label>3</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Peru</collab>             <year>2010</year>             <comment>Decreto Supremo 008–2010–MINAM</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Environmental1">
+        <label>4</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Environmental Investigation Agency</collab>             <year>2010</year>             <article-title>Peru's Forest Sector: Ready for the New International Landscape?</article-title>             <comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.illegal-logging.info/uploads/ReportPeruForestMay10ENG.pdf" xlink:type="simple">http://www.illegal-logging.info/uploads/ReportPeruForestMay10ENG.pdf</ext-link>. Accessed 15 Sep 2010</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Smith1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Smith</surname><given-names>J</given-names></name><name name-style="western"><surname>Colan</surname><given-names>V</given-names></name><name name-style="western"><surname>Sabogal</surname><given-names>C</given-names></name><name name-style="western"><surname>Snook</surname><given-names>L</given-names></name></person-group>             <year>2006</year>             <article-title>Why policy reforms fail to improve logging practices: The role of governance and norms in Peru.</article-title>             <source>Forest Policy Econ</source>             <volume>8</volume>             <fpage>458</fpage>             <lpage>469</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Chirinos1">
+        <label>6</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chirinos</surname><given-names>C</given-names></name><name name-style="western"><surname>Ruiz</surname><given-names>M</given-names></name></person-group>             <year>2003</year>             <article-title>Informe final del estudio: Desarrollo e implementación de lineamientos de control de la extracción ilegal para un manejo forestal sostenible en el Perú.</article-title>             <comment>ITTC, Ciudad de Panamá, Panama</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Barrantes1">
+        <label>7</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Barrantes</surname><given-names>R</given-names></name><name name-style="western"><surname>Trivelli</surname><given-names>C</given-names></name></person-group>             <year>1996</year>             <source>Bosques y madera. Análisis económico del caso peruano</source>             <publisher-loc>Lima</publisher-loc>             <publisher-name>Instituto de Estudios Peruanos/Consorcio de Investigación Económica</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">121</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Peru2">
+        <label>8</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Peru</collab>             <year>2001</year>             <article-title>Aprueban el Reglamento de la Ley Forestal y de Fauna Silvestre, Decreto Supremo 014-2001-AG.</article-title>             <comment>Diario Oficial El Peruano XIX, 201105–201146</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Salo1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Salo</surname><given-names>M</given-names></name><name name-style="western"><surname>Toivonen</surname><given-names>T</given-names></name></person-group>             <year>2009</year>             <article-title>Tropical timber rush in Peruvian Amazonia: spatial allocation of forest concessions in an uninventoried frontier.</article-title>             <source>Environ Manage</source>             <volume>44</volume>             <fpage>609</fpage>             <lpage>623</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Hiedanp1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hiedanpää</surname><given-names>J</given-names></name><name name-style="western"><surname>Kotilainen</surname><given-names>J</given-names></name><name name-style="western"><surname>Salo</surname><given-names>M</given-names></name></person-group>             <year>2011</year>             <article-title>Unfolding the organised irresponsibility: Ecosystem approach and the quest for forest biodiversity in Finland, Peru, and Russia.</article-title>             <source>Forest Policy Econ</source>             <volume>13</volume>             <fpage>159</fpage>             <lpage>165</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Hughes1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hughes</surname><given-names>N</given-names></name></person-group>             <year>2010</year>             <article-title>Indigenous Protest in Peru: The ‘Orchard Dog’ Bites Back.</article-title>             <source>Social Movement Studies</source>             <volume>9</volume>             <fpage>85</fpage>             <lpage>90</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Gray1">
+        <label>12</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Gray</surname><given-names>JA</given-names></name></person-group>             <year>2002</year>             <source>Forest Concession Policies and Revenue Systems: Country Experience and Policy Changes for Sustainable Tropical Forestry</source>             <publisher-loc>Washington DC</publisher-loc>             <publisher-name>World Bank</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">107</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Oliveira1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Oliveira</surname><given-names>PJC</given-names></name><name name-style="western"><surname>Asner</surname><given-names>GP</given-names></name><name name-style="western"><surname>Knapp</surname><given-names>DE</given-names></name><name name-style="western"><surname>Almeyda</surname><given-names>A</given-names></name><name name-style="western"><surname>Galvan-Gildemeister</surname><given-names>R</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Land-use allocation protects the Peruvian Amazon.</article-title>             <source>Science</source>             <volume>317</volume>             <fpage>1233</fpage>             <lpage>1236</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Bass1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bass</surname><given-names>MS</given-names></name><name name-style="western"><surname>Finer</surname><given-names>M</given-names></name><name name-style="western"><surname>Jenkins</surname><given-names>CN</given-names></name><name name-style="western"><surname>Kreft</surname><given-names>H</given-names></name><name name-style="western"><surname>Cisneros-Heredia</surname><given-names>DF</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Global Conservation Significance of Ecuador's Yasuní National Park.</article-title>             <source>PLoS ONE</source>             <volume>5</volume>             <issue>1</issue>             <fpage>e8767</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Pitman1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Pitman</surname><given-names>NCA</given-names></name><name name-style="western"><surname>Mogollón</surname><given-names>H</given-names></name><name name-style="western"><surname>Dávila</surname><given-names>N</given-names></name><name name-style="western"><surname>Ríos</surname><given-names>M</given-names></name><name name-style="western"><surname>García-Villacorta</surname><given-names>R</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Tree Community Change across 700 km of Lowland Amazonian Forest from the Andean Foothills to Brazil.</article-title>             <source>Biotropica</source>             <volume>40</volume>             <fpage>525</fpage>             <lpage>535</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Chirif1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chirif</surname><given-names>A</given-names></name></person-group>             <year>2002</year>             <article-title>El frente patriótico de Loreto: fortalezas y debilidades.</article-title>             <source>Quehacer</source>             <volume>135</volume>             <fpage>62</fpage>             <lpage>73</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-TelloFernndez1">
+        <label>17</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Tello Fernández</surname><given-names>H</given-names></name><name name-style="western"><surname>Quevedo Guevara</surname><given-names>A</given-names></name><name name-style="western"><surname>Gasché</surname><given-names>J</given-names></name></person-group>             <year>2004</year>             <source>Sistema de incentivos para el manejo de bosques de Loreto: El caso de los recursos forestales maderables</source>             <publisher-loc>Iquitos</publisher-loc>             <publisher-name>IIAP – CIES</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">170</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Peru3">
+        <label>18</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Peru</collab>             <year>2002</year>             <comment>Decreto Supremo 046-2002-AG</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Peru4">
+        <label>19</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Peru</collab>             <year>2003</year>             <comment>Resolución Jefatural 050-2003-INRENA</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Hidalgo1">
+        <label>20</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hidalgo</surname><given-names>J</given-names></name></person-group>             <year>2003</year>             <article-title>Estado de la situación forestal en el Perú.</article-title>             <comment>Seminario Permanente de Investigación Agraria (SEPIA) X, Lima</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">52</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Moseley1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Moseley</surname><given-names>C</given-names></name><name name-style="western"><surname>Reyes</surname><given-names>Y</given-names></name></person-group>             <year>2008</year>             <article-title>Forest restoration and forest communities: Have local communities benefited from Forest Service contracting of ecosystem management?</article-title>             <source>Environ Manage</source>             <volume>42</volume>             <fpage>327</fpage>             <lpage>343</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-SUNAT1">
+        <label>22</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">SUNAT</collab>             <year>2006</year>             <article-title>Consulta de RUC.</article-title>             <comment>Available <ext-link ext-link-type="uri" xlink:href="http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias" xlink:type="simple">http://www.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias</ext-link>. Accessed 15 May 2006</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-IIAPBiodamaz1">
+        <label>23</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">IIAP–Biodamaz</collab>             <year>2004</year>             <source>Estrategia regional de la diversidad biológica amazónica</source>             <publisher-loc>Iquitos</publisher-loc>             <publisher-name>Instituto de Investigaciones de la Amazonía Peruana</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">82</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-INRENA1">
+        <label>24</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">INRENA</collab>             <year>2004</year>             <comment>Mapificación y evaluación forestal del Bosque de Producción Permanente del Departamento de Loreto – Documento de Trabajo, Lima, Peru</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Lipsitz1">
+        <label>25</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lipsitz</surname><given-names>S</given-names></name><name name-style="western"><surname>Fitzmaurice</surname><given-names>G</given-names></name></person-group>             <year>2009</year>             <article-title>Generalized estimating equations for longitudinal data analysi.</article-title>             <person-group person-group-type="editor"><name name-style="western"><surname>Fitzmaurice</surname><given-names>G</given-names></name><name name-style="western"><surname>Davidian</surname><given-names>M</given-names></name><name name-style="western"><surname>Verbeke</surname><given-names>G</given-names></name><name name-style="western"><surname>Molenberghs</surname><given-names>G</given-names></name></person-group>             <source>Longitudinal Data Analysis</source>             <fpage>43</fpage>             <lpage>78</lpage>             <comment>Chapman &amp; Hall/CRC, Boca Raton, USA</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Mundry1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Mundry</surname><given-names>R</given-names></name><name name-style="western"><surname>Nunn</surname><given-names>C</given-names></name></person-group>             <year>2009</year>             <article-title>Stepwise Model Fitting and Statistical Inference: Turning Noise into Signal Pollution.</article-title>             <source>Am Nat</source>             <volume>173</volume>             <fpage>119</fpage>             <lpage>123</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Harrell1">
+        <label>27</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Harrell</surname><given-names>FJ</given-names></name></person-group>             <year>2001</year>             <source>Regression Modelling Strategies: With Applications to Linear Models, Logistic Regression and Survival Analysis</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Springer</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">568</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Cumming1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Cumming</surname><given-names>G</given-names></name></person-group>             <year>2009</year>             <article-title>Inference by eye: Reading the overlap of independent confidence intervals.</article-title>             <source>Stat Med</source>             <volume>28</volume>             <fpage>205</fpage>             <lpage>220</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Dourojeanni1">
+        <label>29</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Dourojeanni</surname><given-names>M</given-names></name><name name-style="western"><surname>Barandiarán</surname><given-names>A</given-names></name><name name-style="western"><surname>Dourojeanni</surname><given-names>D</given-names></name></person-group>             <year>2009</year>             <comment>Amazonía peruana en 2021: Explotación de recursos naturales e infraestructuras: ¿Qué está pasando? ¿Qué es lo que significan para el futuro? ProNaturaleza, Lima</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">162</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Defensora1">
+        <label>30</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Defensoría del Pueblo</collab>             <year>2010</year>             <article-title>La Política Forestal y la Amazonía Peruana: Avances y obstáculos en el camino hacia la sostenibilidad.</article-title>             <comment>Serie Informes Defensoriales – Informe 151, Lima</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">298</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Derecho1">
+        <label>31</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Derecho Ambiente y Recursos Naturales (DAR)</collab>             <year>2011</year>             <comment>Informe Anual 2010: Transparencia en el Sector Forestal Peruano, Lima</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">68</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-La1">
+        <label>32</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">La Región</collab>             <year>2002</year>             <article-title>Costos de los inventarios del bosque, planes operativos y plan de manejo son elevados. Concesiones forestales no están al alcance de pequeños extractors madereros.</article-title>             <comment>Iquitos: 22 Apr</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">3</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-Iquitos1">
+        <label>33</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Iquitos al Día</collab>             <year>2004</year>             <article-title>Las concesiones forestales: Muchas posiciones nada de claridad.</article-title>             <comment>Iquitos: 30 Apr</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">6</size>           </element-citation>
+      </ref>
+      <ref id="pone.0019704-ArcilaRueda1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Arcila Rueda</surname><given-names>JL</given-names></name><name name-style="western"><surname>Velásquez Arredondo</surname><given-names>HI</given-names></name></person-group>             <year>2009</year>             <article-title>El precedente jurisprudencial y los instrumentos de regulación ambiental del sector eléctrico colombiano.</article-title>             <source>Energética</source>             <volume>42</volume>             <fpage>53</fpage>             <lpage>61</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Ebeling1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ebeling</surname><given-names>J</given-names></name><name name-style="western"><surname>Yasué</surname><given-names>M</given-names></name></person-group>             <year>2009</year>             <article-title>The effectiveness of market-based conservation in the tropics: Forest certification in Ecuador and Bolivia.</article-title>             <source>Journal of Environmental Management</source>             <volume>90</volume>             <fpage>1145</fpage>             <lpage>1153</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Bauch1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bauch</surname><given-names>S</given-names></name><name name-style="western"><surname>Sills</surname><given-names>E</given-names></name><name name-style="western"><surname>Estraviz Rodriguez</surname><given-names>LC</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Forest Policy Reform in Brazil.</article-title>             <source>Journal of Forestry</source>             <volume>107</volume>             <fpage>132</fpage>             <lpage>138</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Blundell1">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Blundell</surname><given-names>AG</given-names></name></person-group>             <year>2007</year>             <article-title>Implementing CITES regulations for timber.</article-title>             <source>Ecol Appl</source>             <volume>7</volume>             <fpage>323</fpage>             <lpage>330</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Youatt1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Youatt</surname><given-names>A</given-names></name><name name-style="western"><surname>Cmar</surname><given-names>T</given-names></name></person-group>             <year>2009</year>             <article-title>The fight for red gold: ending illegal mahogany Trade from Peru.</article-title>             <source>Natural Resources &amp; Environment</source>             <volume>23</volume>             <fpage>19</fpage>             <lpage>23</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Peru5">
+        <label>39</label>
+        <element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Peru</collab>             <year>2010</year>             <article-title>Proyecto de Ley Forestal y de Fauna Silvestre [Draft of the new forest law submitted for parliamentary evaluation 22.6.2010].</article-title>             <comment>Accessible: <ext-link ext-link-type="uri" xlink:href="http://www.actualidadambiental.pe/documentos/proyecto_ley_FFS.pdf" xlink:type="simple">http://www.actualidadambiental.pe/documentos/proyecto_ley_FFS.pdf</ext-link>. Accessed 18 Mar 2011</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-International1">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <collab xlink:type="simple">International Tropical Timber Organization</collab>             <year>2010</year>             <source>Tropical Timber Market Report</source>             <volume>15</volume>             <lpage>18</lpage>             <comment>16–30 Sep</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019704-Baker1">
+        <label>41</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Baker</surname><given-names>TR</given-names></name><name name-style="western"><surname>Jones</surname><given-names>JPG</given-names></name><name name-style="western"><surname>Rendón Thompson</surname><given-names>OR</given-names></name><name name-style="western"><surname>Román Cuesta</surname><given-names>RN</given-names></name><name name-style="western"><surname>del Castillo</surname><given-names>D</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>How can ecologists help realise the potential of payments for carbon in tropical forest countries?</article-title>             <source>J Appl Ecol</source>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2664.2010.01885.x" xlink:type="simple">10.1111/j.1365-2664.2010.01885.x</ext-link></comment>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

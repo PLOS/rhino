@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-12-03474</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0040478</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Developmental biology</subject>
+            <subj-group>
+              <subject>Molecular development</subject>
+              <subj-group>
+                <subject>Adhesion molecules</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Immunology</subject>
+            <subj-group>
+              <subject>Immunity</subject>
+              <subj-group>
+                <subject>Inflammation</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Immunologic subspecialties</subject>
+              <subj-group>
+                <subject>Pulmonary immunology</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Molecular cell biology</subject>
+            <subj-group>
+              <subject>Cellular types</subject>
+              <subj-group>
+                <subject>Epithelial cells</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Cell adhesion</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Clinical immunology</subject>
+            <subj-group>
+              <subject>Immunity</subject>
+              <subj-group>
+                <subject>Inflammation</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Immunology</subject>
+          <subject>Cell Biology</subject>
+          <subject>Developmental Biology</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Expression of Myoferlin in Human Airway Epithelium and Its Role in Cell Adhesion and Zonula Occludens-1 Expression</article-title><alt-title alt-title-type="running-head">Role of Myoferlin in Epithelial Cell Adhesion</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Leung</surname>
+            <given-names>Cleo</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Shaheen</surname>
+            <given-names>Furquan</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Bernatchez</surname>
+            <given-names>Pascal</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Hackett</surname>
+            <given-names>Tillie-Louise</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>The James Hogg Research Centre, Institute for Heart + Lung Health, St Paul’s Hospital, Vancouver, British Columbia, Canada</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Anesthesiology, Pharmacology and Therapeutics, University of British Columbia, Vancouver, British Columbia, Canada</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Fuxe</surname>
+            <given-names>Jonas</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">Karolinska Institute, Sweden</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">Tillie.Hackett@hli.ubc.ca</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: TLH PB. Performed the experiments: CL FS TLH. Analyzed the data: CL TLH. Contributed reagents/materials/analysis tools: PB TLH. Wrote the paper: CL TLH.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>10</day>
+        <month>7</month>
+        <year>2012</year>
+      </pub-date><volume>7</volume><issue>7</issue><elocation-id>e40478</elocation-id><history>
+        <date date-type="received">
+          <day>31</day>
+          <month>1</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>8</day>
+          <month>6</month>
+          <year>2012</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2012</copyright-year><copyright-holder>Leung et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <sec>
+          <title>Background</title>
+          <p>Normal airway epithelial barrier function is maintained by cell-cell contacts which require the translocation of adhesion proteins at the cell surface, through membrane vesicle trafficking and fusion events. Myoferlin and dysferlin, members of the multiple-C2-domain Ferlin superfamily, have been implicated in membrane fusion processes through the induction of membrane curvature. The objectives of this study were to examine the expression of dysferlin and myoferlin within the human airway and determine the roles of these proteins in airway epithelial homeostasis.</p>
+        </sec>
+        <sec>
+          <title>Methods</title>
+          <p>The expression of dysferlin and myoferlin were evaluated in normal human airway sections by immunohistochemistry, and primary human airway epithelial cells and fibroblasts by immuno blot. Localization of dysferlin and myoferlin in epithelial cells were determined using confocal microscopy. Functional outcomes analyzed included cell adhesion, protein expression, and cell detachment following dysferlin and myoferlin siRNA knock-down, using the human bronchial epithelial cell line, 16HBE.</p>
+        </sec>
+        <sec>
+          <title>Results</title>
+          <p>Primary human airway epithelial cells express both dysferlin and myoferlin whereas fibroblasts isolated from bronchi and the parenchyma only express myoferlin. Expression of dysferlin and myoferlin was further localized within the Golgi, cell cytoplasm and plasma membrane of 16HBE cells using confocal micrscopy. Treatment of 16HBE cells with myoferlin siRNA, but not dysferlin siRNA, resulted in a rounded cell morphology and loss of cell adhesion. This cell shedding following myoferlin knockdown was associated with decreased expression of tight junction molecule, zonula occludens-1 (ZO-1) and increased number of cells positive for apoptotic markers Annexin V and propidium iodide. Cell shedding was not associated with release of the innate inflammatory cytokines IL-6 and IL-8.</p>
+        </sec>
+        <sec>
+          <title>Conclusions/Significance</title>
+          <p>This study demonstrates the heterogeneous expression of myoferlin within epithelial cells and fibroblasts of the respiratory airway. The effect of myoferlin on the expression of ZO-1 in airway epithelial cells indicates its role in membrane fusion events that regulate cell detachment and apoptosis within the airway epithelium.</p>
+        </sec>
+      </abstract><funding-group><funding-statement>This work is supported by grants from Canadian Lung Association and Klosterfrau Foundation (for TLH), Canadian Institutes for Health Research (CIHR), Michael Smith Foundation for Health Research (MSFHR) and Canadian Foundation for Innovation (for PB). CL is a recipient of a CIHR-Institute of community support award. TLH is a recipient of a CIHR/Canadian Lung Association/GSK, IMPACT strategic training, Michael Smith Foundation for Health Research (MSFHR) and Parker B. Francis Foundation salary awards. PB is a recipient of CIHR and MSFHR salary awards. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="12"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The airway epithelium forms a continuous, highly regulated physical barrier, which lines the airway lumen, separating the underlying tissue from inhaled environmental antigens. Intercellular epithelial junctions form the structural adhesive forces that maintain the airway epithelial barrier, and are comprised of tight junctions (TJs), adherens junctions (AJs) and desmosomes. AJs mechanically connect adjacent cells and initiate the proliferation and differentiation of cell-cell contacts through homotypic transmembrane E-cadherin adhesions, which are anchored to the actin cytoskeleton and microtubule network by p120 catenin, β-catenin, and α-catenin. TJs are considered the main regulators of paracellular permeability and movement of ions and solutes between cells and are composed of transmembrane proteins such as junction-adhesion-molecules (JAM)s, occludin, and claudins 1–20 which anchor to the cytoskeleton by zonula occludens (ZO)-1, -2, -3 or cingulin. Desmosomes consist of non-classical cadherins that form adhesive bonds between the filament cytoskeleton of epithelial cells, and the lamina propria.</p>
+      <p>Fusion of cytoplasmic vesicles containing adhesion molecules to the plasma membrane is essential for the formation of selectively permeable membrane barriers. As there is an energy barrier to the fusion process, membrane-fusion events generally require molecules that tether and dock membranes into close proximity of one another (&lt;5–10 nm). Lipid vesicle fusion involves numerous factors, including ferlins, SNAREs and synaptotagmins, to facilitate the fusion of membrane vesicles <xref ref-type="bibr" rid="pone.0040478-Bi1">[1]</xref>, <xref ref-type="bibr" rid="pone.0040478-Washington1">[2]</xref>, <xref ref-type="bibr" rid="pone.0040478-Steinhardt1">[3]</xref>, <xref ref-type="bibr" rid="pone.0040478-Ullrich1">[4]</xref>. In humans (mammals), six ferlin proteins have been identified to date based on their structural similarities and sequence homologies to fer-1; they are dysferlin (Fer1L1) <xref ref-type="bibr" rid="pone.0040478-Bashir1">[5]</xref>, <xref ref-type="bibr" rid="pone.0040478-Liu1">[6]</xref>, otoferlin (Fer1L2) <xref ref-type="bibr" rid="pone.0040478-Yasunaga1">[7]</xref>, <xref ref-type="bibr" rid="pone.0040478-Yasunaga2">[8]</xref>, myoferlin (Fer1L3) <xref ref-type="bibr" rid="pone.0040478-Britton1">[9]</xref>, <xref ref-type="bibr" rid="pone.0040478-Davis1">[10]</xref>, Fer1L4 <xref ref-type="bibr" rid="pone.0040478-Lek1">[11]</xref>, Fer1L5 <xref ref-type="bibr" rid="pone.0040478-Posey1">[12]</xref> and Fer1L6 <xref ref-type="bibr" rid="pone.0040478-Lek1">[11]</xref>. Each ferlin protein contains a transmembrane domain at the carboxyl terminal which acts as a membrane-anchor and multiple C2 domains, with Ca2+-binding motifs that exhibit a wide range of functions such as phospholipid-binding, signaling and membrane trafficking. The majority of our understanding of mammalian ferlin proteins has come from studies focusing on dysferlin, as mutations in the dysferlin gene lead to limb girdle muscular dystrophy type 2B (LGMD2B) and Miyoshi myopathy <xref ref-type="bibr" rid="pone.0040478-Bashir1">[5]</xref>, <xref ref-type="bibr" rid="pone.0040478-Liu1">[6]</xref>. Patients with dysferlinopathy are often diagnosed with defective membrane fusion events in skeletal muscles and the release of surplus vesicles, the contents of which contribute to inflammation and further damage of skeletal muscle <xref ref-type="bibr" rid="pone.0040478-Selcen1">[13]</xref>. Although functions of myoferlin are less well known, sequencing of the gene revealed that it is highly homologous to dysferlin <xref ref-type="bibr" rid="pone.0040478-Britton1">[9]</xref>. In addition, myoferlin has been reported to be responsible for fusion of myoblasts during muscle development and its mutations result in muscle atrophy <xref ref-type="bibr" rid="pone.0040478-Doherty1">[14]</xref>. Although dysferlin and myoferlin are highly expressed in skeletal and cardiac muscles, studies have confirmed their expression in kidney, placenta, lung, and brain <xref ref-type="bibr" rid="pone.0040478-Davis1">[10]</xref>, <xref ref-type="bibr" rid="pone.0040478-Anderson1">[15]</xref>, <xref ref-type="bibr" rid="pone.0040478-Vandre1">[16]</xref>, <xref ref-type="bibr" rid="pone.0040478-Izzedine1">[17]</xref>, <xref ref-type="bibr" rid="pone.0040478-Hochmeister1">[18]</xref>. We have previously demonstrated that dysferlin and myoferlin are present in the caveolae-enriched membrane lipid rafts, isolated from vascular endothelial cells <xref ref-type="bibr" rid="pone.0040478-Sharma1">[19]</xref>, <xref ref-type="bibr" rid="pone.0040478-Bernatchez1">[20]</xref>. Importantly, this work also demonstrated that targeted knockdown of dysferlin and myoferlin led to decreased cell proliferation and adhesion through down-regulation of platelet endothelial cell adhesion molecule 1 (PECAM-1) and vascular endothelial growth factor receptor- 2 (VEGFR-2) respectively, in vascular endothelial cells <xref ref-type="bibr" rid="pone.0040478-Sharma1">[19]</xref>, <xref ref-type="bibr" rid="pone.0040478-Bernatchez1">[20]</xref>. Similar to the vascular endothelium, the airway epithelium also forms a continuous epithelial sheet on top of a basement membrane. Since dysferlin and myoferlin are membrane repair proteins that are crucial for maintaining membrane integrity, we sort to determine whether these proteins have a functional role in the homeostasis of human airway epithelium. The purpose of this study was thus to examine the expression of dysferlin and myoferlin within the human airway and determine the effects of myoferlin and dysferlin knockdown on airway epithelial functions.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s2a">
+        <title>Subjects and Ethics Statement</title>
+        <p>Normal human donor lungs not suitable for transplantation and donated for medical research were obtained with written informed consent through the International Institute for the Advancement of Medicine (Edison, NJ). The study was approved by the Providence Health Care Research Ethics Committee of the University of British Columbia; certificate number H0-50110.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Isolation of Human Airway Epithelial Cells and Lung Fibroblasts</title>
+        <p>Primary airway epithelial cells were extracted via protease digestion of human airways as previously described <xref ref-type="bibr" rid="pone.0040478-Hackett1">[21]</xref>, <xref ref-type="bibr" rid="pone.0040478-Hackett2">[22]</xref>. Briefly, bronchi to the 3<sup>rd</sup> generation were dissected and then rinsed with cold PBS without calcium and magnesium three times to remove blood and mucus. Epithelial layers on intact segments of bronchi (2–4 cm in length) were dissociated at 4°C for 16 hours (h) in 100 ml of MEM (Fisher Scientific) containing 1.4 mg/ml Pronase and 0.1 mg/ml of DNase (Roche Diagnostics). Dissociated epithelial cells were strained through a 70 µm nylon mesh (Becton-Dickison). Cells were then re-suspended and incubated in MEM supplemented with 10%FBS for 10 minutes and washed twice with MEM by centrifugation at 4°C to neutralize the pronase. Cells were then seeded in tissue culture flasks and incubated at 37°C in a humidified 5% CO<sub>2</sub> atmosphere with bronchial epithelial growth media (Cambrex) until confluent monolayers were formed.</p>
+        <p>Primary human bronchial and parenchymal fibroblasts were established from the respective bronchial rings and pleura-free lung parenchyma as previously described <xref ref-type="bibr" rid="pone.0040478-Pechkovsky1">[23]</xref>. Briefly, bronchial and parenchymal tissue from the same lung were dissected into 2 mm<sup>3</sup> size explants and 4–5 explants placed into the well of 6-well tissue culture plates (BD Biosciences) with 0.75 ml of Dulbecco’s modified Eagle’s medium (DMEM, Invitrogen) containing 10% FBS (Invitrogen), 2 mM L-glutamine and 1% antibiotic/antimycotic solution (Invitrogen) and incubated at 37°C with 95% air and 5% CO<sub>2</sub>. Media was replaced every two days to remove tissue debris and non-adherent cells. After seven days tissue explants were removed and the outgrowth of fibroblasts were maintained until a confluent monolayer was formed. Total protein from both primary epithelial cell and fibroblast cultures was extracted as described under the immunoblot procedures below.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Cell Lines and Culture Conditions</title>
+        <p>The bovine aortic endothelial cell (BAEC) and human fetal lung fibroblast (HFL) cell lines were purchased from American Type Culture Collection (ATCC, Manassas, VA, USA). The well described 16HBE14o-, SV40-transformed human bronchial epithelial cell line was obtained from Dr. D. Gruenert (University of Vermont, Burlington, VT, USA) <xref ref-type="bibr" rid="pone.0040478-Gruenert1">[24]</xref>. All cell lines were grown on 6-well tissue culture plates (Corning Costar, Lowell, MA, USA) in DMEM supplemented with 10% fetal bovine serum (FBS) (Hyclone, Logan, USA) and penicillin-streptomycin (Sigma-Aldrich, Oakville, Canada) and cultures were incubated at 37°C in a humidified 5% CO<sub>2</sub> atmosphere. This study using human cell lines was approved by the Providence Health Care Research Ethics Committee of the University of British Columbia; Certificate number H0-50110-1A.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Treatment of Small Interfering RNA (siRNA) and Detachment Assay</title>
+        <p>16HBE cells were grown to 40% confluency in 6-well plates, then transfected with human dysferlin siRNA (<named-content content-type="gene" xlink:type="simple">5′-CTCCCTGTTTGCGGCCTTCTA-3′</named-content>), myoferlin siRNA (<named-content content-type="gene" xlink:type="simple">5′-AACCCTGTCTG GAATGAGATT-3′</named-content>) or non-silencing scrambled control siRNA at a final concentration of 50, 75 and 100 nM using Oligofectamine in Opti-Mem-1 (Invitrogen, Burlington, ON, Canada) as described by the manufacturer. After 8 hours of transfection, the transfection media was replaced with DMEM containing 10% FBS and penicillin-streptomycin for 72 h after which cells were lysed in protein extraction buffer. Spent cell culture media for each treatment condition was collected to determine the number of detached and dead cells using trypan blue staining and a hemocytometer. To quantify the percentage of cells undergoing apoptosis, we used the flurescein isothiocyanate Annexin V and propidium iodide apoptosis detection kit I as per the manufacturer’s instructions (BD Pharmingen) and cells were analyzed immediately by flow cytometry using a BD LSRII machine and flow cytometry analysis was performed using DiVa software.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Immunoblot</title>
+        <p>Proteins were extracted from cell monolayers using protein extraction buffer with protease and phosphatase inhibitor cocktails (Sigma). The total protein concentration of each cell lysate was determined using the DC protein assay as instructed by the manufacturer (Biorad). Equal amounts of protein lysates (80 µg) were loaded to resolve the proteins by sodium dodecyl sulfate-polyacrylamide gel electrophoresis and then transferred to nitrocellulose membranes. The primary antibodies used for immuno blot were dysferlin (NCL-Hamlet, Novocastra), myoferlin (ab76746, Abcam), E-cadherin (sc-8426, Santa Cruz), caveolin-1 (sc-894, Santa Cruz), β-tubulin (16–231, Upstate), VEGFR-2 (sc-504, Santa Cruz), ZO-1(ab59720, Abcam), claudin-1 (37–4900, Life Technologies Corporation), occludin (71–1500, Invitrogen), fibronectin-EDA (MAB1940, Chemicon International, Temecula, CA) and HSP90 (610418, BD Biosciences). Detection was performed with IR700 anti-mouse and IR800 anti-rabbit antibodies (Cell Signaling Technology) and the Odyssey Infrared Imaging System (LI-COR Biotechnology, Lincoln, Nebraska) using a manufacturer’s protocol. Density of the bands was analyzed with Odyssey software 1.1 (LI-COR Biotechnology) using two infrared channels independently. The results are expressed as protein of interest/β-tubulin or HSP-90 density ratio.</p>
+      </sec>
+      <sec id="s2f">
+        <title>Immunohistochemical Staining</title>
+        <p>Donor airway sections (5 µm) were deparaffinized, rehydrated and antigens were retrieved by autoclaving the sections in citrate target retrieval solution (Dako) for 15 minutes at 120°C and 30 psi. Endogenous peroxidase was quenched with 3% hydrogen peroxide for 20 minutes and non-specific binding was blocked with 10% horse serum. Slides were incubated overnight with antibodies against either human dysferlin (1∶40, clone Ham1/7B6, NCL-Hamlet, Novacastra) or myoferlin (1∶500, clone 7D6, ab76746, Abcam), ZO-1 (1∶200 at 4°C in 5% horse serum. Subsequent to three washes in Tris-buffered saline (TBS), sections were then incubated with horse anti-mouse secondary antibody (1∶100, Vector Labs) for 2 h, followed by incubation with streptavidin-horse radish peroxidase (Dako) for 20 minutes. Staining was visualized using brown chromogen 3,3-diaminobenzidine (Dako) and counterstained with hematoxylin (Sigma). Slides were then dehydrated and mounted with Cytoseal 60 (Richard-Allan Scientific). Negative controls were performed in parallel with mouse IgG isotype control (sc-2025, Santa Cruz) and by omitting the primary antibody.</p>
+      </sec>
+      <sec id="s2g">
+        <title>Immunofluorescent Staining and Confocal Microscopy</title>
+        <p>16HBE cells were seeded on chamber slides (BD Falcon, NJ, USA), washed in phosphate-buffered saline (PBS, Sigma-Aldrich) pH 7.4, fixed in 4% paraformaldehyde (Fisher Scientific, Ottawa, ON, Canada) for 20 minutes and blocked with 10% goat serum (Gibco-Invitrogen) for 20 minutes at room temperature (RT). Cells were stained with either 1∶40 dysferlin or 1∶500 myoferlin and 1∶200 ZO-1 or 1∶200 GM130 (610822, BD) antibodies in PBS with 0.1% saponin overnight at 4°C. After removing the primary antibodies and washing the cells with PBS for 3 times at RT, secondary antibody conjugated with 10 µg/ml goat anti-mouse IgG Alexa Fluor 594 (Invitrogen) was added and incubated for 2 h at RT. Cells were washed again with PBS and then incubated with 1 µg/ml of 4,6-diamidino-2-phenylindole (DAPI) before visualizing with a Nikon fluorescent microscope incorporated with a C-spot camera (Nikon Instruments). Fluorescent images were captured using a Leica AOBS SP2 laser scanning confocal microscope (Leica) with Zeiss LSM 510 software, version 3.2 and analyzed with Volocity software (Improvision).</p>
+      </sec>
+      <sec id="s2h">
+        <title>Statistical Analysis</title>
+        <p>Quantitative data are presented as mean ± SEM of three independent experiments. One-way analyses of variance with Bonferroni’s post-hoc correction were used to compare between the treatment groups. P values of less than 0.05 were considered statistically significant. All statistical analyses were performed using Prism Version 5.0 software (Graphpad, Software Inc.).</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <sec id="s3a">
+        <title>Expression of Myoferlin and Dysferlin within the Human Airway</title>
+        <p>To study the expression of myoferlin and dysferlin within the human airway, we performed immunohistochemical staining. As shown in the representative images of human airway, myoferlin and dysferlin (<italic>brown</italic>) are expressed in both basal and ciliated airway epithelial cells in addition to cells within the lamina propria, which consists mainly of fibroblasts and infiltrating inflammatory cells (<xref ref-type="fig" rid="pone-0040478-g001">Figure 1A and B</xref>, respectively). Staining with mouse immunoglobulin control antibody at the same concentration did demonstrate minor non-specific staining (<xref ref-type="fig" rid="pone-0040478-g001">Figure 1C</xref>) whereas the secondary antibody control alone produced no non-specific staining (<xref ref-type="fig" rid="pone-0040478-g001">Figure 1D</xref>).</p>
+        <fig id="pone-0040478-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Dysferlin and myoferlin expression in normal human airway epithelium.</title>
+            <p>Airway sections were obtained from non-diseased human subjects (n = 5) and sections were stained with (A) myoferlin, (B) dysferlin, (C) isotype control and (D) secondary antibodies. The images are representative of the five individuals studied. Scale bar = 100 µM, insert image ×100 magnification.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g001" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3b">
+        <title>Expression of Dysferlin and Myoferlin in Human Lung Cells in vitro</title>
+        <p>We further confirmed our findings using immunohistochemistry by evaluating the expression of dysferlin and myoferlin by immunoblot in both cell lines and primary cells isolated from human lung. All cells were grown in normal growth conditions to confluency and total protein was isolated to analyze dysferlin and myoferlin expression. <xref ref-type="fig" rid="pone-0040478-g002">Figure 2A</xref> shows dysferlin was expressed in both primary airway epithelial cells from five healthy donor lungs and the airway epithelial cell line 16HBE, but not in primary bronchial, lung or cell line fibroblasts. In comparison, all airway epithelial cells and fibroblasts express myoferlin at similar expression levels to that found in bovine aorta endothelial cells (BAECs), which we have previously reported to express both myoferlin and dysferlin (<xref ref-type="fig" rid="pone-0040478-g002">Figure 2B</xref>). To demonstrate the expression of dysferlin and myoferlin in each cell type the densitometry values normalized to loading control β-tubulin are expressed as a percentage of expression in BAEC (<xref ref-type="fig" rid="pone-0040478-g002">Figure 2C and D</xref>).</p>
+        <fig id="pone-0040478-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Dysferlin and myoferlin expression in human airway epithelial cells and fibroblasts.</title>
+            <p>Total cell lysates from primary human lung parenchymal fibroblasts (PF), bronchial fibroblast (BrF), airway epithelial cells derived from normal donor lung tissues (D1–D5), bovine aortic endothelial cell (BAEC), human fetal lung fibroblasts (HFL) and bronchial epithelial cell (16HBE) lines were analyzed for the expression of (A) dysferlin and (B) myoferlin by immunoblot. The band intensity of (C) dysferlin and (D) myoferlin was normalized to β-tubulin and compared to BAEC to quantify the expression levels of the ferlin proteins by densitometry.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g002" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3c">
+        <title>Localization of Dysferlin and Myoferlin Expression in Airway Epithelial Cells</title>
+        <p>To localize the expression of dysferlin and myoferlin in airway epithelial cells, confluent monolayers of 16HBE cells were analyzed by confocal microscopy using immunofluorescent staining. At low magnification, dysferlin and myoferlin (red staining) were found to be expressed abundantly in 16HBE cells in monolayer culture as demonstrated in <xref ref-type="fig" rid="pone-0040478-g003">Figure 3</xref> panels A and B compared to the isotype control (<xref ref-type="fig" rid="pone-0040478-g003">Figure 3</xref>, panel C). Using a digital zoom (white boxed areas), dysferlin and myoferlin was observed to be expressed within the cell cytoplasm and cell membrane but not within the nucleus as identified by DAPI (blue straining, <xref ref-type="fig" rid="pone-0040478-g003">Figure 3</xref>, panels A &amp; B), compared to the isotype control antibody (<xref ref-type="fig" rid="pone-0040478-g003">Figure 3</xref>, panel C). We also observed dysferlin and myoferlin (red staining) expression within Golgi membranes by co-localization with the Golgi matrix protein, GM-130 (green staining), as shown in <xref ref-type="supplementary-material" rid="pone.0040478.s001">figure S1A and B.</xref></p>
+        <fig id="pone-0040478-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Localization of dysferlin and myoferlin in airway epithelial cells.</title>
+            <p>16HBE cells were grown to confluency on 8 well chamber slides and fixed for immunofluorescence analysis. Immunofluorescent staining for (A) dysferlin (<italic>red</italic>), (B) myoferlin (<italic>red</italic>), (C) mouse immunoglobulin isotype, and nuclei stained with 4′,6-diamidino-2-phenylindole (<italic>blue</italic>), were used to examine the localization of dysferlin and myoferlin. Scale bars are equal to 47 µm, and 14 µm on the digital zoomed images.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g003" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3d">
+        <title>Down-regulation of Dysferlin and Myoferlin by Gene Silencing in Airway Epithelial Cells</title>
+        <p>To identify the potential roles of dysferlin and myoferlin in airway epithelial cells, previously designed dysferlin and myoferlin specific siRNA’s were used to knock down protein expression <xref ref-type="bibr" rid="pone.0040478-Bernatchez1">[20]</xref>, <xref ref-type="bibr" rid="pone.0040478-Sharma2">[25]</xref>. 16HBE cells were transfected with siRNA sequences specific to dysferlin, myoferlin and a scrambled siRNA control at concentrations of 50 nM, 75 nM and 100 nM for 72 h. As demonstrated by the representative immunoblot in <xref ref-type="fig" rid="pone-0040478-g004">Figure 4A</xref> and the densitometry analysis normalized to HSP90 in <xref ref-type="fig" rid="pone-0040478-g004">Figure 4B</xref>, dysferlin specific siRNA significantly knocked down dysferlin expression by 72% at 50 nM, 68% at 75 nM and 74% at 100 nM compared to the non-targeting scrambled siRNA control. Likewise, myoferlin siRNA also significantly knocked down myoferlin expression by 57% at 50 nM, 58% at 75 nM and 49% at 100 nM compared to the scrambled siRNA control (<xref ref-type="fig" rid="pone-0040478-g004">Figure 4C and D</xref>).</p>
+        <fig id="pone-0040478-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>No effect of dysferlin or myoferlin knockdown on VEGFR-2 and caveolin-1 expression.</title>
+            <p>16HBE cells were transfected with oligofectamine transfection reagent (TF con), scrambled siRNA (S), dysferlin or myoferlin siRNA at 50 nM, 75 nM and 100 nM for 72 h. The representative immunoblot of three independent experiments demonstrates that siRNA specific for (A) dysferlin and (C) myoferlin had no effect on caveolin-1 or vascular endothelial growth receptor 2 (VEGFR-2) protein expression. Densitometry analysis of band intensities for (B) dysferlin and (D) myoferlin normalized to HSP90 compared to the scrambled siRNA control (dotted line), indicate knock down of 50% or more for each ferlin protein. Values are represented as mean (± SEM) of three independent experiments. A significant difference between the treatment groups with scrambled siRNA is indicated by asterisk (*<italic>p</italic>&lt;0.05; **<italic>p</italic>&lt;0.01, ***<italic>p</italic>&lt;0.005).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g004" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3e">
+        <title>Silencing of Dysferlin and Myoferlin Genes does not Change the Expressions of Caveolin-1 and VEGFR-2</title>
+        <p>Silencing of dysferlin and myoferlin genes may invoke a compensatory response to resume normal protein expression of dysferlin and myoferlin. Caveolin-1 has been shown to regulate the expression of dysferlin and interact with myoferlin in membrane resealing events <xref ref-type="bibr" rid="pone.0040478-HernandezDeviez1">[26]</xref>, <xref ref-type="bibr" rid="pone.0040478-Bernatchez2">[27]</xref>. Airway epithelial cells express high levels of caveolin-1, however as demonstrated by the representative immunoblots we observed no change in caveolin-1 monomer or oligomer expression in 16HBE cells treated with dysferlin or myoferlin siRNA (<xref ref-type="fig" rid="pone-0040478-g004">Figure 4A &amp; C</xref>, respectively).</p>
+        <p>Furthermore we have previously demonstrated that knockdown of myoferlin, but not dysferlin, leads to reduced expression of vascular endothelial growth factor receptor 2 (VEGFR-2) in BAEC <xref ref-type="bibr" rid="pone.0040478-Bernatchez1">[20]</xref>, <xref ref-type="bibr" rid="pone.0040478-Sharma2">[25]</xref>. However in 16HBE cells, we observed no changes in VEGFR-2 expression following myoferlin or dysferlin knockdown indicating these ferlin proteins may have cell specific roles in membrane fusion and trafficking events.</p>
+      </sec>
+      <sec id="s3f">
+        <title>Knockdown of Myoferlin Changes Airway Epithelial Cell Morphology and Cell Detachment</title>
+        <p>We next examined the effects of down-regulating dysferlin and myoferlin using siRNA transfection on cell morphology and attachment. As demonstrated in the phase contrast images of 16HBE cell monolayers (<xref ref-type="fig" rid="pone-0040478-g005">Figure 5A</xref>) following 72 h of dysferlin siRNA transfection, we observed no significant changes in cell morphology. In contrast, knockdown of myoferlin led to a loss of normal epithelial cuboidal morphology to a spindle-shaped phenotype at all siRNA concentrations and increased numbers of rounded and detached cells (<xref ref-type="fig" rid="pone-0040478-g005">Figure 5B</xref>). To verify our observations of cell detachment following 72 h of siRNA treatment, the cell culture media was isolated and cell counts conducted. We found no significant difference between the number of detached 16HBE cells treated with dysferlin siRNA and the scrambled siRNA control (<xref ref-type="fig" rid="pone-0040478-g005">Figure 5C</xref>). In comparison, cells treated with myoferlin siRNA at 75 nM and 100 nM concentrations showed significantly greater numbers of detached 16HBE cells compared to the scrambled siRNA control (<xref ref-type="fig" rid="pone-0040478-g005">Figure 5D</xref>).</p>
+        <fig id="pone-0040478-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Knockdown of myoferlin but not dysferlin alters cell morphology and cell detachment.</title>
+            <p>Phase contrast images captured at 10× magnification of 16HBE cells treated with control media, transfection control, scrambled siRNA, and (A) dysferlin siRNA or (B) myoferlin siRNA at 50 nM, 75 nM and 100 nM for 72 h. Detached cells within cell culture supernatants were counted in each treatment group following (C) dysferlin or (D) myoferlin siRNA treatment using a hemocytometer. Data are presented as mean ± SEM of three independent experiments. A significant difference between the treatment groups and scrambled siRNA control is indicated by asterisk (*<italic>p</italic>&lt;0.05; **<italic>p</italic>&lt;0.01).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g005" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3g">
+        <title>Myoferlin Knockdown Induces Airway Epithelial Cell Detachment Resulting in Cell Death but not Inflammation</title>
+        <p>As the changes in cell morphology and cell detachment observed in cells treated with myoferlin siRNA could be an indication of cell death, we evaluated the viability of detached cells within the culture media using trypan blue dye. We found that the number of dead cells following myoferin knockdown did increase at all siRNA concentrations (<xref ref-type="fig" rid="pone-0040478-g006">Figure 6A</xref>). Cell apoptosis was evaluated after 72 h of myoferlin siRNA treatment by flow cytometry analysis using Annexin-V and propidium iodide (PI) staining (<xref ref-type="fig" rid="pone-0040478-g006">Figure 6B</xref>). During the early stages of apoptosis, translocation of phosphatidylserine from the inner to outer plasma membrane can be detected using Annexin-V and PI staining. The results show that the percentage of apoptosis was 12.3% in cells treated with 75 nM scrambled siRNA control compared to 46.8% in 16HBE cells treated with 75 nM myoferlin siRNA (<xref ref-type="fig" rid="pone-0040478-g006">Figures 6C and D</xref>, respectively). We next examined if knockdown of myoferlin resulted in elevated release of innate pro-inflammatory cytokines interleukin (IL)-6 and IL-8. As demonstrated in <xref ref-type="fig" rid="pone-0040478-g006">Figure 6E and 6F</xref>, the concentration of IL-6 and IL-8 released by 16HBE cells did not alter following treatment of myoferlin specific siRNA compared to transfection and scrambled siRNA controls.</p>
+        <fig id="pone-0040478-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Myoferlin knockdown induces changes in cell detachment and apoptosis but not inflammation.</title>
+            <p>16HBE cells were treated with control media (con), transfection control (TF con), scrambled siRNA (S), or myoferlin siRNA at 50 nM, 75 nM and 100 nM for 72 h. Cell culture supernatants were removed and analyzed for (A) dead cells using trypan blue assay and (B) percentage of cells positive for annexin 5 and propidium iodide by FACs analysis, which are surrogate markers of apoptosis. Representative FACs plots of 16HBE cells treated with (C) scrambled siRNA control compared to (D) myoferlin siRNA at 75 nM concentration indicate elevated numbers of cells positive for propidium iodide and annexin 5 (gated in P4). Cell culture supernatants were also analyzed for inflammatory cytokines (E) interleukin (IL)-6 and (F) IL-8. Data are presented as mean ± SEM of six independent experiments. A significant difference of <italic>p</italic>&lt;0.05 was considered significant.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g006" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3h">
+        <title>Myoferlin Knockdown in Airway Epithelial Cells Results in Loss of ZO-1 Expression</title>
+        <p>We hypothesized that the morphological changes and cell detachment observed in epithelial cells treated with myoferlin siRNA may indicate loss of cell adhesion. To test this hypothesis, we evaluated the expression of adherens junction molecule, E-cadherin, as well as tight junction molecules occuldin, claudin-1, ZO-1 and extracellular matrix (ECM) adhesion receptor integrin β1 during knockdown of dysferlin and myoferlin. Dysferlin knockdown did not result in cell detachment; and as expected, we did not detect any difference in the expression of any of the adhesion proteins measured (<xref ref-type="fig" rid="pone-0040478-g007">Figure 7A</xref>). In comparison, myoferlin knockdown led to a decrease in the expression of ZO-1 at all myoferlin siRNA concentrations, but not E-cadherin, occludin, claudin-1 or integrin β1 when compared to the transfection control conditions (<xref ref-type="fig" rid="pone-0040478-g007">Figure 7B and C</xref>). We and others have previously shown that loss of cell-cell contacts and acquisition of a spindle shape morphology are two of the initial morphological changes associated with epithelial-mesenchymal transition (EMT). To confirm that loss of ZO-1 was not associated with EMT we analyzed the expression of E-cadherin and mesenchymal marker fibronectin-EDA by immuno blot. As shown by the densitometry analysis in <xref ref-type="supplementary-material" rid="pone.0040478.s002">figure S2</xref> we observed no differences in the expression of E-cadherin or fibronectin-EDA.</p>
+        <fig id="pone-0040478-g007" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g007</object-id>
+          <label>Figure 7</label>
+          <caption>
+            <title>Myoferlin knockdown decreases the expression of tight junction molecule ZO-1.</title>
+            <p>16HBE cells were treated with control media (con), transfection control (TF con), scrambled siRNA (S), and (A) dysferlin or (B) myoferlin siRNA at 50 nM, 75 nM and 100 nM for 72 h. Total cell lysates were prepared to analyze the expressions of adherens junction molecule E-cadherin and tight junction molecules occludin, claudin 1, zonula occludens-1 (ZO-1) and integrin β1 as demonstrated by the representative immuno blot from three independent experiments. β-tubulin and HSP90 served as loading controls. (C) Densitometry analysis of band intensities for ZO-1 normalized to HSP90 compared to the scrambled siRNA control (dotted line). Values are represented as mean (± SEM) of three independent experiments. A significant difference between the treatment groups and scrambled siRNA control is indicated by asterisk (*<italic>p</italic>&lt;0.05).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g007" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3i">
+        <title>Myoferlin and ZO-1 Proteins Co-localize in Airway Epithelial Cells</title>
+        <p>To understand the association between myoferlin and ZO-1, we looked at the distribution patterns of myoferlin and ZO-1 in 16HBE cells using confocal microscopy. The distribution pattern of ZO-1 staining (<italic>green</italic>) was co-localized to that of myoferlin staining (<italic>red</italic>) as evidenced by the overlay images, which demonstrate the two co-localized proteins by yellow staining (<xref ref-type="fig" rid="pone-0040478-g008">Figure 8</xref>). Furthermore, when myoferlin expression was knocked down using siRNA (75 nM), we observed reduced expression of both myoferlin and ZO-1 as demonstrated by loss of total (<italic>green and red</italic>) and co-localized staining (<italic>yellow</italic>) compared to the transfection control conditions.</p>
+        <fig id="pone-0040478-g008" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040478.g008</object-id>
+          <label>Figure 8</label>
+          <caption>
+            <title>Co-localization of myoferlin and ZO-1.</title>
+            <p>16HBE cells were grown on 8 well chamber slides and treated with (A) transfection control, (B) scrambled siRNA, or (C) myoferlin siRNA both at 75 nM concentration for 72 h then fixed for immunofluorescence analysis. Immunofluorescent staining for myoferlin (<italic>green</italic>), zonula occludens 1 (<italic>red</italic>) and nuclei stained with 4′,6-diamidino-2-phenylindole (<italic>blue</italic>); were used to examine the localization of ZO-1 and myoferlin following siRNA treatments. Scale bars are equal to 24 µm on all images.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.g008" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>Under normal circumstances, the polarized airway epithelium forms a highly regulated and semi-permeable barrier through the formation of cell-cell adhesions. The formation of these cell-cell adhesion junctions requires the coordinated fusion and exocytosis of vesicles containing adhesion molecules at targeted areas within the cell plasma membrane. In this study, we demonstrate for the first time that membrane fusion proteins of the ferlin family, dysferlin and myoferlin, are expressed within airway epithelial cells of the human lung. Furthermore, we demonstrate that down-regulation of myoferlin, but not dysferlin using siRNA, results in loss of epithelial tight junction protein ZO-1 expression, cell detachment and apoptosis.</p>
+      <p>Sorting of cell membrane-associated proteins occurs predominantly in the <italic>trans</italic>-Golgi network in both polarized epithelia and “non-polarized” fibroblasts through well-defined cytoplasmic domain-sorting signals <xref ref-type="bibr" rid="pone.0040478-Yoshimori1">[28]</xref>, <xref ref-type="bibr" rid="pone.0040478-Keller1">[29]</xref>, <xref ref-type="bibr" rid="pone.0040478-Mostov1">[30]</xref> and specialized organization of the actin and microtubule cytoskeleton beneath the plasma membrane <xref ref-type="bibr" rid="pone.0040478-Bennett1">[31]</xref>. During membrane fusion, a membrane bound structure fuses with the plasma membrane and expels its contents to the exterior. The fusion mechanisms involved include aggregation of the membranes, resulting in close bilayer apposition; destabilization and rupture of the membrane; and merging of the aqueous contents and membrane components <xref ref-type="bibr" rid="pone.0040478-Folsch1">[32]</xref>. This fusion of vesicles within a target plasma membrane is regulated by organelle-specific Rab GTPases, vesicle-tethering complexes <xref ref-type="bibr" rid="pone.0040478-Grosshans1">[33]</xref> and SNAREs <xref ref-type="bibr" rid="pone.0040478-Rothman1">[34]</xref>. Ferlin family members are known to mediate membrane fusion events upon membrane damage, endocytosis and exocytosis <xref ref-type="bibr" rid="pone.0040478-Bernatchez2">[27]</xref>, <xref ref-type="bibr" rid="pone.0040478-Beurg1">[35]</xref>. Ferlins anchor to the plasma membrane via a single C-terminal transmembrane domain and contain C2 domains that mediate lipid and protein binding. Both dysferlin and myoferlin contain C2 domains which can coordinate calcium ions within a negatively charged binding pocket to regulate calcium-activated events, akin to the well characterized classical mediators of vesicle fusion, the synaptotagmins, which contain two C2 domains <xref ref-type="bibr" rid="pone.0040478-Sutton1">[36]</xref>, <xref ref-type="bibr" rid="pone.0040478-Sudhof1">[37]</xref>.</p>
+      <p>The roles of dysferlin and myoferlin in membrane fusion events have primarily focused on skeletal muscles, as mutations particularly in the dysferlin gene are associated with the development of muscular dystrophy, a muscle wasting disease. Since then, dysferlin and myoferlin have also been demonstrated to be expressed in a number of other cell types including myoblasts, inflammatory cells, endothelial cells and specialized epithelium of the placenta, renal tubular and glomerular structures <xref ref-type="bibr" rid="pone.0040478-Vandre1">[16]</xref>, <xref ref-type="bibr" rid="pone.0040478-Robinson1">[38]</xref>. Here, we report that dysferlin and myoferlin are expressed in the airway epithelium at similar levels to vascular endothelial cells whereas bronchial and lung fibroblasts only express myoferlin. We observed that the sub-cellular distribution of dysferlin and myoferlin within airway epithelial cells is localized to the Golgi-membrane, cytoplasm and plasma membrane. Furthermore, this staining was punctate in appearance, suggesting expression was localized to vesicles. Previous studies have reported low expression levels of dysferlin and myoferlin in human lung <xref ref-type="bibr" rid="pone.0040478-Davis1">[10]</xref>, <xref ref-type="bibr" rid="pone.0040478-Anderson1">[15]</xref>, but these studies did not investigate the expression of these proteins in specific cell types.</p>
+      <p>To determine the function of dysferlin and myoferlin within the airway epithelial cells, we used specific siRNAs to knock down protein expression. Down-regulation of myoferlin, but not dysferlin, resulted in loss of cuboidal epithelium and acquisition of a spindle-shape morphology. In addition, the numbers of detached cells within cultures also significantly increased following myoferlin knockdown when compared to dysferlin and control conditions. We have previously demonstrated dysferlin knockdown impairs the proliferation, migration and adhesion of sub-confluent vascular endothelial cells through loss of the adhesion molecule, PECAM-1 <xref ref-type="bibr" rid="pone.0040478-Sharma1">[19]</xref>. Whereas myoferlin knock down led to a decrease in vascular endothelial cell proliferation, and migration that was associated with decreased expression of VEGFR-2, the receptor of vascular endothelial growth factor, an important molecule in vasculogenesis and angiogenesis <xref ref-type="bibr" rid="pone.0040478-Bernatchez1">[20]</xref>. In addition dysferlin and myoferlin have been shown to interact with caveoli-1n in lipid rafts of endothelial cells, skeletal muscle and fibroblasts <xref ref-type="bibr" rid="pone.0040478-Bernatchez2">[27]</xref>, <xref ref-type="bibr" rid="pone.0040478-Matsuda1">[39]</xref>. As PECAM-1 is not expressed on epithelial cells, we quantified the expression of VEGFR-2 and caveolin-1 in airway epithelial cells. We expected that knockdown of dysferlin and myoferlin may stimulate a compensatory response on caveolin-1 in airway epithelial cells. However, we did not see any difference in the expression of caveolin-1, suggesting that dysferlin and myoferlin have tissue or cell-specific functions. Interestingly, although we observed that down-regulation of myoferlin in airway epithelial cells was not associated with VEGFR-2 expression, it was associated with the loss of TJ protein, ZO-1. This finding further suggests that dysferlin and myoferlin may have different regulatory roles of membrane-associated proteins in different tissues. Interestingly, myoferlin associated down-regulation of ZO-1 and cell detachment was not associated with expression changes in the other transmembrane TJ and AJ proteins analyzed, which included occludin, claudin 1 and E-cadherin. In support of our findings, it has recently been shown in the mouse jejunum epithelium that the process of cell shedding requires redistribution of ZO-1 prior to cell extrusion and that shed epithelial cells undergo nuclear chromatin condensation, a hallmark of apoptosis <xref ref-type="bibr" rid="pone.0040478-Watson1">[40]</xref>. This study and others suggest that ZO-1 rearranges beneath dividing and shedding cells to maintain epithelial barrier function by connecting neighboring cells surrounding an extruding cell <xref ref-type="bibr" rid="pone.0040478-Baron1">[41]</xref>, <xref ref-type="bibr" rid="pone.0040478-Bullen1">[42]</xref>, <xref ref-type="bibr" rid="pone.0040478-Jinguji1">[43]</xref>, <xref ref-type="bibr" rid="pone.0040478-Marchiando1">[44]</xref>. Thus, loss of ZO-1 expression via down-regulation of myoferlin expression may be an active participant in catalyzing cell extrusion. This would support our findings of increased numbers of epithelial cells positive for annexin V and PI staining, which are markers for apoptosis, within cultures treated with myoferlin siRNA. As calcium-dependent intercellular adhesion is required for ZO-1 localization to the TJ <xref ref-type="bibr" rid="pone.0040478-Anderson2">[45]</xref>, <xref ref-type="bibr" rid="pone.0040478-Siliciano1">[46]</xref>, we propose that in epithelial homeostasis, the multiple C2-calcium binding domains of myoferlin may play an important role in regulating the graduated fusion in response to gradients of calcium release, for vesicle trafficking. In support of our hypothesis, recent studies have shown that myoferlin forms a protein complex with dynamin 2 (Dyn-2) that is essential for the fission of endocytic vesicles <xref ref-type="bibr" rid="pone.0040478-Takei1">[47]</xref>, <xref ref-type="bibr" rid="pone.0040478-Hinshaw1">[48]</xref> and that tight junctional proteins mislocalize and cell polarity is lost upon Dyn-2 depletion, suggesting a dynamin-myoferlin mediated endocytic pathway maybe involved in the spatial regulation and distribution of tight junction proteins and their binding partners.</p>
+      <p>Tight junctions are responsible for regulating paracellular permeability and maintaining cell polarity, which are often referred to as “barrier” and “fence” function, respectively. TJs also play a role in signaling pathways involved in epithelial proliferation, gene expression and differentiation <xref ref-type="bibr" rid="pone.0040478-Arakawa1">[49]</xref>, <xref ref-type="bibr" rid="pone.0040478-Matter1">[50]</xref>. ZO-1 via its SH3 domain, binds ZONAB (ZO-1-associated nucleic-acid-binding protein) a Y-box transcription factor, sequestering it in the cytoplasm and inhibiting its transcriptional activity <xref ref-type="bibr" rid="pone.0040478-Arakawa1">[49]</xref>, <xref ref-type="bibr" rid="pone.0040478-Matter1">[50]</xref>. Following disassembly of ZO-1 from the tight junction, ZONAB is able to interact with the cell cycle kinase cdk4 to regulate the transcription of cell cycle genes including cyclin D1 and PCNA, which lead to the proliferation of epithelial cells in culture <xref ref-type="bibr" rid="pone.0040478-Balda1">[51]</xref>, <xref ref-type="bibr" rid="pone.0040478-Balda2">[52]</xref>, <xref ref-type="bibr" rid="pone.0040478-Sourisseau1">[53]</xref>. ZO-1 expression has been shown to be localized both at the cell membrane, within the cell cytoplasm and nucleus in dividing cells. These data support our co-localization of ZO-1 and myoferlin by confocal microscopy as both proteins were found with the cytoplasm and cell membrane. Myoferlin has been shown previously to be ubiquitously expressed in developing skeletal muscle, cardiac muscle, placenta <xref ref-type="bibr" rid="pone.0040478-Davis1">[10]</xref> and caveolae-enriched buoyant lipid rafts in endothelial cells <xref ref-type="bibr" rid="pone.0040478-Bernatchez1">[20]</xref>. Interestingly, myoferlin shows developmental ‘switching’ in skeletal muscle as it is highly expressed in proliferating mononuclear cells and becomes downregulated with myogenic maturation <xref ref-type="bibr" rid="pone.0040478-Patel1">[54]</xref>, <xref ref-type="bibr" rid="pone.0040478-Kuru1">[55]</xref>. In contrast, dysferlin is expressed at low levels in proliferative myoblasts, and becomes robustly expressed in fused myotubes and in mature muscle <xref ref-type="bibr" rid="pone.0040478-Patel1">[54]</xref>. This suggests that myoferlin and dysferlin may possess both overlapping and specialized roles, with functional specialization related to distinct requirements of proliferative and differentiated cells. In our study, we found that myoferlin and to a limited extent dysferlin was expressed ubiquitously within basal, ciliated and mucus expressing cells within normal human airway epithelium. However our study does not investigate the expression and localization of myoferlin and dysferlin following epithelial proliferation or repair or the compensatory responses by other multiple C2 domain protein family members, in the absence of either protein. Future studies in our laboratory are aimed at unraveling the mechanisms by which myoferlin regulates ZO-1 expression during epithelial damage.</p>
+      <p>In conclusion, our study provides evidence that dysferlin and myoferlin are present in several cell types within the human airway. Furthermore, down-regulation of myoferlin in airway epithelial cells triggers loss of ZO-1 expression, cell shedding and apoptosis. These <italic>in vivo</italic> and <italic>in vitro</italic> data thus demonstrate that myoferlin in airway epithelial cells may play a role in maintaining epithelial homeostasis through trafficking of tight junction protein ZO-1. Future studies are required to understand the potential roles of myoferlin during epithelial repair.</p>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0040478.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.s001" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>Localization of dysferlin and myoferlin with GM130 in airway epithelial cells.</bold> 16HBE cells were grown to confluency on 8 well chamber slides and fixed for immunofluorescence analysis. Immunofluorescent staining for (A) dysferlin (<italic>red</italic>), (B) myoferlin (<italic>red</italic>), Golgi membrane marker GM130 (green), and nuclei stained with 4′,6-diamidino-2-phenylindole (<italic>blue</italic>) were used to examine the localization of dysferlin and myoferlin within the Golgi membrane. Scale bars are equal to 20 µm.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040478.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040478.s002" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p><bold>Myoferlin knockdown does not induce features of epithelial-mesenchymal transition.</bold> 16HBE cells were treated with control media (con), transfection control (TF con), scrambled siRNA (S), and (A) myoferlin siRNA at 50 nM, 75 nM and 100 nM for 72 hours. Total cell lysates were prepared to analyze the expressions of adherens junction molecule E-cadherin and fibronectin-EDA as demonstrated by the representative immuno blot from three independent experiments. HSP90 served as a loading control. (B) Densitometry analysis of band intensities for E-cadherin and (C) fibronectin-EDA normalized to HSP90 compared to the scrambled siRNA control (dotted line). Values are represented as mean (± SEM) of three independent experiments.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>The authors would like to acknowledge Andy Johnson at the multi-user ubc<italic>FLOW</italic> cytometry facility for his excellent technical advice and assistance.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0040478-Bi1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bi</surname><given-names>GQ</given-names></name><name name-style="western"><surname>Alderton</surname><given-names>JM</given-names></name><name name-style="western"><surname>Steinhardt</surname><given-names>RA</given-names></name></person-group>             <year>1995</year>             <article-title>Calcium-regulated exocytosis is required for cell membrane resealing.</article-title>             <source>J Cell Biol</source>             <volume>131</volume>             <fpage>1747</fpage>             <lpage>1758</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Washington1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Washington</surname><given-names>NL</given-names></name><name name-style="western"><surname>Ward</surname><given-names>S</given-names></name></person-group>             <year>2006</year>             <article-title>FER-1 regulates Ca2+ -mediated membrane fusion during C. elegans spermatogenesis.</article-title>             <source>Journal of cell science</source>             <volume>119</volume>             <fpage>2552</fpage>             <lpage>2562</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Steinhardt1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Steinhardt</surname><given-names>RA</given-names></name><name name-style="western"><surname>Bi</surname><given-names>G</given-names></name><name name-style="western"><surname>Alderton</surname><given-names>JM</given-names></name></person-group>             <year>1994</year>             <article-title>Cell membrane resealing by a vesicular mechanism similar to neurotransmitter release.</article-title>             <source>Science</source>             <volume>263</volume>             <fpage>390</fpage>             <lpage>393</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Ullrich1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ullrich</surname><given-names>B</given-names></name><name name-style="western"><surname>Li</surname><given-names>C</given-names></name><name name-style="western"><surname>Zhang</surname><given-names>JZ</given-names></name><name name-style="western"><surname>McMahon</surname><given-names>H</given-names></name><name name-style="western"><surname>Anderson</surname><given-names>RG</given-names></name><etal/></person-group>             <year>1994</year>             <article-title>Functional properties of multiple synaptotagmins in brain.</article-title>             <source>Neuron</source>             <volume>13</volume>             <fpage>1281</fpage>             <lpage>1291</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Bashir1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bashir</surname><given-names>R</given-names></name><name name-style="western"><surname>Britton</surname><given-names>S</given-names></name><name name-style="western"><surname>Strachan</surname><given-names>T</given-names></name><name name-style="western"><surname>Keers</surname><given-names>S</given-names></name><name name-style="western"><surname>Vafiadaki</surname><given-names>E</given-names></name><etal/></person-group>             <year>1998</year>             <article-title>A gene related to Caenorhabditis elegans spermatogenesis factor fer-1 is mutated in limb-girdle muscular dystrophy type 2B.</article-title>             <source>Nat Genet</source>             <volume>20</volume>             <fpage>37</fpage>             <lpage>42</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Liu1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Liu</surname><given-names>J</given-names></name><name name-style="western"><surname>Aoki</surname><given-names>M</given-names></name><name name-style="western"><surname>Illa</surname><given-names>I</given-names></name><name name-style="western"><surname>Wu</surname><given-names>C</given-names></name><name name-style="western"><surname>Fardeau</surname><given-names>M</given-names></name><etal/></person-group>             <year>1998</year>             <article-title>Dysferlin, a novel skeletal muscle gene, is mutated in Miyoshi myopathy and limb girdle muscular dystrophy.</article-title>             <source>Nat Genet</source>             <volume>20</volume>             <fpage>31</fpage>             <lpage>36</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Yasunaga1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yasunaga</surname><given-names>S</given-names></name><name name-style="western"><surname>Grati</surname><given-names>M</given-names></name><name name-style="western"><surname>Cohen-Salmon</surname><given-names>M</given-names></name><name name-style="western"><surname>El-Amraoui</surname><given-names>A</given-names></name><name name-style="western"><surname>Mustapha</surname><given-names>M</given-names></name><etal/></person-group>             <year>1999</year>             <article-title>A mutation in OTOF, encoding otoferlin, a FER-1-like protein, causes DFNB9, a nonsyndromic form of deafness.</article-title>             <source>Nat Genet</source>             <volume>21</volume>             <fpage>363</fpage>             <lpage>369</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Yasunaga2">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yasunaga</surname><given-names>S</given-names></name><name name-style="western"><surname>Grati</surname><given-names>M</given-names></name><name name-style="western"><surname>Chardenoux</surname><given-names>S</given-names></name><name name-style="western"><surname>Smith</surname><given-names>TN</given-names></name><name name-style="western"><surname>Friedman</surname><given-names>TB</given-names></name><etal/></person-group>             <year>2000</year>             <article-title>OTOF encodes multiple long and short isoforms: genetic evidence that the long ones underlie recessive deafness DFNB9.</article-title>             <source>Am J Hum Genet</source>             <volume>67</volume>             <fpage>591</fpage>             <lpage>600</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Britton1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Britton</surname><given-names>S</given-names></name><name name-style="western"><surname>Freeman</surname><given-names>T</given-names></name><name name-style="western"><surname>Vafiadaki</surname><given-names>E</given-names></name><name name-style="western"><surname>Keers</surname><given-names>S</given-names></name><name name-style="western"><surname>Harrison</surname><given-names>R</given-names></name><etal/></person-group>             <year>2000</year>             <article-title>The third human FER-1-like protein is highly similar to dysferlin.</article-title>             <source>Genomics</source>             <volume>68</volume>             <fpage>313</fpage>             <lpage>321</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Davis1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Davis</surname><given-names>DB</given-names></name><name name-style="western"><surname>Delmonte</surname><given-names>AJ</given-names></name><name name-style="western"><surname>Ly</surname><given-names>CT</given-names></name><name name-style="western"><surname>McNally</surname><given-names>EM</given-names></name></person-group>             <year>2000</year>             <article-title>Myoferlin, a candidate gene and potential modifier of muscular dystrophy.</article-title>             <source>Hum Mol Genet</source>             <volume>9</volume>             <fpage>217</fpage>             <lpage>226</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Lek1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lek</surname><given-names>A</given-names></name><name name-style="western"><surname>Lek</surname><given-names>M</given-names></name><name name-style="western"><surname>North</surname><given-names>KN</given-names></name><name name-style="western"><surname>Cooper</surname><given-names>ST</given-names></name></person-group>             <year>2010</year>             <article-title>Phylogenetic analysis of ferlin genes reveals ancient eukaryotic origins.</article-title>             <source>BMC evolutionary biology</source>             <volume>10</volume>             <fpage>231</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Posey1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Posey</surname><given-names>AD</given-names><suffix>Jr</suffix></name><name name-style="western"><surname>Pytel</surname><given-names>P</given-names></name><name name-style="western"><surname>Gardikiotes</surname><given-names>K</given-names></name><name name-style="western"><surname>Demonbreun</surname><given-names>AR</given-names></name><name name-style="western"><surname>Rainey</surname><given-names>M</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>Endocytic recycling proteins EHD1 and EHD2 interact with fer-1-like-5 (Fer1L5) and mediate myoblast fusion.</article-title>             <source>The Journal of biological chemistry</source>             <volume>286</volume>             <fpage>7379</fpage>             <lpage>7388</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Selcen1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Selcen</surname><given-names>D</given-names></name><name name-style="western"><surname>Stilling</surname><given-names>G</given-names></name><name name-style="western"><surname>Engel</surname><given-names>AG</given-names></name></person-group>             <year>2001</year>             <article-title>The earliest pathologic alterations in dysferlinopathy.</article-title>             <source>Neurology</source>             <volume>56</volume>             <fpage>1472</fpage>             <lpage>1481</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Doherty1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Doherty</surname><given-names>KR</given-names></name><name name-style="western"><surname>Cave</surname><given-names>A</given-names></name><name name-style="western"><surname>Davis</surname><given-names>DB</given-names></name><name name-style="western"><surname>Delmonte</surname><given-names>AJ</given-names></name><name name-style="western"><surname>Posey</surname><given-names>A</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>Normal myoblast fusion requires myoferlin.</article-title>             <source>Development</source>             <volume>132</volume>             <fpage>5565</fpage>             <lpage>5575</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Anderson1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Anderson</surname><given-names>LV</given-names></name><name name-style="western"><surname>Davison</surname><given-names>K</given-names></name><name name-style="western"><surname>Moss</surname><given-names>JA</given-names></name><name name-style="western"><surname>Young</surname><given-names>C</given-names></name><name name-style="western"><surname>Cullen</surname><given-names>MJ</given-names></name><etal/></person-group>             <year>1999</year>             <article-title>Dysferlin is a plasma membrane protein and is expressed early in human development.</article-title>             <source>Hum Mol Genet</source>             <volume>8</volume>             <fpage>855</fpage>             <lpage>861</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Vandre1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vandre</surname><given-names>DD</given-names></name><name name-style="western"><surname>Ackerman</surname><given-names>WEt</given-names></name><name name-style="western"><surname>Kniss</surname><given-names>DA</given-names></name><name name-style="western"><surname>Tewari</surname><given-names>AK</given-names></name><name name-style="western"><surname>Mori</surname><given-names>M</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Dysferlin is expressed in human placenta but does not associate with caveolin.</article-title>             <source>Biology of reproduction</source>             <volume>77</volume>             <fpage>533</fpage>             <lpage>542</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Izzedine1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Izzedine</surname><given-names>H</given-names></name><name name-style="western"><surname>Brocheriou</surname><given-names>I</given-names></name><name name-style="western"><surname>Eymard</surname><given-names>B</given-names></name><name name-style="western"><surname>Le Charpentier</surname><given-names>M</given-names></name><name name-style="western"><surname>Romero</surname><given-names>NB</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Loss of podocyte dysferlin expression is associated with minimal change nephropathy.</article-title>             <source>American journal of kidney diseases : the official journal of the National Kidney Foundation</source>             <volume>48</volume>             <fpage>143</fpage>             <lpage>150</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Hochmeister1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hochmeister</surname><given-names>S</given-names></name><name name-style="western"><surname>Grundtner</surname><given-names>R</given-names></name><name name-style="western"><surname>Bauer</surname><given-names>J</given-names></name><name name-style="western"><surname>Engelhardt</surname><given-names>B</given-names></name><name name-style="western"><surname>Lyck</surname><given-names>R</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Dysferlin is a new marker for leaky brain blood vessels in multiple sclerosis.</article-title>             <source>Journal of neuropathology and experimental neurology</source>             <volume>65</volume>             <fpage>855</fpage>             <lpage>865</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Sharma1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sharma</surname><given-names>A</given-names></name><name name-style="western"><surname>Yu</surname><given-names>C</given-names></name><name name-style="western"><surname>Leung</surname><given-names>C</given-names></name><name name-style="western"><surname>Trane</surname><given-names>A</given-names></name><name name-style="western"><surname>Lau</surname><given-names>M</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>A new role for the muscle repair protein dysferlin in endothelial cell adhesion and angiogenesis.</article-title>             <source>Arterioscler Thromb Vasc Biol</source>             <volume>30</volume>             <fpage>2196</fpage>             <lpage>2204</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Bernatchez1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bernatchez</surname><given-names>PN</given-names></name><name name-style="western"><surname>Acevedo</surname><given-names>L</given-names></name><name name-style="western"><surname>Fernandez-Hernando</surname><given-names>C</given-names></name><name name-style="western"><surname>Murata</surname><given-names>T</given-names></name><name name-style="western"><surname>Chalouni</surname><given-names>C</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Myoferlin regulates vascular endothelial growth factor receptor-2 stability and function.</article-title>             <source>J Biol Chem</source>             <volume>282</volume>             <fpage>30745</fpage>             <lpage>30753</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Hackett1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hackett</surname><given-names>TL</given-names></name><name name-style="western"><surname>Shaheen</surname><given-names>F</given-names></name><name name-style="western"><surname>Johnson</surname><given-names>A</given-names></name><name name-style="western"><surname>Wadsworth</surname><given-names>S</given-names></name><name name-style="western"><surname>Pechkovsky</surname><given-names>DV</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Characterization of side population cells from human airway epithelium.</article-title>             <source>Stem Cells</source>             <volume>26</volume>             <fpage>2576</fpage>             <lpage>2585</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Hackett2">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hackett</surname><given-names>TL</given-names></name><name name-style="western"><surname>Warner</surname><given-names>SM</given-names></name><name name-style="western"><surname>Stefanowicz</surname><given-names>D</given-names></name><name name-style="western"><surname>Shaheen</surname><given-names>F</given-names></name><name name-style="western"><surname>Pechkovsky</surname><given-names>DV</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Induction of epithelial-mesenchymal transition in primary airway epithelial cells from patients with asthma by transforming growth factor-beta1.</article-title>             <source>Am J Respir Crit Care Med</source>             <volume>180</volume>             <fpage>122</fpage>             <lpage>133</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Pechkovsky1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Pechkovsky</surname><given-names>DV</given-names></name><name name-style="western"><surname>Hackett</surname><given-names>TL</given-names></name><name name-style="western"><surname>An</surname><given-names>SS</given-names></name><name name-style="western"><surname>Shaheen</surname><given-names>F</given-names></name><name name-style="western"><surname>Murray</surname><given-names>LA</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Human lung parenchyma but not proximal bronchi produces fibroblasts with enhanced TGF-beta signaling and alpha-SMA expression.</article-title>             <source>Am J Respir Cell Mol Biol</source>             <volume>43</volume>             <fpage>641</fpage>             <lpage>651</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Gruenert1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Gruenert</surname><given-names>DC</given-names></name><name name-style="western"><surname>Finkbeiner</surname><given-names>WE</given-names></name><name name-style="western"><surname>Widdicombe</surname><given-names>JH</given-names></name></person-group>             <year>1995</year>             <article-title>Culture and transformation of human airway epithelial cells.</article-title>             <source>Am J Physiol</source>             <volume>268</volume>             <fpage>L347</fpage>             <lpage>360</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Sharma2">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sharma</surname><given-names>A</given-names></name><name name-style="western"><surname>Yu</surname><given-names>C</given-names></name><name name-style="western"><surname>Leung</surname><given-names>C</given-names></name><name name-style="western"><surname>Trane</surname><given-names>A</given-names></name><name name-style="western"><surname>Lau</surname><given-names>M</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>A new role for the muscle repair protein dysferlin in endothelial cell adhesion and angiogenesis.</article-title>             <source>Arterioscler Thromb Vasc Biol</source>             <volume>30</volume>             <fpage>2196</fpage>             <lpage>2204</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-HernandezDeviez1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hernandez-Deviez</surname><given-names>DJ</given-names></name><name name-style="western"><surname>Martin</surname><given-names>S</given-names></name><name name-style="western"><surname>Laval</surname><given-names>SH</given-names></name><name name-style="western"><surname>Lo</surname><given-names>HP</given-names></name><name name-style="western"><surname>Cooper</surname><given-names>ST</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Aberrant dysferlin trafficking in cells lacking caveolin or expressing dystrophy mutants of caveolin-3.</article-title>             <source>Hum Mol Genet</source>             <volume>15</volume>             <fpage>129</fpage>             <lpage>142</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Bernatchez2">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bernatchez</surname><given-names>PN</given-names></name><name name-style="western"><surname>Sharma</surname><given-names>A</given-names></name><name name-style="western"><surname>Kodaman</surname><given-names>P</given-names></name><name name-style="western"><surname>Sessa</surname><given-names>WC</given-names></name></person-group>             <year>2009</year>             <article-title>Myoferlin is critical for endocytosis in endothelial cells.</article-title>             <source>Am J Physiol Cell Physiol</source>             <volume>297</volume>             <fpage>C484</fpage>             <lpage>492</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Yoshimori1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yoshimori</surname><given-names>T</given-names></name><name name-style="western"><surname>Keller</surname><given-names>P</given-names></name><name name-style="western"><surname>Roth</surname><given-names>MG</given-names></name><name name-style="western"><surname>Simons</surname><given-names>K</given-names></name></person-group>             <year>1996</year>             <article-title>Different biosynthetic transport routes to the plasma membrane in BHK and CHO cells.</article-title>             <source>The Journal of cell biology</source>             <volume>133</volume>             <fpage>247</fpage>             <lpage>256</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Keller1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Keller</surname><given-names>P</given-names></name><name name-style="western"><surname>Simons</surname><given-names>K</given-names></name></person-group>             <year>1997</year>             <article-title>Post-Golgi biosynthetic trafficking.</article-title>             <source>Journal of cell science 110 (Pt</source>             <volume>24)</volume>             <fpage>3001</fpage>             <lpage>3009</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Mostov1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Mostov</surname><given-names>KE</given-names></name><name name-style="western"><surname>Verges</surname><given-names>M</given-names></name><name name-style="western"><surname>Altschuler</surname><given-names>Y</given-names></name></person-group>             <year>2000</year>             <article-title>Membrane traffic in polarized epithelial cells.</article-title>             <source>Current opinion in cell biology</source>             <volume>12</volume>             <fpage>483</fpage>             <lpage>490</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Bennett1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bennett</surname><given-names>V</given-names></name><name name-style="western"><surname>Healy</surname><given-names>J</given-names></name></person-group>             <year>2008</year>             <article-title>Organizing the fluid membrane bilayer: diseases linked to spectrin and ankyrin.</article-title>             <source>Trends in molecular medicine</source>             <volume>14</volume>             <fpage>28</fpage>             <lpage>36</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Folsch1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Folsch</surname><given-names>H</given-names></name></person-group>             <year>2008</year>             <article-title>Regulation of membrane trafficking in polarized epithelial cells.</article-title>             <source>Current opinion in cell biology</source>             <volume>20</volume>             <fpage>208</fpage>             <lpage>213</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Grosshans1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Grosshans</surname><given-names>BL</given-names></name><name name-style="western"><surname>Ortiz</surname><given-names>D</given-names></name><name name-style="western"><surname>Novick</surname><given-names>P</given-names></name></person-group>             <year>2006</year>             <article-title>Rabs and their effectors: achieving specificity in membrane traffic.</article-title>             <source>Proceedings of the National Academy of Sciences of the United States of America</source>             <volume>103</volume>             <fpage>11821</fpage>             <lpage>11827</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Rothman1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rothman</surname><given-names>JE</given-names></name></person-group>             <year>1994</year>             <article-title>Mechanisms of intracellular protein transport.</article-title>             <source>Nature</source>             <volume>372</volume>             <fpage>55</fpage>             <lpage>63</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Beurg1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Beurg</surname><given-names>M</given-names></name><name name-style="western"><surname>Safieddine</surname><given-names>S</given-names></name><name name-style="western"><surname>Roux</surname><given-names>I</given-names></name><name name-style="western"><surname>Bouleau</surname><given-names>Y</given-names></name><name name-style="western"><surname>Petit</surname><given-names>C</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Calcium- and otoferlin-dependent exocytosis by immature outer hair cells.</article-title>             <source>The Journal of neuroscience : the official journal of the Society for Neuroscience</source>             <volume>28</volume>             <fpage>1798</fpage>             <lpage>1803</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Sutton1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sutton</surname><given-names>RB</given-names></name><name name-style="western"><surname>Davletov</surname><given-names>BA</given-names></name><name name-style="western"><surname>Berghuis</surname><given-names>AM</given-names></name><name name-style="western"><surname>Sudhof</surname><given-names>TC</given-names></name><name name-style="western"><surname>Sprang</surname><given-names>SR</given-names></name></person-group>             <year>1995</year>             <article-title>Structure of the first C2 domain of synaptotagmin I: a novel Ca2+/phospholipid-binding fold.</article-title>             <source>Cell</source>             <volume>80</volume>             <fpage>929</fpage>             <lpage>938</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Sudhof1">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sudhof</surname><given-names>TC</given-names></name><name name-style="western"><surname>Rizo</surname><given-names>J</given-names></name></person-group>             <year>1996</year>             <article-title>Synaptotagmins: C2-domain proteins that regulate membrane traffic.</article-title>             <source>Neuron</source>             <volume>17</volume>             <fpage>379</fpage>             <lpage>388</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Robinson1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Robinson</surname><given-names>JM</given-names></name><name name-style="western"><surname>Ackerman</surname><given-names>WEt</given-names></name><name name-style="western"><surname>Behrendt</surname><given-names>NJ</given-names></name><name name-style="western"><surname>Vandre</surname><given-names>DD</given-names></name></person-group>             <year>2009</year>             <article-title>While dysferlin and myoferlin are coexpressed in the human placenta, only dysferlin expression is responsive to trophoblast fusion in model systems.</article-title>             <source>Biol Reprod</source>             <volume>81</volume>             <fpage>33</fpage>             <lpage>39</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Matsuda1">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Matsuda</surname><given-names>C</given-names></name><name name-style="western"><surname>Hayashi</surname><given-names>YK</given-names></name><name name-style="western"><surname>Ogawa</surname><given-names>M</given-names></name><name name-style="western"><surname>Aoki</surname><given-names>M</given-names></name><name name-style="western"><surname>Murayama</surname><given-names>K</given-names></name><etal/></person-group>             <year>2001</year>             <article-title>The sarcolemmal proteins dysferlin and caveolin-3 interact in skeletal muscle.</article-title>             <source>Hum Mol Genet</source>             <volume>10</volume>             <fpage>1761</fpage>             <lpage>1766</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Watson1">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Watson</surname><given-names>AJ</given-names></name><name name-style="western"><surname>Chu</surname><given-names>S</given-names></name><name name-style="western"><surname>Sieck</surname><given-names>L</given-names></name><name name-style="western"><surname>Gerasimenko</surname><given-names>O</given-names></name><name name-style="western"><surname>Bullen</surname><given-names>T</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>Epithelial barrier function in vivo is sustained despite gaps in epithelial layers.</article-title>             <source>Gastroenterology</source>             <volume>129</volume>             <fpage>902</fpage>             <lpage>912</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Baron1">
+        <label>41</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Baron</surname><given-names>DA</given-names></name><name name-style="western"><surname>Miller</surname><given-names>DH</given-names></name></person-group>             <year>1990</year>             <article-title>Extrusion of colonic epithelial cells in vitro.</article-title>             <source>Journal of electron microscopy technique</source>             <volume>16</volume>             <fpage>15</fpage>             <lpage>24</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Bullen1">
+        <label>42</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bullen</surname><given-names>TF</given-names></name><name name-style="western"><surname>Forrest</surname><given-names>S</given-names></name><name name-style="western"><surname>Campbell</surname><given-names>F</given-names></name><name name-style="western"><surname>Dodson</surname><given-names>AR</given-names></name><name name-style="western"><surname>Hershman</surname><given-names>MJ</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Characterization of epithelial cell shedding from human small intestine.</article-title>             <source>Laboratory investigation; a journal of technical methods and pathology</source>             <volume>86</volume>             <fpage>1052</fpage>             <lpage>1063</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Jinguji1">
+        <label>43</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Jinguji</surname><given-names>Y</given-names></name><name name-style="western"><surname>Ishikawa</surname><given-names>H</given-names></name></person-group>             <year>1992</year>             <article-title>Electron microscopic observations on the maintenance of the tight junction during cell division in the epithelium of the mouse small intestine.</article-title>             <source>Cell structure and function</source>             <volume>17</volume>             <fpage>27</fpage>             <lpage>37</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Marchiando1">
+        <label>44</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Marchiando</surname><given-names>AM</given-names></name><name name-style="western"><surname>Shen</surname><given-names>L</given-names></name><name name-style="western"><surname>Graham</surname><given-names>WV</given-names></name><name name-style="western"><surname>Edelblum</surname><given-names>KL</given-names></name><name name-style="western"><surname>Duckworth</surname><given-names>CA</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>The epithelial barrier is maintained by in vivo tight junction expansion during pathologic intestinal epithelial shedding.</article-title>             <source>Gastroenterology 140: 1208–1218 e1201–1202</source>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Anderson2">
+        <label>45</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Anderson</surname><given-names>JM</given-names></name><name name-style="western"><surname>Van Itallie</surname><given-names>CM</given-names></name><name name-style="western"><surname>Peterson</surname><given-names>MD</given-names></name><name name-style="western"><surname>Stevenson</surname><given-names>BR</given-names></name><name name-style="western"><surname>Carew</surname><given-names>EA</given-names></name><etal/></person-group>             <year>1989</year>             <article-title>ZO-1 mRNA and protein expression during tight junction assembly in Caco-2 cells.</article-title>             <source>The Journal of cell biology</source>             <volume>109</volume>             <fpage>1047</fpage>             <lpage>1056</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Siliciano1">
+        <label>46</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Siliciano</surname><given-names>JD</given-names></name><name name-style="western"><surname>Goodenough</surname><given-names>DA</given-names></name></person-group>             <year>1988</year>             <article-title>Localization of the tight junction protein, ZO-1, is modulated by extracellular calcium and cell-cell contact in Madin-Darby canine kidney epithelial cells.</article-title>             <source>The Journal of cell biology</source>             <volume>107</volume>             <fpage>2389</fpage>             <lpage>2399</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Takei1">
+        <label>47</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Takei</surname><given-names>K</given-names></name><name name-style="western"><surname>McPherson</surname><given-names>PS</given-names></name><name name-style="western"><surname>Schmid</surname><given-names>SL</given-names></name><name name-style="western"><surname>De Camilli</surname><given-names>P</given-names></name></person-group>             <year>1995</year>             <article-title>Tubular membrane invaginations coated by dynamin rings are induced by GTP-gamma S in nerve terminals.</article-title>             <source>Nature</source>             <volume>374</volume>             <fpage>186</fpage>             <lpage>190</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Hinshaw1">
+        <label>48</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hinshaw</surname><given-names>JE</given-names></name><name name-style="western"><surname>Schmid</surname><given-names>SL</given-names></name></person-group>             <year>1995</year>             <article-title>Dynamin self-assembles into rings suggesting a mechanism for coated vesicle budding.</article-title>             <source>Nature</source>             <volume>374</volume>             <fpage>190</fpage>             <lpage>192</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Arakawa1">
+        <label>49</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Arakawa</surname><given-names>Y</given-names></name><name name-style="western"><surname>Kajino</surname><given-names>K</given-names></name><name name-style="western"><surname>Kano</surname><given-names>S</given-names></name><name name-style="western"><surname>Tobita</surname><given-names>H</given-names></name><name name-style="western"><surname>Hayashi</surname><given-names>J</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>Transcription of dbpA, a Y box binding protein, is positively regulated by E2F1: implications in hepatocarcinogenesis.</article-title>             <source>Biochemical and biophysical research communications</source>             <volume>322</volume>             <fpage>297</fpage>             <lpage>302</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Matter1">
+        <label>50</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Matter</surname><given-names>K</given-names></name><name name-style="western"><surname>Balda</surname><given-names>MS</given-names></name></person-group>             <year>2007</year>             <article-title>Epithelial tight junctions, gene expression and nucleo-junctional interplay.</article-title>             <source>Journal of cell science</source>             <volume>120</volume>             <fpage>1505</fpage>             <lpage>1511</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Balda1">
+        <label>51</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Balda</surname><given-names>MS</given-names></name><name name-style="western"><surname>Matter</surname><given-names>K</given-names></name></person-group>             <year>2000</year>             <article-title>The tight junction protein ZO-1 and an interacting transcription factor regulate ErbB-2 expression.</article-title>             <source>The EMBO journal</source>             <volume>19</volume>             <fpage>2024</fpage>             <lpage>2033</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Balda2">
+        <label>52</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Balda</surname><given-names>MS</given-names></name><name name-style="western"><surname>Garrett</surname><given-names>MD</given-names></name><name name-style="western"><surname>Matter</surname><given-names>K</given-names></name></person-group>             <year>2003</year>             <article-title>The ZO-1-associated Y-box factor ZONAB regulates epithelial cell proliferation and cell density.</article-title>             <source>The Journal of cell biology</source>             <volume>160</volume>             <fpage>423</fpage>             <lpage>432</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Sourisseau1">
+        <label>53</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sourisseau</surname><given-names>T</given-names></name><name name-style="western"><surname>Georgiadis</surname><given-names>A</given-names></name><name name-style="western"><surname>Tsapara</surname><given-names>A</given-names></name><name name-style="western"><surname>Ali</surname><given-names>RR</given-names></name><name name-style="western"><surname>Pestell</surname><given-names>R</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Regulation of PCNA and cyclin D1 expression and epithelial morphogenesis by the ZO-1-regulated transcription factor ZONAB/DbpA.</article-title>             <source>Molecular and cellular biology</source>             <volume>26</volume>             <fpage>2387</fpage>             <lpage>2398</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Patel1">
+        <label>54</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Patel</surname><given-names>P</given-names></name><name name-style="western"><surname>Harris</surname><given-names>R</given-names></name><name name-style="western"><surname>Geddes</surname><given-names>SM</given-names></name><name name-style="western"><surname>Strehle</surname><given-names>EM</given-names></name><name name-style="western"><surname>Watson</surname><given-names>JD</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Solution structure of the inner DysF domain of myoferlin and implications for limb girdle muscular dystrophy type 2b.</article-title>             <source>Journal of molecular biology</source>             <volume>379</volume>             <fpage>981</fpage>             <lpage>990</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040478-Kuru1">
+        <label>55</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kuru</surname><given-names>S</given-names></name><name name-style="western"><surname>Yasuma</surname><given-names>F</given-names></name><name name-style="western"><surname>Wakayama</surname><given-names>T</given-names></name><name name-style="western"><surname>Kimura</surname><given-names>S</given-names></name><name name-style="western"><surname>Konagaya</surname><given-names>M</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>[A patient with limb girdle muscular dystrophy type 2B (LGMD2B) manifesting cardiomyopathy].</article-title>             <source>Rinsho shinkeigaku  =  Clinical neurology</source>             <volume>44</volume>             <fpage>375</fpage>             <lpage>378</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

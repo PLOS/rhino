@@ -138,5 +138,8 @@ ARTICLES_FOR_TNG53 = [
 
 to_use = []  # Change this to hard-code behavior
 
-for doi in to_use:
+for n, doi in enumerate(to_use):
+    print()
+    print("Completed {0} of {1}".format(n, len(to_use)))
+    print()
     make_zip(doi)

@@ -1,0 +1,1142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-12-14899</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0045847</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Biochemistry</subject>
+            <subj-group>
+              <subject>Proteins</subject>
+              <subj-group>
+                <subject>Protein structure</subject>
+                <subject>Structural proteins</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Macromolecular assemblies</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Macromolecular structure analysis</subject>
+              <subj-group>
+                <subject>Protein structure</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Developmental biology</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Microbiology</subject>
+            <subj-group>
+              <subject>Archaeans</subject>
+              <subj-group>
+                <subject>Archaeal biochemistry</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Virology</subject>
+              <subj-group>
+                <subject>Viral classification</subject>
+                <subj-group>
+                  <subject>DNA viruses</subject>
+                </subj-group>
+              </subj-group>
+              <subj-group>
+                <subject>Viral structure</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Virology</subject>
+          <subject>Microbiology</subject>
+          <subject>Computational Biology</subject>
+          <subject>Developmental Biology</subject>
+          <subject>Biochemistry</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Crystal Structure of ATV<sup><italic>ORF</italic>273</sup>, a New Fold for a Thermo- and Acido-Stable Protein from the <italic>Acidianus</italic> Two-Tailed Virus</article-title><alt-title alt-title-type="running-head">Structure of ATV<sup><italic>ORF</italic>273</sup></alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Felisberto-Rodrigues</surname>
+            <given-names>Catarina</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Blangy</surname>
+            <given-names>Stéphanie</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Goulet</surname>
+            <given-names>Adeline</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="fn" rid="fn1">
+            <sup>¤</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Vestergaard</surname>
+            <given-names>Gisle</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Cambillau</surname>
+            <given-names>Christian</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Garrett</surname>
+            <given-names>Roger A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Ortiz-Lombardía</surname>
+            <given-names>Miguel</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">
+        <label>1</label>
+        <addr-line>CNRS, Aix-Marseille Université, AFMB, UMR 7257, Campus de Luminy, Marseille, France</addr-line>
+      </aff><aff id="aff2">
+        <label>2</label>
+        <addr-line>Archaea Centre, Department of Biology, University of Copenhagen, Copenhagen, Denmark</addr-line>
+      </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Srinivasan</surname>
+            <given-names>Narayanaswamy</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">
+        <addr-line>Indian Institute of Science, India</addr-line>
+      </aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">miguel.ortiz-lombardia@afmb.univ-mrs.fr</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: CFR MOL CC. Performed the experiments: CFR SB AG GV. Analyzed the data: CFR MOL CC RAG. Wrote the paper: MOL CFR RAG CC.</p>
+        </fn>
+        <fn fn-type="current-aff" id="fn1">
+          <label>¤</label>
+          <p>Current address: Birkbeck College, Institute for Structural and Molecular Biology, Department of Crystallography, London, United Kingdom</p>
+        </fn>
+      </author-notes><pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>8</day>
+        <month>10</month>
+        <year>2012</year>
+      </pub-date><volume>7</volume><issue>10</issue><elocation-id>e45847</elocation-id><history>
+        <date date-type="received">
+          <day>24</day>
+          <month>5</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>23</day>
+          <month>8</month>
+          <year>2012</year>
+        </date>
+      </history><permissions>
+        
+        <copyright-holder>Felisberto-Rodrigues et al</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions><abstract>
+        <p><italic>Acidianus</italic> two-tailed virus (ATV) infects crenarchaea of the genus <italic>Acidianus</italic> living in terrestrial thermal springs at extremely high temperatures and low pH. ATV is a member of the <italic>Bicaudaviridae</italic> virus family and undergoes extra-cellular development of two tails, a process that is unique in the viral world. To understand this intriguing phenomenon, we have undertaken structural studies of ATV virion proteins and here we present the crystal structure of one of these proteins, ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e001" xlink:type="simple"/></inline-formula>. ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e002" xlink:type="simple"/></inline-formula> forms tetramers in solution and a molecular envelope is provided for the tetramer, computed from small-angle X-ray scattering (SAXS) data. The crystal structure has properties typical of hyperthermostable proteins, including a relatively high number of salt bridges. However, the protein also exhibits flexible loops and surface pockets. Remarkably, ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e003" xlink:type="simple"/></inline-formula> displays a new <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e004" xlink:type="simple"/></inline-formula> protein fold, consistent with the absence of homologues of this protein in public sequence databases.</p>
+      </abstract><funding-group>
+        <funding-statement>C.F.-R. was funded by a doctoral fellowship from the Fundação para a Ciência e a Tecnologia (<ext-link ext-link-type="uri" xlink:href="http://www.fct.pt/" xlink:type="simple">http://www.fct.pt/</ext-link>), Portugal (SFRH/BD/44380/2008). The Ville de Marseille (<ext-link ext-link-type="uri" xlink:href="http://www.marseille.fr" xlink:type="simple">http://www.marseille.fr</ext-link>) provided a financial installation aid to M.O.-L. The Archaea Centre, Copenhagen was supported by a grant from the Danish Natural Science Research Council. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group><counts>
+        <page-count count="10"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Viruses are key components of biogeochemical cycles: they are the most abundant biological entities in the oceans <xref ref-type="bibr" rid="pone.0045847-Bergh1">[1]</xref> and probably on the planet. Thus, it has been estimated that every day, viruses kill about 20% of the oceanic biomass <xref ref-type="bibr" rid="pone.0045847-Suttle1">[2]</xref>. Viruses also represent a major genetic asset for the biosphere. Indeed, all organisms from each Domain of Life are likely to be infected by viruses. Although viruses infecting archaea are known since the early 1970s <xref ref-type="bibr" rid="pone.0045847-Torsvik1">[3]</xref>, they have only been studied in detail very recently. The notion that these viruses constitute a variety of bacteriophages with head and tail (Caudovirales), reinforced by the initial findings, was challenged by the analyses of samples isolated by Zillig and co-workers from extreme environments, rich in hyperthermophilic archaea, including the Icelandic solfatara <xref ref-type="bibr" rid="pone.0045847-Zillig1">[4]</xref>. These analyses revealed the presence of a large diversity of viral morphotypes, including viruses of linear, spindle-shaped, spherical and more exotic forms, such as drops and bottle-shapes. These viruses infect archaea living in such extreme environments, which mostly belong to the crenarchaeal orders Sulfolobales and Thermoproteales. They have been classified into eight viral families, primarily on the basis of their unusual morphotypes, subsequently backed by genomic analyses with a few viruses remaining unclassified.</p>
+      <p>Generally, crenarchaeal viruses display non-lytic life cycles, a strategy that would allow them to minimise contact to the extreme conditions of their environment. With the exception of the recently discovered <italic>Aeropyrum</italic> coil-shaped virus (ACV) <xref ref-type="bibr" rid="pone.0045847-Mochizuki1">[5]</xref>, which has a single-stranded DNA genome, crenarchaeal viruses present double-stranded DNA genomes. Examination of the genomic sequences obtained so far shows that most of these viruses are unrelated to any other known viruses and that they probably have different evolutionary origins <xref ref-type="bibr" rid="pone.0045847-Prangishvili1">[6]</xref>. In spite of their interest from an evolutionary viewpoint, the biology of crenarchaeal viruses remains largely unexplored. This situation mirrors the fact that between 50% and 90% of the open reading frames (ORFs) predicted in the genomes of these viruses have no unambiguous functional annotations <xref ref-type="bibr" rid="pone.0045847-Prangishvili1">[6]</xref>. Structural analysis has been a useful tool for establishing evolutionary relationships amongst viruses <xref ref-type="bibr" rid="pone.0045847-Abrescia1">[7]</xref>, especially those infecting Archaea <xref ref-type="bibr" rid="pone.0045847-Prangishvili2">[8]</xref>. In the absence of sequence similarity to annotated proteins, structure similarity might provide insights into protein function <xref ref-type="bibr" rid="pone.0045847-Goulet1">[9]</xref>. Thus, we have worked on the structure determination of selected function–orphan crenarchaeal viral proteins with a view to obtain clues to their biological function <xref ref-type="bibr" rid="pone.0045847-Goulet1">[9]</xref>–<xref ref-type="bibr" rid="pone.0045847-Goulet5">[13]</xref>.</p>
+      <p>The <italic>Acidianus</italic> two-tailed virus (ATV) was originally discovered in 2003 in Pozzuoli, Italy. It was isolated from a spring with temperatures higher than 85°C and at a pH of 1.5, where its host, the crenarchaeon <italic>Acidianus convivator</italic>, thrives <xref ref-type="bibr" rid="pone.0045847-Hring1">[14]</xref>, <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref>. ATV is a member of the <italic>Bicaudaviridae</italic> family of crenarchaeal viruses. It has a circular double-stranded DNA genome of 62,730 base pairs, including 72 predicted open reading frames (ORFs), most without <italic>bona fide</italic> homologues in public sequence databases. Exceptionally for a crenarchaeal virus, ATV is known to undergo both lysogenic and lytic life cycles. Lysogeny can be interrupted and transformed into a lytic pathway by environmental stress factors. For example, ATV lytic propagation can be induced by lowering the temperature of the cultures from 85°C to 75°C <xref ref-type="bibr" rid="pone.0045847-Hring1">[14]</xref>.</p>
+      <p>Released ATV virions are initially spindle-shaped particles. At striking variance with all other known viruses, ATV undergoes an extracellular morphological transformation: between one hour and a few days, two tails develop irreversibly at each end of the particle. Tail development seems to depend solely on temperature, which must be close to that of the host's habitat (75°C to 90°C) <xref ref-type="bibr" rid="pone.0045847-Hring1">[14]</xref>. Although infection of host cells by ATV has not yet been directly observed, it is possible that the tails facilitate or mediate the attachment of virions to host membranes.</p>
+      <p>The mechanism behind ATV's ability to grow bipolar tails has yet to be understood. At least 11 proteins have been identified in ATV virion preparations <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref>. ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e005" xlink:type="simple"/></inline-formula> is the fourth most abundant of these proteins <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref>. Notably, ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e006" xlink:type="simple"/></inline-formula> has no homologues in the distantly related virus <italic>Sulfolobus tengchongensis</italic> Spindle-shaped Virus 1 (STSV1), a virus that does not undergo cell–independent tail development <xref ref-type="bibr" rid="pone.0045847-Xiang1">[16]</xref>. To gain insight into this unique biological phenomenon, we have characterised the structure and the behaviour in solution of the ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e007" xlink:type="simple"/></inline-formula> protein.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results and Discussion</title>
+      <sec id="s2a">
+        <title>ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e008" xlink:type="simple"/></inline-formula> structure belongs to a new fold</title>
+        <p>ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e009" xlink:type="simple"/></inline-formula> is an acidic protein (theoretical pI = 4.8) with a molar mass of 32154 Da. This protein (UniProt:Q3V4T6) was isolated from ATV virions and identified by N<sup>′</sup>-terminal Edman degradation from an SDS-PAGE band migrating with an apparent molecular weight of 38 kDa <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref>. All the work reported here was carried out using a recombinant ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e010" xlink:type="simple"/></inline-formula> protein (molar mass 32977 Da, theoretical pI = 5.0) expressed in <italic>E. coli</italic> T7 Iq pLysS cells (New England Biolabs). Recombinant ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e011" xlink:type="simple"/></inline-formula> migrates on SDS polyacrylamide gels with an apparent 39 kDa molecular weight.</p>
+        <p>Two crystal forms of recombinant ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e012" xlink:type="simple"/></inline-formula> were obtained belonging to the tetragonal space group <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e013" xlink:type="simple"/></inline-formula> but with different cell parameters (<xref ref-type="table" rid="pone-0045847-t001">Table 1</xref>). Crystals of the first form diffracted to 3.85 Å resolution and included one monomer in the asymmetric unit. The crystals of the second form reached a 2.15 Å diffraction limit and comprised two monomers in its asymmetric unit. Since ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e014" xlink:type="simple"/></inline-formula> contains a single, N<sup>′</sup>-terminal methionine a triple mutant introducing three methionine residues was produced to facilitate SeSAD phasing. Thus, residues Leu31, Leu117 and Leu240 were selected for mutation into methionines based on their similar properties (bulky, hydrophobic) and on their predicted positioning in ordered <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e015" xlink:type="simple"/></inline-formula>-helices by PSIPRED <xref ref-type="bibr" rid="pone.0045847-Buchan1">[17]</xref>. The SeMet substituted triple mutant protein ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e016" xlink:type="simple"/></inline-formula> was also produced in <italic>E. coli</italic>, purified, and the incorporation of SeMet was checked by mass spectrometry. The SeMet protein produced crystals of the second form with cell parameters isomorphous to those of the corresponding native crystals (<xref ref-type="table" rid="pone-0045847-t001">Table 1</xref>).</p>
+        <table-wrap id="pone-0045847-t001" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0045847.t001</object-id><label>Table 1</label><caption>
+            <title>Summary of data collection, phasing and refinement statistics.</title>
+          </caption><alternatives>
+            <graphic id="pone-0045847-t001-1" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1">Form 1</td>
+                  <td align="left" colspan="1" rowspan="1"><italic>native</italic> Form 2</td>
+                  <td align="left" colspan="1" rowspan="1"><italic>SeSAD</italic> Form 2</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>PDB code</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4ats</td>
+                  <td align="left" colspan="1" rowspan="1">4art</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Data collection</bold>
+                    <xref ref-type="table-fn" rid="nt101">a</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Beamline (synchrotron)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">ID14eh4 (ESRF)</td>
+                  <td align="left" colspan="1" rowspan="1">ID29 (ESRF)</td>
+                  <td align="left" colspan="1" rowspan="1">Proxima1 (Soleil)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Wavelength (Å)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.1810</td>
+                  <td align="left" colspan="1" rowspan="1">0.9184</td>
+                  <td align="left" colspan="1" rowspan="1">0.9791</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Space group</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e017" xlink:type="simple"/></inline-formula>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e018" xlink:type="simple"/></inline-formula>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e019" xlink:type="simple"/></inline-formula>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Unit cell axes (Å)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">a = b = 101.0, c = 53.0</td>
+                  <td align="left" colspan="1" rowspan="1">a = b = 78.6, c = 189.4</td>
+                  <td align="left" colspan="1" rowspan="1">a = b = 78.9, c = 188.9</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Resolution (Å)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">71.43 – 3.85 (3.86 – 3.85)</td>
+                  <td align="left" colspan="1" rowspan="1">50.00 – 2.15 (2.20 – 2.15)</td>
+                  <td align="left" colspan="1" rowspan="1">45.00 – 2.77 (2.85 – 2.77)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Unique reflections</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">2843</td>
+                  <td align="left" colspan="1" rowspan="1">32549</td>
+                  <td align="left" colspan="1" rowspan="1">28786</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Multiplicity</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">11.0 (11.9)</td>
+                  <td align="left" colspan="1" rowspan="1">12.8 (13.4)</td>
+                  <td align="left" colspan="1" rowspan="1">7.6 (7.2)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Completeness (%)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">98.6 (100.0)</td>
+                  <td align="left" colspan="1" rowspan="1">97.9 (99.9)</td>
+                  <td align="left" colspan="1" rowspan="1">99.8 (98.1)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e020" xlink:type="simple"/></inline-formula>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">20.5 (6.8)</td>
+                  <td align="left" colspan="1" rowspan="1">24.0 (3.7)</td>
+                  <td align="left" colspan="1" rowspan="1">16.9 (3.1)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>R</bold>
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e021" xlink:type="simple"/></inline-formula>
+                    <xref ref-type="table-fn" rid="nt102">b</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">15.1 (65.9)</td>
+                  <td align="left" colspan="1" rowspan="1">7.7 (77.4)</td>
+                  <td align="left" colspan="1" rowspan="1">10.0 (74.4)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Phasing</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Anom. corr. (%)</bold>
+                    <xref ref-type="table-fn" rid="nt103">c</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1">44 (3.74)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Phasing power</bold>
+                    <xref ref-type="table-fn" rid="nt104">d</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1">1.01 (3.74)</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Refinement</bold>
+                    <xref ref-type="table-fn" rid="nt101">a</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Reflections used</bold>
+                    <xref ref-type="table-fn" rid="nt105">e</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">2819 (459)</td>
+                  <td align="left" colspan="1" rowspan="1">32529 (1660)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Protein atoms</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1960</td>
+                  <td align="left" colspan="1" rowspan="1">3917</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Solvent atoms</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">0</td>
+                  <td align="left" colspan="1" rowspan="1">281</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1"><italic>R</italic><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e022" xlink:type="simple"/></inline-formula><italic>/R</italic><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e023" xlink:type="simple"/></inline-formula> (%)<xref ref-type="table-fn" rid="nt106">f</xref></td>
+                  <td align="left" colspan="1" rowspan="1">27.1/29.5 (29.1/32.1)</td>
+                  <td align="left" colspan="1" rowspan="1">20.2/23.4 (22.9/25.5)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e024" xlink:type="simple"/></inline-formula> <bold>correlation coefficient</bold><xref ref-type="table-fn" rid="nt107">g</xref></td>
+                  <td align="left" colspan="1" rowspan="1">0.861 (0.838)</td>
+                  <td align="left" colspan="1" rowspan="1">0.947 (0.933)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>r.m.s.d. (bonds)</bold>
+                    <xref ref-type="table-fn" rid="nt108">h</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">0.009</td>
+                  <td align="left" colspan="1" rowspan="1">0.010</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>r.m.s.d. (angles)</bold>
+                    <xref ref-type="table-fn" rid="nt108">h</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.08</td>
+                  <td align="left" colspan="1" rowspan="1">1.05</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Average isotropic </bold>
+                    <bold>
+                      <italic>B</italic>
+                    </bold>
+                    <bold> factors (Å</bold>
+                    <sup>2</sup>
+                    <bold>)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Main chain</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">132.7</td>
+                  <td align="left" colspan="1" rowspan="1">44.5</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Side chains</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">148.8</td>
+                  <td align="left" colspan="1" rowspan="1">54.8</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Solvent</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1">51.9</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Ramachandran plot statistics (%)</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Residues in favoured regions</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">223 (97.4)</td>
+                  <td align="left" colspan="1" rowspan="1">453 (99.3)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Residues in allowed regions</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">6 (2.6)</td>
+                  <td align="left" colspan="1" rowspan="1">3 (0.7)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Outliers</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">0 (0)</td>
+                  <td align="left" colspan="1" rowspan="1">0 (0)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Molprobity score (percentile)</bold>
+                    <xref ref-type="table-fn" rid="nt109">i</xref>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.91 (100)</td>
+                  <td align="left" colspan="1" rowspan="1">1.48 (98)</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives><table-wrap-foot>
+            <fn id="nt101">
+              <label>a</label>
+              <p>Values in parentheses are for the highest resolution shell.</p>
+            </fn>
+            <fn id="nt102">
+              <label>b</label>
+              <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e025" xlink:type="simple"/></inline-formula> is the multiplicity (N) independent R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e026" xlink:type="simple"/></inline-formula>.</p>
+            </fn>
+            <fn id="nt103">
+              <label>c</label>
+              <p>Mean correlation factor between two random subsets of anomalous intensity differences. In parenthesis, resolution at which anomalous correlation drops below 35%.</p>
+            </fn>
+            <fn id="nt104">
+              <label>d</label>
+              <p>Value in parenthesis: resolution for which phasing power drops below 1.0.</p>
+            </fn>
+            <fn id="nt105">
+              <label>e</label>
+              <p>In parenthesis, number of reflections randomly assigned to the test set.</p>
+            </fn>
+            <fn id="nt106">
+              <label>f</label>
+              <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e027" xlink:type="simple"/></inline-formula>. R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e028" xlink:type="simple"/></inline-formula> is defined as R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e029" xlink:type="simple"/></inline-formula> for the test set.</p>
+            </fn>
+            <fn id="nt107">
+              <label>g</label>
+              <p>The value in parentheses corresponds to the test set reflections.</p>
+            </fn>
+            <fn id="nt108">
+              <label>h</label>
+              <p>Root mean square deviation from the standard values.</p>
+            </fn>
+            <fn id="nt109">
+              <label>i</label>
+              <p>As reported by the Molprobity server <xref ref-type="bibr" rid="pone.0045847-Davis1">[57]</xref>. In parenthesis, the percentile of this value among structures of comparable resolution.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+        <p>The SeMet data extended to 2.77 Å resolution. Its structure was solved by the SAD method with data collected at the selenium anomalous peak. The data were of sufficient quality to locate the 6 Se sites present in the two molecules in the asymmetric unit. The current model is refined against native data to 2.15 Å, resulting in an R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e030" xlink:type="simple"/></inline-formula>/R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e031" xlink:type="simple"/></inline-formula> factors of 20.2%/23.4% (<xref ref-type="table" rid="pone-0045847-t001">Table 1</xref>) and includes residues 22 to 270 in monomer A and 25 to 269 in monomer B. Two loops could not be built in the model owing to the lack of supporting electron density. The first of these loops comprises residues Ser46 to Thr53 in monomer A and Arg44 to Ile54 in monomer B, whereas the second missing loop encompases residues Gly148 to Arg151 in both monomers. The monomer A from this model was then used to solve the structure of the first crystal form by molecular replacement. Refinement against these data produced a new model, at 3.85 Å, with R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e032" xlink:type="simple"/></inline-formula> and R<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e033" xlink:type="simple"/></inline-formula> factors of 27.1% and 29.5%, respectively (<xref ref-type="table" rid="pone-0045847-t001">Table 1</xref>). The second crystal form being solved at higher resolution, the rest of the structural description will be based on this current model, unless otherwise stated.</p>
+        <p>The structure of an ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e034" xlink:type="simple"/></inline-formula> monomer is made up of 10 helices and two <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e035" xlink:type="simple"/></inline-formula>-sheets, one composed of seven strands and the other consisting of two short parallel strands (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1</xref>). The major <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e036" xlink:type="simple"/></inline-formula>-sheet is mainly antiparallel, but strands <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e037" xlink:type="simple"/></inline-formula>3 and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e038" xlink:type="simple"/></inline-formula>5 are parallel (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1a</xref>). This <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e039" xlink:type="simple"/></inline-formula>-sheet forms a half-barrel with the first <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e040" xlink:type="simple"/></inline-formula>-helix (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e041" xlink:type="simple"/></inline-formula>1) packed onto its concave side. The rest of the helices and the small <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e042" xlink:type="simple"/></inline-formula>-sheet are arranged at the other side of the major <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e043" xlink:type="simple"/></inline-formula>-sheet (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1b</xref>). The monomer can be described as a disk with overall dimensions 59 Å<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e044" xlink:type="simple"/></inline-formula>58 Å<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e045" xlink:type="simple"/></inline-formula>38 Å. The protein N<sup>′</sup>-terminus protrudes on one side of the disk, whereas the surface of the other side, lined by a high number of acidic residues (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1c</xref>), is concave. The two unmodelled loops face each other at the periphery of the disk, with the visible extremes pointing towards the concave side (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1a</xref>). This concave face (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1c</xref>) includes two deep pockets with volumes of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e046" xlink:type="simple"/></inline-formula>575 Å<sup>3</sup> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e047" xlink:type="simple"/></inline-formula>400 Å<sup>3</sup>, respectively, as calculated by the Relibase+ <xref ref-type="bibr" rid="pone.0045847-Hendlich1">[18]</xref> implementation of LIGSITE <xref ref-type="bibr" rid="pone.0045847-Hendlich2">[19]</xref>. Other smaller pockets are distributed across the protein surface. Analysis of these cavities with the SUMO server <xref ref-type="bibr" rid="pone.0045847-Jambon1">[20]</xref> did not suggest any clear-cut ligands matching them.</p>
+        <fig id="pone-0045847-g001" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0045847.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Crystal structure of ATV</title>
+            <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e048" xlink:type="simple"/></inline-formula><bold>.</bold> <bold>a</bold>) Ribbon representation of the structure of a monomer of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e049" xlink:type="simple"/></inline-formula>. Its <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e050" xlink:type="simple"/></inline-formula>-strands are labelled. The secondary structure elements are colored from the N<sup>′</sup>- (blue) to the C<sup>′</sup>-terminus (red). The loops that were not modelled are represented by dashed, black lines. <bold>b</bold>) A view orthogonal to the previous one, showing the arrangement of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e051" xlink:type="simple"/></inline-formula>-helices. This view shows part of the concave face of the monomer (top, right) <bold>c</bold>) The solvent-accessible surface of the ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e052" xlink:type="simple"/></inline-formula> monomer concave face, colored by its electrostatic potential (red: −52 mV, blue: 52 mV), calculated at pH 7 and 150 mM NaCl with APBS <xref ref-type="bibr" rid="pone.0045847-Baker1">[56]</xref>. Two cavities are marked with yellow open stars. <bold>d</bold>) A detail view of monomer B showing the salt bridge network formed by residues Glu29/Asp33/Lys260 as well as the disulphide bond established by cysteine residues 250 and 263. Amino acid residues are labelled in one-letter code; the secondary structure elements to which they belong are also labelled.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.g001" xlink:type="simple"/>
+        </fig>
+        <p>As expected for a hyperthermostable protein <xref ref-type="bibr" rid="pone.0045847-Petsko1">[21]</xref>, the ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e053" xlink:type="simple"/></inline-formula> monomer is stabilised by a relatively high number of salt bridges (5 in monomer A and 8 in monomer B; to be considered as engaged in a salt bridge, the centroids of the side-chain charged groups and at least a pair of side-chain nitrogen and oxygen atoms of the ion-pairing residues must be within a 4 Å distance <xref ref-type="bibr" rid="pone.0045847-Kumar1">[22]</xref>). Some of these salt bridges form networks, namely the triplets Glu29/Asp33/Lys260 (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1d</xref>) and Glu252/Lys254/Lys265 in monomer B, another feature related to hyperthermostability <xref ref-type="bibr" rid="pone.0045847-Petsko1">[21]</xref>. Furthermore, a disulphide bond is observed between cysteines 250 and 263 in both monomers (<xref ref-type="fig" rid="pone-0045847-g001">Figure 1d</xref>).</p>
+        <p>Structural similarity searches performed with Dali <xref ref-type="bibr" rid="pone.0045847-Holm1">[23]</xref> and PDBeFold <xref ref-type="bibr" rid="pone.0045847-Krissinel1">[24]</xref> produced no significant hits. The highest Z-scores were below 5 for Dali and below 4 for PDBeFold, corresponding to high r.m.s.d. values (worse than 2.7 Å) over a small number of residues ranging from 60 to 120 amino-acids. All these hits were essentially overlapping with the major <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e054" xlink:type="simple"/></inline-formula>-sheet and some included the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e055" xlink:type="simple"/></inline-formula> helix that is packed against this sheet. Thus, we conclude that the ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e056" xlink:type="simple"/></inline-formula> structure defines a new <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e057" xlink:type="simple"/></inline-formula> fold.</p>
+      </sec>
+      <sec id="s2b">
+        <title>ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e058" xlink:type="simple"/></inline-formula> can form different types of oligomers</title>
+        <p>The elution of the recombinant ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e059" xlink:type="simple"/></inline-formula> protein from the size-exclusion chromatography column used for its purification was compatible with the protein forming trimers or tetramers at pH 8.5. To define more accurately the stoichiometry of this oligomer, we analysed the purified protein by the MALS/SEC method (<xref ref-type="fig" rid="pone-0045847-g002">Figure 2</xref>). With the protein injected at 4 mg/mL (121 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e060" xlink:type="simple"/></inline-formula>M), these experiments showed that ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e061" xlink:type="simple"/></inline-formula> forms a tetramer (132.9<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e062" xlink:type="simple"/></inline-formula>1.3 kDa) at pH 7.4 but a dimer (67.7<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e063" xlink:type="simple"/></inline-formula>3.4 kDa) at pH 3.6. Hydrodynamic radius calculation performed with the ASTRA software yielded values of 4.84<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e064" xlink:type="simple"/></inline-formula>0.27 nm and 3.54<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e065" xlink:type="simple"/></inline-formula>0.30 nm, respectively.</p>
+        <fig id="pone-0045847-g002" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0045847.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Oligomeric state of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e066" xlink:type="simple"/></inline-formula> in solution.</title>
+            <p>About 120 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e067" xlink:type="simple"/></inline-formula>g of purified ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e068" xlink:type="simple"/></inline-formula> were subjected to size-exclusion chromatography coupled to MALS/RI/UV detectors as described in the Experimental section. Two chromatograms/mass analyses are combined in this figure, showing the elution of the tetrameric (left) and dimeric (right) forms of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e069" xlink:type="simple"/></inline-formula>, obtained at pH 7.4 and 3.6, respectively. The molar mass (dotted lines), derived from refractive index measurements, and the absorption at 280 nm (full line) were plotted as functions of the elution volume around the peaks. The weight-averaged molar mass (M<italic><sub>w</sub></italic>) values determined by the ASTRA software are indicated.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.g002" xlink:type="simple"/>
+        </fig>
+        <p>The analysis of the crystal interfaces present in the second crystal form with the PISA software <xref ref-type="bibr" rid="pone.0045847-Krissinel2">[25]</xref> suggested two possible dimers with a significant buried area at the interface, namely 1258 Å<sup>2</sup> and 1087 Å<sup>2</sup> per monomer, respectively. Remarkably, these interfaces are not conserved in the first crystal form, which actually displays less extensive contact surfaces, the largest masking 608 Å<sup>2</sup> per monomer, none of them considered as significant by the PISA algorithm.</p>
+        <p>Each of the two interfaces suggested by PISA results in a possible dimer with pseudo-two-fold symmetry. Based on their appearence, we call them the ‘open’ and the ‘closed’ dimers, respectively (<xref ref-type="fig" rid="pone-0045847-g003">Figure 3a and 3b</xref>). In the closed dimer the concave sides of the monomers face each other thereby creating a chamber with a volume of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e070" xlink:type="simple"/></inline-formula>8650 Å<sup>3</sup>. In the open dimer the interface involves their convex side. Not only do the open and closed dimers bear similar contact surface areas, but they also display the same number (15) of inter-subunit hydrogen bonds, defined according to Mills &amp; Dean criteria <xref ref-type="bibr" rid="pone.0045847-Mills1">[26]</xref>. There are however two global differences between these two dimers. First, the closed dimer exhibits two strong symmetrical salt bridges between Asp211 on one monomer and Arg215 on the other. Furthermore, a third salt bridge is observed between Glu195 in monomer B and His219 in monomer A (<xref ref-type="fig" rid="pone-0045847-g003">Figure 3c</xref>). Conversely, only weak ion-pair interactions are found in the open dimer, with the best N-O bridge <xref ref-type="bibr" rid="pone.0045847-Kumar1">[22]</xref> established between residues Glu29 and His237. Second, shape complementarity of the interface surfaces, as calculated by the SC program <xref ref-type="bibr" rid="pone.0045847-Lawrence1">[27]</xref> is significantly better (0.670) for the closed dimer than for the open dimer (0.563).</p>
+        <fig id="pone-0045847-g003" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0045847.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Crystal packing of ATV</title>
+            <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e071" xlink:type="simple"/></inline-formula><bold>.</bold> <bold>a</bold>) Overall view of the open and <bold>b</bold>) closed dimers found in the second crystal form. In both cases the pseudo-two-fold axis is vertical in the plane of the paper. <bold>c</bold>) View of the interface between monomer A (colored as in in <xref ref-type="fig" rid="pone-0045847-g001">Figure 1</xref>) and monomer B (grey) in the closed dimer. Amino acid residues involved in cross-monomer salt bridges are labelled in one-letter code. The secondary structure elements that support them are also labelled. <bold>d</bold>) A view of the dimers arranged as a continuous helical fiber in the crystal. The edges of a unit cell box are shown in grey color.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.g003" xlink:type="simple"/>
+        </fig>
+        <p>Noteworthy is that the dimers observed in the ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e072" xlink:type="simple"/></inline-formula> crystals do not combine to form a tetramer but rather generate fibers (see below). This observation is at odds with the fact that these crystals appear under pH conditions (pH <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e073" xlink:type="simple"/></inline-formula>6) closer to those used for the protein purification, where the MALS/SEC data indicate the presence of tetramers, than to pH 3.6, where dimers are detected by this technique. We sought to resolve this apparent discrepancy by using SAXS to characterize the ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e074" xlink:type="simple"/></inline-formula> oligomer in solution and examine its shape and dimensions. Attempts to obtain SAXS data at pH <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e075" xlink:type="simple"/></inline-formula>6 were unsuccessful, due to concentration-dependent protein aggregation. Therefore we collected SAXS data under the pH and ionic strength conditions used for the protein purification. Guinier analysis yielded an R<italic><sub>g</sub></italic> of 35.8 Å, which is bigger than values calculated for the closed (22.9 Å) and the open (24.4 Å) dimers. The maximum dimension of the particle (D<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e076" xlink:type="simple"/></inline-formula> = 111.0 Å), obtained from the distance distribution function (<italic>P(r)</italic>), was also larger than those computed from the structures of the closed (67.9 Å) and open (84.0 Å) dimers. Finally, the excluded volume of the hydrated particle (Porod volume) was 221.5 nm<sup>3</sup> that, according to the empirical formula <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e077" xlink:type="simple"/></inline-formula> <xref ref-type="bibr" rid="pone.0045847-Petoukhov1">[28]</xref>, gives a molar mass of 133 kDa, in good agreement with an ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e078" xlink:type="simple"/></inline-formula> tetramer (132 kDa). The Kratky plot was consistent with a properly folded protein (<xref ref-type="fig" rid="pone-0045847-g004">Figure 4b</xref>), whereas the <italic>P(r)</italic> function was monomodal and suggested a compact, slightly elongated particle (<xref ref-type="fig" rid="pone-0045847-g004">Figure 4c</xref>).</p>
+        <fig id="pone-0045847-g004" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0045847.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>SAXS analysis of ATV</title>
+            <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e079" xlink:type="simple"/></inline-formula><bold>.</bold> <bold>a</bold>) SAXS intensity as a function of the momentum transfer. This profile corresponds to the measurements taken at 4.7 mg/ml protein cocentration and pH 8.5. Average values are in red and the standard error in grey. <bold>b</bold>) The Kratky plot (see text for details) corresponds to a folded protein. <bold>c</bold>) Pair-distance distribution, <italic>P(r)</italic>, function of the data shown in panel a). <bold>d</bold>) Three orthogonal views of the <italic>ab initio</italic> envelope calculated imposing orthorhombic symmetry.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.g004" xlink:type="simple"/>
+        </fig>
+        <p>Next we employed the program DAMMIF to carry out <italic>ab initio</italic> shape reconstruction of the oligomer. We conducted several series of independent runs with either no forced symmetry or imposing P2, P222, P3 or P4 symmetries (<xref ref-type="table" rid="pone-0045847-t002">Table 2</xref>, <xref ref-type="supplementary-material" rid="pone.0045847.s001">Figure S1a</xref>). Within each symmetry class, the models were very reproducible with average normalized spatial discrepancy (NSD) values below 1.0, consistent with structurally similar solutions. Furthermore, all the models were similar in terms of agreement with the experimental data, as measured by DAMMIF <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e080" xlink:type="simple"/></inline-formula> parameter. Slightly better agreement was attained with P1 and P222 (<xref ref-type="fig" rid="pone-0045847-g004">Figure 4d</xref>) models, whereas P4 models fitted the data systematically worse than the rest. We note that the averaged models have slightly bigger volumes, ranging from 256.5 Å (P4 model) to 282.5 Å (P1 model), than that obtained by Porod analysis.</p>
+        <table-wrap id="pone-0045847-t002" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0045847.t002</object-id><label>Table 2</label><caption>
+            <title>Summary of SAXS results.</title>
+          </caption><alternatives>
+            <graphic id="pone-0045847-t002-2" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.t002" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">DAMMIF<xref ref-type="table-fn" rid="nt110">a</xref></td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">Symmetry</td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e081" xlink:type="simple"/></inline-formula>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">NSD</td>
+                  <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e082" xlink:type="simple"/></inline-formula>Vol<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e083" xlink:type="simple"/></inline-formula> (nm<sup>3</sup>)</td>
+                  <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e084" xlink:type="simple"/></inline-formula> (Å)</td>
+                  <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e085" xlink:type="simple"/></inline-formula> (Å)</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P1</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.654<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e086" xlink:type="simple"/></inline-formula>0.011</td>
+                  <td align="left" colspan="1" rowspan="1">0.583<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e087" xlink:type="simple"/></inline-formula>0.019</td>
+                  <td align="left" colspan="1" rowspan="1">282.5</td>
+                  <td align="left" colspan="1" rowspan="1">34.4</td>
+                  <td align="left" colspan="1" rowspan="1">115</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P2</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.659<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e088" xlink:type="simple"/></inline-formula>0.021</td>
+                  <td align="left" colspan="1" rowspan="1">0.680<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e089" xlink:type="simple"/></inline-formula>0.106</td>
+                  <td align="left" colspan="1" rowspan="1">278.0</td>
+                  <td align="left" colspan="1" rowspan="1">34.2</td>
+                  <td align="left" colspan="1" rowspan="1">115</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P222</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.648<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e090" xlink:type="simple"/></inline-formula>0.008</td>
+                  <td align="left" colspan="1" rowspan="1">0.486<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e091" xlink:type="simple"/></inline-formula>0.017</td>
+                  <td align="left" colspan="1" rowspan="1">272.2</td>
+                  <td align="left" colspan="1" rowspan="1">34.7</td>
+                  <td align="left" colspan="1" rowspan="1">114</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P3</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.704<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e092" xlink:type="simple"/></inline-formula>0.036</td>
+                  <td align="left" colspan="1" rowspan="1">0.654<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e093" xlink:type="simple"/></inline-formula>0.032</td>
+                  <td align="left" colspan="1" rowspan="1">278.4</td>
+                  <td align="left" colspan="1" rowspan="1">33.6</td>
+                  <td align="left" colspan="1" rowspan="1">102</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P4</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">1.770<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e094" xlink:type="simple"/></inline-formula>0.052</td>
+                  <td align="left" colspan="1" rowspan="1">0.768<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e095" xlink:type="simple"/></inline-formula>0.127</td>
+                  <td align="left" colspan="1" rowspan="1">256.5</td>
+                  <td align="left" colspan="1" rowspan="1">32.8</td>
+                  <td align="left" colspan="1" rowspan="1">90</td>
+                </tr>
+              </tbody>
+            </table>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">SASREF<xref ref-type="table-fn" rid="nt111">b</xref></td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="center" colspan="1" rowspan="1"/>
+                  <td align="center" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">Model</td>
+                  <td align="left" colspan="1" rowspan="1">Symmetry</td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e096" xlink:type="simple"/></inline-formula>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">NSD</td>
+                  <td align="center" colspan="1" rowspan="1"/>
+                  <td align="center" colspan="1" rowspan="1"/>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Open dimer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P1</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4.514<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e097" xlink:type="simple"/></inline-formula>0.024</td>
+                  <td align="left" colspan="1" rowspan="1">0.923<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e098" xlink:type="simple"/></inline-formula>0.667</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Open dimer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P2</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4.589<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e099" xlink:type="simple"/></inline-formula>0.045</td>
+                  <td align="left" colspan="1" rowspan="1">1.498<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e100" xlink:type="simple"/></inline-formula>0.999</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Closed dimer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P1</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">13.139<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e101" xlink:type="simple"/></inline-formula>0.239</td>
+                  <td align="left" colspan="1" rowspan="1">1.771<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e102" xlink:type="simple"/></inline-formula>0.944</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Closed dimer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P2</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">12.721<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e103" xlink:type="simple"/></inline-formula>0.033</td>
+                  <td align="left" colspan="1" rowspan="1">2.134<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e104" xlink:type="simple"/></inline-formula>1.437</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Monomer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P1</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4.053<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e105" xlink:type="simple"/></inline-formula>0.012</td>
+                  <td align="left" colspan="1" rowspan="1">1.317<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e106" xlink:type="simple"/></inline-formula>0.059</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Monomer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P2</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4.132<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e107" xlink:type="simple"/></inline-formula>0.044</td>
+                  <td align="left" colspan="1" rowspan="1">1.426<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e108" xlink:type="simple"/></inline-formula>0.066</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Monomer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P222</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4.277<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e109" xlink:type="simple"/></inline-formula>0.097</td>
+                  <td align="left" colspan="1" rowspan="1">0.901<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e110" xlink:type="simple"/></inline-formula>0.092</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Monomer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P3</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">11.765<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e111" xlink:type="simple"/></inline-formula>0.841</td>
+                  <td align="left" colspan="1" rowspan="1">1.398<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e112" xlink:type="simple"/></inline-formula>0.449</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>Monomer</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <bold>P4</bold>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">4.392<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e113" xlink:type="simple"/></inline-formula>0.107</td>
+                  <td align="left" colspan="1" rowspan="1">0.933<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e114" xlink:type="simple"/></inline-formula>0.213</td>
+                  <td align="left" colspan="1" rowspan="1"/>
+                  <td align="left" colspan="1" rowspan="1"/>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives><table-wrap-foot>
+            <fn id="nt110">
+              <label>a</label>
+              <p><italic>ab initio</italic> shape reconstruction.</p>
+            </fn>
+            <fn id="nt111">
+              <label>b</label>
+              <p>Rigid-body modelling.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+        <p>In a complementary approach, we used SASREF <xref ref-type="bibr" rid="pone.0045847-Petoukhov2">[29]</xref> to generate rigid-body refined models based on the available structures of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e115" xlink:type="simple"/></inline-formula>, that is the monomer and the two possible dimers identified in the second crystal form. For the monomer we used the same symmetries as for the <italic>ab initio</italic> shape reconstruction, whereas for the dimers we calculated models with P1 and P2 symmetry. As expected, better agreement to the experimental curve was achieved by the trials with more degrees of freedom, i.e. those involving the monomer (<xref ref-type="table" rid="pone-0045847-t002">Table 2</xref>), with the notable exception of the P3 symmetry, which gave the worst agreement of all the rigid-body models. Examination of the P3 models showed that the monomers are disconnected since they need to occupy a volume that is better accounted for by four monomers. Amongst the models generated from the monomers, those with P4 symmetry performed only better than the P3 models and worse than the rest, in terms of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e116" xlink:type="simple"/></inline-formula> (<xref ref-type="table" rid="pone-0045847-t002">Table 2</xref>). To further explore the possibility that the protein may form trimers in solution and to exclude a problem with SASREF for the generation of appropriated trigonal models, we used the symmdock software <xref ref-type="bibr" rid="pone.0045847-SchneidmanDuhovny1">[30]</xref> to generate trimers of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e117" xlink:type="simple"/></inline-formula> with trigonal symmetry. The best symmdock model has a score of 11592 compared to a score of 8892 for the second best model, with scores monotonously decreasing thereafter. The best symmdock model has an R<italic><sub>g</sub></italic> of 25.8 Å, the second best model has R<italic><sub>g</sub></italic> = 25.9 Å and the average R<italic><sub>g</sub></italic> of the best 10 models is 27.3<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e118" xlink:type="simple"/></inline-formula>1.0 Å. Similarly, the first model has D<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e119" xlink:type="simple"/></inline-formula> = 84.5 Å, the second model has D<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e120" xlink:type="simple"/></inline-formula> = 83.8 Å and the average of the best 10 models gives D<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e121" xlink:type="simple"/></inline-formula> = 84.3<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e122" xlink:type="simple"/></inline-formula>2.8 Å. These values are clearly different from the experimental values obtained by SAXS analysis. Further, the SAXS profiles calculated from these trimers by the program CRYSOL <xref ref-type="bibr" rid="pone.0045847-Svergun1">[31]</xref>, fitted very poorly the experimental profile, with average <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e123" xlink:type="simple"/></inline-formula> = 39.98<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e124" xlink:type="simple"/></inline-formula>6.73. We conclude that under these experimental conditions ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e125" xlink:type="simple"/></inline-formula> does not form trimers.</p>
+        <p>Interestingly, the rigid-body refined models calculated from the crystallographic open dimer came next to those from the monomer in terms of agreement with the SAXS data. Furthermore, models calculated from the open dimer were all very similar, irrespective of the symmetry used (overall <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e126" xlink:type="simple"/></inline-formula>NSD<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e127" xlink:type="simple"/></inline-formula> = 1.128<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e128" xlink:type="simple"/></inline-formula>0.492). We conclude from these results that under the conditions tested (pH 8.5, 100 mM NaCl) ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e129" xlink:type="simple"/></inline-formula> forms a tetramer, possibly with point group 222 symmetry (<xref ref-type="supplementary-material" rid="pone.0045847.s001">Figure S1b</xref>).</p>
+      </sec>
+      <sec id="s2c">
+        <title>ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e130" xlink:type="simple"/></inline-formula> is a hyperthermostable and hyperacidostable protein</title>
+        <p>ATV viruses proliferate at extreme pH (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e131" xlink:type="simple"/></inline-formula>1.5) and temperature (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e132" xlink:type="simple"/></inline-formula>85°C). Under these conditions, structural proteins have to bear an extreme stability to preserve fold and function. The ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e133" xlink:type="simple"/></inline-formula> CD spectrum recorded at 20°C and pH 7.2 displays two minima at 215 and 222 nm, characteristic of a folded protein containing mainly <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e134" xlink:type="simple"/></inline-formula>-helices (<xref ref-type="fig" rid="pone-0045847-g005">Figure 5</xref>). The CD spectra recorded at 20°C and 80°C, both at neutral and acidic (pH 0) conditions are all nearly superimposable, establishing the extreme protein resistance to high temperature, low pH and a combination of both factors. Deconvolution of the CD spectra using the CDSSTR program <xref ref-type="bibr" rid="pone.0045847-Compton1">[32]</xref>, as implemented in the Dichroweb server <xref ref-type="bibr" rid="pone.0045847-Whitmore1">[33]</xref>, was consistent with the secondary structure derived from the crystal structure (42% helices and 18% strands, see <xref ref-type="fig" rid="pone-0045847-g005">Figure 5</xref>) within the uncertainties of this approach <xref ref-type="bibr" rid="pone.0045847-Compton1">[32]</xref>. These analyses suggest that, at the two pH values studied, increasing the temperature to 80°C slightly destabilises the protein helices without affecting its content in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e135" xlink:type="simple"/></inline-formula>-strands.</p>
+        <fig id="pone-0045847-g005" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0045847.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Circular dichroism spectra of ATV</title>
+            <p><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e136" xlink:type="simple"/></inline-formula><bold>.</bold> Mean residue ellipticity spectra recorded at pH 7.2 (black lines) and pH 0 (red lines), either at 20°C (full lines) or at 80°C (dashed lines). The content in helices and strands, as determined by deconvolution of the spectra, is shown (see text for details).</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.g005" xlink:type="simple"/>
+        </fig>
+        <p>In contrast, at pH 11 and 80°C, ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e137" xlink:type="simple"/></inline-formula> unfolds: the signal at 200 nm is negative and the signal in the range 215–260 nm is closer to zero (not shown). Importantly, the fact that ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e138" xlink:type="simple"/></inline-formula> withstands a combination of low pH and high temperature agrees well with the environment of the ATV virus in the thermal spring where it was discovered.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Final remarks</title>
+        <p>Apart from an increased presence of salt-bridges and other ionic pair interactions, ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e139" xlink:type="simple"/></inline-formula> bears some rare traits for a hyperthermostable protein (see <xref ref-type="bibr" rid="pone.0045847-Petsko1">[21]</xref> for a thorough discussion of these properties). First, its fold is less compact than expected and displays several cavities. Second, its C<sup>′</sup>-terminus and especially its N<sup>′</sup>-terminus are not well structured. Finally, it carries disordered loops. The presence of cavities and of disordered loops would seem to suggest an enzymatic function. However, the novelty of the fold and the fact that the protein sequence does not retrieve any significant hit in public databases hinder the assignment of a biological function to ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e140" xlink:type="simple"/></inline-formula>. Furthermore, although the protein has a number of surface pockets we could not assign them to any <italic>bona fide</italic> ligand/substrate. Significantly, ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e141" xlink:type="simple"/></inline-formula> is the fourth most abundant protein in virion preparations <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref> and, moreover, no homologue of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e142" xlink:type="simple"/></inline-formula> is present in the STSV1 virus <xref ref-type="bibr" rid="pone.0045847-Xiang1">[16]</xref>. In contrast, the ATV homologue (ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e143" xlink:type="simple"/></inline-formula>) of the STSV1 major capsid protein (STSV1<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e144" xlink:type="simple"/></inline-formula>) is also the most abundant protein in the ATV virion <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref>.</p>
+        <p>The two viruses ATV and STSV1 both exhibit large fusiform bodies but while the former generates long bipolar tails extracellularly, the latter generates one long tail intracellularly <xref ref-type="bibr" rid="pone.0045847-Hring1">[14]</xref>, <xref ref-type="bibr" rid="pone.0045847-Xiang1">[16]</xref>. Both genomes encode several pairs of homologous proteins, albeit distantly related, but they differ markedly in their virion protein contents. Whereas ATV virions contain several major protein components, STSV1 carries only one major component, the coat protein STSV1<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e145" xlink:type="simple"/></inline-formula>. It has been hypothesised that some of the virion components of ATV actively contribute to the extracellular tail development <xref ref-type="bibr" rid="pone.0045847-Prangishvili3">[15]</xref> and in a detailed study of one of the major components, a MoxR-type ATPase ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e146" xlink:type="simple"/></inline-formula>, evidence was provided for a co-chaperone activity together with a Von Willebrand domain A protein ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e147" xlink:type="simple"/></inline-formula> <xref ref-type="bibr" rid="pone.0045847-Scheele1">[34]</xref>. Moreover, a model was presented whereby this co-chaperone facilitated tail development together with another virion protein ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e148" xlink:type="simple"/></inline-formula>, which exhibits intermediate filament-like properties. Further, it was proposed that novel ATV DNA binding proteins, also present in the virions, were involved in drawing DNA along the tails <xref ref-type="bibr" rid="pone.0045847-Scheele1">[34]</xref>. In this context, a structural role for ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e149" xlink:type="simple"/></inline-formula> cannot be ruled out in spite of its enzyme-like features. In this regard, the stability of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e150" xlink:type="simple"/></inline-formula> to extreme acidic pH suggests that it may be in contact with the external environment of the virion and thus participate in its coat and contribute to the development of ATV tails. Finally, the two interfaces identified in the second-form crystals of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e151" xlink:type="simple"/></inline-formula> are assembled head-to-tail, resulting in helicoidal fibers that extend indefinitely along the crystallographic <italic>c</italic>-axis (<xref ref-type="fig" rid="pone-0045847-g003">Figure 3d</xref>). Although we have not observed fiber formation when handling the protein, such a process could be dependent on pH. In this respect, the crystal pH (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e152" xlink:type="simple"/></inline-formula>6) might reflect the protein natural environment better than the pH (8.5) of the protein solutions. Our results should help guiding further experiments necessary to understand the biological function of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e153" xlink:type="simple"/></inline-formula> and its possible involvement in the development of ATV tails.</p>
+      </sec>
+    </sec>
+    <sec id="s3" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s3a">
+        <title>ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e154" xlink:type="simple"/></inline-formula> construction and purification procedures</title>
+        <p>The ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e155" xlink:type="simple"/></inline-formula> gene was cloned into the pDEST14 expression vector according to standard Gateway protocols. The final construct included a coding sequence for a C–terminal hexa–histidine tag. A variant of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e156" xlink:type="simple"/></inline-formula> (ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e157" xlink:type="simple"/></inline-formula>), carrying the Leu31Met, Leu117Met and Leu240Met mutations, was generated by syntetic production of the mutated gene (Geneart).</p>
+        <p>Plasmids were transformed into the <italic>Escherichia coli</italic> T7 Iq pLysS expression strain (New England Biolabs). Cells were grown at 37°C in Lysogeny Broth (LB) until the OD<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e158" xlink:type="simple"/></inline-formula> reached 0.6. Protein expression was induced then with 0.5 mM isopropyl-<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e159" xlink:type="simple"/></inline-formula>-thio-galactoside (IPTG) and the cultures maintained at 25°C. After <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e160" xlink:type="simple"/></inline-formula>16 hours, cells were harvested and lysed by sonication in 50 mM sodium phosphate buffer (pH 8), 300 mM NaCl, 10 mM imidazole and a protease inhibitor cocktail (Complete EDTA-free, Roche). Soluble protein was separated from inclusion bodies and cell debris by centrifuging for 30 min at 20,000 <italic>g</italic>. We used an ÄKTA FPLC system for a two-step purification. First, the lysates were applied onto a Ni<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e161" xlink:type="simple"/></inline-formula> affinity chromatography column (HisTrap 5 ml, GE Healthcare) and eluted with 250 mM imidazole in 50 mM sodium phosphate buffer (pH 8) and 300 mM NaCl. A preparative Superdex 200 (GE Healthcare) gel filtration column was then run in 10 mM Bicine pH 8.5, 100 mM NaCl to remove aggregated material.</p>
+        <p>Seleno-Methionine-labeled ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e162" xlink:type="simple"/></inline-formula> was prepared following standard procedures in the minimum medium M9 by blocking the methionine biosynthesis pathway <xref ref-type="bibr" rid="pone.0045847-Studier1">[35]</xref>. Expression, purification, and characterisation of the SeMet-labeled ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e163" xlink:type="simple"/></inline-formula> protein were carried out using the same protocols as for the native protein.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Size-Exclusion Chromatography-coupled Multi-Angle Light Scattering</title>
+        <p>Size-Exclusion chromatography (SEC) was performed on an Alliance 2695 HPLC system (Waters). A Shodex KW803 column, operated at 0.5 mL/min, was used in either 20 mM Hepes (pH 7.4) with 100 mM NaCl or in 20 mM citrate buffer (pH 3.6) with 150 mM NaCl. Multi-Angle Light Scattering (MALS), Ultra-Violet (UV) spectrophotometry, Quasi-Elastic Light Scattering (QELS) and Refractive index (RI) measurements were achieved with MiniDawn Treos (Wyatt Technology), Photo Diode Array 2996 (Waters), DynaPro (Wyatt Technology) and Optilab rEX (Wyatt Technology) detectors, respectively. Weight-averaged molar mass (M<italic><sub>w</sub></italic>) and hydrodynamic radius calculations were performed with the ASTRA software (Wyatt Technology) using a dn/dc value of 0.185 mL/g.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Circular Dichroism</title>
+        <p>Temperature and pH stability studies were carried out by far-UV Circular Dichroism (CD) spectroscopy. CD spectra were recorded with a JASCO J-810 spectropolarimeter (JASCO Corporation, Japan) equipped with a Peltier temperature control system. Far–UV measurements (195–260 nm) were performed using a 0.1 cm path quartz cuvette, with a scanning speed of 20 nm/min, spectral bandwidth of 1 nm, and were averaged over three scans. The solvent spectra were subtracted in all experiments to eliminate background effects. CD measurements in millidegrees were performed at a protein concentration of 0.15 mg/mL in 10 mM sodium phosphate buffer at pH 7.2. Stability tests at pH 0 and pH 11 were carried out in 1 M HCl and 1 mM NaOH, respectively. Thermal denaturation was monitored by increasing the temperature from 20°C to 80°C.</p>
+        <p>The CD spectra were deconvoluted by using the CDSSTR program <xref ref-type="bibr" rid="pone.0045847-Compton1">[32]</xref>, with reference database 7, as implemented in the Dichroweb server <xref ref-type="bibr" rid="pone.0045847-Whitmore1">[33]</xref>. The normalised root-mean square deviations were in the 0.004–0.013 range, consistent with excellent agreement between the experimental data and the fitting from the deconvolution.</p>
+      </sec>
+      <sec id="s3d">
+        <title>Small-Angle X-ray Scattering measurements and analysis</title>
+        <p>All Small-Angle X-ray Scattering (SAXS) measurements were carried out at the ID14eh13 beamline (ESRF, Grenoble, France) at a working energy of 13.32 keV corresponding to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e164" xlink:type="simple"/></inline-formula> = 0.931 Å. Data were collected on a Pilatus 1 M detector placed at a sample-detector distance of 2.43 m.</p>
+        <p>SAXS data were collected using 30 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e165" xlink:type="simple"/></inline-formula>l of protein solution at 2.3, 4.7 and 9.2 mg/ml in 10 mM Bicine (pH 8.5) buffer with 100 mM NaCl, loaded by a robotic system into a 2-mm quartz capillary mounted in a vacuum. This procedure enables the sample to move across the beam during exposure thus minimizing the effect of radiation damage. Ten exposures each of 10 s were made in this way for each condition. Individual frames were processed automatically and independently at the beamline by the data collection software (BsxCUBE), yielding radially averaged normalized intensities as a function of the momentum transfer q, with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e166" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e167" xlink:type="simple"/></inline-formula> is the total scattering angle and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e168" xlink:type="simple"/></inline-formula> is the X-ray wavelength. Data were collected in the range q = 0.04–6 nm<sup>−1</sup>. The ten frames were combined to give the average scattering curve for each measurement and any data points affected by aggregation, possibly induced by radiation damage, were excluded. Scattering from the buffer alone was also measured before and after each sample measurement and the average of these two buffer measurements was used for background subtraction using the program PRIMUS <xref ref-type="bibr" rid="pone.0045847-Konarev1">[36]</xref> from the ATSAS package <xref ref-type="bibr" rid="pone.0045847-Konarev2">[37]</xref>. PRIMUS was also used to perform Guinier analysis <xref ref-type="bibr" rid="pone.0045847-Guinier1">[38]</xref> of the low q data, which provides an estimate of the radius of gyration (R<italic><sub>g</sub></italic>). Regularized indirect transforms of the scattering data were carried out with the program GNOM <xref ref-type="bibr" rid="pone.0045847-Svergun2">[39]</xref> to obtain <italic>P(r)</italic> functions of interatomic distances. The <italic>P(r)</italic> function has a maximum at the most probable intermolecular distance and goes to zero at D<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e169" xlink:type="simple"/></inline-formula>, the maximum intramolecular distance. Values of D<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e170" xlink:type="simple"/></inline-formula> were chosen that yielded solutions that fit the experimental data well and have a smooth and strictly positive <italic>P(r)</italic> function. This approach also allows the calculation of R<italic><sub>g</sub></italic> values that agreed with the values found by the Guinier analysis.</p>
+      </sec>
+      <sec id="s3e">
+        <title><italic>Ab initio</italic> 3D shape reconstructions</title>
+        <p>We built 3D bead models fitting the scattering data with the program DAMMIF <xref ref-type="bibr" rid="pone.0045847-Franke1">[40]</xref>. Ten independent DAMMIF runs were performed for each scattering profile, with data extending up to 0.25 Å<sup>−1</sup>, using slow mode settings, assuming either P1, P2, P222, P3 or P4 symmetry and allowing for a maximum 500 steps to grant convergence. The models resulting from independent runs at each symmetry were superimposed using the DAMAVER suite <xref ref-type="bibr" rid="pone.0045847-Volkov1">[41]</xref>. This yielded an initial alignment of structures based on their axes of inertia followed by minimisation of the normalized spatial discrepancy (NSD), which is zero for identical objects and larger than 1 for systematically different objects <xref ref-type="bibr" rid="pone.0045847-Kozin1">[42]</xref>. The aligned structures were then averaged, giving an effective occupancy to each voxel in the model, and filtered at half-maximal occupancy to produce models of the appropriate volume that were used for all subsequent analyses. To provide a clearer representation of the 3D shape reconstructions, bead models were converted to density maps by the program pdb2vol from the Situs package <xref ref-type="bibr" rid="pone.0045847-Wriggers1">[43]</xref>.</p>
+      </sec>
+      <sec id="s3f">
+        <title>Rigid body modelling of the SAXS data</title>
+        <p>We used the program CRYSOL <xref ref-type="bibr" rid="pone.0045847-Svergun1">[31]</xref> to generate theoretical scattering curves from monomer A of the best resolution model of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e171" xlink:type="simple"/></inline-formula>, as well as from the two putative dimers observed in this crystal form. Rigid body modeling was performed with the program SASREF <xref ref-type="bibr" rid="pone.0045847-Petoukhov2">[29]</xref>, which uses a simulated annealing protocol to build an interconnected ensemble of subunits without steric clashes, while minimizing the discrepancy between the experimental scattering data and the curves calculated from the appropriate subunits by CRYSOL.</p>
+      </sec>
+      <sec id="s3g">
+        <title>Crystallisation and Structure Determination</title>
+        <p>ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e172" xlink:type="simple"/></inline-formula> crystallisation trials were carried out in sitting-drop vapour diffusion method at 20°C in 96-well Greiner crystallisation plates using a nanodrop-dispensing robot (Cartesian Inc.). The first crystals, belonging to space group <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e173" xlink:type="simple"/></inline-formula> (<xref ref-type="table" rid="pone-0045847-t001">Table 1</xref>), were obtained in 5%–15% PEG 8000, 0.2 M MgCl<sub>2</sub>, 0.1 M Tris (pH 7–8). A native data set (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e174" xlink:type="simple"/></inline-formula> = 0.91839 Å) to 3.85 Å resolution was collected at the ID14eh4 beamline (ESRF, Grenoble, France).</p>
+        <p>Crystals of a second form grew in a few days by mixing 1.5 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e175" xlink:type="simple"/></inline-formula>L protein at 5 mg/mL with 0.5 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e176" xlink:type="simple"/></inline-formula>L 3.6% isopropanol, 1.9 M (NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>, 5 mM MgCl<sub>2</sub>, 2 mM AMP. The mother liquor was pH 6. Crystals were cryoprotected with mother-liquor supplemented with 25% glycerol and 2.3 M (NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub> and flash vitrified in liquid nitrogen. Two data sets were collected: a native data set (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e177" xlink:type="simple"/></inline-formula> = 0.91839 Å) to 2.15 Å resolution at the ID29 beamline (ESRF, Grenoble, France) and a Se-SAD data set (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e178" xlink:type="simple"/></inline-formula> = 0.97911 Å) to 2.77 Å at the Proxima 1 beamline (SOLEIL, Gif-sur-Yvette, France).</p>
+        <p>Data integration and scaling were done using the XDS package <xref ref-type="bibr" rid="pone.0045847-Kabsch1">[44]</xref> and POINTLESS <xref ref-type="bibr" rid="pone.0045847-Evans1">[45]</xref> was used to help establishing the space group. The structure of ATV<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e179" xlink:type="simple"/></inline-formula> was solved by the single-wavelength anomalous diffraction (SAD) method using the autoSHARP program <xref ref-type="bibr" rid="pone.0045847-Vonrhein1">[46]</xref> with SHELXD <xref ref-type="bibr" rid="pone.0045847-Sheldrick1">[47]</xref> to locate the selenium substructure. Initial automatic building was performed with Buccaneer <xref ref-type="bibr" rid="pone.0045847-Cowtan1">[48]</xref>. Alternative cycles of manual model building with Coot <xref ref-type="bibr" rid="pone.0045847-Emsley1">[49]</xref> and refinement with either autoBuster-TNT <xref ref-type="bibr" rid="pone.0045847-Bricogne1">[50]</xref> or refmac5 <xref ref-type="bibr" rid="pone.0045847-Murshudov1">[51]</xref> were carried out to improve the initial model.</p>
+        <p>We solved the structure of the first crystal form by molecular replacement with the program PHASER <xref ref-type="bibr" rid="pone.0045847-McCoy1">[52]</xref>, using as template the final model from the second crystal form. Refinement was performed with autoBuster-TNT <xref ref-type="bibr" rid="pone.0045847-Bricogne1">[50]</xref> with the “target” option <xref ref-type="bibr" rid="pone.0045847-Smart1">[53]</xref> that uses local similarity restraints to a separate already determined structure, typically at higher resolution, that remains fixed during the refinement of the structure being refined. This procedure facilitates the refinement of low resolution structures. Our final model from the second crystal form was used as “target” structure. Temperature factors were refined with the translation-libration-screw (TLS) approach with a single TLS group.</p>
+        <p>We used the DSSP program <xref ref-type="bibr" rid="pone.0045847-Kabsch2">[54]</xref> to define the secondary structure elements of the higher resolution crystal structure. Figures were generated using Chimera <xref ref-type="bibr" rid="pone.0045847-Pettersen1">[55]</xref>.</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0045847.s001" mimetype="image/tiff" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pone.0045847.s001" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>SAXS analysis of ATV</bold><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0045847.e180" xlink:type="simple"/></inline-formula><bold>.</bold> <bold>a</bold>) Three orthogonal views of each of the five <italic>ab initio</italic> envelopes calculated imposing (from left to right) no, binary, orthorhombic, trigonal or tetragonal symmetry. <bold>b</bold>) Fitting of the SASREF model obtained from the open dimer using P2 symmetry into the P222 DAMMIF model. The fitting was performed by the program Chimera <xref ref-type="bibr" rid="pone.0045847-Pettersen1">[55]</xref>.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We gratefully acknowledge the help of Pierre Legrand, at the Proxima 1 beamline, with data collection. We are also grateful to the staff of the ID14eh4 and ID29 beamlines for their support. We thank the Soleil synchrotron and the European Synchrotron Radiation Facility (ESRF; Grenoble, France) for beam time allocation. We are grateful to the Cambridge Crystallographic Data Centre for granting access to Relibase+ to the SILVER consortium laboratories, and to Global Phasing Ltd for the implementation of a Relibase+ common server for the SILVER partners.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0045847-Bergh1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bergh</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Borsheim</surname><given-names>KY</given-names></name>, <name name-style="western"><surname>Bratbak</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Heldal</surname><given-names>M</given-names></name> (<year>1989</year>) <article-title>High abundance of viruses found in aquatic environments</article-title>. <source>Nature</source> <volume>340</volume>: <fpage>467</fpage>–<lpage>468</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Suttle1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Suttle</surname><given-names>CA</given-names></name> (<year>2007</year>) <article-title>Marine viruses–major players in the global ecosystem</article-title>. <source>Nat Rev Microbiol</source> <volume>5</volume>: <fpage>801</fpage>–<lpage>812</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Torsvik1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Torsvik</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Dundas</surname><given-names>ID</given-names></name> (<year>1974</year>) <article-title>Bacteriophage of Halobacterium salinarium</article-title>. <source>Nature</source> <volume>248</volume>: <fpage>680</fpage>–<lpage>681</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Zillig1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zillig</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Kletzin</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Schleper</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Holz</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Janekovic</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>1994</year>) <article-title>Screening for Sulfolobales, their plasmids and their viruses in Icelandic solfataras</article-title>. <source>Syst Appl Microbiol</source> <volume>16</volume>: <fpage>609</fpage>–<lpage>628</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Mochizuki1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mochizuki</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Krupovic</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Pehau-Arnaudet</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Sako</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Forterre</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Archaeal virus with exceptional virion architecture and the largest single-stranded DNA genome</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>109</volume>: <fpage>13386</fpage>–<lpage>13391</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Prangishvili1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prangishvili</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Garrett</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Koonin</surname><given-names>EV</given-names></name> (<year>2006</year>) <article-title>Evolutionary genomics of archaeal viruses: unique viral genomes in the third domain of life</article-title>. <source>Virus Res</source> <volume>117</volume>: <fpage>52</fpage>–<lpage>67</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Abrescia1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Abrescia</surname><given-names>NGA</given-names></name>, <name name-style="western"><surname>Bamford</surname><given-names>DH</given-names></name>, <name name-style="western"><surname>Grimes</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Stuart</surname><given-names>DI</given-names></name> (<year>2012</year>) <article-title>Structure unifies the viral universe</article-title>. <source>Annu Rev Biochem</source> <volume>81</volume>: <fpage>795</fpage>–<lpage>822</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Prangishvili2">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prangishvili</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Krupovic</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>A new proposed taxon for double-stranded DNA viruses, the order “Ligamenvirales”</article-title>. <source>Arch Virol</source> <volume>157</volume>: <fpage>791</fpage>–<lpage>795</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Goulet1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goulet</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Blangy</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Redder</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Prangishvili</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Felisberto-Rodrigues</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Acidianus filamentous virus 1 coat proteins display a helical fold spanning the filamentous archaeal viruses lineage</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>21155</fpage>–<lpage>21160</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Goulet2">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goulet</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Vestergaard</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Felisberto-Rodrigues</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Campanacci</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Garrett</surname><given-names>RA</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Getting the best out of long-wavelength X-rays: de novo chlorine/sulfur SAD phasing of a structural protein from ATV</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>66</volume>: <fpage>304</fpage>–<lpage>308</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Goulet3">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goulet</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pina</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Redder</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Prangishvili</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Vera</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Orf157 from the archaeal virus Acidianus filamentous virus 1 defines a new class of nuclease</article-title>. <source>J Virol</source> <volume>84</volume>: <fpage>5025</fpage>–<lpage>5031</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Goulet4">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goulet</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Spinelli</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Blangy</surname><given-names>S</given-names></name>, <name name-style="western"><surname>van Tilbeurgh</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Leulliot</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The crystal structure of ORF14 from Sulfolobus islandicus filamentous virus</article-title>. <source>Proteins</source> <volume>76</volume>: <fpage>1020</fpage>–<lpage>1022</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Goulet5">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goulet</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Spinelli</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Blangy</surname><given-names>S</given-names></name>, <name name-style="western"><surname>van Tilbeurgh</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Leulliot</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The thermo- and acidostable ORF-99 from the archaeal virus AFV1</article-title>. <source>Protein Sci</source> <volume>18</volume>: <fpage>1316</fpage>–<lpage>1320</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Hring1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Häring</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Vestergaard</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Rachel</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Garrett</surname><given-names>RA</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Independent virus development outside a host</article-title>. <source>Nature</source> <volume>436</volume>: <fpage>1101</fpage>–<lpage>1102</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Prangishvili3">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prangishvili</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Vestergaard</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Häring</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Aramayo</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Basta</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Structural and genomic properties of the hyperthermophilic archaeal virus ATV with an extracellular stage of the reproductive cycle</article-title>. <source>J Mol Biol</source> <volume>359</volume>: <fpage>1203</fpage>–<lpage>1216</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Xiang1">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xiang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Luo</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>She</surname><given-names>Q</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Sulfolobus tengchongensis spindle-shaped virus STSV1: virus-host interactions and genomic features</article-title>. <source>J Virol</source> <volume>79</volume>: <fpage>8677</fpage>–<lpage>8686</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Buchan1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buchan</surname><given-names>DWA</given-names></name>, <name name-style="western"><surname>Ward</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Lobley</surname><given-names>AE</given-names></name>, <name name-style="western"><surname>Nugent</surname><given-names>TCO</given-names></name>, <name name-style="western"><surname>Bryson</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Protein annotation and modelling servers at University College London</article-title>. <source>Nucleic Acids Res</source> <volume>38</volume>: <fpage>W563</fpage>–<lpage>568</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Hendlich1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hendlich</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bergner</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Günther</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Klebe</surname><given-names>G</given-names></name> (<year>2003</year>) <article-title>Relibase: design and development of a database for comprehensive analysis of protein-ligand interactions</article-title>. <source>J Mol Biol</source> <volume>326</volume>: <fpage>607</fpage>–<lpage>620</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Hendlich2">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hendlich</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Rippmann</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Barnickel</surname><given-names>G</given-names></name> (<year>1997</year>) <article-title>LIGSITE: automatic and efficient detection of potential small molecule-binding sites in proteins</article-title>. <source>J Mol Graph Model</source> <volume>15</volume>: <fpage>359</fpage>–<lpage>363, 389</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Jambon1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jambon</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Imberty</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Deléage</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Geourjon</surname><given-names>C</given-names></name> (<year>2003</year>) <article-title>A new bioinformatic approach to detect common 3D sites in protein structures</article-title>. <source>Proteins</source> <volume>52</volume>: <fpage>137</fpage>–<lpage>145</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Petsko1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Petsko</surname><given-names>GA</given-names></name> (<year>2001</year>) <article-title>Structural basis of thermostability in hyperthermophilic proteins, or “there's more than one way to skin a cat”</article-title>. <source>Methods Enzymol</source> <volume>334</volume>: <fpage>469</fpage>–<lpage>478</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Kumar1">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2002</year>) <article-title>Relationship between ion pair geometries and electrostatic strengths in proteins</article-title>. <source>Biophys J</source> <volume>83</volume>: <fpage>1595</fpage>–<lpage>1612</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Holm1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Holm</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Rosenström</surname><given-names>P</given-names></name> (<year>2010</year>) <article-title>Dali server: conservation mapping in 3D</article-title>. <source>Nucleic Acids Res</source> <volume>38</volume>: <fpage>W545</fpage>–<lpage>549</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Krissinel1">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krissinel</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Henrick</surname><given-names>K</given-names></name> (<year>2004</year>) <article-title>Secondary-structure matching (SSM), a new tool for fast protein structure alignment in three dimensions</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>60</volume>: <fpage>2256</fpage>–<lpage>2268</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Krissinel2">
+        <label>25</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Krissinel E, Henrick K (2005) Detection of protein assemblies in crystals. In: R Berthold M, Glen R, Diederichs K, Kohlbacher O, Fischer I, editors, Computational Life Sciences, Springer Berlin/Heidelberg, volume 3695 of Lecture Notes in Computer Science. pp. 163–174.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Mills1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mills</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Dean</surname><given-names>PM</given-names></name> (<year>1996</year>) <article-title>Three-dimensional hydrogen-bond geometry and probability information from a crystal survey</article-title>. <source>J Comput Aided Mol Des</source> <volume>10</volume>: <fpage>607</fpage>–<lpage>622</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Lawrence1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lawrence</surname><given-names>MC</given-names></name>, <name name-style="western"><surname>Colman</surname><given-names>PM</given-names></name> (<year>1993</year>) <article-title>Shape complementarity at protein/protein interfaces</article-title>. <source>J Mol Biol</source> <volume>234</volume>: <fpage>946</fpage>–<lpage>950</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Petoukhov1">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Petoukhov</surname><given-names>MV</given-names></name>, <name name-style="western"><surname>Franke</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Shkumatov</surname><given-names>AV</given-names></name>, <name name-style="western"><surname>Tria</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Kikhney</surname><given-names>AG</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>New developments in the ATSAS program package for small-angle scattering data analysis</article-title>. <source>J Appl Crystallogr</source> <volume>45</volume>: <fpage>342</fpage>–<lpage>350</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Petoukhov2">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Petoukhov</surname><given-names>MV</given-names></name>, <name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>2005</year>) <article-title>Global rigid body modeling of macromolecular complexes against small-angle scattering data</article-title>. <source>Biophys J</source> <volume>89</volume>: <fpage>1237</fpage>–<lpage>1250</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-SchneidmanDuhovny1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schneidman-Duhovny</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Inbar</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Wolfson</surname><given-names>HJ</given-names></name> (<year>2005</year>) <article-title>Geometry-based exible and symmetric protein docking</article-title>. <source>Proteins</source> <volume>60</volume>: <fpage>224</fpage>–<lpage>231</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Svergun1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Svergun</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Barberato</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Koch</surname><given-names>MHJ</given-names></name> (<year>1995</year>) <article-title>CRYSOL – a program to evaluate X-ray solution scattering of biological macromolecules from atomic coordinates</article-title>. <source>J Appl Crystallogr</source> <volume>28</volume>: <fpage>768</fpage>–<lpage>773</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Compton1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Compton</surname><given-names>LA</given-names></name>, <name name-style="western"><surname>Johnson</surname><given-names>WC</given-names><suffix>Jr</suffix></name> (<year>1986</year>) <article-title>Analysis of protein circular dichroism spectra for secondary structure using a simple matrix multiplication</article-title>. <source>Anal Biochem</source> <volume>155</volume>: <fpage>155</fpage>–<lpage>167</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Whitmore1">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Whitmore</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Wallace</surname><given-names>BA</given-names></name> (<year>2008</year>) <article-title>Protein secondary structure analyses from circular dichroism spectroscopy: methods and reference databases</article-title>. <source>Biopolymers</source> <volume>89</volume>: <fpage>392</fpage>–<lpage>400</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Scheele1">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Scheele</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Erdmann</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ungewickell</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Felisberto-Rodrigues</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Ortiz-Lombardía</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Chaperone role for proteins P618 and P892 in the extracellular tail development of Acidianus two-tailed virus</article-title>. <source>J Virol</source> <volume>85</volume>: <fpage>4812</fpage>–<lpage>4821</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Studier1">
+        <label>35</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Studier</surname><given-names>FW</given-names></name> (<year>2005</year>) <article-title>Protein production by auto-induction in high density shaking cultures</article-title>. <source>Protein Expr Purif</source> <volume>41</volume>: <fpage>207</fpage>–<lpage>234</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Konarev1">
+        <label>36</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Konarev</surname><given-names>PV</given-names></name>, <name name-style="western"><surname>Volkov</surname><given-names>VV</given-names></name>, <name name-style="western"><surname>Sokolova</surname><given-names>AV</given-names></name>, <name name-style="western"><surname>Koch</surname><given-names>MHJ</given-names></name>, <name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>2003</year>) <article-title>PRIMUS: a Windows PC-based system for small-angle scattering data analysis</article-title>. <source>J Appl Crystallogr</source> <volume>36</volume>: <fpage>1277</fpage>–<lpage>1282</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Konarev2">
+        <label>37</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Konarev</surname><given-names>PV</given-names></name>, <name name-style="western"><surname>Petoukhov</surname><given-names>MV</given-names></name>, <name name-style="western"><surname>Volkov</surname><given-names>VV</given-names></name>, <name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>2006</year>) <article-title>ATSAS 2.1, a program package for small-angle scattering data analysis</article-title>. <source>J Appl Crystallogr</source> <volume>39</volume>: <fpage>277</fpage>–<lpage>286</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Guinier1">
+        <label>38</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guinier</surname><given-names>A</given-names></name> (<year>1939</year>) <article-title>La diffraction des rayons x aux très pétits angles: application à l'etude de phénomènes ultramicroscopiques</article-title>. <source>Ann Phys (Paris)</source> <volume>12</volume>: <fpage>161</fpage>–<lpage>237</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Svergun2">
+        <label>39</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>1992</year>) <article-title>Determination of the regularization parameter in indirect-transform methods using perceptual criteria</article-title>. <source>J Appl Crystallogr</source> <volume>25</volume>: <fpage>495</fpage>–<lpage>503</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Franke1">
+        <label>40</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Franke</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>2009</year>) <article-title>DAMMIF, a program for rapid ab-initio shape determination in small-angle scattering</article-title>. <source>J Appl Crystallogr</source> <volume>42</volume>: <fpage>342</fpage>–<lpage>346</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Volkov1">
+        <label>41</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Volkov</surname><given-names>VV</given-names></name>, <name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>2003</year>) <article-title>Uniqueness of ab initio shape determination in small-angle scattering</article-title>. <source>J Appl Crystallogr</source> <volume>36</volume>: <fpage>860</fpage>–<lpage>864</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Kozin1">
+        <label>42</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kozin</surname><given-names>MB</given-names></name>, <name name-style="western"><surname>Svergun</surname><given-names>DI</given-names></name> (<year>2001</year>) <article-title>Automated matching of high- and low-resolution structural models</article-title>. <source>J Appl Crystallogr</source> <volume>34</volume>: <fpage>33</fpage>–<lpage>41</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Wriggers1">
+        <label>43</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wriggers</surname><given-names>W</given-names></name> (<year>2010</year>) <article-title>Using Situs for the integration of multi-resolution structures</article-title>. <source>Biophys Rev</source> <volume>2</volume>: <fpage>21</fpage>–<lpage>27</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Kabsch1">
+        <label>44</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kabsch</surname><given-names>W</given-names></name> (<year>2010</year>) <article-title>XDS</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>66</volume>: <fpage>125</fpage>–<lpage>132</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Evans1">
+        <label>45</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Evans</surname><given-names>PR</given-names></name> (<year>2011</year>) <article-title>An introduction to data reduction: space-group determination, scaling and intensity statistics</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>67</volume>: <fpage>282</fpage>–<lpage>292</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Vonrhein1">
+        <label>46</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vonrhein</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Blanc</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Roversi</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Bricogne</surname><given-names>G</given-names></name> (<year>2007</year>) <article-title>Automated structure solution with autoSHARP</article-title>. <source>Methods Mol Biol</source> <volume>364</volume>: <fpage>215</fpage>–<lpage>230</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Sheldrick1">
+        <label>47</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sheldrick</surname><given-names>GM</given-names></name> (<year>2010</year>) <article-title>Experimental phasing with shelxc/d/e: combining chain tracing with density modification</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>66</volume>: <fpage>479</fpage>–<lpage>485</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Cowtan1">
+        <label>48</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cowtan</surname><given-names>K</given-names></name> (<year>2006</year>) <article-title>The buccaneer software for automated model building. 1. tracing protein chains</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>62</volume>: <fpage>1002</fpage>–<lpage>1011</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Emsley1">
+        <label>49</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Emsley</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Lohkamp</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Scott</surname><given-names>WG</given-names></name>, <name name-style="western"><surname>Cowtan</surname><given-names>K</given-names></name> (<year>2010</year>) <article-title>Features and development of Coot</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>66</volume>: <fpage>486</fpage>–<lpage>501</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Bricogne1">
+        <label>50</label>
+        <mixed-citation publication-type="book" xlink:type="simple">Bricogne G, Blanc E, Brandl M, Flensburg C, Keller P, <etal>et al</etal>. (2011) BUSTER version 2.11.2. Cambridge, UK: Global Phasing Ltd.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Murshudov1">
+        <label>51</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Murshudov</surname><given-names>GN</given-names></name>, <name name-style="western"><surname>Skubák</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Lebedev</surname><given-names>AA</given-names></name>, <name name-style="western"><surname>Pannu</surname><given-names>NS</given-names></name>, <name name-style="western"><surname>Steiner</surname><given-names>RA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Refmac5 for the refinement of macromolecular crystal structures</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>67</volume>: <fpage>355</fpage>–<lpage>367</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-McCoy1">
+        <label>52</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McCoy</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Grosse-Kunstleve</surname><given-names>RW</given-names></name>, <name name-style="western"><surname>Adams</surname><given-names>PD</given-names></name>, <name name-style="western"><surname>Winn</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Storoni</surname><given-names>LC</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Phaser crystallographic software</article-title>. <source>J Appl Crystallogr</source> <volume>40</volume>: <fpage>658</fpage>–<lpage>674</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Smart1">
+        <label>53</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smart</surname><given-names>OS</given-names></name>, <name name-style="western"><surname>Womack</surname><given-names>TO</given-names></name>, <name name-style="western"><surname>Flensburg</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Keller</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Paciorek</surname><given-names>W</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Exploiting structure similarity in refinement: automated NCS and target-structure restraints in BUSTER</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>68</volume>: <fpage>368</fpage>–<lpage>380</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Kabsch2">
+        <label>54</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kabsch</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Sander</surname><given-names>C</given-names></name> (<year>1983</year>) <article-title>Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features</article-title>. <source>Biopolymers</source> <volume>22</volume>: <fpage>2577</fpage>–<lpage>2637</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Pettersen1">
+        <label>55</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pettersen</surname><given-names>EF</given-names></name>, <name name-style="western"><surname>Goddard</surname><given-names>TD</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>CC</given-names></name>, <name name-style="western"><surname>Couch</surname><given-names>GS</given-names></name>, <name name-style="western"><surname>Greenblatt</surname><given-names>DM</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>UCSF Chimera – a visualization system for exploratory research and analysis</article-title>. <source>J Comput Chem</source> <volume>25</volume>: <fpage>1605</fpage>–<lpage>1612</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Baker1">
+        <label>56</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baker</surname><given-names>NA</given-names></name>, <name name-style="western"><surname>Sept</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Joseph</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Holst</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>McCammon</surname><given-names>JA</given-names></name> (<year>2001</year>) <article-title>Electrostatics of nanosystems: application to microtubules and the ribosome</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>98</volume>: <fpage>10037</fpage>–<lpage>10041</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0045847-Davis1">
+        <label>57</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Davis</surname><given-names>IW</given-names></name>, <name name-style="western"><surname>Leaver-Fay</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>VB</given-names></name>, <name name-style="western"><surname>Block</surname><given-names>JN</given-names></name>, <name name-style="western"><surname>Kapral</surname><given-names>GJ</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Molprobity: all-atom contacts and structure validation for proteins and nucleic acids</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>W375</fpage>–<lpage>383</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

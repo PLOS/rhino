@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="discussion" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="publisher">pmed</journal-id><journal-id journal-id-type="flc">plme</journal-id><journal-id journal-id-type="nlm-ta">PLoS Med</journal-id><journal-id journal-id-type="pmc">plosmed</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Medicine</journal-title></journal-title-group><issn pub-type="ppub">1549-1277</issn><issn pub-type="epub">1549-1676</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="doi">10.1371/journal.pmed.0030297</article-id><article-id pub-id-type="publisher-id">06-PLME-RIT-0148R1-Appeal</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research in Translation</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Immunology</subject>
+          <subject>Immunology/Allergy and Hypersensitivity</subject>
+          <subject>Pharmacology</subject>
+          <subject>Rheumatology</subject>
+          <subject>Public Health and Epidemiology</subject>
+        </subj-group>
+        <subj-group subj-group-type="System Taxonomy">
+          <subject>Autoimmune diseases</subject>
+          <subject>Immunology and allergy</subject>
+          <subject>Rheumatology</subject>
+          <subject>Rheumatoid arthritis</subject>
+          <subject>Systemic Lupus Erythematosus</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>A Proposed Classification of the Immunological Diseases</article-title><alt-title alt-title-type="running-head">Research in Translation</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>McGonagle</surname>
+            <given-names>Dennis</given-names>
+          </name>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>McDermott</surname>
+            <given-names>Michael F</given-names>
+          </name>
+        </contrib>
+      </contrib-group><author-notes>
+        <fn fn-type="current-aff" id="n3">
+          <p>Dennis McGonagle is Professor of Investigative Rheumatology, and Michael F. McDermott is Professor of Experimental Rheumatology, Leeds Institute of Molecular Medicine, St. James's University Hospital, Leeds, United Kingdom.</p>
+        </fn>
+        <corresp id="cor1">* To whom correspondence should be addressed. E-mail: <email xlink:type="simple">d.g.mcgonagle@leeds.ac.uk</email></corresp>
+      <fn fn-type="conflict" id="n2">
+        <p> The authors declare that they have no competing interests.</p>
+      </fn></author-notes><pub-date pub-type="ppub">
+        <month>8</month>
+        <year>2006</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>29</day>
+        <month>8</month>
+        <year>2006</year>
+      </pub-date><volume>3</volume><issue>8</issue><elocation-id>e297</elocation-id><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2006</copyright-year><copyright-holder>McGonagle and McDermott</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract abstract-type="toc">
+        <p>The formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.</p>
+      </abstract><funding-group><funding-statement>DM's research was funded by the Medical Research Council, United Kingdom. MFM's work was supported in part by grants from the Wellcome Trust and the Charitable Foundation of the Leeds Teaching Hospitals.</funding-statement></funding-group><counts>
+        <page-count count="7"/>
+      </counts><!--===== Restructure custom-meta-wrap to custom-meta-group =====--><custom-meta-group>
+        <custom-meta>
+          <meta-name>citation</meta-name>
+          <meta-value>McGonagle D, McDermott MF (2006) A proposed classification of the immunological diseases. PLoS Med 3(8): e297. DOI: <ext-link ext-link-type="doi" xlink:href="http://dx.doi.org/10.1371/journal.pmed.0030297" xlink:type="simple">10.1371/journal.pmed.0030297</ext-link></meta-value>
+        </custom-meta>
+      </custom-meta-group></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title/>
+      <p>A century ago Paul Ehrlich proposed that immune reactivity against self, which he called “horror autotoxicus” and which is now called autoimmunity, would be incompatible with life because of potentially devastating consequences for the host. But Ehrlich was proven wrong after the demonstration of autoantibodies and the emergence of a theoretical basis for autoreactivity [<xref ref-type="bibr" rid="pmed-0030297-b001">1</xref>]. Conceptually, autoimmunity is viewed as a defect of either B or T lymphocyte selection, with aberrant lymphocytic responses to autoantigens [<xref ref-type="bibr" rid="pmed-0030297-b002">2</xref>]. In recent years, an improved genetic understanding of both common and rare diseases, collectively associated with mutations reflecting immune system perturbations—ranging from the thymus, to B and T cells, to T regulatory cells—has vindicated the autoimmunity paradigm [<xref ref-type="bibr" rid="pmed-0030297-b003">3</xref>] (<xref ref-type="table" rid="pmed-0030297-t001">Table 1</xref>).</p>
+      <table-wrap content-type="4col" id="pmed-0030297-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pmed.0030297.t001</object-id><label>Table 1</label><caption>
+          <title>Genetic and Cellular Basis for Autoimmunity and Autoinflammation</title>
+        </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.t001" xlink:type="simple"/><!-- <table frame="hsides" rules="groups"><colgroup><col id="tb1col1" align="left"/><col id="tb1col2" align="left"/><col id="tb1col3" align="left"/><col id="tb1col4" align="left"/></colgroup><thead><tr><td><bold>Type of Disease</bold></td><td><bold>Inflammatory Disorder</bold></td><td><bold>Gene&sol;Protein</bold></td><td><bold>Cellular Distribution&sol;Function</bold></td></tr></thead><tbody><tr><td>Monogenic autoimmune disease</td><td>APS-1</td><td><italic>AIRE</italic>&sol;AIRE</td><td>Thymic epithelium&sol;negative T cell selection</td></tr><tr><td/><td>IPEX</td><td><italic>FOXP3</italic>&sol;FOXP3</td><td>Regulatory T cells&sol;immunomodulation</td></tr><tr><td/><td>ALPS</td><td><italic>FAS</italic>&sol;FAS</td><td>Widespread&sol;key role in lymphocyte apoptosis</td></tr><tr><td>Polygenic disease with a prominent autoimmune component</td><td>SLE, TID, AITD</td><td><italic>CTLA-4</italic>&sol;CTLA-4</td><td>Regulation of T lymphocytes activation</td></tr><tr><td/><td>RA, SLE, T1D</td><td><italic>PTPN22</italic>&sol;PTPN22</td><td>Regulation of T lymphocytes activation</td></tr><tr><td/><td>Many disorders</td><td>MHC associations</td><td>Multiple T cell functions, including B cell help</td></tr><tr><td>Monogenic autoinflammatory disease</td><td>FMF</td><td><italic>MEFV</italic>&sol;pyrin</td><td>Neutrophils, early monocyte lineage, stromal cells&sol;regulation of inflammatory response</td></tr><tr><td/><td>HIDS</td><td><italic>MVK</italic>&sol;mevalonate kinase</td><td>Widespread&sol;cholesterol biosynthesis, prenylation</td></tr><tr><td/><td>TRAPS</td><td><italic>TNFRSF1A</italic>&sol; TNFR1</td><td>Widespread&sol;TNF receptor</td></tr><tr><td/><td>FCAS</td><td><italic>CIAS1&sol;NALP3</italic>&sol;&sol; cryopyrin&sol;NALP3</td><td>Monocytes, stromal cell lineage&sol;regulation of inflammation</td></tr><tr><td/><td>MWS</td><td><italic>CIAS1&sol;NALP3</italic>&sol;&sol; cryopyrin&sol;NALP3</td><td/></tr><tr><td/><td>CINCA</td><td><italic>CIAS1&sol;NALP3</italic>&sol;&sol; cryopyrin&sol;NALP3</td><td/></tr><tr><td/><td>PAPA</td><td><italic>PSTPIP1</italic>&sol;PSTPIP1</td><td>Neutrophils and monocytes&sol;regulation of inflammation</td></tr><tr><td/><td>CRMO</td><td><italic>LPIN2</italic> (in humans)&sol;undefined</td><td>Widespread distribution&sol;undefined</td></tr><tr><td/><td/><td><italic>PSTPIP2</italic> (in mouse)&sol;MAYP</td><td>Macrophage&sol;regulation of inflammatory responses responses</td></tr><tr><td/><td>Blau syndrome</td><td><italic>NOD2</italic>&sol;NOD2</td><td>Macrophages, Paneth cells&sol;bacterial sensing</td></tr><tr><td>Polygenic disease with a prominent autoinflammatory component</td><td>Crohn disease</td><td><italic>NOD2</italic>&sol;NOD2</td><td>Macrophages, Paneth cells&sol;bacterial sensing</td></tr></tbody></table> --><!-- <table-wrap-foot><fn><p>This table lists some genes known to be associated with self-directed inflammation, as well as their distribution and putative functions, where known. All autoimmune disease&ndash;associated mutations described so far have been in proteins associated with adaptive immune responses. These proteins are expressed in the thymus or in B and T cells and T regulatory cells. MHC polymorphisms have also been reported in the diseases commonly regarded as autoimmune in nature. Conversely, all mutations described thus far in the autoinflammatory diseases are in proteins that do not specifically play a role in adaptive immunity but are expressed on innate immune cells or with a more widespread nonimmune cell distribution. Collectively, these mutations are typically associated with episodic bouts of uncontrolled inflammation.</p></fn><fn><p>AIRE, autoimmune regulator protein; AITD, autoimmune thyroid disease; ALPS, autoimmune lymphoproliferative syndrome; APS-1, autoimmune polyendocrine syndrome-1; CIAS, cold-induced autoinflammatory syndrome 1; TNFRSF, TNF super family receptor; CINCA, chronic infantile neurologic, cutaneous and articular syndrome; CMRO, chronic multifocal recurrent osteomyelitis; CTLA4, cytotoxic T-lymphocyte antigen 4; FCAS, familial cold autoinflammatory syndrome; FMF, familial Mediterranean fever; HIDS, hyper-IgD syndrome; IPEX, immune dysregulation, polyendocrinopathy, enteropathy, X-linked; FOXP3, forkhead box P3; MAYP, macrophage actin-associated tyrosine phosphorylated protein; MEFV, Mediterranean fever protein; MWS, Muckle-Wells syndrome; NALP, NAcht, LRR, and PYD domains; PSTPIP1, proline serine threonine phosphatase-interacting protein; NOD, nucleotide-binding oligomerization domain; PAPA, pyogenic sterile arthritis, pyoderma gangrenosum, and acne; PTPN22, protein tyrosine phosphatase 22 (PSTPIP1 and PSTPIP2 are thought to be closely related proteins. The CMRO phenotype in humans is associated with LPIN2 mutations and the CMRO phenotype in rodents is associated with the <italic>PSTPIP2</italic> gene. Formal identification of protein encoded by LPIN2 in humans is awaited); SLE, systemic lupus erythematosus; T1D, type 1 diabetes; TLR4, Toll receptor-4; TRAPS, TNF-receptor-associated periodic syndrome.</p></fn></table-wrap-foot> --></table-wrap>
+    </sec>
+    <sec id="s2">
+      <title>Problems with the Concept of Autoimmunity</title>
+      <p>Nevertheless, there are several difficulties with the autoimmunity concept when considering self-directed tissue inflammation. These difficulties include a lack of major histocompatibility complex (MHC) and autoantibody associations in many diseases, tentatively labelled as autoimmune. A gradual appreciation of these difficulties has led to revised definitions of autoimmunity, but this approach fails to define when self-directed tissue inflammation is not autoimmune in origin [<xref ref-type="bibr" rid="pmed-0030297-b004">4</xref>].</p>
+      <p>And there is yet another weakness in the concept of autoimmunity: the idea that the immune system functions by making a distinction between self and nonself has come under scrutiny for failing to explain a number of findings. For example, “Why do we fail to reject tumors, even when many clearly express new or mutated proteins? Why do most of us harbor autoreactive lymphocytes without any sign of autoimmune disease, while a few individuals succumb?” [<xref ref-type="bibr" rid="pmed-0030297-b005">5</xref>].</p>
+      <p>To answer these questions, Polly Matzinger proposed the “danger signal theory,” which proposes that the immune system is not so much concerned with self/nonself discrimination but with mounting responses to danger signals, including exogenous pathogenic bacteria and endogenous damaged tissues [<xref ref-type="bibr" rid="pmed-0030297-b005">5</xref>]. However, the danger model does not account adequately for the exquisite specificity of the adaptive immune responses in autoimmune diseases. This article draws on recent advances from genetic and molecular studies and improved clinical insights into disease in order to propose a unified classification and theoretical framework for all immunological diseases.</p>
+    </sec>
+    <sec id="s3">
+      <title>Key Studies That Defined Autoinflammation as the Opposite of Autoimmunity</title>
+      <p>The recent elucidation of mechanisms underlying self-directed tissue inflammation independent of B or T cell abnormalities could potentially transform our understanding of immunological diseases (<xref ref-type="table" rid="pmed-0030297-t001">Table 1</xref>). Paradoxically, the background to these discoveries is over a century old, with Eli Metchnikoff's seminal observations that described how phagocytic cells, rather than serum factors (or antibodies), were responsible for inflammatory tissue reactions against foreign antigens.</p>
+      <p>Fifty years later came recognition of the clinical entities subsequently known as hereditary periodic fevers (HPFs) [<xref ref-type="bibr" rid="pmed-0030297-b006">6</xref>], which are now known to include tumour necrosis factor (TNF) receptor–associated periodic fever syndrome (TRAPS) [<xref ref-type="bibr" rid="pmed-0030297-b007">7</xref>], familial Mediterranean fever (FMF), hyperimmunoglobulinaemia D with periodic fever syndrome (HIDS), and several others (<xref ref-type="table" rid="pmed-0030297-t001">Table 1</xref>). The key breakthrough came in Daniel Kastner's laboratory by using a candidate gene approach in families with a rare autosomal dominant HPF termed familial Hibernian fever, initially in the prototypic familial Hibernian fever family from Nottingham, as well as in a series of families drawn from both Europe and the United States. Mutations in the TNF1 receptor, which is widely distributed on both immune and nonimmune cells, were shown in six families. This led the authors to propose the term TNF receptor–associated periodic syndrome (TRAPS) and to coin the term autoinflammation, in recognition of an immunopathogenesis that was distinct from autoimmunity [<xref ref-type="bibr" rid="pmed-0030297-b007">7</xref>].</p>
+      <p>It now appears that TRAPS and other monogenic periodic fever disorders share a common thread. They all show disturbances in pathways associated with innate immune cell function, encompassing abnormal signalling in key cytokine pathways that include TNF and interleukin-1 (IL-1ß) (via adaptor molecules collectively termed the inflammasome [<xref ref-type="bibr" rid="pmed-0030297-b008">8</xref>]), as well as through mutations in proteins associated with bacterial sensing [<xref ref-type="bibr" rid="pmed-0030297-b009">9</xref>,<xref ref-type="bibr" rid="pmed-0030297-b010">10</xref>] (<xref ref-type="table" rid="pmed-0030297-t002">Table 2</xref>).</p>
+      <table-wrap id="pmed-0030297-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pmed.0030297.t002</object-id><label>Table 2</label><caption>
+          <title>Immunological Aspects of Pure Autoinflammation versus Pure Autoimmunity</title>
+        </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.t002" xlink:type="simple"/><!-- <table frame="hsides" rules="groups"><colgroup><col id="tb2col1" align="left"/><col id="tb2col2" align="left"/><col id="tb2col3" align="left"/></colgroup><thead><tr><td><bold>Variable</bold></td><td><bold>Autoinflammatory</bold></td><td><bold>Autoimmune</bold></td></tr></thead><tbody><tr><td>Factors determining disease manifestations</td><td>Local tissue factors at disease-prone sites, including tissue trauma, necrosis, mechanical factors, and bacteria or their constituent molecules</td><td>Clinical disease expression determined by events taking place in primary and secondary lymphoid tissues, including bone marrow, thymus, lymph nodes, and spleen</td></tr><tr><td/><td>Innate immune activation</td><td>Adaptive immune activation</td></tr><tr><td>Key theory relating to disease expression</td><td>The danger signal theory of Matzinger, with tissue-specific factors determining disease localisation</td><td>The major factor determining disease is aberrant SNS discrimination, with breakdown of immunological tolerance</td></tr><tr><td>Immunological basis</td><td>Genetically related to perturbations of innate immune function, including pro-inflammatory cytokine signalling abnormalities&sol;bacterial sensing&sol;local tissue abnormalities</td><td>Acquired immune perturbation key-to-disease expression</td></tr><tr><td>Cellular basis</td><td>Expression determined by cells of innate immune system, including neutrophils and macrophages or nonimmune cells</td><td>Expression mainly determined by factors affecting B and T cell activity</td></tr><tr><td/><td>Genetic mutations in HPFs, including TRAPS and FMF, affect these cells</td><td>Genetic mutations in rare autoimmune diseases affect these cells or their selection in thymus</td></tr></tbody></table> --><!-- <table-wrap-foot><fn><p>This table represents some of the key features that allow differentiation of a &ldquo;pure autoinflammatory disease&rdquo; from a &ldquo;pure autoimmune disease.&rdquo; The rare monogenic HPFs are the prototypic autoinflammatory diseases, whereas the prototypes for autoimmune diseases include the polygenic MHC and autoantibody-related diseases, as well as some rare monogenic diseases. SNS, self&sol;nonself.</p></fn></table-wrap-foot> --></table-wrap>
+      <p>Jérôme Galon and colleagues proposed that polygenic diseases sharing clinical features in common with the HPFs and lacking autoantibody or MHC associations could, by default, be termed autoinflammatory in nature [<xref ref-type="bibr" rid="pmed-0030297-b010">10</xref>]. Indeed, the recognition of innate immune-related factors at target sites of disease, rather than adaptive immunity, has led to the idea of classifying some conditions (such as Crohn disease and Behçet syndrome) as being autoinflammatory [<xref ref-type="bibr" rid="pmed-0030297-b010">10</xref>,<xref ref-type="bibr" rid="pmed-0030297-b011">11</xref>]. However, this classification remains highly controversial, given that evidence for autoantibodies and autoimmune-like reactions is also a feature of these diseases [<xref ref-type="bibr" rid="pmed-0030297-b012">12</xref>]. Also, the logical consequence of this approach is a resulting two-tiered classification for some, but not all, immunological diseases.</p>
+    </sec>
+    <sec id="s4">
+      <title>Autoimmunity versus Autoinflammation</title>
+      <p>The issues pertaining to immunological disease classification are compounded by the absence of a precise definition of what constitutes autoinflammation in the common polygenic diseases. This is in contrast to polygenic autoimmune disease, where a broad consensus on a generic definition exists (<xref ref-type="boxed-text" rid="box1">Box 1</xref>). Autoinflammation may simply be defined as self-directed tissue inflammation, where local factors at disease-prone sites determine activation of the innate immune system. Such a definition would encompass autoinflammatory mechanisms across the spectrum of immunological disease. Indeed, several tissue-specific factors that could contribute to inflammation have been recognised (<xref ref-type="supplementary-material" rid="pmed-0030297-sd001">Box S1</xref>).</p>
+      <boxed-text id="box1" position="float">
+        <sec>
+          <title>Box 1. Definitions of Autoimmunity and Autoinflammation</title>
+          <sec>
+            <title>Generic Definition of Autoimmunity</title>
+            <p>Self-directed inflammation, whereby aberrant dendritic cell, B and T cell, responses in primary and secondary lymphoid organs lead to breaking of tolerance, with development of immune reactivity towards native antigens. The adaptive immune response plays the predominant role in the eventual clinical expression of disease. Organ-specific autoantibodies may predate clinical disease expression by years and manifest before target organ damage is discernible.</p>
+          </sec>
+          <sec>
+            <title>Proposal for a Definition of Autoinflammation</title>
+            <p>Self-directed inflammation, whereby local factors at sites predisposed to disease lead to activation of innate immune cells, including macrophages and neutrophils, with resultant target tissue damage. For example, disturbed homeostasis of canonical cytokine cascades (as in the periodic fevers), aberrant bacterial sensing (as in Crohn disease), and tissue microdamage predispose one to site-specific inflammation that is independent of adaptive immune responses.</p>
+          </sec>
+        </sec>
+      </boxed-text>
+      <p>Based on this definition, many common diseases with strong inflammatory components could be classed as predominantly autoinflammatory in nature, although most of these conditions also have evidence for autoimmunity in the clinical setting (<xref ref-type="fig" rid="pmed-0030297-g001">Figure 1</xref>). Importantly, this definition of autoinflammation allows for the establishment of specific boundaries for what constitutes self-directed inflammation. Furthermore, all immunological disease can then be conceptualised as being purely autoinflammatory or autoimmune, or being a combination of autoinflammatory–autoimmune mechanisms that variably interact in the phenotypic expression of disease (<xref ref-type="fig" rid="pmed-0030297-g001">Figure 1</xref>). Thus, the boundaries for autoimmunity are set by mutations associated with the monogenic autoimmune diseases, which show an increased propensity towards adaptive immune responses and which are recognisable by the presence of autoantibodies. On the other hand, the boundaries of autoinflammation are defined by mutations in cells or molecules involved in innate immune responses at disease-prone sites, where disease expression cannot be explained by autoimmune mechanisms.</p>
+      <fig id="pmed-0030297-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pmed.0030297.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>The Immunological Disease Continuum, with Examples</title>
+          <p>The monogenic “autoinflammatory” diseases may be exclusively determined by local tissue-specific factors. For rare monogenic “autoimmune” conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1–associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.g001" xlink:type="simple"/>
+      </fig>
+      <p>For example, Crohn disease is the first polygenic disease with a genetically defined autoinflammatory component, which was defined simultaneously by two groups who showed that the disease-associated mutation occurred in a protein involved in innate immune responses [<xref ref-type="bibr" rid="pmed-0030297-b013">13</xref>,<xref ref-type="bibr" rid="pmed-0030297-b014">14</xref>]. Specifically, the NOD2-associated mutations are thought to be linked to aberrant intracellular innate immune responses to bacterial peptidoglycan [<xref ref-type="bibr" rid="pmed-0030297-b015">15</xref>]. In addition to its expression on cells of the monocyte lineage, the NOD2 protein is also expressed on gut epithelial cells. Moreover, carriage of two copies of the <italic>NOD2</italic> mutation is associated with site-specific involvement of the ileum and severe stricturing disease [<xref ref-type="bibr" rid="pmed-0030297-b016">16</xref>].</p>
+      <p>Gout is the first common polygenic condition with a molecular basis that is reminiscent of the monogenic autoinflammatory diseases. The causative urate crystals have a tendency for site-specific deposition in the joints, which may only periodically lead to inflammation, despite the continuous presence of crystals [<xref ref-type="bibr" rid="pmed-0030297-b017">17</xref>]. At a molecular level, attacks of gout are associated with activation of the IL-1ß signalling cascade, via the NALP3 inflammasone, in a manner similar to some of the HPFs [<xref ref-type="bibr" rid="pmed-0030297-b018">18</xref>,<xref ref-type="bibr" rid="pmed-0030297-b019">19</xref>].</p>
+    </sec>
+    <sec id="s5">
+      <title>Clinical Studies That Helped Define Autoinflammatory Diseases</title>
+      <p>Crohn disease is closely associated with the seronegative spondyloarthropathies, which include ankylosing spondylitis, reactive arthritis, and psoriatic arthritis. Indeed, most patients with ankylosing spondylitis have subclinical Crohn disease. Of course some of these disorders show striking human leukocyte antigen <italic>(HLA)-B27</italic> MHC associations, unlike Crohn disease, and immune reactivity against self has long been suspected as an underlying immunopathogenetic mechanism [<xref ref-type="bibr" rid="pmed-0030297-b020">20</xref>]. However, recent magnetic resonance imaging studies have shown that early disease localisation in ankylosing spondylitis, reactive arthritis, and psoriatic arthritis is maximal at, and adjacent to, sites of relatively high shear and tensile forces at tendon and ligament insertions [<xref ref-type="bibr" rid="pmed-0030297-b021">21</xref>]. Bone inflammation adjacent to insertions may be seen in all of these conditions [<xref ref-type="bibr" rid="pmed-0030297-b022">22</xref>]. However, when bone inflammation is extensive, it is often associated with carriage of the <italic>HLA-B27</italic> gene, suggesting that local factors determine the degree of activation of the adaptive immune response at certain predisposed sites [<xref ref-type="bibr" rid="pmed-0030297-b023">23</xref>].</p>
+      <p>Collectively, Crohn disease and the seronegative arthropathies are associated with acneform lesions, skin pustulosis, and occasionally multifocal osteitis. All of these clinical features are variably shared with two recently identified monogenic autoinflammatory conditions: (1) pyogenic arthritis, pyoderma gangrenosum, and severe cystic acne (PAPA) syndrome and (2) a type of chronic multifocal recurrent osteomyelitis (CMRO) [<xref ref-type="bibr" rid="pmed-0030297-b024">24</xref>,<xref ref-type="bibr" rid="pmed-0030297-b025">25</xref>]. The molecular basis of these monogenic equivalents of more common polygenic clinical counterparts relates to mutations in proteins associated with innate immune cell functioning rather than with adaptive immunity. This suggests that tissue-specific factors in the bones, joints, or skin may lead to clinical disease expression at certain sites (<xref ref-type="table" rid="pmed-0030297-t001">Table 1</xref>).</p>
+      <p>In common with ankylosing spondylitis and psoriatic arthropathy, Behçet disease also has MHC class I associations. However, in contrast to ankylosing spondylitis and psoriatic arthropathy, Behçet disease has clinical features that seem to be mostly autoinflammatory in nature (<xref ref-type="supplementary-material" rid="pmed-0030297-st001">Table S1</xref>). Furthermore, particular variants of both the FMF gene <italic>(MEFV)</italic> and <italic>TNFRSF1A</italic> are more common in people with Behçet disease. There appears to be overlap between Behçet disease, inflammatory bowel disease, and <italic>MEFV</italic> mutations in general, and Ahmet Gül has postulated that poorly defined tissue-specific factors in Behçet disease may eventually lead to the development of secondary autoimmune responses [<xref ref-type="bibr" rid="pmed-0030297-b026">26</xref>].</p>
+      <p>In the case of autoimmune diseases such as rheumatoid arthritis (RA), studies by Ai Lyn Tan and colleagues [<xref ref-type="bibr" rid="pmed-0030297-b027">27</xref>] and by Laura Rhodes and colleagues [<xref ref-type="bibr" rid="pmed-0030297-b028">28</xref>] showed that the degree of joint inflammation, joint erosions, and therapeutic responses are variably affected by tissue-specific factors, including the position of joint ligaments. For instance, RA erosive changes are more pronounced adjacent to the site of maximal stress, as exemplified in the index finger compared with the ring finger of the dominant hand [<xref ref-type="bibr" rid="pmed-0030297-b027">27</xref>]. These studies show how secondary autoinflammatory mechanisms contribute to the clinical expression of RA. Based on magnetic resonance imaging observations in inflammatory arthritis, McGonagle and colleagues proposed a classification whereby RA is viewed as the archetypal autoimmune-mediated synovitis, and the seronegative arthropathies are considered from the perspective of tissue-specific factors related to joint insertions [<xref ref-type="bibr" rid="pmed-0030297-b029">29</xref>]. The implications of this dichotomous classification of joint disease can be extended to all immunological diseases.</p>
+    </sec>
+    <sec id="s6">
+      <title>Implications for Autoimmunity</title>
+      <p>The autoimmunity paradigm has dominated immunology for so long that our concepts of many disorders, including Crohn disease, have been moulded to fit the prevailing dogma. Placing immunological disease along this proposed continuum allows the relative contribution of different types of self-directed inflammation to be considered without assuming that an adaptive immune response is central to disease pathogenesis.</p>
+      <p>The case of vasculitis (blood vessel inflammation) illustrates the usefulness of a continuum view of immunological disease. The autoimmune-mediated vasculitides can be distinguished clinically by the presence of pathogenic autoantibodies, including antineutrophil cytoplasmic antibodies (ANCA). It is of note, therefore, that the nonautoantibody-associated vasculitides, including Takayasu arteritis and giant cell arteritis, affect particular vascular territories in a patchy manner, thereby illustrating the contribution of local factors to disease pathogenesis (<xref ref-type="supplementary-material" rid="pmed-0030297-st001">Table S1</xref>). Thus far, evidence for tissue-specific factors influencing the expression of autoimmune diseases in humans, such as type 1 diabetes, is lacking, but the concept of secondary autoinflammation in autoimmunity offers an alternative perspective on how genetic or environmental factors affecting disease-prone sites could lead to, or alter, clinical disease expression.</p>
+      <p>The classification of MHC class I–associated diseases as autoimmune has been contentious given that these conditions lack specific autoantibody associations. The present classification places <italic>HLA-B27</italic>-related conditions and other MHC class I–associated diseases as intermediates—or “at a half-way house”—between autoinflammation and autoimmunity. As outlined earlier, tissue-specific factors at disease-prone sites appear to be instrumental in localisation of these conditions. While this article deals exclusively with self-directed tissue inflammation, immune-reactivity reactions against nonself (such as reactions to organ transplants) help illustrate the concept of MHC class I–associated diseases being “halfway houses.” In the transplantation field, renal rejection reactions are strongly associated with MHC class I antigens and with tissue-specific factors, especially the duration of organ ischemia. In fact, if organ ischemia is minimised, then MHC-mismatched grafts survive as well as matched grafts, thus showing how adaptive immunity and local tissue factors interact in disease expression [<xref ref-type="bibr" rid="pmed-0030297-b030">30</xref>] in the context of MHC class I associations.</p>
+      <p>In certain clinically defined autoimmune scenarios, including RA, it appears that some patients do in fact have a disease that is predominately autoinflammatory in nature. In a study of patients with benign polyarthritis of the elderly, which often meets diagnostic criteria for RA and has a good prognosis but lacks the autoantibody association, McGonagle and colleagues observed that the pattern of disease localisation was similar to the seronegative arthropathies. In other words, joint disease tended to involve the periarticular structures rather than the synovium [<xref ref-type="bibr" rid="pmed-0030297-b031">31</xref>]. The good prognosis in benign polyarthritis is similar to reactive arthritis, which is a type of seronegative arthritis. Thus, the variable prognosis in diseases such as RA and multiple sclerosis may be related to the predominance of either autoinflammation or autoimmunity, with the former generally equating to a better prognosis.</p>
+      <p>The formal recognition of autoinflammation also has implications for a better clinical understanding of the targeted therapy of the immunological diseases. For example, anticytokine therapy is especially effective in autoinflammatory disease; the interleukin-1 receptor antagonist anakinra shows good efficacy in some monogenic autoinflammatory disorders [<xref ref-type="bibr" rid="pmed-0030297-b032">32</xref>]. On the other hand, strategies to target lymphocytes are especially effective in autoimmune diseases, such as lupus. In some cases, both anticytokine and antilymphocyte strategies are effective in disorders that lie somewhere along the autoimmune–autoinflammatory disease continuum (<xref ref-type="boxed-text" rid="box2">Box 2</xref>). Finally, cytokine blockade of diseases with a strong autoinflammatory basis may aggravate or precipitate autoimmune diseases such as lupus. Placing inflammatory disease along a continuum, therefore, may have relevance for therapy development, since disorders with a prominent autoinflammatory component could be targeted via innate immune pathway blockade.</p>
+      <boxed-text id="box2" position="float">
+        <sec>
+          <title>Box 2. The Autoinflammatory–Autoimmune Continuum and Targeted Therapy in the Immunological Diseases</title>
+          <sec>
+            <title>Group A: Canonical cytokine pathway blockade for autoinflammatory disease</title>
+            <list list-type="bullet">
+              <list-item>
+                <p>TRAPS: etanercept</p>
+              </list-item>
+              <list-item>
+                <p>Cryopyrinopathies (chronic infantile neurologic, cutaneous and articular syndrome, neonatal onset multisystem inflammatory disease, Muckle-Wells syndrome): anakinra</p>
+              </list-item>
+              <list-item>
+                <p>Gout and FMF: colchicine, which may interfere with inflammasome activation, as well as interference with leukocyte motility</p>
+              </list-item>
+              <list-item>
+                <p>Crohn disease: anti-TNF with infliximab or adalimumab</p>
+              </list-item>
+              <list-item>
+                <p>Ankylosing spondylitis and psoriatic arthritis: responsive to all anti-TNF therapies</p>
+              </list-item>
+            </list>
+            <p>In Group A, anti-TNF (etanercept) or IL-1ß blockade with anakinra may be virtually curative in some cases of monogenic autoinflammatory diseases. Colchicine is especially effective in FMF and gout, but not in autoimmunity. Anti-TNF therapy has revolutionised the management of Crohn disease and ankylosing spondylitis, but conversely, this same anticytokine therapy may aggravate some autoimmune diseases, including systemic lupus erythematosus (SLE) and Sjogren syndrome; however, targeting of lymphocytes in such autoimmune diseases may be effective (see Group B). TNF may aggravate autoimmune conditions such as SLE in Group B.</p>
+          </sec>
+          <sec>
+            <title>Group B: Blockade of B and T lymphocytes for autoimmunity</title>
+            <list list-type="bullet">
+              <list-item>
+                <p>SLE: mycophenolate moefitil, azathioprine</p>
+              </list-item>
+              <list-item>
+                <p>SLE: rituximab</p>
+              </list-item>
+              <list-item>
+                <p>Sjogren syndrome: rituximab</p>
+              </list-item>
+            </list>
+          </sec>
+          <sec>
+            <title>Group C: Blockade of cytokines or adaptive immune responses</title>
+            <list list-type="bullet">
+              <list-item>
+                <p>RA: anti-TNF therapy and rituximab (anti-B cell)</p>
+              </list-item>
+              <list-item>
+                <p>Psoriasis: anti-TNF therapy and efalizumab or alefacept, both of which are thought to act primarily by blocking T cell migration and activation.</p>
+              </list-item>
+            </list>
+            <p>In Group C, there is considerable heterogeneity in the extent of response to biological therapies in diseases such as RA and psoriasis. In these two conditions, both anticytokine and antilymphocyte strategies may be effective, which is in keeping with a significant interplay between autoimmune and autoinflammatory components, as proposed in <xref ref-type="fig" rid="pmed-0030297-g001">Figure 1</xref>. Future therapy development and an improved understanding of the basis for drug resistance in immunological diseases will be enhanced by considering the relative role of adaptive immunity and innate immune factors at target sites of disease.</p>
+          </sec>
+        </sec>
+      </boxed-text>
+      <boxed-text position="float">
+        <sec>
+          <title>Landmark Papers That Set the Scene for Proposing an Autoimmune–Autoinflammation Spectrum</title>
+          <sec>
+            <title>1. Burnet et al. [<xref ref-type="bibr" rid="pmed-0030297-b001">1</xref>]</title>
+            <p>The seminal work of Burnet and others set the scene for understanding the nature of autoimmunity.</p>
+          </sec>
+          <sec>
+            <title>2. McDermott et al. [<xref ref-type="bibr" rid="pmed-0030297-b007">7</xref>]</title>
+            <p>This article showed that some inflammation directed against self was due to mutations in the TNF receptor and introduced the concept of autoinflammation. Since TNF is pivotal in innate immune responses, the work confirmed that this disease process was very different from autoimmunity at the molecular level.</p>
+          </sec>
+          <sec>
+            <title>3. Hugot et al. and Ogura Y et al. [<xref ref-type="bibr" rid="pmed-0030297-b013">13</xref>,<xref ref-type="bibr" rid="pmed-0030297-b014">14</xref>]</title>
+            <p>Until this work, Crohn disease was conceptualised in relationship to autoimmune mechanisms. These studies were published simultaneously, and showed that mutations in a protein associated with innate immune responses played a key role in a subgroup of patients with Crohn disease.</p>
+          </sec>
+          <sec>
+            <title>4. Martinon et al. [<xref ref-type="bibr" rid="pmed-0030297-b018">18</xref>]</title>
+            <p>This paper showed that the molecular pathways associated with immune activation in gout and pseudogout were very similar to those associated with immune activation in some of the monogenic autoinflammatory diseases. This mechanistic link shows how multifactorial common diseases, without a clearly defined genetic basis, are linked to autoinflammation.</p>
+          </sec>
+          <sec>
+            <title>5. Matzinger [<xref ref-type="bibr" rid="pmed-0030297-b034">34</xref>]</title>
+            <p>The author argued that the danger theory stood on the shoulders of the self/nonself discrimination theory, and thus explained autoimmunity. However, the danger theory nicely illustrates the role of innate immune responses, which are independent of self/nonself discrimination, as a mechanism for self-directed tissue inflammation.</p>
+          </sec>
+        </sec>
+      </boxed-text>
+    </sec>
+    <sec id="s7">
+      <title>Refining our Understanding of Immunology</title>
+      <p>The concept of autoinflammation has implications for our theoretical understanding of immunology. The two theories of self-directed immunity—the self/nonself discrimination theory and the danger signal theory—place the emphasis on different aspects of how autoimmunity develops and argue for different theoretical rationales for immunological disease. In physics, the nature of matter cannot be readily understood in terms of either particles or waves, so the wave–particle duality arose. Likewise, many aspects of classically recognised autoimmune diseases are best viewed in terms of self/nonself discrimination and, conversely, the autoinflammatory diseases are best viewed from the perspective of tissue-specific danger signals. For example, uric acid—the causative molecule in gout—is a recognised danger signal [<xref ref-type="bibr" rid="pmed-0030297-b033">33</xref>]. From the standpoint of the danger theory, the ultimate susceptibility to disease lies not with the adaptive immune system but with the target tissue itself, from which danger signals emanate [<xref ref-type="bibr" rid="pmed-0030297-b034">34</xref>]; this hypothesis is closely allied with the proposed generic definition of autoinflammation. Looking at immunological disease from the autoimmunity perspective, several groups have drawn attention to the possible role of tissue-specific factors in autoimmunity [<xref ref-type="bibr" rid="pmed-0030297-b035">35</xref>].</p>
+      <p>A better clinical understanding of diseases may be achieved by purposely looking for specific autoinflammatory and autoimmune features. For example, the idea of coeliac disease being autoimmune in nature is questionable given the exogenous nature of the causative gluten antigen. However, when viewed from the perspective of tissue-specific components, such as altered gut permeability following inciting infections and gut tissue transglutaminase-mediated gluten peptide modification, then a unifying basis can be conceptualised [<xref ref-type="bibr" rid="pmed-0030297-b036">36</xref>]. Conversely, the idea that Crohn disease and ulcerative colitis are autoinflammatory in nature is also questionable given their associations with p-antineutrophil cytoplasmic autoantibodies [<xref ref-type="bibr" rid="pmed-0030297-b037">37</xref>]. It remains to be determined whether the autoantibody association represents secondary autoimmunity or disease heterogeneity, with some cases being predominantly autoimmune and others autoinflammatory.</p>
+    </sec>
+    <sec id="s8">
+      <title>Conclusions</title>
+      <p>The formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity. If we adopt a “continuum model” of immunology, in which diseases lie on a spectrum from autoimmune to autoinflammatory, we can begin to define the relative contributions of both the innate and the adaptive immune responses to particular diseases. All noninfectious inflammatory disease can be accommodated within this classification.</p>
+      <p>Animal models of autoimmune disease have been very instructive for elucidating molecular pathways of many conditions. However, in order to adequately assess the role of individual tissue-specific factors, studies will need to focus on the role of site-specific factors in humans. Future clinical studies are needed to develop imaging strategies, including molecular imaging, as well as to determine the basis for inflammation at certain predisposed sites (<xref ref-type="fig" rid="pmed-0030297-g002">Figure 2</xref>). Studies of tissues that are subject to autoinflammatory reactions in diseases such as multiple sclerosis need to explore autoinflammatory mechanisms in disease expression that have been neglected to date. The autoinflammatory–autoimmune continuum offers an inclusive classification of immunological disease and a better understanding of the pathogenesis and treatment of self-directed inflammation.</p>
+      <fig id="pmed-0030297-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pmed.0030297.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>Recognition of Autoinflammation: Psoriatic Arthritis as an Example</title>
+          <p>In early RA, joint disease localisation is to the synovium—in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 ×100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.g002" xlink:type="simple"/>
+      </fig>
+    </sec>
+    <sec id="s9">
+      <title>Supporting Information</title>
+      <supplementary-material id="pmed-0030297-st001" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.st001" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <title>Clinical Aspects of Pure Autoinflammation versus Pure Autoimmunity</title>
+          <p>This table represents key features that allow differentiation of a “pure autoinflammatory disease” from a “pure autoimmune disease” in the clinical setting. As outlined in the text, there is increasing evidence for an interaction between autoimmune and autoinflammatory mechanisms in the phenotypic expression of common polygenic diseases, where overlapping features may be evident.</p>
+          <p>(34 KB DOC).</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pmed-0030297-sd001" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.sd001" xlink:type="simple">
+        <label>Box S1</label>
+        <caption>
+          <title>Recognised Tissue-Specific Factors in Immune Disease Localisation</title>
+          <p>(20 KB DOC).</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pmed-0030297-sd002" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pmed.0030297.sd001" xlink:type="simple">
+        <label>Text S1</label>
+        <caption>
+          <title>Recognised Tissue-Specific Factors in Immune Disease Localisation</title>
+          <p>(20 KB DOC).</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We would like to acknowledge Paul Emery, Ai Lyn Tan, and Andrew Jack for their support.</p>
+    </ack>
+    
+    <ref-list>
+      <title>References</title>
+      <ref id="pmed-0030297-b001">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Burnet</surname><given-names>F</given-names></name></person-group>
+					<year>1957</year>
+					<article-title>A modification of Jerne's theory of antibody production using the concept of clonal selection.</article-title>
+					<source>Aust J Sci</source>
+					<volume>20</volume>
+					<fpage>67</fpage>
+					<lpage>69</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b002">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Davidson</surname><given-names>A</given-names></name><name name-style="western"><surname>Diamond</surname><given-names>B</given-names></name></person-group>
+					<year>2001</year>
+					<article-title>Autoimmune diseases.</article-title>
+					<source>N Engl J Med</source>
+					<volume>345</volume>
+					<fpage>340</fpage>
+					<lpage>350</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b003">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Rioux</surname><given-names>JD</given-names></name><name name-style="western"><surname>Abbas</surname><given-names>AK</given-names></name></person-group>
+					<year>2005</year>
+					<article-title>Paths to understanding the genetic basis of autoimmune disease.</article-title>
+					<source>Nature</source>
+					<volume>435</volume>
+					<fpage>584</fpage>
+					<lpage>589</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b004">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Rose</surname><given-names>NR</given-names></name><name name-style="western"><surname>Bona</surname><given-names>C</given-names></name></person-group>
+					<year>1993</year>
+					<article-title>Defining criteria for autoimmune diseases (Witebsky's postulates revisited).</article-title>
+					<source>Immunol Today</source>
+					<volume>14</volume>
+					<fpage>426</fpage>
+					<lpage>430</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b005">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Matzinger</surname><given-names>P</given-names></name></person-group>
+					<year>1994</year>
+					<article-title>Tolerance, danger, and the extended family.</article-title>
+					<source>Annu Rev Immunol</source>
+					<volume>12</volume>
+					<fpage>991</fpage>
+					<lpage>1045</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b006">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Reimann</surname><given-names>HA</given-names></name></person-group>
+					<year>1949</year>
+					<article-title>Periodic disease. Periodic fever, periodic abdominalgia, cyclic neutropenia, intermittent arthralgia, angioneurotic edema, anaphylactoid purpura and periodic paralysis.</article-title>
+					<source>JAMA</source>
+					<volume>141</volume>
+					<fpage>175</fpage>
+					<lpage>182</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b007">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>McDermott</surname><given-names>MF</given-names></name><name name-style="western"><surname>Aksentijevich</surname><given-names>I</given-names></name><name name-style="western"><surname>Galon</surname><given-names>J</given-names></name><name name-style="western"><surname>McDermott</surname><given-names>EM</given-names></name><name name-style="western"><surname>Ogunkolade</surname><given-names>BW</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>1999</year>
+					<article-title>Germline mutations in the extracellular domains of the 55 kDa TNF receptor, TNFR1, define a family of dominantly inherited autoinflammatory syndromes.</article-title>
+					<source>Cell</source>
+					<volume>97</volume>
+					<fpage>133</fpage>
+					<lpage>144</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b008">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Mariathasan</surname><given-names>S</given-names></name><name name-style="western"><surname>Newton</surname><given-names>K</given-names></name><name name-style="western"><surname>Monack</surname><given-names>DM</given-names></name><name name-style="western"><surname>Vucic</surname><given-names>D</given-names></name><name name-style="western"><surname>French</surname><given-names>DM</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2004</year>
+					<article-title>Differential activation of the inflammasome by caspase-1 adaptors ASC and Ipaf.</article-title>
+					<source>Nature</source>
+					<volume>430</volume>
+					<fpage>213</fpage>
+					<lpage>218</lpage>
+					<comment>E-pub 9 June 2004</comment>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b009">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Stojanov</surname><given-names>S</given-names></name><name name-style="western"><surname>Kastner</surname><given-names>DL</given-names></name></person-group>
+					<year>2005</year>
+					<article-title>Familial autoinflammatory diseases: Genetics, pathogenesis and treatment.</article-title>
+					<source>Curr Opin Rheumatol</source>
+					<volume>17</volume>
+					<fpage>586</fpage>
+					<lpage>599</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b010">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Galon</surname><given-names>J</given-names></name><name name-style="western"><surname>Aksentijevich</surname><given-names>I</given-names></name><name name-style="western"><surname>McDermott</surname><given-names>MF</given-names></name><name name-style="western"><surname>O'Shea</surname><given-names>JJ</given-names></name><name name-style="western"><surname>Kastner</surname><given-names>DL</given-names></name></person-group>
+					<year>2000</year>
+					<article-title>TNFRSF1A mutations and autoinflammatory syndromes.</article-title>
+					<source>Curr Opin Immunol</source>
+					<volume>12</volume>
+					<fpage>479</fpage>
+					<lpage>486</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b011">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Hull</surname><given-names>KM</given-names></name><name name-style="western"><surname>Shoham</surname><given-names>N</given-names></name><name name-style="western"><surname>Chae</surname><given-names>JJ</given-names></name><name name-style="western"><surname>Aksentijevich</surname><given-names>I</given-names></name><name name-style="western"><surname>Kastner</surname><given-names>DL</given-names></name></person-group>
+					<year>2003</year>
+					<article-title>The expanding spectrum of systemic autoinflammatory disorders and their rheumatic manifestations.</article-title>
+					<source>Curr Opin Rheumatol</source>
+					<volume>15</volume>
+					<fpage>61</fpage>
+					<lpage>69</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b012">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Lodes</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Cong</surname><given-names>Y</given-names></name><name name-style="western"><surname>Elson</surname><given-names>CO</given-names></name><name name-style="western"><surname>Mohamath</surname><given-names>R</given-names></name><name name-style="western"><surname>Landers</surname><given-names>CJ</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2004</year>
+					<article-title>Bacterial flagellin is a dominant antigen in Crohn disease.</article-title>
+					<source>J Clin Invest</source>
+					<volume>113</volume>
+					<fpage>1296</fpage>
+					<lpage>1306</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b013">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Hugot</surname><given-names>JP</given-names></name><name name-style="western"><surname>Chamaillard</surname><given-names>M</given-names></name><name name-style="western"><surname>Zouali</surname><given-names>H</given-names></name><name name-style="western"><surname>Lesage</surname><given-names>S</given-names></name><name name-style="western"><surname>Cezard</surname><given-names>JP</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2001</year>
+					<article-title>Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn's disease.</article-title>
+					<source>Nature</source>
+					<volume>411</volume>
+					<fpage>599</fpage>
+					<lpage>603</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b014">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Ogura</surname><given-names>Y</given-names></name><name name-style="western"><surname>Bonen</surname><given-names>DK</given-names></name><name name-style="western"><surname>Inohara</surname><given-names>N</given-names></name><name name-style="western"><surname>Nicolae</surname><given-names>DL</given-names></name><name name-style="western"><surname>Chen</surname><given-names>FF</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2001</year>
+					<article-title>A frameshift mutation in NOD2 associated with susceptibility to Crohn's disease.</article-title>
+					<source>Nature</source>
+					<volume>411</volume>
+					<fpage>603</fpage>
+					<lpage>606</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b015">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Strober</surname><given-names>W</given-names></name><name name-style="western"><surname>Kitani</surname><given-names>A</given-names></name><name name-style="western"><surname>Watababe</surname><given-names>T</given-names></name></person-group>
+					<year>2006</year>
+					<article-title>Signalling pathways and molecular interactions of NOD1 and NOD2.</article-title>
+					<source>Nat Rev Immunol</source>
+					<volume>6</volume>
+					<fpage>9</fpage>
+					<lpage>20</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b016">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Lesage</surname><given-names>S</given-names></name><name name-style="western"><surname>Zouali</surname><given-names>H</given-names></name><name name-style="western"><surname>Cezard</surname><given-names>JP</given-names></name><name name-style="western"><surname>Colombel</surname><given-names>JF</given-names></name><name name-style="western"><surname>Belaiche</surname><given-names>J</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2002</year>
+					<article-title>CARD15/NOD2 mutational analysis and genotype-phenotype correlation in 612 patients with inflammatory bowel disease.</article-title>
+					<source>Am J Hum Genet</source>
+					<volume>70</volume>
+					<fpage>845</fpage>
+					<lpage>857</lpage>
+					<comment>E-pub 1 March 2002</comment>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b017">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Pascual</surname><given-names>E</given-names></name><name name-style="western"><surname>Batlle-Gualda</surname><given-names>E</given-names></name><name name-style="western"><surname>Martinez</surname><given-names>A</given-names></name><name name-style="western"><surname>Rosas</surname><given-names>J</given-names></name><name name-style="western"><surname>Vela</surname><given-names>P</given-names></name></person-group>
+					<year>1999</year>
+					<article-title>Synovial fluid analysis for diagnosis of intercritical gout.</article-title>
+					<source>Ann Intern Med</source>
+					<volume>131</volume>
+					<fpage>756</fpage>
+					<lpage>759</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b018">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Martinon</surname><given-names>F</given-names></name><name name-style="western"><surname>Petrilli</surname><given-names>V</given-names></name><name name-style="western"><surname>Mayor</surname><given-names>A</given-names></name><name name-style="western"><surname>Tardivel</surname><given-names>A</given-names></name><name name-style="western"><surname>Tschopp</surname><given-names>J</given-names></name></person-group>
+					<year>2006</year>
+					<article-title>Gout-associated uric acid crystals activate the NALP3 inflammasome.</article-title>
+					<source>Nature</source>
+					<volume>11</volume>
+					<fpage>11</fpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b019">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>McDermott</surname><given-names>MF</given-names></name></person-group>
+					<year>2004</year>
+					<article-title>A common pathway in periodic fever syndromes.</article-title>
+					<source>Trends Immunol</source>
+					<volume>25</volume>
+					<fpage>457</fpage>
+					<lpage>460</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b020">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Wucherpfennig</surname><given-names>KW</given-names></name></person-group>
+					<year>2001</year>
+					<article-title>Mechanisms for the induction of autoimmunity by infectious agents.</article-title>
+					<source>J Clin Invest</source>
+					<volume>108</volume>
+					<fpage>1097</fpage>
+					<lpage>1104</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b021">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>McGonagle</surname><given-names>D</given-names></name><name name-style="western"><surname>Gibbon</surname><given-names>W</given-names></name><name name-style="western"><surname>O'Connor</surname><given-names>P</given-names></name><name name-style="western"><surname>Green</surname><given-names>M</given-names></name><name name-style="western"><surname>Pease</surname><given-names>C</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>1998</year>
+					<article-title>Characteristic magnetic resonance imaging entheseal changes of knee synovitis in spondylarthropathy.</article-title>
+					<source>Arthritis Rheum</source>
+					<volume>41</volume>
+					<fpage>694</fpage>
+					<lpage>700</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b022">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Tan</surname><given-names>AL</given-names></name><name name-style="western"><surname>Grainger</surname><given-names>AJ</given-names></name><name name-style="western"><surname>Tanner</surname><given-names>SF</given-names></name><name name-style="western"><surname>Emery</surname><given-names>P</given-names></name><name name-style="western"><surname>McGonagle</surname><given-names>D</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2006</year>
+					<article-title>A high-resolution magnetic resonance imaging study of distal interphalangeal joint arthropathy in psoriatic arthritis and osteoarthritis: Are they the same?</article-title>
+					<source>Arthritis Rheum</source>
+					<volume>54</volume>
+					<fpage>1328</fpage>
+					<lpage>1333</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b023">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>McGonagle</surname><given-names>D</given-names></name><name name-style="western"><surname>Stockwin</surname><given-names>L</given-names></name><name name-style="western"><surname>Isaacs</surname><given-names>J</given-names></name><name name-style="western"><surname>Emery</surname><given-names>P</given-names></name></person-group>
+					<year>2001</year>
+					<article-title>An enthesitis based model for the pathogenesis of spondyloarthropathy. Additive effects of microbial adjuvant and biomechanical factors at disease sites.</article-title>
+					<source>J Rheumatol</source>
+					<volume>28</volume>
+					<fpage>2155</fpage>
+					<lpage>2159</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b024">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Ferguson</surname><given-names>PJ</given-names></name><name name-style="western"><surname>Chen</surname><given-names>S</given-names></name><name name-style="western"><surname>Tayeh</surname><given-names>MK</given-names></name><name name-style="western"><surname>Ochoa</surname><given-names>L</given-names></name><name name-style="western"><surname>Leal</surname><given-names>SM</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2005</year>
+					<article-title>Homozygous mutations in LPIN2 are responsible for the syndrome of chronic recurrent multifocal osteomyelitis and congenital dyserythropoietic anaemia (Majeed syndrome).</article-title>
+					<source>J Med Genet</source>
+					<volume>42</volume>
+					<fpage>551</fpage>
+					<lpage>557</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b025">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Ferguson</surname><given-names>PJ</given-names></name><name name-style="western"><surname>Bing</surname><given-names>X</given-names></name><name name-style="western"><surname>Vasef</surname><given-names>MA</given-names></name><name name-style="western"><surname>Ochoa</surname><given-names>LA</given-names></name><name name-style="western"><surname>Mahgoub</surname><given-names>A</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2006</year>
+					<article-title>A missense mutation in pstpip2 is associated with the murine autoinflammatory disorder chronic multifocal osteomyelitis.</article-title>
+					<source>Bone</source>
+					<volume>38</volume>
+					<fpage>41</fpage>
+					<lpage>47</lpage>
+					<comment>E-pub 24 August 2005</comment>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b026">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Gul</surname><given-names>A</given-names></name></person-group>
+					<year>2005</year>
+					<article-title>Behcet's disease as an autoinflammatory disorder.</article-title>
+					<source>Curr Drug Targets Inflamm Allergy</source>
+					<volume>4</volume>
+					<fpage>81</fpage>
+					<lpage>83</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b027">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Tan</surname><given-names>AL</given-names></name><name name-style="western"><surname>Tanner</surname><given-names>SF</given-names></name><name name-style="western"><surname>Conaghan</surname><given-names>PG</given-names></name><name name-style="western"><surname>Radjenovic</surname><given-names>A</given-names></name><name name-style="western"><surname>O'Connor</surname><given-names>P</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2003</year>
+					<article-title>Role of metacarpophalangeal joint anatomic factors in the distribution of synovitis and bone erosion in early rheumatoid arthritis.</article-title>
+					<source>Arthritis Rheum</source>
+					<volume>48</volume>
+					<fpage>1214</fpage>
+					<lpage>1222</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b028">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Rhodes</surname><given-names>LA</given-names></name><name name-style="western"><surname>Tan</surname><given-names>AL</given-names></name><name name-style="western"><surname>Tanner</surname><given-names>SF</given-names></name><name name-style="western"><surname>Radjenovic</surname><given-names>A</given-names></name><name name-style="western"><surname>Hensor</surname><given-names>EM</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2004</year>
+					<article-title>Regional variation and differential response to therapy for knee synovitis adjacent to the cartilage-pannus junction and suprapatellar pouch in inflammatory arthritis: Implications for pathogenesis and treatment.</article-title>
+					<source>Arthritis Rheum</source>
+					<volume>50</volume>
+					<fpage>2428</fpage>
+					<lpage>2432</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b029">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>McGonagle</surname><given-names>D</given-names></name><name name-style="western"><surname>Gibbon</surname><given-names>W</given-names></name><name name-style="western"><surname>Emery</surname><given-names>P</given-names></name></person-group>
+					<year>1998</year>
+					<article-title>Classification of inflammatory arthritis by enthesitis.</article-title>
+					<source>Lancet</source>
+					<volume>352</volume>
+					<fpage>1137</fpage>
+					<lpage>1140</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b030">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Ponticelli</surname><given-names>C</given-names></name></person-group>
+					<year>2003</year>
+					<article-title>Altruistic living renal transplantation.</article-title>
+					<source>J Nephrol</source>
+					<volume>16</volume>
+					<fpage>S6</fpage>
+					<lpage>S9</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b031">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>McGonagle</surname><given-names>D</given-names></name><name name-style="western"><surname>Gibbon</surname><given-names>W</given-names></name><name name-style="western"><surname>O'Connor</surname><given-names>P</given-names></name><name name-style="western"><surname>Green</surname><given-names>M</given-names></name><name name-style="western"><surname>Pease</surname><given-names>C</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>1999</year>
+					<article-title>An anatomical explanation for good-prognosis rheumatoid arthritis.</article-title>
+					<source>Lancet</source>
+					<volume>353</volume>
+					<fpage>123</fpage>
+					<lpage>124</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b032">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Hawkins</surname><given-names>PN</given-names></name><name name-style="western"><surname>Lachmann</surname><given-names>HJ</given-names></name><name name-style="western"><surname>Aganna</surname><given-names>E</given-names></name><name name-style="western"><surname>McDermott</surname><given-names>MF</given-names></name></person-group>
+					<year>2004</year>
+					<article-title>Spectrum of clinical features in Muckle-Wells syndrome and response to anakinra.</article-title>
+					<source>Arthritis Rheum</source>
+					<volume>50</volume>
+					<fpage>607</fpage>
+					<lpage>612</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b033">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Shi</surname><given-names>Y</given-names></name><name name-style="western"><surname>Evans</surname><given-names>JE</given-names></name><name name-style="western"><surname>Rock</surname><given-names>KL</given-names></name></person-group>
+					<year>2003</year>
+					<article-title>Molecular identification of a danger signal that alerts the immune system to dying cells.</article-title>
+					<source>Nature</source>
+					<volume>425</volume>
+					<fpage>516</fpage>
+					<lpage>521</lpage>
+					<comment>E-pub 7 September 2003</comment>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b034">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Matzinger</surname><given-names>P</given-names></name></person-group>
+					<year>2002</year>
+					<article-title>The danger model: a renewed sense of self.</article-title>
+					<source>Science</source>
+					<volume>296</volume>
+					<fpage>301</fpage>
+					<lpage>305</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b035">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Marrack</surname><given-names>P</given-names></name><name name-style="western"><surname>Kappler</surname><given-names>J</given-names></name><name name-style="western"><surname>Kotzin</surname><given-names>BL</given-names></name></person-group>
+					<year>2001</year>
+					<article-title>Autoimmune disease: Why and where it occurs.</article-title>
+					<source>Nat Med</source>
+					<volume>7</volume>
+					<fpage>899</fpage>
+					<lpage>905</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b036">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Dieterich</surname><given-names>W</given-names></name><name name-style="western"><surname>Ehnis</surname><given-names>T</given-names></name><name name-style="western"><surname>Bauer</surname><given-names>M</given-names></name><name name-style="western"><surname>Donner</surname><given-names>P</given-names></name><name name-style="western"><surname>Volta</surname><given-names>U</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>1997</year>
+					<article-title>Identification of tissue transglutaminase as the autoantigen of celiac disease.</article-title>
+					<source>Nat Med</source>
+					<volume>3</volume>
+					<fpage>797</fpage>
+					<lpage>801</lpage>
+				</element-citation>
+      </ref>
+      <ref id="pmed-0030297-b037">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+					<person-group><name name-style="western"><surname>Israeli</surname><given-names>E</given-names></name><name name-style="western"><surname>Grotto</surname><given-names>I</given-names></name><name name-style="western"><surname>Gilburd</surname><given-names>B</given-names></name><name name-style="western"><surname>Balicer</surname><given-names>RD</given-names></name><name name-style="western"><surname>Goldin</surname><given-names>E</given-names></name></person-group>
+					<comment>et al</comment>
+					<year>2005</year>
+					<article-title>Anti-<italic>Saccharomyces cerevisiae</italic> and antineutrophil cytoplasmic antibodies as predictors of inflammatory bowel disease.</article-title>
+					<source>Gut</source>
+					<volume>54</volume>
+					<fpage>1232</fpage>
+					<lpage>1236</lpage>
+				</element-citation>
+      </ref>
+    </ref-list>
+    <glossary>
+      <title>Abbreviations</title>
+      <def-list>
+        <def-item>
+          <term>ALPS</term>
+          <def>
+            <p>autoimmune lymphoproliferative syndrome</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>ANCA</term>
+          <def>
+            <p>antineutrophil cytoplasmic antibodies</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>APCED</term>
+          <def>
+            <p>autoimmune polyendocrinopathy-candidiasis-ectodermal dystrophy syndrome</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>CMRO</term>
+          <def>
+            <p>chronic multifocal recurrent osteomyelitis</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>FMF</term>
+          <def>
+            <p>familial Mediterranean fever</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>HIDS</term>
+          <def>
+            <p>hyperimmunoglobulinaemia D with periodic fever syndrome</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>HLA</term>
+          <def>
+            <p>human leukocyte antigen</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>HPF</term>
+          <def>
+            <p>hereditary periodic fever</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>IPEX</term>
+          <def>
+            <p>immune dysregulation, polyendocrinopathy, enteropathy, X-linked</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>MHC</term>
+          <def>
+            <p>major histocompatibility complex</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>PAPA</term>
+          <def>
+            <p>pyogenic arthritis, pyoderma gangrenosum, and severe cystic acne</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>RA</term>
+          <def>
+            <p>rheumatoid arthritis</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>SLE</term>
+          <def>
+            <p>systemic lupus erythematosus</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>TNF</term>
+          <def>
+            <p>tumour necrosis factor</p>
+          </def>
+        </def-item>
+        <def-item>
+          <term>TRAPS</term>
+          <def>
+            <p>tumour necrosis factor receptor–associated periodic fever syndrome</p>
+          </def>
+        </def-item>
+      </def-list>
+    </glossary>
+  </back>
+</article>

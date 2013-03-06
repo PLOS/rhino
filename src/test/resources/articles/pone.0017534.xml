@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-10-00494</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0017534</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Clinical genetics</subject>
+            <subj-group>
+              <subject>Autosomal recessive</subject>
+              <subject>Congenital hereditary
+myopathies</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Metabolic
+disorders</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Neurology</subject>
+            <subj-group>
+              <subject>Developmental and pediatric neurology</subject>
+              <subject>Neuromuscular
+diseases</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Genetics and Genomics</subject>
+          <subject>Neurological Disorders</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Vulnerability to Oxidative Stress <italic>In Vitro</italic>
+in Pathophysiology of Mitochondrial Short-Chain Acyl-CoA Dehydrogenase Deficiency:
+Response to Antioxidants</article-title><alt-title alt-title-type="running-head">Oxidative Stress in SCAD Deficiency</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zolkipli</surname>
+            <given-names>Zarazuela</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Pedersen</surname>
+            <given-names>Christina
+B.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Lamhonwah</surname>
+            <given-names>Anne-Marie</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Gregersen</surname>
+            <given-names>Niels</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Tein</surname>
+            <given-names>Ingrid</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Neurometabolic Research Laboratory,
+Division of Neurology, Department of Pediatrics, Hospital for Sick Children
+and Department of Laboratory Medicine and Pathobiology, University of Toronto,
+Toronto, Canada</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Research Unit for Molecular Medicine,
+Aarhus University Hospital, Skejby, Aarhus N, Denmark</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Parise</surname>
+            <given-names>Gianni</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">McMaster University, Canada</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">Ingrid.tein@sickkids.ca</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: ZZ AM IT. Performed
+the experiments: ZZ CP. Analyzed the data: ZZ CP AM NG IT. Contributed reagents/materials/analysis
+tools: NG. Wrote the paper: ZZ CP NG IT. Performed statistical analysis: ZZ.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests
+exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>1</day>
+        <month>4</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>4</issue><elocation-id>e17534</elocation-id><history>
+        <date date-type="received">
+          <day>4</day>
+          <month>8</month>
+          <year>2010</year>
+        </date>
+        <date date-type="accepted">
+          <day>7</day>
+          <month>2</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Zolkipli et al</copyright-holder><license><license-p>This is an open-access article distributed
+under the terms of the Creative Commons Attribution License, which permits
+unrestricted use, distribution, and reproduction in any medium, provided the
+original author and source are credited.</license-p></license></permissions><abstract>
+        <sec>
+          <title>Objective</title>
+          <p>To elucidate the pathophysiology of SCAD deficient patients who have a
+unique neurological phenotype, among fatty acid oxidation disorders, with
+early developmental delay, CNS malformations, intractable seizures, myopathy
+and clinical signs suggesting oxidative stress.</p>
+        </sec>
+        <sec>
+          <title>Methods</title>
+          <p>We studied skin fibroblast cultures from patients homozygous for ACADS
+common variant c.625G&gt;A (n = 10), compound heterozygous
+for c.625G&gt;A/c.319C&gt;T (n = 3) or homozygous for
+pathogenic c.319C&gt;T (n = 2) and c.1138C&gt;T (n = 2)
+mutations compared to fibroblasts from patients with carnitine palmitoyltransferase
+2 (CPT2) (n = 5), mitochondrial trifunctional protein
+(MTP)/long-chain L-3-hydroxyacyl-CoA dehydrogenase (LCHAD) (n = 7),
+and medium-chain acyl-CoA dehydrogenase (MCAD) deficiencies (n = 4)
+and normal controls (n = 9). All were exposed to 50 µM
+menadione at 37°C. Additonal conditions included exposure to 39°C
+and/or hypoglycemia. Time to 100% cell death was confirmed with trypan
+blue dye exclusion. Experiments were repeated with antioxidants (Vitamins
+C and E or N-acetylcysteine), Bezafibrate or glucose and temperature rescue.</p>
+        </sec>
+        <sec>
+          <title>Results</title>
+          <p>The most significant risk factor for vulnerability to menadione-induced
+oxidative stress was the presence of a FAO defect. SCADD fibroblasts were
+the most vulnerable compared to other FAO disorders and controls, and were
+similarly affected, independent of genotype. Cell death was exacerbated by
+hyperthermia and/or hypoglycemia. Hyperthermia was a more significant independent
+risk factor than hypoglycemia. Rescue significantly prolonged survival. Incubation
+with antioxidants and Bezafibrate significantly increased viability of SCADD
+fibroblasts.</p>
+        </sec>
+        <sec>
+          <title>Interpretation</title>
+          <p>Vulnerability to oxidative stress likely contributes to neurotoxicity of
+SCADD regardless of <italic>ACADS</italic> genotype and is significantly exacerbated
+by hyperthermia. We recommend rigorous temperature control in SCADD patients
+during acute illness. Antioxidants and Bezafibrate may also prove instrumental
+in their management.</p>
+        </sec>
+      </abstract><funding-group><funding-statement>This work was supported in part by an
+operating grant from the Physicians' Services Incorporated Foundation
+of Ontario as well as grants from the Danish Medical Research Council (no
+relevant grant numbers). ZZ was funded by the Department of Pediatrics, Hospital
+for Sick Children, Toronto. The funders had no role in study design, data
+collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="10"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Cellular energy metabolism is largely sustained by mitochondrial β-oxidation
+of fatty acids when carbohydrate stores are depleted after fasting or prolonged
+exercise. Whereas the clinical presentations of long- and medium-chain fatty
+acid oxidation disorders (FAODs) are primarily of hepatic or cardiac dysfunction,
+short-chain acyl-CoA dehydrogenase deficiency (SCADD) (OMIM # 201470) is predominantly
+neurological in presentation with developmental delay, seizures, hypotonia
+and myopathy <xref ref-type="bibr" rid="pone.0017534-Pedersen1">[1]</xref>, <xref ref-type="bibr" rid="pone.0017534-Tein1">[2]</xref>. Thirty-five
+SCAD gene (<italic>ACADS</italic>) inactivating mutations have been described
+in this autosomal recessive disorder <xref ref-type="bibr" rid="pone.0017534-Pedersen1">[1]</xref>–<xref ref-type="bibr" rid="pone.0017534-vanMaldegem1">[3]</xref>. The
+molecular phenomenon of the common <italic>ACADS</italic> variations, c.625G&gt;A
+and c.511C&gt;T in SCADD is unique. These variations are identified in SCADD
+patients, but also in various general populations at allelic frequencies of
+22%–43% and 3%–8% respectively <xref ref-type="bibr" rid="pone.0017534-Corydon1">[4]</xref>–<xref ref-type="bibr" rid="pone.0017534-vanMaldegem2">[7]</xref>. The
+biochemical consequences are SCAD protein misfolding and aggregation described
+in <italic>in vitro</italic> mitochondrial import studies <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>, which correlate poorly
+with clinical severity. Patients with the <italic>ACADS</italic> gene spectrum
+may remain asymptomatic or have muscle and neuronal toxicity. The speculated
+role of additional gene and/or environmental modifiers needs to be better
+understood.</p>
+      <p>We studied a girl with progressive limb-girdle myopathy, ptosis, facial
+weakness and progressive external ophthalmoplegia and features overlapping
+with mitochondrial Complex I deficiency including cataracts and cardiomyopathy,
+confirmed to have SCADD with homozygosity for c.319 C&gt;T mutation <xref ref-type="bibr" rid="pone.0017534-Tein2">[9]</xref>. As a result
+of her myopathy, she became wheelchair-dependent by 5 years of age. Independent
+1 year trials of a high carbohydrate/low fat diet, L-carnitine, and riboflavin
+did not improve her strength. Her total plasma aldehydes by GC/MS were significantly
+elevated at 2997.6 nM, (controls 2041.3±228.3, n = 12) <xref ref-type="bibr" rid="pone.0017534-Zolkipli1">[10]</xref>. A comparable
+rise was reported in complex I deficiency (3377.8±595.7, n = 14).
+We thus instituted a trial of Vitamins C 200 mg twice a day and E 400 IU daily.
+After 6 months, she had a 6-fold increase in endurance time on sustained deltoid
+abduction.</p>
+      <p>This supported our speculation that increased oxidative stress is a pathogenetic
+mechanism in SCADD. Mitochondria are a major site of reactive oxygen species
+(ROS) production, which are pathologic when excessive. Mitochondrial dysfunction
+with increased ROS secondary to SCADD could explain the overlapping clinical
+features of complex I and SCADD as seen in our patient. The possible association
+between SCADD and oxidative stress in vitro has been investigated. EMA inhibits
+mitochondrial creatine kinase activity <xref ref-type="bibr" rid="pone.0017534-Schuck1">[11]</xref>, <xref ref-type="bibr" rid="pone.0017534-Leipnitz1">[12]</xref>, increases
+lipid and protein oxidation products, and decreases glutathione (GSH) levels
+in rat cerebral cortex <xref ref-type="bibr" rid="pone.0017534-Schuck2">[13]</xref>.
+In human skeletal muscle, EMA inhibits electron transport at complexes I–III
+and II–III <xref ref-type="bibr" rid="pone.0017534-Barschak1">[14]</xref>.
+Given that the respiratory chain (RC) may generate excessive ROS from defective
+electron transport <xref ref-type="bibr" rid="pone.0017534-Boveris1">[15]</xref>,
+at complex I and Complex III <xref ref-type="bibr" rid="pone.0017534-Boveris2">[16]</xref>, <xref ref-type="bibr" rid="pone.0017534-Turrens1">[17]</xref>, we speculate
+that EMA accumulation may contribute to oxidative stress and the neurological
+symptoms in SCADD patients by this mechanism. Furthermore, ROS reportedly
+affects the permeability of the blood brain barrier, enhancing neuronal vulnerability
+to ROS toxicity <xref ref-type="bibr" rid="pone.0017534-Pun1">[18]</xref>.</p>
+      <p>The second possible mechanism is a direct consequence of the SCAD protein
+misfolding. The mitochondrial RC produces superoxides or hydroxyl radicals
+(OH<sup>−</sup>) from the interaction of molecular oxygen with semi-quinone
+or -flavone species <xref ref-type="bibr" rid="pone.0017534-Takeshige1">[19]</xref>, <xref ref-type="bibr" rid="pone.0017534-Sies1">[20]</xref>. SCAD is an
+FAD-linked dehydrogenase, and a defect in SCAD function, due to misfolding
+and defective interaction with functional partners e.g. electron transfer
+flavoprotein (ETF), may thus lead to the production of superoxides in proximity
+to sites of semi-flavone production.</p>
+      <p>A third potential mechanism relates to cellular antioxidant status. Oxidative
+stress is due to an imbalance between excessive ROS generation and antioxidant
+capacity, such as superoxide dismutase (SOD) and glutathione peroxidase activity <xref ref-type="bibr" rid="pone.0017534-Sies1">[20]</xref>–<xref ref-type="bibr" rid="pone.0017534-Duthie1">[22]</xref>. The two
+intracellular SOD enzymes are intramitochondrial manganese superoxide dismutase
+(SOD2) and cytosolic copper zinc SOD (SOD1). A recent proteomic analysis of
+mitochondria from c.625G&gt;A homozygous patient fibroblasts (n = 4)
+revealed reduced SOD2 protein and mRNA expression compared to controls (n = 6),
+rendering them more vulnerable to oxidative stress <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref>.
+Sequencing of the SOD2 gene did not demonstrate abnormalities, suggesting
+possible intrinsic dysregulation of SOD2.</p>
+      <p>Therefore oxidative stress in SCADD could be the result of associated biochemical
+abnormalities combined with intrinsic antioxidant dysfunction and exogenous
+stressors. We plan to first identify the selective vulnerability to oxidative
+stress, <italic>in vitro</italic>, in SCADD patient fibroblasts by exposure
+to menadione, a free radical amplifier, both with and without stressors. Menadione
+generates ROS through redox cycling, and has been shown to decrease mitochondrial
+membrane potential and trigger cytochrome c redistribution to the cytosol <xref ref-type="bibr" rid="pone.0017534-Duthie1">[22]</xref>, <xref ref-type="bibr" rid="pone.0017534-Hockenbery1">[24]</xref>, <xref ref-type="bibr" rid="pone.0017534-Loor1">[25]</xref>. Multiple redundant cell death
+pathways are activated by menadione, and poly ADP ribose polymerase (PARP)
+plays an essential role in mediating each of them <xref ref-type="bibr" rid="pone.0017534-Loor1">[25]</xref>.
+As stressors, we have chosen hyperthermia at 39°C, which increases SCAD
+protein aggregation <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>,
+and hypoglycemia, which limits the cellular bioenergetic source and puts further
+stress on an already dysfunctional FAO pathway. Both of these stressors are
+common well-recognized exogenous triggers for catabolic crisis in FAO disorders.
+We will then test the therapeutic efficacy of specific pathophysiology-based
+treatment interventions.</p>
+      <p>We recognize that the extrapolation of cellular pathophysiologic mechanisms
+from fibroblasts to neuronal tissue is suboptimal, however this is generally
+the primary and often only patient cell type available to study <italic>in
+vitro</italic>. We plan to compare the results from SCAD deficient fibroblasts
+to those with medium and long-chain ACAD deficiencies. The family of ACAD
+deficiencies have similarities such as intermittent metabolic crises with
+hypoketotic hypoglycemia and clinical variability. The long-chain ACAD deficiencies
+present with hepatic, cardiac and skeletal muscle symptoms and signs. Medium-chain
+ACAD deficiencies present with hepatic features, whereas SCAD deficiency is
+primarily neurological/neuromuscular in presentation. Based on our index case,
+we plan to study the relative effect of oxidative stress in the short-, medium-,
+and long-chain ACAD deficiencies at a cellular level in order to determine
+whether this is a selective mechanistic pathway that contributes to the chronic
+neurotoxicity in SCADD.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s2a">
+        <title>Ethics Statement</title>
+        <p>The Toronto Hospital for Sick Children Research Ethics Board and the Danish
+Ethical Committee (M-20070150) approved the use of anonymized patient fibroblasts
+for this study and waived the need for informed consent based on a three-tier
+de-identification which totally precluded any possibility of patient identification.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Patients</title>
+        <p>De-identified skin fibroblast cultures from clinically affected pediatric
+patients (&lt;18 years of age) with SCAD (n = 17), MCAD
+(n = 4), CPT2 (n = 5), MTP (n = 6)
+and LCHAD (n = 1) enzyme deficiencies were provided by
+the Research Unit for Molecular Medicine, Aarhus, Denmark and the Test Development
+Laboratory, Children's Medical Center Dallas, Texas. The SCAD deficient
+patient fibroblasts had the following genotypes; <italic>ACADS</italic> c.1138T/1138T
+(n = 2), c.319 T/319T (n = 2), c.625A/319T
+(n = 3), and c.625A/625A (n = 10).
+The MCAD deficient patient fibroblasts had the following genotypes: <italic>ACADM</italic>
+c.985A&gt;G/PTC (premature stop codon), PTC/PTC, STOP (stop codon mutation)/STOP,
+and missense/missense mutations. Four of the MTP patients had the following
+genotypes: <italic>HADHA</italic> c.1528G&gt;C/PTC, <italic>HADHA</italic>
+c.1528G&gt;C/missense, <italic>HADHB</italic> splice mutation/splice mutation,
+and <italic>HADHB</italic> missense/PTC.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Controls</title>
+        <p>De-identified skin fibroblasts from asymptomatic individuals within the
+pediatric age group were provided by the Tissue Culture Laboratory, Toronto
+Hospital for Sick Children and the Research Unit for Molecular Medicine, Denmark,
+who sequenced for the <italic>ACADS</italic> c.625G&gt;A genotype in all control
+fibroblasts which included: c.[625G]+[625G] (G/G)
+(n = 5), c.[625G]+[625A] (G/A)
+(n = 4) and c.[625A]+[625A]
+(A/A) (n = 4). All controls were homozygous for the wild-type
+sequence at nucleotide position 511 (c.511C).</p>
+        <p>All fibroblasts tested negative for mycoplasma.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Menadione toxicity assay</title>
+        <p>Skin fibroblasts were seeded in 24-well plates (Biosciences) with 20,000
+cells per well. Fibroblasts were grown to a monolayer of confluence in α-MEM
+containing 2.0 g/L of glucose and 10% FCS at 37°C, in 5%
+CO<sub>2</sub> then washed and incubated with 50 µmol/L menadione in
+serum-free α-MEM. Cells were incubated in media with or without glucose,
+and at 37°C or at 39°C. Cell viability was evaluated by light microscopy
+(LM) every hour until 100% cell death in the SCAD deficient cells,
+and every four hours until approximately 50% cell death, then every
+hour until 100% cell death in the control cells. Time to 100%
+cell death (in hours) was confirmed with 0.4% trypan-blue dye exclusion
+(Gibco) by LM. If on examination of trypan-blue dye exclusion, evaluation
+of cell death was &lt;100%, the experiment was repeated until 100%
+death was confirmed. In order to confirm reproducibility, each experiment
+was performed in triplicate, on at least 8 separate occasions. The mean of
+these technical replicates were used in the final statistical analysis.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Rescue</title>
+        <p>Rescue of hypoglycemia with α-MEM+glucose, and rescue of hyperthermia
+by reducing incubator temperature from 39°C to 37°C was performed
+at &lt;40% cell death in 11 SCADD fibroblast lines (c.625A/625A (n = 5),
+c.319T/625A (n = 3), c.319T/319T (n = 2)
+and c.1138T/1138T (n = 1)) after menadione exposure.
+Time to 100% cell death was subsequently confirmed as above.</p>
+      </sec>
+      <sec id="s2f">
+        <title>Intervention</title>
+        <p>Fibroblasts were incubated with menadione and i) antioxidant vitamin C
+0.8 mg/dL and vitamin E 0.9 mg/dL (antiO) (Sigma-Aldrich), ii) N-acetyl-cysteine
+(NAC) 0.5 or 5 mM (Sigma-Aldrich), preceded by 24 hours of pre-incubation
+with NAC prior to menadione exposure or iii) Bezafibrate (B+) (Cayman
+Chemicals) 200 and 400 µmol/L in the SCADD fibroblasts only, preceded
+by 48 hours of pre-incubation with Bezafibrate.</p>
+      </sec>
+      <sec id="s2g">
+        <title>Statistical analysis</title>
+        <p>Results are expressed as mean ± SEM (hours). All values underwent
+logarithmic transformation with subsequent confirmation of normality using
+the D'Agostino Pearson normality test, prior to statistical analysis
+with one-way ANOVA and Bonferroni's sub-group analysis (GraphPad Prism
+software). Logarithmic transformation was performed due to unequal sample
+sizes between groups. P-values &lt;0.05 were considered significant.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <sec id="s3a">
+        <title>Menadione toxicity assay</title>
+        <p>Fibroblast skin cultures from 17 patients with SCADD, 12 with long-chain
+FAODs including CPT2 (n = 5) and MTP/LCHAD (n = 7)
+deficiencies, 4 with MCADD, 4 reportedly asymptomatic c.625G&gt;A homozygotes
+(A/A), and 9 normal controls with genotypes of c.625G/625G (G/G, n = 5)
+and c.625G/625A (G/A, n = 4) were studied. In SCADD,
+no consistent genotype-phenotype correlations have been identified <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>, therefore all 17 patient
+cell lines of varying genotypes were included in one group. Each cell line
+underwent menadione exposure with or without glucose (hypoglycemia), and at
+37°C or 39°C (hyperthermia) (<xref ref-type="fig" rid="pone-0017534-g001">Fig.
+1A to D</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s001">Table
+S1</xref>). The most striking result was the exquisite vulnerability of the
+SCADD patient fibroblasts compared to controls under each of the 4 conditions,
+p&lt;0.001 (<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table
+S3</xref>). The long-chain FAOD fibroblasts (CPT2/MTP) were also significantly
+more vulnerable compared to controls under each of the four conditions, p&lt;0.05.
+Menadione toxicity in the CPT2/MTP patient fibroblasts was comparable to that
+in the SCADD patient fibroblasts, p&gt;0.05 (<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table S3</xref>). The time to 100% death in
+the MCADD cell lines was longer than in the control cells (625G/G and 625
+G/A) only under physiological conditions, p&lt;0.05, but was not significantly
+different when glucose deprivation and/or hyperthermia were added, p&gt;0.05.
+In addition, MCADD fibroblasts were not significantly different from the 625
+A/A controls under all four experimental conditions, p&gt;0.05 (<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table S3</xref>). In comparison of the controls, the
+625G/G and 625G/A control fibroblasts (n = 9) were unexpectedly
+more vulnerable than the 625A/A control fibroblasts (n = 4)
+(<xref ref-type="fig" rid="pone-0017534-g001">Fig. 1A to D</xref>), also reaching
+significance only under physiological conditions, p&lt;0.05 (<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table S3</xref>). This is concordant with results
+of mitochondrial proteomics analysis which indicated higher levels of SOD2
+expression in 625A/A control fibroblasts compared to lower SOD2 expression
+in 625G/G and 625G/A control fibroblasts <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref>.</p>
+        <fig id="pone-0017534-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017534.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Comparison of menadione toxicity in short-chain acyl-CoA dehydrogenase
+deficiency (SCADD), medium-chain acyl-CoA dehydrogenase deficiency (MCADD),
+carnitine palmitoyltransferase 2 deficiency (CPT2D) and mitochondrial trifunctional
+protein deficiency (MTPD)/long-chain L-3hydroxyacyl-CoA dehydrogenase deficiency
+patients and 625A/A controls (n = 4) and 625G/A and G/G
+(n = 9) control data under the 4 experimental conditions.</title>
+            <p>One-way ANOVA and Bonferroni's Mutiple Comparison test compares menadione
+toxicity, after logarithmic transformation to ensure Gaussian distribution.
+The ANOVA shows significant differences between all groups, in all 4 experimental
+conditions, indicated by the error bar spanning all cell lines, p&lt;0.0001(<xref ref-type="supplementary-material" rid="pone.0017534.s001">Table S1</xref>).
+The Bonferroni subgroup analyses are summarized in <xref ref-type="supplementary-material" rid="pone.0017534.s003">Table S3</xref>, and indicated by the error bars comparing
+2 cell lines. <xref ref-type="fig" rid="pone-0017534-g001">Figures 1a to d</xref>
+displays the significantly reduced time to 100% cell death in the SCADD
+and CPT2/MTPD patient cell lines, compared to the 625A/A control and normal
+control (625 G/G and 625 G/A) cell lines. The MCADD cell lines survived significantly
+longer than the normal control cell lines, only at physiological conditions
+(<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table S3</xref>). <xref ref-type="fig" rid="pone-0017534-g001">Figures 1b to 1d</xref> show the progressive
+reduction in survival time to 100% cell death in all cell lines, with
+the addition of glucose deprivation (<xref ref-type="fig" rid="pone-0017534-g001">Figure
+1b</xref>), elevated temperature (<xref ref-type="fig" rid="pone-0017534-g001">Figure
+1c</xref>), or both (<xref ref-type="fig" rid="pone-0017534-g001">Figure 1d</xref>).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.g001" xlink:type="simple"/>
+        </fig>
+        <p>In comparison of the individual effects of hypoglycemia or hyperthermia
+on viability in the SCADD patient fibroblasts, hyperthermia had the more significant
+effect, p&lt;0.01, compared to hypoglycemia alone, p = 0.05
+(<xref ref-type="supplementary-material" rid="pone.0017534.s002">Table S2</xref>).
+Although adverse conditions exacerbated vulnerability in all patient fibroblasts,
+the overall net effect was the most significant for the SCADD fibroblasts
+in all 4 experimental conditions, as shown by the short survival times, compared
+to controls, p&lt;0.001 (<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table
+S3</xref>).</p>
+        <p><xref ref-type="fig" rid="pone-0017534-g002">Figure 2</xref> shows the
+results of the SCADD fibroblasts divided into the four <italic>ACADS</italic>
+genotypes. There was no significant difference between the c.625G&gt;A homozygotes
+(n = 10), c.625G&gt;A/c.319C&gt;T compound heterozygotes
+(n = 3) and pathogenic c.319C&gt;T (n = 2)
+and c.1138C&gt;T (n = 2) homozygotes, but there was a
+significant difference between each of the SCADD patient groups when compared
+to the c.625G&gt;A controls, in all experimental conditions, except for c.319C&gt;T
+(n = 2) which reached significance only under 39°C
+with and without glucose (<xref ref-type="fig" rid="pone-0017534-g002">Fig.
+2A to D</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s004">Table
+S4</xref>). It is intriguing that the symptomatic common variant c.625G&gt;A
+homozygous fibroblasts, most of which have been shown to have a considerable
+residual SCAD enzyme activity of approximately 50% of control <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref>, were just
+as susceptible as the fibroblasts with pathogenic mutations, which have residual
+SCAD enzyme activities of ∼5%. This further supports the speculation
+that although the biochemical abnormalities in SCADD may in part contribute
+to the pathophysiology, there are other modifiers contributing to the pathophysiology
+of the <italic>ACADS</italic> gene spectrum <xref ref-type="bibr" rid="pone.0017534-Gregersen1">[5]</xref>.</p>
+        <fig id="pone-0017534-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017534.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Menadione toxicity in different SCAD genotypes and controls under variable
+conditions.</title>
+            <p>Patient fibroblasts with <italic>ACADS</italic> 1138T/T homozygous (n = 2),
+319T/T homozygous (n = 2) and 625A/319T heterozygous
+(n = 3) mutations and 625A/A symptomatic homozygotes
+(n = 10) are compared to 625A/A (n = 4)
+and 625G/A and G/G controls (n = 9) by ANOVA, as indicated
+by the error bar spanning all cell lines, p&lt;0.0001. <xref ref-type="fig" rid="pone-0017534-g002">Figures 2a to d</xref> shows that there were no significant
+differences in the time to 100% cell death between the 1138T/T, 319T/T,
+625A/319T and 625A/A SCADD patient cell lines. However, the patient cell line
+survival times were significantly reduced when compared to the 625A/A control
+and normal 625G/A and G/G control cell lines, except for 319T/T, which was
+significantly different only at 39°C (<xref ref-type="supplementary-material" rid="pone.0017534.s004">Table S4</xref>).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.g002" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3b">
+        <title>Rescue in SCADD fibroblasts</title>
+        <p>To simulate resuscitation in an acute catabolic crisis, SCADD patient fibroblasts
+of all 4 genotypes (n = 11) were rescued prior to 40%
+cell death (<xref ref-type="supplementary-material" rid="pone.0017534.s010">Figure
+S1</xref>). (i) After exposure to menadione and hypoglycemia at 37°C (column
+2), SCADD cells were rescued with glucose which resulted in increased survival
+(column 3). This approximated the survival of cells exposed to menadione at
+physiological conditions (column 1), p = 0.2. (ii) After
+exposure to menadione at 39°C, cells were rescued by reducing the incubator
+temperature to 37°C (column 5), p&lt;0.0001. Survival also approximated
+baseline (column 1). However, the net increase in survival was 3.1-fold, p&lt;0.0001,
+compared to glucose rescue of 1.5-fold, p&lt;0.0001. (iii) After exposure
+to menadione with hypoglycemia and hyperthermia, simultaneous glucose and
+temperature rescue (column 8) had a more significant effect (2.9-fold), p&lt;0.0001,
+than glucose rescue alone at 39°C (1.3-fold), p&lt;0.0003. These results
+are concordant with the earlier finding that hyperthermia more significantly
+affects SCADD cell viability than hypoglycemia alone. It is striking that
+rescue restored survival to the original baseline, despite the additional
+exposure of an adverse factor. We can conclude that rescue at an early stage
+is effective.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Interventions</title>
+        <p>Given that oxidative stress can be reduced with antioxidants, we evaluated
+the effects of vitamin C 0.8 mg/dL and vitamin E 0.9 mg/dL (AO), and N-acetyl-cysteine
+(NAC) (0.5 and 5 mM) in the SCADD fibroblasts. We also evaluated the effect
+of Bezafibrate (B+) (200 and 400 µmol/L) which is a pan-peroxisome
+proliferator activated receptor (PPAR) agonist reported to restore deficient
+FAO rates in CPT2 and VLCAD fibroblasts <xref ref-type="bibr" rid="pone.0017534-Djouadi1">[26]</xref>.
+We initially evaluated the effects of Bezafibrate on the long-chain FAOD group,
+with the expectation that restoration of FAO would reduce oxidative stress.
+Bezafibrate has so far not been investigated in SCADD, however, if short-chain
+FAO were also restored by Bezafibrate, viability in the SCADD fibroblasts
+might similarly be enhanced.</p>
+        <p>In the Bezafibrate and AO groups (<xref ref-type="fig" rid="pone-0017534-g003">Figure
+3</xref> and <xref ref-type="fig" rid="pone-0017534-g004">4</xref> respectively),
+there was significant improvement in viability in the SCADD (up to 2.3×,
+p&lt;0.0005 and 2.5×, p&lt;0.0001 respectively) and CPT2/MTP deficient
+(up to 5.8×, p&lt;0.01 and 5.2×, p&lt;0.0005) groups under all
+four conditions (<xref ref-type="fig" rid="pone-0017534-g003">Fig 3 A–D</xref>
+and <xref ref-type="fig" rid="pone-0017534-g004">4 A–D</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s005">Tables S5</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s006">S6</xref>). There
+was no significant difference when Bezafibrate exposure was increased to 400 µmol/L
+in the SCADD cells, p&gt;0.05. MCADD and control fibroblasts did not show
+any significant response to Bezafibrate, p&gt;0.05 (<xref ref-type="supplementary-material" rid="pone.0017534.s005">Table S5</xref>). The MCADD cells did show significant
+response to AO at 37°C with and without glucose (<xref ref-type="supplementary-material" rid="pone.0017534.s006">Table S6</xref>).</p>
+        <fig id="pone-0017534-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017534.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Effect of Bezafibrate (B) intervention (200 µmol/L, and 400 µmol/L
+in SCADD fibroblasts only) on menadione toxicity in each FAO disorder under
+variable conditions.</title>
+            <p>Logarithmic transformation followed by paired t-test compares menadione
+toxicity in each FAOD with and without Bezafibrate, under each experimental
+condition. This figure shows that Bezafibrate significantly reduced menadione
+toxicity in the SCAD and MTP/CPT2 deficient patient fibroblasts only, under
+all 4 experimental conditions (<xref ref-type="supplementary-material" rid="pone.0017534.s005">Table
+S5</xref>).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.g003" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0017534-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017534.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Effect of Antioxidant (AO) intervention on menadione toxicity in each
+FAO disorder under variable conditions.</title>
+            <p>Logarithmic transformation followed by paired t-test compares menadione
+toxicity in each FAOD with and without antioxidants, under each experimental
+condition. This figure shows that antioxidants significantly increased survival
+time in the SCADD and CPT2/MTPD patient fibroblasts under all 4 conditions,
+and in the MCADD fibroblasts only at 37° with/without glucose (<xref ref-type="supplementary-material" rid="pone.0017534.s006">Table S6</xref>).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.g004" xlink:type="simple"/>
+        </fig>
+        <p>In the NAC group (<xref ref-type="fig" rid="pone-0017534-g005">Fig. 5</xref>),
+the response to treatment was even more significant in the SCADD (up to 7.1×,
+p&lt;0.0001) and CPT2/MTP deficient (up to 7.2×, p&lt;0.0005) groups
+(<xref ref-type="fig" rid="pone-0017534-g005">Fig. 5A–D</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s007">Table S7</xref>).
+The MCADD fibroblasts also showed significant effects with NAC under all 4
+experimental conditions, p&lt;0.05. In the patient cells, there was no significant
+difference in effect between NAC concentrations of 0.5 mM or 5 mM, p&gt;0.05.
+The control fibroblasts showed significant response under all 4 experimental
+conditions to NAC 5 mmol/L, p&lt;0.05 (<xref ref-type="supplementary-material" rid="pone.0017534.s007">Table S7</xref>).</p>
+        <fig id="pone-0017534-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0017534.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Effect of N-acetyl-cysteine (NAC, 0.5 and 5 mmol/L) intervention on
+menadione toxicity in each FAO disorder under variable conditions.</title>
+            <p>Logarithmic transformation followed by paired t-test compares menadione
+toxicity in each FAOD with and without NAC, under each experimental condition.
+This figure shows that NAC at both concentrations was significantly effective
+for SCADD, CPT2/MTPD, MCADD patient fibroblasts under all experimental conditions.
+In the control fibroblasts, NAC at 5 mmol/L was effective under all experimental
+conditions.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.g005" xlink:type="simple"/>
+        </fig>
+        <p>In summary, the SCADD and CPT2/MTP deficient fibroblasts showed a significant
+increase in viability with all 3 treatments. NAC had the most significant
+effect. The SCADD and CPT2/MTP fibroblasts were the most vulnerable to menadione-
+induced oxidative stress, suggesting that these cell lines had higher levels
+of cellular ROS. Therefore, the anti-oxidant intervention was most significant
+in these groups. The response to Bezafibrate in SCADD fibroblasts suggests
+there may be some restoration of short-chain FAO by PPAR regulation of the <italic>ACADS</italic>
+gene, thereby reducing the biochemical abnormalities arising from the SCAD
+block and the resultant vulnerability to oxidative stress.</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>We pursued the hypothesis that SCADD patients may have increased vulnerability
+to oxidative stress, based on the clinical and biochemical features of our
+index case <xref ref-type="bibr" rid="pone.0017534-Tein2">[9]</xref>, <xref ref-type="bibr" rid="pone.0017534-Zolkipli1">[10]</xref>, the published
+mechanisms for EMA-induced oxidative stress <xref ref-type="bibr" rid="pone.0017534-Schuck1">[11]</xref>–<xref ref-type="bibr" rid="pone.0017534-Barschak1">[14]</xref>, the cellular
+consequences of the SCAD protein misfolding <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>,
+and our recent demonstration of antioxidant dysfunction in SCADD fibroblasts <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref>. The relationship
+between abnormal FAO and secondary mitochondrial dysfunction is likely multifactorial.
+Our studies provide evidence of increased vulnerability to oxidative stress
+in SCADD fibroblasts, with exacerbation by hyperthermia and hypoglycemia.
+This exacerbation is of clinical relevance given that individuals with <italic>ACADS</italic>
+gene spectrum e.g those identified on newborn screening may remain asymptomatic
+until exposed to a triggering illness. This exacerbation is also concordant
+with mitochondrial import studies showing increased aggregation of SCAD proteins
+with hyperthermia <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>.
+Given that both protein aggregation and ROS production are aggravated by hyperthermia,
+this further highlights the interrelationship between these two mechanisms.
+The resulting oxidative imbalance from increased ROS production and from antioxidant
+dysfunction <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref>
+may thereby exceed a subclinical threshold in affected individuals, giving
+rise to clinical disease. The results of our studies are therefore concordant
+with our hypothesis of increased vulnerability to oxidative stress in the
+pathogenetic mechanism of SCADD. These results also suggest an interweaving
+of pathogenetic mechanisms in SCADD namely increased oxidative stress, with
+the previous studies which demonstrated antioxidant dysfunction <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref> and protein misfolding <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>. Furthermore,
+given that the SCAD protein is nuclear-encoded, the demonstrated abnormalities
+in cultured skin fibroblasts can be extrapolated to other cell types in the
+central and peripheral nervous system and likely contribute to the neurological
+and neuromuscular phenotypes of SCAD deficiency.</p>
+      <p>It is possible that significant oxidative imbalance is required prior to
+the manifestation of clinical symptoms. This may explain the discrepancy between
+the frequency of common SCAD variations in the general population, and the
+prevalence of clinically manifest SCADD. The vulnerability to oxidative stress
+appears to be independent of the <italic>ACADS</italic> genotype, concordant
+with previous reports of inconsistent genotype-phenotype correlations <xref ref-type="bibr" rid="pone.0017534-Pedersen1">[1]</xref>, <xref ref-type="bibr" rid="pone.0017534-vanMaldegem3">[27]</xref>. A further example is
+the contrasting clinical phenotypes of c.625G&gt;A homozygosity which may
+be explained by our recent description of decreased SOD2 expression in the
+affected patient vs ‘asymptomatic control’ fibroblasts <xref ref-type="bibr" rid="pone.0017534-Pedersen3">[23]</xref>. In addition, exogenous
+stressors, such as hypoglycemia and fever, may influence the clinical phenotype.
+Oxidative stress with hydrogen peroxide, under heat stress, has been shown
+to impair the heat stress response (HSP40/HSP70), delay unfolded protein recovery
+and enhance loss of mitochondrial membrane potential <xref ref-type="bibr" rid="pone.0017534-Adachi1">[28]</xref>.</p>
+      <p>In mitochondrial Complex I deficiency with the cardiomyopathy and cataracts
+phenotype, it has been proposed that significant induction of SOD2 may result
+from a temporarily much elevated superoxide production rate in the presence
+of an abnormally reduced redox state, as occurs in anoxia reperfusion injury <xref ref-type="bibr" rid="pone.0017534-Pitkanen1">[29]</xref>. Superoxide
+specifically attacks (4Fe-4S) centres in Complex I and II resulting in release
+of free iron in mitochondria and cytosol <xref ref-type="bibr" rid="pone.0017534-Flint1">[30]</xref>, <xref ref-type="bibr" rid="pone.0017534-Fazzone1">[31]</xref>, which generates
+excessive OH<sup>−</sup> <xref ref-type="bibr" rid="pone.0017534-Fridovich2">[32]</xref>.
+This could be the mechanism in our SCADD fibroblasts, with exacerbation by
+heat stress due to protein unfolding <xref ref-type="bibr" rid="pone.0017534-Pedersen2">[8]</xref>.</p>
+      <p>Oxidative stress is likely to trigger pro-apoptotic signaling cascades <xref ref-type="bibr" rid="pone.0017534-Seiler1">[33]</xref>. Of the 7
+glutathione peroxidases in mammals, GPx4 is specific for phospholipid hydroperoxides
+in membranes, and is shown to be significant for neuronal survival <xref ref-type="bibr" rid="pone.0017534-Seiler1">[33]</xref>. GPx4 senses and translates
+oxidative stress into a 12/15-lipoxygenase dependent- and apoptosis-inducing
+factor-mediated cell death pathway. In GPx4-knockout cells, lipid peroxidative
+injury was the key mediator of cell death and was efficiently prevented by
+Vitamin E. Vitamins E and C have been reported to neutralize free radicals <xref ref-type="bibr" rid="pone.0017534-Gutteridge1">[34]</xref>. We evaluated
+these effects at physiological plasma concentrations. NAC has ROS scavenging
+actions, but is also a precursor for glutathione synthesis, and thus essential
+for the effects of GPx <xref ref-type="bibr" rid="pone.0017534-Kelly1">[35]</xref>.</p>
+      <p>Intervention with Bezafibrate resulted in significant improvement in viability
+only in the SCADD and CPT2/MTPD patient cell lines under all 4 experimental
+conditions (<xref ref-type="supplementary-material" rid="pone.0017534.s005">Table
+S5</xref>). The antioxidants significantly improved viability not only in
+the SCADD and CPT2/MTPD cells, but also in the MCADD cells at 37°C (<xref ref-type="supplementary-material" rid="pone.0017534.s006">Table S6</xref>).
+NAC however, was significantly effective in improving viability in all patient
+cell lines under all 4 experimental conditions , as well as the normal controls
+under 3 of the experimental conditions at 0.5 mM, and in all 4 experimental
+conditions at 5.0 mM (<xref ref-type="supplementary-material" rid="pone.0017534.s007">Table
+S7</xref>). In a Bonferroni comparison, the effect of NAC 0.5 or 5 mM was
+significantly more effective in improving cellular viability than AO or Bezafibrate
+under all experimental conditions in the SCADD cell lines, p&lt;0.001 (<xref ref-type="supplementary-material" rid="pone.0017534.s008">Tables S8</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s009">S9</xref>). This
+suggests that in SCADD cells, NAC has more extensive antioxidant actions than
+vitamin C and E or Bezafibrate. In the other cell lines, this difference in
+effect was less consistent (<xref ref-type="supplementary-material" rid="pone.0017534.s008">Tables
+S8</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s009">S9</xref>).</p>
+      <p>The mechanism for Bezafibrate reduction of oxidative stress is uncertain.
+Bezafibrate increases Complex I, III and IV enzyme activities in control cells
+and significantly increases activity of deficient RC complexes in certain
+RC deficient cells <xref ref-type="bibr" rid="pone.0017534-Bastin1">[36]</xref>.
+As EMA may interfere with Complexes I and III, leading to ROS generation,
+Bezafibrate may counteract, in part, these effects. Whether Bezafibrate restores
+short-chain FAO requires further studies.</p>
+      <p>The association between accumulated MCADD metabolites and oxidative stress
+has been investigated. In rat brain, octanoic and decanoic acids were shown
+to uncouple mitochondrial oxidative phosphorylation, provoke mitochondrial
+cytochrome c release, increase lipid and protein oxidation damage and decrease
+GSH levels <xref ref-type="bibr" rid="pone.0017534-Schuck3">[37]</xref>, <xref ref-type="bibr" rid="pone.0017534-Schuck4">[38]</xref>. Our small
+number of MCADD patient fibroblasts survived significantly longer compared
+to 625G/G and 625G/A controls only at 37°C and in glucose-containing medium,
+p&lt;0.05 (<xref ref-type="supplementary-material" rid="pone.0017534.s003">Table
+S3</xref>). With the addition of high temperature and/or glucose deprivation
+however, the MCADD cells were as sensitive to menadione-induced toxicity as
+these control cells, p&gt;0.05. Furthermore, the MCADD fibroblasts were not
+significantly different to the 625A/A controls under all four experimental
+conditions. Therefore the MCADD fibroblasts did not appear to have a similar
+degree of risk for increased vulnerability to oxidative stress as seen in
+the SCADD and TFP/LCHADD fibroblasts.</p>
+      <p>Long-chain defect fibroblasts were more vulnerable to oxidative stress,
+comparable to the SCADD patient fibroblasts, p&gt;0.05 (<xref ref-type="fig" rid="pone-0017534-g001">Fig. 1</xref>, <xref ref-type="supplementary-material" rid="pone.0017534.s003">Table S3</xref>). This may be attributable to the
+accumulation of palmitoyl-CoA and palmitoylcarnitine shown to have detergent
+properties on isolated canine myocytic sarcolemmal membranes and to potentiate
+ROS-induced lipid membrane peroxidative injury in ischemia <xref ref-type="bibr" rid="pone.0017534-Mak1">[39]</xref>. Further, long-chain acyl-CoA's
+are potent inhibitors of mitochondrial adenine nucleotide transporter (ANT1) <xref ref-type="bibr" rid="pone.0017534-Pande1">[40]</xref>, which catalyzes
+exchange of ADP and ATP across the inner mitochondrial membrane <xref ref-type="bibr" rid="pone.0017534-Vignais1">[41]</xref> and is the overall rate-limiting
+step in oxidative phosphorylation <xref ref-type="bibr" rid="pone.0017534-Duee1">[42]</xref>.
+Inhibition of ANT1 would lead to increased ROS.</p>
+      <p>In conclusion, there appear to be multifactorial mechanisms involved in
+the pathophysiology of clinical disease in SCAD deficiency including intrinsic
+factors which predispose to vulnerability to oxidative stress and protein
+unfolding, as well as exogenous stressors such as elevated temperature and
+hypoglycemia. Certain of these factors may also contribute to the pathophysiology
+of long-chain FAODs. The reversal of cellular toxicity <italic>in vitro</italic>
+with antioxidants and bezafibrate supports the role of these agents in maintaining
+mitochondrial homeostasis. We advocate rigorous management of fever in SCADD
+patients, avoidance of adverse conditions such as fasting, and prompt rescue
+during a catabolic crisis. Antioxidants and Bezafibrate may prove to be useful
+therapeutic agents for the prevention and amelioration of the neurological
+morbidity seen in SCAD deficiency.</p>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0017534.s001" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s001" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p>
+            <bold>Summary of short-chain acyl-CoA dehydrogenase deficiency (SCADD),
+medium-chain acyl-CoA dehydrogenase deficiency (MCADD), carnitine palmitoyltransferase
+2 deficiency (CPT2D) and mitochondrial trifunctional protein deficiency (MTPD)
+patient and control data under the 4 experimental conditions.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s002" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s002" xlink:type="simple">
+        <label>Table
+S2</label>
+        <caption>
+          <p>
+            <bold>Summary of subgroup analysis with Bonferroni's Multiple Comparison
+test of short-chain acyl-CoA dehydrogenase deficiency (SCADD) under each experimental
+condition.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s003" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s003" xlink:type="simple">
+        <label>Table
+S3</label>
+        <caption>
+          <p>
+            <bold>Summary of subgroup analysis with Bonferroni's Multiple Comparison
+test under each experimental condition.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s004" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s004" xlink:type="simple">
+        <label>Table
+S4</label>
+        <caption>
+          <p>
+            <bold>Summary of menadione toxicity in the 4 SCADD patient genotypes.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s005" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s005" xlink:type="simple">
+        <label>Table
+S5</label>
+        <caption>
+          <p>
+            <bold>Effect of Bezafibrate intervention (200 and 400 µmol/L in SCADD
+fibroblasts only) on menadione toxicity in each FAO disorder under variable
+conditions.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s006" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s006" xlink:type="simple">
+        <label>Table
+S6</label>
+        <caption>
+          <p>
+            <bold>Effect of Antioxidant intervention on menadione toxicity in each
+FAO disorder under variable conditions.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s007" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s007" xlink:type="simple">
+        <label>Table
+S7</label>
+        <caption>
+          <p>
+            <bold>Effect of N-acetyl-cysteine (NAC, 0.5 and 5 mmol/L) intervention
+on menadione toxicity in each FAO disorder under variable conditions.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s008" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s008" xlink:type="simple">
+        <label>Table
+S8</label>
+        <caption>
+          <p>
+            <bold>Effect of N-acetyl-cysteine (NAC, 0.5 and 5 mmol/L) intervention
+on menadione toxicity in each FAO disorder and control lines under variable
+conditions, compared to AO.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s009" mimetype="application/mspowerpoint" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s009" xlink:type="simple">
+        <label>Table
+S9</label>
+        <caption>
+          <p>
+            <bold>Effect of N-acetyl-cysteine (NAC, 0.5 and 5 mmol/L) intervention
+on menadione toxicity in each FAO disorder and control lines under variable
+conditions, compared to Bezafibrate.</bold>
+          </p>
+          <p>(PPT)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0017534.s010" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0017534.s010" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>Menadione toxicity assay with rescue in SCADD.</bold> Rescue of SCADD
+(n = 11) from hypoglycemia and hyperthermia with glucose
+administration and normothermia, respectively, compared to SCADD cells with
+menadione toxicity at physiological conditions. Paired t-tests indicated by
+errors bars and p-values. This figure shows that rescue with glucose administration
+increased survival by 1.5×, compared to 3.1× increase in survival
+of SCADD cells rescued with normothermia. At 39°C, rescue with glucose
+and normothermia increased survival by 2.9×, compared to glucose rescue
+alone, 1.3×.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>ZZ would like to thank Dr M. Weinstein, Staff Paediatrician. The authors
+are grateful to Dr. C. Pang, Senior Scientist in the Research Institute, Hospital
+for Sick Children for his support. ZZ would also like to acknowledge the substantial
+encouragement and support received from the late Robert Surtees, Professor
+of Paediatrics at Great Ormond Street Hospital, London, UK, whose devotion
+to neurometabolic diseases will forever remain an inspiration.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0017534-Pedersen1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pedersen</surname><given-names>CB</given-names></name><name name-style="western"><surname>Kølvraa</surname><given-names>S</given-names></name><name name-style="western"><surname>Kølvraa</surname><given-names>A</given-names></name><name name-style="western"><surname>Stenbroen</surname><given-names>V</given-names></name><name name-style="western"><surname>Kjeldsen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>The
+ACADS gene variation spectrum in 114 patients with short-chain acyl-CoA dehydrogenase
+(SCAD) deficiency is dominated by missense variations leading to protein misfolding
+at the cellular level.</article-title>             <source>Hum Genet</source>
+            <volume>124</volume>             <fpage>43</fpage>           
+ <lpage>56</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Tein1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Tein</surname><given-names>I</given-names></name><name name-style="western"><surname>Elpeleg</surname><given-names>O</given-names></name><name name-style="western"><surname>Ben-Zeev</surname><given-names>B</given-names></name><name name-style="western"><surname>Korman</surname><given-names>SH</given-names></name><name name-style="western"><surname>Lossos</surname><given-names>A</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Short-chain
+acyl-CoA dehydrogenase gene mutation (c.319C&gt;T) presents with clinical
+heterogeneity and is candidate founder mutation in individuals of Ashkenazi
+Jewish origin.</article-title>             <source>Mol Genet Metab</source>
+            <volume>93</volume>             <fpage>179</fpage>           
+ <lpage>89</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-vanMaldegem1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>van Maldegem</surname><given-names>BT</given-names></name><name name-style="western"><surname>Duran</surname><given-names>M</given-names></name><name name-style="western"><surname>Wanders</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Niezen-Koning</surname><given-names>KE</given-names></name><name name-style="western"><surname>Hogeveen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Short-chain
+acyl-CoA dehydrogenase deficiency (SCADD): relatively high prevalence in the
+Netherlands and strongly variable phenotype; neonatal screening not indicated.</article-title>
+            <source>Ned Tijdschr Geneeskd</source>             <volume>152</volume>
+            <fpage>1678</fpage>             <lpage>85</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Corydon1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Corydon</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Gregersen</surname><given-names>N</given-names></name><name name-style="western"><surname>Lehnert</surname><given-names>W</given-names></name><name name-style="western"><surname>Ribes</surname><given-names>A</given-names></name><name name-style="western"><surname>Rinaldo</surname><given-names>P</given-names></name><etal/></person-group>             <year>1996</year>             <article-title>Ethylmalonic
+aciduria is associated with an amino acid variant of short chain acyl-coenzyme
+A dehydrogenase.</article-title>             <source>Pediatr Res</source>
+            <volume>39</volume>             <fpage>1059</fpage>          
+  <lpage>66</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Gregersen1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Gregersen</surname><given-names>N</given-names></name><name name-style="western"><surname>Winter</surname><given-names>VS</given-names></name><name name-style="western"><surname>Corydon</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Corydon</surname><given-names>TJ</given-names></name><name name-style="western"><surname>Rinaldo</surname><given-names>P</given-names></name><etal/></person-group>             <year>1998</year>             <article-title>Identification
+of four new mutations in the short-chain acyl-CoA dehydrogenase (SCAD) gene
+in two patients: one of the variant alleles, 511C→T, is present at an
+unexpectedly high frequency in the general population, as was the case for
+625G→A, together conferring susceptibility to ethylmalonic aciduria.</article-title>
+            <source>Hum Mol Genet</source>             <volume>7</volume>
+            <fpage>619</fpage>             <lpage>27</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Nagan1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Nagan</surname><given-names>N</given-names></name><name name-style="western"><surname>Kruckeberg</surname><given-names>KE</given-names></name><name name-style="western"><surname>Tauscher</surname><given-names>AL</given-names></name><name name-style="western"><surname>Bailey</surname><given-names>KS</given-names></name><name name-style="western"><surname>Rinaldo</surname><given-names>P</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>The
+frequency of short-chain acyl-CoA dehydrogenase gene variants in the US population
+and correlation with the C(4)-acylcarnitine concentration in newborn blood
+spots.</article-title>             <source>Mol Genet Metab</source>      
+      <volume>78</volume>             <fpage>239</fpage>             <lpage>46</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0017534-vanMaldegem2">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>van Maldegem</surname><given-names>BT</given-names></name><name name-style="western"><surname>Waterham</surname><given-names>HR</given-names></name><name name-style="western"><surname>Duran</surname><given-names>M</given-names></name><name name-style="western"><surname>van der Vlies</surname><given-names>M</given-names></name><name name-style="western"><surname>van Woerden</surname><given-names>CS</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>The
+625G&gt;A SCAD gene variant is common but not associated with increased C4-carnitine
+in newborn blood spots.</article-title>             <source>J Inherit Metab
+Dis</source>             <volume>28</volume>             <fpage>557</fpage>
+            <lpage>62</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Pedersen2">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pedersen</surname><given-names>CB</given-names></name><name name-style="western"><surname>Bross</surname><given-names>P</given-names></name><name name-style="western"><surname>Winter</surname><given-names>VS</given-names></name><name name-style="western"><surname>Corydon</surname><given-names>TJ</given-names></name><name name-style="western"><surname>Bolund</surname><given-names>L</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>Misfolding,
+degradation, and aggregation of variant proteins. The molecular pathogenesis
+of short chain acyl-CoA dehydrogenase (SCAD) deficiency.</article-title> 
+           <source>J Biol Chem</source>             <volume>278</volume> 
+           <fpage>47449</fpage>             <lpage>58</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Tein2">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Tein</surname><given-names>I</given-names></name><name name-style="western"><surname>Haslam</surname><given-names>RH</given-names></name><name name-style="western"><surname>Rhead</surname><given-names>WJ</given-names></name><name name-style="western"><surname>Bennett</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Becker</surname><given-names>LE</given-names></name><etal/></person-group>             <year>1999</year>             <article-title>Short-chain
+acyl-CoA dehydrogenase deficiency: a cause of ophthalmoplegia and multicore
+myopathy.</article-title>             <source>Neurology</source>         
+   <volume>52</volume>             <fpage>366</fpage>             <lpage>72</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0017534-Zolkipli1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Zolkipli</surname><given-names>Z</given-names></name><name name-style="western"><surname>Lehotay</surname><given-names>DC</given-names></name><name name-style="western"><surname>Robinson</surname><given-names>BH</given-names></name><name name-style="western"><surname>Tein</surname><given-names>I</given-names></name></person-group>             <year>2008</year>             <article-title>Lipid
+peroxidative stress in SCAD deficiency (SCADD) and response to antioxidants.</article-title>
+            <source>J Inherit Metab Dis</source>             <volume>31</volume>
+            <supplement>Suppl 1</supplement>             <fpage>47.Abstract</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0017534-Schuck1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Schuck</surname><given-names>PF</given-names></name><name name-style="western"><surname>Leipnitz</surname><given-names>G</given-names></name><name name-style="western"><surname>Ribeiro</surname><given-names>CA</given-names></name><name name-style="western"><surname>Dalcin</surname><given-names>KB</given-names></name><name name-style="western"><surname>Assis</surname><given-names>DR</given-names></name><etal/></person-group>             <year>2002</year>             <article-title>Inhibition
+of creatine kinase activity in vitro by ethylmalonic acid in cerebral cortex
+of young rats.</article-title>             <source>Neurochem Res</source>
+            <volume>27</volume>             <fpage>1633</fpage>          
+  <lpage>9</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Leipnitz1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Leipnitz</surname><given-names>G</given-names></name><name name-style="western"><surname>Schuck</surname><given-names>PF</given-names></name><name name-style="western"><surname>Ribeiro</surname><given-names>CA</given-names></name><name name-style="western"><surname>Dalcin</surname><given-names>KB</given-names></name><name name-style="western"><surname>Assis</surname><given-names>DR</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>Ethylmalonic
+acid inhibits mitochondrial creatine kinase activity from cerebral cortex
+of young rats in vitro.</article-title>             <source>Neurochem Res</source>
+            <volume>28</volume>             <fpage>771</fpage>           
+ <lpage>7</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Schuck2">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Schuck</surname><given-names>PF</given-names></name><name name-style="western"><surname>Busanello</surname><given-names>EN</given-names></name><name name-style="western"><surname>Moura</surname><given-names>AP</given-names></name><name name-style="western"><surname>Tonin</surname><given-names>AM</given-names></name><name name-style="western"><surname>Grings</surname><given-names>M</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Promotion
+of Lipid and Protein Oxidative Damage in Rat Brain by Ethylmalonic Acid.</article-title>
+            <source>Neurochem Res</source>             <volume>35</volume>
+            <fpage>298</fpage>             <lpage>305</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Barschak1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Barschak</surname><given-names>AG</given-names></name><name name-style="western"><surname>Ferreira Gda</surname><given-names>C</given-names></name><name name-style="western"><surname>André</surname><given-names>KR</given-names></name><name name-style="western"><surname>Schuck</surname><given-names>PF</given-names></name><name name-style="western"><surname>Viegas</surname><given-names>CM</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Inhibition
+of the electron transport chain and creatine kinase activity by ethylmalonic
+acid in human skeletal muscle.</article-title>             <source>Metab Brain
+Dis</source>             <volume>21</volume>             <fpage>11</fpage>
+            <lpage>9</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Boveris1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Boveris</surname><given-names>A</given-names></name><name name-style="western"><surname>Oshino</surname><given-names>N</given-names></name><name name-style="western"><surname>Chance</surname><given-names>B</given-names></name></person-group>             <year>1972</year>             <article-title>The
+cellular production of hydrogen peroxide.</article-title>             <source>Biochem
+J</source>             <volume>128</volume>             <fpage>617</fpage>
+            <lpage>630</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Boveris2">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Boveris</surname><given-names>A</given-names></name><name name-style="western"><surname>Chance</surname><given-names>B</given-names></name></person-group>             <year>1973</year>             <article-title>The
+mitochondrial generation of hydrogen peroxide. General properties and effect
+of hyperbaric oxygen.</article-title>             <source>Biochem J</source>
+            <volume>134</volume>             <fpage>707</fpage>          
+  <lpage>716</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Turrens1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Turrens</surname><given-names>JF</given-names></name></person-group>             <year>2003</year>             <article-title>Mitochondrial
+formation of reactive oxygen species.</article-title>             <source>J
+Physiol</source>             <volume>552</volume>             <fpage>335</fpage>
+            <lpage>44</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Pun1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pun</surname><given-names>PB</given-names></name><name name-style="western"><surname>Lu</surname><given-names>J</given-names></name><name name-style="western"><surname>Moochhala</surname><given-names>S</given-names></name></person-group>             <year>2009</year>             <article-title>Involvement
+of ROS in BBB dysfunction.</article-title>             <source>Free Radic
+Res</source>             <volume>43</volume>             <fpage>348</fpage>
+            <lpage>64</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Takeshige1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Takeshige</surname><given-names>K</given-names></name><name name-style="western"><surname>Minakami</surname><given-names>S</given-names></name></person-group>             <year>1979</year>             <article-title>NADH-
+and NADPH-dependent formation of superoxide anions by bovine heart submitochondrial
+particles and NADH-ubiquinone reductase preparation.</article-title>     
+       <source>Biochem J</source>             <volume>180</volume>       
+     <fpage>129</fpage>             <lpage>35</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Sies1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Sies</surname><given-names>H</given-names></name><name name-style="western"><surname>Cadenas</surname><given-names>E</given-names></name></person-group>             <year>1985</year>             <article-title>Oxidative
+stress: damage to intact cells and organs.</article-title>             <source>Philos
+Trans R Soc Lond B Biol Sci</source>             <volume>311</volume>    
+        <fpage>617</fpage>             <lpage>31</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Fridovich1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Fridovich</surname><given-names>I</given-names></name></person-group>             <year>1998</year>             <article-title>The
+trail to superoxide dismutase.</article-title>             <source>Protein
+Sci</source>             <volume>7</volume>             <fpage>2688</fpage>
+            <lpage>90</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Duthie1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Duthie</surname><given-names>SJ</given-names></name><name name-style="western"><surname>Grant</surname><given-names>MH</given-names></name></person-group>             <year>1989</year>             <article-title>The
+role of reductive and oxidative metabolism in the toxicity of mitoxantrone,
+adriamycin and menadione in human liver derived Hep G2 hepatoma cells.</article-title>
+            <source>Br J Cancer</source>             <volume>60</volume> 
+           <fpage>566</fpage>             <lpage>71</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Pedersen3">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pedersen</surname><given-names>CB</given-names></name><name name-style="western"><surname>Zolkipli</surname><given-names>Z</given-names></name><name name-style="western"><surname>Vang</surname><given-names>S</given-names></name><name name-style="western"><surname>Palmfeldt</surname><given-names>J</given-names></name><name name-style="western"><surname>Kjeldsen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Antioxidant
+dysfunction: potential risk for neurotoxicity in ethylmalonic aciduria.</article-title>
+            <source>J Inherit Metab Dis</source>             <volume>33</volume>
+            <fpage>211</fpage>             <lpage>22</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Hockenbery1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Hockenbery</surname><given-names>DM</given-names></name><name name-style="western"><surname>Oltvai</surname><given-names>ZN</given-names></name><name name-style="western"><surname>Yin</surname><given-names>XM</given-names></name><name name-style="western"><surname>Milliman</surname><given-names>CL</given-names></name><name name-style="western"><surname>Korsmeyer</surname><given-names>SJ</given-names></name></person-group>             <year>1993</year>             <article-title>Bcl-2
+functions in an antioxidant pathway to prevent apoptosis.</article-title>
+            <source>Cell</source>             <volume>22;75</volume>     
+       <fpage>241</fpage>             <lpage>51</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Loor1">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Loor</surname><given-names>G</given-names></name><name name-style="western"><surname>Kondapalli</surname><given-names>J</given-names></name><name name-style="western"><surname>Schriewer</surname><given-names>JM</given-names></name><name name-style="western"><surname>Chandel</surname><given-names>NS</given-names></name><name name-style="western"><surname>Vanden Hoek</surname><given-names>TL</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Menadione
+triggers cell death through ROS-dependent mechanisms involving PARP activation
+without requiring apoptosis.</article-title>             <source>Free Radic
+Biol Med</source>             <volume>49</volume>             <fpage>1925</fpage>
+            <lpage>36</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Djouadi1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Djouadi</surname><given-names>F</given-names></name><name name-style="western"><surname>Aubey</surname><given-names>F</given-names></name><name name-style="western"><surname>Schlemmer</surname><given-names>D</given-names></name><name name-style="western"><surname>Ruiter</surname><given-names>JP</given-names></name><name name-style="western"><surname>Wanders</surname><given-names>RJ</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>Bezafibrate
+increases very-long-chain acyl-CoA dehydrogenase protein and mRNA expression
+in deficient fibroblasts and is a potential therapy for fatty acid oxidation
+disorders.</article-title>             <source>Hum Mol Genet</source>    
+        <volume>14</volume>             <fpage>2695</fpage>             <lpage>703</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0017534-vanMaldegem3">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>van Maldegem</surname><given-names>BT</given-names></name><name name-style="western"><surname>Duran</surname><given-names>M</given-names></name><name name-style="western"><surname>Wanders</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Niezen-Koning</surname><given-names>KE</given-names></name><name name-style="western"><surname>Hogeveen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Clinical,
+biochemical, and genetic heterogeneity in short-chain acyl-coenzyme A dehydrogenase
+deficiency.</article-title>             <source>JAMA</source>             <volume>296</volume>
+            <fpage>943</fpage>             <lpage>52</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Adachi1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Adachi</surname><given-names>M</given-names></name><name name-style="western"><surname>Liu</surname><given-names>Y</given-names></name><name name-style="western"><surname>Fujii</surname><given-names>K</given-names></name><name name-style="western"><surname>Calderwood</surname><given-names>SK</given-names></name><name name-style="western"><surname>Nakai</surname><given-names>A</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Oxidative
+stress impairs the heat stress response and delays unfolded protein recovery.</article-title>
+            <source>PLoS One</source>             <volume>4</volume>     
+       <fpage>e7719</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Pitkanen1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pitkanen</surname><given-names>S</given-names></name><name name-style="western"><surname>Robinson</surname><given-names>BH</given-names></name></person-group>             <year>1996</year>             <article-title>Mitochondrial
+complex I deficiency leads to increased production of superoxide radicals
+and induction of superoxide dismutase.</article-title>             <source>J
+Clin Invest</source>             <volume>98</volume>             <fpage>345</fpage>
+            <lpage>51</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Flint1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Flint</surname><given-names>DH</given-names></name><name name-style="western"><surname>Tuminello</surname><given-names>JF</given-names></name><name name-style="western"><surname>Emptage</surname><given-names>MH</given-names></name></person-group>             <year>1993</year>             <article-title>The
+inactivation of Fe-S cluster containing hydro-lyases by superoxide.</article-title>
+            <source>J Biol Chem</source>             <volume>268</volume>
+            <fpage>22369</fpage>             <lpage>76</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Fazzone1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Fazzone</surname><given-names>H</given-names></name><name name-style="western"><surname>Wangner</surname><given-names>A</given-names></name><name name-style="western"><surname>Clerch</surname><given-names>LB</given-names></name></person-group>             <year>1993</year>             <article-title>Rat
+lung contains a developmentally regulated manganese superoxide dismutase mRNA-binding
+protein.</article-title>             <source>J Clin Invest</source>      
+      <volume>92</volume>             <fpage>1278</fpage>             <lpage>81</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0017534-Fridovich2">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Fridovich</surname><given-names>I</given-names></name></person-group>             <year>1995</year>             <article-title>Superoxide
+radical and superoxide dismutases.</article-title>             <source>Annu
+Rev Biochem</source>             <volume>64</volume>             <fpage>97</fpage>
+            <lpage>112</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Seiler1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Seiler</surname><given-names>A</given-names></name><name name-style="western"><surname>Schneider</surname><given-names>M</given-names></name><name name-style="western"><surname>Förster</surname><given-names>H</given-names></name><name name-style="western"><surname>Roth</surname><given-names>S</given-names></name><name name-style="western"><surname>Wirth</surname><given-names>EK</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Glutathione
+peroxidase 4 senses and translates oxidative stress into 12/15-lipoxygenase
+dependent- and AIF-mediated cell death.</article-title>             <source>Cell
+Metab</source>             <volume>8</volume>             <fpage>237</fpage>
+            <lpage>48</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Gutteridge1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Gutteridge</surname><given-names>JM</given-names></name><name name-style="western"><surname>Halliwell</surname><given-names>B</given-names></name></person-group>             <year>1990</year>             <article-title>The
+measurement and mechanism of lipid peroxidation in biological systems.</article-title>
+            <source>Trends Biochem Sci</source>             <volume>15</volume>
+            <fpage>129</fpage>             <lpage>35</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Kelly1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kelly</surname><given-names>GS</given-names></name></person-group>             <year>1998</year>             <article-title>Clinical
+applications of N-acetylcysteine.</article-title>             <source>Altern
+Med Rev</source>             <volume>3</volume>             <fpage>114</fpage>
+            <lpage>27</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Bastin1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Bastin</surname><given-names>J</given-names></name><name name-style="western"><surname>Aubey</surname><given-names>F</given-names></name><name name-style="western"><surname>Rötig</surname><given-names>A</given-names></name><name name-style="western"><surname>Munnich</surname><given-names>A</given-names></name><name name-style="western"><surname>Djouadi</surname><given-names>F</given-names></name></person-group>             <year>2008</year>             <article-title>Activation
+of peroxisome proliferator-activated receptor pathway stimulates the mitochondrial
+respiratory chain and can correct deficiencies in patients' cells lacking
+its components.</article-title>             <source>J Clin Endocrinol Metab</source>
+            <volume>93</volume>             <fpage>1433</fpage>          
+  <lpage>41</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Schuck3">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Schuck</surname><given-names>PF</given-names></name><name name-style="western"><surname>Ferreira Gda</surname><given-names>C</given-names></name><name name-style="western"><surname>Tonin</surname><given-names>AM</given-names></name><name name-style="western"><surname>Viegas</surname><given-names>CM</given-names></name><name name-style="western"><surname>Busanello</surname><given-names>EN</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Evidence
+that the major metabolites accumulating in medium-chain acyl-CoA dehydrogenase
+deficiency disturb mitochondrial energy homeostasis in rat brain.</article-title>
+            <source>Brain Res</source>             <volume>1296</volume> 
+           <fpage>117</fpage>             <lpage>26</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Schuck4">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Schuck</surname><given-names>PF</given-names></name><name name-style="western"><surname>Ferreira</surname><given-names>GC</given-names></name><name name-style="western"><surname>Moura</surname><given-names>AP</given-names></name><name name-style="western"><surname>Busanello</surname><given-names>EN</given-names></name><name name-style="western"><surname>Tonin</surname><given-names>AM</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Medium-chain
+fatty acids accumulating in MCAD deficiency elicit lipid and protein oxidative
+damage and decrease non-enzymatic antioxidant defenses in rat brain.</article-title>
+            <source>Neurochem Int</source>             <volume>54</volume>
+            <fpage>519</fpage>             <lpage>25</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Mak1">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Mak</surname><given-names>IT</given-names></name><name name-style="western"><surname>Kramer</surname><given-names>JH</given-names></name><name name-style="western"><surname>Weglicki</surname><given-names>WB</given-names></name></person-group>             <year>1986</year>             <article-title>Potentiation
+of free radical-induced lipid peroxidative injury to sarcolemmal membranes
+by lipid amphiphiles.</article-title>             <source>J Biol Chem</source>
+            <volume>261</volume>             <fpage>1153</fpage>         
+   <lpage>1157</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Pande1">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pande</surname><given-names>SV</given-names></name><name name-style="western"><surname>Blanchaer</surname><given-names>MC</given-names></name></person-group>             <year>1971</year>             <article-title>Reversible
+inhibition of mitochondrial adenosine diphosphate phosphorylation by long
+chain acyl coenzyme A esters.</article-title>             <source>J Biol Chem</source>
+            <volume>246</volume>             <fpage>402</fpage>          
+  <lpage>11</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Vignais1">
+        <label>41</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Vignais</surname><given-names>PV</given-names></name></person-group>             <year>1976</year>             <article-title>Molecular
+and physiological aspects of adenine nucleotide transport in mitochondria.</article-title>
+            <source>Biochim Biophys Acta</source>             <volume>456</volume>
+            <fpage>1</fpage>             <lpage>38</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0017534-Duee1">
+        <label>42</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Duee</surname><given-names>ED</given-names></name><name name-style="western"><surname>Vignais</surname><given-names>PV</given-names></name></person-group>             <year>1969</year>             <article-title>Kinetics
+of phosphorylation of intramitochondrial and extramitochondrial adenine nucleotides
+as related to nucleotide translocation.</article-title>             <source>J
+Biol Chem</source>             <volume>244</volume>             <fpage>3932</fpage>
+            <lpage>40</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

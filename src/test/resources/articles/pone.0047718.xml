@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS ONE</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-20615</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0047718</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Population modeling</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Evolutionary biology</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Theoretical biology</subject>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Computer science</subject>
+          <subj-group>
+            <subject>Computerized simulations</subject>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Mathematics</subject>
+          <subj-group>
+            <subject>Applied mathematics</subject>
+            <subj-group>
+              <subject>Decision theory</subject>
+              <subject>Game theory</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Physics</subject>
+          <subj-group>
+            <subject>Interdisciplinary physics</subject>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Social and behavioral sciences</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+          <subject>Computer Science</subject>
+          <subject>Evolutionary Biology</subject>
+          <subject>Physics</subject>
+          <subject>Mathematics</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Consistent Strategy Updating in Spatial and Non-Spatial Behavioral Experiments Does Not Promote Cooperation in Social Networks</article-title>
+        <alt-title alt-title-type="running-head">Experimental Spatial Games</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Grujić</surname>
+            <given-names>Jelena</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Röhl</surname>
+            <given-names>Torsten</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Semmann</surname>
+            <given-names>Dirk</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Milinski</surname>
+            <given-names>Manfred</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Traulsen</surname>
+            <given-names>Arne</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>Grupo Interdisciplinar de Sistemas Complejos (GISC), Departamento de Matemáticas, Universidad Carlos III de Madrid, Leganés, Madrid, Spain</addr-line>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <addr-line>Evolutionary Theory Group, Max-Planck-Institute for Evolutionary Biology, Plön, Germany</addr-line>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <addr-line>Research Group Evolution of Cooperation and Prosocial Behaviour, Courant Research Center Evolution of Social Behavior, Göttingen, Germany</addr-line>
+      </aff>
+      <aff id="aff4">
+        <label>4</label>
+        <addr-line>Department for Evolutionary Ecology, Max-Planck-Institute for Evolutionary Biology, Plön, Germany</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Perc</surname>
+            <given-names>Matjaz</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>University of Maribor, Slovenia</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">jelenagr@gmail.com</email> (JG); <email xlink:type="simple">traulsen@evolbio.mpg.de</email> (AT)</corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: DS MM. Performed the experiments: DS MM. Analyzed the data: JG TR AT. Wrote the paper: JG TR DS MM AT.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>19</day>
+        <month>11</month>
+        <year>2012</year>
+      </pub-date>
+      <volume>7</volume>
+      <issue>11</issue>
+      <elocation-id>e47718</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>10</day>
+          <month>7</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>14</day>
+          <month>9</month>
+          <year>2012</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2012</copyright-year>
+        <copyright-holder>Grujić et al</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>The presence of costly cooperation between otherwise selfish actors is not trivial. A prominent mechanism that promotes cooperation is spatial population structure. However, recent experiments with human subjects report substantially lower level of cooperation then predicted by theoretical models. We analyze the data of such an experiment in which a total of 400 players play a Prisoner's Dilemma on a <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e001" xlink:type="simple"/></inline-formula> square lattice in two treatments, either interacting via a fixed square lattice (15 independent groups) or with a population structure changing after each interaction (10 independent groups). We analyze the statistics of individual decisions and infer in which way they can be matched with the typical models of evolutionary game theorists. We find no difference in the strategy updating between the two treatments. However, the strategy updates are distinct from the most popular models which lead to the promotion of cooperation as shown by computer simulations of the strategy updating. This suggests that the promotion of cooperation by population structure is not as straightforward in humans as often envisioned in theoretical models.</p>
+      </abstract>
+      <funding-group>
+        <funding-statement>D.S. acknowledges funding by the German Initiative of Excellence of the German Science Foundation (DFG). J.G.'s work was supported in part by The Ministerio de Ciencia e Innovacion (MICINN) (Spain) through grants PRODIEVO, MOSAICO, FPI, EEBB, and by Comunidad de Madrid (Spain) through grant MODELICO-CM). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="8"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Why would a self-interested individual pay towards the welfare of someone else? The evolution of cooperation is a fascinating problem originating in evolutionary biology <xref ref-type="bibr" rid="pone.0047718-Darwin1">[1]</xref>–<xref ref-type="bibr" rid="pone.0047718-MaynardSmith2">[3]</xref> which has extended to several other disciplines subsequently <xref ref-type="bibr" rid="pone.0047718-Axelrod1">[4]</xref>–<xref ref-type="bibr" rid="pone.0047718-Hauert1">[7]</xref>. While the evolution of cooperation requires an explanation, several mechanisms have been proposed that are routinely invoked to explain it <xref ref-type="bibr" rid="pone.0047718-Nowak1">[8]</xref>, <xref ref-type="bibr" rid="pone.0047718-Fletcher1">[9]</xref>. One of them which is particularly popular among theorists is spatial population structure. Regular lattices lead to interesting effects and dependences on details of the underlying evolutionary model <xref ref-type="bibr" rid="pone.0047718-Nowak2">[10]</xref>–<xref ref-type="bibr" rid="pone.0047718-Helbing2">[20]</xref>. The exploration of non-regular population structures, such as scale-free networks, suggest an intricate dependence on details of the population structure and update mechanisms <xref ref-type="bibr" rid="pone.0047718-Perc1">[18]</xref>, <xref ref-type="bibr" rid="pone.0047718-Abramson1">[21]</xref>–<xref ref-type="bibr" rid="pone.0047718-Roca1">[26]</xref>. Even more complex effects arise when the underlying population structure is dynamic <xref ref-type="bibr" rid="pone.0047718-Pacheco1">[27]</xref>–<xref ref-type="bibr" rid="pone.0047718-Wu1">[32]</xref>.</p>
+      <p>The promotion of cooperation based on population structure has been analyzed extensively by an enormous number of mathematical and computational models. Many theoretical papers suggest a direct applicability to human behavior. But until now, only few experiments to test these predictions have been performed, as discussed in <xref ref-type="bibr" rid="pone.0047718-Helbing3">[33]</xref>. Such behavioral experiments have been performed on one-dimensional lattices <xref ref-type="bibr" rid="pone.0047718-Kirchkamp1">[34]</xref>, two dimensional lattices <xref ref-type="bibr" rid="pone.0047718-Traulsen1">[35]</xref>–<xref ref-type="bibr" rid="pone.0047718-GraciaLzaro1">[37]</xref>, and complex networks <xref ref-type="bibr" rid="pone.0047718-GraciaLzaro1">[37]</xref>–<xref ref-type="bibr" rid="pone.0047718-Suri1">[39]</xref>. These studies have tested the predictions of theoretical models, i.e. the level of cooperation induced by population structure, and also the underlying assumption of update mechanisms.</p>
+      <p>So far, there is little evidence that the sophisticated theoretical results of cooperation in structured populations can be carried over directly to human behavior. One important question from the perspective of a theoretician is whether human subjects condition their decision making on the population structure, i.e. whether they use consistent strategy updating in spatial and non-spatial experiments. Here, we analyze the data of such a behavioral experiment with a two-dimensional lattice and fully independent controls to address this issue <xref ref-type="bibr" rid="pone.0047718-Traulsen1">[35]</xref>. Previously, this data has only been used to infer the strategy updating in the spatial system, but no systematic comparison between the treatments has been provided. We find no significant difference between the spatial and the non-spatial treatment in strategy updating, which suggests that the subjects did not adapt their behavior to the population structure. However, the way that strategies are updated is different from the update rules usually used in theoretical models that promote the evolution of cooperation.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title>Experimental setup</title>
+        <p>The classical Prisoner's Dilemma is played between two players, each of them can choose to cooperate (C) or to defect (D). The payoff matrix is given by<disp-formula id="pone.0047718.e002"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e002" xlink:type="simple"/><label>(1)</label></disp-formula>where the shown payoffs are for the row player. Here, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e003" xlink:type="simple"/></inline-formula> stands for the temptation to defect, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e004" xlink:type="simple"/></inline-formula> for the reward for mutual cooperation, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e005" xlink:type="simple"/></inline-formula> for the punishment for mutual defection and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e006" xlink:type="simple"/></inline-formula> for the sucker's payoff. A Prisoner's Dilemma is defined by the inequation <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e007" xlink:type="simple"/></inline-formula>. In other words, while mutual cooperation leads to a higher payoff than mutual defection, it is worthwhile to defect against a cooperator (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e008" xlink:type="simple"/></inline-formula>) and to defect against a defector (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e009" xlink:type="simple"/></inline-formula>), In addition to this payoff ranking, the condition <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e010" xlink:type="simple"/></inline-formula> should be added in repeated games. In the experiment we have analyzed, the payoffs were chosen as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e011" xlink:type="simple"/></inline-formula> €, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e012" xlink:type="simple"/></inline-formula> €, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e013" xlink:type="simple"/></inline-formula> € and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e014" xlink:type="simple"/></inline-formula> €.</p>
+        <p>In the vast majority of spatially extended models, players make only a single decision in each round which determines their action against all their neighbors. The same holds for our experiment. Participants of the spatial treatment discussed here were virtually located on the nodes of a 4<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e015" xlink:type="simple"/></inline-formula>4 square lattice with periodic boundary conditions, as if the players would be located on the torus. They play a PD game with each of the four neighbors in their von Neumann neighborhood (the four cells orthogonally surrounding a central cell on the lattice). Players must choose one strategy which determines their action in all four games with their four neighbors. The payoffs are calculated by adding the four payoffs of individual games with each neighbor. There are no self-interactions. After each round, players were informed about their action and payoff as well as the actions and payoffs of their four neighbors. Based on this information and their experience from previous interactions, they had to decide on their next action.</p>
+        <p>The experiment had 25 sessions separated in two different treatments. In the spatial treatment the players had fixed neighbors, which stayed the same throughout the whole game. This treatment was repeated 15 times, each with 16 players and 25 rounds. In the non spatial control treatment (repeated 10 times with 16 players and 25 rounds), the neighbors were assigned to a new, random location on the lattice after each round and consequently, the neighbors of each player changed in each round. Players were not informed about the number of rounds. In both treatments, players are informed about the outcomes of every round, about the actions and payoffs of the neighbors they played with. However, at the moment they need to make a decision about their next action, they are not informed about the previous actions or payoff of their new neighbors. In contrast it was easy to remember the previous actions of the neighbors in the spatial setting.</p>
+      </sec>
+      <sec id="s2b">
+        <title>General observables in the two treatments</title>
+        <p>Let us compare the general outcomes of the spatial and non-spatial treatments.</p>
+        <p>We find no significant differences in the fraction of cooperative actions between the two treatments. <xref ref-type="fig" rid="pone-0047718-g001">Figure 1</xref> illustrates that the errors bars of the treatments are overlapping to the great extend, which suggests that there are no large differences between the treatments. This can be backed up by several statistical tests. First, we fit the difference between the two treatments with a linear function. We find an intercept of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e016" xlink:type="simple"/></inline-formula> and a slope <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e017" xlink:type="simple"/></inline-formula>. Since both values are smaller than their errors, it suggests that the values are close to zero. Second, we constructed a nonlinear regression model with a dummy variable for the spatial and the non spatial treatments. In this model, the fraction of cooperative actions <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e018" xlink:type="simple"/></inline-formula> in round <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e019" xlink:type="simple"/></inline-formula> is given by<disp-formula id="pone.0047718.e020"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e020" xlink:type="simple"/><label>(2)</label></disp-formula>Here, the parameters of the model are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e021" xlink:type="simple"/></inline-formula>, measuring the fraction of cooperative actions in the first round of the non spatial treatment, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e022" xlink:type="simple"/></inline-formula>, measuring the difference in cooperative actions in the first round between the two treatments, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e023" xlink:type="simple"/></inline-formula>, measuring the decay on cooperative actions in the non spatial treatment, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e024" xlink:type="simple"/></inline-formula>, measuring the difference in this decay between the two treatments. In addition, we introduced the dummy variable <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e025" xlink:type="simple"/></inline-formula>, which equals <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e026" xlink:type="simple"/></inline-formula> for the non spatial treatment and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e027" xlink:type="simple"/></inline-formula> for the spatial treatment. From the nonlinear regression model, we find <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e028" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e029" xlink:type="simple"/></inline-formula>) and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e030" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e031" xlink:type="simple"/></inline-formula>). The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e032" xlink:type="simple"/></inline-formula>-values show that these numbers are significantly different from zero. For the differences, we obtain <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e033" xlink:type="simple"/></inline-formula> for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e034" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e035" xlink:type="simple"/></inline-formula> for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e036" xlink:type="simple"/></inline-formula>, showing that the dependence on the dummy variable is not statistically significant. All this indicates that the difference between two treatments is not significant.</p>
+        <fig id="pone-0047718-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0047718.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Comparison of the spatial and non-spatial treatments.</title>
+            <p>(a) The fraction of players that have chosen to cooperate is decreasing over time, but remains substantial throughout the experiment <xref ref-type="bibr" rid="pone.0047718-Traulsen1">[35]</xref>. The error bars are the standard deviations of a binomial distribution, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e037" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e038" xlink:type="simple"/></inline-formula> is the number of samples and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e039" xlink:type="simple"/></inline-formula> is the fraction of cooperation. (b) The distribution of cooperative acts per player. We do not observe unconditional cooperation, and very little unconditional defection (5 out of 240 players in the spatial treatment and 6 out of 160 players in the non spatial treatment). (c) The distributions of cumulative payoffs are peaked with median of 15.4 € for the spatial and 15.0 € for the non spatial treatment. The standard deviation is 2.3 € in both cases. (d) Correlation between the frequency of cooperation on the x-axis and the cumulative payoff on the y-axis. Each point is one player.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0047718.g001" position="float" xlink:type="simple"/>
+        </fig>
+        <p>Next, we address the distribution of cooperative acts per player, the distribution of cumulative payoff per player, and the correlation between the two. <xref ref-type="fig" rid="pone-0047718-g001">Figure 1</xref> illustrates that these two distributions are very similar in the two treatments. To compare the distributions between the treatments quantitatively, we performed a Kolmogorov-Smirnov test. We found <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e040" xlink:type="simple"/></inline-formula> for the comparison of the two distributions of cooperative acts and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e041" xlink:type="simple"/></inline-formula> for the comparison of the two distributions of cumulative payoffs. These <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e042" xlink:type="simple"/></inline-formula>-values indicate that we cannot accept the hypothesis that the two distributions arising from the two treatments are different. In order to compare the correlation between the cumulative payoffs and the number of cooperative acts, we developed a linear regression model,<disp-formula id="pone.0047718.e043"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e043" xlink:type="simple"/><label>(3)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e044" xlink:type="simple"/></inline-formula> is the cumulative payoff, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e045" xlink:type="simple"/></inline-formula> is the number of cooperative acts, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e046" xlink:type="simple"/></inline-formula> is the intercept for the non spatial treatment and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e047" xlink:type="simple"/></inline-formula> the difference between the intercepts of the two treatments. The slope in the non spatial treatment is measured by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e048" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e049" xlink:type="simple"/></inline-formula> measures the difference of the slope between the two treatments. Again, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e050" xlink:type="simple"/></inline-formula> is a dummy variable which is equal to 0 for the non spatial treatment and 1 for the spatial treatment. We obtained <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e051" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e052" xlink:type="simple"/></inline-formula>), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e053" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e054" xlink:type="simple"/></inline-formula>), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e055" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e056" xlink:type="simple"/></inline-formula>), and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e057" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e058" xlink:type="simple"/></inline-formula>). The large <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e059" xlink:type="simple"/></inline-formula> values for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e060" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e061" xlink:type="simple"/></inline-formula> show that there is no significant difference between the two treatments.</p>
+        <p>In the next section, we depart from the level of aggregate information on the system level and address the individual decisions of our players in more detail. Many theoretical models have shown that this kind of update mechanism can have a profound impact on the outcome in such models <xref ref-type="bibr" rid="pone.0047718-Hauert2">[16]</xref>, <xref ref-type="bibr" rid="pone.0047718-Szab2">[17]</xref>, <xref ref-type="bibr" rid="pone.0047718-Santos1">[23]</xref>, <xref ref-type="bibr" rid="pone.0047718-Roca1">[26]</xref>.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Update mechanisms</title>
+        <p>In order to understand the dynamics of the system in more detail, we fitted three different update mechanisms that are popular in theoretical studies to the data of the experiment</p>
+        <list list-type="roman-lower">
+          <list-item>
+            <p>Unconditional imitation, where each players switches to the strategy that performed best in the past in the neighborhood. In addition, we assume that some decisions are made at random and that this fraction changes over time.</p>
+          </list-item>
+          <list-item>
+            <p>Fermi rule - where strategies with higher payoffs are imitated with higher probability. In addition, sometimes a random strategy is chosen.</p>
+          </list-item>
+          <list-item>
+            <p>Moody conditional cooperation - Cooperation conditioned upon the own action in the previous round and the number of cooperators in the neighborhood.</p>
+          </list-item>
+        </list>
+        <p>In the classical studies on the promotion of cooperation on lattices, unconditional imitation has been assumed <xref ref-type="bibr" rid="pone.0047718-Nowak2">[10]</xref>, <xref ref-type="bibr" rid="pone.0047718-Nowak3">[12]</xref>, <xref ref-type="bibr" rid="pone.0047718-Nowak4">[40]</xref>. In this case, players update their strategies by imitating the previous action of the neighbor with the highest payoff. In <xref ref-type="fig" rid="pone-0047718-g002">Figure 2</xref>, we illustrate how often the players action is the same as the action of the highest scoring neighbor in the previous round. The probability of this inferred imitation is around 75% and is growing during the game. However, before we conclude that the unconditional imitation is the update mechanism players use frequently, we should notice that defection is almost always the most successful strategy in the neighborhood. Therefore, if a player defects it seems that she/he is imitating the best neighbor. Consequently, the level of defection is very similar to the level of inferred imitation (<xref ref-type="fig" rid="pone-0047718-g002">Figure 2</xref>). To further test the hypotheses of unconditional imitation we performed a randomization test <xref ref-type="bibr" rid="pone.0047718-Fisher1">[41]</xref>. In this test, the action of the players is kept, but the neighborhood is randomized. This gives a reference model for imitation, because with randomized neighborhoods there can be no imitation. We repeated the randomization 10 000 times to compute the distribution of probabilities of inferred imitation from a random setting. The results are presented in the insets of <xref ref-type="fig" rid="pone-0047718-g002">Figure 2</xref>. We see that distributions are very narrow and that the value from the experiment is slightly higher than the randomized average. The p-value is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e062" xlink:type="simple"/></inline-formula> for the spatial treatment and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e063" xlink:type="simple"/></inline-formula> for the non spatial treatment, indicating that the small difference between the observed imitation and the randomized one is significant. This is different from the result of the same analysis in <xref ref-type="bibr" rid="pone.0047718-Grujic1">[36]</xref>, where the small difference is not significant. However there are several differences between the two experiment which could be responsible for this disagreement, such as sample size, system size, number of neighbors, payoff matrix etc. Importantly, in both experiment the level of imitation was lower then 80%. Thus, players sometimes use strategies not played in their neighborhood before, which is very likely to prevent the cluster formation in both cases equally.</p>
+        <fig id="pone-0047718-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0047718.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Unconditional imitation test in the spatial treatment (left) and in the non spatial treatment (right).</title>
+            <p>The main panels show three different type of data: the fraction of inferred imitations, the level of defection and fraction of decisions in which defection was the best performing strategy in the neighborhood. The inferred level of imitation is the fraction of actions in which the players action coincided with the action of the best neighbor in the previous round. Since defection is almost always the best performing strategy, a defecting player seems to be imitating. Therefore, the level of defection is almost identical to the level of the inferred imitations. However, the randomization test illustrated in the inset shows that there is still more imitation than expected in a random setting. The vertical lines show the inferred imitation observed in the experiments, plus and minus a standard deviation, and the gray bars show the distribution of the inferred imitation in the randomized sample.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0047718.g002" position="float" xlink:type="simple"/>
+        </fig>
+        <p>The second mechanism we tested is typically referred to as Fermi rule <xref ref-type="bibr" rid="pone.0047718-Blume1">[11]</xref>, <xref ref-type="bibr" rid="pone.0047718-Szab1">[14]</xref>, <xref ref-type="bibr" rid="pone.0047718-Traulsen2">[42]</xref>. For this rule, the better the neighbor performs the higher is the possibility that he/she will be imitated, see <xref ref-type="fig" rid="pone-0047718-g003">Fig. 3</xref>. Here, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e064" xlink:type="simple"/></inline-formula> measures the intensity of selection, for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e065" xlink:type="simple"/></inline-formula> imitation is random and for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e066" xlink:type="simple"/></inline-formula>, we recover the unconditional imitation from above. Note that this is slightly different from the original Fermi update mechanism, which would be difficult to check. In the original mechanism a random player is chosen and then imitated with the probability given above. However, the additional randomness would make it difficult to analyze the original rule in the experimental data, because in two identical situations, two players could chose a different payoff difference as the basis for comparison. Therefore we measure the probability of imitating the most successful neighbor who played the opposite strategy instead. This test corresponds to a rule where instead of the random player, the best player of the opposite action is chosen and imitated with the same probability as in the original rule. However the rule conserves a very important property of the original rule, which is to allow strategy changes even when the payoff difference is negative, since the best performing player of the opposite strategy can still have a payoff smaller than the focal player. To analyze this dependence, we again fitted the data to a logistic regression model,<disp-formula id="pone.0047718.e067"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e067" xlink:type="simple"/><label>(4)</label></disp-formula>Here, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e068" xlink:type="simple"/></inline-formula> measures the probability to switch strategy in the case of zero payoff differences and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e069" xlink:type="simple"/></inline-formula> measures the difference between this quantity in the two treatments. The parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e070" xlink:type="simple"/></inline-formula> measures the intensity of selection and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e071" xlink:type="simple"/></inline-formula> is the difference in the intensity of selection between the treatments. As above, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e072" xlink:type="simple"/></inline-formula> is a dummy variable with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e073" xlink:type="simple"/></inline-formula> for the non spatial and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e074" xlink:type="simple"/></inline-formula> for the spatial treatment. The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e075" xlink:type="simple"/></inline-formula>-values for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e076" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e077" xlink:type="simple"/></inline-formula> are <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e078" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e079" xlink:type="simple"/></inline-formula>, respectively, such that the dependence on the treatment is not significant.</p>
+        <fig id="pone-0047718-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0047718.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Probability of imitating depending on the payoff difference.</title>
+            <p>Left: probability of switching to another strategy depending on the payoff differences for both the spatial and non spatial experiment. The payoff difference is between the focal player and the best player of the opposite strategy. The results are consistent with imitating the neighbors with higher payoffs. However this imitation is not unconditional, but the higher the payoff difference the larger is the probability of imitation. In addition, players might spontaneously switch their strategies even if they have no neighbors playing the other strategy, resembling mutations. Error bars are the standard deviations of a binomial distribution, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e080" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e081" xlink:type="simple"/></inline-formula> is the number of samples and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e082" xlink:type="simple"/></inline-formula> is the probability of changing the action). Right: Probability of mutations in time. Mutations are defined as the probability that a cooperator surrounded by four cooperators would change the strategy in the next round or that a defector surrounded by four defectors will change the strategy in the next round. We see a large number of mutations, which decreases over time, but always stay substantial. Again in both treatments the players show a similar pattern of behavior. Error bars are the standard deviations of a binomial distribution, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e083" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e084" xlink:type="simple"/></inline-formula> is the number of samples and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e085" xlink:type="simple"/></inline-formula> is the probability of mutation).</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0047718.g003" position="float" xlink:type="simple"/>
+        </fig>
+        <p>However, the players will switch their strategies even if they are surrounded by players with the same strategy as theirs. This corresponds to mutations or exploration behavior <xref ref-type="bibr" rid="pone.0047718-Traulsen3">[43]</xref>. This exploration behavior decreases over time in a manner comparable with the decrease of global cooperation level (<xref ref-type="fig" rid="pone-0047718-g003">Figure 3</xref>). To analyze the difference between the spatial and non spatial treatment, we utilize a non linear regression model,<disp-formula id="pone.0047718.e086"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e086" xlink:type="simple"/><label>(5)</label></disp-formula>where, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e087" xlink:type="simple"/></inline-formula> is the fraction of exploration behavior in round <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e088" xlink:type="simple"/></inline-formula>. The initial level of exploration is measured by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e089" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e090" xlink:type="simple"/></inline-formula>, its decay is measured by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e091" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e092" xlink:type="simple"/></inline-formula>. The p-values for the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e093" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e094" xlink:type="simple"/></inline-formula> are both <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e095" xlink:type="simple"/></inline-formula>. Thus, the dependence on the treatment is statistically not significant.</p>
+        <p>The last update mechanism we analyzed is conditional behavior based on the own previous action and the number of cooperators in the neighborhood. In <xref ref-type="bibr" rid="pone.0047718-Grujic1">[36]</xref>, this has been termed “moody conditional cooperation”. In <xref ref-type="fig" rid="pone-0047718-g004">Figure 4</xref>, we show the probability of cooperating depending on the number of neighbors who cooperated in the previous round and the action of the focal players in the previous round. In the case that the focal player cooperated in the previous round, the probability of her/him cooperating increases linearly with the number of cooperating neighbors, as in previous work. On the other hand, if the player defected in the previous round, the probability of him/her cooperating decreases linearly with the number of cooperating neighbors. We developed a linear regression model with two dummy variables,<disp-formula id="pone.0047718.e096"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e096" xlink:type="simple"/><label>(6)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e097" xlink:type="simple"/></inline-formula> is probability of cooperation after <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e098" xlink:type="simple"/></inline-formula> of your neighbors cooperated in the previous round. The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e099" xlink:type="simple"/></inline-formula> are the parameters of the model, in a similar manner as described above. Again, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e100" xlink:type="simple"/></inline-formula> is a dummy variable which is equal to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e101" xlink:type="simple"/></inline-formula> for the non spatial treatment and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e102" xlink:type="simple"/></inline-formula> for the spatial one. The second dummy variable <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e103" xlink:type="simple"/></inline-formula> is equal to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e104" xlink:type="simple"/></inline-formula> if the focal player cooperated himself/herself in the previous round and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e105" xlink:type="simple"/></inline-formula> otherwise. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e106" xlink:type="simple"/></inline-formula> depends significantly only on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e107" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e108" xlink:type="simple"/></inline-formula> (p-values<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e109" xlink:type="simple"/></inline-formula>). Therefore, the probability of cooperation does not depend on the treatment. It does not depend either on the number of cooperators in the previous round if we do not control for the players own action.</p>
+        <fig id="pone-0047718-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0047718.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Probability of cooperation depending on the previous action and the number of cooperators in the neighborhood.</title>
+            <p>These are called moody conditional cooperators in <xref ref-type="bibr" rid="pone.0047718-Grujic1">[36]</xref>. We see that there is a clear difference between the behavior after cooperating and defecting. After cooperating, the probability of cooperating increases with the number of cooperating neighbors and after defecting the probability of cooperation is decreasing with the number of cooperating neighbors. Again, in both the spatial and the non spatial setting the behavior is very similar.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0047718.g004" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2d">
+        <title>Simulations</title>
+        <p>In the experiments, there is no hint for a significant difference between the treatments. In order to understand why this happens, we have performed simulations with the three update mechanisms fitted to the experimental data: unconditional imitation (with random strategy exploration), Fermi rule (also with random strategy exploration) and moody conditional cooperation. We found that these three update mechanisms will not promote cooperation on lattices and that for them spatial structure does not make a difference, even for much larger systems. Unconditional imitation with random strategy exploration obeys the equation<disp-formula id="pone.0047718.e110"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e110" xlink:type="simple"/><label>(7)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e111" xlink:type="simple"/></inline-formula> is the probability that a player with action A will change his action to the action of the player B, who is her/his best performing neighbor. The round of the game is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e112" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e113" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e114" xlink:type="simple"/></inline-formula> is the payoff of an <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e115" xlink:type="simple"/></inline-formula> player and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e116" xlink:type="simple"/></inline-formula> is the payoff of his best performing neighbor playing <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e117" xlink:type="simple"/></inline-formula>. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e118" xlink:type="simple"/></inline-formula> is the Heaviside function, which is one for positive arguments and zero otherwise. From the experimental data, we found <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e119" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e120" xlink:type="simple"/></inline-formula>. For the simulations with imitation only we set the random strategy exploration parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e121" xlink:type="simple"/></inline-formula>. In the first round, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e122" xlink:type="simple"/></inline-formula> is played with probability 70% and in the every other round the probability of imitation the best player is determined according to the probability given by <xref ref-type="disp-formula" rid="pone.0047718.e110">Eq.7</xref>.</p>
+        <p>If the player does not imitate she/he will play C or D with equal probability. We see that the simulations with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e123" xlink:type="simple"/></inline-formula> reproduce the cooperation level well, but as we saw before, the best performing neighbor will almost always be a defector. Therefore the above update mechanism is equivalent to the mechanism where the next action is determined only by the term <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e124" xlink:type="simple"/></inline-formula> in <xref ref-type="disp-formula" rid="pone.0047718.e110">Eq. 7</xref>. Promotion of cooperation can only occur through the formation of clusters of cooperators, which is prevented by the random strategy exploration. Therefore, since clusters of cooperators cannot be formed anyway, both spatial and non spatial treatments show low levels of cooperation driven by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e125" xlink:type="simple"/></inline-formula> only. On the other hand, for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e126" xlink:type="simple"/></inline-formula>, the two simulation setups display very different dynamics. In the spatial setting, the level of cooperation drops at the beginning, until clusters start forming and expand in a sufficiently large system. In the non spatial setting, such clusters cannot form and the cooperation level drops to zero.</p>
+        <p>In the Fermi update rule, the probability of switching to the opposite strategy depends on the difference of the payoffs between the focal player its neighbors. The dependence is given by the Fermi function, see above. While conventionally a random neighbor is chosen for comparison, in the analysis of the experimental data we have focused on the neighbor with the opposite strategy and the highest payoff. In our simulations, we take the same approach. If there are no players with the opposite strategy in the neighborhood, players will still switch their strategy with some probability. We call this mutations or exploration behavior. In contrast to <xref ref-type="bibr" rid="pone.0047718-Traulsen1">[35]</xref>, we here assume that this quantity is time dependent. In the right panel of <xref ref-type="fig" rid="pone-0047718-g003">Figure 3</xref>, we present the probability of mutations over time. Summarizing this approach we find for the probability of changing strategy<disp-formula id="pone.0047718.e127"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e127" xlink:type="simple"/><label>(8)</label></disp-formula>Note that for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e128" xlink:type="simple"/></inline-formula>, we recover the unconditional imitation from above. For the simulations, we used the parameters obtained from fitting to the experiment, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e129" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e130" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e131" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e132" xlink:type="simple"/></inline-formula> for the spatial treatment and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e133" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e134" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e135" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e136" xlink:type="simple"/></inline-formula> for the non spatial treatment.</p>
+        <p>The last model we simulated are the moody conditional cooperators. The probability of cooperating is given by<disp-formula id="pone.0047718.e137"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pone.0047718.e137" xlink:type="simple"/><label>(9)</label></disp-formula>The probability of cooperating after <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e138" xlink:type="simple"/></inline-formula> neighbors cooperated and the focal player cooperated is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e139" xlink:type="simple"/></inline-formula>. If the focal player defected, the corresponding probability is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e140" xlink:type="simple"/></inline-formula>. For the simulations, we chose the parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e141" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e142" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e143" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e144" xlink:type="simple"/></inline-formula>.</p>
+        <p>Simulations were performed for a spatial and a non spatial setting. In order to analyze the influence of the size of the lattice, we simulated lattice size <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e145" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pone.0047718.e146" xlink:type="simple"/></inline-formula>. <xref ref-type="fig" rid="pone-0047718-g005">Figure 5</xref> shows the levels on cooperation in these simulations for the same payoff matrix as in the experiments, and for the parameters obtained from the fit to the experimental data. As previously well established <xref ref-type="bibr" rid="pone.0047718-Nowak2">[10]</xref>, unconditional imitation without exploration will promote cooperation in the presence of spatial population structure, but not in non spatial settings. But the promotion of cooperation will take place only if there is essentially no random strategy exploration in the system. The presence of noise in the strategy updating will also destroy the clusters of cooperators. Thus, the level of cooperation will be equal to the strategy exploration both in the spatial and the non spatial setting. On the other hand, the Fermi rule and the moody conditional cooperators rule lead to the same levels of cooperation in the spatial and in the non spatial setting for our choice of parameters. Notice, that this may change for a different payoff matrix, other parameters or if we would allow self-interactions. Our results are in good agreement with the results in <xref ref-type="bibr" rid="pone.0047718-GraciaLzaro2">[44]</xref>, where it is shown by simulations that in a population of cooperators, defectors and moody conditional cooperators, the structure of the population does not promote or inhibit cooperation compared to a well mixed population.</p>
+        <fig id="pone-0047718-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0047718.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Simulations for different update mechanisms.</title>
+            <p>Top figures are for the spatial structure and the bottom ones are for non spatial structure. Left to right: unconditional imitation, Fermi and moody conditional cooperators. We see that, for this payoff matrix, the only update mechanism where the spatial structure is relevant is unconditional imitations without random strategy exploration.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0047718.g005" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>We have compared a spatial and a non spatial behavioral experiment with human subjects playing a Prisoner's Dilemma. We have found no significant differences between the two treatments, neither in macroscopic properties such as the level of cooperation, nor in the way that players update their strategies. On the one hand, this is good news for theorists, because their assumption of consistent strategy updates in spatial and non spatial systems seems to be justified. On the other hand, our results suggest that the idea that spatial structure promotes cooperation cannot be carried over to human experiments in a straightforward way. This result is in line with previous results from other experiments. Cassar has found that cooperation was hard to reach on different, albeit small networks <xref ref-type="bibr" rid="pone.0047718-Cassar1">[38]</xref>. Kirchkamp and Nagel have performed an experiment on a one dimensional lattice (circles) as well as in a group setting; their results suggest that naive imitation may be negligible in such experiments <xref ref-type="bibr" rid="pone.0047718-Kirchkamp1">[34]</xref>. Suri and Watts have performed an online experiment and found that network topology had no significant effect on the level of cooperation <xref ref-type="bibr" rid="pone.0047718-Suri1">[39]</xref>.</p>
+      <p>It could be argued that in the above experiments the cooperation is not observed because of the small system size, but in experiments one order of magnitude larger <xref ref-type="bibr" rid="pone.0047718-Grujic1">[36]</xref> or even two orders of magnitude larger <xref ref-type="bibr" rid="pone.0047718-GraciaLzaro1">[37]</xref>, the level of cooperation changed over time similarly. However, in those experiments, the same players were used for both treatments subsequently. Therefore, the comparison we make here is not straightforward in those experiments. All these experiments are performed on different spatial structures with different payoff matrices and system sizes. Common to them is the observation that a strategy updating that does not allow the innovation of a new strategy in a neighborhood, e.g. players switching to defection in a neighbor of cooperators, is not a good explanation for the data.</p>
+      <p>It could be argued that the size of our system is not big enough for spatial structure to make a difference or that the payoff matrix is not the ideal choice. In principle, it is possible that for a different payoff matrix or a larger system, significant differences between the two treatments (spatial and non spatial) would be observed. Therefore, the similarity of players' behavior in both settings should be put to the test in larger systems and for different payoff matrices, before a final conclusion is made. However, one has to keep in mind that random strategy exploration is preventing the formation of clusters. It seems to be unlikely that this feature disappears for larger lattices or different parameters.</p>
+      <p>However, our results do not imply that the theoretical analysis of spatial games is not meaningful. In other biological or technological systems these considerations may be applicable directly. Moreover, the effect of spatial structure could be much more subtle than implied by many theoretical works. In particular, theoretical work should consider the role of mutations (which may arise from mixed strategies, strategies that try to anticipate the future behavior of the neighbors, or from strategies which consider more than one past interaction), see e.g. <xref ref-type="bibr" rid="pone.0047718-Traulsen3">[43]</xref>, <xref ref-type="bibr" rid="pone.0047718-Helbing4">[45]</xref>, <xref ref-type="bibr" rid="pone.0047718-Allen1">[46]</xref>, or other, more sophisticated strategy update mechanisms <xref ref-type="bibr" rid="pone.0047718-Helbing5">[47]</xref>–<xref ref-type="bibr" rid="pone.0047718-Vukov1">[49]</xref>, which is only rarely done in structured populations. However, it is difficult to imagine strictly spatially structured hunter gatherer society.</p>
+      <p>In addition, population structure may have played a crucial role in our evolutionary past and potentially also in our present and future <xref ref-type="bibr" rid="pone.0047718-Apicella1">[50]</xref>. It is frequently argued that many features of human behavior have evolved in hunter gatherer societies. The population structure of these societies may thus be crucial for the evolution of human cooperation.</p>
+      <p>Most importantly, theoretical considerations of fixed networks are a necessary first step to analyze dynamical networks, which may be a more realistic way to address human behavior. Recent experiments of such dynamical networks indicate that there is indeed a scope for the evolution of cooperation mediated by network structure <xref ref-type="bibr" rid="pone.0047718-Fehl1">[51]</xref>, <xref ref-type="bibr" rid="pone.0047718-Rand1">[52]</xref>.</p>
+    </sec>
+    <sec id="s4" sec-type="methods">
+      <title>Methods</title>
+      <p>We used the experimental data from <xref ref-type="bibr" rid="pone.0047718-Traulsen1">[35]</xref>. A detailed explanation of the experiment can be found there. The data of this experiment is available upon request. We emphasize that each player was identified by a letter ranging from a to p (e.g., a has the following neighbors: b, d, e, and m). Therefore, in the spatial treatment players could see that their neighbors were always the same, for example: f, d, e, and a. Subjects were told in the instructions that their neighbors would stay the same throughout. On the other hand, in non spatial treatment, players could see that in each round they have different neighbors. Subjects were told in the instructions that their neighbors would change after each round. Consequently, it is highly unlikely that the players misunderstood their specific rules of the game. In the non spatial treatment the players had no access to information of the previous actions of their present neighbors. Thus, they could not react directly to their previous behavior. In contrast it was very easy in the spatial setting to memorize the four strategies of their neighbors for the next encounter.</p>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank A. Sanchez, J.A. Cuesta, and K. Fehl for valuable comments.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0047718-Darwin1">
+        <label>1</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Darwin C (1859) On the origin of species by means of natural selection. Cambridge-London. Reprinted in Harvard University Press ((<issue>1964</issue>)  ). 30.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-MaynardSmith1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maynard Smith</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Price</surname><given-names>GR</given-names></name> (<year>1973</year>) <article-title>The logic of animal conict</article-title>. <source>Nature</source> <volume>246</volume>: <fpage>15</fpage>–<lpage>18</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-MaynardSmith2">
+        <label>3</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Maynard Smith J, Szathmáry E (1995) The major transitions in evolution. Oxford: W. H. Freeman.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Axelrod1">
+        <label>4</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Axelrod R (1984) The Evolution of Cooperation. New York: Basic Books.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Kollock1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kollock</surname><given-names>P</given-names></name> (<year>1998</year>) <article-title>Social dilemmas: The anatomy of cooperation</article-title>. <source>Annual Review of Sociology</source> <volume>24</volume>: <fpage>183</fpage>–<lpage>214</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Fehr1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fehr</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Gächter</surname><given-names>S</given-names></name> (<year>2000</year>) <article-title>Cooperation and punishment in public goods experiments</article-title>. <source>American Economic Review</source> <volume>90</volume>: <fpage>980</fpage>–<lpage>994</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Hauert1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hauert</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Szabó</surname><given-names>G</given-names></name> (<year>2005</year>) <article-title>Game theory and physics</article-title>. <source>American Journal of Physics</source> <volume>73</volume>: <fpage>405</fpage>–<lpage>414</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Nowak1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name> (<year>2006</year>) <article-title>Five rules for the evolution of cooperation</article-title>. <source>Science</source> <volume>314</volume>: <fpage>1560</fpage>–<lpage>1563</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Fletcher1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fletcher</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Doebeli</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>A simple and general explanation for the evolution of altruism</article-title>. <source>Proc Royal Soc Lond B</source> <volume>276</volume>: <fpage>13</fpage>–<lpage>19</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Nowak2">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>May</surname><given-names>RM</given-names></name> (<year>1992</year>) <article-title>Evolutionary games and spatial chaos</article-title>. <source>Nature</source> <volume>359</volume>: <fpage>826</fpage>–<lpage>829</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Blume1">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Blume</surname><given-names>LE</given-names></name> (<year>1993</year>) <article-title>The statistical mechanics of strategic interaction</article-title>. <source>Games and Economic Behavior</source> <volume>5</volume>: <fpage>387</fpage>–<lpage>424</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Nowak3">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Bonhoeffer</surname><given-names>S</given-names></name>, <name name-style="western"><surname>May</surname><given-names>RM</given-names></name> (<year>1994</year>) <article-title>More spatial games</article-title>. <source>International Journal of Bifurcation and Chaos</source> <volume>4</volume>: <fpage>33</fpage>–<lpage>56</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Nakamaru1">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nakamaru</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Matsuda</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Iwasa</surname><given-names>Y</given-names></name> (<year>1997</year>) <article-title>The evolution of cooperation in a lattice–structured population</article-title>. <source>Journal of Theoretical Biology</source> <volume>184</volume>: <fpage>65</fpage>–<lpage>81</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Szab1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Szabó</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Tőke</surname><given-names>C</given-names></name> (<year>1998</year>) <article-title>Evolutionary Prisoner's Dilemma game on a square lattice</article-title>. <source>Physical Review E</source> <volume>58</volume>: <fpage>69</fpage>–<lpage>73</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Eshel1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eshel</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Samuelson</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Shaked</surname><given-names>A</given-names></name> (<year>1998</year>) <article-title>Altruists, egoists, and hooligans in a local interaction model</article-title>. <source>American Economic Review</source> <volume>88</volume>: <fpage>157</fpage>–<lpage>179</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Hauert2">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hauert</surname><given-names>C</given-names></name> (<year>2002</year>) <article-title>Effects of space in 2×2 games</article-title>. <source>International Journal of Bifurcation and Chaos</source> <volume>12</volume>: <fpage>1531</fpage>–<lpage>1548</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Szab2">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Szabó</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Fáth</surname></name> (<year>2007</year>) <article-title>Evolutionary games on graphs</article-title>. <source>Physics Reports</source> <volume>446</volume>: <fpage>97</fpage>–<lpage>216</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Perc1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Perc</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Szolnoki</surname><given-names>A</given-names></name> (<year>2010</year>) <article-title>Coevolutionary games—a mini review</article-title>. <source>BioSys</source> <volume>99</volume>: <fpage>109</fpage>–<lpage>125</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Helbing1">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Helbing</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Szolnoki</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Perc</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Szabó</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>Evolutionary establishment of moral and double moral standards through spatial interactions</article-title>. <source>PLoS Comput Biol</source> <volume>6</volume>: <fpage>e1000758</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Helbing2">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Helbing</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Szolnoki</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Perc</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Szabo</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>Punish, but not too hard: how costly punishment spreads in the spatial public goods game</article-title>. <source>New J Physics</source> <volume>12</volume>: <fpage>083005</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Abramson1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Abramson</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Kuperman</surname><given-names>M</given-names></name> (<year>2001</year>) <article-title>Social games in a social network</article-title>. <source>Physical Review E</source> <volume>63</volume>: <fpage>030901</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Holme1">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Holme</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Trusina</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Minnhagen</surname><given-names>P</given-names></name> (<year>2003</year>) <article-title>Prisoner's Dilemma in real-world acquaintance networks: Spikes and quasiequilibria induced by the interplay between structure and dynamics</article-title>. <source>Physical Review E</source> <volume>68</volume>: <fpage>030901</fpage> (R).</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Santos1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Santos</surname><given-names>FC</given-names></name>, <name name-style="western"><surname>Pacheco</surname><given-names>JM</given-names></name> (<year>2005</year>) <article-title>Scale-free networks provide a unifying framework for the emergence of cooperation</article-title>. <source>Physical Review Letters</source> <volume>95</volume>: <fpage>098104</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Santos2">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Santos</surname><given-names>FC</given-names></name>, <name name-style="western"><surname>Pacheco</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Lenaerts</surname><given-names>T</given-names></name> (<year>2006</year>) <article-title>Evolutionary dynamics of social dilemmas in structured heterogeneous populations</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>103</volume>: <fpage>3490</fpage>–<lpage>3494</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Perc2">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Perc</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Szolnoki</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Szabó</surname><given-names>G</given-names></name> (<year>2008</year>) <article-title>Restricted connections among distinguished players support cooperation</article-title>. <source>Physical Review E</source> <volume>78</volume>: <fpage>066101</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Roca1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roca</surname><given-names>CP</given-names></name>, <name name-style="western"><surname>Cuesta</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Sanchez</surname><given-names>A</given-names></name> (<year>2009</year>) <article-title>Evolutionary game theory: Temporal and spatial effects beyond replicator dynamics</article-title>. <source>Physics of Life Reviews</source> <volume>6</volume>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Pacheco1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pacheco</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name> (<year>2006</year>) <article-title>Coevolution of strategy and structure in complex networks with dynamical linking</article-title>. <source>Physical Review Letters</source> <volume>97</volume>: <fpage>258103</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Antal1">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Antal</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ohtsuki</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Wakeley</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Taylor</surname><given-names>PD</given-names></name>, <name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name> (<year>2009</year>) <article-title>Evolution of cooperation by phenotypic similarity</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>8597</fpage>–<lpage>8600</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Tarnita1">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tarnita</surname><given-names>CE</given-names></name>, <name name-style="western"><surname>Antal</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ohtsuki</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name> (<year>2009</year>) <article-title>Evolutionary dynamics in set structured populations</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>8601</fpage>–<lpage>8604</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Poncela1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Poncela</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gomez-Gardenes</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Moreno</surname><given-names>Y</given-names></name> (<year>2009</year>) <article-title>Evolutionary game dynamics in a growing structured population</article-title>. <source>New Journal of Physics</source> <volume>11</volume>: <fpage>083031</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Zschaler1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zschaler</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Gross</surname><given-names>T</given-names></name> (<year>2010</year>) <article-title>A homoclinic route to full cooperation in adaptive social networks</article-title>. <source>New Journal of Physics</source> <volume>12</volume>: <fpage>093015</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Wu1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Zhou</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Luo</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name> (<year>2010</year>) <article-title>Evolution of cooperation on stochastical dynamical networks</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e11187</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Helbing3">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Helbing</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>W</given-names></name> (<year>2010</year>) <article-title>The future of social experimenting</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>107</volume>: <fpage>5265</fpage>–<lpage>5266</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Kirchkamp1">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kirchkamp</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Nagel</surname><given-names>R</given-names></name> (<year>2007</year>) <article-title>Naive learning and cooperation in network experiments</article-title>. <source>Games and Economic Behavior</source> <volume>58</volume>: <fpage>269</fpage>–<lpage>292</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Traulsen1">
+        <label>35</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Semmann</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Sommerfeld</surname><given-names>RD</given-names></name>, <name name-style="western"><surname>Krambeck</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Milinski</surname><given-names>M</given-names></name> (<year>2010</year>) <article-title>Human strategy updating in evolutionary games</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>107</volume>: <fpage>2962</fpage>–<lpage>2966</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Grujic1">
+        <label>36</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Grujic</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fosco</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Araujo</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Cuesta</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sanchez</surname><given-names>A</given-names></name> (<year>2010</year>) <article-title>Social experiments in the mesoscale: Humans playing a spatial prisoner's dilemma</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e13749</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-GraciaLzaro1">
+        <label>37</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gracia-Lázaro</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Ferrer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Ruiz</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Tarancón</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Cuesta</surname><given-names>JA</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Heterogeneous networks do not promote cooperation when humans play a prisoner's dilemma</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>109</volume>: <fpage>12922</fpage>–<lpage>12926</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Cassar1">
+        <label>38</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cassar</surname><given-names>A</given-names></name> (<year>2007</year>) <article-title>Coordination and cooperation in local, random and small world networks: Experimental evidence</article-title>. <source>Games and Economic Behavior</source> <volume>58</volume>: <fpage>209</fpage>–<lpage>230</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Suri1">
+        <label>39</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Suri</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Watts</surname><given-names>DJ</given-names></name> (<year>2011</year>) <article-title>Cooperation and contagion in web-based, networked public goods experiments</article-title>. <source>PLoS One</source> <volume>6</volume>: <fpage>e16836</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Nowak4">
+        <label>40</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Bonhoeffer</surname><given-names>S</given-names></name>, <name name-style="western"><surname>May</surname><given-names>RM</given-names></name> (<year>1994</year>) <article-title>Spatial games and the maintenance of cooperation</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>91</volume>: <fpage>4877</fpage>–<lpage>4881</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Fisher1">
+        <label>41</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fisher</surname><given-names>RA</given-names></name> (<year>1935</year>) <article-title>The Design of Experiment</article-title>. <source>Hafner</source></mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Traulsen2">
+        <label>42</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Pacheco</surname><given-names>JM</given-names></name> (<year>2006</year>) <article-title>Stochastic dynamics of invasion and fixation</article-title>. <source>Physical Review E</source> <volume>74</volume>: <fpage>011909</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Traulsen3">
+        <label>43</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Hauert</surname><given-names>C</given-names></name>, <name name-style="western"><surname>De Silva</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Sigmund</surname><given-names>K</given-names></name> (<year>2009</year>) <article-title>Exploration dynamics in evolutionary games</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>709</fpage>–<lpage>712</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-GraciaLzaro2">
+        <label>44</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gracia-Lázaro</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Cuesta</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Sánchez</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Moreno</surname><given-names>Y</given-names></name> (<year>2012</year>) <article-title>Human behavior in prisoner's dilemma experiments suppresses network reciprocity</article-title>. <source>Sci Rep</source> <volume>2</volume>: <fpage>325</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Helbing4">
+        <label>45</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Helbing</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Szolnoki</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Perc</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Szabó</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>Defector-accelerated cooperativeness and punishment in public goods games with mutations</article-title>. <source>Physical Review E</source> <volume>81</volume>: <fpage>057104</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Allen1">
+        <label>46</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Allen</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Traulsen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Tarnita</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Nowak</surname><given-names>MA</given-names></name> (<year>2012</year>) <article-title>How mutation affects evolutionary games on graphs</article-title>. <source>Journal of Theoretical Biology</source> <volume>299</volume>: <fpage>97</fpage>–<lpage>105</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Helbing5">
+        <label>47</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Helbing</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>W</given-names></name> (<year>2009</year>) <article-title>The outbreak of cooperation among success-driven individuals under noisy conditions</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>3680</fpage>–<lpage>5</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Pea1">
+        <label>48</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peña</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Volken</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Pestelacci</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Tomassini</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>Conformity hinders the evolution of cooperation on scale-free networks</article-title>. <source>Physical Review E</source> <volume>80</volume>: <fpage>016110</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Vukov1">
+        <label>49</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vukov</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Santos</surname><given-names>FC</given-names></name>, <name name-style="western"><surname>Pacheco</surname><given-names>JM</given-names></name> (<year>2011</year>) <article-title>Incipient cognition solves the spatial reciprocity conundrum of cooperation</article-title>. <source>PLoS One</source> <volume>6</volume>: <fpage>e17939</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Apicella1">
+        <label>50</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Apicella</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Marlowe</surname><given-names>FW</given-names></name>, <name name-style="western"><surname>Fowler</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Christakis</surname><given-names>NA</given-names></name> (<year>2012</year>) <article-title>Social networks and cooperation in hunter-gatherers</article-title>. <source>Nature</source> <volume>481</volume>: <fpage>497</fpage>–<lpage>501</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Fehl1">
+        <label>51</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fehl</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Post</surname><given-names>DJVD</given-names></name>, <name name-style="western"><surname>Semmann</surname><given-names>D</given-names></name> (<year>2011</year>) <article-title>Co-evolution of behaviour and social network structure promotes human cooperation</article-title>. <source>Ecology Letters</source> <volume>14</volume>: <fpage>546</fpage>–<lpage>551</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0047718-Rand1">
+        <label>52</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rand</surname><given-names>DG</given-names></name>, <name name-style="western"><surname>Arbesman</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Christakis</surname><given-names>NA</given-names></name> (<year>2011</year>) <article-title>Dynamic social networks promote cooperation in experiments with humans</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>108</volume>: <fpage>19193</fpage>–<lpage>19198</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
