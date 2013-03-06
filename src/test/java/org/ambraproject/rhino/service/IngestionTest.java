@@ -270,6 +270,9 @@ public class IngestionTest extends BaseRhinoTest {
    */
   public static boolean compare(AssertionCollector results, String objectName, String fieldName,
                                 @Nullable Object actual, @Nullable Object expected) {
+    if (expected instanceof CharSequence) {
+      expected = CharMatcher.WHITESPACE.collapseFrom((CharSequence) expected, ' ');
+    }
     return results.compare(objectName, fieldName, actual, expected);
   }
 
@@ -322,7 +325,6 @@ public class IngestionTest extends BaseRhinoTest {
    * @return "massaged" equivalent text
    */
   private static String massageXml(CharSequence text) {
-    text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
     text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
     text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
     return text.toString();
