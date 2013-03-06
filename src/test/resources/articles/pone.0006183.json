@@ -1,0 +1,652 @@
+{"doi":"info:doi/10.1371/journal.pone.0006183","title":
+  "Dissociable Perceptual Effects of Visual Adaptation","eIssn":
+  "1932-6203","state":1,"archiveName":"pone.0006183.zip","description":
+  "\u003cp\u003eNeurons in the visual cortex are responsive to the presentation of oriented and curved line segments, which are thought to act as primitives for the visual processing of shapes and objects. Prolonged adaptation to such stimuli gives rise to two related perceptual effects: a slow change in the appearance of the adapting stimulus (perceptual drift), and the distortion of subsequently presented test stimuli (adaptational aftereffects). Here we used a psychophysical nulling technique to dissociate and quantify these two classical observations in order to examine their underlying mechanisms and their relationship to one another. In agreement with previous work, we found that during adaptation horizontal and vertical straight lines serve as attractors for perceived orientation and curvature. However, the rate of perceptual drift for different stimuli was not predictive of the corresponding aftereffect magnitudes, indicating that the two perceptual effects are governed by distinct neural processes. Finally, the rate of perceptual drift for curved line segments did not depend on the spatial scale of the stimulus, suggesting that its mechanisms lie outside strictly retinotopic processing stages. These findings provide new evidence that the visual system relies on statistically salient intrinsic reference stimuli for the processing of visual patterns, and point to perceptual drift as an experimental window for studying the mechanisms of visual perception.\u003c/p\u003e",
+  "rights":
+  ". This is an open-access article distributed under the terms of the Creative Commons Public Domain declaration which stipulates that, once placed in the public domain, this work may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
+  "language":"en","format":"text/xml","pages":"1-8","eLocationId":"e6183",
+  "strkImgURI":"","date":"Jul 10, 2009 12:00:00 AM","volume":"4","issue":
+  "7","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
+  "publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0006183","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0006183","extension":
+      "XML","contentType":"text/xml","title":
+      "Dissociable Perceptual Effects of Visual Adaptation","description":
+      "\u003cp\u003eNeurons in the visual cortex are responsive to the presentation of oriented and curved line segments, which are thought to act as primitives for the visual processing of shapes and objects. Prolonged adaptation to such stimuli gives rise to two related perceptual effects: a slow change in the appearance of the adapting stimulus (perceptual drift), and the distortion of subsequently presented test stimuli (adaptational aftereffects). Here we used a psychophysical nulling technique to dissociate and quantify these two classical observations in order to examine their underlying mechanisms and their relationship to one another. In agreement with previous work, we found that during adaptation horizontal and vertical straight lines serve as attractors for perceived orientation and curvature. However, the rate of perceptual drift for different stimuli was not predictive of the corresponding aftereffect magnitudes, indicating that the two perceptual effects are governed by distinct neural processes. Finally, the rate of perceptual drift for curved line segments did not depend on the spatial scale of the stimulus, suggesting that its mechanisms lie outside strictly retinotopic processing stages. These findings provide new evidence that the visual system relies on statistically salient intrinsic reference stimuli for the processing of visual patterns, and point to perceptual drift as an experimental window for studying the mechanisms of visual perception.\u003c/p\u003e",
+      "size":100427},{"doi":"info:doi/10.1371/journal.pone.0006183",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Dissociable Perceptual Effects of Visual Adaptation","description":
+      "\u003cp\u003eNeurons in the visual cortex are responsive to the presentation of oriented and curved line segments, which are thought to act as primitives for the visual processing of shapes and objects. Prolonged adaptation to such stimuli gives rise to two related perceptual effects: a slow change in the appearance of the adapting stimulus (perceptual drift), and the distortion of subsequently presented test stimuli (adaptational aftereffects). Here we used a psychophysical nulling technique to dissociate and quantify these two classical observations in order to examine their underlying mechanisms and their relationship to one another. In agreement with previous work, we found that during adaptation horizontal and vertical straight lines serve as attractors for perceived orientation and curvature. However, the rate of perceptual drift for different stimuli was not predictive of the corresponding aftereffect magnitudes, indicating that the two perceptual effects are governed by distinct neural processes. Finally, the rate of perceptual drift for curved line segments did not depend on the spatial scale of the stimulus, suggesting that its mechanisms lie outside strictly retinotopic processing stages. These findings provide new evidence that the visual system relies on statistically salient intrinsic reference stimuli for the processing of visual patterns, and point to perceptual drift as an experimental window for studying the mechanisms of visual perception.\u003c/p\u003e",
+      "size":288701},{"doi":"info:doi/10.1371/journal.pone.0006183.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePerceptual drift during prolonged adaptation to simple, unchanging visual stimuli.\u003c/title\u003e\u003cp\u003eA. During inspection of a line tilted slightly from vertical, the line will appear to drift toward the vertical orientation. B. During inspection of a curved line, the line will appear to straighten. C. The shape of the curves is determined through a single parameter, the unit-less aspect ratio (width/height). Stimuli are shown as black on a white background, though in the actual experiments the stimuli were white on a black background.\u003c/p\u003e",
+      "size":474992},{"doi":"info:doi/10.1371/journal.pone.0006183.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePerceptual drift during prolonged adaptation to simple, unchanging visual stimuli.\u003c/title\u003e\u003cp\u003eA. During inspection of a line tilted slightly from vertical, the line will appear to drift toward the vertical orientation. B. During inspection of a curved line, the line will appear to straighten. C. The shape of the curves is determined through a single parameter, the unit-less aspect ratio (width/height). Stimuli are shown as black on a white background, though in the actual experiments the stimuli were white on a black background.\u003c/p\u003e",
+      "size":7599},{"doi":"info:doi/10.1371/journal.pone.0006183.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePerceptual drift during prolonged adaptation to simple, unchanging visual stimuli.\u003c/title\u003e\u003cp\u003eA. During inspection of a line tilted slightly from vertical, the line will appear to drift toward the vertical orientation. B. During inspection of a curved line, the line will appear to straighten. C. The shape of the curves is determined through a single parameter, the unit-less aspect ratio (width/height). Stimuli are shown as black on a white background, though in the actual experiments the stimuli were white on a black background.\u003c/p\u003e",
+      "size":95944},{"doi":"info:doi/10.1371/journal.pone.0006183.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003ePerceptual drift during prolonged adaptation to simple, unchanging visual stimuli.\u003c/title\u003e\u003cp\u003eA. During inspection of a line tilted slightly from vertical, the line will appear to drift toward the vertical orientation. B. During inspection of a curved line, the line will appear to straighten. C. The shape of the curves is determined through a single parameter, the unit-less aspect ratio (width/height). Stimuli are shown as black on a white background, though in the actual experiments the stimuli were white on a black background.\u003c/p\u003e",
+      "size":322439},{"doi":"info:doi/10.1371/journal.pone.0006183.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eExperimental Design.\u003c/title\u003e\u003cp\u003eThe stimuli consisted of an array of 11 white dots on a black background. As subjects fixated on the center dot, a nulling procedure was implemented by means of a forced choice paradigm and an interleaved staircase procedure (see \u003cxref ref-type\u003d\"sec\" rid\u003d\"s4\"\u003e\u003citalic\u003eMaterials and Methods\u003c/italic\u003e\u003c/xref\u003e). A. The tilt aftereffect was measured for 12 adaptation orientations evenly spaced from −90° to +90°, with the probe\u0027s nulling orientation changing by increments of .25° during the staircase. Subjects reported whether the probe stimulus was tilted clockwise or counterclockwise. B. The curvature aftereffect paradigm was similar, with the increments of .5% changes in aspect ratio (defining the curvature) during the staircase. Subjects reported whether the probe stimulus appeared more leftward or rightward. C. Changes in perceived orientation during prolonged adaptation were assessed using the dynamic nulling paradigm. The stimulus was slowly rotated during adaptation, with subjects required to report when it was stationary. Increments in the physical rate of rotation during the staircase procedure were in steps of .0625°/s. D. Dynamic nulling of the curved line was similar, with subjects asked whether the observed curve was curling more leftward or rightward. Increments in the rate of curling motion aspect ratio were .1%/s.\u003c/p\u003e",
+      "size":473940},{"doi":"info:doi/10.1371/journal.pone.0006183.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eExperimental Design.\u003c/title\u003e\u003cp\u003eThe stimuli consisted of an array of 11 white dots on a black background. As subjects fixated on the center dot, a nulling procedure was implemented by means of a forced choice paradigm and an interleaved staircase procedure (see \u003cxref ref-type\u003d\"sec\" rid\u003d\"s4\"\u003e\u003citalic\u003eMaterials and Methods\u003c/italic\u003e\u003c/xref\u003e). A. The tilt aftereffect was measured for 12 adaptation orientations evenly spaced from −90° to +90°, with the probe\u0027s nulling orientation changing by increments of .25° during the staircase. Subjects reported whether the probe stimulus was tilted clockwise or counterclockwise. B. The curvature aftereffect paradigm was similar, with the increments of .5% changes in aspect ratio (defining the curvature) during the staircase. Subjects reported whether the probe stimulus appeared more leftward or rightward. C. Changes in perceived orientation during prolonged adaptation were assessed using the dynamic nulling paradigm. The stimulus was slowly rotated during adaptation, with subjects required to report when it was stationary. Increments in the physical rate of rotation during the staircase procedure were in steps of .0625°/s. D. Dynamic nulling of the curved line was similar, with subjects asked whether the observed curve was curling more leftward or rightward. Increments in the rate of curling motion aspect ratio were .1%/s.\u003c/p\u003e",
+      "size":8202},{"doi":"info:doi/10.1371/journal.pone.0006183.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eExperimental Design.\u003c/title\u003e\u003cp\u003eThe stimuli consisted of an array of 11 white dots on a black background. As subjects fixated on the center dot, a nulling procedure was implemented by means of a forced choice paradigm and an interleaved staircase procedure (see \u003cxref ref-type\u003d\"sec\" rid\u003d\"s4\"\u003e\u003citalic\u003eMaterials and Methods\u003c/italic\u003e\u003c/xref\u003e). A. The tilt aftereffect was measured for 12 adaptation orientations evenly spaced from −90° to +90°, with the probe\u0027s nulling orientation changing by increments of .25° during the staircase. Subjects reported whether the probe stimulus was tilted clockwise or counterclockwise. B. The curvature aftereffect paradigm was similar, with the increments of .5% changes in aspect ratio (defining the curvature) during the staircase. Subjects reported whether the probe stimulus appeared more leftward or rightward. C. Changes in perceived orientation during prolonged adaptation were assessed using the dynamic nulling paradigm. The stimulus was slowly rotated during adaptation, with subjects required to report when it was stationary. Increments in the physical rate of rotation during the staircase procedure were in steps of .0625°/s. D. Dynamic nulling of the curved line was similar, with subjects asked whether the observed curve was curling more leftward or rightward. Increments in the rate of curling motion aspect ratio were .1%/s.\u003c/p\u003e",
+      "size":92157},{"doi":"info:doi/10.1371/journal.pone.0006183.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eExperimental Design.\u003c/title\u003e\u003cp\u003eThe stimuli consisted of an array of 11 white dots on a black background. As subjects fixated on the center dot, a nulling procedure was implemented by means of a forced choice paradigm and an interleaved staircase procedure (see \u003cxref ref-type\u003d\"sec\" rid\u003d\"s4\"\u003e\u003citalic\u003eMaterials and Methods\u003c/italic\u003e\u003c/xref\u003e). A. The tilt aftereffect was measured for 12 adaptation orientations evenly spaced from −90° to +90°, with the probe\u0027s nulling orientation changing by increments of .25° during the staircase. Subjects reported whether the probe stimulus was tilted clockwise or counterclockwise. B. The curvature aftereffect paradigm was similar, with the increments of .5% changes in aspect ratio (defining the curvature) during the staircase. Subjects reported whether the probe stimulus appeared more leftward or rightward. C. Changes in perceived orientation during prolonged adaptation were assessed using the dynamic nulling paradigm. The stimulus was slowly rotated during adaptation, with subjects required to report when it was stationary. Increments in the physical rate of rotation during the staircase procedure were in steps of .0625°/s. D. Dynamic nulling of the curved line was similar, with subjects asked whether the observed curve was curling more leftward or rightward. Increments in the rate of curling motion aspect ratio were .1%/s.\u003c/p\u003e",
+      "size":276966},{"doi":"info:doi/10.1371/journal.pone.0006183.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eAftereffect and adaptation with oriented line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that adaptation near ±15° led to the strongest aftereffect, in agreement with many previous studies. B. Adaptation to the dynamic nulling stimulus similarly revealed peaks ±15° from the vertical stimulus, as well as peaks at ±75°, corresponding to ±15° from the horizontal stimuli. Data points show average values over 12 subjects, the same individuals in A and B. Error bars represent standard error of the mean between subjects (s.e.m.). Data points marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":530404},{"doi":"info:doi/10.1371/journal.pone.0006183.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eAftereffect and adaptation with oriented line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that adaptation near ±15° led to the strongest aftereffect, in agreement with many previous studies. B. Adaptation to the dynamic nulling stimulus similarly revealed peaks ±15° from the vertical stimulus, as well as peaks at ±75°, corresponding to ±15° from the horizontal stimuli. Data points show average values over 12 subjects, the same individuals in A and B. Error bars represent standard error of the mean between subjects (s.e.m.). Data points marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":13240},{"doi":"info:doi/10.1371/journal.pone.0006183.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eAftereffect and adaptation with oriented line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that adaptation near ±15° led to the strongest aftereffect, in agreement with many previous studies. B. Adaptation to the dynamic nulling stimulus similarly revealed peaks ±15° from the vertical stimulus, as well as peaks at ±75°, corresponding to ±15° from the horizontal stimuli. Data points show average values over 12 subjects, the same individuals in A and B. Error bars represent standard error of the mean between subjects (s.e.m.). Data points marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":138272},{"doi":"info:doi/10.1371/journal.pone.0006183.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eAftereffect and adaptation with oriented line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that adaptation near ±15° led to the strongest aftereffect, in agreement with many previous studies. B. Adaptation to the dynamic nulling stimulus similarly revealed peaks ±15° from the vertical stimulus, as well as peaks at ±75°, corresponding to ±15° from the horizontal stimuli. Data points show average values over 12 subjects, the same individuals in A and B. Error bars represent standard error of the mean between subjects (s.e.m.). Data points marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":313642},{"doi":"info:doi/10.1371/journal.pone.0006183.g004",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eAftereffect and adaptation with curved line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that aspect ratios above .1, with curvature either leftward or rightward, yielded significant curvature aftereffects. Unlike the tilt aftereffect, there was no clear peak, and no significant difference between the aftereffect strength for the 5 adaptors of equal sign. B. In contrast to the aftereffect, the dynamic nulling paradigm revealed peaks in the rate of “uncurling”, for adapting stimuli with aspect ratios between .1 and .2. Data points show average values over 16 subjects, the same individuals in A and B. Error bars represent s.e.m.. Values marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":507244},{"doi":"info:doi/10.1371/journal.pone.0006183.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eAftereffect and adaptation with curved line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that aspect ratios above .1, with curvature either leftward or rightward, yielded significant curvature aftereffects. Unlike the tilt aftereffect, there was no clear peak, and no significant difference between the aftereffect strength for the 5 adaptors of equal sign. B. In contrast to the aftereffect, the dynamic nulling paradigm revealed peaks in the rate of “uncurling”, for adapting stimuli with aspect ratios between .1 and .2. Data points show average values over 16 subjects, the same individuals in A and B. Error bars represent s.e.m.. Values marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":12346},{"doi":"info:doi/10.1371/journal.pone.0006183.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eAftereffect and adaptation with curved line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that aspect ratios above .1, with curvature either leftward or rightward, yielded significant curvature aftereffects. Unlike the tilt aftereffect, there was no clear peak, and no significant difference between the aftereffect strength for the 5 adaptors of equal sign. B. In contrast to the aftereffect, the dynamic nulling paradigm revealed peaks in the rate of “uncurling”, for adapting stimuli with aspect ratios between .1 and .2. Data points show average values over 16 subjects, the same individuals in A and B. Error bars represent s.e.m.. Values marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":150922},{"doi":"info:doi/10.1371/journal.pone.0006183.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eAftereffect and adaptation with curved line segments.\u003c/title\u003e\u003cp\u003eA. The static nulling probe revealed that aspect ratios above .1, with curvature either leftward or rightward, yielded significant curvature aftereffects. Unlike the tilt aftereffect, there was no clear peak, and no significant difference between the aftereffect strength for the 5 adaptors of equal sign. B. In contrast to the aftereffect, the dynamic nulling paradigm revealed peaks in the rate of “uncurling”, for adapting stimuli with aspect ratios between .1 and .2. Data points show average values over 16 subjects, the same individuals in A and B. Error bars represent s.e.m.. Values marked by an asterisk (*) are significantly different from zero (2-sided t-test, p\u0026lt;.05, not corrected).\u003c/p\u003e",
+      "size":293007},{"doi":"info:doi/10.1371/journal.pone.0006183.g005",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eSize constancy of perceptual drift for curvature.\u003c/title\u003e\u003cp\u003eAdaptors of three sizes ranging over a factor of 4 were used to determine effect strength of adaptation through dynamic nulling (N \u003d 16 subjects, partially overlapping those in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0006183-g004\"\u003eFigure 4\u003c/xref\u003e). The display was 114 cm, i.e. 1 cm foveally corresponds to ½ deg visual angle. Since that approximation is invalid for larger values, units are given in cm. A. Data plotted against absolute curvature, with smallest stimuli having the highest curvature (dashed line) and largest stimuli having the lowest curvature (solid line). B. \u003citalic\u003eThe exact same data\u003c/italic\u003e plotted against aspect ratio for the three different sizes. Note that aspect ratio, rather than absolute curvature, determined the rate at which the stimulus perceptually straightened. Data were collected for convexities in both directions and then combined. Error bars represent s.e.m over subjects.\u003c/p\u003e",
+      "size":473764},{"doi":"info:doi/10.1371/journal.pone.0006183.g005",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eSize constancy of perceptual drift for curvature.\u003c/title\u003e\u003cp\u003eAdaptors of three sizes ranging over a factor of 4 were used to determine effect strength of adaptation through dynamic nulling (N \u003d 16 subjects, partially overlapping those in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0006183-g004\"\u003eFigure 4\u003c/xref\u003e). The display was 114 cm, i.e. 1 cm foveally corresponds to ½ deg visual angle. Since that approximation is invalid for larger values, units are given in cm. A. Data plotted against absolute curvature, with smallest stimuli having the highest curvature (dashed line) and largest stimuli having the lowest curvature (solid line). B. \u003citalic\u003eThe exact same data\u003c/italic\u003e plotted against aspect ratio for the three different sizes. Note that aspect ratio, rather than absolute curvature, determined the rate at which the stimulus perceptually straightened. Data were collected for convexities in both directions and then combined. Error bars represent s.e.m over subjects.\u003c/p\u003e",
+      "size":13125},{"doi":"info:doi/10.1371/journal.pone.0006183.g005",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eSize constancy of perceptual drift for curvature.\u003c/title\u003e\u003cp\u003eAdaptors of three sizes ranging over a factor of 4 were used to determine effect strength of adaptation through dynamic nulling (N \u003d 16 subjects, partially overlapping those in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0006183-g004\"\u003eFigure 4\u003c/xref\u003e). The display was 114 cm, i.e. 1 cm foveally corresponds to ½ deg visual angle. Since that approximation is invalid for larger values, units are given in cm. A. Data plotted against absolute curvature, with smallest stimuli having the highest curvature (dashed line) and largest stimuli having the lowest curvature (solid line). B. \u003citalic\u003eThe exact same data\u003c/italic\u003e plotted against aspect ratio for the three different sizes. Note that aspect ratio, rather than absolute curvature, determined the rate at which the stimulus perceptually straightened. Data were collected for convexities in both directions and then combined. Error bars represent s.e.m over subjects.\u003c/p\u003e",
+      "size":128733},{"doi":"info:doi/10.1371/journal.pone.0006183.g005",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eSize constancy of perceptual drift for curvature.\u003c/title\u003e\u003cp\u003eAdaptors of three sizes ranging over a factor of 4 were used to determine effect strength of adaptation through dynamic nulling (N \u003d 16 subjects, partially overlapping those in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0006183-g004\"\u003eFigure 4\u003c/xref\u003e). The display was 114 cm, i.e. 1 cm foveally corresponds to ½ deg visual angle. Since that approximation is invalid for larger values, units are given in cm. A. Data plotted against absolute curvature, with smallest stimuli having the highest curvature (dashed line) and largest stimuli having the lowest curvature (solid line). B. \u003citalic\u003eThe exact same data\u003c/italic\u003e plotted against aspect ratio for the three different sizes. Note that aspect ratio, rather than absolute curvature, determined the rate at which the stimulus perceptually straightened. Data were collected for convexities in both directions and then combined. Error bars represent s.e.m over subjects.\u003c/p\u003e",
+      "size":319360},{"doi":"info:doi/10.1371/journal.pone.0006183.t001",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 1","description":
+      "\u003ctitle\u003eParameters of stimuli used in the size constancy experiment.\u003c/title\u003e",
+      "size":398792},{"doi":"info:doi/10.1371/journal.pone.0006183.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eParameters of stimuli used in the size constancy experiment.\u003c/title\u003e",
+      "size":40427},{"doi":"info:doi/10.1371/journal.pone.0006183.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eParameters of stimuli used in the size constancy experiment.\u003c/title\u003e",
+      "size":224075},{"doi":"info:doi/10.1371/journal.pone.0006183.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eParameters of stimuli used in the size constancy experiment.\u003c/title\u003e",
+      "size":218806},{"doi":"info:doi/10.1371/journal.pone.0006183.s001",
+      "contextElement":"supplementary-material","extension":"PDF",
+      "contentType":"application/pdf","title":"Figure S1","description":
+      "\u003cp\u003e(0.07 MB PDF)\u003c/p\u003e","size":66717}],
+  "citedArticles":[{"key":"1","year":1979,"displayYear":"1979","title":
+      "Seeing: Illusion, brain and mind","publisherLocation":
+      "Oxford, England","publisherName":"Oxford University Press",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "JP Frisby","givenNames":"JP","surnames":"Frisby","suffix":""}],
+      "editors":[]},{"key":"2","year":1989,"displayYear":"1989","title":
+      "Adaptation and decorrelation in the cortex.","publisherLocation":
+      "Wokingham, England","publisherName":"Addison-Wesley","pages":
+      "54-72","eLocationID":"54","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "HB Barlow","givenNames":"HB","surnames":"Barlow","suffix":""},{
+          "fullName":"P Földiák","givenNames":"P","surnames":"Földiák",
+          "suffix":""}],"editors":[{"fullName":"C Miall","givenNames":"C",
+          "surnames":"Miall","suffix":""},{"fullName":"RM Durbin",
+          "givenNames":"RM","surnames":"Durbin","suffix":""},{"fullName":
+          "GJ Mitchinson","givenNames":"GJ","surnames":"Mitchinson","suffix":
+          ""}]},{"key":"3","year":2005,"displayYear":"2005","title":
+      "Fitting the mind to the world - Adaptation and after-effects in high-level vision",
+      "publisherLocation":"Oxford","publisherName":
+      "Oxford University Press","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "CWG Clifford","givenNames":"CWG","surnames":"Clifford","suffix":
+          ""},{"fullName":"G Rhodes","givenNames":"G","surnames":"Rhodes",
+          "suffix":""}],"editors":[]},{"key":"4","year":1971,"displayYear":
+      "1971","volumeNumber":78,"volume":"78","title":
+      "Visual feature-analyzers and after-effects of tilt and curvature.",
+      "pages":"114-121","eLocationID":"114","journal":"Psychol Rev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Coltheart","givenNames":"M","surnames":"Coltheart","suffix":
+          ""}],"editors":[]},{"key":"5","year":2000,"displayYear":"2000",
+      "volumeNumber":267,"volume":"267","title":
+      "A functional angle on some after-effects in cortical vision.","pages":
+      "1705-1710","eLocationID":"1705","journal":"Proc Biol Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CW Clifford","givenNames":"CW","surnames":"Clifford","suffix":
+          ""},{"fullName":"P Wenderoth","givenNames":"P","surnames":
+          "Wenderoth","suffix":""},{"fullName":"B Spehar","givenNames":"B",
+          "surnames":"Spehar","suffix":""}],"editors":[]},{"key":"6","year":
+      2005,"displayYear":"2005","volumeNumber":94,"volume":"94","title":
+      "Tilt aftereffect and adaptation-induced changes in orientation tuning in visual cortex.",
+      "pages":"4038-4050","eLocationID":"4038","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DZ Jin","givenNames":"DZ","surnames":"Jin","suffix":""},{
+          "fullName":"V Dragoi","givenNames":"V","surnames":"Dragoi",
+          "suffix":""},{"fullName":"M Sur","givenNames":"M","surnames":
+          "Sur","suffix":""},{"fullName":"HS Seung","givenNames":"HS",
+          "surnames":"Seung","suffix":""}],"editors":[]},{"key":"7","year":
+      2007,"displayYear":"2007","volumeNumber":55,"volume":"55","title":
+      "Feature-based attention modulates orientation-selective responses in human visual cortex.",
+      "pages":"313-323","eLocationID":"313","journal":"Neuron",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Liu","givenNames":"T","surnames":"Liu","suffix":""},{"fullName":
+          "J Larsson","givenNames":"J","surnames":"Larsson","suffix":""},{
+          "fullName":"M Carrasco","givenNames":"M","surnames":"Carrasco",
+          "suffix":""}],"editors":[]},{"key":"8","year":1989,"displayYear":
+      "1989","volumeNumber":46,"volume":"46","title":
+      "The effects of exposure duration and surrounding frames on direct and indirect tilt aftereffects and illusions.",
+      "pages":"338-344","eLocationID":"338","journal":"Percept Psychophys",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Wenderoth","givenNames":"P","surnames":"Wenderoth","suffix":
+          ""},{"fullName":"R van der Zwan","givenNames":"R","surnames":
+          "van der Zwan","suffix":""}],"editors":[]},{"key":"9","year":
+      2007,"displayYear":"2007","volumeNumber":8,"volume":"8","title":
+      "Space and time in visual context.","pages":"522-535","eLocationID":
+      "522","journal":"Nat Rev Neurosci","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"O Schwartz","givenNames":"O","surnames":
+          "Schwartz","suffix":""},{"fullName":"A Hsu","givenNames":"A",
+          "surnames":"Hsu","suffix":""},{"fullName":"P Dayan","givenNames":
+          "P","surnames":"Dayan","suffix":""}],"editors":[]},{"key":"10",
+      "year":1933,"displayYear":"1933","volumeNumber":16,"volume":"16",
+      "title":
+      "Adaptation, after-effect and contrast in the perception of curved lines.",
+      "pages":"1-31","eLocationID":"1","journal":"J Exp Psychol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JJ Gibson","givenNames":"JJ","surnames":"Gibson","suffix":""}],
+      "editors":[]},{"key":"11","year":1937,"displayYear":"1937",
+      "volumeNumber":20,"volume":"20","title":
+      "Adaptation, after-effect, and contrast in the perception of tilted lines.",
+      "pages":"453-467","eLocationID":"453","journal":"J Exp Psychol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JJ Gibson","givenNames":"JJ","surnames":"Gibson","suffix":""},{
+          "fullName":"M Radner","givenNames":"M","surnames":"Radner",
+          "suffix":""}],"editors":[]},{"key":"12","year":1937,"displayYear":
+      "1937","volumeNumber":20,"volume":"20","title":
+      "Adaptation, after-effect, and contrast in the perception of tilted lines. II. Simultaneous contrast and the areal restriction of the after-effect.",
+      "pages":"553-569","eLocationID":"553","journal":"J Exp Psychol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JJ Gibson","givenNames":"JJ","surnames":"Gibson","suffix":""}],
+      "editors":[]},{"key":"13","year":1944,"displayYear":"1944",
+      "volumeNumber":88,"volume":"88","title":
+      "Figural After-Effects: An Investigation of Visual Processes.","pages":
+      "269-357","eLocationID":"269","journal":
+      "Proceedings of the American Philosophical Society",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "W Köhler","givenNames":"W","surnames":"Köhler","suffix":""},{
+          "fullName":"H Wallach","givenNames":"H","surnames":"Wallach",
+          "suffix":""}],"editors":[]},{"key":"14","year":1976,"displayYear":
+      "1976","volumeNumber":16,"volume":"16","title":
+      "Does the tilt after-effect occur in the oblique meridian?","pages":
+      "609-613","eLocationID":"609","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DE Mitchell","givenNames":"DE","surnames":"Mitchell","suffix":
+          ""},{"fullName":"DW Muir","givenNames":"DW","surnames":"Muir",
+          "suffix":""}],"editors":[]},{"key":"15","year":1950,"displayYear":
+      "1950","volumeNumber":40,"volume":"40","title":
+      "Visual ‘normalization’ near the vertical and horizontal.","pages":
+      "355-364","eLocationID":"355","journal":"J Exp Psychol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "WCB Prentice","givenNames":"WCB","surnames":"Prentice","suffix":
+          ""},{"fullName":"D Beardslee","givenNames":"D","surnames":
+          "Beardslee","suffix":""}],"editors":[]},{"key":"16","year":1963,
+      "displayYear":"1963","volumeNumber":76,"volume":"76","title":
+      "Localized normalization of tilted lines.","pages":"146-148",
+      "eLocationID":"146","journal":"Am J Psychol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"R Held","givenNames":"R","surnames":"Held",
+          "suffix":""}],"editors":[]},{"key":"17","year":1967,"displayYear":
+      "1967","volumeNumber":2,"volume":"2","title":
+      "An alternative view of the “Gibson normalization effect”.","pages":
+      "621-626","eLocationID":"621","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Coren","givenNames":"S","surnames":"Coren","suffix":""},{
+          "fullName":"L Festinger","givenNames":"L","surnames":"Festinger",
+          "suffix":""}],"editors":[]},{"key":"18","year":1972,"displayYear":
+      "1972","volumeNumber":12,"volume":"12","title":
+      "Visual tilt normalization: The method of kinesthetic matching.",
+      "pages":"422-424","eLocationID":"422","journal":"Percept Psychophys",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "WB Templeton","givenNames":"WB","surnames":"Templeton","suffix":
+          ""}],"editors":[]},{"key":"19","year":1979,"displayYear":"1979",
+      "title":"The ecological approach to visual perception",
+      "publisherLocation":"Boston, MA","publisherName":"Houghton Mifflin",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "JJ Gibson","givenNames":"JJ","surnames":"Gibson","suffix":""}],
+      "editors":[]},{"key":"20","year":1984,"displayYear":"1984",
+      "volumeNumber":24,"volume":"24","title":
+      "Short test flashes produce large tilt aftereffects.","pages":
+      "1959-1964","eLocationID":"1959","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JM Wolfe","givenNames":"JM","surnames":"Wolfe","suffix":""}],
+      "editors":[]},{"key":"21","year":1986,"displayYear":"1986",
+      "volumeNumber":27,"volume":"27","title":
+      "Fatigue and structural change: two consequences of visual pattern adaptation.",
+      "pages":"538-543","eLocationID":"538","journal":
+      "Invest Ophthalmol Vis Sci","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JM Wolfe","givenNames":"JM","surnames":"Wolfe","suffix":""},{
+          "fullName":"KM O\u0027Connell","givenNames":"KM","surnames":
+          "O\u0027Connell","suffix":""}],"editors":[]},{"key":"22","year":
+      1965,"displayYear":"1965","volumeNumber":78,"volume":"78","title":
+      "Two different after-effects of exposure to visual tilts.","pages":
+      "218-226","eLocationID":"218","journal":"Am J Psychol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RB Morant","givenNames":"RB","surnames":"Morant","suffix":""},{
+          "fullName":"J Harris","givenNames":"J","surnames":"Harris",
+          "suffix":""}],"editors":[]},{"key":"23","year":1987,"displayYear":
+      "1987","volumeNumber":329,"volume":"329","title":
+      "Endstopped neurons in the visual cortex as a substrate for calculating curvature.",
+      "pages":"438-441","eLocationID":"438","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Dobbins","givenNames":"A","surnames":"Dobbins","suffix":""},{
+          "fullName":"SW Zucker","givenNames":"SW","surnames":"Zucker",
+          "suffix":""},{"fullName":"MS Cynader","givenNames":"MS","surnames":
+          "Cynader","suffix":""}],"editors":[]},{"key":"24","year":1989,
+      "displayYear":"1989","volumeNumber":29,"volume":"29","title":
+      "Endstopping and curvature.","pages":"1371-1387","eLocationID":
+      "1371","journal":"Vision Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Dobbins","givenNames":"A","surnames":"Dobbins","suffix":""},{
+          "fullName":"SW Zucker","givenNames":"SW","surnames":"Zucker",
+          "suffix":""},{"fullName":"MS Cynader","givenNames":"MS","surnames":
+          "Cynader","suffix":""}],"editors":[]},{"key":"25","year":2000,
+      "displayYear":"2000","volumeNumber":20,"volume":"20","title":
+      "Selectivity for complex shapes in primate visual area V2.","pages":
+      "RC61","eLocationID":"RC61","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Hegde","givenNames":"J","surnames":"Hegde","suffix":""},{
+          "fullName":"E Van","givenNames":"E","surnames":"Van","suffix":""}],
+      "editors":[]},{"key":"26","year":1996,"displayYear":"1996",
+      "volumeNumber":19,"volume":"19","title":"Visual object recognition.",
+      "pages":"577-621","eLocationID":"577","journal":"Annu Rev Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "NK Logothetis","givenNames":"NK","surnames":"Logothetis","suffix":
+          ""},{"fullName":"DL Sheinberg","givenNames":"DL","surnames":
+          "Sheinberg","suffix":""}],"editors":[]},{"key":"27","year":1995,
+      "displayYear":"1995","volumeNumber":73,"volume":"73","title":
+      "Size and position invariance of neuronal responses in monkey inferotemporal cortex.",
+      "pages":"218-226","eLocationID":"218","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Ito","givenNames":"M","surnames":"Ito","suffix":""},{"fullName":
+          "H Tamura","givenNames":"H","surnames":"Tamura","suffix":""},{
+          "fullName":"I Fujita","givenNames":"I","surnames":"Fujita",
+          "suffix":""},{"fullName":"K Tanaka","givenNames":"K","surnames":
+          "Tanaka","suffix":""}],"editors":[]},{"key":"28","year":1973,
+      "displayYear":"1973","volumeNumber":233,"volume":"233","title":
+      "Adaptation and dynamics of cat retinal ganglion cells.","pages":
+      "271-309","eLocationID":"271","journal":"J Physiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Enroth-Cugell","givenNames":"C","surnames":"Enroth-Cugell",
+          "suffix":""},{"fullName":"RM Shapley","givenNames":"RM","surnames":
+          "Shapley","suffix":""}],"editors":[]},{"key":"29","year":1973,
+      "displayYear":"1973","volumeNumber":182,"volume":"182","title":
+      "Neural correlate of perceptual adaptation to gratings.","pages":
+      "1036-1038","eLocationID":"1036","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Maffei","givenNames":"L","surnames":"Maffei","suffix":""},{
+          "fullName":"A Fiorentini","givenNames":"A","surnames":
+          "Fiorentini","suffix":""},{"fullName":"S Bisti","givenNames":"S",
+          "surnames":"Bisti","suffix":""}],"editors":[]},{"key":"30","year":
+      2000,"displayYear":"2000","volumeNumber":20,"volume":"20","title":
+      "Membrane mechanisms underlying contrast adaptation in cat area 17 in vivo.",
+      "pages":"4267-4285","eLocationID":"4267","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MV Sanchez-Vives","givenNames":"MV","surnames":"Sanchez-Vives",
+          "suffix":""},{"fullName":"LG Nowak","givenNames":"LG","surnames":
+          "Nowak","suffix":""},{"fullName":"DA McCormick","givenNames":
+          "DA","surnames":"McCormick","suffix":""}],"editors":[]},{"key":
+      "31","year":1991,"displayYear":"1991","volumeNumber":7,"volume":"7",
+      "title":
+      "Habituation-like decrease in the responses of neurons in inferior temporal cortex of the macaque.",
+      "pages":"357-362","eLocationID":"357","journal":"Vis Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "EK Miller","givenNames":"EK","surnames":"Miller","suffix":""},{
+          "fullName":"PM Gochin","givenNames":"PM","surnames":"Gochin",
+          "suffix":""},{"fullName":"CG Gross","givenNames":"CG","surnames":
+          "Gross","suffix":""}],"editors":[]},{"key":"32","year":1999,
+      "displayYear":"1999","volumeNumber":27,"volume":"27","title":
+      "Neural substrates of the tilt illusion.","pages":"271-274",
+      "eLocationID":"271","journal":"Aust N Z J Ophthalmol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Wenderoth","givenNames":"P","surnames":"Wenderoth","suffix":
+          ""},{"fullName":"S Smith","givenNames":"S","surnames":"Smith",
+          "suffix":""}],"editors":[]},{"key":"33","year":2001,"displayYear":
+      "2001","volumeNumber":41,"volume":"41","title":
+      "Attention-dependent brief adaptation to contour orientation: a high-level aftereffect for convexity?",
+      "pages":"3883-3902","eLocationID":"3883","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Suzuki","givenNames":"S","surnames":"Suzuki","suffix":""}],
+      "editors":[]},{"key":"34","year":1998,"displayYear":"1998",
+      "volumeNumber":24,"volume":"24","title":
+      "A shape-contrast effect for briefly presented stimuli.","pages":
+      "1315-1341","eLocationID":"1315","journal":
+      "J Exp Psychol Hum Percept Perform","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"S Suzuki","givenNames":"S","surnames":
+          "Suzuki","suffix":""},{"fullName":"P Cavanagh","givenNames":"P",
+          "surnames":"Cavanagh","suffix":""}],"editors":[]},{"key":"35",
+      "year":1974,"displayYear":"1974","volumeNumber":14,"volume":"14",
+      "title":"Letter: Tilt aftereffect following very brief exposures.",
+      "pages":"151-152","eLocationID":"151","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Sekuler","givenNames":"R","surnames":"Sekuler","suffix":""},{
+          "fullName":"J Littlejohn","givenNames":"J","surnames":
+          "Littlejohn","suffix":""}],"editors":[]},{"key":"36","year":1972,
+      "displayYear":"1972","title":"Mapping the tilt after-effect.","note":
+      "D C I E M Research Paper 72-RP-818, Downsview, Ontario, Canada",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MM Taylor","givenNames":"MM","surnames":"Taylor","suffix":""},{
+          "fullName":"RA Parnes","givenNames":"RA","surnames":"Parnes",
+          "suffix":""}],"editors":[]},{"key":"37","year":1971,"displayYear":
+      "1971","volumeNumber":11,"volume":"11","title":
+      "The tilt after-effect: a fresh look.","pages":"833-840","eLocationID":
+      "833","journal":"Vision Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "FW Campbell","givenNames":"FW","surnames":"Campbell","suffix":
+          ""},{"fullName":"L Maffei","givenNames":"L","surnames":"Maffei",
+          "suffix":""}],"editors":[]},{"key":"38","year":1923,"displayYear":
+      "1923","title":"Further studies of gamma movement.",
+      "publisherLocation":"New York","publisherName":"Humanities Press",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "L Hartmann","givenNames":"L","surnames":"Hartmann","suffix":""}],
+      "editors":[{"fullName":"WD Ellis","givenNames":"WD","surnames":
+          "Ellis","suffix":""}]},{"key":"39","year":1987,"displayYear":
+      "1987","volumeNumber":27,"volume":"27","title":
+      "Saturation of the tilt aftereffect.","pages":"1041-1043",
+      "eLocationID":"1041","journal":"Vision Res","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"MW Greenlee","givenNames":"MW","surnames":
+          "Greenlee","suffix":""},{"fullName":"S Magnussen","givenNames":
+          "S","surnames":"Magnussen","suffix":""}],"editors":[]},{"key":
+      "40","year":2001,"displayYear":"2001","volumeNumber":4,"volume":"4",
+      "title":
+      "Prototype-referenced shape encoding revealed by high-level aftereffects.",
+      "pages":"89-94","eLocationID":"89","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DA Leopold","givenNames":"DA","surnames":"Leopold","suffix":""},{
+          "fullName":"AJ O\u0027Toole","givenNames":"AJ","surnames":
+          "O\u0027Toole","suffix":""},{"fullName":"T Vetter","givenNames":
+          "T","surnames":"Vetter","suffix":""},{"fullName":"V Blanz",
+          "givenNames":"V","surnames":"Blanz","suffix":""}],"editors":[]},{
+      "key":"41","year":2006,"displayYear":"2006","volumeNumber":46,"volume":
+      "46","title":"Adaptive norm-based coding of facial identity.","pages":
+      "2977-2987","eLocationID":"2977","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Rhodes","givenNames":"G","surnames":"Rhodes","suffix":""},{
+          "fullName":"L Jeffery","givenNames":"L","surnames":"Jeffery",
+          "suffix":""}],"editors":[]},{"key":"42","year":2006,"displayYear":
+      "2006","volumeNumber":17,"volume":"17","title":
+      "Probing the visual representation of faces with adaptation: A view from the other side of the mean.",
+      "pages":"493-500","eLocationID":"493","journal":"Psychol Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "F Jiang","givenNames":"F","surnames":"Jiang","suffix":""},{
+          "fullName":"V Blanz","givenNames":"V","surnames":"Blanz","suffix":
+          ""},{"fullName":"AJ O\u0027Toole","givenNames":"AJ","surnames":
+          "O\u0027Toole","suffix":""}],"editors":[]},{"key":"43","year":
+      2005,"displayYear":"2005","volumeNumber":272,"volume":"272","title":
+      "The dynamics of visual adaptation to faces.","pages":"897-904",
+      "eLocationID":"897","journal":"Proc R Soc Lond B Biol Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DA Leopold","givenNames":"DA","surnames":"Leopold","suffix":""},{
+          "fullName":"G Rhodes","givenNames":"G","surnames":"Rhodes",
+          "suffix":""},{"fullName":"K-M Müller","givenNames":"K-M",
+          "surnames":"Müller","suffix":""},{"fullName":"L Jeffrey",
+          "givenNames":"L","surnames":"Jeffrey","suffix":""}],"editors":[]},{
+      "key":"44","year":1981,"displayYear":"1981","volumeNumber":214,
+      "volume":"214","title":
+      "Efficiency of human visual signal discrimination.","pages":"93-94",
+      "eLocationID":"93","journal":"Science","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"AE Burgess","givenNames":"AE","surnames":
+          "Burgess","suffix":""},{"fullName":"RF Wagner","givenNames":"RF",
+          "surnames":"Wagner","suffix":""},{"fullName":"RJ Jennings",
+          "givenNames":"RJ","surnames":"Jennings","suffix":""},{"fullName":
+          "HB Barlow","givenNames":"HB","surnames":"Barlow","suffix":""}],
+      "editors":[]},{"key":"45","year":2006,"displayYear":"2006",
+      "volumeNumber":439,"volume":"439","title":
+      "Adaptive filtering enhances information transmission in visual cortex.",
+      "pages":"936-942","eLocationID":"936","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TO Sharpee","givenNames":"TO","surnames":"Sharpee","suffix":""},{
+          "fullName":"H Sugihara","givenNames":"H","surnames":"Sugihara",
+          "suffix":""},{"fullName":"AV Kurgansky","givenNames":"AV",
+          "surnames":"Kurgansky","suffix":""},{"fullName":"SP Rebrik",
+          "givenNames":"SP","surnames":"Rebrik","suffix":""},{"fullName":
+          "MP Stryker","givenNames":"MP","surnames":"Stryker","suffix":""}],
+      "editors":[]},{"key":"46","year":2007,"displayYear":"2007",
+      "volumeNumber":47,"volume":"47","title":
+      "Visual adaptation: neural, psychological and computational aspects.",
+      "pages":"3125-3131","eLocationID":"3125","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CW Clifford","givenNames":"CW","surnames":"Clifford","suffix":
+          ""},{"fullName":"MA Webster","givenNames":"MA","surnames":
+          "Webster","suffix":""},{"fullName":"GB Stanley","givenNames":
+          "GB","surnames":"Stanley","suffix":""},{"fullName":"AA Stocker",
+          "givenNames":"AA","surnames":"Stocker","suffix":""},{"fullName":
+          "A Kohn","givenNames":"A","surnames":"Kohn","suffix":""}],
+      "editors":[]},{"key":"47","year":2005,"displayYear":"2005","title":
+      "Adaptation and the phenomenology of perception.","publisherLocation":
+      "Oxford, UK","publisherName":"Oxford University Press",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
+          "MA Webster","givenNames":"MA","surnames":"Webster","suffix":""},{
+          "fullName":"JS Werner","givenNames":"JS","surnames":"Werner",
+          "suffix":""},{"fullName":"DJ Field","givenNames":"DJ","surnames":
+          "Field","suffix":""}],"editors":[{"fullName":"CW Clifford",
+          "givenNames":"CW","surnames":"Clifford","suffix":""},{"fullName":
+          "G Rhodes","givenNames":"G","surnames":"Rhodes","suffix":""}]},{
+      "key":"48","year":2005,"displayYear":"2005","volumeNumber":102,
+      "volume":"102","title":
+      "Natural-scene geometry predicts the perception of angles and line orientation.",
+      "pages":"1228-1233","eLocationID":"1228","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CQ Howe","givenNames":"CQ","surnames":"Howe","suffix":""},{
+          "fullName":"D Purves","givenNames":"D","surnames":"Purves",
+          "suffix":""}],"editors":[]},{"key":"49","year":2002,"displayYear":
+      "2002","volumeNumber":99,"volume":"99","title":
+      "Range image statistics can explain the anomalous perception of length.",
+      "pages":"13184-13188","eLocationID":"13184","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CQ Howe","givenNames":"CQ","surnames":"Howe","suffix":""},{
+          "fullName":"D Purves","givenNames":"D","surnames":"Purves",
+          "suffix":""}],"editors":[]},{"key":"50","year":1978,"displayYear":
+      "1978","volumeNumber":18,"volume":"18","title":
+      "Spatial frequency analysis of the visual environment: anisotropy and the carpentered environment hypothesis.",
+      "pages":"1393-1399","eLocationID":"1393","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Switkes","givenNames":"E","surnames":"Switkes","suffix":""},{
+          "fullName":"MJ Mayer","givenNames":"MJ","surnames":"Mayer",
+          "suffix":""},{"fullName":"JA Sloan","givenNames":"JA","surnames":
+          "Sloan","suffix":""}],"editors":[]},{"key":"51","year":1998,
+      "displayYear":"1998","volumeNumber":95,"volume":"95","title":
+      "The distribution of oriented contours in the real world.","pages":
+      "4002-4006","eLocationID":"4002","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DM Coppola","givenNames":"DM","surnames":"Coppola","suffix":""},{
+          "fullName":"HR Purves","givenNames":"HR","surnames":"Purves",
+          "suffix":""},{"fullName":"AN McCoy","givenNames":"AN","surnames":
+          "McCoy","suffix":""},{"fullName":"D Purves","givenNames":"D",
+          "surnames":"Purves","suffix":""}],"editors":[]},{"key":"52","year":
+      1998,"displayYear":"1998","volumeNumber":95,"volume":"95","title":
+      "Unequal representation of cardinal and oblique contours in ferret visual cortex.",
+      "pages":"2621-2623","eLocationID":"2621","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DM Coppola","givenNames":"DM","surnames":"Coppola","suffix":""},{
+          "fullName":"LE White","givenNames":"LE","surnames":"White",
+          "suffix":""},{"fullName":"D Fitzpatrick","givenNames":"D",
+          "surnames":"Fitzpatrick","suffix":""},{"fullName":"D Purves",
+          "givenNames":"D","surnames":"Purves","suffix":""}],"editors":[]},{
+      "key":"53","year":1974,"displayYear":"1974","volumeNumber":186,
+      "volume":"186","title":
+      "Neural basis of orientation perception in primate vision.","pages":
+      "1133-1135","eLocationID":"1133","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RJ Mansfield","givenNames":"RJ","surnames":"Mansfield","suffix":
+          ""}],"editors":[]},{"key":"54","year":2007,"displayYear":"2007",
+      "volumeNumber":501,"volume":"501","title":
+      "How do functional maps in primary visual cortex vary with eccentricity?",
+      "pages":"741-755","eLocationID":"741","journal":"J Comp Neurol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "X Xu","givenNames":"X","surnames":"Xu","suffix":""},{"fullName":
+          "TJ Anderson","givenNames":"TJ","surnames":"Anderson","suffix":
+          ""},{"fullName":"VA Casagrande","givenNames":"VA","surnames":
+          "Casagrande","suffix":""}],"editors":[]},{"key":"55","year":2000,
+      "displayYear":"2000","volumeNumber":3,"volume":"3","title":
+      "An oblique effect in human primary visual cortex.","pages":
+      "535-536","eLocationID":"535","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CS Furmanski","givenNames":"CS","surnames":"Furmanski","suffix":
+          ""},{"fullName":"SA Engel","givenNames":"SA","surnames":"Engel",
+          "suffix":""}],"editors":[]},{"key":"56","year":1972,"displayYear":
+      "1972","volumeNumber":78,"volume":"78","title":
+      "Perception and discrimination as a function of stimulus orientation: the “oblique effect” in man and animals.",
+      "pages":"266-278","eLocationID":"266","journal":"Psychol Bull",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Appelle","givenNames":"S","surnames":"Appelle","suffix":""}],
+      "editors":[]},{"key":"57","year":2005,"displayYear":"2005",
+      "volumeNumber":45,"volume":"45","title":
+      "The oblique effect depends on perceived, rather than physical, orientation and direction.",
+      "pages":"3402-3413","eLocationID":"3402","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "X Meng","givenNames":"X","surnames":"Meng","suffix":""},{
+          "fullName":"N Qian","givenNames":"N","surnames":"Qian","suffix":
+          ""}],"editors":[]},{"key":"58","year":1998,"displayYear":"1998",
+      "volumeNumber":38,"volume":"38","title":
+      "Orientation dependency for foveal line stimuli: detection and intensity discrimination, resolution, orientation discrimination and vernier acuity.",
+      "pages":"1097-1103","eLocationID":"1097","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Westheimer","givenNames":"G","surnames":"Westheimer","suffix":
+          ""},{"fullName":"BL Beard","givenNames":"BL","surnames":"Beard",
+          "suffix":""}],"editors":[]},{"key":"59","year":1999,"displayYear":
+      "1999","volumeNumber":82,"volume":"82","title":
+      "Responses to contour features in macaque area V4.","pages":
+      "2490-2502","eLocationID":"2490","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Pasupathy","givenNames":"A","surnames":"Pasupathy","suffix":
+          ""},{"fullName":"CE Connor","givenNames":"CE","surnames":
+          "Connor","suffix":""}],"editors":[]},{"key":"60","year":2007,
+      "displayYear":"2007","volumeNumber":17,"volume":"17","title":
+      "A comparative study of shape representation in macaque visual areas v2 and v4.",
+      "pages":"1100-1116","eLocationID":"1100","journal":"Cereb Cortex",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Hegde","givenNames":"J","surnames":"Hegde","suffix":""},{
+          "fullName":"E Van","givenNames":"E","surnames":"Van","suffix":""}],
+      "editors":[]},{"key":"61","year":2009,"displayYear":"2009","title":
+      "Visual adaptation to convexity in macaque area V4.","journal":
+      "Neuroscience","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "KM Muller","givenNames":"KM","surnames":"Muller","suffix":""},{
+          "fullName":"M Wilke","givenNames":"M","surnames":"Wilke","suffix":
+          ""},{"fullName":"DA Leopold","givenNames":"DA","surnames":
+          "Leopold","suffix":""}],"editors":[]},{"key":"62","year":1991,
+      "displayYear":"1991","volumeNumber":31,"volume":"31","title":
+      "Parallel perception of vernier offsets, curvature, and chevrons in humans.",
+      "pages":"2149-2184","eLocationID":"2149","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Fahle","givenNames":"M","surnames":"Fahle","suffix":""}],
+      "editors":[]},{"key":"63","year":1962,"displayYear":"1962",
+      "volumeNumber":75,"volume":"75","title":
+      "The staircase-method in psychophysics.","pages":"485-491",
+      "eLocationID":"485","journal":"Am J Psychol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"TN Cornsweet","givenNames":"TN","surnames":
+          "Cornsweet","suffix":""}],"editors":[]}],"relatedArticles":[],
+  "authors":[{"fullName":"Kai-Markus Müller","givenNames":"Kai-Markus",
+      "surnames":"Müller","suffix":""},{"fullName":"Frieder Schillinger",
+      "givenNames":"Frieder","surnames":"Schillinger","suffix":""},{
+      "fullName":"David H. Do","givenNames":"David H.","surnames":"Do",
+      "suffix":""},{"fullName":"David A. Leopold","givenNames":"David A.",
+      "surnames":"Leopold","suffix":""}],"editors":[{"fullName":
+      "Mark W. Greenlee","givenNames":"Mark W.","surnames":"Greenlee",
+      "suffix":""}],"journals":[{"eIssn":"1932-6203"}]}

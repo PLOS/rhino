@@ -1,0 +1,1588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS ONE</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-20875</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0056833</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Biochemistry</subject>
+            <subj-group>
+              <subject>Proteins</subject>
+              <subj-group>
+                <subject>Protein classes</subject>
+                <subject>Protein interactions</subject>
+                <subject>Protein structure</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Sequence analysis</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Proteomics</subject>
+            <subj-group>
+              <subject>Protein interactions</subject>
+              <subject>Sequence analysis</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Computer science</subject>
+          <subj-group>
+            <subject>Algorithms</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Computing methods</subject>
+            <subj-group>
+              <subject>Computer inferencing</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Software engineering</subject>
+            <subj-group>
+              <subject>Software tools</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+          <subject>Computer Science</subject>
+          <subject>Biochemistry</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Predicting the Binding Patterns of Hub Proteins: A Study Using Yeast Protein Interaction Networks</article-title>
+        <alt-title alt-title-type="running-head">Predicting the Binding Patterns of Hub Proteins</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Andorf</surname>
+            <given-names>Carson M.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="fn" rid="fn1">
+            <sup>¤</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Honavar</surname>
+            <given-names>Vasant</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Sen</surname>
+            <given-names>Taner Z.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>Department of Computer Science, Iowa State University, Ames, Iowa, United States of America</addr-line>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <addr-line>Bioinformatics and Computational Biology Program, Iowa State University, Ames, Iowa, United States of America</addr-line>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <addr-line>United States Department of Agriculture-Agriculture Research Service Corn Insects and Crop Genetics Research Unit, Ames, Iowa, United States of America</addr-line>
+      </aff>
+      <aff id="aff4">
+        <label>4</label>
+        <addr-line>Department of Genetics, Development and Cell Biology, Iowa State University, Ames, Iowa, United States of America</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Porollo</surname>
+            <given-names>Aleksey</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>University of Cincinnati College of Medicine, United States of America</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">taner@iastate.edu</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: CMA TZS VH. Performed the experiments: CMA. Analyzed the data: CMA TZS VH. Wrote the paper: CMA TZS VH.</p>
+        </fn>
+        <fn id="fn1" fn-type="current-aff">
+          <label>¤</label>
+          <p>Current address: United States Department of Agriculture-Agriculture Research Service Corn Insects and Crop Genetics Research Unit, Ames, Iowa, United States of America</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <year>2013</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>19</day>
+        <month>2</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume>
+      <issue>2</issue>
+      <elocation-id>e56833</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>17</day>
+          <month>7</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>16</day>
+          <month>1</month>
+          <year>2013</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2013</copyright-year>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the Creative Commons CC0 public domain dedication.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <sec>
+          <title>Background</title>
+          <p>Protein-protein interactions are critical to elucidating the role played by individual proteins in important biological pathways. Of particular interest are hub proteins that can interact with large numbers of partners and often play essential roles in cellular control. Depending on the number of binding sites, protein hubs can be classified at a structural level as singlish-interface hubs (SIH) with one or two binding sites, or multiple-interface hubs (MIH) with three or more binding sites. In terms of kinetics, hub proteins can be classified as date hubs (i.e., interact with different partners at different times or locations) or party hubs (i.e., simultaneously interact with multiple partners).</p>
+        </sec>
+        <sec>
+          <title>Methodology</title>
+          <p>Our approach works in 3 phases: Phase I classifies if a protein is likely to bind with another protein. Phase II determines if a protein-binding (PB) protein is a hub. Phase III classifies PB proteins as singlish-interface versus multiple-interface hubs and date versus party hubs. At each stage, we use sequence-based predictors trained using several standard machine learning techniques.</p>
+        </sec>
+        <sec>
+          <title>Conclusions</title>
+          <p>Our method is able to predict whether a protein is a protein-binding protein with an accuracy of 94% and a correlation coefficient of 0.87; identify hubs from non-hubs with 100% accuracy for 30% of the data; distinguish date hubs/party hubs with 69% accuracy and area under ROC curve of 0.68; and SIH/MIH with 89% accuracy and area under ROC curve of 0.84. Because our method is based on sequence information alone, it can be used even in settings where reliable protein-protein interaction data or structures of protein-protein complexes are unavailable to obtain useful insights into the functional and evolutionary characteristics of proteins and their interactions.</p>
+        </sec>
+        <sec>
+          <title>Availability</title>
+          <p>We provide a web server for our three-phase approach: <ext-link ext-link-type="uri" xlink:href="http://hybsvm.gdcb.iastate.edu" xlink:type="simple">http://hybsvm.gdcb.iastate.edu</ext-link>.</p>
+        </sec>
+      </abstract>
+      <funding-group>
+        <funding-statement>This work was funded in part by the National Institute of Health grant GM066387 to VH. The work of CMA was supported in part by a graduate fellowship funded by an Integrative Graduate Education and Research Training award 0504304. The work of VH while working at the National Science Foundation was supported by the National Science Foundation. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="15"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Proteins are the principal catalytic agents, structural elements, signal transmitters, transporters and molecular machines in cells. Functional annotation of proteins remains one of the most challenging problems in functional genomics, however, our evolving understanding of a proteins' interaction partners helps in functional annotation of proteins <xref ref-type="bibr" rid="pone.0056833-Eisenberg1">[1]</xref>. Protein-protein interactions are therefore critical to elucidating the role played by individual proteins in important biological pathways. Such networks are typically constructed using high throughput techniques (e.g., yeast two-hybrid (Y2H) experiments).</p>
+      <p>Our current understanding of protein-protein interaction networks is quite limited for a variety of reasons. The challenge of reliable and complete determination of the interactome is far from being fully addressed due to the high rate of false positives. These false positives are associated with high throughput experiments, the low coverage of solved co-crystal structures in the Protein Data Bank (PDB), and the difficulty of obtaining reliable negative evidence that a protein does not interact with one or more other proteins. For example, Y2H experiments focus on pair-wise interactions between proteins and provide, at best, rather indirect evidence for higher order interactions e.g., those that require three proteins to come together to form a complex. Even in the case of pairwise interactions, Y2H experiments only provide evidence that a pair of proteins is likely to interact <italic>in vitro</italic>, without offering any insights into the physical basis of such interactions, or whether such interactions may actually occur <italic>in vivo</italic> <xref ref-type="bibr" rid="pone.0056833-Yu1">[2]</xref>–<xref ref-type="bibr" rid="pone.0056833-Walhout1">[6]</xref>. It is well known that data from high-throughput Y2H experiments are notoriously noisy and suffer from a high false positive rate <xref ref-type="bibr" rid="pone.0056833-Huang1">[7]</xref>. The high-quality datasets tend to have low-coverage e.g., it is estimated up to 95% of the human interactome is unmapped <xref ref-type="bibr" rid="pone.0056833-Venkatesan1">[8]</xref>. Furthermore, whether a particular protein-protein interaction is experimentally observed depends on the specific experimental conditions. It is therefore critical to validate the putative interactions between proteins suggested by Y2H experiments using additional experimental or computational studies. As a result, considerable amount of recent work has focused on creating high-quality interaction datasets by systematically removing errors and low-quality interactions or by combining multiple sources of evidence <xref ref-type="bibr" rid="pone.0056833-Yu1">[2]</xref>, <xref ref-type="bibr" rid="pone.0056833-Dreze1">[3]</xref>, <xref ref-type="bibr" rid="pone.0056833-Venkatesan1">[8]</xref>, <xref ref-type="bibr" rid="pone.0056833-Das1">[9]</xref>. Hence, there is considerable interest in reliable prediction of protein-protein interactions.</p>
+      <p>Protein-protein interaction networks are usually represented and visualized as graphs in which the nodes correspond to the proteins and edges denote their possible pairwise interactions. Such a representation is simply not rich enough to encode interactions that involve more than two proteins, nor do they distinguish between them. Furthermore, a single target protein can interact with a large number of partners: some of these interactions may be mutually exclusive because of competition between potential binding partners for the same interaction sites on the target protein. Other interactions may be simultaneously possible, and in many instances, even mutually cooperative, i.e., binding of one partner to the target protein may prepare the target for binding to a second partner <xref ref-type="bibr" rid="pone.0056833-Gursoy1">[10]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kuzu1">[11]</xref>. Distinguishing between these various types of interactions is essential for uncovering the physical basis of interactions of a protein with other proteins, engineering the protein surfaces to manipulate synthetic pathways, or for designing drugs that bind specific targets <xref ref-type="bibr" rid="pone.0056833-Liu1">[12]</xref>–<xref ref-type="bibr" rid="pone.0056833-Fleishman1">[14]</xref>. However, answering such questions is extremely difficult in the absence of direct experimental evidence, e.g., structures of complexes formed by a protein when it interacts with one or more other proteins or results of site-specific mutation experiments that identify the protein surface residues that play essential roles in such interactions. Unfortunately, experimental determination of protein-protein complexes or of binding sites is notoriously time-consuming and expensive. Hence, there is a growing interest in computational tools that provide useful insights into various structural aspects of protein interactions from protein sequence alone.</p>
+      <p>Of particular interest in this study are hub proteins, i.e., proteins that interact with large numbers of partners <xref ref-type="bibr" rid="pone.0056833-Mirzarezaee1">[15]</xref>. It is worth noting that “large numbers of partners” is a relative term and is arbitrarily defined. In several studies, hub proteins are defined as those with 5 or more interaction partners <xref ref-type="bibr" rid="pone.0056833-Mirzarezaee1">[15]</xref>–<xref ref-type="bibr" rid="pone.0056833-Manna1">[18]</xref>. The choice of five (as opposed to some other number) or more interacting partners as the defining characteristic of hub proteins is somewhat arbitrary. The quality of protein-protein interaction data (false positives, incomplete coverage) presents additional challenges in categorizing proteins into hubs and non-hubs. These difficulties notwithstanding, hub proteins have been reported to play essential roles in cellular control and tend to be highly conserved across species <xref ref-type="bibr" rid="pone.0056833-Keskin1">[19]</xref>. Mutations in hub proteins can potentially disrupt its interactions with its many interaction partners, which can turn out to be lethal for the cell's survival <xref ref-type="bibr" rid="pone.0056833-Jeong1">[20]</xref>–<xref ref-type="bibr" rid="pone.0056833-Zotenko1">[22]</xref>. Hence, it is especially important to understand physical and structural basis of interactions of hub proteins with their partners. Recent studies suggest that hubs are more diverse than previously thought and show striking differences in number of binding sites and kinetics of binding. Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref> combined three-dimensional structure information, known domain-domain interaction data, and protein-interaction data to define two types of hub protein structures. The first type of hub proteins, called singlish interface hubs (SIH), interacts with multiple partners at one or two binding sites. Because the interactions rely on binding events at one or two binding sites, interactions with the different partners tend to be mutually exclusive. The second type of hub proteins, called multiple-interface hubs (MIH), interacts with multiple interaction partners through more than two binding sites (See <xref ref-type="fig" rid="pone-0056833-g001">Figure 1</xref>). Recent studies <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, <xref ref-type="bibr" rid="pone.0056833-Zotenko1">[22]</xref>–<xref ref-type="bibr" rid="pone.0056833-Patil1">[30]</xref> have explored the roles of SIH and MIH in protein-protein interactions and hence protein function. Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, who were among the first to analyze the properties of SIH and MIH proteins, found that MIH were twice as likely (compared to SIH) to be <italic>essential</italic> for survival and perhaps as a consequence, more conserved across species with implications for determining the evolutionary rates for protein hubs. They also found that MIH proteins are more likely to be members of large stable structural complexes. SIH and MIH also differ in terms of network expansion during evolution: SIH appear to follow the canonical preferential gene duplication model whereas MIH do not <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>. A recent study showed SIH tend to display higher degrees of disorder than MIH <xref ref-type="bibr" rid="pone.0056833-Kim2">[28]</xref>. <xref ref-type="table" rid="pone-0056833-t001">Table 1</xref> summarizes the results of previous studies <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kim2">[28]</xref> that have compared the properties of SIH and MIH.</p>
+      <fig id="pone-0056833-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0056833.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Descriptions of the singlish-date, singlish-party, multi-date, and multi-party classes.</title>
+          <p>Descriptions for each type of hub are described below. The rows of the table represent the singlish and multi-interface hub proteins. The columns represent the date and party hubs. The intersection of the column and row displays a picture showing examples of the type and number of interfaces involved for that class.</p>
+        </caption>
+        <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.g001" position="float" xlink:type="simple"/>
+      </fig>
+      <table-wrap id="pone-0056833-t001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0056833.t001</object-id>
+        <label>Table 1</label>
+        <caption>
+          <title>Properties of singlish and multiple-interface yeast protein hubs.</title>
+        </caption>
+        <alternatives>
+          <graphic id="pone-0056833-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.t001" xlink:type="simple"/>
+          <table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Properties</td>
+                <td align="left" rowspan="1" colspan="1">Singlish-interface</td>
+                <td align="left" rowspan="1" colspan="1">Multiple-interface</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Essential</td>
+                <td align="left" rowspan="1" colspan="1">No</td>
+                <td align="left" rowspan="1" colspan="1">Yes</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Conserved</td>
+                <td align="left" rowspan="1" colspan="1">No</td>
+                <td align="left" rowspan="1" colspan="1">Yes</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Co-expression</td>
+                <td align="left" rowspan="1" colspan="1">Limited</td>
+                <td align="left" rowspan="1" colspan="1">High</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">3D Structure</td>
+                <td align="left" rowspan="1" colspan="1">Smaller, less stable</td>
+                <td align="left" rowspan="1" colspan="1">Larger, stable</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Canonical preferential gene duplication</td>
+                <td align="left" rowspan="1" colspan="1">Yes</td>
+                <td align="left" rowspan="1" colspan="1">No</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Disorder</td>
+                <td align="left" rowspan="1" colspan="1">High</td>
+                <td align="left" rowspan="1" colspan="1">Low</td>
+              </tr>
+            </tbody>
+          </table>
+        </alternatives>
+        <table-wrap-foot>
+          <fn id="nt101">
+            <label/>
+            <p>The properties for each type of interface are listed based on observed tendencies seen in Dataset 3 <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kim2">[28]</xref>.</p>
+          </fn>
+        </table-wrap-foot>
+      </table-wrap>
+      <p>Hub proteins can also be classified based on the kinetic mode of interaction. Han et al. <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref> recently described an expression-based classification model for hub proteins. This classification is based on a bimodal distribution of co-expression of hub proteins with their interaction partners <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>. Date hubs tend to display expression levels that have low correlation with those of their interaction partners (and tend to bind different partners at different time points or locations). Conversely, party hubs tend to exhibit expression levels that have high degree of correlation with those of their interaction partners (and tend to interact simultaneously with the partners). See <xref ref-type="fig" rid="pone-0056833-g001">Figure 1</xref> for an illustration of date hubs versus party hubs. The analysis of party and date hubs provides additional insights into the structure of the underlying proteome and interactome. For example, date hubs contribute to global network stability and connectivity by acting as a inter-module linkers <xref ref-type="bibr" rid="pone.0056833-Gursoy1">[10]</xref> that serve as regulators, mediators, or adapters. In contrast, party hubs act as intra-module linkers that coordinate a specific process or assist the formation of a specific protein complex <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>, <xref ref-type="bibr" rid="pone.0056833-Agarwal1">[32]</xref>. In these intermolecular interactions, the residues that contribute the most to binding (hot spots) for date hubs tend to be spatially near each other (forming hot regions) <xref ref-type="bibr" rid="pone.0056833-Cukuroglu1">[25]</xref>. Date hubs are likely to evolve faster than party hubs <xref ref-type="bibr" rid="pone.0056833-Bertin1">[33]</xref>. <xref ref-type="table" rid="pone-0056833-t002">Table 2</xref> summarizes the conclusions of previous studies that have compared the properties of date hubs and party hubs <xref ref-type="bibr" rid="pone.0056833-Cukuroglu1">[25]</xref>, <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>, <xref ref-type="bibr" rid="pone.0056833-Bertin1">[33]</xref>, <xref ref-type="bibr" rid="pone.0056833-Afridi1">[34]</xref>. The differences between the two types of hub proteins strongly suggest that they might play different functional roles. SIH tend to be date hubs whereas MIH tend to be party hubs <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>; but there are exceptions. It should be no surprise that SIH tend be date hubs: the number of binding sites that a hub protein has limits the number of partners with which it can interact at the same time. However, the converse does not necessarily hold, i.e., not every date hub is a SIH. A date hub may only have one or two concurrent interactions at any given time, but each of these interactions may involve different binding sites. Hence a date hub can in general be a SIH or a MIH. Similarly a party hub tends to be a MIH, since many concurrent interactions require many interaction sites, but a MIH can be a party hub or a date hub based on the interaction kinetics. Recent studies have focused on the role of hubs in interaction networks and in particular, the differences in SIH versus MIH and date hubs versus party hubs <xref ref-type="bibr" rid="pone.0056833-Zotenko1">[22]</xref>–<xref ref-type="bibr" rid="pone.0056833-Bellay1">[24]</xref>, <xref ref-type="bibr" rid="pone.0056833-Fong1">[26]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kahali1">[27]</xref>, <xref ref-type="bibr" rid="pone.0056833-Pang1">[29]</xref>–<xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kar1">[35]</xref>, <xref ref-type="bibr" rid="pone.0056833-Tsai1">[36]</xref>.</p>
+      <table-wrap id="pone-0056833-t002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0056833.t002</object-id>
+        <label>Table 2</label>
+        <caption>
+          <title>Properties of date and party yeast protein hubs.</title>
+        </caption>
+        <alternatives>
+          <graphic id="pone-0056833-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.t002" xlink:type="simple"/>
+          <table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Properties</td>
+                <td align="left" rowspan="1" colspan="1">Date</td>
+                <td align="left" rowspan="1" colspan="1">Party</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Evolutionary rate</td>
+                <td align="left" rowspan="1" colspan="1">Faster</td>
+                <td align="left" rowspan="1" colspan="1">Slower</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Interactome connectivity</td>
+                <td align="left" rowspan="1" colspan="1">Intermodule</td>
+                <td align="left" rowspan="1" colspan="1">Intramodule</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Structural interaction</td>
+                <td align="left" rowspan="1" colspan="1">Few interaction sites</td>
+                <td align="left" rowspan="1" colspan="1">Many interaction sites</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Hot spots</td>
+                <td align="left" rowspan="1" colspan="1">More organized in hot regions</td>
+                <td align="left" rowspan="1" colspan="1">Less organized in hot regions</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Hot regions</td>
+                <td align="left" rowspan="1" colspan="1">Covers a larger fraction of the interface region, larger number of distinct hot regions</td>
+                <td align="left" rowspan="1" colspan="1">Covers a smaller fraction of the interface region, smaller number of distinct hot regions</td>
+              </tr>
+            </tbody>
+          </table>
+        </alternatives>
+        <table-wrap-foot>
+          <fn id="nt102">
+            <label/>
+            <p>The properties for each type of interface are listed based on observed tendencies seen in Dataset 4 <xref ref-type="bibr" rid="pone.0056833-Cukuroglu1">[25]</xref>, <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>, <xref ref-type="bibr" rid="pone.0056833-Bertin1">[33]</xref>.</p>
+          </fn>
+        </table-wrap-foot>
+      </table-wrap>
+      <p>Experimental characterization of hub proteins in terms of their structural and kinetic characteristics requires knowledge of the structures of complexes formed by such proteins in interaction with their binding partners <xref ref-type="bibr" rid="pone.0056833-Kar1">[35]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kar2">[37]</xref>. Because of the prohibitive cost and effort needed to determine the structures of complexes formed by hub proteins with their binding partners and the interfaces that mediate such interactions, there is an urgent need for reliable methods for predicting the structural and kinetic characteristics of hubs from sequence information alone. In particular, there is a growing interest in purely sequence-based computational methods for discriminating between simultaneously possible versus mutually exclusive interactions<xref ref-type="bibr" rid="pone.0056833-Kahali1">[27]</xref>, <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>, <xref ref-type="bibr" rid="pone.0056833-Jin1">[38]</xref>, <xref ref-type="bibr" rid="pone.0056833-Taylor1">[39]</xref> and predicting the number of binding sites available on the surface of a protein.</p>
+      <p>There has been considerable work on machine learning approaches for distinguishing hub proteins from non-hub proteins <xref ref-type="bibr" rid="pone.0056833-Hsing1">[40]</xref>–<xref ref-type="bibr" rid="pone.0056833-Latha1">[42]</xref>. Mirzarezaee et al. have recently proposed methods for distinguishing between date hubs (that interact with one partner at a time) and party hubs (that simultaneously interact with many partners) <xref ref-type="bibr" rid="pone.0056833-Mirzarezaee1">[15]</xref> using 17 features including 4 composition measurements, grouping of 48 physicochemical properties, six GO term features, domain occurrence, disordered regions, and position specific scoring matrices (PSSM). They reported correlation coefficients of 0.74 for both date and party hubs. In light of these results, a natural question to ask is whether similar or better performance can be achieved from information based solely on the sequence of the hub protein.</p>
+      <p>Against this background, we introduce a three-phase machine learning approach (See <xref ref-type="fig" rid="pone-0056833-g002">Figure 2</xref>). Phase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein, that protein goes through the second and third phase of predictions. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence based on a weighted-average of the number of interactors of the top scoring BLAST hits. Phase III applies methods for predicting both structure (singlish vs. multiple) and kinetics (date vs. party) classifications of protein-binding proteins using information derived from only the sequence of the protein (See <xref ref-type="fig" rid="pone-0056833-g003">Figure 3</xref>). Our experiments show that our method is able to predict whether a protein is a protein-binding protein with an accuracy of 94%, 0.93 area under a ROC curve (AUC) and a correlation coefficient of 0.87; identify hubs from non-hubs with 100% accuracy for 30% of the data (with the rest being flagged as putative hubs or putative non-hubs depending on the sequence similarity to known hubs/non-hubs in our dataset); distinguish date hubs/party hubs with 69% accuracy and AUC of 0.68; and SIH/MIH with 89% accuracy, 0.85 AUC. The method can be used even in settings where reliable protein-protein interaction data, or structures of protein-protein complexes are unavailable, to obtain useful insights into the functional and evolutionary characteristics of proteins and their interactions. In addition, our method does not rely on computationally expensive multiple sequence alignments, the presence of functional or structural domains, or additional functional annotations (e.g. GO terms), allowing for fast and updateable predictions.</p>
+      <fig id="pone-0056833-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0056833.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>Three-phase method to predict protein-binding proteins, hub proteins, singlish interface/multiple interface (SIH/MIH), and Date/Party hubs.</title>
+          <p>Phase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein in Phase I, that protein is further classified in Phase II and Phase III. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence and if that protein is likely to be a hub protein. Phase III applies methods for predicting both structural (singlish vs. multiple) and kinetic (date vs. party) classifications of protein hub proteins. All methods for each of the three phases make predictions from sequence alone.</p>
+        </caption>
+        <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.g002" position="float" xlink:type="simple"/>
+      </fig>
+      <fig id="pone-0056833-g003" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0056833.g003</object-id>
+        <label>Figure 3</label>
+        <caption>
+          <title>HybSVM method.</title>
+          <p><italic>HybSVM</italic> is a two-stage machine learning method. The first step of the algorithm is to convert sequence data into a composition-based data representation (monomer, dimer, trimer, and tetramer). These four new data representations are used as inputs to 7 machine learning algorithms based on the NB(k) and NB k-gram approaches (Stage 1). An eighth method based on PSI-BLAST is applied to the original sequence data. The outputs of each of the eight outputs are converted into a binary vector of length 8. The resulting vector is used as input to a SVM to produce the final output (Stage 2).</p>
+        </caption>
+        <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.g003" position="float" xlink:type="simple"/>
+      </fig>
+      <p>It should be noted that categorizing hub proteins into structural and kinetic classes presents many challenges. SIH and date proteins are defined by the absence of concurrent interaction partners or interaction sites. However, it is difficult to reliably determine the absence of interaction between a protein and one or more putative interaction partners because of the lack of experimental data under a broad range of conditions. It is thus possible that some proteins labelled as SIH in our dataset are in fact MIH where not all interaction partners have been identified. Conversely, because of the high false positive rates associated with high-throughput experiments, some proteins labelled as MIH or party hubs are in fact SIH. These sources for errors in the protein-protein interaction data need to be kept in mind in interpreting the results of our study as well as other similar analyses of protein-interaction data.</p>
+      <p>A web server for the three-phase approach for automated PB/NPB, SIH/MIH, and date/party prediction is available at <ext-link ext-link-type="uri" xlink:href="http://hybsvm.gdcb.iastate.edu" xlink:type="simple">http://hybsvm.gdcb.iastate.edu</ext-link>.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results and Discussion</title>
+      <p>Our approach to classifying proteins based on binding patterns is a 3-phase approach: Phase I predicts if a protein is likely to bind with another protein, i.e., protein-binding (PB). Phase II determines if a protein-binding protein is a hub. Phase III classifies PB proteins as singlish-interface versus multiple-interface hubs and date versus party hubs, based on sequence information alone. We present results of experiments for each of the three phases.</p>
+      <p>In this study, we use a simple encoding of protein sequences using the probability distribution short (<italic>k</italic>-letter) subsequences (<italic>k</italic>-grams) of amino acids. In our experiments, we used values of k ranging from <italic>k</italic> = 1 (amino acid composition) through k = 4 (dimers, trimers, and tetramers). Larger values of <italic>k</italic> were not considered, because we run out of data to reliably estimate the model parameters. We use a range of standard machine learning methods implemented in Weka version 3.6.0: J4.8 version <xref ref-type="bibr" rid="pone.0056833-Frank1">[43]</xref> of the C4.5 decision tree learning algorithm (Decision Tree) <xref ref-type="bibr" rid="pone.0056833-Quinlan1">[44]</xref>, SMO version <xref ref-type="bibr" rid="pone.0056833-Platt1">[45]</xref> of the support vector machine (SVM) <xref ref-type="bibr" rid="pone.0056833-Vapnik1">[46]</xref> with a polynomial kernel, Multilayer Perception neural network (ANN) <xref ref-type="bibr" rid="pone.0056833-Frank1">[43]</xref>, and Naïve Bayes algorithm <xref ref-type="bibr" rid="pone.0056833-Frank1">[43]</xref>. In addition, in Phase I and III, we use a two-stage ensemble classifier, <italic>HybSVM</italic>, which uses an SVM to combine the outputs of a set of predictors. We compare the results of predictors trained using machine learning methods with two baseline methods: the first baseline method classifies proteins based on the number of SCOP <xref ref-type="bibr" rid="pone.0056833-Andreeva1">[47]</xref>, <xref ref-type="bibr" rid="pone.0056833-Andreeva2">[48]</xref> and PFAM <xref ref-type="bibr" rid="pone.0056833-Finn1">[49]</xref> domains (domain-based method) present in the sequence. The second baseline method classifies each protein based on the class-label of its nearest PSI-BLAST hit. To evaluate predictors constructed using machine learning we used 10-fold cross-validation. Because any single measure e.g., accuracy, provides at best partial information about the performance of a predictor, we use a set of measures including accuracy, precision, recall, correlation coefficient, F-measure, and area under the Receiver Operating Characteristic (ROC) curve. Additional details can be found in the Methods section of the paper.</p>
+      <sec id="s2a">
+        <title>Predicting protein binding proteins (Phase I)</title>
+        <p>To evaluate our method to discriminate proteins that bind to other proteins from those that bind to other substrates (e.g., small ligands), we assembled Dataset 1, which consists of 5,010 proteins including 3,418 proteins that bind to one or more proteins and 1,592 that bind to small ligands, but are not known to bind to other proteins. As mentioned in the <xref ref-type="sec" rid="s1">introduction</xref>, creating a set of proteins that do not bind to any other protein is a difficult challenge due to low-coverage and high false-positive rates in available protein-protein interaction data. Here we use the information coming from ligand-binding experiments to obtain “negative data”, i.e., non-protein-binding proteins: considering the inaccuracies in the protein-protein interaction data, if a protein has no experimental evidence of binding with another protein, but with a ligand, then we assume that the protein is non-protein binding. Our hypothesis here is that if a protein interacts with a ligand and no experimental data are available for its interaction with another protein, then the lack of evidence of protein-protein interaction is less likely due to the incompleteness in the data and more likely due to the lack of protein binding activity. Thus, we assembled a set of ligand-binding proteins and filtered out those that had high sequence similarity to proteins known to bind with other proteins to obtain a set of non-protein binding proteins. The methodology (described in detail in the Methods section) is not without its drawbacks: it disregards ligand-interacting proteins that are also involved in protein-protein interactions <italic>in vivo</italic> but lacking the confirmation of <italic>in vitro</italic> experimental data.</p>
+        <p>As shown in <xref ref-type="supplementary-material" rid="pone.0056833.s003">Tables S1</xref> and <xref ref-type="supplementary-material" rid="pone.0056833.s004">S2</xref>, the ability to distinguish protein-binding proteins from non-protein-binding proteins varies as a function of the machine learning method used and the size of the <italic>k</italic>-gram used. The accuracies ranged from 74.4% (Decision Tree, <italic>k</italic> = 2) to 87.2% (SVM, <italic>k</italic> = 2). Simply predicting each protein as belonging to the majority class yields an accuracy of 68.2% (see Domain-based method). Most of the methods were able to achieve accuracies well above 68.2%. The precision values ranged from 0% to 81%, recall from 0% to 93%, and correlation coefficient from 0.00 to 0.69. <xref ref-type="fig" rid="pone-0056833-g004">Figure 4</xref> shows ROC curves for each of the methods. These curves show no single method outperforms all others over the entire range of tradeoffs between precision and recall. This suggests the possibility of using an ensemble of classifiers that takes advantage of the complementary information provided by the individual classifiers.</p>
+        <fig id="pone-0056833-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056833.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Receiver-operator characteristics (ROC) curve for Datasets 1, 3, and 4.</title>
+            <p>The curve describes the tradeoff between sensitivity and specificity at different thresholds for various predictors. A simple domain-based method is included as a baseline for comparison. The figure includes ROC curves for protein-binding (PB) versus non-protein-binding (NPB), singlish-interface versus multi-interface hub proteins, and date versus party hub proteins.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.g004" position="float" xlink:type="simple"/>
+        </fig>
+        <p>To examine this possibility, we built <italic>HybSVM</italic> for Phase I, which constructs a support vector machine (SVM) classifier that takes as input, for each protein sequence to be classified, the outputs of seven classifiers as well as the PSI-BLAST method and produces as output, a class label for the protein. The 7 classifiers used are: NB(1), NB(2), NB(3), NB(4), NB 2-gram, NB 3-gram, NB 4-gram. PSI-BLAST performs well on sequences with high sequence similarity whereas the NB(k) and NB k-gram methods perform well on sequences with high <italic>k-</italic>gram composition similarity. Logistic regression models are applied to the <italic>HybSVM</italic> classifier to get a probability score for each prediction. These scores are then used to evaluate the quality of each prediction.</p>
+        <p><xref ref-type="table" rid="pone-0056833-t003">Table 3</xref> compares the performance of the <italic>HybSVM</italic> classifiers for Phase I against other standard machine learning approaches. <italic>HybSVM</italic> had an accuracy of 94.2% (an improvement of 6% in absolute terms over NB 4-gram) and a correlation coefficient of 0.87 (an improvement of 0.15 over NB 4-gram). For each performance measure the <italic>HybSVM</italic> method had the highest value for Dataset 1. <italic>HybSVM</italic> for Phase I also outperforms the other methods over the entire range of tradeoffs between precision and recall on a ROC curve (<xref ref-type="fig" rid="pone-0056833-g004">Figure 4</xref>).</p>
+        <table-wrap id="pone-0056833-t003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056833.t003</object-id>
+          <label>Table 3</label>
+          <caption>
+            <title>Dataset 1 (protein-binding vs. non-protein-binding, i.e. PB vs. NPB) prediction results from classifiers trained using machine learning methods.</title>
+          </caption>
+          <alternatives>
+            <graphic id="pone-0056833-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.t003" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Approach</td>
+                  <td align="left" rowspan="1" colspan="1">Best k</td>
+                  <td align="left" rowspan="1" colspan="1">Accuracy</td>
+                  <td align="left" rowspan="1" colspan="1">F1 Score</td>
+                  <td align="left" rowspan="1" colspan="1">Precision</td>
+                  <td align="left" rowspan="1" colspan="1">Recall</td>
+                  <td align="left" rowspan="1" colspan="1">C.C.</td>
+                  <td align="left" rowspan="1" colspan="1">AUC</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">NB k-gram</td>
+                  <td align="left" rowspan="1" colspan="1">4</td>
+                  <td align="left" rowspan="1" colspan="1">88.2</td>
+                  <td align="left" rowspan="1" colspan="1">80.1</td>
+                  <td align="left" rowspan="1" colspan="1">.75</td>
+                  <td align="left" rowspan="1" colspan="1">.86</td>
+                  <td align="left" rowspan="1" colspan="1">.72</td>
+                  <td align="left" rowspan="1" colspan="1">.85</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">NB(k)</td>
+                  <td align="left" rowspan="1" colspan="1">3</td>
+                  <td align="left" rowspan="1" colspan="1">86.4</td>
+                  <td align="left" rowspan="1" colspan="1">78.5</td>
+                  <td align="left" rowspan="1" colspan="1">.79</td>
+                  <td align="left" rowspan="1" colspan="1">.78</td>
+                  <td align="left" rowspan="1" colspan="1">.69</td>
+                  <td align="left" rowspan="1" colspan="1">.83</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Decision Tree</td>
+                  <td align="left" rowspan="1" colspan="1">1</td>
+                  <td align="left" rowspan="1" colspan="1">81.6</td>
+                  <td align="left" rowspan="1" colspan="1">69.9</td>
+                  <td align="left" rowspan="1" colspan="1">.72</td>
+                  <td align="left" rowspan="1" colspan="1">.68</td>
+                  <td align="left" rowspan="1" colspan="1">.57</td>
+                  <td align="left" rowspan="1" colspan="1">.78</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">SVM</td>
+                  <td align="left" rowspan="1" colspan="1">2</td>
+                  <td align="left" rowspan="1" colspan="1">87.2</td>
+                  <td align="left" rowspan="1" colspan="1">78.9</td>
+                  <td align="left" rowspan="1" colspan="1">.82</td>
+                  <td align="left" rowspan="1" colspan="1">.76</td>
+                  <td align="left" rowspan="1" colspan="1">.70</td>
+                  <td align="left" rowspan="1" colspan="1">.84</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">ANN</td>
+                  <td align="left" rowspan="1" colspan="1">2</td>
+                  <td align="left" rowspan="1" colspan="1">86.9</td>
+                  <td align="left" rowspan="1" colspan="1">77.6</td>
+                  <td align="left" rowspan="1" colspan="1">.83</td>
+                  <td align="left" rowspan="1" colspan="1">.73</td>
+                  <td align="left" rowspan="1" colspan="1">.71</td>
+                  <td align="left" rowspan="1" colspan="1">.84</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Naive Bayes</td>
+                  <td align="left" rowspan="1" colspan="1">2</td>
+                  <td align="left" rowspan="1" colspan="1">82.1</td>
+                  <td align="left" rowspan="1" colspan="1">72.9</td>
+                  <td align="left" rowspan="1" colspan="1">.70</td>
+                  <td align="left" rowspan="1" colspan="1">.76</td>
+                  <td align="left" rowspan="1" colspan="1">.60</td>
+                  <td align="left" rowspan="1" colspan="1">.88</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Domain-based</td>
+                  <td align="left" rowspan="1" colspan="1">N/A</td>
+                  <td align="left" rowspan="1" colspan="1">68.2</td>
+                  <td align="left" rowspan="1" colspan="1">0.0</td>
+                  <td align="left" rowspan="1" colspan="1">.00</td>
+                  <td align="left" rowspan="1" colspan="1">.00</td>
+                  <td align="left" rowspan="1" colspan="1">.00</td>
+                  <td align="left" rowspan="1" colspan="1">.50</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Homology-based</td>
+                  <td align="left" rowspan="1" colspan="1">N/A</td>
+                  <td align="left" rowspan="1" colspan="1">52.7</td>
+                  <td align="left" rowspan="1" colspan="1">49.1</td>
+                  <td align="left" rowspan="1" colspan="1">.37</td>
+                  <td align="left" rowspan="1" colspan="1">.73</td>
+                  <td align="left" rowspan="1" colspan="1">.15</td>
+                  <td align="left" rowspan="1" colspan="1">N/A</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">HybSVM</td>
+                  <td align="left" rowspan="1" colspan="1">N/A</td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>94.2</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>90.5</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>.92</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>.89</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>.87</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>.93</bold>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt103">
+              <label/>
+              <p>Accuracy, F-measure (F1 Score), precision, recall, correlation coefficient (C.C.), and area under the receiver operating characteristic curve (AUC) of classification for the multi-interface versus singlish-interface dataset are presented. Accuracy and F-measure are reported in percentage. For each machine learning approach, values of k ranged from 1 to 4. Only the classifier with the best performing k-value (as defined by highest correlation coefficient) is shown. Our methods were estimated by cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+      </sec>
+      <sec id="s2b">
+        <title>Predicting hub proteins (Phase II)</title>
+        <p>Since our overall goal is to predict structural and kinetic classes for hub proteins and these classifiers need to be trained on hub-only proteins, we need a method to (1) identify hub proteins, (2) filter out non-hub proteins, and/or (3) flag proteins that have potential of being non-hubs. To evaluate this type of method, we assembled Dataset 2, consisting of 4,036 proteins including 1,741 hub proteins and 2,295 non-hub proteins. The dataset was derived from high confidence protein-protein interaction data from BioGrid <xref ref-type="bibr" rid="pone.0056833-Stark1">[50]</xref> by labelling proteins with more than 5 interaction partners as hubs and proteins with fewer than 3 interaction partners as non-hubs. Proteins with 3, 4, or 5 interaction partners were not used in the dataset because, given the incompleteness of experimentally determined interactions, their categorization into hubs versus non-hubs is likely to be less reliable than the rest of the proteins in the dataset.</p>
+        <p>We used a simple homology-based method to classify proteins into hubs and non-hubs. A protein is classified as a hub if each of the top 4 hits returned by PSI-BLAST <xref ref-type="bibr" rid="pone.0056833-Altschul1">[51]</xref> search correspond to hub proteins (See Methods for details). Similarly, a protein is classified as a non-hub if all of the top hits are non-hub proteins. A protein is flagged as being likely a hub or non-hub based on the majority of the class-labels of the four top hits. If no hits are reported, the protein is flagged as having no known label. In addition to our predictions, in our web server, we report the number of interaction partners belonging to the top hit, the range of interaction partners of the top four hits, and a predicted number of interaction partners (based on the number of interaction partners of the top four BLAST hits weighted by the BLAST score of each hit). This simple sequence-based method correctly classified 536 hub proteins and 630 non-hub proteins (approximately 30% of the data). No proteins were incorrectly classified as hubs or non-hubs.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Predicting structural and kinetic classes for hub proteins (Phase III)</title>
+        <sec id="s2c1">
+          <title>Structural prediction: discriminating SIH from MIH hub proteins</title>
+          <p>To evaluate structural predictions on hub proteins, we created Dataset 3. The dataset consists of 155 hub proteins including 35 SIH and 120 MIH. The dataset is a subset of data originally compiled by Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, but has been filtered to remove highly homologous sequences (50% or more sequence identity within at least 80% of the length of the sequence).</p>
+          <p><xref ref-type="supplementary-material" rid="pone.0056833.s005">Tables S3</xref> and <xref ref-type="supplementary-material" rid="pone.0056833.s006">S4</xref> show the ability to distinguish SIH and MIH (Dataset 3) based on several standard machine learning approaches with varying sizes <italic>k</italic>-grams. The accuracies ranged from 67.7% (Decision Tree, <italic>k</italic> = 2) to 81.2% (Naive Bayes, <italic>k</italic> = 3). Several classifiers actually had accuracies below 77.4% (e.g., SVM, <italic>k</italic> = 1). The precision values ranged from 0% to 86%, recall from 0% to 63%, and correlation coefficient from 0.00 to 0.41. <xref ref-type="fig" rid="pone-0056833-g004">Figure 4</xref> shows ROC curves for each of the methods. Again, these curves show no single method outperforms all others. On Dataset 3, each of the machine learning methods used here outperformed the simple domain-based method (note that the simple domain-based method had both 0.00 precision and recall because it was unable to predict any SIH proteins correctly).</p>
+          <p>To validate how well interaction sites of SIH and MIH can be predicted on Dataset 3, we ran a subset of the data through the interaction site predictor ISIS <xref ref-type="bibr" rid="pone.0056833-Ofran1">[52]</xref> and the target specific interaction site predictor NPS-HomPPI <xref ref-type="bibr" rid="pone.0056833-Xue1">[53]</xref> with default settings. Both methods generally under-predicted the number of interaction sites and in many cases the methods predicted few or no interaction sites on the hub proteins.</p>
+          <p><xref ref-type="table" rid="pone-0056833-t004">Table 4</xref> shows that the individual methods perform well on assigning hubs to classes based on structural characteristics. No single <italic>k-</italic>value is optimal for all methods; optimal values of <italic>k</italic> vary with the size and complexity of the dataset. Variables such as number of proteins, size of proteins, and homology between proteins all play an important role in developing an appropriate model for our classifiers. Therefore, it is difficult to design a single model or choose a single optimal value of <italic>k</italic> for any dataset without prior knowledge of the data. We also observe that proteins within a class are assigned different labels by classifiers that correspond to different choices of <italic>k</italic>. Our results show that a single classifier does not classify all the proteins correctly, yet a vast majority of the proteins (over 93%) have at least one classifier that correctly predicts its class. Again, we used the <italic>HybSVM</italic> method, this time for Phase III classifications, to take advantage of the complementary information provided by the individual classifiers.</p>
+          <table-wrap id="pone-0056833-t004" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0056833.t004</object-id>
+            <label>Table 4</label>
+            <caption>
+              <title>Dataset 3 (SIH vs. MIH) prediction results from classifiers trained using machine learning methods.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pone-0056833-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.t004" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Approach</td>
+                    <td align="left" rowspan="1" colspan="1">Best k</td>
+                    <td align="left" rowspan="1" colspan="1">Accuracy</td>
+                    <td align="left" rowspan="1" colspan="1">F1 Score</td>
+                    <td align="left" rowspan="1" colspan="1">Precision</td>
+                    <td align="left" rowspan="1" colspan="1">Recall</td>
+                    <td align="left" rowspan="1" colspan="1">C.C.</td>
+                    <td align="left" rowspan="1" colspan="1">AUC</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">NB k-gram</td>
+                    <td align="left" rowspan="1" colspan="1">4</td>
+                    <td align="left" rowspan="1" colspan="1">83.8</td>
+                    <td align="left" rowspan="1" colspan="1">53.8</td>
+                    <td align="left" rowspan="1" colspan="1">.42</td>
+                    <td align="left" rowspan="1" colspan="1">.75</td>
+                    <td align="left" rowspan="1" colspan="1">.47</td>
+                    <td align="left" rowspan="1" colspan="1">.71</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">NB(k)</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">83.2</td>
+                    <td align="left" rowspan="1" colspan="1">45.3</td>
+                    <td align="left" rowspan="1" colspan="1">.31</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.84</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">.44</td>
+                    <td align="left" rowspan="1" colspan="1">.69</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Decision Tree</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">71.0</td>
+                    <td align="left" rowspan="1" colspan="1">40.3</td>
+                    <td align="left" rowspan="1" colspan="1">.38</td>
+                    <td align="left" rowspan="1" colspan="1">.43</td>
+                    <td align="left" rowspan="1" colspan="1">.21</td>
+                    <td align="left" rowspan="1" colspan="1">.57</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">SVM</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">76.1</td>
+                    <td align="left" rowspan="1" colspan="1">41.0</td>
+                    <td align="left" rowspan="1" colspan="1">.46</td>
+                    <td align="left" rowspan="1" colspan="1">.37</td>
+                    <td align="left" rowspan="1" colspan="1">.27</td>
+                    <td align="left" rowspan="1" colspan="1">.62</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">ANN</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">79.0</td>
+                    <td align="left" rowspan="1" colspan="1">14.1</td>
+                    <td align="left" rowspan="1" colspan="1">.60</td>
+                    <td align="left" rowspan="1" colspan="1">.08</td>
+                    <td align="left" rowspan="1" colspan="1">.10</td>
+                    <td align="left" rowspan="1" colspan="1">.55</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Naive Bayes</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">81.2</td>
+                    <td align="left" rowspan="1" colspan="1">52.8</td>
+                    <td align="left" rowspan="1" colspan="1">.62</td>
+                    <td align="left" rowspan="1" colspan="1">.46</td>
+                    <td align="left" rowspan="1" colspan="1">.41</td>
+                    <td align="left" rowspan="1" colspan="1">.70</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Domain-based</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">76.4</td>
+                    <td align="left" rowspan="1" colspan="1">0.0</td>
+                    <td align="left" rowspan="1" colspan="1">.00</td>
+                    <td align="left" rowspan="1" colspan="1">.00</td>
+                    <td align="left" rowspan="1" colspan="1">−.01</td>
+                    <td align="left" rowspan="1" colspan="1">.42</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Homology-based</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">66.4</td>
+                    <td align="left" rowspan="1" colspan="1">46.6</td>
+                    <td align="left" rowspan="1" colspan="1">.74</td>
+                    <td align="left" rowspan="1" colspan="1">.34</td>
+                    <td align="left" rowspan="1" colspan="1">.32</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">HybSVM</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>89.0</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>76.0</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.75</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">.77</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.69</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.85</bold>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt104">
+                <label/>
+                <p>Accuracy, F-measure (F1 Score), precision, recall, correlation coefficient (C.C.), and area under the receiver operating characteristic curve (AUC) of classification for the multi-interface versus singlish-interface dataset are presented. Accuracy and F-measure are reported in percentage. For each machine learning approach, values of k ranged from 1 to 4. Only the classifier with the best performing k-value (as defined by highest correlation coefficient) is shown. Our methods were estimated by cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+          <p>From the results shown in <xref ref-type="table" rid="pone-0056833-t004">Table 4</xref>, we can see that <italic>HybSVM</italic> outperforms all other individual methods on 5 of the 6 performance measures. For Dataset 3, <italic>HybSVM</italic> improved accuracy by 5.2% (89.0%) and correlation coefficient by 0.22 (0.69) over the previous best classifier, NB 4-gram. This method also had the highest AUC with a value of 0.85 (an improvement of 0.14 over SVM, the next highest performing method). NB(k) had the highest recall value at 0.84 (it was able to correctly label more SIH proteins), but it came at the cost of a low precision (0.31) and lower correlation coefficient (0.44). The threshold can be adjusted for <italic>HybSVM</italic> to achieve a better recall based on <italic>HybSVM</italic> having very balanced precision and recall scores (values of 0.75 and 0.77) and the highest f-measure (76.0). <xref ref-type="fig" rid="pone-0056833-g004">Figure 4</xref> shows ROC curves for each of the methods on Dataset 3. Although <italic>HybSVM</italic> did not always outperform the other methods over the entire range of tradeoffs between precision and recall, it did outperform the other methods for a specific range of false positive rates (from 0.0 to 0.4 for SIH and from 0.25 to 0.5 MIH). No single method significantly outperformed <italic>HybSVM.</italic> It is worth noting that <italic>HybSVM</italic> method is especially attractive if there is little tolerance for false positives. In contrast, each of the other methods (with the exception of domain-based method) works relatively well, in settings where there is greater tolerance for higher false positive rates.</p>
+          <p>A closer examination of the results for Dataset 3 shows that many of the misclassified hub proteins are close to the arbitrary boundary between SIH and MIH. This raises the question as to whether the labels could be more reliably predicted if the arbitrary cut-off on the number of interfaces is altered (See <xref ref-type="supplementary-material" rid="pone.0056833.s001">Figure S1</xref>). For example, hubs with 4 or fewer interaction sites were labelled with an accuracy of 72%. However, the accuracy of classification of hubs with 3 or fewer interfaces, the cut-off value for distinguishing SIH and MIH, was considerably lower. The sensitivity of predictions for MIH improves as the number of interfaces of the hub protein increases (See <xref ref-type="supplementary-material" rid="pone.0056833.s002">Figure S2</xref>). The sensitivity of predicting a protein hub with four or more interfaces is 96% (119/124) and 97% (108/111) for protein hubs with 5 or more interfaces. The majority (11/18) of our misclassifications were caused by a strong homology between proteins with differing numbers of interaction partners that were 2 or fewer (e.g. a protein with two interaction partners had a strong homology with a protein that had four interaction partners). Details of the misclassifications can be found in <xref ref-type="table" rid="pone-0056833-t005">Table 5</xref>.</p>
+          <table-wrap id="pone-0056833-t005" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0056833.t005</object-id>
+            <label>Table 5</label>
+            <caption>
+              <title>Details for misclassified proteins in Dataset 3 using HybSVM.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pone-0056833-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.t005" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1"/>
+                    <td colspan="2" align="left" rowspan="1">Misclassified proteins</td>
+                    <td colspan="2" align="left" rowspan="1">Protein with highest homology</td>
+                    <td colspan="2" align="left" rowspan="1"/>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Class</td>
+                    <td align="left" rowspan="1" colspan="1">Gene</td>
+                    <td align="left" rowspan="1" colspan="1">Interfaces</td>
+                    <td align="left" rowspan="1" colspan="1">Gene</td>
+                    <td align="left" rowspan="1" colspan="1">Interfaces</td>
+                    <td align="left" rowspan="1" colspan="1">e-value</td>
+                    <td align="left" rowspan="1" colspan="1">Difference</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Singlish</td>
+                    <td align="left" rowspan="1" colspan="1">RHO1</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">CDC42</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">1E-52</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">STE11</td>
+                    <td align="left" rowspan="1" colspan="1">4</td>
+                    <td align="left" rowspan="1" colspan="1">CLA4</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">2E-37</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">ARP2</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">ACT1</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">1E-102</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">MAK5</td>
+                    <td align="left" rowspan="1" colspan="1">9</td>
+                    <td align="left" rowspan="1" colspan="1">DRS1</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">6E-42</td>
+                    <td align="left" rowspan="1" colspan="1">7</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">PRP28</td>
+                    <td align="left" rowspan="1" colspan="1">8</td>
+                    <td align="left" rowspan="1" colspan="1">DRS1</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">2E-49</td>
+                    <td align="left" rowspan="1" colspan="1">6</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">PUB1</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">SGN1</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">1E-05</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">CMD1</td>
+                    <td align="left" rowspan="1" colspan="1">4</td>
+                    <td align="left" rowspan="1" colspan="1">MLC1</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">1E-15</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">SEC22</td>
+                    <td align="left" rowspan="1" colspan="1">7</td>
+                    <td align="left" rowspan="1" colspan="1">YKT6</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">9E-10</td>
+                    <td align="left" rowspan="1" colspan="1">5</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">singlish</td>
+                    <td align="left" rowspan="1" colspan="1">SNP1</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">SGN1</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">8E-05</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">YKT6</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">SEC22</td>
+                    <td align="left" rowspan="1" colspan="1">7</td>
+                    <td align="left" rowspan="1" colspan="1">9E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−5</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">CDC42</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">RHO1</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">1E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−1</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">ACT1</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">ARP2</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">1E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−1</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">SGN1</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">PUB1</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">1E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−2</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">YTA7</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">RPT4</td>
+                    <td align="left" rowspan="1" colspan="1">6</td>
+                    <td align="left" rowspan="1" colspan="1">8E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−5</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">MLC1</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">CMD1</td>
+                    <td align="left" rowspan="1" colspan="1">4</td>
+                    <td align="left" rowspan="1" colspan="1">1E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−2</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">MTR3</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">(No hit)</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">BOI2</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">(No hit)</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">multi</td>
+                    <td align="left" rowspan="1" colspan="1">CLA4</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">STE11</td>
+                    <td align="left" rowspan="1" colspan="1">4</td>
+                    <td align="left" rowspan="1" colspan="1">2E-05</td>
+                    <td align="left" rowspan="1" colspan="1">−2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt105">
+                <label/>
+                <p>Details for the misclassified proteins in Dataset 3 based on using the <italic>HybSVM</italic> method including: actual class (multi, singlish), gene name, and number of interfaces as predicted by Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref> are shown. For each misclassified protein, information about the protein with the highest homology based on the nearest BLAST hit is also shown. This information includes: gene name, number of interfaces as predicted by Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, e-value of the BLAST results between the two proteins, and the difference between the number of predicted interfaces for the misclassified protein and its nearest BLAST hit.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+        </sec>
+        <sec id="s2c2">
+          <title>Kinetic prediction: discriminating Date from Party hub proteins</title>
+          <p>To assess kinetic predictions on hub proteins, we created Dataset 4. Dataset 4 contains 199 hub proteins including 91 date hubs and 108 party hubs. Dataset 4 was originally created by Han et al. <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>; this dataset had relatively low sequence homology so no sequences were removed. <xref ref-type="supplementary-material" rid="pone.0056833.s007">Tables S5</xref> and <xref ref-type="supplementary-material" rid="pone.0056833.s008">S6</xref> show the results of using standard machine learning approaches on this dataset. The accuracies for Dataset 4 ranged from 51.0% to 66.2% and the correlation coefficients from 0.01 to 0.30; precision from 50% to 70% and recall from 42% to 62%. The results of HybSVM on Dataset 4 (see <xref ref-type="table" rid="pone-0056833-t006">Table 6</xref>) provided an accuracy of 69.2% and a correlation coefficient of 0.37, which are comparatively better than the best individual method (NB 3-gram). HybSVM had a marginally lower AUC value (0.68) as compared to the Naive Bayes (0.70). HybSVM also had the best F-Score (62.6) and precision (0.71). <xref ref-type="fig" rid="pone-0056833-g004">Figure 4</xref> shows ROC curves for each of the methods on Dataset 4. The ROC curves were similar to the curves generated by building classifiers on the SIH/MIH dataset. The results show that <italic>HybSVM</italic> method can be used in settings where a low false positive rate is desirable.</p>
+          <table-wrap id="pone-0056833-t006" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0056833.t006</object-id>
+            <label>Table 6</label>
+            <caption>
+              <title>Dataset 4 (Date vs. Party hubs) predictions from classifiers trained using machine learning methods.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pone-0056833-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.t006" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Approach</td>
+                    <td align="left" rowspan="1" colspan="1">Best k</td>
+                    <td align="left" rowspan="1" colspan="1">Accuracy</td>
+                    <td align="left" rowspan="1" colspan="1">F1 Score</td>
+                    <td align="left" rowspan="1" colspan="1">Precision</td>
+                    <td align="left" rowspan="1" colspan="1">Recall</td>
+                    <td align="left" rowspan="1" colspan="1">C.C.</td>
+                    <td align="left" rowspan="1" colspan="1">AUC</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">NB k-gram</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">67.1</td>
+                    <td align="left" rowspan="1" colspan="1">59.8</td>
+                    <td align="left" rowspan="1" colspan="1">.54</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.67</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">.33</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.71</bold>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">NB(k)</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">65.1</td>
+                    <td align="left" rowspan="1" colspan="1">58.0</td>
+                    <td align="left" rowspan="1" colspan="1">.53</td>
+                    <td align="left" rowspan="1" colspan="1">.64</td>
+                    <td align="left" rowspan="1" colspan="1">.29</td>
+                    <td align="left" rowspan="1" colspan="1">.65</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Decision Tree</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">53.5</td>
+                    <td align="left" rowspan="1" colspan="1">55.4</td>
+                    <td align="left" rowspan="1" colspan="1">.50</td>
+                    <td align="left" rowspan="1" colspan="1">.62</td>
+                    <td align="left" rowspan="1" colspan="1">.08</td>
+                    <td align="left" rowspan="1" colspan="1">.53</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">SVM</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">62.1</td>
+                    <td align="left" rowspan="1" colspan="1">59.0</td>
+                    <td align="left" rowspan="1" colspan="1">.59</td>
+                    <td align="left" rowspan="1" colspan="1">.59</td>
+                    <td align="left" rowspan="1" colspan="1">.24</td>
+                    <td align="left" rowspan="1" colspan="1">.66</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">ANN</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">66.2</td>
+                    <td align="left" rowspan="1" colspan="1">55.5</td>
+                    <td align="left" rowspan="1" colspan="1">.70</td>
+                    <td align="left" rowspan="1" colspan="1">.46</td>
+                    <td align="left" rowspan="1" colspan="1">.30</td>
+                    <td align="left" rowspan="1" colspan="1">.69</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Naive Bayes</td>
+                    <td align="left" rowspan="1" colspan="1">1</td>
+                    <td align="left" rowspan="1" colspan="1">65.2</td>
+                    <td align="left" rowspan="1" colspan="1">57.5</td>
+                    <td align="left" rowspan="1" colspan="1">.66</td>
+                    <td align="left" rowspan="1" colspan="1">.51</td>
+                    <td align="left" rowspan="1" colspan="1">.29</td>
+                    <td align="left" rowspan="1" colspan="1">.70</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Domain-based</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">59.1</td>
+                    <td align="left" rowspan="1" colspan="1">30.2</td>
+                    <td align="left" rowspan="1" colspan="1">.62</td>
+                    <td align="left" rowspan="1" colspan="1">.20</td>
+                    <td align="left" rowspan="1" colspan="1">.14</td>
+                    <td align="left" rowspan="1" colspan="1">.57</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">Homology-based</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">29.8</td>
+                    <td align="left" rowspan="1" colspan="1">22.0</td>
+                    <td align="left" rowspan="1" colspan="1">.22</td>
+                    <td align="left" rowspan="1" colspan="1">.22</td>
+                    <td align="left" rowspan="1" colspan="1">−.43</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">HybSVM</td>
+                    <td align="left" rowspan="1" colspan="1">N/A</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>69.2</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>62.6</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.71</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">.56</td>
+                    <td align="left" rowspan="1" colspan="1">
+                      <bold>.37</bold>
+                    </td>
+                    <td align="left" rowspan="1" colspan="1">.68</td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt106">
+                <label/>
+                <p>Accuracy, F-measure (F1 Score), precision, recall, correlation coefficient (C.C.), and area under the receiver operating characteristic curve (AUC) of classification for the multi-interface versus singlish-interface dataset are presented. Accuracy and F-measure are reported in percentage. For each machine learning approach, values of k ranged from 1 to 4. Only the classifier with the best performing k-value (as defined by highest correlation coefficient) is shown. Our methods were estimated by cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+          <p>A study by Mirzarezaee et al. has recently proposed methods for distinguishing date hub proteins from party hub proteins <xref ref-type="bibr" rid="pone.0056833-Mirzarezaee1">[15]</xref> using a variety of features including 4 composition measurements, 48 physicochemical properties, six GO term features, domain occurrence presence, disordered regions, and position specific scoring matrices (PSSM). They reported accuracies of up to 77% with correlation coefficients of 0.74 for both date and party hubs. Their dataset also used yeast proteins, but it was a different set of proteins and consisted of over 5,000 non-hub proteins. Their methodology consisted of classifying proteins into the following four classes: non-hub, intermediately connected, date, and party. The <italic>HybSVM</italic> approach we report here focused instead on the binary classification task of distinguishing date hubs from party hubs. Our method does not need functional annotations (GO terms) of proteins, their domain composition, or their sequence alignments with their homologs. Our method also provides probability scores for each prediction. These scores allow an investigator to trade-off the reliability of predictions against the coverage of the predictions. <italic>HybSVM</italic> runs quickly and is easy to implement and update, which are ideal characteristics to serve the method through a web server. A web server implementation of <italic>HybSVM</italic> can be found here: <ext-link ext-link-type="uri" xlink:href="http://hybsvm.gdcb.iastate.edu" xlink:type="simple">http://hybsvm.gdcb.iastate.edu</ext-link>.</p>
+        </sec>
+      </sec>
+      <sec id="s2d">
+        <title>Validating the three-phase approach</title>
+        <p>To validate our three-phase approach, we tested each phase on additional datasets. Since Dataset 1 (PB versus NPB) was created independently of Dataset 3 (SIH versus MIH) and Dataset 4 (Date versus Party), we used these two datasets along with the data used in the Mirzarezaee paper (Date versus Party) as a test set for the <italic>HybSVM</italic> classifier for predicting protein-binding proteins (Phase I). The union of these three datasets included 900 yeast hub proteins. The Phase I <italic>HybSVM</italic> classifier predicted 99.7% of the proteins as protein-binding proteins. Only three multi-interface proteins were misclassified.</p>
+        <p>We also used the data from the Mirzarezaee study as an additional test set to predict hub proteins (Phase II) and for the <italic>HybSVM</italic> classifier to discriminate date hubs from party hubs (Phase III). The Phase II classifier correctly predicted 147 proteins as hub proteins and 116 as likely hub-proteins. The classifier misclassified 45 proteins as non-hub proteins and 23 as likely non-hubs proteins (12% error rate). All other proteins were labeled as being of unknown category. The Phase III classifier used to discriminate date and party hub proteins predicted 67.9% of the 546 proteins correctly with a correlation coefficient of 0.36. One of the advantages of our approach over the Mirzarezaee study is that a probability score is assigned to the predictions. In this example, a majority of the misclassifications had a probability score under 0.70. Predictions with higher scores are more reliable. For example, in the case of predictions with score greater than 0.70 (337 proteins), accuracy improves to 74.2% (0.46 correlation coefficient). The predictions with score greater than 0.90 (78 proteins) yield even more reliable results: 84.6% accuracy, and 0.54 correlation coefficient. These results show that investigators can benefit from our method, which needs only sequence information, to control the quality of the predictions by sacrificing the coverage of the classifier. SIH and MIH class labels were not readily available for the Mirzarezaee dataset, so the structural classifier of Phase III was not evaluated on this dataset.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Conclusion</title>
+        <p>We have demonstrated that it is possible to fairly reliably classify proteins in a three-phase approach: the first phase distinguishes protein-binding (PB) versus non-protein-binding (NPB) proteins; the second phase predicts if the protein is likely to be a hub; the third phase classifies protein-binding proteins into SIH versus MIH and date versus party hubs. Our approach uses only sequence information and therefore will be highly useful for the analysis of proteins lacking structural information. These classifications provide insights into the structural and kinetic characteristics of the corresponding proteins in the absence of interaction networks, expression data, three-dimensional structure, sequence alignment, functional annotations, domains, or motifs. We note that the performance of our classifier for predicting structural characteristics of hubs (i.e., classifying hubs into SIH versus MIH) is better than that of the classifier for predicting kinetic or expression related characteristics of hubs (i.e., classifying hubs into date versus party hubs).</p>
+      </sec>
+    </sec>
+    <sec id="s3" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <p>Here we used four datasets for training and testing classifiers for different phases of prediction. Because protein interaction datasets tend to have high false positive rates, when building these datasets, our main goal was to use high-quality data. Our second goal was to remove sequence bias in the datasets. The first dataset consists of proteins that are involved in binding with other proteins (PB) and proteins that are not involved in PB (NPB). This dataset was used in the first phase of our prediction. The second dataset consists of hub and non-hub proteins. This set of proteins was used in the second phase of predictions. Datasets 3 and 4 were used by the third phase to distinguish singlish/multiple and date/party hub proteins (<xref ref-type="fig" rid="pone-0056833-g002">Figure 2</xref>).</p>
+      <sec id="s3a">
+        <title>Dataset 1 – Protein-binding (PB) versus non-protein-binding (NPB) proteins</title>
+        <p>The first dataset consists of two subsets of proteins. The first subset is generated using high-quality sets of proteins that are known to interact with other proteins. These proteins form a protein-binding (PB) subset. The second subset consists of proteins that are unlikely to bind with other proteins (NPB). To create the PB subset, 3,640 yeast proteins were downloaded from HINT <xref ref-type="bibr" rid="pone.0056833-Das1">[9]</xref> (High-quality protein interactomes) (<ext-link ext-link-type="uri" xlink:href="http://hint.yulab.org/" xlink:type="simple">http://hint.yulab.org/</ext-link>)–HINT is a database of high-quality protein-protein interactions for different organisms, which was obtained by integrating protein-protein interaction data from various sources and filtered to remove low-quality interactions.</p>
+        <p>The NPB subset consists of proteins that bind with small molecules, but not with proteins. Identifying such a subset is a challenging task, because the available protein-protein interaction data are incomplete at best. It has been estimated that the fraction of identified interactions of the full human interactome is between 5% and 13% <xref ref-type="bibr" rid="pone.0056833-Venkatesan1">[8]</xref>, <xref ref-type="bibr" rid="pone.0056833-Baker1">[54]</xref>, <xref ref-type="bibr" rid="pone.0056833-Liu2">[55]</xref> and up to 30% for the yeast interactome <xref ref-type="bibr" rid="pone.0056833-Baker1">[54]</xref>. The efforts to increase the coverage will most likely increase the false positive rate as well <xref ref-type="bibr" rid="pone.0056833-DeLasRivas1">[56]</xref>. Therefore, it is inevitable that any NPB dataset will be subject to these inherent limitations of incompleteness and incorrectness in experimental protein-protein interaction sets. Considering these limitations, we used the following methodology to create the NPB subset: a set of 8,443 proteins were downloaded from BindingDB <xref ref-type="bibr" rid="pone.0056833-Liu3">[57]</xref> (<ext-link ext-link-type="uri" xlink:href="http://www.bindingdb.org/bind/index.jsp" xlink:type="simple">http://www.bindingdb.org/bind/index.jsp</ext-link>). This includes the entire set of protein targets that bind to small-molecules. In order to filter proteins that are interacting with other proteins, these 8,443 BindingDB proteins were BLASTed <xref ref-type="bibr" rid="pone.0056833-Altschul2">[58]</xref> against the PB set and any protein that had a positive hit was removed. Additional filtering was performed with the remaining BindingDB proteins against the 5,000 yeast proteins that have an experimental protein-protein interaction evidence in BioGrid <xref ref-type="bibr" rid="pone.0056833-Stark1">[50]</xref> (<ext-link ext-link-type="uri" xlink:href="http://thebiogrid.org/" xlink:type="simple">http://thebiogrid.org/</ext-link>). The remaining set of non-interacting proteins was 4,567 proteins. To minimize sequence bias, we clustered the proteins in both subsets where at least 80% of the sequence shared 50% or more sequence identity. A representative sequence was randomly chosen for each cluster to obtain the final dataset. The resulting dataset, Dataset 1, consists of a total of 5,010 proteins including 3,418 proteins in the PB subset and 1,592 proteins in the NPB subset.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Dataset 2 – Hub proteins versus non-hub proteins</title>
+        <p>Manna et al. <xref ref-type="bibr" rid="pone.0056833-Manna1">[18]</xref> had previously created a dataset of hubs and non-hubs. This dataset was originally assembled by downloading human protein-protein interaction data from BioGRID <xref ref-type="bibr" rid="pone.0056833-Stark1">[50]</xref>. Any protein that had more than five interactions was labeled as a hub, proteins with fewer than three interactions were labeled as non-hub. Proteins with three, four, or five interactions were not considered as they were near the arbitrary cut-off value for defining a hub and had high potential for being mislabeled. Their resulting dataset included 2,221 hub proteins and 2,889 non-hub proteins. The data ranged from proteins with a single interaction partner to 170 interaction partners. To minimize sequence bias in this dataset, we applied the same methodology we used to obtain Dataset 1: we clustered the protein where at least 80% of each sequence shared 50% or more sequence identity and randomly chose a representative sequence from each cluster. The resulting dataset, Dataset 2, consists of 4,036 proteins including 1,741 hub proteins and 2,295 non-hub proteins.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Dataset 3 - Singlish interface hubs (SIH) versus multiple interface hubs (MIH)</title>
+        <p>Previously Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref> created SIH and MIH datasets by combining yeast interaction data from various sources <xref ref-type="bibr" rid="pone.0056833-Uetz1">[4]</xref>, <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, <xref ref-type="bibr" rid="pone.0056833-Mewes1">[59]</xref>–<xref ref-type="bibr" rid="pone.0056833-Xenarios1">[63]</xref> and associating these proteins with Pfam domains <xref ref-type="bibr" rid="pone.0056833-Finn1">[49]</xref>, <xref ref-type="bibr" rid="pone.0056833-Bateman1">[64]</xref>, which were then subsequently mapped onto known PDB structures using iPfam <xref ref-type="bibr" rid="pone.0056833-Finn2">[65]</xref>. They filtered out interactions that were not consistent with protein complexes as defined by iPfam to obtain a yeast protein interaction network. Kim et al. used this set to analyze evolutionary patterns in hub proteins and it uses a robust structure-based definition of hubs, which was useful in our study. Here, we follow their definition of hubs such that a protein is defined as a hub protein if it has five or more interaction partners. A hub protein with 1 or 2 mutually exclusive interactions is defined as singlish-interface hub (SIH); a hub protein with 3 or more mutually exclusive interactions is defined as multi-interface hub (MIH). The original dataset consists of 1,269 interactions involving 873 proteins with 167 hub proteins including 36 SIH and 131 MIH proteins. We downloaded the original dataset from <ext-link ext-link-type="uri" xlink:href="http://sin.gersteinlab.org" xlink:type="simple">http://sin.gersteinlab.org</ext-link>. We filtered non-hub proteins out and applied the same sequence filtering that we used for Dataset 1 and Dataset 2. The resulting dataset, Dataset 3, consists of 155 hub proteins with 35 SIH and 120 MIH proteins.</p>
+      </sec>
+      <sec id="s3d">
+        <title>Dataset 4 - Date hubs versus Party hubs</title>
+        <p>Han et al. <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref> created a protein set of date and party hubs by merging the results of multiple methods <xref ref-type="bibr" rid="pone.0056833-Uetz1">[4]</xref>, <xref ref-type="bibr" rid="pone.0056833-Han1">[31]</xref>, <xref ref-type="bibr" rid="pone.0056833-Agarwal1">[32]</xref>, <xref ref-type="bibr" rid="pone.0056833-Mewes1">[59]</xref>–<xref ref-type="bibr" rid="pone.0056833-Gavin1">[62]</xref>, <xref ref-type="bibr" rid="pone.0056833-Bader1">[66]</xref>–<xref ref-type="bibr" rid="pone.0056833-vonMering1">[71]</xref>. Similar to Kim et al. <xref ref-type="bibr" rid="pone.0056833-Kim1">[16]</xref>, they defined a protein as a hub protein if it has five or more interaction partners. They based their definition of date and party hubs on co-expression patterns: hubs that have low degree of co-expression with their interaction partners (Pearson correlation coefficient of 0.5 or lower) are assumed to bind different partners at different time points or locations and are classified as date hubs. In the same vein, hubs that exhibit high degree of co-expression with their interaction partners (Pearson correlation coefficient greater than 0.5) are assumed to interact simultaneously with their interaction partners. Their resulting yeast interaction dataset consists of 1,379 proteins and 2,493 interactions, which contains both hub and non-hub proteins. We filtered non-hub proteins out and applied the same sequence filtering that we used on the previous datasets. The sequence bias was already removed in the original dataset; so no additional sequences were removed. The resulting set, Dataset 4 consists of 199 hub proteins including 91 date hubs and 108 party hubs.</p>
+      </sec>
+      <sec id="s3e">
+        <title>Overlap among Dataset 3 and Dataset 4</title>
+        <p>It is worth noting that the SIH-MIH and Date-Party classes show some overlap. <xref ref-type="fig" rid="pone-0056833-g005">Figure 5</xref> is a Venn diagram showing the distribution of the 41 proteins in their respective classes. For example, 6 singlish-interface proteins are also date hub proteins. Similarly, there are 2 singlish-party hubs, 6 multi-date hubs, and 27 multi-party hubs. <xref ref-type="fig" rid="pone-0056833-g006">Figure 6</xref> show examples of singlish-interface date hub and multi-party hub proteins respectively.</p>
+        <fig id="pone-0056833-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056833.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Venn-diagram for Dataset 3 and Dataset 4.</title>
+            <p>Each of the 272 hub proteins belong to one or more of the following classes: singlish, multi, date, party. Dataset 3 consists of 35 singlish hub proteins and 120 multi hub proteins (Yellow circles). Dataset 4 consists of 91 date hub proteins and 108 party hub proteins (Blue circles). Please see text for more details about the datasets.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.g005" position="float" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0056833-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0056833.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Example of a singlish-interface date and multi-party hub proteins.</title>
+            <p>Images A and B show the quaternary structure for the singlish-date protein Rab GDP dissociation inhibitor alpha (GDI1, YER136W) binding with two different proteins. Image C shows the quaternary structure for the yeast protein beta 6 subunit of the 20S proteasome (PRE7, YBL041W) binding with multiple proteins at the same time. <bold>A:</bold> GDI1 (green) binding with GTP-binding protein YPT31/YPT8 (purple). PDB ID of the complex: 3cpj <xref ref-type="bibr" rid="pone.0056833-Ignatev1">[79]</xref>, <xref ref-type="bibr" rid="pone.0056833-Berman1">[80]</xref>. <bold>B:</bold> GDI1 (green) binding with GTP-binding proteinYPT1 (yellow). PDB ID of the complex: 1ukv <xref ref-type="bibr" rid="pone.0056833-Berman1">[80]</xref>, <xref ref-type="bibr" rid="pone.0056833-Rak1">[81]</xref>. The protein binds at one location (singlish-interface) with one partner at a time (date). <bold>C:</bold> PRE7 (green) binds with PUP1 (orange), PUP3 (red), C5 (pink), PRE4 (purple). PDB ID of the complex: 3bdm <xref ref-type="bibr" rid="pone.0056833-Berman1">[80]</xref>, <xref ref-type="bibr" rid="pone.0056833-Groll1">[82]</xref>. The protein binds at multiple locations (multi-interface) with many partners at same time (party).</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0056833.g006" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3f">
+        <title>Classification framework</title>
+        <p>For each class within our dataset we built a binary classifier that predicts if that protein belonged to that class or not. The reported accuracy estimates are based on stratified 10-fold cross validation. Each of the individual classifiers is described below:</p>
+      </sec>
+      <sec id="s3g">
+        <title>Machine learning methods</title>
+        <sec id="s3g1">
+          <title>Support Vector Machines</title>
+          <p>A support vector machine (SVM), given a training set, that is linearly separable in a kernel-induced feature space, implements a linear decision boundary that maximizes the margin of separation between the classes <xref ref-type="bibr" rid="pone.0056833-Vapnik1">[46]</xref>. If the dataset is not perfectly separable, slack variables are used to minimize the number of misclassified training examples. Logistic regression models were applied to the outputs of the SVM to get a probability score. These scores can be used to evaluate the quality of a prediction. Even if the overall accuracy of the prediction model does not meet high standards, the quality of individual predictions may be suitable based on the probability score. The score also allows an investigator to determine and set the trade-off between the sensitivity and selectivity of the classified (as shown in the ROC-curves). The scores range from 0.5 (50% or equal probability of belonging to either class) to 1 (100% probability of belonging to the specified class). We used the Weka version 3.6.0 SMO implementation <xref ref-type="bibr" rid="pone.0056833-Platt1">[45]</xref> of the support vector machine algorithm <xref ref-type="bibr" rid="pone.0056833-Vapnik1">[46]</xref> with a polynomial kernel.</p>
+        </sec>
+        <sec id="s3g2">
+          <title>Naive Bayes Multinomial Classifier</title>
+          <p>The Naive Bayes multinomial classifier models each sequence by a bag of letters sampled from a fixed alphabet. In our case, the bag of letters is the amino acid composition of a protein sequence. Thus, each element (amino acid) of the sequence is assumed to be independent of the other elements in the sequence given the class label. Based on this assumption, a multinomial Naive Bayes classifier can be built over all of the sequences for a given class. This is similar to the bag of words approach previously used for text classification <xref ref-type="bibr" rid="pone.0056833-AndrewMccallum1">[72]</xref>.</p>
+        </sec>
+        <sec id="s3g3">
+          <title>Naive Bayes k-grams Classifier</title>
+          <p>The Naive Bayes <italic>k</italic>-grams (NB <italic>k</italic>-grams) method <xref ref-type="bibr" rid="pone.0056833-Andorf1">[73]</xref> uses a sliding a window of size <italic>k</italic> along each sequence to generate a <italic>bag</italic> of <italic>k</italic>-grams representation of the sequence. Much like in the case of the Naive Bayes classifier described above, the Naïve Bayes <italic>k</italic>-grams classifier treats each <italic>k</italic>-gram in the bag to be independent of the others given the class label for the sequence. Given this probabilistic model, the previously outlined method for classification using a probabilistic model can be applied. A problem with the NB <italic>k</italic>-grams approach is that successive <italic>k</italic>-grams extracted from a sequence share <italic>k</italic>-1 elements in common. This grossly and systematically violates the independence assumption of Naive Bayes.</p>
+        </sec>
+        <sec id="s3g4">
+          <title>NB (k)</title>
+          <p>NB(k) <xref ref-type="bibr" rid="pone.0056833-Andorf1">[73]</xref> constructs, for each class, a Markov model of order <italic>k</italic> -1. It modifies the Naïve Bayes model to explicitly model the dependencies (of order <italic>k-1</italic>) between the letters of a sequence. It is easily seen that when <italic>k</italic> = 1, Naive Bayes k-grams as well as Naive Bayes (1) reduce to the Naive Bayes model. The relevant probabilities required for specifying the above models can be estimated using standard techniques for estimation of probabilities using Laplace estimators <xref ref-type="bibr" rid="pone.0056833-Mitchell1">[74]</xref>.</p>
+          <p>Naïve Bayes (NB) <italic>k</italic>-grams and NB(<italic>k</italic>) models were constructed and evaluated on the dataset with <italic>k</italic> ranging from 1 to 4. Values of <italic>k</italic> larger than 4 were not considered because at higher values of <italic>k</italic>, the available data are insufficient to obtain reliable probability estimates.</p>
+        </sec>
+        <sec id="s3g5">
+          <title>PSI-Blast</title>
+          <p>The homology-based tool PSI-BLAST <xref ref-type="bibr" rid="pone.0056833-Altschul1">[51]</xref> version 2.2.9 was used to construct a binary classifier for each class. We used the binary class label predicted by the PSI-BLAST-based classifier as an additional input to our <italic>HybSVM</italic> classifier. Given a query sequence to be classified, we used PSI-BLAST to compare the query sequence against the training set. In 10-fold cross-validation, we ran PSI-BLAST with the query sequences in a given fold against the reference database comprised of the remaining nine folds. We repeated this process for each of the ten folds. For <italic>HybSVM</italic>, a class was assigned to the query sequence based on the top-scoring hit (i.e., the sequence with the lowest e-value) from the PSI-BLAST results. The resulting binary prediction of the PSI-BLAST classifier for class <italic>c</italic> is 1 if the class label for the top scoring hit is <italic>c</italic>. Otherwise, it is 0. An e-value cut-off of 1×10<sup>−4</sup> was used for PSI-BLAST, with all other parameters set to their default values. For predicting hub proteins, the four top-scoring hit were used. If there was a consensus among the top four hits then the class label of the four hits is assigned to the query sequence. If three of the four top-scoring hits had the same class, the query sequence is labeled as ‘likely’ belonging to that class. In addition to the prediction, we report the number of interaction partners belonging to the top hit, the range of interaction partners of the top four hits, and a weighted average (based on the BLAST score) of number of interaction partners of the top four hits.</p>
+        </sec>
+        <sec id="s3g6">
+          <title>Domain-based Method</title>
+          <p>The domain-based method builds a classifier by using a class-conditional probability distribution based on the frequency of SCOP <xref ref-type="bibr" rid="pone.0056833-Andreeva1">[47]</xref>, <xref ref-type="bibr" rid="pone.0056833-Andreeva2">[48]</xref> and PFAM <xref ref-type="bibr" rid="pone.0056833-Finn1">[49]</xref> domains in the following manner. For each protein, the count for each type of domain was determined by the number of domains listed at the Saccharomyces Genome Database (SGD) <xref ref-type="bibr" rid="pone.0056833-Nash1">[75]</xref>. This method was used to rule out a simple direct correlation between the number of domains and the number of interaction sites on a hub protein.</p>
+        </sec>
+        <sec id="s3g7">
+          <title>Decision Tree</title>
+          <p>A Decision Tree builds a predictive model by recursively partitioning the dataset based on choosing features that provide the most information gain. In our example, the feature set is the observed k-gram composition of amino acids given a class. For binary classes (e.g., SIH versus MIH), the decision tree algorithm chooses a <italic>k</italic>-gram feature that partitions the data to maximize the information gain between classes. The process is recursively repeated on the new partitions until no more information gain can be achieved. Additional techniques are performed (e.g., pruning) to help prevent overtraining. For these experiments we used the commonly used decision tree algorithm C4.5 <xref ref-type="bibr" rid="pone.0056833-Quinlan1">[44]</xref> implemented as the J4.8 algorithm <xref ref-type="bibr" rid="pone.0056833-Frank1">[43]</xref> in Weka version 3.6.0.</p>
+        </sec>
+        <sec id="s3g8">
+          <title>Multi-layer perceptron</title>
+          <p>A multi-layer perceptron, often referred to as a multilayer artificial neural network <xref ref-type="bibr" rid="pone.0056833-McCulloch1">[76]</xref>, <xref ref-type="bibr" rid="pone.0056833-Rosenblatt1">[77]</xref> (ANN) implements a non-linear decision function by using a weighted linear combination of non-linear (typically sigmoid) transformations of linear functions of input features. The ANN is typically trained using error back-propagation or generalized gradient descent algorithm that minimizes a function of the error between the desired and actual outputs of the ANN. We used the Multilayer Perceptron artificial neural network (ANN) implementation <xref ref-type="bibr" rid="pone.0056833-Frank1">[43]</xref> in Weka version 3.6.0.</p>
+        </sec>
+        <sec id="s3g9">
+          <title>HybSVM Method</title>
+          <p>We introduce <italic>HybSVM</italic> classifier that is a support vector machine (SVM) classifier that assigns the class label to a target sequence based on the class labels output by the Naive Bayes (NB), NB k-gram, NB(k) classifiers, and an additional attribute, the output from the PSI-BLAST classifiers. Since there are eight classifiers Naive Bayes, NB 2-gram, NB 3-gram, NB 4-gram, NB(2), NB(3), NB(4), and PSI-BLAST, the input to the <italic>HybSVM</italic> classifier consists of a 8-tuple vector of class labels assigned to the sequence by the 8 classifiers. A SVM is trained to predict the class label for each sequence based on the 8-tuple of class labels predicted by the eight individual classifiers.</p>
+        </sec>
+      </sec>
+      <sec id="s3h">
+        <title>Performance evaluation</title>
+        <p>The performance measures <italic>accuracy, precision, recall, f-measure, and correlation coefficient</italic> are used to evaluate the performance of our machine learning approaches <xref ref-type="bibr" rid="pone.0056833-Baldi1">[78]</xref>. <italic>Accuracy</italic> is the fraction of overall predictions that are correct. <italic>Precision</italic> is the ratio of predicted true positive examples to the total number of actual positive examples. <italic>Recall</italic> is the ratio of predicted true positives to the total number of examples predicted as positive. The <italic>F-measure</italic> (F1 score) is the harmonic mean of precision and recall. The F-measure has a range between 0 (worst value) and 1 (best value). <italic>Correlation coefficient</italic> measures the correlation between predictions and actual class labels. The correlation coefficient has a range of -1 (worst value) and 1 (best value).</p>
+        <p><xref ref-type="supplementary-material" rid="pone.0056833.s009">Table S7</xref> summarizes the definitions of performance measures in the two-class setting (binary classification), where <italic>M</italic> represents the total number of classes and <italic>N</italic> represents the total number of examples. <italic>TP</italic>, <italic>TN</italic>, <italic>FP</italic>, and <italic>FN</italic> are the true positives, true negatives, false positives, and false negatives for each of our classification problems. For example, when predicting SIH proteins: TP refers to a SIH correctly predicted, FP to MIH predicted as SIH, FN as SIH predicted as a MIH, and TN to MIH correctly predicted.</p>
+        <p>Where possible, we used the area under the receiver operating characteristic (AUC) curve. The ROC curve plots the true positive rate versus false positive rate for a binary classifier system (a protein belongs to a given class or not) as its discrimination threshold is varied. The area ranges from 0 (worst) to 1 (best); the value of 0.5 refers to the expected value of a random method.</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0056833.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s001" position="float" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>The accuracy curve of predicting singlish-interface and multiple-interface hub proteins as a function of the number of interaction sites.</bold> The curve shows the prediction accuracy for proteins with number of interactions sites less than the given maximum threshold. For example, the value of 5 on the x-axis refers to all hub proteins with 5 or fewer interfaces and the value on the curve (83%) at x = 5, represents the accuracy of this set.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s002" position="float" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p><bold>The sensitivity curve of predicting singlish-interface and multiple-interface hub proteins as a function of the number of interaction sites.</bold> The curve shows the prediction accuracy for proteins with number of interactions sites more than the given minimum threshold. For example, the value of 5 on the x-axis refers to all hub proteins with 5 or more interfaces and the value on the curve (97%) at x = 5, represents the sensitivity of this set.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s003" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s003" position="float" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p><bold>Accuracy, precision, recall, and correlation coefficient (CC) of classification for the protein-binding versus non-protein-binding dataset are presented for internal machine learning methods.</bold> For each machine learning approach, values of k ranged from 1 to 4. The performance of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s004" position="float" xlink:type="simple">
+        <label>Table S2</label>
+        <caption>
+          <p><bold>Accuracy, precision, recall, and correlation coefficient (CC) of classification for the protein-binding versus non-protein-binding dataset are presented for standard machine learning methods.</bold> For each machine learning approach, values of k ranged from 1 to 2. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s005" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s005" position="float" xlink:type="simple">
+        <label>Table S3</label>
+        <caption>
+          <p><bold>Accuracy, precision, recall, and correlation coefficient (CC) of classification for the multi-interface versus singlish-interface dataset are presented for internal machine learning methods.</bold> For each machine learning approach, values of k ranged from 1 to 4. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s006" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s006" position="float" xlink:type="simple">
+        <label>Table S4</label>
+        <caption>
+          <p><bold>Accuracy, precision, recall, and correlation coefficient (CC) of classification for the multi-interface versus singlish-interface dataset are presented for standard machine learning methods.</bold> For each machine learning approach, values of k ranged from 1 to 3. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s007" position="float" xlink:type="simple">
+        <label>Table S5</label>
+        <caption>
+          <p><bold>Accuracy, precision, recall, and correlation coefficient (CC) of classification for the date versus party dataset are presented for internal machine learning methods.</bold> For each machine learning approach, values of k ranged from 1 to 4. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s008" position="float" xlink:type="simple">
+        <label>Table S6</label>
+        <caption>
+          <p><bold>Accuracy, precision, recall, and correlation coefficient (CC) of classification for the date versus party dataset are presented for standard machine learning methods.</bold> For each machine learning approach, values of k ranged from 1 to 3. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0056833.s009" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0056833.s009" position="float" xlink:type="simple">
+        <label>Table S7</label>
+        <caption>
+          <p>
+            <bold>The formula for binary classification for each of our five performance measures is provided. </bold>
+            <bold>
+              <italic>TP</italic>
+            </bold>
+            <bold>, </bold>
+            <bold>
+              <italic>TN</italic>
+            </bold>
+            <bold>, </bold>
+            <bold>
+              <italic>FP</italic>
+            </bold>
+            <bold>, </bold>
+            <bold>
+              <italic>FN</italic>
+            </bold>
+            <bold> are the true positives, true negatives, false positives, and false negative predictions.</bold>
+          </p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We would like to thank Rasna Walia (Iowa State University) and Li Xue (Iowa State University) for their critical reading of the manuscript. The work of Vasant Honavar while working at the National Science Foundation was supported by the National Science Foundation. Any opinion, finding, and conclusions contained in this article are those of the authors and do not necessarily represent the views of the National Science Foundation.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0056833-Eisenberg1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eisenberg</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Marcotte</surname><given-names>EM</given-names></name>, <name name-style="western"><surname>Xenarios</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Yeates</surname><given-names>TO</given-names></name> (<year>2000</year>) <article-title>Protein function in the post-genomic era</article-title>. <source>Nature</source> <volume>405</volume>: <fpage>823</fpage>–<lpage>826</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Yu1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Braun</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Yildirim</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Lemmens</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Venkatesan</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>High-quality binary protein interaction map of the yeast interactome network</article-title>. <source>Science</source> <volume>322</volume>: <fpage>104</fpage>–<lpage>110</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Dreze1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dreze</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Monachello</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Lurin</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Cusick</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Hill</surname><given-names>DE</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>High-quality binary interactome mapping</article-title>. <source>Methods Enzymol</source> <volume>470</volume>: <fpage>281</fpage>–<lpage>315</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Uetz1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Uetz</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Giot</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Cagney</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Mansfield</surname><given-names>TA</given-names></name>, <name name-style="western"><surname>Judson</surname><given-names>RS</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>A comprehensive analysis of protein-protein interactions in Saccharomyces cerevisiae</article-title>. <source>Nature</source> <volume>403</volume>: <fpage>623</fpage>–<lpage>627</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Ito1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ito</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Chiba</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ozawa</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Yoshida</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hattori</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>A comprehensive two-hybrid analysis to explore the yeast protein interactome</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>98</volume>: <fpage>4569</fpage>–<lpage>4574</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Walhout1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Walhout</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Vidal</surname><given-names>M</given-names></name> (<year>2001</year>) <article-title>High-throughput yeast two-hybrid assays for large-scale protein interaction mapping</article-title>. <source>Methods</source> <volume>24</volume>: <fpage>297</fpage>–<lpage>306</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Huang1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Jedynak</surname><given-names>BM</given-names></name>, <name name-style="western"><surname>Bader</surname><given-names>JS</given-names></name> (<year>2007</year>) <article-title>Where have all the interactions gone? Estimating the coverage of two-hybrid protein interaction maps</article-title>. <source>PLoS Comput Biol</source> <volume>3</volume>: <fpage>e214</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Venkatesan1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Venkatesan</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Rual</surname><given-names>JF</given-names></name>, <name name-style="western"><surname>Vazquez</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Stelzl</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Lemmens</surname><given-names>I</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>An empirical framework for binary interactome mapping</article-title>. <source>Nat Methods</source> <volume>6</volume>: <fpage>83</fpage>–<lpage>90</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Das1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Das</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Yu</surname><given-names>H</given-names></name> (<year>2012</year>) <article-title>HINT: High-quality protein interactomes and their applications in understanding human disease</article-title>. <source>BMC Syst Biol</source> <volume>6</volume>: <fpage>92</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Gursoy1">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gursoy</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Keskin</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2008</year>) <article-title>Topological properties of protein interaction networks from a structural perspective</article-title>. <source>Biochem Soc Trans</source> <volume>36</volume>: <fpage>1398</fpage>–<lpage>1403</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Kuzu1">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kuzu</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Keskin</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Gursoy</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2012</year>) <article-title>Constructing structural networks of signaling pathways on the proteome scale</article-title>. <source>Curr Opin Struct Biol</source></mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Liu1">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Liang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Cao</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Chang</surname><given-names>Z</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Nonnatural protein-protein interaction-pair design by key residues grafting</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>104</volume>: <fpage>5330</fpage>–<lpage>5335</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Grigoryan1">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Grigoryan</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Reinke</surname><given-names>AW</given-names></name>, <name name-style="western"><surname>Keating</surname><given-names>AE</given-names></name> (<year>2009</year>) <article-title>Design of protein-interaction specificity gives selective bZIP-binding peptides</article-title>. <source>Nature</source> <volume>458</volume>: <fpage>859</fpage>–<lpage>864</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Fleishman1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fleishman</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Whitehead</surname><given-names>TA</given-names></name>, <name name-style="western"><surname>Ekiert</surname><given-names>DC</given-names></name>, <name name-style="western"><surname>Dreyfus</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Corn</surname><given-names>JE</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Computational design of proteins targeting the conserved stem region of influenza hemagglutinin</article-title>. <source>Science</source> <volume>332</volume>: <fpage>816</fpage>–<lpage>821</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Mirzarezaee1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mirzarezaee</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Araabi</surname><given-names>BN</given-names></name>, <name name-style="western"><surname>Sadeghi</surname><given-names>M</given-names></name> (<year>2010</year>) <article-title>Features analysis for identification of date and party hubs in protein interaction network of Saccharomyces Cerevisiae</article-title>. <source>BMC Syst Biol</source> <volume>4</volume>: <fpage>172</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Kim1">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>PM</given-names></name>, <name name-style="western"><surname>Lu</surname><given-names>LJ</given-names></name>, <name name-style="western"><surname>Xia</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Gerstein</surname><given-names>MB</given-names></name> (<year>2006</year>) <article-title>Relating three-dimensional structures to protein networks provides evolutionary insights</article-title>. <source>Science</source> <volume>314</volume>: <fpage>1938</fpage>–<lpage>1941</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Ekman1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ekman</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Light</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Bjorklund</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Elofsson</surname><given-names>A</given-names></name> (<year>2006</year>) <article-title>What properties characterize the hub proteins of the protein-protein interaction network of Saccharomyces cerevisiae</article-title>? <source>Genome Biol</source> <volume>7</volume>: <fpage>R45</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Manna1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Manna</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Bhattacharya</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Kahali</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Ghosh</surname><given-names>TC</given-names></name> (<year>2009</year>) <article-title>Evolutionary constraints on hub and non-hub proteins in human protein interaction network: insight from protein connectivity and intrinsic disorder</article-title>. <source>Gene</source> <volume>434</volume>: <fpage>50</fpage>–<lpage>55</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Keskin1">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Keskin</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Gursoy</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2008</year>) <article-title>Principles of protein-protein interactions: what are the preferred ways for proteins to interact</article-title>? <source>Chem Rev</source> <volume>108</volume>: <fpage>1225</fpage>–<lpage>1244</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Jeong1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jeong</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Mason</surname><given-names>SP</given-names></name>, <name name-style="western"><surname>Barabasi</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Oltvai</surname><given-names>ZN</given-names></name> (<year>2001</year>) <article-title>Lethality and centrality in protein networks</article-title>. <source>Nature</source> <volume>411</volume>: <fpage>41</fpage>–<lpage>42</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Missiuro1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Missiuro</surname><given-names>PV</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Zou</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Ross</surname><given-names>BC</given-names></name>, <name name-style="western"><surname>Zhao</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Information flow analysis of interactome networks</article-title>. <source>PLoS Comput Biol</source> <volume>5</volume>: <fpage>e1000350</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Zotenko1">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zotenko</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Mestre</surname><given-names>J</given-names></name>, <name name-style="western"><surname>O'Leary</surname><given-names>DP</given-names></name>, <name name-style="western"><surname>Przytycka</surname><given-names>TM</given-names></name> (<year>2008</year>) <article-title>Why do hubs in the yeast protein interaction network tend to be essential: reexamining the connection between the network topology and essentiality</article-title>. <source>PLoS Comput Biol</source> <volume>4</volume>: <fpage>e1000140</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Aragues1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aragues</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Sali</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Bonet</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Marti-Renom</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Oliva</surname><given-names>B</given-names></name> (<year>2007</year>) <article-title>Characterization of protein hubs by inferring interacting motifs from protein interactions</article-title>. <source>PLoS Comput Biol</source> <volume>3</volume>: <fpage>1761</fpage>–<lpage>1771</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Bellay1">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bellay</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Han</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Michaut</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Costanzo</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Bringing order to protein disorder through comparative genomics and genetic interactions</article-title>. <source>Genome Biol</source> <volume>12</volume>: <fpage>R14</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Cukuroglu1">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cukuroglu</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Gursoy</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Keskin</surname><given-names>O</given-names></name> (<year>2010</year>) <article-title>Analysis of hot region organization in hub proteins</article-title>. <source>Ann Biomed Eng</source> <volume>38</volume>: <fpage>2068</fpage>–<lpage>2078</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Fong1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fong</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Panchenko</surname><given-names>AR</given-names></name> (<year>2010</year>) <article-title>Intrinsic disorder and protein multibinding in domain, terminal, and linker regions</article-title>. <source>Mol Biosyst</source> <volume>6</volume>: <fpage>1821</fpage>–<lpage>1828</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Kahali1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kahali</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Ahmad</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ghosh</surname><given-names>TC</given-names></name> (<year>2009</year>) <article-title>Exploring the evolutionary rate differences of party hub and date hub proteins in Saccharomyces cerevisiae protein-protein interaction network</article-title>. <source>Gene</source> <volume>429</volume>: <fpage>18</fpage>–<lpage>22</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Kim2">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>PM</given-names></name>, <name name-style="western"><surname>Sboner</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Xia</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>The role of disorder in interaction networks: a structural analysis</article-title>. <source>Mol Syst Biol</source> <volume>4</volume>: <fpage>179</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Pang1">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pang</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Xuan</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Sheng</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>X</given-names></name> (<year>2010</year>) <article-title>Understanding protein evolutionary rate by integrating gene co-expression with protein interactions</article-title>. <source>BMC Syst Biol</source> <volume>4</volume>: <fpage>179</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Patil1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patil</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kinoshita</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Nakamura</surname><given-names>H</given-names></name> (<year>2010</year>) <article-title>Hub promiscuity in protein-protein interaction networks</article-title>. <source>Int J Mol Sci</source> <volume>11</volume>: <fpage>1930</fpage>–<lpage>1943</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Han1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Han</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Bertin</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Hao</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Goldberg</surname><given-names>DS</given-names></name>, <name name-style="western"><surname>Berriz</surname><given-names>GF</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Evidence for dynamically organized modularity in the yeast protein-protein interaction network</article-title>. <source>Nature</source> <volume>430</volume>: <fpage>88</fpage>–<lpage>93</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Agarwal1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Agarwal</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Deane</surname><given-names>CM</given-names></name>, <name name-style="western"><surname>Porter</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>NS</given-names></name> (<year>2010</year>) <article-title>Revisiting date and party hubs: novel approaches to role assignment in protein interaction networks</article-title>. <source>PLoS Comput Biol</source> <volume>6</volume>: <fpage>e1000817</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Bertin1">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bertin</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Simonis</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Dupuy</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Cusick</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Han</surname><given-names>JD</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Confirmation of organized modularity in the yeast interactome</article-title>. <source>PLoS Biol</source> <volume>5</volume>: <fpage>e153</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Afridi1">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Afridi</surname><given-names>TH</given-names></name>, <name name-style="western"><surname>Khan</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>YS</given-names></name> (<year>2011</year>) <article-title>Mito-GSAAC: mitochondria prediction using genetic ensemble classifier and split amino acid composition</article-title>. <source>Amino Acids</source></mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Kar1">
+        <label>35</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kar</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Gursoy</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Keskin</surname><given-names>O</given-names></name> (<year>2009</year>) <article-title>Human cancer protein-protein interaction network: a structural perspective</article-title>. <source>PLoS Comput Biol</source> <volume>5</volume>: <fpage>e1000601</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Tsai1">
+        <label>36</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tsai</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2009</year>) <article-title>Protein-protein interaction networks: how can a hub protein bind so many different partners</article-title>? <source>Trends Biochem Sci</source> <volume>34</volume>: <fpage>594</fpage>–<lpage>600</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Kar2">
+        <label>37</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kar</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Kuzu</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Keskin</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Gursoy</surname><given-names>A</given-names></name> (<year>2012</year>) <article-title>Protein-protein interfaces integrated into interaction networks: implications on drug design</article-title>. <source>Curr Pharm Des</source></mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Jin1">
+        <label>38</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jin</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>XS</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>L</given-names></name> (<year>2007</year>) <article-title>Hubs with network motifs organize modularity dynamically in the protein-protein interaction network of yeast</article-title>. <source>PLoS One</source> <volume>2</volume>: <fpage>e1207</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Taylor1">
+        <label>39</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Taylor</surname><given-names>IW</given-names></name>, <name name-style="western"><surname>Linding</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Warde-Farley</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Pesquita</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Dynamic modularity in protein interaction networks predicts breast cancer outcome</article-title>. <source>Nat Biotechnol</source> <volume>27</volume>: <fpage>199</fpage>–<lpage>204</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Hsing1">
+        <label>40</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hsing</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Byler</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Cherkasov</surname><given-names>A</given-names></name> (<year>2009</year>) <article-title>Predicting highly-connected hubs in protein interaction networks by QSAR and biological data descriptors</article-title>. <source>Bioinformation</source> <volume>4</volume>: <fpage>164</fpage>–<lpage>168</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Nair1">
+        <label>41</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><collab xlink:type="simple">Nair MTaAS</collab> (<year>2009</year>) <article-title>Prediction and disorderliness of hub proteins</article-title>. <source>International Journal of Bioinformatics Research</source> <volume>1</volume>: <fpage>70</fpage>–<lpage>80</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Latha1">
+        <label>42</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Latha</surname><given-names>AB</given-names></name>, <name name-style="western"><surname>Nair</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Sivasankaran</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Dhar</surname><given-names>PK</given-names></name> (<year>2011</year>) <article-title>Identification of hub proteins from sequence</article-title>. <source>Bioinformation</source> <volume>7</volume>: <fpage>163</fpage>–<lpage>168</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Frank1">
+        <label>43</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frank</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Hall</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Trigg</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Holmes</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Witten</surname><given-names>IH</given-names></name> (<year>2004</year>) <article-title>Data mining in bioinformatics using Weka</article-title>. <source>Bioinformatics</source> <volume>20</volume>: <fpage>2479</fpage>–<lpage>2481</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Quinlan1">
+        <label>44</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Quinlan JR (1993) C4.5: Programs for Machine Learning. San Francisco, CA, USA: Morgan Kaufmann Publishers.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Platt1">
+        <label>45</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Platt J (1998) Fast training of support vector machines using sequential minimal optimization. In: Scholkopf B, Burges CJC, Smola AJ, editors. Advances in Kernel Methods - Support Vector Learning. Cambridge, MA, USA: MIT Press.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Vapnik1">
+        <label>46</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Vapnik V (1998) Statistical learning theory. New York, NY, USA: Wiley.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Andreeva1">
+        <label>47</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Andreeva</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Howorth</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Hubbard</surname><given-names>TJ</given-names></name>, <name name-style="western"><surname>Chothia</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>SCOP database in 2004: refinements integrate structure and sequence family data</article-title>. <source>Nucleic Acids Res</source> <volume>32</volume>: <fpage>D226</fpage>–<lpage>229</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Andreeva2">
+        <label>48</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Andreeva</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Howorth</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Chandonia</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Hubbard</surname><given-names>TJ</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Data growth and its impact on the SCOP database: new developments</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D419</fpage>–<lpage>425</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Finn1">
+        <label>49</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Finn</surname><given-names>RD</given-names></name>, <name name-style="western"><surname>Mistry</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Tate</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Coggill</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Heger</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>The Pfam protein families database</article-title>. <source>Nucleic Acids Res</source> <volume>38</volume>: <fpage>D211</fpage>–<lpage>222</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Stark1">
+        <label>50</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stark</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Breitkreutz</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Chatr-Aryamontri</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Boucher</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Oughtred</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>The BioGRID Interaction Database: 2011 update</article-title>. <source>Nucleic Acids Res</source> <volume>39</volume>: <fpage>D698</fpage>–<lpage>704</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Altschul1">
+        <label>51</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name>, <name name-style="western"><surname>Madden</surname><given-names>TL</given-names></name>, <name name-style="western"><surname>Schaffer</surname><given-names>AA</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>Z</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>Gapped BLAST and PSI-BLAST: a new generation of protein database search programs</article-title>. <source>Nucleic Acids Res</source> <volume>25</volume>: <fpage>3389</fpage>–<lpage>3402</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Ofran1">
+        <label>52</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ofran</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Rost</surname><given-names>B</given-names></name> (<year>2007</year>) <article-title>ISIS: interaction sites identified from sequence</article-title>. <source>Bioinformatics</source> <volume>23</volume>: <fpage>e13</fpage>–<lpage>16</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Xue1">
+        <label>53</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xue</surname><given-names>LC</given-names></name>, <name name-style="western"><surname>Dobbs</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Honavar</surname><given-names>V</given-names></name> (<year>2011</year>) <article-title>HomPPI: a class of sequence homology based protein-protein interface prediction methods</article-title>. <source>BMC Bioinformatics</source> <volume>12</volume>: <fpage>244</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Baker1">
+        <label>54</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baker</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>Proteomics: The interaction map</article-title>. <source>Nature</source> <volume>484</volume>: <fpage>271</fpage>–<lpage>275</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Liu2">
+        <label>55</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>KC</given-names></name>, <name name-style="western"><surname>Yuan</surname><given-names>S</given-names></name> (<year>2012</year>) <article-title>Human Protein-Protein Interaction Prediction by A Novel Sequence-Based Coevolution Method: Coevolutionary Divergence</article-title>. <source>Bioinformatics</source></mixed-citation>
+      </ref>
+      <ref id="pone.0056833-DeLasRivas1">
+        <label>56</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>De Las Rivas</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fontanillo</surname><given-names>C</given-names></name> (<year>2010</year>) <article-title>Protein-protein interactions essentials: key concepts to building and analyzing interactome networks</article-title>. <source>PLoS Comput Biol</source> <volume>6</volume>: <fpage>e1000807</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Liu3">
+        <label>57</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Jorissen</surname><given-names>RN</given-names></name>, <name name-style="western"><surname>Gilson</surname><given-names>MK</given-names></name> (<year>2007</year>) <article-title>BindingDB: a web-accessible database of experimentally determined protein-ligand binding affinities</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>D198</fpage>–<lpage>201</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Altschul2">
+        <label>58</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name>, <name name-style="western"><surname>Gish</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Miller</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name>, <name name-style="western"><surname>Lipman</surname><given-names>DJ</given-names></name> (<year>1990</year>) <article-title>Basic local alignment search tool</article-title>. <source>J Mol Biol</source> <volume>215</volume>: <fpage>403</fpage>–<lpage>410</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Mewes1">
+        <label>59</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mewes</surname><given-names>HW</given-names></name>, <name name-style="western"><surname>Frishman</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Guldener</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Mannhaupt</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Mayer</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>MIPS: a database for genomes and protein sequences</article-title>. <source>Nucleic Acids Res</source> <volume>30</volume>: <fpage>31</fpage>–<lpage>34</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Ito2">
+        <label>60</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ito</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tashiro</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Muta</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ozawa</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Chiba</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>Toward a protein-protein interaction map of the budding yeast: A comprehensive system to examine two-hybrid interactions in all possible combinations between the yeast proteins</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>97</volume>: <fpage>1143</fpage>–<lpage>1147</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Ho1">
+        <label>61</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ho</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Gruhler</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Heilbut</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Bader</surname><given-names>GD</given-names></name>, <name name-style="western"><surname>Moore</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Systematic identification of protein complexes in Saccharomyces cerevisiae by mass spectrometry</article-title>. <source>Nature</source> <volume>415</volume>: <fpage>180</fpage>–<lpage>183</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Gavin1">
+        <label>62</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gavin</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Bosche</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Krause</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Grandi</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Marzioch</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Functional organization of the yeast proteome by systematic analysis of protein complexes</article-title>. <source>Nature</source> <volume>415</volume>: <fpage>141</fpage>–<lpage>147</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Xenarios1">
+        <label>63</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xenarios</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Salwinski</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Duan</surname><given-names>XJ</given-names></name>, <name name-style="western"><surname>Higney</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>SM</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>DIP, the Database of Interacting Proteins: a research tool for studying cellular networks of protein interactions</article-title>. <source>Nucleic Acids Res</source> <volume>30</volume>: <fpage>303</fpage>–<lpage>305</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Bateman1">
+        <label>64</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bateman</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Birney</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Cerruti</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Durbin</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Etwiller</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>The Pfam protein families database</article-title>. <source>Nucleic Acids Res</source> <volume>30</volume>: <fpage>276</fpage>–<lpage>280</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Finn2">
+        <label>65</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Finn</surname><given-names>RD</given-names></name>, <name name-style="western"><surname>Marshall</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bateman</surname><given-names>A</given-names></name> (<year>2005</year>) <article-title>iPfam: visualization of protein-protein interactions in PDB at domain and amino acid resolutions</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>410</fpage>–<lpage>412</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Bader1">
+        <label>66</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bader</surname><given-names>GD</given-names></name>, <name name-style="western"><surname>Betel</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Hogue</surname><given-names>CW</given-names></name> (<year>2003</year>) <article-title>BIND: the Biomolecular Interaction Network Database</article-title>. <source>Nucleic Acids Res</source> <volume>31</volume>: <fpage>248</fpage>–<lpage>250</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Dandekar1">
+        <label>67</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dandekar</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Snel</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Huynen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bork</surname><given-names>P</given-names></name> (<year>1998</year>) <article-title>Conservation of gene order: a fingerprint of proteins that physically interact</article-title>. <source>Trends Biochem Sci</source> <volume>23</volume>: <fpage>324</fpage>–<lpage>328</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-FromontRacine1">
+        <label>68</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fromont-Racine</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Mayes</surname><given-names>AE</given-names></name>, <name name-style="western"><surname>Brunet-Simon</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Rain</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Colley</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>Genome-wide protein interaction screens reveal functional networks involving Sm-like proteins</article-title>. <source>Yeast</source> <volume>17</volume>: <fpage>95</fpage>–<lpage>110</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-FromontRacine2">
+        <label>69</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fromont-Racine</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Rain</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Legrain</surname><given-names>P</given-names></name> (<year>1997</year>) <article-title>Toward a functional analysis of the yeast genome through exhaustive two-hybrid screens</article-title>. <source>Nat Genet</source> <volume>16</volume>: <fpage>277</fpage>–<lpage>282</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Marcotte1">
+        <label>70</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marcotte</surname><given-names>EM</given-names></name>, <name name-style="western"><surname>Pellegrini</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Thompson</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Yeates</surname><given-names>TO</given-names></name>, <name name-style="western"><surname>Eisenberg</surname><given-names>D</given-names></name> (<year>1999</year>) <article-title>A combined algorithm for genome-wide prediction of protein function</article-title>. <source>Nature</source> <volume>402</volume>: <fpage>83</fpage>–<lpage>86</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-vonMering1">
+        <label>71</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>von Mering</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Krause</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Snel</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Cornell</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Oliver</surname><given-names>SG</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Comparative assessment of large-scale data sets of protein-protein interactions</article-title>. <source>Nature</source> <volume>417</volume>: <fpage>399</fpage>–<lpage>403</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-AndrewMccallum1">
+        <label>72</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Andrew Mccallum KN (1998) A Comparison of Event Models for Naive Bayes Text Classification. AAAI-98 Workshop on ‘Learning for Text Categorization’. pp. 41–48.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Andorf1">
+        <label>73</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Andorf</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Dobbs</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Honavar</surname><given-names>V</given-names></name> (<year>2007</year>) <article-title>Exploring inconsistencies in genome-wide protein function annotations: a machine learning approach</article-title>. <source>BMC Bioinformatics</source> <volume>8</volume>: <fpage>284</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Mitchell1">
+        <label>74</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Mitchell T (1997) Machine learning. New York, NY, USA: McGraw Hill.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Nash1">
+        <label>75</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nash</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Weng</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Hitz</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Balakrishnan</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Christie</surname><given-names>KR</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Expanded protein information at SGD: new pages and proteome browser</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>D468</fpage>–<lpage>471</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-McCulloch1">
+        <label>76</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McCulloch</surname><given-names>WS</given-names></name>, <name name-style="western"><surname>Pitts</surname><given-names>W</given-names></name> (<year>1990</year>) <article-title>A logical calculus of the ideas immanent in nervous activity. 1943</article-title>. <source>Bull Math Biol</source> <volume>52</volume>: <fpage>99</fpage>–<lpage>115; discussion 173–197</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Rosenblatt1">
+        <label>77</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Rosenblatt R (1962) Principles of Neurodynamics. New York: Spartan Books.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Baldi1">
+        <label>78</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baldi</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Brunak</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Chauvin</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Andersen</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Nielsen</surname><given-names>H</given-names></name> (<year>2000</year>) <article-title>Assessing the accuracy of prediction algorithms for classification: an overview</article-title>. <source>Bioinformatics</source> <volume>16</volume>: <fpage>412</fpage>–<lpage>424</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Ignatev1">
+        <label>79</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ignatev</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kravchenko</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Rak</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Goody</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Pylypenko</surname><given-names>O</given-names></name> (<year>2008</year>) <article-title>A structural model of the GDP dissociation inhibitor rab membrane extraction mechanism</article-title>. <source>J Biol Chem</source> <volume>283</volume>: <fpage>18377</fpage>–<lpage>18384</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Berman1">
+        <label>80</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Berman</surname><given-names>HM</given-names></name>, <name name-style="western"><surname>Battistuz</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Bhat</surname><given-names>TN</given-names></name>, <name name-style="western"><surname>Bluhm</surname><given-names>WF</given-names></name>, <name name-style="western"><surname>Bourne</surname><given-names>PE</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>The Protein Data Bank</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>58</volume>: <fpage>899</fpage>–<lpage>907</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Rak1">
+        <label>81</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rak</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pylypenko</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Durek</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Watzke</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kushnir</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>Structure of Rab GDP-dissociation inhibitor in complex with prenylated YPT1 GTPase</article-title>. <source>Science</source> <volume>302</volume>: <fpage>646</fpage>–<lpage>650</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0056833-Groll1">
+        <label>82</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Groll</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Schellenberg</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Bachmann</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Archer</surname><given-names>CR</given-names></name>, <name name-style="western"><surname>Huber</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>A plant pathogen virulence factor inhibits the eukaryotic proteasome by a novel mechanism</article-title>. <source>Nature</source> <volume>452</volume>: <fpage>755</fpage>–<lpage>758</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

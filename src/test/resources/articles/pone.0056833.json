@@ -1,0 +1,1123 @@
+{"doi":"info:doi/10.1371/journal.pone.0056833","title":
+  "Predicting the Binding Patterns of Hub Proteins: A Study Using Yeast Protein Interaction Networks",
+  "eIssn":"1932-6203","state":1,"archiveName":"pone.0056833.zip",
+  "description":
+  "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eProtein-protein interactions are critical to elucidating the role played by individual proteins in important biological pathways. Of particular interest are hub proteins that can interact with large numbers of partners and often play essential roles in cellular control. Depending on the number of binding sites, protein hubs can be classified at a structural level as singlish-interface hubs (SIH) with one or two binding sites, or multiple-interface hubs (MIH) with three or more binding sites. In terms of kinetics, hub proteins can be classified as date hubs (i.e., interact with different partners at different times or locations) or party hubs (i.e., simultaneously interact with multiple partners).\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology\u003c/title\u003e\u003cp\u003eOur approach works in 3 phases: Phase I classifies if a protein is likely to bind with another protein. Phase II determines if a protein-binding (PB) protein is a hub. Phase III classifies PB proteins as singlish-interface versus multiple-interface hubs and date versus party hubs. At each stage, we use sequence-based predictors trained using several standard machine learning techniques.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eOur method is able to predict whether a protein is a protein-binding protein with an accuracy of 94% and a correlation coefficient of 0.87; identify hubs from non-hubs with 100% accuracy for 30% of the data; distinguish date hubs/party hubs with 69% accuracy and area under ROC curve of 0.68; and SIH/MIH with 89% accuracy and area under ROC curve of 0.84. Because our method is based on sequence information alone, it can be used even in settings where reliable protein-protein interaction data or structures of protein-protein complexes are unavailable to obtain useful insights into the functional and evolutionary characteristics of proteins and their interactions.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eAvailability\u003c/title\u003e\u003cp\u003eWe provide a web server for our three-phase approach: \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://hybsvm.gdcb.iastate.edu\" xlink:type\u003d\"simple\"\u003ehttp://hybsvm.gdcb.iastate.edu\u003c/ext-link\u003e.\u003c/p\u003e\u003c/sec\u003e",
+  "rights":
+  ". This is an open-access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the Creative Commons CC0 public domain dedication.",
+  "language":"en","format":"text/xml","pages":"1-15","eLocationId":
+  "e56833","strkImgURI":"info:doi/10.1371/journal.pone.0056833.g006","date":
+  "Feb 19, 2013 12:00:00 AM","volume":"8","issue":"2","journal":"PLoS ONE",
+  "publisherLocation":"San Francisco, USA","publisherName":
+  "Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0056833","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0056833","extension":
+      "XML","contentType":"text/xml","title":
+      "Predicting the Binding Patterns of Hub Proteins: A Study Using Yeast Protein Interaction Networks",
+      "description":
+      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eProtein-protein interactions are critical to elucidating the role played by individual proteins in important biological pathways. Of particular interest are hub proteins that can interact with large numbers of partners and often play essential roles in cellular control. Depending on the number of binding sites, protein hubs can be classified at a structural level as singlish-interface hubs (SIH) with one or two binding sites, or multiple-interface hubs (MIH) with three or more binding sites. In terms of kinetics, hub proteins can be classified as date hubs (i.e., interact with different partners at different times or locations) or party hubs (i.e., simultaneously interact with multiple partners).\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology\u003c/title\u003e\u003cp\u003eOur approach works in 3 phases: Phase I classifies if a protein is likely to bind with another protein. Phase II determines if a protein-binding (PB) protein is a hub. Phase III classifies PB proteins as singlish-interface versus multiple-interface hubs and date versus party hubs. At each stage, we use sequence-based predictors trained using several standard machine learning techniques.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eOur method is able to predict whether a protein is a protein-binding protein with an accuracy of 94% and a correlation coefficient of 0.87; identify hubs from non-hubs with 100% accuracy for 30% of the data; distinguish date hubs/party hubs with 69% accuracy and area under ROC curve of 0.68; and SIH/MIH with 89% accuracy and area under ROC curve of 0.84. Because our method is based on sequence information alone, it can be used even in settings where reliable protein-protein interaction data or structures of protein-protein complexes are unavailable to obtain useful insights into the functional and evolutionary characteristics of proteins and their interactions.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eAvailability\u003c/title\u003e\u003cp\u003eWe provide a web server for our three-phase approach: \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://hybsvm.gdcb.iastate.edu\" xlink:type\u003d\"simple\"\u003ehttp://hybsvm.gdcb.iastate.edu\u003c/ext-link\u003e.\u003c/p\u003e\u003c/sec\u003e",
+      "size":190948},{"doi":"info:doi/10.1371/journal.pone.0056833",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Predicting the Binding Patterns of Hub Proteins: A Study Using Yeast Protein Interaction Networks",
+      "description":
+      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eProtein-protein interactions are critical to elucidating the role played by individual proteins in important biological pathways. Of particular interest are hub proteins that can interact with large numbers of partners and often play essential roles in cellular control. Depending on the number of binding sites, protein hubs can be classified at a structural level as singlish-interface hubs (SIH) with one or two binding sites, or multiple-interface hubs (MIH) with three or more binding sites. In terms of kinetics, hub proteins can be classified as date hubs (i.e., interact with different partners at different times or locations) or party hubs (i.e., simultaneously interact with multiple partners).\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology\u003c/title\u003e\u003cp\u003eOur approach works in 3 phases: Phase I classifies if a protein is likely to bind with another protein. Phase II determines if a protein-binding (PB) protein is a hub. Phase III classifies PB proteins as singlish-interface versus multiple-interface hubs and date versus party hubs. At each stage, we use sequence-based predictors trained using several standard machine learning techniques.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eOur method is able to predict whether a protein is a protein-binding protein with an accuracy of 94% and a correlation coefficient of 0.87; identify hubs from non-hubs with 100% accuracy for 30% of the data; distinguish date hubs/party hubs with 69% accuracy and area under ROC curve of 0.68; and SIH/MIH with 89% accuracy and area under ROC curve of 0.84. Because our method is based on sequence information alone, it can be used even in settings where reliable protein-protein interaction data or structures of protein-protein complexes are unavailable to obtain useful insights into the functional and evolutionary characteristics of proteins and their interactions.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eAvailability\u003c/title\u003e\u003cp\u003eWe provide a web server for our three-phase approach: \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://hybsvm.gdcb.iastate.edu\" xlink:type\u003d\"simple\"\u003ehttp://hybsvm.gdcb.iastate.edu\u003c/ext-link\u003e.\u003c/p\u003e\u003c/sec\u003e",
+      "size":997038},{"doi":"info:doi/10.1371/journal.pone.0056833.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eDescriptions of the singlish-date, singlish-party, multi-date, and multi-party classes.\u003c/title\u003e\u003cp\u003eDescriptions for each type of hub are described below. The rows of the table represent the singlish and multi-interface hub proteins. The columns represent the date and party hubs. The intersection of the column and row displays a picture showing examples of the type and number of interfaces involved for that class.\u003c/p\u003e",
+      "size":376312},{"doi":"info:doi/10.1371/journal.pone.0056833.g001",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eDescriptions of the singlish-date, singlish-party, multi-date, and multi-party classes.\u003c/title\u003e\u003cp\u003eDescriptions for each type of hub are described below. The rows of the table represent the singlish and multi-interface hub proteins. The columns represent the date and party hubs. The intersection of the column and row displays a picture showing examples of the type and number of interfaces involved for that class.\u003c/p\u003e",
+      "size":43912},{"doi":"info:doi/10.1371/journal.pone.0056833.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eDescriptions of the singlish-date, singlish-party, multi-date, and multi-party classes.\u003c/title\u003e\u003cp\u003eDescriptions for each type of hub are described below. The rows of the table represent the singlish and multi-interface hub proteins. The columns represent the date and party hubs. The intersection of the column and row displays a picture showing examples of the type and number of interfaces involved for that class.\u003c/p\u003e",
+      "size":14761},{"doi":"info:doi/10.1371/journal.pone.0056833.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eDescriptions of the singlish-date, singlish-party, multi-date, and multi-party classes.\u003c/title\u003e\u003cp\u003eDescriptions for each type of hub are described below. The rows of the table represent the singlish and multi-interface hub proteins. The columns represent the date and party hubs. The intersection of the column and row displays a picture showing examples of the type and number of interfaces involved for that class.\u003c/p\u003e",
+      "size":90848},{"doi":"info:doi/10.1371/journal.pone.0056833.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eDescriptions of the singlish-date, singlish-party, multi-date, and multi-party classes.\u003c/title\u003e\u003cp\u003eDescriptions for each type of hub are described below. The rows of the table represent the singlish and multi-interface hub proteins. The columns represent the date and party hubs. The intersection of the column and row displays a picture showing examples of the type and number of interfaces involved for that class.\u003c/p\u003e",
+      "size":69913},{"doi":"info:doi/10.1371/journal.pone.0056833.t001",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 1","description":
+      "\u003ctitle\u003eProperties of singlish and multiple-interface yeast protein hubs.\u003c/title\u003e",
+      "size":160011},{"doi":"info:doi/10.1371/journal.pone.0056833.t001",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eProperties of singlish and multiple-interface yeast protein hubs.\u003c/title\u003e",
+      "size":5946},{"doi":"info:doi/10.1371/journal.pone.0056833.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eProperties of singlish and multiple-interface yeast protein hubs.\u003c/title\u003e",
+      "size":1817},{"doi":"info:doi/10.1371/journal.pone.0056833.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eProperties of singlish and multiple-interface yeast protein hubs.\u003c/title\u003e",
+      "size":13034},{"doi":"info:doi/10.1371/journal.pone.0056833.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eProperties of singlish and multiple-interface yeast protein hubs.\u003c/title\u003e",
+      "size":30140},{"doi":"info:doi/10.1371/journal.pone.0056833.t002",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 2","description":
+      "\u003ctitle\u003eProperties of date and party yeast protein hubs.\u003c/title\u003e",
+      "size":170319},{"doi":"info:doi/10.1371/journal.pone.0056833.t002",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eProperties of date and party yeast protein hubs.\u003c/title\u003e",
+      "size":7875},{"doi":"info:doi/10.1371/journal.pone.0056833.t002",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eProperties of date and party yeast protein hubs.\u003c/title\u003e",
+      "size":1947},{"doi":"info:doi/10.1371/journal.pone.0056833.t002",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eProperties of date and party yeast protein hubs.\u003c/title\u003e",
+      "size":19105},{"doi":"info:doi/10.1371/journal.pone.0056833.t002",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eProperties of date and party yeast protein hubs.\u003c/title\u003e",
+      "size":36083},{"doi":"info:doi/10.1371/journal.pone.0056833.g002",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThree-phase method to predict protein-binding proteins, hub proteins, singlish interface/multiple interface (SIH/MIH), and Date/Party hubs.\u003c/title\u003e\u003cp\u003ePhase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein in Phase I, that protein is further classified in Phase II and Phase III. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence and if that protein is likely to be a hub protein. Phase III applies methods for predicting both structural (singlish vs. multiple) and kinetic (date vs. party) classifications of protein hub proteins. All methods for each of the three phases make predictions from sequence alone.\u003c/p\u003e",
+      "size":111460},{"doi":"info:doi/10.1371/journal.pone.0056833.g002",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThree-phase method to predict protein-binding proteins, hub proteins, singlish interface/multiple interface (SIH/MIH), and Date/Party hubs.\u003c/title\u003e\u003cp\u003ePhase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein in Phase I, that protein is further classified in Phase II and Phase III. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence and if that protein is likely to be a hub protein. Phase III applies methods for predicting both structural (singlish vs. multiple) and kinetic (date vs. party) classifications of protein hub proteins. All methods for each of the three phases make predictions from sequence alone.\u003c/p\u003e",
+      "size":27645},{"doi":"info:doi/10.1371/journal.pone.0056833.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThree-phase method to predict protein-binding proteins, hub proteins, singlish interface/multiple interface (SIH/MIH), and Date/Party hubs.\u003c/title\u003e\u003cp\u003ePhase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein in Phase I, that protein is further classified in Phase II and Phase III. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence and if that protein is likely to be a hub protein. Phase III applies methods for predicting both structural (singlish vs. multiple) and kinetic (date vs. party) classifications of protein hub proteins. All methods for each of the three phases make predictions from sequence alone.\u003c/p\u003e",
+      "size":12537},{"doi":"info:doi/10.1371/journal.pone.0056833.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThree-phase method to predict protein-binding proteins, hub proteins, singlish interface/multiple interface (SIH/MIH), and Date/Party hubs.\u003c/title\u003e\u003cp\u003ePhase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein in Phase I, that protein is further classified in Phase II and Phase III. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence and if that protein is likely to be a hub protein. Phase III applies methods for predicting both structural (singlish vs. multiple) and kinetic (date vs. party) classifications of protein hub proteins. All methods for each of the three phases make predictions from sequence alone.\u003c/p\u003e",
+      "size":51848},{"doi":"info:doi/10.1371/journal.pone.0056833.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eThree-phase method to predict protein-binding proteins, hub proteins, singlish interface/multiple interface (SIH/MIH), and Date/Party hubs.\u003c/title\u003e\u003cp\u003ePhase I predicts if a protein physically binds with other proteins (protein-binding (PB) versus non-protein-binding (NPB)). If a protein is predicted to be a PB protein in Phase I, that protein is further classified in Phase II and Phase III. Phase II uses sequence similarity to determine the potential number of interaction sites for the input sequence and if that protein is likely to be a hub protein. Phase III applies methods for predicting both structural (singlish vs. multiple) and kinetic (date vs. party) classifications of protein hub proteins. All methods for each of the three phases make predictions from sequence alone.\u003c/p\u003e",
+      "size":24540},{"doi":"info:doi/10.1371/journal.pone.0056833.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eHybSVM method.\u003c/title\u003e\u003cp\u003e\u003citalic\u003eHybSVM\u003c/italic\u003e is a two-stage machine learning method. The first step of the algorithm is to convert sequence data into a composition-based data representation (monomer, dimer, trimer, and tetramer). These four new data representations are used as inputs to 7 machine learning algorithms based on the NB(k) and NB k-gram approaches (Stage 1). An eighth method based on PSI-BLAST is applied to the original sequence data. The outputs of each of the eight outputs are converted into a binary vector of length 8. The resulting vector is used as input to a SVM to produce the final output (Stage 2).\u003c/p\u003e",
+      "size":360482},{"doi":"info:doi/10.1371/journal.pone.0056833.g003",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eHybSVM method.\u003c/title\u003e\u003cp\u003e\u003citalic\u003eHybSVM\u003c/italic\u003e is a two-stage machine learning method. The first step of the algorithm is to convert sequence data into a composition-based data representation (monomer, dimer, trimer, and tetramer). These four new data representations are used as inputs to 7 machine learning algorithms based on the NB(k) and NB k-gram approaches (Stage 1). An eighth method based on PSI-BLAST is applied to the original sequence data. The outputs of each of the eight outputs are converted into a binary vector of length 8. The resulting vector is used as input to a SVM to produce the final output (Stage 2).\u003c/p\u003e",
+      "size":42578},{"doi":"info:doi/10.1371/journal.pone.0056833.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eHybSVM method.\u003c/title\u003e\u003cp\u003e\u003citalic\u003eHybSVM\u003c/italic\u003e is a two-stage machine learning method. The first step of the algorithm is to convert sequence data into a composition-based data representation (monomer, dimer, trimer, and tetramer). These four new data representations are used as inputs to 7 machine learning algorithms based on the NB(k) and NB k-gram approaches (Stage 1). An eighth method based on PSI-BLAST is applied to the original sequence data. The outputs of each of the eight outputs are converted into a binary vector of length 8. The resulting vector is used as input to a SVM to produce the final output (Stage 2).\u003c/p\u003e",
+      "size":15539},{"doi":"info:doi/10.1371/journal.pone.0056833.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eHybSVM method.\u003c/title\u003e\u003cp\u003e\u003citalic\u003eHybSVM\u003c/italic\u003e is a two-stage machine learning method. The first step of the algorithm is to convert sequence data into a composition-based data representation (monomer, dimer, trimer, and tetramer). These four new data representations are used as inputs to 7 machine learning algorithms based on the NB(k) and NB k-gram approaches (Stage 1). An eighth method based on PSI-BLAST is applied to the original sequence data. The outputs of each of the eight outputs are converted into a binary vector of length 8. The resulting vector is used as input to a SVM to produce the final output (Stage 2).\u003c/p\u003e",
+      "size":85015},{"doi":"info:doi/10.1371/journal.pone.0056833.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eHybSVM method.\u003c/title\u003e\u003cp\u003e\u003citalic\u003eHybSVM\u003c/italic\u003e is a two-stage machine learning method. The first step of the algorithm is to convert sequence data into a composition-based data representation (monomer, dimer, trimer, and tetramer). These four new data representations are used as inputs to 7 machine learning algorithms based on the NB(k) and NB k-gram approaches (Stage 1). An eighth method based on PSI-BLAST is applied to the original sequence data. The outputs of each of the eight outputs are converted into a binary vector of length 8. The resulting vector is used as input to a SVM to produce the final output (Stage 2).\u003c/p\u003e",
+      "size":73340},{"doi":"info:doi/10.1371/journal.pone.0056833.g004",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReceiver-operator characteristics (ROC) curve for Datasets 1, 3, and 4.\u003c/title\u003e\u003cp\u003eThe curve describes the tradeoff between sensitivity and specificity at different thresholds for various predictors. A simple domain-based method is included as a baseline for comparison. The figure includes ROC curves for protein-binding (PB) versus non-protein-binding (NPB), singlish-interface versus multi-interface hub proteins, and date versus party hub proteins.\u003c/p\u003e",
+      "size":1312790},{"doi":"info:doi/10.1371/journal.pone.0056833.g004",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReceiver-operator characteristics (ROC) curve for Datasets 1, 3, and 4.\u003c/title\u003e\u003cp\u003eThe curve describes the tradeoff between sensitivity and specificity at different thresholds for various predictors. A simple domain-based method is included as a baseline for comparison. The figure includes ROC curves for protein-binding (PB) versus non-protein-binding (NPB), singlish-interface versus multi-interface hub proteins, and date versus party hub proteins.\u003c/p\u003e",
+      "size":85530},{"doi":"info:doi/10.1371/journal.pone.0056833.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReceiver-operator characteristics (ROC) curve for Datasets 1, 3, and 4.\u003c/title\u003e\u003cp\u003eThe curve describes the tradeoff between sensitivity and specificity at different thresholds for various predictors. A simple domain-based method is included as a baseline for comparison. The figure includes ROC curves for protein-binding (PB) versus non-protein-binding (NPB), singlish-interface versus multi-interface hub proteins, and date versus party hub proteins.\u003c/p\u003e",
+      "size":17795},{"doi":"info:doi/10.1371/journal.pone.0056833.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReceiver-operator characteristics (ROC) curve for Datasets 1, 3, and 4.\u003c/title\u003e\u003cp\u003eThe curve describes the tradeoff between sensitivity and specificity at different thresholds for various predictors. A simple domain-based method is included as a baseline for comparison. The figure includes ROC curves for protein-binding (PB) versus non-protein-binding (NPB), singlish-interface versus multi-interface hub proteins, and date versus party hub proteins.\u003c/p\u003e",
+      "size":156245},{"doi":"info:doi/10.1371/journal.pone.0056833.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReceiver-operator characteristics (ROC) curve for Datasets 1, 3, and 4.\u003c/title\u003e\u003cp\u003eThe curve describes the tradeoff between sensitivity and specificity at different thresholds for various predictors. A simple domain-based method is included as a baseline for comparison. The figure includes ROC curves for protein-binding (PB) versus non-protein-binding (NPB), singlish-interface versus multi-interface hub proteins, and date versus party hub proteins.\u003c/p\u003e",
+      "size":949291},{"doi":"info:doi/10.1371/journal.pone.0056833.t003",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 3","description":
+      "\u003ctitle\u003eDataset 1 (protein-binding vs. non-protein-binding, i.e. PB vs. NPB) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":267743},{"doi":"info:doi/10.1371/journal.pone.0056833.t003",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eDataset 1 (protein-binding vs. non-protein-binding, i.e. PB vs. NPB) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":12978},{"doi":"info:doi/10.1371/journal.pone.0056833.t003",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eDataset 1 (protein-binding vs. non-protein-binding, i.e. PB vs. NPB) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":2455},{"doi":"info:doi/10.1371/journal.pone.0056833.t003",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eDataset 1 (protein-binding vs. non-protein-binding, i.e. PB vs. NPB) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":31510},{"doi":"info:doi/10.1371/journal.pone.0056833.t003",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 3","description":
+      "\u003ctitle\u003eDataset 1 (protein-binding vs. non-protein-binding, i.e. PB vs. NPB) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":69115},{"doi":"info:doi/10.1371/journal.pone.0056833.t004",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 4","description":
+      "\u003ctitle\u003eDataset 3 (SIH vs. MIH) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":267335},{"doi":"info:doi/10.1371/journal.pone.0056833.t004",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eDataset 3 (SIH vs. MIH) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":13018},{"doi":"info:doi/10.1371/journal.pone.0056833.t004",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eDataset 3 (SIH vs. MIH) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":2464},{"doi":"info:doi/10.1371/journal.pone.0056833.t004",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eDataset 3 (SIH vs. MIH) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":31672},{"doi":"info:doi/10.1371/journal.pone.0056833.t004",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 4","description":
+      "\u003ctitle\u003eDataset 3 (SIH vs. MIH) prediction results from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":69387},{"doi":"info:doi/10.1371/journal.pone.0056833.t005",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 5","description":
+      "\u003ctitle\u003eDetails for misclassified proteins in Dataset 3 using HybSVM.\u003c/title\u003e",
+      "size":419795},{"doi":"info:doi/10.1371/journal.pone.0056833.t005",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eDetails for misclassified proteins in Dataset 3 using HybSVM.\u003c/title\u003e",
+      "size":17742},{"doi":"info:doi/10.1371/journal.pone.0056833.t005",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eDetails for misclassified proteins in Dataset 3 using HybSVM.\u003c/title\u003e",
+      "size":2956},{"doi":"info:doi/10.1371/journal.pone.0056833.t005",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eDetails for misclassified proteins in Dataset 3 using HybSVM.\u003c/title\u003e",
+      "size":42406},{"doi":"info:doi/10.1371/journal.pone.0056833.t005",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 5","description":
+      "\u003ctitle\u003eDetails for misclassified proteins in Dataset 3 using HybSVM.\u003c/title\u003e",
+      "size":96285},{"doi":"info:doi/10.1371/journal.pone.0056833.t006",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 6","description":
+      "\u003ctitle\u003eDataset 4 (Date vs. Party hubs) predictions from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":266943},{"doi":"info:doi/10.1371/journal.pone.0056833.t006",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 6","description":
+      "\u003ctitle\u003eDataset 4 (Date vs. Party hubs) predictions from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":12990},{"doi":"info:doi/10.1371/journal.pone.0056833.t006",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 6","description":
+      "\u003ctitle\u003eDataset 4 (Date vs. Party hubs) predictions from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":2449},{"doi":"info:doi/10.1371/journal.pone.0056833.t006",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 6","description":
+      "\u003ctitle\u003eDataset 4 (Date vs. Party hubs) predictions from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":31687},{"doi":"info:doi/10.1371/journal.pone.0056833.t006",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 6","description":
+      "\u003ctitle\u003eDataset 4 (Date vs. Party hubs) predictions from classifiers trained using machine learning methods.\u003c/title\u003e",
+      "size":69445},{"doi":"info:doi/10.1371/journal.pone.0056833.g005",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVenn-diagram for Dataset 3 and Dataset 4.\u003c/title\u003e\u003cp\u003eEach of the 272 hub proteins belong to one or more of the following classes: singlish, multi, date, party. Dataset 3 consists of 35 singlish hub proteins and 120 multi hub proteins (Yellow circles). Dataset 4 consists of 91 date hub proteins and 108 party hub proteins (Blue circles). Please see text for more details about the datasets.\u003c/p\u003e",
+      "size":186550},{"doi":"info:doi/10.1371/journal.pone.0056833.g005",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVenn-diagram for Dataset 3 and Dataset 4.\u003c/title\u003e\u003cp\u003eEach of the 272 hub proteins belong to one or more of the following classes: singlish, multi, date, party. Dataset 3 consists of 35 singlish hub proteins and 120 multi hub proteins (Yellow circles). Dataset 4 consists of 91 date hub proteins and 108 party hub proteins (Blue circles). Please see text for more details about the datasets.\u003c/p\u003e",
+      "size":39359},{"doi":"info:doi/10.1371/journal.pone.0056833.g005",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVenn-diagram for Dataset 3 and Dataset 4.\u003c/title\u003e\u003cp\u003eEach of the 272 hub proteins belong to one or more of the following classes: singlish, multi, date, party. Dataset 3 consists of 35 singlish hub proteins and 120 multi hub proteins (Yellow circles). Dataset 4 consists of 91 date hub proteins and 108 party hub proteins (Blue circles). Please see text for more details about the datasets.\u003c/p\u003e",
+      "size":14474},{"doi":"info:doi/10.1371/journal.pone.0056833.g005",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVenn-diagram for Dataset 3 and Dataset 4.\u003c/title\u003e\u003cp\u003eEach of the 272 hub proteins belong to one or more of the following classes: singlish, multi, date, party. Dataset 3 consists of 35 singlish hub proteins and 120 multi hub proteins (Yellow circles). Dataset 4 consists of 91 date hub proteins and 108 party hub proteins (Blue circles). Please see text for more details about the datasets.\u003c/p\u003e",
+      "size":75391},{"doi":"info:doi/10.1371/journal.pone.0056833.g005",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVenn-diagram for Dataset 3 and Dataset 4.\u003c/title\u003e\u003cp\u003eEach of the 272 hub proteins belong to one or more of the following classes: singlish, multi, date, party. Dataset 3 consists of 35 singlish hub proteins and 120 multi hub proteins (Yellow circles). Dataset 4 consists of 91 date hub proteins and 108 party hub proteins (Blue circles). Please see text for more details about the datasets.\u003c/p\u003e",
+      "size":45197},{"doi":"info:doi/10.1371/journal.pone.0056833.g006",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eExample of a singlish-interface date and multi-party hub proteins.\u003c/title\u003e\u003cp\u003eImages A and B show the quaternary structure for the singlish-date protein Rab GDP dissociation inhibitor alpha (GDI1, YER136W) binding with two different proteins. Image C shows the quaternary structure for the yeast protein beta 6 subunit of the 20S proteasome (PRE7, YBL041W) binding with multiple proteins at the same time. \u003cbold\u003eA:\u003c/bold\u003e GDI1 (green) binding with GTP-binding protein YPT31/YPT8 (purple). PDB ID of the complex: 3cpj \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Ignatev1\"\u003e[79]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e. \u003cbold\u003eB:\u003c/bold\u003e GDI1 (green) binding with GTP-binding proteinYPT1 (yellow). PDB ID of the complex: 1ukv \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Rak1\"\u003e[81]\u003c/xref\u003e. The protein binds at one location (singlish-interface) with one partner at a time (date). \u003cbold\u003eC:\u003c/bold\u003e PRE7 (green) binds with PUP1 (orange), PUP3 (red), C5 (pink), PRE4 (purple). PDB ID of the complex: 3bdm \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Groll1\"\u003e[82]\u003c/xref\u003e. The protein binds at multiple locations (multi-interface) with many partners at same time (party).\u003c/p\u003e",
+      "size":1675414},{"doi":"info:doi/10.1371/journal.pone.0056833.g006",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eExample of a singlish-interface date and multi-party hub proteins.\u003c/title\u003e\u003cp\u003eImages A and B show the quaternary structure for the singlish-date protein Rab GDP dissociation inhibitor alpha (GDI1, YER136W) binding with two different proteins. Image C shows the quaternary structure for the yeast protein beta 6 subunit of the 20S proteasome (PRE7, YBL041W) binding with multiple proteins at the same time. \u003cbold\u003eA:\u003c/bold\u003e GDI1 (green) binding with GTP-binding protein YPT31/YPT8 (purple). PDB ID of the complex: 3cpj \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Ignatev1\"\u003e[79]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e. \u003cbold\u003eB:\u003c/bold\u003e GDI1 (green) binding with GTP-binding proteinYPT1 (yellow). PDB ID of the complex: 1ukv \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Rak1\"\u003e[81]\u003c/xref\u003e. The protein binds at one location (singlish-interface) with one partner at a time (date). \u003cbold\u003eC:\u003c/bold\u003e PRE7 (green) binds with PUP1 (orange), PUP3 (red), C5 (pink), PRE4 (purple). PDB ID of the complex: 3bdm \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Groll1\"\u003e[82]\u003c/xref\u003e. The protein binds at multiple locations (multi-interface) with many partners at same time (party).\u003c/p\u003e",
+      "size":146380},{"doi":"info:doi/10.1371/journal.pone.0056833.g006",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eExample of a singlish-interface date and multi-party hub proteins.\u003c/title\u003e\u003cp\u003eImages A and B show the quaternary structure for the singlish-date protein Rab GDP dissociation inhibitor alpha (GDI1, YER136W) binding with two different proteins. Image C shows the quaternary structure for the yeast protein beta 6 subunit of the 20S proteasome (PRE7, YBL041W) binding with multiple proteins at the same time. \u003cbold\u003eA:\u003c/bold\u003e GDI1 (green) binding with GTP-binding protein YPT31/YPT8 (purple). PDB ID of the complex: 3cpj \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Ignatev1\"\u003e[79]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e. \u003cbold\u003eB:\u003c/bold\u003e GDI1 (green) binding with GTP-binding proteinYPT1 (yellow). PDB ID of the complex: 1ukv \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Rak1\"\u003e[81]\u003c/xref\u003e. The protein binds at one location (singlish-interface) with one partner at a time (date). \u003cbold\u003eC:\u003c/bold\u003e PRE7 (green) binds with PUP1 (orange), PUP3 (red), C5 (pink), PRE4 (purple). PDB ID of the complex: 3bdm \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Groll1\"\u003e[82]\u003c/xref\u003e. The protein binds at multiple locations (multi-interface) with many partners at same time (party).\u003c/p\u003e",
+      "size":23840},{"doi":"info:doi/10.1371/journal.pone.0056833.g006",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eExample of a singlish-interface date and multi-party hub proteins.\u003c/title\u003e\u003cp\u003eImages A and B show the quaternary structure for the singlish-date protein Rab GDP dissociation inhibitor alpha (GDI1, YER136W) binding with two different proteins. Image C shows the quaternary structure for the yeast protein beta 6 subunit of the 20S proteasome (PRE7, YBL041W) binding with multiple proteins at the same time. \u003cbold\u003eA:\u003c/bold\u003e GDI1 (green) binding with GTP-binding protein YPT31/YPT8 (purple). PDB ID of the complex: 3cpj \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Ignatev1\"\u003e[79]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e. \u003cbold\u003eB:\u003c/bold\u003e GDI1 (green) binding with GTP-binding proteinYPT1 (yellow). PDB ID of the complex: 1ukv \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Rak1\"\u003e[81]\u003c/xref\u003e. The protein binds at one location (singlish-interface) with one partner at a time (date). \u003cbold\u003eC:\u003c/bold\u003e PRE7 (green) binds with PUP1 (orange), PUP3 (red), C5 (pink), PRE4 (purple). PDB ID of the complex: 3bdm \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Groll1\"\u003e[82]\u003c/xref\u003e. The protein binds at multiple locations (multi-interface) with many partners at same time (party).\u003c/p\u003e",
+      "size":452875},{"doi":"info:doi/10.1371/journal.pone.0056833.g006",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eExample of a singlish-interface date and multi-party hub proteins.\u003c/title\u003e\u003cp\u003eImages A and B show the quaternary structure for the singlish-date protein Rab GDP dissociation inhibitor alpha (GDI1, YER136W) binding with two different proteins. Image C shows the quaternary structure for the yeast protein beta 6 subunit of the 20S proteasome (PRE7, YBL041W) binding with multiple proteins at the same time. \u003cbold\u003eA:\u003c/bold\u003e GDI1 (green) binding with GTP-binding protein YPT31/YPT8 (purple). PDB ID of the complex: 3cpj \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Ignatev1\"\u003e[79]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e. \u003cbold\u003eB:\u003c/bold\u003e GDI1 (green) binding with GTP-binding proteinYPT1 (yellow). PDB ID of the complex: 1ukv \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Rak1\"\u003e[81]\u003c/xref\u003e. The protein binds at one location (singlish-interface) with one partner at a time (date). \u003cbold\u003eC:\u003c/bold\u003e PRE7 (green) binds with PUP1 (orange), PUP3 (red), C5 (pink), PRE4 (purple). PDB ID of the complex: 3bdm \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Berman1\"\u003e[80]\u003c/xref\u003e, \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0056833-Groll1\"\u003e[82]\u003c/xref\u003e. The protein binds at multiple locations (multi-interface) with many partners at same time (party).\u003c/p\u003e",
+      "size":1181344},{"doi":"info:doi/10.1371/journal.pone.0056833.s001",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Figure S1","description":
+      "\u003cp\u003e\u003cbold\u003eThe accuracy curve of predicting singlish-interface and multiple-interface hub proteins as a function of the number of interaction sites.\u003c/bold\u003e The curve shows the prediction accuracy for proteins with number of interactions sites less than the given maximum threshold. For example, the value of 5 on the x-axis refers to all hub proteins with 5 or fewer interfaces and the value on the curve (83%) at x \u003d 5, represents the accuracy of this set.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":112361},{"doi":"info:doi/10.1371/journal.pone.0056833.s002",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Figure S2","description":
+      "\u003cp\u003e\u003cbold\u003eThe sensitivity curve of predicting singlish-interface and multiple-interface hub proteins as a function of the number of interaction sites.\u003c/bold\u003e The curve shows the prediction accuracy for proteins with number of interactions sites more than the given minimum threshold. For example, the value of 5 on the x-axis refers to all hub proteins with 5 or more interfaces and the value on the curve (97%) at x \u003d 5, represents the sensitivity of this set.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":97777},{"doi":"info:doi/10.1371/journal.pone.0056833.s003",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S1","description":
+      "\u003cp\u003e\u003cbold\u003eAccuracy, precision, recall, and correlation coefficient (CC) of classification for the protein-binding versus non-protein-binding dataset are presented for internal machine learning methods.\u003c/bold\u003e For each machine learning approach, values of k ranged from 1 to 4. The performance of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":14991},{"doi":"info:doi/10.1371/journal.pone.0056833.s004",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S2","description":
+      "\u003cp\u003e\u003cbold\u003eAccuracy, precision, recall, and correlation coefficient (CC) of classification for the protein-binding versus non-protein-binding dataset are presented for standard machine learning methods.\u003c/bold\u003e For each machine learning approach, values of k ranged from 1 to 2. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":15021},{"doi":"info:doi/10.1371/journal.pone.0056833.s005",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S3","description":
+      "\u003cp\u003e\u003cbold\u003eAccuracy, precision, recall, and correlation coefficient (CC) of classification for the multi-interface versus singlish-interface dataset are presented for internal machine learning methods.\u003c/bold\u003e For each machine learning approach, values of k ranged from 1 to 4. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":15078},{"doi":"info:doi/10.1371/journal.pone.0056833.s006",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S4","description":
+      "\u003cp\u003e\u003cbold\u003eAccuracy, precision, recall, and correlation coefficient (CC) of classification for the multi-interface versus singlish-interface dataset are presented for standard machine learning methods.\u003c/bold\u003e For each machine learning approach, values of k ranged from 1 to 3. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":15179},{"doi":"info:doi/10.1371/journal.pone.0056833.s007",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S5","description":
+      "\u003cp\u003e\u003cbold\u003eAccuracy, precision, recall, and correlation coefficient (CC) of classification for the date versus party dataset are presented for internal machine learning methods.\u003c/bold\u003e For each machine learning approach, values of k ranged from 1 to 4. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":15029},{"doi":"info:doi/10.1371/journal.pone.0056833.s008",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S6","description":
+      "\u003cp\u003e\u003cbold\u003eAccuracy, precision, recall, and correlation coefficient (CC) of classification for the date versus party dataset are presented for standard machine learning methods.\u003c/bold\u003e For each machine learning approach, values of k ranged from 1 to 3. The performances of the results were estimated using cross-validation. The highest performing value(s) for each performance measure is highlighted in bold.\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":15292},{"doi":"info:doi/10.1371/journal.pone.0056833.s009",
+      "contextElement":"supplementary-material","extension":"DOCX",
+      "contentType":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title":"Table S7","description":
+      "\u003cp\u003e\n            \u003cbold\u003eThe formula for binary classification for each of our five performance measures is provided. \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eTP\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e, \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eTN\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e, \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eFP\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e, \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eFN\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e are the true positives, true negatives, false positives, and false negative predictions.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
+      "size":67319}],"citedArticles":[{"key":"1","year":2000,"displayYear":
+      "2000","volumeNumber":405,"volume":"405","title":
+      "Protein function in the post-genomic era","pages":"823-826",
+      "eLocationID":"823","journal":"Nature","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"D Eisenberg","givenNames":"D","surnames":
+          "Eisenberg","suffix":""},{"fullName":"EM Marcotte","givenNames":
+          "EM","surnames":"Marcotte","suffix":""},{"fullName":"I Xenarios",
+          "givenNames":"I","surnames":"Xenarios","suffix":""},{"fullName":
+          "TO Yeates","givenNames":"TO","surnames":"Yeates","suffix":""}],
+      "editors":[]},{"key":"2","year":2008,"displayYear":"2008",
+      "volumeNumber":322,"volume":"322","title":
+      "High-quality binary protein interaction map of the yeast interactome network",
+      "pages":"104-110","eLocationID":"104","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "H Yu","givenNames":"H","surnames":"Yu","suffix":""},{"fullName":
+          "P Braun","givenNames":"P","surnames":"Braun","suffix":""},{
+          "fullName":"MA Yildirim","givenNames":"MA","surnames":"Yildirim",
+          "suffix":""},{"fullName":"I Lemmens","givenNames":"I","surnames":
+          "Lemmens","suffix":""},{"fullName":"K Venkatesan","givenNames":
+          "K","surnames":"Venkatesan","suffix":""}],"editors":[]},{"key":
+      "3","year":2010,"displayYear":"2010","volumeNumber":470,"volume":
+      "470","title":"High-quality binary interactome mapping","pages":
+      "281-315","eLocationID":"281","journal":"Methods Enzymol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Dreze","givenNames":"M","surnames":"Dreze","suffix":""},{
+          "fullName":"D Monachello","givenNames":"D","surnames":
+          "Monachello","suffix":""},{"fullName":"C Lurin","givenNames":"C",
+          "surnames":"Lurin","suffix":""},{"fullName":"ME Cusick",
+          "givenNames":"ME","surnames":"Cusick","suffix":""},{"fullName":
+          "DE Hill","givenNames":"DE","surnames":"Hill","suffix":""}],
+      "editors":[]},{"key":"4","year":2000,"displayYear":"2000",
+      "volumeNumber":403,"volume":"403","title":
+      "A comprehensive analysis of protein-protein interactions in Saccharomyces cerevisiae",
+      "pages":"623-627","eLocationID":"623","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Uetz","givenNames":"P","surnames":"Uetz","suffix":""},{
+          "fullName":"L Giot","givenNames":"L","surnames":"Giot","suffix":
+          ""},{"fullName":"G Cagney","givenNames":"G","surnames":"Cagney",
+          "suffix":""},{"fullName":"TA Mansfield","givenNames":"TA",
+          "surnames":"Mansfield","suffix":""},{"fullName":"RS Judson",
+          "givenNames":"RS","surnames":"Judson","suffix":""}],"editors":[]},{
+      "key":"5","year":2001,"displayYear":"2001","volumeNumber":98,"volume":
+      "98","title":
+      "A comprehensive two-hybrid analysis to explore the yeast protein interactome",
+      "pages":"4569-4574","eLocationID":"4569","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Ito","givenNames":"T","surnames":"Ito","suffix":""},{"fullName":
+          "T Chiba","givenNames":"T","surnames":"Chiba","suffix":""},{
+          "fullName":"R Ozawa","givenNames":"R","surnames":"Ozawa","suffix":
+          ""},{"fullName":"M Yoshida","givenNames":"M","surnames":
+          "Yoshida","suffix":""},{"fullName":"M Hattori","givenNames":"M",
+          "surnames":"Hattori","suffix":""}],"editors":[]},{"key":"6","year":
+      2001,"displayYear":"2001","volumeNumber":24,"volume":"24","title":
+      "High-throughput yeast two-hybrid assays for large-scale protein interaction mapping",
+      "pages":"297-306","eLocationID":"297","journal":"Methods",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AJ Walhout","givenNames":"AJ","surnames":"Walhout","suffix":""},{
+          "fullName":"M Vidal","givenNames":"M","surnames":"Vidal","suffix":
+          ""}],"editors":[]},{"key":"7","year":2007,"displayYear":"2007",
+      "volumeNumber":3,"volume":"3","title":
+      "Where have all the interactions gone? Estimating the coverage of two-hybrid protein interaction maps",
+      "pages":"e214","eLocationID":"e214","journal":"PLoS Comput Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "H Huang","givenNames":"H","surnames":"Huang","suffix":""},{
+          "fullName":"BM Jedynak","givenNames":"BM","surnames":"Jedynak",
+          "suffix":""},{"fullName":"JS Bader","givenNames":"JS","surnames":
+          "Bader","suffix":""}],"editors":[]},{"key":"8","year":2009,
+      "displayYear":"2009","volumeNumber":6,"volume":"6","title":
+      "An empirical framework for binary interactome mapping","pages":
+      "83-90","eLocationID":"83","journal":"Nat Methods",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "K Venkatesan","givenNames":"K","surnames":"Venkatesan","suffix":
+          ""},{"fullName":"JF Rual","givenNames":"JF","surnames":"Rual",
+          "suffix":""},{"fullName":"A Vazquez","givenNames":"A","surnames":
+          "Vazquez","suffix":""},{"fullName":"U Stelzl","givenNames":"U",
+          "surnames":"Stelzl","suffix":""},{"fullName":"I Lemmens",
+          "givenNames":"I","surnames":"Lemmens","suffix":""}],"editors":[]},{
+      "key":"9","year":2012,"displayYear":"2012","volumeNumber":6,"volume":
+      "6","title":
+      "HINT: High-quality protein interactomes and their applications in understanding human disease",
+      "pages":"92","eLocationID":"92","journal":"BMC Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Das","givenNames":"J","surnames":"Das","suffix":""},{"fullName":
+          "H Yu","givenNames":"H","surnames":"Yu","suffix":""}],"editors":[]},
+    {"key":"10","year":2008,"displayYear":"2008","volumeNumber":36,"volume":
+      "36","title":
+      "Topological properties of protein interaction networks from a structural perspective",
+      "pages":"1398-1403","eLocationID":"1398","journal":
+      "Biochem Soc Trans","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Gursoy","givenNames":"A","surnames":"Gursoy","suffix":""},{
+          "fullName":"O Keskin","givenNames":"O","surnames":"Keskin",
+          "suffix":""},{"fullName":"R Nussinov","givenNames":"R","surnames":
+          "Nussinov","suffix":""}],"editors":[]},{"key":"11","year":2012,
+      "displayYear":"2012","title":
+      "Constructing structural networks of signaling pathways on the proteome scale",
+      "journal":"Curr Opin Struct Biol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"G Kuzu","givenNames":"G","surnames":"Kuzu",
+          "suffix":""},{"fullName":"O Keskin","givenNames":"O","surnames":
+          "Keskin","suffix":""},{"fullName":"A Gursoy","givenNames":"A",
+          "surnames":"Gursoy","suffix":""},{"fullName":"R Nussinov",
+          "givenNames":"R","surnames":"Nussinov","suffix":""}],"editors":[]},
+    {"key":"12","year":2007,"displayYear":"2007","volumeNumber":104,"volume":
+      "104","title":
+      "Nonnatural protein-protein interaction-pair design by key residues grafting",
+      "pages":"5330-5335","eLocationID":"5330","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Liu","givenNames":"S","surnames":"Liu","suffix":""},{"fullName":
+          "X Zhu","givenNames":"X","surnames":"Zhu","suffix":""},{"fullName":
+          "H Liang","givenNames":"H","surnames":"Liang","suffix":""},{
+          "fullName":"A Cao","givenNames":"A","surnames":"Cao","suffix":""},{
+          "fullName":"Z Chang","givenNames":"Z","surnames":"Chang","suffix":
+          ""}],"editors":[]},{"key":"13","year":2009,"displayYear":"2009",
+      "volumeNumber":458,"volume":"458","title":
+      "Design of protein-interaction specificity gives selective bZIP-binding peptides",
+      "pages":"859-864","eLocationID":"859","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Grigoryan","givenNames":"G","surnames":"Grigoryan","suffix":
+          ""},{"fullName":"AW Reinke","givenNames":"AW","surnames":
+          "Reinke","suffix":""},{"fullName":"AE Keating","givenNames":"AE",
+          "surnames":"Keating","suffix":""}],"editors":[]},{"key":"14",
+      "year":2011,"displayYear":"2011","volumeNumber":332,"volume":"332",
+      "title":
+      "Computational design of proteins targeting the conserved stem region of influenza hemagglutinin",
+      "pages":"816-821","eLocationID":"816","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SJ Fleishman","givenNames":"SJ","surnames":"Fleishman","suffix":
+          ""},{"fullName":"TA Whitehead","givenNames":"TA","surnames":
+          "Whitehead","suffix":""},{"fullName":"DC Ekiert","givenNames":
+          "DC","surnames":"Ekiert","suffix":""},{"fullName":"C Dreyfus",
+          "givenNames":"C","surnames":"Dreyfus","suffix":""},{"fullName":
+          "JE Corn","givenNames":"JE","surnames":"Corn","suffix":""}],
+      "editors":[]},{"key":"15","year":2010,"displayYear":"2010",
+      "volumeNumber":4,"volume":"4","title":
+      "Features analysis for identification of date and party hubs in protein interaction network of Saccharomyces Cerevisiae",
+      "pages":"172","eLocationID":"172","journal":"BMC Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Mirzarezaee","givenNames":"M","surnames":"Mirzarezaee","suffix":
+          ""},{"fullName":"BN Araabi","givenNames":"BN","surnames":
+          "Araabi","suffix":""},{"fullName":"M Sadeghi","givenNames":"M",
+          "surnames":"Sadeghi","suffix":""}],"editors":[]},{"key":"16",
+      "year":2006,"displayYear":"2006","volumeNumber":314,"volume":"314",
+      "title":
+      "Relating three-dimensional structures to protein networks provides evolutionary insights",
+      "pages":"1938-1941","eLocationID":"1938","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PM Kim","givenNames":"PM","surnames":"Kim","suffix":""},{
+          "fullName":"LJ Lu","givenNames":"LJ","surnames":"Lu","suffix":""},{
+          "fullName":"Y Xia","givenNames":"Y","surnames":"Xia","suffix":""},{
+          "fullName":"MB Gerstein","givenNames":"MB","surnames":"Gerstein",
+          "suffix":""}],"editors":[]},{"key":"17","year":2006,"displayYear":
+      "2006","volumeNumber":7,"volume":"7","title":
+      "What properties characterize the hub proteins of the protein-protein interaction network of Saccharomyces cerevisiae",
+      "pages":"R45","eLocationID":"R45","journal":"Genome Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Ekman","givenNames":"D","surnames":"Ekman","suffix":""},{
+          "fullName":"S Light","givenNames":"S","surnames":"Light","suffix":
+          ""},{"fullName":"AK Bjorklund","givenNames":"AK","surnames":
+          "Bjorklund","suffix":""},{"fullName":"A Elofsson","givenNames":
+          "A","surnames":"Elofsson","suffix":""}],"editors":[]},{"key":
+      "18","year":2009,"displayYear":"2009","volumeNumber":434,"volume":
+      "434","title":
+      "Evolutionary constraints on hub and non-hub proteins in human protein interaction network: insight from protein connectivity and intrinsic disorder",
+      "pages":"50-55","eLocationID":"50","journal":"Gene",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "B Manna","givenNames":"B","surnames":"Manna","suffix":""},{
+          "fullName":"T Bhattacharya","givenNames":"T","surnames":
+          "Bhattacharya","suffix":""},{"fullName":"B Kahali","givenNames":
+          "B","surnames":"Kahali","suffix":""},{"fullName":"TC Ghosh",
+          "givenNames":"TC","surnames":"Ghosh","suffix":""}],"editors":[]},{
+      "key":"19","year":2008,"displayYear":"2008","volumeNumber":108,
+      "volume":"108","title":
+      "Principles of protein-protein interactions: what are the preferred ways for proteins to interact",
+      "pages":"1225-1244","eLocationID":"1225","journal":"Chem Rev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "O Keskin","givenNames":"O","surnames":"Keskin","suffix":""},{
+          "fullName":"A Gursoy","givenNames":"A","surnames":"Gursoy",
+          "suffix":""},{"fullName":"B Ma","givenNames":"B","surnames":"Ma",
+          "suffix":""},{"fullName":"R Nussinov","givenNames":"R","surnames":
+          "Nussinov","suffix":""}],"editors":[]},{"key":"20","year":2001,
+      "displayYear":"2001","volumeNumber":411,"volume":"411","title":
+      "Lethality and centrality in protein networks","pages":"41-42",
+      "eLocationID":"41","journal":"Nature","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"H Jeong","givenNames":"H","surnames":"Jeong",
+          "suffix":""},{"fullName":"SP Mason","givenNames":"SP","surnames":
+          "Mason","suffix":""},{"fullName":"AL Barabasi","givenNames":"AL",
+          "surnames":"Barabasi","suffix":""},{"fullName":"ZN Oltvai",
+          "givenNames":"ZN","surnames":"Oltvai","suffix":""}],"editors":[]},{
+      "key":"21","year":2009,"displayYear":"2009","volumeNumber":5,"volume":
+      "5","title":"Information flow analysis of interactome networks",
+      "pages":"e1000350","eLocationID":"e1000350","journal":
+      "PLoS Comput Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PV Missiuro","givenNames":"PV","surnames":"Missiuro","suffix":
+          ""},{"fullName":"K Liu","givenNames":"K","surnames":"Liu","suffix":
+          ""},{"fullName":"L Zou","givenNames":"L","surnames":"Zou","suffix":
+          ""},{"fullName":"BC Ross","givenNames":"BC","surnames":"Ross",
+          "suffix":""},{"fullName":"G Zhao","givenNames":"G","surnames":
+          "Zhao","suffix":""}],"editors":[]},{"key":"22","year":2008,
+      "displayYear":"2008","volumeNumber":4,"volume":"4","title":
+      "Why do hubs in the yeast protein interaction network tend to be essential: reexamining the connection between the network topology and essentiality",
+      "pages":"e1000140","eLocationID":"e1000140","journal":
+      "PLoS Comput Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Zotenko","givenNames":"E","surnames":"Zotenko","suffix":""},{
+          "fullName":"J Mestre","givenNames":"J","surnames":"Mestre",
+          "suffix":""},{"fullName":"DP O\u0027Leary","givenNames":"DP",
+          "surnames":"O\u0027Leary","suffix":""},{"fullName":
+          "TM Przytycka","givenNames":"TM","surnames":"Przytycka","suffix":
+          ""}],"editors":[]},{"key":"23","year":2007,"displayYear":"2007",
+      "volumeNumber":3,"volume":"3","title":
+      "Characterization of protein hubs by inferring interacting motifs from protein interactions",
+      "pages":"1761-1771","eLocationID":"1761","journal":
+      "PLoS Comput Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Aragues","givenNames":"R","surnames":"Aragues","suffix":""},{
+          "fullName":"A Sali","givenNames":"A","surnames":"Sali","suffix":
+          ""},{"fullName":"J Bonet","givenNames":"J","surnames":"Bonet",
+          "suffix":""},{"fullName":"MA Marti-Renom","givenNames":"MA",
+          "surnames":"Marti-Renom","suffix":""},{"fullName":"B Oliva",
+          "givenNames":"B","surnames":"Oliva","suffix":""}],"editors":[]},{
+      "key":"24","year":2011,"displayYear":"2011","volumeNumber":12,"volume":
+      "12","title":
+      "Bringing order to protein disorder through comparative genomics and genetic interactions",
+      "pages":"R14","eLocationID":"R14","journal":"Genome Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Bellay","givenNames":"J","surnames":"Bellay","suffix":""},{
+          "fullName":"S Han","givenNames":"S","surnames":"Han","suffix":""},{
+          "fullName":"M Michaut","givenNames":"M","surnames":"Michaut",
+          "suffix":""},{"fullName":"T Kim","givenNames":"T","surnames":
+          "Kim","suffix":""},{"fullName":"M Costanzo","givenNames":"M",
+          "surnames":"Costanzo","suffix":""}],"editors":[]},{"key":"25",
+      "year":2010,"displayYear":"2010","volumeNumber":38,"volume":"38",
+      "title":"Analysis of hot region organization in hub proteins","pages":
+      "2068-2078","eLocationID":"2068","journal":"Ann Biomed Eng",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Cukuroglu","givenNames":"E","surnames":"Cukuroglu","suffix":
+          ""},{"fullName":"A Gursoy","givenNames":"A","surnames":"Gursoy",
+          "suffix":""},{"fullName":"O Keskin","givenNames":"O","surnames":
+          "Keskin","suffix":""}],"editors":[]},{"key":"26","year":2010,
+      "displayYear":"2010","volumeNumber":6,"volume":"6","title":
+      "Intrinsic disorder and protein multibinding in domain, terminal, and linker regions",
+      "pages":"1821-1828","eLocationID":"1821","journal":"Mol Biosyst",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JH Fong","givenNames":"JH","surnames":"Fong","suffix":""},{
+          "fullName":"AR Panchenko","givenNames":"AR","surnames":
+          "Panchenko","suffix":""}],"editors":[]},{"key":"27","year":2009,
+      "displayYear":"2009","volumeNumber":429,"volume":"429","title":
+      "Exploring the evolutionary rate differences of party hub and date hub proteins in Saccharomyces cerevisiae protein-protein interaction network",
+      "pages":"18-22","eLocationID":"18","journal":"Gene",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "B Kahali","givenNames":"B","surnames":"Kahali","suffix":""},{
+          "fullName":"S Ahmad","givenNames":"S","surnames":"Ahmad","suffix":
+          ""},{"fullName":"TC Ghosh","givenNames":"TC","surnames":"Ghosh",
+          "suffix":""}],"editors":[]},{"key":"28","year":2008,"displayYear":
+      "2008","volumeNumber":4,"volume":"4","title":
+      "The role of disorder in interaction networks: a structural analysis",
+      "pages":"179","eLocationID":"179","journal":"Mol Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PM Kim","givenNames":"PM","surnames":"Kim","suffix":""},{
+          "fullName":"A Sboner","givenNames":"A","surnames":"Sboner",
+          "suffix":""},{"fullName":"Y Xia","givenNames":"Y","surnames":
+          "Xia","suffix":""},{"fullName":"M Gerstein","givenNames":"M",
+          "surnames":"Gerstein","suffix":""}],"editors":[]},{"key":"29",
+      "year":2010,"displayYear":"2010","volumeNumber":4,"volume":"4","title":
+      
+      "Understanding protein evolutionary rate by integrating gene co-expression with protein interactions",
+      "pages":"179","eLocationID":"179","journal":"BMC Syst Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "K Pang","givenNames":"K","surnames":"Pang","suffix":""},{
+          "fullName":"C Cheng","givenNames":"C","surnames":"Cheng","suffix":
+          ""},{"fullName":"Z Xuan","givenNames":"Z","surnames":"Xuan",
+          "suffix":""},{"fullName":"H Sheng","givenNames":"H","surnames":
+          "Sheng","suffix":""},{"fullName":"X Ma","givenNames":"X",
+          "surnames":"Ma","suffix":""}],"editors":[]},{"key":"30","year":
+      2010,"displayYear":"2010","volumeNumber":11,"volume":"11","title":
+      "Hub promiscuity in protein-protein interaction networks","pages":
+      "1930-1943","eLocationID":"1930","journal":"Int J Mol Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Patil","givenNames":"A","surnames":"Patil","suffix":""},{
+          "fullName":"K Kinoshita","givenNames":"K","surnames":"Kinoshita",
+          "suffix":""},{"fullName":"H Nakamura","givenNames":"H","surnames":
+          "Nakamura","suffix":""}],"editors":[]},{"key":"31","year":2004,
+      "displayYear":"2004","volumeNumber":430,"volume":"430","title":
+      "Evidence for dynamically organized modularity in the yeast protein-protein interaction network",
+      "pages":"88-93","eLocationID":"88","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JD Han","givenNames":"JD","surnames":"Han","suffix":""},{
+          "fullName":"N Bertin","givenNames":"N","surnames":"Bertin",
+          "suffix":""},{"fullName":"T Hao","givenNames":"T","surnames":
+          "Hao","suffix":""},{"fullName":"DS Goldberg","givenNames":"DS",
+          "surnames":"Goldberg","suffix":""},{"fullName":"GF Berriz",
+          "givenNames":"GF","surnames":"Berriz","suffix":""}],"editors":[]},{
+      "key":"32","year":2010,"displayYear":"2010","volumeNumber":6,"volume":
+      "6","title":
+      "Revisiting date and party hubs: novel approaches to role assignment in protein interaction networks",
+      "pages":"e1000817","eLocationID":"e1000817","journal":
+      "PLoS Comput Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Agarwal","givenNames":"S","surnames":"Agarwal","suffix":""},{
+          "fullName":"CM Deane","givenNames":"CM","surnames":"Deane",
+          "suffix":""},{"fullName":"MA Porter","givenNames":"MA","surnames":
+          "Porter","suffix":""},{"fullName":"NS Jones","givenNames":"NS",
+          "surnames":"Jones","suffix":""}],"editors":[]},{"key":"33","year":
+      2007,"displayYear":"2007","volumeNumber":5,"volume":"5","title":
+      "Confirmation of organized modularity in the yeast interactome",
+      "pages":"e153","eLocationID":"e153","journal":"PLoS Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "N Bertin","givenNames":"N","surnames":"Bertin","suffix":""},{
+          "fullName":"N Simonis","givenNames":"N","surnames":"Simonis",
+          "suffix":""},{"fullName":"D Dupuy","givenNames":"D","surnames":
+          "Dupuy","suffix":""},{"fullName":"ME Cusick","givenNames":"ME",
+          "surnames":"Cusick","suffix":""},{"fullName":"JD Han","givenNames":
+          "JD","surnames":"Han","suffix":""}],"editors":[]},{"key":"34",
+      "year":2011,"displayYear":"2011","title":
+      "Mito-GSAAC: mitochondria prediction using genetic ensemble classifier and split amino acid composition",
+      "journal":"Amino Acids","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TH Afridi","givenNames":"TH","surnames":"Afridi","suffix":""},{
+          "fullName":"A Khan","givenNames":"A","surnames":"Khan","suffix":
+          ""},{"fullName":"YS Lee","givenNames":"YS","surnames":"Lee",
+          "suffix":""}],"editors":[]},{"key":"35","year":2009,"displayYear":
+      "2009","volumeNumber":5,"volume":"5","title":
+      "Human cancer protein-protein interaction network: a structural perspective",
+      "pages":"e1000601","eLocationID":"e1000601","journal":
+      "PLoS Comput Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Kar","givenNames":"G","surnames":"Kar","suffix":""},{"fullName":
+          "A Gursoy","givenNames":"A","surnames":"Gursoy","suffix":""},{
+          "fullName":"O Keskin","givenNames":"O","surnames":"Keskin",
+          "suffix":""}],"editors":[]},{"key":"36","year":2009,"displayYear":
+      "2009","volumeNumber":34,"volume":"34","title":
+      "Protein-protein interaction networks: how can a hub protein bind so many different partners",
+      "pages":"594-600","eLocationID":"594","journal":"Trends Biochem Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CJ Tsai","givenNames":"CJ","surnames":"Tsai","suffix":""},{
+          "fullName":"B Ma","givenNames":"B","surnames":"Ma","suffix":""},{
+          "fullName":"R Nussinov","givenNames":"R","surnames":"Nussinov",
+          "suffix":""}],"editors":[]},{"key":"37","year":2012,"displayYear":
+      "2012","title":
+      "Protein-protein interfaces integrated into interaction networks: implications on drug design",
+      "journal":"Curr Pharm Des","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Kar","givenNames":"G","surnames":"Kar","suffix":""},{"fullName":
+          "G Kuzu","givenNames":"G","surnames":"Kuzu","suffix":""},{
+          "fullName":"O Keskin","givenNames":"O","surnames":"Keskin",
+          "suffix":""},{"fullName":"A Gursoy","givenNames":"A","surnames":
+          "Gursoy","suffix":""}],"editors":[]},{"key":"38","year":2007,
+      "displayYear":"2007","volumeNumber":2,"volume":"2","title":
+      "Hubs with network motifs organize modularity dynamically in the protein-protein interaction network of yeast",
+      "pages":"e1207","eLocationID":"e1207","journal":"PLoS One",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Jin","givenNames":"G","surnames":"Jin","suffix":""},{"fullName":
+          "S Zhang","givenNames":"S","surnames":"Zhang","suffix":""},{
+          "fullName":"XS Zhang","givenNames":"XS","surnames":"Zhang",
+          "suffix":""},{"fullName":"L Chen","givenNames":"L","surnames":
+          "Chen","suffix":""}],"editors":[]},{"key":"39","year":2009,
+      "displayYear":"2009","volumeNumber":27,"volume":"27","title":
+      "Dynamic modularity in protein interaction networks predicts breast cancer outcome",
+      "pages":"199-204","eLocationID":"199","journal":"Nat Biotechnol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "IW Taylor","givenNames":"IW","surnames":"Taylor","suffix":""},{
+          "fullName":"R Linding","givenNames":"R","surnames":"Linding",
+          "suffix":""},{"fullName":"D Warde-Farley","givenNames":"D",
+          "surnames":"Warde-Farley","suffix":""},{"fullName":"Y Liu",
+          "givenNames":"Y","surnames":"Liu","suffix":""},{"fullName":
+          "C Pesquita","givenNames":"C","surnames":"Pesquita","suffix":""}],
+      "editors":[]},{"key":"40","year":2009,"displayYear":"2009",
+      "volumeNumber":4,"volume":"4","title":
+      "Predicting highly-connected hubs in protein interaction networks by QSAR and biological data descriptors",
+      "pages":"164-168","eLocationID":"164","journal":"Bioinformation",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Hsing","givenNames":"M","surnames":"Hsing","suffix":""},{
+          "fullName":"K Byler","givenNames":"K","surnames":"Byler","suffix":
+          ""},{"fullName":"A Cherkasov","givenNames":"A","surnames":
+          "Cherkasov","suffix":""}],"editors":[]},{"key":"41","year":2009,
+      "displayYear":"2009","volumeNumber":1,"volume":"1","title":
+      "Prediction and disorderliness of hub proteins","pages":"70-80",
+      "eLocationID":"70","journal":
+      "International Journal of Bioinformatics Research",
+      "collaborativeAuthors":["Nair MTaAS"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
+    {"key":"42","year":2011,"displayYear":"2011","volumeNumber":7,"volume":
+      "7","title":"Identification of hub proteins from sequence","pages":
+      "163-168","eLocationID":"163","journal":"Bioinformation",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AB Latha","givenNames":"AB","surnames":"Latha","suffix":""},{
+          "fullName":"AS Nair","givenNames":"AS","surnames":"Nair","suffix":
+          ""},{"fullName":"A Sivasankaran","givenNames":"A","surnames":
+          "Sivasankaran","suffix":""},{"fullName":"PK Dhar","givenNames":
+          "PK","surnames":"Dhar","suffix":""}],"editors":[]},{"key":"43",
+      "year":2004,"displayYear":"2004","volumeNumber":20,"volume":"20",
+      "title":"Data mining in bioinformatics using Weka","pages":
+      "2479-2481","eLocationID":"2479","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "E Frank","givenNames":"E","surnames":"Frank","suffix":""},{
+          "fullName":"M Hall","givenNames":"M","surnames":"Hall","suffix":
+          ""},{"fullName":"L Trigg","givenNames":"L","surnames":"Trigg",
+          "suffix":""},{"fullName":"G Holmes","givenNames":"G","surnames":
+          "Holmes","suffix":""},{"fullName":"IH Witten","givenNames":"IH",
+          "surnames":"Witten","suffix":""}],"editors":[]},{"key":"44",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"45","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"46","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"47","year":2004,"displayYear":"2004","volumeNumber":32,"volume":
+      "32","title":
+      "SCOP database in 2004: refinements integrate structure and sequence family data",
+      "pages":"D226-229","eLocationID":"D226","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Andreeva","givenNames":"A","surnames":"Andreeva","suffix":""},{
+          "fullName":"D Howorth","givenNames":"D","surnames":"Howorth",
+          "suffix":""},{"fullName":"SE Brenner","givenNames":"SE","surnames":
+          "Brenner","suffix":""},{"fullName":"TJ Hubbard","givenNames":
+          "TJ","surnames":"Hubbard","suffix":""},{"fullName":"C Chothia",
+          "givenNames":"C","surnames":"Chothia","suffix":""}],"editors":[]},{
+      "key":"48","year":2008,"displayYear":"2008","volumeNumber":36,"volume":
+      "36","title":
+      "Data growth and its impact on the SCOP database: new developments",
+      "pages":"D419-425","eLocationID":"D419","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Andreeva","givenNames":"A","surnames":"Andreeva","suffix":""},{
+          "fullName":"D Howorth","givenNames":"D","surnames":"Howorth",
+          "suffix":""},{"fullName":"JM Chandonia","givenNames":"JM",
+          "surnames":"Chandonia","suffix":""},{"fullName":"SE Brenner",
+          "givenNames":"SE","surnames":"Brenner","suffix":""},{"fullName":
+          "TJ Hubbard","givenNames":"TJ","surnames":"Hubbard","suffix":""}],
+      "editors":[]},{"key":"49","year":2010,"displayYear":"2010",
+      "volumeNumber":38,"volume":"38","title":
+      "The Pfam protein families database","pages":"D211-222","eLocationID":
+      "D211","journal":"Nucleic Acids Res","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"RD Finn","givenNames":"RD","surnames":"Finn",
+          "suffix":""},{"fullName":"J Mistry","givenNames":"J","surnames":
+          "Mistry","suffix":""},{"fullName":"J Tate","givenNames":"J",
+          "surnames":"Tate","suffix":""},{"fullName":"P Coggill",
+          "givenNames":"P","surnames":"Coggill","suffix":""},{"fullName":
+          "A Heger","givenNames":"A","surnames":"Heger","suffix":""}],
+      "editors":[]},{"key":"50","year":2011,"displayYear":"2011",
+      "volumeNumber":39,"volume":"39","title":
+      "The BioGRID Interaction Database: 2011 update","pages":"D698-704",
+      "eLocationID":"D698","journal":"Nucleic Acids Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Stark","givenNames":"C","surnames":"Stark","suffix":""},{
+          "fullName":"BJ Breitkreutz","givenNames":"BJ","surnames":
+          "Breitkreutz","suffix":""},{"fullName":"A Chatr-Aryamontri",
+          "givenNames":"A","surnames":"Chatr-Aryamontri","suffix":""},{
+          "fullName":"L Boucher","givenNames":"L","surnames":"Boucher",
+          "suffix":""},{"fullName":"R Oughtred","givenNames":"R","surnames":
+          "Oughtred","suffix":""}],"editors":[]},{"key":"51","year":1997,
+      "displayYear":"1997","volumeNumber":25,"volume":"25","title":
+      "Gapped BLAST and PSI-BLAST: a new generation of protein database search programs",
+      "pages":"3389-3402","eLocationID":"3389","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SF Altschul","givenNames":"SF","surnames":"Altschul","suffix":
+          ""},{"fullName":"TL Madden","givenNames":"TL","surnames":
+          "Madden","suffix":""},{"fullName":"AA Schaffer","givenNames":
+          "AA","surnames":"Schaffer","suffix":""},{"fullName":"J Zhang",
+          "givenNames":"J","surnames":"Zhang","suffix":""},{"fullName":
+          "Z Zhang","givenNames":"Z","surnames":"Zhang","suffix":""}],
+      "editors":[]},{"key":"52","year":2007,"displayYear":"2007",
+      "volumeNumber":23,"volume":"23","title":
+      "ISIS: interaction sites identified from sequence","pages":"e13-16",
+      "eLocationID":"e13","journal":"Bioinformatics","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"Y Ofran","givenNames":"Y","surnames":"Ofran",
+          "suffix":""},{"fullName":"B Rost","givenNames":"B","surnames":
+          "Rost","suffix":""}],"editors":[]},{"key":"53","year":2011,
+      "displayYear":"2011","volumeNumber":12,"volume":"12","title":
+      "HomPPI: a class of sequence homology based protein-protein interface prediction methods",
+      "pages":"244","eLocationID":"244","journal":"BMC Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "LC Xue","givenNames":"LC","surnames":"Xue","suffix":""},{
+          "fullName":"D Dobbs","givenNames":"D","surnames":"Dobbs","suffix":
+          ""},{"fullName":"V Honavar","givenNames":"V","surnames":
+          "Honavar","suffix":""}],"editors":[]},{"key":"54","year":2012,
+      "displayYear":"2012","volumeNumber":484,"volume":"484","title":
+      "Proteomics: The interaction map","pages":"271-275","eLocationID":
+      "271","journal":"Nature","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Baker","givenNames":"M","surnames":"Baker","suffix":""}],
+      "editors":[]},{"key":"55","year":2012,"displayYear":"2012","title":
+      "Human Protein-Protein Interaction Prediction by A Novel Sequence-Based Coevolution Method: Coevolutionary Divergence",
+      "journal":"Bioinformatics","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CH Liu","givenNames":"CH","surnames":"Liu","suffix":""},{
+          "fullName":"KC Li","givenNames":"KC","surnames":"Li","suffix":""},{
+          "fullName":"S Yuan","givenNames":"S","surnames":"Yuan","suffix":
+          ""}],"editors":[]},{"key":"56","year":2010,"displayYear":"2010",
+      "volumeNumber":6,"volume":"6","title":
+      "Protein-protein interactions essentials: key concepts to building and analyzing interactome networks",
+      "pages":"e1000807","eLocationID":"e1000807","journal":
+      "PLoS Comput Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J De Las Rivas","givenNames":"J","surnames":"De Las Rivas",
+          "suffix":""},{"fullName":"C Fontanillo","givenNames":"C",
+          "surnames":"Fontanillo","suffix":""}],"editors":[]},{"key":"57",
+      "year":2007,"displayYear":"2007","volumeNumber":35,"volume":"35",
+      "title":
+      "BindingDB: a web-accessible database of experimentally determined protein-ligand binding affinities",
+      "pages":"D198-201","eLocationID":"D198","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Liu","givenNames":"T","surnames":"Liu","suffix":""},{"fullName":
+          "Y Lin","givenNames":"Y","surnames":"Lin","suffix":""},{"fullName":
+          "X Wen","givenNames":"X","surnames":"Wen","suffix":""},{"fullName":
+          "RN Jorissen","givenNames":"RN","surnames":"Jorissen","suffix":
+          ""},{"fullName":"MK Gilson","givenNames":"MK","surnames":
+          "Gilson","suffix":""}],"editors":[]},{"key":"58","year":1990,
+      "displayYear":"1990","volumeNumber":215,"volume":"215","title":
+      "Basic local alignment search tool","pages":"403-410","eLocationID":
+      "403","journal":"J Mol Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SF Altschul","givenNames":"SF","surnames":"Altschul","suffix":
+          ""},{"fullName":"W Gish","givenNames":"W","surnames":"Gish",
+          "suffix":""},{"fullName":"W Miller","givenNames":"W","surnames":
+          "Miller","suffix":""},{"fullName":"EW Myers","givenNames":"EW",
+          "surnames":"Myers","suffix":""},{"fullName":"DJ Lipman",
+          "givenNames":"DJ","surnames":"Lipman","suffix":""}],"editors":[]},{
+      "key":"59","year":2002,"displayYear":"2002","volumeNumber":30,"volume":
+      "30","title":"MIPS: a database for genomes and protein sequences",
+      "pages":"31-34","eLocationID":"31","journal":"Nucleic Acids Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "HW Mewes","givenNames":"HW","surnames":"Mewes","suffix":""},{
+          "fullName":"D Frishman","givenNames":"D","surnames":"Frishman",
+          "suffix":""},{"fullName":"U Guldener","givenNames":"U","surnames":
+          "Guldener","suffix":""},{"fullName":"G Mannhaupt","givenNames":
+          "G","surnames":"Mannhaupt","suffix":""},{"fullName":"K Mayer",
+          "givenNames":"K","surnames":"Mayer","suffix":""}],"editors":[]},{
+      "key":"60","year":2000,"displayYear":"2000","volumeNumber":97,"volume":
+      "97","title":
+      "Toward a protein-protein interaction map of the budding yeast: A comprehensive system to examine two-hybrid interactions in all possible combinations between the yeast proteins",
+      "pages":"1143-1147","eLocationID":"1143","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Ito","givenNames":"T","surnames":"Ito","suffix":""},{"fullName":
+          "K Tashiro","givenNames":"K","surnames":"Tashiro","suffix":""},{
+          "fullName":"S Muta","givenNames":"S","surnames":"Muta","suffix":
+          ""},{"fullName":"R Ozawa","givenNames":"R","surnames":"Ozawa",
+          "suffix":""},{"fullName":"T Chiba","givenNames":"T","surnames":
+          "Chiba","suffix":""}],"editors":[]},{"key":"61","year":2002,
+      "displayYear":"2002","volumeNumber":415,"volume":"415","title":
+      "Systematic identification of protein complexes in Saccharomyces cerevisiae by mass spectrometry",
+      "pages":"180-183","eLocationID":"180","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "Y Ho","givenNames":"Y","surnames":"Ho","suffix":""},{"fullName":
+          "A Gruhler","givenNames":"A","surnames":"Gruhler","suffix":""},{
+          "fullName":"A Heilbut","givenNames":"A","surnames":"Heilbut",
+          "suffix":""},{"fullName":"GD Bader","givenNames":"GD","surnames":
+          "Bader","suffix":""},{"fullName":"L Moore","givenNames":"L",
+          "surnames":"Moore","suffix":""}],"editors":[]},{"key":"62","year":
+      2002,"displayYear":"2002","volumeNumber":415,"volume":"415","title":
+      "Functional organization of the yeast proteome by systematic analysis of protein complexes",
+      "pages":"141-147","eLocationID":"141","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AC Gavin","givenNames":"AC","surnames":"Gavin","suffix":""},{
+          "fullName":"M Bosche","givenNames":"M","surnames":"Bosche",
+          "suffix":""},{"fullName":"R Krause","givenNames":"R","surnames":
+          "Krause","suffix":""},{"fullName":"P Grandi","givenNames":"P",
+          "surnames":"Grandi","suffix":""},{"fullName":"M Marzioch",
+          "givenNames":"M","surnames":"Marzioch","suffix":""}],"editors":[]},
+    {"key":"63","year":2002,"displayYear":"2002","volumeNumber":30,"volume":
+      "30","title":
+      "DIP, the Database of Interacting Proteins: a research tool for studying cellular networks of protein interactions",
+      "pages":"303-305","eLocationID":"303","journal":"Nucleic Acids Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "I Xenarios","givenNames":"I","surnames":"Xenarios","suffix":""},{
+          "fullName":"L Salwinski","givenNames":"L","surnames":"Salwinski",
+          "suffix":""},{"fullName":"XJ Duan","givenNames":"XJ","surnames":
+          "Duan","suffix":""},{"fullName":"P Higney","givenNames":"P",
+          "surnames":"Higney","suffix":""},{"fullName":"SM Kim","givenNames":
+          "SM","surnames":"Kim","suffix":""}],"editors":[]},{"key":"64",
+      "year":2002,"displayYear":"2002","volumeNumber":30,"volume":"30",
+      "title":"The Pfam protein families database","pages":"276-280",
+      "eLocationID":"276","journal":"Nucleic Acids Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Bateman","givenNames":"A","surnames":"Bateman","suffix":""},{
+          "fullName":"E Birney","givenNames":"E","surnames":"Birney",
+          "suffix":""},{"fullName":"L Cerruti","givenNames":"L","surnames":
+          "Cerruti","suffix":""},{"fullName":"R Durbin","givenNames":"R",
+          "surnames":"Durbin","suffix":""},{"fullName":"L Etwiller",
+          "givenNames":"L","surnames":"Etwiller","suffix":""}],"editors":[]},
+    {"key":"65","year":2005,"displayYear":"2005","volumeNumber":21,"volume":
+      "21","title":
+      "iPfam: visualization of protein-protein interactions in PDB at domain and amino acid resolutions",
+      "pages":"410-412","eLocationID":"410","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RD Finn","givenNames":"RD","surnames":"Finn","suffix":""},{
+          "fullName":"M Marshall","givenNames":"M","surnames":"Marshall",
+          "suffix":""},{"fullName":"A Bateman","givenNames":"A","surnames":
+          "Bateman","suffix":""}],"editors":[]},{"key":"66","year":2003,
+      "displayYear":"2003","volumeNumber":31,"volume":"31","title":
+      "BIND: the Biomolecular Interaction Network Database","pages":
+      "248-250","eLocationID":"248","journal":"Nucleic Acids Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "GD Bader","givenNames":"GD","surnames":"Bader","suffix":""},{
+          "fullName":"D Betel","givenNames":"D","surnames":"Betel","suffix":
+          ""},{"fullName":"CW Hogue","givenNames":"CW","surnames":"Hogue",
+          "suffix":""}],"editors":[]},{"key":"67","year":1998,"displayYear":
+      "1998","volumeNumber":23,"volume":"23","title":
+      "Conservation of gene order: a fingerprint of proteins that physically interact",
+      "pages":"324-328","eLocationID":"324","journal":"Trends Biochem Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Dandekar","givenNames":"T","surnames":"Dandekar","suffix":""},{
+          "fullName":"B Snel","givenNames":"B","surnames":"Snel","suffix":
+          ""},{"fullName":"M Huynen","givenNames":"M","surnames":"Huynen",
+          "suffix":""},{"fullName":"P Bork","givenNames":"P","surnames":
+          "Bork","suffix":""}],"editors":[]},{"key":"68","year":2000,
+      "displayYear":"2000","volumeNumber":17,"volume":"17","title":
+      "Genome-wide protein interaction screens reveal functional networks involving Sm-like proteins",
+      "pages":"95-110","eLocationID":"95","journal":"Yeast",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Fromont-Racine","givenNames":"M","surnames":"Fromont-Racine",
+          "suffix":""},{"fullName":"AE Mayes","givenNames":"AE","surnames":
+          "Mayes","suffix":""},{"fullName":"A Brunet-Simon","givenNames":
+          "A","surnames":"Brunet-Simon","suffix":""},{"fullName":"JC Rain",
+          "givenNames":"JC","surnames":"Rain","suffix":""},{"fullName":
+          "A Colley","givenNames":"A","surnames":"Colley","suffix":""}],
+      "editors":[]},{"key":"69","year":1997,"displayYear":"1997",
+      "volumeNumber":16,"volume":"16","title":
+      "Toward a functional analysis of the yeast genome through exhaustive two-hybrid screens",
+      "pages":"277-282","eLocationID":"277","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Fromont-Racine","givenNames":"M","surnames":"Fromont-Racine",
+          "suffix":""},{"fullName":"JC Rain","givenNames":"JC","surnames":
+          "Rain","suffix":""},{"fullName":"P Legrain","givenNames":"P",
+          "surnames":"Legrain","suffix":""}],"editors":[]},{"key":"70",
+      "year":1999,"displayYear":"1999","volumeNumber":402,"volume":"402",
+      "title":
+      "A combined algorithm for genome-wide prediction of protein function",
+      "pages":"83-86","eLocationID":"83","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "EM Marcotte","givenNames":"EM","surnames":"Marcotte","suffix":
+          ""},{"fullName":"M Pellegrini","givenNames":"M","surnames":
+          "Pellegrini","suffix":""},{"fullName":"MJ Thompson","givenNames":
+          "MJ","surnames":"Thompson","suffix":""},{"fullName":"TO Yeates",
+          "givenNames":"TO","surnames":"Yeates","suffix":""},{"fullName":
+          "D Eisenberg","givenNames":"D","surnames":"Eisenberg","suffix":
+          ""}],"editors":[]},{"key":"71","year":2002,"displayYear":"2002",
+      "volumeNumber":417,"volume":"417","title":
+      "Comparative assessment of large-scale data sets of protein-protein interactions",
+      "pages":"399-403","eLocationID":"399","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C von Mering","givenNames":"C","surnames":"von Mering","suffix":
+          ""},{"fullName":"R Krause","givenNames":"R","surnames":"Krause",
+          "suffix":""},{"fullName":"B Snel","givenNames":"B","surnames":
+          "Snel","suffix":""},{"fullName":"M Cornell","givenNames":"M",
+          "surnames":"Cornell","suffix":""},{"fullName":"SG Oliver",
+          "givenNames":"SG","surnames":"Oliver","suffix":""}],"editors":[]},{
+      "key":"72","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"73","year":2007,"displayYear":"2007","volumeNumber":8,"volume":
+      "8","title":
+      "Exploring inconsistencies in genome-wide protein function annotations: a machine learning approach",
+      "pages":"284","eLocationID":"284","journal":"BMC Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Andorf","givenNames":"C","surnames":"Andorf","suffix":""},{
+          "fullName":"D Dobbs","givenNames":"D","surnames":"Dobbs","suffix":
+          ""},{"fullName":"V Honavar","givenNames":"V","surnames":
+          "Honavar","suffix":""}],"editors":[]},{"key":"74",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"75","year":2007,"displayYear":"2007","volumeNumber":35,"volume":
+      "35","title":
+      "Expanded protein information at SGD: new pages and proteome browser",
+      "pages":"D468-471","eLocationID":"D468","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "R Nash","givenNames":"R","surnames":"Nash","suffix":""},{
+          "fullName":"S Weng","givenNames":"S","surnames":"Weng","suffix":
+          ""},{"fullName":"B Hitz","givenNames":"B","surnames":"Hitz",
+          "suffix":""},{"fullName":"R Balakrishnan","givenNames":"R",
+          "surnames":"Balakrishnan","suffix":""},{"fullName":"KR Christie",
+          "givenNames":"KR","surnames":"Christie","suffix":""}],"editors":[]},
+    {"key":"76","year":1990,"displayYear":"1990","volumeNumber":52,"volume":
+      "52","title":
+      "A logical calculus of the ideas immanent in nervous activity. 1943",
+      "pages":"99-115; discussion 173–197","eLocationID":"99","journal":
+      "Bull Math Biol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "WS McCulloch","givenNames":"WS","surnames":"McCulloch","suffix":
+          ""},{"fullName":"W Pitts","givenNames":"W","surnames":"Pitts",
+          "suffix":""}],"editors":[]},{"key":"77","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[]},{"key":"78","year":2000,"displayYear":"2000",
+      "volumeNumber":16,"volume":"16","title":
+      "Assessing the accuracy of prediction algorithms for classification: an overview",
+      "pages":"412-424","eLocationID":"412","journal":"Bioinformatics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Baldi","givenNames":"P","surnames":"Baldi","suffix":""},{
+          "fullName":"S Brunak","givenNames":"S","surnames":"Brunak",
+          "suffix":""},{"fullName":"Y Chauvin","givenNames":"Y","surnames":
+          "Chauvin","suffix":""},{"fullName":"CA Andersen","givenNames":
+          "CA","surnames":"Andersen","suffix":""},{"fullName":"H Nielsen",
+          "givenNames":"H","surnames":"Nielsen","suffix":""}],"editors":[]},{
+      "key":"79","year":2008,"displayYear":"2008","volumeNumber":283,
+      "volume":"283","title":
+      "A structural model of the GDP dissociation inhibitor rab membrane extraction mechanism",
+      "pages":"18377-18384","eLocationID":"18377","journal":"J Biol Chem",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Ignatev","givenNames":"A","surnames":"Ignatev","suffix":""},{
+          "fullName":"S Kravchenko","givenNames":"S","surnames":
+          "Kravchenko","suffix":""},{"fullName":"A Rak","givenNames":"A",
+          "surnames":"Rak","suffix":""},{"fullName":"RS Goody","givenNames":
+          "RS","surnames":"Goody","suffix":""},{"fullName":"O Pylypenko",
+          "givenNames":"O","surnames":"Pylypenko","suffix":""}],"editors":[]},
+    {"key":"80","year":2002,"displayYear":"2002","volumeNumber":58,"volume":
+      "58","title":"The Protein Data Bank","pages":"899-907","eLocationID":
+      "899","journal":"Acta Crystallogr D Biol Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "HM Berman","givenNames":"HM","surnames":"Berman","suffix":""},{
+          "fullName":"T Battistuz","givenNames":"T","surnames":"Battistuz",
+          "suffix":""},{"fullName":"TN Bhat","givenNames":"TN","surnames":
+          "Bhat","suffix":""},{"fullName":"WF Bluhm","givenNames":"WF",
+          "surnames":"Bluhm","suffix":""},{"fullName":"PE Bourne",
+          "givenNames":"PE","surnames":"Bourne","suffix":""}],"editors":[]},{
+      "key":"81","year":2003,"displayYear":"2003","volumeNumber":302,
+      "volume":"302","title":
+      "Structure of Rab GDP-dissociation inhibitor in complex with prenylated YPT1 GTPase",
+      "pages":"646-650","eLocationID":"646","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Rak","givenNames":"A","surnames":"Rak","suffix":""},{"fullName":
+          "O Pylypenko","givenNames":"O","surnames":"Pylypenko","suffix":
+          ""},{"fullName":"T Durek","givenNames":"T","surnames":"Durek",
+          "suffix":""},{"fullName":"A Watzke","givenNames":"A","surnames":
+          "Watzke","suffix":""},{"fullName":"S Kushnir","givenNames":"S",
+          "surnames":"Kushnir","suffix":""}],"editors":[]},{"key":"82",
+      "year":2008,"displayYear":"2008","volumeNumber":452,"volume":"452",
+      "title":
+      "A plant pathogen virulence factor inhibits the eukaryotic proteasome by a novel mechanism",
+      "pages":"755-758","eLocationID":"755","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Groll","givenNames":"M","surnames":"Groll","suffix":""},{
+          "fullName":"B Schellenberg","givenNames":"B","surnames":
+          "Schellenberg","suffix":""},{"fullName":"AS Bachmann","givenNames":
+          "AS","surnames":"Bachmann","suffix":""},{"fullName":"CR Archer",
+          "givenNames":"CR","surnames":"Archer","suffix":""},{"fullName":
+          "R Huber","givenNames":"R","surnames":"Huber","suffix":""}],
+      "editors":[]}],"relatedArticles":[],"authors":[{"fullName":
+      "Carson M. Andorf","givenNames":"Carson M.","surnames":"Andorf",
+      "suffix":""},{"fullName":"Vasant Honavar","givenNames":"Vasant",
+      "surnames":"Honavar","suffix":""},{"fullName":"Taner Z. Sen",
+      "givenNames":"Taner Z.","surnames":"Sen","suffix":""}],"editors":[{
+      "fullName":"Aleksey Porollo","givenNames":"Aleksey","surnames":
+      "Porollo","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
