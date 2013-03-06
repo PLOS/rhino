@@ -29,6 +29,9 @@ public class AssetFileIdentityTest {
         "info:doi/10.1371/journal.pone.0056866.t003", "TIF").getContextElement(), "table-wrap");
     assertEquals(AssetFileIdentity.create(
         "info:doi/10.1371/journal.pone.0056866.g010", "TIF").getContextElement(), "fig");
+    assertEquals(AssetFileIdentity.create(
+        "info:doi/10.1371/journal.pone.0056182.s001", "MP4").getContextElement(),
+        "supplementary-material");
 
     assertNull(AssetFileIdentity.create(
         "info:doi/10.1371/journal.pone.0056866", "XML").getContextElement());
