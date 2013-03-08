@@ -368,7 +368,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareMarkupText(results, Article.class, "rights", actual.getRights(), expected.getRights());
     compare(results, Article.class, "language", actual.getLanguage(), expected.getLanguage());
     compare(results, Article.class, "format", actual.getFormat(), expected.getFormat());
-    compare(results, Article.class, "pages", actual.getPages(), expected.getPages());
+    comparePageRanges(results, Article.class, "pages", actual.getPages(), expected.getPages());
     compare(results, Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
 
     // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
@@ -610,7 +610,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareMarkupText(results, CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
     compare(results, CitedArticle.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     compare(results, CitedArticle.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
-    compare(results, CitedArticle.class, "pages", actual.getPages(), expected.getPages());
+    comparePageRanges(results, CitedArticle.class, "pages", actual.getPages(), expected.getPages());
     compare(results, CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
     compare(results, CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
     compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
@@ -622,6 +622,18 @@ public class IngestionTest extends BaseRhinoTest {
 
     comparePersonLists(results, CitedArticle.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
+  }
+
+  private static final Pattern PAGE_RANGE_DELIMITER = Pattern.compile("\\s*-\\s*");
+
+  private static boolean comparePageRanges(AssertionCollector results, Class<?> parentType, String fieldName,
+                                           String actualPageRange, String expectedPageRange) {
+    if (expectedPageRange != null) {
+      // Legacy page range values sometimes have junk whitespace. Remove it before comparing.
+      expectedPageRange = PAGE_RANGE_DELIMITER.matcher(expectedPageRange.trim()).replaceAll("-");
+    }
+
+    return compare(results, parentType, fieldName, actualPageRange, expectedPageRange);
   }
 
   private static boolean isEmptyCitation(CitedArticle c) {
