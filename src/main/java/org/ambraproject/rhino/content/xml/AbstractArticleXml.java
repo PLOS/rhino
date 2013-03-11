@@ -50,7 +50,7 @@ import java.util.Map;
  */
 public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathReader {
 
-  private static final Logger log = LoggerFactory.getLogger(AssetXml.class);
+  private static final Logger log = LoggerFactory.getLogger(AbstractArticleXml.class);
 
   protected AbstractArticleXml(Node xml) {
     super(xml);
