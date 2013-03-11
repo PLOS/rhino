@@ -20,7 +20,6 @@ package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
@@ -73,8 +72,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * {@inheritDoc}
    */
   @Override
-  public ImmutableListMultimap<String, AssetNode> findAllAssetNodes() {
-    return super.findAllAssetNodes();
+  public AssetNodesByDoi findAllAssetNodes() {
+    return super.findAllAssetNodes(); // TODO Pull down
   }
 
   /**

@@ -21,7 +21,6 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.LinkedListMultimap;
@@ -84,36 +83,35 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
       Joiner.on('|').join(Iterables.concat(ASSET_WITH_OBJID, ASSET_WITH_HREF)));
 
   /**
-   * Get a list containing each node within this object's XML whose name is expected to be associated with an asset
-   * entity.
+   * Find each node within this object's XML whose name is expected to be associated with an asset entity.
    *
    * @return the list of asset nodes
    */
-  protected ImmutableListMultimap<String, AssetNode> findAllAssetNodes() {
-    // Find all nodes of an asset type and wrap them
+  protected AssetNodesByDoi findAllAssetNodes() {
+    // Find all nodes of an asset type and map them by DOI
     List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
-    ListMultimap<String, AssetNode> wrappedNodes = LinkedListMultimap.create(rawNodes.size());
+    ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
     for (Node node : rawNodes) {
-      AssetNode wrappedNode = new AssetNode(node, getAssetDoi(node));
-      wrappedNodes.put(wrappedNode.getDoi(), wrappedNode);
+      String assetDoi = getAssetDoi(node);
+      nodeMap.put(assetDoi, node);
     }
 
     // Remove <graphic> nodes that don't share a DOI with another asset.
     // (Why not just add them separately? Doing it this way preserves document order.)
-    for (Map.Entry<String, Collection<AssetNode>> entry : wrappedNodes.asMap().entrySet()) {
-      Collection<AssetNode> nodes = entry.getValue();
+    for (Map.Entry<String, Collection<Node>> entry : nodeMap.asMap().entrySet()) {
+      Collection<Node> nodes = entry.getValue();
       if (nodes.size() <= 1) {
         continue; // The DOI is unique, so keep the one node even if it is a <graphic>
       }
-      for (Iterator<AssetNode> iterator = nodes.iterator(); iterator.hasNext(); ) {
-        AssetNode wrappedNode = iterator.next();
-        if ("graphic".equals(wrappedNode.getNode().getNodeName())) {
+      for (Iterator<Node> iterator = nodes.iterator(); iterator.hasNext(); ) {
+        Node node = iterator.next();
+        if ("graphic".equals(node.getNodeName())) {
           iterator.remove();
         }
       }
     }
 
-    return ImmutableListMultimap.copyOf(wrappedNodes);
+    return new AssetNodesByDoi(nodeMap);
   }
 
   protected String getAssetDoi(Node assetNode) {

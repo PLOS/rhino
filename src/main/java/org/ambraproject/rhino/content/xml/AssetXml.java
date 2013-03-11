@@ -18,18 +18,13 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ListMultimap;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Contains a whole article as an NLM-format XML document and extracts metadata for one asset.
@@ -54,56 +49,23 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   @Override
   public ArticleAsset build(ArticleAsset obj) throws XmlContentException {
-    final String targetDoi = assetId.getIdentifier();
-    ListMultimap<String, AssetNode> allAssetNodes = findAllAssetNodes();
-    List<AssetNode> wrappedNodes = allAssetNodes.get(targetDoi);
-    if (wrappedNodes.isEmpty()) {
-      String errorMsg = "Article XML does not have an asset with DOI=" + targetDoi;
-      throw new XmlContentException(errorMsg);
-    } else if (wrappedNodes.size() == 1) {
-      // Typical case.
-      Node xmlNode = wrappedNodes.get(0).getNode();
-      return parseAsset(xmlNode, obj);
-    } else {
-      // Rare case. Repeated hrefs with the same DOI are permitted only if they describe identical assets.
-      // Return the one described asset if these nodes match each other; else, error.
-      Iterator<AssetNode> nodeIterator = wrappedNodes.iterator();
-      ArticleAsset asset = parseAsset(nodeIterator.next().getNode(), obj);
-      while (nodeIterator.hasNext()) {
-        ArticleAsset nextAsset = parseAsset(nodeIterator.next().getNode(), obj);
-        if (!haveEqualFields(asset, nextAsset)) {
-          String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + targetDoi;
-          throw new XmlContentException(errorMsg);
-        }
-      }
-      return asset;
-    }
+    return parseAsset(obj); // TODO Inline me
   }
 
-  private boolean haveEqualFields(ArticleAsset a1, ArticleAsset a2) {
-    if (!Objects.equal(a1.getDoi(), a2.getDoi())) return false;
-    if (!Objects.equal(a1.getContextElement(), a2.getContextElement())) return false;
-    if (!Objects.equal(a1.getExtension(), a2.getExtension())) return false;
-    if (!Objects.equal(a1.getContentType(), a2.getContentType())) return false;
-    if (!Objects.equal(a1.getTitle(), a2.getTitle())) return false;
-    if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
-    return true;
-  }
-
-  private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
+  private ArticleAsset parseAsset(ArticleAsset asset) {
     asset.setDoi(assetId.getKey());
     AssetIdentity.setNoFile(asset);
 
-    Node contextNode = assetNode;
-    if ("graphic".equals(assetNode.getNodeName())) {
+    Node contextNode = xml;
+    if ("graphic".equals(contextNode.getNodeName())) {
       // Ambra treats "graphic" as a special case and uses the parent node instead.
       // TODO: Ambra bug? Just using contextElement="graphic" makes more sense and is consistent with other cases.
-      contextNode = assetNode.getParentNode();
+      contextNode = contextNode.getParentNode();
     }
     asset.setContextElement(contextNode.getNodeName());
 
-    asset.setTitle(Strings.nullToEmpty(readString("child::label", assetNode)));
-    Node captionNode = readNode("child::caption", assetNode);
+    asset.setTitle(Strings.nullToEmpty(readString("child::label")));
+    Node captionNode = readNode("child::caption");
     asset.setDescription((captionNode != null) ? buildTextWithMarkup(captionNode) : "");
 
     return asset;
