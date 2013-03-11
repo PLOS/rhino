@@ -21,7 +21,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.LinkedListMultimap;
@@ -89,7 +89,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
    *
    * @return the list of asset nodes
    */
-  protected List<AssetNode> findAllAssetNodes() {
+  protected ImmutableListMultimap<String, AssetNode> findAllAssetNodes() {
     // Find all nodes of an asset type and wrap them
     List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
     ListMultimap<String, AssetNode> wrappedNodes = LinkedListMultimap.create(rawNodes.size());
@@ -111,12 +111,9 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
           iterator.remove();
         }
       }
-      if (nodes.size() > 1) {
-        log.error("Multiple assets with DOI=" + entry.getKey()); // TODO Throw exception to client
-      }
     }
 
-    return ImmutableList.copyOf(wrappedNodes.values());
+    return ImmutableListMultimap.copyOf(wrappedNodes);
   }
 
   protected String getAssetDoi(Node assetNode) {

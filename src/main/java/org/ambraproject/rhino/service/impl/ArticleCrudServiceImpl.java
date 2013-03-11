@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
@@ -344,7 +345,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
-    List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    ImmutableListMultimap<String, AssetNode> assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
     if (assets == null) {  // create
       assets = Lists.newArrayListWithCapacity(assetNodes.size());
@@ -373,7 +374,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       assets.clear();
     }
-    for (AssetNode assetNode : assetNodes) {
+    for (AssetNode assetNode : assetNodes.values()) {
       ArticleAsset asset = new ArticleAsset();
       writeAsset(asset, assetNode);
       assets.add(asset);

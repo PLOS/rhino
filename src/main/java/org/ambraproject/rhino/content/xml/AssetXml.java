@@ -18,14 +18,17 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ListMultimap;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,24 +54,40 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
 
   @Override
   public ArticleAsset build(ArticleAsset obj) throws XmlContentException {
-    List<AssetNode> allAssetNodes = findAllAssetNodes();
-    Node matchingAssetNode = findMatchingAsset(allAssetNodes);
-    return parseAsset(matchingAssetNode, obj);
+    final String targetDoi = assetId.getIdentifier();
+    ListMultimap<String, AssetNode> allAssetNodes = findAllAssetNodes();
+    List<AssetNode> wrappedNodes = allAssetNodes.get(targetDoi);
+    if (wrappedNodes.isEmpty()) {
+      String errorMsg = "Article XML does not have an asset with DOI=" + targetDoi;
+      throw new XmlContentException(errorMsg);
+    } else if (wrappedNodes.size() == 1) {
+      // Typical case.
+      Node xmlNode = wrappedNodes.get(0).getNode();
+      return parseAsset(xmlNode, obj);
+    } else {
+      // Rare case. Repeated hrefs with the same DOI are permitted only if they describe identical assets.
+      // Return the one described asset if these nodes match each other; else, error.
+      Iterator<AssetNode> nodeIterator = wrappedNodes.iterator();
+      ArticleAsset asset = parseAsset(nodeIterator.next().getNode(), obj);
+      while (nodeIterator.hasNext()) {
+        ArticleAsset nextAsset = parseAsset(nodeIterator.next().getNode(), obj);
+        if (!haveEqualFields(asset, nextAsset)) {
+          String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + targetDoi;
+          throw new XmlContentException(errorMsg);
+        }
+      }
+      return asset;
+    }
   }
 
-  /*
-   * TODO: Query directly for the correct node instead of finding all of them and iterating
-   */
-  private Node findMatchingAsset(List<AssetNode> assetNodes) throws XmlContentException {
-    final String targetDoi = assetId.getIdentifier();
-    for (AssetNode assetNode : assetNodes) {
-      if (targetDoi.equals(assetNode.getDoi())) {
-        return assetNode.getNode();
-      }
-    }
-
-    String errorMsg = "Article XML does not have an asset with DOI=" + targetDoi;
-    throw new XmlContentException(errorMsg);
+  private boolean haveEqualFields(ArticleAsset a1, ArticleAsset a2) {
+    if (!Objects.equal(a1.getDoi(), a2.getDoi())) return false;
+    if (!Objects.equal(a1.getContextElement(), a2.getContextElement())) return false;
+    if (!Objects.equal(a1.getExtension(), a2.getExtension())) return false;
+    if (!Objects.equal(a1.getContentType(), a2.getContentType())) return false;
+    if (!Objects.equal(a1.getTitle(), a2.getTitle())) return false;
+    if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
+    return true;
   }
 
   private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
