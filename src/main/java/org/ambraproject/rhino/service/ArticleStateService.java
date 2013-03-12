@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -42,5 +43,5 @@ public interface ArticleStateService {
    * @param articleId identifies the article whose state we are updating
    * @param state state to be written
    */
-  void write(ArticleIdentity articleId, ArticleState state);
+  void write(ArticleIdentity articleId, ArticleState state) throws FileStoreException, IOException;
 }

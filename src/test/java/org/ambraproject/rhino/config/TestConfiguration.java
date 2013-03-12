@@ -20,6 +20,7 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
+import org.ambraproject.queue.MessageSender;
 import org.ambraproject.queue.MessageService;
 import org.ambraproject.queue.MessageServiceImpl;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -135,13 +136,23 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
+  public MessageSender messageSender() {
+    return new DummyMessageSender();
+  }
+
+  @Bean
+  public org.apache.commons.configuration.Configuration ambraConfiguration() {
+    return ConfigurationStore.getInstance().getConfiguration();
+  }
+
+  @Bean
   public SyndicationService syndicationService() throws IOException {
     SyndicationServiceImpl service = new SyndicationServiceImpl();
     service.setSessionFactory(sessionFactory(dataSource()).getObject());
-    service.setAmbraConfiguration(ConfigurationStore.getInstance().getConfiguration());
+    service.setAmbraConfiguration(ambraConfiguration());
     MessageServiceImpl messageService = new MessageServiceImpl();
-    messageService.setAmbraConfiguration(ConfigurationStore.getInstance().getConfiguration());
-    messageService.setSender(new DummyMessageSender());
+    messageService.setAmbraConfiguration(ambraConfiguration());
+    messageService.setSender(messageSender());
     return service;
   }
 }

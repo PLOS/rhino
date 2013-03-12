@@ -121,15 +121,10 @@
         factory-method="getInstance" />
 
   <beans:bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration" />
-<!--
-  <beans:bean id="routeBuilder" class="org.ambraproject.rhino.Routes" depends-on="activemq, PROPAGATION_REQUIRED">
-    <beans:property name="ambraConfiguration" ref="ambraConfiguration"/>
-  </beans:bean>
--->
+
   <camel:camelContext xmlns="http://camel.apache.org/schema/spring">
     <camel:jmxAgent id="plos-queue" createConnector="false"/>
     <camel:template id="messageProducerTemplate"/>
-<!--    <routeBuilder ref="routeBuilder"/> -->
   </camel:camelContext>
 
   <beans:bean id="messageSender" class="org.ambraproject.queue.CamelSender">

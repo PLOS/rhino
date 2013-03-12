@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -80,7 +81,8 @@ public class ArticleStateController extends DoiBasedCrudController {
    * @throws IOException
    */
   @RequestMapping(value = ARTICLE_STATE_TEMPLATE, method = RequestMethod.PUT)
-  public void write(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void write(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, FileStoreException {
 
     ArticleIdentity id = parse(request);
     ArticleState state = readJsonFromRequest(request, ArticleState.class);
