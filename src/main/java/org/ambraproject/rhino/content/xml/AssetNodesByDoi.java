@@ -39,8 +39,8 @@ public class AssetNodesByDoi {
 
   /**
    * Get the XML nodes associated with a DOI. Typically the returned list will contain exactly one node. It is valid
-   * (but rare) for an article XML document to contain multiple asset nodes with the same DOI. (Those nodes are valid
-   * only if they represent identical assets, but that is not checked here.)
+   * (but rare) for an article XML document to contain multiple asset nodes with the same DOI, in which case the
+   * returned list contains them in their order from the original document.
    *
    * @param doi an asset DOI
    * @return a non-empty list

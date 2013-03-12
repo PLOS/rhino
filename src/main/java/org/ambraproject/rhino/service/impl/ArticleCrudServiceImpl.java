@@ -422,26 +422,42 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @return the new asset
    */
   private static ArticleAsset writeAsset(AssetNodesByDoi assetNodes, String assetDoi) throws XmlContentException {
-    List<Node> matchingNodes = assetNodes.getNodes(assetDoi);
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
+    List<Node> matchingNodes = assetNodes.getNodes(assetDoi);
 
-    if (matchingNodes.size() == 1) {
-      // Typical case.
-      return parseAssetNode(matchingNodes.get(0), assetIdentity);
-    } else {
-      // Rare case. Repeated hrefs with the same DOI are permitted only if they describe identical assets.
-      // Return the one described asset if these nodes match each other; else, error.
-      Iterator<Node> nodeIterator = matchingNodes.iterator();
-      ArticleAsset asset = parseAssetNode(nodeIterator.next(), assetIdentity);
-      while (nodeIterator.hasNext()) {
-        ArticleAsset nextAsset = parseAssetNode(nodeIterator.next(), assetIdentity);
-        if (!haveEqualFields(asset, nextAsset)) {
-          String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + assetDoi;
-          throw new XmlContentException(errorMsg);
-        }
-      }
-      return asset;
+    /*
+     * In the typical case, there is exactly one matching node.
+     *
+     * Rarely, multiple nodes will have the same DOI (such as two representations of the same "supplemental info"
+     * asset). Legacy behavior in this case is to store metadata for the first one.
+     */
+    if (matchingNodes.size() > 1) {
+      log.warn("Matched multiple nodes with DOI=\"{}\"; defaulting to first instance", assetDoi);
     }
+    return parseAssetNode(matchingNodes.get(0), assetIdentity);
+  }
+
+  /**
+   * Parse an asset from multiple redundant asset nodes only if they have equal values. Throw an exception if two nodes
+   * do not describe the same asset.
+   *
+   * @param assetNodes    one or more article XML nodes representing an asset
+   * @param assetIdentity the identity of the asset to parse
+   * @return the parsed asset
+   * @throws XmlContentException
+   */
+  private static ArticleAsset parseDistinctAsset(List<Node> assetNodes, AssetIdentity assetIdentity) throws XmlContentException {
+    Preconditions.checkArgument(!assetNodes.isEmpty());
+    Iterator<Node> nodeIterator = assetNodes.iterator();
+    ArticleAsset asset = parseAssetNode(nodeIterator.next(), assetIdentity);
+    while (nodeIterator.hasNext()) {
+      ArticleAsset nextAsset = parseAssetNode(nodeIterator.next(), assetIdentity);
+      if (!haveEqualFields(asset, nextAsset)) {
+        String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + assetIdentity.getIdentifier();
+        throw new XmlContentException(errorMsg);
+      }
+    }
+    return asset;
   }
 
   private static ArticleAsset parseAssetNode(Node assetNode, AssetIdentity assetIdentity) throws XmlContentException {
