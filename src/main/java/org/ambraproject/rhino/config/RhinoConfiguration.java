@@ -23,6 +23,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.IngestibleService;
@@ -108,6 +109,12 @@ public class RhinoConfiguration extends BaseConfiguration {
         }
     );
     return builder.create();
+  }
+
+  @Bean
+  public org.apache.commons.configuration.Configuration ambraConfiguration() {
+    // Fetch from Ambra's custom container
+    return ConfigurationStore.getInstance().getConfiguration();
   }
 
   @Bean
