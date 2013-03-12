@@ -84,12 +84,6 @@
     </repository>
   </repositories>
 
-  <scm>
-    <developerConnection>scm:svn:http://ambraproject.org/svn/ambra/ambra-admin/</developerConnection>
-    <connection>scm:svn:http://ambraproject.org/svn/ambra/ambra-admin/</connection>
-    <url>http://www.ambraproject.org/trac/browser/ambra/ambra-admin/</url>
-  </scm>
-
   <distributionManagement>
     <repository>
       <id>ambra</id>
@@ -134,7 +128,7 @@
       <artifactId>ambra-base</artifactId>
       <version>${ambra.version}</version>
       <exclusions>
-        <!--These are some easy wins for reducing the size of the admin war, we don't need these libraries in admin-->
+        <!--These are some easy wins for reducing the size of the war, we don't need these libraries-->
         <exclusion>
           <groupId>org.tuckey</groupId>
           <artifactId>urlrewritefilter</artifactId>
@@ -170,7 +164,7 @@
       </exclusions>
     </dependency>
 
-    <!--the war dependency is necessary to overlay classes, ftls, etc. when building the admin war-->
+    <!--the war dependency is necessary to overlay classes, ftls, etc. when building the war-->
     <dependency>
       <groupId>org.ambraproject</groupId>
       <artifactId>ambra-webapp</artifactId>
@@ -327,7 +321,7 @@
 
 
   <build>
-    <finalName>ambra-admin</finalName>
+    <finalName>rhino</finalName>
     <plugins>
       <!--warpath plugin allows us to use warpath dependencies to get transitive dependencies from the war-->
       <plugin>
@@ -409,7 +403,6 @@
           <!-- disable site deploy -->
           <useReleaseProfile>false</useReleaseProfile>
           <!-- no javadoc and source jars -->
-          <tagBase>http://ambraproject.org/svn/ambra/ambra-admin/tags</tagBase>
           <autoVersionSubmodules>true</autoVersionSubmodules>
           <preparationGoals>clean install</preparationGoals>
           <arguments>-Ppackages,distribution,release</arguments>
