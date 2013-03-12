@@ -55,7 +55,7 @@ public class RhinoConfiguration extends BaseConfiguration {
    * Static stuff outside the Spring framework that needs to be run on startup. Ideally this should be empty.
    */
   private static void doStartupKludges() {
-    // Required by Ambra; see org.topazproject.ambra.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
+    // Required by Ambra; org.ambraproject.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
     System.setProperty("SYSTEM_OBJECT_ID_PREFIX", "info:doi/0.0/");
   }
 

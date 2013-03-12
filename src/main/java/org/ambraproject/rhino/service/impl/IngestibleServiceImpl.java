@@ -14,11 +14,11 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.inject.internal.Preconditions;
+import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.apache.commons.configuration.Configuration;
-import org.topazproject.ambra.configuration.ConfigurationStore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;

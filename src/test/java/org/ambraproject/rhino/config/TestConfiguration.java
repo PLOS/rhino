@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.config;
 
+import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -33,7 +34,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
-import org.topazproject.ambra.configuration.ConfigurationStore;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -48,7 +48,7 @@ public class TestConfiguration extends BaseConfiguration {
     try {
 
       // In a servlet container, this gets called at webapp load time.
-      // See org.topazproject.ambra.configuration.WebAppListener.  Here, we
+      // See org.ambraproject.configuration.WebAppListener.  Here, we
       // have to call it in a lowly static initializer, before Spring creates
       // its beans.
       ConfigurationStore.getInstance().loadDefaultConfiguration();

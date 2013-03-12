@@ -170,12 +170,6 @@
       </exclusions>
     </dependency>
 
-    <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>conf-helper</artifactId>
-      <version>${conf-helper.version}</version>
-    </dependency>
-
     <!--the war dependency is necessary to overlay classes, ftls, etc. when building the admin war-->
     <dependency>
       <groupId>org.ambraproject</groupId>
