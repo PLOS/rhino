@@ -65,6 +65,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -349,8 +350,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
     AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
+    Collection<String> assetDois = assetNodes.getDois();
+
     if (assets == null) {  // create
-      assets = Lists.newArrayListWithCapacity(assetNodes.getNodeCount());
+      assets = Lists.newArrayListWithCapacity(assetDois.size());
       article.setAssets(assets);
     } else {  // update
 
@@ -376,7 +379,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       assets.clear();
     }
-    for (String assetDoi : assetNodes.getAllDois()) {
+
+    for (String assetDoi : assetDois) {
       ArticleAsset asset;
       try {
         asset = parseAsset(assetNodes, assetDoi);

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2006-2013 by Public Library of Science
+ * http://plos.org
+ * http://ambraproject.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.Preconditions;
@@ -33,7 +51,7 @@ public class AssetNodesByDoi {
    *
    * @return the asset DOIs
    */
-  public ImmutableSet<String> getAllDois() {
+  public ImmutableSet<String> getDois() {
     return nodeMap.keySet();
   }
 
@@ -45,7 +63,7 @@ public class AssetNodesByDoi {
    * @param doi an asset DOI
    * @return a non-empty list
    * @throws IllegalArgumentException if there is no asset matching the DOI (equivalently, if {@code
-   *                                  !this.getAllDois().contains(doi)})
+   *                                  !this.getDois().contains(doi)})
    * @throws NullPointerException     if {@code doi == null}
    */
   public ImmutableList<Node> getNodes(String doi) {
@@ -55,6 +73,24 @@ public class AssetNodesByDoi {
       throw new IllegalArgumentException("DOI not matched to asset node: " + doi);
     }
     return nodes;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    AssetNodesByDoi that = (AssetNodesByDoi) o;
+    return nodeMap.equals(that.nodeMap);
+  }
+
+  @Override
+  public int hashCode() {
+    return nodeMap.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + nodeMap.toString();
   }
 
 }
