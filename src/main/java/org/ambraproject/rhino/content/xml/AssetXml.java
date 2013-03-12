@@ -26,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
-import java.util.List;
-
 /**
  * Contains a whole article as an NLM-format XML document and extracts metadata for one asset.
  */
@@ -50,41 +48,20 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
   }
 
   @Override
-  public ArticleAsset build(ArticleAsset obj) throws XmlContentException {
-    List<AssetNode> allAssetNodes = findAllAssetNodes();
-    Node matchingAssetNode = findMatchingAsset(allAssetNodes);
-    return parseAsset(matchingAssetNode, obj);
-  }
-
-  /*
-   * TODO: Query directly for the correct node instead of finding all of them and iterating
-   */
-  private Node findMatchingAsset(List<AssetNode> assetNodes) throws XmlContentException {
-    final String targetDoi = assetId.getIdentifier();
-    for (AssetNode assetNode : assetNodes) {
-      if (targetDoi.equals(assetNode.getDoi())) {
-        return assetNode.getNode();
-      }
-    }
-
-    String errorMsg = "Article XML does not have an asset with DOI=" + targetDoi;
-    throw new XmlContentException(errorMsg);
-  }
-
-  private ArticleAsset parseAsset(Node assetNode, ArticleAsset asset) {
+  public ArticleAsset build(ArticleAsset asset) throws XmlContentException {
     asset.setDoi(assetId.getKey());
     AssetIdentity.setNoFile(asset);
 
-    Node contextNode = assetNode;
-    if ("graphic".equals(assetNode.getNodeName())) {
+    Node contextNode = xml;
+    if (GRAPHIC_NODE_NAME.equals(contextNode.getNodeName())) {
       // Ambra treats "graphic" as a special case and uses the parent node instead.
       // TODO: Ambra bug? Just using contextElement="graphic" makes more sense and is consistent with other cases.
-      contextNode = assetNode.getParentNode();
+      contextNode = contextNode.getParentNode();
     }
     asset.setContextElement(contextNode.getNodeName());
 
-    asset.setTitle(Strings.nullToEmpty(readString("child::label", assetNode)));
-    Node captionNode = readNode("child::caption", assetNode);
+    asset.setTitle(Strings.nullToEmpty(readString("child::label")));
+    Node captionNode = readNode("child::caption");
     asset.setDescription((captionNode != null) ? buildTextWithMarkup(captionNode) : "");
 
     return asset;

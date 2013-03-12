@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -31,7 +32,7 @@ import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.AssetNode;
+import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
@@ -57,14 +58,17 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -344,10 +348,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
-    List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
+    Collection<String> assetDois = assetNodes.getDois();
+
     if (assets == null) {  // create
-      assets = Lists.newArrayListWithCapacity(assetNodes.size());
+      assets = Lists.newArrayListWithCapacity(assetDois.size());
       article.setAssets(assets);
     } else {  // update
 
@@ -373,9 +379,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       assets.clear();
     }
-    for (AssetNode assetNode : assetNodes) {
-      ArticleAsset asset = new ArticleAsset();
-      writeAsset(asset, assetNode);
+
+    for (String assetDoi : assetDois) {
+      ArticleAsset asset;
+      try {
+        asset = parseAsset(assetNodes, assetDoi);
+      } catch (XmlContentException e) {
+        throw complainAboutXml(e);
+      }
       assets.add(asset);
     }
     ArticleAsset xmlAsset = new ArticleAsset();
@@ -408,21 +419,72 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Copy metadata into an asset entity from an XML node describing the asset.
+   * Write metadata from an XML node describing an asset into a new asset entity.
    *
-   * @param asset     the persistent asset entity to modify
-   * @param assetNode the XML node from which to extract data
-   * @return the modified asset (same identity)
+   * @param assetNodes the set of all asset nodes found in the article document
+   * @param assetDoi   the DOI of the asset to find and write
+   * @return the new asset
    */
-  private static ArticleAsset writeAsset(ArticleAsset asset, AssetNode assetNode) {
-    String assetDoi = assetNode.getDoi();
+  private static ArticleAsset parseAsset(AssetNodesByDoi assetNodes, String assetDoi) throws XmlContentException {
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
+    List<Node> matchingNodes = assetNodes.getNodes(assetDoi);
 
-    try {
-      return new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
-    } catch (XmlContentException e) {
-      throw complainAboutXml(e);
+    /*
+     * In the typical case, there is exactly one matching node.
+     *
+     * Rarely, multiple nodes will have the same DOI (such as two representations of the same "supplemental info"
+     * asset). Legacy behavior in this case is to store metadata for the first one.
+     */
+    if (matchingNodes.size() > 1) {
+      log.warn("Matched multiple nodes with DOI=\"{}\"; defaulting to first instance", assetDoi);
     }
+    return parseAssetNode(matchingNodes.get(0), assetIdentity);
+  }
+
+  /**
+   * Parse an asset from multiple redundant asset nodes only if they have equal values. Throw an exception if two nodes
+   * do not describe the same asset.
+   *
+   * @param assetNodes    one or more article XML nodes representing an asset
+   * @param assetIdentity the identity of the asset to parse
+   * @return the parsed asset
+   * @throws XmlContentException
+   */
+  private static ArticleAsset parseDistinctAsset(List<Node> assetNodes, AssetIdentity assetIdentity) throws XmlContentException {
+    Preconditions.checkArgument(!assetNodes.isEmpty());
+    Iterator<Node> nodeIterator = assetNodes.iterator();
+    ArticleAsset asset = parseAssetNode(nodeIterator.next(), assetIdentity);
+    while (nodeIterator.hasNext()) {
+      ArticleAsset nextAsset = parseAssetNode(nodeIterator.next(), assetIdentity);
+      if (!haveEqualFields(asset, nextAsset)) {
+        String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + assetIdentity.getIdentifier();
+        throw new XmlContentException(errorMsg);
+      }
+    }
+    return asset;
+  }
+
+  private static ArticleAsset parseAssetNode(Node assetNode, AssetIdentity assetIdentity) throws XmlContentException {
+    return new AssetXml(assetNode, assetIdentity).build(new ArticleAsset());
+  }
+
+  /**
+   * Check if two assets have equal values for all fields defined in article XML. This is more stringent than {@link
+   * ArticleAsset#equals(Object)}.
+   *
+   * @param a1 an asset
+   * @param a2 another asset
+   * @return {@code true} they have equal values for all fields defined in article XML
+   */
+  private static boolean haveEqualFields(ArticleAsset a1, ArticleAsset a2) {
+    if (Preconditions.checkNotNull(a1) == Preconditions.checkNotNull(a2)) return true;
+    if (!Objects.equal(a1.getDoi(), a2.getDoi())) return false;
+    if (!Objects.equal(a1.getContextElement(), a2.getContextElement())) return false;
+    if (!Objects.equal(a1.getExtension(), a2.getExtension())) return false;
+    if (!Objects.equal(a1.getContentType(), a2.getContentType())) return false;
+    if (!Objects.equal(a1.getTitle(), a2.getTitle())) return false;
+    if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
+    return true;
   }
 
   private static RestClientException complainAboutXml(XmlContentException e) {
