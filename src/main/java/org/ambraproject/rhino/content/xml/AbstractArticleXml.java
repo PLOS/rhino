@@ -23,8 +23,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.LinkedListMultimap;
-import com.google.common.collect.ListMultimap;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -37,10 +35,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -73,46 +68,16 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     return standardizeWhitespace(super.getTextFromNode(node));
   }
 
+  protected static final String GRAPHIC_NODE_NAME = "graphic"; // gets some special handling
+
   // The node-names for nodes that can be an asset, separated by where to find the DOI
   protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
   protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
-      "supplementary-material", "inline-formula", "disp-formula", "graphic");
+      "supplementary-material", "inline-formula", "disp-formula", GRAPHIC_NODE_NAME);
 
   // An XPath expression that will match any node with one of the names above
-  private static final String ASSET_EXPRESSION = String.format("//(%s)",
+  protected static final String ASSET_EXPRESSION = String.format("//(%s)",
       Joiner.on('|').join(Iterables.concat(ASSET_WITH_OBJID, ASSET_WITH_HREF)));
-
-  /**
-   * Find each node within this object's XML whose name is expected to be associated with an asset entity.
-   *
-   * @return the list of asset nodes
-   */
-  protected AssetNodesByDoi findAllAssetNodes() {
-    // Find all nodes of an asset type and map them by DOI
-    List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
-    ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
-    for (Node node : rawNodes) {
-      String assetDoi = getAssetDoi(node);
-      nodeMap.put(assetDoi, node);
-    }
-
-    // Remove <graphic> nodes that don't share a DOI with another asset.
-    // (Why not just add them separately? Doing it this way preserves document order.)
-    for (Map.Entry<String, Collection<Node>> entry : nodeMap.asMap().entrySet()) {
-      Collection<Node> nodes = entry.getValue();
-      if (nodes.size() <= 1) {
-        continue; // The DOI is unique, so keep the one node even if it is a <graphic>
-      }
-      for (Iterator<Node> iterator = nodes.iterator(); iterator.hasNext(); ) {
-        Node node = iterator.next();
-        if ("graphic".equals(node.getNodeName())) {
-          iterator.remove();
-        }
-      }
-    }
-
-    return new AssetNodesByDoi(nodeMap);
-  }
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();

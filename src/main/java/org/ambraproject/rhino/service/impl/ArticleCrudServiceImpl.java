@@ -379,7 +379,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     for (String assetDoi : assetNodes.getAllDois()) {
       ArticleAsset asset;
       try {
-        asset = writeAsset(assetNodes, assetDoi);
+        asset = parseAsset(assetNodes, assetDoi);
       } catch (XmlContentException e) {
         throw complainAboutXml(e);
       }
@@ -421,7 +421,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param assetDoi   the DOI of the asset to find and write
    * @return the new asset
    */
-  private static ArticleAsset writeAsset(AssetNodesByDoi assetNodes, String assetDoi) throws XmlContentException {
+  private static ArticleAsset parseAsset(AssetNodesByDoi assetNodes, String assetDoi) throws XmlContentException {
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
     List<Node> matchingNodes = assetNodes.getNodes(assetDoi);
 
