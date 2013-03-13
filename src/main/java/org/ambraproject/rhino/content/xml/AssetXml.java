@@ -53,7 +53,7 @@ public class AssetXml extends AbstractArticleXml<ArticleAsset> {
     AssetIdentity.setNoFile(asset);
 
     Node contextNode = xml;
-    if (GRAPHIC_NODE_NAME.equals(contextNode.getNodeName())) {
+    if (GRAPHIC.equals(contextNode.getNodeName())) {
       // Ambra treats "graphic" as a special case and uses the parent node instead.
       // TODO: Ambra bug? Just using contextElement="graphic" makes more sense and is consistent with other cases.
       contextNode = contextNode.getParentNode();

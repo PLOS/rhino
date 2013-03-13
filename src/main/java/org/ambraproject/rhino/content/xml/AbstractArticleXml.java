@@ -68,12 +68,14 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
     return standardizeWhitespace(super.getTextFromNode(node));
   }
 
-  protected static final String GRAPHIC_NODE_NAME = "graphic"; // gets some special handling
+  // Node names that get special handling
+  protected static final String TABLE_WRAP = "table-wrap";
+  protected static final String GRAPHIC = "graphic";
 
   // The node-names for nodes that can be an asset, separated by where to find the DOI
-  protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of("table-wrap", "fig");
+  protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of(TABLE_WRAP, "fig");
   protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
-      "supplementary-material", "inline-formula", "disp-formula", GRAPHIC_NODE_NAME);
+      "supplementary-material", "inline-formula", "disp-formula", GRAPHIC);
 
   // An XPath expression that will match any node with one of the names above
   protected static final String ASSET_EXPRESSION = String.format("//(%s)",

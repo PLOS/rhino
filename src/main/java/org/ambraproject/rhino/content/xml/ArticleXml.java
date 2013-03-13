@@ -18,11 +18,13 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
@@ -84,7 +86,11 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
     for (Node node : rawNodes) {
       String assetDoi = getAssetDoi(node);
-      nodeMap.put(assetDoi, node);
+      if (assetDoi != null) {
+        nodeMap.put(assetDoi, node);
+      } else {
+        findNestedDoi(node, nodeMap);
+      }
     }
 
     // Remove <graphic> nodes that don't share a DOI with another asset.
@@ -96,13 +102,37 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       }
       for (Iterator<Node> iterator = nodes.iterator(); iterator.hasNext(); ) {
         Node node = iterator.next();
-        if ("graphic".equals(node.getNodeName())) {
+        if (GRAPHIC.equals(node.getNodeName())) {
           iterator.remove();
         }
       }
     }
 
     return new AssetNodesByDoi(nodeMap);
+  }
+
+  /**
+   * Try to find a DOI at a special position within an XML node and, if it's found, insert it into the node map at that
+   * key.
+   *
+   * @param outerNode an asset node such that {@code getAssetDoi(outerNode) == null}
+   * @param nodeMap   the map to modify if a nested DOI is found
+   */
+  private void findNestedDoi(Node outerNode, Multimap<String, Node> nodeMap) {
+    Preconditions.checkNotNull(nodeMap);
+
+    // Currently, the only special case handled here is
+    //   <table-wrap> ... <graphic xlink:href="..." /> ... </table-wrap>
+    // See case pone.0012008 (asset 10.1371/journal.pone.0012008.t002) in the test suite.
+    if (TABLE_WRAP.equals(outerNode.getNodeName())) {
+      Node graphicNode = readNode("descendant::" + GRAPHIC, outerNode);
+      if (graphicNode != null) {
+        String doi = getAssetDoi(graphicNode);
+        if (doi != null) {
+          nodeMap.put(doi, outerNode);
+        }
+      }
+    }
   }
 
   /**
