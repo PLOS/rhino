@@ -13,21 +13,44 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.ListMultimap;
 import org.ambraproject.queue.MessageSender;
 import org.w3c.dom.Document;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
+
 /**
- * Implementation of {@link MessageSender} that does nothing.
- * <p/>
- * TODO: consider keeping track of what is sent for asserts in tests.
+ * Implementation of {@link MessageSender} for testing.
  */
 public class DummyMessageSender implements MessageSender {
 
+  public ListMultimap<String, String> messagesSent = LinkedListMultimap.create();
+
   @Override
   public void sendMessage(String destination, String body) {
+    messagesSent.put(destination, body);
   }
 
   @Override
   public void sendMessage(String destination, Document body) {
+    try {
+      TransformerFactory factory = TransformerFactory.newInstance();
+      Transformer transformer = factory.newTransformer();
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+      transformer.setOutputProperty(OutputKeys.INDENT, "no");
+      StringWriter writer = new StringWriter();
+      StreamResult result = new StreamResult(writer);
+      DOMSource source = new DOMSource(body);
+      transformer.transform(source, result);
+      messagesSent.put(destination, writer.toString());
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }

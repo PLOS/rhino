@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -61,7 +62,8 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   private ArticleCrudService articleCrudService;
 
   @Autowired
-  private MessageSender messageSender;
+  @VisibleForTesting
+  public MessageSender messageSender;
 
   @Autowired
   private Configuration ambraConfiguration;
@@ -88,8 +90,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * {@inheritDoc}
    */
   @Override
-  public void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
-      throws IOException {
+  public ArticleState read(ArticleIdentity articleId) {
     Article article = loadArticle(articleId);
     ArticleState state = new ArticleState();
     state.setPublished(article.getState() == 0);
@@ -104,9 +105,17 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     for (Syndication syndication : syndications) {
       setSyndicationState(state, syndication);
     }
+    return state;
+  }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
+      throws IOException {
     assert format == MetadataFormat.JSON;
-    writeJsonToResponse(response, state);
+    writeJsonToResponse(response, read(articleId));
   }
 
   /**
@@ -225,7 +234,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * {@inheritDoc}
    */
   @Override
-  public void write(ArticleIdentity articleId, ArticleState state)
+  public ArticleState write(ArticleIdentity articleId, ArticleState state)
       throws FileStoreException, IOException {
     Article article = loadArticle(articleId);
     article.setState(state.isPublished() ? Article.STATE_ACTIVE : Article.STATE_UNPUBLISHED);
@@ -248,6 +257,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     }
     updateSolrIndex(articleId, article, state.isPublished());
     hibernateTemplate.update(article);
+    return read(articleId);
   }
 
   private Article loadArticle(ArticleIdentity articleId) {

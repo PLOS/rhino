@@ -24,9 +24,11 @@ import org.ambraproject.queue.MessageSender;
 import org.ambraproject.queue.MessageService;
 import org.ambraproject.queue.MessageServiceImpl;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
@@ -153,6 +155,12 @@ public class TestConfiguration extends BaseConfiguration {
     MessageServiceImpl messageService = new MessageServiceImpl();
     messageService.setAmbraConfiguration(ambraConfiguration());
     messageService.setSender(messageSender());
+    service.setMessageService(messageService);
     return service;
+  }
+
+  @Bean
+  public ArticleStateService articleStateService() {
+    return new ArticleStateServiceImpl();
   }
 }

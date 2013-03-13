@@ -27,6 +27,14 @@ import java.io.IOException;
 public interface ArticleStateService {
 
   /**
+   * Returns an article's state.
+   *
+   * @param articleId
+   * @return ArticleState
+   */
+  ArticleState read(ArticleIdentity articleId);
+
+  /**
    * Writes an article's state to the response.
    *
    * @param response HttpServletResponse for the current request
@@ -42,6 +50,8 @@ public interface ArticleStateService {
    *
    * @param articleId identifies the article whose state we are updating
    * @param state state to be written
+   * @return the state after updates are applied
    */
-  void write(ArticleIdentity articleId, ArticleState state) throws FileStoreException, IOException;
+  ArticleState write(ArticleIdentity articleId, ArticleState state)
+      throws FileStoreException, IOException;
 }
