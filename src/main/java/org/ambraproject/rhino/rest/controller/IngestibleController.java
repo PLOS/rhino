@@ -71,7 +71,7 @@ public class IngestibleController extends DoiBasedCrudController {
    * @param format   format of the response.  Currently only JSON is supported.
    * @throws IOException
    */
-  @RequestMapping(value = INGESTIBLE_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
   public void read(HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {

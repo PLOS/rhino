@@ -48,7 +48,9 @@ public abstract class RestController {
   /**
    * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
    * consists of one or more URI path elements that the API defines as a prefix for a class of RESTful "nouns" and must
-   * end with a slash (for example, {@code "/article/"}).
+   * end with a slash (for example, {@code "/article/"}). The request's URI must contain the given namespace prefix:
+   * everything before the namespace (typically the path to the webapp, or nothing) is ignored, and everything after the
+   * namespace is the return value.
    * <p/>
    * This is essentially doing the work of a {@link PathVariable} annotated parameter, but Spring does not seem to
    * support {@code PathVariable}s that span multiple URI components across slashes. So, if we want to treat a value
@@ -63,20 +65,22 @@ public abstract class RestController {
    */
   protected static String getFullPathVariable(HttpServletRequest request, final String namespace) {
     final int namespaceLength = namespace.length();
-    if (namespace.charAt(namespaceLength - 1) != '/') {
-      throw new IllegalArgumentException("Namespace must end with '/'");
+    if (namespaceLength < 3 || namespace.charAt(0) != '/' || namespace.charAt(namespaceLength - 1) != '/') {
+      throw new IllegalArgumentException("Namespace must begin and end with '/'");
     }
     String requestUri = request.getRequestURI();
-    if (!requestUri.startsWith(namespace)) {
-      String message = String.format("Request URI (\"%s\") does not start with expected namespace (\"%s\")",
+    int namespaceIndex = requestUri.indexOf(namespace);
+    if (namespaceIndex < 0) {
+      String message = String.format("Request URI (\"%s\") does not have expected namespace (\"%s\")",
           requestUri, namespace);
       throw new IllegalArgumentException(message);
     }
+    int namespaceEnd = namespaceIndex + namespaceLength;
     int end = requestUri.length() - (requestUri.endsWith("/") ? 1 : 0);
-    if (end <= namespaceLength) {
+    if (end <= namespaceEnd) {
       throw new IllegalArgumentException("Request URI has no path variable after namespace");
     }
-    return requestUri.substring(namespaceLength, end);
+    return requestUri.substring(namespaceEnd, end);
   }
 
   /**

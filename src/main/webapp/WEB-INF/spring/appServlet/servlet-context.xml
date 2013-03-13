@@ -37,7 +37,7 @@
   <resources mapping="/resources/**" location="/resources/"/>
 
   <!-- Allow us to use "${foo}" notation to pull values from ambra configuration in this file.  -->
-  <beans:bean id="propertyConfigurer" class="org.topazproject.ambra.configuration.SpringPlaceholderConfigurer" />
+  <beans:bean id="propertyConfigurer" class="org.ambraproject.configuration.SpringPlaceholderConfigurer" />
 
   <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

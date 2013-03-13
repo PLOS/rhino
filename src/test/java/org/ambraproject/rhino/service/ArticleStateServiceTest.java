@@ -100,19 +100,18 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
     assertEquals(dummySender.messagesSent.size(), 3);
 
-    List<String> solrMessages = dummySender.messagesSent.get(ambraConfiguration.getString(
-        "ambra.services.search.articleIndexingQueue"));
+    List<String> solrMessages = dummySender.messagesSent.get("activemq:fake.indexing.queue");
     assertEquals(solrMessages.size(), 1);
     XMLUnit.compareXML(IOUtils.toString(new FileInputStream(
         TEST_DATA_DIR + "pone.0056489_solr_decorated.xml")), solrMessages.get(0));
 
     String expectedSyndication
         = "<ambraMessage><doi>info:doi/10.1371/journal.pone.0056489</doi><archive>pone.0056489.zip</archive></ambraMessage>";
-    List<String> crossRefMessages = dummySender.messagesSent.get("activemq:plos.crossref");
+    List<String> crossRefMessages = dummySender.messagesSent.get("activemq:fake.crossref.queue");
     assertEquals(crossRefMessages.size(), 1);
     XMLUnit.compareXML(expectedSyndication, crossRefMessages.get(0));
 
-    List<String> pmcMessages = dummySender.messagesSent.get("activemq:plos.pmc");
+    List<String> pmcMessages = dummySender.messagesSent.get("activemq:fake.pmc.queue");
     assertEquals(pmcMessages.size(), 1);
     XMLUnit.compareXML(expectedSyndication, pmcMessages.get(0));
   }

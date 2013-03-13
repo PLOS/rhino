@@ -51,6 +51,8 @@ import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -501,6 +503,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     fileStoreService.deleteFile(fsid);
     hibernateTemplate.delete(article);
+  }
+
+  @Override
+  public void listDois(HttpServletResponse response, MetadataFormat format) throws IOException {
+    assert format == MetadataFormat.JSON;
+    List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class)
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        .setProjection(Projections.property("doi"))
+        .addOrder(Order.asc("lastModified"))
+    );
+    writeJsonToResponse(response, dois);
   }
 
   @Required

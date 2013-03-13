@@ -23,6 +23,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -57,7 +58,7 @@ public class RhinoConfiguration extends BaseConfiguration {
    * Static stuff outside the Spring framework that needs to be run on startup. Ideally this should be empty.
    */
   private static void doStartupKludges() {
-    // Required by Ambra; see org.topazproject.ambra.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
+    // Required by Ambra; org.ambraproject.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
     System.setProperty("SYSTEM_OBJECT_ID_PREFIX", "info:doi/0.0/");
   }
 
@@ -110,6 +111,12 @@ public class RhinoConfiguration extends BaseConfiguration {
         }
     );
     return builder.create();
+  }
+
+  @Bean
+  public org.apache.commons.configuration.Configuration ambraConfiguration() {
+    // Fetch from Ambra's custom container
+    return ConfigurationStore.getInstance().getConfiguration();
   }
 
   @Bean
