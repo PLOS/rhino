@@ -117,7 +117,7 @@
     <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>
   </beans:bean>
 
-  <beans:bean id="configurationStore" class="org.topazproject.ambra.configuration.ConfigurationStore"
+  <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"
         factory-method="getInstance" />
 
   <beans:bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration" />
