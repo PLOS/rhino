@@ -18,7 +18,10 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.io.Closeables;
+import com.google.gson.Gson;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +33,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -172,4 +177,27 @@ public abstract class RestController {
     return respondWithPlainText(report.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  /**
+   * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this
+   * method, the InputStream associated with the request will be closed.
+   *
+   * @param request HttpServletRequest
+   * @param clazz class of the bean we are de-serializing
+   * @param <T> type of the bean we are de-serializing
+   * @return JSON de-serialized to a bean
+   * @throws IOException
+   */
+  protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
+    InputStream is = request.getInputStream();
+    Gson gson = new Gson();
+    boolean threw = true;
+    T result;
+    try {
+      result = gson.fromJson(IOUtils.toString(is), clazz);
+      threw = false;
+    } finally {
+      Closeables.close(is, threw);
+    }
+    return result;
+  }
 }

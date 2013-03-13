@@ -28,6 +28,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
+import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.CharEncoding;
 import org.hibernate.Criteria;
@@ -68,6 +69,9 @@ public abstract class AmbraService {
 
   @Autowired
   protected ArticleService articleService;
+
+  @Autowired
+  protected SyndicationService syndicationService;
 
   /**
    * Check whether a distinct entity exists.

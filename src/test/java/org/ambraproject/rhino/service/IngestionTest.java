@@ -24,6 +24,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.CitedArticlePerson;
 import org.ambraproject.models.Journal;
+import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -34,6 +35,7 @@ import org.ambraproject.rhino.test.AssertionCollector;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -288,6 +290,7 @@ public class IngestionTest extends BaseRhinoTest {
       compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
     }
     compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
+    assertSyndications(results, actual);
     return results;
   }
 
@@ -666,6 +669,40 @@ public class IngestionTest extends BaseRhinoTest {
         expected.getArchiveName());
     compare(results, Article.class, "strkImgURI", Strings.nullToEmpty(actual.getStrkImgURI()),
         Strings.nullToEmpty(expected.getStrkImgURI()));
+  }
+
+  private Syndication buildExpectedSyndication(String target, Article article) {
+    Syndication result = new Syndication();
+    result.setDoi(article.getDoi());
+    result.setTarget(target);
+    result.setStatus("PENDING");
+    result.setSubmissionCount(0);
+    return result;
+  }
+
+  private void assertSyndications(AssertionCollector results, Article article) {
+
+    // There is no getter for syndication in article, since the foreign key is
+    // doi instead of articleID.  So we can't do the comparison via JSON as we
+    // do elsewhere in this test.
+    List<Syndication> expected = new ArrayList<Syndication>(2);
+    expected.add(buildExpectedSyndication("CROSSREF", article));
+    expected.add(buildExpectedSyndication("PMC", article));
+    List<Syndication> actual = hibernateTemplate.findByCriteria(
+        DetachedCriteria.forClass(Syndication.class)
+            .add(Restrictions.eq("doi", article.getDoi()))
+            .addOrder(Order.asc("target")));
+
+    int commonSize = Math.min(expected.size(), actual.size());
+    for (int i = 0; i < commonSize; i++) {
+      results.compare(Syndication.class, "syndication", actual.get(i), expected.get(i));
+    }
+    for (int i = commonSize; i < actual.size(); i++) {
+      results.compare(Syndication.class, "syndication", actual.get(i), null);
+    }
+    for (int i = commonSize; i < expected.size(); i++) {
+      results.compare(Syndication.class, "syndication", null, expected.get(i));
+    }
   }
 
   // Transformation helper methods
