@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.config.TestConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -142,9 +143,9 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
    */
   @BeforeMethod
   public void deleteEntities() {
-    Collection<Class<?>> typesToDelete = ImmutableList.<Class<?>>of(Article.class);
+    Collection<Class<?>> typesToDelete = ImmutableList.<Class<?>>of(Article.class, Syndication.class);
     for (Class<?> typeToDelete : typesToDelete) {
-      List<?> allObjects = hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class));
+      List<?> allObjects = hibernateTemplate.findByCriteria(DetachedCriteria.forClass(typeToDelete));
       hibernateTemplate.deleteAll(allObjects);
     }
   }
