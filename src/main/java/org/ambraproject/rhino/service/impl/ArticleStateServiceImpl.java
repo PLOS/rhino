@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -67,9 +68,6 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
   @Autowired
   private Configuration ambraConfiguration;
-
-  private DocumentBuilderFactory documentBuilderFactory
-      = DocumentBuilderFactoryCreator.createFactory();
 
   /**
    * Helper method to set the syndication state for the appropriate target based on
@@ -130,15 +128,13 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * @return doc
    */
   private Document appendJournals(Document doc, ArticleIdentity articleId) {
-    List<Article> articles = hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Article.class)
-            .setFetchMode("journals", FetchMode.JOIN)
-            .add(Restrictions.eq("doi", articleId.getKey()))
-    );
-    if (articles.size() != 1) {
-      throw new IllegalStateException("Invalid DOI " + articleId.getIdentifier());
-    }
-    Set<Journal> journals = articles.get(0).getJournals();
+    Article article = (Article) DataAccessUtils.uniqueResult(
+        (List<?>) hibernateTemplate.findByCriteria(
+            DetachedCriteria.forClass(Article.class)
+                .setFetchMode("journals", FetchMode.JOIN)
+                .add(Restrictions.eq("doi", articleId.getKey()))
+        ));
+    Set<Journal> journals = article.getJournals();
 
     Element additionalInfoElement = doc.createElementNS(XML_NAMESPACE, "ambra");
     Element journalsElement = doc.createElementNS(XML_NAMESPACE, "journals");
@@ -172,7 +168,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * @return doc
    */
   private Document appendStrikingImage(Document doc, Article article) {
-    String strikingImage = article.getStrkImgURI() == null ? "" : article.getStrkImgURI();
+    String strikingImage = Strings.nullToEmpty(article.getStrkImgURI());
     NodeList metaNodeLst = doc.getElementsByTagName("article-meta");
     Node metaNode = metaNodeLst.item(0);
     Element strkImgElem = doc.createElement("article-strkImg");
@@ -200,16 +196,17 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       Document doc;
       try {
         xml = articleCrudService.readXml(articleId);
-        DocumentBuilder documentBuilder;
 
-        // TODO: is this synchronization really necessary?  Just copying and pasting from
-        // the old admin code.  Nothing in the javadocs indicates it is.
-        synchronized (documentBuilderFactory) {
-          try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-          } catch (ParserConfigurationException pce) {
-            throw new RuntimeException(pce);
-          }
+        // TODO: is it necessary and/or performant to create a new one of these each
+        // time?  The old admin codebase a DocumentBuilderFactory as an instance field
+        // and synchronizes access to it.
+        DocumentBuilderFactory documentBuilderFactory
+            = DocumentBuilderFactoryCreator.createFactory();
+        DocumentBuilder documentBuilder;
+        try {
+          documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException pce) {
+          throw new RuntimeException(pce);
         }
         try {
           doc = documentBuilder.parse(xml);
