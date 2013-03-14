@@ -61,6 +61,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.testng.Assert.assertEquals;
@@ -308,7 +309,20 @@ public class IngestionTest extends BaseRhinoTest {
     // Else, be more permissive with XML formatting.
     // We don't mind if actual includes whitespace between tags that was missing from expected.
     // TODO: Make this fail if actual deletes whitespace that was included in expected.
-    return compare(results, objectType, fieldName, massageXml(actual), massageXml(expected));
+    actual = massageXml(actual);
+    expected = massageXml(expected);
+    if (!actual.equals(expected) && optionalWhitespace(actual).matcher(expected).matches()) {
+      /*
+       * Old Admin incorrectly ignores line breaks, therefore omitting whitespace. So 'actual' may still be correct if
+       * it has a whitespace group that 'expected' omits entirely. This means the test might fail to catch bugs where
+       * 'actual' is inserting whitespace where it actually shouldn't be (such as in the middle of a word), but that is
+       * relatively low-risk versus known cases where 'expected' reflects buggy behavior.
+       *
+       * See the pone.0040470 case for examples.
+       */
+      expected = actual;
+    }
+    return compare(results, objectType, fieldName, actual, expected);
   }
 
   /**
@@ -325,6 +339,7 @@ public class IngestionTest extends BaseRhinoTest {
    * @return "massaged" equivalent text
    */
   private static String massageXml(CharSequence text) {
+    text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
     text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
     text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
     return text.toString();
@@ -350,6 +365,26 @@ public class IngestionTest extends BaseRhinoTest {
       CharSequence expectedElement = (i < expected.size()) ? expected.get(i) : null;
       compareMarkupText(results, objectType, String.format("%s[%d]", fieldName, i), actualElement, expectedElement);
     }
+  }
+
+  private static final Pattern NON_WHITESPACE = Pattern.compile("[^\\s]+");
+
+  /**
+   * Produce a pattern that permits whitespace to be omitted or substituted with other whitespace.
+   *
+   * @param text
+   * @return
+   */
+  private static Pattern optionalWhitespace(CharSequence text) {
+    Matcher nonWhitespaceGroups = NON_WHITESPACE.matcher(Preconditions.checkNotNull(text));
+    StringBuilder optionalWhitespacePattern = new StringBuilder(text.length());
+    while (nonWhitespaceGroups.find()) {
+      if (optionalWhitespacePattern.length() > 0) {
+        optionalWhitespacePattern.append("\\s*");
+      }
+      optionalWhitespacePattern.append(Pattern.quote(nonWhitespaceGroups.group()));
+    }
+    return Pattern.compile(optionalWhitespacePattern.toString());
   }
 
   /**
