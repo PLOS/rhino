@@ -24,6 +24,8 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
+import org.ambraproject.models.AmbraEntity;
+import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -101,7 +103,18 @@ public class RhinoConfiguration extends BaseConfiguration {
         new ExclusionStrategy() {
           @Override
           public boolean shouldSkipField(FieldAttributes f) {
-            return namesToExclude.contains(f.getName());
+            final String name = f.getName();
+            if (namesToExclude.contains(name)) {
+              return true;
+            }
+
+            // Prevent infinite recursion on ArticleRelationship.parentArticle
+            if (ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass())
+                && AmbraEntity.class.isAssignableFrom(f.getDeclaredClass())) {
+              return true;
+            }
+
+            return false;
           }
 
           @Override

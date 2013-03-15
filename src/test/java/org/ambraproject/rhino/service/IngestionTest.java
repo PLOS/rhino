@@ -30,8 +30,11 @@ import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
+import org.ambraproject.rhino.test.DummyResponse;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -66,6 +69,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -197,6 +201,7 @@ public class IngestionTest extends BaseRhinoTest {
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .setFetchMode("journals", FetchMode.JOIN)
+            .setFetchMode("journals.volumes", FetchMode.JOIN)
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
@@ -207,6 +212,16 @@ public class IngestionTest extends BaseRhinoTest {
       log.error(failure.toString());
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
+    testReadMetadata(actual, MetadataFormat.JSON);
+  }
+
+  private void testReadMetadata(Article article, MetadataFormat metadataFormat) throws IOException {
+    DummyResponse response = new DummyResponse();
+
+    // Mostly we want to test that this method call doesn't crash or hang
+    articleCrudService.readMetadata(response, article, metadataFormat);
+
+    assertFalse(StringUtils.isBlank(response.read()));
   }
 
   @Test(dataProvider = "generatedZipIngestionData")
