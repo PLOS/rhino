@@ -307,8 +307,6 @@ public class IngestionTest extends BaseRhinoTest {
     }
 
     // Else, be more permissive with XML formatting.
-    // We don't mind if actual includes whitespace between tags that was missing from expected.
-    // TODO: Make this fail if actual deletes whitespace that was included in expected.
     actual = massageXml(actual);
     expected = massageXml(expected);
     if (!actual.equals(expected) && optionalWhitespace(actual).matcher(expected).matches()) {
