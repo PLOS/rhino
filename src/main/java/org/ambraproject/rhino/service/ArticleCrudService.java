@@ -111,4 +111,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
       throws IOException;
 
   public abstract void setAssetService(AssetCrudService assetService);
+
+  /**
+   * List the DOIs of all ingested articles.
+   *
+   * @param response the response to which to write the list
+   * @param format   the desired list format
+   * @throws IOException
+   */
+  public abstract void listDois(HttpServletResponse response, MetadataFormat format) throws IOException;
+
 }

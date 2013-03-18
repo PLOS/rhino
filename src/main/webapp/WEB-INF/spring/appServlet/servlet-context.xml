@@ -22,9 +22,11 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
              xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xmlns:camel="http://camel.apache.org/schema/spring"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
   <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
@@ -113,6 +115,32 @@
   <beans:bean id="articleClassifier" class="org.ambraproject.service.article.AIArticleClassifier">
     <beans:property name="httpClient" ref="httpClient"/>
     <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>
+  </beans:bean>
+
+  <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"
+        factory-method="getInstance" />
+
+  <beans:bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration" />
+
+  <camel:camelContext xmlns="http://camel.apache.org/schema/spring">
+    <camel:jmxAgent id="plos-queue" createConnector="false"/>
+    <camel:template id="messageProducerTemplate"/>
+  </camel:camelContext>
+
+  <beans:bean id="messageSender" class="org.ambraproject.queue.CamelSender">
+    <beans:property name="producerTemplate" ref="messageProducerTemplate"/>
+  </beans:bean>
+
+  <beans:bean id="messageService" class="org.ambraproject.queue.MessageServiceImpl">
+    <beans:property name="sender" ref="messageSender"/>
+    <beans:property name="ambraConfiguration" ref="ambraConfiguration"/>
+  </beans:bean>
+
+  <beans:bean id="syndicationService" class="org.ambraproject.service.syndication.impl.SyndicationServiceImpl">
+    <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
+    <beans:property name="ambraConfiguration" ref="ambraConfiguration"/>
+    <beans:property name="messageService" ref="messageService"/>
+<!--    <beans:property name="journalService" ref="journalService"/> -->
   </beans:bean>
 
   <mvc:interceptors>

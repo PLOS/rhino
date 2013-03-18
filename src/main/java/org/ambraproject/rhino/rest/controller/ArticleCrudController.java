@@ -78,6 +78,14 @@ public class ArticleCrudController extends DoiBasedCrudController {
   }
 
 
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
+  public void listDois(HttpServletResponse response,
+                       @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    articleCrudService.listDois(response, mf);
+  }
+
   /**
    * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
    *

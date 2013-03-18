@@ -346,6 +346,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       citation.setKey(readString("child::label", refNode));
 
       Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
+      if (citationNode == null) {
+        throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
+            + "element-citation, mixed-citation, nlm-citation");
+      }
       citation = new CitedArticleXml(citationNode).build(citation);
       citations.add(citation);
     }

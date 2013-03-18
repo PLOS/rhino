@@ -20,12 +20,20 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
+import org.ambraproject.queue.MessageSender;
+import org.ambraproject.queue.MessageServiceImpl;
+import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.DummyMessageSender;
+import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
 import org.ambraproject.service.article.DummyArticleClassifier;
+import org.ambraproject.service.syndication.SyndicationService;
+import org.ambraproject.service.syndication.impl.SyndicationServiceImpl;
+import org.ambraproject.testutils.AmbraTestConfigurationFactory;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
@@ -75,9 +83,8 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public org.apache.commons.configuration.Configuration ambraConfiguration() {
-    // Dummy object for the test environment
-    return new org.apache.commons.configuration.BaseConfiguration();
+  public org.apache.commons.configuration.Configuration ambraConfiguration() throws Exception {
+    return AmbraTestConfigurationFactory.getConfiguration("ambra-test-config.xml");
   }
 
   /**
@@ -116,5 +123,27 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public AssetCrudService assetService() {
     return new AssetCrudServiceImpl();
+  }
+
+  @Bean
+  public MessageSender messageSender() {
+    return new DummyMessageSender();
+  }
+
+  @Bean
+  public SyndicationService syndicationService() throws Exception {
+    SyndicationServiceImpl service = new SyndicationServiceImpl();
+    service.setSessionFactory(sessionFactory(dataSource()).getObject());
+    service.setAmbraConfiguration(ambraConfiguration());
+    MessageServiceImpl messageService = new MessageServiceImpl();
+    messageService.setAmbraConfiguration(ambraConfiguration());
+    messageService.setSender(messageSender());
+    service.setMessageService(messageService);
+    return service;
+  }
+
+  @Bean
+  public ArticleStateService articleStateService() {
+    return new ArticleStateServiceImpl();
   }
 }

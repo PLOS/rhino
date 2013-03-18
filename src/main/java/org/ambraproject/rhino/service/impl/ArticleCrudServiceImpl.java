@@ -44,12 +44,16 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.service.article.NoSuchArticleIdException;
+import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -192,6 +196,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       hibernateTemplate.update(article);
     }
     String doi = article.getDoi();
+
+    try {
+
+      // This method needs the article to have already been persisted to the DB.
+      syndicationService.createSyndications(doi);
+    } catch (NoSuchArticleIdException nsaide) {
+
+      // Should never happen, since we have already loaded this article.
+      throw new RuntimeException(nsaide);
+    }
 
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());
@@ -551,6 +565,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     fileStoreService.deleteFile(fsid);
     hibernateTemplate.delete(article);
+  }
+
+  @Override
+  public void listDois(HttpServletResponse response, MetadataFormat format) throws IOException {
+    assert format == MetadataFormat.JSON;
+    List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class)
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        .setProjection(Projections.property("doi"))
+        .addOrder(Order.asc("lastModified"))
+    );
+    writeJsonToResponse(response, dois);
   }
 
   @Required
