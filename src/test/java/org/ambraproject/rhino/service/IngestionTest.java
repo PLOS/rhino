@@ -349,6 +349,9 @@ public class IngestionTest extends BaseRhinoTest {
    * Removes whitespace from between tags. This does not produce strictly equivalent XML but it is close enough for test
    * comparisons (but see the comment in {@link #compareMarkupText}).
    * <p/>
+   * Un-escape ampersands where they appear within an attribute value. (This could be handled more generally, but it
+   * barely comes up. Legacy Admin unnecessarily escapes ampersands in this context on case pone.0005668.)
+   * <p/>
    * This should be replaced with proper use of the XML library if it gets too hairy.
    *
    * @param text XML text
@@ -358,6 +361,7 @@ public class IngestionTest extends BaseRhinoTest {
     text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
     text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
     text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
+    text = AMPERSAND_ESCAPE_IN_TAG_ATTR.matcher(text).replaceAll("$1&$2");
     return text.toString();
   }
 
@@ -367,6 +371,13 @@ public class IngestionTest extends BaseRhinoTest {
       + "([^>\\s]+)" // Tag name.
       + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
       + "/>"
+  );
+  private static final Pattern AMPERSAND_ESCAPE_IN_TAG_ATTR = Pattern.compile(""
+      + "(<[^>]*"    // Stuff in the tag before the attribute begins
+      + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
+      + "&amp;"      // The escaped ampersand
+      + "([^>\"]*\"" // Closes the attribute
+      + "[^>]*>)"    // Closes the tag
   );
 
   private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
