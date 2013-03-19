@@ -2,17 +2,17 @@ package org.ambraproject.rhino.service;
 
 
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -505,8 +505,8 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
     // We care only about eIssn, because that's the only part given in article XML.
     // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
-    Set<String> actualEissns = mapJournalsByEissn(actualSet).keySet();
-    Set<String> expectedEissns = mapJournalsByEissn(expectedSet).keySet();
+    Set<String> actualEissns = Maps.uniqueIndex(actualSet, JOURNAL_EISSN).keySet();
+    Set<String> expectedEissns = Maps.uniqueIndex(expectedSet, JOURNAL_EISSN).keySet();
 
     for (String missing : Sets.difference(expectedEissns, actualEissns)) {
       compare(results, Journal.class, "eIssn", null, missing);
@@ -520,9 +520,9 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
-    Map<String, ArticleRelationship> actualMap = mapRelationshipsByDoi(actual);
+    Map<String, ArticleRelationship> actualMap = Maps.uniqueIndex(actual, RELATIONSHIP_DOI);
     Set<String> actualDois = actualMap.keySet();
-    Map<String, ArticleRelationship> expectedMap = mapRelationshipsByDoi(expected);
+    Map<String, ArticleRelationship> expectedMap = Maps.uniqueIndex(expected, RELATIONSHIP_DOI);
     Set<String> expectedDois = expectedMap.keySet();
 
     for (String missingDoi : Sets.difference(expectedDois, actualDois)) {
@@ -541,9 +541,9 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
                                                  Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
-    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
+    Map<AssetIdentity, ArticleAsset> actualAssetMap = Maps.uniqueIndex(actualList, ASSET_IDENTITY);
     Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetFilesByAssetId(expectedList);
+    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = Multimaps.index(expectedList, ASSET_IDENTITY);
     Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
 
     for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
@@ -573,9 +573,9 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void compareAssetsWithExpectedFiles(AssertionCollector results,
                                               Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
-    Map<AssetFileIdentity, ArticleAsset> actualMap = mapAssetFilesByAssetFileId(actual);
+    Map<AssetFileIdentity, ArticleAsset> actualMap = Maps.uniqueIndex(actual, ASSET_FILE_IDENTITY);
     Set<AssetFileIdentity> actualKeys = actualMap.keySet();
-    Map<AssetFileIdentity, ArticleAsset> expectedMap = mapAssetFilesByAssetFileId(expected);
+    Map<AssetFileIdentity, ArticleAsset> expectedMap = Maps.uniqueIndex(expected, ASSET_FILE_IDENTITY);
     Set<AssetFileIdentity> expectedKeys = expectedMap.keySet();
 
     for (AssetFileIdentity missing : Sets.difference(expectedKeys, actualKeys)) {
@@ -651,9 +651,9 @@ public class IngestionTest extends BaseRhinoTest {
       }
     }
 
-    Map<String, CitedArticle> actualMap = mapCitationsByKey(actualList);
+    Map<String, CitedArticle> actualMap = Maps.uniqueIndex(actualList, CITATION_KEY);
     Set<String> actualKeys = actualMap.keySet();
-    Map<String, CitedArticle> expectedMap = mapCitationsByKey(expectedList);
+    Map<String, CitedArticle> expectedMap = Maps.uniqueIndex(expectedList, CITATION_KEY);
     Set<String> expectedKeys = expectedMap.keySet();
 
     for (String key : Sets.intersection(actualKeys, expectedKeys)) {
@@ -809,56 +809,42 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-  // Transformation helper methods
+  // Transformation helpers
 
-  private static ImmutableMap<String, Journal> mapJournalsByEissn(Collection<Journal> journals) {
-    ImmutableMap.Builder<String, Journal> map = ImmutableMap.builder();
-    for (Journal journal : journals) {
-      map.put(journal.geteIssn(), journal);
+  private static final Function<Journal, String> JOURNAL_EISSN = new Function<Journal, String>() {
+    @Override
+    public String apply(Journal input) {
+      return input.geteIssn();
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMap<String, ArticleRelationship> mapRelationshipsByDoi(Collection<ArticleRelationship> relationships) {
-    ImmutableMap.Builder<String, ArticleRelationship> map = ImmutableMap.builder();
-    for (ArticleRelationship relationship : relationships) {
-      map.put(relationship.getOtherArticleDoi(), relationship);
+  private static final Function<ArticleRelationship, String> RELATIONSHIP_DOI = new Function<ArticleRelationship, String>() {
+    @Override
+    public String apply(ArticleRelationship input) {
+      return input.getOtherArticleDoi();
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMap<AssetIdentity, ArticleAsset> mapUninitAssetsById(Collection<ArticleAsset> assets) {
-    ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
-    for (ArticleAsset asset : assets) {
-      map.put(AssetIdentity.from(asset), asset);
+  private static final Function<ArticleAsset, AssetIdentity> ASSET_IDENTITY = new Function<ArticleAsset, AssetIdentity>() {
+    @Override
+    public AssetIdentity apply(ArticleAsset input) {
+      return AssetIdentity.from(input);
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMultimap<AssetIdentity, ArticleAsset> mapAssetFilesByAssetId(Collection<ArticleAsset> assets) {
-    ImmutableListMultimap.Builder<AssetIdentity, ArticleAsset> map = ImmutableListMultimap.builder();
-    for (ArticleAsset asset : assets) {
-      AssetFileIdentity fileIdentity = AssetFileIdentity.from(asset);
-      map.put(fileIdentity.forAsset(), asset);
+  private static final Function<ArticleAsset, AssetFileIdentity> ASSET_FILE_IDENTITY = new Function<ArticleAsset, AssetFileIdentity>() {
+    @Override
+    public AssetFileIdentity apply(ArticleAsset input) {
+      return AssetFileIdentity.from(input);
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMap<AssetFileIdentity, ArticleAsset> mapAssetFilesByAssetFileId(Collection<ArticleAsset> assets) {
-    ImmutableMap.Builder<AssetFileIdentity, ArticleAsset> map = ImmutableMap.builder();
-    for (ArticleAsset asset : assets) {
-      map.put(AssetFileIdentity.from(asset), asset);
+  private static final Function<CitedArticle, String> CITATION_KEY = new Function<CitedArticle, String>() {
+    @Override
+    public String apply(CitedArticle input) {
+      return input.getKey();
     }
-    return map.build();
-  }
-
-  private static ImmutableMap<String, CitedArticle> mapCitationsByKey(Collection<CitedArticle> citations) {
-    ImmutableMap.Builder<String, CitedArticle> map = ImmutableMap.builder();
-    for (CitedArticle citation : citations) {
-      map.put(citation.getKey(), citation);
-    }
-    return map.build();
-  }
+  };
 
   private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
     List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());
