@@ -107,27 +107,47 @@ public class IngestionTest extends BaseRhinoTest {
     };
   }
 
+  /**
+   * Provide test cases for ingestion tests.
+   *
+   * @param assertionSuffix the file name suffix for files that assert expected behavior
+   * @param testInputSuffix the file name suffix for files to use as test input
+   * @param testDataPath    the path to the directory containing both above kinds of file
+   * @return a list containing arrays ready to pass as @Test parameters
+   */
+  private List<Object[]> provideIngestionCases(String assertionSuffix, String testInputSuffix, File testDataPath) {
+    File[] assertionFiles = testDataPath.listFiles(forSuffix(assertionSuffix));
+    Arrays.sort(assertionFiles);
+    List<Object[]> cases = Lists.newLinkedList(); // LinkedList for mid-iteration removal -- see generatedIngestionData
+
+    // Only add to the test if files are found for both the input and asserted output
+    for (File assertionFile : assertionFiles) {
+      String assertionFilePath = assertionFile.getPath();
+      String filePath = assertionFilePath.substring(0, assertionFilePath.length() - assertionSuffix.length());
+      File testInputFile = new File(filePath + testInputSuffix);
+      if (testInputFile.exists()) {
+        cases.add(new Object[]{assertionFile, testInputFile});
+      }
+    }
+
+    return cases;
+  }
+
   @DataProvider
   public Object[][] generatedIngestionData() {
-    File[] jsonFiles = DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
-    Arrays.sort(jsonFiles);
-    List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
+    List<Object[]> cases = provideIngestionCases(JSON_SUFFIX, XML_SUFFIX, DATA_PATH);
 
-    // Only add to the test if both the .json and .xml file exist.
-    for (File jsonFile : jsonFiles) {
-      String jsonFilePath = jsonFile.getPath();
-      String xmlPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + XML_SUFFIX;
-      File xmlFile = new File(xmlPath);
-      if (!xmlFile.exists()) {
-        continue;
-      }
+    for (Iterator<Object[]> iterator = cases.iterator(); iterator.hasNext(); ) {
+      Object[] testCase = iterator.next();
+      String jsonFilePath = ((File) testCase[0]).getPath();
+      String filePath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length());
 
       // Don't return any articles that have a zip archive.  Those will be returned
       // instead by generatedZipIngestionData() for a different test.
-      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
+      String zipPath = filePath + ZIP_SUFFIX;
       File zipFile = new File(zipPath);
-      if (!zipFile.exists()) {
-        cases.add(new Object[]{jsonFile, xmlFile});
+      if (zipFile.exists()) {
+        iterator.remove();
       }
     }
 
@@ -136,18 +156,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   @DataProvider
   public Object[][] generatedZipIngestionData() {
-    File[] jsonFiles = ZIP_DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
-    Arrays.sort(jsonFiles);
-    List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
-    for (File jsonFile : jsonFiles) {
-      String jsonFilePath = jsonFile.getPath();
-      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
-      File zipFile = new File(zipPath);
-      if (zipFile.exists()) {
-        cases.add(new Object[]{jsonFile, zipFile});
-      }
-    }
-    return cases.toArray(new Object[0][]);
+    return provideIngestionCases(JSON_SUFFIX, ZIP_SUFFIX, ZIP_DATA_PATH).toArray(new Object[0][]);
   }
 
   private Article readReferenceCase(File jsonFile) throws IOException {
