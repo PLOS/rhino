@@ -59,10 +59,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -576,49 +573,20 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void compareAssetsWithExpectedFiles(AssertionCollector results,
                                               Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
-    SortAssetsReturnValue actualReturnValue = sortAssets(actual);
-    List<AssetFileIdentity> actualSorted = actualReturnValue.sortedList;
-    Map<AssetFileIdentity, ArticleAsset> actualAssetMap = actualReturnValue.assetMap;
-    Set<AssetFileIdentity> actualSet = new HashSet<AssetFileIdentity>(actualSorted);
+    Map<AssetFileIdentity, ArticleAsset> actualMap = mapAssetFilesByAssetFileId(actual);
+    Set<AssetFileIdentity> actualKeys = actualMap.keySet();
+    Map<AssetFileIdentity, ArticleAsset> expectedMap = mapAssetFilesByAssetFileId(expected);
+    Set<AssetFileIdentity> expectedKeys = expectedMap.keySet();
 
-    SortAssetsReturnValue expectedReturnValue = sortAssets(expected);
-    List<AssetFileIdentity> expectedSorted = expectedReturnValue.sortedList;
-    Map<AssetFileIdentity, ArticleAsset> expectedAssetMap = expectedReturnValue.assetMap;
-    Set<AssetFileIdentity> expectedSet = new HashSet<AssetFileIdentity>(expectedSorted);
-
-    for (AssetFileIdentity missing : Sets.difference(expectedSet, actualSet)) {
+    for (AssetFileIdentity missing : Sets.difference(expectedKeys, actualKeys)) {
       compare(results, ArticleAsset.class, "doi/extension", null, missing);
     }
-    for (AssetFileIdentity extra : Sets.difference(actualSet, expectedSet)) {
+    for (AssetFileIdentity extra : Sets.difference(actualKeys, expectedKeys)) {
       compare(results, ArticleAsset.class, "doi/extension", extra, null);
     }
-
-    if (actualSorted.size() == expectedSorted.size()) {
-      for (int i = 0; i < actualSorted.size(); i++) {
-        compareAssetFields(results, actualAssetMap.get(actualSorted.get(i)),
-            expectedAssetMap.get(expectedSorted.get(i)), true);
-      }
+    for (AssetFileIdentity key : Sets.intersection(actualKeys, expectedKeys)) {
+      compareAssetFields(results, actualMap.get(key), expectedMap.get(key), true);
     }
-  }
-
-  private static class SortAssetsReturnValue {
-    List<AssetFileIdentity> sortedList;
-    Map<AssetFileIdentity, ArticleAsset> assetMap;
-  }
-
-  private SortAssetsReturnValue sortAssets(Collection<ArticleAsset> assets) {
-    List<AssetFileIdentity> sortedList = new ArrayList<AssetFileIdentity>(assets.size());
-    Map<AssetFileIdentity, ArticleAsset> assetMap = new HashMap<AssetFileIdentity, ArticleAsset>();
-    for (ArticleAsset asset : assets) {
-      AssetFileIdentity afi = AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
-      sortedList.add(afi);
-      assetMap.put(afi, asset);
-    }
-    Collections.sort(sortedList);
-    SortAssetsReturnValue results = new SortAssetsReturnValue();
-    results.sortedList = sortedList;
-    results.assetMap = assetMap;
-    return results;
   }
 
   /**
@@ -872,6 +840,14 @@ public class IngestionTest extends BaseRhinoTest {
     for (ArticleAsset asset : assets) {
       AssetFileIdentity fileIdentity = AssetFileIdentity.from(asset);
       map.put(fileIdentity.forAsset(), asset);
+    }
+    return map.build();
+  }
+
+  private static ImmutableMap<AssetFileIdentity, ArticleAsset> mapAssetFilesByAssetFileId(Collection<ArticleAsset> assets) {
+    ImmutableMap.Builder<AssetFileIdentity, ArticleAsset> map = ImmutableMap.builder();
+    for (ArticleAsset asset : assets) {
+      map.put(AssetFileIdentity.from(asset), asset);
     }
     return map.build();
   }
