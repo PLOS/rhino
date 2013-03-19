@@ -33,6 +33,7 @@ import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.util.NodeListAdapter;
+import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -271,10 +272,16 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
     for (String otherType : otherTypes) {
-      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + uriEncode(otherType));
+      otherType = uriEncode(otherType);
+      otherType = SLASH_ESCAPE.replace(otherType); // uriEncode leaves slashes alone, but we actually want them escaped
+      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + otherType); // TODO PLOS-specific
     }
     return articleTypes;
   }
+
+  private static final StringReplacer SLASH_ESCAPE = StringReplacer.builder()
+      .replaceExact("/", String.format("%%%H", '/'))
+      .build();
 
   /**
    * Build a field of XML text by partially reconstructing the node's content. The output is text content between the
