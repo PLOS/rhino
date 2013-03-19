@@ -91,7 +91,8 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
-  public void ingest(HttpServletResponse response, @RequestParam(value = "doi") String doi,
+  public void ingest(HttpServletResponse response,
+                     @RequestParam(value = "doi", required = false) String doi,
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 

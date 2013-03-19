@@ -29,6 +29,7 @@ public class PlosDoiUtilsTest {
   @DataProvider
   public Object[][] badDois() {
     Object[] bad = new Object[]{
+        null,
         "",
         "info:",
         "info:doi/10.1371/",

@@ -37,9 +37,12 @@ public final class PlosDoiUtils {
   }
 
   /**
-   * Validates that the inpyut is a well-formed PLOS DOI.
+   * Validates that the input is a well-formed PLOS DOI.
    */
   public static boolean validate(String doi) {
+    if (doi == null) {
+      return false;
+    }
     for (Pattern pattern : PLOS_DOI_RES) {
       Matcher m = pattern.matcher(doi);
       if (m.matches()) {
@@ -60,7 +63,9 @@ public final class PlosDoiUtils {
    * @return the short form
    */
   public static String getShortIdentifier(String doi) {
-    Preconditions.checkNotNull(doi);
+    if (doi == null) {
+      throw new IllegalArgumentException("null is not a valid PLOS DOI");
+    }
     Matcher m = SHORT_IDENTIFIER_RE.matcher(doi);
     if (!m.find()) {
       throw new IllegalArgumentException("Not a valid PLOS DOI: " + doi);
