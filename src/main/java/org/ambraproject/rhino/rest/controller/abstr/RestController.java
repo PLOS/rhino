@@ -28,6 +28,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -159,6 +160,21 @@ public abstract class RestController {
     HttpStatus status = e.getResponseStatus();
     log.info("Reporting error to client (" + status + ")", e);
     return respondWithPlainText(e.getMessage(), status);
+  }
+
+  /**
+   * Exception handler for exceptions thrown by the Spring MVC framework when incoming
+   * requests cannot be matched with the @RequestParam-annotated parameters.  For example,
+   * if a request is missing a required parameter, or the types do not match, this
+   * handler will be invoked.  This method returns a 405 status code to the client instead
+   * of a 500.
+   *
+   * @param srbe exception from the Spring framework
+   * @return ResponseEntity encapsulating a 405 return code and an informative error message
+   */
+  @ExceptionHandler(ServletRequestBindingException.class)
+  public ResponseEntity<String> reportRequestError(ServletRequestBindingException srbe) {
+    return respondWithPlainText(srbe.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
   }
 
   /**
