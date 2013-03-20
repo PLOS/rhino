@@ -44,6 +44,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -63,7 +64,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -523,7 +523,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void readMetadata(HttpServletResponse response, DoiBasedIdentity id, MetadataFormat format) throws IOException {
+  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
@@ -536,13 +536,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
-    readMetadata(response, article, format);
+    readMetadata(receiver, article, format);
   }
 
   @Override
-  public void readMetadata(HttpServletResponse response, Article article, MetadataFormat format) throws IOException {
+  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    writeJsonToResponse(response, article);
+    writeJson(receiver, article);
   }
 
   /**
@@ -567,7 +567,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void listDois(HttpServletResponse response, MetadataFormat format) throws IOException {
+  public void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
     List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
         .forClass(Article.class)
@@ -575,7 +575,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         .setProjection(Projections.property("doi"))
         .addOrder(Order.asc("lastModified"))
     );
-    writeJsonToResponse(response, dois);
+    writeJson(receiver, dois);
   }
 
   @Required

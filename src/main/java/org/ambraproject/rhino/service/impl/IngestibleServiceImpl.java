@@ -17,10 +17,10 @@ import com.google.inject.internal.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
@@ -51,7 +51,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    * {@inheritDoc}
    */
   @Override
-  public void read(HttpServletResponse response, MetadataFormat format) throws IOException {
+  public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     Preconditions.checkArgument(format == MetadataFormat.JSON);
     File ingestDir = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY));
     File[] archives = ingestDir.listFiles(new FilenameFilter() {
@@ -71,7 +71,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
       results.add("info:doi/10.1371/journal." + filename.substring(0, filename.length() - 4));
     }
     Collections.sort(results);
-    writeJsonToResponse(response, results);
+    writeJson(receiver, results);
   }
 
   /**

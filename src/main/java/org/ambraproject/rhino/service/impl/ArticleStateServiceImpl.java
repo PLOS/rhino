@@ -27,6 +27,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.configuration.Configuration;
@@ -43,7 +44,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -110,10 +110,10 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * {@inheritDoc}
    */
   @Override
-  public void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
+  public void read(ResponseReceiver receiver, ArticleIdentity articleId, MetadataFormat format)
       throws IOException {
     assert format == MetadataFormat.JSON;
-    writeJsonToResponse(response, read(articleId));
+    writeJson(receiver, read(articleId));
   }
 
   /**

@@ -17,8 +17,8 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -37,12 +37,12 @@ public interface ArticleStateService {
   /**
    * Writes an article's state to the response.
    *
-   * @param response  HttpServletResponse for the current request
+   * @param receiver  response for the current request
    * @param articleId wraps the article's DOI
    * @param format    the desired metadata format
    * @throws IOException
    */
-  void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
+  void read(ResponseReceiver receiver, ArticleIdentity articleId, MetadataFormat format)
       throws IOException;
 
   /**

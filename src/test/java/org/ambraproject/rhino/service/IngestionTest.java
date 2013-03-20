@@ -34,7 +34,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
-import org.ambraproject.rhino.test.DummyResponse;
+import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -272,7 +272,7 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void testReadMetadata(Article article, MetadataFormat metadataFormat) throws IOException {
-    DummyResponse response = new DummyResponse();
+    DummyResponseReceiver response = new DummyResponseReceiver();
 
     // Mostly we want to test that this method call doesn't crash or hang
     articleCrudService.readMetadata(response, article, metadataFormat);
