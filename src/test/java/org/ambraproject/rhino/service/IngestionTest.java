@@ -74,13 +74,19 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
- * This is actually a test on {@link ArticleCrudService#write} and would normally be in {@link ArticleCrudServiceTest}.
- * But because of the special way that it gathers its assertion data, I'm putting it in its own class now. Maybe it
- * should be moved into the regular test when it's ready to supplant/replace it.
+ * Special test suite for testing ingestion features, using the legacy Admin app as a reference implementation.
  * <p/>
- * The test case data for this class live at {@code DATA_PATH}. The XML file is raw article data as it would be passed
- * to the ingester in production. The matching JSON file is a Gson dump of an {@link org.ambraproject.models.Article}
- * instance as created by the reference implementation ({@code org.ambraproject.article.service.IngesterImpl}).
+ * The test case data for this class live at {@code DATA_PATH}. Each XML file is raw article data to be passed to an
+ * {@link ArticleCrudService}. The matching JSON file is a Gson dump of an {@link org.ambraproject.models.Article}
+ * instance as created by the reference implementation ({@code org.ambraproject.article.service.IngesterImpl}). There
+ * are also full zip archives that are analogous to the XML, but test {@link IngestibleService} instead.
+ * <p/>
+ * The code in this class was centered around the reference implementation, and was written with the assumption that it
+ * would use the unaltered JSON code for comparisons, bugs and all. Hence, there are a lot of little hacks in the
+ * assertions that either relax the requirements for equality between actual and "expected" values, or outright ignore
+ * certain values in the presence of known bugs. These should be well-commented.
+ * <p/>
+ * Better, less hackish tests are desirable in the unit test classes that explicitly test particular services.
  */
 public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
