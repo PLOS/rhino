@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.util;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

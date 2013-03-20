@@ -163,11 +163,9 @@ public abstract class RestController {
   }
 
   /**
-   * Exception handler for exceptions thrown by the Spring MVC framework when incoming
-   * requests cannot be matched with the @RequestParam-annotated parameters.  For example,
-   * if a request is missing a required parameter, or the types do not match, this
-   * handler will be invoked.  This method returns a 405 status code to the client instead
-   * of a 500.
+   * Exception handler for exceptions thrown by the Spring MVC framework when incoming requests cannot be matched with
+   * the @RequestParam-annotated parameters.  For example, if a request is missing a required parameter, or the types do
+   * not match, this handler will be invoked.  This method returns a 405 status code to the client instead of a 500.
    *
    * @param srbe exception from the Spring framework
    * @return ResponseEntity encapsulating a 405 return code and an informative error message
@@ -194,12 +192,12 @@ public abstract class RestController {
   }
 
   /**
-   * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this
-   * method, the InputStream associated with the request will be closed.
+   * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this method, the InputStream
+   * associated with the request will be closed.
    *
    * @param request HttpServletRequest
-   * @param clazz class of the bean we are de-serializing
-   * @param <T> type of the bean we are de-serializing
+   * @param clazz   class of the bean we are de-serializing
+   * @param <T>     type of the bean we are de-serializing
    * @return JSON de-serialized to a bean
    * @throws IOException
    */

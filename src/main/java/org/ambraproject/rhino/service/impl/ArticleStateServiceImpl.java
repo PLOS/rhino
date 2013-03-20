@@ -70,10 +70,10 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   private Configuration ambraConfiguration;
 
   /**
-   * Helper method to set the syndication state for the appropriate target based on
-   * the status property of the Syndication object.
+   * Helper method to set the syndication state for the appropriate target based on the status property of the
+   * Syndication object.
    *
-   * @param state ArticleState object that will be modified
+   * @param state       ArticleState object that will be modified
    * @param syndication Syndication we are reading from
    */
   private void setSyndicationState(ArticleState state, Syndication syndication) {
@@ -117,13 +117,11 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   }
 
   /**
-   * Attaches additional XML info to an article document specifying the journals it
-   * is published in.
+   * Attaches additional XML info to an article document specifying the journals it is published in.
    * <p/>
-   * This is largely copied from org.ambraproject.article.service.ArticleDocumentServiceImpl
-   * in the old admin codebase.
+   * This is largely copied from org.ambraproject.article.service.ArticleDocumentServiceImpl in the old admin codebase.
    *
-   * @param doc article XML
+   * @param doc       article XML
    * @param articleId encodes DOI
    * @return doc
    */
@@ -160,10 +158,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   /**
    * Append an additional XML node to an article document specifying the striking image.
    * <p/>
-   * This is largely copied from org.ambraproject.search.service.IndexingServiceImpl
-   * in the old admin codebase.
+   * This is largely copied from org.ambraproject.search.service.IndexingServiceImpl in the old admin codebase.
    *
-   * @param doc article XML
+   * @param doc     article XML
    * @param article
    * @return doc
    */
@@ -179,10 +176,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   }
 
   /**
-   * Updates the solr index (indirectly, via plos-queue) depending on the publication
-   * state of an article.
+   * Updates the solr index (indirectly, via plos-queue) depending on the publication state of an article.
    *
-   * @param articleId wraps the DOI
+   * @param articleId   wraps the DOI
    * @param article
    * @param isPublished indicates whether we are publishing or un-publishing
    * @throws FileStoreException

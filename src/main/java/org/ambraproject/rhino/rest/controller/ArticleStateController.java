@@ -59,14 +59,14 @@ public class ArticleStateController extends DoiBasedCrudController {
   /**
    * Reads the state of an article.
    *
-   * @param request HttpServletRequest
+   * @param request  HttpServletRequest
    * @param response HttpServletResponse
    * @param format
    * @throws IOException
    */
   @RequestMapping(value = ARTICLE_STATE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
 
     ArticleIdentity id = parse(request);
@@ -76,7 +76,7 @@ public class ArticleStateController extends DoiBasedCrudController {
   /**
    * Sets the state of an article based on JSON in the request.
    *
-   * @param request HttpServletRequest
+   * @param request  HttpServletRequest
    * @param response HttpServletResponse
    * @throws IOException
    */

@@ -14,20 +14,18 @@
 package org.ambraproject.rhino.content;
 
 /**
- * Bean representing the state of an article: for example, whether it has been
- * published, syndicated, re-ingested, etc.
+ * Bean representing the state of an article: for example, whether it has been published, syndicated, re-ingested, etc.
  * <p/>
- * This is not a persistent entity, but rather a bean used in communicating over
- * a ReST API to read and write the state of an article.  Where these states
- * are actually stored on the backend is not this class's concern.
+ * This is not a persistent entity, but rather a bean used in communicating over a ReST API to read and write the state
+ * of an article.  Where these states are actually stored on the backend is not this class's concern.
  */
 public class ArticleState {
 
   /**
    * Represents legal syndication targets.
    * <p/>
-   * In the old codebase, this is loaded from ambra.xml.  That seems like overkill
-   * considering that we only have two of these, and they change rarely.
+   * In the old codebase, this is loaded from ambra.xml.  That seems like overkill considering that we only have two of
+   * these, and they change rarely.
    */
   public enum SyndicationTarget {
     CROSSREF,
@@ -35,8 +33,8 @@ public class ArticleState {
   }
 
   /**
-   * Represents legal states for a syndication attempt to be in.  This is
-   * an enum-duplication of the Syndication.status property.
+   * Represents legal states for a syndication attempt to be in.  This is an enum-duplication of the Syndication.status
+   * property.
    */
   public enum SyndicationState {
     PENDING,

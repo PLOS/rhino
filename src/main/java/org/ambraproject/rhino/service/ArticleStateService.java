@@ -37,9 +37,9 @@ public interface ArticleStateService {
   /**
    * Writes an article's state to the response.
    *
-   * @param response HttpServletResponse for the current request
+   * @param response  HttpServletResponse for the current request
    * @param articleId wraps the article's DOI
-   * @param format the desired metadata format
+   * @param format    the desired metadata format
    * @throws IOException
    */
   void read(HttpServletResponse response, ArticleIdentity articleId, MetadataFormat format)
@@ -49,7 +49,7 @@ public interface ArticleStateService {
    * Writes an ArticleState object to the persistent article identified by articleId.
    *
    * @param articleId identifies the article whose state we are updating
-   * @param state state to be written
+   * @param state     state to be written
    * @return the state after updates are applied
    */
   ArticleState write(ArticleIdentity articleId, ArticleState state)
