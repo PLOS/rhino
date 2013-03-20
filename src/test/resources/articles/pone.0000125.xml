@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+   <front>
+      <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+            <publisher-name>Public Library of Science</publisher-name>
+            <publisher-loc>San Francisco, USA</publisher-loc>
+         </publisher></journal-meta>
+      <article-meta><article-id pub-id-type="publisher-id">06-PONE-RA-00210R2</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0000125</article-id><article-categories>
+            <subj-group subj-group-type="heading">
+               <subject>Research Article</subject>
+            </subj-group>
+            <subj-group subj-group-type="Discipline">
+               <subject>Evolutionary Biology/Animal Genetics</subject>
+               <subject>Evolutionary Biology/Evolutionary and Comparative Genetics</subject>
+               <subject>Genetics and Genomics/Animal Genetics</subject>
+               <subject>Genetics and Genomics/Population Genetics</subject>
+            </subj-group>
+         </article-categories><title-group><article-title>Heterozygote Advantage for Fecundity</article-title><alt-title alt-title-type="running-head">Heterozygote Advantage</alt-title></title-group><contrib-group>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Gemmell</surname>
+                  <given-names>Neil J.</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff1">
+                  <sup>1</sup>
+               </xref>
+               <xref ref-type="corresp" rid="n101">
+                  <sup>*</sup>
+               </xref>
+            </contrib>
+            <contrib contrib-type="author" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Slate</surname>
+                  <given-names>Jon</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff2">
+                  <sup>2</sup>
+               </xref>
+            </contrib>
+         </contrib-group><aff id="aff1">
+            <label>1</label>
+            <addr-line>School of Biological Sciences, University of Canterbury, Christchurch, New Zealand</addr-line> 
+         </aff><aff id="aff2">
+            <label>2</label>
+            <addr-line>Department of Animal and Plant Sciences, University of Sheffield, Sheffield, United Kingdom</addr-line> 
+         </aff><contrib-group>
+            <contrib contrib-type="editor" xlink:type="simple">
+               <name name-style="western">
+                  <surname>Scheffler</surname>
+                  <given-names>Konrad</given-names>
+               </name>
+               <role>Academic Editor</role>
+               <xref ref-type="aff" rid="edit1"/>
+            </contrib>
+         </contrib-group><aff id="edit1">University of Cape Town, South Africa</aff><author-notes>
+            <corresp id="n101">* To whom correspondence should be addressed. E-mail: <email xlink:type="simple">neil.gemmell@canterbury.ac.nz</email>
+            </corresp>
+            <fn fn-type="con">
+               <p>Conceived and designed the experiments: NG JS. Performed the experiments: NG JS. Analyzed the data: NG JS. Contributed reagents/materials/analysis tools: NG JS. Wrote the paper: NG JS.</p>
+            </fn>
+         <fn fn-type="conflict">
+            <p>The authors have declared that no competing interests exist.</p>
+         </fn></author-notes><pub-date pub-type="ppub">
+            <day>27</day>
+            <month>12</month>
+            <year>2006</year>
+         </pub-date><pub-date pub-type="epub">
+            <day>27</day>
+            <month>12</month>
+            <year>2006</year>
+         </pub-date><volume>1</volume><issue>1</issue><elocation-id>e125</elocation-id><history>
+            <date date-type="received">
+               <day>9</day>
+               <month>10</month>
+               <year>2006</year>
+            </date>
+            <date date-type="accepted">
+               <day>4</day>
+               <month>12</month>
+               <year>2006</year>
+            </date>
+         </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2006</copyright-year><copyright-holder>Gemmell, Slate</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+            <p>Heterozygote advantage, or overdominance, remains a popular and persuasive explanation for the maintenance of genetic variation in natural populations in the face of selection. However, despite being first proposed more than 80 years ago, there remain few examples that fit the criteria for heterozygote advantage, all of which are associated with disease resistance and are maintained only in the presence of disease or other gene-by-environment interaction. Here we report five new examples of heterozygote advantage, based around polymorphisms in the <italic>BMP15</italic> and <italic>GDF9</italic> genes that affect female fecundity in domesticated sheep and are not reliant on disease for their maintenance. Five separate mutations in these members of the transforming growth factor β (<italic>TGFβ</italic>) superfamily give phenotypes with fitness differentials characteristic of heterozygous advantage. In each case, one copy of the mutant allele increases ovulation rate, and ultimately litter size per ewe lambing, relative to the wildtype. However, homozygous ewes inheriting mutant alleles from both parents have impaired oocyte development and maturation, which results in small undeveloped ovaries and infertility. Using data collected over many years on ovulation rates, litter size, and lambing rates, we have calculated the equilibrium solution for each of these polymorphisms using standard population genetic theory. The predicted equilibrium frequencies obtained for these mutant alleles range from 0.11 to 0.23, which are amongst the highest yet reported for a polymorphism maintained by heterozygote advantage. These are amongst the most frequent and compelling examples of heterozygote advantage yet described and the first documented examples of heterozygote advantage that are not reliant on a disease interaction for their maintenance.</p>
+         </abstract><funding-group><funding-statement>This collaboration was facilitated by a University of Canterbury Erskine Grant to J.S.</funding-statement></funding-group><counts>
+            <page-count count="6"/>
+         </counts></article-meta>
+   </front>
+   <body>
+      <sec id="s1">
+         <title>Introduction</title>
+         <p>Heterozygote advantage, or overdominance, remains a popular and persuasive explanation for the maintenance of genetic variation in natural populations in the face of selection <xref ref-type="bibr" rid="pone.0000125-Allison1">[1]</xref>, <xref ref-type="bibr" rid="pone.0000125-Haldane1">[2]</xref>. However, despite being first proposed more than 80 years ago <xref ref-type="bibr" rid="pone.0000125-Fisher1">[3]</xref>, <xref ref-type="bibr" rid="pone.0000125-Fisher2">[4]</xref> there remain only a small number of examples that fit the criteria for heterozygote advantage, all of which are associated with disease resistance and maintained only in the presence of disease or other gene-by-environment interaction (see supporting text and <xref ref-type="supplementary-material" rid="pone.0000125.s001">Table S1</xref>). In addition, it is hard to continue to portray heterozygote advantage as an important general concept in evolutionary biology when a single example is used repeatedly throughout the literature. Here we report a simple, but compelling new example of heterozygote advantage, based around polymorphisms in genes associated with fertility in sheep.</p>
+         <p>Several genes have recently been identified that affect female fecundity in domesticated sheep <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>–<xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>. Specifically, mutations in the <italic>BMP15</italic> 
+            <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref> and <italic>GDF9</italic> 
+            <xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref> genes have been shown to increase ovulation rate and ultimately litter size in multiple sheep breeds (<xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/>). The <italic>BMP15</italic> fecundity alleles show an X-linked overdominance inheritance pattern with infertility in homozygous females, while the <italic>GDF9</italic> fecundity alleles have an autosomal overdominance inheritance pattern with infertility in homozygous females <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>–<xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>. Surprisingly, <italic>BMP15</italic> and <italic>GDF9</italic> have never been explicitly referred to as characteristic of heterozygote advantage and genotype fitnesses have never been estimated at these genes.</p>
+         <table-wrap id="pone-0000125-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0000125.t001</object-id><label>Table 1</label><caption>
+               <title>Fecundity genes exhibiting heterozygote advantage in sheep.</title>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.t001" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Breed</td>
+                     <td align="left" colspan="1" rowspan="1">Locus</td>
+                     <td align="left" colspan="1" rowspan="1">Mutation</td>
+                     <td align="left" colspan="3" rowspan="1">Genotype</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <bold>
+                           <italic>q</italic>
+                        </bold>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">+/+</td>
+                     <td align="left" colspan="1" rowspan="1">+/−</td>
+                     <td align="left" colspan="1" rowspan="1">−/−</td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">OR, LA, <italic>w</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">OR, LA, <italic>w</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">OR, LA, <italic>w</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Romney</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>BMP15</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecX<sup>I</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">1.8, 1.19, 0.87</td>
+                     <td align="left" colspan="1" rowspan="1">2.8, 1.36, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.11</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="7" rowspan="1">a) Calculations of fitness (w) and equilibrium frequency (q) based on lambs alive (LA).</td>
+                  </tr>
+               </tbody>
+            </table></table-wrap>
+         <table-wrap id="pone-0000125-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0000125.t001</object-id><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.t001" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Breed</td>
+                     <td align="left" colspan="1" rowspan="1">Locus</td>
+                     <td align="left" colspan="1" rowspan="1">Mutation</td>
+                     <td align="left" colspan="3" rowspan="1">Genotype</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <bold>
+                           <italic>q</italic>
+                        </bold>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">+/+</td>
+                     <td align="left" colspan="1" rowspan="1">+/−</td>
+                     <td align="left" colspan="1" rowspan="1">−/−</td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">OR, LS, <italic>w</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">OR, LS, <italic>w</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">OR, LS, <italic>w</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Romney</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>BMP15</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecX<sup>I</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">1.8, 1.57, 0.73</td>
+                     <td align="left" colspan="1" rowspan="1">2.8, 2.14, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.21</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Romney</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>BMP15</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecX<sup>H</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">1.8, 1.57, 0.73</td>
+                     <td align="left" colspan="1" rowspan="1">2.8, 2.14, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.21</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Belclare</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>BMP15</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecX<sup>B</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">1.92, 1.65, 0.69</td>
+                     <td align="left" colspan="1" rowspan="1">3.26, 2.36, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.23</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Belclare</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>BMP15</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecX<sup>G</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">1.92, 1.65, 0.79</td>
+                     <td align="left" colspan="1" rowspan="1">2.69, 2.09, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.17</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Cambridge</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>BMP15</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecX<sup>G</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">2.27, 1.86, 0.81</td>
+                     <td align="left" colspan="1" rowspan="1">3.11, 2.29, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.16</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Belclare</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>GDF9</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecG<sup>H</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">1.92, 1.65, 0.79</td>
+                     <td align="left" colspan="1" rowspan="1">2.67, 2.08, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.17</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Cambridge</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>GDF9</italic>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">FecG<sup>H</sup>
+                     </td>
+                     <td align="left" colspan="1" rowspan="1">2.27, 1.86, 0.69</td>
+                     <td align="left" colspan="1" rowspan="1">4.28, 2.72, 1</td>
+                     <td align="left" colspan="1" rowspan="1">0, 0, 0</td>
+                     <td align="left" colspan="1" rowspan="1">0.24</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="7" rowspan="1">b) Calculations of fitness (w) and equilibrium frequency (q) based on litter size (LS).</td>
+                  </tr>
+               </tbody>
+            </table><table-wrap-foot>
+               <fn id="nt102">
+                  <p>Mutations in the fecundity genes <italic>BMP15</italic> and <italic>GDF9</italic> and the effects of genotype on mean ovulation rates (OR), litter sizes (LS), lambs alive at one day of age (LA) and the relative fitness in females (<italic>w</italic>). Ovulation rates are derived from references <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>, <xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>, litter sizes calculated as per reference <xref ref-type="bibr" rid="pone.0000125-Hanrahan2">[22]</xref>, and lambs alive obtained from reference <xref ref-type="bibr" rid="pone.0000125-Davis2">[17]</xref>. The designations +/+, +/− and −/− represent the wildtype homozygote, heterozygote and mutant homozygote respectively. The equilibrium frequency (<italic>q</italic>) of the mutant allele is shown for each breed in which these mutations are found.</p>
+               </fn>
+            </table-wrap-foot></table-wrap>
+         <p>Four separate mutations (Inverdale, Hanna, Belclare and Galway) in the X-linked <italic>BMP15</italic> gene (<xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/>) have been described <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref> that give rise to phenotypes with fitness differentials characteristic of heterozygous advantage (<xref ref-type="fig" rid="pone-0000125-g001">Figure 1</xref>). One copy of the Inverdale (<italic>FecX<sup>I</sup>
+            </italic>), Hanna (<italic>FecX<sup>H</sup>
+            </italic>), Belclare (<italic>FECX<sup>B</sup>
+            </italic>) or Galway (<italic>FECX<sup>G</sup>
+            </italic>) allele increases ovulation rate and ultimately litter size by about 0.6 lambs per ewe lambing compared to the wildtype <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>–<xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>. However, homozygous ewes inheriting mutant alleles from both parents have small undeveloped ovaries and are infertile <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>–<xref ref-type="bibr" rid="pone.0000125-Galloway2">[8]</xref>.</p>
+         <fig id="pone-0000125-g001" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0000125.g001</object-id>
+            <label>Figure 1</label>
+            <caption>
+               <title>Genotypes and the fitness differentiations (w) for the Inverdale mutation (FecXI).</title>
+            </caption>
+            <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.g001" xlink:type="simple"/>
+         </fig>
+         <p>Mechanistically, the genetic basis of this heterozygote advantage is well understood. The <italic>BMP15</italic> gene encodes bone morphogenic protein 15 (also known as growth differentiation factor 9B, GDF9B), which is a member of the transforming growth factor β (<italic>TGFβ</italic>) superfamily <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>. <italic>BMP15</italic> acts through a cascade of other proteins (the SMAD pathway) that are responsible for a huge diversity of cellular behaviours, including oocyte development and maturation <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>, <xref ref-type="bibr" rid="pone.0000125-Galloway2">[8]</xref>, <xref ref-type="bibr" rid="pone.0000125-Shimasaki1">[9]</xref>. Without <italic>BMP15</italic>, oocytes continue to grow in the absence of granulosa cell proliferation until they are unable to be supported by the residual granulosa cells, whereupon they degenerate <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>. Curiously, although a lack of <italic>BMP15</italic> blocks follicular growth in homozygotes, inactivation of only one copy of <italic>BMP15</italic> increases ovulation rate <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>, <xref ref-type="bibr" rid="pone.0000125-Galloway2">[8]</xref>, conferring a fecundity advantage to the heterozygote (<xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/>, <xref ref-type="fig" rid="pone-0000125-g001">Figure 1</xref>).</p>
+         <p>A similar pattern of heterozygote advantage is observed in another closely related member of theTGFβ superfamily <italic>GDF9</italic> 
+            <xref ref-type="bibr" rid="pone.0000125-Dong1">[10]</xref>. Like <italic>BMP15</italic>, the autosomal <italic>GDF9</italic> has an essential role in controlling follicular growth via its influence on granulosa cell function <xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>, <xref ref-type="bibr" rid="pone.0000125-Dong1">[10]</xref>. An absence of <italic>GDF9</italic> also blocks follicular growth in homozygotes, resulting in sterility, while inactivation of only one copy of <italic>GDF9</italic> again increases ovulation rate <xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>, conferring a fecundity advantage to the heterozygote (<xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/>).</p>
+         <p>Despite being very compelling examples of heterozygote advantage, the overdominant nature of these fertility polymorphisms is not widely recognised. One of the hurdles to these becoming a more widely known example of heterozygote advantage is the absence of data on the equilibrium solution for each of these polymorphisms and knowledge of their frequencies in a natural situation (see supporting text). However, using standard population genetic theory <xref ref-type="bibr" rid="pone.0000125-Hedrick1">[11]</xref> the equilibrium solution can be readily calculated from data collected over many years on ovulation rates, litter size and lambing rates <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>–<xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>. Here we report the predicted fitness and equilibrium solution for each of these fecundity polymorphisms and show that these are expected to be amongst the most frequent and compelling examples of heterozygote advantage yet described.</p>
+      </sec>
+      <sec id="s2">
+         <title>Results and Discussion</title>
+         <p>The equilibrium solution for each fecundity polymorphism was calculated from data collected on ovulation rates, litter size, and lambing rates as described below. For the Inverdale mutation (<italic>FecX<sup>I</sup>
+            </italic>) the estimated relative fitness of ewes (<italic>w</italic>), based on lambs alive at one day of age, of the homozygote wildtype (<italic>++</italic>), heterozygote (<italic>+/−</italic>) and mutant homozygote (<italic>−/−</italic>) are 0.87, 1 and 0 respectively, leading to a predicted equilibrium frequency for the <italic>FecX<sup>I</sup>
+            </italic> allele (<italic>q</italic>) of 0.11 (<xref ref-type="table" rid="pone-0000125-t001">Table 1a</xref>). Other mutations in <italic>BMP15</italic> and <italic>GDF9</italic> show similar relative fitnesses and equilibrium frequencies for the more limited litter size data (<xref ref-type="table" rid="pone-0000125-t002">Table 1b</xref>), which are collectively amongst the highest yet described for a polymorphism maintained by heterozygote advantage. For comparison, the equilibrium frequency of the recessive sickle cell allele (Hb<sup>S</sup>) rarely exceeds 0.15 <xref ref-type="bibr" rid="pone.0000125-Williams1">[12]</xref>.</p>
+         <p>Heterozygote advantage as a concept holds considerable sway in evolutionary biology, but only a handful of examples have withstood close scrutiny (reviewed in <xref ref-type="supplementary-material" rid="pone.0000125.s001">Table S1</xref>). Of the 21 examples reported that invoke heterozygote advantage as an explanation for the maintenance of polymorphism, compelling evidence for heterozygote advantage is lacking in nearly every instance (<xref ref-type="supplementary-material" rid="pone.0000125.s001">Table S1</xref>). The following information is required to unequivocally demonstrate heterozygote advantage: (i) the gene and mutant alleles under selection must be known; (ii) the relative fitness of each genotype must be known (with heterozygotes exhibiting the greatest relative fitness); (iii) the mechanism of selection must be understood i.e. we need to known why heterozygotes are fitter than homozygotes.</p>
+         <p>Prior to the discovery of the sheep fecundity genes described here, perhaps only the classic example of heterozygote advantage, sickle cell anaemia, met these requirements. In African and Asian human populations where malaria is prevalent, fatalities in homozygotes for the sickle cell trait (Hb<sup>SS</sup>) are offset by the survival advantage of heterozygotes bearing one copy of the sickle cell allele (Hb<sup>S+</sup>) over the wildtype homozygotes (Hb<sup>++</sup>), when challenged with malaria <xref ref-type="bibr" rid="pone.0000125-Allison1">[1]</xref>, <xref ref-type="bibr" rid="pone.0000125-Williams1">[12]</xref>. Sickle cell anaemia is an excellent example of heterozygote advantage, but it has two principal shortcomings. First, the advantage to heterozygotes is conditional, only operating where malaria is prevalent <xref ref-type="bibr" rid="pone.0000125-Allison1">[1]</xref>. Second, the heterozygote advantage arises because of the super-position of two opposite directional selection pressures (malaria and sickle-cell anaemia), so it is not really a true case of heterozygote advantage arising from the heterozygote having superior fitness for a specific trait.</p>
+         <p>There are numerous other putative examples of heterozygote advantage that evoke contemporary and/or historical resistance to infectious disease to explain the relatively high frequency of otherwise deleterious alleles. Examples include the cystic fibrosis-causing alleles at the <italic>CFTR</italic> gene, the Gaucher Disease-causing allele at <italic>GBA</italic>, deafness-causing alleles at <italic>GJB2</italic> and polymorphism at the major histocompatability locus <italic>MHC</italic> (<xref ref-type="supplementary-material" rid="pone.0000125.s001">Table S1</xref>). However, in the majority of these cases genotype fitnesses remain undetermined, and very often the infectious disease driving selection is unknown. This missing information makes it difficult to distinguish between heterozygote advantage and alternative explanations including other forms of balancing selection, such as negative frequency dependence or spatially/temporally variable directional selection <xref ref-type="bibr" rid="pone.0000125-Kreitman1">[13]</xref>.</p>
+         <p>The fertility polymorphisms documented in <italic>BMP15</italic> and <italic>GDF9</italic> represent one of the best examples of heterozygote advantage yet described, with the genetic basis, fitness differentials and the mechanism of selection well understood <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>–<xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>. Crucially, in stark contrast to sickle cell anaemia, no external factor, such as disease <xref ref-type="bibr" rid="pone.0000125-Haldane1">[2]</xref>, needs to be invoked to understand the fitness differentials among genotypes for these polymorphisms.</p>
+         <p>There are of course still substantial issues unresolved for these polymorphisms too. Among the most important of these issues is the frequency of the polymorphism in the wild. At equilibrium our theoretical expectation, based on data from domesticated sheep, is that fertility alleles such as <italic>FecX<sup>I</sup>
+            </italic> will occur at a frequency of 0.11–0.23 (<xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/>). The obvious extension of this work then is to screen wild populations of sheep for these mutations to determine if they are present and if the frequencies match expectations. To date such an investigation has not been undertaken widely. One study of a small population of Soay sheep on the remote Islands of St Kilda found no evidence for any of the <italic>BMP15</italic> fertility polymorphisms described in <xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/> (Gratten pers. comm.). However since this is an isolated population, subject to regular population crashes <xref ref-type="bibr" rid="pone.0000125-CluttonBrock1">[14]</xref>, the absence of polymorphism in <italic>BMP15</italic> in this population may not be overly surprising and further studies in other wild sheep populations are warranted.</p>
+         <p>Heterozygote advantage is commonly assumed to slow the rate of loss of genetic diversity by genetic drift. However, Robertson <xref ref-type="bibr" rid="pone.0000125-Robertson1">[15]</xref> described scenarios where it can accelerate loss of diversity by drift, and provided solutions to the relative rate that heterozygote advantage accelerates or retards loss of diversity for populations of finite size. Extrapolating from <xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/> of Robertson <xref ref-type="bibr" rid="pone.0000125-Robertson1">[15]</xref>, and assuming that s<sub>1</sub> = 0.125, s<sub>2</sub> = 0.5 because selection is only in one sex, and q = 0.20, then heterozygote advantage at the loci described here would retard the effects of genetic drift 100-fold in a population with effective population size (N<sub>e</sub>) 176 (retardation of loss would be greater in larger populations). In other words, the polymorphism is likely to be maintained in moderate or large sized populations.</p>
+         <p>It may well transpire that the fertility polymorphisms described here are only relatively common in domesticated sheep as a consequence of selective breeding and that they do not actually confer an appreciable fitness advantage to heterozygotes in the wild, due perhaps to the existence of other genes under stronger selection that are in linkage or have epistatic effects on these fertility polymorphisms. One prominent example of a mutation maintained at high frequency by human mediated selection for the heterozygote is the Halothane mutation in pigs <xref ref-type="bibr" rid="pone.0000125-Fujii1">[16]</xref>. The Halothane mutation occurs as a result of a missense mutation in a calcium release gene, the ryanodine receptor gene (<italic>RYR1</italic>), expressed in muscle. Heterozygous carriers show a higher lean content than homozygous wild type individuals, whereas the mutant homozygotes are highly susceptible to malignant hyperthermia <xref ref-type="bibr" rid="pone.0000125-Fujii1">[16]</xref>. Selection for leanness in domesticated pigs created an overdominant situation maintaining the mutation at high frequency until a DNA based diagnostic became available that enabled the targeted culling of individuals bearing the Halothane mutation <xref ref-type="bibr" rid="pone.0000125-Fujii1">[16]</xref>.</p>
+         <p>It remains possible that the fertility polymorphisms in <italic>BMP15</italic> and <italic>GDF9</italic> are also maintained through selective breeding, but these mutations differ significantly from the Halothane mutation in that the heterozygotes clearly have a natural advantage in terms of fecundity over the wild type, with little demonstrable decrease in other fitness parameters for the heterozygote reported to date <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>–<xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>, <xref ref-type="bibr" rid="pone.0000125-Davis2">[17]</xref>. However, an obvious possibility is that there is a trade off between birthing many lambs and their survival to weaning, particularly when environmental conditions are unfavourable. To explore this further we have examined data on the mean frequency of single and multiple births for carriers of the Inverdale mutation (FecX<sup>I</sup>) and for wildtype Romney sheep <xref ref-type="bibr" rid="pone.0000125-Amer1">[18]</xref>. We have then estimated the relative fitness of each genotype using data on average survival rates to weaning, for lambs for each birth category, across environmental conditions that range from intensive farming to harsh hill country (<xref ref-type="table" rid="pone-0000125-t003">Table 2</xref>
+            <xref ref-type="table" rid="pone-0000125-t004"/>) <xref ref-type="bibr" rid="pone.0000125-Amer1">[18]</xref>. Due to an absence of data on the frequency of different litter sizes under different environmental conditions, we have made the conservative assumption that this is unaffected by environmental conditions.</p>
+         <table-wrap id="pone-0000125-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0000125.t002</object-id><label>Table 2</label><caption>
+               <title>Table 2. Heterozygote advantage for fecundity in sheep under two different environment conditions.</title>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.t002" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">Environment</td>
+                     <td align="left" colspan="3" rowspan="1">Birth category</td>
+                     <td align="left" colspan="1" rowspan="1">Total</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">Single</td>
+                     <td align="left" colspan="1" rowspan="1">Twins</td>
+                     <td align="left" colspan="1" rowspan="1">Triplets</td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Proportions for wildtype (+/+)</td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">0.26</td>
+                     <td align="left" colspan="1" rowspan="1">0.67</td>
+                     <td align="left" colspan="1" rowspan="1">0.07</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Proportions for heterozygote (+/−)</td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">0.19</td>
+                     <td align="left" colspan="1" rowspan="1">0.55</td>
+                     <td align="left" colspan="1" rowspan="1">0.26</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Mean survival rate to weaning</td>
+                     <td align="left" colspan="1" rowspan="1">Intensive Farming</td>
+                     <td align="left" colspan="1" rowspan="1">0.9</td>
+                     <td align="left" colspan="1" rowspan="1">0.85</td>
+                     <td align="left" colspan="1" rowspan="1">0.65</td>
+                     <td align="left" colspan="1" rowspan="1">0.8</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Mean survival rate to weaning</td>
+                     <td align="left" colspan="1" rowspan="1">Harsh Hill Country</td>
+                     <td align="left" colspan="1" rowspan="1">0.75</td>
+                     <td align="left" colspan="1" rowspan="1">0.65</td>
+                     <td align="left" colspan="1" rowspan="1">0.35</td>
+                     <td align="left" colspan="1" rowspan="1">0.58</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Surviving lambs for wildtype (+/+)</td>
+                     <td align="left" colspan="1" rowspan="1">Intensive Farming</td>
+                     <td align="left" colspan="1" rowspan="1">0.23</td>
+                     <td align="left" colspan="1" rowspan="1">1.14</td>
+                     <td align="left" colspan="1" rowspan="1">0.14</td>
+                     <td align="left" colspan="1" rowspan="1">1.51</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Surviving lambs for heterozygote (+/−)</td>
+                     <td align="left" colspan="1" rowspan="1">Intensive Farming</td>
+                     <td align="left" colspan="1" rowspan="1">0.17</td>
+                     <td align="left" colspan="1" rowspan="1">0.94</td>
+                     <td align="left" colspan="1" rowspan="1">0.51</td>
+                     <td align="left" colspan="1" rowspan="1">1.62</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Surviving lambs for wildtype (+/+)</td>
+                     <td align="left" colspan="1" rowspan="1">Harsh Hill Country</td>
+                     <td align="left" colspan="1" rowspan="1">0.20</td>
+                     <td align="left" colspan="1" rowspan="1">0.87</td>
+                     <td align="left" colspan="1" rowspan="1">0.07</td>
+                     <td align="left" colspan="1" rowspan="1">1.14</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Surviving lambs heterozygote (+/−)</td>
+                     <td align="left" colspan="1" rowspan="1">Harsh Hill Country</td>
+                     <td align="left" colspan="1" rowspan="1">0.14</td>
+                     <td align="left" colspan="1" rowspan="1">0.72</td>
+                     <td align="left" colspan="1" rowspan="1">0.27</td>
+                     <td align="left" colspan="1" rowspan="1">1.13</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="6" rowspan="1">a) Predicted proportions and survival to weaning by birth category for carriers of the Inverdale mutation (FecX<sup>I</sup>) and for wildtype Romney sheep for the two environmental extremes, intensive farming and harsh hill country.</td>
+                  </tr>
+               </tbody>
+            </table></table-wrap>
+         <table-wrap id="pone-0000125-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0000125.t002</object-id><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.t002" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Environment</td>
+                     <td align="left" colspan="3" rowspan="1">Fitness (<italic>w</italic>)</td>
+                     <td align="left" colspan="1" rowspan="1">
+                        <italic>q</italic>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">+/+</td>
+                     <td align="left" colspan="1" rowspan="1">+/−</td>
+                     <td align="left" colspan="1" rowspan="1">−/−</td>
+                     <td align="left" colspan="1" rowspan="1"/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Intensive Farming</td>
+                     <td align="left" colspan="1" rowspan="1">0.932</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">0.064</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Harsh Hill Country</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                     <td align="left" colspan="1" rowspan="1">0.992</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">NA</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="5" rowspan="1">b) Calculations of fitness (<italic>w</italic>) and equilibrium frequency (<italic>q</italic>) of the mutant allele based on predicted lambs surviving to weaning for the two environmental extremes, intensive farming and harsh hill country. Note the advantage to the heterozygote is lost in harsh hill country.</td>
+                  </tr>
+               </tbody>
+            </table><table-wrap-foot>
+               <fn id="nt105">
+                  <p>To examine whether heterozygote advantage might persist in sheep populations under a variety of environmental conditions we have compiled data on the mean frequency of single and multiple births for carriers of the Inverdale mutation (FecX<sup>I</sup>) and for wildtype Romney sheep <xref ref-type="bibr" rid="pone.0000125-Amer1">[18]</xref>. We have then estimated the relative fitness of each genotype using data on average survival rates to weaning, for lambs for each birth category, across environmental conditions that range from intensive farming to harsh hill country (defined in <xref ref-type="bibr" rid="pone.0000125-Amer1">[18]</xref>). The designations +/+, +/− and −/− represent the wildtype homozygote, heterozygote and mutant homozygote respectively.</p>
+               </fn>
+            </table-wrap-foot></table-wrap>
+         <p>We found that lamb survival to weaning does decrease with increasing litter size <xref ref-type="bibr" rid="pone.0000125-Davis2">[17]</xref>, <xref ref-type="bibr" rid="pone.0000125-Amer1">[18]</xref>, but that the advantage to heterozygotes seems to hold across a wide variety of environmental conditions (<xref ref-type="table" rid="pone-0000125-t003">Table 2</xref>
+            <xref ref-type="table" rid="pone-0000125-t004"/>), even with our rather simplistic assumption that the frequency of births by category is unaffected by environment. Under intensive farming the selection coefficient (<italic>s</italic>) in favour of the heterozygote is 0.068, whilst in harsh conditions the wildtype is favoured slightly with <italic>s</italic> of 0.008 (<xref ref-type="table" rid="pone-0000125-t003">Table 2</xref>
+            <xref ref-type="table" rid="pone-0000125-t004"/>). These calculations suggest that the heterozygote advantage for fecundity conferred by <italic>BMP15</italic> has some dependence on environmental conditions. Under benign conditions (e.g. intensive farming, easy and hard hill country), the heterozygous advantage would be promoted and equilibrium might be reached, but under harsh conditions (e.g. harsh hill country), lamb survival for multiple births drops <xref ref-type="bibr" rid="pone.0000125-Amer1">[18]</xref> and the advantage to heterozygotes is apparently lost (<xref ref-type="table" rid="pone-0000125-t003">Table 2</xref>
+            <xref ref-type="table" rid="pone-0000125-t004"/>).</p>
+         <p>Recalculating the equilibrium solution for the mutant allele under each of these environmental scenarios results in an expected equilibrium frequency, <italic>q</italic>, of no greater than 0.064 predicted for intensive farming, the most benign situation (<xref ref-type="table" rid="pone-0000125-t003">Table 2</xref>
+            <xref ref-type="table" rid="pone-0000125-t004"/>). This is an important result because based on the calculations of Robertson <xref ref-type="bibr" rid="pone.0000125-Robertson1">[15]</xref> a value of <italic>q</italic> below 0.2 will usually result in heterozygous advantage actually accelerating the effects of drift unless N<sub>e</sub> is very large, making a stable equilibrium increasingly unlikely as <italic>q</italic> becomes smaller.</p>
+         <p>Overall our calculations suggest that a stable equilibrium for these fecundity alleles might only be expected in populations of large size (Ne&gt;400) <xref ref-type="bibr" rid="pone.0000125-Robertson1">[15]</xref> under favourable or predominantly favourable environmental conditions. However, it remains possible that the heterozygous advantage could be maintained in natural populations even under harsh conditions if females modify the number of lambs they produce in response to environmental conditions, which a range of studies suggest they will <xref ref-type="bibr" rid="pone.0000125-Lassoued1">[19]</xref>–<xref ref-type="bibr" rid="pone.0000125-Robinson1">[21]</xref>. This is a factor that we have been unable to incorporate in our calculations due to an absence of condition specific rates of single, twin and other multiple births. However, if heterozygous carriers and wildtype ewes responded in the same way to the harsher environments, producing fewer multiple births, it may transpire that the heterozygote may still have superior fitness across all environmental conditions.</p>
+         <p>The possibility remains that the alleles that confer this heterozygous advantage may be maintained in wild populations and further research is warranted. Investigations of the patterns of genomic diversity adjacent to each of these loci would provide insights into any obvious pattern of selection around these genes. In addition, such a study might enable the estimation of the age of these polymorphisms, which we would predict would be old, if indeed they are maintained by overdominance in the wild. While there is still much to be determined about the maintenance of these new examples of heterozygote advantage in the wild, the overdominant effect of these mutations under domestication is incontrovertible, and provides a useful complement to the perennial example of heterozygote advantage based upon the sickle cell <xref ref-type="bibr" rid="pone.0000125-Allison1">[1]</xref>.</p>
+      </sec>
+      <sec id="s3">
+         <title>Materials and Methods</title>
+         <p>The relative genotype fitnesses in females (<italic>w</italic>) and the equilibrium frequency (<italic>q</italic>) of the mutant allele were calculated for each of the <italic>BMP15</italic> and <italic>GDF9</italic> polymorphisms found in each breed of sheep (<xref ref-type="table" rid="pone-0000125-t001">Table 1</xref>
+            <xref ref-type="table" rid="pone-0000125-t002"/>). For these calculations we assume that litter size (LS), is an accurate measure of female reproductive fitness. To calculate litter size (LS), we used reports of ovulation rate (OR) <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>, <xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>, the standard measure of fecundity in this system, which we converted using the quadratic equation:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.e001" xlink:type="simple"/></disp-formula>
+            <xref ref-type="bibr" rid="pone.0000125-Hanrahan2">[22]</xref>
+         </p>
+         <p>Subsequently, where data were available, we have adjusted for neo-natal mortality, to give an estimate of the lambs alive at one day of age per ewe lambing (LA), which incorporates barrenness, litter size and lamb survival into a single measure <xref ref-type="bibr" rid="pone.0000125-Davis2">[17]</xref>.</p>
+         <p>
+            <italic>BMP15</italic> (<italic>GDF9B</italic>) is X-linked therefore males have only one copy of the gene and there is no evidence of a fitness difference between alleles in males <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>. Therefore, assuming that wild type females have relative fitness 1-s, heterozygous females have relative fitness 1, and female mutant homozygotes have relative fitness 1-t, and that male carriers have fitness equal to male wild types, the equilibrium frequency of the mutant allele is given by <italic>q</italic> = s/(s+t) <xref ref-type="bibr" rid="pone.0000125-Hedrick1">[11]</xref>. Note that since FecX<sup>B</sup> and FecX<sup>G</sup> both segregate in Belclare sheep a stable equilibrium cannot be attained when both mutants are present <xref ref-type="bibr" rid="pone.0000125-Galloway1">[6]</xref>, <xref ref-type="bibr" rid="pone.0000125-Hanrahan1">[7]</xref>. Therefore, for simplicity, the reported equilibrium frequency is based on the assumption that only the focal mutant and the wild type segregate.</p>
+         <p>
+            <italic>GDF9</italic> maps to sheep chromosome 5 and there is no evidence of a fitness difference between genotypes in males <xref ref-type="bibr" rid="pone.0000125-Davis1">[5]</xref>. Again, we assumed that the three genotypes have fitness 1-s, 1 and 1-t in females as above, but in this case the three male genotypes have relative fitness 1, halving the selection coefficient against the two homozygous genotypes. The equilibrium frequency of the mutant allele is given by <italic>q</italic> = 0.5s/(0.5s+0.5t) = s/(s+t) <xref ref-type="bibr" rid="pone.0000125-Hedrick1">[11]</xref>.</p>
+      </sec>
+      <sec id="s4">
+         <title>Supporting Information</title>
+         <supplementary-material id="pone.0000125.s001" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0000125.s001" xlink:type="simple">
+            <label>Table S1</label>
+            <caption>
+               <p>A review of genes proposed to exhibit heterozygote advantage.</p>
+               <p>(0.12 MB DOC)</p>
+            </caption>
+         </supplementary-material>
+      </sec>
+   </body>
+   <back>
+      <ack>
+         <p>We thank Roger Butlin, Brian Charlesworth, Brent Emerson, Greg Hurst, Laurence Hurst, and Hamish Spencer for helpful comments and/or discussion on an earlier draft of this manuscript. We also thank Bill Sherwin and an anonymous reviewer for constructive critic of this manuscript prior to publication. We acknowledge the expert assistance of Matt Walters in developing <xref ref-type="fig" rid="pone-0000125-g001">Figure 1</xref>.</p>
+      </ack>
+      <ref-list>
+         <title>References</title>
+         <ref id="pone.0000125-Allison1">
+            <label>1</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Allison</surname>
+                     <given-names>AC</given-names>
+                  </name>
+               </person-group> 
+               <year>1954</year> 
+               <article-title>Protection afforded by sickle-cell trait against subtertian malarial infection.</article-title> 
+               <source>Br Med J</source> 
+               <volume>1</volume> 
+               <fpage>290</fpage> 
+               <lpage>294</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Haldane1">
+            <label>2</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Haldane</surname>
+                     <given-names>JBS</given-names>
+                  </name>
+               </person-group> 
+               <year>1949</year> 
+               <article-title>Disease and evolution.</article-title> 
+               <source>Ricarea Scientifica Supplement A</source> 
+               <volume>19</volume> 
+               <fpage>68</fpage> 
+               <lpage>76</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Fisher1">
+            <label>3</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Fisher</surname>
+                     <given-names>RA</given-names>
+                  </name>
+               </person-group> 
+               <year>1922</year> 
+               <article-title>On the dominance ratio.</article-title> 
+               <source>Proc Royal Soc Edin</source> 
+               <volume>42</volume> 
+               <fpage>321</fpage> 
+               <lpage>341</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Fisher2">
+            <label>4</label>
+            <element-citation publication-type="book" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Fisher</surname>
+                     <given-names>RA</given-names>
+                  </name>
+               </person-group> 
+               <year>1930</year> 
+               <source>The Genetical Theory of Natural Selection.</source> 
+               <publisher-loc>Oxford</publisher-loc> 
+               <publisher-name>Clarendon Press</publisher-name> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Davis1">
+            <label>5</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Davis</surname>
+                     <given-names>GH</given-names>
+                  </name>
+               </person-group> 
+               <year>2005</year> 
+               <article-title>Major genes affecting ovulation rate in sheep.</article-title> 
+               <source>Genet Sel Evol</source> 
+               <volume>37</volume> 
+               <fpage>S11</fpage> 
+               <lpage>S23</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Galloway1">
+            <label>6</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Galloway</surname>
+                     <given-names>SM</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>McNatty</surname>
+                     <given-names>KP</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Cambridge</surname>
+                     <given-names>LM</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Laitinen</surname>
+                     <given-names>MPE</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Juengel</surname>
+                     <given-names>JL</given-names>
+                  </name>
+                  <etal/>
+               </person-group> 
+               <year>2000</year> 
+               <article-title>Mutations in an oocyte-derived growth factor gene (BMP15) cause increased ovulation rate and infertility in a dosage-sensitive manner.</article-title> 
+               <source>Nat Genet</source> 
+               <volume>25</volume> 
+               <fpage>279</fpage> 
+               <lpage>283</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Hanrahan1">
+            <label>7</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Hanrahan</surname>
+                     <given-names>JP</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Gregan</surname>
+                     <given-names>SM</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Mulsant</surname>
+                     <given-names>P</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Mullen</surname>
+                     <given-names>M</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Davis</surname>
+                     <given-names>GH</given-names>
+                  </name>
+                  <etal/>
+               </person-group> 
+               <year>2004</year> 
+               <article-title>Mutations in the genes for oocyte-derived growth factors GDF9 and BMP15 are associated with both increased ovulation rate and sterility in Cambridge and Belclare sheep (<italic>Ovis aries</italic>).</article-title> 
+               <source>Biol Reprod</source> 
+               <volume>70</volume> 
+               <fpage>900</fpage> 
+               <lpage>909</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Galloway2">
+            <label>8</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Galloway</surname>
+                     <given-names>SM</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Gregan</surname>
+                     <given-names>SM</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Wilson</surname>
+                     <given-names>T</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>McNatty</surname>
+                     <given-names>KP</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Juengel</surname>
+                     <given-names>JL</given-names>
+                  </name>
+                  <etal/>
+               </person-group> 
+               <year>2002</year> 
+               <article-title>BMP15 mutations and ovarian function.</article-title> 
+               <source>Mol Cell Endo</source> 
+               <volume>191</volume> 
+               <fpage>15</fpage> 
+               <lpage>18</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Shimasaki1">
+            <label>9</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Shimasaki</surname>
+                     <given-names>S</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Moore</surname>
+                     <given-names>RK</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Otsuka</surname>
+                     <given-names>F</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Erickson</surname>
+                     <given-names>GF</given-names>
+                  </name>
+               </person-group> 
+               <year>2004</year> 
+               <article-title>The bone morphogenetic protein system in mammalian reproduction.</article-title> 
+               <source>Endocr Rev</source> 
+               <volume>25</volume> 
+               <fpage>72</fpage> 
+               <lpage>101</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Dong1">
+            <label>10</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Dong</surname>
+                     <given-names>JW</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Albertini</surname>
+                     <given-names>DF</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Nishimori</surname>
+                     <given-names>K</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Kumar</surname>
+                     <given-names>TR</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Lu</surname>
+                     <given-names>NF</given-names>
+                  </name>
+                  <etal/>
+               </person-group> 
+               <year>1996</year> 
+               <article-title>Growth differentiation factor-9 is required during early ovarian folliculogenesis.</article-title> 
+               <source>Nature</source> 
+               <volume>383</volume> 
+               <fpage>531</fpage> 
+               <lpage>535</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Hedrick1">
+            <label>11</label>
+            <element-citation publication-type="book" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Hedrick</surname>
+                     <given-names>P</given-names>
+                  </name>
+               </person-group> 
+               <year>2005</year> 
+               <source>Genetics of Populations.</source> 
+               <publisher-loc>Sudbury, Massachusetts</publisher-loc> 
+               <publisher-name>Jones and Bartlett</publisher-name> 
+               <fpage>737</fpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Williams1">
+            <label>12</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Williams</surname>
+                     <given-names>TN</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Mwangi</surname>
+                     <given-names>TW</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Wambua</surname>
+                     <given-names>S</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Peto</surname>
+                     <given-names>TEA</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Weatherall</surname>
+                     <given-names>DJ</given-names>
+                  </name>
+                  <etal/>
+               </person-group> 
+               <year>2005</year> 
+               <article-title>Negative epistasis between the malaria-protective effects of α+-thalassemia and the sickle cell trait.</article-title> 
+               <source>Nat Genet</source> 
+               <volume>37</volume> 
+               <fpage>1253</fpage> 
+               <lpage>1257</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Kreitman1">
+            <label>13</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Kreitman</surname>
+                     <given-names>M</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Di Rienzo</surname>
+                     <given-names>A</given-names>
+                  </name>
+               </person-group> 
+               <year>2004</year> 
+               <article-title>Balancing claims for balancing selection.</article-title> 
+               <source>Trends Genet</source> 
+               <volume>20</volume> 
+               <fpage>300</fpage> 
+               <lpage>304</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-CluttonBrock1">
+            <label>14</label>
+            <element-citation publication-type="book" xlink:type="simple"> 
+               <person-group person-group-type="editor">
+                  <name name-style="western">
+                     <surname>Clutton-Brock</surname>
+                     <given-names>TH</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Pemberton</surname>
+                     <given-names>JM</given-names>
+                  </name>
+               </person-group> 
+               <year>2004</year> 
+               <source>Soay Sheep: Dynamics and Selection in an Island Population.</source> 
+               <publisher-loc>Cambridge, U.K.</publisher-loc> 
+               <publisher-name>Cambridge University Press</publisher-name> 
+               <fpage>396</fpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Robertson1">
+            <label>15</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Robertson</surname>
+                     <given-names>A</given-names>
+                  </name>
+               </person-group> 
+               <year>1962</year> 
+               <article-title>Selection for heterozygotes in small populations.</article-title> 
+               <source>Genetics</source> 
+               <volume>47</volume> 
+               <fpage>1291</fpage> 
+               <lpage>1300</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Fujii1">
+            <label>16</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Fujii</surname>
+                     <given-names>J</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Otsu</surname>
+                     <given-names>K</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Zorzato</surname>
+                     <given-names>F</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>de Leon</surname>
+                     <given-names>S</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Khanna</surname>
+                     <given-names>VK</given-names>
+                  </name>
+                  <etal/>
+               </person-group> 
+               <year>1991</year> 
+               <article-title>Identification of a mutation in porcine ryanodine receptor associated with malignant hyperthermia.</article-title> 
+               <source>Science</source> 
+               <volume>253</volume> 
+               <fpage>448</fpage> 
+               <lpage>451</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Davis2">
+            <label>17</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Davis</surname>
+                     <given-names>GH</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Dodds</surname>
+                     <given-names>KG</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>McEwan</surname>
+                     <given-names>JC</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Fennessy</surname>
+                     <given-names>PF</given-names>
+                  </name>
+               </person-group> 
+               <year>1992</year> 
+               <article-title>Liveweight, fleece weight and prolificacy of Romney ewes carrying the Inverdale prolificacy gene (FecX <sup>I</sup>) located on the X-chromosome.</article-title> 
+               <source>Livestock Production Science</source> 
+               <volume>34</volume> 
+               <fpage>83</fpage> 
+               <lpage>91</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Amer1">
+            <label>18</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Amer</surname>
+                     <given-names>PR</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>McEwan</surname>
+                     <given-names>JC</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Dodds</surname>
+                     <given-names>KG</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Davis</surname>
+                     <given-names>GH</given-names>
+                  </name>
+               </person-group> 
+               <year>1999</year> 
+               <article-title>Economic values for ewe prolificacy and lamb survival in New Zealand sheep.</article-title> 
+               <source>Livestock Production Science</source> 
+               <volume>58</volume> 
+               <fpage>75</fpage> 
+               <lpage>90</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Lassoued1">
+            <label>19</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Lassoued</surname>
+                     <given-names>N</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Rekik</surname>
+                     <given-names>M</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Mahouachi</surname>
+                     <given-names>M</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Ben Hamouda</surname>
+                     <given-names>M</given-names>
+                  </name>
+               </person-group> 
+               <year>2004</year> 
+               <article-title>The effect of nutrition prior to and during mating on ovulation rate, reproductive wastage, and lambing rate in three sheep breeds.</article-title> 
+               <source>Small Ruminant Research</source> 
+               <volume>52</volume> 
+               <fpage>117</fpage> 
+               <lpage>125</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-OCallaghan1">
+            <label>20</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>O'Callaghan</surname>
+                     <given-names>D</given-names>
+                  </name>
+                  <name name-style="western">
+                     <surname>Boland</surname>
+                     <given-names>MP</given-names>
+                  </name>
+               </person-group> 
+               <year>1999</year> 
+               <article-title>Nutritional effects on ovulation, embryo development and the establishment of pregnancy in ruminants.</article-title> 
+               <source>Animal Science</source> 
+               <volume>68</volume> 
+               <fpage>299</fpage> 
+               <lpage>314</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Robinson1">
+            <label>21</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Robinson</surname>
+                     <given-names>JJ</given-names>
+                  </name>
+               </person-group> 
+               <year>1996</year> 
+               <article-title>Nutrition and reproduction.</article-title> 
+               <source>Animal Reproduction Science</source> 
+               <volume>42</volume> 
+               <fpage>25</fpage> 
+               <lpage>34</lpage> 
+            </element-citation>
+         </ref>
+         <ref id="pone.0000125-Hanrahan2">
+            <label>22</label>
+            <element-citation publication-type="journal" xlink:type="simple"> 
+               <person-group person-group-type="author">
+                  <name name-style="western">
+                     <surname>Hanrahan</surname>
+                     <given-names>JP</given-names>
+                  </name>
+               </person-group> 
+               <year>1982</year> 
+               <article-title>Selection for increased ovulation rate, litter size and embryo survival.</article-title> 
+               <source>2nd World Congress on Genetics Applied to Livestock Production</source> 
+               <volume>V</volume> 
+               <fpage>294</fpage> 
+            </element-citation>
+         </ref>
+      </ref-list>
+      
+   </back>
+</article>

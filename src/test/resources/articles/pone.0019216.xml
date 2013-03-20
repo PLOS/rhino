@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">10-PONE-RA-21751</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0019216</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Histology</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Immunology</subject>
+            <subj-group>
+              <subject>Immune cells</subject>
+              <subj-group>
+                <subject>B cells</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Immune response</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Infectious diseases</subject>
+            <subj-group>
+              <subject>Parasitic diseases</subject>
+              <subj-group>
+                <subject>Schistosomiasis</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Immunology</subject>
+          <subject>Infectious Diseases</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Lack of Galectin-3 Disturbs Mesenteric Lymph Node Homeostasis and B Cell Niches in the Course of <italic>Schistosoma mansoni</italic> Infection</article-title><alt-title alt-title-type="running-head">Gal-3 Regulates B Cell Niches</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Oliveira</surname>
+            <given-names>Felipe L.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Brand</surname>
+            <given-names>Camila</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Paula</surname>
+            <given-names>Adelzon A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Arcanjo</surname>
+            <given-names>Kátia D.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Hsu</surname>
+            <given-names>Daniel K.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Liu</surname>
+            <given-names>Fu-Tong</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Takiya</surname>
+            <given-names>Christina M.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Borojevic</surname>
+            <given-names>Radovan</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Chammas</surname>
+            <given-names>Roger</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff5">
+            <sup>5</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>El-Cheikh</surname>
+            <given-names>Márcia C.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Laboratório de Proliferação e Diferenciação Celular, Instituto de Ciências Biomédicas, Universidade Federal do Rio de Janeiro, Rio de Janeiro, Brazil</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Dermatology, School of Medicine, University of California Davis, Sacramento, California, United States of America</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Laboratório de Patologia Celular – Instituto de Ciências Biomédicas – Universidade Federal do Rio de Janeiro, Rio de Janeiro, Brazil</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Laboratório de Oncologia Experimental, Departamento de Radiologia e Oncologia, Faculdade de Medicina, Universidade de São Paulo, São Paulo, Brazil</addr-line>       </aff><aff id="aff5"><label>5</label><addr-line>Instituto do Câncer do Estado de São Paulo, São Paulo, Brazil</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Diemert</surname>
+            <given-names>David Joseph</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">The George Washington University Medical Center, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">felipe@histo.ufrj.br</email> (FLdO); <email xlink:type="simple">marcia@histo.ufrj.br</email> (MCEC)</corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: FLO RC MCE-C. Performed the experiments: FLO CB AAP. Analyzed the data: FLO CB AAP KDA DKH F-TL CMT RB RC MCE-C. Contributed reagents/materials/analysis tools: CMT RB RC MCE-C. Wrote the paper: FLO F-TL RC MCE-C.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>6</day>
+        <month>5</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>5</issue><elocation-id>e19216</elocation-id><history>
+        <date date-type="received">
+          <day>26</day>
+          <month>10</month>
+          <year>2010</year>
+        </date>
+        <date date-type="accepted">
+          <day>30</day>
+          <month>3</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><license><license-p>This is an open-access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the Creative Commons CC0 public domain dedication.</license-p></license></permissions><abstract>
+        <p>Galectin-3 is a β-galactoside-binding protein that has been shown to regulate pathophysiological processes, including cellular activation, differentiation and apoptosis. Recently, we showed that galectin-3 acts as a potent inhibitor of B cell differentiation into plasma cells. Here, we have investigated whether galectin-3 interferes with the lymphoid organization of B cell compartments in mesenteric lymph nodes (MLNs) during chronic schistosomiasis, using WT and galectin-3<sup>-/-</sup> mice. <italic>Schistosoma mansoni s</italic>ynthesizes GalNAcβ1-4(Fucα1-3)GlcNAc(Lac-DiNAc) structures (N-acetylgalactosamine β1-4 N-acetylglucosamine), which are known to interact with galectin-3 and elicit an intense humoral response. Antigens derived from the eggs and adult worms are continuously drained to MLNs and induce a polyclonal B cell activation. In the present work, we observed that chronically-infected galectin-3<sup>-/-</sup> mice exhibited a significant reduced amount of macrophages and B lymphocytes followed by drastic histological changes in B lymphocyte and plasma cell niches in the MLNs. The lack of galectin-3 favored an increase in the lymphoid follicle number, but made follicular cells more susceptible to apoptotic stimuli. There were an excessive quantity of apoptotic bodies, higher number of annexin V<sup>+</sup>/PI<sup>-</sup> cells, and reduced clearance of follicular apoptotic cells in the course of schistosomiasis. Here, we observed that galectin-3 was expressed in non-lymphoid follicular cells and its absence was associated with severe damage to tissue architecture. Thus, we convey new information on the role of galectin-3 in regulation of histological events associated with B lymphocyte and plasma cell niches, apoptosis, phagocytosis and cell cycle properties in the MLNs of mice challenged with <italic>S.mansoni</italic>.</p>
+      </abstract><funding-group><funding-statement>This work was supported by Conselho Nacional de Pesquisa e Desenvolvimento (CNPq - 472553/2008-9); Fundacoes de Amparo a Pesquisa do Estado do Rio de Janeiro e de Sao Paulo (FAPERJ and FAPESP) and Associacao Paul Ehrlich de Biologia Celular Aplicada a Medicina (APABCAM). These funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="11"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Schistosomiasis is a helminth disease that affects more than 200 million people predominantly in developing countries <xref ref-type="bibr" rid="pone.0019216-Hotez1">[1]</xref>. <italic>Schistosoma mansoni</italic> infection is a long lasting inflammatory reaction characterized by the presence of adult worms living in the mesenteric venous system, depositing their eggs in small submucosal veins of the intestine. Some of these eggs are washed through the portal blood flow into the liver, where they cause granulomatous inflammatory reactions <xref ref-type="bibr" rid="pone.0019216-ElCheikh1">[2]</xref>. A typical Th2 response is well defined in the acute phase and the evolution towards the chronic phase is associated with a down-regulation of several aspects of the immune response to parasites <xref ref-type="bibr" rid="pone.0019216-Grzych1">[3]</xref>. Egg and worm antigens are continuously drained to mesenteric lymph nodes (MLNs), where they induce an intense polyclonal B cell activation and germinal center reaction in the lymphoid follicles (LFs), concomitant with development of splenomegaly <xref ref-type="bibr" rid="pone.0019216-ElCheikh1">[2]</xref>, <xref ref-type="bibr" rid="pone.0019216-Borojevic1">[4]</xref>, <xref ref-type="bibr" rid="pone.0019216-Lenzi1">[5]</xref>.</p>
+      <p>Lymph nodes have a well-defined lymphoid architecture: a cortical region consisting mostly of B lymphocytes, macrophages and follicular dendritic cells (FDCs) densely packed and organized into LFs; a paracortical region (deep cortex) presenting predominantly T lymphocytes, scarce B lymphocytes and dendritic cells; and a medullary region formed by macrophages and plasma cells organized in cellular cords, besides sinuses that conduct the lymph, cells and secreted immunoglobulin to the venous blood system <xref ref-type="bibr" rid="pone.0019216-Randolph1">[6]</xref>. This structural organization contributes to B cell activation and proliferation (B220 or CD45RA<sup>+</sup> cells) into LFs, establishing germinal centers and/or inducing the B cell differentiation into plasmablasts (CD138<sup>+</sup>) and Blimp-1<sup>+</sup> immunoglobulin secreting plasma cells <xref ref-type="bibr" rid="pone.0019216-MacLennan1">[7]</xref>–<xref ref-type="bibr" rid="pone.0019216-Benson1">[9]</xref>. Part of these activated B cells undergo apoptosis and are eliminated by macrophages or resident immature dendritic cells <xref ref-type="bibr" rid="pone.0019216-WillardMack1">[10]</xref>–<xref ref-type="bibr" rid="pone.0019216-Nakamura1">[12]</xref>.</p>
+      <p>During schistosomiasis, both eggs and the adult worms synthesize GalNAcβ1-4(Fucα1-3)GlcNAc(Lac-DiNAc) structures (N-acetylgalactosamine β1-4 N-acetylglucosamine) that interact with galectin-3. The latter is a conserved β-galactoside-binding protein expressed by macrophages that can elicit an intra-hepatic granulomatous reaction and a vigorous humoral immune response <xref ref-type="bibr" rid="pone.0019216-vandenBerg1">[13]</xref>, <xref ref-type="bibr" rid="pone.0019216-Nyame1">[14]</xref>. This lectin regulates cell-cell and cell-extracellular matrix interactions, cell signaling, inflammatory responses and biological events, such as cellular activation, migration, differentiation, apoptosis and tumor metastasis <xref ref-type="bibr" rid="pone.0019216-Yang1">[15]</xref>. Moreover, galectin-3 acts as a powerful pro-inflammatory molecule to myeloid cells by inducing chemotaxis of monocytes and phagocytosis by macrophages <xref ref-type="bibr" rid="pone.0019216-Sano1">[16]</xref>, <xref ref-type="bibr" rid="pone.0019216-Sano2">[17]</xref>. It also controls T cell activation, proliferation and death <xref ref-type="bibr" rid="pone.0019216-Yang2">[18]</xref>, <xref ref-type="bibr" rid="pone.0019216-Joo1">[19]</xref>, modulates carbohydrate-dependent thymocyte interactions in thymic microenvironments <xref ref-type="bibr" rid="pone.0019216-VillaVerde1">[20]</xref>, and inhibits conventional/B2 and peritoneal/B1 lymphocytes differentiation into plasma cells <xref ref-type="bibr" rid="pone.0019216-AcostaRodrguez1">[21]</xref>–<xref ref-type="bibr" rid="pone.0019216-Oliveira2">[23]</xref>.</p>
+      <p>Recently, we showed that one of the hallmarks of <italic>S.mansoni-</italic>infected galectin-3<sup>−/−</sup> mice is disturbed plasmacytogenesis involving the spleen, bone marrow and MLNs <xref ref-type="bibr" rid="pone.0019216-Oliveira1">[22]</xref>. The increase of plasma cells in the MLNs associated with the continuous arrival of mesenteric antigens could disturb the tissue organization of the lymphoid compartments. Thus, in this work, we investigated the possible interference of galectin-3 in the organization of MLNs in the course of chronic murine schistosomiasis. It was observed that in infected galectin-3<sup>−/−</sup> mice there was significant histological disorganization in the B and plasma cell niches, which correlated with abnormal cell survival rate and inadequate clearance. We propose that galectin-3 contributes to the maintenance of MLN architecture and drives immune responses by regulating B cell differentiation during <italic>S. mansoni</italic> infection.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s2a">
+        <title>Mice and Schistosoma mansoni infection</title>
+        <p>Inbred C57/bl6 wild type (WT) and galectin-3<sup>−/−</sup> mice (backcrossed to C57/bl6 for 10 generations) <xref ref-type="bibr" rid="pone.0019216-Hsu1">[24]</xref> matched by age and sex were obtained from a colony bred at the Federal University of Rio de Janeiro (Brazil). All mice procedures were performed in accordance with institutional guidelines (protocol number DAHEICB 009, Federal University of Rio de Janeiro). Uninfected mice were used as controls. Thirty day-old mice were infected by percutaneous penetration of 40 <italic>S. mansoni</italic> cercariae (BH strain, Oswaldo Cruz Institute, Rio de Janeiro, Brazil). Mice were euthanized using a carbon dioxide chamber 90–95 days after infection, corresponding to the chronic phase of the disease <xref ref-type="bibr" rid="pone.0019216-ElCheikh2">[25]</xref>.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Cell suspensions and flow cytometry</title>
+        <p>Cell suspensions from MLNs of infected WT and galectin-3<sup>−/−</sup> mice were obtained <italic>ex vivo</italic> by standard mechanical procedures and washed twice with Phosphate Buffer Solution (PBS), pH 7.2, containing 3% Fetal Bovine Serum (FBS), quantified and their concentration adjusted to 1×10<sup>6</sup> cells/mL for flow cytometry analysis. The cells were incubated with Fc blocker (Clone 2.4G2) for 10 min before adding the following monoclonal antibodies: FITC anti-B220, anti-Mac 1 and anti-CD4; PE anti-CD19, anti-CD8 and anti-CD-138; PE Cy5.5 anti-Mac1, anti-Gr-1 and anti-B220 (BD Bioscience, USA). The samples were assayed in a flow cytometer (FACSCalibur, BD Bioscience, USA) and the resulting data analyzed using the CellQuest and WinMDI 2.9 software packages. DNA-content was measured by propidium iodide labeling using Vindelov solution <xref ref-type="bibr" rid="pone.0019216-Vindelv1">[26]</xref>.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Phenotype of lymph nodal cells</title>
+        <p>Lymph node cells were characterized according to phenotypic markers, as follows: monocytes (CD19<sup>−</sup> B220<sup>−</sup> Mac-1<sup>+</sup> Gr-1<sup>+/low</sup> CD4<sup>−</sup> CD8<sup>−</sup> CD138<sup>−</sup>), macrophages (CD19<sup>−</sup> B220<sup>−</sup> Mac-1<sup>+</sup> Gr-1<sup>−</sup> CD4<sup>−</sup> CD8<sup>−</sup> CD138<sup>−</sup>), granulocytes (CD19<sup>−</sup> B220<sup>−</sup> Mac-1<sup>+</sup> Gr-1<sup>+/high</sup> CD4<sup>−</sup> CD8<sup>−</sup> CD138<sup>−</sup>), CD4<sup>+</sup> T cells (CD19<sup>−</sup> B220<sup>−</sup> Mac-1<sup>−</sup> Gr-1<sup>−</sup> CD4<sup>+</sup> CD8<sup>−</sup> CD138<sup>−</sup>), CD8<sup>+</sup> T cells (CD19<sup>−</sup> B220<sup>−</sup> Mac-1<sup>−</sup> Gr-1<sup>−</sup> CD4<sup>−</sup> CD8<sup>+</sup> CD138<sup>−</sup>), plasmacytoid dendritic cells (CD19<sup>−</sup> B220<sup>+</sup> Mac-1<sup>−</sup> Gr-1<sup>+</sup> CD4<sup>+</sup> CD8<sup>−</sup> CD138<sup>−</sup>), B2/conventional B cells (CD19<sup>+</sup> B220<sup>+/high</sup> Mac-1<sup>−</sup> Gr-1<sup>−</sup> CD4<sup>−</sup> CD8<sup>−</sup> CD138<sup>−</sup>), B1 cells (CD19<sup>+</sup> B220<sup>+/low</sup> Mac-1<sup>+</sup> Gr-1<sup>−</sup> CD4<sup>−</sup> CD8<sup>−</sup> CD138<sup>−</sup>) and plasma cells (CD19<sup>−</sup> B220<sup>−/low</sup> Mac-1<sup>−</sup> Gr-1<sup>−</sup> CD4<sup>−</sup> CD8<sup>−</sup> CD138<sup>+</sup>).</p>
+      </sec>
+      <sec id="s2d">
+        <title>Histological preparations</title>
+        <p>For histological analyses, WT and galectin-3<sup>−/−</sup> mice were sacrificed during the chronic phase of schistosomiasis infection (5 animals per group). Mesenteric lymph nodes were removed, cut into 0.5 mm-thick slices, washed in cold saline and fixed in 10% buffered formalin fixative. After 12 h of fixation, specimens were dehydrated in alcohol and embedded in paraffin. Sections of 5 µm were obtained and stained with hematoxylin &amp; eosin (H&amp;E). Uninfected WT and galectin-3<sup>−/−</sup> mice were used as control groups.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Quantification of lymphoid follicles</title>
+        <p>LFs were characterized as well-defined rounded clusters containing lymphocyte-like cells and they were quantified per microscopic field using the Image J software (original magnification, 25X). For each experiment, sectioned samples were obtained from mesenteric lymph nodes of five WT and galectin-3<sup>−/−</sup> mice, both uninfected and infected with <italic>S. mansoni</italic>.</p>
+      </sec>
+      <sec id="s2f">
+        <title>Immunohistochemistry</title>
+        <p>Paraffin-embedded sections were de-waxed and hydrated. After inhibition of endogenous peroxidase, sections were incubated for 1 h with 0.01 M PBS containing 5% BSA, 4% skim milk, 0.1% Triton X-100 (Sigma Aldrich, USA), 0.05% Tween-20, and 10% normal goat serum and incubation with the following purified antibodies: anti-gal-3 (clone M3/38; American Type Culture Collection, Manassas, VA, USA, at 1∶10 in PBS, 3% BSA and 1% normal goat serum), anti-B220, anti-CD138 and Blimp-1 (Santa Cruz Biotechnology, USA) overnight at 4°C in a humid chamber. Antibodies were detected with a biotinylated anti-rat IgG (BA-4001, Vector Laboratories, Burlingame, CA, USA) and developed with avidin-peroxidase (1∶50 in PBS) (Sigma Aldrich, USA), using diaminobenzidyne as the chromogen. Sections were counterstained with Harris' hematoxylin. Bright-field pictures were acquired using an Evolution MP 5.0 RTV Color camera (Media Cybernetics, Canada). As negative controls, sections of WT and knockout mice tissue were incubated with non-immune rat serum instead of anti-galectin-3 antibody.</p>
+      </sec>
+      <sec id="s2g">
+        <title>Apoptosis and Phagocytosis assays</title>
+        <p>MLNs from WT and galectin-3<sup>−/−</sup> mice were dissociated and the cells were cultured in RPMI 1640 medium supplemented with 10% SFB in 12-well plates (Corning, USA) for 2 h at 37°C and 5% CO<sub>2</sub> atmosphere. The non-adherent cells were collected and induced to apoptosis by heating at 43°C for 60 minutes <xref ref-type="bibr" rid="pone.0019216-Montalvo1">[27]</xref>. Subsequently, the apoptotic and dead cells were marked with annexin V-FITC and propidium iodide (PI), and quantified by flow cytometry. Adherent cells were obtained and maintained at 37°C. Apoptotic-induced non-adherent cells were co-cultured with these adherent cells (ratio of 4 non-adherent to 1 adherent cells) during 24 h and 72 h days, at 37°C and 5% CO<sub>2</sub> atmosphere. The floating cells were washed out and the resting cells were stained by the May-Grunwald-Giemsa method <xref ref-type="bibr" rid="pone.0019216-ElCheikh3">[28]</xref>. Adherent-phagocytic cells were identified by the formation of translucent vacuoles and phagosomes inside the cytoplasm and differentiated from the adherent non-phagocytic cells by the absence of them. Results represent a mean of three independent experiments performed using MLNs from infected WT and galectin-3<sup>−/−</sup> mice. Images were captured using a QColor-3 camera (Olympus, Japan) and analyzed with the Q-Capture software.</p>
+      </sec>
+      <sec id="s2h">
+        <title>Immunofluorescence to MOMA-2 marker</title>
+        <p>Direct immunofluorescence staining of MLNs was carried out after de-waxing and rehydration of sections. Auto-fluorescence and charge affinity were inhibited by 0.06% potassium permanganate and 50 mM ammonium chloride. Triton 0.3% - BSA 5% was used to block possible non-specific binding before incubation with the Alexa 488-conjugated anti-MOMA-2 monoclonal antibody (Serotec, USA) overnight at 4°C in a humid chamber. Sections were counterstained with DAPI and visualized using an Olympus IX81 confocal microscope (Olympus, Japan). Images were acquired using the Cell M software (Olympus, Japan).</p>
+      </sec>
+      <sec id="s2i">
+        <title>Statistical Analysis</title>
+        <p>The statistical tests were accomplished using the Tukey's multiple comparison test (<italic>t</italic>-test); significance threshold was fixed at <italic>p</italic>≤0.05.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <p>Galectin-3 has been reported as a modulatory molecule that regulates B cell differentiation into plasma cells <xref ref-type="bibr" rid="pone.0019216-AcostaRodrguez1">[21]</xref>–<xref ref-type="bibr" rid="pone.0019216-Oliveira2">[23]</xref>. First, we evaluated galectin-3<sup>+</sup> cells in the MLNs of uninfected and infected mice in the chronic phase of <italic>S.mansoni-</italic>infection. In uninfected WT mice, we observed elongated and vacuolated galectin-3<sup>+</sup> cells predominantly in subcapsular sites and in the light zone of the LFs (<xref ref-type="fig" rid="pone-0019216-g001">Figure 1A</xref>). As expected, galectin-3<sup>+</sup> cells were not detected in samples obtained from galectin-3 deficient mice (<xref ref-type="fig" rid="pone-0019216-g001">Figure 1B</xref>). In infected WT mice, we also observed large follicular galectin-3<sup>+</sup> cells (<xref ref-type="fig" rid="pone-0019216-g001">Figure 1C</xref>, LF region) and a significant number of small and rounded galectin-3<sup>+</sup> cells in extrafollicular regions (<xref ref-type="fig" rid="pone-0019216-g001">Figure 1C</xref>, Ef region). In more details, we observed that the majority of these galectin-3<sup>+</sup> cells within the LFs were non-lymphoid cells (<xref ref-type="fig" rid="pone-0019216-g001">Figure 1D</xref>). These data indicate that galectin-3 was expressed by follicular and extrafollicular cells in the MLNs in uninfected conditions and the expression of this lectin seems increased in distinct cell types dispersed by the parenchyma of the MLNs obtained from <italic>S.mansoni</italic>-chronically infected mice.</p>
+      <fig id="pone-0019216-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Immunohistochemistry to galectin-3 in MLNs.</title>
+          <p>(A) The immunoreactivity for galectin-3 was preferentially found in follicular non-lymphoid cells from uninfected wild-type mice. (B) Galectin-3 was not detected in MLNs of uninfected galectin-3−/− mice. (C) Photomicrograph of lymphoid follicle of MLNs surrounded by a dotted line derived from infected wild-type mice. (D) Galectin-3+ cells have distinct morphology and intensity of immunoreaction. The arrows indicate elongated and vacuolated cells, while the arrowheads point to smaller and rounded cells. Original magnification: A and C, 200x; B and D, 400x. Data are representative of three independent experiments. LZ: light zone; DZ: dark zone; Sub: subcapsular region.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g001" xlink:type="simple"/>
+      </fig>
+      <p>Previously, we described that total leukocyte number in the MLNs was not modified when comparing WT and galectin-3<sup>−/−</sup> uninfected mice <xref ref-type="bibr" rid="pone.0019216-Oliveira1">[22]</xref>. However, the cellularity was drastically modified in the MLNs of chronically infected galectin-3<sup>−/−</sup> mice. In the absence of galectin-3, granulocytes and monocytes were significantly increased during chronic phase of the disease. In contrast, macrophages, TCD8<sup>+</sup> cells, and B lymphocytes were drastically decreased in these mice, compared with infected WT mice (<xref ref-type="table" rid="pone-0019216-t001">Table 1</xref>).</p>
+      <table-wrap id="pone-0019216-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019216.t001</object-id><label>Table 1</label><caption>
+          <title>Absolute number of the cell subsets in the mesenteric lymph nodes of WT and galectin-3−/− mice infected with <italic>S.mansoni.</italic></title>
+        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019216-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.t001" xlink:type="simple"/><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Cell types</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>WT mice</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Gal-3−/− mice</italic>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Total cells</td>
+              <td align="left" colspan="1" rowspan="1">86.6×10<sup>6</sup> cells/mL±11.42</td>
+              <td align="left" colspan="1" rowspan="1">63.2×10<sup>6</sup> cells/mL±6.35 *</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Granulocytes</td>
+              <td align="left" colspan="1" rowspan="1">19.1×10<sup>5</sup> cells/mL±4.7</td>
+              <td align="left" colspan="1" rowspan="1">25.8×10<sup>5</sup> cells/mL±7.3</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Monocytes</td>
+              <td align="left" colspan="1" rowspan="1">12.8×10<sup>5</sup> cells/mL±2.9</td>
+              <td align="left" colspan="1" rowspan="1">34.5×10<sup>5</sup> cells/mL±3.6 *</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Macrophages</td>
+              <td align="left" colspan="1" rowspan="1">44.4×10<sup>5</sup> cells/mL±4.8</td>
+              <td align="left" colspan="1" rowspan="1">19.9×10<sup>5</sup> cells/mL±2.9 *</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CD4+ lymphocytes</td>
+              <td align="left" colspan="1" rowspan="1">201.2×10<sup>5</sup> cells/mL±18.1</td>
+              <td align="left" colspan="1" rowspan="1">219.6×10<sup>5</sup> cells/mL±21.2</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">CD8+ lymphocytes</td>
+              <td align="left" colspan="1" rowspan="1">262.4×10<sup>5</sup> cells/mL±31.3</td>
+              <td align="left" colspan="1" rowspan="1">167.5×10<sup>5</sup> cells/mL±27.2 *</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Total B lymphocytes</td>
+              <td align="left" colspan="1" rowspan="1">343.7×10<sup>5</sup> cells/mL±21.2</td>
+              <td align="left" colspan="1" rowspan="1">161.9×10<sup>5</sup> cells/mL±18.9 *</td>
+            </tr>
+          </tbody>
+        </table></alternatives><table-wrap-foot>
+          <fn id="nt101">
+            <label/>
+            <p>Data are reported as means ± SEM, They are representative of three independent experiments, Statistical analysis: Tukey's multiple comparison test (*, <italic>P</italic>&lt;0.05).</p>
+          </fn>
+        </table-wrap-foot></table-wrap>
+      <p>Considering the role of galectin-3 in B cell differentiation <xref ref-type="bibr" rid="pone.0019216-AcostaRodrguez1">[21]</xref>–<xref ref-type="bibr" rid="pone.0019216-Oliveira2">[23]</xref>, we analyzed the phenotype of B lymphocytes (B220<sup>+</sup> CD19<sup>+</sup> B cells) in the MLNs of WT and galectin-3<sup>−/−</sup> mice. In uninfected mice, we did not find differences in the B lymphocytes (<xref ref-type="fig" rid="pone-0019216-g002">Figure 2A and 2B</xref>, respectively). However, there were significant differences in B lymphocyte and plasma cell number in MLNs of chronically-infected mice. In infected galectin-3<sup>−/−</sup> mice, B lymphocytes were significantly reduced (approximately 29% of the cells), when compared with infected WT mice (about 47% of the cells) in the MLNs (<xref ref-type="fig" rid="pone-0019216-g002">Figure 2C and 2D</xref>). Moreover, we clearly found a cell subpopulation expressing lower levels of surface B220 in the absence of galectin-3 (<xref ref-type="fig" rid="pone-0019216-g002">Figure 2D</xref>, arrow), suggesting that these cells could be differentiating into B220<sup>−/low</sup> plasma cells.</p>
+      <fig id="pone-0019216-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>Phenotypic analysis of B lymphocytes in the MLNs.</title>
+          <p>B220+ CD19+ cells were selected and quantified in uninfected wild typeWT and galectin-3−/− mice (A and B, respectively), and in chronically-infected wild typeWT and galectin-3−/− mice (C and D, respectively). (D) The arrow pointed to distinct B220low subpopulation found in the absence of galectin-3. (E) Histograms reflect the surface expression of CD138, a plasma cell marker. Full histogram: WT mice. Empty histogram: galectin-3−/− mice. (F) Absolute number of plasma cells in MLNs of infected WT (solid bars) and infected galectin-3−/− mice (open bars). Data are reported as means + SEM and are representative of three independent experiments, each carried out in five mice with chronic infection. Statistical analysis: Tukey's multiple comparison test (*, P&lt;0.05).</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g002" xlink:type="simple"/>
+      </fig>
+      <p>To reinforce this proposal, we marked these cells with anti-CD138 and observed that there was an increase of CD138<sup>+</sup> plasma cells in galectin-3<sup>−/−</sup> mice when compared with WT mice (<xref ref-type="fig" rid="pone-0019216-g002">Figure 2E</xref>). By quantifying the absolute number of plasma cells in the MLNs, we showed that the number of plasma cells in galectin-3−/− mice were four times higher, compared with infected WT mice (<xref ref-type="fig" rid="pone-0019216-g002">Figure 2F</xref>). Previously, we demonstrated that the plasma cell number in these lymphoid organs was also similar between these groups of uninfected mice <xref ref-type="bibr" rid="pone.0019216-Oliveira1">[22]</xref>. According with these data, we suggest that the lack of galectin-3 disturbs B lymphocyte-plasma cell homeostasis in the MLNs of the <italic>S.mansoni</italic>-infected mice.</p>
+      <p>In order to investigate the relationship between the absence of galectin-3 and the imbalance in B lymphocyte and plasma cell populations, we analyzed the lymphoid architecture of the MLNs and the distribution of B lymphocytes and plasma cells <italic>in situ</italic>. In uninfected WT mice, the LFs were normally found in the cortical region (<xref ref-type="fig" rid="pone-0019216-g003">Figure 3A</xref>), whereas in galectin-3<sup>−/−</sup> uninfected mice, the LFs were abnormally dispersed throughout the paracortical and medullary regions (<xref ref-type="fig" rid="pone-0019216-g003">Figure 3B</xref>). These follicles were quantified according their location and they are increased in the paracortical and medullary regions in galectin-3<sup>−/−</sup> mice (<xref ref-type="fig" rid="pone-0019216-g003">Figure 3E</xref>). In <italic>S.mansoni</italic>-infected WT mice, the LFs were detected predominantly in the cortical and paracortical sites, being rare or even absent in the medullary region (<xref ref-type="fig" rid="pone-0019216-g003">Figure 3C</xref>). MLNs of infected galectin-3<sup>−/−</sup> mice were widely disorganized, containing LFs scattered all over the cortex, paracortex and medulla, disrupting the classical architecture of these organs (<xref ref-type="fig" rid="pone-0019216-g003">Figure 3D</xref>). These follicles were significantly increased in all of these regions, compared with infected WT mice (<xref ref-type="fig" rid="pone-0019216-g003">Figure 3F</xref>).</p>
+      <fig id="pone-0019216-g003" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g003</object-id>
+        <label>Figure 3</label>
+        <caption>
+          <title>Histological analysis of MLNs of WTwild-type and galectin-3−/− mice.</title>
+          <p>Midsagittal section of MLN showing lymphoid follicles preferentially within the cortex and scarcely in paracortex in uninfected and infected WT mice (A and C, respectively). Histological section from MLNs of uninfected and infected galectin-3−/− mice exhibiting lymphoid follicles randomly scattered throughout the cortex, paracortex and medulla (B and D, respectively). The samples were stained with hematoxilin and eosin. Lymphoid follicles were quantified by microscopic field in uninfected (E) and infected mice (F), with magnification of 25x. The solid bars indicate the WT mice and the open bars represent galectin-3−/− mice. Data are reported as means + SEM and are representative of three independent experiments. Statistical analysis: Tukey's multiple comparison test (*, P&lt;0.05). A–D, original magnification: 200x.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g003" xlink:type="simple"/>
+      </fig>
+      <p>Activated B220<sup>+</sup> B lymphocytes proliferate in the germinal center reaction and a proportion of these cells differentiate into plasma cells (CD138<sup>+</sup> cells) in extrafollicular sites. Subsequently, plasma cells expressing Blimp-1 differentiate into immunoglobulin secreting cells (Blimp-1<sup>+</sup> cells) in the medullary region, more precisely, in medullary cellular cords <xref ref-type="bibr" rid="pone.0019216-Mueller1">[29]</xref>, <xref ref-type="bibr" rid="pone.0019216-Dumic1">[30]</xref>. The atypical tissue organization and the exacerbated plasmacytogenesis observed in MLNs of <italic>Schistosoma</italic>-infected galectin-3<sup>−/−</sup> mice led us to investigate the micro-anatomical location of B lymphocytes and plasma cells, with an emphasis on the antibody-secreting plasma cells. In contrast to infected WT mice, where most B220<sup>+</sup> B cells were properly distributed within LFs, B220<sup>+</sup> B lymphocytes were widely dispersed throughout both intra and extrafollicular regions in the MLNs of galectin-3<sup>−/−</sup> mice (<xref ref-type="fig" rid="pone-0019216-g004">Figure 4A–4B</xref>, respectively). In WT mice, CD138<sup>+</sup> cells were enriched in well-defined extrafollicular niches forming intense cellular cords (<xref ref-type="fig" rid="pone-0019216-g004">Figure 4C</xref>) and Blimp-1<sup>+</sup> cells were widely scattered throughout paracortical and medullary parenchyma (<xref ref-type="fig" rid="pone-0019216-g004">Figure 4E</xref>). In infected galectin-3<sup>−/−</sup> mice, CD138<sup>+</sup> and Blimp-1<sup>+</sup> plasma cells were randomly distributed throughout intra and extra-follicular sites (<xref ref-type="fig" rid="pone-0019216-g004">Figure 4D and 4F</xref>, respectively). As the number of B lymphocytes and plasma cells were similar in uninfected WT and galectin-3 mice, we evaluated these niches only in infected mice. Together, these data indicate that the lack of galectin-3 disturbs severely B lymphocyte and plasma cell niches during chronic phase of schistosomiasis.</p>
+      <fig id="pone-0019216-g004" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g004</object-id>
+        <label>Figure 4</label>
+        <caption>
+          <title>Immunohistochemistry to localize B lymphocyte and plasma cell niches in MLNs.</title>
+          <p>(A) Immunoreactivity for B cells using anti-B220 antibody preferentially within of lymphoid follicles (LF) in chronically-infected WT wild type mice. (B) In galectin-3−/− mice, B220+ cells were randomly dispersed by the parenchyma forming numerous lymphoid follicles. In infected WT mice, CD138+ plasma cells and Blimp-1+ antibody-secreting cells were found in cellular cords in extrafollicular regions (C and E, respectively). In infected galectin-3−/− mice, CD138+ and Blimp-1+ plasma cells were randomly scattered throughout the parenchyma (D and F, respectively). A–F: Original magnification, 200x. Boxed images: original magnification, 400x. Data are reported as means + SEM and are representative of three independent experiments.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g004" xlink:type="simple"/>
+      </fig>
+      <p>By analyzing the follicular structures closely, we observed that there were higher numbers of apoptotic bodies and cellular debris in LFs of chronically-infected galectin-3<sup>−/−</sup> mice, when compared with infected WT mice (<xref ref-type="fig" rid="pone-0019216-g005">Figure 5A–5B</xref>, arrows). Considering the reduced macrophage number in MLNs of infected galectin-3<sup>−/−</sup> mice (<xref ref-type="table" rid="pone-0019216-t001">Table 1</xref>), we decided to investigate their distribution using a follicular-specific macrophage-marker. MOMA-2<sup>+</sup> macrophages were widely distributed throughout the parenchyma of the MLNs of WT mice (<xref ref-type="fig" rid="pone-0019216-g005">Figure 5C and 5E</xref>). In contrast, in MLNs of galectin-3<sup>−/−</sup> mice infected with <italic>S. mansoni</italic>, the quantity of MOMA-2<sup>+</sup> cells was drastically reduced (<xref ref-type="fig" rid="pone-0019216-g005">Figure 5D and 5F</xref>). As these MOMA-2<sup>+</sup> macrophages are potent phagocytes, we suggest that the lack of galectin-3 is associated with the high number of cellular bodies presented within the LFs.</p>
+      <fig id="pone-0019216-g005" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g005</object-id>
+        <label>Figure 5</label>
+        <caption>
+          <title>Histological analysis of lymphoid follicles of MLNs of infected mice.</title>
+          <p>(A) In wild type (WT) mice, section of lymphoid follicles showed scarce apoptotic bodies (arrow). In infected gal-3−/− mice (B), there was high number of cellular debris dispersed throughout the follicles (arrows). Immunofluorescence to MOMA-2+ macrophages. (C) Immunoreactivity for MOMA-2 Alexa 488 (green cells) in MLNs of WT and (D) in galectin-3−/− mice. (E) Detailed MOMA-2+ cell clusters in WT mice and (F) rare MOMA-2+ cells in the absence of galectin-3. The nuclei were stained with DAPI. Data are representative of three independent experiments, each carried out in three mice with chronic infection.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g005" xlink:type="simple"/>
+      </fig>
+      <p>Two major points were still unclear: the reduced cellularity compared with the high quantity of LFs and the raise of cellular bodies in the MLNs of chronically-infected galectin-3<sup>−/−</sup> mice. Then, we performed the DNA content analysis and annexin-V staining by flow cytometry in lymph nodal cells, since data obtained by these methods could clarify, at least in part, these phenomena. Although we did not observe significant differences between the number of cells in sub-G1/G0 phases on MLNs from WT and galectin-3<sup>−/−</sup> mice (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6A and 6B</xref>, in M1), the effects of the lack of galectin-3 were evident in the other phases of the cell cycle. In WT mice, about 57.7% of the cells were cycling in G1/G0 stages (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6A</xref>, in M2) and approximately 22.7% of the cells were in the same phase of the cell cycle in galectin-3<sup>−/−</sup> mice (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6B</xref>, in M2). In parallel, the number of cells in the S phase was significantly increased in MLNs of galectin-3<sup>−/−</sup> mice (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6A and 6B</xref>, in M3). Moreover, in WT mice, approximately 24.8% of the lymph nodal cells were in G2/M phase. In contrast, in infected galectin-3<sup>−/−</sup> mice, the proportion of the cells was 40.1% (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6A and 6B</xref>, in M4). These results suggest that the significant proportion of the cells in MLNs of infected galectin-3<sup>−/−</sup> mice are arrested in G2 phase of the cell cycle. Besides, we found that 30.8% of the cells obtained from MLNs of galectin-3<sup>−/−</sup> mice presented an abnormal DNA content, suggesting hyperploidy or the presence of a large amount of aggregates of nuclei derived from dead cells (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6A and 6B</xref>, in M5). These values are presented in <xref ref-type="table" rid="pone-0019216-t002">table 2</xref>.</p>
+      <fig id="pone-0019216-g006" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g006</object-id>
+        <label>Figure 6</label>
+        <caption>
+          <title>Cell cycle analysis and apoptosis index in MLNs of WT and galectin-3<sup>−/−</sup> infected mice.</title>
+          <p>Histograms represent the stages of cell cycle in WT (A) and Gal-3<sup>−/−</sup> mice (B) infected with <italic>S.mansoni</italic>. In both graphs, the phases were described as bellow: M1 - sub G1/G0; M2 – G1/G0; M3 – S phase; M4 – G2/M and M5 – hyperploid cells. (C–D) Quantification of Annexin-V<sup>+</sup>/Propidium iodide (PI) <sup>−</sup> apoptotic cells (gated in R2 region) and Annexin-V<sup>+</sup>/PI<sup>+</sup> dead cells (gated in R3 region), in WT (C) and Gal-3<sup>−/−</sup> mice (D). (E) Quantification of apoptotic cells induced by high temperature. Solid bars represent WT mice and open bars indicate Gal-3<sup>−/−</sup> mice. Data are reported as means ± SEM and are representative of three independent experiments. Statistical analysis: Tukey's multiple comparison test (*, <italic>P</italic>&lt;0.05). A–B, original magnification, 400x.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g006" xlink:type="simple"/>
+      </fig>
+      <table-wrap id="pone-0019216-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0019216.t002</object-id><label>Table 2</label><caption>
+          <title>Relative number of cells during cell cycle events in MLNs of mice chronically-infected with <italic>Schistosoma mansoni.</italic></title>
+        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0019216-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.t002" xlink:type="simple"/><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Region</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>WT mice</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Gal-3−/− mice</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Cell cycle stage</italic>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">M1</td>
+              <td align="left" colspan="1" rowspan="1">0.27%</td>
+              <td align="left" colspan="1" rowspan="1">0.60%</td>
+              <td align="left" colspan="1" rowspan="1">Fragmented DNA</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">M2</td>
+              <td align="left" colspan="1" rowspan="1">57.71%</td>
+              <td align="left" colspan="1" rowspan="1">22.72%</td>
+              <td align="left" colspan="1" rowspan="1">G1/G0 phases *</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">M3</td>
+              <td align="left" colspan="1" rowspan="1">9.03%</td>
+              <td align="left" colspan="1" rowspan="1">3.00%</td>
+              <td align="left" colspan="1" rowspan="1">S phase</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">M4</td>
+              <td align="left" colspan="1" rowspan="1">24.79%</td>
+              <td align="left" colspan="1" rowspan="1">40.13%</td>
+              <td align="left" colspan="1" rowspan="1">G2/M phases *</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">M5</td>
+              <td align="left" colspan="1" rowspan="1">9.94%</td>
+              <td align="left" colspan="1" rowspan="1">30.85%</td>
+              <td align="left" colspan="1" rowspan="1">Hyperploid *</td>
+            </tr>
+          </tbody>
+        </table></alternatives><table-wrap-foot>
+          <fn id="nt102">
+            <label/>
+            <p>Data are reported as means ± SEM, They are representative of three independent experiments, Statistical analysis: Tukey's multiple comparison test (*, <italic>P</italic>&lt;0.05).</p>
+          </fn>
+        </table-wrap-foot></table-wrap>
+      <p>Although it was clear that the absence of galectin-3 was arresting the cell cycle in G2 phase, it was still undefined if the cellular debris observed was consequence of this disturbed cell cycle. Thus, we used annexin-V and propidium iodide staining to quantify possible apoptotic and dead cells and compared samples of WT and galectin-3<sup>−/−</sup> mice, both chronically-infected with <italic>S.mansoni</italic>. We observed that approximately 19.9% of the cells were annexin V<sup>+</sup>/PI<sup>neg</sup> in the MLNs of WT mice (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6C</xref>, in R2), whereas about 30.9% of the cells were annexin V<sup>+</sup>/PI<sup>neg</sup> in the MLNs of galectin-3<sup>−/−</sup> mice (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6D</xref>, in R2). These data suggest that the lack of galectin-3 promotes a significant increase in the number of cells undergoing apoptosis. We did not find differences in the number of annexin V<sup>+</sup>/PI<sup>+</sup> dead cells when compared WT (5.5% of the cells) and galectin-3<sup>−/−</sup> mice (4.9% of the cells) (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6C and 6D</xref>, in R3). Perhaps, galectin-3 has an anti-apoptotic role in lymph node cells in the course of chronic phase of schistosomiasis.</p>
+      <p>In order to investigate the possible anti-apoptotic role of galectin-3, we provided apoptotic stimuli by means of raising the temperature in MLNs cells from infected WT and galectin-3<sup>−/−</sup> mice. The cells of MLNs of both WT and galectin-3<sup>−/−</sup> mice were induced to apoptosis maintained in a culture system at 43°C during 1 hour. After this time, these cells were stained with annexin-V and propidium iodide (PI). We observed that cells from MLNs of infected galectin-3<sup>−/−</sup> mice were more susceptible to apoptosis, when compared to their WT counterpart (<xref ref-type="fig" rid="pone-0019216-g006">Figure 6E</xref>). Taken together, these data indicate that the lack of galectin-3 disturbs the cell cycle and increased the susceptibility to apoptotic signals on lymph node cells derived from chronically-infected mice. Although these data are all well suggestive, the origin of the cellular debris (significantly increased in infected galectin-3<sup>−/−</sup> mice) remains unclear.</p>
+      <p>Another possibility concerns the disturbed clearance of these cellular debris. To investigate this, we evaluated the phagocytic capacity of phagocytes derived from MLNs of both WT or galectin-3<sup>−/−</sup> mice. Total lymph node cells were maintained in the culture system, as described in “methodology section”. Non-adherent cells were isolated and treated to induce apoptosis. Adherent cells were maintained in normal conditions of the culture. Subsequently, both non-adherent and adherent cells obtained from either WT or galectin-3<sup>−/−</sup> mice were co-cultured. After 24 and 72 hr, adherent cells were macrophage-like cells containing central or peripheral nuclei, spread but not elongated morphology and high adherence capacity. The number of actually phagocytic cells was determined according to the presence of intracellular vacuoles containing cellular material or apoptotic bodies. We found a reduced number of phagocytic cells derived from MLNs of infected galectin-3<sup>−/−</sup> mice, when compared to adherent phagocytic cells obtained from MLNs of infected WT mice. Conversely, non-phagocytic adherent cells without any intracellular apoptotic cells of infected galectin-3<sup>−/−</sup> mice were predominant, when compared to non-phagocytic adherent cells from WT group (<xref ref-type="fig" rid="pone-0019216-g007">Figure 7A–7B</xref>). Representative photomicrographs depict the morphology of phagocytic and non-phagocytic cells are shown in <xref ref-type="fig" rid="pone-0019216-g007">Figure 7C</xref> and <xref ref-type="fig" rid="pone-0019216-g007">Figure 7D</xref> (arrows). These findings suggest that, besides the increased sensitivity of galectin-3<sup>−/−</sup> cells to cell death, the higher amount of cellular debris in MLNs from infected galectin-3<sup>−/−</sup> mice could be a result of an impaired phagocytic capacity in these lymphoid compartments. All these results indicate that the lack of galectin-3 disturbs MLNs homeostasis, leading to disruption of the architecture of B cell compartments during chronic phase of murine schistosomiasis.</p>
+      <fig id="pone-0019216-g007" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0019216.g007</object-id>
+        <label>Figure 7</label>
+        <caption>
+          <title>Quantification of phagocytic and non-phagocytic cells of MLNs of WT and galectin-3<sup>−/−</sup> infected mice.</title>
+          <p>Non-adherent lymph nodal cells were collected, induced to apoptosis by high temperature and co-cultured with adherent cells to be engulffed. Measurement of phagocytic and non-phagocytic cells after 24 h (A) and 72 h (B) of co-culture procedures. The solid bars indicate the wild-type mice and the open bars represent the gal-3<sup>−/−</sup> mice. Phagocytic cells had a translucent vacuole and phagosomes (C, arrow), while non-phagocytic cells were identified by the absence of phagossomes and clear citoplasm (D, arrow). Data are reported as means ± SEM and are representative of three independent experiments using cells derived from chronically-infected mice. Statistical analysis: Tukey's multiple comparison test (*, <italic>P</italic>&lt;0.05).</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0019216.g007" xlink:type="simple"/>
+      </fig>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>Galectin-3 null mice are viable under normal conditions <xref ref-type="bibr" rid="pone.0019216-Hsu1">[24]</xref>, <xref ref-type="bibr" rid="pone.0019216-Colnot1">[31]</xref> and long lasting inflammatory responses, like Chagas' Disease and Schistosomiasis <xref ref-type="bibr" rid="pone.0019216-AcostaRodrguez1">[21]</xref>, <xref ref-type="bibr" rid="pone.0019216-Oliveira1">[22]</xref>. <italic>S. mansoni</italic>-infected galectin-3<sup>−/−</sup> mice display no differences in the parasite burden, egg deposition, parasite survival or fecundity when compared to infected WT mice. However, these knockout mice have an abnormal number of splenic T and B lymphocytes, accelerated plasmacytogenesis and hyperimmunoglobulinemia with high levels of serum IgG and IgE, eosinophilia and distinct intra-hepatic fibrogranulomatous reaction <xref ref-type="bibr" rid="pone.0019216-Oliveira1">[22]</xref>, <xref ref-type="bibr" rid="pone.0019216-Breuilh1">[32]</xref>.</p>
+      <p>Galectin-3 is highly expressed by human monocyte differentiating into macrophages <xref ref-type="bibr" rid="pone.0019216-Liu1">[33]</xref> and is lowly expressed by human monocytes that differentiate into dendritic cells <xref ref-type="bibr" rid="pone.0019216-Dietz1">[34]</xref>. In the MLNs homeostasis, the role of galectin-3 it is not clear. In this context, Hoyer and colleagues described that human tonsilar follicular dendritic cells are galectin-3<sup>+</sup> and these cells regulate anti-apoptotic mechanisms during diffuse large B-cell lymphoma progression <xref ref-type="bibr" rid="pone.0019216-Hoyer1">[35]</xref>. Consistent with that, in murine chronic schistosomiasis model, we observed large and spread galectin-3<sup>+</sup> follicular cells scattered throughout LFs of MLNs from infected WT mice, while the bulk of rounded lymphocyte-like cells were galectin-3-negative.</p>
+      <p>MLNs continuously draining the major part of tissues involved by schistosomiasis. In the course of the chronic phase, there is progressive hyperplasia and the lymphoid organization is maintained <xref ref-type="bibr" rid="pone.0019216-ElCheikh2">[25]</xref>. In this work, we showed that the basic structural aspects of the MLNs of galectin-3<sup>−/−</sup> mice were softly disturbed independently of the infection. However, the course of the chronic schistosomiasis significantly amplified these histological disorders and the MLNs of <italic>S. mansoni</italic>-infected galectin-3<sup>−/−</sup> mice contained macrophage and B2 lymphocyte niches severely modified. Our results are not sufficient to prove whether galectin-3 controls these microenvironments, although it has been described that resident macrophages are responsible for phagocytosis of apoptotic cells <xref ref-type="bibr" rid="pone.0019216-Sano2">[17]</xref> and constitutively these cells control the distinct steps of trafficking and differentiation of these B cells <xref ref-type="bibr" rid="pone.0019216-Karlsson1">[36]</xref>. Since <italic>S.mansoni</italic> chronically-infected galectin-3<sup>−/−</sup> mice had delayed monocyte-macrophage differentiation <xref ref-type="bibr" rid="pone.0019216-Oliveira1">[22]</xref>, we propose that the disorganization on B lymphocyte and plasma cell niches is narrowly associated with this eminent macrophage dysfunction. In infected WT mice, B lymphocytes and plasma cells are normally distributed throughout follicular and extrafollicular sites, respectively. However, in infected galectin-3<sup>−/−</sup> mice, these organizational scenarios are widely modified, where B220<sup>+</sup> B cells, CD138<sup>+</sup> plasma cells and Blimp-1<sup>+</sup> antibody-secreting cells are abnormally misplaced throughout the cortex, paracortex and medullar regions.</p>
+      <p>It is known that strict mechanisms regulate B cell decision between follicular and extrafollicular areas, where B lymphocytes rapidly differentiate into antibody-secreting cells <xref ref-type="bibr" rid="pone.0019216-Martin1">[37]</xref>. Although some light has been shed on this subject, it remains unclear how galectin-3 regulates B cell differentiation into plasma cells. In this context, it was shown that galectin-3 inhibits Blimp-1 expression in different experimental models, interfering with terminal differentiation of B lymphocytes in antibody-secreting plasma cells <xref ref-type="bibr" rid="pone.0019216-AcostaRodrguez1">[21]</xref>, <xref ref-type="bibr" rid="pone.0019216-Oliveira2">[23]</xref>. The increase of Blimp-1<sup>+</sup> cells in the absence of galectin-3 endorses the hypothesis that galectin-3 is a potential regulator of Blimp-1 expression.</p>
+      <p>The macrophage dysfunction can also be associated with the higher rate of cell death and reduced phagocytosis levels due to the absence of galectin-3, where we did observe a significant histological disorder in the distribution of MOMA-2<sup>+</sup> macrophages. These cells were described as typical tissue macrophages predominantly detected in subcapsular sinus, follicles (tingible body macrophages) and throughout paracortical and medullary regions <xref ref-type="bibr" rid="pone.0019216-Kraal1">[38]</xref>. By definition, tingible body macrophages are large phagocytic cells containing many apoptotic cells in distinct states of degradation <xref ref-type="bibr" rid="pone.0019216-Smith1">[39]</xref>. In this work, we demonstrated that the number of total and MOMA-2<sup>+</sup> macrophages are both decreased and these macrophages have reduced phagocytic capacity to engulf apoptotic cells in the MLNs from infected galectin-3<sup>−/−</sup> mice.</p>
+      <p>In accordance, Miyake and colleagues showed that injected dead cell bodies were rapidly engulfed by macrophages in the splenic marginal zone, indicating a critical role of macrophages in quickly removing apoptotic residues <xref ref-type="bibr" rid="pone.0019216-Miyake1">[40]</xref>. During schistosomiasis, soluble eggs antigens (SEA) favor the activation-induced cell death of follicular B and T lymphocytes <xref ref-type="bibr" rid="pone.0019216-Lundy1">[41]</xref>. Here, we did find an elevated number of cellular debris inside of LFs in the MLNs of chronically-infected galectin-3<sup>−/−</sup> mice. Thus, we propose that, at least in part, galectin-3 plays a regulatory role in anti-apoptotic events and/or phagocytosis of dead cells during schistosomiasis.</p>
+      <p>DNA content analysis findings corroborate the cellularity results. We found that the total cell number was significantly reduced in the MLNs of infected galectin-3<sup>−/−</sup> mice. Analyzing the cell cycle data, we did note that cells arrested in G1 stage were numerically reduced, while in G2 stage, the cellularity was increased. Possibly, the absence of galectin-3 downregulates mitotic cycles and favors the generation of cells more susceptible to apoptosis. Paradoxically, LFs in the MLNs of infected galectin-3<sup>−/−</sup> mice were more numerous, but the majority presented suggestive lower cellular density and apoptotic bodies accumulated inside them.</p>
+      <p>In conclusion, we provide clues on the role of galectin-3 in driving histological changes in MLNs of mice infected with <italic>S.mansoni</italic>. We suggest that the tissue disorganization observed in the absence of galectin-3 is, at least partially, responsible for an abnormal immune regulation and changes in cell number and activities, including survival, apoptosis, phagocytosis, and differentiation. Nevertheless, tissue damages and/or lost of appropriate cell interactions and constrains in lymphoid tissue might contribute to some aspects of immune response against to helminths, as well as tumorigenesis and progression of lymphoproliferative diseases, such as leukemia and lymphomas.</p>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>The authors are grateful to PhD student Antonio Palumbo, Programa de Pós-Graduação em Ciências Morfológicas ICB/UFRJ - Rio de Janeiro, by his support in the immunofluorescence analysis in confocal microscope.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0019216-Hotez1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hotez</surname><given-names>PJ</given-names></name><name name-style="western"><surname>Brindley</surname><given-names>PJ</given-names></name><name name-style="western"><surname>Bethony</surname><given-names>JM</given-names></name><name name-style="western"><surname>King</surname><given-names>CH</given-names></name><name name-style="western"><surname>Pearce</surname><given-names>EJ</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Helminth infections: the great neglected tropical diseases.</article-title>             <source>J Clin Invest</source>             <volume>118</volume>             <issue>4</issue>             <fpage>1311</fpage>             <lpage>21</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-ElCheikh1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>El-Cheikh</surname><given-names>MC</given-names></name><name name-style="western"><surname>Dutra</surname><given-names>HS</given-names></name><name name-style="western"><surname>Minóprio</surname><given-names>P</given-names></name><name name-style="western"><surname>Borojevic</surname><given-names>R</given-names></name></person-group>             <year>1994</year>             <article-title>Increase of B-lymphocyte number and activity during experimental murine schistosomiasis mansoni.</article-title>             <source>Braz J Med Biol Res</source>             <volume>27</volume>             <fpage>1605</fpage>             <lpage>1617</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Grzych1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Grzych</surname><given-names>JM</given-names></name><name name-style="western"><surname>Pearce</surname><given-names>E</given-names></name><name name-style="western"><surname>Cheever</surname><given-names>A</given-names></name><name name-style="western"><surname>Caulada</surname><given-names>ZA</given-names></name><name name-style="western"><surname>Caspar</surname><given-names>P</given-names></name><etal/></person-group>             <year>1991</year>             <article-title>Egg deposition is the major stimulus for the production of Th2 cytokines in murine schistosomiasis mansoni.</article-title>             <source>J Immunol</source>             <volume>146</volume>             <fpage>1322</fpage>             <lpage>1327</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Borojevic1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Borojevic</surname><given-names>R</given-names></name></person-group>             <year>1992</year>             <article-title>Experimental murine schistosomiasis mansoni: establishment of the chronic phase of the disease.</article-title>             <source>Mem Inst Oswaldo Cruz</source>             <volume>87</volume>             <fpage>171</fpage>             <lpage>174</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Lenzi1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lenzi</surname><given-names>HL</given-names></name><name name-style="western"><surname>Oliveira</surname><given-names>DN</given-names></name><name name-style="western"><surname>Pelajo-Machado</surname><given-names>M</given-names></name><name name-style="western"><surname>Borojevic</surname><given-names>R</given-names></name><name name-style="western"><surname>Lenzi</surname><given-names>JA</given-names></name></person-group>             <year>1996</year>             <article-title>Coelom-associated lymphomyeloid tissue (milky spots): site of lymphoid and myelomonocytic cell generation.</article-title>             <source>Braz J Med Biol Res</source>             <volume>29</volume>             <fpage>19</fpage>             <lpage>24</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Randolph1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Randolph</surname><given-names>GJ</given-names></name><name name-style="western"><surname>Angeli</surname><given-names>V</given-names></name><name name-style="western"><surname>Swartz</surname><given-names>MA</given-names></name></person-group>             <year>2005</year>             <article-title>Dendritic-cell trafficking to lymph nodes through lymphatic vessels.</article-title>             <source>Nat Rev Immunol</source>             <volume>8</volume>             <fpage>617</fpage>             <lpage>28</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-MacLennan1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>MacLennan</surname><given-names>IC</given-names></name></person-group>             <year>1994</year>             <article-title>Germinal centers.</article-title>             <source>Annu Rev Immunol</source>             <volume>12</volume>             <fpage>117</fpage>             <lpage>139</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-AngelinDuclos1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Angelin-Duclos</surname><given-names>C</given-names></name><name name-style="western"><surname>Cattoretti</surname><given-names>G</given-names></name><name name-style="western"><surname>Lin</surname><given-names>KI</given-names></name><name name-style="western"><surname>Calame</surname><given-names>K</given-names></name></person-group>             <year>2000</year>             <article-title>Commitment of B lymphocytes to a plasma cell fate is associated with Blimp-1 expression in vivo.</article-title>             <source>J Immunol</source>             <volume>165</volume>             <fpage>5462</fpage>             <lpage>5471</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Benson1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Benson</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Erickson</surname><given-names>LD</given-names></name><name name-style="western"><surname>Gleeson</surname><given-names>MW</given-names></name><name name-style="western"><surname>Noelle</surname><given-names>RJ</given-names></name></person-group>             <year>2007</year>             <article-title>Affinity of antigen encounter and other early B-cell signals determine B-cell fate.</article-title>             <source>Curr Opin Immunol</source>             <volume>19</volume>             <fpage>275</fpage>             <lpage>80</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-WillardMack1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Willard-Mack</surname><given-names>CL</given-names></name></person-group>             <year>2006</year>             <article-title>Normal structure, function, and histology of lymph nodes.</article-title>             <source>Toxicol Pathol</source>             <volume>34</volume>             <fpage>409</fpage>             <lpage>424</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Hanayama1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hanayama</surname><given-names>R</given-names></name><name name-style="western"><surname>Tanaka</surname><given-names>M</given-names></name><name name-style="western"><surname>Miwa</surname><given-names>K</given-names></name><name name-style="western"><surname>Shinohara</surname><given-names>A</given-names></name><name name-style="western"><surname>Iwamatsu</surname><given-names>A</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Identification of a factor that links apoptotic cells to phagocytes.</article-title>             <source>Nature</source>             <volume>417</volume>             <fpage>182</fpage>             <lpage>187</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Nakamura1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Nakamura</surname><given-names>M</given-names></name><name name-style="western"><surname>Yagi</surname><given-names>H</given-names></name><name name-style="western"><surname>Kayaba</surname><given-names>S</given-names></name><name name-style="western"><surname>Ishii</surname><given-names>T</given-names></name><name name-style="western"><surname>Gotoh</surname><given-names>T</given-names></name><etal/></person-group>             <year>1996</year>             <article-title>Death of germinal center B cells without DNA fragmentation.</article-title>             <source>Eur J Immunol</source>             <volume>26</volume>             <fpage>1211</fpage>             <lpage>1216</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-vandenBerg1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>van den Berg</surname><given-names>TK</given-names></name><name name-style="western"><surname>Honing</surname><given-names>H</given-names></name><name name-style="western"><surname>Franke</surname><given-names>N</given-names></name><name name-style="western"><surname>van Remoortere</surname><given-names>A</given-names></name><name name-style="western"><surname>Schiphorst</surname><given-names>WECM</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>LacdiNAc-glycans constitute a parasite pattern for galectin-3-mediated immune recognition.</article-title>             <source>J Immunol</source>             <volume>173</volume>             <fpage>1902</fpage>             <lpage>1907</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Nyame1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Nyame</surname><given-names>AK</given-names></name><name name-style="western"><surname>Lewis</surname><given-names>FA</given-names></name><name name-style="western"><surname>Doughty</surname><given-names>BL</given-names></name><name name-style="western"><surname>Correa-Oliveira</surname><given-names>R</given-names></name><name name-style="western"><surname>Cummings</surname><given-names>RD</given-names></name></person-group>             <year>2003</year>             <article-title>Immunity to schistosomiasis: glycans are potential antigenic targets for immune intervention.</article-title>             <source>Exp Parasitol</source>             <volume>104</volume>             <fpage>1</fpage>             <lpage>13</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Yang1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yang</surname><given-names>RY</given-names></name><name name-style="western"><surname>Rabinovich</surname><given-names>GA</given-names></name><name name-style="western"><surname>Liu</surname><given-names>FT</given-names></name></person-group>             <year>2008</year>             <article-title>Galectins: structure, function and therapeutic potential.</article-title>             <source>Expert Rev Mol Med</source>             <volume>13</volume>             <fpage>1</fpage>             <lpage>24</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Sano1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sano</surname><given-names>H</given-names></name><name name-style="western"><surname>Hsu</surname><given-names>DK</given-names></name><name name-style="western"><surname>Yu</surname><given-names>L</given-names></name><name name-style="western"><surname>Apgar</surname><given-names>JR</given-names></name><name name-style="western"><surname>Kuwabara</surname><given-names>I</given-names></name><etal/></person-group>             <year>2000</year>             <article-title>Human galectin-3 is a novel chemoattractant for monocytes and macrophages.</article-title>             <source>J Immunol</source>             <volume>165</volume>             <fpage>2156</fpage>             <lpage>2164</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Sano2">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sano</surname><given-names>H</given-names></name><name name-style="western"><surname>Hsu</surname><given-names>DK</given-names></name><name name-style="western"><surname>Apgar</surname><given-names>JR</given-names></name><name name-style="western"><surname>Yu</surname><given-names>L</given-names></name><name name-style="western"><surname>Sharma</surname><given-names>BB</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>Critical role of galectin-3 in phagocytosis by macrophages.</article-title>             <source>J Clin Invest</source>             <volume>112</volume>             <fpage>389</fpage>             <lpage>397</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Yang2">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yang</surname><given-names>RY</given-names></name><name name-style="western"><surname>Hsu</surname><given-names>DK</given-names></name><name name-style="western"><surname>Liu</surname><given-names>FT</given-names></name></person-group>             <year>1996</year>             <article-title>Expression of galectin-3 modulates T-cell growth and apoptosis.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>93</volume>             <fpage>6737</fpage>             <lpage>6742</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Joo1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Joo</surname><given-names>HG</given-names></name><name name-style="western"><surname>Goedegebuure</surname><given-names>PS</given-names></name><name name-style="western"><surname>Sadanaga</surname><given-names>N</given-names></name><name name-style="western"><surname>Nagoshi</surname><given-names>M</given-names></name><name name-style="western"><surname>von Bernstorff</surname><given-names>W</given-names></name><etal/></person-group>             <year>2001</year>             <article-title>Expression and function of galectin-3, a beta-galactoside-binding protein in activated T lymphocytes.</article-title>             <source>J Leukoc Biol</source>             <volume>69</volume>             <fpage>555</fpage>             <lpage>64</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-VillaVerde1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Villa-Verde</surname><given-names>DM</given-names></name><name name-style="western"><surname>Silva-Monteiro</surname><given-names>E</given-names></name><name name-style="western"><surname>Jasiulionis</surname><given-names>MG</given-names></name><name name-style="western"><surname>Farias-De-Oliveira</surname><given-names>DA</given-names></name><name name-style="western"><surname>Brentani</surname><given-names>RR</given-names></name><etal/></person-group>             <year>2002</year>             <article-title>Galectin-3 modulates carbohydrate-dependent thymocyte interactions with the thymic microenvironment.</article-title>             <source>Eur J Immunol</source>             <volume>32</volume>             <fpage>1434</fpage>             <lpage>1444</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-AcostaRodrguez1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Acosta-Rodríguez</surname><given-names>EV</given-names></name><name name-style="western"><surname>Montes</surname><given-names>CL</given-names></name><name name-style="western"><surname>Motrán</surname><given-names>CC</given-names></name><name name-style="western"><surname>Zuniga</surname><given-names>EI</given-names></name><name name-style="western"><surname>Liu</surname><given-names>FT</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>Galectin-3 mediates IL-4-induced survival and differentiation of B cells: functional cross-talk and implications during Trypanosoma cruzi infection.</article-title>             <source>J Immunol</source>             <volume>172</volume>             <fpage>493</fpage>             <lpage>502</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Oliveira1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Oliveira</surname><given-names>FL</given-names></name><name name-style="western"><surname>Frazão</surname><given-names>P</given-names></name><name name-style="western"><surname>Chammas</surname><given-names>R</given-names></name><name name-style="western"><surname>Hsu</surname><given-names>DK</given-names></name><name name-style="western"><surname>Liu</surname><given-names>FT</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Kinetics of mobilization and differentiation of lymphohematopoietic cells during experimental murine schistosomiasis in galectin-3 -/- mice.</article-title>             <source>J Leukoc Biol</source>             <volume>82</volume>             <fpage>300</fpage>             <lpage>310</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Oliveira2">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Oliveira</surname><given-names>FL</given-names></name><name name-style="western"><surname>Chammas</surname><given-names>R</given-names></name><name name-style="western"><surname>Ricon</surname><given-names>L</given-names></name><name name-style="western"><surname>Fermino</surname><given-names>ML</given-names></name><name name-style="western"><surname>Bernardes</surname><given-names>ES</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Galectin-3 regulates peritoneal B1-cell differentiation into plasma cells.</article-title>             <source>Glycobiology</source>             <volume>19</volume>             <fpage>1248</fpage>             <lpage>1258</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Hsu1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hsu</surname><given-names>DK</given-names></name><name name-style="western"><surname>Yang</surname><given-names>RY</given-names></name><name name-style="western"><surname>Pan</surname><given-names>Z</given-names></name><name name-style="western"><surname>Yu</surname><given-names>L</given-names></name><name name-style="western"><surname>Salomon</surname><given-names>DR</given-names></name><etal/></person-group>             <year>2000</year>             <article-title>Targeted disruption of the galectin-3 gene results in attenuated peritoneal inflammatory responses.</article-title>             <source>Am J Pathol</source>             <volume>156</volume>             <fpage>1073</fpage>             <lpage>1083</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-ElCheikh2">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>El-Cheikh</surname><given-names>MC</given-names></name><name name-style="western"><surname>Bonomo</surname><given-names>AC</given-names></name><name name-style="western"><surname>Rossi</surname><given-names>MI</given-names></name><name name-style="western"><surname>Pinho</surname><given-names>MF</given-names></name><name name-style="western"><surname>Borojevic</surname><given-names>R</given-names></name></person-group>             <year>1998</year>             <article-title>Experimental murine schistosomiasis mansoni: modulation of the B-1 lymphocyte distribution and phenotype expression.</article-title>             <source>Immunobiology</source>             <volume>199</volume>             <fpage>51</fpage>             <lpage>62</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Vindelv1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vindeløv</surname><given-names>LL</given-names></name><name name-style="western"><surname>Hansen</surname><given-names>HH</given-names></name><name name-style="western"><surname>Christensen</surname><given-names>IJ</given-names></name><name name-style="western"><surname>Spang-Thomsen</surname><given-names>M</given-names></name><name name-style="western"><surname>Hirsch</surname><given-names>FR</given-names></name><etal/></person-group>             <year>1980</year>             <article-title>Clonal heterogeneity of small-cell anaplastic carcinoma of the lung demonstrated by flow-cytometric DNA analysis.</article-title>             <source>Cancer Res</source>             <volume>40</volume>             <fpage>4295</fpage>             <lpage>4300</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Montalvo1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Montalvão</surname><given-names>F</given-names></name><name name-style="western"><surname>Almeida</surname><given-names>GM</given-names></name><name name-style="western"><surname>Silva</surname><given-names>EM</given-names></name><name name-style="western"><surname>Borges</surname><given-names>VM</given-names></name><name name-style="western"><surname>Vasconcellos</surname><given-names>R</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Apoptotic lymphocytes treated with IgG from Trypanosoma cruzi infection increase TNF-a secretion and reduce parasite replication in macrophages.</article-title>             <source>Eur J Immunol</source>             <volume>40</volume>             <fpage>417</fpage>             <lpage>425</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-ElCheikh3">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>El-Cheikh</surname><given-names>MC</given-names></name><name name-style="western"><surname>Borojevic</surname><given-names>R</given-names></name></person-group>             <year>1990</year>             <article-title>Extramedullar proliferation of eosinophil granulocytes in chronic Schistosomiasis mansoni is mediated by a factor secreted by inflammatory macrophages, Infect.</article-title>             <source>Immun</source>             <volume>58</volume>             <fpage>816</fpage>             <lpage>821</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Mueller1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Mueller</surname><given-names>SN</given-names></name><name name-style="western"><surname>Germain</surname><given-names>RN</given-names></name></person-group>             <year>2009</year>             <article-title>Stromal cell contributions to the homeostasis and functionality of the immune system.</article-title>             <source>Nat Rev Immunol</source>             <volume>9</volume>             <fpage>618</fpage>             <lpage>629</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Dumic1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Dumic</surname><given-names>J</given-names></name><name name-style="western"><surname>Dabelic</surname><given-names>S</given-names></name><name name-style="western"><surname>Flögel</surname><given-names>M</given-names></name></person-group>             <year>2006</year>             <article-title>Galectin-3: an open-ended story.</article-title>             <source>Biochim Biophys Acta</source>             <volume>1760</volume>             <fpage>616</fpage>             <lpage>635</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Colnot1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Colnot</surname><given-names>C</given-names></name><name name-style="western"><surname>Ripoche</surname><given-names>MA</given-names></name><name name-style="western"><surname>Milon</surname><given-names>G</given-names></name><name name-style="western"><surname>Montagutelli</surname><given-names>X</given-names></name><name name-style="western"><surname>Crocker</surname><given-names>PR</given-names></name><etal/></person-group>             <year>1998</year>             <article-title>Maintenance of granulocyte numbers during acute peritonitis is defective in galectin-3-null mutant mice.</article-title>             <source>Immunology</source>             <volume>94</volume>             <fpage>290</fpage>             <lpage>296</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Breuilh1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Breuilh</surname><given-names>L</given-names></name><name name-style="western"><surname>Vanhoutte</surname><given-names>F</given-names></name><name name-style="western"><surname>Fontaine</surname><given-names>J</given-names></name><name name-style="western"><surname>van Stijn</surname><given-names>CM</given-names></name><name name-style="western"><surname>Tillie-Leblond</surname><given-names>I</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Galectin-3 modulates immune and inflammatory responses during helminthic infection: impact of galectin-3 deficiency on the functions of dendritic cells.</article-title>             <source>Infect Immun</source>             <volume>75</volume>             <fpage>5148</fpage>             <lpage>5157</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Liu1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Liu</surname><given-names>FT</given-names></name><name name-style="western"><surname>Hsu</surname><given-names>DK</given-names></name><name name-style="western"><surname>Zuberi</surname><given-names>RI</given-names></name><name name-style="western"><surname>Kuwabara</surname><given-names>I</given-names></name><name name-style="western"><surname>Chi</surname><given-names>EY</given-names></name><etal/></person-group>             <year>1995</year>             <article-title>Expression and function of galectin-3, a beta-galactoside-binding lectin, in human monocytes and macrophages.</article-title>             <source>Am J Pathol</source>             <volume>147</volume>             <fpage>1016</fpage>             <lpage>1028</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Dietz1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Dietz</surname><given-names>AB</given-names></name><name name-style="western"><surname>Bulur</surname><given-names>PA</given-names></name><name name-style="western"><surname>Knutson</surname><given-names>GJ</given-names></name><name name-style="western"><surname>Matasic</surname><given-names>R</given-names></name><name name-style="western"><surname>Vuk-Pavlovic</surname><given-names>S</given-names></name></person-group>             <year>2000</year>             <article-title>Maturation of human monocyte-derived dendritic cells studied by microarray hybridization.</article-title>             <source>Biochem Biophys Res Commun</source>             <volume>275</volume>             <fpage>731</fpage>             <lpage>738</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Hoyer1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hoyer</surname><given-names>KK</given-names></name><name name-style="western"><surname>Pang</surname><given-names>M</given-names></name><name name-style="western"><surname>Gui</surname><given-names>D</given-names></name><name name-style="western"><surname>Shintaku</surname><given-names>IP</given-names></name><name name-style="western"><surname>Kuwabara</surname><given-names>I</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>An Anti-Apoptotic Role for Galectin-3 in Diffuse Large B-Cell Lymphomas.</article-title>             <source>Amer J Pathology</source>             <volume>164</volume>             <fpage>893</fpage>             <lpage>902</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Karlsson1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Karlsson</surname><given-names>MCI</given-names></name><name name-style="western"><surname>Guinamard</surname><given-names>R</given-names></name><name name-style="western"><surname>Bolland</surname><given-names>S</given-names></name><name name-style="western"><surname>Sankala</surname><given-names>M</given-names></name><name name-style="western"><surname>Steinman</surname><given-names>RM</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>Macrophages control the retention and trafficking of B lymphocytes in the splenic marginal zone.</article-title>             <source>J Exp Med</source>             <volume>198</volume>             <fpage>333</fpage>             <lpage>340</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Martin1">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Martin</surname><given-names>F</given-names></name><name name-style="western"><surname>Kearney</surname><given-names>JF</given-names></name></person-group>             <year>2002</year>             <article-title>Marginal-zone B cells.</article-title>             <source>Nat Rev Immunol</source>             <volume>5</volume>             <fpage>323</fpage>             <lpage>335</lpage>             <comment>Review</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Kraal1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kraal</surname><given-names>G</given-names></name><name name-style="western"><surname>Rep</surname><given-names>M</given-names></name><name name-style="western"><surname>Janse</surname><given-names>M</given-names></name></person-group>             <year>1987</year>             <article-title>Macrophages in T and B cell compartments and other tissue macrophages recognized by monoclonal antibody MOMA-2. An immunohistochemical study.</article-title>             <source>Scand J Immunol</source>             <volume>26</volume>             <fpage>653</fpage>             <lpage>661</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Smith1">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Smith</surname><given-names>JP</given-names></name><name name-style="western"><surname>Burton</surname><given-names>GF</given-names></name><name name-style="western"><surname>Tew</surname><given-names>JG</given-names></name><name name-style="western"><surname>Szakal</surname><given-names>AK</given-names></name></person-group>             <year>1998</year>             <article-title>Tingible body macrophages in regulation of germinal center reactions.</article-title>             <source>Dev Immunol</source>             <volume>6</volume>             <fpage>285</fpage>             <lpage>294</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Miyake1">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Miyake</surname><given-names>Y</given-names></name><name name-style="western"><surname>Asano</surname><given-names>K</given-names></name><name name-style="western"><surname>Kaise</surname><given-names>H</given-names></name><name name-style="western"><surname>Uemura</surname><given-names>M</given-names></name><name name-style="western"><surname>Nakayama</surname><given-names>M</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Critical role of macrophages in the marginal zone in the suppression of immune responses to apoptotic cell-associated antigens.</article-title>             <source>J Clin Invest</source>             <volume>117</volume>             <fpage>2268</fpage>             <lpage>2278</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0019216-Lundy1">
+        <label>41</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lundy</surname><given-names>SK</given-names></name><name name-style="western"><surname>Lerman</surname><given-names>SP</given-names></name><name name-style="western"><surname>Boros</surname><given-names>DL</given-names></name></person-group>             <year>2001</year>             <article-title>Soluble egg antigen-stimulated T helper lymphocyte apoptosis and evidence for cell death mediated by FasL(+) T and B cells during murine Schistosoma mansoni infection.</article-title>             <source>Infect Immun</source>             <volume>69</volume>             <fpage>271</fpage>             <lpage>80</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

@@ -1,0 +1,883 @@
+{"doi":"info:doi/10.1371/journal.pone.0021661","title":
+  "Spatiotopic Coding of BOLD Signal in Human Visual Cortex Depends on Spatial Attention",
+  "eIssn":"1932-6203","state":1,"archiveName":"pone.0021661.zip",
+  "description":
+  "\u003cp\u003eThe neural substrate of the phenomenological experience of a stable visual world remains obscure. One possible mechanism would be to construct \u003citalic\u003espatiotopic\u003c/italic\u003e neural maps where the response is selective to the position of the stimulus in external space, rather than to retinal eccentricities, but evidence for these maps has been inconsistent. Here we show, with fMRI, that when human subjects perform concomitantly a demanding attentive task on stimuli displayed at the fovea, BOLD responses evoked by moving stimuli irrelevant to the task were mostly tuned in retinotopic coordinates. However, under more unconstrained conditions, where subjects could attend easily to the motion stimuli, BOLD responses were tuned not in retinal but in external coordinates (spatiotopic selectivity) in many visual areas, including MT, MST, LO and V6, agreeing with our previous fMRI study. These results indicate that spatial attention may play an important role in mediating spatiotopic selectivity.\u003c/p\u003e",
+  "rights":
+  "Crespi et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-14","eLocationId":
+  "e21661","strkImgURI":"","date":"Jul 7, 2011 12:00:00 AM","volume":"6",
+  "issue":"7","journal":"PLoS ONE","publisherLocation":
+  "San Francisco, USA","publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0021661","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0021661","extension":
+      "XML","contentType":"text/xml","title":
+      "Spatiotopic Coding of BOLD Signal in Human Visual Cortex Depends on Spatial Attention",
+      "description":
+      "\u003cp\u003eThe neural substrate of the phenomenological experience of a stable visual world remains obscure. One possible mechanism would be to construct \u003citalic\u003espatiotopic\u003c/italic\u003e neural maps where the response is selective to the position of the stimulus in external space, rather than to retinal eccentricities, but evidence for these maps has been inconsistent. Here we show, with fMRI, that when human subjects perform concomitantly a demanding attentive task on stimuli displayed at the fovea, BOLD responses evoked by moving stimuli irrelevant to the task were mostly tuned in retinotopic coordinates. However, under more unconstrained conditions, where subjects could attend easily to the motion stimuli, BOLD responses were tuned not in retinal but in external coordinates (spatiotopic selectivity) in many visual areas, including MT, MST, LO and V6, agreeing with our previous fMRI study. These results indicate that spatial attention may play an important role in mediating spatiotopic selectivity.\u003c/p\u003e",
+      "size":138432},{"doi":"info:doi/10.1371/journal.pone.0021661",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Spatiotopic Coding of BOLD Signal in Human Visual Cortex Depends on Spatial Attention",
+      "description":
+      "\u003cp\u003eThe neural substrate of the phenomenological experience of a stable visual world remains obscure. One possible mechanism would be to construct \u003citalic\u003espatiotopic\u003c/italic\u003e neural maps where the response is selective to the position of the stimulus in external space, rather than to retinal eccentricities, but evidence for these maps has been inconsistent. Here we show, with fMRI, that when human subjects perform concomitantly a demanding attentive task on stimuli displayed at the fovea, BOLD responses evoked by moving stimuli irrelevant to the task were mostly tuned in retinotopic coordinates. However, under more unconstrained conditions, where subjects could attend easily to the motion stimuli, BOLD responses were tuned not in retinal but in external coordinates (spatiotopic selectivity) in many visual areas, including MT, MST, LO and V6, agreeing with our previous fMRI study. These results indicate that spatial attention may play an important role in mediating spatiotopic selectivity.\u003c/p\u003e",
+      "size":3663434},{"doi":"info:doi/10.1371/journal.pone.0021661.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eMT and V1 BOLD response amplitude.\u003c/title\u003e\u003cp\u003eBOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), in MT (A \u0026amp; B) and parafoveal V1 (C \u0026amp; D), during passive fixation (A \u0026amp; C) and the foveal attentional task (B \u0026amp; D). The responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). The mean responses were calculated by averaging the visual responses from homologous regions of the two hemispheres for mirror symmetric fixation directions and stimulus positions. Error bars show the between subject s.e.m., in many cases smaller than the symbol size. The responses of V1 are retinotopic, and became marginally more retinotopic in the attentional condition. In the passive viewing the responses of MT at all three fixations line up well, consistent with spatiotopic selectivity; with foveal attention they are clearly displaced in the direction of gaze, retinotopically tuned. \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s001\"\u003eTable S1\u003c/xref\u003e gives the values and significance of spatiotopic and retinotopic fits to the data.\u003c/p\u003e",
+      "size":396364},{"doi":"info:doi/10.1371/journal.pone.0021661.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eMT and V1 BOLD response amplitude.\u003c/title\u003e\u003cp\u003eBOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), in MT (A \u0026amp; B) and parafoveal V1 (C \u0026amp; D), during passive fixation (A \u0026amp; C) and the foveal attentional task (B \u0026amp; D). The responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). The mean responses were calculated by averaging the visual responses from homologous regions of the two hemispheres for mirror symmetric fixation directions and stimulus positions. Error bars show the between subject s.e.m., in many cases smaller than the symbol size. The responses of V1 are retinotopic, and became marginally more retinotopic in the attentional condition. In the passive viewing the responses of MT at all three fixations line up well, consistent with spatiotopic selectivity; with foveal attention they are clearly displaced in the direction of gaze, retinotopically tuned. \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s001\"\u003eTable S1\u003c/xref\u003e gives the values and significance of spatiotopic and retinotopic fits to the data.\u003c/p\u003e",
+      "size":15476},{"doi":"info:doi/10.1371/journal.pone.0021661.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eMT and V1 BOLD response amplitude.\u003c/title\u003e\u003cp\u003eBOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), in MT (A \u0026amp; B) and parafoveal V1 (C \u0026amp; D), during passive fixation (A \u0026amp; C) and the foveal attentional task (B \u0026amp; D). The responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). The mean responses were calculated by averaging the visual responses from homologous regions of the two hemispheres for mirror symmetric fixation directions and stimulus positions. Error bars show the between subject s.e.m., in many cases smaller than the symbol size. The responses of V1 are retinotopic, and became marginally more retinotopic in the attentional condition. In the passive viewing the responses of MT at all three fixations line up well, consistent with spatiotopic selectivity; with foveal attention they are clearly displaced in the direction of gaze, retinotopically tuned. \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s001\"\u003eTable S1\u003c/xref\u003e gives the values and significance of spatiotopic and retinotopic fits to the data.\u003c/p\u003e",
+      "size":230188},{"doi":"info:doi/10.1371/journal.pone.0021661.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eMT and V1 BOLD response amplitude.\u003c/title\u003e\u003cp\u003eBOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), in MT (A \u0026amp; B) and parafoveal V1 (C \u0026amp; D), during passive fixation (A \u0026amp; C) and the foveal attentional task (B \u0026amp; D). The responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). The mean responses were calculated by averaging the visual responses from homologous regions of the two hemispheres for mirror symmetric fixation directions and stimulus positions. Error bars show the between subject s.e.m., in many cases smaller than the symbol size. The responses of V1 are retinotopic, and became marginally more retinotopic in the attentional condition. In the passive viewing the responses of MT at all three fixations line up well, consistent with spatiotopic selectivity; with foveal attention they are clearly displaced in the direction of gaze, retinotopically tuned. \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s001\"\u003eTable S1\u003c/xref\u003e gives the values and significance of spatiotopic and retinotopic fits to the data.\u003c/p\u003e",
+      "size":321151},{"doi":"info:doi/10.1371/journal.pone.0021661.e001",
+      "contextElement":"disp-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":5266},{"doi":
+      "info:doi/10.1371/journal.pone.0021661.e001","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":4419},{"doi":
+      "info:doi/10.1371/journal.pone.0021661.g002","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 2",
+      "description":
+      "\u003ctitle\u003eGardner Spatiotopy Index of the visual cortex.\u003c/title\u003e\u003cp\u003eSpatiotopy index for three representative hemispheres, the left and right hemisphere of Subject 1 (A \u0026amp; B, C \u0026amp; D) and the right of Subject 2 (E \u0026amp; F), for the passive-fixation condition (left: A-C-E) and attention condition (right: B-D-F). During passive fixation, there are large regions of blue (spatiotopic), particularly in dorsal cortex, including areas MT, MST, V6 and, to a lesser extent, LO. However, when performing the attention-demanding foveal task areas that were clearly spatiotopic (color-coded blue) with passive fixation, become strongly retinotopic (color-coded red/yellow) when attention is directed to the fovea. The islands within V1 inside the solid black lines indicate the parafoveal regions used for the data of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g008\"\u003eFigures. 8\u003c/xref\u003e \u0026amp; \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003e1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":5761424},{"doi":"info:doi/10.1371/journal.pone.0021661.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eGardner Spatiotopy Index of the visual cortex.\u003c/title\u003e\u003cp\u003eSpatiotopy index for three representative hemispheres, the left and right hemisphere of Subject 1 (A \u0026amp; B, C \u0026amp; D) and the right of Subject 2 (E \u0026amp; F), for the passive-fixation condition (left: A-C-E) and attention condition (right: B-D-F). During passive fixation, there are large regions of blue (spatiotopic), particularly in dorsal cortex, including areas MT, MST, V6 and, to a lesser extent, LO. However, when performing the attention-demanding foveal task areas that were clearly spatiotopic (color-coded blue) with passive fixation, become strongly retinotopic (color-coded red/yellow) when attention is directed to the fovea. The islands within V1 inside the solid black lines indicate the parafoveal regions used for the data of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g008\"\u003eFigures. 8\u003c/xref\u003e \u0026amp; \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003e1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":40660},{"doi":"info:doi/10.1371/journal.pone.0021661.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eGardner Spatiotopy Index of the visual cortex.\u003c/title\u003e\u003cp\u003eSpatiotopy index for three representative hemispheres, the left and right hemisphere of Subject 1 (A \u0026amp; B, C \u0026amp; D) and the right of Subject 2 (E \u0026amp; F), for the passive-fixation condition (left: A-C-E) and attention condition (right: B-D-F). During passive fixation, there are large regions of blue (spatiotopic), particularly in dorsal cortex, including areas MT, MST, V6 and, to a lesser extent, LO. However, when performing the attention-demanding foveal task areas that were clearly spatiotopic (color-coded blue) with passive fixation, become strongly retinotopic (color-coded red/yellow) when attention is directed to the fovea. The islands within V1 inside the solid black lines indicate the parafoveal regions used for the data of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g008\"\u003eFigures. 8\u003c/xref\u003e \u0026amp; \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003e1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":1088187},{"doi":"info:doi/10.1371/journal.pone.0021661.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eGardner Spatiotopy Index of the visual cortex.\u003c/title\u003e\u003cp\u003eSpatiotopy index for three representative hemispheres, the left and right hemisphere of Subject 1 (A \u0026amp; B, C \u0026amp; D) and the right of Subject 2 (E \u0026amp; F), for the passive-fixation condition (left: A-C-E) and attention condition (right: B-D-F). During passive fixation, there are large regions of blue (spatiotopic), particularly in dorsal cortex, including areas MT, MST, V6 and, to a lesser extent, LO. However, when performing the attention-demanding foveal task areas that were clearly spatiotopic (color-coded blue) with passive fixation, become strongly retinotopic (color-coded red/yellow) when attention is directed to the fovea. The islands within V1 inside the solid black lines indicate the parafoveal regions used for the data of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g008\"\u003eFigures. 8\u003c/xref\u003e \u0026amp; \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003e1\u003c/xref\u003e.\u003c/p\u003e",
+      "size":6103518},{"doi":"info:doi/10.1371/journal.pone.0021661.g003",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eMontecarlo simulations of the spatiotopic index.\u003c/title\u003e\u003cp\u003eMontecarlo simulations of the spatiotopic index. A–C Assumed spatial tuning of the response. Each bar represents the stimulus position and the dots the fixation; the color of the continuous curve shows the spatial selectivity tuning for each fixation. A: no tuning; B: Gaussian tuning function of 2σ \u003d 16°, centered 8° contralaterally of fixation; C: Gaussian tuning function of 2σ \u003d 50°, centered 8° contralaterally of fixation. D–F distribution of spatiotopic indexes, assuming that the response of each voxel is perturbed by Gaussian noise of 30% the amplitude of peak response. With no underlying selectivity, the average index is 0, with 50% spatiotopic responses, 50% retinotopic. With relatively broad selectivity, 93% of voxels were retinotopic, with only a small tail spatiotopic (E). Even 50° selectivity resulted in the majority (74%) voxels remaining retinotopic (F). No matter how unselective or noisy the responses are, they cannot produce a spatiotopic index that is consistently negative.\u003c/p\u003e",
+      "size":2225148},{"doi":"info:doi/10.1371/journal.pone.0021661.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eMontecarlo simulations of the spatiotopic index.\u003c/title\u003e\u003cp\u003eMontecarlo simulations of the spatiotopic index. A–C Assumed spatial tuning of the response. Each bar represents the stimulus position and the dots the fixation; the color of the continuous curve shows the spatial selectivity tuning for each fixation. A: no tuning; B: Gaussian tuning function of 2σ \u003d 16°, centered 8° contralaterally of fixation; C: Gaussian tuning function of 2σ \u003d 50°, centered 8° contralaterally of fixation. D–F distribution of spatiotopic indexes, assuming that the response of each voxel is perturbed by Gaussian noise of 30% the amplitude of peak response. With no underlying selectivity, the average index is 0, with 50% spatiotopic responses, 50% retinotopic. With relatively broad selectivity, 93% of voxels were retinotopic, with only a small tail spatiotopic (E). Even 50° selectivity resulted in the majority (74%) voxels remaining retinotopic (F). No matter how unselective or noisy the responses are, they cannot produce a spatiotopic index that is consistently negative.\u003c/p\u003e",
+      "size":13682},{"doi":"info:doi/10.1371/journal.pone.0021661.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eMontecarlo simulations of the spatiotopic index.\u003c/title\u003e\u003cp\u003eMontecarlo simulations of the spatiotopic index. A–C Assumed spatial tuning of the response. Each bar represents the stimulus position and the dots the fixation; the color of the continuous curve shows the spatial selectivity tuning for each fixation. A: no tuning; B: Gaussian tuning function of 2σ \u003d 16°, centered 8° contralaterally of fixation; C: Gaussian tuning function of 2σ \u003d 50°, centered 8° contralaterally of fixation. D–F distribution of spatiotopic indexes, assuming that the response of each voxel is perturbed by Gaussian noise of 30% the amplitude of peak response. With no underlying selectivity, the average index is 0, with 50% spatiotopic responses, 50% retinotopic. With relatively broad selectivity, 93% of voxels were retinotopic, with only a small tail spatiotopic (E). Even 50° selectivity resulted in the majority (74%) voxels remaining retinotopic (F). No matter how unselective or noisy the responses are, they cannot produce a spatiotopic index that is consistently negative.\u003c/p\u003e",
+      "size":161020},{"doi":"info:doi/10.1371/journal.pone.0021661.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eMontecarlo simulations of the spatiotopic index.\u003c/title\u003e\u003cp\u003eMontecarlo simulations of the spatiotopic index. A–C Assumed spatial tuning of the response. Each bar represents the stimulus position and the dots the fixation; the color of the continuous curve shows the spatial selectivity tuning for each fixation. A: no tuning; B: Gaussian tuning function of 2σ \u003d 16°, centered 8° contralaterally of fixation; C: Gaussian tuning function of 2σ \u003d 50°, centered 8° contralaterally of fixation. D–F distribution of spatiotopic indexes, assuming that the response of each voxel is perturbed by Gaussian noise of 30% the amplitude of peak response. With no underlying selectivity, the average index is 0, with 50% spatiotopic responses, 50% retinotopic. With relatively broad selectivity, 93% of voxels were retinotopic, with only a small tail spatiotopic (E). Even 50° selectivity resulted in the majority (74%) voxels remaining retinotopic (F). No matter how unselective or noisy the responses are, they cannot produce a spatiotopic index that is consistently negative.\u003c/p\u003e",
+      "size":1044786},{"doi":"info:doi/10.1371/journal.pone.0021661.g004",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReliable voxels for the most representative visual areas.\u003c/title\u003e\u003cp\u003eReliable voxels of the major visual areas considered in the spatiotopic maps showed in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g002\"\u003eFig. 2\u003c/xref\u003e. The primary visual areas (V1 \u0026amp; V2- top rows) and the LO+ and MT+ complex regions (bottom rows) for each hemisphere of each subject were considered, both during the passive-fixation condition (A\u0026amp;C) and attention condition (B\u0026amp;D). Voxels were considered reliable only if the response (average for stimuli contralateral in both retinotopic and spatiotopic coordinates) correlated with the hemodynamic model (p\u0026lt;0.05).\u003c/p\u003e",
+      "size":1992680},{"doi":"info:doi/10.1371/journal.pone.0021661.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReliable voxels for the most representative visual areas.\u003c/title\u003e\u003cp\u003eReliable voxels of the major visual areas considered in the spatiotopic maps showed in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g002\"\u003eFig. 2\u003c/xref\u003e. The primary visual areas (V1 \u0026amp; V2- top rows) and the LO+ and MT+ complex regions (bottom rows) for each hemisphere of each subject were considered, both during the passive-fixation condition (A\u0026amp;C) and attention condition (B\u0026amp;D). Voxels were considered reliable only if the response (average for stimuli contralateral in both retinotopic and spatiotopic coordinates) correlated with the hemodynamic model (p\u0026lt;0.05).\u003c/p\u003e",
+      "size":23726},{"doi":"info:doi/10.1371/journal.pone.0021661.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReliable voxels for the most representative visual areas.\u003c/title\u003e\u003cp\u003eReliable voxels of the major visual areas considered in the spatiotopic maps showed in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g002\"\u003eFig. 2\u003c/xref\u003e. The primary visual areas (V1 \u0026amp; V2- top rows) and the LO+ and MT+ complex regions (bottom rows) for each hemisphere of each subject were considered, both during the passive-fixation condition (A\u0026amp;C) and attention condition (B\u0026amp;D). Voxels were considered reliable only if the response (average for stimuli contralateral in both retinotopic and spatiotopic coordinates) correlated with the hemodynamic model (p\u0026lt;0.05).\u003c/p\u003e",
+      "size":740941},{"doi":"info:doi/10.1371/journal.pone.0021661.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eReliable voxels for the most representative visual areas.\u003c/title\u003e\u003cp\u003eReliable voxels of the major visual areas considered in the spatiotopic maps showed in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g002\"\u003eFig. 2\u003c/xref\u003e. The primary visual areas (V1 \u0026amp; V2- top rows) and the LO+ and MT+ complex regions (bottom rows) for each hemisphere of each subject were considered, both during the passive-fixation condition (A\u0026amp;C) and attention condition (B\u0026amp;D). Voxels were considered reliable only if the response (average for stimuli contralateral in both retinotopic and spatiotopic coordinates) correlated with the hemodynamic model (p\u0026lt;0.05).\u003c/p\u003e",
+      "size":1983326},{"doi":"info:doi/10.1371/journal.pone.0021661.g005",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVoxel Reliability in areas V1 and MT.\u003c/title\u003e\u003cp\u003eReliability of voxel response plotted against spatiotopy index for the right hemisphere of subject S2. A \u0026amp; B area V1 (entire area); C \u0026amp; D area MT. Reliability was the correlation coefficient calculated by regressing the hemodynamic modeled response against the average response timecourse to all stimuli that were contralateral in both spatiotopic and retinotopic coordinates (left of both screen center and fixation). Blue symbols indicate significant reliabilities (1-tailed, p\u0026lt;0.05), light blue non-significant. The values of r are the correlation coefficients for regressing the reliability indexes and spatiotopy indexes.\u003c/p\u003e",
+      "size":631196},{"doi":"info:doi/10.1371/journal.pone.0021661.g005",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVoxel Reliability in areas V1 and MT.\u003c/title\u003e\u003cp\u003eReliability of voxel response plotted against spatiotopy index for the right hemisphere of subject S2. A \u0026amp; B area V1 (entire area); C \u0026amp; D area MT. Reliability was the correlation coefficient calculated by regressing the hemodynamic modeled response against the average response timecourse to all stimuli that were contralateral in both spatiotopic and retinotopic coordinates (left of both screen center and fixation). Blue symbols indicate significant reliabilities (1-tailed, p\u0026lt;0.05), light blue non-significant. The values of r are the correlation coefficients for regressing the reliability indexes and spatiotopy indexes.\u003c/p\u003e",
+      "size":19375},{"doi":"info:doi/10.1371/journal.pone.0021661.g005",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVoxel Reliability in areas V1 and MT.\u003c/title\u003e\u003cp\u003eReliability of voxel response plotted against spatiotopy index for the right hemisphere of subject S2. A \u0026amp; B area V1 (entire area); C \u0026amp; D area MT. Reliability was the correlation coefficient calculated by regressing the hemodynamic modeled response against the average response timecourse to all stimuli that were contralateral in both spatiotopic and retinotopic coordinates (left of both screen center and fixation). Blue symbols indicate significant reliabilities (1-tailed, p\u0026lt;0.05), light blue non-significant. The values of r are the correlation coefficients for regressing the reliability indexes and spatiotopy indexes.\u003c/p\u003e",
+      "size":328007},{"doi":"info:doi/10.1371/journal.pone.0021661.g005",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eVoxel Reliability in areas V1 and MT.\u003c/title\u003e\u003cp\u003eReliability of voxel response plotted against spatiotopy index for the right hemisphere of subject S2. A \u0026amp; B area V1 (entire area); C \u0026amp; D area MT. Reliability was the correlation coefficient calculated by regressing the hemodynamic modeled response against the average response timecourse to all stimuli that were contralateral in both spatiotopic and retinotopic coordinates (left of both screen center and fixation). Blue symbols indicate significant reliabilities (1-tailed, p\u0026lt;0.05), light blue non-significant. The values of r are the correlation coefficients for regressing the reliability indexes and spatiotopy indexes.\u003c/p\u003e",
+      "size":440927},{"doi":"info:doi/10.1371/journal.pone.0021661.g006",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eA–E Voxel Reliability in MT for all subjects.\u003c/title\u003e\u003cp\u003eAs for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e, reliability of voxel response is plotted against spatiotopy index for the other two subjects of this study (A\u0026amp;B) and three subjects of the previous study (d\u0027Avossa et al \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0021661-Goossens1\"\u003e[14]\u003c/xref\u003e: C–E). Color conventions as for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e. \u003cbold\u003eF\u003c/bold\u003e To evaluate the reliability of the Gardner spatiotopic index, the index was calculated for even runs (2, 4, 6…) and plotted against that for odd runs (1, 3, 5…) for voxels of V1 (red) and MT (black) for subject S1. The value of the correlation r \u003d 0.42.\u003c/p\u003e",
+      "size":1251844},{"doi":"info:doi/10.1371/journal.pone.0021661.g006",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eA–E Voxel Reliability in MT for all subjects.\u003c/title\u003e\u003cp\u003eAs for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e, reliability of voxel response is plotted against spatiotopy index for the other two subjects of this study (A\u0026amp;B) and three subjects of the previous study (d\u0027Avossa et al \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0021661-Goossens1\"\u003e[14]\u003c/xref\u003e: C–E). Color conventions as for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e. \u003cbold\u003eF\u003c/bold\u003e To evaluate the reliability of the Gardner spatiotopic index, the index was calculated for even runs (2, 4, 6…) and plotted against that for odd runs (1, 3, 5…) for voxels of V1 (red) and MT (black) for subject S1. The value of the correlation r \u003d 0.42.\u003c/p\u003e",
+      "size":25073},{"doi":"info:doi/10.1371/journal.pone.0021661.g006",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eA–E Voxel Reliability in MT for all subjects.\u003c/title\u003e\u003cp\u003eAs for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e, reliability of voxel response is plotted against spatiotopy index for the other two subjects of this study (A\u0026amp;B) and three subjects of the previous study (d\u0027Avossa et al \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0021661-Goossens1\"\u003e[14]\u003c/xref\u003e: C–E). Color conventions as for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e. \u003cbold\u003eF\u003c/bold\u003e To evaluate the reliability of the Gardner spatiotopic index, the index was calculated for even runs (2, 4, 6…) and plotted against that for odd runs (1, 3, 5…) for voxels of V1 (red) and MT (black) for subject S1. The value of the correlation r \u003d 0.42.\u003c/p\u003e",
+      "size":393857},{"doi":"info:doi/10.1371/journal.pone.0021661.g006",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 6","description":
+      "\u003ctitle\u003eA–E Voxel Reliability in MT for all subjects.\u003c/title\u003e\u003cp\u003eAs for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e, reliability of voxel response is plotted against spatiotopy index for the other two subjects of this study (A\u0026amp;B) and three subjects of the previous study (d\u0027Avossa et al \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0021661-Goossens1\"\u003e[14]\u003c/xref\u003e: C–E). Color conventions as for \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g005\"\u003eFig. 5\u003c/xref\u003e. \u003cbold\u003eF\u003c/bold\u003e To evaluate the reliability of the Gardner spatiotopic index, the index was calculated for even runs (2, 4, 6…) and plotted against that for odd runs (1, 3, 5…) for voxels of V1 (red) and MT (black) for subject S1. The value of the correlation r \u003d 0.42.\u003c/p\u003e",
+      "size":918535},{"doi":"info:doi/10.1371/journal.pone.0021661.g007",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eMT averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for the MT region, during passive observation (A) and attention to the fovea (B). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whithin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. The curves are shifted to have zero amplitude at time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":1583696},{"doi":"info:doi/10.1371/journal.pone.0021661.g007",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eMT averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for the MT region, during passive observation (A) and attention to the fovea (B). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whithin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. The curves are shifted to have zero amplitude at time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":12497},{"doi":"info:doi/10.1371/journal.pone.0021661.g007",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eMT averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for the MT region, during passive observation (A) and attention to the fovea (B). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whithin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. The curves are shifted to have zero amplitude at time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":199486},{"doi":"info:doi/10.1371/journal.pone.0021661.g007",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 7","description":
+      "\u003ctitle\u003eMT averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for the MT region, during passive observation (A) and attention to the fovea (B). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whithin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. The curves are shifted to have zero amplitude at time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":1355204},{"doi":"info:doi/10.1371/journal.pone.0021661.g008",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 8","description":
+      "\u003ctitle\u003eV1 averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for parafoveal V1 (a continent region where voxels responded primarily to the adjacent contralateral bar in central viewing: A and B) and the entire V1 region (C and D), during passive observation (A and C) and attention to the fovea (B and D). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whitin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. All curves are shifted to have zero amplitude time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":2665268},{"doi":"info:doi/10.1371/journal.pone.0021661.g008",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 8","description":
+      "\u003ctitle\u003eV1 averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for parafoveal V1 (a continent region where voxels responded primarily to the adjacent contralateral bar in central viewing: A and B) and the entire V1 region (C and D), during passive observation (A and C) and attention to the fovea (B and D). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whitin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. All curves are shifted to have zero amplitude time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":21806},{"doi":"info:doi/10.1371/journal.pone.0021661.g008",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 8","description":
+      "\u003ctitle\u003eV1 averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for parafoveal V1 (a continent region where voxels responded primarily to the adjacent contralateral bar in central viewing: A and B) and the entire V1 region (C and D), during passive observation (A and C) and attention to the fovea (B and D). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whitin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. All curves are shifted to have zero amplitude time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":304296},{"doi":"info:doi/10.1371/journal.pone.0021661.g008",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 8","description":
+      "\u003ctitle\u003eV1 averaged timecourses of BOLD responses.\u003c/title\u003e\u003cp\u003eAverage timecourse of responses to four different stimuli at three different fixations, for parafoveal V1 (a continent region where voxels responded primarily to the adjacent contralateral bar in central viewing: A and B) and the entire V1 region (C and D), during passive observation (A and C) and attention to the fovea (B and D). The icons indicate the stimuli (labeled 1–4), and the dots the fixation (corresponding to the color-coded time-courses shown below). All timecourses are averaged across hemispheres whitin subjects and then across subjects, with the responses and fixations of the left hemispheres flipped to make them analogous to those of the right (see methods). Bars represent ±1 s.e.m. across subjects. All curves are shifted to have zero amplitude time zero (stimulus onset), for display purposes.\u003c/p\u003e",
+      "size":2416747},{"doi":"info:doi/10.1371/journal.pone.0021661.g009",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 9","description":
+      "\u003ctitle\u003eSpatiotopy Index for the most representative visual areas.\u003c/title\u003e\u003cp\u003eSpatiotopy index for ten visual areas, calculated from individual voxels then averaged over all subjects and hemispheres, with (filled bars) and without (hatched bars) the demanding foveal task. For the regions LO-MT-MST-V6 the index clearly flips with attention, from strongly spatiotopic to strongly retinotopic. However, primary and secondary cortex, V3, V3a and VP (along the ventral stream) are retinotopic in both conditions, and attention has little influence on the index. Error bars represent the s.e.m. between subjects.\u003c/p\u003e",
+      "size":623544},{"doi":"info:doi/10.1371/journal.pone.0021661.g009",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 9","description":
+      "\u003ctitle\u003eSpatiotopy Index for the most representative visual areas.\u003c/title\u003e\u003cp\u003eSpatiotopy index for ten visual areas, calculated from individual voxels then averaged over all subjects and hemispheres, with (filled bars) and without (hatched bars) the demanding foveal task. For the regions LO-MT-MST-V6 the index clearly flips with attention, from strongly spatiotopic to strongly retinotopic. However, primary and secondary cortex, V3, V3a and VP (along the ventral stream) are retinotopic in both conditions, and attention has little influence on the index. Error bars represent the s.e.m. between subjects.\u003c/p\u003e",
+      "size":10826},{"doi":"info:doi/10.1371/journal.pone.0021661.g009",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 9","description":
+      "\u003ctitle\u003eSpatiotopy Index for the most representative visual areas.\u003c/title\u003e\u003cp\u003eSpatiotopy index for ten visual areas, calculated from individual voxels then averaged over all subjects and hemispheres, with (filled bars) and without (hatched bars) the demanding foveal task. For the regions LO-MT-MST-V6 the index clearly flips with attention, from strongly spatiotopic to strongly retinotopic. However, primary and secondary cortex, V3, V3a and VP (along the ventral stream) are retinotopic in both conditions, and attention has little influence on the index. Error bars represent the s.e.m. between subjects.\u003c/p\u003e",
+      "size":185762},{"doi":"info:doi/10.1371/journal.pone.0021661.g009",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 9","description":
+      "\u003ctitle\u003eSpatiotopy Index for the most representative visual areas.\u003c/title\u003e\u003cp\u003eSpatiotopy index for ten visual areas, calculated from individual voxels then averaged over all subjects and hemispheres, with (filled bars) and without (hatched bars) the demanding foveal task. For the regions LO-MT-MST-V6 the index clearly flips with attention, from strongly spatiotopic to strongly retinotopic. However, primary and secondary cortex, V3, V3a and VP (along the ventral stream) are retinotopic in both conditions, and attention has little influence on the index. Error bars represent the s.e.m. between subjects.\u003c/p\u003e",
+      "size":495925},{"doi":"info:doi/10.1371/journal.pone.0021661.g010",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 10","description":
+      "\u003ctitle\u003eEffect of attention on the spatiotopy of MT.\u003c/title\u003e\u003cp\u003eScatter plot of spatiotopy indexes during the attention condition against passive fixation condition of all voxels of MT of the three subjects. An index of +1 implies that the area is perfectly retinotopic and an index of −1 implies that it is perfectly spatiotopic. The light blue open circles show the mean value of the spatiotopic index across voxels. The red and green stars are the indexes calculated on the averaged BOLD responses of all voxels in MT of the left (red) and right (green) hemisphere. The majority of voxels cluster in the upper left quadrant, spatiotopic in passive fixation and retinotopic with attention to fovea. In all three cases, the effect of attention was highly significant: paired t-tests in all conditions yielded p\u0026lt;0.0001.\u003c/p\u003e",
+      "size":437004},{"doi":"info:doi/10.1371/journal.pone.0021661.g010",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 10","description":
+      "\u003ctitle\u003eEffect of attention on the spatiotopy of MT.\u003c/title\u003e\u003cp\u003eScatter plot of spatiotopy indexes during the attention condition against passive fixation condition of all voxels of MT of the three subjects. An index of +1 implies that the area is perfectly retinotopic and an index of −1 implies that it is perfectly spatiotopic. The light blue open circles show the mean value of the spatiotopic index across voxels. The red and green stars are the indexes calculated on the averaged BOLD responses of all voxels in MT of the left (red) and right (green) hemisphere. The majority of voxels cluster in the upper left quadrant, spatiotopic in passive fixation and retinotopic with attention to fovea. In all three cases, the effect of attention was highly significant: paired t-tests in all conditions yielded p\u0026lt;0.0001.\u003c/p\u003e",
+      "size":9483},{"doi":"info:doi/10.1371/journal.pone.0021661.g010",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 10","description":
+      "\u003ctitle\u003eEffect of attention on the spatiotopy of MT.\u003c/title\u003e\u003cp\u003eScatter plot of spatiotopy indexes during the attention condition against passive fixation condition of all voxels of MT of the three subjects. An index of +1 implies that the area is perfectly retinotopic and an index of −1 implies that it is perfectly spatiotopic. The light blue open circles show the mean value of the spatiotopic index across voxels. The red and green stars are the indexes calculated on the averaged BOLD responses of all voxels in MT of the left (red) and right (green) hemisphere. The majority of voxels cluster in the upper left quadrant, spatiotopic in passive fixation and retinotopic with attention to fovea. In all three cases, the effect of attention was highly significant: paired t-tests in all conditions yielded p\u0026lt;0.0001.\u003c/p\u003e",
+      "size":181073},{"doi":"info:doi/10.1371/journal.pone.0021661.g010",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 10","description":
+      "\u003ctitle\u003eEffect of attention on the spatiotopy of MT.\u003c/title\u003e\u003cp\u003eScatter plot of spatiotopy indexes during the attention condition against passive fixation condition of all voxels of MT of the three subjects. An index of +1 implies that the area is perfectly retinotopic and an index of −1 implies that it is perfectly spatiotopic. The light blue open circles show the mean value of the spatiotopic index across voxels. The red and green stars are the indexes calculated on the averaged BOLD responses of all voxels in MT of the left (red) and right (green) hemisphere. The majority of voxels cluster in the upper left quadrant, spatiotopic in passive fixation and retinotopic with attention to fovea. In all three cases, the effect of attention was highly significant: paired t-tests in all conditions yielded p\u0026lt;0.0001.\u003c/p\u003e",
+      "size":353500},{"doi":"info:doi/10.1371/journal.pone.0021661.g011",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 11","description":
+      "\u003ctitle\u003eAttentional effects on MT BOLD response amplitudes.\u003c/title\u003e\u003cp\u003eA \u0026amp; B: MT BOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), during passive fixation (A) and during the foveal attentional task (B). The data are taken from \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, with negative values clipped to zero (to avoid these becoming over-exaggerated during the multiplication modeling). Like \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, the responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). C and D: The attentional effects on the BOLD response were first simulated by multiplying the non-attentional responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-A\u003c/xref\u003e with a Gaussian function with a 4° spread constant centered at fixation (C), and the attentional responses with the complementary function (1 minus the Gaussian function D). E. Boosting the response to more foveal stimuli changed the shape of the spatial tuning of BOLD responses, making them more retinotopic with D\u0027Avossa and Gardner indexes of (0.52 and 0.34 respectively: see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). F: Applying the complementary operator failed to generate spatiotopically selective responses from the retinotopic responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-B\u003c/xref\u003e, leaving both indexes of spatiotopicity virtually unchanged (\u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). A variety of Difference of Gaussian operators were attempted, but none made the response more spatiotopic. G \u0026amp; H. To achieve spatiotopicity, the responses need to be modulated by a gaze-contingent function. H. shows the inverse Gaussian operators of D multiplied by a gain field that boosts leftward gaze. G shows the Gaussian boosting function multiplied by the inverse gain field (to attempt to recover the retinotopic base). I \u0026amp; J. Result of both attentional boost and gainfields. The spatiotopic functions of A become retinotopic (I), and the retinotopic function of B become spatiotopic (J).\u003c/p\u003e",
+      "size":422616},{"doi":"info:doi/10.1371/journal.pone.0021661.g011",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 11","description":
+      "\u003ctitle\u003eAttentional effects on MT BOLD response amplitudes.\u003c/title\u003e\u003cp\u003eA \u0026amp; B: MT BOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), during passive fixation (A) and during the foveal attentional task (B). The data are taken from \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, with negative values clipped to zero (to avoid these becoming over-exaggerated during the multiplication modeling). Like \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, the responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). C and D: The attentional effects on the BOLD response were first simulated by multiplying the non-attentional responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-A\u003c/xref\u003e with a Gaussian function with a 4° spread constant centered at fixation (C), and the attentional responses with the complementary function (1 minus the Gaussian function D). E. Boosting the response to more foveal stimuli changed the shape of the spatial tuning of BOLD responses, making them more retinotopic with D\u0027Avossa and Gardner indexes of (0.52 and 0.34 respectively: see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). F: Applying the complementary operator failed to generate spatiotopically selective responses from the retinotopic responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-B\u003c/xref\u003e, leaving both indexes of spatiotopicity virtually unchanged (\u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). A variety of Difference of Gaussian operators were attempted, but none made the response more spatiotopic. G \u0026amp; H. To achieve spatiotopicity, the responses need to be modulated by a gaze-contingent function. H. shows the inverse Gaussian operators of D multiplied by a gain field that boosts leftward gaze. G shows the Gaussian boosting function multiplied by the inverse gain field (to attempt to recover the retinotopic base). I \u0026amp; J. Result of both attentional boost and gainfields. The spatiotopic functions of A become retinotopic (I), and the retinotopic function of B become spatiotopic (J).\u003c/p\u003e",
+      "size":23974},{"doi":"info:doi/10.1371/journal.pone.0021661.g011",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 11","description":
+      "\u003ctitle\u003eAttentional effects on MT BOLD response amplitudes.\u003c/title\u003e\u003cp\u003eA \u0026amp; B: MT BOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), during passive fixation (A) and during the foveal attentional task (B). The data are taken from \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, with negative values clipped to zero (to avoid these becoming over-exaggerated during the multiplication modeling). Like \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, the responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). C and D: The attentional effects on the BOLD response were first simulated by multiplying the non-attentional responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-A\u003c/xref\u003e with a Gaussian function with a 4° spread constant centered at fixation (C), and the attentional responses with the complementary function (1 minus the Gaussian function D). E. Boosting the response to more foveal stimuli changed the shape of the spatial tuning of BOLD responses, making them more retinotopic with D\u0027Avossa and Gardner indexes of (0.52 and 0.34 respectively: see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). F: Applying the complementary operator failed to generate spatiotopically selective responses from the retinotopic responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-B\u003c/xref\u003e, leaving both indexes of spatiotopicity virtually unchanged (\u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). A variety of Difference of Gaussian operators were attempted, but none made the response more spatiotopic. G \u0026amp; H. To achieve spatiotopicity, the responses need to be modulated by a gaze-contingent function. H. shows the inverse Gaussian operators of D multiplied by a gain field that boosts leftward gaze. G shows the Gaussian boosting function multiplied by the inverse gain field (to attempt to recover the retinotopic base). I \u0026amp; J. Result of both attentional boost and gainfields. The spatiotopic functions of A become retinotopic (I), and the retinotopic function of B become spatiotopic (J).\u003c/p\u003e",
+      "size":227680},{"doi":"info:doi/10.1371/journal.pone.0021661.g011",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 11","description":
+      "\u003ctitle\u003eAttentional effects on MT BOLD response amplitudes.\u003c/title\u003e\u003cp\u003eA \u0026amp; B: MT BOLD response amplitudes, averaged over subjects and hemispheres, as a function of the spatiotopic stimulus coordinates (0 is screen center), during passive fixation (A) and during the foveal attentional task (B). The data are taken from \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, with negative values clipped to zero (to avoid these becoming over-exaggerated during the multiplication modeling). Like \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, the responses are color-coded by fixation (red −8°, black 0°, blue +8°: fixation indicated by the dotted colored lines). C and D: The attentional effects on the BOLD response were first simulated by multiplying the non-attentional responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-A\u003c/xref\u003e with a Gaussian function with a 4° spread constant centered at fixation (C), and the attentional responses with the complementary function (1 minus the Gaussian function D). E. Boosting the response to more foveal stimuli changed the shape of the spatial tuning of BOLD responses, making them more retinotopic with D\u0027Avossa and Gardner indexes of (0.52 and 0.34 respectively: see \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). F: Applying the complementary operator failed to generate spatiotopically selective responses from the retinotopic responses of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g011\"\u003eFig. 11-B\u003c/xref\u003e, leaving both indexes of spatiotopicity virtually unchanged (\u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s002\"\u003eTable S2\u003c/xref\u003e). A variety of Difference of Gaussian operators were attempted, but none made the response more spatiotopic. G \u0026amp; H. To achieve spatiotopicity, the responses need to be modulated by a gaze-contingent function. H. shows the inverse Gaussian operators of D multiplied by a gain field that boosts leftward gaze. G shows the Gaussian boosting function multiplied by the inverse gain field (to attempt to recover the retinotopic base). I \u0026amp; J. Result of both attentional boost and gainfields. The spatiotopic functions of A become retinotopic (I), and the retinotopic function of B become spatiotopic (J).\u003c/p\u003e",
+      "size":350690},{"doi":"info:doi/10.1371/journal.pone.0021661.s001",
+      "contextElement":"supplementary-material","extension":"DOC",
+      "contentType":"application/msword","title":"Table S1","description":
+      "\u003cp\u003e\u003cbold\u003eSpatiotopy and retinotopy indexes for MT and V1.\u003c/bold\u003e The table gives the values of \u003citalic\u003ed\u0027Avossa index\u003c/italic\u003e \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0021661-Goossens1\"\u003e[14]\u003c/xref\u003e where 0 indicates full spatiotopy and 1 full retinotopy – and the \u003citalic\u003eGardner index\u003c/italic\u003e \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0021661-Corbetta1\"\u003e[24]\u003c/xref\u003e where −1 indicates full spatiotopy and +1 full retinotopy, for the various conditions of \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e. \u003citalic\u003eR\u003csup\u003e2\u003c/sup\u003e\u003c/italic\u003e is the \u003citalic\u003ecoefficient of determination\u003c/italic\u003e for the perfect retinotopic or spatiotopic alignment of responses. A value of 1 means that the model accounts for all the variance, a value less than zero means that the model is worse than the mean in explaining the variance. Where SS means sums of squares, \u003citalic\u003eR\u003csup\u003e2\u003c/sup\u003e\u003c/italic\u003e is given by:\u003cdisp-formula\u003e\u003cgraphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" position\u003d\"float\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0021661.e002\" xlink:type\u003d\"simple\" orientation\u003d\"portrait\"/\u003e\u003c/disp-formula\u003eThe statistical significance of the coefficient of determination (compared with the mean) was calculated by t-test with \u003citalic\u003en\u003c/italic\u003e-2 degrees of freedom. For the spatiotopic alignment, n \u003d 12, for the retinotopic alignment, n \u003d 10. The double stars refer to p\u0026lt;0.01. Obviously, if the explained variance is significantly different from the mean, it is significantly different from a negative value (worse than the mean).\u003cdisp-formula\u003e\u003cgraphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" mimetype\u003d\"image\" position\u003d\"float\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0021661.e003\" xlink:type\u003d\"simple\" orientation\u003d\"portrait\"/\u003e\u003c/disp-formula\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
+      "size":29696},{"doi":"info:doi/10.1371/journal.pone.0021661.e002",
+      "contextElement":"disp-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":3222},{"doi":
+      "info:doi/10.1371/journal.pone.0021661.e002","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":2695},{"doi":
+      "info:doi/10.1371/journal.pone.0021661.e003","contextElement":
+      "disp-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":3120},{"doi":
+      "info:doi/10.1371/journal.pone.0021661.e003","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":2566},{"doi":
+      "info:doi/10.1371/journal.pone.0021661.s002","contextElement":
+      "supplementary-material","extension":"DOC","contentType":
+      "application/msword","title":"Table S2","description":
+      "\u003cp\u003e\u003cbold\u003eSimulations of MT responses with attentional boost and gaze-dependent gain fields.\u003c/bold\u003e Same indexes and significance testing as for \u003cxref ref-type\u003d\"supplementary-material\" rid\u003d\"pone.0021661.s001\"\u003eTable S1\u003c/xref\u003e, calculated for the simulations described in the text. The data are taken from \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0021661-g001\"\u003eFig. 1\u003c/xref\u003e, with negative values clipped to zero.\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
+      "size":32768}],"citedArticles":[{"key":"1","year":1988,"displayYear":
+      "1988","volumeNumber":331,"volume":"331","title":
+      "A back-propagation programmed network that simulates response properties of a subset of posterior parietal neurons.",
+      "pages":"679-684","eLocationID":"679","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Zipser","givenNames":"D","surnames":"Zipser","suffix":""},{
+          "fullName":"RA Andersen","givenNames":"RA","surnames":"Andersen",
+          "suffix":""}],"editors":[]},{"key":"2","year":2002,"displayYear":
+      "2002","volumeNumber":3,"volume":"3","title":
+      "A computational perspective on the neural basis of multisensory spatial representations.",
+      "pages":"741-747","eLocationID":"741","journal":"Nat Rev Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Pouget","givenNames":"A","surnames":"Pouget","suffix":""},{
+          "fullName":"S Deneve","givenNames":"S","surnames":"Deneve",
+          "suffix":""},{"fullName":"JR Duhamel","givenNames":"JR","surnames":
+          "Duhamel","suffix":""}],"editors":[]},{"key":"3","year":1983,
+      "displayYear":"1983","volumeNumber":3,"volume":"3","title":
+      "The influence of the angle of gaze upon the excitability of the light-sensitive neurons of the posterior parietal cortex.",
+      "pages":"532-548","eLocationID":"532","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RA Andersen","givenNames":"RA","surnames":"Andersen","suffix":
+          ""},{"fullName":"VB Mountcastle","givenNames":"VB","surnames":
+          "Mountcastle","suffix":""}],"editors":[]},{"key":"4","year":1985,
+      "displayYear":"1985","volumeNumber":230,"volume":"230","title":
+      "Encoding of spatial location by posterior parietal neurons.","pages":
+      "456-458","eLocationID":"456","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RA Andersen","givenNames":"RA","surnames":"Andersen","suffix":
+          ""},{"fullName":"GK Essick","givenNames":"GK","surnames":
+          "Essick","suffix":""},{"fullName":"RM Siegel","givenNames":"RM",
+          "surnames":"Siegel","suffix":""}],"editors":[]},{"key":"5","year":
+      1997,"displayYear":"1997","volumeNumber":77,"volume":"77","title":
+      "Eye position effects in monkey cortex. I. Visual and pursuit-related activity in extrastriate areas MT and MST.",
+      "pages":"944-961","eLocationID":"944","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "F Bremmer","givenNames":"F","surnames":"Bremmer","suffix":""},{
+          "fullName":"UJ Ilg","givenNames":"UJ","surnames":"Ilg","suffix":
+          ""},{"fullName":"A Thiele","givenNames":"A","surnames":"Thiele",
+          "suffix":""},{"fullName":"C Distler","givenNames":"C","surnames":
+          "Distler","suffix":""},{"fullName":"KP Hoffmann","givenNames":
+          "KP","surnames":"Hoffmann","suffix":""}],"editors":[]},{"key":
+      "6","year":1998,"displayYear":"1998","volumeNumber":10,"volume":"10",
+      "title":
+      "Eye position encoding in the macaque posterior parietal cortex.",
+      "pages":"153-160","eLocationID":"153","journal":"Eur J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "F Bremmer","givenNames":"F","surnames":"Bremmer","suffix":""},{
+          "fullName":"A Pouget","givenNames":"A","surnames":"Pouget",
+          "suffix":""},{"fullName":"KP Hoffmann","givenNames":"KP",
+          "surnames":"Hoffmann","suffix":""}],"editors":[]},{"key":"7",
+      "year":1993,"displayYear":"1993","volumeNumber":96,"volume":"96",
+      "title":
+      "Parietal neurons encoding spatial locations in craniotopic coordinates.",
+      "pages":"221-229","eLocationID":"221","journal":"Exptl Brain Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Galletti","givenNames":"C","surnames":"Galletti","suffix":""},{
+          "fullName":"PP Battaglini","givenNames":"PP","surnames":
+          "Battaglini","suffix":""},{"fullName":"P Fattori","givenNames":
+          "P","surnames":"Fattori","suffix":""}],"editors":[]},{"key":"8",
+      "year":1997,"displayYear":"1997","volumeNumber":389,"volume":"389",
+      "title":
+      "Spatial invariance of visual receptive fields in parietal cortex neurons.",
+      "pages":"845-848","eLocationID":"845","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Duhamel","givenNames":"J","surnames":"Duhamel","suffix":""},{
+          "fullName":"F Bremmer","givenNames":"F","surnames":"Bremmer",
+          "suffix":""},{"fullName":"S BenHamed","givenNames":"S","surnames":
+          "BenHamed","suffix":""},{"fullName":"W Graf","givenNames":"W",
+          "surnames":"Graf","suffix":""}],"editors":[]},{"key":"9","year":
+      2002,"displayYear":"2002","volumeNumber":295,"volume":"295","title":
+      "Cortical neurons encoding path and place: where you go is where you are.",
+      "pages":"2462-2465","eLocationID":"2462","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MT Froehler","givenNames":"MT","surnames":"Froehler","suffix":
+          ""},{"fullName":"CJ Duffy","givenNames":"CJ","surnames":"Duffy",
+          "suffix":""}],"editors":[]},{"key":"10","year":2004,"displayYear":
+      "2004","volumeNumber":43,"volume":"43","title":
+      "Posterior parietal cortex neurons encode target motion in world-centered coordinates.",
+      "pages":"145-151","eLocationID":"145","journal":"Neuron",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "UJ Ilg","givenNames":"UJ","surnames":"Ilg","suffix":""},{
+          "fullName":"S Schumann","givenNames":"S","surnames":"Schumann",
+          "suffix":""},{"fullName":"P Thier","givenNames":"P","surnames":
+          "Thier","suffix":""}],"editors":[]},{"key":"11","year":2009,
+      "displayYear":"2009","title":
+      "Visual selectivity for heading in monkey area MST.","journal":
+      "Exp Brain Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "F Bremmer","givenNames":"F","surnames":"Bremmer","suffix":""},{
+          "fullName":"M Kubischik","givenNames":"M","surnames":"Kubischik",
+          "suffix":""},{"fullName":"M Pekel","givenNames":"M","surnames":
+          "Pekel","suffix":""},{"fullName":"KP Hoffmann","givenNames":"KP",
+          "surnames":"Hoffmann","suffix":""},{"fullName":"M Lappe",
+          "givenNames":"M","surnames":"Lappe","suffix":""}],"editors":[]},{
+      "key":"12","year":2002,"displayYear":"2002","volumeNumber":12,"volume":
+      "12","title":
+      "Eye position signals modulate early dorsal and ventral visual areas.",
+      "pages":"991-997","eLocationID":"991","journal":"Cereb Cortex",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JF DeSouza","givenNames":"JF","surnames":"DeSouza","suffix":""},{
+          "fullName":"SP Dukelow","givenNames":"SP","surnames":"Dukelow",
+          "suffix":""},{"fullName":"T Vilis","givenNames":"T","surnames":
+          "Vilis","suffix":""}],"editors":[]},{"key":"13","year":2003,
+      "displayYear":"2003","volumeNumber":39,"volume":"39","title":
+      "Spatial updating in human parietal cortex.","pages":"361-373",
+      "eLocationID":"361","journal":"Neuron","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"EP Merriam","givenNames":"EP","surnames":
+          "Merriam","suffix":""},{"fullName":"CR Genovese","givenNames":
+          "CR","surnames":"Genovese","suffix":""},{"fullName":"CL Colby",
+          "givenNames":"CL","surnames":"Colby","suffix":""}],"editors":[]},{
+      "key":"14","year":2006,"displayYear":"2006","volumeNumber":26,"volume":
+      "26","title":
+      "Representation of head-centric flow in the human motion complex.",
+      "pages":"5616-5627","eLocationID":"5616","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Goossens","givenNames":"J","surnames":"Goossens","suffix":""},{
+          "fullName":"SP Dukelow","givenNames":"SP","surnames":"Dukelow",
+          "suffix":""},{"fullName":"RS Menon","givenNames":"RS","surnames":
+          "Menon","suffix":""},{"fullName":"T Vilis","givenNames":"T",
+          "surnames":"Vilis","suffix":""},{"fullName":"AV van den Berg",
+          "givenNames":"AV","surnames":"van den Berg","suffix":""}],
+      "editors":[]},{"key":"15","year":2006,"displayYear":"2006",
+      "volumeNumber":9,"volume":"9","title":
+      "A human parietal face area contains aligned head-centered visual and tactile maps.",
+      "pages":"1337-1343","eLocationID":"1337","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MI Sereno","givenNames":"MI","surnames":"Sereno","suffix":""},{
+          "fullName":"RS Huang","givenNames":"RS","surnames":"Huang",
+          "suffix":""}],"editors":[]},{"key":"16","year":2007,"displayYear":
+      "2007","volumeNumber":17,"volume":"17","title":
+      "Beyond retinotopic mapping: the spatial representation of objects in the human lateral occipital complex.",
+      "pages":"1164-1172","eLocationID":"1164","journal":"Cereb Cortex",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A McKyton","givenNames":"A","surnames":"McKyton","suffix":""},{
+          "fullName":"E Zohary","givenNames":"E","surnames":"Zohary",
+          "suffix":""}],"editors":[]},{"key":"17","year":2007,"displayYear":
+      "2007","volumeNumber":97,"volume":"97","title":
+      "Remapping in human visual cortex.","pages":"1738-1755","eLocationID":
+      "1738","journal":"J Neurophysiol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"EP Merriam","givenNames":"EP","surnames":
+          "Merriam","suffix":""},{"fullName":"CR Genovese","givenNames":
+          "CR","surnames":"Genovese","suffix":""},{"fullName":"CL Colby",
+          "givenNames":"CL","surnames":"Colby","suffix":""}],"editors":[]},{
+      "key":"18","year":2007,"displayYear":"2007","volumeNumber":10,"volume":
+      "10","title":
+      "Spatiotopic selectivity of BOLD responses to visual motion in human area MT.",
+      "pages":"249-255","eLocationID":"249","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G d\u0027Avossa","givenNames":"G","surnames":"d\u0027Avossa",
+          "suffix":""},{"fullName":"M Tosetti","givenNames":"M","surnames":
+          "Tosetti","suffix":""},{"fullName":"S Crespi","givenNames":"S",
+          "surnames":"Crespi","suffix":""},{"fullName":"L Biagi",
+          "givenNames":"L","surnames":"Biagi","suffix":""},{"fullName":
+          "DC Burr","givenNames":"DC","surnames":"Burr","suffix":""}],
+      "editors":[]},{"key":"19","year":2008,"displayYear":"2008",
+      "volumeNumber":28,"volume":"28","title":
+      "Maps of visual space in human occipital cortex are retinotopic, not spatiotopic.",
+      "pages":"3988-3999","eLocationID":"3988","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JL Gardner","givenNames":"JL","surnames":"Gardner","suffix":""},{
+          "fullName":"EP Merriam","givenNames":"EP","surnames":"Merriam",
+          "suffix":""},{"fullName":"JA Movshon","givenNames":"JA","surnames":
+          "Movshon","suffix":""},{"fullName":"DJ Heeger","givenNames":"DJ",
+          "surnames":"Heeger","suffix":""}],"editors":[]},{"key":"20","year":
+      1998,"displayYear":"1998","volumeNumber":282,"volume":"282","title":
+      "Mechanisms of directed attention in the human extrastriate cortex as revealed by functional MRI.",
+      "pages":"108-111","eLocationID":"108","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Kastner","givenNames":"S","surnames":"Kastner","suffix":""},{
+          "fullName":"P De Weerd","givenNames":"P","surnames":"De Weerd",
+          "suffix":""},{"fullName":"R Desimone","givenNames":"R","surnames":
+          "Desimone","suffix":""},{"fullName":"LG Ungerleider","givenNames":
+          "LG","surnames":"Ungerleider","suffix":""}],"editors":[]},{"key":
+      "21","year":1998,"displayYear":"1998","volumeNumber":21,"volume":
+      "21","title":"The retinotopy of visual spatial attention.","pages":
+      "1409-1422","eLocationID":"1409","journal":"Neuron",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "RB Tootell","givenNames":"RB","surnames":"Tootell","suffix":""},{
+          "fullName":"N Hadjikhani","givenNames":"N","surnames":
+          "Hadjikhani","suffix":""},{"fullName":"EK Hall","givenNames":
+          "EK","surnames":"Hall","suffix":""},{"fullName":"S Marrett",
+          "givenNames":"S","surnames":"Marrett","suffix":""},{"fullName":
+          "W Vanduffel","givenNames":"W","surnames":"Vanduffel","suffix":
+          ""}],"editors":[]},{"key":"22","year":1999,"displayYear":"1999",
+      "volumeNumber":2,"volume":"2","title":
+      "A physiological correlate of the ‘spotlight’ of visual attention.",
+      "pages":"370-374","eLocationID":"370","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JA Brefczynski","givenNames":"JA","surnames":"Brefczynski",
+          "suffix":""},{"fullName":"EA DeYoe","givenNames":"EA","surnames":
+          "DeYoe","suffix":""}],"editors":[]},{"key":"23","year":1999,
+      "displayYear":"1999","volumeNumber":96,"volume":"96","title":
+      "Spatial attention affects brain activity in human primary visual cortex.",
+      "pages":"3314-3319","eLocationID":"3314","journal":
+      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SP Gandhi","givenNames":"SP","surnames":"Gandhi","suffix":""},{
+          "fullName":"DJ Heeger","givenNames":"DJ","surnames":"Heeger",
+          "suffix":""},{"fullName":"GM Boynton","givenNames":"GM","surnames":
+          "Boynton","suffix":""}],"editors":[]},{"key":"24","year":2002,
+      "displayYear":"2002","volumeNumber":3,"volume":"3","title":
+      "Control of goal-directed and stimulus-driven attention in the brain.",
+      "pages":"201-215","eLocationID":"201","journal":"Nat Rev Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Corbetta","givenNames":"M","surnames":"Corbetta","suffix":""},{
+          "fullName":"GL Shulman","givenNames":"GL","surnames":"Shulman",
+          "suffix":""}],"editors":[]},{"key":"25","year":2006,"displayYear":
+      "2006","volumeNumber":9,"volume":"9","title":
+      "Dynamic shifts of visual receptive fields in cortical area MT by spatial attention.",
+      "pages":"1156-1160","eLocationID":"1156","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Womelsdorf","givenNames":"T","surnames":"Womelsdorf","suffix":
+          ""},{"fullName":"K Anton-Erxleben","givenNames":"K","surnames":
+          "Anton-Erxleben","suffix":""},{"fullName":"F Pieper","givenNames":
+          "F","surnames":"Pieper","suffix":""},{"fullName":"S Treue",
+          "givenNames":"S","surnames":"Treue","suffix":""}],"editors":[]},{
+      "key":"26","year":2007,"displayYear":"2007","volumeNumber":27,"volume":
+      "27","title":
+      "Topographic organization in and near human visual area V4.","pages":
+      "11896-11911","eLocationID":"11896","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "KA Hansen","givenNames":"KA","surnames":"Hansen","suffix":""},{
+          "fullName":"KN Kay","givenNames":"KN","surnames":"Kay","suffix":
+          ""},{"fullName":"JL Gallant","givenNames":"JL","surnames":
+          "Gallant","suffix":""}],"editors":[]},{"key":"27","year":2009,
+      "displayYear":"2009","volumeNumber":19,"volume":"19","title":
+      "Attention narrows position tuning of population responses in V1.",
+      "pages":"1356-1361","eLocationID":"1356","journal":"Curr Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Fischer","givenNames":"J","surnames":"Fischer","suffix":""},{
+          "fullName":"D Whitney","givenNames":"D","surnames":"Whitney",
+          "suffix":""}],"editors":[]},{"key":"28","year":2004,"displayYear":
+      "2004","volumeNumber":16,"volume":"16","title":
+      "Parietal lobe lesions disrupt saccadic remapping of inhibitory location tagging.",
+      "pages":"503-509","eLocationID":"503","journal":"J Cogn Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Sapir","givenNames":"A","surnames":"Sapir","suffix":""},{
+          "fullName":"A Hayes","givenNames":"A","surnames":"Hayes","suffix":
+          ""},{"fullName":"A Henik","givenNames":"A","surnames":"Henik",
+          "suffix":""},{"fullName":"S Danziger","givenNames":"S","surnames":
+          "Danziger","suffix":""},{"fullName":"R Rafal","givenNames":"R",
+          "surnames":"Rafal","suffix":""}],"editors":[]},{"key":"29","year":
+      2008,"displayYear":"2008","volumeNumber":28,"volume":"28","title":
+      "The native coordinate system of spatial attention is retinotopic.",
+      "pages":"10654-10662","eLocationID":"10654","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JD Golomb","givenNames":"JD","surnames":"Golomb","suffix":""},{
+          "fullName":"MM Chun","givenNames":"MM","surnames":"Chun","suffix":
+          ""},{"fullName":"JA Mazer","givenNames":"JA","surnames":"Mazer",
+          "suffix":""}],"editors":[]},{"key":"30","year":2010,"displayYear":
+      "2010","volumeNumber":30,"volume":"30","title":
+      "Attentional facilitation throughout human visual cortex lingers in retinotopic coordinates after eye movements.",
+      "pages":"10493-10506","eLocationID":"10493","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JD Golomb","givenNames":"JD","surnames":"Golomb","suffix":""},{
+          "fullName":"AY Nguyen-Phuc","givenNames":"AY","surnames":
+          "Nguyen-Phuc","suffix":""},{"fullName":"JA Mazer","givenNames":
+          "JA","surnames":"Mazer","suffix":""},{"fullName":"G McCarthy",
+          "givenNames":"G","surnames":"McCarthy","suffix":""},{"fullName":
+          "MM Chun","givenNames":"MM","surnames":"Chun","suffix":""}],
+      "editors":[]},{"key":"31","year":2010,"displayYear":"2010",
+      "volumeNumber":30,"volume":"30","title":
+      "Rapid formation of spatiotopic representations as revealed by inhibition of return.",
+      "pages":"8882-8887","eLocationID":"8882","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "Y Pertzov","givenNames":"Y","surnames":"Pertzov","suffix":""},{
+          "fullName":"E Zohary","givenNames":"E","surnames":"Zohary",
+          "suffix":""},{"fullName":"G Avidan","givenNames":"G","surnames":
+          "Avidan","suffix":""}],"editors":[]},{"key":"32","year":2010,
+      "displayYear":"2010","volumeNumber":14,"volume":"14","title":
+      "Visual stability based on remapping of attention pointers.","pages":
+      "147-153","eLocationID":"147","journal":"Trends Cogn Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Cavanagh","givenNames":"P","surnames":"Cavanagh","suffix":""},{
+          "fullName":"AR Hunt","givenNames":"AR","surnames":"Hunt","suffix":
+          ""},{"fullName":"A Afraz","givenNames":"A","surnames":"Afraz",
+          "suffix":""},{"fullName":"M Rolfs","givenNames":"M","surnames":
+          "Rolfs","suffix":""}],"editors":[]},{"key":"33","year":2010,
+      "displayYear":"2010a","volumeNumber":200,"volume":"200","title":
+      "Evidence for the predictive remapping of visual attention.","pages":
+      "117-122","eLocationID":"117","journal":"Exp Brain Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Mathot","givenNames":"S","surnames":"Mathot","suffix":""},{
+          "fullName":"J Theeuwes","givenNames":"J","surnames":"Theeuwes",
+          "suffix":""}],"editors":[]},{"key":"34","year":2005,"displayYear":
+      "2005","volumeNumber":28,"volume":"28","title":
+      "Transient BOLD responses at block transitions.","pages":"956-966",
+      "eLocationID":"956","journal":"Neuroimage","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"MD Fox","givenNames":"MD","surnames":"Fox",
+          "suffix":""},{"fullName":"AZ Snyder","givenNames":"AZ","surnames":
+          "Snyder","suffix":""},{"fullName":"DM Barch","givenNames":"DM",
+          "surnames":"Barch","suffix":""},{"fullName":"DA Gusnard",
+          "givenNames":"DA","surnames":"Gusnard","suffix":""},{"fullName":
+          "ME Raichle","givenNames":"ME","surnames":"Raichle","suffix":""}],
+      "editors":[]},{"key":"35","year":1996,"displayYear":"1996",
+      "volumeNumber":16,"volume":"16","title":
+      "Linear systems analysis of functional magnetic resonance imaging in human V1.",
+      "pages":"4207-4221","eLocationID":"4207","journal":"J Neuroscience",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "GM Boynton","givenNames":"GM","surnames":"Boynton","suffix":""},{
+          "fullName":"SA Engel","givenNames":"SA","surnames":"Engel",
+          "suffix":""},{"fullName":"GH Glover","givenNames":"GH","surnames":
+          "Glover","suffix":""},{"fullName":"DJ Heeger","givenNames":"DJ",
+          "surnames":"Heeger","suffix":""}],"editors":[]},{"key":"36","year":
+      2001,"displayYear":"2001","volumeNumber":13,"volume":"13","title":
+      "Separating processes within a trial in event-related functional MRI.",
+      "pages":"218-229","eLocationID":"218","journal":"Neuroimage",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JM Ollinger","givenNames":"JM","surnames":"Ollinger","suffix":
+          ""},{"fullName":"M Corbetta","givenNames":"M","surnames":
+          "Corbetta","suffix":""},{"fullName":"GL Shulman","givenNames":
+          "GL","surnames":"Shulman","suffix":""}],"editors":[]},{"key":
+      "37","year":2000,"displayYear":"2000","volumeNumber":3,"volume":"3",
+      "title":
+      "A cortical area that responds specifically to optic flow, revealed by function Magnetic Resonance Imaging.",
+      "pages":"1322-1328","eLocationID":"1322","journal":
+      "Nature Neuroscience","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MC Morrone","givenNames":"MC","surnames":"Morrone","suffix":""},{
+          "fullName":"M Tosetti","givenNames":"M","surnames":"Tosetti",
+          "suffix":""},{"fullName":"D Montanaro","givenNames":"D","surnames":
+          "Montanaro","suffix":""},{"fullName":"DC Burr","givenNames":"DC",
+          "surnames":"Burr","suffix":""},{"fullName":"A Fiorentini",
+          "givenNames":"A","surnames":"Fiorentini","suffix":""}],"editors":[]},
+    {"key":"38","year":1998,"displayYear":"1998","volumeNumber":6,"volume":
+      "6","title":
+      "Intersubject variability of functional areas in the human visual cortex.",
+      "pages":"301-315","eLocationID":"301","journal":"Hum Brain Mapp",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MK Hasnain","givenNames":"MK","surnames":"Hasnain","suffix":""},{
+          "fullName":"PT Fox","givenNames":"PT","surnames":"Fox","suffix":
+          ""},{"fullName":"MG Woldorff","givenNames":"MG","surnames":
+          "Woldorff","suffix":""}],"editors":[]},{"key":"39","year":2006,
+      "displayYear":"2006","volumeNumber":26,"volume":"26","title":
+      "Two retinotopic visual areas in human lateral occipital cortex.",
+      "pages":"13128-13142","eLocationID":"13128","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Larsson","givenNames":"J","surnames":"Larsson","suffix":""},{
+          "fullName":"DJ Heeger","givenNames":"DJ","surnames":"Heeger",
+          "suffix":""}],"editors":[]},{"key":"40","year":2009,"displayYear":
+      "2009","title":"Human V6: The Medial Motion Area.","journal":
+      "Cereb Cortex","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Pitzalis","givenNames":"S","surnames":"Pitzalis","suffix":""},{
+          "fullName":"MI Sereno","givenNames":"MI","surnames":"Sereno",
+          "suffix":""},{"fullName":"G Committeri","givenNames":"G",
+          "surnames":"Committeri","suffix":""},{"fullName":"P Fattori",
+          "givenNames":"P","surnames":"Fattori","suffix":""},{"fullName":
+          "G Galati","givenNames":"G","surnames":"Galati","suffix":""}],
+      "editors":[]},{"key":"41","year":2002,"displayYear":"2002",
+      "volumeNumber":22,"volume":"22","title":
+      "Retinotopy and functional subdivision of human areas MT and MST.",
+      "pages":"7195-7205","eLocationID":"7195","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AC Huk","givenNames":"AC","surnames":"Huk","suffix":""},{
+          "fullName":"RF Dougherty","givenNames":"RF","surnames":
+          "Dougherty","suffix":""},{"fullName":"DJ Heeger","givenNames":
+          "DJ","surnames":"Heeger","suffix":""}],"editors":[]},{"key":"42",
+      "year":2010,"displayYear":"2010","volumeNumber":66,"volume":"66",
+      "title":
+      "Privileged processing of the straight-ahead direction in primate area V1.",
+      "pages":"126-137","eLocationID":"126","journal":"Neuron",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JB Durand","givenNames":"JB","surnames":"Durand","suffix":""},{
+          "fullName":"Y Trotter","givenNames":"Y","surnames":"Trotter",
+          "suffix":""},{"fullName":"S Celebrini","givenNames":"S","surnames":
+          "Celebrini","suffix":""}],"editors":[]},{"key":"43","year":2005,
+      "displayYear":"2005","volumeNumber":94,"volume":"94","title":
+      "Area MT neurons respond to visual motion distant from their receptive fields.",
+      "pages":"4156-4167","eLocationID":"4156","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Zaksas","givenNames":"D","surnames":"Zaksas","suffix":""},{
+          "fullName":"T Pasternak","givenNames":"T","surnames":"Pasternak",
+          "suffix":""}],"editors":[]},{"key":"44","year":2010,"displayYear":
+      "2010","title":
+      "Dynamics of eye position signals in macaque dorsal areas explain peri-saccadic mislocalization.",
+      "journal":"J Vis","note":"in press","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"A Morris","givenNames":"A","surnames":
+          "Morris","suffix":""},{"fullName":"M Kubischik","givenNames":"M",
+          "surnames":"Kubischik","suffix":""},{"fullName":"K Hoffmann",
+          "givenNames":"K","surnames":"Hoffmann","suffix":""},{"fullName":
+          "B Krekelberg","givenNames":"B","surnames":"Krekelberg","suffix":
+          ""},{"fullName":"F Bremmer","givenNames":"F","surnames":
+          "Bremmer","suffix":""}],"editors":[]},{"key":"45","year":2002,
+      "displayYear":"2002","volumeNumber":3,"volume":"3","title":
+      "A common reference frame for movement plans in the posterior parietal cortex.",
+      "pages":"553-562","eLocationID":"553","journal":"Nat Rev Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "YE Cohen","givenNames":"YE","surnames":"Cohen","suffix":""},{
+          "fullName":"RA Andersen","givenNames":"RA","surnames":"Andersen",
+          "suffix":""}],"editors":[]},{"key":"46","year":2010,"displayYear":
+      "2010","volumeNumber":104,"volume":"104","title":
+      "Spatiotemporal properties of vestibular responses in area MSTd.",
+      "pages":"1506-1522","eLocationID":"1506","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CR Fetsch","givenNames":"CR","surnames":"Fetsch","suffix":""},{
+          "fullName":"SM Rajguru","givenNames":"SM","surnames":"Rajguru",
+          "suffix":""},{"fullName":"A Karunaratne","givenNames":"A",
+          "surnames":"Karunaratne","suffix":""},{"fullName":"Y Gu",
+          "givenNames":"Y","surnames":"Gu","suffix":""},{"fullName":
+          "DE Angelaki","givenNames":"DE","surnames":"Angelaki","suffix":
+          ""}],"editors":[]},{"key":"47","year":2005,"displayYear":"2005",
+      "volumeNumber":94,"volume":"94","title":
+      "Eye-centered, head-centered, and complex coding of visual and auditory targets in the intraparietal sulcus.",
+      "pages":"2331-2352","eLocationID":"2331","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "OA Mullette-Gillman","givenNames":"OA","surnames":
+          "Mullette-Gillman","suffix":""},{"fullName":"YE Cohen",
+          "givenNames":"YE","surnames":"Cohen","suffix":""},{"fullName":
+          "JM Groh","givenNames":"JM","surnames":"Groh","suffix":""}],
+      "editors":[]},{"key":"48","year":2005,"displayYear":"2005",
+      "volumeNumber":25,"volume":"25","title":
+      "Multisensory space representations in the macaque ventral intraparietal area.",
+      "pages":"4616-4625","eLocationID":"4616","journal":"J Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Schlack","givenNames":"A","surnames":"Schlack","suffix":""},{
+          "fullName":"SJ Sterbing-D\u0027Angelo","givenNames":"SJ",
+          "surnames":"Sterbing-D\u0027Angelo","suffix":""},{"fullName":
+          "K Hartung","givenNames":"K","surnames":"Hartung","suffix":""},{
+          "fullName":"KP Hoffmann","givenNames":"KP","surnames":"Hoffmann",
+          "suffix":""},{"fullName":"F Bremmer","givenNames":"F","surnames":
+          "Bremmer","suffix":""}],"editors":[]},{"key":"49","year":1984,
+      "displayYear":"1984","volumeNumber":58,"volume":"58","title":
+      "Electrophysiological and behavioural evidence for the role of oculomotor proprioception on visual functions of the cat.",
+      "pages":"97-100","eLocationID":"97","journal":"Doc Ophthalmol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Maffei","givenNames":"L","surnames":"Maffei","suffix":""},{
+          "fullName":"A Fiorentini","givenNames":"A","surnames":
+          "Fiorentini","suffix":""}],"editors":[]},{"key":"50","year":1999,
+      "displayYear":"1999","volumeNumber":398,"volume":"398","title":
+      "Gaze direction controls response gain in primary visual-cortex neurons.",
+      "pages":"239-242","eLocationID":"239","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "Y Trotter","givenNames":"Y","surnames":"Trotter","suffix":""},{
+          "fullName":"S Celebrini","givenNames":"S","surnames":"Celebrini",
+          "suffix":""}],"editors":[]},{"key":"51","year":1997,"displayYear":
+      "1997","volumeNumber":278,"volume":"278","title":
+      "Modulating irrelevant motion perception by varying attentional load in an unrelated task.",
+      "pages":"1616-1619","eLocationID":"1616","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Rees","givenNames":"G","surnames":"Rees","suffix":""},{
+          "fullName":"CD Frith","givenNames":"CD","surnames":"Frith",
+          "suffix":""},{"fullName":"N Lavie","givenNames":"N","surnames":
+          "Lavie","suffix":""}],"editors":[]},{"key":"52","year":1999,
+      "displayYear":"1999","volumeNumber":22,"volume":"22","title":
+      "Increased activity in human visual cortex during directed attention in the absence of visual stimulation.",
+      "pages":"751-761","eLocationID":"751","journal":"Neuron",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Kastner","givenNames":"S","surnames":"Kastner","suffix":""},{
+          "fullName":"MA Pinsk","givenNames":"MA","surnames":"Pinsk",
+          "suffix":""},{"fullName":"P De Weerd","givenNames":"P","surnames":
+          "De Weerd","suffix":""},{"fullName":"R Desimone","givenNames":
+          "R","surnames":"Desimone","suffix":""},{"fullName":
+          "LG Ungerleider","givenNames":"LG","surnames":"Ungerleider",
+          "suffix":""}],"editors":[]},{"key":"53","year":2008,"displayYear":
+      "2008","volumeNumber":18,"volume":"18","title":
+      "Retinotopy and attention in human occipital, temporal, parietal, and frontal cortex.",
+      "pages":"2158-2168","eLocationID":"2158","journal":"Cereb Cortex",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AP Saygin","givenNames":"AP","surnames":"Saygin","suffix":""},{
+          "fullName":"MI Sereno","givenNames":"MI","surnames":"Sereno",
+          "suffix":""}],"editors":[]},{"key":"54","year":1999,"displayYear":
+      "1999","volumeNumber":22,"volume":"22","title":
+      "Space and attention in parietal cortex.","pages":"319-349",
+      "eLocationID":"319","journal":"Annu Rev Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CL Colby","givenNames":"CL","surnames":"Colby","suffix":""},{
+          "fullName":"ME Goldberg","givenNames":"ME","surnames":"Goldberg",
+          "suffix":""}],"editors":[]},{"key":"55","year":1999,"displayYear":
+      "1999","volumeNumber":354,"volume":"354","title":
+      "Spatial attention and neglect: parietal, frontal and cingulate contributions to the mental representation and attentional targeting of salient extrapersonal events.",
+      "pages":"1325-1346","eLocationID":"1325","journal":
+      "Philos Trans R Soc Lond B Biol Sci","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"MM Mesulam","givenNames":"MM","surnames":
+          "Mesulam","suffix":""}],"editors":[]},{"key":"56","year":2009,
+      "displayYear":"2009","volumeNumber":13,"volume":"13","title":
+      "Topographic maps in human frontal and parietal cortex.","pages":
+      "488-495","eLocationID":"488","journal":"Trends Cogn Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MA Silver","givenNames":"MA","surnames":"Silver","suffix":""},{
+          "fullName":"S Kastner","givenNames":"S","surnames":"Kastner",
+          "suffix":""}],"editors":[]},{"key":"57","year":2005,"displayYear":
+      "2005","volumeNumber":94,"volume":"94","title":
+      "Topographic maps of visual spatial attention in human parietal cortex.",
+      "pages":"1358-1371","eLocationID":"1358","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MA Silver","givenNames":"MA","surnames":"Silver","suffix":""},{
+          "fullName":"D Ress","givenNames":"D","surnames":"Ress","suffix":
+          ""},{"fullName":"DJ Heeger","givenNames":"DJ","surnames":
+          "Heeger","suffix":""}],"editors":[]},{"key":"58","year":2009,
+      "displayYear":"2009","volumeNumber":9,"volume":"9","title":
+      "Top-down flow of visual spatial attention signals from parietal to occipital cortex.",
+      "pages":"18 11-14","eLocationID":"18 11","journal":"J Vis",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TZ Lauritzen","givenNames":"TZ","surnames":"Lauritzen","suffix":
+          ""},{"fullName":"M D\u0027Esposito","givenNames":"M","surnames":
+          "D\u0027Esposito","suffix":""},{"fullName":"DJ Heeger",
+          "givenNames":"DJ","surnames":"Heeger","suffix":""},{"fullName":
+          "MA Silver","givenNames":"MA","surnames":"Silver","suffix":""}],
+      "editors":[]},{"key":"59","year":1987,"displayYear":"1987",
+      "volumeNumber":25,"volume":"25","title":
+      "Reorienting attention across the horizontal and vertical meridians: evidence in favor of a premotor theory of attention.",
+      "pages":"31-40","eLocationID":"31","journal":"Neuropsychologia",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "G Rizzolatti","givenNames":"G","surnames":"Rizzolatti","suffix":
+          ""},{"fullName":"L Riggio","givenNames":"L","surnames":"Riggio",
+          "suffix":""},{"fullName":"I Dascola","givenNames":"I","surnames":
+          "Dascola","suffix":""},{"fullName":"C Umilta","givenNames":"C",
+          "surnames":"Umilta","suffix":""}],"editors":[]},{"key":"60","year":
+      2003,"displayYear":"2003","volumeNumber":299,"volume":"299","title":
+      "Neuronal activity in the lateral intraparietal area and spatial attention.",
+      "pages":"81-86","eLocationID":"81","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JW Bisley","givenNames":"JW","surnames":"Bisley","suffix":""},{
+          "fullName":"ME Goldberg","givenNames":"ME","surnames":"Goldberg",
+          "suffix":""}],"editors":[]},{"key":"61","year":2003,"displayYear":
+      "2003","volumeNumber":40,"volume":"40","title":
+      "Visuomotor origins of covert spatial attention.","pages":"671-683",
+      "eLocationID":"671","journal":"Neuron","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"T Moore","givenNames":"T","surnames":"Moore",
+          "suffix":""},{"fullName":"KM Armstrong","givenNames":"KM",
+          "surnames":"Armstrong","suffix":""},{"fullName":"M Fallah",
+          "givenNames":"M","surnames":"Fallah","suffix":""}],"editors":[]},{
+      "key":"62","year":2010,"displayYear":"2010b","title":
+      "Gradual Remapping Results in Early Retinotopic and Late Spatiotopic Inhibition of Return.",
+      "journal":"Psychol Sci","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Mathot","givenNames":"S","surnames":"Mathot","suffix":""},{
+          "fullName":"J Theeuwes","givenNames":"J","surnames":"Theeuwes",
+          "suffix":""}],"editors":[]},{"key":"63","year":2001,"displayYear":
+      "2001","volumeNumber":409,"volume":"409","title":
+      "Self-motion and the perception of stationary objects.","pages":
+      "85-88","eLocationID":"85","journal":"Nature","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"M Wexler","givenNames":"M","surnames":
+          "Wexler","suffix":""},{"fullName":"F Panerai","givenNames":"F",
+          "surnames":"Panerai","suffix":""},{"fullName":"I Lamouret",
+          "givenNames":"I","surnames":"Lamouret","suffix":""},{"fullName":
+          "J Droulez","givenNames":"J","surnames":"Droulez","suffix":""}],
+      "editors":[]},{"key":"64","year":2003,"displayYear":"2003",
+      "volumeNumber":6,"volume":"6","title":
+      "Spatiotopic temporal integration of visual motion across saccadic eye movements.",
+      "pages":"877-881","eLocationID":"877","journal":"Nat Neurosci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Melcher","givenNames":"D","surnames":"Melcher","suffix":""},{
+          "fullName":"MC Morrone","givenNames":"MC","surnames":"Morrone",
+          "suffix":""}],"editors":[]},{"key":"65","year":2009,"displayYear":
+      "2009","volumeNumber":102,"volume":"102","title":
+      "Psychophysical evidence for spatiotopic processing in area MT in a short-term memory for motion task.",
+      "pages":"2435-2440","eLocationID":"2435","journal":"J Neurophysiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "WS Ong","givenNames":"WS","surnames":"Ong","suffix":""},{
+          "fullName":"N Hooshvar","givenNames":"N","surnames":"Hooshvar",
+          "suffix":""},{"fullName":"M Zhang","givenNames":"M","surnames":
+          "Zhang","suffix":""},{"fullName":"JW Bisley","givenNames":"JW",
+          "surnames":"Bisley","suffix":""}],"editors":[]},{"key":"66","year":
+      2004,"displayYear":"2004","volumeNumber":44,"volume":"44","title":
+      "The role of attention in central and peripheral motion integration.",
+      "pages":"1367-1374","eLocationID":"1367","journal":"Vision Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Melcher","givenNames":"D","surnames":"Melcher","suffix":""},{
+          "fullName":"S Crespi","givenNames":"S","surnames":"Crespi",
+          "suffix":""},{"fullName":"A Bruno","givenNames":"A","surnames":
+          "Bruno","suffix":""},{"fullName":"MC Morrone","givenNames":"MC",
+          "surnames":"Morrone","suffix":""}],"editors":[]},{"key":"67",
+      "year":2005,"displayYear":"2005","volumeNumber":15,"volume":"15",
+      "title":
+      "Spatiotopic transfer of visual-form adaptation across saccadic eye movements.",
+      "pages":"1745-1748","eLocationID":"1745","journal":"Curr Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Melcher","givenNames":"D","surnames":"Melcher","suffix":""}],
+      "editors":[]},{"key":"68","year":2008,"displayYear":"2008",
+      "volumeNumber":12,"volume":"12","title":"Trans-saccadic perception.",
+      "pages":"466-473","eLocationID":"466","journal":"Trends Cogn Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Melcher","givenNames":"D","surnames":"Melcher","suffix":""},{
+          "fullName":"CL Colby","givenNames":"CL","surnames":"Colby",
+          "suffix":""}],"editors":[]},{"key":"69","year":2010,"displayYear":
+      "2010","title":"Spatiotopic coding and remapping in humans.","journal":
+      "Phil Trans Roy Soc","note":"in press","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"DC Burr","givenNames":"DC","surnames":"Burr",
+          "suffix":""},{"fullName":"MC Morrone","givenNames":"MC","surnames":
+          "Morrone","suffix":""}],"editors":[]}],"relatedArticles":[],
+  "authors":[{"fullName":"Sofia Crespi","givenNames":"Sofia","surnames":
+      "Crespi","suffix":""},{"fullName":"Laura Biagi","givenNames":"Laura",
+      "surnames":"Biagi","suffix":""},{"fullName":"Giovanni d\u0027Avossa",
+      "givenNames":"Giovanni","surnames":"d\u0027Avossa","suffix":""},{
+      "fullName":"David C. Burr","givenNames":"David C.","surnames":"Burr",
+      "suffix":""},{"fullName":"Michela Tosetti","givenNames":"Michela",
+      "surnames":"Tosetti","suffix":""},{"fullName":
+      "Maria Concetta Morrone","givenNames":"Maria Concetta","surnames":
+      "Morrone","suffix":""}],"editors":[{"fullName":"Ben J. Harrison",
+      "givenNames":"Ben J.","surnames":"Harrison","suffix":""}],"journals":[{
+      "eIssn":"1932-6203"}]}

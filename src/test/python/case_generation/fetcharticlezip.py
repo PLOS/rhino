@@ -21,6 +21,7 @@
 from __future__ import print_function
 from cStringIO import StringIO
 import os
+import random
 import requests
 import zipfile
 
@@ -88,6 +89,18 @@ def make_zip(doi):
                             compress_type=zipfile.ZIP_DEFLATED)
     print('Created ' + zip_path)
 
+def random_dois(factor=1000, ls_file="/home/rskonnord/corpus_ls.txt"):
+    if ls_file:
+        with open(ls_file) as f:
+            all_dois = [x.strip() for x in f.readlines()]
+    else:
+        all_dois = os.listdir(CORPUS_PATH)
+
+    dois = set()
+    while len(dois) * factor < len(all_dois):
+        dois.add(random.choice(all_dois))
+    return sorted(dois)
+
 
 INTERESTING_ARTICLES = [
     'pbio.0030408',
@@ -116,6 +129,17 @@ INTERESTING_ARTICLES = [
     ]
 """From https://developer.plos.org/confluence/display/Ambra2/Interesting+articles"""
 
-for doi in INTERESTING_ARTICLES:
+ARTICLES_FOR_TNG53 = [
+    'pcbi.1001051',
+    'pcbi.1001083',
+    'pcbi.1002484',
+    'ppat.0020025',
+    ]
+
+to_use = []  # Change this to hard-code behavior
+
+for n, doi in enumerate(to_use):
+    print()
+    print("Completed {0} of {1}".format(n, len(to_use)))
+    print()
     make_zip(doi)
-make_zip('pone.0038869')

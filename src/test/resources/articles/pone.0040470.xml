@@ -1,0 +1,1824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-11-17088</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0040470</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Biochemistry</subject>
+            <subj-group>
+              <subject>Bioenergetics</subject>
+              <subj-group>
+                <subject>Energy-producing organelles</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Proteins</subject>
+              <subj-group>
+                <subject>Transmembrane transport proteins</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Genetics</subject>
+            <subj-group>
+              <subject>Molecular
+genetics</subject>
+              <subj-group>
+                <subject>Gene identification and analysis</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Molecular cell
+biology</subject>
+            <subj-group>
+              <subject>Cellular structures</subject>
+              <subj-group>
+                <subject>Subcellular organelles</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Cellular types</subject>
+              <subj-group>
+                <subject>Germ cells</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Genetics and Genomics</subject>
+          <subject>Biochemistry</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>SCaMC-1Like a Member of the Mitochondrial Carrier (MC) Family Preferentially Expressed in Testis and Localized in Mitochondria and Chromatoid Body</article-title><alt-title alt-title-type="running-head">SCaMC-1L a MC Located in the Chromatoid Body</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Amigo</surname>
+            <given-names>Ignacio</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Traba</surname>
+            <given-names>Javier</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Satrústegui</surname>
+            <given-names>Jorgina</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>del Arco</surname>
+            <given-names>Araceli</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Área de Bioquímica,
+Centro Regional de Investigaciones Biomédicas (CRIB), Facultad de Ciencias
+Ambientales y Bioquímica, Universidad de Castilla-La Mancha, Toledo,
+Spain</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Departamento de Biología
+Molecular, Centro de Biología Molecular Severo Ochoa UAM-CSIC, and
+CIBER de Enfermedades Raras (CIBERER), Universidad Autónoma de Madrid,
+Madrid, Spain</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Mishmar</surname>
+            <given-names>Dan</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">Ben-Gurion University of the Negev, Israel</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">Araceli.Arco@uclm.es</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: JS AdA. Performed
+the experiments: IA JT AdA. Analyzed the data: IA AdA. Contributed reagents/materials/analysis
+tools: IA JT AdA. Wrote the paper: JS AdA.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests
+exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>6</day>
+        <month>7</month>
+        <year>2012</year>
+      </pub-date><volume>7</volume><issue>7</issue><elocation-id>e40470</elocation-id><history>
+        <date date-type="received">
+          <day>5</day>
+          <month>9</month>
+          <year>2011</year>
+        </date>
+        <date date-type="accepted">
+          <day>8</day>
+          <month>6</month>
+          <year>2012</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2012</copyright-year><copyright-holder>Amigo et al</copyright-holder><license><license-p>This is an open-access article distributed
+under the terms of the Creative Commons Attribution License, which permits
+unrestricted use, distribution, and reproduction in any medium, provided the
+original author and source are credited.</license-p></license></permissions><abstract>
+        <p>Mitochondrial carriers (MC) form a highly conserved family involved in
+solute transport across the inner mitochondrial membrane in eukaryotes. In
+mammals, ATP-Mg/Pi carriers, SCaMCs, form the most complex subgroup with four
+paralogs, SCaMC-1, -2, -3 and -3L, and several splicing variants. Here, we
+report the tissue distribution and subcellular localization of a mammalian-specific
+SCaMC paralog, <italic>4930443G12Rik/SCaMC-1Like</italic> (<italic>SCaMC-1L</italic>),
+which displays unanticipated new features. SCaMC-1L proteins show higher amino
+acid substitution rates than its closest paralog SCaMC-1. In mouse, SCaMC-1L
+expression is restricted to male germ cells and regulated during spermatogenesis
+but unexpectedly its localization is not limited to mitochondrial structures.
+In mature spermatids SCaMC-1L is detected in the mitochondrial sheath but
+in previous differentiation stages appears associated to cytosolic granules
+which colocalize with specific markers of the chromatoid body (CB) in post-meiotic
+round spermatids and inter-mitochondrial cement (IMC) in spermatocytes. The
+origin of this atypical distribution was further investigated by transient
+expression in cell lines. Similarly to male germ cells, in addition to mitochondrial
+and cytosolic distribution, a fraction of SCaMC-1L-expressing COS-7 cells
+display cytosolic SCaMC-1L-aggregates which exhibit aggresomal-like features
+as the CB. Our results indicate that different regions of SCaMC-1L hinder
+its import into mitochondria and this apparently favours the formation of
+cytosolic aggregates in COS-7 cells. This mechanism could be also operational
+in male germ cells and explain the incorporation of SCaMC-1L into germinal
+granules.</p>
+      </abstract><funding-group><funding-statement>This work was supported by grants from
+the Instituto de Salud Carlos III (ISCIII) PI080610 (to AdA), Ministerio de
+Educación y Ciencia, BFU2008-04084/BMC (to JS) and by an institutional
+grant from the Fundación Ramón Areces to the CBMSO CSIC-UAM.
+The CIBER de Enfermedades Raras is an initiative of the ISCIII. The funders
+had no role in study design, data collection and analysis, decision to publish,
+or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="15"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The Mitochondrial carrier (MC) family (SLC25) is a highly represented group
+of solute transporters in eukaryotic cells. Members of MC family (MCF) perform
+the transport of metabolites, nucleotides and cofactors across the inner mitochondrial
+membrane (reviewed in <xref ref-type="bibr" rid="pone.0040470-Palmieri1">[1]</xref>–<xref ref-type="bibr" rid="pone.0040470-delArco1">[3]</xref>). The MCF
+shows increased complexity in pluricellular eukaryotes, mainly as a consequence
+of the generation of novel paralogs <xref ref-type="bibr" rid="pone.0040470-delArco1">[3]</xref>–<xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref> and, to a lesser
+extent, by the emergence of proteins with new transport capabilities <xref ref-type="bibr" rid="pone.0040470-delArco1">[3]</xref>, <xref ref-type="bibr" rid="pone.0040470-Hughes1">[7]</xref>. Gene duplication events have
+contributed as the major source of MCF functional diversity <xref ref-type="bibr" rid="pone.0040470-delArco1">[3]</xref>, <xref ref-type="bibr" rid="pone.0040470-Szklarczyk1">[5]</xref>–<xref ref-type="bibr" rid="pone.0040470-Palmieri2">[8]</xref>.</p>
+      <p>In mammals, the most expanded subfamilies of MCs are those involved in
+adenine nucleotide transport; the ADP/ATP translocases (AACs) and SCaMCs,
+the ATP-Mg/Pi carriers <xref ref-type="bibr" rid="pone.0040470-Fiermonte1">[9]</xref>–<xref ref-type="bibr" rid="pone.0040470-Traba2">[11]</xref>. ATP-Mg/Pi
+carriers mediate a reversible electroneutral exchange between ATP-Mg<sup>2−</sup>
+and HPO<sub>4</sub><sup>2−</sup> <xref ref-type="bibr" rid="pone.0040470-Aprille1">[12]</xref>
+and control the net transport of adenine nucleotides across the inner mitochondrial
+membrane <xref ref-type="bibr" rid="pone.0040470-Aprille1">[12]</xref>.
+SCaMCs belong to a MC sub-group containing N-terminal extensions with EF-hand
+calcium-binding motifs (CaMC, <xref ref-type="bibr" rid="pone.0040470-Satrstegui1">[13]</xref>).
+A single SCaMCs counterpart, Sal1p, is found in yeast <xref ref-type="bibr" rid="pone.0040470-Traba3">[14]</xref>, <xref ref-type="bibr" rid="pone.0040470-Cavero1">[15]</xref>
+while four paralogs, with several splicing variants, SCaMC-1, -2, -3 and -3L,
+have been identified in human and rodent genomes <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref>, <xref ref-type="bibr" rid="pone.0040470-Fiermonte1">[9]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>, <xref ref-type="bibr" rid="pone.0040470-Satrstegui1">[13]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco3">[16]</xref>, <xref ref-type="bibr" rid="pone.0040470-Haitina1">[17]</xref>.
+Both subfamilies have paralogs expressed specifically in testis, SCaMC-3L
+and AAC4 <xref ref-type="bibr" rid="pone.0040470-Brower1">[4]</xref>, <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref>, <xref ref-type="bibr" rid="pone.0040470-Dolce1">[18]</xref>, <xref ref-type="bibr" rid="pone.0040470-Kim1">[19]</xref>.
+Interestingly, inactivation of <italic>Aac4</italic> in mouse causes spermatogenesis
+arrest <xref ref-type="bibr" rid="pone.0040470-Brower2">[20]</xref>
+indicating that ATP supply from mitochondria may be critical for normal male
+germ cell differentiation.</p>
+      <p>Mammalian spermatogenesis is an intricate process of cellular differentiation
+performed by numerous testis and/or germ cell specific genes. A number of
+ultrastructural studies have revealed that mitochondria of germinal cells
+undergo changes in their appearance, location and number during spermatogenesis
+(<xref ref-type="bibr" rid="pone.0040470-Seitz1">[21]</xref>, <xref ref-type="bibr" rid="pone.0040470-Aihara1">[22]</xref> and references
+therein). Additionally, mitochondria participate in the formation of the chromatoid
+body (CB), a male germ cell-specific perinuclear granule formed by aggregates
+of electron-dense material involved in the control of mRNA stability and translation,
+and in processing of small RNAs <xref ref-type="bibr" rid="pone.0040470-Parvinen1">[23]</xref>–<xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>. In mouse,
+the CB appears for the first time in the cytoplasm of meiotic spermatocytes
+in the interstices of mitochondrial clusters, named inter-mitochondrial cement
+(IMC) <xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>–<xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>, being condensed
+after meiosis to one single perinuclear granule placed at the surface of the
+haploid nucleus <xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>.
+Consequently, several mitochondrial proteins have been detected as components
+of CBs <xref ref-type="bibr" rid="pone.0040470-Hess1">[29]</xref>–<xref ref-type="bibr" rid="pone.0040470-Haraguchi2">[31]</xref>. Furthermore,
+recent reports have shown that signaling from mitochondria influences the
+formation of the IMC and promotes mitochondrial clustering <xref ref-type="bibr" rid="pone.0040470-Huang1">[32]</xref>–<xref ref-type="bibr" rid="pone.0040470-Watanabe1">[33]</xref>.</p>
+      <p>In this study, we report the tissue distribution and subcellular localization
+of a fifth SCaMC paralog, 4930443G12Rik/SCaMC-1Like (SCaMC-1L), expressed
+in male germ cells which represents a new link between mitochondria and germinal
+granules. SCaMC-1L is detected in the mitochondrial sheath of mature spermatids,
+but its intracellular location varies in a stage-specific fashion during spermatogenesis,
+being present in germinal granules, IMC and CB, in spermatocytes and post-meiotic
+spermatids. By ectopic expression in cell lines we have reproduced this complex
+distribution and analysed the mechanisms involved in the formation of cytosolic
+SCaMC-1L aggregates.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title><italic>SCaMC-1Like</italic> a mammalian-specific <italic>SCaMC</italic>
+paralog</title>
+        <p>In mouse, TBLATN searches using human SCaMC-1 as query detected a predicted
+gene adjacent to SCaMC-1 5′ end, <italic>4930443G12Rik</italic>, whose
+product showed high similarity, 78% and 75% at the amino acid
+level to human and mouse SCaMC-1, respectively (SLC25A24 and slc25a24, <xref ref-type="fig" rid="pone-0040470-g001">Figure 1A</xref>). This <italic>SCaMC-1</italic>
+like gene, hereafter referred as <italic>SCaMC-1Like</italic> (<italic>SCaMC-1L</italic>),
+encoded a predicted protein of 473 amino acids which displayed four calcium-binding
+motifs at identical positions to those of mouse SCaMC-1 and a carboxyl-terminal
+half similar to the MCF (<xref ref-type="fig" rid="pone-0040470-g001">Figure
+1B</xref>). The amino acid changes, compared to mouse SCaMC-1, were scattered
+throughout the protein and there was a relative abundance of conservative
+substitutions (<xref ref-type="fig" rid="pone-0040470-g001">Figure 1B</xref>).
+Its genomic organization matches that of mouse <italic>SCaMC-1</italic>, with
+10 exons and identical exon/intron boundaries. Both genes, separated by a
+short intergenic region were oriented in the same direction, suggesting that
+they could have arisen by a tandem duplication event (<xref ref-type="fig" rid="pone-0040470-g001">Figure 1A</xref>). In the rat genome, a <italic>SCaMC-1L</italic>
+ortholog, <italic>LOC691448</italic>, was also found immediately upstream
+to <italic>slc25a24</italic>. <italic>LOC691448</italic> encoded a predicted
+protein of 473 amino acids, annotated as similar to slc25a24, and is 83%
+identical in amino acid sequence to mouse SCaMC-1L (<xref ref-type="fig" rid="pone-0040470-g001">Figure
+1B</xref>). Both murine SCaMC-1L orthologs conserved the residues proposed
+to be involved in substrate interaction in the ATP-Mg/Pi carriers at equivalent
+positions (<xref ref-type="fig" rid="pone-0040470-g001">Figure 1B</xref>) <xref ref-type="bibr" rid="pone.0040470-Robinson1">[34]</xref> suggesting
+that SCaMC-1L could represent a ATP-Mg/Pi carrier paralog.</p>
+        <fig id="pone-0040470-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title><italic>SCaMC-1Like, SCaMC-1L</italic>, a new SCaMC paralog emerged
+by a tandem duplication in mammals.</title>
+            <p>(<bold>A</bold>) Scheme of the head-to-tail tandem array of mouse <italic>SCaMC-1
+(slc25a24)</italic> and <italic>4930443G12Rik/SCaMC-1L</italic> genes. <italic>SCaMC-1</italic>, <italic>SCaMC-1L</italic>
+and flanking loci are represented by arrows indicating transcription orientation. <italic>SCaMC-1</italic>/<italic>SCaMC-1L</italic>
+intron-exon organization is also shown. Exons are indicated by filled boxes
+(not to scale) and numbered. (<bold>B</bold>) Alignment of predicted mouse
+and rat SCaMC-1L protein sequences (Mm_SCaMC-1L and Rn_SCaMC-1L) with that
+of mouse SCaMC-1 (slc25a24, Mm_SCaMC-1). Alignment was performed with ClustalW
+and colored with BOXSHADE 3.21 software. Predicted EF-hand calcium-binding
+motifs are indicated by red boxes. Secondary structure prediction for the
+region homologous to mitochondrial carriers, amino acids 181 to end, of Mm_SCaMC-1L
+was obtained using Jpred3 server <xref ref-type="bibr" rid="pone.0040470-Cole1">[69]</xref>.
+The predicted transmembrane helices are indicated (H1–H6), matrix loops
+are marked in lower case letter and the β-strand region by an arrow. The
+residues proposed as participants in substrate interactions in H2, H4 and
+H6 <xref ref-type="bibr" rid="pone.0040470-Robinson1">[34]</xref>
+are included in boxes and marked with asterisks. (<bold>C</bold>) Phylogenetic
+relationships among SCaMC-1 and SCaMC-1L paralogs. The phylogenetic tree was
+constructed using amino acid sequences derived from exons 2 to 7 with the
+neighbor-joining method (MEGA 4.0, <xref ref-type="bibr" rid="pone.0040470-Tamura1">[70]</xref>)
+and PAM distances. Non-mammalian vertebrate SCaMCs were used as outgroups.
+The scale of branch lengths is indicated (number of substitutions per site).
+Percentage bootstrap values are shown in each node (500 replicates, only bootstrap
+values of 60% or more are shown). The accession numbers of annotated
+SCaMC-1 and SCaMC-1L proteins as well as the amino-acid sequences of manually
+assembled orthologs are compiled in Supplementary <xref ref-type="supplementary-material" rid="pone.0040470.s007">Tables S1</xref> and <xref ref-type="supplementary-material" rid="pone.0040470.s008">S2</xref>. See alignment in <xref ref-type="supplementary-material" rid="pone.0040470.s006">Figure S6</xref>.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g001" xlink:type="simple"/>
+        </fig>
+        <p>Searches in annotated databases failed to detect orthologs in non-mammalian
+vertebrates but detected <italic>SCaMC-1L</italic> orthologs in a wide range
+of mammalian clades including marsupials but not in the monotreme platypus,
+suggesting that duplication of the <italic>SCaMC-1L</italic>-ancestor occurred
+after the therian/monotreme split. To test this hypothesis, we compiled mammalian
+SCaMC-1 and SCaMC-1L orthologs (Supplementary <xref ref-type="supplementary-material" rid="pone.0040470.s007">Tables S1</xref> and <xref ref-type="supplementary-material" rid="pone.0040470.s008">S2</xref>) and constructed a phylogenetic tree using
+non-mammalian SCaMC-1 proteins as basal outgroup. The topology of the tree
+corroborated that the ancestor duplication probably occurred in mammals after
+the divergence of the monotreme lineage. Thus, mammalian SCaMC-1L and SCaMC-1
+orthologs formed two independent and well-defined clusters whose last common
+ancestor was the platypus SCaMC-1 ortholog (<xref ref-type="fig" rid="pone-0040470-g001">Figure
+1C</xref>). In addition, this analysis indicated that a different rate of
+amino acid substitutions existed inside each cluster, with longer branches
+leading to SCaMC-1L than to SCaMC-1 orthologs (<xref ref-type="fig" rid="pone-0040470-g001">Figure
+1C</xref>). To detect differences in the pattern of sequence substitutions
+between <italic>SCaMC-1</italic> and <italic>-1L</italic> genes, we calculated
+non-synonymous (<italic>Ka</italic>) and synonymous (<italic>Ks</italic>)
+nucleotide substitution rates by pairwise comparisons between representative
+mammalian orthologues using the codeml program implemented in the PAML package <xref ref-type="bibr" rid="pone.0040470-Yang1">[35]</xref> (<xref ref-type="supplementary-material" rid="pone.0040470.s001">Figure S1</xref>). The <italic>Ka</italic>/<italic>Ks</italic>
+ratio is commonly used as indicator of selective constraints on the protein-coding
+genes with <italic>Ka/Ks</italic> = 1, &lt;1 and &gt;1
+indicating neutral evolution, purifying and positive selection, respectively.
+Among <italic>SCaMC-1</italic> orthologs we found a very low pairwise <italic>Ka</italic>/<italic>Ks</italic>
+ratio, 0.055±0.012 (average ± SEM), indicative of a strong purifying
+selection. As anticipated, the average pairwise <italic>Ka</italic>/<italic>Ks</italic>
+ratio found among <italic>SCaMC-1L</italic> orthologs was significantly larger
+than this of <italic>SCaMC-1</italic>, 0.392±0.085 (average ±
+SEM; paired t-test; p&lt;0.001) (<xref ref-type="supplementary-material" rid="pone.0040470.s001">Figure
+S1</xref>). This greater <italic>Ka/Ks</italic> ratio for <italic>SCaMC-1L</italic>
+genes was due to increased non-synonymous substitutions rate, <italic>Ka</italic>,
+which was 4.8 fold larger than for <italic>SCaMC-1</italic> ones (0.166±0.036 <italic>vs</italic>
+0.034±0.007) whereas that synonymous substitutions, <italic>Ks</italic>,
+value appeared only slightly lower among <italic>SCaMC-1L</italic>, 0.427±0.093,
+than for <italic>SCaMC-1</italic> genes, 0.600±0.131), indicating that
+SCaMC-1L appears to be subjected to reduced evolutionary pressure to maintain
+conserved residues compared to SCaMC-1.</p>
+      </sec>
+      <sec id="s2b">
+        <title>SCaMC-1L is preferentially expressed in testis</title>
+        <p>The acquisition of a portion of the ancestral gene functions by the newly
+duplicated gene or, alternatively, a more restricted expression pattern, is
+a frequent situation considered as a major cause for retention of duplicated
+genes <xref ref-type="bibr" rid="pone.0040470-Lynch1">[36]</xref>.
+An initial inspection of ESTs database revealed that <italic>SCaMC-1L</italic>
+transcripts derived exclusively from testis. Subsequently, we confirmed that <italic>SCaMC-1L</italic>
+transcripts were successfully amplified from testis and, to lesser levels,
+from brain mRNA, but not from other tissues (<xref ref-type="fig" rid="pone-0040470-g002">Figure
+2A</xref>).</p>
+        <fig id="pone-0040470-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>SCaMC-1L is expressed in testis and male germ cells.</title>
+            <p>(<bold>A</bold>) RT-PCR analysis of <italic>SCaMC-1L</italic> expression
+in mouse tissues. Equivalent aliquots of cDNAs derived from the indicated
+tissues were used as templates. Amplification of <italic>β-actin</italic>
+was used as an internal control. The results obtained indicate that SCaMC-<italic>1L</italic>
+is expressed preferentially in testis and, at lower levels, in brain. (<bold>B</bold>)
+Expression of SCaMC-1L protein in adult mouse tissues. 10 µg of total
+protein extracts from the indicated tissues were analyzed by western blot
+using a specific anti-SCaMC-1L antibody. A single band of the expected size,
+around 50 kDa, was exclusively detected in testis, marked with an arrow. β-actin
+levels are shown as loading control. A parallel blot was incubated with antibodies
+against SCaMC-1 which detected a single band of 45 kDa, and then with antibodies
+against SCaMC-3 which detected a band of of about 48 kDa. The specific distribution
+patterns of the labelled bands in mouse tissues rule out any significant crossreactivity
+among paralogs. (<bold>C</bold>) 5 µg of total proteins from cauda,
+corpus and caput spermatids were analyzed by western blot with anti-SCaMC-1L
+antibody. Membranes were re-probed with β-actin antibody as loading control
+and anti-SCaMC-1. Equivalent SCaMC-1L levels are found in spermatids from
+different regions of epididymis. (<bold>D</bold>) SCaMC-1L-staining is detected
+in the midpiece of epididymal spermatids. SCaMC-1L was detected using an affinity-purified
+SCaMC-1L antibody and visualized with a FITC-conjugated secondary antibody,
+mitochondria were stained with an anti-COX-I monoclonal antibody and visualized
+with a Cy3-conjugated secondary antibody, nuclei were stained with Hoechst
+and triple merged panel is also shown. Merge panel shows the co-localization
+of SCaMC-1L and COX-I staining in the mitochondrial sheath of midpiece. Enlarged
+images of this region are shown at bottom. (<bold>E</bold>) SCaMC-1 is not
+detected in mature spermatids. SCaMC-1 staining was performed using anti-SCaMC-1
+antibody at dilution 1∶200 and visualized Alexa Fluor 555 anti-rabbit
+as secondary antibody, nuclei were stained with Hoechst. Scale bars; 10 µm.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g002" xlink:type="simple"/>
+        </fig>
+        <p>Western blot analysis using an antiserum raised against its hydrophilic
+N-extension showed a band of the predicted mass of SCaMC-1L, approx. 50 kDa,
+exclusively in extracts obtained from adult mouse testis (<xref ref-type="fig" rid="pone-0040470-g002">Figure 2B</xref>) and in samples from mature spermatids
+recovered from the caput, corpus and caudal regions of the epididymis (<xref ref-type="fig" rid="pone-0040470-g002">Figure 2C</xref>), but not in different
+brain regions likely due to their lower SCaMC-1L levels (<xref ref-type="fig" rid="pone-0040470-g002">Figure 2B</xref>). <xref ref-type="fig" rid="pone-0040470-g002">Figure
+2D</xref> shows the localization of SCaMC-1L in epididymal spermatids where
+SCaMC-1L immunofluorescence was detected in the midpiece and colocalized with
+the mitochondrial markers COX-I (subunit I of cytochrome c oxidase, <xref ref-type="fig" rid="pone-0040470-g002">Figure 2D</xref>) and the mitochondrial
+dye MitoTracker Red (not shown), indicating that SCaMC-1L is present in mitochondria
+of mature male germ cells. SCaMC-1, it closest paralog, was not detected by
+immunofluorescence in these structures (<xref ref-type="fig" rid="pone-0040470-g002">Figure
+2E</xref>).</p>
+      </sec>
+      <sec id="s2c">
+        <title>SCaMC-1L displays both cell-and intracellular-specific localizations
+in the developing testis</title>
+        <p>Spermatogenesis occurs in synchronized cycles within the seminiferous epithelia.
+In mouse, the seminiferous epithelial cycle is divided into twelve stages
+(I-XII) where each stage comprises a mix of cells at certain developmental
+steps (<xref ref-type="supplementary-material" rid="pone.0040470.s002">Figure
+S2</xref>, <xref ref-type="bibr" rid="pone.0040470-Russell1">[37]</xref>).
+During the first wave of spermatogenesis, germ cells are synchronized in their
+development, and the different cell types appear progressively at different
+post-natal days. At postnatal day (PND) 7 only spermatogonia and Sertoli cells
+are present in the seminiferous tubules, primary spermatocytes appear at PND
+10, while pachytene spermatocytes are not present until PND 18. After meiosis,
+haploid round spermatids start to differentiate to mature sperm at PND 20 <xref ref-type="bibr" rid="pone.0040470-Russell1">[37]</xref>, <xref ref-type="bibr" rid="pone.0040470-Bellv1">[38]</xref>. To study the developmental
+pattern of SCaMC-1L in testis, the expression of SCaMC-1L in developing male
+germ cells was analyzed by western blot in testis extracts at different post-natal
+times, between 15–25 days, and in 3-month-old mice. No significant expression
+was observed at PND 15 and 17, and a gradual increase in SCaMC-1L levels was
+observed from PND 18 to 20, reaching adult levels at PND 25 (<xref ref-type="fig" rid="pone-0040470-g003">Figure 3A</xref>). This temporal pattern indicates
+that SCaMC-1L expression could be limited to meiotic and post-meiotic phases
+of spermatogenesis (from PND 18 onwards, <xref ref-type="bibr" rid="pone.0040470-Bellv1">[38]</xref>)
+first appearing in pachytene spermatocytes at PND 18. The increase in SCaMC-1L
+levels at PND 25 corresponds to the time at which the emergence of haploid
+round spermatids has taken place <xref ref-type="bibr" rid="pone.0040470-Bellv1">[38]</xref>.
+These results are consistent with microarray data in GEO database (GEO profile
+GDS2390) showing that in developing testes SCaMC-1L-expression is first detected
+in pachytene spermatocytes and later increased in round spermatids. In early
+stages, at PND 18, SCaMC-1L was detected as a single faint band larger than
+50 kDa, but later, at PND 19–20, an additional smaller product of approx.
+50 kDa, was observed which remained as the major band at PND 25 and adult
+testis (<xref ref-type="fig" rid="pone-0040470-g003">Figure 3A</xref>, asterisk).</p>
+        <fig id="pone-0040470-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Immunohistochemical localization of SCaMC-1L protein in mouse testis.</title>
+            <p>(<bold>A</bold>) Analysis of SCaMC-1L expression during spermatogenesis.
+SCaMC-1L levels were determined in mitochondrial-enriched extracts prepared
+from mouse testis at different post-natal days (PND), between 15–25
+days and 3-month-old, by western blot. The levels of the mitochondrial proteins
+SCaMC-1 and hsp60 were used as loading controls. (<bold>B–E</bold>)
+Detection of SCaMC-1L in squash preparations of seminiferous tubules by immunofluorescence
+assays. The stages of seminiferous segments are indicated. SCaMC-1L and COX-I
+detection were performed as described in <xref ref-type="fig" rid="pone-0040470-g002">Figure
+2</xref>. SCaMC-1L is detected in granules close to mitochondria in late pachytene
+spermatocytes (LP) (B), and round spermatids (RS) (B, C), identified by the
+heterochromatic chromocenter (CC) at the nucleus (C, indicated by an arrow).
+In elongating spermatids (EES) a diffuse SCaMC-1L staining is detected in
+the nucleus (D), in elongated spermatid (ES) SCaMC-1L is found at the midpiece
+matching with COX-I signals (E). Enlarged images of marked insets for merged
+panels and corresponding Hoechst staining are shown. Scale bars; 10 µm.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g003" xlink:type="simple"/>
+        </fig>
+        <p>To determine its cellular distribution along spermatogenesis, we performed
+immunofluorescence analysis on squash preparations of seminiferous tubules
+as described previously <xref ref-type="bibr" rid="pone.0040470-Kotaja3">[39]</xref>
+(<xref ref-type="fig" rid="pone-0040470-g003">Figures 3B–E</xref>).
+As expected by its absence in early post-natal stages, no expression of SCaMC-1L
+was observed in spermatogonia or Sertoli cells (not shown). SCaMC-1L was detected
+in meiotic spermatocytes and in all post-meiotic stages, but, unexpectedly,
+we found that its intracellular localization suffered dynamic changes during
+spermiogenesis. SCaMC-1L protein was detected in late pachytene spermatocytes
+(LP) at stages VII–IX of the seminiferous epithelial cycle in cytosolic
+granules adjacent, but not coincident, to COX-I positive mitochondria (<xref ref-type="fig" rid="pone-0040470-g003">Figure 3B</xref>, marked with asterisks).
+The appearance of these granular structures was similar to that described
+for the inter-mitochondrial cement in meiotic spermatocytes <xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>. In haploid round spermatids
+(RS) at stages II–IV, which were identified by the presence of heterochromatic
+chromocenter (CC) within the nucleus, significant SCaMC-1L immunoreactivity
+was detected in a compact structure juxtaposed to the nuclear envelope similar
+to the chromatoid body (CB, arrowheads in <xref ref-type="fig" rid="pone-0040470-g003">Figure
+3C</xref>). Notably, it has been proposed that CB is formed, at least in part,
+from the accretion of cytoplasmic granules previously aggregated in the vicinity
+of mitochondria in pachytene spermatocytes <xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>, <xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>, <xref ref-type="bibr" rid="pone.0040470-Huang1">[32]</xref>. Later, after the onset of
+CB disappearance at step 8 of spermiogenesis, SCaMC-1L-specific signals were
+detected in the remains of CB and as a speckled staining spread through the
+cytosol and nucleus (see inset in <xref ref-type="fig" rid="pone-0040470-g003">Figure
+3B</xref>, arrowhead). In successive stages, when the remainder of CB migrates
+to the caudal end in early elongating spermatids (EES) <xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>, <xref ref-type="bibr" rid="pone.0040470-Shang1">[40]</xref>,
+only the nuclear staining remained apparent (<xref ref-type="fig" rid="pone-0040470-g003">Figure
+3D</xref>). However, in elongated spermatids (ES) at stages VII–VIII,
+as in mature epididymal spermatozoa, SCaMC-1L co-localized with COX-I in the
+mitochondrial sheath of midpiece (<xref ref-type="fig" rid="pone-0040470-g003">Figure
+3E</xref>).</p>
+        <p>In parallel, SCaMC-1L distribution was analyzed by the drying-down technique <xref ref-type="bibr" rid="pone.0040470-Kotaja3">[39]</xref>, <xref ref-type="bibr" rid="pone.0040470-Peters1">[41]</xref>. Using this procedure the
+cytoplasm is partially lost, exposing the chromatoid body, which usually stays
+in contact with the nucleus along with some cytosolic organelles <xref ref-type="bibr" rid="pone.0040470-Kotaja3">[39]</xref>. In these preparations, SCaMC-1L
+staining was also found associated to structures reminiscent of inter-mitochondrial
+cement in pachytene spermatocytes (<xref ref-type="fig" rid="pone-0040470-g004">Figure
+4A</xref>, asterisks) and CB in round spermatids (<xref ref-type="fig" rid="pone-0040470-g004">Figure
+4B</xref>). In EES, in addition to structures derived from the CB (arowheads),
+a diffuse SCaMC-1L staining was also detected in the nucleus (<xref ref-type="fig" rid="pone-0040470-g004">Figure 4C</xref>) which remained until the latest
+steps of spermatid differentiation (<xref ref-type="fig" rid="pone-0040470-g004">Figures
+4D, 4E</xref>). However in ES, at the end of spermiogenesis after mitochondrial
+disposition around the flagellum, SCaMC-1L-positive signals appeared again
+restricted to the midpiece showing total co-localization with COX-I (<xref ref-type="fig" rid="pone-0040470-g004">Figure 4F</xref>). We confirmed by
+phase-contrast microscopy that SCaMC-1L staining was entirely coincident with
+the dense material associated to the nuclear envelope distinctive of CB <xref ref-type="bibr" rid="pone.0040470-Sderstrm1">[42]</xref> (<xref ref-type="fig" rid="pone-0040470-g005">Figure 5A</xref>). In addition, by
+double immunostaining we confirmed its co-localization with eIF4E, a P-body
+marker found in the CB <xref ref-type="bibr" rid="pone.0040470-Kotaja1">[24]</xref>, <xref ref-type="bibr" rid="pone.0040470-Tanaka1">[43]</xref>, and MVH
+(mouse vasa homologue) a specific marker for CB and IMC <xref ref-type="bibr" rid="pone.0040470-Tanaka1">[43]</xref>, <xref ref-type="bibr" rid="pone.0040470-Noce1">[44]</xref>.
+As shown in <xref ref-type="fig" rid="pone-0040470-g005">Figure 5</xref>,
+SCaMC-1L-signals matched entirely with those of eIF4E and MVH in RS, confirming
+its location in the CB (<xref ref-type="fig" rid="pone-0040470-g005">Figures
+5B, 5C</xref>). Likewise, in pachytene spermatocytes SCaMC-1L-staining was
+coincident with MVH-positive granules indicating its presence in the IMC (<xref ref-type="fig" rid="pone-0040470-g005">Figure 5D</xref>). These MVH-positives
+germinal granules, however, showed no colocalization with SCaMC-1 (<xref ref-type="fig" rid="pone-0040470-g005">Figure 5E</xref>).</p>
+        <fig id="pone-0040470-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Intracellular distribution of SCaMC-1L in drying-down preparations
+of mouse seminiferous tubules.</title>
+            <p>Immunofluorescence staining of SCaMC-1L in drying-down slides was performed
+as in <xref ref-type="fig" rid="pone-0040470-g002">Figure 2</xref>. Representative
+images of SCaMC-1L (green) and the mitochondrial marker COX-I (red) staining
+in late pachytene spermatocytes (<bold>A</bold>), haploid round spermatids
+(<bold>B</bold>), elongating spermatids at different steps of differentiation
+(<bold>C</bold>, <bold>D</bold>, <bold>E</bold>) and elongated spermatids
+(<bold>F</bold>) are shown. Scale bars; 10 µM.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g004" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0040470-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Localization of SCaMC-1L in chomatoid body.</title>
+            <p>Drying-down slides were labeled with anti-SCaMC-1L antibody and its localization
+in chromatoid body (CB) of round spermatids (RS) was confirmed by parallel
+phase contrast microscopy (<bold>A</bold>) and by co-staining with the specific
+markers for CB, eIF4E (<bold>B</bold>) and MHV (<bold>C, D</bold>). CBs, identified
+as eIF4E and MVH protein-positive structures, appear strongly stained for
+SCaMC-1L. In late pachytene spermatocytes (LP) SCaMC-1L signals co-localizes
+entirely with cytosolic granules MVH-positive (D). RS were identified by the
+heterochromatic chromocenter (CC) at the nucleus (indicated by arrow in A).
+(<bold>E</bold>) Absence of co-localization of SCaMC-1 and MVH signals in
+drying-down slides. Scale bars; A, 5 µM; B–E; 10 µM.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g005" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2d">
+        <title>Ectopically expressed SCaMC-1L shows different intracellular patterns
+in COS-7 cells</title>
+        <p>The presence of MCs in non-mitochondrial membranes, as peroxisomes or plasma
+membrane, is not new <xref ref-type="bibr" rid="pone.0040470-delArco1">[3]</xref>, <xref ref-type="bibr" rid="pone.0040470-Mazurek1">[45]</xref>. However,
+the dynamic distribution of SCaMC-1L during spermatogenesis and especially,
+its location at the CB, a non-membrane-bound compartment, were novel aspects
+not described for other MCs. In order to study whether this novel distribution
+was property of the SCaMC-1L sequence itself, we transfected cell lines lacking
+endogenous SCaMC-1L to analyze its intracellular distribution (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6</xref>).</p>
+        <fig id="pone-0040470-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Expressed SCaMC-1L shows different intracellular patterns in COS-7
+cells.</title>
+            <p>Quantitative assessment of SCaMC-1L distribution in COS-7 cells. The percentage
+of SCaMC-1L-expressing cells showing cytosolic, mitochondrial or extra-mitochondrial
+patterns were analyzed using one µg of DNA (<bold>A</bold>) or with
+different DNA concentrations (<bold>B</bold>). Intracellular pattern was determined
+in parallel transfections by co-staining with anti-SCaMC-1L and anti-COX-I,
+as mitochondrial control, and the distribution of SCaMC-1L-signals were examined
+by visual inspection under a fluorescent microscope. Two hundred cells were
+analyzed for each transfection assay. Data are the mean ± SEM of three
+independent experiments. (<bold>C</bold>) The expression levels of SCaMC-1L
+at the different plasmid concentrations used were determined by western blot.
+Five µg of total protein was loaded in each lane. As loading control,
+SCaMC-1 levels was analyzed (<bold>D–F</bold>) Representative images
+of SCaMC-1L-expressing COS-7 cells showing the different intracellular patterns
+observed; cytosolic (D) mitochondrial (G) and disperse (E) or perinuclear
+SCaMC-1L extra-mitochondrial aggregates (F). Mitochondrial co-localization
+was determined by double staining with anti-SCaMC-1L and anti-COX-I antibodies
+as described in <xref ref-type="fig" rid="pone-0040470-g002">Figure 2</xref>,
+corresponding merge panels are also shown. Scale bar, 20 µm. Insets
+show higher magnification (600×) of the indicated areas in the merge
+panels, in both the nuclear area (N) is delimited.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g006" xlink:type="simple"/>
+        </fig>
+        <p>When a carboxyl FLAG-tagged SCaMC-1L was expressed in COS-7 cells, only
+a fraction of the SCaMC-1L-positive cells, about 20%, showed total
+co-localization of SCaMC-1L-staining with that of mitochondrial markers as
+COX-I (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6G</xref>) or MitoTracker
+(not shown) (see summary in <xref ref-type="fig" rid="pone-0040470-g006">Figure
+6A</xref>). However, in a large percentage of transfected cells, around 50%,
+SCaMC-1L appeared diffusely distributed throughout the cytoplasm (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6D</xref>) and in the remaining cells, approx.
+30%, in addition to cytoplamic staining, SCaMC-1L was observed concentrated
+in cytoplasmic granules negative for mitochondrial markers (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6E, F</xref>). Similar patterns were obtained
+with different fixation protocols or using other cell lines, such as HEK-293T
+or HeLa (not shown). Likewise, identical distribution was found using construct
+lacking the FLAG epitope or fused to EGFP at C-teminus (<xref ref-type="supplementary-material" rid="pone.0040470.s003">Figures S3A and S3B</xref>).</p>
+        <p>Transfections with varying amounts of the SCaMC-1L-expression vector ruled
+out that the formation of these extra-mitochondrial granules could be an artefact
+due to overexpression (<xref ref-type="fig" rid="pone-0040470-g006">Figure
+6B</xref>). The frequency of cells showing cytoplasmic granules was maintained
+when the plasmid concentration was reduced 5- or 10-fold and only using higher
+plasmid concentration, up to 5-fold, it increased about 15% (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6B</xref>). The correlation
+between the expression levels of SCaMC-1L and plasmid concentration was confirmed
+by western analysis (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6C</xref>).
+Therefore, ectopic expression of SCaMC-1L in cultured cells generated different
+intracellular patterns, as in male germ cells, in contrast to the exclusive
+mitochondrial location shown by its closest paralog, SCaMC-1, and by other
+CaMCs overexpressed in cells lines <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref>, <xref ref-type="bibr" rid="pone.0040470-Fiermonte1">[9]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco4">[46]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco5">[47]</xref>.</p>
+        <p>In SCaMC-1L-expressing cells containing cytoplasmic SCaMC-1L granules two
+major patterns were clearly distinguished; i) cells showing small, vesicular,
+filamentous or cup-shaped aggregates scattered throughout the cytoplasm (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6E</xref>, arrows), which sometimes
+appeared grouped in reticular arrangements (<xref ref-type="fig" rid="pone-0040470-g006">Figure
+6E</xref>, asterisks), and ii) cells showing larger and more intense SCaMC-1L-positive
+accumulations, which occasionally formed large honeycomb-like structures (<xref ref-type="supplementary-material" rid="pone.0040470.s004">Figure S4</xref>),
+located at the perinuclear area and co-clustered with mitochondria (<xref ref-type="fig" rid="pone-0040470-g006">Figure 6F</xref>). These patterns were
+not independent but occurred sequentially. Thus, in SCaMC-1L-positive cells
+disperse granules were observed early, at 6–8 h post-transfection, whereas
+perinuclear aggregations, showing more intense signals, emerged later, suggesting
+that the latter were originated by fusion of dispersed granules (<xref ref-type="supplementary-material" rid="pone.0040470.s009">movie S1</xref>). Interestingly, disperse SCaMC-1L-positive
+granules were usually observed very close to mitochondria, an arrangement
+reminiscent of the inter-mitochondrial cement (<xref ref-type="fig" rid="pone-0040470-g006">Figure
+6E</xref>, arrowheads). In these cells, mitochondria appeared punctuated rather
+than filamentous, indicating that mitochondrial morphology could also be affected
+(compare COX-positive mitochondria in <xref ref-type="fig" rid="pone-0040470-g006">Figures
+6E and 6F</xref> with that in 6G). In addition, we find a total absence of
+co-location with CD63 and Lysotracker indicating that SCaMC-1L-positive structures
+did not belong to the late endosomal/lysosomal pathway (<xref ref-type="supplementary-material" rid="pone.0040470.s005">Figure S5</xref>).</p>
+        <p>Taken together, our results suggest that ectopic SCaMC-1L are not successfully
+imported into mitochondria and it is possible that the excess of unfolded
+(and possibly unprocessed) cytosolic SCaMC-1L may favour the formation of
+small cytosolic granules that are later assembled in larger perinuclear aggregates.
+It should be noted that this mechanism could be also operational in male germ
+cells and to contribute to CB formation during spermatogenesis. Similarly,
+TDRD4/RNF17, a component of mammalian germinal granules, forms large cytosolic
+granules when is transfected in cell lines <xref ref-type="bibr" rid="pone.0040470-Pan1">[48]</xref>.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Perinuclear SCaMC-1L-positive aggregates shows aggresomal features</title>
+        <p>It has been reported that the CB has aggresome-like features <xref ref-type="bibr" rid="pone.0040470-Yokota1">[26]</xref>, <xref ref-type="bibr" rid="pone.0040470-Haraguchi2">[31]</xref>.
+Among other aspects, aggresomes have been characterized as inclusion bodies
+placed around the microtubule organizing center (MTOC) where protein aggregates
+were concentrated by the microtubule dynein motor <xref ref-type="bibr" rid="pone.0040470-Kopito1">[49]</xref>, <xref ref-type="bibr" rid="pone.0040470-GarcaMata1">[50]</xref>. We observed
+that the large perinuclear aggregates found in SCaMC-1L-expressing cells were
+reminiscent of aggresomes. First, perinuclear aggregates were located in the
+vicinity of the MTOC, as indicated by their proximity to centrosomal γ-tubulin
+(<xref ref-type="fig" rid="pone-0040470-g007">Figure 7A</xref>, marked by
+arrow). Second, its formation depended on dynein-dependent transport, as was
+inferred from the loss of SCaMC-1L perinuclear aggregates upon treatment with
+nocodazole (Noc) (<xref ref-type="fig" rid="pone-0040470-g007">Figures 7B,
+7C</xref>), a microtubule-destabilizing reagent which causes a similar disintegration
+of chromatoid bodies <xref ref-type="bibr" rid="pone.0040470-Ventel1">[51]</xref>
+(<xref ref-type="fig" rid="pone-0040470-g007">Figures 7B, 7C</xref>). Incubation
+with 5 µM Noc, resulted in a loss of microtubule filaments verified
+by α-tubulin co-staining (not shown) and caused a time-dependent decline
+at the percentage of SCaMC-1L-expressing cells with perinuclear aggregates,
+ranging from around 70%, in non-treated cells, to less than 20%
+after 4 hours of Noc incubation (<xref ref-type="fig" rid="pone-0040470-g007">Figure
+7B</xref>) indicating that the formation of perinuclear aggregates required
+an unaltered microtubule network and dynein dependent transport <xref ref-type="bibr" rid="pone.0040470-GarcaMata1">[50]</xref>. Interestingly, small
+SCaMC-1L-aggregates were maintained even in the presence of Noc (<xref ref-type="fig" rid="pone-0040470-g007">Figure 7C</xref>), indicating that the disrupting
+agent altered their retrograde transport, but their formation did not require
+an intact microtubule network.</p>
+        <fig id="pone-0040470-g007" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g007</object-id>
+          <label>Figure 7</label>
+          <caption>
+            <title>Perinuclear SCaMC-1L-positive aggregates show aggresomal features.</title>
+            <p>(<bold>A</bold>) Perinuclear SCaMC-1L aggregates (green) colocalize with γ-Tubulin
+signals (red) at MTOC (indicated by an arrow). (<bold>B</bold>) Perinuclear
+SCaMC-1L aggregates formation depends on microtubule network integrity. COS-7
+cells were transfected with SCaMC-1L expression vector and 24 h later incubated
+with 5 µM nocodazole (Noc) during the indicated time. Cells were then
+fixed and processed to detect SCaMC-1L distribution by immunofluorescence
+with anti-FLAG antibody. Only cells showing extra-mitochondrial structures
+were taken into account. The percentage of SCaMC-1L expressing-cells showing
+perinuclear and disperse aggregates at different times of Noc incubation was
+determined. The distribution pattern was scored in at least two hundred cells
+at each time point. Results are the mean ± SEM of three independent
+experiments. (<bold>C</bold>) Representative images of cells showing perinuclear
+(without Noc, -Noc) and dispersed (after incubation with Noc for 4 h, Noc
+4 h) SCaMC-1L aggregates. Incubation with Noc only causes the dispersion of
+perinuclear aggregates, scattered SCaMC-1L-positive structures are still detected
+after the treatment. (<bold>D</bold>) SCaMC-1L aggregates are stained with
+anti-ubiquitin (FK-2) antibodies. Images of SCaMC-1L transfected cells with
+anti-FLAG antibody (green) showing perinuclear (i) and disperse aggregates
+(ii), and mitochondrial distribution (iii) and their corresponding co-staining
+with FK-2 (red). Merged panels are also shown. Scale bars, 20 µm.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g007" xlink:type="simple"/>
+        </fig>
+        <p>Third, SCaMC-1L perinuclear aggregates as aggresomes were highly enriched
+in ubiquitinated proteins. <xref ref-type="fig" rid="pone-0040470-g007">Figure
+7D</xref> shows that in SCaMC-1L-expressing cells displaying SCaMC-1L aggregates
+with either perinuclear (<xref ref-type="fig" rid="pone-0040470-g007">Figure
+7D</xref>, panel i) or disperse (<xref ref-type="fig" rid="pone-0040470-g007">Figure
+7D</xref>, panel ii) pattern, SCaMC-1L-positive structures co-localized with
+those labeled with anti-ubiquitin FK-2 antibody, which recognizes mono- and
+poly-ubiquitinated proteins. This co-localization suggested that SCaMC-1L
+protein could be modified by ubiquitination or form complexes with ubiquitinated
+proteins. However, we were not able to detect ubiquitination of SCaMC-1L itself
+by immunoblotting, indicating that ubiquitin may modify other associated proteins.
+Interestingly, there was total absence of co-localization with FK-2 signals
+in SCaMC-1L-expressing cells in which SCaMC-1L displayed cytosolic or mitochondrial
+pattern (<xref ref-type="fig" rid="pone-0040470-g007">Figure 7D</xref>, panel
+iii), in these cells FK-2 staining was found in the nucleus, a distribution
+observed frequently in cells with normal proteosome activity <xref ref-type="bibr" rid="pone.0040470-Burch1">[52]</xref>, <xref ref-type="bibr" rid="pone.0040470-Han1">[53]</xref>.</p>
+      </sec>
+      <sec id="s2f">
+        <title>The hydrophilic N-extension and regions of the hydrophobic C-domain
+of SCaMC-1L impair its import into mitochondria</title>
+        <p>In CaMCs, as in MCs, mitochondrial targeting information is scattered along
+the hydrophobic C-half domain <xref ref-type="bibr" rid="pone.0040470-Satrstegui1">[13]</xref>, <xref ref-type="bibr" rid="pone.0040470-Neupert1">[54]</xref>, <xref ref-type="bibr" rid="pone.0040470-Chacinska1">[55]</xref>, but a significant role
+for the long N-terminal extension has been proposed <xref ref-type="bibr" rid="pone.0040470-delArco3">[16]</xref>–<xref ref-type="bibr" rid="pone.0040470-Roesch1">[56]</xref>. Thus, some CaMCs show incomplete
+mitochondrial import that is overcome by removing its N-terminal domain <xref ref-type="bibr" rid="pone.0040470-delArco3">[16]</xref>–<xref ref-type="bibr" rid="pone.0040470-Roesch1">[56]</xref>. We have
+thus analyzed whether this domain was responsible for the decreased mitochondrial
+import of SCaMC-1L. To this end, we generated a truncated carboxy-FLAG tagged
+SCaMC-1L protein lacking the entire hydrophilic N-extension (ΔNT<sub>(1–160)</sub>-SCaMC-1L, <xref ref-type="fig" rid="pone-0040470-g008">Figure 8A</xref>), and studied its
+intracellular distribution. Transiently transfected COS-7 cells showed a higher
+percentage of cells displaying mitochondrial anti-FLAG staining, about 80%
+(<xref ref-type="fig" rid="pone-0040470-g008">Figure 8A</xref>), indicating
+that the N-domain of SCaMC-1L affected negatively its import in mitochondria.
+However, only in a fraction of ΔNT<sub>(1–160)</sub>-SCaMC-1L expressing
+cells, about 10%, anti-FLAG signals entirely co-localized with mitochondrial
+markers (<xref ref-type="fig" rid="pone-0040470-g008">Figure 8B</xref>, panel
+ii); most ΔNT<sub>(1–160)</sub>-SCaMC-1L-positive signals showed
+a partial overlap with mitochondrial SCaMC-1 (<xref ref-type="fig" rid="pone-0040470-g008">Figure
+8A</xref>, see <xref ref-type="fig" rid="pone-0040470-g008">Figure 8B</xref>
+panels iii and iv).</p>
+        <fig id="pone-0040470-g008" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040470.g008</object-id>
+          <label>Figure 8</label>
+          <caption>
+            <title>Both N-extension and C-half MC regions of SCaMC-1L are involved in
+its intracellular distribution.</title>
+            <p>(<bold>A</bold>) The N-terminal extension of SCaMC-1L hampers its import
+into mitochondria. COS-7 cells were transfected with a FLAG-tagged amino truncated
+SCaMC-1L protein, ΔNT<sub>(1–160)</sub>-SCaMC-1L<sub>FLAG</sub>,
+and 24–30 h later were fixed and co-stained with anti-FLAG (red) and
+anti-SCaMC-1 (green) antibodies. FLAG and SCaMC-1 images were taken under
+identical conditions and co-localization was evaluated in merged compositions.
+Five patterns were clearly identified (I–V). Most of ΔNT<sub>(1–160)</sub>-SCaMC-1L-positive
+cells show, at distinct degree, mitochondrial localization. These cells were
+sub-classified according to their co-localization degree with mitochondria
+(II–III) and the additional presence of SCaMC-1L aggregates (IV). Results
+are the mean ± SEM of three independent experiments. At least 50 cells
+were analyzed for each transfection assay. (<bold>B</bold>) Representative
+images of FLAG/SCaMC-1 double stained cells showing ΔNT<sub>(1–160)</sub>-SCaMC-1L-patterns
+I, II, III, IV and V merged panels are also shown. Insets magnification 300×;
+scale bar, 20 µM. (<bold>C</bold>) Scheme of the chimeric SCaMC-1L/SCaMC-1
+proteins used. Relative positions of the EF-hand calcium-binding domains are
+marked by gray ovals. Quantification of the intracellular patterns observed
+for each protein (bottom) was performed as described in <xref ref-type="fig" rid="pone-0040470-g006">Figure 6</xref>. One hundred cells were counted for
+each transfection assay. Results are the mean ± SEM of three independent
+experiments.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.g008" xlink:type="simple"/>
+        </fig>
+        <p>However, regardless of its higher frequency of mitochondrial location, ΔNT<sub>(1–160)</sub>-SCaMC-1L
+still appeared in extra-mitochondrial aggregates, both disperse or perinuclear
+(<xref ref-type="fig" rid="pone-0040470-g008">Figures 8A and 8B</xref>, panel
+v), indicating that the hydrophilic N-domain hindered the import into mitochondria
+but did not determine the formation of cytosolic aggregates. To study the
+role of the hydrophobic carboxy-terminal half of SCaMC-1L, we constructed
+chimeric proteins containing portions from SCaMC-1L and from human SCaMC-1
+(<xref ref-type="fig" rid="pone-0040470-g008">Figure 8C</xref>). When expressed
+in COS-7 cells, we found that the C-terminal half of SCaMC-1 (Chimera-1, 1L<sub>1–184</sub>-huSCaMC-1<sub>185–476</sub>)
+conferred a predominantly mitochondrial distribution, while the C-terminal
+half of SCaMC-1L (Chimera-2, hu1<sub>1–184</sub>-SCaMC-1L<sub>185–473</sub>)
+caused a frequent localization in non-mitochondrial aggregates (more than
+80%, <xref ref-type="fig" rid="pone-0040470-g008">Figure 8C</xref>).
+Moreover, the frequency of non-mitochondrial aggregates diminished with the
+length of SCaMC-1L C-half in the chimera (<xref ref-type="fig" rid="pone-0040470-g008">Figure
+8C</xref>). In addition, distal and proximal regions of the C-terminal half
+did not affect equally to its intracellular distribution. Thus, residues 185–362
+of SCaMC-1L present in Chimera-4 were more prone to promote the formation
+of cytosolic aggregates than the region covering the two last transmembrane
+domains, residues 363 to C-end, which favored its presence in mitochondria
+(<xref ref-type="fig" rid="pone-0040470-g008">Figure 8C</xref>). Taken together,
+these results suggest that both the hydrophilic N-extension and the most distal
+C-end regions of SCaMC-1L prevent its targeting to mitochondria while the
+proximal C-domain, residues 185–362, might provide aggregation-prone
+features to SCaMC-1L.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <sec id="s3a">
+        <title>Localization of SCaMC-1L in mouse testis</title>
+        <p>In the present study, we describe a mammalian-specific SCaMC paralog, SCaMC-1L,
+which displays notable differences with other MCs. SCaMC-1L expression was
+restricted to male germ cells and during spermatogenesis it showed a surprising
+number of intracellular locations which were displayed in a stage-specific
+fashion throughout the male germ-cell differentiation process. In mature spermatozoa
+the location of SCaMC-1L was that expected for a mitochondrial protein, the
+mitochondrial sheath (<xref ref-type="fig" rid="pone-0040470-g002">Figure
+2D</xref>). However, in earlier differentiation stages, SCaMC-1L was already
+expressed, but not in mitochondria. In late pachytene spermatocytes, SCaMC-1L
+was present in MVH-positive cytosolic granules, the intermitochondrial cement
+(IMC, <xref ref-type="fig" rid="pone-0040470-g003">Figures 3B</xref>, <xref ref-type="fig" rid="pone-0040470-g004">4A</xref>, <xref ref-type="fig" rid="pone-0040470-g005">5D</xref>) <xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>, <xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>, <xref ref-type="bibr" rid="pone.0040470-Tanaka1">[43]</xref>, <xref ref-type="bibr" rid="pone.0040470-Noce1">[44]</xref>, and later,
+at early post-meiotic stages, it appeared in the cytosol and co-localized
+with markers of the chromatoid body (CB) (<xref ref-type="fig" rid="pone-0040470-g003">Figures
+3C</xref>, <xref ref-type="fig" rid="pone-0040470-g004">4B</xref> and <xref ref-type="fig" rid="pone-0040470-g005">5</xref>), a unique structure in male
+germ cells composed by aggregates of electron-dense material and involved
+in RNA processing <xref ref-type="bibr" rid="pone.0040470-Parvinen1">[23]</xref>, <xref ref-type="bibr" rid="pone.0040470-Kotaja2">[25]</xref>–<xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>.</p>
+        <p>A dynamic localization during spermatogenesis has also been reported for
+other mitochondrial proteins such as cytochrome c <xref ref-type="bibr" rid="pone.0040470-Hess1">[29]</xref>,
+the phospholipid hydroperoxide glutathione peroxidase, PHGPx <xref ref-type="bibr" rid="pone.0040470-Haraguchi1">[30]</xref> or mouse gametogenetin-binding
+Protein 1 (GGNBP1, <xref ref-type="bibr" rid="pone.0040470-Aihara1">[22]</xref>).
+Rat cytochrome c paralogs, both testis-specific, c<sub>t</sub>, and somatic,
+c<sub>s</sub>, have been found both in mitochondria and CB during spermatogenesis <xref ref-type="bibr" rid="pone.0040470-Hess1">[29]</xref> and other mitochondrial
+proteins, such as ATP synthase subunits α and β, and proteins encoded
+by the mitochondrial genome, as COX-I, have been detected in the CB <xref ref-type="bibr" rid="pone.0040470-Haraguchi2">[31]</xref>. In addition
+to MVH, a number of CB components, including tudor-domain containing 1, 6
+and 7 (TDRD1, TDRD6 and TDRD7), or Sm proteins of spliceosomal snRNPs have
+also been localized in the IMC of spermatocytes <xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>, <xref ref-type="bibr" rid="pone.0040470-Chuma2">[57]</xref>, <xref ref-type="bibr" rid="pone.0040470-Hosokawa1">[58]</xref> revealing the existence
+of a functional interplay between the CB and mitochondria during spermatogenesis <xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>, in which
+SCaMC-1L may also participate.</p>
+        <p>Other MCs such as ORC2/slc25a2, SCaMC-3L/slc25a41 or AAC4/slc25a31 are
+also preferentially expressed in mouse testis <xref ref-type="bibr" rid="pone.0040470-Brower1">[4]</xref>, <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref>, <xref ref-type="bibr" rid="pone.0040470-Dolce1">[18]</xref>, <xref ref-type="bibr" rid="pone.0040470-Bonilla1">[59]</xref>,
+but their location at the cellular level along spermatogenesis is still uncertain.
+Surprisingly, human AAC4/SLC25A31 has been detected in the fibrous sheath
+of the flagellum of spermatozoa, a portion that lacks mitochondria <xref ref-type="bibr" rid="pone.0040470-Kim1">[19]</xref>.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Determinants of the subcellular distribution of SCaMC-1L</title>
+        <p>Our data indicate that the anomalous distribution of SCaMC-1L in male germ
+cells was a property depending on the sequence of SCaMC-1L itself. Ectopic
+expression of SCaMC-1L in cell lines revealed that SCaMC-1L had a difficulty
+in mitochondrial import. This was not due to artefacts of overexpression,
+as it was observed even when it was expressed at very low levels (<xref ref-type="fig" rid="pone-0040470-g006">Figures 6A, 6B</xref>). We analyzed in more detail
+the determinants for the lack of mitochondrial localization of SCaMC-1L and
+found that mitochondrial import of SCaMC-1L was partially hampered by its
+hydrophilic N-terminal extension (<xref ref-type="fig" rid="pone-0040470-g008">Figures
+8A, 8B</xref>). A reversal of incomplete mitochondrial import by N-terminal
+domain removal has been also described for other CaMCs <xref ref-type="bibr" rid="pone.0040470-delArco3">[16]</xref>, <xref ref-type="bibr" rid="pone.0040470-Roesch1">[56]</xref>.
+Roesch and coworkers <xref ref-type="bibr" rid="pone.0040470-Roesch1">[56]</xref>
+have suggested that CaMCs interact in their pass across the intermembrane
+space with small Tim proteins different from those used by MCs lacking hydrophilic
+N-extensions, and this could account the different effectiveness observed
+in their import. Moreover, the faulty import of SCaMC-1L is not caused solely
+by its N-extension, as amino acids 185–362 within the hydrophobic SCaMC-1L
+carboxyl-half also impaired its import in mitochondria (<xref ref-type="fig" rid="pone-0040470-g008">Figure 8C</xref>). We can not rule out that SCaMC-1L
+may require additional factors to be inserted into mitochondria. Thus, it
+has been reported that apocytochrome c<sub>T</sub> is less readily taken up
+by mitochondria <italic>in vitro</italic> than the c<sub>S</sub> isoform and
+that specific stage-specific factors may be required to facilitate its import
+into mitochondria <xref ref-type="bibr" rid="pone.0040470-Hess1">[29]</xref>.</p>
+        <p>Our findings suggest that the apparent difficulty of SCaMC-1L to be imported,
+along with its expression levels, are important factors causing the formation
+of cytosolic aggregates. In fact, inefficient translocation through the IMS
+and slow passage across the TOM complex in the outer mitochondrial membrane
+favor aggregation of mitochondrial precursor proteins <xref ref-type="bibr" rid="pone.0040470-Neupert1">[54]</xref>, <xref ref-type="bibr" rid="pone.0040470-Esaki1">[60]</xref>,
+and mistargeting of overexpressed hydrophobic proteins also leads to the formation
+of stable cytosolic aggregates <xref ref-type="bibr" rid="pone.0040470-Kopito1">[49]</xref>.
+Likewise, we observed that high SCaMC-1L expression, obtained by a 5-fold
+increase in the amount of expression vector (<xref ref-type="fig" rid="pone-0040470-g006">Figure
+6B</xref>) or longer times (48–72 h) after transfection (not shown),
+resulted in a higher frequency of cells showing cytosolic aggregates. This
+was reminiscent of the events occurring during spermatogenesis, where a large
+increase of SCaMC-1L expression occurred at the time of round spermatids emergence,
+and strong SCaMC-1L immunoreactivity appeared associated with the CBs in these
+cells (<xref ref-type="fig" rid="pone-0040470-g003">Figures 3C</xref>, <xref ref-type="fig" rid="pone-0040470-g004">4B</xref> and <xref ref-type="fig" rid="pone-0040470-g005">5</xref>).</p>
+      </sec>
+      <sec id="s3c">
+        <title>Physiologial role(s)</title>
+        <p>Based on sequence conservation, mitochondrial SCaMC-1L is probably a mitochondrial
+ATP-Mg/Pi carrier. In fact, murine SCaMC-1L orthologs show high degree of
+homology with SCaMC-1, including the residues proposed to be involved in substrate
+interaction (<xref ref-type="fig" rid="pone-0040470-g001">Figure 1B</xref>, <xref ref-type="bibr" rid="pone.0040470-Robinson1">[34]</xref>). However,
+its transporter function has not been investigated. SCaMC-1L adds to the large
+group of mitochondrial proteins having testis-specific isoforms, including
+cytochrome c<sub>T</sub>, <xref ref-type="bibr" rid="pone.0040470-Narisawa1">[61]</xref>,
+mammalian testis-specific cytochrome oxidase subunit VIb <xref ref-type="bibr" rid="pone.0040470-Httemann1">[62]</xref> and others <xref ref-type="bibr" rid="pone.0040470-Brower1">[4]</xref>, <xref ref-type="bibr" rid="pone.0040470-Tamai1">[63]</xref>.</p>
+        <p>A most remarkable aspect of SCaMC-1L is its location at the CB. In addition
+to RNA-binding proteins and TDRD proteins, the CB contains proteins from different
+cellular compartments as histones, actin, glycolytic (LDH, <xref ref-type="bibr" rid="pone.0040470-Haraguchi2">[31]</xref>) and mitochondrial (cytochrome
+c<sub>T</sub>, <xref ref-type="bibr" rid="pone.0040470-Hess1">[29]</xref>)
+proteins as well as aggresomal markers, such as Hsp70, ubiquitin and ubiquitin-conjugating
+enzymes <xref ref-type="bibr" rid="pone.0040470-Yokota1">[26]</xref>, <xref ref-type="bibr" rid="pone.0040470-Haraguchi2">[31]</xref>, suggesting
+an aggresome-like role for this structure <xref ref-type="bibr" rid="pone.0040470-Yokota1">[26]</xref>, <xref ref-type="bibr" rid="pone.0040470-Haraguchi2">[31]</xref>. In SCaMC-1L
+expressing cells, perinuclear SCaMC-1L aggregates exhibit some of the hallmarks
+described for cellular aggresomes namely as microtubule-dependent formation,
+co-location with γ-tubulin at the MTOC and the presence of anti-ubiquitin
+positive signals (<xref ref-type="fig" rid="pone-0040470-g007">Figure 7D</xref>) <xref ref-type="bibr" rid="pone.0040470-GarcaMata1">[50]</xref>, <xref ref-type="bibr" rid="pone.0040470-Johnston1">[64]</xref>, indicating
+that these aggregates mimic SCaMC-1L behavior in male germ cells. Aggresomes
+are not only stress responses to misfolded proteins. “Physiological
+aggresomes” have been shown to play a role in inactivation of iNOS <xref ref-type="bibr" rid="pone.0040470-Pandit1">[65]</xref>, or in the
+regulation of cardiomyocyte cell cycle by cyclin D2SV <xref ref-type="bibr" rid="pone.0040470-Sun1">[66]</xref>. It is possible that during
+spermatogenesis, SCaMC-1L could favor the recruitment or co-aggregation of
+components from mitochondria or other subcellular origins by transporting
+them to the CB.</p>
+        <p>Another possibility is that SCaMC-1L through its Ca<sup>2+</sup>-binding
+domains can participate in the enrichment of calcium ions observed in the
+CB <xref ref-type="bibr" rid="pone.0040470-Yokota1">[26]</xref>.
+A similar function has been proposed for the Ca<sup>2+</sup>-calmodulin-binding
+proteins BASP1 and MARCKS recently identified as CB components <xref ref-type="bibr" rid="pone.0040470-Mosevitsky1">[67]</xref>. Alternatively, SCaMC-1L
+could be also a structural component of the CB. In transiently transfected
+cells, perinuclear SCaMC-1L aggregates do not form a compact structure but
+fibrous aggregates as occurs for the CB (<xref ref-type="supplementary-material" rid="pone.0040470.s003">Figure S3</xref>, <xref ref-type="bibr" rid="pone.0040470-Fawcett1">[28]</xref>).
+Interestingly, in primates (human and chimpanzee), where <italic>SCaMC-1L</italic>
+counterparts have undergone rearrangement becoming non functional, the CB
+appears to be formed by small particles dispersed in the cytoplasm instead
+of one single and large aggregate <xref ref-type="bibr" rid="pone.0040470-Chuma1">[27]</xref>.
+Human <italic>SCaMC-1L</italic>, LOC727941, is pseudogenized due to a nonsense
+mutation in exon 6 and the lack of sequences corresponding to mouse exons
+2 and 3. In chimpanzee genome we have detected a constitutional deletion affecting
+exons 5–10 of the <italic>SCaMC-1L</italic> counterpart.</p>
+        <p>On the other hand, during post-meiotic male germ cell differentiation,
+transcription ceases whereas translation is delayed, and consequently, it
+is possible that SCaMC-1L could be transiently accumulated in the CB until
+its inclusion in the mitochondria of spermatids. Similarly, after CB disassembly,
+some CB constituents migrate appearing in mature spermatids associated to
+different structures of the middle piece of flagellum <xref ref-type="bibr" rid="pone.0040470-Shang1">[40]</xref>, <xref ref-type="bibr" rid="pone.0040470-Mosevitsky1">[67]</xref>.</p>
+      </sec>
+      <sec id="s3d">
+        <title>Evolutionary aspects</title>
+        <p>The finding of this fifth SCaMC paralog makes the ATP-Mg/Pi carriers the
+most represented MC subfamily in mammals. Only the ADP/ATP translocases have
+undergone a similar expansion <xref ref-type="bibr" rid="pone.0040470-Traba2">[11]</xref>.
+Although murine SCaMC-1L shows high similarity with its closest paralog SCaMC-1,
+around 75% at the amino acid level (<xref ref-type="fig" rid="pone-0040470-g001">Figure
+1B</xref>), there is a higher rate of amino-acid divergence (<xref ref-type="fig" rid="pone-0040470-g001">Figure 1C</xref>), due to a higher rates non-synonymous
+(<italic>Ka</italic>) nucleotide substitution rates, about 4.8 fold, in mammalian
+SCaMC-1L than in their corresponding SCaMC-1 paralogs. This agrees with the
+accelerated divergence commonly observed in one of the copies of duplicated
+gene pairs <xref ref-type="bibr" rid="pone.0040470-Force1">[68]</xref>.
+It is reasonable to assume that the accelerated divergence detected in SCaMC-1L
+paralogs enabled the acquisition of new properties, maybe related to its aggregation-prone
+features, advantageous for mammalian spermatogenesis.</p>
+      </sec>
+    </sec>
+    <sec id="s4" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s4a">
+        <title><italic>In silico</italic> searches of SCaMC-1 and SCaMC-1Like sequences</title>
+        <p>To search for <italic>SCaMC-1</italic> related genes, we have used protein
+and nucleotide sequences of identified SCaMC-1 genes <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref> to screen genome databases
+using the BLASTN, BLASTP, TBLASTN and BLAT algorithms. We used NCBI (<ext-link ext-link-type="uri" xlink:href="http://blast.ncbi.nlm.nih.gov" xlink:type="simple">http://blast.ncbi.nlm.nih.gov</ext-link>),
+Ensembl (<ext-link ext-link-type="uri" xlink:href="http://www.ensembl.org" xlink:type="simple">www.ensembl.org</ext-link>)
+and UCSC (<ext-link ext-link-type="uri" xlink:href="http://genome.ucsc.edu" xlink:type="simple">http://genome.ucsc.edu</ext-link>).
+Searches were carried out using default values with the low complexity filter
+off. Likewise, BLASTN were performed in genomic TRACE archives in NCBI. Sequences
+derived from the most closely related phylogenetic species were used as query
+in each search. Protein homology was determined using the BLASTP algorithm.
+Exon/intron boundaries were confirmed by application of the Splice site prediction
+by Neural Network program at BDGP (Berkeley <italic>Drosophila</italic> Genome
+Project, <ext-link ext-link-type="uri" xlink:href="http://www.fruitfly.org" xlink:type="simple">http://www.fruitfly.org</ext-link>).
+Finally, sequences were aligned by ClustalW followed by manual adjustments.
+To estimate non-synonymous (<italic>Ka</italic>) and synonymous (<italic>Ks</italic>)
+nucleotide substitution ratio representative mammalian mRNA sequences of SCaMC-1
+and SCaMC-1L genes were retrieved from the NCBI database, and then converted
+to codon alignments by the PAL2NAL server (<ext-link ext-link-type="uri" xlink:href="http://www.bork.embl.de/pal2nal" xlink:type="simple">http://www.bork.embl.de/pal2nal</ext-link>) using corresponding protein sequence alignments. <italic>Ka</italic> and <italic>Ks</italic>
+values were calculated with the codeml program implemented in the PAML package <xref ref-type="bibr" rid="pone.0040470-Yang1">[35]</xref>. Pair Student's
+t-test was used for statistical analysis.</p>
+      </sec>
+      <sec id="s4b">
+        <title>Squash and drying-down preparations of seminiferous tubules and spermatozoa
+processing</title>
+        <p>Tissue samples from C57BL/6 mice were used for all analysis. All animal
+work performed in this study was carried out in accordance with procedures
+approved in the Directive 86/609/EEC of the European Union with approval of
+the Ethics Committee of the Universidad Autónoma de Madrid. Animals
+were sacrificed by cervical dislocation, and the testes from adult mouse were
+dissected and decapsulated in phosphate buffered saline (PBS). After identification
+of the waves of the seminiferous epithelium by transillumination, stage-specific
+short tubule segments were cut and processed as described <xref ref-type="bibr" rid="pone.0040470-Kotaja3">[39]</xref>. Briefly, the tubule segments
+were transferred to microscope slides in 15 µl of PBS. A coverslip was
+placed carefully onto the tubule segment, the excess fluid was removed by
+blotting, the slides were snap frozen in liquid nitrogen and the cover slip
+was removed. Cells were fixed by incubating in 90% ethanol for 3 minutes
+and air dried at RT.</p>
+        <p>For mouse drying-down preparations, stage-specific segments of seminiferous
+tubules were isolated and transferred in 20 µl of 100 mM sucrose solution
+to a small petri dish. Cells were released from tubules by squeezing carefully
+with fine forceps, and suspended by gentle pipetting up and down. The cell
+suspension was spread on a slide dipped in the fixing solution, (1%
+paraformaldehyde (PFA), 0.15% Triton X-100, pH 9.2 in PBS), and slides
+were dried for 3 h at 37°C in a highly humidified chamber protected from
+light <xref ref-type="bibr" rid="pone.0040470-Peters1">[41]</xref>.
+The stage of the seminiferous epithelial cycle was determined based on the
+appearance of Hoechst-stained germ cell nuclei. The criteria used for staging
+were the presence of specific germ cell types and the combination of cell
+types detected.</p>
+        <p>Spermatozoa collected from dissected caput, corpus and cauda epididymis
+were washed in PBS, centrifuged at 3000 g and fixed in 4% PFA in PBS
+for 30 min at RT. Then cells were collected by centrifugation and diluted
+in PBS for slide preparation. Slides were dried at RT and stored at −80°C.</p>
+      </sec>
+      <sec id="s4c">
+        <title>RT-PCR analysis of mouse SCaMC-1-Like expression</title>
+        <p>The procedures used for total RNA extractions and first strand cDNA synthesis
+have been described previously <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>. Amplification
+of mouse SCaMC-1L mRNA has been performed basically as described <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref> using specific primers derived
+from the predicted mouse <italic>4930443G12Rik</italic> gene (forward, <named-content content-type="gene" xlink:type="simple">5′-GGTCGATGACAGTAGACTGG-3′</named-content>;
+reverse, <named-content content-type="gene" xlink:type="simple">5′-GAGATCTAAGCCTGCGTACG-3′</named-content>).
+For normalization, β-actin sequences were amplified in parallel. The primers
+and conditions used have been previously described <xref ref-type="bibr" rid="pone.0040470-Traba1">[6]</xref>.</p>
+      </sec>
+      <sec id="s4d">
+        <title>Plasmids</title>
+        <p>The SCaMC-1Like full-length cDNA was synthesized from 3 µg of total
+RNA of mouse testis with the Cells-to-cDNA™ II Kit (Ambion) using random
+primers to synthesize the first-strand cDNA. PCR reaction was performed using
+specific primers designed according to the predicted <italic>4930443G12Rik</italic>
+gene. We used two sets of PCR primers to generate overlapping fragments: 5′
+pair (forward, containing ATG, 5′-CTGGACG<underline>ATG</underline>CTACGCAGGC-3′and
+reverse <named-content content-type="gene" xlink:type="simple">5′-TCGGTATAGGGCTCGGGTAC-3′</named-content>);
+and the 3′ pair (forward <named-content content-type="gene" xlink:type="simple">5′-CAACCTGCTGAGCATCATACCG-3′</named-content>
+and reverse <named-content content-type="gene" xlink:type="simple">5′-TTCCACTTCTAGATTAATCCAAAAAGCC-3′</named-content>).
+PCR fragments were cloned using pSTBlue1-blunt vector (Novagen) and sequenced.
+Finally, full length coding sequence was assembled and subcloned into the
+expression vector pCMV5 digested with EcoRI, to obtain pCMV5-SCaMC-1L. The
+plasmid expressing SCaMC-1L<sub>FLAG</sub> was generated by using PCR to insert
+DNA encoding the FLAG epitope preceding the termination codon. The SCaMC-1
+amino-truncated version, pCMV5-NT<sub>(1–160)</sub>-SCaMC-1L (amino
+acids 161–473), was generated by PCR using a forward primer containing
+a new initiation codon (underlined) and additional nucleotides according to
+rules for consensus for translational initiation, primer <named-content content-type="gene" xlink:type="simple">5′-GACC<underline>ATG</underline>GACATTGTTCGTTTCTGG-3′</named-content>.</p>
+        <p>To obtain chimeric proteins containing regions of human SCaMC-1 and mouse
+SCaMC-1L, a novel EcoRI site was created into SCaMC-1L cDNA, SCaMC-1L*,
+at equivalent position to that present in human SCaMC-1 cDNA by PCR, this
+change results in a silence mutation. Chimera-1 (huN<sub>(1–184)</sub>-SCaMC-1L<sub>(185–473)FLAG</sub>)
+and Chimera-2 (1LN<sub>(1–184)</sub>-huSCaMC-1<sub>(185–477)FLAG</sub>)
+were generated exchanging EcoRI fragments between SCaMC-1L*<sub>FLAG</sub>
+and pCMV5-SCaMC-1<sub>FLAG</sub>. Constructs encoding Chimera-3 (1LN<sub>(1–184)</sub>-huSCaMC-1<sub>(185–362)</sub>-1L<sub>(363–473)FLAG</sub>) and Chimera-4 (1LN<sub>(1–163)</sub>-huSCaMC-1<sub>(364–477)FLAG</sub>)
+proteins were obtained from Chimera-1 and SCaMC-1L<sub>FLAG</sub>, respectively,
+exchanging an equivalent BglII-EcoRI fragment with SCaMC-1L<sub>FLAG</sub>
+to obtain Chimera-3 and with SCaMC-1<sub>FLAG</sub> for Chimera-4.</p>
+      </sec>
+      <sec id="s4e">
+        <title>Antibody generation</title>
+        <p>A polyclonal antibody was raised in rabbit against bacterially expressed
+N-terminal extension of mouse SCaMC-1L. pQE vectors (Qiagen) were used to
+express amino acids 2–162 fused to a 6-histidine tag at the N terminus.
+Procedures for overexpression and purification of the recombinant protein
+were as described previously <xref ref-type="bibr" rid="pone.0040470-delArco4">[46]</xref>.
+The antiserum was affinity-purified by incubation with nitrocellulose membrane
+strips to which the antigen was bound, followed by elution with 0.1 M glycine
+(pH 2.8).</p>
+      </sec>
+      <sec id="s4f">
+        <title>Cell culture, transfection and immunofluorescence analysis</title>
+        <p>COS-7 cells obtained from ATCC (Manassas, VA) were cultured in Dulbecco's
+modified Eagle's medium supplemented with 5% inactivated FBS (Invitrogen)
+at 37°C in a 5% CO<sub>2</sub> atmosphere. For transfections, 25,000
+cells grown on coverslips were transiently transfected with 0.5 µg of
+DNA, except when noted, using the LipofectAMINE reagent as described <xref ref-type="bibr" rid="pone.0040470-delArco3">[16]</xref>. After 24–48
+h of incubation to allow expression, cells were fixed and immunofluorescence
+assays performed as described <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>, <xref ref-type="bibr" rid="pone.0040470-delArco4">[46]</xref>. Identical
+procedures and antibodies dilutions were used for male germ cells preparations.
+In immunofluorescence analysis monoclonal antibodies against FLAG peptide,
+clone M2 (1∶100; Sigma), COX-I (1∶200; Molecular Probes), γ-tubulin
+(1∶200; Sigma), ubiquitinated proteins FK2 (1∶200; BIOMOL), anti-eIF4E
+(1∶100; Santa Cruz), anti-α-actin (1∶200; Sigma) were used,
+as well as rabbit polyclonal antibodies against human SCaMC-1 (1∶200; <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>), affinity-purified
+rabbit anti-SCaMC-1L (1∶200) and anti-MVH (1∶100; Abcam). Secondary
+antibodies used were Alexa Fluor 488 goat anti-rabbit (1∶400; Invitrogene);
+Cy3-conjugated goat-anti-mouse (1∶1000; Jackson InmunoResearch), FITC-conjugated
+goat-anti-mouse (1∶400; Vector) and Alexa Fluor 555 donkey anti-rabbit
+(1∶500; Invitrogene). For double staining anti-MVH was labeled using
+Zenon Rabbit IgG Labeling Kit (Invitrogen) according to manufacturer's
+instruction.Nuclear staining was performed with Hoechst 33258 or DAPI (Molecular
+Probes). Fluorescence microscopy was performed using an Axioskop2 plus (Zeiss)
+at a nominal magnification of 63×. Digital images were taken in parallel
+with a Coolsnap FX camera controlled with MetaView software.</p>
+      </sec>
+      <sec id="s4g">
+        <title>Subcellular fractionation and Western blot analysis</title>
+        <p>Testes were collected from mice of different ages and processed in parallel.
+Samples were homogenized in a dounce homogenizer in 0.8 ml of buffer A (250
+mM sucrose, 20 mM HEPES, 10 mM KCl, 1.5 mM MgCl<sub>2</sub>, 1 mM EDTA, 1
+mM EGTA, 1 mM dithiothreitol pH 7.4, 1 mM iodoacetate and 1 mM phenylmethylsulfonyl
+fluoride). Homogenates were centrifuged at 500 g for 15 min, and the resulting
+supernatants were further centrifuged at 9000 g for 15 min to obtain mitochondria-enriched
+fractions, which were resuspended in buffer A. Protein determination was performed
+according to the Bradford method. Total protein extraction from cultured cells
+was performed as described <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>.
+Samples were resolved by SDS-PAGE on a 10% gel and the presence of
+SCaMC-1L was determined by Western blotting using anti-SCaMC-1L (1∶3000).
+Rabbit anti-human SCaMC-1 and anti-human SCaMC-3 (1∶5000; <xref ref-type="bibr" rid="pone.0040470-delArco2">[10]</xref>), and mouse monoclonal anti-hsp60
+(1∶10000; Stressgene) and anti-β-actin (1∶10000; SIGMA) were
+used as loading control. Proteins were detected using ECL (Amersham Biosciences).</p>
+      </sec>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pone.0040470.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s001" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold><italic>Ka/Ks</italic></bold><bold> ratios among mammalian SCaMC-1
+and SCaMC-1L orthologues.</bold> To calculate <italic>Ka</italic>/<italic>Ks</italic>
+values for <italic>SCaMC-1</italic> and <italic>SCaMC-1L</italic> genes we
+retrieved coding sequences corresponding to exons 2 to 7 of representative
+mammalian and performed pairwise sequence comparisons. The results are based
+on Ka/Ks values for sequences from seven representative mammals; <italic>Bos
+Taurus</italic>, <italic>Echinops telfairi</italic>, <italic>Myotis lucifugus</italic>, <italic>Mus
+musculus</italic>, <italic>Macaca mulatta</italic>, <italic>Pongo pygmaeus</italic>,
+and <italic>Rattus novergicus</italic>. Ka/Ks ratios were estimated using
+PAML for all pairwise combinations. The pairwise Ka/Ks ratios for <italic>SCaMC-1L</italic>
+orthologs are significantly greater than those of SCaMC-1 (paired t-test;
+p&lt;0.001) suggesting that <italic>SCaMC-1L</italic> genes evolved faster
+than <italic>SCaMC-1</italic>.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s002" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p><bold>Expression of SCaMC-1L throughout the spermatogenic stages.</bold>
+The germ cells present at each stage (I–XII) of the mouse spermatogenic
+cycle from intermediate spermatogonia (In) to mature sperm are pictured (adapted
+from <xref ref-type="bibr" rid="pone.0040470-Russell1">[37]</xref>).
+Each stage of the spermatogenic cycle comprises a set of developing germ cells.
+In the diagram, the developmental progression of a cell is followed from the
+bottom file, left to right. By solid colored bars are indicated the developmental
+stages showing significant SCaMC-1L expression, dashed bars indicate less
+abundant but detectable expression. The intracellular patterns detected for
+SCaMC-1L; intermitochondrial cement (IMC), chromatoid body (CB) and mitochondrial
+sheath, are marked by different colors. SCaMC-1L expression is absent in intermediate
+and type-B spermatogonia (B), and preleptotene (Pl), leptotene (L) and zygotene
+spermatocytes (Z). SCaMC-1L is observed in the IMC in late pachytene spermatocytes
+(P), at differentiation stage VII. After meiosis (m), SCaMC-1L is detected
+in the CB during round spermatid differentiation (steps 1–8 of spermiogenesis)
+and as dispersed structures after CB dissociation (step 9 onwards). In elongated
+spermatids, steps 15 and 16 of spermiogenesis, the protein is found in the
+mitochondrial sheath of the flagellum.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s003" xlink:type="simple">
+        <label>Figure S3</label>
+        <caption>
+          <p><bold>The C-terminal does not affect the intracellular patterns of ScaMC-1L.</bold>
+(<bold>A</bold>) Representative images of SCaMC-1L-expressing COS-7 cells
+showing the different intracellular patterns observed; cytosolic (a), mitochondrial
+(b) and extra-mitochondrial aggregates (c). COS-7 cells were transfected with
+a full-length SCaMC-1L construct unchanged at C-end, co-localization with
+mitochondrial structures was determined by co-staining with anti-SCaMC-1L
+and anti-COX-I as mitochondrial control. (<bold>B</bold>) Representative images
+of COS-7 cells expressing a SCaMC-1L-EGFP fusion protein. SCaMC-1L-EGFP construct
+was obtained subcloning the entire mouse <italic>SCaMC-1L</italic> coding
+sequence (amino acids 1–473) into pEGFP-N1. SCaMC-1L-EGFP expressing
+cells were fixed and co-localization with mitochondrial COX-I was determined.
+Cells showing cytosolic (a), mitochondrial (a) and extra-mitochondrial aggregates
+(b) are shown. Magnification 63×; scale bar, 10 µm.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s004" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s004" xlink:type="simple">
+        <label>Figure S4</label>
+        <caption>
+          <p><bold>Perinuclear honeycomb-like SCaMC-1L aggregates.</bold> A representative
+image of SCaMC-1L-transfected COS-7 cells containing SCaMC-1L honeycomb-like
+aggregates is shown. SCaMC-1L was detected with specific anti-SCaMC-1L antibody
+visualized with a FITC-conjugated secondary antibody, mitochondrial structures
+are stained with anti-COX-I antibody visualized with Cy3-conjugated secondary
+antibody; the corresponding merged panel is also shown. Magnification 63×;
+scale bar, 20 µm. Enlarged image (400×) of the indicated inset
+is also shown.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s005" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s005" xlink:type="simple">
+        <label>Figure S5</label>
+        <caption>
+          <p><bold>Cytosolic SCaMC-1L granules do not co-localize with late endosomal/lysosomal
+markers.</bold> COS-7 cells were transiently transfected with FLAG-tagged
+SCaMC-1L and 24–30 hours later co-localization was analyzed by co-staining
+with specific markers. COS-7 cells were co-stained with anti-SCaMC-1L antibody
+(A, B) and specific markers for late endosomes (A) and lysosomes (B). As late
+endosomal marker a monoclonal anti-human CD63 antibody (clone H5C6, Developmental
+Studies Hybridoma Bank) was used at 1∶200. To analyze co-localization
+with lysosomes, cells were stained with 50 mM LysoTracker (Molecular Probes)
+for 30 min at 37°C prior to fixation. Nuclei were stained with Hoechst.
+Magnification 63×; scale bar, 20 µm.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s006" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s006" xlink:type="simple">
+        <label>Figure S6</label>
+        <caption>
+          <p><bold>Alignment of SCaMC-1 and SCaMC-1L sequences encoded by exons 2 to
+7 was performed with ClustalW program and coloured using BOXSHADE program.</bold>
+(<ext-link ext-link-type="uri" xlink:href="http://www.ch.embnet.org" xlink:type="simple">www.ch.embnet.org</ext-link>).</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s007" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p><bold>Accession numbers of annotated SCaMC-1 and SCaMC-1L proteins.</bold>
+(alphabetical order of species).</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s008" xlink:type="simple">
+        <label>Table S2</label>
+        <caption>
+          <p><bold>SCaMC-1 and SCaMC-1L non-annotated protein sequences used in this
+study.</bold> (alphabetical order of species).</p>
+          <p>(DOCX)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pone.0040470.s009" mimetype="video/x-msvideo" position="float" xlink:href="info:doi/10.1371/journal.pone.0040470.s009" xlink:type="simple">
+        <label>Movie
+S1</label>
+        <caption>
+          <p><bold>COS-7 cells were grown on glass plates and transiently transfected
+with SCaMC-1L-EGFP construct.</bold> The SCaMC-1L-EGFP expressing vector was
+obtained subcloning the full coding sequence (amino acids1–473) of mouse
+SCaMC-1L-1L into pEGFP-N. Images were taken every 15 min for 7 h using an
+Axiovert 200 (Zeiss) system at 37 C with a ×40 objective using a Coolsnap
+FX CCD camera (Roper Scientific). The Metamorph 6.1r6 (Universal Imaging)
+program was used for image processing.</p>
+          <p>(AVI)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank I. Manso for help with animal handling. The expert technical advice
+of the Optical and Confocal Microscopy Unit of the Centro de Biología
+Molecular is also acknowledged. I. Amigo is a recipient of a FPI predoctoral
+fellowship from Ministerio de Educación y Ciencia (MEC), J. Traba is
+a recipient of a fellowship from the Comunidad de Madrid.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0040470-Palmieri1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Palmieri</surname><given-names>F</given-names></name></person-group>             <year>2004</year>             <article-title>The
+mitochondrial transporter family (SLC25): physiological and pathological implications.</article-title>
+            <source>Pflugers Arch</source>             <volume>447</volume>
+            <fpage>689</fpage>             <lpage>709</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Kunji1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kunji</surname><given-names>ER</given-names></name></person-group>             <year>2004</year>             <article-title>The
+role and structure of mitochondrial carriers.</article-title>             <source>FEBS
+Lett</source>             <volume>564</volume>             <fpage>239</fpage>
+            <lpage>44</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-delArco1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name></person-group>             <year>2005</year>             <article-title>New
+mitochondrial carriers: an overview.</article-title>             <source>Cell
+Mol Life Sci</source>             <volume>62</volume>             <fpage>2204</fpage>
+            <lpage>27</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Brower1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Brower</surname><given-names>JV</given-names></name><name name-style="western"><surname>Rodic</surname><given-names>N</given-names></name><name name-style="western"><surname>Seki</surname><given-names>T</given-names></name><name name-style="western"><surname>Jorgensen</surname><given-names>M</given-names></name><name name-style="western"><surname>Fliess</surname><given-names>N</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Evolutionarily
+conserved mammalian adenine nucleotide translocase 4 is essential for spermatogenesis.</article-title>
+            <source>J Biol Chem</source>             <volume>282</volume>
+            <fpage>29658</fpage>             <lpage>66</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Szklarczyk1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Szklarczyk</surname><given-names>R</given-names></name><name name-style="western"><surname>Huynen</surname><given-names>MA</given-names></name></person-group>             <year>2009</year>             <article-title>Expansion
+of the human mitochondrial proteome by intra- and inter-compartmental protein
+duplication.</article-title>             <source>Genome Biol</source>    
+        <volume>10</volume>             <fpage>R135</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Traba1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Traba</surname><given-names>J</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name></person-group>             <year>2009</year>             <article-title>Characterization
+of SCaMC-3-like/slc25a41, a novel calcium-independent mitochondrial ATP-Mg/Pi
+carrier.</article-title>             <source>Biochem J</source>          
+  <volume>418</volume>             <fpage>125</fpage>             <lpage>33</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Hughes1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Hughes</surname><given-names>J</given-names></name><name name-style="western"><surname>Criscuolo</surname><given-names>F</given-names></name></person-group>             <year>2008</year>             <article-title>Evolutionary
+history of the UCP gene family: gene duplication and selection.</article-title>
+            <source>BMC Evol Biol</source>             <volume>8</volume>
+            <fpage>306</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Palmieri2">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Palmieri</surname><given-names>F</given-names></name><name name-style="western"><surname>Pierri</surname><given-names>CL</given-names></name><name name-style="western"><surname>De Grassi</surname><given-names>A</given-names></name><name name-style="western"><surname>Nunes-Nesi</surname><given-names>A</given-names></name><name name-style="western"><surname>Fernie</surname><given-names>AR</given-names></name></person-group>             <year>2011</year>             <article-title>Evolution,
+structure and function of mitochondrial carriers: a review with new insights.</article-title>
+            <source>Plant J</source>             <volume>66</volume>     
+       <fpage>161</fpage>             <lpage>81</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Fiermonte1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Fiermonte</surname><given-names>G</given-names></name><name name-style="western"><surname>De Leonardis</surname><given-names>F</given-names></name><name name-style="western"><surname>Todisco</surname><given-names>S</given-names></name><name name-style="western"><surname>Palmieri</surname><given-names>L</given-names></name><name name-style="western"><surname>Lasorsa</surname><given-names>FM</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>Identification
+of the mitochondrial ATP-Mg/Pi transporter. Bacterial expression, reconstitution,
+functional characterization, and tissue distribution.</article-title>    
+        <source>J Biol Chem</source>             <volume>279</volume>    
+        <fpage>30722</fpage>             <lpage>30</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-delArco2">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name></person-group>             <year>2004</year>             <article-title>Identification
+of a novel human subfamily of mitochondrial carriers with calcium-binding
+domains.</article-title>             <source>J Biol Chem</source>        
+    <volume>279</volume>             <fpage>24701</fpage>             <lpage>13</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Traba2">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Traba</surname><given-names>J</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name><name name-style="western"><surname>Del Arco</surname><given-names>A</given-names></name></person-group>             <year>2011</year>             <article-title>Adenine
+nucleotide transporters in organelles: novel genes and functions.</article-title>
+            <source>Cell Mol Life Sci</source>             <volume>68</volume>
+            <fpage>1183</fpage>             <lpage>206</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Aprille1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Aprille</surname><given-names>JR</given-names></name></person-group>             <year>1993</year>             <article-title>Mechanism
+and regulation of the mitochondrial ATP-Mg/P(i) carrier.</article-title> 
+           <source>J Bioenerg Biomembr</source>             <volume>25</volume>
+            <fpage>473</fpage>             <lpage>81</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Satrstegui1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name><name name-style="western"><surname>Pardo</surname><given-names>B</given-names></name><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name></person-group>             <year>2007</year>             <article-title>Mitochondrial
+transporters as novel targets for intracellular calcium signaling.</article-title>
+            <source>Physiol Rev</source>             <volume>87</volume> 
+           <fpage>29</fpage>             <lpage>67</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Traba3">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Traba</surname><given-names>J</given-names></name><name name-style="western"><surname>Froschauer</surname><given-names>E</given-names></name><name name-style="western"><surname>Wiesenberger</surname><given-names>G</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name></person-group>             <year>2008</year>             <article-title>Yeast
+mitochondria import ATP through the calcium-dependent ATP-Mg/Pi carrier Sal1p,
+and are ATP consumers during aerobic growth in glucose.</article-title>  
+          <source>Mol Microbiol</source>             <volume>69</volume> 
+           <fpage>570</fpage>             <lpage>85</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Cavero1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Cavero</surname><given-names>S</given-names></name><name name-style="western"><surname>Traba</surname><given-names>J</given-names></name><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name></person-group>             <year>2005</year>             <article-title>The
+calcium-dependent ATP-Mg/Pi mitochondrial carrier is a target of glucose-induced
+calcium signalling in <italic>Saccharomyces cerevisiae</italic>.</article-title>
+            <source>Biochem J</source>             <volume>392</volume>  
+          <fpage>537</fpage>             <lpage>44</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-delArco3">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name></person-group>             <year>2005</year>             <article-title>Novel
+variants of human SCaMC-3, an isoform of the ATP-Mg/P(i) mitochondrial carrier,
+generated by alternative splicing from 3′-flanking transposable elements.</article-title>
+            <source>Biochem J</source>             <volume>389</volume>  
+          <fpage>647</fpage>             <lpage>55</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Haitina1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Haitina</surname><given-names>T</given-names></name><name name-style="western"><surname>Lindblom</surname><given-names>J</given-names></name><name name-style="western"><surname>Renstrom</surname><given-names>T</given-names></name><name name-style="western"><surname>Fredriksson</surname><given-names>R</given-names></name></person-group>             <year>2006</year>             <article-title>Fourteen
+novel human members of mitochondrial solute carrier family 25 (SLC25) widely
+expressed in the central nervous system.</article-title>             <source>Genomics</source>
+            <volume>88</volume>             <fpage>779</fpage>           
+ <lpage>90</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Dolce1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Dolce</surname><given-names>V</given-names></name><name name-style="western"><surname>Scarcia</surname><given-names>P</given-names></name><name name-style="western"><surname>Iacopetta</surname><given-names>D</given-names></name><name name-style="western"><surname>Palmieri</surname><given-names>F</given-names></name></person-group>             <year>2005</year>             <article-title>A
+fourth ADP/ATP carrier isoform in man: identification, bacterial expression,
+functional characterization and tissue distribution.</article-title>     
+       <source>FEBS Lett</source>             <volume>579</volume>       
+     <fpage>633</fpage>             <lpage>7</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Kim1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kim</surname><given-names>YH</given-names></name><name name-style="western"><surname>Haidl</surname><given-names>G</given-names></name><name name-style="western"><surname>Schaefer</surname><given-names>M</given-names></name><name name-style="western"><surname>Egner</surname><given-names>U</given-names></name><name name-style="western"><surname>Mandal</surname><given-names>A</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Compartmentalization
+of a unique ADP/ATP carrier protein SFEC (Sperm Flagellar Energy Carrier,
+AAC4) with glycolytic enzymes in the fibrous sheath of the human sperm flagellar
+principal piece.</article-title>             <source>Dev Biol</source>   
+         <volume>302</volume>             <fpage>463</fpage>             <lpage>76</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Brower2">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Brower</surname><given-names>JV</given-names></name><name name-style="western"><surname>Lim</surname><given-names>CH</given-names></name><name name-style="western"><surname>Jorgensen</surname><given-names>M</given-names></name><name name-style="western"><surname>Oh</surname><given-names>SP</given-names></name><name name-style="western"><surname>Terada</surname><given-names>N</given-names></name></person-group>             <year>2009</year>             <article-title>Adenine
+nucleotide translocase 4 deficiency leads to early meiotic arrest of murine
+male germ cells.</article-title>             <source>Reproduction</source>
+            <volume>138</volume>             <fpage>463</fpage>          
+  <lpage>70</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Seitz1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Seitz</surname><given-names>J</given-names></name><name name-style="western"><surname>Möbius</surname><given-names>J</given-names></name><name name-style="western"><surname>Bergmann</surname><given-names>M</given-names></name><name name-style="western"><surname>Meinhardt</surname><given-names>A</given-names></name></person-group>             <year>1995</year>             <article-title>Mitochondrial
+differentiation during meiosis of male germ cells.</article-title>       
+     <source>Int J Androl</source>             <volume>18</volume>       
+     <fpage>7</fpage>             <lpage>11</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Aihara1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Aihara</surname><given-names>T</given-names></name><name name-style="western"><surname>Nakamura</surname><given-names>N</given-names></name><name name-style="western"><surname>Honda</surname><given-names>S</given-names></name><name name-style="western"><surname>Hirose</surname><given-names>S</given-names></name></person-group>             <year>2009</year>             <article-title>A
+Novel Potential Role for Gametogenetin-Binding Protein 1 (GGNBP1) in Mitochondrial
+Morphogenesis During Spermatogenesis in Mice1.</article-title>           
+ <source>Biol Reprod</source>             <volume>80</volume>             <fpage>762</fpage>
+            <lpage>770</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Parvinen1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Parvinen</surname><given-names>M</given-names></name></person-group>             <year>2005</year>             <article-title>The
+chromatoid body in spermatogenesis.</article-title>             <source>Int
+J Androl</source>             <volume>28</volume>             <fpage>189</fpage>
+            <lpage>201</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Kotaja1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kotaja</surname><given-names>N</given-names></name><name name-style="western"><surname>Bhattacharyya</surname><given-names>SN</given-names></name><name name-style="western"><surname>Jaskiewicz</surname><given-names>L</given-names></name><name name-style="western"><surname>Kimmins</surname><given-names>S</given-names></name><name name-style="western"><surname>Parvinen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>The
+chromatoid body of male germ cells: similarity with processing bodies and
+presence of Dicer and microRNA pathway components.</article-title>       
+     <source>Proc Natl Acad Sci USA</source>             <volume>103</volume>
+            <fpage>2647</fpage>             <lpage>2652</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Kotaja2">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kotaja</surname><given-names>N</given-names></name><name name-style="western"><surname>Sassone-Corsi</surname><given-names>P</given-names></name></person-group>             <year>2007</year>             <article-title>The
+chromatoid body: a germ-cell-specific RNA-processing centre.</article-title>
+            <source>Nat Rev Mol Cell Biol</source>             <volume>8</volume>
+            <fpage>85</fpage>             <lpage>90</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Yokota1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Yokota</surname><given-names>S</given-names></name></person-group>             <year>2008</year>             <article-title>Historical
+survey on chromatoid body research.</article-title>             <source>Acta
+Histochem Cytochem</source>             <volume>41</volume>             <fpage>65</fpage>
+            <lpage>82</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Chuma1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Chuma</surname><given-names>S</given-names></name><name name-style="western"><surname>Hosokawa</surname><given-names>M</given-names></name><name name-style="western"><surname>Tanaka</surname><given-names>T</given-names></name><name name-style="western"><surname>Nakatsuji</surname><given-names>N</given-names></name></person-group>             <year>2009</year>             <article-title>Ultrastructural
+characterization of spermatogenesis and its evolutionary conservation in the
+germline: germinal granules in mammals.</article-title>             <source>Mol
+Cell Endocrinol</source>             <volume>306</volume>             <fpage>17</fpage>
+            <lpage>23</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Fawcett1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Fawcett</surname><given-names>DW</given-names></name><name name-style="western"><surname>Eddy</surname><given-names>EM</given-names></name><name name-style="western"><surname>Phillips</surname><given-names>DM</given-names></name></person-group>             <year>1970</year>             <article-title>Observations
+on the fine structure and relationships of the chromatoid body in mammalian
+spermatogenesis.</article-title>             <source>Biol Reprod</source>
+            <volume>2</volume>             <fpage>129</fpage>             <lpage>53</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Hess1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Hess</surname><given-names>RA</given-names></name><name name-style="western"><surname>Miller</surname><given-names>LA</given-names></name><name name-style="western"><surname>Kirby</surname><given-names>JD</given-names></name><name name-style="western"><surname>Margoliash</surname><given-names>E</given-names></name><name name-style="western"><surname>Goldberg</surname><given-names>E</given-names></name></person-group>             <year>1993</year>             <article-title>Immunoelectron
+microscopic localization of testicular and somatic cytochromes c in the seminiferous
+epithelium of the rat.</article-title>             <source>Biol Reprod</source>
+            <volume>48</volume>             <fpage>1299</fpage>          
+  <lpage>308</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Haraguchi1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Haraguchi</surname><given-names>CM</given-names></name><name name-style="western"><surname>Mabuchi</surname><given-names>T</given-names></name><name name-style="western"><surname>Hirata</surname><given-names>S</given-names></name><name name-style="western"><surname>Shoda</surname><given-names>T</given-names></name><name name-style="western"><surname>Yamada</surname><given-names>AT</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>Spatiotemporal
+changes of levels of a moonlighting protein, phospholipid hydroperoxide glutathione
+peroxidase, in subcellular compartments during spermatogenesis in the rat
+testis.</article-title>             <source>Biol Reprod</source>         
+   <volume>69</volume>             <fpage>885</fpage>             <lpage>95</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Haraguchi2">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Haraguchi</surname><given-names>CM</given-names></name><name name-style="western"><surname>Mabuchi</surname><given-names>T</given-names></name><name name-style="western"><surname>Hirata</surname><given-names>S</given-names></name><name name-style="western"><surname>Shoda</surname><given-names>T</given-names></name><name name-style="western"><surname>Hoshi</surname><given-names>K</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>Chromatoid
+bodies: aggresome-like characteristics and degradation sites for organelles
+of spermiogenic cells.</article-title>             <source>J Histochem Cytochem</source>
+            <volume>53</volume>             <fpage>455</fpage>           
+ <lpage>65</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Huang1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Huang</surname><given-names>H</given-names></name><name name-style="western"><surname>Gao</surname><given-names>Q</given-names></name><name name-style="western"><surname>Peng</surname><given-names>X</given-names></name><name name-style="western"><surname>Choi</surname><given-names>SY</given-names></name><name name-style="western"><surname>Sarma</surname><given-names>K</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>piRNA-Associated
+Germline Nuage Formation and Spermatogenesis Require MitoPLD Profusogenic
+Mitochondrial-Surface Lipid Signaling.</article-title>             <source>Dev
+Cell</source>             <volume>20</volume>             <fpage>376</fpage>
+            <lpage>87</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Watanabe1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Watanabe</surname><given-names>T</given-names></name><name name-style="western"><surname>Chuma</surname><given-names>S</given-names></name><name name-style="western"><surname>Yamamoto</surname><given-names>Y</given-names></name><name name-style="western"><surname>Kuramochi-Miyagawa</surname><given-names>S</given-names></name><name name-style="western"><surname>Totoki</surname><given-names>Y</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>MITOPLD
+Is a Mitochondrial Protein Essential for Nuage Formation and piRNA Biogenesis
+in the Mouse Germline.</article-title>             <source>Dev Cell</source>
+            <volume>20</volume>             <fpage>364</fpage>           
+ <lpage>75</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Robinson1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Robinson</surname><given-names>AJ</given-names></name><name name-style="western"><surname>Kunji</surname><given-names>ER</given-names></name></person-group>             <year>2006</year>             <article-title>Mitochondrial
+carriers in the cytoplasmic state have a common substrate binding site.</article-title>
+            <source>Proc Natl Acad Sci U S A</source>             <volume>103</volume>
+            <fpage>2617</fpage>             <lpage>22</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Yang1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Yang</surname><given-names>Z</given-names></name></person-group>             <year>2007</year>             <article-title>PAML
+4: phylogenetic analysis by maximum likelihood.</article-title>          
+  <source>Mol Biol Evol</source>             <volume>24</volume>         
+   <fpage>1586</fpage>             <lpage>1591</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Lynch1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Lynch</surname><given-names>M</given-names></name><name name-style="western"><surname>Force</surname><given-names>A</given-names></name></person-group>             <year>2000</year>             <article-title>The
+probability of duplicate gene preservation by subfunctionalization.</article-title>
+            <source>Genetics</source>             <volume>154</volume>   
+         <fpage>459</fpage>             <lpage>73</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Russell1">
+        <label>37</label>
+        <element-citation publication-type="other" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Russell</surname><given-names>LD</given-names></name><name name-style="western"><surname>Ettlin</surname><given-names>RA</given-names></name><name name-style="western"><surname>Sinha Hikim</surname><given-names>AP</given-names></name><name name-style="western"><surname>Clegg</surname><given-names>ED</given-names></name></person-group>             <year>1990</year>             <article-title>Histological
+and histopathological evaluation of the testis.</article-title>          
+  <source>Clearwater: Cache River Press, Clearwater, Florida</source>    
+     </element-citation>
+      </ref>
+      <ref id="pone.0040470-Bellv1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Bellvé</surname><given-names>AR</given-names></name><name name-style="western"><surname>Millette</surname><given-names>CF</given-names></name><name name-style="western"><surname>Bhatnagar</surname><given-names>YM</given-names></name><name name-style="western"><surname>O'Brien</surname><given-names>DA</given-names></name></person-group>             <year>1977</year>             <article-title>Dissociation
+of the mouse testis and characterization of isolated spermatogenic cells.</article-title>
+            <source>J Histochem Cytochem</source>             <volume>25</volume>
+            <fpage>480</fpage>             <lpage>94</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Kotaja3">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kotaja</surname><given-names>N</given-names></name><name name-style="western"><surname>Kimmins</surname><given-names>S</given-names></name><name name-style="western"><surname>Brancorsini</surname><given-names>S</given-names></name><name name-style="western"><surname>Hentsch</surname><given-names>D</given-names></name><name name-style="western"><surname>Vonesch</surname><given-names>JL</given-names></name><etal/></person-group>             <year>2004</year>             <article-title>Preparation,
+isolation and characterization of stage-specific spermatogenic cells for cellular
+and molecular analysis.</article-title>             <source>Nat Methods</source>
+            <volume>1</volume>             <fpage>249</fpage>             <lpage>254</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Shang1">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Shang</surname><given-names>P</given-names></name><name name-style="western"><surname>Baarends</surname><given-names>WM</given-names></name><name name-style="western"><surname>Hoogerbrugge</surname><given-names>J</given-names></name><name name-style="western"><surname>Ooms</surname><given-names>MP</given-names></name><name name-style="western"><surname>van Cappellen</surname><given-names>WA</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Functional
+transformation of the chromatoid body in mouse spermatids requires testis-specific
+serine/threonine kinases.</article-title>             <source>J Cell Sci</source>
+            <volume>123</volume>             <fpage>331</fpage>          
+  <lpage>9</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Peters1">
+        <label>41</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Peters</surname><given-names>AH</given-names></name><name name-style="western"><surname>Plug</surname><given-names>AW</given-names></name><name name-style="western"><surname>van Vugt</surname><given-names>MJ</given-names></name><name name-style="western"><surname>de Boer</surname><given-names>P</given-names></name></person-group>             <year>1997</year>             <article-title>A
+drying-down technique for the spreading of mammalian meiocytes from the male
+and female germline.</article-title>             <source>Chromosome Res</source>
+            <volume>5</volume>             <fpage>66</fpage>             <lpage>8</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Sderstrm1">
+        <label>42</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Söderström</surname><given-names>KO</given-names></name><name name-style="western"><surname>Parvinen</surname><given-names>M</given-names></name></person-group>             <year>1976</year>             <article-title>RNA
+synthesis in different stages of rat seminiferous epithelial cycle.</article-title>
+            <source>Mol Cell Endocrinol</source>             <volume>5</volume>
+            <fpage>181</fpage>             <lpage>99</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Tanaka1">
+        <label>43</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Tanaka</surname><given-names>T</given-names></name><name name-style="western"><surname>Hosokawa</surname><given-names>M</given-names></name><name name-style="western"><surname>Vagin</surname><given-names>VV</given-names></name><name name-style="western"><surname>Reuter</surname><given-names>M</given-names></name><name name-style="western"><surname>Hayashi</surname><given-names>E</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>Tudor
+domain containing 7 (Tdrd7) is essential for dynamic ribonucleoprotein (RNP)
+remodeling of chromatoid bodies during spermatogenesis.</article-title>  
+          <source>Proc Natl Acad Sci U S A</source>             <volume>108</volume>
+            <fpage>10579</fpage>             <lpage>84</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Noce1">
+        <label>44</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Noce</surname><given-names>T</given-names></name><name name-style="western"><surname>Okamoto-Ito</surname><given-names>S</given-names></name><name name-style="western"><surname>Tsunekawa</surname><given-names>N</given-names></name></person-group>             <year>2001</year>             <article-title>Vasa
+homolog genes in mammalian germ cell development.</article-title>        
+    <source>Cell Struct Funct</source>             <volume>26</volume>   
+         <fpage>131</fpage>             <lpage>6</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Mazurek1">
+        <label>45</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Mazurek</surname><given-names>MP</given-names></name><name name-style="western"><surname>Prasad</surname><given-names>PD</given-names></name><name name-style="western"><surname>Gopal</surname><given-names>E</given-names></name><name name-style="western"><surname>Fraser</surname><given-names>SP</given-names></name><name name-style="western"><surname>Bolt</surname><given-names>L</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Molecular
+origin of plasma membrane citrate transporter in human prostate epithelial
+cells.</article-title>             <source>EMBO Rep</source>             <volume>11</volume>
+            <fpage>431</fpage>             <lpage>7</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-delArco4">
+        <label>46</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name></person-group>             <year>1998</year>             <article-title>Molecular
+cloning of Aralar, a new member of the mitochondrial carrier superfamily that
+binds calcium and is present in human muscle and brain.</article-title>  
+          <source>J Biol Chem</source>             <volume>273</volume>  
+          <fpage>23327</fpage>             <lpage>34</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-delArco5">
+        <label>47</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>del Arco</surname><given-names>A</given-names></name><name name-style="western"><surname>Agudo</surname><given-names>M</given-names></name><name name-style="western"><surname>Satrústegui</surname><given-names>J</given-names></name></person-group>             <year>2000</year>             <article-title>Characterization
+of a second member of the subfamily of calcium-binding mitochondrial carriers
+expressed in human non-excitable tissues.</article-title>             <source>Biochem
+J</source>             <volume>345</volume>             <fpage>725</fpage>
+            <lpage>32</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Pan1">
+        <label>48</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pan</surname><given-names>J</given-names></name><name name-style="western"><surname>Goodheart</surname><given-names>M</given-names></name><name name-style="western"><surname>Chuma</surname><given-names>S</given-names></name><name name-style="western"><surname>Nakatsuji</surname><given-names>N</given-names></name><name name-style="western"><surname>Page</surname><given-names>DC</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>RNF17,
+a component of the mammalian germ cell nuage, is essential for spermiogenesis.</article-title>
+            <source>Development</source>             <volume>132</volume>
+            <fpage>4029</fpage>             <lpage>39</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Kopito1">
+        <label>49</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Kopito</surname><given-names>RR</given-names></name></person-group>             <year>2000</year>             <article-title>Aggresomes,
+inclusion bodies and protein aggregation.</article-title>             <source>Trends
+Cell Biol</source>             <volume>10</volume>             <fpage>524</fpage>
+            <lpage>30</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-GarcaMata1">
+        <label>50</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>García-Mata</surname><given-names>R</given-names></name><name name-style="western"><surname>Bebök</surname><given-names>Z</given-names></name><name name-style="western"><surname>Sorscher</surname><given-names>EJ</given-names></name><name name-style="western"><surname>Sztul</surname><given-names>ES</given-names></name></person-group>             <year>1999</year>             <article-title>Characterization
+and dynamics of aggresome formation by a cytosolic GFP-chimera.</article-title>
+            <source>J Cell Biol</source>             <volume>146</volume>
+            <fpage>1239</fpage>             <lpage>54</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Ventel1">
+        <label>51</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Ventelä</surname><given-names>S</given-names></name><name name-style="western"><surname>Toppari</surname><given-names>J</given-names></name><name name-style="western"><surname>Parvinen</surname><given-names>M</given-names></name></person-group>             <year>2003</year>             <article-title>Intercellular
+organelle traffic through cytoplasmic bridges in early spermatids of the rat:
+mechanisms of haploid gene product sharing.</article-title>             <source>Mol
+Biol Cell</source>             <volume>14</volume>             <fpage>2768</fpage>
+            <lpage>80</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Burch1">
+        <label>52</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Burch</surname><given-names>AD</given-names></name><name name-style="western"><surname>Weller</surname><given-names>SK</given-names></name></person-group>             <year>2004</year>             <article-title>Nuclear
+Sequestration of Cellular Chaperone and Proteasomal Machinery during Herpes
+Simplex Virus Type 1 Infection.</article-title>             <source>J Virol</source>
+            <volume>78</volume>             <fpage>7175</fpage>          
+  <lpage>85</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Han1">
+        <label>53</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Han</surname><given-names>J</given-names></name><name name-style="western"><surname>Ma</surname><given-names>I</given-names></name><name name-style="western"><surname>Hendzel</surname><given-names>MJ</given-names></name><name name-style="western"><surname>Allalunis-Turner</surname><given-names>J</given-names></name></person-group>             <year>2009</year>             <article-title>The
+cytotoxicity of γ-secretase inhibitor I to breast cancer cells is mediated
+by proteasome inhibition, not by γ-secretase inhibition.</article-title>
+            <source>Breast Cancer Res</source>             <volume>11</volume>
+            <fpage>R57</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Neupert1">
+        <label>54</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Neupert</surname><given-names>W</given-names></name><name name-style="western"><surname>Herrmann</surname><given-names>JM</given-names></name></person-group>             <year>2007</year>             <article-title>Translocation
+of proteins into mitochondria.</article-title>             <source>Annu Rev
+Biochem</source>             <volume>76</volume>             <fpage>723</fpage>
+            <lpage>49</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Chacinska1">
+        <label>55</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Chacinska</surname><given-names>A</given-names></name><name name-style="western"><surname>Koehler</surname><given-names>CM</given-names></name><name name-style="western"><surname>Milenkovic</surname><given-names>D</given-names></name><name name-style="western"><surname>Lithgow</surname><given-names>T</given-names></name><name name-style="western"><surname>Pfanner</surname><given-names>N</given-names></name></person-group>             <year>2009</year>             <article-title>Importing
+mitochondrial proteins: machineries and mechanisms.</article-title>      
+      <source>Cell</source>             <volume>138</volume>             <fpage>628</fpage>
+            <lpage>44</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Roesch1">
+        <label>56</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Roesch</surname><given-names>K</given-names></name><name name-style="western"><surname>Hynds</surname><given-names>PJ</given-names></name><name name-style="western"><surname>Varga</surname><given-names>R</given-names></name><name name-style="western"><surname>Tranebjaerg</surname><given-names>L</given-names></name><name name-style="western"><surname>Koehler</surname><given-names>CM</given-names></name></person-group>             <year>2004</year>             <article-title>The
+calcium-binding aspartate/glutamate carriers, citrin and aralar1, are new
+substrates for the DDP1/TIMM8a-TIMM13 complex.</article-title>           
+ <source>Hum Mol Genet</source>             <volume>13</volume>          
+  <fpage>2101</fpage>             <lpage>11</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Chuma2">
+        <label>57</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Chuma</surname><given-names>S</given-names></name><name name-style="western"><surname>Hosokawa</surname><given-names>M</given-names></name><name name-style="western"><surname>Kitamura</surname><given-names>K</given-names></name><name name-style="western"><surname>Kasai</surname><given-names>S</given-names></name><name name-style="western"><surname>Fujioka</surname><given-names>M</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>Tdrd1/Mtr-1,
+a tudor-related gene, is essential for male germ-cell differentiation and
+nuage/germinal granule formation in mice.</article-title>             <source>Proc
+Natl Acad Sci U S A</source>             <volume>103</volume>             <fpage>15894</fpage>
+            <lpage>9</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Hosokawa1">
+        <label>58</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Hosokawa</surname><given-names>M</given-names></name><name name-style="western"><surname>Shoji</surname><given-names>M</given-names></name><name name-style="western"><surname>Kitamura</surname><given-names>K</given-names></name><name name-style="western"><surname>Tanaka</surname><given-names>T</given-names></name><name name-style="western"><surname>Noce</surname><given-names>T</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Tudor-related
+proteins TDRD1/MTR-1, TDRD6 and TDRD7/TRAP: domain composition, intracellular
+localization, and function in male germ cells in mice.</article-title>   
+         <source>Dev Biol</source>             <volume>301</volume>      
+      <fpage>38</fpage>             <lpage>52</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Bonilla1">
+        <label>59</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Bonilla</surname><given-names>E</given-names></name><name name-style="western"><surname>Xu</surname><given-names>EY</given-names></name></person-group>             <year>2008</year>             <article-title>Identification
+and characterization of novel mammalian spermatogenic genes conserved from
+fly to human.</article-title>             <source>Mol Hum Reprod</source>
+            <volume>14</volume>             <fpage>137</fpage>           
+ <lpage>42</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Esaki1">
+        <label>60</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Esaki</surname><given-names>M</given-names></name><name name-style="western"><surname>Kanamori</surname><given-names>T</given-names></name><name name-style="western"><surname>Nishikawa</surname><given-names>S</given-names></name><name name-style="western"><surname>Shin</surname><given-names>I</given-names></name><name name-style="western"><surname>Schultz</surname><given-names>PG</given-names></name><etal/></person-group>             <year>2003</year>             <article-title>Tom40
+protein import channel binds to non-native proteins and prevents their aggregation.</article-title>
+            <source>Nat Struct Biol</source>             <volume>10</volume>
+            <fpage>988</fpage>             <lpage>94</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Narisawa1">
+        <label>61</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Narisawa</surname><given-names>S</given-names></name><name name-style="western"><surname>Hecht</surname><given-names>NB</given-names></name><name name-style="western"><surname>Goldberg</surname><given-names>E</given-names></name><name name-style="western"><surname>Boatright</surname><given-names>KM</given-names></name><name name-style="western"><surname>Reed</surname><given-names>JC</given-names></name><etal/></person-group>             <year>2002</year>             <article-title>Testis-specific
+cytochrome c-null mice produce functional sperm but undergo early testicular
+atrophy.</article-title>             <source>Mol Cell Biol</source>      
+      <volume>22</volume>             <fpage>5554</fpage>             <lpage>5562</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pone.0040470-Httemann1">
+        <label>62</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Hüttemann</surname><given-names>M</given-names></name><name name-style="western"><surname>Jaradat</surname><given-names>S</given-names></name><name name-style="western"><surname>Grossman</surname><given-names>LI</given-names></name></person-group>             <year>2003</year>             <article-title>Cytochrome
+c Oxidase of Mammals Contains a Testes-Specific Isoform of Subunit VIb the
+Counterpart to Testes-Specific Cytochrome c?</article-title>             <source>Mol
+Reprod Dev</source>             <volume>66</volume>             <fpage>8</fpage>
+            <lpage>16</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Tamai1">
+        <label>63</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Tamai</surname><given-names>S</given-names></name><name name-style="western"><surname>Iida</surname><given-names>H</given-names></name><name name-style="western"><surname>Yokota</surname><given-names>S</given-names></name><name name-style="western"><surname>Sayano</surname><given-names>T</given-names></name><name name-style="western"><surname>Kiguchiya</surname><given-names>S</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Characterization
+of the mitochondrial protein LETM1, which maintains the mitochondrial tubular
+shapes and interacts with the AAA-ATPase BCS1L.</article-title>          
+  <source>J Cell Sci</source>             <volume>121</volume>           
+ <fpage>2588</fpage>             <lpage>600</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Johnston1">
+        <label>64</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Johnston</surname><given-names>JA</given-names></name><name name-style="western"><surname>Ward</surname><given-names>CL</given-names></name><name name-style="western"><surname>Kopito</surname><given-names>RR</given-names></name></person-group>             <year>1998</year>             <article-title>Aggresomes:
+a cellular response to misfolded proteins.</article-title>             <source>J
+Cell Biol</source>             <volume>143</volume>             <fpage>1883</fpage>
+            <lpage>98</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Pandit1">
+        <label>65</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Pandit</surname><given-names>L</given-names></name><name name-style="western"><surname>Kolodziejska</surname><given-names>KE</given-names></name><name name-style="western"><surname>Zeng</surname><given-names>S</given-names></name><name name-style="western"><surname>Eissa</surname><given-names>NT</given-names></name></person-group>             <year>2009</year>             <article-title>The
+physiologic aggresome mediates cellular inactivation of iNOS.</article-title>
+            <source>Proc Natl Acad Sci U S A</source>             <volume>106</volume>
+            <fpage>1211</fpage>             <lpage>5</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Sun1">
+        <label>66</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Sun</surname><given-names>Q</given-names></name><name name-style="western"><surname>Zhang</surname><given-names>F</given-names></name><name name-style="western"><surname>Wafa</surname><given-names>K</given-names></name><name name-style="western"><surname>Baptist</surname><given-names>T</given-names></name><name name-style="western"><surname>Pasumarthi</surname><given-names>KB</given-names></name></person-group>             <year>2009</year>             <article-title>A
+splice variant of cyclin D2 regulates cardiomyocyte cell cycle through a novel
+protein aggregation pathway.</article-title>             <source>J Cell Sci</source>
+            <volume>122</volume>             <fpage>1563</fpage>         
+   <lpage>73</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Mosevitsky1">
+        <label>67</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Mosevitsky</surname><given-names>MI</given-names></name><name name-style="western"><surname>Snigirevskaya</surname><given-names>ES</given-names></name><name name-style="western"><surname>Komissarchik</surname><given-names>YY</given-names></name></person-group>             <year>2012</year>             <article-title>Immunoelectron
+microscopic study of BASP1 and MARCKS location in the early and late rat spermatids.</article-title>
+            <source>Acta Histochem</source>             <volume>114</volume>
+            <fpage>237</fpage>             <lpage>43</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Force1">
+        <label>68</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Force</surname><given-names>A</given-names></name><name name-style="western"><surname>Lynch</surname><given-names>M</given-names></name><name name-style="western"><surname>Pickett</surname><given-names>FB</given-names></name><name name-style="western"><surname>Amores</surname><given-names>A</given-names></name><name name-style="western"><surname>Yan</surname><given-names>YL</given-names></name><etal/></person-group>             <year>1999</year>             <article-title>Preservation
+of duplicate genes by complementary, degenerative mutations.</article-title>
+            <source>Genetics</source>             <volume>151</volume>   
+         <fpage>1531</fpage>             <lpage>45</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Cole1">
+        <label>69</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Cole</surname><given-names>C</given-names></name><name name-style="western"><surname>Barber</surname><given-names>JD</given-names></name><name name-style="western"><surname>Barton</surname><given-names>GJ</given-names></name></person-group>             <year>2008</year>             <article-title>The
+Jpred 3 secondary structure prediction server.</article-title>           
+ <source>Nucleic Acids Res</source>             <volume>36</volume>      
+      <fpage>W197</fpage>             <lpage>201</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040470-Tamura1">
+        <label>70</label>
+        <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author"><name name-style="western"><surname>Tamura</surname><given-names>K</given-names></name><name name-style="western"><surname>Dudley</surname><given-names>J</given-names></name><name name-style="western"><surname>Nei</surname><given-names>M</given-names></name><name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name></person-group>             <year>2007</year>             <article-title>MEGA4:
+Molecular Evolutionary Genetics Analysis (MEGA) software version 4.0.</article-title>
+            <source>Mol Biol Evol</source>             <volume>24</volume>
+            <fpage>1596</fpage>             <lpage>9</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-08611R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0005668</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Immunology/Immunomodulation</subject><subject>Immunology/Leukocyte Development</subject><subject>Physiology/Endocrinology</subject><subject>Diabetes and Endocrinology/Multiple Endocrine Disorders and Neoplasias</subject><subject>Diabetes and Endocrinology/Neuroendocrinology and Pituitary</subject></subj-group></article-categories><title-group><article-title>Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients</article-title><alt-title alt-title-type="running-head">Thymus Function in AGHD</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Morrhaye</surname><given-names>Gabriel</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Kermani</surname><given-names>Hamid</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Legros</surname><given-names>Jean-Jacques</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Baron</surname><given-names>Frederic</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Beguin</surname><given-names>Yves</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Moutschen</surname><given-names>Michel</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Cheynier</surname><given-names>Remi</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Martens</surname><given-names>Henri J.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Geenen</surname><given-names>Vincent</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>University of Liege Center of Immunology, Laboratory of Immunoendocrinology, Institute of Pathology CHU-B23, Liege-Sart Tilman, Belgium</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>University of Liege, Division of Hematology, CHU-B35, Liege-Sart Tilman, Belgium</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>University of Liege, Division of Immunodeficiencies and Infectious Diseases, CHU-B35, Liege-Sart Tilman, Belgium</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Institut Pasteur, Département de Virologie, Paris, France</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Unutmaz</surname><given-names>Derya</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">New York University School of Medicine, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">hmartens@ulg.ac.be</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: GM HJM VG. Performed the experiments: GM HK. Analyzed the data: GM HK JJL MM HJM VG. Contributed reagents/materials/analysis tools: JJL FB YB RC HJM VG. Wrote the paper: GM FB YB MM RC HJM VG.</p></fn>
+<fn fn-type="conflict"><p>Dr. Vincent Geenen received consultant fees as clinical researcher from Pfizer, Inc.</p></fn></author-notes><pub-date pub-type="collection"><year>2009</year></pub-date><pub-date pub-type="epub"><day>22</day><month>5</month><year>2009</year></pub-date><volume>4</volume><issue>5</issue><elocation-id>e5668</elocation-id><history>
+<date date-type="received"><day>10</day><month>2</month><year>2009</year></date>
+<date date-type="accepted"><day>27</day><month>4</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>Morrhaye et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract><sec>
+<title>Background</title>
+<p>Despite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.</p>
+</sec><sec>
+<title>Methodology/Principal Findings</title>
+<p>Twenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/β TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p&lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r = 0.61, p&lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/β TREC ratio (p&lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/β TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.</p>
+</sec><sec>
+<title>Conclusions</title>
+<p>In patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.</p>
+</sec><sec>
+<title>Trial Registration</title>
+<p>ClinicalTrials.gov <ext-link ext-link-type="uri" xlink:href="http://clinicaltrials.gov/ct2/show/NCT00601419?term=00601419&amp;rank=1" xlink:type="simple">NTC00601419</ext-link></p>
+</sec></abstract><funding-group><funding-statement>This work was supported by the Walloon Region of Belgium (<ext-link ext-link-type="uri" xlink:href="http://recherche-technologie.wallonie.be/fr/menu" xlink:type="simple">http://recherche-technologie.wallonie.be/fr/menu</ext-link>; DGTRE Reseaux2-SENEGENE n° 05/1/6192 and First-Spin off ThymUP). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="7"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The thymus is the unique lymphoid organ responsible for the generation of self-tolerant and competent naive T cells, as well as of self antigen-specific natural regulatory T cells. The diversity of T-cell receptors for antigen (TCR) results from the random recombination of gene segments encoding the variable parts of the TCRα and β chains. Successive rearrangements in the TCR locus generate different types of TCR excision circles (TRECs), such as signal-joint (sj) TRECs and DJβTRECs <xref ref-type="bibr" rid="pone.0005668-Douek1">[1]</xref>–<xref ref-type="bibr" rid="pone.0005668-Poulin1">[4]</xref>. Within some limits, quantification of sjTREC frequency is now considered to be a very valuable method to evaluate thymopoiesis, as well as the impact of the neuroendocrine system upon thymic function <xref ref-type="bibr" rid="pone.0005668-Geenen1">[5]</xref>, <xref ref-type="bibr" rid="pone.0005668-Geenen2">[6]</xref>. In addition, the ratio of sjTREC/DJβTREC frequencies (sj/β TREC ratio) reliably reflects the magnitude of intrathymic proliferation of precursor T cells <xref ref-type="bibr" rid="pone.0005668-Dion1">[7]</xref>–<xref ref-type="bibr" rid="pone.0005668-vandenDool1">[9]</xref>. For a long time, the thymus function was assumed to decrease in humans after puberty, in parallel with adipose involution. It was then thought that the peripheral T cell repertoire was mainly seeded with a complete repertoire of antigen-reactive memory T cells, with no obvious need for the maintenance of naive T cell generation. In recent years however, demonstrative evidence was provided that the adult thymus remains active until late in life and generates competent naive T cells for ensuring a diverse peripheral repertoire <xref ref-type="bibr" rid="pone.0005668-Douek1">[1]</xref>, <xref ref-type="bibr" rid="pone.0005668-Poulin1">[4]</xref>, <xref ref-type="bibr" rid="pone.0005668-Castermans1">[10]</xref>.</p>
+<p>Growth hormone (GH) and GH receptor (GHR) are related to type I cytokines and to receptors of type I cytokines, respectively <xref ref-type="bibr" rid="pone.0005668-Leonard1">[11]</xref>, <xref ref-type="bibr" rid="pone.0005668-Redelman1">[12]</xref>. Already in 1930, involution of the rat thymus had been observed following hypophysectomy <xref ref-type="bibr" rid="pone.0005668-Smith1">[13]</xref>. Thereafter, administration in mice of an antiserum against GH was shown to induce thymic atrophy, whereas neonatal thymectomy was associated with degranulation of GH-secreting acidophil cells in the anterior pituitary <xref ref-type="bibr" rid="pone.0005668-Pierpaoli1">[14]</xref>. The implantation of GH-secreting cells from GH3 pituitary adenoma increases thymic size in aged rats <xref ref-type="bibr" rid="pone.0005668-Kelley1">[15]</xref>, and GH administration increases thymic cellularity and thymic T cell proliferation in GH- and prolactin (PRL)-deficient dwarf DW/J mice <xref ref-type="bibr" rid="pone.0005668-Murphy1">[16]</xref>. Nevertheless, the thymotropic effects of GH evidenced in hypophysectomised rodents and in genetic models of pituitary hormone deficiency did not gain universal acceptance <xref ref-type="bibr" rid="pone.0005668-Dorshkind1">[17]</xref>. Parameters of immunodeficiency reported in these animals may depend upon breeding conditions <xref ref-type="bibr" rid="pone.0005668-Dorshkind2">[18]</xref>, <xref ref-type="bibr" rid="pone.0005668-Foster1">[19]</xref>. The thymotrope properties of GH may be partially explained by counteraction of stress-induced immunosuppressive glucocorticoids. GH is able to activate Jak2/Stat5 pathway <xref ref-type="bibr" rid="pone.0005668-Herrington1">[20]</xref>, and activated Stat5 inhibits 75% of the actions promoted by glucocorticoids in lymphoid cells <xref ref-type="bibr" rid="pone.0005668-Stocklin1">[21]</xref>, including apoptosis of pre-T cells. The mechanisms underlying GH thymotropic actions in genetic/hypophysectomised models remain to be further deciphered using more specific and sensitive methods. Human recombinant GH also promotes human T cell grafting in SCID mice, and this xenograft is associated with a marked colonization of murine thymus by human T cells <xref ref-type="bibr" rid="pone.0005668-Taub1">[22]</xref>. As a major mediator of GH actions, IGF-1 closely regulates thymic homing of T-cell precursors, thymopoiesis, thymocyte traffic within the thymus microenvironment, as well as a number of peripheral immune functions <xref ref-type="bibr" rid="pone.0005668-Clark1">[23]</xref>–<xref ref-type="bibr" rid="pone.0005668-Savino2">[26]</xref>. Very interestingly, it was recently reported that infusion in old mice of ghrelin, a GH secretagogue, significantly improves thymopoiesis, increases the number of recent thymic emigrants, and improves TCR diversity of the peripheral T cell repertoire <xref ref-type="bibr" rid="pone.0005668-Dixit1">[27]</xref>. While the GH/IGF-1 axis, as well as other hormones, is not an essential factor for normal thymus and T-cell function, there is now strong evidence from animal and preclinical studies that they can be effective modulators and used as pharmacological agents in specific situations.</p>
+<p>This important and well-documented preclinical background has promoted recent clinical studies that are exploring the use of endocrine-based therapies aiming to enhance thymopoiesis in immunodeficient individuals, and in particular to evaluate the potential benefit of GH treatment for immune restoration through stimulation of thymopoiesis in HIV-1 – infected patients. A first pilot study showed that GH treatment reverses thymic atrophy and enhances the number of circulating naive CD4 T cells in HIV-infected adults <xref ref-type="bibr" rid="pone.0005668-Napolitano1">[28]</xref>. This was confirmed by a prospective randomized study, which further showed that GH treatment strongly increases the number of circulating sjTRECs in peripheral blood mononuclear cells <xref ref-type="bibr" rid="pone.0005668-Napolitano2">[29]</xref>. However, the HIV-infected patients from this latter study received very high doses of GH (3 mg daily for 6 months, followed by 1.5 mg daily), and some interference with anti-retroviral therapy could not be excluded, according to the authors themselves. Until now, no data are available with regard to the thymic function once adult GH deficiency (AGHD) has been diagnosed and documented according to appropriate guidelines. The principal objective of this clinical research study was to directly investigate the impact of GH deficiency and GH supplementation at physiological doses upon thymus function and thymopoiesis in AGHD.</p>
+</sec><sec id="s2">
+<title>Methods</title>
+<p>The protocol for this trial and supporting CONSORT checklist are available as supporting information; see <xref ref-type="supplementary-material" rid="pone.0005668.s001">Checklist S1</xref> and <xref ref-type="supplementary-material" rid="pone.0005668.s002">Protocol S1</xref>.</p>
+<sec id="s2a">
+<title>Study design and patients</title>
+<p>Twenty-two patients were enrolled in this study at the Department of Medicine in Liege University Hospital. There were 10 males and 12 females, with an age range between 27 and 69 years. The protocol was approved by the Ethical Committee of Liege Medical School and University Hospital, and each enrolled patient signed an informed consent. All patients had been diagnosed at least two years before with AGHD according to the guidelines of clinical practice established by the Endocrine Society <xref ref-type="bibr" rid="pone.0005668-Molitch1">[30]</xref>. Causes of AGHD in the patients are listed in <xref ref-type="table" rid="pone-0005668-t001">Table 1</xref>. At the time of their enrolment, all patients were being treated with recombinant human GH; the range of GH dosage was 0.2–0.5 mg daily in one subcutaneous (sc) injection at bedtime and, for each patient, the dosage has been adjusted for at least 6 months to maintain IGF-1 blood concentrations in physiological levels (maintenance dose). Patients also received conventional and adequate replacement therapy in case of associated pituitary hormone deficiencies. The biological parameters of the study were measured at three different time points: first during GH treatment, secondly 1 month after GH withdrawal, and thirdly 1 month after resumption of GH treatment at the dosage used before discontinuation. Given the design of the study, there were neither major inclusion nor exclusion criteria for this study, and the patients did not present any side effects (hyperglycemia or water retention) due to GH treatment. Another major advantage was that each patient constituted his/her own control, and only one parameter (GH administration or not) was modified during the study.</p>
+<table-wrap id="pone-0005668-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0005668.t001</object-id><label>Table 1</label><caption>
+<title>Clinical and baseline characteristics of patients with AGHD before GH withdrawal.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0005668-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0005668.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">N°</td>
+<td align="left" colspan="1" rowspan="1">Cause of AGHD</td>
+<td align="left" colspan="1" rowspan="1">Age</td>
+<td align="left" colspan="1" rowspan="1">Sex</td>
+<td align="left" colspan="1" rowspan="1">IGF-1 (ng/ml)</td>
+<td align="left" colspan="1" rowspan="1">sjTREC frequency (n/10<sup>5</sup> cells)</td>
+<td align="left" colspan="1" rowspan="1">sj/ß TREC ratio</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">Craniopharyngioma</td>
+<td align="left" colspan="1" rowspan="1">67</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">172</td>
+<td align="left" colspan="1" rowspan="1">119.4</td>
+<td align="left" colspan="1" rowspan="1">47.2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">Traumatic brain injury</td>
+<td align="left" colspan="1" rowspan="1">37</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">330</td>
+<td align="left" colspan="1" rowspan="1">167.9</td>
+<td align="left" colspan="1" rowspan="1">221.4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">Secreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">52</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">280</td>
+<td align="left" colspan="1" rowspan="1">88.2</td>
+<td align="left" colspan="1" rowspan="1">4.6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">HIV infection and therapy</td>
+<td align="left" colspan="1" rowspan="1">54</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">318</td>
+<td align="left" colspan="1" rowspan="1">778.3</td>
+<td align="left" colspan="1" rowspan="1">106.3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">Secreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">57</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">232</td>
+<td align="left" colspan="1" rowspan="1">1452.9</td>
+<td align="left" colspan="1" rowspan="1">60.3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">Secreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">51</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">304</td>
+<td align="left" colspan="1" rowspan="1">361.7</td>
+<td align="left" colspan="1" rowspan="1">2.4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">Secreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">65</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">87</td>
+<td align="left" colspan="1" rowspan="1">21.9</td>
+<td align="left" colspan="1" rowspan="1">0.1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">Craniopharyngioma</td>
+<td align="left" colspan="1" rowspan="1">69</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">123</td>
+<td align="left" colspan="1" rowspan="1">1.2</td>
+<td align="left" colspan="1" rowspan="1">29.7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">Craniopharyngioma</td>
+<td align="left" colspan="1" rowspan="1">38</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">126</td>
+<td align="left" colspan="1" rowspan="1">30.7</td>
+<td align="left" colspan="1" rowspan="1">8.1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">10</td>
+<td align="left" colspan="1" rowspan="1">Meningioma</td>
+<td align="left" colspan="1" rowspan="1">64</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">323</td>
+<td align="left" colspan="1" rowspan="1">68.4</td>
+<td align="left" colspan="1" rowspan="1">8.9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">Radiotherapy</td>
+<td align="left" colspan="1" rowspan="1">48</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">136</td>
+<td align="left" colspan="1" rowspan="1">107.9</td>
+<td align="left" colspan="1" rowspan="1">21.0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">Congenital GH deficiency</td>
+<td align="left" colspan="1" rowspan="1">27</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">248</td>
+<td align="left" colspan="1" rowspan="1">216.2</td>
+<td align="left" colspan="1" rowspan="1">73.8</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">Nonsecreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">62</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">263</td>
+<td align="left" colspan="1" rowspan="1">39.3</td>
+<td align="left" colspan="1" rowspan="1">44.0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">14</td>
+<td align="left" colspan="1" rowspan="1">Sheehan's syndrome</td>
+<td align="left" colspan="1" rowspan="1">61</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">154</td>
+<td align="left" colspan="1" rowspan="1">970.3</td>
+<td align="left" colspan="1" rowspan="1">42.0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">Nonsecreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">43</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">202</td>
+<td align="left" colspan="1" rowspan="1">650.6</td>
+<td align="left" colspan="1" rowspan="1">24.7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">16</td>
+<td align="left" colspan="1" rowspan="1">Craniopharyngioma</td>
+<td align="left" colspan="1" rowspan="1">51</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">82</td>
+<td align="left" colspan="1" rowspan="1">1135.5</td>
+<td align="left" colspan="1" rowspan="1">n.d.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">Traumatic brain injury</td>
+<td align="left" colspan="1" rowspan="1">36</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">365</td>
+<td align="left" colspan="1" rowspan="1">656.7</td>
+<td align="left" colspan="1" rowspan="1">n.d.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">Traumatic brain injury</td>
+<td align="left" colspan="1" rowspan="1">57</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">233</td>
+<td align="left" colspan="1" rowspan="1">103.4</td>
+<td align="left" colspan="1" rowspan="1">118.2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">19</td>
+<td align="left" colspan="1" rowspan="1">Pinealoma</td>
+<td align="left" colspan="1" rowspan="1">46</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">430</td>
+<td align="left" colspan="1" rowspan="1">2833.3</td>
+<td align="left" colspan="1" rowspan="1">n.d.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">Nonsecreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">69</td>
+<td align="left" colspan="1" rowspan="1">M</td>
+<td align="left" colspan="1" rowspan="1">178</td>
+<td align="left" colspan="1" rowspan="1">62.1</td>
+<td align="left" colspan="1" rowspan="1">54.2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">21</td>
+<td align="left" colspan="1" rowspan="1">Isolated/idiopathic GH deficiency</td>
+<td align="left" colspan="1" rowspan="1">28</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">116</td>
+<td align="left" colspan="1" rowspan="1">68.5</td>
+<td align="left" colspan="1" rowspan="1">14.5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">22</td>
+<td align="left" colspan="1" rowspan="1">Secreting pituitary adenoma</td>
+<td align="left" colspan="1" rowspan="1">49</td>
+<td align="left" colspan="1" rowspan="1">F</td>
+<td align="left" colspan="1" rowspan="1">134</td>
+<td align="left" colspan="1" rowspan="1">3405.9</td>
+<td align="left" colspan="1" rowspan="1">2.2</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><p>n.d.:not determined.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2b">
+<title>Isolation of peripheral blood mononuclear cells (PBMCs)</title>
+<p>Twenty-four milliliters of blood were collected at each time of the study, and PBMCs were purified by Ficoll-Paque gradient centrifugation (Becton-Dickinson Vacutainer CPT). Cells were washed twice in HBSS, suspended in DPBS, adjusted at 10<sup>8</sup> cells/ml, and stored at −80°C. One million cells were used either for sjTREC or DβTREC measurements.</p>
+</sec><sec id="s2c">
+<title>TREC analyses</title>
+<p>Specific primers for the sjTRECs (δRec-ψJα), the 13 different DJβTRECs (Dβ1–Jβ1.1–Jβ1.6, and Dβ2–Jβ2.1–Jβ2.7), and the human CD3γ-chain have been previously defined (7,8). In order to amplify the Db2–Jb2.5 to Db2–Jb2.7 TRECs, a set of 3 additional reverse Jβ primers were added to the published ones with the following sequences: 2.5-out (<named-content content-type="gene" xlink:type="simple">5′-GCCGGGACCCGGCTCTCAGT-3′</named-content>), 2.5-in (<named-content content-type="gene" xlink:type="simple">5′-CGGCTCTCAGTGCTGGGTAA-3′</named-content>), 2.6-out (<named-content content-type="gene" xlink:type="simple">5′-TGACCAAGAGACCCAGTA-3′</named-content>), 2.6-in (<named-content content-type="gene" xlink:type="simple">5′-GTCTGGTTTTTGCGGGGAGT-3′</named-content>), 2.7-out (<named-content content-type="gene" xlink:type="simple">5′-TGACCGTGCTGGGTGAGTT-3′</named-content>), 2.7-in (<named-content content-type="gene" xlink:type="simple">5′-GGAGCTCGGGGAGCCTTA-3′</named-content>). All primers were purchased from Eurogentec (Seraing, Belgium). Three plasmids were used to generate standard curves for real-time quantitative PCR-based assay, each containing two inserted amplicons (CD3γ with either sjTREC, Dβ1–Jβ1.4, or Dβ2–Jβ2.3) amplified in the same run as experimental samples.</p>
+<p>Parallel quantification of each TREC together with the CD3γ amplicon was performed for each sample using LightCycler Technology (Roche Diagnostics, Basel, Switzerland). This protocol precisely measures the input DNA for quantification, thus providing an absolute number of TRECs per 10<sup>5</sup> cells. Approximately 10<sup>6</sup> PBMC were lyzed in Tween-20 (0.05%), Nonidet P-40 (NP-40, 0.05%), and proteinase K (100 µg/ml) for 30 min at 56°C, and for 15 min at 98°C. Multiplex PCR amplification was performed for sjTREC, together with the CD3γ chain, in 100 µl (10 min for initial denaturation at 95°C, 30 sec at 95°C, 30 sec at 60°C, 2 min at 72°C for 22 cycles) using the ‘outer’ 3′/5′ primer pairs. These PCR conditions were used for all subsequent experiments. Following the first round of amplification, PCR products were diluted 10-fold prior to online real-time amplification using LightCycler Technology. PCR conditions in LightCycler experiments were as follows: 1 min for initial denaturation at 95°C, 1 sec at 95°C, 15 sec at 60°C, 15 sec at 72°C for 40 cycles. Fluorescence measurements were performed at the end of the elongation steps. For each PCR product, the TREC and CD3γ second-round PCR quantifications were performed in separate capillaries and in independent LightCycler experiments, but quantified on the same first-round serially diluted standard curve. This highly sensitive nested quantitative PCR assay allows the detection of one copy per PCR reaction for each DNA circle. The results are expressed as absolute number of TRECs per 10<sup>5</sup> cells. The quantification of sjTREC frequencies was performed in duplicate.</p>
+<p>For DβTREC amplification, the first round was performed with 9 primers for different DβTREC amplification. The temperature and cycles were identical to sjTREC amplification. Light Cycler quantification of Dβ1-Jβ1TRECs and Dβ2-Jβ2TRECs were performed independently as described.</p>
+</sec><sec id="s2d">
+<title>IGF-1 measurement</title>
+<p>Serum IGF-1 concentrations were determined using a specific radioimmunoassay (BioSource, Nivelles, Belgium).</p>
+</sec><sec id="s2e">
+<title>Statistical analyses</title>
+<p>Differences between paired groups were assessed by Wilcoxon test. Spearman's test was used to assess correlation between two distinct parameters. Age- and IGF-1–dependency of sjTREC were fitted to an exponential regression model <xref ref-type="bibr" rid="pone.0005668-Geenen2">[6]</xref>. All statistical analyses were performed on GraphPad Prism4.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Plasma IGF-1 concentrations</title>
+<p>As shown in <xref ref-type="fig" rid="pone-0005668-g001">Fig. 1A</xref> and as expected, plasma IGF-1 concentrations significantly decreased one month after interruption of GH treatment in 21 out of 22 patients with GHDA. One month after reintroduction of GH supplementation, plasma IGF-1 concentrations significantly increased in 21 out of 22 patients to reach a level, which was similar to the one measured before stopping GH treatment. The most important decrease in plasma IGF-1 was observed in patient #19, a female (46 yr-old) with a surgically treated pinealoma.</p>
+<fig id="pone-0005668-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0005668.g001</object-id><label>Figure 1</label><caption>
+<title>Plasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.</title>
+<p>The interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P&lt;0.001 (by Wilcoxon's signed rank test, N = 22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R = 0.61, P&lt;0.01 by Spearman's analysis).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0005668.g001" xlink:type="simple"/></fig></sec><sec id="s3b">
+<title>sjTREC quantification</title>
+<p>In 19 out of 22 patients with GHDA, the arrest of treatment induced a significant decrease in sjTREC frequency, while GH resumption was followed by a significant rebound in the same patients (<xref ref-type="fig" rid="pone-0005668-g001">Fig. 1B</xref>). Two dramatic decreases were observed: the first patient (from 900 to 30 sjTREC/10<sup>5</sup> cells) was patient #4, a male (44 yr-old) with AGHD in the context of a treated HIV infection, the second patient (from 1000 to 2 sjTREC/10<sup>5</sup> cells) was patient #5, a female (57 yr-old) with a PRL-secreting adenoma that had been surgically treated. A significant positive correlation (P&lt;0.01) was observed between sjTREC levels and plasma IGF-1 concentrations (<xref ref-type="fig" rid="pone-0005668-g001">Fig. 1C</xref>).</p>
+</sec><sec id="s3c">
+<title>Relationship between age and sjTREC frequency (<xref ref-type="fig" rid="pone-0005668-g002">Fig. 2</xref>)</title>
+<fig id="pone-0005668-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0005668.g002</object-id><label>Figure 2</label><caption>
+<title>Relationship between age and sjTREC frequency in PBMCs from patients with AGHD.</title>
+<p>A. Under GH treatment (R = −0.35, P = 0.11). B. One month after GH withdrawal (R = −0.5, P = 0.02). C. One month after GH resumption (R = −0.55, P&lt;0.01).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0005668.g002" xlink:type="simple"/></fig>
+<p>There was no significant correlation between age and sjTREC levels in patients with AGHD under GH treatment since at least 2 years. After GH withdrawal during one month, age and sjTREC were negatively correlated (P&lt;0.02), as well as one month after GH resumption (P&lt;0.01).</p>
+</sec><sec id="s3d">
+<title>Quantification of sj/β TREC ratio</title>
+<p>Mean DJβTREC frequency was neither affected by GH withdrawal, nor by GH resumption (<xref ref-type="fig" rid="pone-0005668-g003">Fig. 3A</xref>). However, a significant decrease of the sj/β TREC ratio was associated with interruption of GH treatment (P&lt;0.01). One month after GH reintroduction, there was a tendency for sj/β ratio increase, but this did not reach the level measured before GH withdrawal (<xref ref-type="fig" rid="pone-0005668-g003">Fig. 3B</xref>).</p>
+<fig id="pone-0005668-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0005668.g003</object-id><label>Figure 3</label><caption>
+<title>Blood DβTREC frequency and sj/β TREC ratio.</title>
+<p>No significant modification was detected in blood DβTREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/β TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P&lt;0.01 (by Wilcoxon's signed rank test, N = 19).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0005668.g003" xlink:type="simple"/></fig></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>Until now, thymopoiesis has never been investigated in humans with AGHD, and only one study has investigated the impact of GH deficiency upon immune parameters in humans <xref ref-type="bibr" rid="pone.0005668-Sneppen1">[31]</xref>. Our results show that, in patients with well-documented GH deficiency, both the frequency of circulating sjTRECs (marker of thymic T cell output) in PBMCs and the sj/βTREC ratio (marker of intrathymic precursor T cell proliferation) are significantly decreased one month after GH withdrawal. Resumption of GH treatment for one month is sufficient to increase thymic T cell output to a level similar or close to the one measured before GH interruption. There was a significant negative correlation between age and sjTREC frequency one month after GH withdrawal, as well as one month after GH resumption. This negative correlation was not observed in AGHD patients treated by GH for at least two years. The age-related decline in thymopoiesis as reflected by a marked decrease in sjTREC in elderly is a common observation. The reason for the discrepancy observed in this study is unknown. It could be due to the rather small number of patients or to a time length of GH resumption insufficient to return to the situation observed before GH withdrawal. These results are not surprising given the vast amount of literature about the thymotropic effects and immunomodulating properties of GH and IGF-1 (extensive review in <xref ref-type="bibr" rid="pone.0005668-Dorshkind1">[17]</xref>). Immune defects in hypophysectomised or in <italic>Igf1</italic><sup>−/−</sup> deficient animals are partially or totally reversed by GH administration. While GH and IGF-1 are not essential for lymphopoiesis or lymphocyte effector function, they clearly appear to be immunostimulatory.</p>
+<p>Intrathymic T cell proliferation was also stimulated by GH treatment, but was not completely restored after one month of treatment. Although there is clear evidence that the magnitude of thymic output depends on the intrathymic proliferation of precursor T cells <xref ref-type="bibr" rid="pone.0005668-Dion1">[7]</xref>, <xref ref-type="bibr" rid="pone.0005668-Dulude1">[8]</xref>, our data show that GH treatment restores the frequency of recent thymic emigrants before the level of intrathymic T cell proliferation, suggesting that limited thymic output is sufficient to repopulate these subsets. Moreover, it is possible that changes in peripheral survival capacities in these subsets also participate to their reconstitution. Therefore, in patients with AGHD, GH treatment significantly affects thymus function and particularly the peripheral level of recent thymic emigrants.</p>
+<p>The close positive correlation observed between plasma IGF-1 concentrations and the frequency of sjTRECs in PBMCs argues for an important role of IGF-1 in mediating GH impact upon human thymic function as already suggested by others <xref ref-type="bibr" rid="pone.0005668-Napolitano2">[29]</xref>. Several groups have investigated the components of the IGF axis, including IGF binding proteins (IGFBPs), in the human thymus. Human thymic epithelial cells (TEC) predominantly express IGF-2 and IGFBP-2 to -6 <xref ref-type="bibr" rid="pone.0005668-Geenen3">[32]</xref>, <xref ref-type="bibr" rid="pone.0005668-Kecha1">[33]</xref>, while IGF-1 expression is restricted to scattered cells with a macrophage-like morphology and distribution <xref ref-type="bibr" rid="pone.0005668-Geenen3">[32]</xref>, <xref ref-type="bibr" rid="pone.0005668-Arkins1">[34]</xref>. Several lines of evidence also argue for IGF-1 expression by human TEC <xref ref-type="bibr" rid="pone.0005668-deMelloCoelho1">[35]</xref>. Human thymocytes express type 1 IGF receptor (IGF-1R) <xref ref-type="bibr" rid="pone.0005668-Kooijman1">[36]</xref>, and IGF-1 administration stimulates repopulation of the atrophic thymus in diabetic rats <xref ref-type="bibr" rid="pone.0005668-Binz1">[37]</xref>. IGF-1 also regenerates the thymus in a rat model of dexamethasone-induced thymic atrophy <xref ref-type="bibr" rid="pone.0005668-Hinton1">[38]</xref>. Furthermore, in murine fetal thymic organ cultures (FTOC), the treatment with anti-IGF-1R decreased the total T cell number by 81%, whereas murine FTOC treated with anti-M6P/IGF-2R displayed a smaller (31%) decrease in total T-cell number <xref ref-type="bibr" rid="pone.0005668-Kecha2">[39]</xref>. The same experimental model provided evidence that IGF-1 preferentially exerts mitogenic effects on most immature CD4−CD8− T cells, and inhibits commitment from the CD4−CD8− to the CD4+CD8+ stage. Therefore, it clearly appears that most of the GH thymotropic actions evidenced by others and by the present study are not a direct effect but are essentially mediated by local IGF-1 signaling between thymic stromal cells and precursor T cells during their differentiation in the thymus. Further supporting this view, a very recent study has elegantly demonstrated that exogenous IGF-1 increases peripheral naive and recent thymic emigrants populations, and that the control of thymic function predominantly involves TEC expansion regulating thymocyte precursor entry and facilitating intrathymic T-cell proliferation <xref ref-type="bibr" rid="pone.0005668-Chu1">[40]</xref>. Interestingly, the effects reported in that study were observed after IGF-1 administration for 14 days, a time period which suggests that IGF-1 thymotropic action needs intervention of local intrathymic mediators. Such findings raise the question about the mediation of cytokines/chemokines produced by TEC and whose identity remains to be further deciphered although interleukin 7 (IL-7), a cytokine constitutively produced by TEC, appears as one plausible candidate <xref ref-type="bibr" rid="pone.0005668-Sportes1">[41]</xref>.</p>
+<p>The impact of GH on the intrathymic generation of TCR diversity may also be addressed though this question was not addressed in our study. This is however a very important question, and a recent study nicely showed that infusion of ghrelin, a natural GH secretagogue, into old mice reverses the age-related changes in thymic morphology and thymocyte numbers, but also increases thymic output of naive T cells and improves TCR diversity of peripheral T cell subpopulations <xref ref-type="bibr" rid="pone.0005668-Dixit1">[27]</xref>. Although the extrapolation of data collected from animal models to humans must be cautioned against, those findings strongly suggest that the use of GH and/or GH secretagogues should be considered in the future for restoring an important set of thymic functions that are compromised by aging. The process of immunosenescence is known to be associated with reduced thymopoiesis and TCR oligoclonality. The conjunction of these two phenomena is a major factor implicated in the well-known susceptibility of seniors to infectious diseases, as well as the decline in their immune response to different prophylactic vaccines. There is less and less doubt that endocrine-based therapies aimed at enhancing thymic function might be of very great help in the future to correct this age-related decline in immunocompetence and to assist senior people in their fight against infectious diseases.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0005668.s001" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0005668.s001" xlink:type="simple"><label>Checklist S1</label><caption>
+<p>CONSORT checklist</p>
+<p>(0.05 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0005668.s002" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0005668.s002" xlink:type="simple"><label>Protocol S1</label><caption>
+<p>Trial Protocol</p>
+<p>(0.03 MB DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank all patients included in this study for their participations. We are grateful to Elisabeth Lallemand for blood sample collection. We are grateful to J.M.McCune for his helpful comments.</p>
+<p><bold>Note</bold></p>
+<p>This study has been selected for oral presentation at the 2009 Meeting of the Endocrine Society - Washington, DC</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0005668-Douek1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Douek</surname><given-names>DC</given-names></name>
+<name name-style="western"><surname>McFarland</surname><given-names>RD</given-names></name>
+<name name-style="western"><surname>Keiser</surname><given-names>PH</given-names></name>
+<name name-style="western"><surname>Gage</surname><given-names>EA</given-names></name>
+<name name-style="western"><surname>Massey</surname><given-names>JM</given-names></name>
+<etal/></person-group>             <year>1998</year>             <article-title>Changes in thymic function with age and during the treatment of HIV infection.</article-title>             <source>Nature</source>             <volume>396</volume>             <fpage>690</fpage>             <lpage>695</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Kong1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kong</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>CH</given-names></name>
+<name name-style="western"><surname>Cooper</surname><given-names>MD</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Thymic function can be accurately monitored by the level of recent T cell emigrants in the circulation.</article-title>             <source>Immunity</source>             <volume>8</volume>             <fpage>97</fpage>             <lpage>104</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Kong2"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kong</surname><given-names>FK</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Cooper</surname><given-names>MD</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Reversible disruption of thymic function by steroid treatment.</article-title>             <source>J Immunol</source>             <volume>168</volume>             <fpage>6500</fpage>             <lpage>6505</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Poulin1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Poulin</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Viswanathan</surname><given-names>MN</given-names></name>
+<name name-style="western"><surname>Harris</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Komanduri</surname><given-names>KV</given-names></name>
+<name name-style="western"><surname>Wieder</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>1999</year>             <article-title>Direct evidence for thymic function in adult humans.</article-title>             <source>J Exp Med</source>             <volume>190</volume>             <fpage>479</fpage>             <lpage>486</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Geenen1"><label>5</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Geenen</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Brilot</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Hansenne</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Louis</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Charlet-Renard</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>The central role of the thymus in the development of self-tolerance and autoimmunity in the neuroendocrine system.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Geenen</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Chrousos</surname><given-names>G</given-names></name>
+</person-group>             <source>Immunoendocrinology in health and disease. 1st ed</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Marcel Dekker</publisher-name>             <fpage>337</fpage>             <lpage>356</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Geenen2"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Geenen</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Poulin</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Dion</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Martens</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Castermans</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Quantification of T cell receptor rearrangement excision circles to estimate thymic function: an important new tool for endocrine-immune physiology.</article-title>             <source>J Endocrinol</source>             <volume>176</volume>             <fpage>305</fpage>             <lpage>311</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Dion1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dion</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Poulin</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Bordi</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Sylvestre</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Corsini</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>HIV infection rapidly induces and maintains a substantial suppression of thymocyte proliferation.</article-title>             <source>Immunity</source>             <volume>21</volume>             <fpage>757</fpage>             <lpage>768</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Dulude1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dulude</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Cheynier</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Gauchat</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Abdallah</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Kettaf</surname><given-names>N</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>The magnitude of thymic output is genetically determined through controlled intrathymic precursor T cell proliferation.</article-title>             <source>J Immunol</source>             <volume>181</volume>             <fpage>7818</fpage>             <lpage>7824</lpage>          </element-citation></ref>
+<ref id="pone.0005668-vandenDool1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>van den Dool</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>de Boer</surname><given-names>RJ</given-names></name>
+</person-group>             <year>2006</year>             <article-title>The effects of age, thymectomy, and HIV Infection on alpha and beta TCR excision circles in naive T cells.</article-title>             <source>J Immunol</source>             <volume>177</volume>             <fpage>4391</fpage>             <lpage>4401</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Castermans1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Castermans</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Baron</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Willems</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Schaaf-Lafontaine</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Meuris</surname><given-names>N</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Evidence for neo-generation of T cells by the thymus after non-myeloablative conditioning.</article-title>             <source>Haematologica</source>             <volume>93</volume>             <fpage>240</fpage>             <lpage>247</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Leonard1"><label>11</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Leonard</surname><given-names>W</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Type I cytokines and interferons and their receptors.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Paul</surname><given-names>W</given-names></name>
+</person-group>             <source>Fundamental Immunology. 5th ed</source>             <publisher-loc>Philadelphia</publisher-loc>             <publisher-name>Lippincott Williams &amp; Wilkins</publisher-name>             <fpage>701</fpage>             <lpage>747</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Redelman1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Redelman</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Welniak</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Taub</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Murphy</surname><given-names>WJ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Neuroendocrine hormones such as growth hormone and prolactin are integral members of the immunological cytokine network.</article-title>             <source>Cell Immunol</source>             <volume>252</volume>             <fpage>111</fpage>             <lpage>121</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Smith1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>P</given-names></name>
+</person-group>             <year>1930</year>             <article-title>Effects of hypophysectomy upon involution of the thymus in the rat.</article-title>             <source>Anatomy Record</source>             <volume>47</volume>             <fpage>119</fpage>             <lpage>129</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Pierpaoli1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pierpaoli</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Sorkin</surname><given-names>E</given-names></name>
+</person-group>             <year>1968</year>             <article-title>Hormones and immunologic capacity. I. Effect of heterologous anti-growth hormone (ASTH) antiserum on thymus and peripheral lymphatic tissue in mice. Induction of a wasting syndrome.</article-title>             <source>J Immunol</source>             <volume>101</volume>             <fpage>1036</fpage>             <lpage>1043</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Kelley1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kelley</surname><given-names>KW</given-names></name>
+<name name-style="western"><surname>Brief</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Westly</surname><given-names>HJ</given-names></name>
+<name name-style="western"><surname>Novakofski</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Bechtel</surname><given-names>PJ</given-names></name>
+<etal/></person-group>             <year>1986</year>             <article-title>GH3 pituitary adenoma cells can reverse thymic aging in rats.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>83</volume>             <fpage>5663</fpage>             <lpage>5667</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Murphy1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Murphy</surname><given-names>WJ</given-names></name>
+<name name-style="western"><surname>Durum</surname><given-names>SK</given-names></name>
+<name name-style="western"><surname>Longo</surname><given-names>DL</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Differential effects of growth hormone and prolactin on murine T cell development and function.</article-title>             <source>J Exp Med</source>             <volume>178</volume>             <fpage>231</fpage>             <lpage>236</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Dorshkind1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dorshkind</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Horseman</surname><given-names>ND</given-names></name>
+</person-group>             <year>2000</year>             <article-title>The roles of prolactin, growth hormone, insulin-like growth factor-I, and thyroid hormones in lymphocyte development and function: insights from genetic models of hormone and hormone receptor deficiency.</article-title>             <source>Endocr Rev</source>             <volume>21</volume>             <fpage>292</fpage>             <lpage>312</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Dorshkind2"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dorshkind</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Horseman</surname><given-names>ND</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Anterior pituitary hormones, stress, and immune system homeostasis.</article-title>             <source>Bioessays</source>             <volume>23</volume>             <fpage>288</fpage>             <lpage>294</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Foster1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Foster</surname><given-names>MP</given-names></name>
+<name name-style="western"><surname>Jensen</surname><given-names>ER</given-names></name>
+<name name-style="western"><surname>Montecino-Rodriguez</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Leathers</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Horseman</surname><given-names>N</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Humoral and cell-mediated immunity in mice with genetic deficiencies of prolactin, growth hormone, insulin-like growth factor-I, and thyroid hormone.</article-title>             <source>Clin Immunol</source>             <volume>96</volume>             <fpage>140</fpage>             <lpage>149</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Herrington1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Herrington</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Smit</surname><given-names>LS</given-names></name>
+<name name-style="western"><surname>Schwartz</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Carter-Su</surname><given-names>C</given-names></name>
+</person-group>             <year>2000</year>             <article-title>The role of STAT proteins in growth hormone signaling.</article-title>             <source>Oncogene</source>             <volume>19</volume>             <fpage>2585</fpage>             <lpage>2597</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Stocklin1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stocklin</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Wissler</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Gouilleux</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Groner</surname><given-names>B</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Functional interactions between Stat5 and the glucocorticoid receptor.</article-title>             <source>Nature</source>             <volume>383</volume>             <fpage>726</fpage>             <lpage>728</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Taub1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Taub</surname><given-names>DD</given-names></name>
+<name name-style="western"><surname>Tsarfaty</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Lloyd</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Durum</surname><given-names>SK</given-names></name>
+<name name-style="western"><surname>Longo</surname><given-names>DL</given-names></name>
+<etal/></person-group>             <year>1994</year>             <article-title>Growth hormone promotes human T cell adhesion and migration to both human and murine matrix proteins in vitro and directly promotes xenogeneic engraftment.</article-title>             <source>J Clin Invest</source>             <volume>94</volume>             <fpage>293</fpage>             <lpage>300</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Clark1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Clark</surname><given-names>R</given-names></name>
+</person-group>             <year>1997</year>             <article-title>The somatogenic hormones and insulin-like growth factor-1: stimulators of lymphopoiesis and immune function.</article-title>             <source>Endocr Rev</source>             <volume>18</volume>             <fpage>157</fpage>             <lpage>179</lpage>          </element-citation></ref>
+<ref id="pone.0005668-MontecinoRodriguez1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Montecino-Rodriguez</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Clark</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Dorshkind</surname><given-names>K</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Effects of insulin-like growth factor administration and bone marrow transplantation on thymopoiesis in aged mice.</article-title>             <source>Endocrinology</source>             <volume>139</volume>             <fpage>4120</fpage>             <lpage>4126</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Savino1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Savino</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Dardenne</surname><given-names>M</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Neuroendocrine control of thymus physiology.</article-title>             <source>Endocr Rev</source>             <volume>21</volume>             <fpage>412</fpage>             <lpage>443</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Savino2"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Savino</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Postel-Vinay</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Smaniotto</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Dardenne</surname><given-names>M</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The thymus gland: a target organ for growth hormone.</article-title>             <source>Scand J Immunol</source>             <volume>55</volume>             <fpage>442</fpage>             <lpage>452</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Dixit1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dixit</surname><given-names>VD</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Sun</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Weeraratna</surname><given-names>AT</given-names></name>
+<name name-style="western"><surname>Youm</surname><given-names>YH</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Ghrelin promotes thymopoiesis during aging.</article-title>             <source>J Clin Invest</source>             <volume>117</volume>             <fpage>2778</fpage>             <lpage>2790</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Napolitano1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Napolitano</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Lo</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Gotway</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Mulligan</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Barbour</surname><given-names>JD</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Increased thymic mass and circulating naive CD4 T cells in HIV-1-infected adults treated with growth hormone.</article-title>             <source>Aids</source>             <volume>16</volume>             <fpage>1103</fpage>             <lpage>1111</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Napolitano2"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Napolitano</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Schmidt</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Gotway</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Ameli</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Filbert</surname><given-names>EL</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Growth hormone enhances thymic function in HIV-1-infected adults.</article-title>             <source>J Clin Invest</source>             <volume>118</volume>             <fpage>1085</fpage>             <lpage>1098</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Molitch1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Molitch</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Clemmons</surname><given-names>DR</given-names></name>
+<name name-style="western"><surname>Malozowski</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Merriam</surname><given-names>GR</given-names></name>
+<name name-style="western"><surname>Shalet</surname><given-names>SM</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society Clinical Practice Guideline.</article-title>             <source>J Clin Endocrinol Metab</source>             <volume>91</volume>             <fpage>1621</fpage>             <lpage>1634</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Sneppen1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sneppen</surname><given-names>SB</given-names></name>
+<name name-style="western"><surname>Mersebach</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Ullum</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Feldt-Rasmussen</surname><given-names>U</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Immune function during GH treatment in GH-deficient adults: an 18-month randomized, placebo-controlled, double-blinded trial.</article-title>             <source>Clin Endocrinol (Oxf)</source>             <volume>57</volume>             <fpage>787</fpage>             <lpage>792</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Geenen3"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Geenen</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Achour</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Robert</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Vandersmissen</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Sodoyez</surname><given-names>JC</given-names></name>
+<etal/></person-group>             <year>1993</year>             <article-title>Evidence that insulin-like growth factor 2 (IGF2) is the dominant thymic peptide of the insulin superfamily.</article-title>             <source>Thymus</source>             <volume>21</volume>             <fpage>115</fpage>             <lpage>127</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Kecha1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kecha</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Martens</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Franchimont</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Achour</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Hazee-Hagelstein</surname><given-names>MT</given-names></name>
+<etal/></person-group>             <year>1999</year>             <article-title>Characterization of the insulin-like growth factor axis in the human thymus.</article-title>             <source>J Neuroendocrinol</source>             <volume>11</volume>             <fpage>435</fpage>             <lpage>440</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Arkins1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Arkins</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Rebeiz</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Biragyn</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Reese</surname><given-names>DL</given-names></name>
+<name name-style="western"><surname>Kelley</surname><given-names>KW</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Murine macrophages express abundant insulin-like growth factor-I class I Ea and Eb transcripts.</article-title>             <source>Endocrinology</source>             <volume>133</volume>             <fpage>2334</fpage>             <lpage>2343</lpage>          </element-citation></ref>
+<ref id="pone.0005668-deMelloCoelho1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>de Mello Coelho</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Villa-Verde</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Farias-de-Oliveira</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>de Brito</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Dardenne</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Functional insulin-like growth factor-1/insulin-like growth factor-1 receptor-mediated circuit in human and murine thymic epithelial cells.</article-title>             <source>Neuroendocrinology</source>             <volume>75</volume>             <fpage>139</fpage>             <lpage>150</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Kooijman1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kooijman</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Scholtens</surname><given-names>LE</given-names></name>
+<name name-style="western"><surname>Rijkers</surname><given-names>GT</given-names></name>
+<name name-style="western"><surname>Zegers</surname><given-names>BJ</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Type I insulin-like growth factor receptor expression in different developmental stages of human thymocytes.</article-title>             <source>J Endocrinol</source>             <volume>147</volume>             <fpage>203</fpage>             <lpage>209</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Binz1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Binz</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Joller</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Froesch</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Binz</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Zapf</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>1990</year>             <article-title>Repopulation of the atrophied thymus in diabetic rats by insulin-like growth factor I.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>87</volume>             <fpage>3690</fpage>             <lpage>3694</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Hinton1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hinton</surname><given-names>PS</given-names></name>
+<name name-style="western"><surname>Peterson</surname><given-names>CA</given-names></name>
+<name name-style="western"><surname>Dahly</surname><given-names>EM</given-names></name>
+<name name-style="western"><surname>Ney</surname><given-names>DM</given-names></name>
+</person-group>             <year>1998</year>             <article-title>IGF-I alters lymphocyte survival and regeneration in thymus and spleen after dexamethasone treatment.</article-title>             <source>Am J Physiol</source>             <volume>274</volume>             <fpage>R912</fpage>             <lpage>920</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Kecha2"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kecha</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Brilot</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Martens</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Franchimont</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Renard</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Involvement of insulin-like growth factors in early T cell development: a study using fetal thymic organ cultures.</article-title>             <source>Endocrinology</source>             <volume>141</volume>             <fpage>1209</fpage>             <lpage>1217</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Chu1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chu</surname><given-names>YW</given-names></name>
+<name name-style="western"><surname>Schmitz</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Choudhury</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Telford</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Kapoor</surname><given-names>V</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Exogenous insulin-like growth factor 1 enhances thymopoiesis predominantly through thymic epithelial cell expansion.</article-title>             <source>Blood</source>             <volume>112</volume>             <fpage>2836</fpage>             <lpage>2846</lpage>          </element-citation></ref>
+<ref id="pone.0005668-Sportes1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sportes</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Hakim</surname><given-names>FT</given-names></name>
+<name name-style="western"><surname>Memon</surname><given-names>SA</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Chua</surname><given-names>KS</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Administration of rhIL-7 in humans increases in vivo TCR repertoire diversity by preferential expansion of naive T cell subsets.</article-title>             <source>J Exp Med</source>             <volume>205</volume>             <fpage>1701</fpage>             <lpage>1714</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

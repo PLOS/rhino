@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="review-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">10-PONE-RW-16785R1</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0012008</article-id><article-categories><subj-group subj-group-type="heading"><subject>Review</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Marine and Aquatic Sciences</subject><subject>Marine and Aquatic Sciences/Biological Oceanography</subject><subject>Marine and Aquatic Sciences/Historical Biology</subject></subj-group></article-categories><title-group><article-title>Marine Biodiversity in South Africa: An Evaluation of Current States of Knowledge</article-title><alt-title alt-title-type="running-head">Marine Biodiversity S. Africa</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Griffiths</surname><given-names>Charles L.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Robinson</surname><given-names>Tamara B.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Lange</surname><given-names>Louise</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mead</surname><given-names>Angela</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Zoology Department, Marine Biology Research Centre, University of Cape Town, Rondebosch, South Africa</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Zoology Department, Centre for Invasion Biology, University of Cape Town, Rondebosch, South Africa</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Gratwicke</surname><given-names>Brian</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Smithsonian's National Zoological Park, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">Charles.Griffiths@uct.ac.za</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2010</year></pub-date><pub-date pub-type="epub"><day>2</day><month>8</month><year>2010</year></pub-date><volume>5</volume><issue>8</issue><elocation-id>e12008</elocation-id><history>
+<date date-type="received"><day>23</day><month>2</month><year>2010</year></date>
+<date date-type="accepted"><day>7</day><month>7</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Griffiths et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Continental South Africa has a coastline of some 3,650 km and an Exclusive Economic Zone (EEZ) of just over 1 million km<sup>2</sup>. Waters in the EEZ extend to a depth of 5,700 m, with more than 65% deeper than 2,000 m. Despite its status as a developing nation, South Africa has a relatively strong history of marine taxonomic research and maintains comprehensive and well-curated museum collections totaling over 291,000 records. Over 3 million locality records from more than 23,000 species have been lodged in the regional AfrOBIS (African Ocean Biogeographic Information System) data center (which stores data from a wider African region). A large number of regional guides to the marine fauna and flora are also available and are listed.</p>
+<p>The currently recorded marine biota of South Africa numbers at least 12,914 species, although many taxa, particularly those of small body size, remain poorly documented. The coastal zone is relatively well sampled with some 2,500 samples of benthic invertebrate communities have been taken by grab, dredge, or trawl. Almost none of these samples, however, were collected after 1980, and over 99% of existing samples are from depths shallower than 1,000 m—indeed 83% are from less than 100 m. The abyssal zone thus remains almost completely unexplored.</p>
+<p>South Africa has a fairly large industrial fishing industry, of which the largest fisheries are the pelagic (pilchard and anchovy) and demersal (hake) sectors, both focused on the west and south coasts. The east coast has fewer, smaller commercial fisheries, but a high coastal population density, resulting in intense exploitation of inshore resources by recreational and subsistence fishers, and this has resulted in the overexploitation of many coastal fish and invertebrate stocks. South Africa has a small aquaculture industry rearing mussels, oysters, prawns, and abalone—the latter two in land-based facilities.</p>
+<p>Compared with many other developing countries, South Africa has a well-conserved coastline, 23% of which is under formal protection, however deeper waters are almost entirely excluded from conservation areas. Marine pollution is confined mainly to the densely populated KwaZulu-Natal coast and the urban centers of Cape Town and Port Elizabeth. Over 120 introduced or cryptogenic marine species have been recorded, but most of these are confined to the few harbors and sheltered sites along the coast.</p>
+</abstract><funding-group><funding-statement>This work was funded by the South African National Research Foundation (NRF) and the Census of Marine Life (CoML). While the funders had no direct role in study design, data collection and analysis or preparation of the manuscript, the decision to publish in this journal was prescribed by CoML, as this is a carefully structured collection.</funding-statement></funding-group><counts><page-count count="13"/></counts></article-meta>
+</front>
+<body><sec id="s2">
+<title>Introduction</title>
+<p>In relation to its land area, South Africa has a short, linear coastline of 3,650 km (<xref ref-type="fig" rid="pone-0012008-g001">Figure 1</xref>). The South Africa Exclusive Economic Zone (EEZ) has a total area of 1,535,539 km<sup>2</sup>, of which 466,879 km<sup>2</sup> surrounds the Prince Edward Islands–South African territories situated in the Southern Ocean and not considered in this analysis. The EEZ surrounding continental South Africa itself (<xref ref-type="fig" rid="pone-0012008-g002">Figure 2</xref>) thus has an area of 1,068,659 km<sup>2</sup>, slightly less than the land area of the country, which is 1,221,037 km<sup>2</sup>. The EEZ extends to a maximum depth of 5,700 m and is divided about one-third into the Atlantic Ocean and two-thirds into the Indian Ocean. The continental shelf is narrow along the east (Indian Ocean) coast, but much wider to the west (Atlantic coast) and especially to the south, where it extends into the large, shallow Agulhas Bank. The depth distribution of the South African EEZ is depicted in <xref ref-type="fig" rid="pone-0012008-g003">Figure 3</xref>. Only some 25% of the seafloor lies in depths shallower than 1,000 m, with the largest single 100 m depth stratum being 100–200 m, which alone comprises 10% of the entire EEZ. Depths greater than 2,000 m make up 65% of the EEZ, and this region has been subject to extremely little biological sampling (see below).</p>
+<fig id="pone-0012008-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g001</object-id><label>Figure 1</label><caption>
+<title>Map of South Africa showing place names mentioned in the text, major current systems, and position of the continental shelf break.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g001" xlink:type="simple"/></fig><fig id="pone-0012008-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g002</object-id><label>Figure 2</label><caption>
+<title>Map showing seafloor depths and the boundaries of South Africa's continental Exclusive Economic Zone (EEZ).</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g002" xlink:type="simple"/></fig><fig id="pone-0012008-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g003</object-id><label>Figure 3</label><caption>
+<title>Area occupied by each 100 m depth zone within the South African continental EEZ.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g003" xlink:type="simple"/></fig><sec id="s2a">
+<title>Oceanographic regime</title>
+<p>The oceanographic regime around South Africa is dominated by two major current systems: the cold Benguela Current along the Atlantic coast to the west and the warm Agulhas Current along the Indian Ocean coast to the east. The Benguela Current has two components. An offshore oceanic flow forms the eastern limb of the South Atlantic Subtropical Gyre and has a broad, sluggish, equatorward flow of only 0.1–0.3 m s<sup>−1</sup> <xref ref-type="bibr" rid="pone.0012008-Shannon1">[1]</xref>. Inshore of this a coastal component exhibits dynamic wind-driven upwelling, which is strongly modulated by local weather systems, resulting in short-term upwelling cycles with a periodicity of 5–10 days. Upwelling is concentrated in distinct upwelling cells and occurs predominatly in the austral spring and summer <xref ref-type="bibr" rid="pone.0012008-Shannon2">[2]</xref>. Offshore, mean monthly sea surface temperatures range from 15.4°C to 20.1°C <xref ref-type="bibr" rid="pone.0012008-TauntonClark1">[3]</xref>, but in the nearshore upwelling region, variability is greater and temperatures range from 10°C to 18°C <xref ref-type="bibr" rid="pone.0012008-Shannon3">[4]</xref>. Intense upwelling along the west coast results in high biological productivity, which in turn supports large fish stocks, including pilchard, anchovy, hake, and rock lobster, each forming the basis for lucrative commercial fisheries. Much of the organic matter associated with this high productivity sinks onto the relatively wide continental shelf, where decay results in the reduction of dissolved oxygen in bottom waters <xref ref-type="bibr" rid="pone.0012008-Bailey1">[5]</xref>. Periodically, these low-oxygen conditions extend close inshore, sometimes reaching the shoreline itself and resulting in mass mortalities of fish, rock lobster, and other invertebrates <xref ref-type="bibr" rid="pone.0012008-Cockcroft1">[6]</xref>.</p>
+<p>Along the east coast, the warm Agulhas Current brings nutrient-poor, tropical waters southward from the equatorial Indian Ocean. The current is strongest and warmest at the shelf break, where surface waters flow at up to 2 m s<sup>−1</sup> and temperatures vary from 20°C to 28°C, depending on season <xref ref-type="bibr" rid="pone.0012008-Lutjeharms1">[7]</xref>. Off northern KwaZulu-Natal, the current flows close inshore, but it moves farther offshore as the shelf widens off Durban <xref ref-type="bibr" rid="pone.0012008-Schumann1">[8]</xref>. South of East London it finally moves well offshore, following the edge of the Agulhas Bank <xref ref-type="bibr" rid="pone.0012008-Grundlingh1">[9]</xref> and eventually retroflects south of the country. Intermittently, current reversals result in inshore pockets of cooler water flowing northward, parallel to the coast <xref ref-type="bibr" rid="pone.0012008-Lutjeharms1">[7]</xref>. These are less predictable farther eastward, but are marked and frequent on the south coast between Cape Agulhas and Port Elizabeth. Close to shore, warm surface layers overlie cool bottom waters during summer <xref ref-type="bibr" rid="pone.0012008-Schumann2">[10]</xref>, but this marked stratification is broken down by winter storms. Periodically, parts of the south coast experience local, wind-driven upwelling of cool bottom water, while the fast flow of the current itself drives upwelling of deep waters, where the shelf widens to form the Agulhas Bank <xref ref-type="bibr" rid="pone.0012008-Lutjeharms2">[11]</xref>. Productivity on this coast is low and there are few commercial fisheries, although human poulation density is high, resulting in intense pressure on coastal marine resources.</p>
+<p>The region between Cape Agulhas and Cape Point is regarded as a region of overlap between south coast and west coast oceanographic regimes. At the point of retroflection of the Agulhas Current, large (∼200–300 km diameter), anticyclonic eddies, termed Agulhas Rings, pinch off into the South Atlantic Ocean <xref ref-type="bibr" rid="pone.0012008-Lutjeharms3">[12]</xref>. About six such eddies occur per year <xref ref-type="bibr" rid="pone.0012008-DeRuijter1">[13]</xref>, transporting Indian Ocean water in a northwesterly direction into the Benguela system at 0.05–0.08 m s<sup>−1</sup> <xref ref-type="bibr" rid="pone.0012008-Shannon1">[1]</xref>.</p>
+</sec><sec id="s2b">
+<title>The coastline</title>
+<p>The South African coastline is 3,650 km in length <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref>, almost linear in outline, and strongly wave exposed, particularly in the southwest, where peak wave heights exceed 6 m for 10% of the time <xref ref-type="bibr" rid="pone.0012008-Shillington1">[15]</xref>. There is a simple semidiurnal tidal regime, with spring-tide amplitude 2–2.5 m and neap-tide range about 1 m <xref ref-type="bibr" rid="pone.0012008-Field1">[16]</xref>. Of the few significant bays and inlets on the South African coast, only the Saldanha Bay–Langebaan Lagoon system offers significant shelter along the west coast. Although a number of large, shallow, lunate bays exist on the east coast (e.g., Algoa Bay), False Bay is the only bay along this entire coast deep enough to offer significant shelter from wave exposure. Nonetheless, the many minor rocky headlands offer isolated areas of relative calm, resulting in contrasting wave exposure levels at a local scale <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref>. The southern African shoreline consists of approximately 27% rocky shore, 42% sandy beach, and 31% mixed shore—these mostly comprising sand on the upper shore, above a wave-cut rocky platform <xref ref-type="bibr" rid="pone.0012008-Bally1">[17]</xref>.</p>
+<p>There are some 343 estuaries along the South African coast, 292 of which lie along the wetter Indian Ocean coastline. Due to generally low and seasonally variable rainfall, most of these systems are small and seasonally closed. Permanently open estuaries are rare, although the few that do exist support important estuarine habitats <xref ref-type="bibr" rid="pone.0012008-Whitfield1">[18]</xref>. A group of relatively large, shallow saline lakes and lagoons lie along the northern KwaZulu-Natal coast, the largest of which, Lake St. Lucia, covers 300 km<sup>2</sup> and is the most extensive and best studied estuarine system in the region.</p>
+</sec><sec id="s2c">
+<title>Biogeography</title>
+<p>Many studies have analyzed marine biogeography around the South African coast, and each has recognized between two and five broad coastal biogeographic provinces, with some discrepancies regarding the naming of these areas, levels of dissimilarity between regions, region boundaries, and the recognition of overlap zones <xref ref-type="bibr" rid="pone.0012008-Stephenson1">[19]</xref>, <xref ref-type="bibr" rid="pone.0012008-Stephenson2">[20]</xref>, <xref ref-type="bibr" rid="pone.0012008-Stephenson3">[21]</xref>, <xref ref-type="bibr" rid="pone.0012008-Stephenson4">[22]</xref>, <xref ref-type="bibr" rid="pone.0012008-Brown1">[23]</xref>, <xref ref-type="bibr" rid="pone.0012008-Emanuel1">[24]</xref>, <xref ref-type="bibr" rid="pone.0012008-Stegenga1">[25]</xref>, <xref ref-type="bibr" rid="pone.0012008-Bustamante1">[26]</xref>, <xref ref-type="bibr" rid="pone.0012008-Bolton1">[27]</xref>, <xref ref-type="bibr" rid="pone.0012008-Turpie1">[28]</xref>, <xref ref-type="bibr" rid="pone.0012008-Sink1">[29]</xref>, <xref ref-type="bibr" rid="pone.0012008-Bolton2">[30]</xref>. A recent national assessment of marine biodiversity in South Africa has synthesized all existing information and, through extensive expert input, has defined nine marine bioregions, which incorporate both the previously recognized coastal and newly delimited offshore zones, as shown in <xref ref-type="fig" rid="pone-0012008-g004">Figure 4</xref> <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref>. Note that while these coastal bioregions have been well defined by means of detailed faunistic and floristic analyses, the offshore regions are defined largely by physical criteria (e.g., temperature, depth, substratum).</p>
+<fig id="pone-0012008-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g004</object-id><label>Figure 4</label><caption>
+<title>South Africa's nine marine bioregions, as defined by Lombard <xref ref-type="bibr" rid="pone.0012008-Lombard1">[<bold>14</bold>]</xref>.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g004" xlink:type="simple"/></fig>
+<p>In this classification, the coastline is divided into five regions. The cool-temperate <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/916206" xlink:type="simple">Namaqua</ext-link> Bioregion of the west coast and warm-temperate Agulhas Bioregion of the south coast are separated by a broad overlap zone, termed the South-western Cape Bioregion. On the east coast the subtropical Natal Bioregion, merges in the far north of the country into the tropical Delagoa Bioregion, which extends northward into Mozambique. The classification of the offshore environment recognizes four distinct areas. The Atlantic Offshore Bioregion extends from Namibia to Cape Agulhas, while the West Indian Offshore Bioregion includes the continental slopes of the south and east coasts, meeting the tropical South-west Indian Offshore Bioregion in northern KwaZulu-Natal. A deep-water Indio-Pacific Offshore Bioregion includes the abyss of the entire east coast. It must be stressed that within each of these bioregions there certainly exist a variety of localized habitats (e.g., reef, sand, mud), each with their own distinctive biota. Also the boundaries of the offshore bioregions are based on minimal biological sampling and hence may be revised as more quantitative biological field data become available.</p>
+</sec><sec id="s2d">
+<title>History of exploration</title>
+<p>The history of systematic research and exploration in South Africa for virtually all taxa can be divided into three eras <xref ref-type="bibr" rid="pone.0012008-Linder1">[31]</xref>. The first, termed the “colonial” phase, was characterized by expeditions that collected specimens from the colonies and shipped them to museums in Europe, where they were cataloged and described, often in beautifully illustrated volumes. The first such dedicated marine collections along South African shores were undertaken in the late 1700s by Carl Peter Thunberg, a student of Carl Linnaeus <xref ref-type="bibr" rid="pone.0012008-Day1">[32]</xref>. These were followed by numerous other collections made by adventurers and naturalists visiting the coasts of Natal and the Cape of Good Hope, and by the great global ocean expeditions, such as the <italic>Challenger</italic>, <italic>Deutschen Tiefsee</italic>, and <italic>Discovery</italic>. The second or “descriptive” phase of research and exploration was dominated by descriptive work, carried out largely, but not exclusively, at South African institutions. In the marine field, this era really began in 1895 with the appointment of J.D.F. Gilchrist as state marine biologist and later as curator at the South African Museum. As a result of his work, and that of his followers, notably the prodigious K.H. Barnard, most common South African marine invertebrate and fish taxa had been fairly well cataloged by the 1970s (see <xref ref-type="supplementary-material" rid="pone.0012008.s001">Text S1</xref>). From this point, we enter the third or “modern” phase, in which workers began concentrating more on phylogenetic and biological questions and on ecological understanding. A number of important taxa still remain poorly described, and much descriptive work still needs to be done (even within what are regarded as relatively well studied groups). Moreover, our knowledge of the biota of deep-sea environments still remains fragmentary, as will be detailed below.</p>
+<p>The most recent development in the field of marine biodiversity has been the Census of Marine Life (Census) program, which has a Sub-Saharan Africa Regional Implementation Committee. This was established in 2003, with the aim of enhancing knowledge about the diversity and distribution of marine life around the African continent—indeed this review is one of the products from that group. The African Census group is supported by a regional data node within the Ocean Biogeographic Information System (OBIS). The AfrOBIS node was set up in 2005 and already holds more than 3.2 million records of more than 23,000 species, the vast majority of these from the seas around Namibia, South Africa, and Mozambique <xref ref-type="bibr" rid="pone.0012008-Grundlingh2">[33]</xref>. Only those records from within the political boundaries of South Africa are considered in the more detailed analyses below.</p>
+</sec></sec><sec id="s3" sec-type="methods">
+<title>Methods</title>
+<sec id="s3a">
+<title>Research capacity</title>
+<p>South Africa currently boasts more than a dozen institutions with a strong focus in marine science, and they are fairly well distributed between three main coastal urban centers. The largest concentration of marine scientists is found in the Cape Town region, and includes those based at Marine and Coastal Management (a government directorate within the Departments of Environmental Affairs and of Agriculture, Forestry and Fisheries); the Universities of Cape Town, the Western Cape, and Stellenbosch; the South African (Iziko) Museum; and the Council for Scientific and Industrial Research. A second grouping in the Eastern Cape includes researchers at Nelson Mandela Metropolitan University, Rhodes University, Walter Sizulu University (formerly University of Transkei), and BayWorld (an aquarium and museum complex in Port Elizabeth). The third concentration in the Durban area includes workers at the Oceanographic Research Institute, University of KwaZulu-Natal, Natal Sharks Board, and Ezemvelo KwaZulu-Natal Wildlife. Besides these larger groups, several other institutions, including some distant from the coast, such as the Mammal Research Institute, University of Pretoria, have at least one staff member working in marine science. Despite the apparent good capacity at an institutional level, a different picture emerges at the level of functional ecosystems <xref ref-type="bibr" rid="pone.0012008-Durham1">[34]</xref>. While capacity is best in the fields of rocky shore and pelagic open ocean research (particularly with regard to exploited species), expertise on sandy beaches, subtidal hard and soft substrata, and deep-sea environments are generally inadequate. Four large, oceangoing research vessels, all of which are state owned, are currently in use in South African waters. Stock assessments of exploited species are the focus of most research cruises, and little or no ship time is allocated to biodiversity research. In addition, none of the existing vessels possesses the capacity to collect benthic samples from depths deeper than about 1000 m.</p>
+<p>As in many other developing countries, taxonomic expertise in South Africa provides only limited coverage, although this greatly exceeds that in any other African country. A list of currently active taxonomists and their fields of expertise is included in <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref>, and a list of major taxonomic reference works and guides to the regional marine biota in <xref ref-type="supplementary-material" rid="pone.0012008.s001">Text S1</xref>. The coverage of available guides is good, although many of these are now severely dated. A total of 31 local marine taxonomists are active in the region, but many of these are graduate students undertaking taxonomic theses, university staff with a part-time interest in taxonomy, or are retired, but still actively publishing. Only about five of the listed experts are employed as full-time systematists. Current local expertise is also completely lacking for a number of important taxa, particularly those with small body size and little economic significance, such as <named-content content-type="class" xlink:href="http://www.eol.org/pages/1795" xlink:type="simple">Hydrozoa</named-content>, <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2921225" xlink:type="simple">Nematoda</named-content>, and most <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2884" xlink:type="simple">Platyhelminthes</named-content>.</p>
+</sec><sec id="s3b">
+<title>Marine collections</title>
+<p>The primary marine invertebrate collections in the region are housed at the Iziko South African Museum in Cape Town and comprise some 129,000 records, offering significant coverage of all major marine taxonomic groups. Other, more specialized collections are housed at several other museums spread around the coast, notably the national fish collection at the South African Institute for Aquatic Biodiversity in Grahamstown (56,000 records) and the collection of mollusks at the Natal Museum (63,000 records). Large collections of algae are also held by the Bolus Herbarium at the University of Cape Town (11,000 records) and the Schoenland Herbarium at Rhodes University (32,000 records).</p>
+</sec><sec id="s3c">
+<title>Sample coverage</title>
+<p>Sampling effort has been best for intertidal habitats, where there is good coverage around the whole South African coast, undertaken primarily by the University of Cape Town Ecological Survey, allowing for detailed mapping of habitat types <xref ref-type="bibr" rid="pone.0012008-Jackson1">[35]</xref> and species distributions <xref ref-type="bibr" rid="pone.0012008-Branch1">[36]</xref> on a national scale. Shallow nearshore waters have also received relatively good attention, allowing for detailed analyses of the distribution patterns of coastal fish <xref ref-type="bibr" rid="pone.0012008-Turpie1">[28]</xref>, various invertebrate groups <xref ref-type="bibr" rid="pone.0012008-Awad1">[37]</xref>, and algae <xref ref-type="bibr" rid="pone.0012008-Bolton3">[38]</xref>, among others.</p>
+<p>By contrast, biodiversity over the greater part of the offshore continental shelf around South Africa is less well documented <xref ref-type="bibr" rid="pone.0012008-Leslie1">[39]</xref>. An exception is the ichthyofauna, which has been well studied, largely as a result of regular stock assessment surveys undertaken in support of the region's major demersal, pelagic, and line-fish fisheries. Current knowledge of benthic invertebrate diversity and biogeography is based on some 1,460 dredge, 602 grab, and 442 trawl samples, which have been analyzed for community structure. Many more samples exist in museum collections, but the majority of these samples originate from directed collections of individual species or taxa, rather than collections that examine the composition of the entire community. Some of the early samples originate from international expeditions of the late 1800s and early 1900s, such as the <italic>Challenger</italic>, <italic>Valdivia</italic>, and <italic>Gauss</italic>, but the vast majority of samples were collected during the University of Cape Town Ecological Survey, which took place from the 1940s to early 1980s. Virtually no benthic invertebrate surveys have been undertaken since that time, as shown in a plot of the temporal sequence of sample collection (<xref ref-type="fig" rid="pone-0012008-g005">Figure 5</xref>). The majority of benthic samples are from the west coast (<xref ref-type="fig" rid="pone-0012008-g006">Figure 6</xref>), where several inshore sites have been particularly well sampled, notably Lambert's Bay, St. Helena Bay, Saldanha Bay/Langebaan Lagoon, Table Bay, and False Bay. The south coast shelf is also moderately well sampled, while KwaZulu-Natal has by far the least number of samples. Most of the samples on both the west and south coasts were collected by dredging, while trawling was the dominant collection method utilized off the east coast (<xref ref-type="fig" rid="pone-0012008-g007">Figure 7</xref>).</p>
+<fig id="pone-0012008-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g005</object-id><label>Figure 5</label><caption>
+<title>Number of benthic invertebrate samples collected within South African waters each decade.</title>
+<p>Samples coded by method: dredges (blue), grabs (green), and trawls (yellow).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g005" xlink:type="simple"/></fig><fig id="pone-0012008-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g006</object-id><label>Figure 6</label><caption>
+<title>Locations of benthic invertebrate samples collected by dredges (blue), grabs (green), and trawls (yellow) around the South African coast.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g006" xlink:type="simple"/></fig><fig id="pone-0012008-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g007</object-id><label>Figure 7</label><caption>
+<title>Regional distribution of benthic invertebrate samples collected in South African waters.</title>
+<p>Dredge, grab, and trawl samples are represented in blue, green, and yellow, respectively.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g007" xlink:type="simple"/></fig>
+<p>The depth distribution of all existing benthic samples shows that the bulk of these (83%) have been taken in less than 100 m of water, while only 2% have been taken in water deeper than 1,000 m. Comparison of the numbers of samples with the area per depth zone (<xref ref-type="fig" rid="pone-0012008-g008">Figure 8</xref>) reveals that 39 samples have been taken per 1,000 km<sup>2</sup> in the 0–100 m depth zone (by far the most in any zone). At depths of 100 to 1,000 m, between one and five samples have been taken per 1,000 km<sup>2</sup>, while deeper than 1,000 m all depth zones have less than one sample per 1,000 km<sup>2</sup> and most strata remain totally unsampled! This lack of data severely constrains the assessment of patterns of benthic biodiversity in South African waters. Our knowledge of the biota is further complicated by the fact that many macrofaunal species still remain to be formally described.</p>
+<fig id="pone-0012008-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g008</object-id><label>Figure 8</label><caption>
+<title>Number of benthic samples taken per 1,000 km<sup>2</sup> in each 100 m depth zone within the South African EEZ.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g008" xlink:type="simple"/></fig></sec></sec><sec id="s4">
+<title>Results</title>
+<sec id="s4a">
+<title>Known biodiversity</title>
+<p>South Africa is widely recognized as a region of high biological diversity, and in terrestrial species it is the third most diverse country in the world <xref ref-type="bibr" rid="pone.0012008-World1">[40]</xref>. The species richness of South African marine systems, however, has rarely been placed in a global context, although the reviews in this collection will assist in providing just such an analysis.</p>
+<p><xref ref-type="table" rid="pone-0012008-t001">Table 1</xref> provides a summary of the numbers of known marine species in South Africa by major taxa and evaluates the state of knowledge of each, while <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref> gives the same information in much more detail, broken down by class or order. The currently known number of marine species from South Africa is estimated at 12,914. Of course, this number constantly changes, as species are described as new to science, or are newly recorded from the region, or as existing species are subjected to taxonomic revision. The species richness reported here is a considerable increase from the 11,130 faunal species given in a previous (1999) synthesis <xref ref-type="bibr" rid="pone.0012008-Gibbons1">[41]</xref>. There are several reasons for this increase. Additional taxa have been described or newly recorded in the region over the past decade, primarily among the <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/3142" xlink:type="simple">Porifera</ext-link> <xref ref-type="bibr" rid="pone.0012008-Samaai1">[42]</xref>, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2060" xlink:type="simple">Bryozoa</ext-link> <xref ref-type="bibr" rid="pone.0012008-Florence1">[43]</xref>, and <named-content content-type="class" xlink:href="http://www.eol.org/pages/2773824" xlink:type="simple">Tunicata</named-content> <xref ref-type="bibr" rid="pone.0012008-Monniot1">[44]</xref>. We have also been able to trace some records that were not included by Gibbons et al. <xref ref-type="bibr" rid="pone.0012008-World1">[40]</xref>, such as additions to the <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/4666" xlink:type="simple">Ciliophora</named-content>, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/13073320" xlink:type="simple">Dinozoa</ext-link>, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2701" xlink:type="simple">Myxozoa</ext-link>, <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/8867" xlink:type="simple">Phoronida</named-content>, <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2884" xlink:type="simple">Platyhelminthes</named-content>, and <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/6851" xlink:type="simple">Rotifera</named-content>. However, the most important factor adding to the current estimate of species diversity is that our listing includes algae and fungi, which were not considered in the previous compilation <xref ref-type="bibr" rid="pone.0012008-Gibbons1">[41]</xref>. By far the most speciose taxa listed are the <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2195" xlink:type="simple">Mollusca</named-content> (3,154 species), <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/164" xlink:type="simple">Arthropoda</ext-link> (2,451 species), and Pisces (2,000 species), which are the only groups containing more than 1,000 species each, and which together account for no less than 68% of the total biota in South African waters.</p>
+<table-wrap id="pone-0012008-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.t001</object-id><label>Table 1</label><caption>
+<title>Summary of known marine biodiversity in South Africa.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012008-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Taxonomic group</td>
+<td align="left" colspan="1" rowspan="1">No. species<xref ref-type="table-fn" rid="nt102">1</xref></td>
+<td align="left" colspan="1" rowspan="1">State of knowledge</td>
+<td align="left" colspan="1" rowspan="1">No. introduced spp.</td>
+<td align="left" colspan="1" rowspan="1">No. experts</td>
+<td align="left" colspan="1" rowspan="1">No. ID guides<xref ref-type="table-fn" rid="nt103">2</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Domain <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/7920" xlink:type="simple">Archaea</named-content></bold></td>
+<td align="left" colspan="1" rowspan="1">n/a</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">n/a</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Domain Bacteria (including <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/3223" xlink:type="simple">Cyanobacteria</named-content>)</bold></td>
+<td align="left" colspan="1" rowspan="1">n/a</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">n/a</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold><named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/5559" xlink:type="simple">Fungi</named-content></bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Domain <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2908256" xlink:type="simple">Eukarya</ext-link></bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Kingdom <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/3352" xlink:type="simple">Chromista</named-content></bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2542705" xlink:type="simple">Phaeophyta</ext-link></td>
+<td align="left" colspan="1" rowspan="1">111</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Other <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/3352" xlink:type="simple">Chromista</named-content></td>
+<td align="left" colspan="1" rowspan="1">225</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">n/a</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Kingdom <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/281" xlink:type="simple">Plantae</named-content></bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="phylum" xlink:href="http://www.eol.org/pages/3893" xlink:type="simple">Chlorophyta</named-content></td>
+<td align="left" colspan="1" rowspan="1">197</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="phylum" xlink:href="http://www.eol.org/pages/4524" xlink:type="simple">Rhodophyta</named-content></td>
+<td align="left" colspan="1" rowspan="1">505</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/282" xlink:type="simple">Angiospermae</ext-link></td>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Kingdom <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/2945389" xlink:type="simple">Protoctista</named-content> (<named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/4651" xlink:type="simple">Protozoa</named-content>)</bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2910041" xlink:type="simple">Dinomastigota</ext-link> (<ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2910041" xlink:type="simple">Dinoflagellata</ext-link>)</td>
+<td align="left" colspan="1" rowspan="1">220</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="order" xlink:href="http://www.eol.org/pages/2869058" xlink:type="simple">Foraminifera</named-content></td>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Kingdom <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/1" xlink:type="simple">Animalia</named-content></bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/3142" xlink:type="simple">Porifera</ext-link></td>
+<td align="left" colspan="1" rowspan="1">346</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1745" xlink:type="simple">Cnidaria</ext-link></td>
+<td align="left" colspan="1" rowspan="1">853</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2884" xlink:type="simple">Platyhelminthes</named-content></td>
+<td align="left" colspan="1" rowspan="1">354</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2195" xlink:type="simple">Mollusca</named-content></td>
+<td align="left" colspan="1" rowspan="1">3154</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">10</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="phylum" xlink:href="http://www.eol.org/pages/36" xlink:type="simple">Annelida</named-content></td>
+<td align="left" colspan="1" rowspan="1">787</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2598871" xlink:type="simple">Crustacea</ext-link></td>
+<td align="left" colspan="1" rowspan="1">2331</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">21</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2060" xlink:type="simple">Bryozoa</ext-link></td>
+<td align="left" colspan="1" rowspan="1">270</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1926" xlink:type="simple">Echinodermata</ext-link></td>
+<td align="left" colspan="1" rowspan="1">410</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><named-content content-type="class" xlink:href="http://www.eol.org/pages/4657485" xlink:type="simple">Urochordata</named-content> (<named-content content-type="class" xlink:href="http://www.eol.org/pages/2773824" xlink:type="simple">Tunicata</named-content> etc)</td>
+<td align="left" colspan="1" rowspan="1">227</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Other invertebrates</td>
+<td align="left" colspan="1" rowspan="1">630</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">8</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2774383" xlink:type="simple">Vertebrata</ext-link> (Pisces)</td>
+<td align="left" colspan="1" rowspan="1">2000</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Other vertebrates</td>
+<td align="left" colspan="1" rowspan="1">272</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>SUB-TOTAL</bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>TOTAL REGIONAL DIVERSITY</bold><xref ref-type="table-fn" rid="nt104">3</xref></td>
+<td align="left" colspan="1" rowspan="1">12915</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p><bold>Notes:</bold></p></fn><fn id="nt102"><label>1</label><p>Sources of the reports: databases, scientific literature, books, field guides, technical reports.</p></fn><fn id="nt103"><label>2</label><p>State of knowledge is ranked on a scale of 1–5, where 1 = very poor or unknown and 5 = well known, n/a = no data available. For a more detailed breakdown by class and order, see <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref>.</p></fn><fn id="nt104"><label>3</label><p>Number of introduced species follows Mead et al. (in review) and excludes cryptogenic species.</p></fn><fn id="nt105"><label>4</label><p>Identification guides lists major works only, as cited in <xref ref-type="supplementary-material" rid="pone.0012008.s001">Text S1</xref>.</p></fn><fn id="nt106"><label>5</label><p>Total regional diversity including all taxonomic groups as reported in <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref>.</p></fn></table-wrap-foot></table-wrap>
+<p>We recognize that the quality of the data in <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref> is mixed. Even at the phylum level, no species are reported from eight phyla, while only a single species is known from a further three (<named-content content-type="phylum" xlink:href="http://www.eol.org/pages/6851" xlink:type="simple">Rotifera</named-content>, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1526" xlink:type="simple">Kinorhyncha</ext-link>, <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/5559" xlink:type="simple">Fungi</named-content>). It is very likely that this reflects lack of taxonomic attention, rather than actual absence or paucity of these groups from the region. Current species counts within many other groups, particularly of smaller organisms, such as <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2884" xlink:type="simple">Platyhelminthes</named-content>, Nematodes, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1740" xlink:type="simple">Chaetognatha</ext-link>, and Protocista, are also likely to be greatly underestimated. We have attempted to estimate the number of unidentified species in each group using a method described by Griffiths <xref ref-type="bibr" rid="pone.0012008-Griffiths1">[45]</xref>. This technique involves comparing the ratio of species in well-studied groups between South Africa and Europe (the best-studied region in the world) and then assuming that a similar ratio should apply to those groups that have been poorly studied in South Africa. Using this approximation, we estimate that 7,590 additional species need to be described to bring the state of taxonomic knowledge in South Africa up to European levels (<xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref>). It should be noted that for all groups for which the present number of known species was not available, no estimate of unknown species could be calculated, and that this results in an underestimation of the total number of species from the region. Additionally, this overall estimate remains a minimal one of absolute biodiversity, since even in European seas species continue to be discovered at a rate that has remained linear for the past 300 years, being limited more by the availability of taxonomic expertise, than of new material to describe!</p>
+<p>Not surprisingly, higher vertebrates are considered to be well-documented, and where no species have been recorded (<ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1738" xlink:type="simple">Crocodylia</ext-link> and <named-content content-type="order" xlink:href="http://www.eol.org/pages/3101501" xlink:type="simple">Sauria</named-content>) it is with confidence that we report that none are present and it is only within the Pisces that new vertebrate species continue to be regularly discovered. Other taxa that are relatively well documented include the <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1926" xlink:type="simple">Echinodermata</ext-link>, several groups within the Crustacean (<named-content content-type="order" xlink:href="http://www.eol.org/pages/1158" xlink:type="simple">Amphipoda</named-content>, <named-content content-type="order" xlink:href="http://www.eol.org/pages/7230" xlink:type="simple">Isopoda</named-content>, <named-content content-type="order" xlink:href="http://www.eol.org/pages/1183" xlink:type="simple">Decapoda</named-content>), <named-content content-type="class" xlink:href="http://www.eol.org/pages/84" xlink:type="simple">Polychaeta</named-content>, <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2195" xlink:type="simple">Mollusca</named-content>, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2060" xlink:type="simple">Bryozoa</ext-link>, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1745" xlink:type="simple">Cnidaria</ext-link>, and the macroalgae (<named-content content-type="phylum" xlink:href="http://www.eol.org/pages/4524" xlink:type="simple">Rhodophyta</named-content>, <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/3893" xlink:type="simple">Chlorophyta</named-content>, and <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2542705" xlink:type="simple">Phaeophyta</ext-link>). Major groups that are still considered to be greatly underestimated include <named-content content-type="class" xlink:href="http://www.eol.org/pages/2773824" xlink:type="simple">Tunicata</named-content>, <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2884" xlink:type="simple">Platyhelminthes</named-content> and <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2921225" xlink:type="simple">Nematoda</named-content>.</p>
+<p>The total number of endemic species listed in <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref> is 4,233, or 33% of the listed biota. Such estimates of endemism are subject to error, both because the number of endemic species is simply not available for some groups, and because poor levels of taxonomic research in adjoining countries (as is the case here) tend to artificially elevate apparent rates of endemism. Moreover, these (and most earlier) estimates are derived from published literature, and some species listed may have subsequently ceased to be endemic because they have since been recorded in another country. Nevertheless, available data suggest that South Africa supports a high proportion of marine endemic species, although this is highly variable among taxa. At the level of major phyla, <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2060" xlink:type="simple">Bryozoa</ext-link> and <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2195" xlink:type="simple">Mollusca</named-content> demonstrate very high levels of endemism—64% and 56%, respectively—in contrast to much lower proportions shown by phyla such as <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1926" xlink:type="simple">Echinodermata</ext-link> (3.6%) and <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/3142" xlink:type="simple">Porifera</ext-link> (8.8%). Marked differences are also evident even between closely-related groups, including those with similar life histories. For example, the proportion of endemics among the <named-content content-type="order" xlink:href="http://www.eol.org/pages/1158" xlink:type="simple">Amphipoda</named-content> is 33%, far lower than that among the <named-content content-type="order" xlink:href="http://www.eol.org/pages/7230" xlink:type="simple">Isopoda</named-content> (85%), or <named-content content-type="order" xlink:href="http://www.eol.org/pages/1243" xlink:type="simple">Cumacea</named-content> (71%). These differences are hard to explain, but may arise from differences in the state of research in adjoining counties (poorer reporting in adjoining countries tending to increase apparent rates of endemism).</p>
+</sec><sec id="s4b">
+<title>Spatial patterns</title>
+<p>The spatial patterns of species richness and endemism of coastal fishes, macroalgae, and a variety of benthic invertebrate groups around the South African coast have been plotted <xref ref-type="bibr" rid="pone.0012008-Emanuel1">[24]</xref>, <xref ref-type="bibr" rid="pone.0012008-Turpie1">[28]</xref>, <xref ref-type="bibr" rid="pone.0012008-Bolton2">[30]</xref>, <xref ref-type="bibr" rid="pone.0012008-Awad1">[37]</xref>. The main findings of these studies were that some groups, including fishes, bivalves, gastropods, brachyurans, and echinoderms, become progressively more species rich to the (more tropical) east, whereas other taxa, such as amphipods, isopods, and polychaetes, attain maximum species richness in the temperate southwest. When all groups are summed, the pattern is one of low species richness along the entire west coast and relatively even species richness along the remainder of the coast (<xref ref-type="fig" rid="pone-0012008-g009">Figure 9</xref>). The apparent decline in species to the extreme east is almost certainly due to reduced sampling intensity in that region (see above). Endemicity in all groups peaks along the south coast, but to a large extent this may be an artifact of the way endemism is defined (as being confined within the political borders of a single country)—since the proportions of endemics naturally tends to increase with linear distance from the nearest political border.</p>
+<fig id="pone-0012008-g009" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0012008.g009</object-id><label>Figure 9</label><caption>
+<title>Number of species recorded from each 100 km unit around the coast of South Africa from the Namibian border (1) to the Mozambique border (28).</title>
+<p>Cape Town is in unit 9 and Durban in unit 24.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.g009" xlink:type="simple"/></fig>
+<p>Another way of examining these data is to plot the distribution patterns of range-restricted species, such as those with ranges of 300 km or less. Interestingly, the resulting plot (37) shows that range-restricted species are strongly concentrated on the boundaries or “ecotones” where two biogeographic regions meet, particularly around Cape Point.</p>
+</sec><sec id="s4c">
+<title>Introduced species</title>
+<p>The most recent published account of marine alien species in South Africa <xref ref-type="bibr" rid="pone.0012008-Griffiths2">[46]</xref> lists only 22 confirmed alien species and 18 cryptogenic species. However, unpublished work by the authors has raised these numbers to 86 introduced species and an additional 40 cryptogenic species (Mead <italic>et al.</italic> in prep), with more newly discovered introductions regularly being added to this list. Most of these introduced species are confined to sheltered sites, such as harbors, lagoons and estuaries and only two—the Mediterranean mussel (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/449961" xlink:type="simple">Mytilus galloprovincialis</named-content></italic>) and the Pacific barnacle (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/1020180" xlink:type="simple">Balanus glandula</named-content></italic>)—have become widespread on the open wave-exposed coastline. Two other species—the sponge <italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/335633" xlink:type="simple">Suberites tylobtusa</named-content></italic> and the anemone <italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/421495" xlink:type="simple">Metridium senile</named-content></italic>—have established significant populations in deeper waters and the impacts of these new populations are currently under investigation. Taxa with the largest numbers of introduced species are the <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/2598871" xlink:type="simple">Crustacea</ext-link> (33 species), <named-content content-type="phylum" xlink:href="http://www.eol.org/pages/2195" xlink:type="simple">Mollusca</named-content> (22 species), <named-content content-type="class" xlink:href="http://www.eol.org/pages/1486" xlink:type="simple">Ascidiacea</named-content> (18 species), and <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/1745" xlink:type="simple">Cnidaria</ext-link> (16 species). The only fish listed is the carp <italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/985921" xlink:type="simple">Cyprinus carpio</named-content></italic>, which extends into the upper reaches of estuaries, but not into the sea itself. The low number of alien species recorded from the Protocista, and absence of recorded introductions from groups such as the <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/5559" xlink:type="simple">Fungi</named-content>, <named-content content-type="kingdom" xlink:href="http://www.eol.org/pages/3352" xlink:type="simple">Chromista</named-content>, Procaryotes, and Bacteria is considered indicative of the poor level of taxonomic knowledge for these groups, rather than any lack of actual introductions.</p>
+</sec></sec><sec id="s5">
+<title>Discussion</title>
+<sec id="s5a">
+<title>The known, unknown, and unknowable</title>
+<p>Compared with other developing countries, South Africa has a fairly strong history of taxonomic research and, as a result, the marine fauna of the region is relatively well known, certainly far better so than that of any other African nation. In addition, a comprehensive series of regional identification guides are available dating from the 1950s to the 2000s (<xref ref-type="supplementary-material" rid="pone.0012008.s001">Text S1</xref>), although many of these are now in urgent need of revision.</p>
+<p>Inevitably, given the limited number of active taxonomists in the region, certain taxa (for example, fish, mollusks, crustaceans, polychaetes) have received far more attention than others. Indeed some have been completely neglected (see <xref ref-type="supplementary-material" rid="pone.0012008.s002">Table S1</xref>). In addition, sampling effort has been strongly biased toward coastal and shallow waters, as vanishingly few benthic samples have been collected in waters deeper than 1,000 m (<xref ref-type="fig" rid="pone-0012008-g008">Figure 8</xref>). As a result, there are definite taxonomic, regional, and habitat biases in our current state of knowledge. The most obvious of these is the lack of samples from the abyssal zone (&gt;3,000 m), even though this zone makes up half of the national EEZ. This is largely a consequence of the great cost of collecting such samples, as well as the lack of locally-based capacity to undertake sampling at great depth. Other gaps include sampling of hard substrata in all depths deeper than those accessible to scuba divers (&gt;30 m) and a relative undersampling of the more tropical waters of the north-east coast (<xref ref-type="fig" rid="pone-0012008-g006">Figure 6</xref>).</p>
+</sec><sec id="s5b">
+<title>Value, use, and impacts of biodiversity</title>
+<p>The South African marine biota supports a wide range of fisheries (<xref ref-type="table" rid="pone-0012008-t002">Table 2</xref>) that together contribute roughly 1% to the national GDP (approximately US$404 million) <xref ref-type="bibr" rid="pone.0012008-Food1">[47]</xref>. The most valuable fishery in commercial terms is the demersal fishery, which is focused mainly on Cape hake, with additional catches of Agulhas sole, kingklip, and adult horse mackerel, constituting a total nominal catch of 188,842 t <xref ref-type="bibr" rid="pone.0012008-Stuttaford1">[48]</xref>. The pelagic fishery for anchovy and pilchards is South Africa's largest fishery in terms of tonnage, with a highly variable annual catch, currently of roughly 600,000 t <xref ref-type="bibr" rid="pone.0012008-Food1">[47]</xref>. The line fishery is the third most important fishery in South Africa in total tonnage landed and total economic value. Although records for the commercial line-fish sector are maintained, landings by the open-access recreational line fishery are not reported, even though the total catch from this sector may be double that reported by the commercial sector <xref ref-type="bibr" rid="pone.0012008-Department1">[49]</xref>. The west coast lobster fishery is one of the oldest along the South African coast, dating back to at least 1875. Commercial, subsistence, and recreational sectors all form part of this fishery. In the last decade substantial stocks have developed along the south coast (an area not traditionally considered commercially viable for rock lobster fishing). This has resulted in a small-scale commercial fishery being opened in this region in 2003 <xref ref-type="bibr" rid="pone.0012008-Cockcroft2">[50]</xref>.</p>
+<table-wrap id="pone-0012008-t002" position="float"><label>Table 2</label><caption>
+<title>Major fisheries sectors in South African waters and the annual catches of each (data derived from references 47, 48, 53).</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0012008-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Fisheries sector</td>
+<td align="left" colspan="1" rowspan="1">Method</td>
+<td align="left" colspan="1" rowspan="1">Target species</td>
+<td align="left" colspan="1" rowspan="1">Annual catch</td>
+<td align="left" colspan="1" rowspan="1">Region</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Demersal fisheries</td>
+<td align="left" colspan="1" rowspan="1">Trawl</td>
+<td align="left" colspan="1" rowspan="1">Deep water hake (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/207889" xlink:type="simple">Merluccius paradoxus</named-content></italic>), Shallow water hake (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/207888" xlink:type="simple">Merluccius capensis</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">158,000 t</td>
+<td align="left" colspan="1" rowspan="1">Deep water west and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/207888" xlink:type="simple">M. capensis</named-content></italic></td>
+<td align="left" colspan="1" rowspan="1">±6% of hake TAC</td>
+<td align="left" colspan="1" rowspan="1">Shallower than 110 m on the Agulhas Bank</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Agulhas sole (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/213090" xlink:type="simple">Austroglossus pectoralis</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">872 t</td>
+<td align="left" colspan="1" rowspan="1">Agulhas Bank, west coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Longline</td>
+<td align="left" colspan="1" rowspan="1">Kingklip (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/218109" xlink:type="simple">Genypterus capensis</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">Figure not available</td>
+<td align="left" colspan="1" rowspan="1">West and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/207889" xlink:type="simple">M. paradoxus</named-content></italic>, <italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/207888" xlink:type="simple">M. capensis</named-content></italic></td>
+<td align="left" colspan="1" rowspan="1">10% of hake TAC</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Midwater trawl</td>
+<td align="left" colspan="1" rowspan="1">Adult horse mackerel (<italic><ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/211880" xlink:type="simple">Trachurus trachurus capensis</ext-link></italic>)</td>
+<td align="left" colspan="1" rowspan="1">58,000 t</td>
+<td align="left" colspan="1" rowspan="1">West and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Pelagic fisheries</td>
+<td align="left" colspan="1" rowspan="1">Purse-seine</td>
+<td align="left" colspan="1" rowspan="1">Anchovy (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/223061" xlink:type="simple">Engraulis encrasicolus</named-content></italic>), Pilchard (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/338628" xlink:type="simple">Sardinops sagax</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">600,000 t (both species)</td>
+<td align="left" colspan="1" rowspan="1">Inshore on west and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Juvenile horse mackerel and lanternfish</td>
+<td align="left" colspan="1" rowspan="1">Variable (up to 25,000 t)</td>
+<td align="left" colspan="1" rowspan="1">Inshore, west and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Round herring (<italic>Engraulis whiteheadi</italic>)</td>
+<td align="left" colspan="1" rowspan="1">Infrequent and highly variable</td>
+<td align="left" colspan="1" rowspan="1">Further offshore than anchovy and pilchards</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Line fisheries</td>
+<td align="left" colspan="1" rowspan="1">Poling</td>
+<td align="left" colspan="1" rowspan="1">Albacore tuna (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/205933" xlink:type="simple">Thunnus alalunga</named-content></italic>), yellowfin tuna (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/205934" xlink:type="simple">Thunnus albacares</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">4,000–6,000 t</td>
+<td align="left" colspan="1" rowspan="1">Offshore west coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Rod, reel, or handline line fishery</td>
+<td align="left" colspan="1" rowspan="1">Commercial: Hake, tuna, shark, sword fish and a variety of other species</td>
+<td align="left" colspan="1" rowspan="1">±18,000 t</td>
+<td align="left" colspan="1" rowspan="1">The whole coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Recreational: A variety of species</td>
+<td align="left" colspan="1" rowspan="1">3,000 t</td>
+<td align="left" colspan="1" rowspan="1">Around the whole coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Beach seine</td>
+<td align="left" colspan="1" rowspan="1">Seine nets from the beach</td>
+<td align="left" colspan="1" rowspan="1">Harders (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/357050" xlink:type="simple">Liza richardsonii</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">±6,000 t</td>
+<td align="left" colspan="1" rowspan="1">West and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Chokka squid fishery</td>
+<td align="left" colspan="1" rowspan="1">Jigging</td>
+<td align="left" colspan="1" rowspan="1">Chokka squid (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/451497" xlink:type="simple">Loligo vulgaris</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">±6,000 t Based on average 1993–2002</td>
+<td align="left" colspan="1" rowspan="1">South coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Lobster</td>
+<td align="left" colspan="1" rowspan="1">Traps set on longlines</td>
+<td align="left" colspan="1" rowspan="1">South coast spiny lobster (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/341287" xlink:type="simple">Palinurus gilchristi</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">382 t (tail mass)</td>
+<td align="left" colspan="1" rowspan="1">Offshore south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Traps, hoopnets, and recreational divers</td>
+<td align="left" colspan="1" rowspan="1">West coast rock lobster (<italic><italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/317431" xlink:type="simple">Jasus lalandi</named-content></italic></italic>)</td>
+<td align="left" colspan="1" rowspan="1">3,527 t</td>
+<td align="left" colspan="1" rowspan="1">West and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Prawn</td>
+<td align="left" colspan="1" rowspan="1">Trawl</td>
+<td align="left" colspan="1" rowspan="1">Six shallow water penaeid prawn species</td>
+<td align="left" colspan="1" rowspan="1">Variable ±100 t</td>
+<td align="left" colspan="1" rowspan="1">East coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Wild oysters</td>
+<td align="left" colspan="1" rowspan="1">Collection from the open coast (commercial and recreational)</td>
+<td align="left" colspan="1" rowspan="1">Cape rock oyster (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/3054765" xlink:type="simple">Striostrea margaritacea</named-content>,</italic>)</td>
+<td align="left" colspan="1" rowspan="1">Circa 500,000 individuals</td>
+<td align="left" colspan="1" rowspan="1">East and south</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><italic>Striostrea cuccullata</italic></td>
+<td align="left" colspan="1" rowspan="1">Not available</td>
+<td align="left" colspan="1" rowspan="1">East coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Abalone</td>
+<td align="left" colspan="1" rowspan="1">Diving using the “hookah” system</td>
+<td align="left" colspan="1" rowspan="1">Abalone (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/3048998" xlink:type="simple">Haliotis midae</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">Fishery collapsed and was officially closed in 2008</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Algal fisheries</td>
+<td align="left" colspan="1" rowspan="1">Beach cast collected</td>
+<td align="left" colspan="1" rowspan="1"><italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/10452455" xlink:type="simple">Gracilaria verrucosa</named-content></italic></td>
+<td align="left" colspan="1" rowspan="1">Not available</td>
+<td align="left" colspan="1" rowspan="1">West coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Beach cast collected, live kelp harvested from the shore</td>
+<td align="left" colspan="1" rowspan="1">Kelp (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/913806" xlink:type="simple">Laminaria pallida</named-content>, <named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/913795" xlink:type="simple">Ecklonia maxima</named-content></italic>)</td>
+<td align="left" colspan="1" rowspan="1">7,000 t frond weight</td>
+<td align="left" colspan="1" rowspan="1">West coast and south coast</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Beach cast collected</td>
+<td align="left" colspan="1" rowspan="1"><italic><named-content content-type="genus" xlink:href="http://www.eol.org/pages/9837" xlink:type="simple">Gelidium</named-content></italic> species</td>
+<td align="left" colspan="1" rowspan="1">Not available</td>
+<td align="left" colspan="1" rowspan="1">West coast and south coast</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt107"><label/><p>Note: Data derived from reference 47.</p></fn></table-wrap-foot></table-wrap>
+<p>Seaweeds have been commercially collected since the 1940s for extraction of alginates and agars used as thickeners, gelling agents, stabilizers, and emulsifiers in paints, food, and cosmetics. This industry is thought to have little impact on biodiversity, as plants are collected once they have washed ashore, or are harvested at low intensity by ecologically sustainable methods <xref ref-type="bibr" rid="pone.0012008-Santelices1">[51]</xref>, <xref ref-type="bibr" rid="pone.0012008-Stegenga2">[52]</xref>. Nonetheless, there has been a recent rapid increase in the collection of live kelp as feed for an expanding cultured abalone industry. This has raised concerns regarding future demands that may be placed on kelp resources along some sections of the coast.</p>
+<p>While most commercial fisheries are focused on the west and south coasts, the east coast has few and smaller fisheries, but a high coastal population density, resulting in intense exploitation of inshore resources by recreational and subsistence sectors. As a result, many coastal fish and invertebrate stocks in this region are overexploited <xref ref-type="bibr" rid="pone.0012008-Penny1">[53]</xref>. The country has a small aquaculture industry rearing some 6,000 t of mussels, oysters, prawns, and abalone—the latter two in land-based facilities. Although the tonnage of abalone produced is moderate, value is high and South Africa ranks as the third-largest global producer of this product.</p>
+<p>In the last decade, ecotourism based on South Africa's marine environment has developed significantly. In particular, shark, whale, and dolphin watching have rapidly expanded. Along the south coast, a thriving industry exists round boat-based viewing and cage diving with great white sharks (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/213726" xlink:type="simple">Carcharodon carcharias</named-content></italic>), while a number of shark species and large pods of dolphin attract tourists along the KwaZulu-Natal coast. Besides these directed industries, tourists (both South African and foreign) make extensive use of the South African coast for recreational purposes.</p>
+</sec><sec id="s5c">
+<title>Threats to biodiversity</title>
+<p>South African marine biodiversity is under threat from a range of anthropogenic activities, the intensity and variety of which have increased significantly over the past hundred years. With reference to the coastal zone, impacts include direct exploitation, the introduction of non-native marine species, climate change, habitat modification, pollution, and disturbance.</p>
+<p>Direct exploitation of coastal resources ranges from traditional subsistence exploitation and recreational fishing to full-scale commercial activities. Following global trends, overall landings by South African fisheries increased dramatically from the 1950s <xref ref-type="bibr" rid="pone.0012008-Penny1">[53]</xref>, <xref ref-type="bibr" rid="pone.0012008-Griffiths3">[54]</xref>, <xref ref-type="bibr" rid="pone.0012008-Griffiths4">[55]</xref>, but subsequently declined from an unsustainable peak and are now relatively stable. Details of the various fisheries sectors are provided in the previous section.</p>
+<p>Coastal impacts of climate change include rise in sea level and changes in circulatory and sea surface temperature patterns. Increasing sea level is not predicted to be of great consequence to most coastal species, as they can simply move higher up on the shore. An exception might occur on the South African east coast, where many shores consist of rock platforms in the lower shore, bounded by sandy habitats above. Here rising sea levels may result in the loss of habitat for some upper intertidal species. Of more importance are changes in the geographic ranges of species associated with changing sea temperature. Along the east coast rising sea temperatures can be expected to result in the southward expansion of the ranges of tropical species. Unexpectedly, though, recent satellite evidence suggests that between 1987 and 2007, temperatures have in fact declined along the west and south coasts (Rouault, personal communication). This decline is due to shifts in wind and rainfall patterns, resulting in changes in upwelling patterns, a well-known effect of climate change <xref ref-type="bibr" rid="pone.0012008-Snyder1">[56]</xref>. One example of a significant climate-induced change in community composition has been detected in False Bay. This location falls in the transition zone between cold west coast and warm-temperate south coast conditions and has seen declines in the warm-water indigenous brown mussel (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/468743" xlink:type="simple">Perna perna</named-content></italic>) and concurrent increases in kelp and the cold-water invasive mussel (<italic><named-content content-type="genus-species" xlink:href="http://www.eol.org/pages/449961" xlink:type="simple">M. galloprovincialis</named-content></italic>) (Mead and Griffiths, in review). A strong movement in the center of gravity of both pelagic fish and West Coast rock lobster <xref ref-type="bibr" rid="pone.0012008-Cockcroft3">[57]</xref> stocks from west to east over the past decade, presumably initiated by climate change, has also taken place. The resulting change in availability of prey has in turn caused dramatic declines in the numbers of predatory seabirds in west coast colonies and corresponding increases in the size of those colonies on the south and east coast over the same period <xref ref-type="bibr" rid="pone.0012008-Crawford1">[58]</xref>.</p>
+<p>Harbors, marinas, seawalls, railway lines, and other structures constructed along the seashore are common features in South Africa's coastal cities <xref ref-type="bibr" rid="pone.0012008-Griffiths4">[55]</xref>. Although these forms of development are spatially limited, they will have displaced organisms. Similarly, near- and offshore pipelines continue to discharge increasing volumes of sewage, fish waste, or industrial effluent into the marine environment. The nearshore pipelines are concentrated around a few major population centers, leaving most of the coast unaffected, but a formal national assessment of the impact of these releases has not been made. Disturbance due to human trampling and diving activities is thought to be limited, both spatially and temporally, being focused around relatively few key recreational areas and during holiday periods. While South Africa's progressive environmental legislation prohibits the use of motor vehicles in sensitive beach zones and controls the approaching of marine mammals, recent work has demonstrated that food provisioning by the shark-watching industry has a negligible impact on shark behavior <xref ref-type="bibr" rid="pone.0012008-Laroche1">[59]</xref>.</p>
+<p>Currently, 23% of the South African coastline, but less than 1% of the country's EEZ, falls within marine protected areas (MPAs) <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref>. Although the proportion of coastline in declared MPAs is high, there is concern that only 9% of coastal protected areas enjoy total protection (no-take MPAs). In addition, existing MPAs are unevenly distributed among the five coastal bioregions. The entire <ext-link ext-link-type="uri" xlink:href="http://www.eol.org/pages/916206" xlink:type="simple">Namaqua</ext-link> Bioregion currently lacks any MPA, although the proposed proclamation of a Namaqualand MPA, extending from the coast to include offshore habitats, would increase the area under protection. By contrast, the Delagoa Bioregion, on the east coast, receives 20% protection in no-take MPAs <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref>. This spatial imbalance results in a large portion of South Africa's coastal marine biodiversity remaining unprotected. The conservation status of offshore regions is of even greater concern, as less than 0.2% receives total protection <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref>. It is important to note, however, that without adequate enforcement, MPAs do little to conserve the organisms and habitats within their boundaries. The capacity for such enforcement, even in South Africa's present MPAs, is questionable and cause for concern.</p>
+<p>While the protection of biodiversity in general is clearly a key aim and achievement of these MPAs, the adequate protection of specific taxa (such as the intensively illegally harvested abalone) and specific key habitats may still require additional dedicated efforts. A recent spatial assessment of South African marine biodiversity <xref ref-type="bibr" rid="pone.0012008-Lombard1">[14]</xref> noted the fish fauna as the most exploited and threatened major component of the marine biota, while high-profile reefs and pinnacles, soft-bottom trawling grounds, and coastal and subtidal areas exposed to mining on the west coast were identified as the most threatened habitats. Through the establishment of an accurate fish distribution database and detailed mapping and sampling of the habitats named above, future research could significantly enhance the level of protection afforded to South African marine biodiversity.</p>
+<p>On a final positive note, there is enormous scope for future marine biodiversity research in South Africa. The large numbers of undescribed species in a variety of taxa are indicative of the wide potential for future species discovery. A new generation of taxonomists will be needed to perform these tasks, but the recent creation of a South African National Biodiversity Institute (SANBI) and South African Biosystematics Initiative (SABI) has increased the availability of funding and encouraged young researchers to enter this field. Other key areas that require attention include quantification of the effect of trawling and mining on benthic habitats, assessment of the impacts of alien species, quantification of the impacts of pollution (sewage and storm water) in the nearshore environment, and the quantification and prediction of future climate change effects.</p>
+</sec></sec><sec id="s6">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0012008.s001" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.s001" xlink:type="simple"><label>Text S1</label><caption>
+<p>Major taxonomic resources and guides to the South African marine biota.</p>
+<p>(0.08 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pone.0012008.s002" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pone.0012008.s002" xlink:type="simple"><label>Table S1</label><caption>
+<p>(0.04 MB XLS)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank K. Christison, W. Florence, C. Reed, and S. Symms for providing us with unpublished information and K. Sink, T. Samaai, and M. Gibbons for their constructive comments on, and suggestions for improvement of, earlier drafts of the manuscript. Huw Griffiths of the British Antarctic Survey kindly compiled <xref ref-type="fig" rid="pone-0012008-g002">Figures 2</xref> and <xref ref-type="fig" rid="pone-0012008-g003">3</xref>.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0012008-Shannon1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shannon</surname><given-names>LV</given-names></name>
+</person-group>             <year>1985</year>             <article-title>The Benguela ecosystem Part I: Evolution of the Benguela, physical features and processes.</article-title>             <source>Oceanog Mar Biol Ann Rev</source>             <volume>23</volume>             <fpage>105</fpage>             <lpage>182</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Shannon2"><label>2</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shannon</surname><given-names>LV</given-names></name>
+<name name-style="western"><surname>Nelson</surname><given-names>G</given-names></name>
+</person-group>             <year>1996</year>             <article-title>The Benguela: Large-scale features and process and system variability.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Wefer</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Berger</surname><given-names>WH</given-names></name>
+<name name-style="western"><surname>Siedler</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Webb</surname><given-names>DJ</given-names></name>
+</person-group>             <source>The South Atlantic: Present and past circulation</source>             <publisher-loc>Telos</publisher-loc>             <publisher-name>Springer-Verlag</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">644</size>           </element-citation></ref>
+<ref id="pone.0012008-TauntonClark1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Taunton-Clark</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Shannon</surname><given-names>LV</given-names></name>
+</person-group>             <year>1988</year>             <article-title>Annual and interannual variability in the South-East Atlantic during the 20<sup>th</sup> century.</article-title>             <source>S Afr J Mar Sci</source>             <volume>6</volume>             <fpage>97</fpage>             <lpage>106</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Shannon3"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shannon</surname><given-names>LV</given-names></name>
+<name name-style="western"><surname>Crawford</surname><given-names>RJM</given-names></name>
+<name name-style="western"><surname>Pollock</surname><given-names>DE</given-names></name>
+<name name-style="western"><surname>Hutchings</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Boyd</surname><given-names>AJ</given-names></name>
+<etal/></person-group>             <year>1992</year>             <article-title>The 1980s – A decade of change in the Benguela Ecosystem.</article-title>             <source>SA J Mar Sci</source>             <volume>12</volume>             <fpage>271</fpage>             <lpage>296</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Bailey1"><label>5</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bailey</surname><given-names>GW</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Organic carbon flux and development of oxygen deficiency on the modern Benguela continental shelf south of 22°S: Spatial and temporal variability, in modern and ancient continental shelf Anoxia.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Tyson</surname><given-names>RV</given-names></name>
+<name name-style="western"><surname>Pearson</surname><given-names>TH</given-names></name>
+</person-group>             <source>Geol. Soc. Spec. Publ. 58 Bath: Geological Society UK</source>             <fpage>171</fpage>             <lpage>183</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Cockcroft1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cockcroft</surname><given-names>AC</given-names></name>
+</person-group>             <year>2001</year>             <article-title><italic>Jasus lalandii</italic> walkouts or mass stranding of in South Africa during the 1990's: An overview.</article-title>             <source>Mar Freshwater Res</source>             <volume>52</volume>             <fpage>1085</fpage>             <lpage>1092</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Lutjeharms1"><label>7</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lutjeharms</surname><given-names>JRE</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Coastal hydrography.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Lubke</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>De Moor</surname><given-names>I</given-names></name>
+</person-group>             <source>Field Guide to the Eastern and Southern Cape Coasts</source>             <publisher-loc>Cape Town</publisher-loc>             <publisher-name>University of Cape Town Press</publisher-name>             <fpage>50</fpage>             <lpage>61</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Schumann1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schumann</surname><given-names>EH</given-names></name>
+</person-group>             <year>1987</year>             <article-title>The coastal ocean off the east coast of South Africa.</article-title>             <source>Trans Roy Soc S Afr</source>             <volume>46</volume>             <fpage>215</fpage>             <lpage>229</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Grundlingh1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Grundlingh</surname><given-names>ML</given-names></name>
+</person-group>             <year>1983</year>             <article-title>On the course of the Agulhas Current.</article-title>             <source>S Afr Geogr J</source>             <volume>65</volume>             <fpage>49</fpage>             <lpage>57</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Schumann2"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schumann</surname><given-names>EH</given-names></name>
+<name name-style="western"><surname>Beekman</surname><given-names>LJ</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Ocean temperature structures on the Agulhas Bank.</article-title>             <source>Trans Roy Soc S Afr</source>             <volume>45</volume>             <fpage>191</fpage>             <lpage>203</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Lutjeharms2"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lutjeharms</surname><given-names>JRE</given-names></name>
+<name name-style="western"><surname>Cooper</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Roberts</surname><given-names>M</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Dynamic upwelling at the inshore edge of the Agulhas Current.</article-title>             <source>Cont Shelf Res</source>             <volume>20</volume>             <fpage>737</fpage>             <lpage>761</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Lutjeharms3"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lutjeharms</surname><given-names>JRE</given-names></name>
+<name name-style="western"><surname>van Ballegooyen</surname><given-names>RC</given-names></name>
+</person-group>             <year>1988</year>             <article-title>The retroflection of the Agulhas Current.</article-title>             <source>J Physical Oceanog</source>             <volume>18</volume>             <fpage>1570</fpage>             <lpage>1583</lpage>          </element-citation></ref>
+<ref id="pone.0012008-DeRuijter1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>De Ruijter</surname><given-names>WPM</given-names></name>
+<name name-style="western"><surname>Biastoch</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Drijfhout</surname><given-names>SS</given-names></name>
+<name name-style="western"><surname>Lutjeharms</surname><given-names>JRE</given-names></name>
+<name name-style="western"><surname>Matano</surname><given-names>RP</given-names></name>
+<etal/></person-group>             <year>1999</year>             <article-title>Indian-Atlantic interocean exchange: Dynamics, estimation and impact.</article-title>             <source>J Geophys. Res</source>             <volume>104</volume>             <fpage>20885</fpage>             <lpage>20910</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Lombard1"><label>14</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lombard</surname><given-names>AT</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Marine component of the National Spatial Biodiversity Assessment for the development of South Africa's National Biodiversity Strategic and Action Plan.</article-title>             <comment>National Botanical Institute</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">101</size>           </element-citation></ref>
+<ref id="pone.0012008-Shillington1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shillington</surname><given-names>FA</given-names></name>
+<name name-style="western"><surname>Harris</surname><given-names>TFW</given-names></name>
+</person-group>             <year>1978</year>             <article-title>Surface waves near Cape Town and their associated atmospheric pressure distributions over the South Atlantic.</article-title>             <source>Ocean Dynamics</source>             <volume>31</volume>             <fpage>67</fpage>             <lpage>82</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Field1"><label>16</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Field</surname><given-names>JG</given-names></name>
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Littoral and sublittoral ecosystems of southern Africa.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Niehuis</surname><given-names>PH</given-names></name>
+<name name-style="western"><surname>Mathieson</surname><given-names>AC</given-names></name>
+</person-group>             <source>Intertidal and Littoral Ecosystems</source>             <publisher-loc>Elsevier</publisher-loc>             <publisher-name>Amsterdam</publisher-name>             <fpage>323</fpage>             <lpage>346</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Bally1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bally</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Mc Quaid</surname><given-names>CD</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>AC</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Shores of mixed sand and rock: an unexplored ecosystem.</article-title>             <source>S A J Sci</source>             <volume>80</volume>             <fpage>500</fpage>             <lpage>503</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Whitfield1"><label>18</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Whitfield</surname><given-names>AK</given-names></name>
+<name name-style="western"><surname>Lubke</surname><given-names>RA</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Estuarine and coastal lake ecology.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Lubke</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>De Moor</surname><given-names>I</given-names></name>
+</person-group>             <source>Field guide to the eastern and southern Cape coasts</source>             <publisher-loc>Cape Town</publisher-loc>             <publisher-name>University of Cape Town Press</publisher-name>             <fpage>216</fpage>             <lpage>231</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Stephenson1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stephenson</surname><given-names>TA</given-names></name>
+</person-group>             <year>1939</year>             <article-title>The constitution of the intertidal fauna and flora of South Africa, I.</article-title>             <source>J Linn Soc Lon</source>             <volume>40</volume>             <fpage>487</fpage>             <lpage>536</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Stephenson2"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stephenson</surname><given-names>TA</given-names></name>
+</person-group>             <year>1944</year>             <article-title>The constitution of the intertidal fauna and flora of South Africa, II.</article-title>             <source>Ann Natal Mus</source>             <volume>10</volume>             <fpage>261</fpage>             <lpage>358</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Stephenson3"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stephenson</surname><given-names>TA</given-names></name>
+</person-group>             <year>1948</year>             <article-title>The constitution of the intertidal fauna and flora of South Africa, III.</article-title>             <source>Ann Natal Mus</source>             <volume>11</volume>             <fpage>207</fpage>             <lpage>324</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Stephenson4"><label>22</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stephenson</surname><given-names>TA</given-names></name>
+<name name-style="western"><surname>Stephenson</surname><given-names>A</given-names></name>
+</person-group>             <year>1972</year>             <source>Life between tidemarks on rocky shores</source>             <publisher-loc>San Francisco</publisher-loc>             <publisher-name>W.H. Freeman</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">425</size>           </element-citation></ref>
+<ref id="pone.0012008-Brown1"><label>23</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brown</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>Jarman</surname><given-names>N</given-names></name>
+</person-group>             <year>1978</year>             <article-title>Coastal marine habitats.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Werger</surname><given-names>MJA</given-names></name>
+<name name-style="western"><surname>Van Bruggen</surname><given-names>AC</given-names></name>
+</person-group>             <source>Biogeography and ecology of southern Africa</source>             <publisher-loc>The Hague</publisher-loc>             <publisher-name>W. Junk</publisher-name>             <fpage>1239</fpage>             <lpage>1277</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Emanuel1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Emanuel</surname><given-names>BP</given-names></name>
+<name name-style="western"><surname>Bustamante</surname><given-names>RH</given-names></name>
+<name name-style="western"><surname>Branch</surname><given-names>GM</given-names></name>
+<name name-style="western"><surname>Eekhout</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Odendaal</surname><given-names>FJ</given-names></name>
+</person-group>             <year>1992</year>             <article-title>A zoogeographic and functional approach to the selection of marine reserves on the west coast of South Africa.</article-title>             <source>S Afr J Mar Sci</source>             <volume>12</volume>             <fpage>341</fpage>             <lpage>354</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Stegenga1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stegenga</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Bolton</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1992</year>             <article-title>Ceramiaceae (Rhodophyta) of the Cape Province, South Africa: Distribution in relation to concepts of marine provinces.</article-title>             <source>Bot Mar</source>             <volume>35</volume>             <fpage>99</fpage>             <lpage>107</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Bustamante1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bustamante</surname><given-names>RH</given-names></name>
+<name name-style="western"><surname>Branch</surname><given-names>GM</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Large scale patterns and trophic structure of southern African rocky shores: The role of geographic variation and wave exposure.</article-title>             <source>J Biogeog</source>             <volume>23</volume>             <fpage>339</fpage>             <lpage>351</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Bolton1"><label>27</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bolton</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Anderson</surname><given-names>RJ</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Marine vegetation.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Cowling</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Richardson</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Pierce</surname><given-names>SM</given-names></name>
+</person-group>             <source>Vegetation of southern Africa</source>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>Cambridge University Press</publisher-name>             <fpage>348</fpage>             <lpage>370</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Turpie1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Turpie</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Beckley</surname><given-names>LE</given-names></name>
+<name name-style="western"><surname>Katua</surname><given-names>SM</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Biogeography and the selection of priority areas for the conservation of South African coastal fishes.</article-title>             <source>Biol Conserv</source>             <volume>92</volume>             <fpage>59</fpage>             <lpage>72</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Sink1"><label>29</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sink</surname><given-names>KJ</given-names></name>
+</person-group>             <year>2001</year>             <article-title>A hierarchical analysis of abiotic determinants and harvesting impacts in the rocky intertidal communities of KwaZulu-Natal.</article-title>             <comment>Ph.D. Thesis. University of Cape Town</comment>          </element-citation></ref>
+<ref id="pone.0012008-Bolton2"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bolton</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Leliaert</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>De Clerck</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Anderson</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Stegenga</surname><given-names>H</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Where is the western limit of the tropical Indian Ocean seaweed flora? An analysis of intertidal seaweed biogeography on the east coast of South Africa.</article-title>             <source>Mar Biol</source>             <volume>144</volume>             <fpage>51</fpage>             <lpage>59</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Linder1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Linder</surname><given-names>HP</given-names></name>
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Introduction and overview. Special Issue: Systematic Biology.</article-title>             <source>Trans Roy Soc S Afr</source>             <volume>54</volume>             <fpage>1</fpage>             <lpage>4</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Day1"><label>32</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Day</surname><given-names>JH</given-names></name>
+</person-group>             <year>1977</year>             <article-title>Marine biology in South Africa.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Brown</surname><given-names>AC</given-names></name>
+</person-group>             <source>A history of scientific endeavour in South Africa</source>             <publisher-loc>Cape Town</publisher-loc>             <publisher-name>Royal Society of South Africa</publisher-name>             <fpage>86</fpage>             <lpage>108</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Grundlingh2"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Grundlingh</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>von St Ange</surname><given-names>UB</given-names></name>
+<name name-style="western"><surname>Bolton</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Bursey</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Compagno</surname><given-names>L</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>AfrOBIS: A marine biogeographic information system for sub-Saharan Africa.</article-title>             <source>S Afr J Sci</source>             <volume>103</volume>             <fpage>91</fpage>             <lpage>93</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Durham1"><label>34</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Durham</surname><given-names>BD</given-names></name>
+<name name-style="western"><surname>Pauw</surname><given-names>JC</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Summary marine biodiversity status report for South Africa.</article-title>             <comment>National Research Foundation, Pretoria</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">98</size>           </element-citation></ref>
+<ref id="pone.0012008-Jackson1"><label>35</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jackson</surname><given-names>LF</given-names></name>
+<name name-style="western"><surname>Lipschitz</surname><given-names>S</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Coastal sensitivity atlas of southern Africa.</article-title>             <comment>Department of Transport, South Africa</comment> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">35</size>           </element-citation></ref>
+<ref id="pone.0012008-Branch1"><label>36</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Branch</surname><given-names>GM</given-names></name>
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Branch</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Beckley</surname><given-names>LE</given-names></name>
+</person-group>             <year>1994</year>             <source>Two oceans: A guide to the marine life of southern Africa</source>             <publisher-loc>Cape Town</publisher-loc>             <publisher-name>David Phillip</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">360</size>           </element-citation></ref>
+<ref id="pone.0012008-Awad1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Awad</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Turpie</surname><given-names>JK</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Distribution and endemicity patterns of benthic marine invertebrates in South Africa applied to the selection of priority conservation areas.</article-title>             <source>Div Distrib</source>             <volume>8</volume>             <fpage>129</fpage>             <lpage>145</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Bolton3"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bolton</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Stegenga</surname><given-names>H</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Seaweed species diversity in South Africa,</article-title>             <source>S Afr J Mar Sci</source>             <volume>24</volume>             <fpage>19</fpage>             <lpage>25</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Leslie1"><label>39</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Leslie</surname><given-names>RW</given-names></name>
+<name name-style="western"><surname>Tilney</surname><given-names>RL</given-names></name>
+<name name-style="western"><surname>Rogers</surname><given-names>J</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Functional ecosystems: soft subtidal substrates.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Durham</surname><given-names>BD</given-names></name>
+<name name-style="western"><surname>Pauw</surname><given-names>JC</given-names></name>
+</person-group>             <source>Summary marine biodiversity status report for South Africa</source>             <fpage>13</fpage>             <lpage>15</lpage>             <comment>National Research Foundation, Pretoria</comment>          </element-citation></ref>
+<ref id="pone.0012008-World1"><label>40</label><element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">World Conservation Monitoring Centre</collab>             <year>1992</year>             <source>Development of a national biodiversity index: A discussion paper</source>             <publisher-loc>Cambridge</publisher-loc>             <publisher-name>World Conservation Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0012008-Gibbons1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gibbons</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Abiahy</surname><given-names>BB</given-names></name>
+<name name-style="western"><surname>Angel</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Assuncao</surname><given-names>CML</given-names></name>
+<name name-style="western"><surname>Bartsch</surname><given-names>I</given-names></name>
+<etal/></person-group>             <year>1999</year>             <article-title>The taxonomic richness of South Africa's marine fauna: A crisis at hand.</article-title>             <source>S Afr J Sci</source>             <volume>95</volume>             <fpage>8</fpage>             <lpage>12</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Samaai1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Samaai</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Gibbons</surname><given-names>MJ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Demospongiae taxonomy and biodiversity of the Benguela region on the west coast of South Africa.</article-title>             <source>Afr Nat Hist</source>             <volume>1</volume>             <fpage>1</fpage>             <lpage>96</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Florence1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Florence</surname><given-names>WK</given-names></name>
+<name name-style="western"><surname>Hayward</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Gibbons</surname><given-names>MJ</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Taxonomy of shallow-water Bryozoa from the west coast of South Africa.</article-title>             <source>Afr Nat Hist</source>             <volume>3</volume>             <fpage>1</fpage>             <lpage>58</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Monniot1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Monniot</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Monniot</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Schleyer</surname><given-names>M</given-names></name>
+</person-group>             <year>2001</year>             <article-title>South African ascidians.</article-title>             <source>Ann S Afr Mus</source>             <volume>108</volume>             <fpage>1</fpage>             <lpage>141</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Griffiths1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Coastal marine biodiversity in East Africa.</article-title>             <source>Indian J Mar Sci</source>             <volume>33</volume>             <fpage>35</fpage>             <lpage>41</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Griffiths2"><label>46</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Robinson</surname><given-names>TB</given-names></name>
+<name name-style="western"><surname>Mead</surname><given-names>A</given-names></name>
+</person-group>             <year>2009</year>             <article-title>The status and distribution of marine alien species in South Africa.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Rilov</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Crooks</surname><given-names>JA</given-names></name>
+</person-group>             <source>Biological invasions in marine ecosystems</source>             <publisher-loc>Berlin</publisher-loc>             <publisher-name>Springer-Verlag</publisher-name>             <fpage>393</fpage>             <lpage>408</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Food1"><label>47</label><element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Food and Agriculture Organization of the United Nations (FAO)</collab>             <year>2009</year>             <article-title>Fishery and aquaculture country profiles: South Africa.</article-title>             <comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.fao.org/fishery/countrysector/FI-CP_ZA/en" xlink:type="simple">http://www.fao.org/fishery/countrysector/FI-CP_ZA/en</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0012008-Stuttaford1"><label>48</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stuttaford</surname><given-names>M</given-names></name>
+</person-group>             <year>1996</year>             <article-title>South African fishing industry handbook: South Africa, Namibia and Moçambique.</article-title>             <comment>24th Edition. Marine Information cc, Stellenbosch, South Africa</comment>          </element-citation></ref>
+<ref id="pone.0012008-Department1"><label>49</label><element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">Department of Environmental Affairs and Tourism</collab>             <year>2009</year>             <article-title>State of the environment 2005.</article-title>             <comment>Available: <ext-link ext-link-type="uri" xlink:href="http://soer.deat.gov.za/indicator.aspx?m=230" xlink:type="simple">http://soer.deat.gov.za/indicator.aspx?m=230</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0012008-Cockcroft2"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cockcroft</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>van Zyl</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Hutchings</surname><given-names>L</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Large-scale changes in the distribution of South African west coast rock lobsters: An overview.</article-title>             <source>Afr J Mar Sci</source>             <volume>30</volume>             <fpage>149</fpage>             <lpage>159</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Santelices1"><label>51</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Santelices</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Seaweeds as resources.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Siegfried</surname><given-names>WR</given-names></name>
+</person-group>             <source>Rocky shores: Exploitation in Chile and South Africa</source>             <publisher-loc>Berlin</publisher-loc>             <publisher-name>Springer</publisher-name>             <fpage>33</fpage>             <lpage>55</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Stegenga2"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stegenga</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Bolton</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Anderson</surname><given-names>RJ</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Seaweeds of the South African West Coast.</article-title>             <source>Contributions from the Bolus Herbarium</source>             <volume>18</volume>             <fpage>1</fpage>             <lpage>655</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Penny1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Penny</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Mann-lang</surname><given-names>JB</given-names></name>
+<name name-style="western"><surname>Van der elst</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Wilke</surname><given-names>CG</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Long-term trends in catch and effort in the Kwazulu-Natal nearshore linefisheries.</article-title>             <source>SA J Mar Sci</source>             <volume>21</volume>             <fpage>51</fpage>             <lpage>76</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Griffiths3"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Griffiths</surname><given-names>MH</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Long term trends in catch and effort of commercial linefish off South Africa's Cape Province: Snapshots of the 20th Century.</article-title>             <source>S Afr J Mar Sci</source>             <volume>22</volume>             <fpage>81</fpage>             <lpage>110</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Griffiths4"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Griffiths</surname><given-names>CL</given-names></name>
+<name name-style="western"><surname>Van Sittert</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Best</surname><given-names>PB</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>Clark</surname><given-names>BM</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Human impacts on marine animal life in the Benguela – A historical overview.</article-title>             <source>Oceanogr Mar Biol: Ann Rev</source>             <volume>42</volume>             <fpage>303</fpage>             <lpage>392</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Snyder1"><label>56</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Snyder</surname><given-names>MAL</given-names></name>
+<name name-style="western"><surname>Sloan</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Diffenbaugh</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Bell</surname><given-names>JL</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Future climate change and upwelling in the California Current.</article-title>             <source>Geophys Res Lett</source>             <volume>30</volume>             <fpage>1823</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1029/2003GL017647" xlink:type="simple">10.1029/2003GL017647</ext-link></comment>          </element-citation></ref>
+<ref id="pone.0012008-Cockcroft3"><label>57</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cockcroft</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>van Zyl</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Hutchings</surname><given-names>L</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Large-scale changes in the spatial distribution of South African west coast rock lobster: An overview.</article-title>             <source>Afr J Mar Sci</source>             <volume>30</volume>             <fpage>149</fpage>             <lpage>159</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Crawford1"><label>58</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Crawford</surname><given-names>RJM</given-names></name>
+<name name-style="western"><surname>Sabarros</surname><given-names>PS</given-names></name>
+<name name-style="western"><surname>Fiarweather</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Underhill</surname><given-names>LG</given-names></name>
+<name name-style="western"><surname>Wolfaardt</surname><given-names>AC</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Implications for seabirds off South Africa of a long-term change in the distribution of sardine.</article-title>             <source>Afr J Mar Sci</source>             <volume>30</volume>             <fpage>177</fpage>             <lpage>184</lpage>          </element-citation></ref>
+<ref id="pone.0012008-Laroche1"><label>59</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Laroche</surname><given-names>RK</given-names></name>
+<name name-style="western"><surname>Kock</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Dill</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Oosthuizen</surname><given-names>WH</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Effects of provisioning ecotourism activity on the behaviour of white sharks <italic>Carcharodon carcharias</italic>.</article-title>             <source>Mar Ecol Prog Ser</source>             <volume>338</volume>             <fpage>199</fpage>             <lpage>209</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

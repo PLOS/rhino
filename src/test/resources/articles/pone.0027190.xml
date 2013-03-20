@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-11-13464</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0027190</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Biotechnology</subject>
+            <subj-group>
+              <subject>Bioengineering</subject>
+              <subj-group>
+                <subject>Bionics</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Biomaterials</subject>
+              <subject>Bionanotechnology</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Evolutionary biology</subject>
+            <subj-group>
+              <subject>Evolutionary processes</subject>
+              <subj-group>
+                <subject>Coevolution</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Population biology</subject>
+            <subj-group>
+              <subject>Population dynamics</subject>
+              <subj-group>
+                <subject>Predator-prey dynamics</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Zoology</subject>
+            <subj-group>
+              <subject>Entomology</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Materials science</subject>
+          <subj-group>
+            <subject>Biomaterials</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Material by attribute</subject>
+            <subj-group>
+              <subject>Porous materials</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Physics</subject>
+          <subj-group>
+            <subject>Classical mechanics</subject>
+            <subj-group>
+              <subject>Acoustics</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Biotechnology</subject>
+          <subject>Evolutionary Biology</subject>
+          <subject>Physics</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Moth Wing Scales Slightly Increase the Absorbance of Bat Echolocation Calls</article-title><alt-title alt-title-type="running-head">Moth Wing Scales Absorb Bat Calls</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zeng</surname>
+            <given-names>Jinyao</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Xiang</surname>
+            <given-names>Ning</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Jiang</surname>
+            <given-names>Lei</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Jones</surname>
+            <given-names>Gareth</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zheng</surname>
+            <given-names>Yongmei</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Liu</surname>
+            <given-names>Bingwan</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff5">
+            <sup>5</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zhang</surname>
+            <given-names>Shuyi</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Institute of Molecular Ecology and Evolution, Institutes for Advanced Interdisciplinary Research, East China Normal University, Shanghai, People's Republic of China</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>School of Architecture, Rensselaer Polytechnic Institute, Troy, New York, United States of America</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>National Center for Nanoscience and Technology, Beijing, People's Republic of China</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>School of Biological Sciences, University of Bristol, Bristol, United Kingdom</addr-line>       </aff><aff id="aff5"><label>5</label><addr-line>College of Wildlife Resources, Northeast Forestry University, Harbin, People's Republic of China</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Chin</surname>
+            <given-names>Wei-Chun</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">University of California Merced, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">syzhang@bio.ecnu.edu.cn</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: NX LJ GJ SZ. Performed the experiments: JZ YZ BL. Analyzed the data: JZ. Contributed reagents/materials/analysis tools: NX LJ SZ. Wrote the paper: JZ NX GJ SZ.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>9</day>
+        <month>11</month>
+        <year>2011</year>
+      </pub-date><volume>6</volume><issue>11</issue><elocation-id>e27190</elocation-id><history>
+        <date date-type="received">
+          <day>13</day>
+          <month>7</month>
+          <year>2011</year>
+        </date>
+        <date date-type="accepted">
+          <day>11</day>
+          <month>10</month>
+          <year>2011</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Zeng et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <p>Coevolutionary arms races between predators and prey can lead to a diverse range of foraging and defense strategies, such as countermeasures between nocturnal insects and echolocating bats. Here, we show how the fine structure of wing scales may help moths by slightly increasing sound absorbance at frequencies typically used in bat echolocation. Using four widespread species of moths and butterflies, we found that moth scales are composed of honeycomb-like hollows similar to sound-absorbing material, but these were absent from butterfly scales. Micro-reverberation chamber experiments revealed that moth wings were more absorbent at the frequencies emitted by many echolocating bats (40–60 kHz) than butterfly wings. Furthermore, moth wings lost absorbance at these frequencies when scales were removed, which suggests that some moths have evolved stealth tactics to reduce their conspicuousness to echolocating bats. Although the benefits to moths are relatively small in terms of reducing their target strengths, scales may nonetheless confer survival advantages by reducing the detection distances of moths by bats by 5–6%.</p>
+      </abstract><funding-group><funding-statement>This study was supported by a CAS grant and the National “985” Project awarded to Shuyi Zhang, and a China Partnering award from the BBSRC to Gareth Jones. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="6"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Moths and butterflies comprise the order Lepidoptera, which is the second largest insect group in terms of species richness. The fossil record indicates that moths have existed for around 140 million years and butterflies nearly 70 million years <xref ref-type="bibr" rid="pone.0027190-Culver1">[1]</xref>, <xref ref-type="bibr" rid="pone.0027190-VaneWright1">[2]</xref>. Bats evolved later than moths, perhaps 70 million years ago <xref ref-type="bibr" rid="pone.0027190-Teeling1">[3]</xref>, <xref ref-type="bibr" rid="pone.0027190-Veselka1">[4]</xref> and are the main predators of nocturnal aerial insects. Moths have evolved a suite of defenses to reduce their chances of being eaten by bats, including the possession of tympanic organs that are sensitive to ultrasound in many taxa, the ability to adjust flight paths after detecting bats and even the use of ultrasound to deter or jam the echolocation of approaching bats <xref ref-type="bibr" rid="pone.0027190-Fullard1">[5]</xref>, <xref ref-type="bibr" rid="pone.0027190-Miller1">[6]</xref>, <xref ref-type="bibr" rid="pone.0027190-Jones1">[7]</xref>.</p>
+      <p>The wings of moths and butterflies are made of thin layers of chitin, covered with numerous flat scales that are usually less than 0.25 mm wide <xref ref-type="bibr" rid="pone.0027190-Ghiradella1">[8]</xref>. Some of these scales contain rich chemical pigments that give rise to bright colours, others contain millions of microscopic ridges and bumps that cause light to bounce off in different directions and create brilliant and iridescent structural colours <xref ref-type="bibr" rid="pone.0027190-Vukusic1">[9]</xref>. The colours and patterns of moth and butterfly wings elaborated by scales serve several functions: (<italic>i</italic>) mate attraction <xref ref-type="bibr" rid="pone.0027190-Burghardt1">[10]</xref> or mate choice <xref ref-type="bibr" rid="pone.0027190-Brunton1">[11]</xref>; (<italic>ii</italic>) warning predators that the insect is toxic <xref ref-type="bibr" rid="pone.0027190-Mallet1">[12]</xref>; (<italic>iii</italic>) camouflage or mimicry that may assist in protection against predators <xref ref-type="bibr" rid="pone.0027190-Brakefield1">[13]</xref>, (<italic>iv</italic>) absorbing or reflecting sunlight as tiny solar heat collectors and aiding in temperature regulation in order to warm insects up for flight or even by acting as reflectors to protect insects from overheating as feathers may do in birds <xref ref-type="bibr" rid="pone.0027190-Kingsolver1">[14]</xref>, <xref ref-type="bibr" rid="pone.0027190-Srinivasarao1">[15]</xref>, (<italic>v</italic>) offering protection against spiders by shedding and sticking to adhesive in webs <xref ref-type="bibr" rid="pone.0027190-Eisner1">[16]</xref>, (<italic>vi</italic>) aiding in sound production or acting as a sound resonator <xref ref-type="bibr" rid="pone.0027190-Nakano1">[17]</xref>. We hypothesize that a potentially vital function of moth scales is to absorb the ultrasonic echolocation calls emitted by bats; this aspect of moth biology has only been investigated crudely in previous studies <xref ref-type="bibr" rid="pone.0027190-Roeder1">[18]</xref>, <xref ref-type="bibr" rid="pone.0027190-Moss1">[19]</xref>. Here, we use a novel method for measuring ultrasound absorption from small biological samples and demonstrate that some moths have evolved additional stealth tactics to reduce their conspicuousness to echolocating bats by their wing scales absorbing ultrasound.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <p>We compared the structural characteristics of scales in two moth and two butterfly species, and measured their absorptivity of different ultrasonic frequencies. We chose the Tiger Moth (<italic>Spilosoma niveus</italic>) and Clouded Buff (<italic>Rhyparioides amurensis</italic>) moths (Arctiidae), and the Indian Cabbage White (<italic>Pieris canidia</italic>) and Asian Pale Clouded Yellow (<italic>Colias erate</italic>) butterflies (Pieridae) as model species because these are among the most common moth and butterfly species in China. Two distinct layers—ground and cover scales—can be observed in the wings of these lepidopterans (<xref ref-type="fig" rid="pone-0027190-g001">Figure 1</xref>). Approximately 100 million scales are present on each wing and the scale dimensions are shown in <xref ref-type="table" rid="pone-0027190-t001">Table 1</xref>.</p>
+      <fig id="pone-0027190-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0027190.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>SEM images of a tiny section of the hind wing.</title>
+          <p>Showing the arrangement of ground scales (gs) and cover scales (cs) on the wing. (<italic>A</italic>) The Tiger Moth (<italic>Spilosoma niveus</italic>). (<italic>B</italic>) The Clouded Buff (<italic>Rhyparioides amurensis</italic>). (<italic>C</italic>) The Indian Cabbage White Butterfly (<italic>Pieris canidia</italic>). (<italic>D</italic>) The Asian Pale Clouded Yellow (<italic>Colias erate</italic>). Scale bar, 100 µm.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0027190.g001" xlink:type="simple"/>
+      </fig>
+      <table-wrap id="pone-0027190-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0027190.t001</object-id><label>Table 1</label><caption>
+          <title>Characteristics of cover scales and ground scales in the moths and butterflies.</title>
+        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0027190-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0027190.t001" xlink:type="simple"/><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="2" rowspan="1">Species</td>
+              <td align="left" colspan="2" rowspan="1">Cover scales</td>
+              <td align="left" colspan="2" rowspan="1">Ground scales</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="2" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">Length (<bold>µ</bold>m)</td>
+              <td align="left" colspan="1" rowspan="1">Width (<bold>µ</bold>m)</td>
+              <td align="left" colspan="1" rowspan="1">Length (<bold>µ</bold>m)</td>
+              <td align="left" colspan="1" rowspan="1">Width (<bold>µ</bold>m)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Moths</td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Spilosoma niveus</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">174.38±1.72 (<italic>n</italic> = 70)</td>
+              <td align="left" colspan="1" rowspan="1">44.17±0.44 (<italic>n</italic> = 70)</td>
+              <td align="left" colspan="1" rowspan="1">96.28±1.75 (<italic>n</italic> = 105)</td>
+              <td align="left" colspan="1" rowspan="1">42.56±0.44 (<italic>n</italic> = 105)</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Rhyparioides amurensis</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">220.58±3.42 (<italic>n</italic> = 50)</td>
+              <td align="left" colspan="1" rowspan="1">44.81±1.01 (<italic>n</italic> = 50)</td>
+              <td align="left" colspan="1" rowspan="1">135.44±1.67 (<italic>n</italic> = 110)</td>
+              <td align="left" colspan="1" rowspan="1">48.97±0.7 (<italic>n</italic> = 110)</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Butterflies</td>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Pieris canidia</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">129.56±1.57 (<italic>n</italic> = 20)</td>
+              <td align="left" colspan="1" rowspan="1">33.17±1.32 (<italic>n</italic> = 20)</td>
+              <td align="left" colspan="1" rowspan="1">101.86±1.18 (<italic>n</italic> = 90)</td>
+              <td align="left" colspan="1" rowspan="1">54.76±0.54 (<italic>n</italic> = 90)</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1"/>
+              <td align="left" colspan="1" rowspan="1">
+                <italic>Colias erate</italic>
+              </td>
+              <td align="left" colspan="1" rowspan="1">125.82±1.06 (<italic>n</italic> = 30)</td>
+              <td align="left" colspan="1" rowspan="1">39.47±0.45 (<italic>n</italic> = 30)</td>
+              <td align="left" colspan="1" rowspan="1">98.38±0.73 (<italic>n</italic> = 120)</td>
+              <td align="left" colspan="1" rowspan="1">51.9±0.39 (<italic>n</italic> = 120)</td>
+            </tr>
+          </tbody>
+        </table></alternatives><table-wrap-foot>
+          <fn id="nt101">
+            <label/>
+            <p>Values are expressed as mean ± SEM.</p>
+          </fn>
+        </table-wrap-foot></table-wrap>
+      <p>As described for other lepidopterans <xref ref-type="bibr" rid="pone.0027190-Ghiradella1">[8]</xref>, the scales of both insects display similar basic structural components: longitudinal ridges, overlapping lamellae, microribs, transverse crossribs and pillar-like trabeculae (<xref ref-type="fig" rid="pone-0027190-g002">Figure 2</xref>). In the scales of the moths that we examined, the regions between the ridges and crossribs are hollow, as a consequence of their multilayer microstructure. Hollows connect with each other and form a meshwork. However, no equivalent hollows were observed in the butterfly scales, in which some pigment granules were attached to the ridges (<xref ref-type="fig" rid="pone-0027190-g002">Figure 2</xref>).</p>
+      <fig id="pone-0027190-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0027190.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>SEM images of a scale fragment.</title>
+          <p>Showing the complicated upper lamina and the interior of a scale. Ridges (R), lamellae (l), microribs (mr) and crossribs (r) are indicated distinctly. (<italic>A</italic> and <italic>B</italic>) Multiform trabeculae (T) connect with each other and form various mesh between the upper and bottom laminae within the scale of <italic>Spilosoma niveus</italic> (<italic>A</italic>) and <italic>Rhyparioides amurensis</italic> (<italic>B</italic>). Scale bar, 1 µm. (<italic>C</italic> and <italic>D</italic>) These meshworks all run into one another within the scale. Ridges and microribs form many close and regular windows, and pigment granules (p) could be seen in <italic>Pieris canidia</italic> (<italic>C</italic>) and <italic>Colias erate</italic> (<italic>D</italic>) scales, although trabeculae were not apparent. Scale bars, 1 µm (<italic>C</italic>), 100 nm (<italic>D</italic>).</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0027190.g002" xlink:type="simple"/>
+      </fig>
+      <p>The absorptivity of ultrasound by moth and butterfly wing fragments (10 cm<sup>2</sup>: <italic>n</italic> = 15 samples for each treatment) was measured over the frequency range 20–100 kHz (<xref ref-type="fig" rid="pone-0027190-g003">Figure 3</xref>), using a reverberation chamber (<xref ref-type="fig" rid="pone-0027190-g004">Figure 4</xref>). The random-incident absorption factors of the moth wings with and without scales were also measured. The absorption factors of the two moths were considerably higher than that of two butterflies between 40–60 kHz. When the scales were removed, the peaks of the absorption factors of the moths declined markedly (<xref ref-type="fig" rid="pone-0027190-g003">Figure 3A</xref>). The absorption factors among the butterflies' wings with and without scales were not different (<xref ref-type="fig" rid="pone-0027190-g003">Figure 3B</xref>). A repeated measures analysis of variance (with ultrasound frequency as within-subject factors and presence/absence of scales the moths/butterflies as between - subject factors) showed a significant effect of preparation type (moths or butterflies with or without scales) (<italic>F</italic><sub>3,959</sub> = 76.17, <italic>p</italic>&lt;0.001) and frequency (<italic>F</italic><sub>7,959</sub> = 29.53, <italic>p</italic>&lt;0.001) on absorption factor. Moreover, there was a significant group×frequency interaction (<italic>F</italic><sub>21,959</sub> = 8.87, <italic>p</italic>&lt;0.01) showing that different species had different absorption factors at different frequencies. Bonferroni post-hoc comparisons showed that moths with scales differed significantly in absorption factors compared with moths without scales (<italic>p</italic>&lt;0.01) and from butterflies with (<italic>p</italic>&lt;0.01) and without (<italic>p</italic>&lt;0.01) scales. However, when moth scales were removed, the absorption factors did not differ from those of butterflies either with (<italic>p</italic> = 0.45) or without (<italic>p</italic> = 0.26) scales. The absorption factors of butterfly wings with or without scales did not differ significantly (<italic>p</italic> = 1.00). These results show that the moth scales increase the absorption of ultrasound significantly compared with butterfly scales and that this absorptive advantage is lost when the scales are removed only for moths.</p>
+      <fig id="pone-0027190-g003" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0027190.g003</object-id>
+        <label>Figure 3</label>
+        <caption>
+          <title>Absorption factor of wings with and without scales of moths and butterflies from 20 kHz to 100 kHz.</title>
+          <p><italic>Spilosoma niveus</italic> (<italic>S.n.</italic>), <italic>Rhyparioides amurensis</italic> (<italic>R.a.</italic>), <italic>Pieris canidia</italic> (<italic>P.c.</italic>) and <italic>Colias erate</italic> (<italic>C.e.</italic>). (<italic>A</italic>) Moths with scales differed significantly in absorption factors compared with moths without scales, and from butterflies with and without scales (<italic>P</italic>&lt;0.001). Absorption factors of moths without scales did not differ from those of butterflies either with or without scales (<italic>P</italic>&lt;0.05). (<italic>B</italic>) The absorption factors of butterfly wings with or without scales did not differ significantly (<italic>P</italic>&gt;0.05). Experiments were performed in triplicate, and the SEM is indicated by the error bars, and <italic>n</italic> = 15 for all samples.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0027190.g003" xlink:type="simple"/>
+      </fig>
+      <fig id="pone-0027190-g004" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pone.0027190.g004</object-id>
+        <label>Figure 4</label>
+        <caption>
+          <title>Reverberation chamber used for the ultrasonic absorption measurements.</title>
+          <p>The ultrasonic source is deployed in a chamber corner, and the ultrasonic microphone can be moved from the lid up-and-down to warrant spatial averages. Many semi-spherical scatters are also deployed on the interior surfaces to achieve a diffuse sound field within the frequency range of interest. Medium exchange by nitrogen is carried out by one of the gas inlet/outlets.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0027190.g004" xlink:type="simple"/>
+      </fig>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>It is unlikely that moth scales function as heat reflectors to protect moths from overheating most moths are nocturnal, and temperatures at night are generally not as high as during the day. That the scales function as solar panels for warming can also be rejected for similar reasons, though scales may assist in maintaining relatively high body temperatures at night. Scales also confer colour to moths, assisting with protection against visual predators by aposematism or camouflage. Scales may also protect moths from becoming ensnared in spider webs, and these potential benefits are not mutually exclusive from any acoustic benefits of scales.</p>
+      <p>Preliminary indications of a possible anechoic role for moth scales have nearly always come from studies on bats' perception of moths as prey. It has been firmly established that bats determine species-specific features of moth prey depending on their shape, size and depth-structure <xref ref-type="bibr" rid="pone.0027190-Simmons1">[20]</xref>, <xref ref-type="bibr" rid="pone.0027190-Simmons2">[21]</xref>, <xref ref-type="bibr" rid="pone.0027190-Waters1">[22]</xref>. The observation that echo amplitudes increase by 1 to 2 decibels by removal of moth scales was first measured by Roeder, although the effect was insignificant compared with that produced by changes in moth wing positions <xref ref-type="bibr" rid="pone.0027190-Roeder1">[18]</xref>. These estimates correspond closely with our values – the difference between target strengths of scaled and unscaled moths at 40 kHz (where the difference is greatest) is only estimated to be about 2 dB (A. T. Catherall pers. comm.). Since Roeder's measurements, more has become known of the intensity of bat echolocation calls and the hearing thresholds of bats, and so it is possible to model the advantages conferred by scales in reducing detection distances of moths by bats.</p>
+      <p>Target strengths for moths of the size studied here are typically around −15 dB <xref ref-type="bibr" rid="pone.0027190-Surlykke1">[23]</xref>. We used the models of Goerlitz et al. <xref ref-type="bibr" rid="pone.0027190-Goerlitz1">[24]</xref> to calculate changes in detection distance of moths by bats. Assuming a source level of 125 dB SPL at 10 cm, 17°C and 80% relative humidity, the model predicts detection distances of 11.24 m (unscaled) and 10. 75 m (scaled) assuming a bat hearing threshold of 0 dB SPL, and 6.75 m and 6.36 m respectively with a hearing threshold of 20 dB SPL. These predictions suggest that scales might confer a 5–6% difference in detection distance at best, which is small but potentially of evolutionary significance to enhancing moth survival prospects.</p>
+      <p>In addition, the sound absorbing role of wing scales was also suggested by observations on spectral modifications in echoes, in which the relative height of the side lobes was changed in the cross-correlation functions, and notches appeared in power spectra and in spectrograms <xref ref-type="bibr" rid="pone.0027190-Moss1">[19]</xref>. Yet relatively little is known about the detailed mechanisms by which wing scales might reduce echo strengths. In this comparative study on wing scale absorption, we confirmed that moth scales absorb some frequencies of sound, and that the optimal absorbing frequency range is 40–60 kHz.</p>
+      <p>The mechanisms responsible for sound absorption of wing scales are currently unknown. Numerous works have been devoted to colour effects in iridescent scales in Lepidoptera, especially in butterflies <xref ref-type="bibr" rid="pone.0027190-Ghiradella1">[8]</xref>, <xref ref-type="bibr" rid="pone.0027190-Vukusic1">[9]</xref>, <xref ref-type="bibr" rid="pone.0027190-Yoshioka1">[25]</xref>. Several other functions of scales as the constituents of auditory, scent or sound-producing organs have also been reported <xref ref-type="bibr" rid="pone.0027190-Nakano1">[17]</xref>, <xref ref-type="bibr" rid="pone.0027190-Gpfert1">[26]</xref>, <xref ref-type="bibr" rid="pone.0027190-Costanzo1">[27]</xref>. Scale patterns obtained in this study showed that the scales overlap in butterflies in a more ordered manner (like roof-tiles) than in moths. Butterfly scales are also more uniform in structure. Perhaps, the more scattered arrangement of moth scales creates larger interstitial air space hollows, which may act as a porous absorber so that sound propagation occurs in a network of interconnected pores though viscous effects causing acoustic energy to be dissipated as heat <xref ref-type="bibr" rid="pone.0027190-Cox1">[28]</xref>. Furthermore, the ultrastructure of moth scales is similar to a thin panel perforated with a large number of microscopic pores together with an air space behind it, which probably acts as a microperforated panel absorber <xref ref-type="bibr" rid="pone.0027190-Maa1">[29]</xref>. Such a structure resembles the acoustically absorptive material used by humans in buildings, however, the sound absorbers of the moth scales may be more effective than some man-made absorbers, because there is an impedance-matching structure between the air and the perforated panel, which consists of wedges similar to those used in an anechoic chamber. These wedges could further reduce the reflection of sound although the perforated panel will have initially absorbed most of the sound. We therefore suggest that there is probably an integrative action with both a porous absorber and a perforated panel absorber that accounts for the sound absorption in moth wings.</p>
+      <p>Most echolocating bats emit calls that contain most energy between 20–60 kHz <xref ref-type="bibr" rid="pone.0027190-Waters1">[22]</xref>, <xref ref-type="bibr" rid="pone.0027190-Fullard2">[30]</xref>. In China, the commonest aerial feeding bat, <italic>Pipistrellus abramus</italic>, echolocates with most energy at 44–52 kHz <xref ref-type="bibr" rid="pone.0027190-Luo1">[31]</xref>. This frequency band accords well with that best absorbed by the moth scales. We believe this might be the result of selective pressure from the major predators of moths–echolocating bats. The structure of the sound absorbers on the moth wings would reduce the chance of the moth being detected by bats. Future experiments will reveal how widespread the absorbance of ultrasound is among moth species, and whether absorbance is related to the range of echolocation calls emitted by sympatric bat species. Another particularly interesting area for future research might be to confirm the mechanisms of absorbance. Many moths have already evolved ears to detect echolocating bats, and undertake evasive manoeuvres to escape from them <xref ref-type="bibr" rid="pone.0027190-Jones1">[7]</xref>. Stealth would therefore be an extra defense used by moths in avoiding predation by echolocating bats in a way similar to the use of absorbent materials used to make military aircraft less detectable by radar, and submarines less detectable by sonar <xref ref-type="bibr" rid="pone.0027190-Denny1">[32]</xref>.</p>
+      <p>In conclusion, some moths carry scales that have hollows between ridges and crossribs in their structure, and these were not recorded in the butterfly species studied. Moth wing fragments reflected weaker echoes than did butterfly wing fragments of equivalent size, and the removal of scales from moth wings decreased their absorbance of ultrasound, while a similar effect did not occur in butterflies. We suggest that moth scales may confer a marginal acoustic advantage to moths by decreasing the distance that bats can detect the moths by 5–6% in a best-case scenario. Further studies on how widespread the differences in scale structure that we observed are (as we only investigated moths and butterflies from two families), and whether the removal of scales increases the predation risk to moths will be revealing.</p>
+    </sec>
+    <sec id="s4" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s4a">
+        <title>(a) Study species</title>
+        <p>Tiger Moths <italic>Spilosoma niveus</italic> (Ménétriés, 1859) and the Clouded Buff <italic>Rhyparioides amurensis</italic> (Bremer, 1861), the Indian Cabbage White Butterflies <italic>Pieris canidia</italic> (Linnaeus, 1768) and the Asian Pale Clouded Yellow <italic>Colias erate</italic> (Esper, [1805]) were captured in rural areas of Beijing and Shanghai. They are all widespread species and usually considered as agricultural pests <xref ref-type="bibr" rid="pone.0027190-Wang1">[33]</xref>.</p>
+      </sec>
+      <sec id="s4b">
+        <title>(b) SEM</title>
+        <p>We determined the shape and surface texture of the scales by obtaining scanning electron microscope (SEM) images from small sections of a wing. Samples were coated with 5 nm of gold to provide a conducting surface, and were examined with a Hitachi S-3200N electron microscope.</p>
+      </sec>
+      <sec id="s4c">
+        <title>(c) Determination of sound absorption</title>
+        <p>A micro-reverberation chamber with a known volume was used to measure sound absorptivity of moth and butterfly wings. The steady-state diffuse ultrasonic energy decays at a certain rate (so-called reverberation time) inside the chamber when switching off the ultrasonic excitations. After introducing the moth or butterfly wings, the reverberation time changes with respect to those of the empty chamber. After moth wings were measured, the scales were carefully removed by using the liquid polyvinyl alcohol <xref ref-type="bibr" rid="pone.0027190-Yoshioka1">[25]</xref>, and then the wings without scales were measured once again under the same conditions. The difference in measured reverberation times caused by specimens of known size is used to determine the absorption factors. 12 microphone positions were selected in each measurement to achieve spatial averaging of measured reverberation times. 15 individuals of each species were examined. The data were analyzed using repeated measures ANOVA followed by post-hoc analyses with Bonferroni tests (SPSS 11.0).</p>
+        <p>Broad-band measurement techniques for experimental determination of ultrasonic reflection and absorption within the frequency range between 20 kHz and 100 kHz have not yet been documented either in major acoustics or in the biology literature. In architectural acoustics sound absorbing materials are often determined in a reverberation chamber of known volume. The interior of the chamber features highly reflective surfaces. The time for the sound energy to decay from its initial steady-state level by 60 dB (one millionth of the initial sound pressure value) is termed reverberation time. If a diffuse sound field inside the chamber can be created, the empty-chamber reverberation time <italic>T</italic><sub>0</sub>(<italic>f</italic>) in seconds as function of frequency is determined. Introducing a material under test with a known surface area <italic>S</italic><sub>m</sub> in m<sup>2</sup> into the chamber, the new reverberation times, changed to <italic>T</italic><sub>1</sub>(<italic>f</italic>) in seconds, are measured. The absorption factors of the material under test <italic>α</italic>(<italic>f</italic>) as function of frequency can then be determined using the Sabine equation <xref ref-type="bibr" rid="pone.0027190-Sabine1">[34]</xref>, <xref ref-type="bibr" rid="pone.0027190-Blauert1">[35]</xref><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0027190.e001" xlink:type="simple"/><label>(1)</label></disp-formula>where <italic>V</italic> is the chamber volume in m<sup>3</sup>. The chamber measurement method described above assumes a diffuse sound field inside the chamber, the sound energy impinging upon the material surface under test can be considered randomly from all possible directions, and the background absorption is assumed to be low.</p>
+      </sec>
+      <sec id="s4d">
+        <title>(d) Micro-reverberation chamber tests</title>
+        <p>In determining sound absorption of moth and butterfly wings using Eq. (1), this work uses a micro-reverberation chamber with a volume <italic>V</italic> = 504 cm<sup>3</sup> (<xref ref-type="fig" rid="pone-0027190-g004">Figure 4</xref>) and a wing size is in order of <italic>S<sub>m</sub></italic> = 10 cm<sup>2</sup>. Such a wing size is appropriate for the current investigation on moth wings and was attained by attaching 4 pieces of wing together. The air in the ultrasonic frequency range between 20–100 kHz becomes noticeably absorbent. To compensate the absorbent medium in the reverberation chamber in keeping the background (empty-state) absorption as low as possible, nitrogen is used to replace air in the chamber <xref ref-type="bibr" rid="pone.0027190-Xiang1">[36]</xref>. During the medium-exchange, once the oxygen content is reduced to 3% (97% nitrogen) in the chamber the measurement can be carried out <xref ref-type="bibr" rid="pone.0027190-Xiang1">[36]</xref>. A broad-band ultrasonic transducer covering the frequency range between 18 kHz and 100 kHz is deployed inside the chamber near one bottom-corner, while an ultrasonic microphone can be moved up-and-down for measuring the chamber impulse responses at different locations. A broad-band pseudo-random signal is periodically sent to the ultrasonic source at an update-rate of 250 kHz so as to cover the frequency up to 110 kHz, a fast cross-correlation is applied between the excitation signal and the received chamber response measured by the ultrasonic microphone <xref ref-type="bibr" rid="pone.0027190-Xiang2">[37]</xref>, to obtain chamber impulse responses. Using this method, high signal-to-noise ratios (over 45 dB) can be achieved over the frequency range between 20 kHz and 100 kHz. The steady-state ultrasound energy decay is derived from the chamber impulse response by Schroeder integration <xref ref-type="bibr" rid="pone.0027190-Schroeder1">[38]</xref>. A model-based Bayesian energy decay analysis <xref ref-type="bibr" rid="pone.0027190-Xiang3">[39]</xref> is used to determine the reverberation times. Because the background absorption and the diffusion of the sound field might be chamber-specific, the absorption quantities <italic>α</italic>(<italic>f</italic>) determined using Eq. (1) are termed in this work absorption factors, and these are sufficient to compare the relative absorptivity between moth and butterfly wings under the same acoustic conditions.</p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank Junpeng Zhang, Guangjian Zhu, Xiuqun Han, Zhe Wang, Guimei He, Dong Xu, Huilin Han, Mujie Qi and Yanpeng Zhu for assistance with samples, and Huilin Han for support in the species identification. We are grateful to Yu Chen, Jun Ma, Zulin Yu, Junxian Shen, David E. Lucero, Brock Fenton and two anonymous reviewers for helpful comments on an earlier version of this manuscript. Holger Goerlitz helped with calculating detection distances.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0027190-Culver1">
+        <label>1</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Culver</surname><given-names>SJ</given-names></name><name name-style="western"><surname>Rawson</surname><given-names>PF</given-names></name></person-group>             <year>2000</year>             <source>Biotic response to global change: the last 145 million years</source>             <publisher-loc>Cambridge</publisher-loc>             <publisher-name>Cambridge University Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">501</size>           </element-citation>
+      </ref>
+      <ref id="pone.0027190-VaneWright1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vane-Wright</surname><given-names>D</given-names></name></person-group>             <year>2004</year>             <article-title>Butterflies at that awkward age.</article-title>             <source>Nature</source>             <volume>428</volume>             <fpage>477</fpage>             <lpage>480</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Teeling1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Teeling</surname><given-names>EC</given-names></name><name name-style="western"><surname>Springer</surname><given-names>MS</given-names></name><name name-style="western"><surname>Madsen</surname><given-names>O</given-names></name><name name-style="western"><surname>Bates</surname><given-names>P</given-names></name><name name-style="western"><surname>O'Brien</surname><given-names>SJ</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>A molecular phylogeny for bats illuminates biogeography and the fossil record.</article-title>             <source>Science</source>             <volume>307</volume>             <fpage>580</fpage>             <lpage>584</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Veselka1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Veselka</surname><given-names>N</given-names></name><name name-style="western"><surname>McErlain</surname><given-names>DD</given-names></name><name name-style="western"><surname>Holdsworth</surname><given-names>DW</given-names></name><name name-style="western"><surname>Eger</surname><given-names>JL</given-names></name><name name-style="western"><surname>Chhem</surname><given-names>RK</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>A bony connection signals laryngeal echolocation in bats.</article-title>             <source>Nature</source>             <volume>463</volume>             <fpage>939</fpage>             <lpage>942</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Fullard1">
+        <label>5</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Fullard</surname><given-names>JH</given-names></name></person-group>             <year>1998</year>             <article-title>The sensory coevolution of moths and bats.</article-title>             <person-group person-group-type="editor"><name name-style="western"><surname>Hoy</surname><given-names>RR</given-names></name><name name-style="western"><surname>Popper</surname><given-names>AN</given-names></name><name name-style="western"><surname>Fay</surname><given-names>RR</given-names></name></person-group>             <source>Comparative hearing: insects</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Springer</publisher-name>             <fpage>279</fpage>             <lpage>326</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Miller1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Miller</surname><given-names>L</given-names></name><name name-style="western"><surname>Surlykke</surname><given-names>A</given-names></name></person-group>             <year>2001</year>             <article-title>How some insects detect and avoid being eaten by bats: tactics and countertactics of prey and predator.</article-title>             <source>Bioscience</source>             <volume>51</volume>             <fpage>570</fpage>             <lpage>581</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Jones1">
+        <label>7</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Jones</surname><given-names>G</given-names></name><name name-style="western"><surname>Rydell</surname><given-names>J</given-names></name></person-group>             <year>2003</year>             <article-title>Attack and defense: interactions between echolocating bats and their insect prey.</article-title>             <person-group person-group-type="editor"><name name-style="western"><surname>Kunz</surname><given-names>TH</given-names></name></person-group>             <source>Bat Ecology</source>             <publisher-loc>Chicago</publisher-loc>             <publisher-name>University of Chicago Press</publisher-name>             <fpage>301</fpage>             <lpage>345</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Ghiradella1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ghiradella</surname><given-names>H</given-names></name></person-group>             <year>1991</year>             <article-title>Light and color on the wing: structural colors in butterflies and moths.</article-title>             <source>Appl Opt</source>             <volume>30</volume>             <fpage>3492</fpage>             <lpage>3500</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Vukusic1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vukusic</surname><given-names>P</given-names></name><name name-style="western"><surname>Sambles</surname><given-names>JR</given-names></name></person-group>             <year>2003</year>             <article-title>Photonic structures in biology.</article-title>             <source>Nature</source>             <volume>424</volume>             <fpage>852</fpage>             <lpage>855</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Burghardt1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Burghardt</surname><given-names>F</given-names></name><name name-style="western"><surname>Knüttel</surname><given-names>H</given-names></name><name name-style="western"><surname>Becker</surname><given-names>M</given-names></name><name name-style="western"><surname>Fiedler</surname><given-names>K</given-names></name></person-group>             <year>2000</year>             <article-title>Flavonoid wing pigments increase attractiveness of female common blue (<italic>Polyommatus icarus</italic>) butterflies to mate-searching males.</article-title>             <source>Naturwissenschaften</source>             <volume>87</volume>             <fpage>304</fpage>             <lpage>307</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Brunton1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Brunton</surname><given-names>CFA</given-names></name><name name-style="western"><surname>Majerus</surname><given-names>MEN</given-names></name></person-group>             <year>1995</year>             <article-title>Ultraviolet colours in butterflies: intra-or inter-specific communication?</article-title>             <source>Proc R Soc B</source>             <volume>260</volume>             <fpage>199</fpage>             <lpage>204</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Mallet1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Mallet</surname><given-names>J</given-names></name><name name-style="western"><surname>Singer</surname><given-names>MC</given-names></name></person-group>             <year>1987</year>             <article-title>Individual selection, kin selection, and the shifting balance in the evolution of warning colours: the evidence from butterflies.</article-title>             <source>Biol J Linn Soc</source>             <volume>32</volume>             <fpage>337</fpage>             <lpage>350</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Brakefield1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Brakefield</surname><given-names>PM</given-names></name><name name-style="western"><surname>Liebert</surname><given-names>TG</given-names></name></person-group>             <year>2000</year>             <article-title>Evolutionary dynamics of declining melanism in the peppered moth in the Netherlands.</article-title>             <source>Proc R Soc B</source>             <volume>267</volume>             <fpage>1953</fpage>             <lpage>1957</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Kingsolver1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kingsolver</surname><given-names>JG</given-names></name><name name-style="western"><surname>Watt</surname><given-names>WB</given-names></name></person-group>             <year>1983</year>             <article-title>Thermoregulatory strategies in Colias butterflies: thermal stress and the limits to adaptation in temporally varying environments.</article-title>             <source>Am Nat</source>             <volume>12</volume>             <fpage>32</fpage>             <lpage>55</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Srinivasarao1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Srinivasarao</surname><given-names>M</given-names></name></person-group>             <year>1999</year>             <article-title>Nano-optics in the biological world: beetles, butterflies, birds, and moths.</article-title>             <source>Chem Rev</source>             <volume>99</volume>             <fpage>1935</fpage>             <lpage>1961</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Eisner1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Eisner</surname><given-names>T</given-names></name><name name-style="western"><surname>Alsop</surname><given-names>R</given-names></name><name name-style="western"><surname>Ettershank</surname><given-names>G</given-names></name></person-group>             <year>1964</year>             <article-title>Adhesiveness of spider silk.</article-title>             <source>Science</source>             <volume>146</volume>             <fpage>1058</fpage>             <lpage>1061</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Nakano1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Nakano</surname><given-names>R</given-names></name><name name-style="western"><surname>Skals</surname><given-names>N</given-names></name><name name-style="western"><surname>Takanashi</surname><given-names>T</given-names></name><name name-style="western"><surname>Surlykke</surname><given-names>A</given-names></name><name name-style="western"><surname>Koike</surname><given-names>T</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Moths produce extremely quiet ultrasonic courtship songs by rubbing specialized scales.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>105</volume>             <fpage>11812</fpage>             <lpage>11817</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Roeder1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Roeder</surname><given-names>KD</given-names></name></person-group>             <year>1963</year>             <article-title>Echoes of ultrasonic pulses from flying moths.</article-title>             <source>Biol Bull</source>             <volume>124</volume>             <fpage>200</fpage>             <lpage>210</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Moss1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Moss</surname><given-names>CF</given-names></name><name name-style="western"><surname>Zagaeski</surname><given-names>M</given-names></name></person-group>             <year>1994</year>             <article-title>Acoustic information available to bats using frequency-modulated sounds for the perception of insect prey.</article-title>             <source>J Acoust Soc Am</source>             <volume>95</volume>             <fpage>2745</fpage>             <lpage>2756</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Simmons1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Simmons</surname><given-names>JA</given-names></name><name name-style="western"><surname>Chen</surname><given-names>L</given-names></name></person-group>             <year>1989</year>             <article-title>The acoustic basis for target discrimination by FM echolocating bats.</article-title>             <source>J Acoust Soc Am</source>             <volume>86</volume>             <fpage>1333</fpage>             <lpage>1350</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Simmons2">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Simmons</surname><given-names>JA</given-names></name><name name-style="western"><surname>Moss</surname><given-names>CF</given-names></name><name name-style="western"><surname>Ferragamo</surname><given-names>M</given-names></name></person-group>             <year>1990</year>             <article-title>Convergence of temporal and spectral information into acoustic images of complex sonar targets perceived by the echolocating bat, <italic>Eptesicus fuscus</italic>.</article-title>             <source>J Comp Physiol A</source>             <volume>166</volume>             <fpage>449</fpage>             <lpage>470</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Waters1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Waters</surname><given-names>DA</given-names></name></person-group>             <year>2003</year>             <article-title>Bats and moths: what is there left to learn?</article-title>             <source>Physiol Entomol</source>             <volume>28</volume>             <fpage>237</fpage>             <lpage>250</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Surlykke1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Surlykke</surname><given-names>A</given-names></name><name name-style="western"><surname>Filskov</surname><given-names>M</given-names></name><name name-style="western"><surname>Fullard</surname><given-names>JH</given-names></name><name name-style="western"><surname>Forrest</surname><given-names>E</given-names></name></person-group>             <year>1999</year>             <article-title>Auditory relationships to size in noctuid moths: bigger is better.</article-title>             <source>Naturwissenschaften</source>             <volume>86</volume>             <fpage>238</fpage>             <lpage>241</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Goerlitz1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Goerlitz</surname><given-names>HR</given-names></name><name name-style="western"><surname>ter Hofstede</surname><given-names>HM</given-names></name><name name-style="western"><surname>Zeale</surname><given-names>MRK</given-names></name><name name-style="western"><surname>Jones</surname><given-names>G</given-names></name><name name-style="western"><surname>Holderied</surname><given-names>MW</given-names></name></person-group>             <year>2010</year>             <article-title>An aerial-hawking bat uses stealth echolocation to counter moth hearing.</article-title>             <source>Curr Biol</source>             <volume>20</volume>             <fpage>1568</fpage>             <lpage>1572</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Yoshioka1">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yoshioka</surname><given-names>S</given-names></name><name name-style="western"><surname>Kinoshita</surname><given-names>S</given-names></name></person-group>             <year>2006</year>             <article-title>Structural or pigmentary? Origin of the distinctive white stripe on the blue wing of a Morpho butterfly.</article-title>             <source>Proc R Soc B</source>             <volume>273</volume>             <fpage>129</fpage>             <lpage>134</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Gpfert1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Göpfert</surname><given-names>MC</given-names></name><name name-style="western"><surname>Surlykke</surname><given-names>A</given-names></name><name name-style="western"><surname>Wasserthal</surname><given-names>LT</given-names></name></person-group>             <year>2002</year>             <article-title>Tympanal and atympanal ‘mouth–ears’ in hawkmoths (Sphingidae).</article-title>             <source>Proc R Soc B</source>             <volume>269</volume>             <fpage>89</fpage>             <lpage>95</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Costanzo1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Costanzo</surname><given-names>K</given-names></name><name name-style="western"><surname>Monteiro</surname><given-names>A</given-names></name></person-group>             <year>2007</year>             <article-title>The use of chemical and visual cues in female choice in the butterfly <italic>Bicyclus anynana</italic>.</article-title>             <source>Proc R Soc B</source>             <volume>274</volume>             <fpage>845</fpage>             <lpage>851</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Cox1">
+        <label>28</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Cox</surname><given-names>TJ</given-names></name><name name-style="western"><surname>D'Antonio</surname><given-names>P</given-names></name></person-group>             <year>2009</year>             <source>Acoustic absorbers and diffusers: theory, design and application</source>             <publisher-loc>Oxon</publisher-loc>             <publisher-name>Taylor &amp; Francis Group</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">476</size>           </element-citation>
+      </ref>
+      <ref id="pone.0027190-Maa1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Maa</surname><given-names>DY</given-names></name></person-group>             <year>1975</year>             <article-title>Theory and design of micro-perforated-panel soundabsorbing constructions.</article-title>             <source>Sci Sin</source>             <volume>18</volume>             <fpage>38</fpage>             <lpage>50</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Fullard2">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Fullard</surname><given-names>JH</given-names></name></person-group>             <year>1982</year>             <article-title>Echolocation assemblages and their effects on moth auditory systems.</article-title>             <source>Can J Zool</source>             <volume>60</volume>             <fpage>2572</fpage>             <lpage>2576</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Luo1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Luo</surname><given-names>F</given-names></name><name name-style="western"><surname>Ma</surname><given-names>J</given-names></name><name name-style="western"><surname>Li</surname><given-names>A</given-names></name><name name-style="western"><surname>Wu</surname><given-names>FJ</given-names></name><name name-style="western"><surname>Chen</surname><given-names>QC</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Echolocation calls and neurophysiological correlations with auditory response properties in the inferior colliculus of <italic>Pipistrellus abramus</italic>(Microchiroptera: Vespertilionidae).</article-title>             <source>Zool Stud</source>             <volume>46</volume>             <fpage>622</fpage>             <lpage>630</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Denny1">
+        <label>32</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Denny</surname><given-names>M</given-names></name></person-group>             <year>2007</year>             <source>Blip, ping &amp; buzz: making sense of radar and sonar</source>             <publisher-loc>Baltimore</publisher-loc>             <publisher-name>Johns Hopkins University Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">274</size>           </element-citation>
+      </ref>
+      <ref id="pone.0027190-Wang1">
+        <label>33</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Wang</surname><given-names>P</given-names></name><name name-style="western"><surname>Wang</surname><given-names>L</given-names></name><name name-style="western"><surname>Fang</surname><given-names>C</given-names></name><name name-style="western"><surname>Bai</surname><given-names>J</given-names></name><name name-style="western"><surname>Zhu</surname><given-names>H</given-names></name><etal/></person-group>             <year>1981</year>             <source>Iconocraphia Heterocerorum Sinicorum</source>             <publisher-loc>Beijing</publisher-loc>             <publisher-name>Science Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">698</size>           </element-citation>
+      </ref>
+      <ref id="pone.0027190-Sabine1">
+        <label>34</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sabine</surname><given-names>WC</given-names></name></person-group>             <year>1922</year>             <source>Collected papers on acoustics</source>             <publisher-loc>Cambridge</publisher-loc>             <publisher-name>Harvard University Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">279</size>           </element-citation>
+      </ref>
+      <ref id="pone.0027190-Blauert1">
+        <label>35</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Blauert</surname><given-names>J</given-names></name><name name-style="western"><surname>Xiang</surname><given-names>N</given-names></name></person-group>             <year>2008</year>             <source>Acoustics for engineers: Troy lectures</source>             <publisher-loc>Berlin</publisher-loc>             <publisher-name>Springer</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">253</size>           </element-citation>
+      </ref>
+      <ref id="pone.0027190-Xiang1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Xiang</surname><given-names>N</given-names></name><name name-style="western"><surname>Blauert</surname><given-names>J</given-names></name></person-group>             <year>1993</year>             <article-title>Binaural scale modelling for auralisation and prediction of acoustics in auditoria.</article-title>             <source>Appl Acoust</source>             <volume>38</volume>             <fpage>267</fpage>             <lpage>267</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Xiang2">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Xiang</surname><given-names>N</given-names></name><name name-style="western"><surname>Schroeder</surname><given-names>MR</given-names></name></person-group>             <year>2003</year>             <article-title>Reciprocal maximum-length sequence pairs for acoustical dual source measurements.</article-title>             <source>J Acoust Soc Am</source>             <volume>113</volume>             <fpage>2754</fpage>             <lpage>2761</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Schroeder1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Schroeder</surname><given-names>MR</given-names></name></person-group>             <year>1965</year>             <article-title>New method of measuring reverberation time.</article-title>             <source>J Acoust Soc Am</source>             <volume>37</volume>             <fpage>409</fpage>             <lpage>412</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0027190-Xiang3">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Xiang</surname><given-names>N</given-names></name><name name-style="western"><surname>Goggans</surname><given-names>PM</given-names></name></person-group>             <year>2001</year>             <article-title>Evaluation of decay times in coupled spaces: Bayesian parameter estimation.</article-title>             <source>J Acoust Soc Am</source>             <volume>110</volume>             <fpage>1415</fpage>             <lpage>1424</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

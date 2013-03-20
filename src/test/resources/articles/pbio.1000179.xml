@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Biol</journal-id><journal-id journal-id-type="pmc">plosbiol</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Biology</journal-title></journal-title-group><issn pub-type="ppub">1544-9173</issn><issn pub-type="epub">1545-7885</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PLBI-RA-3749R3</article-id><article-id pub-id-type="doi">10.1371/journal.pbio.1000179</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Ecology</subject><subject>Ecology/Behavioral Ecology</subject><subject>Ecology/Community Ecology and Biodiversity</subject><subject>Ecology/Evolutionary Ecology</subject><subject>Evolutionary Biology</subject><subject>Evolutionary Biology/Animal Behavior</subject><subject>Evolutionary Biology/Evolutionary Ecology</subject></subj-group></article-categories><title-group><article-title>Host Niches and Defensive Extended Phenotypes Structure Parasitoid Wasp Communities</article-title><alt-title alt-title-type="running-head">Host Traits Structure Parasitoid Communities</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Bailey</surname><given-names>Richard</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Schönrogge</surname><given-names>Karsten</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Cook</surname><given-names>James M.</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref><xref ref-type="aff" rid="aff5"><sup>5</sup></xref><xref ref-type="aff" rid="aff6"><sup>6</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Melika</surname><given-names>George</given-names></name><xref ref-type="aff" rid="aff7"><sup>7</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Csóka</surname><given-names>György</given-names></name><xref ref-type="aff" rid="aff8"><sup>8</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Thuróczy</surname><given-names>Csaba</given-names></name><xref ref-type="aff" rid="aff9"><sup>9</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Stone</surname><given-names>Graham N.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Institute of Evolutionary Biology, School of Biology, University of Edinburgh, Edinburgh, United Kingdom</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Animal Ecology, Evolutionary Biology Centre, Uppsala University, Uppsala, Sweden</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Centre for Ecology and Hydrology, CEH Wallingford, Wallingford, United Kingdom</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Division of Biology, Imperial College London, Ascot, United Kingdom</addr-line>       </aff><aff id="aff5"><label>5</label><addr-line>Centre for Population Biology, Imperial College London, Silwood Park Campus, Ascot, United Kingdom</addr-line>       </aff><aff id="aff6"><label>6</label><addr-line>School of Biological Sciences, Whiteknights, University of Reading, Reading, United Kingdom</addr-line>       </aff><aff id="aff7"><label>7</label><addr-line>Systematic Parasitoid Laboratory, Vas County Plant Protection and Soil 15 Conservation Service, Köszeg, Hungary</addr-line>       </aff><aff id="aff8"><label>8</label><addr-line>Hungarian Forest Research Institute, Mátrafüred Research Station, Mátrafüred, Hungary</addr-line>       </aff><aff id="aff9"><label>9</label><addr-line>Malomarok, Köszeg, Hungary</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Agrawal</surname><given-names>Anurag A.</given-names></name>
+<role>Academic Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Cornell University, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">james.cook@reading.ac.uk</email></corresp>
+<fn fn-type="con"><p>The author(s) have made the following declarations about their contributions: Conceived and designed the experiments: KS JMC GNS. Performed the experiments: RB GM GC CT. Analyzed the data: RB KS JMC GNS. Wrote the paper: RB KS JMC GNS.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>8</month><year>2009</year></pub-date><pub-date pub-type="epub"><day>25</day><month>8</month><year>2009</year></pub-date><volume>7</volume><issue>8</issue><elocation-id>e1000179</elocation-id><history>
+<date date-type="received"><day>3</day><month>9</month><year>2008</year></date>
+<date date-type="accepted"><day>15</day><month>7</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>Bailey et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Oak galls are spectacular extended phenotypes of gallwasp genes in host oak tissues and have evolved complex morphologies that serve, in part, to exclude parasitoid natural enemies.</p>
+<p>Parasitoids and their insect herbivore hosts have coevolved to produce diverse communities comprising about a third of all animal species. The factors structuring these communities, however, remain poorly understood. An emerging theme in community ecology is the need to consider the effects of host traits, shaped by both natural selection and phylogenetic history, on associated communities of natural enemies. Here we examine the impact of host traits and phylogenetic relatedness on 48 ecologically closed and species-rich communities of parasitoids attacking gall-inducing wasps on oaks. Gallwasps induce the development of spectacular and structurally complex galls whose species- and generation-specific morphologies are the extended phenotypes of gallwasp genes. All the associated natural enemies attack their concealed hosts through gall tissues, and several structural gall traits have been shown to enhance defence against parasitoid attack. Here we explore the significance of these and other host traits in predicting variation in parasitoid community structure across gallwasp species. In particular, we test the “Enemy Hypothesis,” which predicts that galls with similar morphology will exclude similar sets of parasitoids and therefore have similar parasitoid communities. Having controlled for phylogenetic patterning in host traits and communities, we found significant correlations between parasitoid community structure and several gall structural traits (toughness, hairiness, stickiness), supporting the Enemy Hypothesis. Parasitoid community structure was also consistently predicted by components of the hosts' spatiotemporal niche, particularly host oak taxonomy and gall location (e.g., leaf versus bud versus seed). The combined explanatory power of structural and spatiotemporal traits on community structure can be high, reaching 62% in one analysis. The observed patterns derive mainly from partial niche specialisation of highly generalist parasitoids with broad host ranges (&gt;20 hosts), rather than strict separation of enemies with narrower host ranges, and so may contribute to maintenance of the richness of generalist parasitoids in gallwasp communities. Though evolutionary escape from parasitoids might most effectively be achieved via changes in host oak taxon, extreme conservatism in this trait for gallwasps suggests that selection is more likely to have acted on gall morphology and location. Any escape from parasitoids associated with evolutionary shifts in these traits has probably only been transient, however, due to subsequent recruitment of parasitoid species already attacking other host galls with similar trait combinations.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>Herbivorous insects, such as the wasps that induce trees to make galls, and the parasitoids that attack (and ultimately kill) the wasps comprise about a third of all animal species, but it remains unclear what determines the structure of these complex coevolving communities. Here, we analyzed 48 parasitoid communities attacking different cynipid wasps that live and feed on oak trees. These communities are diverse and “closed,” with each centered upon the characteristic gall induced by a given cynipid wasp species. The often spectacular and complex galls are extended phenotypes of gallwasp genes and have been suggested to evolve as gallwasp defenses against their parasitoid enemies—“the Enemy Hypothesis.” Our analysis showed that similar parasitoid communities occurred on galls with similar structural traits (e.g., toughness, hairiness, stickiness), supporting the Enemy Hypothesis. We also found similar communities on galls that co-occur frequently in time and space; in particular, those occurring on the same oak species and same plant organ (e.g., leaf, bud, seed). Our results suggest that cynipid wasps might escape particular parasitoids via evolutionary shifts in the structure or location of their galls. However, escape may often be transient due to recruitment of new enemies already attacking other host galls with similar trait combinations.</p>
+</abstract><funding-group><funding-statement>This work was supported by grant numbers GR/12847 and NER/B/504406/1 from the UK Natural Environment Research Council to GNS, JMC, and KS, and by collaborative research grants to GNS, JMC, GM, and GC from the Royal Society of London and the British Council. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="12"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Identifying the processes that structure communities remains one of the fundamental challenges facing ecology <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref> and greatly influences our ability to predict the effects of species invasions and extinctions <xref ref-type="bibr" rid="pbio.1000179-Tylianakis1">[6]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Bruno1">[8]</xref>. However, the issues are complex, and recent reviews have emphasised the need for new approaches to understanding the ecology and evolution of communities <xref ref-type="bibr" rid="pbio.1000179-vanVeen1">[9]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Webb1">[11]</xref>. Two important emerging themes are (i) the effects of adaptive trait variation at one trophic level upon other levels <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Schmitz1">[12]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Bukovinszky1">[13]</xref> and (ii) the roles of evolutionary history and phylogenetically conserved traits in determining current community structure <xref ref-type="bibr" rid="pbio.1000179-Losos1">[4]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Webb1">[11]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Gillespie1">[14]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>.</p>
+<p>Here we address these issues in a study that focuses on diverse, clearly defined communities of parasitoid wasps attacking insect herbivore hosts. Understanding the processes structuring host–parasitoid communities is important because parasitoid wasps and their insect hosts comprise about one-third of all animal species, and more than 50% of all terrestrial animal species <xref ref-type="bibr" rid="pbio.1000179-May1">[17]</xref>. Parasitoids also play a major role in regulating populations of their insect hosts, and the ecosystem service they provide in reducing losses to herbivores and stored product pests is estimated at billions of dollars annually <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Bruno1">[8]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>. Detailed studies of single insect host species have shown that variation in host traits, including feeding location, feeding mode, and host plant species <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>, influences the mortality imposed by parasitoids. However, much less is known of the effects of host trait evolution on parasitoid community composition <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>. Addressing this issue requires examination of patterns in parasitoid communities across host species, and because related host species may share both similar traits and parasitoid communities through shared common ancestry <xref ref-type="bibr" rid="pbio.1000179-Hawkins2">[19]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stireman2">[20]</xref>, this in turn requires explicit consideration of host phylogeny.</p>
+<p>We studied the parasitoid wasp communities associated with a major radiation of herbivorous insects—cynipid gallwasps (<italic>Hymenoptera</italic>, <italic>Cynipidae</italic>) on oak trees (<italic>Quercus</italic> species)—a host taxon with some 1,000 herbivore species, distributed primarily in northern temperate regions <xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>. These communities are excellent test subjects because they are diverse and well studied <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Schnrogge2">[29]</xref>, and the vast majority of the associated parasitoids attack only oak gallwasps <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew3">[30]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew4">[31]</xref>. The communities are thus ecologically “closed” and may meaningfully be considered in isolation.</p>
+<p>Oak gallwasps induce the development of spectacular galls (<xref ref-type="fig" rid="pbio-1000179-g001">Figures 1</xref> and <xref ref-type="supplementary-material" rid="pbio.1000179.s002">S2</xref>), which though comprising plant tissues represent the extended phenotypes of gallwasp genes <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Dawkins1">[32]</xref>. Parasitoids inflict high mortality on their gallwasp hosts <xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Schnrogge1">[28]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Price1">[33]</xref>, and selection should favour adaptive host traits that reduce parasitism <xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref>. Since all parasitoid attack involves oviposition through gall tissues, gallwasp genes that induce gall structures that reduce parasitoid attack rates should be favoured by selection—a view encapsulated in the Enemy Hypothesis <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Price1">[33]</xref>. This hypothesis is supported by studies of the impact of variation in gall morphology within galler species, and is also compatible with demonstrated convergent evolution of several of the same traits (<xref ref-type="table" rid="pbio-1000179-t001">Table 1</xref>) in gallwasps <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Cook2">[26]</xref>. These defensive extended phenotypes drive reciprocal phenotype evolution <xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Agrawal2">[35]</xref> in parasitoid traits, such as ovipositor length, which may limit access to concealed gallwasp hosts <xref ref-type="bibr" rid="pbio.1000179-Askew4">[31]</xref>. While previous studies have examined the role of other host defences (such as warning coloration and cuticular coatings of hair or spines (e.g., <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>) and grooming behaviours <xref ref-type="bibr" rid="pbio.1000179-Clayton1">[36]</xref>), we here examine the impact of diversity in extended phenotypes in predicting variation in parasitoid community structure among a closely related group of herbivores.</p>
+<fig id="pbio-1000179-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.g001</object-id><label>Figure 1</label><caption>
+<title>Resource availability and trait variation in oak cynipid galls.</title>
+<p>(A) Gallwasp larvae. 1. A gallwasp larva (<italic>Andricus lucidus</italic> asexual generation) in its larval chamber. 2. Multiple larvae in the multilocular sexual generation gall of <italic>Biorhiza pallida</italic>. (B) One of the parasitoids in this study, <italic>M. stigmatizans</italic> (Torymidae) drilling through the wall of an oak cynipid gall. (C) Matrix showing some of the diversity in defensive gall morphologies <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref> and gall locations represented by species in this study, with examples (sg, sexual generation; ag, asexual generation): 1. <italic>A. lucidus</italic> (ag). 2. <italic>A. hartigi</italic> (ag). 3. <italic>A. grossulariae</italic> (ag). 4. <italic>A. caputmedusae</italic> (ag). 5. <italic>A. lignicolus</italic> (ag). 6. <italic>A. gemmeus</italic> (ag). 7. <italic>A. lucidus</italic> (sg). 8. <italic>Cynips longiventris</italic> (ag). 9. <italic>Callirhytis glandium</italic> (ag). 10. <italic>Dryocosmus nitidus</italic> (sg). 11. <italic>Neuroterus lanuginosus</italic>. 12. <italic>A. quercustozae</italic> (ag). 13. <italic>A. grossulariae</italic> (sg). 14. <italic>A. quercuscalicis</italic> (ag). 15. <italic>A. coronatus</italic> (ag). Scale bar = 5 mm in all images.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.g001" xlink:type="simple"/></fig><table-wrap id="pbio-1000179-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.t001</object-id><label>Table 1</label><caption>
+<title>Summary of host characters used as explanatory variables in analyses of parasitoid community composition.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pbio-1000179-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Variable</td>
+<td align="left" colspan="1" rowspan="1">Category</td>
+<td align="left" colspan="1" rowspan="1">Type</td>
+<td align="left" colspan="1" rowspan="1">Character Variation</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall hairiness</td>
+<td align="left" colspan="1" rowspan="1">Morphology</td>
+<td align="left" colspan="1" rowspan="1">Binary</td>
+<td align="left" colspan="1" rowspan="1">Galls either have a smooth or hairy (defensive) surface. Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall spininess</td>
+<td align="left" colspan="1" rowspan="1">Morphology</td>
+<td align="left" colspan="1" rowspan="1">Binary</td>
+<td align="left" colspan="1" rowspan="1">Galls are either spineless or covered with spines (defensive). Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall toughness</td>
+<td align="left" colspan="1" rowspan="1">Morphology</td>
+<td align="left" colspan="1" rowspan="1">Categorical</td>
+<td align="left" colspan="1" rowspan="1">Four levels, increasing in toughness from 1 to 4. High toughness is defensive. Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall stickiness</td>
+<td align="left" colspan="1" rowspan="1">Morphology</td>
+<td align="left" colspan="1" rowspan="1">Binary</td>
+<td align="left" colspan="1" rowspan="1">Galls are either coated with sticky resin (defensive) or not. Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall internal airspace</td>
+<td align="left" colspan="1" rowspan="1">Morphology</td>
+<td align="left" colspan="1" rowspan="1">Binary</td>
+<td align="left" colspan="1" rowspan="1">Galls are either solid or have an internal airspace surrounding the larval chamber (defensive). Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Host gall size</td>
+<td align="left" colspan="1" rowspan="1">Morphology</td>
+<td align="left" colspan="1" rowspan="1">Continuous</td>
+<td align="left" colspan="1" rowspan="1">The volume of each mature gall type, with gall inducer larval chamber subtracted.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Host resource size</td>
+<td align="left" colspan="1" rowspan="1">Resource availability</td>
+<td align="left" colspan="1" rowspan="1">Continuous</td>
+<td align="left" colspan="1" rowspan="1">The volume of each fully developed host gallwasp larva.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall locularity</td>
+<td align="left" colspan="1" rowspan="1">Resource availability</td>
+<td align="left" colspan="1" rowspan="1">Binary</td>
+<td align="left" colspan="1" rowspan="1">Galls either contain a single host gallwasp larva, or &gt;1. Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Mean number of hosts/gall</td>
+<td align="left" colspan="1" rowspan="1">Resource availability</td>
+<td align="left" colspan="1" rowspan="1">Continuous</td>
+<td align="left" colspan="1" rowspan="1">Mean number of parasitoids emerging from galls producing at least one parasitoid.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Organ galled</td>
+<td align="left" colspan="1" rowspan="1">Spatiotemporal niche</td>
+<td align="left" colspan="1" rowspan="1">Categorical</td>
+<td align="left" colspan="1" rowspan="1">Gall location on the oak host, either shoot bud, dormant bud on the trunk (lenticel), acorn, leaf, catkin, or shoot. Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Oak section</td>
+<td align="left" colspan="1" rowspan="1">Spatiotemporal niche</td>
+<td align="left" colspan="1" rowspan="1">Binary</td>
+<td align="left" colspan="1" rowspan="1">Galls develop either on oaks in the section Cerris (<italic>Q. cerris</italic>) or in the section Quercus (<italic>Q. petraea</italic>, <italic>Q. pubescens</italic>, and <italic>Q. robur</italic>)<xref ref-type="table-fn" rid="nt102">a</xref>. Labile.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Season of development</td>
+<td align="left" colspan="1" rowspan="1">Spatiotemporal niche</td>
+<td align="left" colspan="1" rowspan="1">Continuous</td>
+<td align="left" colspan="1" rowspan="1">The week, starting at April 1st, that the gall was first observed to start development.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Persistence</td>
+<td align="left" colspan="1" rowspan="1">Spatiotemporal niche</td>
+<td align="left" colspan="1" rowspan="1">Continuous</td>
+<td align="left" colspan="1" rowspan="1">The mean duration of gall development, in weeks.</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Sample size</td>
+<td align="left" colspan="1" rowspan="1">Sampling effort</td>
+<td align="left" colspan="1" rowspan="1">Continuous</td>
+<td align="left" colspan="1" rowspan="1">Total number of parasitoids emerging from galls of a given type.</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><p>These are categorised as describing gall morphology, host resource availability, or gall spatiotemporal niche. Character states for all gall types are given in <xref ref-type="supplementary-material" rid="pbio.1000179.s004">Table S2</xref>. Gall morphology character states were defined as defensive on the basis of their demonstrated efficacy in single species studies <xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref>. Categorical characters with many state changes in our species set <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cska1">[43]</xref> provide multiple independent contrasts and are labelled as labile.</p></fn><fn id="nt102"><label>a</label><p>Please see <xref ref-type="sec" rid="s4">Material and Methods</xref> for justification of classifying oak hosts at the section rather than species level.</p></fn></table-wrap-foot></table-wrap>
+<p>Because the parasitoid communities attacking oak gallwasps comprise both specialists (those attacking a small subset of available host gall types) and generalists (those attacking many host gall types) <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Schnrogge1">[28]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew3">[30]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew4">[31]</xref>, we can also ask which of these groups drive any host-associated community structure. This is important because whereas changes in host traits influencing specialist enemies are likely to influence only a small number of species in these foodwebs, those influencing vulnerability to attack by generalists may have both major direct and indirect (apparent competition <xref ref-type="bibr" rid="pbio.1000179-vanVeen1">[9]</xref>) influences on many species in the web. Further, Askew <xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref> predicted that the richness of oak gallwasp communities would be maintained by partitioning of generalist parasitoids among different gall phenotypes.</p>
+<p>We emphasise two key phases in successful parasitoid attack—host detection and host exploitation <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref>. For parasitoids of herbivorous insects, host detection requires searching the right part of the right plant at the right time, while exploitation involves overcoming any host defences and the ability to develop on the host resources available <xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref>. We can, in turn, divide host traits into three major groups (<xref ref-type="table" rid="pbio-1000179-t001">Table 1</xref>), each of which has been invoked repeatedly <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins2">[19]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew3">[30]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref> as a key determinant of parasitoid community structure: (i) Spatiotemporal niche traits describe the distribution of hosts in space (oak taxon galled, location of the gall on the oak) and time (season and duration of development), and determine the likelihood of detection by parasitoids. (ii) Resource traits represent the quality of the host resource per gall (host size, number of hosts per gall) potentially available to parasitoids. (iii) Gall morphology traits capture variation in the structure of gall tissues parasitoids must penetrate to access host resources, potentially acting as direct defences against particular natural enemies (the Enemy Hypothesis <xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Price1">[33]</xref>). These three groups of traits influence parasitoid success in host detection (spatiotemporal niche) and host exploitation (resource, morphology), respectively.</p>
+<p>Here we compare the parasitoid communities induced by 40 gallwasp species (<xref ref-type="supplementary-material" rid="pbio.1000179.s003">Table S1</xref>) at five replicate sites across Hungary (<xref ref-type="supplementary-material" rid="pbio.1000179.s001">Figure S1</xref>), a known ancient centre of oak cynipid diversity <xref ref-type="bibr" rid="pbio.1000179-Stone4">[37]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Challis1">[38]</xref>. Oak gallwasp lifecycles involve obligate alternation between a spring sexual generation and a summer asexual generation <xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone5">[39]</xref>, each of which induces a gall with a characteristic morphology that develops on a characteristic plant organ (e.g., bud, leaf, flower, fruit, root) of a specific oak taxon <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Cook2">[26]</xref>. Exemplar gall phenotypes are shown in <xref ref-type="fig" rid="pbio-1000179-g001">Figure 1</xref>, and gall morphologies and character states for all species and generations are shown in <xref ref-type="supplementary-material" rid="pbio.1000179.s002">Figure S2</xref> and <xref ref-type="supplementary-material" rid="pbio.1000179.s004">Table S2</xref>. Sexual and asexual gallwasp generations have long been known to support different parasitoid communities <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Schnrogge1">[28]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone6">[40]</xref>, a feature of gallwasp ecology that here we establish quantitatively in ancient refuge communities for the first time. Because the two generations of the gallwasp lifecycle also show independent evolution of morphological traits, gall locations and host oak associations <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook2">[26]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>, we examine patterns in associated parasitoid communities in each generation separately. Specifically, we ask whether similar parasitoid communities evolve on hosts with similar gall morphology traits (as predicted by the Enemy Hypothesis), on hosts occupying similar spatiotemporal niches, or on hosts providing similar levels of resource per gall. Further, we ask whether any host-associated community structure is driven by the preferences of generalist natural enemies, as predicted by Askew <xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>.</p>
+<p>A key issue in analyses of patterns across species is the fact that host trait values (both gall phenotypes and associated parasitoid communities) cannot be regarded as statistically independent, but are linked by phylogenetic patterns of shared common ancestry <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins2">[19]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Clayton1">[36]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Grafen1">[42]</xref>. To assess the strength of any phylogenetic patterning in variables of interest, we generated a molecular phylogeny of the host gallwasp species (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>), and then used matrix correlation analyses (MCA; see <xref ref-type="sec" rid="s4">Materials and Methods</xref>) to test the significance of correlations between pairwise genetic distance between species, and pairwise similarity in phenotypic and community traits. We then use two parallel approaches that control for phylogenetic nonindependence to examine patterns within each generation (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). First, we included host relatedness (shown visually in <xref ref-type="fig" rid="pbio-1000179-g002">Figure 2</xref>) as a covariate in MCA of host traits and parasitoid communities. Second, we controlled for phylogenetic nonindependence using phylogenetically independent contrasts in phylogenetic regression analysis (PRA) <xref ref-type="bibr" rid="pbio.1000179-Grafen1">[42]</xref>. We present results separately for each of our five study sites, and for all five sites pooled (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). We predict that host traits with a key role in structuring parasitoid communities should have consistent significant effects across these different datasets.</p>
+<fig id="pbio-1000179-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.g002</object-id><label>Figure 2</label><caption>
+<title>Phylogenetic relationships between host gallwasps.</title>
+<p>The mitochondrial DNA sequence phylogeny of host gallwasps, presented as a cladogram with node support shown by posterior probabilities in Bayesian analyses (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). Coloured symbols at branch tips indicate gallwasp clade membership (following 23,25,39), allowing recognition of phylogenetic patterns in <xref ref-type="fig" rid="pbio-1000179-g003">Figure 3</xref>. The shape of the symbol indicates the generation included in our analysis (circle, asexual; square, sexual).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.g002" xlink:type="simple"/></fig></sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Sexual and Asexual Gallwasp Generations Support Significantly Different Communities</title>
+<p>We reared over 40,000 cynipid galls, resulting in &gt;31,000 parasitoids belonging to 58 species (<xref ref-type="supplementary-material" rid="pbio.1000179.s005">Table S3</xref>). Each gall type was attacked by between three and 30 parasitoid species, of varying host specificity. For the purposes of illustration (and not for data analysis), we divide parasitoid species among the following categories. There were nine extreme specialist parasitoid species (recorded from only one host gall type), 23 specialists (two to 11 hosts), 16 generalists (11–21 hosts), and nine extreme generalists (&gt;20 hosts) (<xref ref-type="supplementary-material" rid="pbio.1000179.s005">Table S3</xref>). Our placement of parasitoid species into these categories closely matches previous work on Western Palaearctic oak gall communities <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cska1">[43]</xref>. To allow tests of correlations between host phenotypic traits and parasitoid community composition, we calculated the pairwise similarity in parasitoid community composition for all gall type pairs using Bray-Curtis scores. This common measure of similarity takes account of both the presence and the relative abundance of parasitoid species (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>), and for our sampled communities ranged from 0% (no parasitoid species in common) to 80% (great overlap of species). A striking feature of our data is the fact that though some parasitoids attack both asexual and sexual generation galls, communities associated with the same generation of different host species are significantly more similar than those associated with different generations of the same host species (shown visually in <xref ref-type="fig" rid="pbio-1000179-g003">Figure 3</xref>; ANOSIM of Bray-Curtis scores by generation significant for all sites: <italic>p</italic>&lt;0.001 at Gödöllõ, Mátrafüred, and Sopron; <italic>p</italic>&lt;0.02 at Varpalota; <italic>p</italic>&lt;0.05 at Szentkut). This replicates Askew's findings for younger and much less diverse postglacial oak gallwasp communities in the UK <xref ref-type="bibr" rid="pbio.1000179-Askew1">[21]</xref>, and is consistent with a fundamental role for season of development in determining parasitoid community composition (see also <xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>).</p>
+<fig id="pbio-1000179-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.g003</object-id><label>Figure 3</label><caption>
+<title>Cluster analyses showing similarity in parasitoid community composition and gall phenotypes.</title>
+<p>Cluster analyses showing similarities between gall types in (A) parasitoid assemblage composition, and (B) spatiotemporal niche character states (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). Colours of symbols at branch tips match those for the clades in <xref ref-type="fig" rid="pbio-1000179-g002">Figure 2</xref>. Sexual generation galls are indicated by square symbols and red branches.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.g003" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Phenotypic Traits and Parasitoid Communities Are Strongly Correlated with Host Phylogeny</title>
+<p>Parasitoid community composition and all three aspects of host phenotypes (spatiotemporal niche, host resource availability, gall morphology) are correlated with host phylogeny (<xref ref-type="fig" rid="pbio-1000179-g002">Figures 2</xref> and <xref ref-type="fig" rid="pbio-1000179-g003">3</xref>; <xref ref-type="table" rid="pbio-1000179-t002">Table 2</xref>). More closely related gallwasp hosts harboured more similar parasitoid communities in both sexual (<italic>p</italic>&lt;0.05, pooled sites) and asexual generations (<italic>p</italic>&lt;0.001, and significant at <italic>p</italic>&lt;0.05 in four of five individual sites). Significant correlations were also always positive for spatiotemporal traits (plant organ galled, oak taxon, and gall persistence) and host resource availability (host size, <xref ref-type="table" rid="pbio-1000179-t002">Table 2</xref>). In contrast, signs of significant correlations varied among morphological traits; they were positive for toughness and gall size but negative for spininess, stickiness, and presence of an internal airspace. The negative correlations for the latter traits are consistent with previous analyses demonstrating their convergent evolution in gallwasps <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook2">[26]</xref>. A greater number of significant correlations was found in the asexual generation galls (<xref ref-type="table" rid="pbio-1000179-t002">Table 2</xref>), in part reflecting the greater trait diversity present in this generation (<xref ref-type="supplementary-material" rid="pbio.1000179.s002">Figure S2</xref>; <xref ref-type="supplementary-material" rid="pbio.1000179.s004">Table S2</xref>). These results underline the need to control for phylogenetic nonindependence in testing correlations between host traits and parasitoid community composition, even in closely related hosts.</p>
+<table-wrap id="pbio-1000179-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.t002</object-id><label>Table 2</label><caption>
+<title>Phylogenetic patterns in host gall traits and parasitoid communities for sexual and asexual gallwasp generations.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pbio-1000179-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Gall trait</td>
+<td align="left" colspan="1" rowspan="1">Asexual</td>
+<td align="left" colspan="1" rowspan="1">Sexual</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold><italic>Gall morphology</italic></bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Hairiness</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Toughness</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.05 (+)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Spininess</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.01 (−)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Stickiness</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.05 (−)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Internal airspace</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.01 (−)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Gall size</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.01 (+)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="3" rowspan="1"><bold><italic>Resource availability</italic></bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Host resource size</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.001 (+)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Hosts/gall</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Locularity</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="3" rowspan="1"><bold><italic>Spatiotemporal niche</italic></bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Plant organ galled</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.001 (+)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Oak section</bold></td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.001 (+)</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Persistence</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1"><italic>p</italic>&lt;0.001 (+)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Season</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><p>Cell entries show the significance of matrix correlations (and their sign) between host phylogenetic relatedness and gall traits.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2c">
+<title>Gall Defences, Spatiotemporal Niche, and Resource Availability Each Structure Parasitoid Communities</title>
+<p>Summaries of the significant variables retained in MCA and PRA analyses are shown in <xref ref-type="table" rid="pbio-1000179-t003">Tables 3</xref> and <xref ref-type="table" rid="pbio-1000179-t004">4</xref>, respectively. While MCAs addressed overall similarity in community composition using untransformed Bray Curtis similarities, in PRAs we used multidimensional scaling (MDS) to identify three statistically independent axes of community variation (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). The results of the two analytical approaches are highly congruent and show parasitoid community composition to be influenced by host traits associated with each of gall morphology, spatiotemporal niche, and host resource (<xref ref-type="table" rid="pbio-1000179-t003">Tables 3</xref> and <xref ref-type="table" rid="pbio-1000179-t004">4</xref>). Explanatory power of these traits in combination can be high: in PRA, these groups of explanatory variables explained up to 62% of the deviance in a given MDS axis (<xref ref-type="table" rid="pbio-1000179-t004">Table 4</xref>). For some site and generation combinations, however, available host species allowed very few independent contrasts, limiting the degrees of freedom available for detection of patterns in the data (see legend, <xref ref-type="table" rid="pbio-1000179-t004">Table 4</xref>).</p>
+<table-wrap id="pbio-1000179-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.t003</object-id><label>Table 3</label><caption>
+<title>Significant matrix correlations between gall traits (rows) and Bray-Curtis similarity in parasitoid assemblage composition.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pbio-1000179-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Variable</td>
+<td align="left" colspan="2" rowspan="1">Dataset</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Asexual</td>
+<td align="left" colspan="1" rowspan="1">Sexual</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Sample size</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Relatedness (alone)</bold></td>
+<td align="left" colspan="1" rowspan="1">***4</td>
+<td align="left" colspan="1" rowspan="1">*</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Relatedness in MAM</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="3" rowspan="1"><bold>Gall morphology</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Hairiness</bold></td>
+<td align="left" colspan="1" rowspan="1">*2</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Toughness</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Spininess</bold></td>
+<td align="left" colspan="1" rowspan="1">*1</td>
+<td align="left" colspan="1" rowspan="1">N/A</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Stickiness</bold></td>
+<td align="left" colspan="1" rowspan="1">**</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>±Internal airspace</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">N/A</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Gall size</bold></td>
+<td align="left" colspan="1" rowspan="1">*2</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="3" rowspan="1"><bold><italic>Resource availability</italic></bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Host size</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Locularity</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Hosts/gall</bold></td>
+<td align="left" colspan="1" rowspan="1">*2</td>
+<td align="left" colspan="1" rowspan="1">*1</td>
+</tr>
+<tr>
+<td align="left" colspan="3" rowspan="1"><bold><italic>Spatiotemporal niche</italic></bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Plant organ galled</bold></td>
+<td align="left" colspan="1" rowspan="1">***2</td>
+<td align="left" colspan="1" rowspan="1">*</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Oak section</bold></td>
+<td align="left" colspan="1" rowspan="1">**3</td>
+<td align="left" colspan="1" rowspan="1">**1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Season</bold></td>
+<td align="left" colspan="1" rowspan="1">*1</td>
+<td align="left" colspan="1" rowspan="1">—</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Persistence</bold></td>
+<td align="left" colspan="1" rowspan="1">—</td>
+<td align="left" colspan="1" rowspan="1">***1</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt104"><p>Asterisks indicate significance for the pooled sites dataset (*, <italic>p</italic>&lt;0.05; **, <italic>p</italic>&lt;0.01; ***, <italic>p</italic>&lt;0.001), whereas numbers indicate the number out of five individual sites showing a significant correlation (all <italic>p</italic>&lt;0.05). Results are presented for asexual and sexual generations tested separately. Results for relatedness are given when this variable alone is fitted, followed in the row below by significance in a multiple regression with all other significant variables in the MAM (see <xref ref-type="sec" rid="s4">Material and Methods</xref>). Entries marked N/A lack variance in the host gall trait for that row.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pbio-1000179-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.t004</object-id><label>Table 4</label><caption>
+<title>Parameter estimates, significance, and percent deviance explained in MAMs for PRAs of parasitoid community composition (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>).</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pbio-1000179-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Dataset</td>
+<td align="left" colspan="1" rowspan="1">MDS Axis</td>
+<td align="left" colspan="3" rowspan="1">Spatiotemporal Niche</td>
+<td align="left" colspan="2" rowspan="1">Resource</td>
+<td align="left" colspan="3" rowspan="1">Gall Morphology</td>
+<td align="left" colspan="1" rowspan="1">Sample Size</td>
+<td align="left" colspan="1" rowspan="1">Percent Deviance Explained</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Oak Section</td>
+<td align="left" colspan="1" rowspan="1">Organ Galled</td>
+<td align="left" colspan="1" rowspan="1">Persistence</td>
+<td align="left" colspan="1" rowspan="1">Locularity</td>
+<td align="left" colspan="1" rowspan="1">Hosts/Gall</td>
+<td align="left" colspan="1" rowspan="1">Hairiness</td>
+<td align="left" colspan="1" rowspan="1">Toughness</td>
+<td align="left" colspan="1" rowspan="1">Gall Size</td>
+<td align="left" colspan="1" rowspan="1">Total Emer</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pooled sites, asexual 31/14</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.71<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">18.9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">−0.69</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">13.2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.21<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.81**</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−1.14*</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.26**</td>
+<td align="left" colspan="1" rowspan="1">62.1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pooled sites, sexual only 17/9</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.91<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">41.9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.57</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">54.7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Mátrafüred, asexual only 21/11</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">−0.37*</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.20**</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">6.2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">−0.20</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.77</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.20</td>
+<td align="left" colspan="1" rowspan="1">54.7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">0.55</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.16</td>
+<td align="left" colspan="1" rowspan="1">37.2</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Mátrafüred, sexual only 13/7</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.25</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">61.4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Gödöllö, asexual only 23/12</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">0.34</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.96<xref ref-type="table-fn" rid="nt107">b</xref>**</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.13</td>
+<td align="left" colspan="1" rowspan="1">26.7</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Gödöllö, sexual only 11/6</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">0.57</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">38.3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Szentkút, asexual only 22/11</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.78<xref ref-type="table-fn" rid="nt108">c</xref></td>
+<td align="left" colspan="1" rowspan="1">−0.0003</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">60.6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">−0.32</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.68</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">14.5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Sopron, asexual only, 27/13</bold></td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ns</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.83<xref ref-type="table-fn" rid="nt109">d</xref> 0.48<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">53.5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">−0.14<xref ref-type="table-fn" rid="nt106">a</xref>** 0.55<xref ref-type="table-fn" rid="nt110">e</xref>**</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">6.8</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt105"><p>Only significant results are shown, separated by site and for sexual and asexual host generations. Significance level is indicated as follows: no *, <italic>p</italic>&lt;0.05; *, <italic>p</italic>&lt;0.003 (threshold for significance with Bonferroni correction for analyses for individual sites and generations); and **, <italic>p</italic>&lt;0.001. Total emer, total number of emerging parasitoids; Hosts/gall, mean parasitoids per gall, given by total emergence/total producing from <xref ref-type="supplementary-material" rid="pbio.1000179.s004">Table S2</xref>. The figures following the name of each dataset in the first column give the number of species/number of phylogenetically independent contrasts in each analysis. No significant correlations for any dataset were obtained for the following host gall variables: resource volume, spininess, stickiness, and the presence/absence of an internal airspace. No significant correlations for any variable were obtained for sexual generation galls at Szentkút, either sexual or asexual generation galls at Várpalota (insufficient degrees of freedom were available for analysis in the sexual generation), or sexual generation galls at Sopron. These analyses have four of the five lowest numbers of species and independent contrasts, with 8/5, 4/1, 13/5, and 12/6, respectively. Superscript letters show significant character states for “organ galled” locations (a–c) and gall “toughness” (d and e).</p></fn><fn id="nt106"><label>a</label><p>Leaf.</p></fn><fn id="nt107"><label>b</label><p>Soft.</p></fn><fn id="nt108"><label>c</label><p>Very hard.</p></fn><fn id="nt109"><label>d</label><p>Acorn.</p></fn><fn id="nt110"><label>e</label><p>Shoot.</p></fn></table-wrap-foot></table-wrap><sec id="s2c1">
+<title>(i) Gall morphology</title>
+<p>We obtained significant correlations with parasitoid community composition for putatively defensive gall structure traits (<xref ref-type="table" rid="pbio-1000179-t003">Tables 3</xref> and <xref ref-type="table" rid="pbio-1000179-t004">4</xref>): gall hairiness (MCA and PRA), gall size (MCA and PRA), gall toughness (PRA), gall spininess (MCA), and gall stickiness (MCA). All but one of the significant correlations were obtained for parasitoid communities attacking the more structurally complex and diverse asexual generation galls (see <xref ref-type="fig" rid="pbio-1000179-g001">Figure 1</xref>). Significance in two or more individual site datasets was revealed for gall hairiness (PRA: three sites), gall toughness (PRA: two sites), and gall size (MCA: two sites). Our results thus show that gall traits of demonstrated defensive value within galler species also influence parasitoid community structure among species, and so support the Enemy Hypothesis for gall structural diversity.</p>
+</sec><sec id="s2c2">
+<title>(ii) Spatiotemporal niche traits</title>
+<p>Host oak section had the most consistently significant impact on parasitoid community composition of any single host trait, with significant correlations for both generations in MCA, and for three individual site asexual generation analyses in both MCA and PRA (<xref ref-type="table" rid="pbio-1000179-t003">Tables 3</xref> and <xref ref-type="table" rid="pbio-1000179-t004">4</xref>). The location of the host gall within the oak (leaf, bud, acorn, etc.) was also significant in both generations, and in two individual site asexual generation analyses in both MCA and PRA. Host gall persistence (MCA for sexual generation galls) and season of development (MCA for asexual generation galls, and for one individual site asexual generation PRA) had significant but less general impacts on community structure.</p>
+</sec><sec id="s2c3">
+<title>(iii) Host resource traits</title>
+<p>Neither analytical approach revealed significant correlations between host resource size and community composition in either generation. In contrast, aggregation of hosts (as measured by the variables locularity and hosts/gall; <xref ref-type="table" rid="pbio-1000179-t003">Tables 3</xref> and <xref ref-type="table" rid="pbio-1000179-t004">4</xref>) influenced community structure in both generations.</p>
+</sec></sec><sec id="s2d">
+<title>Host Gall Traits Influence the Relative Impacts of Generalist Parasitoids</title>
+<p>Askew <xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref> proposed that structuring of rich cynipid-centred communities would be mediated by variation in the ability of generalist parasitoids to exploit different host phenotypes. Our data show that the relative dominance (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>) of the five most generalist species attacking each gallwasp generation varies with host traits (<xref ref-type="fig" rid="pbio-1000179-g004">Figure 4</xref>). For example, in the sexual generation gall communities, the parasitoid <italic>Aulogymnus gallarum</italic> (Eulophidae; 23 recorded host gall types) was a dominant parasitoid of catkin galls (38.5% of all parasitoid emergence), but was rare (&lt;6%) or absent in galls developing in any other location. Similarly, it was a dominant sexual generation parasitoid of hosts on section <italic>Quercus</italic> oaks (40.1%), but was much rarer in hosts on section Cerris. Reversals in the relative importance of parasitoid species pairs across sexual gall locations can also be seen for <italic>Megastigmus dorsalis</italic> (Torymidae) and <italic>Sycophila biguttata</italic> (Eurytomidae). A similar and more pronounced pattern is seen in the asexual generation galls: each of the five gall locations represented in our sampling was dominated by a different generalist parasitoid (<xref ref-type="fig" rid="pbio-1000179-g004">Figure 4</xref>), and the relative ranks of these parasitoids differed across hosts in the oak sections Cerris and <italic>Quercus</italic>. Where sampled gall types allow similar dominance analyses to be made in individual sites, the observed patterns are concordant with those across the pooled data. These results are consistent with Askew's hypothesis.</p>
+<fig id="pbio-1000179-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.1000179.g004</object-id><label>Figure 4</label><caption>
+<title>Host trait-associated variation in parasitism by generalist parasitoids in communities associated with sexual and asexual generation oak gallwasp communities.</title>
+<p>The dominance plot shows, for the five most generalist parasitoid species, the proportion individuals of a given species comprise of all emerged parasitoids ( = dominance) averaged across host gall types with specific gall locations and oak associations. Gall locations refer to the plant organ galled (the location category “wood” refers to galls integral to the main axis of shoots), while oak taxon associations refer to gall induction on species in either <italic>Quercus</italic> section Cerris or section Quercus sensu stricto. The selected parasitoid taxa are <italic>A. gallarum</italic> (Eulophidae), <italic>C. fungosa</italic> (Pteromalidae), <italic>E. brunniventris</italic> (Eurytomidae), <italic>M. dorsalis</italic> (Torymidae), and <italic>S. biguttata</italic> (Eurytomidae). The data from different host gall types have been pooled at two biologically relevant spatial scales, namely galls on different plant organs (left) and on different oak host taxa (right).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.g004" xlink:type="simple"/></fig></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>Previous multispecies studies of communities centred on herbivorous insects have shown that a range of host traits structure parasitoid assemblages, including food plant taxon <xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stireman2">[20]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Lill1">[44]</xref>–<xref ref-type="bibr" rid="pbio.1000179-LeCorff1">[50]</xref>, host feeding niche (e.g., exposed versus leaf mining versus gall inducing; <xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins4">[48]</xref>,<xref ref-type="bibr" rid="pbio.1000179-LeCorff1">[50]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Mills1">[54]</xref>), season of development <xref ref-type="bibr" rid="pbio.1000179-LeCorff1">[50]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins6">[55]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Sheehan1">[56]</xref>, duration of gall development <xref ref-type="bibr" rid="pbio.1000179-Hawkins6">[55]</xref>, and intrinsic (i.e., direct behavioural and morphological) defences against parasitoid attack <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Gross1">[57]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Gentry1">[58]</xref>. The relationships we find between host spatiotemporal niche traits and parasitoid community composition further strengthen several of these patterns. The strong separation between communities attacking spring (sexual) and summer (asexual) gallwasp generations parallels similar phenology-associated community structure in other concealed hosts, including gall midges <xref ref-type="bibr" rid="pbio.1000179-Hawkins6">[55]</xref> and leaf miners <xref ref-type="bibr" rid="pbio.1000179-LeCorff1">[50]</xref>, as does the impact of host plant taxon <xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins4">[48]</xref>,<xref ref-type="bibr" rid="pbio.1000179-LeCorff1">[50]</xref>. The significance of gall location independent of host plant taxon parallels similar findings in communities attacking galling sawflies on willows <xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>. Our findings that host aggregation (multilocularity, hosts per gall) influences community structure while host resource size does not also parallels findings in other systems <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>. The generality of these patterns implies that phenological matching commonly dictates the pool of available parasitoid species, whereas the location of hosts within specific plant taxa dictates which subset of this pool has appropriate searching behaviours to detect them <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Lill1">[44]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Lewis1">[47]</xref>. Our findings suggest that species interactions, such as resource competition and multiparasitism among parasitoid species <xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>, as well as host–parasitoid coevolution <xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Roland1">[59]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Thompson1">[60]</xref>, will commonly involve hosts on the same oak taxon and plant organ.</p>
+<sec id="s3a">
+<title>Significant Impacts of Gall Extended Phenotypes Support the Enemy Hypothesis</title>
+<p>One initially counterintuitive finding of studies comparing parasitoid communities associated with different host feeding niches was that despite being apparently well defended by gall tissues, gall inducers usually support richer communities and suffer higher mortality than externally feeding herbivores (<xref ref-type="bibr" rid="pbio.1000179-Hawkins4">[48]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Price2">[51]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Hawkins5">[53]</xref>; but see <xref ref-type="bibr" rid="pbio.1000179-Mills1">[54]</xref>). This may be because, as proposed by Stireman and Singer <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref> for tachinid fly parasitoid communities, well-defended hosts suffer lower mortality from attack by generalist vertebrate (and possibly invertebrate) predators, and so represent enemy-free space <xref ref-type="bibr" rid="pbio.1000179-Jeffries1">[61]</xref> for their specialist parasitoids. Whether the same applies to cynipid galls and their associated parasitoids or not, the Enemy Hypothesis predicts that the high host mortality imposed by parasitoids on most insect gall inducers should drive the evolution of gall phenotypes that reduce attack by, or exclude, at least a subset of them <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Price1">[33]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Waring1">[52]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins7">[62]</xref>. Though there is evidence that herbivore extended phenotypes do structure parasitoid assemblages across host species <xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Salvo1">[63]</xref>, no previous studies have demonstrated an impact of the complex gall morphology traits that predict vulnerability to attack within gall-inducer species <xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Waring1">[52]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins5">[53]</xref>. This led to the hypothesis that observed phenotypic diversity in some galler lineages represents the “ghost of parasitism past” <xref ref-type="bibr" rid="pbio.1000179-Price2">[51]</xref>, whose efficacy in influencing parasitoid attack has been nullified by the evolution of effective parasitoid countermeasures. Our results show that in the rich, sympatric communities of cynipid gallwasps on oaks, the gall-associated extended phenotypes of gallwasp genes can structure parasitoid communities, and so provide support for the Enemy Hypothesis. Further, they show that traits expressed in two distinct stages of the gallwasp lifecycle can influence community structure, because while gall morphology is controlled by genes expressed in the gallwasp larva, oak taxon, gall location, and the grouping of hosts within gall structures are all determined by the oviposition behaviour of the adult female <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>.</p>
+<p>Although we have demonstrated that gall morphology influences parasitoid community composition, none of the gall morphologies we sampled were free of parasitoids, and so none represent true enemy-free space <xref ref-type="bibr" rid="pbio.1000179-Jeffries1">[61]</xref>. This suggests that any enemy-free space gained by novel gall morphologies is only transient <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone3">[27]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Agrawal2">[35]</xref>. The ability of all but seven of the parasitoid species in this study to attack multiple gall morphologies implies that parasitoids are able to circumvent some structural gall defences through behavioural or phenological plasticity <xref ref-type="bibr" rid="pbio.1000179-Agrawal2">[35]</xref>, and consequently the coevolution of host morphological defences with parasitoid attack mechanisms is probably diffuse <xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Agrawal2">[35]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Thompson1">[60]</xref>. For a gallwasp, our results suggest that the best way to escape its current parasitoid community in a given generation is to shift to a new oak taxon, or to a new location on its current oak host. Which of these routes has been exploited in the evolution of gallwasp communities will depend on the relative frequency of each kind of shift during gallwasp diversification. In contrast to other gall inducers <xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>, oak gallwasps shift between oak lineages extremely rarely <xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>, while changes in gall location and morphology are more frequent <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook2">[26]</xref>. However, when evolutionary shifts in gall location occur, they will often be a case of “out of the frying pan and into the fire,” because of subsequent detection and exploitation of novel hosts by parasitoid species already attacking other host galls resident in the same spatiotemporal niche <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>.</p>
+<p>Why then are similar impacts of gall morphology not seen in the parasitoid communities associated with species-rich radiations of hosts inducing structurally complex galls on other plants (such as <italic>Asphondyllia</italic> gall midges on creosote bush, <italic>Larrea tridentata</italic>; <xref ref-type="bibr" rid="pbio.1000179-Waring1">[52]</xref>)? One possibility is that gall phenotypes in these radiations do represent the “ghost of parasitism past.” An alternative is that relationships between gall morphology and associated communities may only become apparent when phylogenetic patterns are controlled for. Changes in parasitoid assemblages during evolutionary diversification of a host lineage represent the sum of phylogenetic correlation between the assemblages attacking related hosts, and the impacts of variation in any host traits influencing parasitoid attack. If phylogenetic correlations are strong (as they are in a range of host–parasitoid systems <xref ref-type="bibr" rid="pbio.1000179-Stireman1">[5]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Nyman1">[18]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Sheehan1">[56]</xref>), significant impacts of gall morphology traits may only be revealed when host phylogeny is controlled for, as we have done here. Though patterns of evolution have been examined in <italic>Asphondyllia</italic> gall traits <xref ref-type="bibr" rid="pbio.1000179-Joy1">[64]</xref>, to our knowledge phylogenetically controlled analyses of associated parasitoid assemblages have yet to be made.</p>
+<p>In addition to their parasitoid natural enemies, some cynipid gallwasps are also attacked by opportunist vertebrate natural enemies, including insectivorous birds <xref ref-type="bibr" rid="pbio.1000179-Cska1">[43]</xref>. Studies on other gall-inducer systems <xref ref-type="bibr" rid="pbio.1000179-Abrahamson2">[34]</xref> have shown that birds can impose directional selection on gall traits, and although available evidence shows that parasitoids inflict the vast majority of natural enemy-imposed mortality in cynipid galls <xref ref-type="bibr" rid="pbio.1000179-Cska1">[43]</xref>, it is possible that the traits we discuss here could also influence bird predation in this system.</p>
+</sec><sec id="s3b">
+<title>Gall Traits Structure Communities through Their Impact on Generalist Parasitoids</title>
+<p>Species rich communities of insect herbivores often harbour multiple generalist parasitoids <xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Lill1">[44]</xref>,<xref ref-type="bibr" rid="pbio.1000179-LeCorff1">[50]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Henneman1">[65]</xref>, raising the question of how host species richness is maintained in the face of apparent competition <xref ref-type="bibr" rid="pbio.1000179-vanVeen1">[9]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Ackland1">[66]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Kondoh2">[69]</xref>. Our results show that within each gallwasp generation, significant impacts of host traits on parasitoid community structure primarily involve generalist parasitoids (<xref ref-type="fig" rid="pbio-1000179-g004">Figure 4</xref>). This argues against the existence of clearly defined tritrophic niches in gallwasp communities, in which hosts in specific niches are attacked by specific sets of natural enemies <xref ref-type="bibr" rid="pbio.1000179-Singer1">[1]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Abrahamson1">[2]</xref>. However, the fact that generalist parasitoids vary in the mortality they inflict in different spatiotemporal niches makes them less generalist than their host ranges would suggest. Though we have not explicitly examined it here, one possible consequence of this is a weakening of indirect interactions (such as apparent competition) between hosts mediated by shared enemies <xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Henneman1">[65]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Morris1">[68]</xref>, with potential contributions to food web stability <xref ref-type="bibr" rid="pbio.1000179-Kondoh1">[67]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Kondoh2">[69]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Dell1">[70]</xref>. Interaction networks can also be stabilised by switching of parasitoids between alternative hosts <xref ref-type="bibr" rid="pbio.1000179-Ackland1">[66]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Kondoh1">[67]</xref>. If such host switching occurs in oak gall parasitoids, our results suggest that it will be primarily among hosts in the same gall generation and probably on the same oak taxon.</p>
+<p>Further studies across guilds of natural enemies that exploit potentially coevolving hosts are needed to assess the generality of the patterns of community structure found here. Influential generalist natural enemies attacking spatiotemporally linked metacommunities of hosts may be a feature of many natural communities, as oak gall communities show many similarities with those centred on other concealed insect herbivores (such as other gall inducers, leaf miners, or stem borers) <xref ref-type="bibr" rid="pbio.1000179-Godfray1">[15]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Hawkins1">[16]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Askew2">[22]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Rott1">[45]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Lewis1">[47]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Henneman1">[65]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Morris1">[68]</xref>, including many pests and potential targets for biological control. Our work underlines the need to incorporate host phylogeny into analyses of community structure, and doing so may help to predict both the natural enemies awaiting invading hosts, and the nontarget hosts of possible biocontrol agents <xref ref-type="bibr" rid="pbio.1000179-Henneman1">[65]</xref>.</p>
+</sec></sec><sec id="s4">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Host Species and Their Gall Traits</title>
+<p>Full names of all host gallwasp species are listed in <xref ref-type="supplementary-material" rid="pbio.1000179.s003">Table S1</xref> and gall traits are defined in <xref ref-type="table" rid="pbio-1000179-t001">Table 1</xref>. Gall morphology traits were recorded for mature galls and are listed in <xref ref-type="supplementary-material" rid="pbio.1000179.s004">Table S2</xref>, and shown in <xref ref-type="supplementary-material" rid="pbio.1000179.s002">Figure S2</xref>. Gall season refers to the date of the first recorded onset of development of a gall type (see <xref ref-type="table" rid="pbio-1000179-t001">Table 1</xref>). Gall persistence was measured in weeks from the onset of development until the gall inducer emerged, or the gall fell from the tree, or the end of parasitoid attack in a given year—assumed here to be the end of October on the basis of parasitoid emergence dates from our rearings.</p>
+<p>Host abundance per gall was estimated using the mean number of parasitoids emerging from a single gall of each phenotype. Both sample size and the mean number of parasitoids per gall were ln(value +1) transformed prior to analysis.</p>
+</sec><sec id="s4b">
+<title>Parasitoid Community Data</title>
+<p>Galls were collected between 2000 and 2003 at five field sites in Hungary (<xref ref-type="supplementary-material" rid="pbio.1000179.s001">Figure S1</xref>) and reared individually in outside insectaries. At each sample site, galls were collected from &gt;100 individual trees comprising all oak species present, separated by an average of 20–50 m, over an area of approximately 0.25 km<sup>2</sup> (500 m×500 m). Each site was searched systematically and thoroughly at fortnightly intervals between April and October, and where natural host distributions allowed, each gall type was harvested as far as possible across the full site area. Galls were harvested haphazardly with respect to height and aspect, to a maximum of 8 m above ground level with a long handled pruner. Galls were always harvested in their first year of development, typically across a number of dates but also before emergence of gall inhabitants and after adequate gall growth to allow inhabitants to develop to adulthood. The emerging wasps were identified to species level and all host and parasitoid species are listed in <xref ref-type="supplementary-material" rid="pbio.1000179.s003">Tables S1</xref> and <xref ref-type="supplementary-material" rid="pbio.1000179.s005">S3</xref>. The target sample size per gall type per site was 150, based on our previous work on cynipid communities <xref ref-type="bibr" rid="pbio.1000179-Stone2">[24]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Schnrogge1">[28]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Schnrogge2">[29]</xref>. Because of unavoidable variation in what was actually reared (<xref ref-type="supplementary-material" rid="pbio.1000179.s006">Table S4</xref>), sample size was fitted as a covariate in all analyses. Pairwise similarities between parasitoid communities for use in both MCA and Analyses Of SIMilarity (ANOSIM; <xref ref-type="bibr" rid="pbio.1000179-Clarke1">[71]</xref>) were calculated as Bray-Curtis similarities in PRIMER 5 (Primer-E Ltd) from standardised untransformed parasitoid abundances. We did this for individual sites and for the pooled sites dataset (i) for pooled gallwasp generations to allow us to test differences between sexual and asexual generation communities (ANOSIM), and (ii) for sexual and asexual generations separately to allow analyses of patterns within each generation (MCA). The ANOSIM analyses were carried out as a one-way design using generation as explanatory factor. The number of possible permutations was capped at 999. To allow analysis of community composition using phylogenetically independent contrasts, the Bray-Curtis matrix was decomposed into three mutually independent variables using MDS <xref ref-type="bibr" rid="pbio.1000179-Kruskall1">[72]</xref>. Three MDS dimensions were used for each dataset, which reduced STRESS <xref ref-type="bibr" rid="pbio.1000179-Kruskall1">[72]</xref> (a measure of goodness of fit) to below an acceptable threshold <xref ref-type="bibr" rid="pbio.1000179-Kruskall1">[72]</xref> of 0.15 in every case. Each MDS dimension was tested as a separate response variable. The parasitoid community response variables and other descriptors (MDS axes, species richness, sampling effort) are listed in <xref ref-type="supplementary-material" rid="pbio.1000179.s006">Table S4</xref>. The oaks attacked by gallwasp hosts were identified to oak section, either section Cerris (<italic>Q. cerris</italic>) or section <italic>Q. sensu stricto</italic> (<italic>Q. petraea</italic>, <italic>Q. pubescens</italic>, <italic>Q. robur</italic>). We did not attempt to separate species within the section <italic>Quercus</italic> because extensive hybridisation makes definitive allocation of individuals to species using either morphological or molecular markers impossible <xref ref-type="bibr" rid="pbio.1000179-Bacilieri1">[73]</xref>–<xref ref-type="bibr" rid="pbio.1000179-Muir1">[78]</xref>. In this we match observed patterns in oak gallwasp host specificity <xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone5">[39]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref> and follow previous analyses of insect biodiversity on Western Palaearctic oaks <xref ref-type="bibr" rid="pbio.1000179-Kelly1">[79]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Kennedy1">[80]</xref>.</p>
+</sec><sec id="s4c">
+<title>Gallwasp Phylogeny</title>
+<p>The gallwasp phylogeny was estimated from partial sequences (433 base pairs, accession numbers in <xref ref-type="supplementary-material" rid="pbio.1000179.s003">Table S1</xref>) of the mitochondrial cytochrome b locus. Generation of the sequence data and selection of appropriate models of sequence evolution for this locus are discussed in detail elsewhere <xref ref-type="bibr" rid="pbio.1000179-Stone5">[39]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>. Our phylogenetic hypothesis (working phylogeny <italic>sensu</italic> Grafen <xref ref-type="bibr" rid="pbio.1000179-Grafen1">[42]</xref>) was generated using a Bayesian approach in M<sc>r</sc>B<sc>ayes</sc> 3.0 <xref ref-type="bibr" rid="pbio.1000179-Huelsenbeck1">[81]</xref> using the general time-reversible (GTR) model of sequence evolution. Trees were sampled over 10<sup>6</sup> generations with an empirically determined burn-in period of 10<sup>5</sup> generations before tree sampling began. Convergence of parameter estimates over each run was confirmed using T<sc>racer</sc> <xref ref-type="bibr" rid="pbio.1000179-Rambaut1">[82]</xref>. As in previous phylogenetic analyses of Western Palaearctic oak gallwasps <xref ref-type="bibr" rid="pbio.1000179-Stone1">[23]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>, we used the rose gallwasp <italic>Diplolepis rosae</italic> as the outgroup. The topology of the phylogeny used here matches very closely the results of more extensive published analyses that use a combination of mitochondrial and nuclear markers <xref ref-type="bibr" rid="pbio.1000179-Cook1">[25]</xref>,<xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>. GenBank (<ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/Genbank" xlink:type="simple">http://www.ncbi.nlm.nih.gov/Genbank</ext-link>) accession numbers for all sequences used in our analysis are listed in <xref ref-type="supplementary-material" rid="pbio.1000179.s003">Table S1</xref>.</p>
+</sec><sec id="s4d">
+<title>Analysis of Phylogenetically Independent Contrasts</title>
+<p>We used PRA <xref ref-type="bibr" rid="pbio.1000179-Grafen1">[42]</xref> for multiple regression of phylogenetically independent contrasts in GLIM 4.0. This approach uses a user-defined working phylogeny to structure a generalised linear modelling analysis in which significance of each explanatory variable was tested in turn while controlling for all others. The approach assumes a normal distribution during model fitting, and where necessary, variables were transformed to meet this assumption (see “Host Species and Their Gall Traits” above). To minimise the impact of phylogenetic uncertainty on the regression procedure <xref ref-type="bibr" rid="pbio.1000179-Grafen1">[42]</xref>, we took the conservative approach of collapsing nodes with a posterior probability of &lt;70% into polytomies. Grafen's default “<xref ref-type="fig" rid="pbio-1000179-g002">figure 2</xref> method” <xref ref-type="bibr" rid="pbio.1000179-Grafen1">[42]</xref> was used to determine the initial distribution of branch lengths (node height = (<italic>i</italic> − 1)/(<italic>n</italic> − 1), where <italic>n</italic> = number of species and <italic>i</italic> = number of species below that node in the phylogeny). Minimal adequate models (MAM) were determined by stepwise removal of all nonsignificant (<italic>p</italic>&gt;0.05) variables. Where the multilevel factors “plant organ galled” and “gall toughness” were retained in models, the categories were split into a series of binary variables. These were then tested in all possible combinations, controlling for other significant variables, to reveal significant categories. In analyses for separate generations and sites, significance levels were adjusted for multiple tests using the Bonferroni correction (corrected threshold <italic>p</italic> = 1 − (1 − alpha)<sup>1/k</sup> where <italic>k</italic> is the number of tests and alpha is the desired threshold value of 5%). The numbers of species and independent contrasts in each analysis are given in <xref ref-type="table" rid="pbio-1000179-t004">Table 4</xref>.</p>
+</sec><sec id="s4e">
+<title>MCA</title>
+<p>In these analyses, host relatedness was incorporated as a covariate and estimated as (1 – the GTR model proportional sequence divergence between host species pairs) for the cytochrome <italic>b</italic> data, calculated using PAUP* <xref ref-type="bibr" rid="pbio.1000179-Swofford1">[83]</xref>. Pairwise divergences between species for this gene closely parallel those in a nuclear gene (long wavelength opsin; <xref ref-type="bibr" rid="pbio.1000179-Stone7">[41]</xref>), suggesting that this is an appropriate measure of phylogenetic relatedness. MCA was carried out with simple or partial Mantel permutation tests in FSTAT <xref ref-type="bibr" rid="pbio.1000179-Goudet1">[84]</xref>, using 2,000 permutations and following Manly <xref ref-type="bibr" rid="pbio.1000179-Manly1">[85]</xref>. As in the PRA, nonsignificant variables were removed from each full model to leave the MAM. Analyses were carried out for pooled and single sites, for separate generations. Similarities in gall traits were calculated using the Manhattan method for continuous variables and the Jaccard index for binary variables <xref ref-type="bibr" rid="pbio.1000179-Krebs1">[86]</xref>.</p>
+</sec><sec id="s4f">
+<title>Analyses of Parasitoid Dominance</title>
+<p>We used a SIMPER analysis in PRIMER5 to reveal which species of parasitoid accounted for the majority of pairwise Bray-Curtis similarity in associated parasitoid communities of host gall types. Most of the variation could be attributed to five species: <italic>A. gallarum</italic> (Eulophidae), <italic>Cecidostiba fungosa</italic> (Pteromalidae), <italic>Eurytoma brunniventris</italic> (Eurytomidae), <italic>M. dorsalis</italic> (Torymidae), and <italic>S. biguttata</italic> (Eurytomidae). All five species are extreme generalists and were recorded from more than 20 host gall types in this study (<xref ref-type="supplementary-material" rid="pbio.1000179.s005">Table S3</xref>). To visualise variation in the impact of these species across galls with different traits, we (i) calculated the dominance of each species in each host gall type as the proportion of individuals of that species of the total of emerging parasitoids, and then (ii) averaged the dominance values for each parasitoid species across host gall types sharing each selected trait of interest.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pbio.1000179.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.s001" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>Field sampling sites.</bold> The five sites sampled (latitude and longitude in decimal degrees) were Mátrafüred (47.83 N, 19.97 E), Gödöllõ (47.6 N, 19.35 E), Szentkút (47.98 N, 19.8 E), Várpalota (47.20 N, 18.13 E), and Sopron (47.68 N, 16.57 E).</p>
+<p>(0.12 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pbio.1000179.s002" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.s002" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>The host gall phenotypes in this study.</bold> The following images show the mature phenotypes of all 48 gall types in our study, numbered according to the list above. In each image the scale bar is 1 cm long.</p>
+<p>(17.64 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pbio.1000179.s003" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.s003" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Full names and GenBank accession numbers of the host gallwasps.</bold> The number by each species and gall generation (A, asexual; S, sexual) identifies it in <xref ref-type="supplementary-material" rid="pbio.1000179.s002">Figure S2</xref> and <xref ref-type="supplementary-material" rid="pbio.1000179.s004">Tables S2</xref> and <xref ref-type="supplementary-material" rid="pbio.1000179.s006">S4</xref>.</p>
+<p>(0.03 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pbio.1000179.s004" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.s004" xlink:type="simple"><label>Table S2</label><caption>
+<p><bold>Gall scores for explanatory variables.</bold> Key to columns: Gall vol., Gall cortex volume (mm<sup>3</sup>); Hair, hairiness; Hard, toughness (1, soft; 2, semi-soft; 3, hard; 4, very hard); Loc, locularity (M, multilocular; U, unilocular); N, absent; Oak, Oak section (Q, <italic>Quercus</italic> section Quercus; C, <italic>Quercus</italic> section Cerris); Org, host organ galled (B, bud; C, catkin; A, acorn; L, lenticel bud; Lf, leaf; S, shoot); Phen, persistence; Res, resource volume (mm<sup>3</sup>); Seas, season; Space, presence/absence of an internal airspace; Spine, spininess; Stick, stickiness; Y, present.</p>
+<p>(0.11 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pbio.1000179.s005" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.s005" xlink:type="simple"><label>Table S3</label><caption>
+<p><bold>Parasitoid species list.</bold> The full names and family affiliations of all parasitoid species sampled are given below. All are members of the superfamily Chalcidoidea. The families represented are Eulophidae (Eul), Eupelmidae (Eup), Eurytomidae (Eury), Ormyridae (Orm), Pteromalidae (Pter), and Torymidae (Tor). A full list of the parasitoid composition of galls of each host is available from the authors by request.</p>
+<p>(0.04 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pbio.1000179.s006" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pbio.1000179.s006" xlink:type="simple"><label>Table S4</label><caption>
+<p><bold>Gall scores for response (community) and sampling variables for pooled-sites analyses in each of (i) sexual generation galls, and (ii) asexual generation galls.</bold> Key to variables: Galls producing, total number of galls producing parasitoids; No. emerged, total number of emerging parasitoids; Richness, species richness; MDS axes 1–3 are values for three mutually independent MDS axes describing community composition.</p>
+<p>(0.11 MB DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Maria Bechtold for her help in specimen preparation and Dick Askew for his help with parasitoid identification. Tim Barraclough, Jackie Brown, Mike Hassell, Andy Purvis, and Andrew Reid all made helpful comments on the manuscript.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pbio.1000179-Singer1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Singer</surname><given-names>M. S</given-names></name>
+<name name-style="western"><surname>Stireman</surname><given-names>J. O</given-names></name>
+</person-group>             <year>2005</year>             <article-title>The tri-trophic niche concept and adaptive radiation of phytophagous insects.</article-title>             <source>Ecol Lett</source>             <volume>8</volume>             <fpage>1247</fpage>             <lpage>1255</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Abrahamson1"><label>2</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Abrahamson</surname><given-names>W. G</given-names></name>
+<name name-style="western"><surname>Blair</surname><given-names>C. P</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Sequential radiation through host-race formation: herbivore diversity leads to diversity in natural enemies. </article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Tilmon</surname><given-names>K</given-names></name>
+</person-group>             <source>Specialization, speciation, and radiation: the evolutionary biology of herbivorous insects</source>             <publisher-loc>Berkeley (California)</publisher-loc>             <publisher-name>University of California Press</publisher-name>             <fpage>188</fpage>             <lpage>202</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Weiher1"><label>3</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Weiher</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Keddy</surname><given-names>P. E</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Ecological assembly rules: perspectives, advances, retreats.</article-title>             <publisher-loc>Cambridge</publisher-loc>             <publisher-name>Cambridge University Press</publisher-name>          </element-citation></ref>
+<ref id="pbio.1000179-Losos1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Losos</surname><given-names>J. B</given-names></name>
+<name name-style="western"><surname>Leal</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Glor</surname><given-names>R. E</given-names></name>
+<name name-style="western"><surname>de Queiroz</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Hertz</surname><given-names>P. E</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Niche lability in the evolution of a Caribbean lizard community.</article-title>             <source>Nature</source>             <volume>424</volume>             <fpage>542</fpage>             <lpage>545</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stireman1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stireman</surname><given-names>J. O</given-names></name>
+<name name-style="western"><surname>Singer</surname><given-names>M. S</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Determinants of parasitoid-host associations: insights from a natural tachinid-lepidopteran community.</article-title>             <source>Ecology</source>             <volume>84</volume>             <fpage>296</fpage>             <lpage>310</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Tylianakis1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tylianakis</surname><given-names>J. M</given-names></name>
+<name name-style="western"><surname>Tscharntke</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Lewis</surname><given-names>O. T</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Habitat modification alters the structure of tropical host-parasitoid food webs.</article-title>             <source>Nature</source>             <volume>445</volume>             <fpage>202</fpage>             <lpage>205</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Fraser1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fraser</surname><given-names>S. E. M</given-names></name>
+<name name-style="western"><surname>Dytham</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Mayhew</surname><given-names>P. J</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Determinants of parasitoid abundance and diversity in woodland habitats.</article-title>             <source>J Appl Ecol</source>             <volume>44</volume>             <fpage>352</fpage>             <lpage>361</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Bruno1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bruno</surname><given-names>J. F</given-names></name>
+<name name-style="western"><surname>Cardinale</surname><given-names>B. J</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Cascading effects of predator richness.</article-title>             <source>Front Ecol Environ</source>             <volume>6</volume>             <fpage>539</fpage>             <lpage>546</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-vanVeen1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>van Veen</surname><given-names>F. J. F</given-names></name>
+<name name-style="western"><surname>Morris</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Godfray</surname><given-names>H. C. J</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Apparent competition, quantitative food webs, and the structure of phytophagous insect communities.</article-title>             <source>Annu Rev Entomol</source>             <volume>51</volume>             <fpage>187</fpage>             <lpage>208</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Agrawal1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Agrawal</surname><given-names>A. A</given-names></name>
+<name name-style="western"><surname>Ackerly</surname><given-names>D. D</given-names></name>
+<name name-style="western"><surname>Adler</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Arnold</surname><given-names>A. E</given-names></name>
+<name name-style="western"><surname>Caceres</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Filling key gaps in population and community ecology.</article-title>             <source>Front Ecol Environ</source>             <volume>5</volume>             <fpage>145</fpage>             <lpage>152</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Webb1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Webb</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Losos</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Agrawal</surname><given-names>A</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Integrating phylogenies into community ecology.</article-title>             <source>Ecology</source>             <volume>87</volume>             <fpage>S1</fpage>             <lpage>S2</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Schmitz1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schmitz</surname><given-names>O. J</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Effects of predator hunting mode on grassland ecosystem function.</article-title>             <source>Science</source>             <volume>319</volume>             <fpage>952</fpage>             <lpage>954</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Bukovinszky1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bukovinszky</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>van Veen</surname><given-names>F. J. F</given-names></name>
+<name name-style="western"><surname>Jongema</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Dicke</surname><given-names>M</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Direct and indirect effects of resource quality on food web structure.</article-title>             <source>Science</source>             <volume>319</volume>             <fpage>804</fpage>             <lpage>807</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Gillespie1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gillespie</surname><given-names>R</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Community assembly through adaptive radiation in Hawaiian spiders.</article-title>             <source>Science</source>             <volume>303</volume>             <fpage>356</fpage>             <lpage>359</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Godfray1"><label>15</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Godfray</surname><given-names>H. C. J</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Parasitoids. Behavioural and evolutionary ecology.</article-title>             <publisher-loc>Princeton (New Jersey)</publisher-loc>             <publisher-name>Princeton University Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">473</size>           </element-citation></ref>
+<ref id="pbio.1000179-Hawkins1"><label>16</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+<name name-style="western"><surname>Sheehan</surname><given-names>W</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Parasitoid community ecology.</article-title>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>Oxford University Press</publisher-name>          </element-citation></ref>
+<ref id="pbio.1000179-May1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>May</surname><given-names>R. M</given-names></name>
+</person-group>             <year>1990</year>             <article-title>How many species?</article-title>             <source>Phil Trans Biol Sci</source>             <volume>330</volume>             <fpage>293</fpage>             <lpage>304</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Nyman1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nyman</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Bokma</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Kopelke</surname><given-names>J. P</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Reciprocal diversification in a complex plant-herbivore-parasitoid food web.</article-title>             <source>BMC Biology</source>             <volume>5</volume>             <fpage>49</fpage>          </element-citation></ref>
+<ref id="pbio.1000179-Hawkins2"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+<name name-style="western"><surname>Mills</surname><given-names>N. J</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Variability in parasitoid community structure.</article-title>             <source>J Anim Ecol</source>             <volume>65</volume>             <fpage>501</fpage>             <lpage>516</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stireman2"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stireman</surname><given-names>J. O</given-names></name>
+<name name-style="western"><surname>Nason</surname><given-names>J. D</given-names></name>
+<name name-style="western"><surname>Heard</surname><given-names>S. B</given-names></name>
+<name name-style="western"><surname>Seehawer</surname><given-names>J. M</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Cascading host-associated genetic differentiation in parasitoids of phytophagous insects.</article-title>             <source>Proc Biol Sci</source>             <volume>273</volume>             <fpage>523</fpage>             <lpage>530</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Askew1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Askew</surname><given-names>R. R</given-names></name>
+</person-group>             <year>1961</year>             <article-title>On the biology of the inhabitants of oak galls of Cynipidae (Hymenoptera) in Britain.</article-title>             <source>Trans Soc Brit Entomol</source>             <volume>14</volume>             <fpage>237</fpage>             <lpage>258</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Askew2"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Askew</surname><given-names>R. R</given-names></name>
+</person-group>             <year>1980</year>             <article-title>The diversity of insect communities in leaf mines and plant galls.</article-title>             <source>J Anim Ecol</source>             <volume>49</volume>             <fpage>817</fpage>             <lpage>829</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Cook</surname><given-names>J. M</given-names></name>
+</person-group>             <year>1998</year>             <article-title>The structure of cynipid oak galls: patterns in the evolution of an extended phenotype.</article-title>             <source>Proc Biol Sci</source>             <volume>265</volume>             <fpage>979</fpage>             <lpage>988</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone2"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Schönrogge</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Atkinson</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Bellido</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Pujade-Villar</surname><given-names>J</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The population biology of oak gall wasps (Hymenoptera: Cynipidae).</article-title>             <source>Annu Rev Entomol</source>             <volume>47</volume>             <fpage>633</fpage>             <lpage>668</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Cook1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cook</surname><given-names>J. M</given-names></name>
+<name name-style="western"><surname>Rokas</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Pagel</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Evolutionary shifts between host oak sections and host-plant organs in Andricus gallwasps.</article-title>             <source>Evolution</source>             <volume>56</volume>             <fpage>1821</fpage>             <lpage>1830</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Cook2"><label>26</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cook</surname><given-names>J. M</given-names></name>
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Rowe</surname><given-names>A</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Patterns in the evolution of gall structure and life cycles in oak gallwasps (Hymenoptera: Cynipidae).</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Csóka</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Mattson</surname><given-names>W. J</given-names></name>
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Price</surname><given-names>P. W</given-names></name>
+</person-group>             <source>The biology of gall-inducing arthropods</source>                          <publisher-name>U.S. Department of Agriculture (USDA), Forest Service, North Central Research Station</publisher-name>             <fpage>261</fpage>             <lpage>279</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone3"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Schönrogge</surname><given-names>K</given-names></name>
+</person-group>             <year>2003</year>             <article-title>The adaptive significance of insect gall morphology.</article-title>             <source>Trends Ecol Evol</source>             <volume>18</volume>             <fpage>512</fpage>             <lpage>522</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Schnrogge1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schönrogge</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Crawley</surname><given-names>M. J</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Quantitative webs as a means of assessing the impact of alien insects.</article-title>             <source>J Anim Ecol</source>             <volume>69</volume>             <fpage>841</fpage>             <lpage>868</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Schnrogge2"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schönrogge</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Walker</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Crawley</surname><given-names>M. J</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Invaders on the move: parasitism in the sexual galls of four alien gall wasps in Britain (Hymenoptera: Cynipidae).</article-title>             <source>Proc Biol Sci</source>             <volume>265</volume>             <fpage>1643</fpage>             <lpage>1650</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Askew3"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Askew</surname><given-names>R. R</given-names></name>
+</person-group>             <year>1961</year>             <article-title>A study of the biology of species of the genus Mesopolobus Westwood (Hymenoptera; Pteromalidae) associated with cynipid galls on oak.</article-title>             <source>Trans Roy Ent Soc Lond</source>             <volume>133</volume>             <fpage>155</fpage>             <lpage>173</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Askew4"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Askew</surname><given-names>R. R</given-names></name>
+</person-group>             <year>1965</year>             <article-title>The biology of the British species of the genus Torymus Dalman (Hymenoptera: Torymidae) associated with galls of Cynipidae (Hymenoptera) on oak, with special reference to alternation of forms.</article-title>             <source>Trans Roy Entomol Soc Lond</source>             <volume>9</volume>             <fpage>217</fpage>             <lpage>32</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Dawkins1"><label>32</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dawkins</surname><given-names>R</given-names></name>
+</person-group>             <year>1982</year>             <article-title>The extended phenotype.</article-title>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>Oxford University Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">307</size>           </element-citation></ref>
+<ref id="pbio.1000179-Price1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Price</surname><given-names>P. W</given-names></name>
+<name name-style="western"><surname>Fernandes</surname><given-names>G. W</given-names></name>
+<name name-style="western"><surname>Waring</surname><given-names>G. L</given-names></name>
+</person-group>             <year>1987</year>             <article-title>Adaptive nature of insect galls.</article-title>             <source>Environ Entomol</source>             <volume>16</volume>             <fpage>15</fpage>             <lpage>24</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Abrahamson2"><label>34</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Abrahamson</surname><given-names>W. G</given-names></name>
+<name name-style="western"><surname>Weis</surname><given-names>A. E</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Evolutionary ecology across three trophic levels: goldenrods, gallmakers and natural enemies. Princeton Monographs in Population Biology number 29.</article-title>             <publisher-loc>Princeton (New Jersey)</publisher-loc>             <publisher-name>Princeton University Press</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">456</size>           </element-citation></ref>
+<ref id="pbio.1000179-Agrawal2"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Agrawal</surname><given-names>A. A</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Ecology - phenotypic plasticity in the interactions and evolution of species.</article-title>             <source>Science</source>             <volume>294</volume>             <fpage>321</fpage>             <lpage>326</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Clayton1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Clayton</surname><given-names>D. H</given-names></name>
+<name name-style="western"><surname>Bush</surname><given-names>S. E</given-names></name>
+<name name-style="western"><surname>Goates</surname><given-names>B. M</given-names></name>
+<name name-style="western"><surname>Johnson</surname><given-names>K. P</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Host defence reinforces host–parasite cospeciation.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>100</volume>             <fpage>15694</fpage>             <lpage>15699</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone4"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Challis</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Atkinson</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Csóka</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Hayward</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>The phylogeographical clade trade: tracing the impact of human-mediated dispersal on the colonization of northern Europe by the oak gallwasp Andricus kollari.</article-title>             <source>Mol Ecol</source>             <volume>16</volume>             <fpage>2768</fpage>             <lpage>2781</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Challis1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Challis</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Mutun</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Nieves-Aldrey</surname><given-names>J. L</given-names></name>
+<name name-style="western"><surname>Preuss</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Rokas</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Longitudinal range expansion and cryptic eastern species in the western Palaearctic oak gallwasp, Andricus coriarius.</article-title>             <source>Mol Ecol</source>             <volume>16</volume>             <fpage>2103</fpage>             <lpage>2114</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone5"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Atkinson</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Rokas</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Nieves-Aldrey</surname><given-names>J. L</given-names></name>
+<name name-style="western"><surname>Melika</surname><given-names>G</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Evidence for widespread cryptic sexual generations in apparently purely asexual Andricus gallwasps.</article-title>             <source>Mol Ecol</source>             <volume>17</volume>             <fpage>652</fpage>             <lpage>665</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone6"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Schönrogge</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Crawley</surname><given-names>M. J</given-names></name>
+<name name-style="western"><surname>Fraser</surname><given-names>S</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Geographic variation in the parasitoid community associated with an invading gallwasp, Andricus quercuscalicis (Hymenoptera: Cynipidae).</article-title>             <source>Oecologia</source>             <volume>104</volume>             <fpage>207</fpage>             <lpage>217</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Stone7"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Hernandez-Lopez</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Nicholls</surname><given-names>J. A</given-names></name>
+<name name-style="western"><surname>di Pierro</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Pujade-Villar</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Extreme host plant conservatism during at least 20 million years of host plant pursuit by oak gallwasps.</article-title>             <source>Evolution</source>             <volume>63</volume>             <fpage>854</fpage>             <lpage>869</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Grafen1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Grafen</surname><given-names>A</given-names></name>
+</person-group>             <year>1989</year>             <article-title>The phylogenetic regression.</article-title>             <source>Phil Trans Biol Sci</source>             <volume>326</volume>             <fpage>119</fpage>             <lpage>157</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Cska1"><label>43</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Csóka</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Stone</surname><given-names>G. N</given-names></name>
+<name name-style="western"><surname>Melika</surname><given-names>G</given-names></name>
+</person-group>             <year>2005</year>             <article-title>The biology, ecology and evolution of gall wasps.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Raman </surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Schaeffer</surname><given-names>C. W</given-names></name>
+<name name-style="western"><surname>Withers</surname><given-names>T. M</given-names></name>
+</person-group>             <source>Biology, ecology and evolution of gall-inducing arthropods</source>             <publisher-loc>Enfield (New Hampshire)</publisher-loc>             <publisher-name>Science Publishers Inc</publisher-name>             <fpage>573</fpage>             <lpage>642</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Lill1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lill</surname><given-names>J. T</given-names></name>
+<name name-style="western"><surname>Marquis</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Ricklefs</surname><given-names>R. E</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Host plants influence parasitism of forest caterpillars.</article-title>             <source>Nature</source>             <volume>417</volume>             <fpage>170</fpage>             <lpage>173</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Rott1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rott</surname><given-names>A. S</given-names></name>
+<name name-style="western"><surname>Godfray</surname><given-names>H. C. J</given-names></name>
+</person-group>             <year>2000</year>             <article-title>The structure of a leafminer-parasitoid community.</article-title>             <source>J Anim Ecol</source>             <volume>69</volume>             <fpage>274</fpage>             <lpage>289</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Hawkins3"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Parasitoid species richness, host mortality, and biological-control.</article-title>             <source>Am Nat</source>             <volume>141</volume>             <fpage>634</fpage>             <lpage>641</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Lewis1"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lewis</surname><given-names>O. T</given-names></name>
+<name name-style="western"><surname>Memmott</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>LaSalle</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Lyal</surname><given-names>C. H. C</given-names></name>
+<name name-style="western"><surname>Whitefoord</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Structure of a diverse tropical forest insect-parasitoid community.</article-title>             <source>J Anim Ecol</source>             <volume>71</volume>             <fpage>855</fpage>             <lpage>873</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Hawkins4"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+<name name-style="western"><surname>Askew</surname><given-names>R. R</given-names></name>
+<name name-style="western"><surname>Shaw</surname><given-names>M. R</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Influences of host feeding niche and foodplant type on generalist and specialist parasitoids.</article-title>             <source>Ecol Entomol</source>             <volume>15</volume>             <fpage>275</fpage>             <lpage>280</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Gauld1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gauld</surname><given-names>I. D</given-names></name>
+<name name-style="western"><surname>Gaston</surname><given-names>K. J</given-names></name>
+<name name-style="western"><surname>Janzen</surname><given-names>D. H</given-names></name>
+</person-group>             <year>1992</year>             <article-title>Plant allelochemicals, tritrophic interactions and the anomalous diversity of tropical parasitoids: the ‘nasty’ host hypothesis.</article-title>             <source>Oikos</source>             <volume>65</volume>             <fpage>353</fpage>             <lpage>357</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-LeCorff1"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Le Corff</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Marquis</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Whitfield</surname><given-names>J. B</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Temporal and spatial variation in a parasitoid community associated with the herbivores that feed on Missouri Quercus.</article-title>             <source>Environ Entomol</source>             <volume>29</volume>             <fpage>181</fpage>             <lpage>194</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Price2"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Price</surname><given-names>P. W</given-names></name>
+<name name-style="western"><surname>Pschorn-Walcher</surname><given-names>H</given-names></name>
+</person-group>             <year>1988</year>             <article-title>Are galling insects better protected against parasitoids than exposed feeders? a test using tenthredinid sawflies.</article-title>             <source>Ecol Entomol</source>             <volume>13</volume>             <fpage>195</fpage>             <lpage>205</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Waring1"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Waring</surname><given-names>G. L</given-names></name>
+<name name-style="western"><surname>Price</surname><given-names>P. W</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Parasitoid pressure and the radiation of a gall forming group (Cecidomyiidae: Asphondyllia spp.) on creosote bush (Larrea tridentata).</article-title>             <source>Oecologia</source>             <volume>79</volume>             <fpage>293</fpage>             <lpage>299</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Hawkins5"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+<name name-style="western"><surname>Gagné</surname><given-names>R. J</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Determinants of assemblage size for the parasitoids of Cecidomyiidae (Diptera).</article-title>             <source>Oecologia</source>             <volume>81</volume>             <fpage>75</fpage>             <lpage>88</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Mills1"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mills</surname><given-names>N. J</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Species richness and structure in the parasitoid complexes of tortricoid hosts.</article-title>             <source>J Anim Ecol</source>             <volume>62</volume>             <fpage>45</fpage>             <lpage>59</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Hawkins6"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+<name name-style="western"><surname>Goeden</surname><given-names>R. D</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Organisation of a parasitoid community associated with a complex of galls on Atriplex spp. in southern California.</article-title>             <source>Ecol Entomol</source>             <volume>9</volume>             <fpage>271</fpage>             <lpage>292</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Sheehan1"><label>56</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sheehan</surname><given-names>W</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Parasitoid community structure: effects of host abundance, phylogeny, and ecology.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+<name name-style="western"><surname>Sheehan</surname><given-names>W</given-names></name>
+</person-group>             <source>Parasitoid community ecology</source>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>Oxford University Press</publisher-name>             <fpage>90</fpage>             <lpage>110</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Gross1"><label>57</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gross</surname><given-names>P</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Insect behavioural and morphological defences against parasitoids.</article-title>             <source>Annu Rev Entomol</source>             <volume>38</volume>             <fpage>251</fpage>             <lpage>273</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Gentry1"><label>58</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gentry</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Dyer</surname><given-names>L. A</given-names></name>
+</person-group>             <year>2002</year>             <article-title>On the conditional nature of neotropical caterpillar defences against their natural enemies.</article-title>             <source>Ecology</source>             <volume>83</volume>             <fpage>3108</fpage>             <lpage>3119</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Roland1"><label>59</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Roland</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>P. D</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Insect parasitoid species respond to forest structure at different spatial scales.</article-title>             <source>Nature</source>             <volume>386</volume>             <fpage>710</fpage>             <lpage>713</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Thompson1"><label>60</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thompson</surname><given-names>J. N</given-names></name>
+<name name-style="western"><surname>Cunningham</surname><given-names>B. M</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Geographic structure and dynamics of coevolutionary selection.</article-title>             <source>Nature</source>             <volume>417</volume>             <fpage>735</fpage>             <lpage>738</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Jeffries1"><label>61</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jeffries</surname><given-names>M. J</given-names></name>
+<name name-style="western"><surname>Lawton</surname><given-names>J. H</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Enemy-free space and the structure of ecological communities.</article-title>             <source>Biol J Linn Soc</source>             <volume>23</volume>             <fpage>269</fpage>             <lpage>286</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Hawkins7"><label>62</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>B. A</given-names></name>
+</person-group>             <year>1988</year>             <article-title>Do galls protect endophytic herbivores from parasitoids? A comparison of galling and non-galling Diptera.</article-title>             <source>Ecol Entomol</source>             <volume>13</volume>             <fpage>473</fpage>             <lpage>477</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Salvo1"><label>63</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Salvo</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Valladares</surname><given-names>G. R</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Looks are important: parasitic assemblages of agromyzid leaf miners (Diptera) in relation to mine shape and contrast.</article-title>             <source>J Anim Ecol</source>             <volume>73</volume>             <fpage>494</fpage>             <lpage>505</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Joy1"><label>64</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Joy</surname><given-names>J. B</given-names></name>
+<name name-style="western"><surname>Crespi</surname><given-names>B. J</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Adaptive radiation of gall inducing insects within a single host-plant species.</article-title>             <source>Evolution</source>             <volume>61</volume>             <fpage>784</fpage>             <lpage>795</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Henneman1"><label>65</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Henneman</surname><given-names>M. L</given-names></name>
+<name name-style="western"><surname>Memmott</surname><given-names>J</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Infiltration of a Hawaiian community by introduced biological control agents.</article-title>             <source>Science</source>             <volume>293</volume>             <fpage>1314</fpage>             <lpage>1316</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Ackland1"><label>66</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ackland</surname><given-names>G. J</given-names></name>
+<name name-style="western"><surname>Gallagher</surname><given-names>I. D</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Stabilization of large generalized Lotka-Volterra foodwebs by evolutionary feedback.</article-title>             <source>Phys Rev Lett</source>             <volume>93</volume>             <fpage>158701</fpage>          </element-citation></ref>
+<ref id="pbio.1000179-Kondoh1"><label>67</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kondoh</surname><given-names>M</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Foraging adaptation and the relationship between food-web complexity and stability.</article-title>             <source>Science</source>             <volume>299</volume>             <fpage>1388</fpage>             <lpage>1391</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Morris1"><label>68</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morris</surname><given-names>R. J</given-names></name>
+<name name-style="western"><surname>Lewis</surname><given-names>O. T</given-names></name>
+<name name-style="western"><surname>Godfray</surname><given-names>H. C. J</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Experimental evidence for apparent competition in a tropical forest food web.</article-title>             <source>Nature</source>             <volume>428</volume>             <fpage>310</fpage>             <lpage>313</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Kondoh2"><label>69</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kondoh</surname><given-names>M</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Anti-predator defence and the complexity-stability relationship of food webs.</article-title>             <source>Proc Biol Sci</source>             <volume>274</volume>             <fpage>1617</fpage>             <lpage>1624</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Dell1"><label>70</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dell</surname><given-names>A. I</given-names></name>
+<name name-style="western"><surname>Kokkoris</surname><given-names>G. D</given-names></name>
+<name name-style="western"><surname>Banasek-Richter</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Bersier</surname><given-names>L-F</given-names></name>
+<name name-style="western"><surname>Dunne</surname><given-names>J. A</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>How do complex food webs persist in Nature?</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>de Ruiter</surname><given-names>P. C</given-names></name>
+<name name-style="western"><surname>Wolters</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Moore</surname><given-names>J. C</given-names></name>
+</person-group>             <source>Dynamic food webs</source>             <publisher-loc>Amsterdam</publisher-loc>             <publisher-name>Academic Press</publisher-name>             <fpage>425</fpage>             <lpage>436</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Clarke1"><label>71</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Clarke</surname><given-names>K. R</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Non-parametric multivariate analyses of changes in community structure.</article-title>             <source>Aust J Ecol</source>             <volume>18</volume>             <fpage>117 </fpage>             <lpage>143</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Kruskall1"><label>72</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kruskall</surname><given-names>J. B</given-names></name>
+<name name-style="western"><surname>Wish</surname><given-names>M</given-names></name>
+</person-group>             <year>1978</year>             <article-title>Multidimensional Scaling.</article-title>             <publisher-loc>Beverly Hills (California)</publisher-loc>             <publisher-name>SAGE Publications Inc</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">96</size>           </element-citation></ref>
+<ref id="pbio.1000179-Bacilieri1"><label>73</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bacilieri</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Ducousso</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Kremer</surname><given-names>A</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Comparison of morphological characters and molecular markers for the analysis of hybridisation in sessile and pedunculate oak.</article-title>             <source>Annal Sci Forest</source>             <volume>53</volume>             <fpage>79</fpage>             <lpage>91</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Bruschi1"><label>74</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bruschi</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Vendramin</surname><given-names>G. G</given-names></name>
+<name name-style="western"><surname>Bussotti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Grossoni</surname><given-names>P</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Morphological and molecular differentiation between Quercus petraea (Matt.) Liebl. and Quercus pubescens Willd. (Fagaceae) in northern and central Italy.</article-title>             <source>Ann Bot</source>             <volume>85</volume>             <fpage>325</fpage>             <lpage>333</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Bussotti1"><label>75</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bussotti</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Grossoni</surname><given-names>P</given-names></name>
+</person-group>             <year>1997</year>             <article-title>European and Mediterranean oaks (Quercus L.; Fagaceae) SEM characterization of the micromorphology of the abaxial leaf surface.</article-title>             <source>Bot J Linn Soc</source>             <volume>124</volume>             <fpage>183</fpage>             <lpage>199</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-DumolinLapgue1"><label>76</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dumolin-Lapègue</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Demesure</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Fineschi</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Le Corre</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Petit</surname><given-names>R. J</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Phylogeographic structure of white oaks throughout the European continent.</article-title>             <source>Genetics</source>             <volume>146</volume>             <fpage>1475</fpage>             <lpage>1487</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Dupouey1"><label>77</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dupouey</surname><given-names>J. L</given-names></name>
+<name name-style="western"><surname>Badeau</surname><given-names>V</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Morphological variability of oaks (Q. robur L., Q. petraea (Matt.) Liebl, Q. pubescens Willd.) in northeastern France: preliminary results.</article-title>             <source>Annal Sci Forest</source>             <volume>50</volume>             <fpage>35s</fpage>             <lpage>40s</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Muir1"><label>78</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Muir</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Fleming</surname><given-names>C. C</given-names></name>
+<name name-style="western"><surname>Schlötterer</surname><given-names>C</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Species status of hybridising oaks.</article-title>             <source>Nature</source>             <volume>405</volume>             <fpage>1016</fpage>          </element-citation></ref>
+<ref id="pbio.1000179-Kelly1"><label>79</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kelly</surname><given-names>C. K</given-names></name>
+<name name-style="western"><surname>Southwood</surname><given-names>T. R. E</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Species richness and resource availability: A phylogenetic analysis of insects associated with trees.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>96</volume>             <fpage>8013</fpage>             <lpage>8016</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Kennedy1"><label>80</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kennedy</surname><given-names>C. E. J</given-names></name>
+<name name-style="western"><surname>Southwood</surname><given-names>T. R. E</given-names></name>
+</person-group>             <year>1984</year>             <article-title>The number of species of insects associated with British trees – a reanalysis.</article-title>             <source>J Anim Ecol</source>             <volume>53</volume>             <fpage>455</fpage>             <lpage>478</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Huelsenbeck1"><label>81</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Huelsenbeck</surname><given-names>J. P</given-names></name>
+<name name-style="western"><surname>Ronquist</surname><given-names>F</given-names></name>
+</person-group>             <year>2001</year>             <article-title>MrBayes: Bayesian inference of phylogeny.</article-title>             <source>Bioinformatics</source>             <volume>17</volume>             <fpage>754</fpage>             <lpage>755</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Rambaut1"><label>82</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rambaut</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Drummond</surname><given-names>A</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Tracer: MCMC Trace Analysis Tool.</article-title>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>University of Oxford</publisher-name>          </element-citation></ref>
+<ref id="pbio.1000179-Swofford1"><label>83</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Swofford</surname><given-names>D. L</given-names></name>
+</person-group>             <year>2002</year>             <article-title>PAUP*. Phylogenetic Analysis Using Parsimony (*and Other Methods).</article-title>             <publisher-loc>Sunderland (Massachusetts)</publisher-loc>             <publisher-name>Sinauer</publisher-name>          </element-citation></ref>
+<ref id="pbio.1000179-Goudet1"><label>84</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Goudet</surname><given-names>J</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Fstat version 1.2: a computer program to calculate F statistics.</article-title>             <source>J Hered</source>             <volume>86</volume>             <fpage>485</fpage>             <lpage>486</lpage>          </element-citation></ref>
+<ref id="pbio.1000179-Manly1"><label>85</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Manly</surname><given-names>B. J. F</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Randomization, bootstrap and Monte Carlo methods in biology.</article-title>             <publisher-loc>London</publisher-loc>             <publisher-name>Chapman and Hall</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">424</size>           </element-citation></ref>
+<ref id="pbio.1000179-Krebs1"><label>86</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Krebs</surname><given-names>C. J</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Ecological methodology.</article-title>             <publisher-loc>Menlo Park (California)</publisher-loc>             <publisher-name>Addison, Wesley, Longman</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">624</size>           </element-citation></ref>
+</ref-list><glossary><title>Abbreviations</title><def-list><def-item>
+<term>MAM</term>
+<def>
+<p>minimal adequate model</p>
+</def>
+</def-item><def-item>
+<term>MCA</term>
+<def>
+<p>matrix correlation analysis</p>
+</def>
+</def-item><def-item>
+<term>MDS</term>
+<def>
+<p>multidimensional scaling</p>
+</def>
+</def-item><def-item>
+<term>PRA</term>
+<def>
+<p>phylogenetic regression analysis</p>
+</def>
+</def-item></def-list></glossary>
+
+</back>
+</article>

@@ -2,16 +2,17 @@ package org.ambraproject.rhino.service;
 
 
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -58,14 +59,12 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.testng.Assert.assertEquals;
@@ -75,13 +74,19 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
- * This is actually a test on {@link ArticleCrudService#write} and would normally be in {@link ArticleCrudServiceTest}.
- * But because of the special way that it gathers its assertion data, I'm putting it in its own class now. Maybe it
- * should be moved into the regular test when it's ready to supplant/replace it.
+ * Special test suite for testing ingestion features, using the legacy Admin app as a reference implementation.
  * <p/>
- * The test case data for this class live at {@code DATA_PATH}. The XML file is raw article data as it would be passed
- * to the ingester in production. The matching JSON file is a Gson dump of an {@link org.ambraproject.models.Article}
- * instance as created by the reference implementation ({@code org.ambraproject.article.service.IngesterImpl}).
+ * The test case data for this class live at {@code DATA_PATH}. Each XML file is raw article data to be passed to an
+ * {@link ArticleCrudService}. The matching JSON file is a Gson dump of an {@link org.ambraproject.models.Article}
+ * instance as created by the reference implementation ({@code org.ambraproject.article.service.IngesterImpl}). There
+ * are also full zip archives that are analogous to the XML, but test {@link IngestibleService} instead.
+ * <p/>
+ * The code in this class was centered around the reference implementation, and was written with the assumption that it
+ * would use the unaltered JSON code for comparisons, bugs and all. Hence, there are a lot of little hacks in the
+ * assertions that either relax the requirements for equality between actual and "expected" values, or outright ignore
+ * certain values in the presence of known bugs. These should be well-commented.
+ * <p/>
+ * Better, less hackish tests are desirable in the unit test classes that explicitly test particular services.
  */
 public class IngestionTest extends BaseRhinoTest {
   private static final Logger log = LoggerFactory.getLogger(IngestionTest.class);
@@ -97,6 +102,45 @@ public class IngestionTest extends BaseRhinoTest {
   @Autowired
   private Gson entityGson;
 
+  /**
+   * Test cases that we want to exclude from normal runs.
+   * <p/>
+   * Each of these cases has been found to fail because it asserts "pathological" behavior from the old Admin app that
+   * we don't want to reproduce. The input files are left in the test harness, but are skipped if they are named here.
+   * The pathological test failures may be observed by commenting out an entry below. Each entry in the list should be
+   * accompanied by an explanatory comment.
+   */
+  private static final ImmutableSet<String> TEST_CASE_EXCLUSIONS = ImmutableSet.copyOf(new String[]{
+
+      /*
+       * Asset-like files named "10.1371/journal.pbio.0020365.t001-M", "*.t002-M", and "*.t003-M" appeared in the
+       * original zip file, which caused them to be mentioned in the JSON assertion, even though no such identifiers
+       * appear anywhere in the article XML.
+       */
+      "pbio.0020365",
+
+      /*
+       * The original zip file contained a file with suffix ".xml.orig", which caused old Admin to create an unwanted
+       * asset named "info:doi/10.1371/journal.pone.0027190.xml" with extension "ORIG".
+       */
+      "pone.0027190",
+
+      /*
+       * In old Admin, DTD validation (at some point in XML parsing) adds the attribute orientation="portrait" to the
+       * XML node for 10.1371/journal.pone.0021661.e002. The e002 asset is itself nested in the caption for
+       * 10.1371/journal.pone.0021661.s001. So, the check of the s001's description field fails because Rhino does no
+       * online validation and never adds orientation="portrait".
+       *
+       * This is a questionable exclusion because we probably should be applying DTD validation (and getting the
+       * consequent changes in output) anyway, using locally stored copies of the DTD files if necessary.
+       * See org.ambraproject.rhino.service.impl.AmbraService.newDocumentBuilder.
+       *
+       * TODO: Re-examine DTD validation; try to make this case pass and delete the exclusion.
+       */
+      "pone.0021661",
+
+  });
+
   private static FilenameFilter forSuffix(final String suffix) {
     return new FilenameFilter() {
       @Override
@@ -106,27 +150,50 @@ public class IngestionTest extends BaseRhinoTest {
     };
   }
 
-  @DataProvider
-  public Object[][] generatedIngestionData() {
-    File[] jsonFiles = DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
-    Arrays.sort(jsonFiles);
-    List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
+  /**
+   * Provide test cases for ingestion tests.
+   *
+   * @param assertionSuffix the file name suffix for files that assert expected behavior
+   * @param testInputSuffix the file name suffix for files to use as test input
+   * @param testDataPath    the path to the directory containing both above kinds of file
+   * @return a list containing arrays ready to pass as @Test parameters
+   */
+  private List<Object[]> provideIngestionCases(String assertionSuffix, String testInputSuffix, File testDataPath) {
+    File[] assertionFiles = testDataPath.listFiles(forSuffix(assertionSuffix));
+    Arrays.sort(assertionFiles);
+    List<Object[]> cases = Lists.newLinkedList(); // LinkedList for mid-iteration removal -- see generatedIngestionData
 
-    // Only add to the test if both the .json and .xml file exist.
-    for (File jsonFile : jsonFiles) {
-      String jsonFilePath = jsonFile.getPath();
-      String xmlPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + XML_SUFFIX;
-      File xmlFile = new File(xmlPath);
-      if (!xmlFile.exists()) {
+    // Only add to the test if files are found for both the input and asserted output
+    for (File assertionFile : assertionFiles) {
+      String assertionFilePath = assertionFile.getPath();
+      String filePath = assertionFilePath.substring(0, assertionFilePath.length() - assertionSuffix.length());
+      if (TEST_CASE_EXCLUSIONS.contains(filePath.substring(filePath.lastIndexOf('/') + 1))) {
         continue;
       }
+      File testInputFile = new File(filePath + testInputSuffix);
+      if (testInputFile.exists()) {
+        cases.add(new Object[]{assertionFile, testInputFile});
+      }
+    }
+
+    return cases;
+  }
+
+  @DataProvider
+  public Object[][] generatedIngestionData() {
+    List<Object[]> cases = provideIngestionCases(JSON_SUFFIX, XML_SUFFIX, DATA_PATH);
+
+    for (Iterator<Object[]> iterator = cases.iterator(); iterator.hasNext(); ) {
+      Object[] testCase = iterator.next();
+      String jsonFilePath = ((File) testCase[0]).getPath();
+      String filePath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length());
 
       // Don't return any articles that have a zip archive.  Those will be returned
       // instead by generatedZipIngestionData() for a different test.
-      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
+      String zipPath = filePath + ZIP_SUFFIX;
       File zipFile = new File(zipPath);
-      if (!zipFile.exists()) {
-        cases.add(new Object[]{jsonFile, xmlFile});
+      if (zipFile.exists()) {
+        iterator.remove();
       }
     }
 
@@ -135,18 +202,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   @DataProvider
   public Object[][] generatedZipIngestionData() {
-    File[] jsonFiles = ZIP_DATA_PATH.listFiles(forSuffix(JSON_SUFFIX));
-    Arrays.sort(jsonFiles);
-    List<Object[]> cases = Lists.newArrayListWithCapacity(jsonFiles.length);
-    for (File jsonFile : jsonFiles) {
-      String jsonFilePath = jsonFile.getPath();
-      String zipPath = jsonFilePath.substring(0, jsonFilePath.length() - JSON_SUFFIX.length()) + ZIP_SUFFIX;
-      File zipFile = new File(zipPath);
-      if (zipFile.exists()) {
-        cases.add(new Object[]{jsonFile, zipFile});
-      }
-    }
-    return cases.toArray(new Object[0][]);
+    return provideIngestionCases(JSON_SUFFIX, ZIP_SUFFIX, ZIP_DATA_PATH).toArray(new Object[0][]);
   }
 
   private Article readReferenceCase(File jsonFile) throws IOException {
@@ -287,6 +343,9 @@ public class IngestionTest extends BaseRhinoTest {
    */
   public static boolean compare(AssertionCollector results, String objectName, String fieldName,
                                 @Nullable Object actual, @Nullable Object expected) {
+    if (expected instanceof CharSequence) {
+      expected = CharMatcher.WHITESPACE.collapseFrom((CharSequence) expected, ' ');
+    }
     return results.compare(objectName, fieldName, actual, expected);
   }
 
@@ -321,9 +380,20 @@ public class IngestionTest extends BaseRhinoTest {
     }
 
     // Else, be more permissive with XML formatting.
-    // We don't mind if actual includes whitespace between tags that was missing from expected.
-    // TODO: Make this fail if actual deletes whitespace that was included in expected.
-    return compare(results, objectType, fieldName, massageXml(actual), massageXml(expected));
+    actual = massageXml(actual);
+    expected = massageXml(expected);
+    if (!actual.equals(expected) && optionalWhitespace(actual).matcher(expected).matches()) {
+      /*
+       * Old Admin incorrectly ignores line breaks, therefore omitting whitespace. So 'actual' may still be correct if
+       * it has a whitespace group that 'expected' omits entirely. This means the test might fail to catch bugs where
+       * 'actual' is inserting whitespace where it actually shouldn't be (such as in the middle of a word), but that is
+       * relatively low-risk versus known cases where 'expected' reflects buggy behavior.
+       *
+       * See the pone.0040470 case for examples.
+       */
+      expected = actual;
+    }
+    return compare(results, objectType, fieldName, actual, expected);
   }
 
   /**
@@ -334,6 +404,9 @@ public class IngestionTest extends BaseRhinoTest {
    * Removes whitespace from between tags. This does not produce strictly equivalent XML but it is close enough for test
    * comparisons (but see the comment in {@link #compareMarkupText}).
    * <p/>
+   * Un-escape ampersands where they appear within an attribute value. (This could be handled more generally, but it
+   * barely comes up. Legacy Admin unnecessarily escapes ampersands in this context on case pone.0005668.)
+   * <p/>
    * This should be replaced with proper use of the XML library if it gets too hairy.
    *
    * @param text XML text
@@ -343,6 +416,7 @@ public class IngestionTest extends BaseRhinoTest {
     text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
     text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
     text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
+    text = AMPERSAND_ESCAPE_IN_TAG_ATTR.matcher(text).replaceAll("$1&$2");
     return text.toString();
   }
 
@@ -352,6 +426,13 @@ public class IngestionTest extends BaseRhinoTest {
       + "([^>\\s]+)" // Tag name.
       + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
       + "/>"
+  );
+  private static final Pattern AMPERSAND_ESCAPE_IN_TAG_ATTR = Pattern.compile(""
+      + "(<[^>]*"    // Stuff in the tag before the attribute begins
+      + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
+      + "&amp;"      // The escaped ampersand
+      + "([^>\"]*\"" // Closes the attribute
+      + "[^>]*>)"    // Closes the tag
   );
 
   private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
@@ -366,6 +447,26 @@ public class IngestionTest extends BaseRhinoTest {
       CharSequence expectedElement = (i < expected.size()) ? expected.get(i) : null;
       compareMarkupText(results, objectType, String.format("%s[%d]", fieldName, i), actualElement, expectedElement);
     }
+  }
+
+  private static final Pattern NON_WHITESPACE = Pattern.compile("[^\\s]+");
+
+  /**
+   * Produce a pattern that permits whitespace to be omitted or substituted with other whitespace.
+   *
+   * @param text
+   * @return
+   */
+  private static Pattern optionalWhitespace(CharSequence text) {
+    Matcher nonWhitespaceGroups = NON_WHITESPACE.matcher(Preconditions.checkNotNull(text));
+    StringBuilder optionalWhitespacePattern = new StringBuilder(text.length());
+    while (nonWhitespaceGroups.find()) {
+      if (optionalWhitespacePattern.length() > 0) {
+        optionalWhitespacePattern.append("\\s*");
+      }
+      optionalWhitespacePattern.append(Pattern.quote(nonWhitespaceGroups.group()));
+    }
+    return Pattern.compile(optionalWhitespacePattern.toString());
   }
 
   /**
@@ -384,7 +485,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareMarkupText(results, Article.class, "rights", actual.getRights(), expected.getRights());
     compare(results, Article.class, "language", actual.getLanguage(), expected.getLanguage());
     compare(results, Article.class, "format", actual.getFormat(), expected.getFormat());
-    compare(results, Article.class, "pages", actual.getPages(), expected.getPages());
+    comparePageRanges(results, Article.class, "pages", actual.getPages(), expected.getPages());
     compare(results, Article.class, "eLocationId", actual.geteLocationId(), expected.geteLocationId());
 
     // actual.getDate() returns a java.sql.Date since it's coming from hibernate.  We have
@@ -410,8 +511,8 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareJournalSets(AssertionCollector results, Set<Journal> actualSet, Set<Journal> expectedSet) {
     // We care only about eIssn, because that's the only part given in article XML.
     // All other Journal fields come from the environment, which doesn't exist here (see createTestJournal).
-    Set<String> actualEissns = mapJournalsByEissn(actualSet).keySet();
-    Set<String> expectedEissns = mapJournalsByEissn(expectedSet).keySet();
+    Set<String> actualEissns = Maps.uniqueIndex(actualSet, JOURNAL_EISSN).keySet();
+    Set<String> expectedEissns = Maps.uniqueIndex(expectedSet, JOURNAL_EISSN).keySet();
 
     for (String missing : Sets.difference(expectedEissns, actualEissns)) {
       compare(results, Journal.class, "eIssn", null, missing);
@@ -425,9 +526,9 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void compareRelationshipLists(AssertionCollector results, List<ArticleRelationship> actual, List<ArticleRelationship> expected) {
-    Map<String, ArticleRelationship> actualMap = mapRelationshipsByDoi(actual);
+    Map<String, ArticleRelationship> actualMap = Maps.uniqueIndex(actual, RELATIONSHIP_DOI);
     Set<String> actualDois = actualMap.keySet();
-    Map<String, ArticleRelationship> expectedMap = mapRelationshipsByDoi(expected);
+    Map<String, ArticleRelationship> expectedMap = Maps.uniqueIndex(expected, RELATIONSHIP_DOI);
     Set<String> expectedDois = expectedMap.keySet();
 
     for (String missingDoi : Sets.difference(expectedDois, actualDois)) {
@@ -446,9 +547,9 @@ public class IngestionTest extends BaseRhinoTest {
   private void compareAssetsWithoutExpectedFiles(AssertionCollector results,
                                                  Collection<ArticleAsset> actualList, Collection<ArticleAsset> expectedList) {
     // Compare assets by their DOI, ignoring order
-    Map<AssetIdentity, ArticleAsset> actualAssetMap = mapUninitAssetsById(actualList);
+    Map<AssetIdentity, ArticleAsset> actualAssetMap = Maps.uniqueIndex(actualList, ASSET_IDENTITY);
     Set<AssetIdentity> actualAssetIds = actualAssetMap.keySet();
-    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = mapAssetFilesByAssetId(expectedList);
+    Multimap<AssetIdentity, ArticleAsset> expectedAssetMap = Multimaps.index(expectedList, ASSET_IDENTITY);
     Set<AssetIdentity> expectedAssetIds = expectedAssetMap.keySet();
 
     for (AssetIdentity missingDoi : Sets.difference(expectedAssetIds, actualAssetIds)) {
@@ -478,49 +579,20 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void compareAssetsWithExpectedFiles(AssertionCollector results,
                                               Collection<ArticleAsset> actual, Collection<ArticleAsset> expected) {
-    SortAssetsReturnValue actualReturnValue = sortAssets(actual);
-    List<AssetFileIdentity> actualSorted = actualReturnValue.sortedList;
-    Map<AssetFileIdentity, ArticleAsset> actualAssetMap = actualReturnValue.assetMap;
-    Set<AssetFileIdentity> actualSet = new HashSet<AssetFileIdentity>(actualSorted);
+    Map<AssetFileIdentity, ArticleAsset> actualMap = Maps.uniqueIndex(actual, ASSET_FILE_IDENTITY);
+    Set<AssetFileIdentity> actualKeys = actualMap.keySet();
+    Map<AssetFileIdentity, ArticleAsset> expectedMap = Maps.uniqueIndex(expected, ASSET_FILE_IDENTITY);
+    Set<AssetFileIdentity> expectedKeys = expectedMap.keySet();
 
-    SortAssetsReturnValue expectedReturnValue = sortAssets(expected);
-    List<AssetFileIdentity> expectedSorted = expectedReturnValue.sortedList;
-    Map<AssetFileIdentity, ArticleAsset> expectedAssetMap = expectedReturnValue.assetMap;
-    Set<AssetFileIdentity> expectedSet = new HashSet<AssetFileIdentity>(expectedSorted);
-
-    for (AssetFileIdentity missing : Sets.difference(expectedSet, actualSet)) {
+    for (AssetFileIdentity missing : Sets.difference(expectedKeys, actualKeys)) {
       compare(results, ArticleAsset.class, "doi/extension", null, missing);
     }
-    for (AssetFileIdentity extra : Sets.difference(actualSet, expectedSet)) {
+    for (AssetFileIdentity extra : Sets.difference(actualKeys, expectedKeys)) {
       compare(results, ArticleAsset.class, "doi/extension", extra, null);
     }
-
-    if (actualSorted.size() == expectedSorted.size()) {
-      for (int i = 0; i < actualSorted.size(); i++) {
-        compareAssetFields(results, actualAssetMap.get(actualSorted.get(i)),
-            expectedAssetMap.get(expectedSorted.get(i)), true);
-      }
+    for (AssetFileIdentity key : Sets.intersection(actualKeys, expectedKeys)) {
+      compareAssetFields(results, actualMap.get(key), expectedMap.get(key), true);
     }
-  }
-
-  private static class SortAssetsReturnValue {
-    List<AssetFileIdentity> sortedList;
-    Map<AssetFileIdentity, ArticleAsset> assetMap;
-  }
-
-  private SortAssetsReturnValue sortAssets(Collection<ArticleAsset> assets) {
-    List<AssetFileIdentity> sortedList = new ArrayList<AssetFileIdentity>(assets.size());
-    Map<AssetFileIdentity, ArticleAsset> assetMap = new HashMap<AssetFileIdentity, ArticleAsset>();
-    for (ArticleAsset asset : assets) {
-      AssetFileIdentity afi = AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
-      sortedList.add(afi);
-      assetMap.put(afi, asset);
-    }
-    Collections.sort(sortedList);
-    SortAssetsReturnValue results = new SortAssetsReturnValue();
-    results.sortedList = sortedList;
-    results.assetMap = assetMap;
-    return results;
   }
 
   /**
@@ -534,7 +606,18 @@ public class IngestionTest extends BaseRhinoTest {
                                   ArticleAsset expected, boolean assetFileExpected) {
     assertEquals(actual.getDoi(), expected.getDoi()); // should be true as a method precondition
 
-    compare(results, ArticleAsset.class, "contextElement", actual.getContextElement(), expected.getContextElement());
+    String actualContextElement = actual.getContextElement();
+    String expectedContextElement = expected.getContextElement();
+    if ("".equals(expectedContextElement) && "inline-formula".equals(actualContextElement)) {
+      /*
+       * Some test cases have an empty string for inline-formula elements. This is not true for all inline formulas,
+       * therefore this seems not to be a special case where the empty string is correct. It's probably a legacy bug.
+       * So, make sure we don't assert for the buggy value.
+       */
+      expectedContextElement = actualContextElement;
+    }
+    compare(results, ArticleAsset.class, "contextElement", actualContextElement, expectedContextElement);
+
     compareMarkupText(results, ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
     compareMarkupText(results, ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
 
@@ -574,9 +657,9 @@ public class IngestionTest extends BaseRhinoTest {
       }
     }
 
-    Map<String, CitedArticle> actualMap = mapCitationsByKey(actualList);
+    Map<String, CitedArticle> actualMap = Maps.uniqueIndex(actualList, CITATION_KEY);
     Set<String> actualKeys = actualMap.keySet();
-    Map<String, CitedArticle> expectedMap = mapCitationsByKey(expectedList);
+    Map<String, CitedArticle> expectedMap = Maps.uniqueIndex(expectedList, CITATION_KEY);
     Set<String> expectedKeys = expectedMap.keySet();
 
     for (String key : Sets.intersection(actualKeys, expectedKeys)) {
@@ -626,7 +709,7 @@ public class IngestionTest extends BaseRhinoTest {
     compareMarkupText(results, CitedArticle.class, "title", actual.getTitle(), expected.getTitle());
     compare(results, CitedArticle.class, "publisherLocation", actual.getPublisherLocation(), expected.getPublisherLocation());
     compare(results, CitedArticle.class, "publisherName", actual.getPublisherName(), expected.getPublisherName());
-    compare(results, CitedArticle.class, "pages", actual.getPages(), expected.getPages());
+    comparePageRanges(results, CitedArticle.class, "pages", actual.getPages(), expected.getPages());
     compare(results, CitedArticle.class, "eLocationID", actual.geteLocationID(), expected.geteLocationID());
     compare(results, CitedArticle.class, "journal", actual.getJournal(), expected.getJournal());
     compareMarkupText(results, CitedArticle.class, "note", actual.getNote(), expected.getNote());
@@ -638,6 +721,18 @@ public class IngestionTest extends BaseRhinoTest {
 
     comparePersonLists(results, CitedArticle.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
+  }
+
+  private static final Pattern PAGE_RANGE_DELIMITER = Pattern.compile("\\s*-\\s*");
+
+  private static boolean comparePageRanges(AssertionCollector results, Class<?> parentType, String fieldName,
+                                           String actualPageRange, String expectedPageRange) {
+    if (expectedPageRange != null) {
+      // Legacy page range values sometimes have junk whitespace. Remove it before comparing.
+      expectedPageRange = PAGE_RANGE_DELIMITER.matcher(expectedPageRange.trim()).replaceAll("-");
+    }
+
+    return compare(results, parentType, fieldName, actualPageRange, expectedPageRange);
   }
 
   private static boolean isEmptyCitation(CitedArticle c) {
@@ -720,48 +815,42 @@ public class IngestionTest extends BaseRhinoTest {
     }
   }
 
-  // Transformation helper methods
+  // Transformation helpers
 
-  private static ImmutableMap<String, Journal> mapJournalsByEissn(Collection<Journal> journals) {
-    ImmutableMap.Builder<String, Journal> map = ImmutableMap.builder();
-    for (Journal journal : journals) {
-      map.put(journal.geteIssn(), journal);
+  private static final Function<Journal, String> JOURNAL_EISSN = new Function<Journal, String>() {
+    @Override
+    public String apply(Journal input) {
+      return input.geteIssn();
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMap<String, ArticleRelationship> mapRelationshipsByDoi(Collection<ArticleRelationship> relationships) {
-    ImmutableMap.Builder<String, ArticleRelationship> map = ImmutableMap.builder();
-    for (ArticleRelationship relationship : relationships) {
-      map.put(relationship.getOtherArticleDoi(), relationship);
+  private static final Function<ArticleRelationship, String> RELATIONSHIP_DOI = new Function<ArticleRelationship, String>() {
+    @Override
+    public String apply(ArticleRelationship input) {
+      return input.getOtherArticleDoi();
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMap<AssetIdentity, ArticleAsset> mapUninitAssetsById(Collection<ArticleAsset> assets) {
-    ImmutableMap.Builder<AssetIdentity, ArticleAsset> map = ImmutableMap.builder();
-    for (ArticleAsset asset : assets) {
-      map.put(AssetIdentity.from(asset), asset);
+  private static final Function<ArticleAsset, AssetIdentity> ASSET_IDENTITY = new Function<ArticleAsset, AssetIdentity>() {
+    @Override
+    public AssetIdentity apply(ArticleAsset input) {
+      return AssetIdentity.from(input);
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMultimap<AssetIdentity, ArticleAsset> mapAssetFilesByAssetId(Collection<ArticleAsset> assets) {
-    ImmutableListMultimap.Builder<AssetIdentity, ArticleAsset> map = ImmutableListMultimap.builder();
-    for (ArticleAsset asset : assets) {
-      AssetFileIdentity fileIdentity = AssetFileIdentity.from(asset);
-      map.put(fileIdentity.forAsset(), asset);
+  private static final Function<ArticleAsset, AssetFileIdentity> ASSET_FILE_IDENTITY = new Function<ArticleAsset, AssetFileIdentity>() {
+    @Override
+    public AssetFileIdentity apply(ArticleAsset input) {
+      return AssetFileIdentity.from(input);
     }
-    return map.build();
-  }
+  };
 
-  private static ImmutableMap<String, CitedArticle> mapCitationsByKey(Collection<CitedArticle> citations) {
-    ImmutableMap.Builder<String, CitedArticle> map = ImmutableMap.builder();
-    for (CitedArticle citation : citations) {
-      map.put(citation.getKey(), citation);
+  private static final Function<CitedArticle, String> CITATION_KEY = new Function<CitedArticle, String>() {
+    @Override
+    public String apply(CitedArticle input) {
+      return input.getKey();
     }
-    return map.build();
-  }
+  };
 
   private static ImmutableList<PersonName> asPersonNames(Collection<? extends AmbraEntity> persons) {
     List<PersonName> names = Lists.newArrayListWithCapacity(persons.size());
