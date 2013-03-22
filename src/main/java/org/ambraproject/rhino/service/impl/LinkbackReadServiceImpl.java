@@ -36,24 +36,23 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 public class LinkbackReadServiceImpl extends AmbraService implements LinkbackReadService {
 
   private static class ArticleListView {
-    private final String doi;
-    private final String title;
-    private final String articleUrl;
-    private final long linkbackCount;
-    private final Date mostRecentLinkback;
+    private final Object doi;
+    private final Object title;
+    private final Object articleUrl;
+    private final Object linkbackCount;
+    private final Object mostRecentLinkback;
 
     private ArticleListView(Object[] queryResult) {
-      this.doi = (String) queryResult[0];
-      this.title = (String) queryResult[1];
-      this.articleUrl = (String) queryResult[2];
-      this.linkbackCount = (Long) queryResult[3];
-      this.mostRecentLinkback = (Date) queryResult[4];
+      this.doi = queryResult[0];
+      this.title = queryResult[1];
+      this.articleUrl = queryResult[2];
+      this.linkbackCount = queryResult[3];
+      this.mostRecentLinkback = queryResult[4];
     }
   }
 
@@ -66,9 +65,18 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
 
   @Override
   public void listByArticle(ResponseReceiver receiver, MetadataFormat format, OrderBy orderBy) throws IOException {
+    // Here is what this is intended to do, in SQL:
+    //  SELECT article.doi, article.title, pbcount.count
+    //  FROM article INNER JOIN
+    //    (SELECT COUNT(url) AS count, articleID FROM pingback GROUP BY articleId) AS pbcount
+    //  ON article.articleID = pbcount.articleID
+    //  ORDER BY pbcount.count DESC;
+
     List<Object[]> results = hibernateTemplate.find(""
-        + "select a.doi, a.title, a.url, count(distinct p.ID) as linkbackCount, max(p.created) as mostRecentLinkback "
-        + "from Pingback as p, Article as a where p.articleID = a.ID order by mostRecentLinkback desc");
+        + "select distinct a.doi, a.title, a.url, "
+        + "  (select count(*) from Pingback where articleID = a.ID), "
+        + "  (select max(created) from Pingback where articleID = a.ID) "
+        + "from Pingback as p, Article as a where p.articleID = a.ID");
     writeJson(receiver, Lists.transform(results, AS_VIEW));
   }
 
@@ -82,7 +90,7 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
     List<?> results = hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Linkback.class)
             .add(Restrictions.eq("articleID", articleId))
-            .addOrder(Order.asc("created"))
+            .addOrder(Order.desc("created"))
     );
     writeJson(receiver, results);
   }
