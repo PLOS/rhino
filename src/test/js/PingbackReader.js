@@ -43,7 +43,7 @@ function populateArticleTable(linkbacksByArticle) {
     var fetchRow = $('<tr/>').append(fetchCell).hide();
     articleRow
       .append($('<td/>').text(article.doi))
-      .append($('<td/>').text(article.title))
+      .append($('<td/>').html($('<a/>').attr('href', article.articleUrl).text(article.title)))
       .append($('<td/>').text(article.linkbackCount))
       .append($('<td/>').text(article.mostRecentLinkback))
       .append($('<td/>').append(makeFetchButton(article, articleRow, fetchRow)))
@@ -88,7 +88,7 @@ function populateLinkbacks(box, linkbacksList) {
   $.each(linkbacksList, function (index, linkback) {
     var row = $('<tr/>')
       .append($('<td/>').text(linkback.title))
-      .append($('<td/>').text(linkback.url))
+      .append($('<td/>').html($('<a/>').attr('href', linkback.url).text(linkback.url)))
       .append($('<td/>').text(linkback.created))
       .append($('<td/>').text(linkback.blogName))
       .append($('<td/>').text(linkback.excerpt));

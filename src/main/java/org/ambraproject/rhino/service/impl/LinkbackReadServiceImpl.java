@@ -44,14 +44,16 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
   private static class ArticleListView {
     private final String doi;
     private final String title;
+    private final String articleUrl;
     private final long linkbackCount;
     private final Date mostRecentLinkback;
 
     private ArticleListView(Object[] queryResult) {
       this.doi = (String) queryResult[0];
       this.title = (String) queryResult[1];
-      this.linkbackCount = (Long) queryResult[2];
-      this.mostRecentLinkback = (Date) queryResult[3];
+      this.articleUrl = (String) queryResult[2];
+      this.linkbackCount = (Long) queryResult[3];
+      this.mostRecentLinkback = (Date) queryResult[4];
     }
   }
 
@@ -65,7 +67,7 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
   @Override
   public void listByArticle(ResponseReceiver receiver, MetadataFormat format, OrderBy orderBy) throws IOException {
     List<Object[]> results = hibernateTemplate.find(""
-        + "select a.doi, a.title, count(distinct p.ID) as linkbackCount, max(p.created) as mostRecentLinkback "
+        + "select a.doi, a.title, a.url, count(distinct p.ID) as linkbackCount, max(p.created) as mostRecentLinkback "
         + "from Pingback as p, Article as a where p.articleID = a.ID order by mostRecentLinkback desc");
     writeJson(receiver, Lists.transform(results, AS_VIEW));
   }
