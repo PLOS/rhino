@@ -28,6 +28,7 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.LinkbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.slf4j.Logger;
@@ -68,6 +69,8 @@ public class ArticleCrudController extends DoiBasedCrudController {
   private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
+  @Autowired
+  private LinkbackReadService linkbackReadService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -87,6 +90,15 @@ public class ArticleCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleCrudService.listDois(receiver, mf);
+  }
+
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {"linkbacks"})
+  public void listLinkbacks(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    linkbackReadService.listByArticle(receiver, mf, LinkbackReadService.OrderBy.COUNT);
   }
 
   /**
@@ -161,6 +173,16 @@ public class ArticleCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleCrudService.readMetadata(receiver, id, mf);
+  }
+
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"linkbacks"})
+  public void readLinkbacks(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws FileStoreException, IOException {
+    ArticleIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    linkbackReadService.read(receiver, id, mf);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
