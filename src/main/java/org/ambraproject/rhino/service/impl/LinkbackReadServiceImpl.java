@@ -65,19 +65,25 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
 
   @Override
   public void listByArticle(ResponseReceiver receiver, MetadataFormat format, OrderBy orderBy) throws IOException {
+    // TODO: Handle all Linkbacks (i.e., also Trackback), not just Pingback
+
     // Here is what this is intended to do, in SQL:
-    //  SELECT article.doi, article.title, pbcount.count
+    //  SELECT article.doi, article.title, pb.count, pb.mostRecent
     //  FROM article INNER JOIN
-    //    (SELECT COUNT(url) AS count, articleID FROM pingback GROUP BY articleId) AS pbcount
-    //  ON article.articleID = pbcount.articleID
-    //  ORDER BY pbcount.count DESC;
+    //    (SELECT COUNT(url) AS count, MAX(created) AS mostRecent, articleID
+    //     FROM pingback GROUP BY articleId) AS pb
+    //  ON article.articleID = pb.articleID
+    //  ORDER BY pb.mostRecent DESC;
 
     List<Object[]> results = hibernateTemplate.find(""
         + "select distinct a.doi, a.title, a.url, "
-        + "  (select count(*) from Pingback where articleID = a.ID), "
-        + "  (select max(created) from Pingback where articleID = a.ID) "
-        + "from Pingback as p, Article as a where p.articleID = a.ID");
-    writeJson(receiver, Lists.transform(results, AS_VIEW));
+        + "  (select count(*) from Pingback where articleID = a.ID) as linkbackCount, "
+        + "  (select max(created) from Pingback where articleID = a.ID) as mostRecent " // TODO Eliminate duplication?
+        + "from Pingback as p, Article as a where p.articleID = a.ID "
+        + "order by mostRecent desc "
+    );
+    List<ArticleListView> resultView = Lists.transform(results, AS_VIEW);
+    writeJson(receiver, resultView);
   }
 
   @Override
