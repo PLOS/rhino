@@ -22,6 +22,8 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +59,8 @@ public class AssetMetadataController extends DoiBasedCrudController {
       throws IOException {
     AssetIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    assetCrudService.readMetadata(response, id, mf);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    assetCrudService.readMetadata(receiver, id, mf);
   }
 
 }

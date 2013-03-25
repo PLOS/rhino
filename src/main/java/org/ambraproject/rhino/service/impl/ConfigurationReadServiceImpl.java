@@ -4,10 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.ConfigurationReadService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,10 +18,10 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   private Configuration ambraConfiguration;
 
   @Override
-  public void read(HttpServletResponse response, MetadataFormat format) throws IOException {
+  public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     Preconditions.checkNotNull(format);
     assert format == MetadataFormat.JSON;
-    writeJsonToResponse(response, convertToMap(ambraConfiguration));
+    writeJson(receiver, convertToMap(ambraConfiguration));
   }
 
   /**

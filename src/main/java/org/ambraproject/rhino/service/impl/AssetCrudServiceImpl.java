@@ -29,6 +29,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -37,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -215,7 +215,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
+  public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     assert format == MetadataFormat.JSON;
     @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
@@ -227,7 +227,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (assets.isEmpty()) {
       throw reportNotFound(id);
     }
-    writeJsonToResponse(response, assets);
+    writeJson(receiver, assets);
   }
 
   /**

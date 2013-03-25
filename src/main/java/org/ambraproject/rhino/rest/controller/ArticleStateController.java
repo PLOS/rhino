@@ -19,6 +19,8 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleStateService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +72,8 @@ public class ArticleStateController extends DoiBasedCrudController {
       throws IOException {
 
     ArticleIdentity id = parse(request);
-    articleStateService.read(response, id, MetadataFormat.getFromParameter(format, true));
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleStateService.read(receiver, id, MetadataFormat.getFromParameter(format, true));
   }
 
   /**
@@ -87,6 +90,7 @@ public class ArticleStateController extends DoiBasedCrudController {
     ArticleIdentity id = parse(request);
     ArticleState state = readJsonFromRequest(request, ArticleState.class);
     articleStateService.write(id, state);
-    articleStateService.read(response, id, MetadataFormat.JSON);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleStateService.read(receiver, id, MetadataFormat.JSON);
   }
 }

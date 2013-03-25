@@ -24,6 +24,8 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.PlosDoiUtils;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -72,12 +74,13 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws IOException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
-  public void read(HttpServletResponse response,
+  public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
 
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ingestibleService.read(response, mf);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    ingestibleService.read(receiver, mf);
   }
 
   /**
@@ -91,7 +94,8 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
-  public void ingest(HttpServletResponse response, @RequestParam(value = "doi") String doi,
+  public void ingest(HttpServletRequest request, HttpServletResponse response,
+                     @RequestParam(value = "doi") String doi,
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
@@ -115,6 +119,7 @@ public class IngestibleController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(response, result, MetadataFormat.JSON);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 }
