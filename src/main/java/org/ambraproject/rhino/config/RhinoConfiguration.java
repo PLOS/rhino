@@ -32,7 +32,7 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.service.LinkbackReadService;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
@@ -40,7 +40,7 @@ import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.LinkbackReadServiceImpl;
+import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -174,8 +174,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public LinkbackReadService linkbackReadService() {
-    return new LinkbackReadServiceImpl();
+  public PingbackReadService pingbackReadService() {
+    return new PingbackReadServiceImpl();
   }
 
 }

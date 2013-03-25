@@ -24,7 +24,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 
 import java.io.IOException;
 
-public interface LinkbackReadService {
+public interface PingbackReadService {
 
   public static enum OrderBy {DATE, COUNT;}
 

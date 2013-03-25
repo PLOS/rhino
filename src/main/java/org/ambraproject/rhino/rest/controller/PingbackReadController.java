@@ -21,7 +21,7 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
-import org.ambraproject.rhino.service.LinkbackReadService;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,29 +35,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class LinkbackReadController extends DoiBasedCrudController {
+public class PingbackReadController extends DoiBasedCrudController {
 
-  private static final String LINKBACK_ROOT = "/linkback";
-  private static final String LINKBACK_NAMESPACE = LINKBACK_ROOT + '/';
-  private static final String LINKBACK_TEMPLATE = LINKBACK_NAMESPACE + "**";
+  private static final String PINGBACK_ROOT = "/pingback";
+  private static final String PINGBACK_NAMESPACE = PINGBACK_ROOT + '/';
+  private static final String PINGBACK_TEMPLATE = PINGBACK_NAMESPACE + "**";
 
-  private static final String LINKBACK_TYPE_PARAM = "type";
+  private static final String PINGBACK_TYPE_PARAM = "type";
 
   @Override
   protected String getNamespacePrefix() {
-    return LINKBACK_NAMESPACE;
+    return PINGBACK_NAMESPACE;
   }
 
   @Autowired
-  private LinkbackReadService linkbackReadService;
+  private PingbackReadService pingbackReadService;
 
-  @RequestMapping(value = LINKBACK_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = PINGBACK_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = LINKBACK_TYPE_PARAM, required = false) String linkbackType)
+                   @RequestParam(value = PINGBACK_TYPE_PARAM, required = false) String pingbackType)
       throws IOException {
     ArticleIdentity id = ArticleIdentity.create(getIdentifier(request));
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    linkbackReadService.read(receiver, id, MetadataFormat.JSON);
+    pingbackReadService.read(receiver, id, MetadataFormat.JSON);
   }
 
 }

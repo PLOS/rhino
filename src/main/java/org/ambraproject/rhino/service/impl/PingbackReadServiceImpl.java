@@ -23,11 +23,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.Article;
-import org.ambraproject.models.Linkback;
-import org.ambraproject.models.Trackback;
+import org.ambraproject.models.Pingback;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.service.LinkbackReadService;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -38,21 +37,21 @@ import org.springframework.dao.support.DataAccessUtils;
 import java.io.IOException;
 import java.util.List;
 
-public class LinkbackReadServiceImpl extends AmbraService implements LinkbackReadService {
+public class PingbackReadServiceImpl extends AmbraService implements PingbackReadService {
 
   private static class ArticleListView {
     private final Object doi;
     private final Object title;
     private final Object articleUrl;
-    private final Object linkbackCount;
-    private final Object mostRecentLinkback;
+    private final Object pingbackCount;
+    private final Object mostRecentPingback;
 
     private ArticleListView(Object[] queryResult) {
       this.doi = queryResult[0];
       this.title = queryResult[1];
       this.articleUrl = queryResult[2];
-      this.linkbackCount = queryResult[3];
-      this.mostRecentLinkback = queryResult[4];
+      this.pingbackCount = queryResult[3];
+      this.mostRecentPingback = queryResult[4];
     }
   }
 
@@ -65,8 +64,6 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
 
   @Override
   public void listByArticle(ResponseReceiver receiver, MetadataFormat format, OrderBy orderBy) throws IOException {
-    // TODO: Handle all Linkbacks (i.e., also Trackback), not just Pingback
-
     // Here is what this is intended to do, in SQL:
     //  SELECT article.doi, article.title, pb.count, pb.mostRecent
     //  FROM article INNER JOIN
@@ -77,7 +74,7 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
 
     List<Object[]> results = hibernateTemplate.find(""
         + "select distinct a.doi, a.title, a.url, "
-        + "  (select count(*) from Pingback where articleID = a.ID) as linkbackCount, "
+        + "  (select count(*) from Pingback where articleID = a.ID) as pingbackCount, "
         + "  (select max(created) from Pingback where articleID = a.ID) as mostRecent " // TODO Eliminate duplication?
         + "from Pingback as p, Article as a where p.articleID = a.ID "
         + "order by mostRecent desc "
@@ -94,25 +91,20 @@ public class LinkbackReadServiceImpl extends AmbraService implements LinkbackRea
             .add(Restrictions.eq("doi", article.getKey()))
             .setProjection(Projections.property("ID"))));
     List<?> results = hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Linkback.class)
+        DetachedCriteria.forClass(Pingback.class)
             .add(Restrictions.eq("articleID", articleId))
             .addOrder(Order.desc("created"))
     );
     writeJson(receiver, results);
   }
 
-  private static ImmutableMap<String, Object> view(Article article, Linkback linkback) {
+  private static ImmutableMap<String, Object> view(Article article, Pingback pingback) {
     ImmutableMap.Builder<String, Object> view = ImmutableMap.<String, Object>builder();
     view.put("articleDoi", article.getDoi())
-        .put("url", linkback.getUrl())
-        .put("title", linkback.getTitle())
-        .put("created", linkback.getCreated())
-        .put("lastModified", linkback.getLastModified());
-    if (linkback instanceof Trackback) {
-      Trackback trackback = (Trackback) linkback;
-      view.put("blogName", trackback.getBlogName())
-          .put("excerpt", trackback.getExcerpt());
-    }
+        .put("url", pingback.getUrl())
+        .put("title", pingback.getTitle())
+        .put("created", pingback.getCreated())
+        .put("lastModified", pingback.getLastModified());
     return view.build();
   }
 
