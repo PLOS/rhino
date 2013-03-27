@@ -212,14 +212,14 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @return the appropriate value for the rights property of {@link Article}, based on the article XML.
    */
   private String buildRights() throws XmlContentException {
-    String holder = Strings.nullToEmpty(readString("/article/front/article-meta/permissions/copyright-holder"));
+    String holder = readString("/article/front/article-meta/permissions/copyright-holder");
     String license = readString("/article/front/article-meta/permissions/license/license-p");
     if (license == null) {
       throw new XmlContentException("Required license statement is omitted");
     }
 
     // pmc2obj-v3.xslt lines 179-183
-    String rights = holder + ". " + license;
+    String rights = (holder == null) ? license : (holder + ". " + license);
     return rights.trim();
   }
 

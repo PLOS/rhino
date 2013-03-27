@@ -482,7 +482,7 @@ public class IngestionTest extends BaseRhinoTest {
     compare(results, Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
     compare(results, Article.class, "state", actual.getState(), expected.getState());
     compareMarkupText(results, Article.class, "description", actual.getDescription(), expected.getDescription());
-    compareMarkupText(results, Article.class, "rights", actual.getRights(), expected.getRights());
+    compareRights(results, actual.getRights(), expected.getRights());
     compare(results, Article.class, "language", actual.getLanguage(), expected.getLanguage());
     compare(results, Article.class, "format", actual.getFormat(), expected.getFormat());
     comparePageRanges(results, Article.class, "pages", actual.getPages(), expected.getPages());
@@ -500,6 +500,14 @@ public class IngestionTest extends BaseRhinoTest {
     compare(results, Article.class, "url", actual.getUrl(), expected.getUrl());
     compareMarkupLists(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     compare(results, Article.class, "types", actual.getTypes(), expected.getTypes());
+  }
+
+  private boolean compareRights(AssertionCollector results, String actualRights, String expectedRights) {
+    final String unwantedPrefix = ". "; // Legacy bug: this appears before license if no holder is provided.
+    if (expectedRights != null && expectedRights.startsWith(unwantedPrefix)) {
+      expectedRights = expectedRights.substring(unwantedPrefix.length());
+    }
+    return compare(results, Article.class, "rights", actualRights, expectedRights);
   }
 
   private void compareCategorySets(AssertionCollector results, Set<Category> actual, Set<Category> expected) {
