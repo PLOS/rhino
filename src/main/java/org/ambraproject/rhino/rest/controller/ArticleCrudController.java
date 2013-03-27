@@ -28,6 +28,9 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +69,8 @@ public class ArticleCrudController extends DoiBasedCrudController {
   private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
+  @Autowired
+  private PingbackReadService pingbackReadService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -78,6 +83,24 @@ public class ArticleCrudController extends DoiBasedCrudController {
   }
 
 
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
+  public void listDois(HttpServletRequest request, HttpServletResponse response,
+                       @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleCrudService.listDois(receiver, mf);
+  }
+
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {"pingbacks"})
+  public void listPingbacks(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    pingbackReadService.listByArticle(receiver, mf, PingbackReadService.OrderBy.COUNT);
+  }
+
   /**
    * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
    *
@@ -87,7 +110,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletResponse response,
+  public void create(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
       throws IOException, FileStoreException {
     Article result;
@@ -103,7 +126,8 @@ public class ArticleCrudController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(response, result, MetadataFormat.JSON);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 
   /**
@@ -120,7 +144,7 @@ public class ArticleCrudController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = "/zip", method = RequestMethod.POST)
-  public void zipUpload(HttpServletResponse response,
+  public void zipUpload(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
                         @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
@@ -137,7 +161,8 @@ public class ArticleCrudController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(response, result, MetadataFormat.JSON);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
@@ -146,7 +171,18 @@ public class ArticleCrudController extends DoiBasedCrudController {
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    articleCrudService.readMetadata(response, id, mf);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    articleCrudService.readMetadata(receiver, id, mf);
+  }
+
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"pingbacks"})
+  public void readPingbacks(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws FileStoreException, IOException {
+    ArticleIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    pingbackReadService.read(receiver, id, mf);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)

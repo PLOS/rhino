@@ -18,9 +18,13 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
@@ -29,6 +33,7 @@ import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.CitedArticle;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.util.NodeListAdapter;
+import org.ambraproject.rhino.util.StringReplacer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -36,9 +41,12 @@ import org.w3c.dom.Node;
 
 import java.net.URLEncoder;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -69,11 +77,63 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
   /**
-   * {@inheritDoc}
+   * Find each node within this object's XML whose name is expected to be associated with an asset entity.
+   *
+   * @return the list of asset nodes
    */
-  @Override
-  public List<AssetNode> findAllAssetNodes() {
-    return super.findAllAssetNodes();
+  public AssetNodesByDoi findAllAssetNodes() {
+    // Find all nodes of an asset type and map them by DOI
+    List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
+    ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
+    for (Node node : rawNodes) {
+      String assetDoi = getAssetDoi(node);
+      if (assetDoi != null) {
+        nodeMap.put(assetDoi, node);
+      } else {
+        findNestedDoi(node, nodeMap);
+      }
+    }
+
+    // Remove <graphic> nodes that don't share a DOI with another asset.
+    // (Why not just add them separately? Doing it this way preserves document order.)
+    for (Map.Entry<String, Collection<Node>> entry : nodeMap.asMap().entrySet()) {
+      Collection<Node> nodes = entry.getValue();
+      if (nodes.size() <= 1) {
+        continue; // The DOI is unique, so keep the one node even if it is a <graphic>
+      }
+      for (Iterator<Node> iterator = nodes.iterator(); iterator.hasNext(); ) {
+        Node node = iterator.next();
+        if (GRAPHIC.equals(node.getNodeName())) {
+          iterator.remove();
+        }
+      }
+    }
+
+    return new AssetNodesByDoi(nodeMap);
+  }
+
+  /**
+   * Try to find a DOI at a special position within an XML node and, if it's found, insert it into the node map at that
+   * key.
+   *
+   * @param outerNode an asset node such that {@code getAssetDoi(outerNode) == null}
+   * @param nodeMap   the map to modify if a nested DOI is found
+   */
+  private void findNestedDoi(Node outerNode, Multimap<String, Node> nodeMap) {
+    Preconditions.checkNotNull(nodeMap);
+
+    // Currently, the only special case handled here is
+    //   <table-wrap> ... <graphic xlink:href="..." /> ... </table-wrap>
+    // See case pone.0012008 (asset 10.1371/journal.pone.0012008.t002) in the test suite.
+    if (TABLE_WRAP.equals(outerNode.getNodeName())) {
+      Node graphicNode = readNode("descendant::" + GRAPHIC, outerNode);
+      if (graphicNode != null) {
+        String doi = getAssetDoi(graphicNode);
+        if (doi != null) {
+          nodeMap.put(doi, outerNode);
+        }
+      }
+    }
   }
 
   /**
@@ -151,14 +211,16 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   /**
    * @return the appropriate value for the rights property of {@link Article}, based on the article XML.
    */
-  private String buildRights() {
+  private String buildRights() throws XmlContentException {
+    String holder = Strings.nullToEmpty(readString("/article/front/article-meta/permissions/copyright-holder"));
+    String license = readString("/article/front/article-meta/permissions/license/license-p");
+    if (license == null) {
+      throw new XmlContentException("Required license statement is omitted");
+    }
 
     // pmc2obj-v3.xslt lines 179-183
-    StringBuilder rightsStr = new StringBuilder();
-    rightsStr.append(readString("/article/front/article-meta/permissions/copyright-holder"))
-        .append(". ")
-        .append(readString("/article/front/article-meta/permissions/license/license-p"));
-    return rightsStr.toString().trim();
+    String rights = holder + ". " + license;
+    return rights.trim();
   }
 
   /**
@@ -210,10 +272,16 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
     for (String otherType : otherTypes) {
-      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + uriEncode(otherType));
+      otherType = uriEncode(otherType);
+      otherType = SLASH_ESCAPE.replace(otherType); // uriEncode leaves slashes alone, but we actually want them escaped
+      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + otherType); // TODO PLOS-specific
     }
     return articleTypes;
   }
+
+  private static final StringReplacer SLASH_ESCAPE = StringReplacer.builder()
+      .replaceExact("/", String.format("%%%H", '/'))
+      .build();
 
   /**
    * Build a field of XML text by partially reconstructing the node's content. The output is text content between the
@@ -285,6 +353,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       citation.setKey(readString("child::label", refNode));
 
       Node citationNode = readNode("(child::element-citation|child::mixed-citation|child::nlm-citation)", refNode);
+      if (citationNode == null) {
+        throw new XmlContentException("All citation (<ref>) nodes expected to contain one of: "
+            + "element-citation, mixed-citation, nlm-citation");
+      }
       citation = new CitedArticleXml(citationNode).build(citation);
       citations.add(citation);
     }

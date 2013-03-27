@@ -1,0 +1,1795 @@
+{"doi":"info:doi/10.1371/journal.pone.0045847","title":
+  "Crystal Structure of ATV\u003csup\u003e\u003citalic\u003eORF\u003c/italic\u003e273\u003c/sup\u003e, a New Fold for a Thermo- and Acido-Stable Protein from the \u003citalic\u003eAcidianus\u003c/italic\u003e Two-Tailed Virus",
+  "eIssn":"1932-6203","state":1,"archiveName":"pone.0045847.zip",
+  "description":
+  "\u003cp\u003e\u003citalic\u003eAcidianus\u003c/italic\u003e two-tailed virus (ATV) infects crenarchaea of the genus \u003citalic\u003eAcidianus\u003c/italic\u003e living in terrestrial thermal springs at extremely high temperatures and low pH. ATV is a member of the \u003citalic\u003eBicaudaviridae\u003c/italic\u003e virus family and undergoes extra-cellular development of two tails, a process that is unique in the viral world. To understand this intriguing phenomenon, we have undertaken structural studies of ATV virion proteins and here we present the crystal structure of one of these proteins, ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e001\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e002\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e forms tetramers in solution and a molecular envelope is provided for the tetramer, computed from small-angle X-ray scattering (SAXS) data. The crystal structure has properties typical of hyperthermostable proteins, including a relatively high number of salt bridges. However, the protein also exhibits flexible loops and surface pockets. Remarkably, ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e003\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e displays a new \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e004\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e protein fold, consistent with the absence of homologues of this protein in public sequence databases.\u003c/p\u003e",
+  "rights":
+  "Felisberto-Rodrigues et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-10","eLocationId":
+  "e45847","strkImgURI":"","date":"Oct 8, 2012 12:00:00 AM","volume":"7",
+  "issue":"10","journal":"PLoS ONE","publisherLocation":
+  "San Francisco, USA","publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0045847","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0045847","extension":
+      "XML","contentType":"text/xml","title":
+      "Crystal Structure of ATV\u003csup\u003e\u003citalic\u003eORF\u003c/italic\u003e273\u003c/sup\u003e, a New Fold for a Thermo- and Acido-Stable Protein from the \u003citalic\u003eAcidianus\u003c/italic\u003e Two-Tailed Virus",
+      "description":
+      "\u003cp\u003e\u003citalic\u003eAcidianus\u003c/italic\u003e two-tailed virus (ATV) infects crenarchaea of the genus \u003citalic\u003eAcidianus\u003c/italic\u003e living in terrestrial thermal springs at extremely high temperatures and low pH. ATV is a member of the \u003citalic\u003eBicaudaviridae\u003c/italic\u003e virus family and undergoes extra-cellular development of two tails, a process that is unique in the viral world. To understand this intriguing phenomenon, we have undertaken structural studies of ATV virion proteins and here we present the crystal structure of one of these proteins, ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e001\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e002\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e forms tetramers in solution and a molecular envelope is provided for the tetramer, computed from small-angle X-ray scattering (SAXS) data. The crystal structure has properties typical of hyperthermostable proteins, including a relatively high number of salt bridges. However, the protein also exhibits flexible loops and surface pockets. Remarkably, ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e003\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e displays a new \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e004\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e protein fold, consistent with the absence of homologues of this protein in public sequence databases.\u003c/p\u003e",
+      "size":146259},{"doi":"info:doi/10.1371/journal.pone.0045847",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Crystal Structure of ATV\u003csup\u003e\u003citalic\u003eORF\u003c/italic\u003e273\u003c/sup\u003e, a New Fold for a Thermo- and Acido-Stable Protein from the \u003citalic\u003eAcidianus\u003c/italic\u003e Two-Tailed Virus",
+      "description":
+      "\u003cp\u003e\u003citalic\u003eAcidianus\u003c/italic\u003e two-tailed virus (ATV) infects crenarchaea of the genus \u003citalic\u003eAcidianus\u003c/italic\u003e living in terrestrial thermal springs at extremely high temperatures and low pH. ATV is a member of the \u003citalic\u003eBicaudaviridae\u003c/italic\u003e virus family and undergoes extra-cellular development of two tails, a process that is unique in the viral world. To understand this intriguing phenomenon, we have undertaken structural studies of ATV virion proteins and here we present the crystal structure of one of these proteins, ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e001\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e002\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e forms tetramers in solution and a molecular envelope is provided for the tetramer, computed from small-angle X-ray scattering (SAXS) data. The crystal structure has properties typical of hyperthermostable proteins, including a relatively high number of salt bridges. However, the protein also exhibits flexible loops and surface pockets. Remarkably, ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e003\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e displays a new \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e004\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e protein fold, consistent with the absence of homologues of this protein in public sequence databases.\u003c/p\u003e",
+      "size":618308},{"doi":"info:doi/10.1371/journal.pone.0045847.e005",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e005","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e006","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e006","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e007","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e007","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e008","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e008","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e009","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e009","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e010","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e010","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e011","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e011","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e012","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e012","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e013","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1382},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e013","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":894},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e014","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e014","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e015","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e015","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":444},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e016","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1324},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e016","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":844},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.t001","contextElement":
+      "table-wrap","extension":"TIF","contentType":"image/tiff","title":
+      "Table 1","description":
+      "\u003ctitle\u003eSummary of data collection, phasing and refinement statistics.\u003c/title\u003e",
+      "size":692532},{"doi":"info:doi/10.1371/journal.pone.0045847.t001",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eSummary of data collection, phasing and refinement statistics.\u003c/title\u003e",
+      "size":26487},{"doi":"info:doi/10.1371/journal.pone.0045847.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eSummary of data collection, phasing and refinement statistics.\u003c/title\u003e",
+      "size":3668},{"doi":"info:doi/10.1371/journal.pone.0045847.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eSummary of data collection, phasing and refinement statistics.\u003c/title\u003e",
+      "size":61172},{"doi":"info:doi/10.1371/journal.pone.0045847.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eSummary of data collection, phasing and refinement statistics.\u003c/title\u003e",
+      "size":152069},{"doi":"info:doi/10.1371/journal.pone.0045847.e017",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1382},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e017","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":894},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e018","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1382},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e018","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":894},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e019","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1382},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e019","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":894},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e020","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":2458},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e020","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1425},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e021","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":664},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e021","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e022","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":762},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e022","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":597},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e023","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":738},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e023","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":592},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e024","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1294},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e024","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":859},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e025","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":8164},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e025","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":4142},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e026","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":812},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e026","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":619},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e027","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":4608},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e027","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":2289},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e028","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":738},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e028","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":592},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e029","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":762},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e029","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":597},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e030","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":762},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e030","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":597},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e031","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":738},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e031","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":592},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e032","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":762},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e032","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":597},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e033","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":738},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e033","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":592},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e034","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e034","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e035","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e035","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e036","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e036","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e037","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e037","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e038","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e038","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e039","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e039","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e040","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e040","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":444},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e041","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e041","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":444},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e042","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e042","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e043","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e043","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e044","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":476},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e044","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":452},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e045","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":476},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e045","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":452},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e046","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e046","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e047","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e047","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e048","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e048","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e049","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e049","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e050","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e050","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e051","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e051","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":444},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e052","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e052","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.g001","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 1",
+      "description":
+      "\u003ctitle\u003eCrystal structure of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e048\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Ribbon representation of the structure of a monomer of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e049\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. Its \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-strands are labelled. The secondary structure elements are colored from the N\u003csup\u003e′\u003c/sup\u003e- (blue) to the C\u003csup\u003e′\u003c/sup\u003e-terminus (red). The loops that were not modelled are represented by dashed, black lines. \u003cbold\u003eb\u003c/bold\u003e) A view orthogonal to the previous one, showing the arrangement of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-helices. This view shows part of the concave face of the monomer (top, right) \u003cbold\u003ec\u003c/bold\u003e) The solvent-accessible surface of the ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e monomer concave face, colored by its electrostatic potential (red: −52 mV, blue: 52 mV), calculated at pH 7 and 150 mM NaCl with APBS \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0045847-Baker1\"\u003e[56]\u003c/xref\u003e. Two cavities are marked with yellow open stars. \u003cbold\u003ed\u003c/bold\u003e) A detail view of monomer B showing the salt bridge network formed by residues Glu29/Asp33/Lys260 as well as the disulphide bond established by cysteine residues 250 and 263. Amino acid residues are labelled in one-letter code; the secondary structure elements to which they belong are also labelled.\u003c/p\u003e",
+      "size":6632394},{"doi":"info:doi/10.1371/journal.pone.0045847.g001",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eCrystal structure of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e048\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Ribbon representation of the structure of a monomer of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e049\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. Its \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-strands are labelled. The secondary structure elements are colored from the N\u003csup\u003e′\u003c/sup\u003e- (blue) to the C\u003csup\u003e′\u003c/sup\u003e-terminus (red). The loops that were not modelled are represented by dashed, black lines. \u003cbold\u003eb\u003c/bold\u003e) A view orthogonal to the previous one, showing the arrangement of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-helices. This view shows part of the concave face of the monomer (top, right) \u003cbold\u003ec\u003c/bold\u003e) The solvent-accessible surface of the ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e monomer concave face, colored by its electrostatic potential (red: −52 mV, blue: 52 mV), calculated at pH 7 and 150 mM NaCl with APBS \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0045847-Baker1\"\u003e[56]\u003c/xref\u003e. Two cavities are marked with yellow open stars. \u003cbold\u003ed\u003c/bold\u003e) A detail view of monomer B showing the salt bridge network formed by residues Glu29/Asp33/Lys260 as well as the disulphide bond established by cysteine residues 250 and 263. Amino acid residues are labelled in one-letter code; the secondary structure elements to which they belong are also labelled.\u003c/p\u003e",
+      "size":160845},{"doi":"info:doi/10.1371/journal.pone.0045847.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eCrystal structure of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e048\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Ribbon representation of the structure of a monomer of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e049\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. Its \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-strands are labelled. The secondary structure elements are colored from the N\u003csup\u003e′\u003c/sup\u003e- (blue) to the C\u003csup\u003e′\u003c/sup\u003e-terminus (red). The loops that were not modelled are represented by dashed, black lines. \u003cbold\u003eb\u003c/bold\u003e) A view orthogonal to the previous one, showing the arrangement of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-helices. This view shows part of the concave face of the monomer (top, right) \u003cbold\u003ec\u003c/bold\u003e) The solvent-accessible surface of the ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e monomer concave face, colored by its electrostatic potential (red: −52 mV, blue: 52 mV), calculated at pH 7 and 150 mM NaCl with APBS \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0045847-Baker1\"\u003e[56]\u003c/xref\u003e. Two cavities are marked with yellow open stars. \u003cbold\u003ed\u003c/bold\u003e) A detail view of monomer B showing the salt bridge network formed by residues Glu29/Asp33/Lys260 as well as the disulphide bond established by cysteine residues 250 and 263. Amino acid residues are labelled in one-letter code; the secondary structure elements to which they belong are also labelled.\u003c/p\u003e",
+      "size":31553},{"doi":"info:doi/10.1371/journal.pone.0045847.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eCrystal structure of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e048\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Ribbon representation of the structure of a monomer of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e049\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. Its \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-strands are labelled. The secondary structure elements are colored from the N\u003csup\u003e′\u003c/sup\u003e- (blue) to the C\u003csup\u003e′\u003c/sup\u003e-terminus (red). The loops that were not modelled are represented by dashed, black lines. \u003cbold\u003eb\u003c/bold\u003e) A view orthogonal to the previous one, showing the arrangement of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-helices. This view shows part of the concave face of the monomer (top, right) \u003cbold\u003ec\u003c/bold\u003e) The solvent-accessible surface of the ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e monomer concave face, colored by its electrostatic potential (red: −52 mV, blue: 52 mV), calculated at pH 7 and 150 mM NaCl with APBS \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0045847-Baker1\"\u003e[56]\u003c/xref\u003e. Two cavities are marked with yellow open stars. \u003cbold\u003ed\u003c/bold\u003e) A detail view of monomer B showing the salt bridge network formed by residues Glu29/Asp33/Lys260 as well as the disulphide bond established by cysteine residues 250 and 263. Amino acid residues are labelled in one-letter code; the secondary structure elements to which they belong are also labelled.\u003c/p\u003e",
+      "size":423106},{"doi":"info:doi/10.1371/journal.pone.0045847.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eCrystal structure of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e048\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Ribbon representation of the structure of a monomer of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e049\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e. Its \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e050\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-strands are labelled. The secondary structure elements are colored from the N\u003csup\u003e′\u003c/sup\u003e- (blue) to the C\u003csup\u003e′\u003c/sup\u003e-terminus (red). The loops that were not modelled are represented by dashed, black lines. \u003cbold\u003eb\u003c/bold\u003e) A view orthogonal to the previous one, showing the arrangement of the \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e051\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e-helices. This view shows part of the concave face of the monomer (top, right) \u003cbold\u003ec\u003c/bold\u003e) The solvent-accessible surface of the ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e052\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e monomer concave face, colored by its electrostatic potential (red: −52 mV, blue: 52 mV), calculated at pH 7 and 150 mM NaCl with APBS \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0045847-Baker1\"\u003e[56]\u003c/xref\u003e. Two cavities are marked with yellow open stars. \u003cbold\u003ed\u003c/bold\u003e) A detail view of monomer B showing the salt bridge network formed by residues Glu29/Asp33/Lys260 as well as the disulphide bond established by cysteine residues 250 and 263. Amino acid residues are labelled in one-letter code; the secondary structure elements to which they belong are also labelled.\u003c/p\u003e",
+      "size":7172405},{"doi":"info:doi/10.1371/journal.pone.0045847.e053",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e053","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e054","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e054","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e055","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":644},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e055","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e056","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e056","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e057","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1054},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e057","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":731},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e058","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e058","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e059","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e059","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e060","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":500},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e060","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e061","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e061","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e062","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e062","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e063","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e063","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e064","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e064","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e065","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e065","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e066","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e066","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e067","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":500},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e067","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e068","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e068","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e069","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e069","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.g002","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 2",
+      "description":
+      "\u003ctitle\u003eOligomeric state of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e066\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in solution.\u003c/title\u003e\u003cp\u003eAbout 120 \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e067\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003eg of purified ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e068\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e were subjected to size-exclusion chromatography coupled to MALS/RI/UV detectors as described in the Experimental section. Two chromatograms/mass analyses are combined in this figure, showing the elution of the tetrameric (left) and dimeric (right) forms of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e069\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, obtained at pH 7.4 and 3.6, respectively. The molar mass (dotted lines), derived from refractive index measurements, and the absorption at 280 nm (full line) were plotted as functions of the elution volume around the peaks. The weight-averaged molar mass (M\u003citalic\u003e\u003csub\u003ew\u003c/sub\u003e\u003c/italic\u003e) values determined by the ASTRA software are indicated.\u003c/p\u003e",
+      "size":267300},{"doi":"info:doi/10.1371/journal.pone.0045847.g002",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eOligomeric state of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e066\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in solution.\u003c/title\u003e\u003cp\u003eAbout 120 \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e067\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003eg of purified ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e068\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e were subjected to size-exclusion chromatography coupled to MALS/RI/UV detectors as described in the Experimental section. Two chromatograms/mass analyses are combined in this figure, showing the elution of the tetrameric (left) and dimeric (right) forms of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e069\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, obtained at pH 7.4 and 3.6, respectively. The molar mass (dotted lines), derived from refractive index measurements, and the absorption at 280 nm (full line) were plotted as functions of the elution volume around the peaks. The weight-averaged molar mass (M\u003citalic\u003e\u003csub\u003ew\u003c/sub\u003e\u003c/italic\u003e) values determined by the ASTRA software are indicated.\u003c/p\u003e",
+      "size":33039},{"doi":"info:doi/10.1371/journal.pone.0045847.g002",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eOligomeric state of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e066\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in solution.\u003c/title\u003e\u003cp\u003eAbout 120 \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e067\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003eg of purified ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e068\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e were subjected to size-exclusion chromatography coupled to MALS/RI/UV detectors as described in the Experimental section. Two chromatograms/mass analyses are combined in this figure, showing the elution of the tetrameric (left) and dimeric (right) forms of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e069\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, obtained at pH 7.4 and 3.6, respectively. The molar mass (dotted lines), derived from refractive index measurements, and the absorption at 280 nm (full line) were plotted as functions of the elution volume around the peaks. The weight-averaged molar mass (M\u003citalic\u003e\u003csub\u003ew\u003c/sub\u003e\u003c/italic\u003e) values determined by the ASTRA software are indicated.\u003c/p\u003e",
+      "size":12831},{"doi":"info:doi/10.1371/journal.pone.0045847.g002",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eOligomeric state of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e066\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in solution.\u003c/title\u003e\u003cp\u003eAbout 120 \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e067\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003eg of purified ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e068\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e were subjected to size-exclusion chromatography coupled to MALS/RI/UV detectors as described in the Experimental section. Two chromatograms/mass analyses are combined in this figure, showing the elution of the tetrameric (left) and dimeric (right) forms of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e069\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, obtained at pH 7.4 and 3.6, respectively. The molar mass (dotted lines), derived from refractive index measurements, and the absorption at 280 nm (full line) were plotted as functions of the elution volume around the peaks. The weight-averaged molar mass (M\u003citalic\u003e\u003csub\u003ew\u003c/sub\u003e\u003c/italic\u003e) values determined by the ASTRA software are indicated.\u003c/p\u003e",
+      "size":67232},{"doi":"info:doi/10.1371/journal.pone.0045847.g002",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 2","description":
+      "\u003ctitle\u003eOligomeric state of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e066\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e in solution.\u003c/title\u003e\u003cp\u003eAbout 120 \u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e067\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003eg of purified ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e068\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e were subjected to size-exclusion chromatography coupled to MALS/RI/UV detectors as described in the Experimental section. Two chromatograms/mass analyses are combined in this figure, showing the elution of the tetrameric (left) and dimeric (right) forms of ATV\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e069\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e, obtained at pH 7.4 and 3.6, respectively. The molar mass (dotted lines), derived from refractive index measurements, and the absorption at 280 nm (full line) were plotted as functions of the elution volume around the peaks. The weight-averaged molar mass (M\u003citalic\u003e\u003csub\u003ew\u003c/sub\u003e\u003c/italic\u003e) values determined by the ASTRA software are indicated.\u003c/p\u003e",
+      "size":113784},{"doi":"info:doi/10.1371/journal.pone.0045847.e070",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e070","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e071","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e071","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.g003","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 3",
+      "description":
+      "\u003ctitle\u003eCrystal packing of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e071\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Overall view of the open and \u003cbold\u003eb\u003c/bold\u003e) closed dimers found in the second crystal form. In both cases the pseudo-two-fold axis is vertical in the plane of the paper. \u003cbold\u003ec\u003c/bold\u003e) View of the interface between monomer A (colored as in in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0045847-g001\"\u003eFigure 1\u003c/xref\u003e) and monomer B (grey) in the closed dimer. Amino acid residues involved in cross-monomer salt bridges are labelled in one-letter code. The secondary structure elements that support them are also labelled. \u003cbold\u003ed\u003c/bold\u003e) A view of the dimers arranged as a continuous helical fiber in the crystal. The edges of a unit cell box are shown in grey color.\u003c/p\u003e",
+      "size":6633698},{"doi":"info:doi/10.1371/journal.pone.0045847.g003",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCrystal packing of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e071\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Overall view of the open and \u003cbold\u003eb\u003c/bold\u003e) closed dimers found in the second crystal form. In both cases the pseudo-two-fold axis is vertical in the plane of the paper. \u003cbold\u003ec\u003c/bold\u003e) View of the interface between monomer A (colored as in in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0045847-g001\"\u003eFigure 1\u003c/xref\u003e) and monomer B (grey) in the closed dimer. Amino acid residues involved in cross-monomer salt bridges are labelled in one-letter code. The secondary structure elements that support them are also labelled. \u003cbold\u003ed\u003c/bold\u003e) A view of the dimers arranged as a continuous helical fiber in the crystal. The edges of a unit cell box are shown in grey color.\u003c/p\u003e",
+      "size":141129},{"doi":"info:doi/10.1371/journal.pone.0045847.g003",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCrystal packing of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e071\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Overall view of the open and \u003cbold\u003eb\u003c/bold\u003e) closed dimers found in the second crystal form. In both cases the pseudo-two-fold axis is vertical in the plane of the paper. \u003cbold\u003ec\u003c/bold\u003e) View of the interface between monomer A (colored as in in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0045847-g001\"\u003eFigure 1\u003c/xref\u003e) and monomer B (grey) in the closed dimer. Amino acid residues involved in cross-monomer salt bridges are labelled in one-letter code. The secondary structure elements that support them are also labelled. \u003cbold\u003ed\u003c/bold\u003e) A view of the dimers arranged as a continuous helical fiber in the crystal. The edges of a unit cell box are shown in grey color.\u003c/p\u003e",
+      "size":27960},{"doi":"info:doi/10.1371/journal.pone.0045847.g003",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCrystal packing of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e071\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Overall view of the open and \u003cbold\u003eb\u003c/bold\u003e) closed dimers found in the second crystal form. In both cases the pseudo-two-fold axis is vertical in the plane of the paper. \u003cbold\u003ec\u003c/bold\u003e) View of the interface between monomer A (colored as in in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0045847-g001\"\u003eFigure 1\u003c/xref\u003e) and monomer B (grey) in the closed dimer. Amino acid residues involved in cross-monomer salt bridges are labelled in one-letter code. The secondary structure elements that support them are also labelled. \u003cbold\u003ed\u003c/bold\u003e) A view of the dimers arranged as a continuous helical fiber in the crystal. The edges of a unit cell box are shown in grey color.\u003c/p\u003e",
+      "size":388653},{"doi":"info:doi/10.1371/journal.pone.0045847.g003",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 3","description":
+      "\u003ctitle\u003eCrystal packing of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e071\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Overall view of the open and \u003cbold\u003eb\u003c/bold\u003e) closed dimers found in the second crystal form. In both cases the pseudo-two-fold axis is vertical in the plane of the paper. \u003cbold\u003ec\u003c/bold\u003e) View of the interface between monomer A (colored as in in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0045847-g001\"\u003eFigure 1\u003c/xref\u003e) and monomer B (grey) in the closed dimer. Amino acid residues involved in cross-monomer salt bridges are labelled in one-letter code. The secondary structure elements that support them are also labelled. \u003cbold\u003ed\u003c/bold\u003e) A view of the dimers arranged as a continuous helical fiber in the crystal. The edges of a unit cell box are shown in grey color.\u003c/p\u003e",
+      "size":5483284},{"doi":"info:doi/10.1371/journal.pone.0045847.e072",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e072","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e073","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e073","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e074","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e074","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e075","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e075","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e076","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e076","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e077","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":2922},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e077","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1687},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e078","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e078","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e079","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e079","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.g004","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 4",
+      "description":
+      "\u003ctitle\u003eSAXS analysis of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e079\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) SAXS intensity as a function of the momentum transfer. This profile corresponds to the measurements taken at 4.7 mg/ml protein cocentration and pH 8.5. Average values are in red and the standard error in grey. \u003cbold\u003eb\u003c/bold\u003e) The Kratky plot (see text for details) corresponds to a folded protein. \u003cbold\u003ec\u003c/bold\u003e) Pair-distance distribution, \u003citalic\u003eP(r)\u003c/italic\u003e, function of the data shown in panel a). \u003cbold\u003ed\u003c/bold\u003e) Three orthogonal views of the \u003citalic\u003eab initio\u003c/italic\u003e envelope calculated imposing orthorhombic symmetry.\u003c/p\u003e",
+      "size":1288110},{"doi":"info:doi/10.1371/journal.pone.0045847.g004",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eSAXS analysis of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e079\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) SAXS intensity as a function of the momentum transfer. This profile corresponds to the measurements taken at 4.7 mg/ml protein cocentration and pH 8.5. Average values are in red and the standard error in grey. \u003cbold\u003eb\u003c/bold\u003e) The Kratky plot (see text for details) corresponds to a folded protein. \u003cbold\u003ec\u003c/bold\u003e) Pair-distance distribution, \u003citalic\u003eP(r)\u003c/italic\u003e, function of the data shown in panel a). \u003cbold\u003ed\u003c/bold\u003e) Three orthogonal views of the \u003citalic\u003eab initio\u003c/italic\u003e envelope calculated imposing orthorhombic symmetry.\u003c/p\u003e",
+      "size":88341},{"doi":"info:doi/10.1371/journal.pone.0045847.g004",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eSAXS analysis of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e079\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) SAXS intensity as a function of the momentum transfer. This profile corresponds to the measurements taken at 4.7 mg/ml protein cocentration and pH 8.5. Average values are in red and the standard error in grey. \u003cbold\u003eb\u003c/bold\u003e) The Kratky plot (see text for details) corresponds to a folded protein. \u003cbold\u003ec\u003c/bold\u003e) Pair-distance distribution, \u003citalic\u003eP(r)\u003c/italic\u003e, function of the data shown in panel a). \u003cbold\u003ed\u003c/bold\u003e) Three orthogonal views of the \u003citalic\u003eab initio\u003c/italic\u003e envelope calculated imposing orthorhombic symmetry.\u003c/p\u003e",
+      "size":19065},{"doi":"info:doi/10.1371/journal.pone.0045847.g004",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eSAXS analysis of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e079\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) SAXS intensity as a function of the momentum transfer. This profile corresponds to the measurements taken at 4.7 mg/ml protein cocentration and pH 8.5. Average values are in red and the standard error in grey. \u003cbold\u003eb\u003c/bold\u003e) The Kratky plot (see text for details) corresponds to a folded protein. \u003cbold\u003ec\u003c/bold\u003e) Pair-distance distribution, \u003citalic\u003eP(r)\u003c/italic\u003e, function of the data shown in panel a). \u003cbold\u003ed\u003c/bold\u003e) Three orthogonal views of the \u003citalic\u003eab initio\u003c/italic\u003e envelope calculated imposing orthorhombic symmetry.\u003c/p\u003e",
+      "size":127926},{"doi":"info:doi/10.1371/journal.pone.0045847.g004",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 4","description":
+      "\u003ctitle\u003eSAXS analysis of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e079\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) SAXS intensity as a function of the momentum transfer. This profile corresponds to the measurements taken at 4.7 mg/ml protein cocentration and pH 8.5. Average values are in red and the standard error in grey. \u003cbold\u003eb\u003c/bold\u003e) The Kratky plot (see text for details) corresponds to a folded protein. \u003cbold\u003ec\u003c/bold\u003e) Pair-distance distribution, \u003citalic\u003eP(r)\u003c/italic\u003e, function of the data shown in panel a). \u003cbold\u003ed\u003c/bold\u003e) Three orthogonal views of the \u003citalic\u003eab initio\u003c/italic\u003e envelope calculated imposing orthorhombic symmetry.\u003c/p\u003e",
+      "size":1087994},{"doi":"info:doi/10.1371/journal.pone.0045847.e080",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e080","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":475},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.t002","contextElement":
+      "table-wrap","extension":"TIF","contentType":"image/tiff","title":
+      "Table 2","description":
+      "\u003ctitle\u003eSummary of SAXS results.\u003c/title\u003e","size":
+      351404},{"doi":"info:doi/10.1371/journal.pone.0045847.t002",
+      "contextElement":"table-wrap","extension":"PNG_I","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eSummary of SAXS results.\u003c/title\u003e","size":
+      12895},{"doi":"info:doi/10.1371/journal.pone.0045847.t002",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eSummary of SAXS results.\u003c/title\u003e","size":
+      2574},{"doi":"info:doi/10.1371/journal.pone.0045847.t002",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eSummary of SAXS results.\u003c/title\u003e","size":
+      29222},{"doi":"info:doi/10.1371/journal.pone.0045847.t002",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eSummary of SAXS results.\u003c/title\u003e","size":
+      66581},{"doi":"info:doi/10.1371/journal.pone.0045847.e081",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e081","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":475},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e082","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e082","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":466},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e083","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e083","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":454},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e084","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":828},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e084","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":623},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e085","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1052},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e085","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":708},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e086","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e086","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e087","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e087","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e088","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e088","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e089","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e089","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e090","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e090","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e091","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e091","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e092","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e092","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e093","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e093","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e094","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e094","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e095","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e095","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e096","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e096","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":475},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e097","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e097","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e098","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e098","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e099","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e099","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e100","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e100","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e101","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e101","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e102","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e102","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e103","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e103","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e104","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e104","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e105","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e105","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e106","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e106","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e107","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e107","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e108","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e108","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e109","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e109","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e110","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e110","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e111","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e111","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e112","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e112","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e113","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e113","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e114","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e114","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e115","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e115","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e116","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e116","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":475},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e117","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e117","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e118","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e118","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e119","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e119","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e120","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e120","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e121","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e121","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e122","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e122","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e123","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e123","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":475},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e124","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e124","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e125","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e125","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e126","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e126","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":466},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e127","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":516},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e127","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":454},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e128","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":530},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e128","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e129","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e129","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e130","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e130","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e131","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e131","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e132","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":524},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e132","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":492},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e133","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e133","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e134","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e134","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":444},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e135","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e135","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e136","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e136","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.g005","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 5",
+      "description":
+      "\u003ctitle\u003eCircular dichroism spectra of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e136\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e Mean residue ellipticity spectra recorded at pH 7.2 (black lines) and pH 0 (red lines), either at 20°C (full lines) or at 80°C (dashed lines). The content in helices and strands, as determined by deconvolution of the spectra, is shown (see text for details).\u003c/p\u003e",
+      "size":321000},{"doi":"info:doi/10.1371/journal.pone.0045847.g005",
+      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eCircular dichroism spectra of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e136\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e Mean residue ellipticity spectra recorded at pH 7.2 (black lines) and pH 0 (red lines), either at 20°C (full lines) or at 80°C (dashed lines). The content in helices and strands, as determined by deconvolution of the spectra, is shown (see text for details).\u003c/p\u003e",
+      "size":40634},{"doi":"info:doi/10.1371/journal.pone.0045847.g005",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eCircular dichroism spectra of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e136\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e Mean residue ellipticity spectra recorded at pH 7.2 (black lines) and pH 0 (red lines), either at 20°C (full lines) or at 80°C (dashed lines). The content in helices and strands, as determined by deconvolution of the spectra, is shown (see text for details).\u003c/p\u003e",
+      "size":14601},{"doi":"info:doi/10.1371/journal.pone.0045847.g005",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eCircular dichroism spectra of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e136\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e Mean residue ellipticity spectra recorded at pH 7.2 (black lines) and pH 0 (red lines), either at 20°C (full lines) or at 80°C (dashed lines). The content in helices and strands, as determined by deconvolution of the spectra, is shown (see text for details).\u003c/p\u003e",
+      "size":84719},{"doi":"info:doi/10.1371/journal.pone.0045847.g005",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 5","description":
+      "\u003ctitle\u003eCircular dichroism spectra of ATV\u003c/title\u003e\u003cp\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e136\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e Mean residue ellipticity spectra recorded at pH 7.2 (black lines) and pH 0 (red lines), either at 20°C (full lines) or at 80°C (dashed lines). The content in helices and strands, as determined by deconvolution of the spectra, is shown (see text for details).\u003c/p\u003e",
+      "size":128034},{"doi":"info:doi/10.1371/journal.pone.0045847.e137",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e137","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e138","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e138","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e139","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e139","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e140","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e140","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e141","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e141","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e142","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e142","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e143","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1078},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e143","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":741},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e144","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1014},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e144","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":699},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e145","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1014},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e145","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":699},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e146","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1118},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e146","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":750},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e147","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1114},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e147","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":754},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e148","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1122},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e148","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":755},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e149","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e149","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e150","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e150","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e151","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e151","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e152","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e152","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e153","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e153","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e154","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e154","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e155","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e155","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e156","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e156","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e157","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1324},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e157","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":844},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e158","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":678},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e158","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":542},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e159","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":620},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e159","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":536},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e160","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":434},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e160","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":428},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e161","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":590},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e161","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":509},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e162","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1324},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e162","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":844},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e163","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1324},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e163","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":844},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e164","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":518},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e164","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e165","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":500},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e165","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e166","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":2416},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e166","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1412},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e167","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":732},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e167","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":584},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e168","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":518},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e168","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e169","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e169","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e170","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":616},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e170","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":512},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e171","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e171","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e172","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e172","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e173","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1382},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e173","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":894},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e174","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":518},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e174","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e175","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":500},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e175","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e176","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":500},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e176","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":462},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e177","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":518},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e177","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e178","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":518},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e178","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":477},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e179","contextElement":
+      "inline-formula","extension":"TIF","contentType":"image/tiff","title":
+      "","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e179","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.s001","contextElement":
+      "supplementary-material","extension":"TIF","contentType":
+      "image/tiff","title":"Figure S1","description":
+      "\u003cp\u003e\u003cbold\u003eSAXS analysis of ATV\u003c/bold\u003e\u003cinline-formula\u003e\u003cinline-graphic xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" xlink:href\u003d\"info:doi/10.1371/journal.pone.0045847.e180\" xlink:type\u003d\"simple\"/\u003e\u003c/inline-formula\u003e\u003cbold\u003e.\u003c/bold\u003e \u003cbold\u003ea\u003c/bold\u003e) Three orthogonal views of each of the five \u003citalic\u003eab initio\u003c/italic\u003e envelopes calculated imposing (from left to right) no, binary, orthorhombic, trigonal or tetragonal symmetry. \u003cbold\u003eb\u003c/bold\u003e) Fitting of the SASREF model obtained from the open dimer using P2 symmetry into the P222 DAMMIF model. The fitting was performed by the program Chimera \u003cxref ref-type\u003d\"bibr\" rid\u003d\"pone.0045847-Pettersen1\"\u003e[55]\u003c/xref\u003e.\u003c/p\u003e\u003cp\u003e(TIF)\u003c/p\u003e",
+      "size":3696236},{"doi":"info:doi/10.1371/journal.pone.0045847.e180",
+      "contextElement":"inline-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":1100},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e180","contextElement":
+      "inline-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e001","contextElement":"",
+      "extension":"TIF","contentType":"image/tiff","title":"","description":
+      "","size":1100},{"doi":"info:doi/10.1371/journal.pone.0045847.e001",
+      "contextElement":"","extension":"PNG","contentType":"image/png",
+      "title":"","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e002","contextElement":"",
+      "extension":"TIF","contentType":"image/tiff","title":"","description":
+      "","size":1100},{"doi":"info:doi/10.1371/journal.pone.0045847.e002",
+      "contextElement":"","extension":"PNG","contentType":"image/png",
+      "title":"","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e003","contextElement":"",
+      "extension":"TIF","contentType":"image/tiff","title":"","description":
+      "","size":1100},{"doi":"info:doi/10.1371/journal.pone.0045847.e003",
+      "contextElement":"","extension":"PNG","contentType":"image/png",
+      "title":"","description":"","size":746},{"doi":
+      "info:doi/10.1371/journal.pone.0045847.e004","contextElement":"",
+      "extension":"TIF","contentType":"image/tiff","title":"","description":
+      "","size":1054},{"doi":"info:doi/10.1371/journal.pone.0045847.e004",
+      "contextElement":"","extension":"PNG","contentType":"image/png",
+      "title":"","description":"","size":731}],"citedArticles":[{"key":"1",
+      "year":1989,"displayYear":"1989","volumeNumber":340,"volume":"340",
+      "title":"High abundance of viruses found in aquatic environments",
+      "pages":"467-468","eLocationID":"467","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "O Bergh","givenNames":"O","surnames":"Bergh","suffix":""},{
+          "fullName":"KY Borsheim","givenNames":"KY","surnames":"Borsheim",
+          "suffix":""},{"fullName":"G Bratbak","givenNames":"G","surnames":
+          "Bratbak","suffix":""},{"fullName":"M Heldal","givenNames":"M",
+          "surnames":"Heldal","suffix":""}],"editors":[]},{"key":"2","year":
+      2007,"displayYear":"2007","volumeNumber":5,"volume":"5","title":
+      "Marine viruses–major players in the global ecosystem","pages":
+      "801-812","eLocationID":"801","journal":"Nat Rev Microbiol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "CA Suttle","givenNames":"CA","surnames":"Suttle","suffix":""}],
+      "editors":[]},{"key":"3","year":1974,"displayYear":"1974",
+      "volumeNumber":248,"volume":"248","title":
+      "Bacteriophage of Halobacterium salinarium","pages":"680-681",
+      "eLocationID":"680","journal":"Nature","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"T Torsvik","givenNames":"T","surnames":
+          "Torsvik","suffix":""},{"fullName":"ID Dundas","givenNames":"ID",
+          "surnames":"Dundas","suffix":""}],"editors":[]},{"key":"4","year":
+      1994,"displayYear":"1994","volumeNumber":16,"volume":"16","title":
+      "Screening for Sulfolobales, their plasmids and their viruses in Icelandic solfataras",
+      "pages":"609-628","eLocationID":"609","journal":
+      "Syst Appl Microbiol","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "W Zillig","givenNames":"W","surnames":"Zillig","suffix":""},{
+          "fullName":"A Kletzin","givenNames":"A","surnames":"Kletzin",
+          "suffix":""},{"fullName":"C Schleper","givenNames":"C","surnames":
+          "Schleper","suffix":""},{"fullName":"I Holz","givenNames":"I",
+          "surnames":"Holz","suffix":""},{"fullName":"D Janekovic",
+          "givenNames":"D","surnames":"Janekovic","suffix":""}],"editors":[]},
+    {"key":"5","year":2012,"displayYear":"2012","volumeNumber":109,"volume":
+      "109","title":
+      "Archaeal virus with exceptional virion architecture and the largest single-stranded DNA genome",
+      "pages":"13386-13391","eLocationID":"13386","journal":
+      "Proc Natl Acad Sci USA","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "T Mochizuki","givenNames":"T","surnames":"Mochizuki","suffix":
+          ""},{"fullName":"M Krupovic","givenNames":"M","surnames":
+          "Krupovic","suffix":""},{"fullName":"G Pehau-Arnaudet",
+          "givenNames":"G","surnames":"Pehau-Arnaudet","suffix":""},{
+          "fullName":"Y Sako","givenNames":"Y","surnames":"Sako","suffix":
+          ""},{"fullName":"P Forterre","givenNames":"P","surnames":
+          "Forterre","suffix":""}],"editors":[]},{"key":"6","year":2006,
+      "displayYear":"2006","volumeNumber":117,"volume":"117","title":
+      "Evolutionary genomics of archaeal viruses: unique viral genomes in the third domain of life",
+      "pages":"52-67","eLocationID":"52","journal":"Virus Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Prangishvili","givenNames":"D","surnames":"Prangishvili",
+          "suffix":""},{"fullName":"RA Garrett","givenNames":"RA","surnames":
+          "Garrett","suffix":""},{"fullName":"EV Koonin","givenNames":"EV",
+          "surnames":"Koonin","suffix":""}],"editors":[]},{"key":"7","year":
+      2012,"displayYear":"2012","volumeNumber":81,"volume":"81","title":
+      "Structure unifies the viral universe","pages":"795-822","eLocationID":
+      "795","journal":"Annu Rev Biochem","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"NGA Abrescia","givenNames":"NGA","surnames":
+          "Abrescia","suffix":""},{"fullName":"DH Bamford","givenNames":
+          "DH","surnames":"Bamford","suffix":""},{"fullName":"JM Grimes",
+          "givenNames":"JM","surnames":"Grimes","suffix":""},{"fullName":
+          "DI Stuart","givenNames":"DI","surnames":"Stuart","suffix":""}],
+      "editors":[]},{"key":"8","year":2012,"displayYear":"2012",
+      "volumeNumber":157,"volume":"157","title":
+      "A new proposed taxon for double-stranded DNA viruses, the order “Ligamenvirales”",
+      "pages":"791-795","eLocationID":"791","journal":"Arch Virol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Prangishvili","givenNames":"D","surnames":"Prangishvili",
+          "suffix":""},{"fullName":"M Krupovic","givenNames":"M","surnames":
+          "Krupovic","suffix":""}],"editors":[]},{"key":"9","year":2009,
+      "displayYear":"2009","volumeNumber":106,"volume":"106","title":
+      "Acidianus filamentous virus 1 coat proteins display a helical fold spanning the filamentous archaeal viruses lineage",
+      "pages":"21155-21160","eLocationID":"21155","journal":
+      "Proc Natl Acad Sci USA","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Goulet","givenNames":"A","surnames":"Goulet","suffix":""},{
+          "fullName":"S Blangy","givenNames":"S","surnames":"Blangy",
+          "suffix":""},{"fullName":"P Redder","givenNames":"P","surnames":
+          "Redder","suffix":""},{"fullName":"D Prangishvili","givenNames":
+          "D","surnames":"Prangishvili","suffix":""},{"fullName":
+          "C Felisberto-Rodrigues","givenNames":"C","surnames":
+          "Felisberto-Rodrigues","suffix":""}],"editors":[]},{"key":"10",
+      "year":2010,"displayYear":"2010","volumeNumber":66,"volume":"66",
+      "title":
+      "Getting the best out of long-wavelength X-rays: de novo chlorine/sulfur SAD phasing of a structural protein from ATV",
+      "pages":"304-308","eLocationID":"304","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"A Goulet","givenNames":"A","surnames":
+          "Goulet","suffix":""},{"fullName":"G Vestergaard","givenNames":
+          "G","surnames":"Vestergaard","suffix":""},{"fullName":
+          "C Felisberto-Rodrigues","givenNames":"C","surnames":
+          "Felisberto-Rodrigues","suffix":""},{"fullName":"V Campanacci",
+          "givenNames":"V","surnames":"Campanacci","suffix":""},{"fullName":
+          "RA Garrett","givenNames":"RA","surnames":"Garrett","suffix":""}],
+      "editors":[]},{"key":"11","year":2010,"displayYear":"2010",
+      "volumeNumber":84,"volume":"84","title":
+      "Orf157 from the archaeal virus Acidianus filamentous virus 1 defines a new class of nuclease",
+      "pages":"5025-5031","eLocationID":"5025","journal":"J Virol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Goulet","givenNames":"A","surnames":"Goulet","suffix":""},{
+          "fullName":"M Pina","givenNames":"M","surnames":"Pina","suffix":
+          ""},{"fullName":"P Redder","givenNames":"P","surnames":"Redder",
+          "suffix":""},{"fullName":"D Prangishvili","givenNames":"D",
+          "surnames":"Prangishvili","suffix":""},{"fullName":"L Vera",
+          "givenNames":"L","surnames":"Vera","suffix":""}],"editors":[]},{
+      "key":"12","year":2009,"displayYear":"2009","volumeNumber":76,"volume":
+      "76","title":
+      "The crystal structure of ORF14 from Sulfolobus islandicus filamentous virus",
+      "pages":"1020-1022","eLocationID":"1020","journal":"Proteins",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Goulet","givenNames":"A","surnames":"Goulet","suffix":""},{
+          "fullName":"S Spinelli","givenNames":"S","surnames":"Spinelli",
+          "suffix":""},{"fullName":"S Blangy","givenNames":"S","surnames":
+          "Blangy","suffix":""},{"fullName":"H van Tilbeurgh","givenNames":
+          "H","surnames":"van Tilbeurgh","suffix":""},{"fullName":
+          "N Leulliot","givenNames":"N","surnames":"Leulliot","suffix":""}],
+      "editors":[]},{"key":"13","year":2009,"displayYear":"2009",
+      "volumeNumber":18,"volume":"18","title":
+      "The thermo- and acidostable ORF-99 from the archaeal virus AFV1",
+      "pages":"1316-1320","eLocationID":"1316","journal":"Protein Sci",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Goulet","givenNames":"A","surnames":"Goulet","suffix":""},{
+          "fullName":"S Spinelli","givenNames":"S","surnames":"Spinelli",
+          "suffix":""},{"fullName":"S Blangy","givenNames":"S","surnames":
+          "Blangy","suffix":""},{"fullName":"H van Tilbeurgh","givenNames":
+          "H","surnames":"van Tilbeurgh","suffix":""},{"fullName":
+          "N Leulliot","givenNames":"N","surnames":"Leulliot","suffix":""}],
+      "editors":[]},{"key":"14","year":2005,"displayYear":"2005",
+      "volumeNumber":436,"volume":"436","title":
+      "Independent virus development outside a host","pages":"1101-1102",
+      "eLocationID":"1101","journal":"Nature","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"M Häring","givenNames":"M","surnames":
+          "Häring","suffix":""},{"fullName":"G Vestergaard","givenNames":
+          "G","surnames":"Vestergaard","suffix":""},{"fullName":"R Rachel",
+          "givenNames":"R","surnames":"Rachel","suffix":""},{"fullName":
+          "L Chen","givenNames":"L","surnames":"Chen","suffix":""},{
+          "fullName":"RA Garrett","givenNames":"RA","surnames":"Garrett",
+          "suffix":""}],"editors":[]},{"key":"15","year":2006,"displayYear":
+      "2006","volumeNumber":359,"volume":"359","title":
+      "Structural and genomic properties of the hyperthermophilic archaeal virus ATV with an extracellular stage of the reproductive cycle",
+      "pages":"1203-1216","eLocationID":"1203","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Prangishvili","givenNames":"D","surnames":"Prangishvili",
+          "suffix":""},{"fullName":"G Vestergaard","givenNames":"G",
+          "surnames":"Vestergaard","suffix":""},{"fullName":"M Häring",
+          "givenNames":"M","surnames":"Häring","suffix":""},{"fullName":
+          "R Aramayo","givenNames":"R","surnames":"Aramayo","suffix":""},{
+          "fullName":"T Basta","givenNames":"T","surnames":"Basta","suffix":
+          ""}],"editors":[]},{"key":"16","year":2005,"displayYear":"2005",
+      "volumeNumber":79,"volume":"79","title":
+      "Sulfolobus tengchongensis spindle-shaped virus STSV1: virus-host interactions and genomic features",
+      "pages":"8677-8686","eLocationID":"8677","journal":"J Virol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "X Xiang","givenNames":"X","surnames":"Xiang","suffix":""},{
+          "fullName":"L Chen","givenNames":"L","surnames":"Chen","suffix":
+          ""},{"fullName":"X Huang","givenNames":"X","surnames":"Huang",
+          "suffix":""},{"fullName":"Y Luo","givenNames":"Y","surnames":
+          "Luo","suffix":""},{"fullName":"Q She","givenNames":"Q","surnames":
+          "She","suffix":""}],"editors":[]},{"key":"17","year":2010,
+      "displayYear":"2010","volumeNumber":38,"volume":"38","title":
+      "Protein annotation and modelling servers at University College London",
+      "pages":"W563-568","eLocationID":"W563","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DWA Buchan","givenNames":"DWA","surnames":"Buchan","suffix":""},{
+          "fullName":"SM Ward","givenNames":"SM","surnames":"Ward","suffix":
+          ""},{"fullName":"AE Lobley","givenNames":"AE","surnames":
+          "Lobley","suffix":""},{"fullName":"TCO Nugent","givenNames":
+          "TCO","surnames":"Nugent","suffix":""},{"fullName":"K Bryson",
+          "givenNames":"K","surnames":"Bryson","suffix":""}],"editors":[]},{
+      "key":"18","year":2003,"displayYear":"2003","volumeNumber":326,
+      "volume":"326","title":
+      "Relibase: design and development of a database for comprehensive analysis of protein-ligand interactions",
+      "pages":"607-620","eLocationID":"607","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Hendlich","givenNames":"M","surnames":"Hendlich","suffix":""},{
+          "fullName":"A Bergner","givenNames":"A","surnames":"Bergner",
+          "suffix":""},{"fullName":"J Günther","givenNames":"J","surnames":
+          "Günther","suffix":""},{"fullName":"G Klebe","givenNames":"G",
+          "surnames":"Klebe","suffix":""}],"editors":[]},{"key":"19","year":
+      1997,"displayYear":"1997","volumeNumber":15,"volume":"15","title":
+      "LIGSITE: automatic and efficient detection of potential small molecule-binding sites in proteins",
+      "pages":"359-363, 389","eLocationID":"359","journal":
+      "J Mol Graph Model","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Hendlich","givenNames":"M","surnames":"Hendlich","suffix":""},{
+          "fullName":"F Rippmann","givenNames":"F","surnames":"Rippmann",
+          "suffix":""},{"fullName":"G Barnickel","givenNames":"G","surnames":
+          "Barnickel","suffix":""}],"editors":[]},{"key":"20","year":2003,
+      "displayYear":"2003","volumeNumber":52,"volume":"52","title":
+      "A new bioinformatic approach to detect common 3D sites in protein structures",
+      "pages":"137-145","eLocationID":"137","journal":"Proteins",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "M Jambon","givenNames":"M","surnames":"Jambon","suffix":""},{
+          "fullName":"A Imberty","givenNames":"A","surnames":"Imberty",
+          "suffix":""},{"fullName":"G Deléage","givenNames":"G","surnames":
+          "Deléage","suffix":""},{"fullName":"C Geourjon","givenNames":"C",
+          "surnames":"Geourjon","suffix":""}],"editors":[]},{"key":"21",
+      "year":2001,"displayYear":"2001","volumeNumber":334,"volume":"334",
+      "title":
+      "Structural basis of thermostability in hyperthermophilic proteins, or “there\u0027s more than one way to skin a cat”",
+      "pages":"469-478","eLocationID":"469","journal":"Methods Enzymol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "GA Petsko","givenNames":"GA","surnames":"Petsko","suffix":""}],
+      "editors":[]},{"key":"22","year":2002,"displayYear":"2002",
+      "volumeNumber":83,"volume":"83","title":
+      "Relationship between ion pair geometries and electrostatic strengths in proteins",
+      "pages":"1595-1612","eLocationID":"1595","journal":"Biophys J",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Kumar","givenNames":"S","surnames":"Kumar","suffix":""},{
+          "fullName":"R Nussinov","givenNames":"R","surnames":"Nussinov",
+          "suffix":""}],"editors":[]},{"key":"23","year":2010,"displayYear":
+      "2010","volumeNumber":38,"volume":"38","title":
+      "Dali server: conservation mapping in 3D","pages":"W545-549",
+      "eLocationID":"W545","journal":"Nucleic Acids Res",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Holm","givenNames":"L","surnames":"Holm","suffix":""},{
+          "fullName":"P Rosenström","givenNames":"P","surnames":
+          "Rosenström","suffix":""}],"editors":[]},{"key":"24","year":2004,
+      "displayYear":"2004","volumeNumber":60,"volume":"60","title":
+      "Secondary-structure matching (SSM), a new tool for fast protein structure alignment in three dimensions",
+      "pages":"2256-2268","eLocationID":"2256","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"E Krissinel","givenNames":"E","surnames":
+          "Krissinel","suffix":""},{"fullName":"K Henrick","givenNames":
+          "K","surnames":"Henrick","suffix":""}],"editors":[]},{"key":"25",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"26","year":1996,"displayYear":"1996","volumeNumber":10,"volume":
+      "10","title":
+      "Three-dimensional hydrogen-bond geometry and probability information from a crystal survey",
+      "pages":"607-622","eLocationID":"607","journal":
+      "J Comput Aided Mol Des","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JE Mills","givenNames":"JE","surnames":"Mills","suffix":""},{
+          "fullName":"PM Dean","givenNames":"PM","surnames":"Dean","suffix":
+          ""}],"editors":[]},{"key":"27","year":1993,"displayYear":"1993",
+      "volumeNumber":234,"volume":"234","title":
+      "Shape complementarity at protein/protein interfaces","pages":
+      "946-950","eLocationID":"946","journal":"J Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MC Lawrence","givenNames":"MC","surnames":"Lawrence","suffix":
+          ""},{"fullName":"PM Colman","givenNames":"PM","surnames":
+          "Colman","suffix":""}],"editors":[]},{"key":"28","year":2012,
+      "displayYear":"2012","volumeNumber":45,"volume":"45","title":
+      "New developments in the ATSAS program package for small-angle scattering data analysis",
+      "pages":"342-350","eLocationID":"342","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MV Petoukhov","givenNames":"MV","surnames":"Petoukhov","suffix":
+          ""},{"fullName":"D Franke","givenNames":"D","surnames":"Franke",
+          "suffix":""},{"fullName":"AV Shkumatov","givenNames":"AV",
+          "surnames":"Shkumatov","suffix":""},{"fullName":"G Tria",
+          "givenNames":"G","surnames":"Tria","suffix":""},{"fullName":
+          "AG Kikhney","givenNames":"AG","surnames":"Kikhney","suffix":""}],
+      "editors":[]},{"key":"29","year":2005,"displayYear":"2005",
+      "volumeNumber":89,"volume":"89","title":
+      "Global rigid body modeling of macromolecular complexes against small-angle scattering data",
+      "pages":"1237-1250","eLocationID":"1237","journal":"Biophys J",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MV Petoukhov","givenNames":"MV","surnames":"Petoukhov","suffix":
+          ""},{"fullName":"DI Svergun","givenNames":"DI","surnames":
+          "Svergun","suffix":""}],"editors":[]},{"key":"30","year":2005,
+      "displayYear":"2005","volumeNumber":60,"volume":"60","title":
+      "Geometry-based exible and symmetric protein docking","pages":
+      "224-231","eLocationID":"224","journal":"Proteins",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Schneidman-Duhovny","givenNames":"D","surnames":
+          "Schneidman-Duhovny","suffix":""},{"fullName":"Y Inbar",
+          "givenNames":"Y","surnames":"Inbar","suffix":""},{"fullName":
+          "R Nussinov","givenNames":"R","surnames":"Nussinov","suffix":""},{
+          "fullName":"HJ Wolfson","givenNames":"HJ","surnames":"Wolfson",
+          "suffix":""}],"editors":[]},{"key":"31","year":1995,"displayYear":
+      "1995","volumeNumber":28,"volume":"28","title":
+      "CRYSOL – a program to evaluate X-ray solution scattering of biological macromolecules from atomic coordinates",
+      "pages":"768-773","eLocationID":"768","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Svergun","givenNames":"D","surnames":"Svergun","suffix":""},{
+          "fullName":"C Barberato","givenNames":"C","surnames":"Barberato",
+          "suffix":""},{"fullName":"MHJ Koch","givenNames":"MHJ","surnames":
+          "Koch","suffix":""}],"editors":[]},{"key":"32","year":1986,
+      "displayYear":"1986","volumeNumber":155,"volume":"155","title":
+      "Analysis of protein circular dichroism spectra for secondary structure using a simple matrix multiplication",
+      "pages":"155-167","eLocationID":"155","journal":"Anal Biochem",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "LA Compton","givenNames":"LA","surnames":"Compton","suffix":""},{
+          "fullName":"WC Johnson Jr","givenNames":"WC","surnames":
+          "Johnson","suffix":"Jr"}],"editors":[]},{"key":"33","year":2008,
+      "displayYear":"2008","volumeNumber":89,"volume":"89","title":
+      "Protein secondary structure analyses from circular dichroism spectroscopy: methods and reference databases",
+      "pages":"392-400","eLocationID":"392","journal":"Biopolymers",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "L Whitmore","givenNames":"L","surnames":"Whitmore","suffix":""},{
+          "fullName":"BA Wallace","givenNames":"BA","surnames":"Wallace",
+          "suffix":""}],"editors":[]},{"key":"34","year":2011,"displayYear":
+      "2011","volumeNumber":85,"volume":"85","title":
+      "Chaperone role for proteins P618 and P892 in the extracellular tail development of Acidianus two-tailed virus",
+      "pages":"4812-4821","eLocationID":"4812","journal":"J Virol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "U Scheele","givenNames":"U","surnames":"Scheele","suffix":""},{
+          "fullName":"S Erdmann","givenNames":"S","surnames":"Erdmann",
+          "suffix":""},{"fullName":"EJ Ungewickell","givenNames":"EJ",
+          "surnames":"Ungewickell","suffix":""},{"fullName":
+          "C Felisberto-Rodrigues","givenNames":"C","surnames":
+          "Felisberto-Rodrigues","suffix":""},{"fullName":
+          "M Ortiz-Lombardía","givenNames":"M","surnames":
+          "Ortiz-Lombardía","suffix":""}],"editors":[]},{"key":"35","year":
+      2005,"displayYear":"2005","volumeNumber":41,"volume":"41","title":
+      "Protein production by auto-induction in high density shaking cultures",
+      "pages":"207-234","eLocationID":"207","journal":"Protein Expr Purif",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "FW Studier","givenNames":"FW","surnames":"Studier","suffix":""}],
+      "editors":[]},{"key":"36","year":2003,"displayYear":"2003",
+      "volumeNumber":36,"volume":"36","title":
+      "PRIMUS: a Windows PC-based system for small-angle scattering data analysis",
+      "pages":"1277-1282","eLocationID":"1277","journal":
+      "J Appl Crystallogr","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PV Konarev","givenNames":"PV","surnames":"Konarev","suffix":""},{
+          "fullName":"VV Volkov","givenNames":"VV","surnames":"Volkov",
+          "suffix":""},{"fullName":"AV Sokolova","givenNames":"AV",
+          "surnames":"Sokolova","suffix":""},{"fullName":"MHJ Koch",
+          "givenNames":"MHJ","surnames":"Koch","suffix":""},{"fullName":
+          "DI Svergun","givenNames":"DI","surnames":"Svergun","suffix":""}],
+      "editors":[]},{"key":"37","year":2006,"displayYear":"2006",
+      "volumeNumber":39,"volume":"39","title":
+      "ATSAS 2.1, a program package for small-angle scattering data analysis",
+      "pages":"277-286","eLocationID":"277","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "PV Konarev","givenNames":"PV","surnames":"Konarev","suffix":""},{
+          "fullName":"MV Petoukhov","givenNames":"MV","surnames":
+          "Petoukhov","suffix":""},{"fullName":"VV Volkov","givenNames":
+          "VV","surnames":"Volkov","suffix":""},{"fullName":"DI Svergun",
+          "givenNames":"DI","surnames":"Svergun","suffix":""}],"editors":[]},
+    {"key":"38","year":1939,"displayYear":"1939","volumeNumber":12,"volume":
+      "12","title":
+      "La diffraction des rayons x aux très pétits angles: application à l\u0027etude de phénomènes ultramicroscopiques",
+      "pages":"161-237","eLocationID":"161","journal":"Ann Phys (Paris)",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Guinier","givenNames":"A","surnames":"Guinier","suffix":""}],
+      "editors":[]},{"key":"39","year":1992,"displayYear":"1992",
+      "volumeNumber":25,"volume":"25","title":
+      "Determination of the regularization parameter in indirect-transform methods using perceptual criteria",
+      "pages":"495-503","eLocationID":"495","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "DI Svergun","givenNames":"DI","surnames":"Svergun","suffix":""}],
+      "editors":[]},{"key":"40","year":2009,"displayYear":"2009",
+      "volumeNumber":42,"volume":"42","title":
+      "DAMMIF, a program for rapid ab-initio shape determination in small-angle scattering",
+      "pages":"342-346","eLocationID":"342","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D Franke","givenNames":"D","surnames":"Franke","suffix":""},{
+          "fullName":"DI Svergun","givenNames":"DI","surnames":"Svergun",
+          "suffix":""}],"editors":[]},{"key":"41","year":2003,"displayYear":
+      "2003","volumeNumber":36,"volume":"36","title":
+      "Uniqueness of ab initio shape determination in small-angle scattering",
+      "pages":"860-864","eLocationID":"860","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "VV Volkov","givenNames":"VV","surnames":"Volkov","suffix":""},{
+          "fullName":"DI Svergun","givenNames":"DI","surnames":"Svergun",
+          "suffix":""}],"editors":[]},{"key":"42","year":2001,"displayYear":
+      "2001","volumeNumber":34,"volume":"34","title":
+      "Automated matching of high- and low-resolution structural models",
+      "pages":"33-41","eLocationID":"33","journal":"J Appl Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "MB Kozin","givenNames":"MB","surnames":"Kozin","suffix":""},{
+          "fullName":"DI Svergun","givenNames":"DI","surnames":"Svergun",
+          "suffix":""}],"editors":[]},{"key":"43","year":2010,"displayYear":
+      "2010","volumeNumber":2,"volume":"2","title":
+      "Using Situs for the integration of multi-resolution structures",
+      "pages":"21-27","eLocationID":"21","journal":"Biophys Rev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "W Wriggers","givenNames":"W","surnames":"Wriggers","suffix":""}],
+      "editors":[]},{"key":"44","year":2010,"displayYear":"2010",
+      "volumeNumber":66,"volume":"66","title":"XDS","pages":"125-132",
+      "eLocationID":"125","journal":"Acta Crystallogr D Biol Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "W Kabsch","givenNames":"W","surnames":"Kabsch","suffix":""}],
+      "editors":[]},{"key":"45","year":2011,"displayYear":"2011",
+      "volumeNumber":67,"volume":"67","title":
+      "An introduction to data reduction: space-group determination, scaling and intensity statistics",
+      "pages":"282-292","eLocationID":"282","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"PR Evans","givenNames":"PR","surnames":
+          "Evans","suffix":""}],"editors":[]},{"key":"46","year":2007,
+      "displayYear":"2007","volumeNumber":364,"volume":"364","title":
+      "Automated structure solution with autoSHARP","pages":"215-230",
+      "eLocationID":"215","journal":"Methods Mol Biol",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "C Vonrhein","givenNames":"C","surnames":"Vonrhein","suffix":""},{
+          "fullName":"E Blanc","givenNames":"E","surnames":"Blanc","suffix":
+          ""},{"fullName":"P Roversi","givenNames":"P","surnames":
+          "Roversi","suffix":""},{"fullName":"G Bricogne","givenNames":"G",
+          "surnames":"Bricogne","suffix":""}],"editors":[]},{"key":"47",
+      "year":2010,"displayYear":"2010","volumeNumber":66,"volume":"66",
+      "title":
+      "Experimental phasing with shelxc/d/e: combining chain tracing with density modification",
+      "pages":"479-485","eLocationID":"479","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"GM Sheldrick","givenNames":"GM","surnames":
+          "Sheldrick","suffix":""}],"editors":[]},{"key":"48","year":2006,
+      "displayYear":"2006","volumeNumber":62,"volume":"62","title":
+      "The buccaneer software for automated model building. 1. tracing protein chains",
+      "pages":"1002-1011","eLocationID":"1002","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"K Cowtan","givenNames":"K","surnames":
+          "Cowtan","suffix":""}],"editors":[]},{"key":"49","year":2010,
+      "displayYear":"2010","volumeNumber":66,"volume":"66","title":
+      "Features and development of Coot","pages":"486-501","eLocationID":
+      "486","journal":"Acta Crystallogr D Biol Crystallogr",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "P Emsley","givenNames":"P","surnames":"Emsley","suffix":""},{
+          "fullName":"B Lohkamp","givenNames":"B","surnames":"Lohkamp",
+          "suffix":""},{"fullName":"WG Scott","givenNames":"WG","surnames":
+          "Scott","suffix":""},{"fullName":"K Cowtan","givenNames":"K",
+          "surnames":"Cowtan","suffix":""}],"editors":[]},{"key":"50",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
+    {"key":"51","year":2011,"displayYear":"2011","volumeNumber":67,"volume":
+      "67","title":
+      "Refmac5 for the refinement of macromolecular crystal structures",
+      "pages":"355-367","eLocationID":"355","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"GN Murshudov","givenNames":"GN","surnames":
+          "Murshudov","suffix":""},{"fullName":"P Skubák","givenNames":"P",
+          "surnames":"Skubák","suffix":""},{"fullName":"AA Lebedev",
+          "givenNames":"AA","surnames":"Lebedev","suffix":""},{"fullName":
+          "NS Pannu","givenNames":"NS","surnames":"Pannu","suffix":""},{
+          "fullName":"RA Steiner","givenNames":"RA","surnames":"Steiner",
+          "suffix":""}],"editors":[]},{"key":"52","year":2007,"displayYear":
+      "2007","volumeNumber":40,"volume":"40","title":
+      "Phaser crystallographic software","pages":"658-674","eLocationID":
+      "658","journal":"J Appl Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"AJ McCoy","givenNames":"AJ","surnames":
+          "McCoy","suffix":""},{"fullName":"RW Grosse-Kunstleve",
+          "givenNames":"RW","surnames":"Grosse-Kunstleve","suffix":""},{
+          "fullName":"PD Adams","givenNames":"PD","surnames":"Adams",
+          "suffix":""},{"fullName":"MD Winn","givenNames":"MD","surnames":
+          "Winn","suffix":""},{"fullName":"LC Storoni","givenNames":"LC",
+          "surnames":"Storoni","suffix":""}],"editors":[]},{"key":"53",
+      "year":2012,"displayYear":"2012","volumeNumber":68,"volume":"68",
+      "title":
+      "Exploiting structure similarity in refinement: automated NCS and target-structure restraints in BUSTER",
+      "pages":"368-380","eLocationID":"368","journal":
+      "Acta Crystallogr D Biol Crystallogr","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"OS Smart","givenNames":"OS","surnames":
+          "Smart","suffix":""},{"fullName":"TO Womack","givenNames":"TO",
+          "surnames":"Womack","suffix":""},{"fullName":"C Flensburg",
+          "givenNames":"C","surnames":"Flensburg","suffix":""},{"fullName":
+          "P Keller","givenNames":"P","surnames":"Keller","suffix":""},{
+          "fullName":"W Paciorek","givenNames":"W","surnames":"Paciorek",
+          "suffix":""}],"editors":[]},{"key":"54","year":1983,"displayYear":
+      "1983","volumeNumber":22,"volume":"22","title":
+      "Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features",
+      "pages":"2577-2637","eLocationID":"2577","journal":"Biopolymers",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "W Kabsch","givenNames":"W","surnames":"Kabsch","suffix":""},{
+          "fullName":"C Sander","givenNames":"C","surnames":"Sander",
+          "suffix":""}],"editors":[]},{"key":"55","year":2004,"displayYear":
+      "2004","volumeNumber":25,"volume":"25","title":
+      "UCSF Chimera – a visualization system for exploratory research and analysis",
+      "pages":"1605-1612","eLocationID":"1605","journal":"J Comput Chem",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "EF Pettersen","givenNames":"EF","surnames":"Pettersen","suffix":
+          ""},{"fullName":"TD Goddard","givenNames":"TD","surnames":
+          "Goddard","suffix":""},{"fullName":"CC Huang","givenNames":"CC",
+          "surnames":"Huang","suffix":""},{"fullName":"GS Couch",
+          "givenNames":"GS","surnames":"Couch","suffix":""},{"fullName":
+          "DM Greenblatt","givenNames":"DM","surnames":"Greenblatt","suffix":
+          ""}],"editors":[]},{"key":"56","year":2001,"displayYear":"2001",
+      "volumeNumber":98,"volume":"98","title":
+      "Electrostatics of nanosystems: application to microtubules and the ribosome",
+      "pages":"10037-10041","eLocationID":"10037","journal":
+      "Proc Natl Acad Sci USA","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "NA Baker","givenNames":"NA","surnames":"Baker","suffix":""},{
+          "fullName":"D Sept","givenNames":"D","surnames":"Sept","suffix":
+          ""},{"fullName":"S Joseph","givenNames":"S","surnames":"Joseph",
+          "suffix":""},{"fullName":"MJ Holst","givenNames":"MJ","surnames":
+          "Holst","suffix":""},{"fullName":"JA McCammon","givenNames":"JA",
+          "surnames":"McCammon","suffix":""}],"editors":[]},{"key":"57",
+      "year":2007,"displayYear":"2007","volumeNumber":35,"volume":"35",
+      "title":
+      "Molprobity: all-atom contacts and structure validation for proteins and nucleic acids",
+      "pages":"W375-383","eLocationID":"W375","journal":
+      "Nucleic Acids Res","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "IW Davis","givenNames":"IW","surnames":"Davis","suffix":""},{
+          "fullName":"A Leaver-Fay","givenNames":"A","surnames":
+          "Leaver-Fay","suffix":""},{"fullName":"VB Chen","givenNames":
+          "VB","surnames":"Chen","suffix":""},{"fullName":"JN Block",
+          "givenNames":"JN","surnames":"Block","suffix":""},{"fullName":
+          "GJ Kapral","givenNames":"GJ","surnames":"Kapral","suffix":""}],
+      "editors":[]}],"relatedArticles":[],"authors":[{"fullName":
+      "Catarina Felisberto-Rodrigues","givenNames":"Catarina","surnames":
+      "Felisberto-Rodrigues","suffix":""},{"fullName":"Stéphanie Blangy",
+      "givenNames":"Stéphanie","surnames":"Blangy","suffix":""},{"fullName":
+      "Adeline Goulet","givenNames":"Adeline","surnames":"Goulet","suffix":
+      ""},{"fullName":"Gisle Vestergaard","givenNames":"Gisle","surnames":
+      "Vestergaard","suffix":""},{"fullName":"Christian Cambillau",
+      "givenNames":"Christian","surnames":"Cambillau","suffix":""},{
+      "fullName":"Roger A. Garrett","givenNames":"Roger A.","surnames":
+      "Garrett","suffix":""},{"fullName":"Miguel Ortiz-Lombardía",
+      "givenNames":"Miguel","surnames":"Ortiz-Lombardía","suffix":""}],
+  "editors":[{"fullName":"Narayanaswamy Srinivasan","givenNames":
+      "Narayanaswamy","surnames":"Srinivasan","suffix":""}],"journals":[{
+      "eIssn":"1932-6203"}]}

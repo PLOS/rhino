@@ -35,13 +35,15 @@ import java.util.regex.Pattern;
 /**
  * An identifier for one file that corresponds to an asset. It is uniquely identified by a DOI and file extension.
  */
-public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<AssetFileIdentity> {
+public class AssetFileIdentity extends DoiBasedIdentity {
 
   private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
 
   private static final String TIFF_EXTENSION = "tif";
 
   private static final String PDF_EXTENSION = "pdf";
+
+  private static final String MP4_EXTENSION = "mp4";
 
   private final String extension;
 
@@ -126,15 +128,20 @@ public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<As
     if (PDF_EXTENSION.equalsIgnoreCase(getFileExtension())) {
       return new MediaType("application", "pdf");
     }
+    if (MP4_EXTENSION.equalsIgnoreCase(getFileExtension())) {
+      return new MediaType("video", "mp4");
+    }
     String mimeType = MIMETYPES.getContentType(getFilePath());
     return MediaType.parseMediaType(mimeType);
   }
 
-  private static final Pattern DOI_TO_CONTEXT_ELEMENT_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.?([tg]\\d+)?");
+  private static final Pattern DOI_TO_CONTEXT_ELEMENT_RE
+      = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.?([tgs]\\d+)?");
 
   /**
-   * @return the contextElement property associated with this asset file.  This has only three values: "fig",
-   *         "table-wrap", or null, for figures, tables, or everything else.
+   * @return the contextElement property associated with this asset file.  This has only four values: "fig",
+   *         "table-wrap", "supplementary-material", or null, for figures, tables, supplemental material, or everything
+   *         else.
    */
   public String getContextElement() {
     Matcher m = DOI_TO_CONTEXT_ELEMENT_RE.matcher(getIdentifier());
@@ -151,6 +158,9 @@ public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<As
 
       case 't':
         return "table-wrap";
+
+      case 's':
+        return "supplementary-material";
 
       default:
         return null;
@@ -219,8 +229,4 @@ public class AssetFileIdentity extends DoiBasedIdentity implements Comparable<As
     return result;
   }
 
-  @Override
-  public int compareTo(AssetFileIdentity that) {
-    return (getIdentifier() + extension).compareTo(that.getIdentifier() + that.extension);
-  }
 }

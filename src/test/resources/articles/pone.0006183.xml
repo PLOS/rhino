@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PONE-RA-09329R2</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0006183</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Neuroscience/Cognitive Neuroscience</subject><subject>Neuroscience/Sensory Systems</subject><subject>Neuroscience/Experimental Psychology</subject><subject>Neuroscience/Natural and Synthetic Vision</subject></subj-group></article-categories><title-group><article-title>Dissociable Perceptual Effects of Visual Adaptation</article-title><alt-title alt-title-type="running-head">Dissociable Adaptation Effects</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Müller</surname><given-names>Kai-Markus</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Schillinger</surname><given-names>Frieder</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Do</surname><given-names>David H.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Leopold</surname><given-names>David A.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Unit on Cognitive Neurophysiology and Imaging, Laboratory of Neuropsychology, National Institute of Mental Health, Bethesda, Maryland, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>International Max-Planck Research School, Tübingen, Germany</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Department of Psychology, University of Tübingen, Tübingen, Germany</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Johns Hopkins University School of Medicine, Baltimore, Maryland, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Greenlee</surname><given-names>Mark W.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of Regensburg, Germany</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">leopoldd@mail.nih.gov</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: KMM DAL. Performed the experiments: KMM FS. Analyzed the data: KMM. Contributed reagents/materials/analysis tools: FS DHD. Wrote the paper: KMM DAL.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><year>2009</year></pub-date><pub-date pub-type="epub"><day>10</day><month>7</month><year>2009</year></pub-date><volume>4</volume><issue>7</issue><elocation-id>e6183</elocation-id><history>
+<date date-type="received"><day>20</day><month>3</month><year>2009</year></date>
+<date date-type="accepted"><day>11</day><month>6</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Public Domain declaration which stipulates that, once placed in the public domain, this work may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.</license-p></license></permissions><abstract>
+<p>Neurons in the visual cortex are responsive to the presentation of oriented and curved line segments, which are thought to act as primitives for the visual processing of shapes and objects. Prolonged adaptation to such stimuli gives rise to two related perceptual effects: a slow change in the appearance of the adapting stimulus (perceptual drift), and the distortion of subsequently presented test stimuli (adaptational aftereffects). Here we used a psychophysical nulling technique to dissociate and quantify these two classical observations in order to examine their underlying mechanisms and their relationship to one another. In agreement with previous work, we found that during adaptation horizontal and vertical straight lines serve as attractors for perceived orientation and curvature. However, the rate of perceptual drift for different stimuli was not predictive of the corresponding aftereffect magnitudes, indicating that the two perceptual effects are governed by distinct neural processes. Finally, the rate of perceptual drift for curved line segments did not depend on the spatial scale of the stimulus, suggesting that its mechanisms lie outside strictly retinotopic processing stages. These findings provide new evidence that the visual system relies on statistically salient intrinsic reference stimuli for the processing of visual patterns, and point to perceptual drift as an experimental window for studying the mechanisms of visual perception.</p>
+</abstract><funding-group><funding-statement>This work was supported by the Intramural Research Programs of the National Institute of Mental Health, the National Institute for Neurological Disorders and Stroke, and the National Eye Institute. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="8"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Following the prolonged inspection of a visual stimulus, a subsequently viewed stimulus sometimes appears conspicuously distorted. This phenomenon, termed an <italic>adaptational aftereffect</italic> can affect the perception of various stimulus attributes, and is an important psychophysical tool for probing how the brain encodes stimuli at many levels <xref ref-type="bibr" rid="pone.0006183-Frisby1">[1]</xref>–<xref ref-type="bibr" rid="pone.0006183-Clifford1">[3]</xref>. For instance, adapting to a tilted line causes a subsequently presented vertical line to appear tilted in the direction opposite of the adaptation line, an observation thought to tap into competing populations of orientation tuned neurons in the visual cortex <xref ref-type="bibr" rid="pone.0006183-Coltheart1">[4]</xref>–<xref ref-type="bibr" rid="pone.0006183-Liu1">[7]</xref>. Aftereffect paradigms typically involve several seconds of inspection of an adapting stimulus, followed by the brief assessment of a probe stimulus whose distortions are measured. A perceptual aftereffect therefore does not simply reflect the brain's state of adaptation, but is instead a complex interaction between the adapting stimulus, the state of adaptation, and the probe stimulus. In fact, very similar perceptual distortions often result from simultaneous, rather than sequential, presentation of the inducing (i.e. adapting) and probe stimuli (e.g. <xref ref-type="bibr" rid="pone.0006183-Wenderoth1">[8]</xref>, for a review see <xref ref-type="bibr" rid="pone.0006183-Schwartz1">[9]</xref>). These and other findings raise the question, to what extent are aftereffects determined by adaptation to the inspection stimulus, and to what extent are they a function of the relationship between the adapting and probe stimulus?</p>
+<p>Early work by the eminent psychologist J.J. Gibson, who first described the tilt and curvature aftereffects many decades ago <xref ref-type="bibr" rid="pone.0006183-Gibson1">[10]</xref>–<xref ref-type="bibr" rid="pone.0006183-Gibson3">[12]</xref>, linked aftereffects directly to the adaptation process. He first showed that, even in the absence of a probe stimulus, adaptation makes a mark on perception. Specifically, Gibson noted that during the prolonged observation of tilted lines, the line orientation would drift slowly toward the nearest cardinal (horizontal or vertical) axis. Similarly, curved line segments would subjectively become slightly straighter with time. Gibson argued that the nature of these perceptual changes revealed a framework of internal reference points, or <italic>norms</italic>, which served to guide visual processing. In the case of tilt, the relevant norms were the cardinal axes. In the case of curvature, the relevant norm was a straight line or edge. According to his view, adaptation involved a “recalibration”, or temporary shift, in the norm, changing one's subjective perception of what constitutes horizontal, vertical, or straight. Aftereffects, Gibson argued, were then a natural consequence of such recalibration, since probe stimuli would be interpreted in the context of a temporarily shifted norm.</p>
+<p>Although provocative, this hypothesis of norms failed to gain traction in subsequent decades, as it was incompatible with experimental observations. For example, it was found that the tilt aftereffect could be elicited with respect to orientations other than horizontal or vertical <xref ref-type="bibr" rid="pone.0006183-Khler1">[13]</xref>, <xref ref-type="bibr" rid="pone.0006183-Mitchell1">[14]</xref>. In contrast to aftereffects, which have been studied widely, only a few studies have attempted to understand the dynamic perceptual processes during prolonged inspection of stimuli <xref ref-type="bibr" rid="pone.0006183-Prentice1">[15]</xref>–<xref ref-type="bibr" rid="pone.0006183-Templeton1">[18]</xref>. Eventually, the value of adaptation and aftereffects for investigating visual processing was dismissed even by Gibson himself <xref ref-type="bibr" rid="pone.0006183-Gibson4">[19]</xref>.</p>
+<p>Nevertheless, in part based on Gibson's original conjectures, aftereffects have become the standard method for measuring visual adaptation. The present study questions the assumption that aftereffects and adaptation are inextricably linked by measuring each quantity independently. We investigate this issue using the same stimuli originally studied by Gibson: namely, tilted and curved line segments. For a set range of adapting stimuli, we compare aftereffect magnitude with the rate of perceptual drift during inspection, with the latter quantity measured using a novel dynamic nulling paradigm. We report that perception drifts toward particular stimulus values, and that the rate of this drift varies systematically with stimulus features. However, this drift rate, while scale-invariant, does not predict the magnitude of corresponding aftereffects, and therefore does not represent the same underlying process. Thus the present experiments, while supporting a norm-based account of stimulus processing, demonstrate that adaptation is, at least to some degree, distinct from perceptual aftereffects.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<p>Our principal aims were to quantify perceptual drift upon viewing oriented and curved stimuli, to determine whether perception was drawn by specific attractors, and to study the relationship between such drift and the more commonly studied adaptational aftereffects. The main observation is depicted schematically in <xref ref-type="fig" rid="pone-0006183-g001">Figure 1</xref>. Upon several seconds of viewing lines tilted slightly away from vertical, their apparent orientation appeared to rotate very slowly, becoming slightly more vertical over time. Similarly, prolonged viewing of curved line segments resulted in their becoming slightly straighter. These observations are consistent with the notion that certain stimulus attributes – in this case verticality and straightness – play a special role in visual analysis, perhaps serving as norms for the interpretation of incoming visual patterns. <xref ref-type="fig" rid="pone-0006183-g002">Figure 2</xref> shows the paradigm in which we applied the common psychophysical method of nulling to evaluate the strength of aftereffects for orientation and curvature. A variant of this paradigm, termed <italic>dynamic nulling</italic>, was then used to evaluate the rate of perceptual drift during the adaptation phase (see <xref ref-type="sec" rid="s4"><italic>Materials and Methods</italic></xref>).</p>
+<fig id="pone-0006183-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0006183.g001</object-id><label>Figure 1</label><caption>
+<title>Perceptual drift during prolonged adaptation to simple, unchanging visual stimuli.</title>
+<p>A. During inspection of a line tilted slightly from vertical, the line will appear to drift toward the vertical orientation. B. During inspection of a curved line, the line will appear to straighten. C. The shape of the curves is determined through a single parameter, the unit-less aspect ratio (width/height). Stimuli are shown as black on a white background, though in the actual experiments the stimuli were white on a black background.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.g001" xlink:type="simple"/></fig><fig id="pone-0006183-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0006183.g002</object-id><label>Figure 2</label><caption>
+<title>Experimental Design.</title>
+<p>The stimuli consisted of an array of 11 white dots on a black background. As subjects fixated on the center dot, a nulling procedure was implemented by means of a forced choice paradigm and an interleaved staircase procedure (see <xref ref-type="sec" rid="s4"><italic>Materials and Methods</italic></xref>). A. The tilt aftereffect was measured for 12 adaptation orientations evenly spaced from −90° to +90°, with the probe's nulling orientation changing by increments of .25° during the staircase. Subjects reported whether the probe stimulus was tilted clockwise or counterclockwise. B. The curvature aftereffect paradigm was similar, with the increments of .5% changes in aspect ratio (defining the curvature) during the staircase. Subjects reported whether the probe stimulus appeared more leftward or rightward. C. Changes in perceived orientation during prolonged adaptation were assessed using the dynamic nulling paradigm. The stimulus was slowly rotated during adaptation, with subjects required to report when it was stationary. Increments in the physical rate of rotation during the staircase procedure were in steps of .0625°/s. D. Dynamic nulling of the curved line was similar, with subjects asked whether the observed curve was curling more leftward or rightward. Increments in the rate of curling motion aspect ratio were .1%/s.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.g002" xlink:type="simple"/></fig><sec id="s2a">
+<title>Orientation</title>
+<p>We first examined the effects of adapting to line segments of different orientations, both on the aftereffect magnitude in subsequently viewed probe stimuli, as well as on the perceptual drift experienced during the adaptation period itself. The results in <xref ref-type="fig" rid="pone-0006183-g003">Fig. 3A</xref> show that stimuli oriented between 15° and 45° away from vertical were effective adaptors for generating the well-studied tilt aftereffect (2-sided t-test, p&lt;.05, not corrected). The plot, which shows the average perception of vertical across subjects, replicates many previous studies <xref ref-type="bibr" rid="pone.0006183-Clifford2">[5]</xref>, <xref ref-type="bibr" rid="pone.0006183-Gibson2">[11]</xref>, <xref ref-type="bibr" rid="pone.0006183-Wolfe1">[20]</xref>, <xref ref-type="bibr" rid="pone.0006183-Wolfe2">[21]</xref>. While some studies have, in addition, reported an indirect component of tilt adaptation, i.e. an attractive shift towards the adaptor, for large adaptation angles <xref ref-type="bibr" rid="pone.0006183-Clifford2">[5]</xref>, <xref ref-type="bibr" rid="pone.0006183-Gibson2">[11]</xref>, <xref ref-type="bibr" rid="pone.0006183-Morant1">[22]</xref>, we did not measure any such attraction using this stimulus set and paradigm (see <xref ref-type="sec" rid="s4"><italic>Materials and Methods</italic></xref> for details).</p>
+<fig id="pone-0006183-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0006183.g003</object-id><label>Figure 3</label><caption>
+<title>Aftereffect and adaptation with oriented line segments.</title>
+<p>A. The static nulling probe revealed that adaptation near ±15° led to the strongest aftereffect, in agreement with many previous studies. B. Adaptation to the dynamic nulling stimulus similarly revealed peaks ±15° from the vertical stimulus, as well as peaks at ±75°, corresponding to ±15° from the horizontal stimuli. Data points show average values over 12 subjects, the same individuals in A and B. Error bars represent standard error of the mean between subjects (s.e.m.). Data points marked by an asterisk (*) are significantly different from zero (2-sided t-test, p&lt;.05, not corrected).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.g003" xlink:type="simple"/></fig>
+<p>We next used dynamic nulling to investigate the rate of perceptual drift during the inspection period. In these trials, we applied a small, constant rotation to the adaptor stimulus to counteract, or null, any perceived rotational drift. At the end of the 6 s adaptation period, subjects were required to indicate whether the adapting stimulus appeared to be rotating clockwise or counterclockwise, and the rate of nulling was adjusted accordingly on each trial in the staircase procedure. All orientations were interleaved during testing to avoid systematic or prolonged exposure to any orientation. <xref ref-type="fig" rid="pone-0006183-g003">Fig. 3B</xref> shows the rotation rate required to make the adapting stimulus appear stationary, as a function of orientation. We found four peak drift rates for orientations 15° away from the vertical and horizontal axes.</p>
+<p>Thus the profile of perceptual drift differed substantially from that of adaptational aftereffects, suggesting that they represent different aspects of brain function. First the pattern of aftereffect strength showed two additional peaks as a function of adapting orientation (see <xref ref-type="sec" rid="s3">Discussion</xref>). Second, the mean accumulated perceptual drift during adaptation was roughly 5× lower than the corresponding mean aftereffect size (see right axis <xref ref-type="fig" rid="pone-0006183-g003">Fig. 3B</xref>). Finally, comparing the drift rate and aftereffect size for the ±15° peaks revealed that these two factors were uncorrelated across subjects (r = −.03, p = .92).</p>
+</sec><sec id="s2b">
+<title>Curvature</title>
+<p>We next repeated the experiments with upright curved line segments, using static and dynamic nulling to modulate the level of curvature in the context of a staircase. Curvature was defined as the aspect ratio of an imaginary rectangle into which the arc of a circle was inscribed (see <xref ref-type="fig" rid="pone-0006183-g001">Fig. 1B</xref> and <xref ref-type="sec" rid="s4"><italic>Materials and Methods</italic></xref> for details). <xref ref-type="fig" rid="pone-0006183-g004">Fig. 4A</xref> shows the aftereffect to a range of adaptor curves, measured by applying a nulling orientation to a probe stimulus, which began the staircase testing as a straight line. On each trial subjects indicated whether the line was curved leftward or rightward. Given the plotted average “points of subjective straightness”, all adaptor stimuli tested (other than the straight line segment) were effective in inducing a negative after-effect (2-sided t-test, p&lt;.05, not corrected). There was no difference in aftereffect magnitude for the 5 adaptors of equal sign (repeated measures one-way ANOVA∶ F(4, 60) = .68, p = .61 for aspect ratios &lt;0 and F(4, 60) = 2.21, p = .08 for aspect ratios &gt;0).</p>
+<fig id="pone-0006183-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0006183.g004</object-id><label>Figure 4</label><caption>
+<title>Aftereffect and adaptation with curved line segments.</title>
+<p>A. The static nulling probe revealed that aspect ratios above .1, with curvature either leftward or rightward, yielded significant curvature aftereffects. Unlike the tilt aftereffect, there was no clear peak, and no significant difference between the aftereffect strength for the 5 adaptors of equal sign. B. In contrast to the aftereffect, the dynamic nulling paradigm revealed peaks in the rate of “uncurling”, for adapting stimuli with aspect ratios between .1 and .2. Data points show average values over 16 subjects, the same individuals in A and B. Error bars represent s.e.m.. Values marked by an asterisk (*) are significantly different from zero (2-sided t-test, p&lt;.05, not corrected).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.g004" xlink:type="simple"/></fig>
+<p>As with orientation, the dynamic nulling of curvature revealed systematic perceptual drift, as indicated by the rate of the nulling required for the stimulus to maintain an apparently constant curvature level (<xref ref-type="fig" rid="pone-0006183-g004">Fig. 4B</xref>). During adaptation, subjects were required to indicate their perception of curling motion, which was adjusted according to the adaptive staircase procedure. The rate of subjective curling during adaptation peaked at intermediate curvature levels, and then declined at high curvature levels.</p>
+<p>Thus, as with orientation, adaptation to curvature revealed a dissociation between the pattern of aftereffect magnitudes and perceptual drift rates. For the same adapting stimuli, aftereffect magnitudes were largely insensitive to curvature levels, while drift rates showed clear peaks. (However, it is important to point out that for stimuli with smaller absolute curvature, perceptual drift might be more readily detectable). Furthermore, as with orientation, the magnitudes of static and dynamic nulling for individual subjects were uncorrelated (for aspect ratios of ±.2∶ r = −.11, p = .68, for aspect ratios of ±.1∶ r = −.17, p = .53). For curvature, however, the maximal rate of perceptual drift did correspond well to the maximal aftereffect, as can be seen on the axis plotted on the right of <xref ref-type="fig" rid="pone-0006183-g004">Fig. 4B</xref>.</p>
+</sec><sec id="s2c">
+<title>Size Constancy</title>
+<p>The peaks observed in the rate of perceptual drift offer two distinct explanations. The maximal rate might be determined by absolute curvature (1/radius) or by the relative curvature (shape). Absolute curvature can be thought of as the local orientation gradient present on the retina, whereas shape is scale-invariant, and defined in the present experiments by the unit-less aspect ratio of the imaginary rectangle into which the curves are inscribed. By this definition, changing the scale of the adaptor stimulus, while holding the aspect ratio constant, would affect the absolute but not relative curvature. Some theoretical and neurophysiological work suggests that the brain's encoding of geometric curvature might be related to neural activity in strictly retinotopic areas of the brain with small receptive fields, such as V1 or V2 <xref ref-type="bibr" rid="pone.0006183-Dobbins1">[23]</xref>–<xref ref-type="bibr" rid="pone.0006183-Hegde1">[25]</xref>. If adaptive processes in these areas were to underlie the observed effects, one might expect absolute curvature to be the relevant stimulus parameter. On the other hand, the observed size constancy for shape responses in other parts of the brain, such as the inferotemporal cortex <xref ref-type="bibr" rid="pone.0006183-Logothetis1">[26]</xref>, <xref ref-type="bibr" rid="pone.0006183-Ito1">[27]</xref>, suggests that there could also be adaptive processes in which the relative curvature, or ”shape”, was the important feature.</p>
+<p>To distinguish these possibilities, we repeated the dynamic nulling experiments for curvature, varying the size of the adaptor stimuli. The largest stimuli were inscribed into an imaginary rectangle that was 4 times taller (and 16 times larger in area) than the smallest stimuli. This variation resulted in the same aspect ratio having different values of absolute curvature (see <xref ref-type="sec" rid="s4"><italic>Materials and Methods</italic></xref> section and <xref ref-type="table" rid="pone-0006183-t001">Table 1</xref> for details). The adaptor stimuli were spaced logarithmically, to a range of 0.32, with both directions of curvature presented. <xref ref-type="fig" rid="pone-0006183-g005">Fig. 5</xref> shows the data for the three different sizes, with the leftward and rightward adaptor curvature combined. <xref ref-type="fig" rid="pone-0006183-g005">Fig. 5A</xref> shows the data plotted in terms of absolute curvature, in units of 1/radius (cm<sup>−1</sup>). A repeated measures 2-way ANOVA revealed, for the three levels of absolute curvature in which the stimuli overlapped (.009, .018, .035), a significant interaction between the factors <italic>size</italic> and <italic>curvature</italic> (F(4,60) = 5.63, p&lt;.001). This was not the case when the same data were aligned in terms of their aspect ratio (<xref ref-type="fig" rid="pone-0006183-g005">Fig. 5B</xref>). While the size played some role in the overall rate of adaptation, the curves had the same basic shape and did not show any interaction between <italic>size</italic> and <italic>aspect ratio</italic> (repeated measures 2-way ANOVA (over .02, .04, .08, .16, .32), F(8,120) = .97, p = .46). These results, taken together, indicate that the aspect ratio and thus the “gestalt”, rather than the absolute curvature, was the primary determinant for the rate of adaptation.</p>
+<fig id="pone-0006183-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0006183.g005</object-id><label>Figure 5</label><caption>
+<title>Size constancy of perceptual drift for curvature.</title>
+<p>Adaptors of three sizes ranging over a factor of 4 were used to determine effect strength of adaptation through dynamic nulling (N = 16 subjects, partially overlapping those in <xref ref-type="fig" rid="pone-0006183-g004">Figure 4</xref>). The display was 114 cm, i.e. 1 cm foveally corresponds to ½ deg visual angle. Since that approximation is invalid for larger values, units are given in cm. A. Data plotted against absolute curvature, with smallest stimuli having the highest curvature (dashed line) and largest stimuli having the lowest curvature (solid line). B. <italic>The exact same data</italic> plotted against aspect ratio for the three different sizes. Note that aspect ratio, rather than absolute curvature, determined the rate at which the stimulus perceptually straightened. Data were collected for convexities in both directions and then combined. Error bars represent s.e.m over subjects.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.g005" xlink:type="simple"/></fig><table-wrap id="pone-0006183-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0006183.t001</object-id><label>Table 1</label><caption>
+<title>Parameters of stimuli used in the size constancy experiment.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0006183-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" colspan="5" rowspan="1">Large stimuli</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Width(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Height(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Aspect Ratio</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Radius(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Curvature</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">18.00</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">∞</td>
+<td align="left" colspan="1" rowspan="1">0.000</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.36</td>
+<td align="left" colspan="1" rowspan="1">18.00</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+<td align="left" colspan="1" rowspan="1">450.18</td>
+<td align="left" colspan="1" rowspan="1">0.002</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.72</td>
+<td align="left" colspan="1" rowspan="1">18.00</td>
+<td align="left" colspan="1" rowspan="1">0.04</td>
+<td align="left" colspan="1" rowspan="1">225.36</td>
+<td align="left" colspan="1" rowspan="1">0.004</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1.44</td>
+<td align="left" colspan="1" rowspan="1">18.00</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">113.22</td>
+<td align="left" colspan="1" rowspan="1">0.009</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2.88</td>
+<td align="left" colspan="1" rowspan="1">18.00</td>
+<td align="left" colspan="1" rowspan="1">0.16</td>
+<td align="left" colspan="1" rowspan="1">57.69</td>
+<td align="left" colspan="1" rowspan="1">0.017</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">5.76</td>
+<td align="left" colspan="1" rowspan="1">18.00</td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">31.01</td>
+<td align="left" colspan="1" rowspan="1">0.032</td>
+</tr>
+<tr>
+<td align="left" colspan="5" rowspan="1">Medium stimuli</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Width(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Height(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Aspect Ratio</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Radius(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Curvature</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">9.00</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">∞</td>
+<td align="left" colspan="1" rowspan="1">0.000</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.18</td>
+<td align="left" colspan="1" rowspan="1">9.00</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+<td align="left" colspan="1" rowspan="1">225.09</td>
+<td align="left" colspan="1" rowspan="1">0.004</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.36</td>
+<td align="left" colspan="1" rowspan="1">9.00</td>
+<td align="left" colspan="1" rowspan="1">0.04</td>
+<td align="left" colspan="1" rowspan="1">112.68</td>
+<td align="left" colspan="1" rowspan="1">0.009</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.72</td>
+<td align="left" colspan="1" rowspan="1">9.00</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">56.61</td>
+<td align="left" colspan="1" rowspan="1">0.018</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1.44</td>
+<td align="left" colspan="1" rowspan="1">9.00</td>
+<td align="left" colspan="1" rowspan="1">0.16</td>
+<td align="left" colspan="1" rowspan="1">28.85</td>
+<td align="left" colspan="1" rowspan="1">0.035</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2.88</td>
+<td align="left" colspan="1" rowspan="1">9.00</td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">15.50</td>
+<td align="left" colspan="1" rowspan="1">0.065</td>
+</tr>
+<tr>
+<td align="left" colspan="5" rowspan="1">Small stimuli</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Width(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Height(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Aspect Ratio</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Radius(cm)</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Curvature</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">4.50</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">∞</td>
+<td align="left" colspan="1" rowspan="1">0.000</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.09</td>
+<td align="left" colspan="1" rowspan="1">4.50</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+<td align="left" colspan="1" rowspan="1">112.55</td>
+<td align="left" colspan="1" rowspan="1">0.009</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.18</td>
+<td align="left" colspan="1" rowspan="1">4.50</td>
+<td align="left" colspan="1" rowspan="1">0.04</td>
+<td align="left" colspan="1" rowspan="1">56.34</td>
+<td align="left" colspan="1" rowspan="1">0.018</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.36</td>
+<td align="left" colspan="1" rowspan="1">4.50</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">28.31</td>
+<td align="left" colspan="1" rowspan="1">0.035</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">0.72</td>
+<td align="left" colspan="1" rowspan="1">4.50</td>
+<td align="left" colspan="1" rowspan="1">0.16</td>
+<td align="left" colspan="1" rowspan="1">14.42</td>
+<td align="left" colspan="1" rowspan="1">0.069</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1.44</td>
+<td align="left" colspan="1" rowspan="1">4.50</td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">7.75</td>
+<td align="left" colspan="1" rowspan="1">0.129</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>When doubling aspect ratio of the imaginary box the curve is inscribed in, curvature does not automatically double. The current stimulus set represents an optimized combination of width and height of the stimuli in order to be able to compare curvatures and overall shape.</p></fn></table-wrap-foot></table-wrap></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>Visual features and objects are normally perceived to be stable in their appearance, with any observed changes assumed to reflect changes in the world rather than adjustments in the brain of the percipient. Such perceptual stability is remarkable, given the ubiquity of adaptive processes affecting visual analysis, from the retina to the association cortex <xref ref-type="bibr" rid="pone.0006183-EnrothCugell1">[28]</xref>–<xref ref-type="bibr" rid="pone.0006183-Miller1">[31]</xref>. The present experiments investigate the exception to the rule, and measure the relatively minor penetration of adaptation into our perceptual experience. We show that these changes, though subtle, are quantifiable and consistent.</p>
+<sec id="s3a">
+<title/>
+<sec id="s3a1">
+<title>Two faces of visual adaptation</title>
+<p>It is arguable that adaptational aftereffects, which are an important part of the psychologist's toolbox, do not provide a pure assessment of the adaptive process itself, since it involves two stimuli. While increased adaptation time strengthens aftereffects, the interaction between adapting and test stimuli may not be fundamentally grounded in dynamic, adaptive processes. For example, repulsion in perceived orientation associated with the simultaneous tilt <italic>illusion</italic> (also reported by Gibson <xref ref-type="bibr" rid="pone.0006183-Gibson3">[12]</xref> closely resembles the tilt aftereffect in many respects, but does not entail adaptation <xref ref-type="bibr" rid="pone.0006183-Wenderoth1">[8]</xref>, <xref ref-type="bibr" rid="pone.0006183-Wenderoth2">[32]</xref>. Furthermore, very brief presentations of an adaptor stimulus can in some cases lead to subsequent misperceptions in shape <xref ref-type="bibr" rid="pone.0006183-Suzuki1">[33]</xref>, <xref ref-type="bibr" rid="pone.0006183-Suzuki2">[34]</xref> or orientation <xref ref-type="bibr" rid="pone.0006183-Sekuler1">[35]</xref>. These repulsive effects are presumably based on the interaction between stimuli rather than on adaptation processes <xref ref-type="bibr" rid="pone.0006183-Schwartz1">[9]</xref>.</p>
+<p>The dynamic nulling paradigm used here isolates the adaptation process without invoking a second probe stimulus, thereby avoiding the potential confounds of stimulus-stimulus interaction. Our results suggest that adaptational aftereffects and perceptual drift derive, at least to some extent, from distinct neural mechanisms. First, with both the tilted and curved stimuli, there was no correlation among subjects between the rate of perceptual drift and the magnitude of the corresponding aftereffect. This is despite a large overall variation in drift rates and aftereffect sizes across subjects. Second, for the oriented lines (but not the curves), the accumulated orientation drift over the adaptation period was insufficient to explain the tilt aftereffect magnitude, falling short by a factor of five.</p>
+<p>Finally, for both oriented and curved lines, the pattern of aftereffect magnitudes differed from that of drift rates as a function of the adapting stimulus. This effect is clear in the case of curvature, where intermediate and high curvature adaptors elicited similar aftereffects, but gave rise to very different rates of perceptual drift. For orientation, the nature of the mismatch between <xref ref-type="fig" rid="pone-0006183-g003">Fig. 3A</xref> and <xref ref-type="fig" rid="pone-0006183-g003">Fig. 3B</xref> requires more explanation. The aftereffect and the drift share peaks at ±15° from vertical, suggesting that they may be related. However, previous experiments have shown that the position of these peaks depends on the reference stimulus, appearing at ±15° on either side of <italic>any</italic> axis chosen as a reference orientation, not only the cardinal axes (see also <xref ref-type="supplementary-material" rid="pone.0006183.s001">Figure S1</xref> and <xref ref-type="bibr" rid="pone.0006183-Khler1">[13]</xref>, <xref ref-type="bibr" rid="pone.0006183-Mitchell1">[14]</xref>, <xref ref-type="bibr" rid="pone.0006183-Taylor1">[36]</xref>, <xref ref-type="bibr" rid="pone.0006183-Campbell1">[37]</xref>)). In contrast, the four orientation peaks found in the <xref ref-type="fig" rid="pone-0006183-g003">Fig. 3B</xref> involved no such choice of a reference, and therefore represent genuine perceptual attractors. What might the basis be for the observed differences between perceptual drift and the subsequent aftereffects? An obvious conclusion is that they draw upon at least partially distinct underlying neural mechanisms.</p>
+<p>Aftereffects are inherently spatial and, with few exceptions <xref ref-type="bibr" rid="pone.0006183-Suzuki2">[34]</xref>, <xref ref-type="bibr" rid="pone.0006183-Hartmann1">[38]</xref>, are only effective when the adapting and test stimuli are presented to the same portion of the retina. Accordingly, most models of the well-studied tilt aftereffect invoke elements that are characteristic of neural responses in retinotopic areas such as V1 <xref ref-type="bibr" rid="pone.0006183-Coltheart1">[4]</xref>, <xref ref-type="bibr" rid="pone.0006183-Jin1">[6]</xref>, <xref ref-type="bibr" rid="pone.0006183-Liu1">[7]</xref>. For many stimuli, the nature of the figural distortion can be reduced to a spatial repulsion of portions of the test stimulus from portions of the adapting stimulus, and are observed similarly even in the absence of adaptation, when the “adapting” and test stimulus are presented simultaneously (e.g. the tilt illusion <xref ref-type="bibr" rid="pone.0006183-Wenderoth1">[8]</xref>, <xref ref-type="bibr" rid="pone.0006183-Schwartz1">[9]</xref>). In contrast, perceptual drift involves only one stimulus, whose changing appearance depends on the brain's response to it, but not on its interaction with a second stimulus. Both perceptual drift and aftereffects depend on adaptation time. For example, the strength of the tilt aftereffect grows logarithmically with adaptation duration, saturating only after an hour of exposure to the adapting stimulus <xref ref-type="bibr" rid="pone.0006183-Greenlee1">[39]</xref>. It would be of great interest to know how changes in the rate of perceptual drift over time relate to the dynamics of aftereffect buildup.</p>
+<p>What determines the direction of perceptual drift? Our results show that observed changes are governed by non-retinotopic, higher-level stimulus attributes. For example, it was not the <italic>absolute</italic> curvature level that determined the rate of perceptual drift (<xref ref-type="fig" rid="pone-0006183-g005">Figure 5</xref>), but rather then shape itself (i.e. the aspect ratio of the box into which the curve was inscribed). For orientation, other work found that perceptual drift of tilted lines follows a world-centered (as opposed to retinotopic) frame of reference <xref ref-type="bibr" rid="pone.0006183-Prentice1">[15]</xref>. A previous hypothesis suggested that such perceptual changes reflected the gradual decay of initial <italic>overestimation</italic> of stimulus properties such as orientation and curvature <xref ref-type="bibr" rid="pone.0006183-Coren1">[17]</xref>. In all cases, the consistent direction of perceptual drift underscores the brain's apparent tendency to consider some stimuli to be special reference points, or norms. This heuristic dates back to Gibson, who invoked the concept of norms to account for both drift and aftereffects. Recently, this idea has been applied to applied to a wide range of higher-level stimulus attributes, including even the identity of faces <xref ref-type="bibr" rid="pone.0006183-Clifford1">[3]</xref>, <xref ref-type="bibr" rid="pone.0006183-Leopold1">[40]</xref>–<xref ref-type="bibr" rid="pone.0006183-Jiang1">[42]</xref>, whose aftereffects also show a logarithmic buildup over time <xref ref-type="bibr" rid="pone.0006183-Leopold2">[43]</xref>. The present study shows for two categories of stimuli that the perceptual attraction to such norms during periods of adaptation can be measured and quantified, and ultimately disentangled from the spatial interactions associated with aftereffects.</p>
+</sec></sec><sec id="s3b">
+<title>Tuning the brain to the world</title>
+<p>The processing of orientation and curvature in the brain's retinotopic areas is based on two dimensional projections of three-dimensional objects and scenes. As frequently pointed out, images on the retina are locally ambiguous with respect to the third dimension and continually require inferences about the structure of the external world. Our eye and brain are specialized for this task, and able to extract visual information in a highly efficient manner <xref ref-type="bibr" rid="pone.0006183-Burgess1">[44]</xref>, with adaptive processes thought to remove inefficient redundancy in the coding <xref ref-type="bibr" rid="pone.0006183-Sharpee1">[45]</xref> (for reviews, see <xref ref-type="bibr" rid="pone.0006183-Clifford3">[46]</xref>, <xref ref-type="bibr" rid="pone.0006183-Webster1">[47]</xref>). The brain's adaptation to the natural world may hold the key to understanding misperceptions of orientation, as well as our correct perceptions. It has been argued that the tilt illusion ultimately has its roots in the statistical relationship between objects in natural visual scenes, and their oriented projections on the retina <xref ref-type="bibr" rid="pone.0006183-Howe1">[48]</xref>, as does the tendency to perceive vertical line segments longer than horizontal ones of the same length <xref ref-type="bibr" rid="pone.0006183-Howe2">[49]</xref>. Overall, horizontal and vertical orientations have a much higher prevalence in natural scenes than do other orientations <xref ref-type="bibr" rid="pone.0006183-Switkes1">[50]</xref>, <xref ref-type="bibr" rid="pone.0006183-Coppola1">[51]</xref>, perhaps owing to the reliable orientations of the horizon and gravity, respectively. This factor seems to have shaped responses in the primary visual cortex, as there is an over representation of cardinal orientations in the primary visual cortex of ferrets <xref ref-type="bibr" rid="pone.0006183-Coppola2">[52]</xref> and primates <xref ref-type="bibr" rid="pone.0006183-Mansfield1">[53]</xref>, <xref ref-type="bibr" rid="pone.0006183-Xu1">[54]</xref>, including humans <xref ref-type="bibr" rid="pone.0006183-Furmanski1">[55]</xref>.</p>
+<p>In some ways, our results speak against perceptual drift arising from strictly low-level, retinotopic visual processing. It is possible that norms for seemingly low-level attributes, such as orientation and curvature, could also emerge at later stages of the visual hierarchy. More likely, such specializations for particular stimulus types are coordinated between multiple stages of visual processing. The brain's specialization for cardinal axes may also explain other psychophysical phenomena related to orientation, such as the so-called <italic>oblique effect</italic>, where patterns oriented along the horizontal or vertical axes are more readily detected and discriminated than those oriented obliquely <xref ref-type="bibr" rid="pone.0006183-Appelle1">[56]</xref>–<xref ref-type="bibr" rid="pone.0006183-Westheimer1">[58]</xref>. Less is known about the environmental statistics of curvature, whose representation in the brain is a topic of active investigation <xref ref-type="bibr" rid="pone.0006183-Pasupathy1">[59]</xref>–<xref ref-type="bibr" rid="pone.0006183-Muller1">[61]</xref>. Psychophysically, the brain appears to treat curved and straight line elements as categorically different entities, since small amount of curvature are easily detectable among otherwise straight elements, even if their orientations are randomized <xref ref-type="bibr" rid="pone.0006183-Fahle1">[62]</xref>.</p>
+<p>In summary, our sensation and perception of objects in the world involves the extensive analysis of orientation of curvature. As we inspect a stimulus, we have the impression that our perception is unbiased and stable in its analysis. However, these and other results show that, even for these primitive scene elements, our sampling of the world is biased toward certain stimuli, and continually readjusts itself, even though these changes nearly always escape our notice.</p>
+</sec></sec><sec id="s4">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Subjects</title>
+<p>The Institutional Review Board of the National Institutes of Health approved all procedures and written informed consent was obtained for all subjects. Twelve subjects participated in the orientation experiment reported in <xref ref-type="fig" rid="pone-0006183-g003">Figure 3</xref> (age range: 20–38, mean 26.4 years, 5 female, 7 male). 8 were naïve to the hypothesis of the experiment. All subjects had normal or corrected to normal vision. For different conditions within one experiment (orientation, curvature, or size constancy respectively) the same subjects were used allowing us to compare individual effect sizes of adaptation and after-effect. The order of the experiments was counterbalanced across subjects. Sixteen subjects participated in the curvature experiment reported in <xref ref-type="fig" rid="pone-0006183-g004">Figure 4</xref> (age range: 22–34, mean 26.0 years, 8 female, 8 male), 14 of which were naive. In the size constancy experiment reported in <xref ref-type="fig" rid="pone-0006183-g005">Figure 5</xref>, 16 subjects participated (age range: 22–38, mean 27.3 years, 6 female, 10 male), among them 11 naïve according to the hypothesis. Subjects gave written consent and were compensated for their participation.</p>
+</sec><sec id="s4b">
+<title>Apparatus and Stimuli</title>
+<p>Subjects sat in a dark room with their chin placed on a chin rest to ensure constant eye to screen distance. For orientation and size constancy (<xref ref-type="fig" rid="pone-0006183-g003">Figures 3</xref> and <xref ref-type="fig" rid="pone-0006183-g005">5</xref>), the distance to the screen was set to 114 cm and for curvature (<xref ref-type="fig" rid="pone-0006183-g004">Figure 4</xref>) the distance was set to 50 cm. For the display of the stimulus sequence a Notebook screen was used (Sony VAJO, 37×23 cm, 1920×1200 pixels). The visual patterns and the stimulation sequence were designed by means of custom written code (OpenGL and C++ in Microsoft Visual Studio.NET, Microsoft, Redmond WA). Adaptation and test stimuli were white (for orientation and size constancy: 310 cd/m<sup>2</sup>; for curvature: 75 cd/m<sup>2</sup>;) presented on a black background (all Experiments: .6 cd/m<sup>2</sup>). The lines were created using an array of 11 white circular, evenly spaced dots, each extending .05° visual angle for orientation and curvature. Because the size constancy experiment used scaled versions of the stimulus, the dot size was .025°, .05°, or .1° visual angle respectively. Curved lines were constructed by inscribing a curve into an imaginary rectangle, with an aspect ratio of 0 relating to a straight vertical line and an aspect ratio of .5 relating to a half circle. All tested curves were constructed from vertically upright rectangles. Here, we define the degree of curvature as the aspect ratio (width/height) of that imaginary rectangle. The dotted lines generated for the orientation experiment extended 5.0° visual angle. In the curvature experiment, the height of the lines was 5.1° visual angle and the width varied using the following values: 0°, ±.52°, ±1.03°, ±1.55°, ±2.05° corresponding to aspect ratios of 0, .1, .2, .3, or .4 respectively. In the size constancy experiment a screen distance of 114 cm was used, i.e. 1 cm foveally corresponds to ½° visual angle. Curvature is defined as 1/r. <xref ref-type="table" rid="pone-0006183-t001">Table 1</xref> gives the values for the different stimulus parameters.</p>
+</sec><sec id="s4c">
+<title>Control measures</title>
+<p>During each experiment, subjects were given a brief rest each 5 minutes, during which time they were required to fill out a questionnaire indicating state of alertness and fixation quality of the previous run. This mainly served as a reminder and control of crucial aspects of the task. After each experiment was completed, the subject was asked to fill out a final questionnaire asking for the hypothesis of the experiment. None of the naïve subjects guessed the hypothesis of the drift experiments correctly.</p>
+</sec><sec id="s4d">
+<title>Experimental paradigms</title>
+<p>In the aftereffect experiments, a trial consisted of the following sequence, outlined in <xref ref-type="fig" rid="pone-0006183-g002">Figures 2a and 2b</xref>. A fixation dot appeared on the screen, which subjects were instructed to fixate throughout the trial. After 1.0 s, ten additional dots appeared, forming the adaptor stimulus, either a line segment or a curve. The original fixation dot served as an integral part of the adaptor and probe stimuli. The adaptation stimulus was presented for 6.0 s, followed by a 50 ms test stimulus after a 200 ms gap. Following each trial, the subjects responded in a forced-choice manner via mouse click whether the test stimulus appeared to be oriented clockwise or counterclockwise of vertical (tilt aftereffect) or curved with the ends of the line pointing leftward or rightward (curvature aftereffect). The point of subjective equality was attained by adjusting the test stimulus orientation or curvature (“static nulling”) according to a staircase procedure <xref ref-type="bibr" rid="pone.0006183-Cornsweet1">[63]</xref>. Staircases corresponding to all twelve orientations or all eleven curvatures were randomly interleaved; with each staircase terminating once 6 reversals were reached. The experiment was finished, as soon as all staircases had terminated.</p>
+<p>In the perceptual drift experiments, outlined in <xref ref-type="fig" rid="pone-0006183-g002">Figures 2c and 2d</xref>, subject also fixated for 1.0 s and then adapted for 6.0 s. However, during these experiments, there was no probe stimulus, and nulling occurred during adaptation itself. A tone at the beginning of the intertrial interval indicated to the subject to respond whether the adaptor stimulus was rotating clockwise or counterclockwise (in the tilt experiments) or becoming more or less curved (in the curvature experiments). In a staircase design similar to the aftereffect experiments, real rotation and or curvature motion was added to the adaptor stimulus in order to bring their percept of any motion to zero (“dynamic nulling”). This was achieved by changing the width of the imaginary rectangle into which the curve was inscribed. We chose the width, because the drift illusion for curvature has been shown to be width-dependent <xref ref-type="bibr" rid="pone.0006183-Coren1">[17]</xref>. As above, the staircases were randomly interleaved, and terminated individually once 6 reversals were reached. In order to maximally spend any residual aftereffects, a straight test line segment was added for 2.0 s between curvature trials (not depicted in <xref ref-type="fig" rid="pone-0006183-g002">Figure 2D</xref>). In the final experiment comparing different stimulus sizes, this intervening straight stimulus was not used, and the adaptation stimulus was only shown for 3.0 s.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0006183.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pone.0006183.s001" xlink:type="simple"><label>Figure S1</label><caption>
+<p>(0.07 MB PDF)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pone.0006183-Frisby1"><label>1</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Frisby</surname><given-names>JP</given-names></name>
+</person-group>             <year>1979</year>             <source>Seeing: Illusion, brain and mind</source>             <publisher-loc>Oxford, England</publisher-loc>             <publisher-name>Oxford University Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0006183-Barlow1"><label>2</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Barlow</surname><given-names>HB</given-names></name>
+<name name-style="western"><surname>Földiák</surname><given-names>P</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Adaptation and decorrelation in the cortex.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Miall</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Durbin</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Mitchinson</surname><given-names>GJ</given-names></name>
+</person-group>             <source>The Computing Neuron</source>             <publisher-loc>Wokingham, England</publisher-loc>             <publisher-name>Addison-Wesley</publisher-name>             <fpage>54</fpage>             <lpage>72</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Clifford1"><label>3</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Clifford</surname><given-names>CWG</given-names></name>
+<name name-style="western"><surname>Rhodes</surname><given-names>G</given-names></name>
+</person-group>             <year>2005</year>             <source>Fitting the mind to the world - Adaptation and after-effects in high-level vision</source>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>Oxford University Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0006183-Coltheart1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Coltheart</surname><given-names>M</given-names></name>
+</person-group>             <year>1971</year>             <article-title>Visual feature-analyzers and after-effects of tilt and curvature.</article-title>             <source>Psychol Rev</source>             <volume>78</volume>             <fpage>114</fpage>             <lpage>121</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Clifford2"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Clifford</surname><given-names>CW</given-names></name>
+<name name-style="western"><surname>Wenderoth</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Spehar</surname><given-names>B</given-names></name>
+</person-group>             <year>2000</year>             <article-title>A functional angle on some after-effects in cortical vision.</article-title>             <source>Proc Biol Sci</source>             <volume>267</volume>             <fpage>1705</fpage>             <lpage>1710</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Jin1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jin</surname><given-names>DZ</given-names></name>
+<name name-style="western"><surname>Dragoi</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Sur</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Seung</surname><given-names>HS</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Tilt aftereffect and adaptation-induced changes in orientation tuning in visual cortex.</article-title>             <source>J Neurophysiol</source>             <volume>94</volume>             <fpage>4038</fpage>             <lpage>4050</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Liu1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Liu</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Larsson</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Carrasco</surname><given-names>M</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Feature-based attention modulates orientation-selective responses in human visual cortex.</article-title>             <source>Neuron</source>             <volume>55</volume>             <fpage>313</fpage>             <lpage>323</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Wenderoth1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wenderoth</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>van der Zwan</surname><given-names>R</given-names></name>
+</person-group>             <year>1989</year>             <article-title>The effects of exposure duration and surrounding frames on direct and indirect tilt aftereffects and illusions.</article-title>             <source>Percept Psychophys</source>             <volume>46</volume>             <fpage>338</fpage>             <lpage>344</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Schwartz1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schwartz</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Hsu</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Dayan</surname><given-names>P</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Space and time in visual context.</article-title>             <source>Nat Rev Neurosci</source>             <volume>8</volume>             <fpage>522</fpage>             <lpage>535</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Gibson1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gibson</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1933</year>             <article-title>Adaptation, after-effect and contrast in the perception of curved lines.</article-title>             <source>J Exp Psychol</source>             <volume>16</volume>             <fpage>1</fpage>             <lpage>31</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Gibson2"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gibson</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Radner</surname><given-names>M</given-names></name>
+</person-group>             <year>1937</year>             <article-title>Adaptation, after-effect, and contrast in the perception of tilted lines.</article-title>             <source>J Exp Psychol</source>             <volume>20</volume>             <fpage>453</fpage>             <lpage>467</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Gibson3"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gibson</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1937</year>             <article-title>Adaptation, after-effect, and contrast in the perception of tilted lines. II. Simultaneous contrast and the areal restriction of the after-effect.</article-title>             <source>J Exp Psychol</source>             <volume>20</volume>             <fpage>553</fpage>             <lpage>569</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Khler1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Köhler</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Wallach</surname><given-names>H</given-names></name>
+</person-group>             <year>1944</year>             <article-title>Figural After-Effects: An Investigation of Visual Processes.</article-title>             <source>Proceedings of the American Philosophical Society</source>             <volume>88</volume>             <fpage>269</fpage>             <lpage>357</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Mitchell1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mitchell</surname><given-names>DE</given-names></name>
+<name name-style="western"><surname>Muir</surname><given-names>DW</given-names></name>
+</person-group>             <year>1976</year>             <article-title>Does the tilt after-effect occur in the oblique meridian?</article-title>             <source>Vision Res</source>             <volume>16</volume>             <fpage>609</fpage>             <lpage>613</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Prentice1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Prentice</surname><given-names>WCB</given-names></name>
+<name name-style="western"><surname>Beardslee</surname><given-names>D</given-names></name>
+</person-group>             <year>1950</year>             <article-title>Visual ‘normalization’ near the vertical and horizontal.</article-title>             <source>J Exp Psychol</source>             <volume>40</volume>             <fpage>355</fpage>             <lpage>364</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Held1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Held</surname><given-names>R</given-names></name>
+</person-group>             <year>1963</year>             <article-title>Localized normalization of tilted lines.</article-title>             <source>Am J Psychol</source>             <volume>76</volume>             <fpage>146</fpage>             <lpage>148</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Coren1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Coren</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Festinger</surname><given-names>L</given-names></name>
+</person-group>             <year>1967</year>             <article-title>An alternative view of the “Gibson normalization effect”.</article-title>             <volume>2</volume>             <fpage>621</fpage>             <lpage>626</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Templeton1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Templeton</surname><given-names>WB</given-names></name>
+</person-group>             <year>1972</year>             <article-title>Visual tilt normalization: The method of kinesthetic matching.</article-title>             <source>Percept Psychophys</source>             <volume>12</volume>             <fpage>422</fpage>             <lpage>424</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Gibson4"><label>19</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gibson</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1979</year>             <source>The ecological approach to visual perception</source>             <publisher-loc>Boston, MA</publisher-loc>             <publisher-name>Houghton Mifflin</publisher-name>          </element-citation></ref>
+<ref id="pone.0006183-Wolfe1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wolfe</surname><given-names>JM</given-names></name>
+</person-group>             <year>1984</year>             <article-title>Short test flashes produce large tilt aftereffects.</article-title>             <source>Vision Res</source>             <volume>24</volume>             <fpage>1959</fpage>             <lpage>1964</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Wolfe2"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wolfe</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>O'Connell</surname><given-names>KM</given-names></name>
+</person-group>             <year>1986</year>             <article-title>Fatigue and structural change: two consequences of visual pattern adaptation.</article-title>             <source>Invest Ophthalmol Vis Sci</source>             <volume>27</volume>             <fpage>538</fpage>             <lpage>543</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Morant1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morant</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Harris</surname><given-names>J</given-names></name>
+</person-group>             <year>1965</year>             <article-title>Two different after-effects of exposure to visual tilts.</article-title>             <source>Am J Psychol</source>             <volume>78</volume>             <fpage>218</fpage>             <lpage>226</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Dobbins1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dobbins</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Zucker</surname><given-names>SW</given-names></name>
+<name name-style="western"><surname>Cynader</surname><given-names>MS</given-names></name>
+</person-group>             <year>1987</year>             <article-title>Endstopped neurons in the visual cortex as a substrate for calculating curvature.</article-title>             <source>Nature</source>             <volume>329</volume>             <fpage>438</fpage>             <lpage>441</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Dobbins2"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dobbins</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Zucker</surname><given-names>SW</given-names></name>
+<name name-style="western"><surname>Cynader</surname><given-names>MS</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Endstopping and curvature.</article-title>             <source>Vision Res</source>             <volume>29</volume>             <fpage>1371</fpage>             <lpage>1387</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Hegde1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hegde</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Van</surname><given-names>E</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Selectivity for complex shapes in primate visual area V2.</article-title>             <source>J Neurosci</source>             <volume>20</volume>             <fpage>RC61</fpage>          </element-citation></ref>
+<ref id="pone.0006183-Logothetis1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Logothetis</surname><given-names>NK</given-names></name>
+<name name-style="western"><surname>Sheinberg</surname><given-names>DL</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Visual object recognition.</article-title>             <source>Annu Rev Neurosci</source>             <volume>19</volume>             <fpage>577</fpage>             <lpage>621</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Ito1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ito</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Tamura</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Fujita</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Tanaka</surname><given-names>K</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Size and position invariance of neuronal responses in monkey inferotemporal cortex.</article-title>             <source>J Neurophysiol</source>             <volume>73</volume>             <fpage>218</fpage>             <lpage>226</lpage>          </element-citation></ref>
+<ref id="pone.0006183-EnrothCugell1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Enroth-Cugell</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Shapley</surname><given-names>RM</given-names></name>
+</person-group>             <year>1973</year>             <article-title>Adaptation and dynamics of cat retinal ganglion cells.</article-title>             <source>J Physiol</source>             <volume>233</volume>             <fpage>271</fpage>             <lpage>309</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Maffei1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Maffei</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Fiorentini</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bisti</surname><given-names>S</given-names></name>
+</person-group>             <year>1973</year>             <article-title>Neural correlate of perceptual adaptation to gratings.</article-title>             <source>Science</source>             <volume>182</volume>             <fpage>1036</fpage>             <lpage>1038</lpage>          </element-citation></ref>
+<ref id="pone.0006183-SanchezVives1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sanchez-Vives</surname><given-names>MV</given-names></name>
+<name name-style="western"><surname>Nowak</surname><given-names>LG</given-names></name>
+<name name-style="western"><surname>McCormick</surname><given-names>DA</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Membrane mechanisms underlying contrast adaptation in cat area 17 in vivo.</article-title>             <source>J Neurosci</source>             <volume>20</volume>             <fpage>4267</fpage>             <lpage>4285</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Miller1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Miller</surname><given-names>EK</given-names></name>
+<name name-style="western"><surname>Gochin</surname><given-names>PM</given-names></name>
+<name name-style="western"><surname>Gross</surname><given-names>CG</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Habituation-like decrease in the responses of neurons in inferior temporal cortex of the macaque.</article-title>             <source>Vis Neurosci</source>             <volume>7</volume>             <fpage>357</fpage>             <lpage>362</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Wenderoth2"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wenderoth</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>S</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Neural substrates of the tilt illusion.</article-title>             <source>Aust N Z J Ophthalmol</source>             <volume>27</volume>             <fpage>271</fpage>             <lpage>274</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Suzuki1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Suzuki</surname><given-names>S</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Attention-dependent brief adaptation to contour orientation: a high-level aftereffect for convexity?</article-title>             <source>Vision Res</source>             <volume>41</volume>             <fpage>3883</fpage>             <lpage>3902</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Suzuki2"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Suzuki</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Cavanagh</surname><given-names>P</given-names></name>
+</person-group>             <year>1998</year>             <article-title>A shape-contrast effect for briefly presented stimuli.</article-title>             <source>J Exp Psychol Hum Percept Perform</source>             <volume>24</volume>             <fpage>1315</fpage>             <lpage>1341</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Sekuler1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sekuler</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Littlejohn</surname><given-names>J</given-names></name>
+</person-group>             <year>1974</year>             <article-title>Letter: Tilt aftereffect following very brief exposures.</article-title>             <source>Vision Res</source>             <volume>14</volume>             <fpage>151</fpage>             <lpage>152</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Taylor1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Taylor</surname><given-names>MM</given-names></name>
+<name name-style="western"><surname>Parnes</surname><given-names>RA</given-names></name>
+</person-group>             <year>1972</year>             <article-title>Mapping the tilt after-effect.</article-title>             <comment>D C I E M Research Paper 72-RP-818, Downsview, Ontario, Canada</comment>          </element-citation></ref>
+<ref id="pone.0006183-Campbell1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Campbell</surname><given-names>FW</given-names></name>
+<name name-style="western"><surname>Maffei</surname><given-names>L</given-names></name>
+</person-group>             <year>1971</year>             <article-title>The tilt after-effect: a fresh look.</article-title>             <source>Vision Res</source>             <volume>11</volume>             <fpage>833</fpage>             <lpage>840</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Hartmann1"><label>38</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hartmann</surname><given-names>L</given-names></name>
+</person-group>             <year>1923</year>             <article-title>Further studies of gamma movement.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Ellis</surname><given-names>WD</given-names></name>
+</person-group>             <source>A source book of gestalt psychology</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>Humanities Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0006183-Greenlee1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Greenlee</surname><given-names>MW</given-names></name>
+<name name-style="western"><surname>Magnussen</surname><given-names>S</given-names></name>
+</person-group>             <year>1987</year>             <article-title>Saturation of the tilt aftereffect.</article-title>             <source>Vision Res</source>             <volume>27</volume>             <fpage>1041</fpage>             <lpage>1043</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Leopold1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Leopold</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>O'Toole</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Vetter</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Blanz</surname><given-names>V</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Prototype-referenced shape encoding revealed by high-level aftereffects.</article-title>             <source>Nat Neurosci</source>             <volume>4</volume>             <fpage>89</fpage>             <lpage>94</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Rhodes1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rhodes</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Jeffery</surname><given-names>L</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Adaptive norm-based coding of facial identity.</article-title>             <source>Vision Res</source>             <volume>46</volume>             <fpage>2977</fpage>             <lpage>2987</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Jiang1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jiang</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Blanz</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>O'Toole</surname><given-names>AJ</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Probing the visual representation of faces with adaptation: A view from the other side of the mean.</article-title>             <source>Psychol Sci</source>             <volume>17</volume>             <fpage>493</fpage>             <lpage>500</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Leopold2"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Leopold</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Rhodes</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Müller</surname><given-names>K-M</given-names></name>
+<name name-style="western"><surname>Jeffrey</surname><given-names>L</given-names></name>
+</person-group>             <year>2005</year>             <article-title>The dynamics of visual adaptation to faces.</article-title>             <source>Proc R Soc Lond B Biol Sci</source>             <volume>272</volume>             <fpage>897</fpage>             <lpage>904</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Burgess1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Burgess</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Wagner</surname><given-names>RF</given-names></name>
+<name name-style="western"><surname>Jennings</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Barlow</surname><given-names>HB</given-names></name>
+</person-group>             <year>1981</year>             <article-title>Efficiency of human visual signal discrimination.</article-title>             <source>Science</source>             <volume>214</volume>             <fpage>93</fpage>             <lpage>94</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Sharpee1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sharpee</surname><given-names>TO</given-names></name>
+<name name-style="western"><surname>Sugihara</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Kurgansky</surname><given-names>AV</given-names></name>
+<name name-style="western"><surname>Rebrik</surname><given-names>SP</given-names></name>
+<name name-style="western"><surname>Stryker</surname><given-names>MP</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Adaptive filtering enhances information transmission in visual cortex.</article-title>             <source>Nature</source>             <volume>439</volume>             <fpage>936</fpage>             <lpage>942</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Clifford3"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Clifford</surname><given-names>CW</given-names></name>
+<name name-style="western"><surname>Webster</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Stanley</surname><given-names>GB</given-names></name>
+<name name-style="western"><surname>Stocker</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Kohn</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Visual adaptation: neural, psychological and computational aspects.</article-title>             <source>Vision Res</source>             <volume>47</volume>             <fpage>3125</fpage>             <lpage>3131</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Webster1"><label>47</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Webster</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Werner</surname><given-names>JS</given-names></name>
+<name name-style="western"><surname>Field</surname><given-names>DJ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Adaptation and the phenomenology of perception.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Clifford</surname><given-names>CW</given-names></name>
+<name name-style="western"><surname>Rhodes</surname><given-names>G</given-names></name>
+</person-group>             <source>Fitting the mind to the world: adaptation and after-effects in high-level vision</source>             <publisher-loc>Oxford, UK</publisher-loc>             <publisher-name>Oxford University Press</publisher-name>          </element-citation></ref>
+<ref id="pone.0006183-Howe1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Howe</surname><given-names>CQ</given-names></name>
+<name name-style="western"><surname>Purves</surname><given-names>D</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Natural-scene geometry predicts the perception of angles and line orientation.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>102</volume>             <fpage>1228</fpage>             <lpage>1233</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Howe2"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Howe</surname><given-names>CQ</given-names></name>
+<name name-style="western"><surname>Purves</surname><given-names>D</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Range image statistics can explain the anomalous perception of length.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>99</volume>             <fpage>13184</fpage>             <lpage>13188</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Switkes1"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Switkes</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Mayer</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Sloan</surname><given-names>JA</given-names></name>
+</person-group>             <year>1978</year>             <article-title>Spatial frequency analysis of the visual environment: anisotropy and the carpentered environment hypothesis.</article-title>             <source>Vision Res</source>             <volume>18</volume>             <fpage>1393</fpage>             <lpage>1399</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Coppola1"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Coppola</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Purves</surname><given-names>HR</given-names></name>
+<name name-style="western"><surname>McCoy</surname><given-names>AN</given-names></name>
+<name name-style="western"><surname>Purves</surname><given-names>D</given-names></name>
+</person-group>             <year>1998</year>             <article-title>The distribution of oriented contours in the real world.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>95</volume>             <fpage>4002</fpage>             <lpage>4006</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Coppola2"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Coppola</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>White</surname><given-names>LE</given-names></name>
+<name name-style="western"><surname>Fitzpatrick</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Purves</surname><given-names>D</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Unequal representation of cardinal and oblique contours in ferret visual cortex.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>95</volume>             <fpage>2621</fpage>             <lpage>2623</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Mansfield1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mansfield</surname><given-names>RJ</given-names></name>
+</person-group>             <year>1974</year>             <article-title>Neural basis of orientation perception in primate vision.</article-title>             <source>Science</source>             <volume>186</volume>             <fpage>1133</fpage>             <lpage>1135</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Xu1"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Xu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Anderson</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>Casagrande</surname><given-names>VA</given-names></name>
+</person-group>             <year>2007</year>             <article-title>How do functional maps in primary visual cortex vary with eccentricity?</article-title>             <source>J Comp Neurol</source>             <volume>501</volume>             <fpage>741</fpage>             <lpage>755</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Furmanski1"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Furmanski</surname><given-names>CS</given-names></name>
+<name name-style="western"><surname>Engel</surname><given-names>SA</given-names></name>
+</person-group>             <year>2000</year>             <article-title>An oblique effect in human primary visual cortex.</article-title>             <source>Nat Neurosci</source>             <volume>3</volume>             <fpage>535</fpage>             <lpage>536</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Appelle1"><label>56</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Appelle</surname><given-names>S</given-names></name>
+</person-group>             <year>1972</year>             <article-title>Perception and discrimination as a function of stimulus orientation: the “oblique effect” in man and animals.</article-title>             <source>Psychol Bull</source>             <volume>78</volume>             <fpage>266</fpage>             <lpage>278</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Meng1"><label>57</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Meng</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Qian</surname><given-names>N</given-names></name>
+</person-group>             <year>2005</year>             <article-title>The oblique effect depends on perceived, rather than physical, orientation and direction.</article-title>             <source>Vision Res</source>             <volume>45</volume>             <fpage>3402</fpage>             <lpage>3413</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Westheimer1"><label>58</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Westheimer</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Beard</surname><given-names>BL</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Orientation dependency for foveal line stimuli: detection and intensity discrimination, resolution, orientation discrimination and vernier acuity.</article-title>             <source>Vision Res</source>             <volume>38</volume>             <fpage>1097</fpage>             <lpage>1103</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Pasupathy1"><label>59</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pasupathy</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Connor</surname><given-names>CE</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Responses to contour features in macaque area V4.</article-title>             <source>J Neurophysiol</source>             <volume>82</volume>             <fpage>2490</fpage>             <lpage>2502</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Hegde2"><label>60</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hegde</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Van</surname><given-names>E</given-names></name>
+</person-group>             <year>2007</year>             <article-title>A comparative study of shape representation in macaque visual areas v2 and v4.</article-title>             <source>Cereb Cortex</source>             <volume>17</volume>             <fpage>1100</fpage>             <lpage>1116</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Muller1"><label>61</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Muller</surname><given-names>KM</given-names></name>
+<name name-style="western"><surname>Wilke</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Leopold</surname><given-names>DA</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Visual adaptation to convexity in macaque area V4.</article-title>             <source>Neuroscience</source>          </element-citation></ref>
+<ref id="pone.0006183-Fahle1"><label>62</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fahle</surname><given-names>M</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Parallel perception of vernier offsets, curvature, and chevrons in humans.</article-title>             <source>Vision Res</source>             <volume>31</volume>             <fpage>2149</fpage>             <lpage>2184</lpage>          </element-citation></ref>
+<ref id="pone.0006183-Cornsweet1"><label>63</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cornsweet</surname><given-names>TN</given-names></name>
+</person-group>             <year>1962</year>             <article-title>The staircase-method in psychophysics.</article-title>             <source>Am J Psychol</source>             <volume>75</volume>             <fpage>485</fpage>             <lpage>491</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

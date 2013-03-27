@@ -23,8 +23,8 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -63,11 +63,11 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
    * asset.
    *
-   * @param response the response to which the metadata should be written
+   * @param receiver the receiver to which the metadata should be written
    * @param id       the identity of the asset to read
    * @param format   the desired metadata format
    */
-  public abstract void readMetadata(HttpServletResponse response, AssetIdentity id, MetadataFormat format)
+  public abstract void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException;
 
   /**

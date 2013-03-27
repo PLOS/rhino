@@ -38,7 +38,7 @@ import java.util.List;
  */
 public abstract class XpathReader {
 
-  private final Node xml;
+  protected final Node xml;
   private final XPath xPath;
 
   protected XpathReader(Node xml) {

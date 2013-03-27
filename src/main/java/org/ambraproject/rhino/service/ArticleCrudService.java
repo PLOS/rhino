@@ -24,8 +24,8 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -89,26 +89,36 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of an article.
    *
-   * @param response the response object to which to send the metadata
+   * @param receiver the receiver object to which to send the metadata
    * @param id       the identifier of the article
    * @param format   the desired metadata format
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract void readMetadata(HttpServletResponse response, DoiBasedIdentity id, MetadataFormat format)
+  public abstract void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format)
       throws IOException;
 
   /**
    * Read the metadata of an article.
    *
-   * @param response the response object to which to send the metadata
+   * @param receiver the receiver object to which to send the metadata
    * @param article  the article
    * @param format   the desired metadata format
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract void readMetadata(HttpServletResponse response, Article article, MetadataFormat format)
+  public abstract void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format)
       throws IOException;
 
   public abstract void setAssetService(AssetCrudService assetService);
+
+  /**
+   * List the DOIs of all ingested articles.
+   *
+   * @param receiver the receiver to which to write the list
+   * @param format   the desired list format
+   * @throws IOException
+   */
+  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+
 }

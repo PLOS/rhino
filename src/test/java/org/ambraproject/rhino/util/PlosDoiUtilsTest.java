@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.util;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -29,6 +28,7 @@ public class PlosDoiUtilsTest {
   @DataProvider
   public Object[][] badDois() {
     Object[] bad = new Object[]{
+        null,
         "",
         "info:",
         "info:doi/10.1371/",

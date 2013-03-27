@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -26,10 +27,11 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
+import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.CharEncoding;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -40,7 +42,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -68,6 +69,9 @@ public abstract class AmbraService {
 
   @Autowired
   protected ArticleService articleService;
+
+  @Autowired
+  protected SyndicationService syndicationService;
 
   /**
    * Check whether a distinct entity exists.
@@ -192,23 +196,18 @@ public abstract class AmbraService {
   }
 
   /**
-   * Write JSON describing an object to the response.
-   * <p/>
-   * Passing an {@link HttpServletResponse} object into the service layer here isn't great. It's necessary to do this,
-   * rather than pass in the {@link Writer}, because we must call {@link javax.servlet.ServletResponse#getWriter()} as
-   * late as possible. If an exception (even an expected {@link RestClientException}) is thrown after {@code
-   * getWriter()} is called, Spring won't be able to write its own response when handling the exception.
+   * Write JSON describing an object.
    *
-   * @param response the response object to write to
+   * @param receiver the receiver object to write to
    * @param entity   the object to describe in JSON
    * @throws IOException if the response can't be written to
    */
-  protected void writeJsonToResponse(HttpServletResponse response, Object entity) throws IOException {
+  protected void writeJson(ResponseReceiver receiver, Object entity) throws IOException {
     Writer writer = null;
     boolean threw = true;
     try {
-      response.setCharacterEncoding(CharEncoding.UTF_8);
-      writer = response.getWriter();
+      receiver.setCharacterEncoding(Charsets.UTF_8);
+      writer = receiver.getWriter();
       writer = new BufferedWriter(writer);
       entityGson.toJson(entity, writer);
       threw = false;

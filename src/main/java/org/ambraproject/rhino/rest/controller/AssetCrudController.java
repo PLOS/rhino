@@ -30,6 +30,8 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,7 +85,7 @@ public class AssetCrudController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
-  public void upload(HttpServletResponse response,
+  public void upload(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(value = DOI_PARAM) String assetDoi,
                      @RequestParam(value = EXTENSION_PARAM) String extension,
                      @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
@@ -101,7 +103,8 @@ public class AssetCrudController extends DoiBasedCrudController {
     }
 
     response.setStatus(result.getStatus().value());
-    assetCrudService.readMetadata(response, fileIdentity.forAsset(), MetadataFormat.JSON);
+    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    assetCrudService.readMetadata(receiver, fileIdentity.forAsset(), MetadataFormat.JSON);
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)

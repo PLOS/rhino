@@ -1,0 +1,232 @@
+{"doi":"info:doi/10.1371/journal.pmed.0040307","title":
+  "Child Rights and Child Poverty: Can the International Framework of Children\u0027s Rights Be Used to Improve Child Survival Rates?",
+  "eIssn":"1549-1676","state":1,"archiveName":"pmed.0040307.zip",
+  "description":
+  "\u003cp\u003eThe authors explain how the international framework of human rights can be better used to help reduce child poverty and improve child survival rates.\u003c/p\u003e",
+  "rights":
+  "Pemberton et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-4","eLocationId":"e307",
+  "strkImgURI":"","date":"Oct 23, 2007 12:00:00 AM","volume":"4","issue":
+  "10","journal":"PLoS Med","publisherLocation":"San Francisco, USA",
+  "publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pmed.0040307","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Essay",
+    "http://rdf.plos.org/RDF/articleType/discussion"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pmed.0040307","extension":
+      "XML","contentType":"text/xml","title":
+      "Child Rights and Child Poverty: Can the International Framework of Children\u0027s Rights Be Used to Improve Child Survival Rates?",
+      "description":
+      "\u003cp\u003eThe authors explain how the international framework of human rights can be better used to help reduce child poverty and improve child survival rates.\u003c/p\u003e",
+      "size":48046},{"doi":"info:doi/10.1371/journal.pmed.0040307",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Child Rights and Child Poverty: Can the International Framework of Children\u0027s Rights Be Used to Improve Child Survival Rates?",
+      "description":
+      "\u003cp\u003eThe authors explain how the international framework of human rights can be better used to help reduce child poverty and improve child survival rates.\u003c/p\u003e",
+      "size":240990},{"doi":
+      "info:doi/10.1371/journal.pmed.0040307.poverty_logo","contextElement":
+      "p","extension":"PNG","contentType":"image/png","title":"",
+      "description":"","size":23162},{"doi":
+      "info:doi/10.1371/journal.pmed.0040307.g001","contextElement":"fig",
+      "extension":"TIF","contentType":"image/tiff","title":"Figure 1",
+      "description":
+      "\u003ctitle\u003eContinuum of Rights\u003c/title\u003e","size":
+      49472},{"doi":"info:doi/10.1371/journal.pmed.0040307.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eContinuum of Rights\u003c/title\u003e","size":875},{
+      "doi":"info:doi/10.1371/journal.pmed.0040307.g001","contextElement":
+      "fig","extension":"PNG_M","contentType":"image/png","title":
+      "Figure 1","description":
+      "\u003ctitle\u003eContinuum of Rights\u003c/title\u003e","size":
+      10934},{"doi":"info:doi/10.1371/journal.pmed.0040307.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eContinuum of Rights\u003c/title\u003e","size":
+      16082}],"citedArticles":[{"key":"1","year":2002,"displayYear":"2002",
+      "title":
+      "State of the world\u0027s children 2002: Leadership: The rate of progress",
+      "publisherLocation":"New York","publisherName":"UNICEF",
+      "collaborativeAuthors":["UNICEF"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"2","year":2003,"displayYear":"2003","volumeNumber":361,"volume":
+      "361","title":
+      "Where and why are 10 million children dying every year?","pages":
+      "2226-2234","eLocationID":"2226","journal":"Lancet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
+    {"key":"3","year":2002,"displayYear":"2002","title":
+      "The world health report 2002: Reducing risks, promoting healthy life.",
+      "note":
+      "Available: http://www.who.int/whr/2002/en/. Accessed 12 September 2007",
+      "collaborativeAuthors":["World Health Organization"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"4","year":1998,"displayYear":"1998","title":
+      "Human development report 1998: Consumption for human development.",
+      "note":
+      "Available: http://hdr.undp.org/reports/global/1998/en/. Accessed 12 September 2007",
+      "collaborativeAuthors":["United Nations Development Programme"],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[]},{"key":"5","year":2004,"displayYear":"2004","title":
+      "State of the world\u0027s children 2005: Childhood under threat.",
+      "note":
+      "Available: http://www.unicef.org/sowc05/english/. Accessed 12 September 2007",
+      "collaborativeAuthors":["UNICEF"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"6","year":2003,"displayYear":"2003","title":
+      "Child poverty in the developing world","publisherLocation":
+      "Bristol","publisherName":"The Policy Press","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[]},{"key":"7","year":1995,"displayYear":"1995","title":
+      "World health report 1995: Bridging the gaps.","note":
+      "Available: http://www.who.int/whr/1995/en/index.html. Accessed 12 September 2007",
+      "collaborativeAuthors":["World Health Organization"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"8","year":2004,"displayYear":"2004","volumeNumber":364,"volume":
+      "364","title":
+      "UNICEF leadership 2005–2015: A call for strategic change.","pages":
+      "9451","eLocationID":"9451","journal":"Lancet","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[],"editors":[]},{"key":"9","year":2006,"displayYear":
+      "2006","volumeNumber":368,"volume":"368","title":
+      "Ann Veneman: getting UNICEF back to basics.","pages":"1061",
+      "eLocationID":"1061","journal":"Lancet","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[],"editors":[]},{"key":"10","year":1999,"displayYear":
+      "1999","title":
+      "Human rights for children and women: How UNICEF helps make them a reality.",
+      "note":
+      "Available: http://www.unicef.org/publications/index_5587.html. Accessed 12 September 2007",
+      "collaborativeAuthors":["UNICEF"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"11","year":2002,"displayYear":"2002","title":
+      "Statement by Mary Robinson, United Nations High Commissioner for Human Rights, at the World Summit on Sustainable Development plenary session.",
+      "note":
+      "Available: http://www.un.org/events/wssd/statements/unhchrE.htm. Accessed 12 September 2007",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"12","year":2003,"displayYear":"2003","title":"Introduction.",
+      "publisherLocation":"London","publisherName":"Zed","note":"In",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
+          "fullName":"LA Williams","givenNames":"LA","surnames":"Williams",
+          "suffix":""},{"fullName":"WA Kjonstad","givenNames":"WA",
+          "surnames":"Kjonstad","suffix":""},{"fullName":"P  Robson",
+          "givenNames":"P","surnames":"Robson","suffix":""}]},{"key":"13",
+      "year":2001,"displayYear":"2001","volumeNumber":54,"volume":"54",
+      "title":
+      "The United Nations decade for the elimination of poverty: What role for international law?",
+      "pages":"553-589","eLocationID":"553","journal":
+      "Current Legal Problems","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
+    {"key":"14","year":2004,"displayYear":"2004","title":
+      "Social inequality and social injustice: A human rights perspective",
+      "publisherLocation":"New York","publisherName":"Palgrave",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"15","year":1991,"displayYear":"1991","title":
+      "A theory of human need","publisherLocation":"London","publisherName":
+      "Macmillan","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"16","year":1991,"displayYear":"1991","title":
+      "Development as freedom","publisherLocation":"Oxford","publisherName":
+      "Oxford University Press","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"17","year":2001,"displayYear":"2001","title":
+      "Human rights and poverty eradication: A talisman for the commonwealth",
+      "publisherLocation":"New Delhi","publisherName":
+      "Commonwealth Human Rights Initiative","collaborativeAuthors":[
+        "Commonwealth Human Rights Initiative"],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"18","year":2003,"displayYear":"2003","title":
+      "Poverty as a violation of human rights: The Pinochet case and the emergence of a new paradigm.",
+      "publisherLocation":"London","publisherName":"Zed","note":"In",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
+          "fullName":"LA Williams","givenNames":"LA","surnames":"Williams",
+          "suffix":""},{"fullName":"A Kjonstad","givenNames":"A","surnames":
+          "Kjonstad","suffix":""},{"fullName":"P Robson","givenNames":"P",
+          "surnames":"Robson","suffix":""}]},{"key":"19","year":2003,
+      "displayYear":"2003","title":
+      "The right to development as a basic human right.","publisherLocation":
+      "London","publisherName":"Zed","note":"In","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[{"fullName":"LA Williams","givenNames":"LA","surnames":
+          "Williams","suffix":""},{"fullName":"A Kjonstad","givenNames":
+          "A","surnames":"Kjonstad","suffix":""},{"fullName":"P  Robson",
+          "givenNames":"P","surnames":"Robson","suffix":""}]},{"key":"20",
+      "year":1999,"displayYear":"1999","volumeNumber":21,"volume":"21",
+      "title":"Combating child poverty—Human rights approaches.","pages":
+      "680-706","eLocationID":"680","journal":"Human Rights Quarterly",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
+    {"key":"21","year":2003,"displayYear":"2003","title":
+      "Poverty is a violation of human rights: Inhumanity or injustice? Ethical and human right dimensions of poverty: Towards a new paradigm in the fight against poverty",
+      "publisherLocation":"Sao Paolo","publisherName":"UNESCO",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"22","year":2000,"displayYear":"2000","title":
+      "Human development report 2000: Human rights and development.","note":
+      "Available: http://hdr.undp.org/reports/global/2000/en/. Accessed 12 September 2007",
+      "collaborativeAuthors":["United Nations Development Programme"],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[]},{"key":"23","year":2002,"displayYear":"2002","title":
+      "The international measurement of poverty and anti-poverty policies.",
+      "publisherLocation":"Bristol","publisherName":"Policy Press","note":
+      "In","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
+          "fullName":"P Townsend","givenNames":"P","surnames":"Townsend",
+          "suffix":""},{"fullName":"D Gordon","givenNames":"D","surnames":
+          "Gordon","suffix":""}]},{"key":"24","year":2005,"displayYear":
+      "2005","title":
+      "The relationship between child poverty and child rights: The role of indicators.",
+      "publisherLocation":"New York","publisherName":
+      "UNICEF/New School University","note":"In","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[{"fullName":"A Minujin","givenNames":"A","surnames":
+          "Minujin","suffix":""},{"fullName":"E Delamonica","givenNames":
+          "E","surnames":"Delamonica","suffix":""},{"fullName":
+          "M Komarecki","givenNames":"M","surnames":"Komarecki","suffix":
+          ""}]},{"key":"25","year":2007,"displayYear":"2007","volumeNumber":
+      370,"volume":"370","title":
+      "An inspirational defence of the right to health.","pages":"379-380",
+      "eLocationID":"379","journal":"Lancet","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[],"editors":[]},{"key":"26","year":2007,"displayYear":
+      "2007","title":
+      "The global human right to health: Dream or possibility?",
+      "publisherLocation":"Oxford","publisherName":"Radcliffe Publishing",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
+    {"key":"27","year":2007,"displayYear":"2007","volumeNumber":370,"volume":
+      "370","title":
+      "History, principles and practice of health and human rights.","pages":
+      "9585","eLocationID":"9585","journal":"Lancet","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[],"editors":[]},{"key":"28","year":2007,"displayYear":
+      "2007","volumeNumber":370,"volume":"370","title":
+      "Do human rights matter to health?","pages":"9586","eLocationID":
+      "9586","journal":"Lancet","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
+    {"key":"29","year":2007,"displayYear":"2007","title":
+      "Some social policy implications of a right to social security.",
+      "publisherLocation":"Antwerp","publisherName":"Intersentia","pages":
+      "57-83","eLocationID":"57","note":"In","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[{"fullName":"J Van Langendonc","givenNames":"J","surnames":
+          "Van Langendonc","suffix":""}]},{"key":"30","year":2003,
+      "displayYear":"2003","title":
+      "General comment no. 5: General measures of implementation for the Convention on the Rights of the Child 03/10/2003. CRC/GC/2003/5.",
+      "note":
+      "Available: http://www.unhchr.ch/tbs/doc.nsf/(symbol/CRC.GC.2003.5.En). Accessed 12 September 2007",
+      "collaborativeAuthors":[
+        "United Nations Committee on the Rights of the Child"],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
+      "editors":[]}],"relatedArticles":[],"authors":[{"fullName":
+      "Simon Pemberton","givenNames":"Simon","surnames":"Pemberton","suffix":
+      ""},{"fullName":"David Gordon","givenNames":"David","surnames":
+      "Gordon","suffix":""},{"fullName":"Shailen Nandy","givenNames":
+      "Shailen","surnames":"Nandy","suffix":""},{"fullName":
+      "Christina Pantazis","givenNames":"Christina","surnames":"Pantazis",
+      "suffix":""},{"fullName":"Peter Townsend","givenNames":"Peter",
+      "surnames":"Townsend","suffix":""}],"editors":[],"journals":[{"eIssn":
+      "1549-1676"}]}

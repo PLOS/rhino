@@ -18,18 +18,24 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.io.Closeables;
+import com.google.gson.Gson;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -43,7 +49,9 @@ public abstract class RestController {
   /**
    * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
    * consists of one or more URI path elements that the API defines as a prefix for a class of RESTful "nouns" and must
-   * end with a slash (for example, {@code "/article/"}).
+   * end with a slash (for example, {@code "/article/"}). The request's URI must contain the given namespace prefix:
+   * everything before the namespace (typically the path to the webapp, or nothing) is ignored, and everything after the
+   * namespace is the return value.
    * <p/>
    * This is essentially doing the work of a {@link PathVariable} annotated parameter, but Spring does not seem to
    * support {@code PathVariable}s that span multiple URI components across slashes. So, if we want to treat a value
@@ -58,20 +66,22 @@ public abstract class RestController {
    */
   protected static String getFullPathVariable(HttpServletRequest request, final String namespace) {
     final int namespaceLength = namespace.length();
-    if (namespace.charAt(namespaceLength - 1) != '/') {
-      throw new IllegalArgumentException("Namespace must end with '/'");
+    if (namespaceLength < 3 || namespace.charAt(0) != '/' || namespace.charAt(namespaceLength - 1) != '/') {
+      throw new IllegalArgumentException("Namespace must begin and end with '/'");
     }
     String requestUri = request.getRequestURI();
-    if (!requestUri.startsWith(namespace)) {
-      String message = String.format("Request URI (\"%s\") does not start with expected namespace (\"%s\")",
+    int namespaceIndex = requestUri.indexOf(namespace);
+    if (namespaceIndex < 0) {
+      String message = String.format("Request URI (\"%s\") does not have expected namespace (\"%s\")",
           requestUri, namespace);
       throw new IllegalArgumentException(message);
     }
+    int namespaceEnd = namespaceIndex + namespaceLength;
     int end = requestUri.length() - (requestUri.endsWith("/") ? 1 : 0);
-    if (end <= namespaceLength) {
+    if (end <= namespaceEnd) {
       throw new IllegalArgumentException("Request URI has no path variable after namespace");
     }
-    return requestUri.substring(namespaceLength, end);
+    return requestUri.substring(namespaceEnd, end);
   }
 
   /**
@@ -153,6 +163,19 @@ public abstract class RestController {
   }
 
   /**
+   * Exception handler for exceptions thrown by the Spring MVC framework when incoming requests cannot be matched with
+   * the @RequestParam-annotated parameters.  For example, if a request is missing a required parameter, or the types do
+   * not match, this handler will be invoked.  This method returns a 405 status code to the client instead of a 500.
+   *
+   * @param srbe exception from the Spring framework
+   * @return ResponseEntity encapsulating a 405 return code and an informative error message
+   */
+  @ExceptionHandler(ServletRequestBindingException.class)
+  public ResponseEntity<String> reportRequestError(ServletRequestBindingException srbe) {
+    return respondWithPlainText(srbe.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
+  }
+
+  /**
    * Display a server-side error to the rest client. This is meant generally to handle bugs and configuration errors.
    * Because this is assumed to be caused by programmer error, the stack trace is sent in the request body.
    *
@@ -168,4 +191,27 @@ public abstract class RestController {
     return respondWithPlainText(report.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  /**
+   * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this method, the InputStream
+   * associated with the request will be closed.
+   *
+   * @param request HttpServletRequest
+   * @param clazz   class of the bean we are de-serializing
+   * @param <T>     type of the bean we are de-serializing
+   * @return JSON de-serialized to a bean
+   * @throws IOException
+   */
+  protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
+    InputStream is = request.getInputStream();
+    Gson gson = new Gson();
+    boolean threw = true;
+    T result;
+    try {
+      result = gson.fromJson(IOUtils.toString(is), clazz);
+      threw = false;
+    } finally {
+      Closeables.close(is, threw);
+    }
+    return result;
+  }
 }

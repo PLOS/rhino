@@ -20,20 +20,26 @@ package org.ambraproject.rhino.config;
 
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
+import org.ambraproject.queue.MessageSender;
+import org.ambraproject.queue.MessageServiceImpl;
+import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.DummyMessageSender;
+import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
 import org.ambraproject.service.article.DummyArticleClassifier;
+import org.ambraproject.service.syndication.SyndicationService;
+import org.ambraproject.service.syndication.impl.SyndicationServiceImpl;
+import org.ambraproject.testutils.AmbraTestConfigurationFactory;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
-import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
-import org.topazproject.ambra.configuration.ConfigurationStore;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -43,19 +49,6 @@ import java.util.Properties;
 @Configuration
 @Import(RhinoConfiguration.class)
 public class TestConfiguration extends BaseConfiguration {
-
-  static {
-    try {
-
-      // In a servlet container, this gets called at webapp load time.
-      // See org.topazproject.ambra.configuration.WebAppListener.  Here, we
-      // have to call it in a lowly static initializer, before Spring creates
-      // its beans.
-      ConfigurationStore.getInstance().loadDefaultConfiguration();
-    } catch (ConfigurationException ce) {
-      throw new RuntimeException(ce);
-    }
-  }
 
   /**
    * Dummy object for sanity-checking the unit test configuration.
@@ -87,6 +80,11 @@ public class TestConfiguration extends BaseConfiguration {
     bean.setHibernateProperties(hibernateProperties);
 
     return bean;
+  }
+
+  @Bean
+  public org.apache.commons.configuration.Configuration ambraConfiguration() throws Exception {
+    return AmbraTestConfigurationFactory.getConfiguration("ambra-test-config.xml");
   }
 
   /**
@@ -125,5 +123,27 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public AssetCrudService assetService() {
     return new AssetCrudServiceImpl();
+  }
+
+  @Bean
+  public MessageSender messageSender() {
+    return new DummyMessageSender();
+  }
+
+  @Bean
+  public SyndicationService syndicationService() throws Exception {
+    SyndicationServiceImpl service = new SyndicationServiceImpl();
+    service.setSessionFactory(sessionFactory(dataSource()).getObject());
+    service.setAmbraConfiguration(ambraConfiguration());
+    MessageServiceImpl messageService = new MessageServiceImpl();
+    messageService.setAmbraConfiguration(ambraConfiguration());
+    messageService.setSender(messageSender());
+    service.setMessageService(messageService);
+    return service;
+  }
+
+  @Bean
+  public ArticleStateService articleStateService() {
+    return new ArticleStateServiceImpl();
   }
 }

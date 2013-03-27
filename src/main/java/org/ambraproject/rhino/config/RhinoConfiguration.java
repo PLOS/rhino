@@ -23,15 +23,24 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.ambraproject.configuration.ConfigurationStore;
+import org.ambraproject.models.AmbraEntity;
+import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +64,7 @@ public class RhinoConfiguration extends BaseConfiguration {
    * Static stuff outside the Spring framework that needs to be run on startup. Ideally this should be empty.
    */
   private static void doStartupKludges() {
-    // Required by Ambra; see org.topazproject.ambra.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
+    // Required by Ambra; org.ambraproject.configuration.ConfigurationStore, org.ambraproject.util.URIGenerator
     System.setProperty("SYSTEM_OBJECT_ID_PREFIX", "info:doi/0.0/");
   }
 
@@ -98,7 +107,18 @@ public class RhinoConfiguration extends BaseConfiguration {
         new ExclusionStrategy() {
           @Override
           public boolean shouldSkipField(FieldAttributes f) {
-            return namesToExclude.contains(f.getName());
+            final String name = f.getName();
+            if (namesToExclude.contains(name)) {
+              return true;
+            }
+
+            // Prevent infinite recursion on ArticleRelationship.parentArticle
+            if (ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass())
+                && AmbraEntity.class.isAssignableFrom(f.getDeclaredClass())) {
+              return true;
+            }
+
+            return false;
           }
 
           @Override
@@ -108,6 +128,12 @@ public class RhinoConfiguration extends BaseConfiguration {
         }
     );
     return builder.create();
+  }
+
+  @Bean
+  public org.apache.commons.configuration.Configuration ambraConfiguration() {
+    // Fetch from Ambra's custom container
+    return ConfigurationStore.getInstance().getConfiguration();
   }
 
   @Bean
@@ -136,4 +162,20 @@ public class RhinoConfiguration extends BaseConfiguration {
   public IngestibleService ingestibleService() {
     return new IngestibleServiceImpl();
   }
+
+  @Bean
+  public ArticleStateService articleStateService() {
+    return new ArticleStateServiceImpl();
+  }
+
+  @Bean
+  ConfigurationReadService configurationReadService() {
+    return new ConfigurationReadServiceImpl();
+  }
+
+  @Bean
+  public PingbackReadService pingbackReadService() {
+    return new PingbackReadServiceImpl();
+  }
+
 }

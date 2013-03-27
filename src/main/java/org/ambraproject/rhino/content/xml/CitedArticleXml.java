@@ -136,6 +136,11 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
       String fpage = readString("child::fpage");
       String lpage = readString("child::lpage");
       if (!Strings.isNullOrEmpty(lpage)) {
+        if (fpage == null) {
+          // This is legacy behavior, resulting in confusing output like "-18" for fpage == null, lpage == "18".
+          // Probably better to throw an error or return lpage. TODO: Improve.
+          fpage = "";
+        }
         return fpage + "-" + lpage;
       } else {
         return fpage;

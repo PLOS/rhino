@@ -1,0 +1,283 @@
+{"doi":"info:doi/10.1371/journal.pone.0000125","title":
+  "Heterozygote Advantage for Fecundity","eIssn":"1932-6203","state":1,
+  "archiveName":"pone.0000125.zip","description":
+  "\u003cp\u003eHeterozygote advantage, or overdominance, remains a popular and persuasive explanation for the maintenance of genetic variation in natural populations in the face of selection. However, despite being first proposed more than 80 years ago, there remain few examples that fit the criteria for heterozygote advantage, all of which are associated with disease resistance and are maintained only in the presence of disease or other gene-by-environment interaction. Here we report five new examples of heterozygote advantage, based around polymorphisms in the \u003citalic\u003eBMP15\u003c/italic\u003e and \u003citalic\u003eGDF9\u003c/italic\u003e genes that affect female fecundity in domesticated sheep and are not reliant on disease for their maintenance. Five separate mutations in these members of the transforming growth factor β (\u003citalic\u003eTGFβ\u003c/italic\u003e) superfamily give phenotypes with fitness differentials characteristic of heterozygous advantage. In each case, one copy of the mutant allele increases ovulation rate, and ultimately litter size per ewe lambing, relative to the wildtype. However, homozygous ewes inheriting mutant alleles from both parents have impaired oocyte development and maturation, which results in small undeveloped ovaries and infertility. Using data collected over many years on ovulation rates, litter size, and lambing rates, we have calculated the equilibrium solution for each of these polymorphisms using standard population genetic theory. The predicted equilibrium frequencies obtained for these mutant alleles range from 0.11 to 0.23, which are amongst the highest yet reported for a polymorphism maintained by heterozygote advantage. These are amongst the most frequent and compelling examples of heterozygote advantage yet described and the first documented examples of heterozygote advantage that are not reliant on a disease interaction for their maintenance.\u003c/p\u003e",
+  "rights":
+  "Gemmell, Slate. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language":"en","format":"text/xml","pages":"1-6","eLocationId":"e125",
+  "strkImgURI":"","date":"Dec 27, 2006 12:00:00 AM","volume":"1","issue":
+  "1","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
+  "publisherName":"Public Library of Science","url":
+  "http://dx.doi.org/10.1371%2Fjournal.pone.0000125","collaborativeAuthors":[],
+  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
+  "assets":[{"doi":"info:doi/10.1371/journal.pone.0000125","extension":
+      "XML","contentType":"text/xml","title":
+      "Heterozygote Advantage for Fecundity","description":
+      "\u003cp\u003eHeterozygote advantage, or overdominance, remains a popular and persuasive explanation for the maintenance of genetic variation in natural populations in the face of selection. However, despite being first proposed more than 80 years ago, there remain few examples that fit the criteria for heterozygote advantage, all of which are associated with disease resistance and are maintained only in the presence of disease or other gene-by-environment interaction. Here we report five new examples of heterozygote advantage, based around polymorphisms in the \u003citalic\u003eBMP15\u003c/italic\u003e and \u003citalic\u003eGDF9\u003c/italic\u003e genes that affect female fecundity in domesticated sheep and are not reliant on disease for their maintenance. Five separate mutations in these members of the transforming growth factor β (\u003citalic\u003eTGFβ\u003c/italic\u003e) superfamily give phenotypes with fitness differentials characteristic of heterozygous advantage. In each case, one copy of the mutant allele increases ovulation rate, and ultimately litter size per ewe lambing, relative to the wildtype. However, homozygous ewes inheriting mutant alleles from both parents have impaired oocyte development and maturation, which results in small undeveloped ovaries and infertility. Using data collected over many years on ovulation rates, litter size, and lambing rates, we have calculated the equilibrium solution for each of these polymorphisms using standard population genetic theory. The predicted equilibrium frequencies obtained for these mutant alleles range from 0.11 to 0.23, which are amongst the highest yet reported for a polymorphism maintained by heterozygote advantage. These are amongst the most frequent and compelling examples of heterozygote advantage yet described and the first documented examples of heterozygote advantage that are not reliant on a disease interaction for their maintenance.\u003c/p\u003e",
+      "size":79966},{"doi":"info:doi/10.1371/journal.pone.0000125",
+      "extension":"PDF","contentType":"application/pdf","title":
+      "Heterozygote Advantage for Fecundity","description":
+      "\u003cp\u003eHeterozygote advantage, or overdominance, remains a popular and persuasive explanation for the maintenance of genetic variation in natural populations in the face of selection. However, despite being first proposed more than 80 years ago, there remain few examples that fit the criteria for heterozygote advantage, all of which are associated with disease resistance and are maintained only in the presence of disease or other gene-by-environment interaction. Here we report five new examples of heterozygote advantage, based around polymorphisms in the \u003citalic\u003eBMP15\u003c/italic\u003e and \u003citalic\u003eGDF9\u003c/italic\u003e genes that affect female fecundity in domesticated sheep and are not reliant on disease for their maintenance. Five separate mutations in these members of the transforming growth factor β (\u003citalic\u003eTGFβ\u003c/italic\u003e) superfamily give phenotypes with fitness differentials characteristic of heterozygous advantage. In each case, one copy of the mutant allele increases ovulation rate, and ultimately litter size per ewe lambing, relative to the wildtype. However, homozygous ewes inheriting mutant alleles from both parents have impaired oocyte development and maturation, which results in small undeveloped ovaries and infertility. Using data collected over many years on ovulation rates, litter size, and lambing rates, we have calculated the equilibrium solution for each of these polymorphisms using standard population genetic theory. The predicted equilibrium frequencies obtained for these mutant alleles range from 0.11 to 0.23, which are amongst the highest yet reported for a polymorphism maintained by heterozygote advantage. These are amongst the most frequent and compelling examples of heterozygote advantage yet described and the first documented examples of heterozygote advantage that are not reliant on a disease interaction for their maintenance.\u003c/p\u003e",
+      "size":162645},{"doi":"info:doi/10.1371/journal.pone.0000125.t001",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 1","description":
+      "\u003ctitle\u003eFecundity genes exhibiting heterozygote advantage in sheep.\u003c/title\u003e",
+      "size":9249944},{"doi":"info:doi/10.1371/journal.pone.0000125.t001",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eFecundity genes exhibiting heterozygote advantage in sheep.\u003c/title\u003e",
+      "size":1196},{"doi":"info:doi/10.1371/journal.pone.0000125.t001",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eFecundity genes exhibiting heterozygote advantage in sheep.\u003c/title\u003e",
+      "size":29061},{"doi":"info:doi/10.1371/journal.pone.0000125.t001",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 1","description":
+      "\u003ctitle\u003eFecundity genes exhibiting heterozygote advantage in sheep.\u003c/title\u003e",
+      "size":199822},{"doi":"info:doi/10.1371/journal.pone.0000125.g001",
+      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eGenotypes and the fitness differentiations (w) for the Inverdale mutation (FecXI).\u003c/title\u003e",
+      "size":1607608},{"doi":"info:doi/10.1371/journal.pone.0000125.g001",
+      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eGenotypes and the fitness differentiations (w) for the Inverdale mutation (FecXI).\u003c/title\u003e",
+      "size":4691},{"doi":"info:doi/10.1371/journal.pone.0000125.g001",
+      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eGenotypes and the fitness differentiations (w) for the Inverdale mutation (FecXI).\u003c/title\u003e",
+      "size":159807},{"doi":"info:doi/10.1371/journal.pone.0000125.g001",
+      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
+      "title":"Figure 1","description":
+      "\u003ctitle\u003eGenotypes and the fitness differentiations (w) for the Inverdale mutation (FecXI).\u003c/title\u003e",
+      "size":1228051},{"doi":"info:doi/10.1371/journal.pone.0000125.t002",
+      "contextElement":"table-wrap","extension":"TIF","contentType":
+      "image/tiff","title":"Table 2","description":
+      "\u003ctitle\u003eTable 2. Heterozygote advantage for fecundity in sheep under two different environment conditions.\u003c/title\u003e",
+      "size":10021352},{"doi":"info:doi/10.1371/journal.pone.0000125.t002",
+      "contextElement":"table-wrap","extension":"PNG_S","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eTable 2. Heterozygote advantage for fecundity in sheep under two different environment conditions.\u003c/title\u003e",
+      "size":1319},{"doi":"info:doi/10.1371/journal.pone.0000125.t002",
+      "contextElement":"table-wrap","extension":"PNG_M","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eTable 2. Heterozygote advantage for fecundity in sheep under two different environment conditions.\u003c/title\u003e",
+      "size":36554},{"doi":"info:doi/10.1371/journal.pone.0000125.t002",
+      "contextElement":"table-wrap","extension":"PNG_L","contentType":
+      "image/png","title":"Table 2","description":
+      "\u003ctitle\u003eTable 2. Heterozygote advantage for fecundity in sheep under two different environment conditions.\u003c/title\u003e",
+      "size":240414},{"doi":"info:doi/10.1371/journal.pone.0000125.e001",
+      "contextElement":"disp-formula","extension":"TIF","contentType":
+      "image/tiff","title":"","description":"","size":5808},{"doi":
+      "info:doi/10.1371/journal.pone.0000125.e001","contextElement":
+      "disp-formula","extension":"PNG","contentType":"image/png","title":
+      "","description":"","size":1240},{"doi":
+      "info:doi/10.1371/journal.pone.0000125.s001","contextElement":
+      "supplementary-material","extension":"DOC","contentType":
+      "application/msword","title":"Table S1","description":
+      "\u003cp\u003eA review of genes proposed to exhibit heterozygote advantage.\u003c/p\u003e\u003cp\u003e(0.12 MB DOC)\u003c/p\u003e",
+      "size":120832}],"citedArticles":[{"key":"1","year":1954,"displayYear":
+      "1954","volumeNumber":1,"volume":"1","title":
+      "Protection afforded by sickle-cell trait against subtertian malarial infection.",
+      "pages":"290-294","eLocationID":"290","journal":"Br Med J",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "AC Allison","givenNames":"AC","surnames":"Allison","suffix":""}],
+      "editors":[]},{"key":"2","year":1949,"displayYear":"1949",
+      "volumeNumber":19,"volume":"19","title":"Disease and evolution.",
+      "pages":"68-76","eLocationID":"68","journal":
+      "Ricarea Scientifica Supplement A","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"JBS Haldane","givenNames":"JBS","surnames":
+          "Haldane","suffix":""}],"editors":[]},{"key":"3","year":1922,
+      "displayYear":"1922","volumeNumber":42,"volume":"42","title":
+      "On the dominance ratio.","pages":"321-341","eLocationID":"321",
+      "journal":"Proc Royal Soc Edin","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"RA Fisher","givenNames":"RA","surnames":
+          "Fisher","suffix":""}],"editors":[]},{"key":"4","year":1930,
+      "displayYear":"1930","title":
+      "The Genetical Theory of Natural Selection.","publisherLocation":
+      "Oxford","publisherName":"Clarendon Press","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Book","authors":[{
+          "fullName":"RA Fisher","givenNames":"RA","surnames":"Fisher",
+          "suffix":""}],"editors":[]},{"key":"5","year":2005,"displayYear":
+      "2005","volumeNumber":37,"volume":"37","title":
+      "Major genes affecting ovulation rate in sheep.","pages":"S11-S23",
+      "eLocationID":"S11","journal":"Genet Sel Evol","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"GH Davis","givenNames":"GH","surnames":
+          "Davis","suffix":""}],"editors":[]},{"key":"6","year":2000,
+      "displayYear":"2000","volumeNumber":25,"volume":"25","title":
+      "Mutations in an oocyte-derived growth factor gene (BMP15) cause increased ovulation rate and infertility in a dosage-sensitive manner.",
+      "pages":"279-283","eLocationID":"279","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "SM Galloway","givenNames":"SM","surnames":"Galloway","suffix":
+          ""},{"fullName":"KP McNatty","givenNames":"KP","surnames":
+          "McNatty","suffix":""},{"fullName":"LM Cambridge","givenNames":
+          "LM","surnames":"Cambridge","suffix":""},{"fullName":
+          "MPE Laitinen","givenNames":"MPE","surnames":"Laitinen","suffix":
+          ""},{"fullName":"JL Juengel","givenNames":"JL","surnames":
+          "Juengel","suffix":""}],"editors":[]},{"key":"7","year":2004,
+      "displayYear":"2004","volumeNumber":70,"volume":"70","title":
+      "Mutations in the genes for oocyte-derived growth factors GDF9 and BMP15 are associated with both increased ovulation rate and sterility in Cambridge and Belclare sheep (\u003citalic\u003eOvis aries\u003c/italic\u003e).",
+      "pages":"900-909","eLocationID":"900","journal":"Biol Reprod",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JP Hanrahan","givenNames":"JP","surnames":"Hanrahan","suffix":
+          ""},{"fullName":"SM Gregan","givenNames":"SM","surnames":
+          "Gregan","suffix":""},{"fullName":"P Mulsant","givenNames":"P",
+          "surnames":"Mulsant","suffix":""},{"fullName":"M Mullen",
+          "givenNames":"M","surnames":"Mullen","suffix":""},{"fullName":
+          "GH Davis","givenNames":"GH","surnames":"Davis","suffix":""}],
+      "editors":[]},{"key":"8","year":2002,"displayYear":"2002",
+      "volumeNumber":191,"volume":"191","title":
+      "BMP15 mutations and ovarian function.","pages":"15-18","eLocationID":
+      "15","journal":"Mol Cell Endo","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"SM Galloway","givenNames":"SM","surnames":
+          "Galloway","suffix":""},{"fullName":"SM Gregan","givenNames":
+          "SM","surnames":"Gregan","suffix":""},{"fullName":"T Wilson",
+          "givenNames":"T","surnames":"Wilson","suffix":""},{"fullName":
+          "KP McNatty","givenNames":"KP","surnames":"McNatty","suffix":""},{
+          "fullName":"JL Juengel","givenNames":"JL","surnames":"Juengel",
+          "suffix":""}],"editors":[]},{"key":"9","year":2004,"displayYear":
+      "2004","volumeNumber":25,"volume":"25","title":
+      "The bone morphogenetic protein system in mammalian reproduction.",
+      "pages":"72-101","eLocationID":"72","journal":"Endocr Rev",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "S Shimasaki","givenNames":"S","surnames":"Shimasaki","suffix":
+          ""},{"fullName":"RK Moore","givenNames":"RK","surnames":"Moore",
+          "suffix":""},{"fullName":"F Otsuka","givenNames":"F","surnames":
+          "Otsuka","suffix":""},{"fullName":"GF Erickson","givenNames":
+          "GF","surnames":"Erickson","suffix":""}],"editors":[]},{"key":
+      "10","year":1996,"displayYear":"1996","volumeNumber":383,"volume":
+      "383","title":
+      "Growth differentiation factor-9 is required during early ovarian folliculogenesis.",
+      "pages":"531-535","eLocationID":"531","journal":"Nature",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JW Dong","givenNames":"JW","surnames":"Dong","suffix":""},{
+          "fullName":"DF Albertini","givenNames":"DF","surnames":
+          "Albertini","suffix":""},{"fullName":"K Nishimori","givenNames":
+          "K","surnames":"Nishimori","suffix":""},{"fullName":"TR Kumar",
+          "givenNames":"TR","surnames":"Kumar","suffix":""},{"fullName":
+          "NF Lu","givenNames":"NF","surnames":"Lu","suffix":""}],"editors":[]},
+    {"key":"11","year":2005,"displayYear":"2005","title":
+      "Genetics of Populations.","publisherLocation":
+      "Sudbury, Massachusetts","publisherName":"Jones and Bartlett","pages":
+      "737","eLocationID":"737","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[{"fullName":
+          "P Hedrick","givenNames":"P","surnames":"Hedrick","suffix":""}],
+      "editors":[]},{"key":"12","year":2005,"displayYear":"2005",
+      "volumeNumber":37,"volume":"37","title":
+      "Negative epistasis between the malaria-protective effects of α+-thalassemia and the sickle cell trait.",
+      "pages":"1253-1257","eLocationID":"1253","journal":"Nat Genet",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "TN Williams","givenNames":"TN","surnames":"Williams","suffix":
+          ""},{"fullName":"TW Mwangi","givenNames":"TW","surnames":
+          "Mwangi","suffix":""},{"fullName":"S Wambua","givenNames":"S",
+          "surnames":"Wambua","suffix":""},{"fullName":"TEA Peto",
+          "givenNames":"TEA","surnames":"Peto","suffix":""},{"fullName":
+          "DJ Weatherall","givenNames":"DJ","surnames":"Weatherall","suffix":
+          ""}],"editors":[]},{"key":"13","year":2004,"displayYear":"2004",
+      "volumeNumber":20,"volume":"20","title":
+      "Balancing claims for balancing selection.","pages":"300-304",
+      "eLocationID":"300","journal":"Trends Genet","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"M Kreitman","givenNames":"M","surnames":
+          "Kreitman","suffix":""},{"fullName":"A Di Rienzo","givenNames":
+          "A","surnames":"Di Rienzo","suffix":""}],"editors":[]},{"key":
+      "14","year":2004,"displayYear":"2004","title":
+      "Soay Sheep: Dynamics and Selection in an Island Population.",
+      "publisherLocation":"Cambridge, U.K.","publisherName":
+      "Cambridge University Press","pages":"396","eLocationID":"396",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[{
+          "fullName":"TH Clutton-Brock","givenNames":"TH","surnames":
+          "Clutton-Brock","suffix":""},{"fullName":"JM Pemberton",
+          "givenNames":"JM","surnames":"Pemberton","suffix":""}]},{"key":
+      "15","year":1962,"displayYear":"1962","volumeNumber":47,"volume":
+      "47","title":"Selection for heterozygotes in small populations.",
+      "pages":"1291-1300","eLocationID":"1291","journal":"Genetics",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "A Robertson","givenNames":"A","surnames":"Robertson","suffix":
+          ""}],"editors":[]},{"key":"16","year":1991,"displayYear":"1991",
+      "volumeNumber":253,"volume":"253","title":
+      "Identification of a mutation in porcine ryanodine receptor associated with malignant hyperthermia.",
+      "pages":"448-451","eLocationID":"448","journal":"Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "J Fujii","givenNames":"J","surnames":"Fujii","suffix":""},{
+          "fullName":"K Otsu","givenNames":"K","surnames":"Otsu","suffix":
+          ""},{"fullName":"F Zorzato","givenNames":"F","surnames":
+          "Zorzato","suffix":""},{"fullName":"S de Leon","givenNames":"S",
+          "surnames":"de Leon","suffix":""},{"fullName":"VK Khanna",
+          "givenNames":"VK","surnames":"Khanna","suffix":""}],"editors":[]},{
+      "key":"17","year":1992,"displayYear":"1992","volumeNumber":34,"volume":
+      "34","title":
+      "Liveweight, fleece weight and prolificacy of Romney ewes carrying the Inverdale prolificacy gene (FecX \u003csup\u003eI\u003c/sup\u003e) located on the X-chromosome.",
+      "pages":"83-91","eLocationID":"83","journal":
+      "Livestock Production Science","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"GH Davis","givenNames":"GH","surnames":
+          "Davis","suffix":""},{"fullName":"KG Dodds","givenNames":"KG",
+          "surnames":"Dodds","suffix":""},{"fullName":"JC McEwan",
+          "givenNames":"JC","surnames":"McEwan","suffix":""},{"fullName":
+          "PF Fennessy","givenNames":"PF","surnames":"Fennessy","suffix":
+          ""}],"editors":[]},{"key":"18","year":1999,"displayYear":"1999",
+      "volumeNumber":58,"volume":"58","title":
+      "Economic values for ewe prolificacy and lamb survival in New Zealand sheep.",
+      "pages":"75-90","eLocationID":"75","journal":
+      "Livestock Production Science","collaborativeAuthors":[],
+      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors":[{"fullName":"PR Amer","givenNames":"PR","surnames":"Amer",
+          "suffix":""},{"fullName":"JC McEwan","givenNames":"JC","surnames":
+          "McEwan","suffix":""},{"fullName":"KG Dodds","givenNames":"KG",
+          "surnames":"Dodds","suffix":""},{"fullName":"GH Davis",
+          "givenNames":"GH","surnames":"Davis","suffix":""}],"editors":[]},{
+      "key":"19","year":2004,"displayYear":"2004","volumeNumber":52,"volume":
+      "52","title":
+      "The effect of nutrition prior to and during mating on ovulation rate, reproductive wastage, and lambing rate in three sheep breeds.",
+      "pages":"117-125","eLocationID":"117","journal":
+      "Small Ruminant Research","collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "N Lassoued","givenNames":"N","surnames":"Lassoued","suffix":""},{
+          "fullName":"M Rekik","givenNames":"M","surnames":"Rekik","suffix":
+          ""},{"fullName":"M Mahouachi","givenNames":"M","surnames":
+          "Mahouachi","suffix":""},{"fullName":"M Ben Hamouda","givenNames":
+          "M","surnames":"Ben Hamouda","suffix":""}],"editors":[]},{"key":
+      "20","year":1999,"displayYear":"1999","volumeNumber":68,"volume":
+      "68","title":
+      "Nutritional effects on ovulation, embryo development and the establishment of pregnancy in ruminants.",
+      "pages":"299-314","eLocationID":"299","journal":"Animal Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "D O\u0027Callaghan","givenNames":"D","surnames":
+          "O\u0027Callaghan","suffix":""},{"fullName":"MP Boland",
+          "givenNames":"MP","surnames":"Boland","suffix":""}],"editors":[]},{
+      "key":"21","year":1996,"displayYear":"1996","volumeNumber":42,"volume":
+      "42","title":"Nutrition and reproduction.","pages":"25-34",
+      "eLocationID":"25","journal":"Animal Reproduction Science",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JJ Robinson","givenNames":"JJ","surnames":"Robinson","suffix":
+          ""}],"editors":[]},{"key":"22","year":1982,"displayYear":"1982",
+      "volume":"V","title":
+      "Selection for increased ovulation rate, litter size and embryo survival.",
+      "pages":"294","eLocationID":"294","journal":
+      "2nd World Congress on Genetics Applied to Livestock Production",
+      "collaborativeAuthors":[],"citationType":
+      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
+          "JP Hanrahan","givenNames":"JP","surnames":"Hanrahan","suffix":
+          ""}],"editors":[]}],"relatedArticles":[],"authors":[{"fullName":
+      "Neil J. Gemmell","givenNames":"Neil J.","surnames":"Gemmell","suffix":
+      ""},{"fullName":"Jon Slate","givenNames":"Jon","surnames":"Slate",
+      "suffix":""}],"editors":[{"fullName":"Konrad Scheffler","givenNames":
+      "Konrad","surnames":"Scheffler","suffix":""}],"journals":[{"eIssn":
+      "1932-6203"}]}

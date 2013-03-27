@@ -18,10 +18,13 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
+import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -29,7 +32,7 @@ import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.AssetNode;
+import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
@@ -41,12 +44,16 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,16 +62,20 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -185,6 +196,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     String doi = article.getDoi();
 
+    try {
+
+      // This method needs the article to have already been persisted to the DB.
+      syndicationService.createSyndications(doi);
+    } catch (NoSuchArticleIdException nsaide) {
+
+      // Should never happen, since we have already loaded this article.
+      throw new RuntimeException(nsaide);
+    }
+
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());
     String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid();
@@ -214,6 +235,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return article;
   }
 
+  private static final Pattern ZIP_ENTRY_EXCLUDE_RE = Pattern.compile("\\.xml(\\.\\w+)?");
+
+  /**
+   * Determines if we should save a file contained within an article archive as an asset.
+   *
+   * @param filename the name of a file within a .zip archive
+   * @return true if this file should be persisted as an asset
+   */
+  @VisibleForTesting
+  public static boolean shouldSaveAssetFile(String filename) {
+    Preconditions.checkNotNull(filename);
+    filename = filename.toLowerCase().trim();
+    if (filename.startsWith("manifest.")) {
+      return false;
+    }
+    Matcher matcher = ZIP_ENTRY_EXCLUDE_RE.matcher(filename);
+    return !matcher.find();
+  }
+
   private void addAssetFiles(Article article, ZipFile zipFile)
       throws IOException, FileStoreException {
 
@@ -222,24 +262,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Enumeration<? extends ZipEntry> entries = zipFile.entries();
     while (entries.hasMoreElements()) {
       ZipEntry entry = entries.nextElement();
-      if (!entry.getName().toLowerCase().startsWith("manifest.")) {
+      if (shouldSaveAssetFile(entry.getName())) {
         String[] fields = entry.getName().split("\\.");
 
         // Not sure why, but the existing admin code always converts the extension to UPPER.
         String extension = fields[fields.length - 1].toUpperCase();
-
-        // Need to exlude both ".xml" and ".xml.orig".
-        if (!"XML".equals(extension) && !"ORIG".equals(extension)) {
-          String doi = "info:doi/10.1371/journal."
-              + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
-          InputStream is = zipFile.getInputStream(entry);
-          boolean threw = true;
-          try {
-            assetService.upload(is, AssetFileIdentity.create(doi, extension));
-            threw = false;
-          } finally {
-            Closeables.close(is, threw);
-          }
+        String doi = "info:doi/10.1371/journal."
+            + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
+        InputStream is = zipFile.getInputStream(entry);
+        boolean threw = true;
+        try {
+          assetService.upload(is, AssetFileIdentity.create(doi, extension));
+          threw = false;
+        } finally {
+          Closeables.close(is, threw);
         }
       }
     }
@@ -325,10 +361,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
-    List<AssetNode> assetNodes = xml.findAllAssetNodes();
+    AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
+    Collection<String> assetDois = assetNodes.getDois();
+
     if (assets == null) {  // create
-      assets = Lists.newArrayListWithCapacity(assetNodes.size());
+      assets = Lists.newArrayListWithCapacity(assetDois.size());
       article.setAssets(assets);
     } else {  // update
 
@@ -354,9 +392,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       });
       assets.clear();
     }
-    for (AssetNode assetNode : assetNodes) {
-      ArticleAsset asset = new ArticleAsset();
-      writeAsset(asset, assetNode);
+
+    for (String assetDoi : assetDois) {
+      ArticleAsset asset;
+      try {
+        asset = parseAsset(assetNodes, assetDoi);
+      } catch (XmlContentException e) {
+        throw complainAboutXml(e);
+      }
       assets.add(asset);
     }
     ArticleAsset xmlAsset = new ArticleAsset();
@@ -389,21 +432,72 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Copy metadata into an asset entity from an XML node describing the asset.
+   * Write metadata from an XML node describing an asset into a new asset entity.
    *
-   * @param asset     the persistent asset entity to modify
-   * @param assetNode the XML node from which to extract data
-   * @return the modified asset (same identity)
+   * @param assetNodes the set of all asset nodes found in the article document
+   * @param assetDoi   the DOI of the asset to find and write
+   * @return the new asset
    */
-  private static ArticleAsset writeAsset(ArticleAsset asset, AssetNode assetNode) {
-    String assetDoi = assetNode.getDoi();
+  private static ArticleAsset parseAsset(AssetNodesByDoi assetNodes, String assetDoi) throws XmlContentException {
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
+    List<Node> matchingNodes = assetNodes.getNodes(assetDoi);
 
-    try {
-      return new AssetXml(assetNode.getNode(), assetIdentity).build(asset);
-    } catch (XmlContentException e) {
-      throw complainAboutXml(e);
+    /*
+     * In the typical case, there is exactly one matching node.
+     *
+     * Rarely, multiple nodes will have the same DOI (such as two representations of the same "supplemental info"
+     * asset). Legacy behavior in this case is to store metadata for the first one.
+     */
+    if (matchingNodes.size() > 1) {
+      log.warn("Matched multiple nodes with DOI=\"{}\"; defaulting to first instance", assetDoi);
     }
+    return parseAssetNode(matchingNodes.get(0), assetIdentity);
+  }
+
+  /**
+   * Parse an asset from multiple redundant asset nodes only if they have equal values. Throw an exception if two nodes
+   * do not describe the same asset.
+   *
+   * @param assetNodes    one or more article XML nodes representing an asset
+   * @param assetIdentity the identity of the asset to parse
+   * @return the parsed asset
+   * @throws XmlContentException
+   */
+  private static ArticleAsset parseDistinctAsset(List<Node> assetNodes, AssetIdentity assetIdentity) throws XmlContentException {
+    Preconditions.checkArgument(!assetNodes.isEmpty());
+    Iterator<Node> nodeIterator = assetNodes.iterator();
+    ArticleAsset asset = parseAssetNode(nodeIterator.next(), assetIdentity);
+    while (nodeIterator.hasNext()) {
+      ArticleAsset nextAsset = parseAssetNode(nodeIterator.next(), assetIdentity);
+      if (!haveEqualFields(asset, nextAsset)) {
+        String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + assetIdentity.getIdentifier();
+        throw new XmlContentException(errorMsg);
+      }
+    }
+    return asset;
+  }
+
+  private static ArticleAsset parseAssetNode(Node assetNode, AssetIdentity assetIdentity) throws XmlContentException {
+    return new AssetXml(assetNode, assetIdentity).build(new ArticleAsset());
+  }
+
+  /**
+   * Check if two assets have equal values for all fields defined in article XML. This is more stringent than {@link
+   * ArticleAsset#equals(Object)}.
+   *
+   * @param a1 an asset
+   * @param a2 another asset
+   * @return {@code true} they have equal values for all fields defined in article XML
+   */
+  private static boolean haveEqualFields(ArticleAsset a1, ArticleAsset a2) {
+    if (Preconditions.checkNotNull(a1) == Preconditions.checkNotNull(a2)) return true;
+    if (!Objects.equal(a1.getDoi(), a2.getDoi())) return false;
+    if (!Objects.equal(a1.getContextElement(), a2.getContextElement())) return false;
+    if (!Objects.equal(a1.getExtension(), a2.getExtension())) return false;
+    if (!Objects.equal(a1.getContentType(), a2.getContentType())) return false;
+    if (!Objects.equal(a1.getTitle(), a2.getTitle())) return false;
+    if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
+    return true;
   }
 
   private static RestClientException complainAboutXml(XmlContentException e) {
@@ -429,7 +523,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void readMetadata(HttpServletResponse response, DoiBasedIdentity id, MetadataFormat format) throws IOException {
+  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
@@ -442,13 +536,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
-    readMetadata(response, article, format);
+    readMetadata(receiver, article, format);
   }
 
   @Override
-  public void readMetadata(HttpServletResponse response, Article article, MetadataFormat format) throws IOException {
+  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    writeJsonToResponse(response, article);
+    writeJson(receiver, article);
   }
 
   /**
@@ -470,6 +564,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     fileStoreService.deleteFile(fsid);
     hibernateTemplate.delete(article);
+  }
+
+  @Override
+  public void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException {
+    assert format == MetadataFormat.JSON;
+    List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class)
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        .setProjection(Projections.property("doi"))
+        .addOrder(Order.asc("lastModified"))
+    );
+    writeJson(receiver, dois);
   }
 
   @Required
