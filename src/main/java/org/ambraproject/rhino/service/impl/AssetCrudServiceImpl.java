@@ -192,16 +192,22 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
         hibernateTemplate.execute(new HibernateCallback<List<?>>() {
           @Override
           public List<?> doInHibernate(Session session) throws HibernateException, SQLException {
+            // Find the parent article, and the max sort order for all assets with that parent (not necessarily same asset DOI)
             SQLQuery query = session.createSQLQuery(""
-                + "SELECT "
+                + "SELECT forArticle.articleID, MAX(forArticle.sortOrder) FROM "
+                + "  articleAsset forArticle INNER JOIN articleAsset forDoi "
+                + "  ON forArticle.articleID = forDoi.articleID "
+                + "WHERE forDoi.doi = :assetDoi "
+                + "GROUP BY forArticle.articleID");
 
-                // Find the parent article that is (presumed) common to all other asset files
-                // with the same DOI as the new one (they have different extensions).
-                + "  (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :doi) AS parentArticleId, "
+            // TODO: Consider this query instead
+            // It seems to do the same thing and is simpler, but probably performs worse.
+            //   SELECT articleID, MAX(sortOrder)
+            //   FROM articleAsset WHERE articleID =
+            //     (SELECT DISTINCT articleID FROM articleAsset WHERE doi = :assetDoi)
+            //   GROUP BY articleID
 
-                // Hibernate maintains the article's assets as a List field. Get the max index so we can insert a new one.
-                + "  (SELECT MAX(sortOrder) FROM articleAsset WHERE articleID = parentArticleId)");
-            query.setParameter("doi", assetDoi);
+            query.setParameter("assetDoi", assetDoi);
             return query.list();
           }
         }));
