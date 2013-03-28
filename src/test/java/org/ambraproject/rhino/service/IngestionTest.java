@@ -482,7 +482,7 @@ public class IngestionTest extends BaseRhinoTest {
     compare(results, Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
     compare(results, Article.class, "state", actual.getState(), expected.getState());
     compareMarkupText(results, Article.class, "description", actual.getDescription(), expected.getDescription());
-    compareMarkupText(results, Article.class, "rights", actual.getRights(), expected.getRights());
+    compareRights(results, actual.getRights(), expected.getRights());
     compare(results, Article.class, "language", actual.getLanguage(), expected.getLanguage());
     compare(results, Article.class, "format", actual.getFormat(), expected.getFormat());
     comparePageRanges(results, Article.class, "pages", actual.getPages(), expected.getPages());
@@ -500,6 +500,14 @@ public class IngestionTest extends BaseRhinoTest {
     compare(results, Article.class, "url", actual.getUrl(), expected.getUrl());
     compareMarkupLists(results, Article.class, "collaborativeAuthors", actual.getCollaborativeAuthors(), expected.getCollaborativeAuthors());
     compare(results, Article.class, "types", actual.getTypes(), expected.getTypes());
+  }
+
+  private boolean compareRights(AssertionCollector results, String actualRights, String expectedRights) {
+    final String unwantedPrefix = ". "; // Legacy bug: this appears before license if no holder is provided.
+    if (expectedRights != null && expectedRights.startsWith(unwantedPrefix)) {
+      expectedRights = expectedRights.substring(unwantedPrefix.length());
+    }
+    return compare(results, Article.class, "rights", actualRights, expectedRights);
   }
 
   private void compareCategorySets(AssertionCollector results, Set<Category> actual, Set<Category> expected) {
@@ -699,7 +707,7 @@ public class IngestionTest extends BaseRhinoTest {
     }
 
     compare(results, CitedArticle.class, "key", actual.getKey(), expected.getKey());
-    compare(results, CitedArticle.class, "year", actual.getYear(), expected.getYear());
+    compareYear(results, actual.getYear(), expected.getYear());
     compare(results, CitedArticle.class, "displayYear", actual.getDisplayYear(), expected.getDisplayYear());
     compare(results, CitedArticle.class, "month", actual.getMonth(), expected.getMonth());
     compare(results, CitedArticle.class, "day", actual.getDay(), expected.getDay());
@@ -723,6 +731,16 @@ public class IngestionTest extends BaseRhinoTest {
     comparePersonLists(results, CitedArticle.class, "editors", actual.getEditors(), expected.getEditors());
   }
 
+  private static void compareYear(AssertionCollector results, Integer actualYear, Integer expectedYear) {
+    if (actualYear != null && expectedYear != null
+        && actualYear.toString().length() == 4 && expectedYear.toString().length() > 4) {
+      // On displayYear fields with more than one four-digit substring, legacy behavior is to just concatenate them.
+      // New behavior is to just take the first one.
+      expectedYear = Integer.valueOf(expectedYear.toString().substring(0, 4));
+    }
+    compare(results, CitedArticle.class, "year", actualYear, expectedYear);
+  }
+
   private static final Pattern PAGE_RANGE_DELIMITER = Pattern.compile("\\s*-\\s*");
 
   private static boolean comparePageRanges(AssertionCollector results, Class<?> parentType, String fieldName,
@@ -730,6 +748,11 @@ public class IngestionTest extends BaseRhinoTest {
     if (expectedPageRange != null) {
       // Legacy page range values sometimes have junk whitespace. Remove it before comparing.
       expectedPageRange = PAGE_RANGE_DELIMITER.matcher(expectedPageRange.trim()).replaceAll("-");
+
+      // Legacy page range values sometimes put a hyphen before the last page if the first page was missing.
+      if (expectedPageRange.charAt(0) == '-') {
+        expectedPageRange = expectedPageRange.substring(1);
+      }
     }
 
     return compare(results, parentType, fieldName, actualPageRange, expectedPageRange);

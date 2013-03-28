@@ -137,9 +137,8 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
       String lpage = readString("child::lpage");
       if (!Strings.isNullOrEmpty(lpage)) {
         if (fpage == null) {
-          // This is legacy behavior, resulting in confusing output like "-18" for fpage == null, lpage == "18".
-          // Probably better to throw an error or return lpage. TODO: Improve.
-          fpage = "";
+          // Legacy behavior was to return output like "-18" for fpage == null, lpage == "18".
+          return lpage;
         }
         return fpage + "-" + lpage;
       } else {
@@ -196,7 +195,7 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
    * as the year.
    *
    * @param displayYear the display year given as text in the article XML
-   * @return the year as a number, if exactly one sequence of digits is found in the displayYear; else {@code null}
+   * @return the first sequence of four or more digits as a number, if possible; else, {@code null}
    */
   private Integer parseYearFallback(String displayYear) {
     Matcher matcher = YEAR_FALLBACK.matcher(displayYear);
@@ -206,13 +205,8 @@ public class CitedArticleXml extends AbstractArticleXml<CitedArticle> {
     String displayYearSub = matcher.group();
 
     if (matcher.find()) {
-      // Multiple year substrings were found. Admin's existing behavior is to concatenate the digits into a number.
-      // Obviously this is not sensible, but we'll reproduce it here until we (TODO) settle on something better.
-      StringBuilder sb = new StringBuilder().append(displayYearSub).append(matcher.group());
-      while (matcher.find()) {
-        sb.append(matcher.group());
-      }
-      displayYearSub = sb.toString();
+      // Legacy behavior was to concatenate all such matches into one number.
+      log.warn("Matched more than one year-like digit string: using {}; ignoring {}", displayYearSub, matcher.group());
     }
 
     try {
