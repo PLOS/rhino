@@ -220,7 +220,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
                               WriteMode mode) throws IOException, FileStoreException {
     ZipFile zip = new ZipFile(filename);
-    Document manifestDoc = parseXml(readZipFile(zip, "MANIFEST.xml"));
+    Document manifestDoc = getManifest(zip);
     ManifestXml manifest = new ManifestXml(manifestDoc);
     byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
     Document doc = parseXml(xmlData);
@@ -282,15 +282,40 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
+   * Returns the manifest from the archive as an XML Document.
+   *
+   * @param archive zip archive
+   * @return Document view of the manifest
+   * @throws IOException
+   */
+  private Document getManifest(ZipFile archive) throws IOException {
+    byte[] bytes = readZipFile(archive, "MANIFEST.xml");
+    if (bytes == null) {
+
+      // I've seen a few archives with the name in lowercase.  Not common.
+      bytes = readZipFile(archive, "manifest.xml");
+      if (bytes == null) {
+        throw new RestClientException("No manifest found in archive " + archive.getName(),
+            HttpStatus.METHOD_NOT_ALLOWED);
+      }
+    }
+    return parseXml(bytes);
+  }
+
+  /**
    * Reads and returns the contents of a file in a .zip archive.
    *
    * @param zipFile  zip file
    * @param filename name of the file within the archive to read
-   * @return contents of the file
+   * @return contents of the file, or null if the file does not exist in zipFile
    * @throws IOException
    */
   private byte[] readZipFile(ZipFile zipFile, String filename) throws IOException {
-    InputStream is = zipFile.getInputStream(zipFile.getEntry(filename));
+    ZipEntry entry = zipFile.getEntry(filename);
+    if (entry == null) {
+      return null;
+    }
+    InputStream is = zipFile.getInputStream(entry);
     byte[] bytes;
     boolean threw = true;
     try {
