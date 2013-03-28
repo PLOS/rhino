@@ -161,8 +161,9 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
-    article.setRights(buildRights());
-    article.setPages(buildPages());
+    article.setRights(buildRights(readString("/article/front/article-meta/permissions/copyright-holder"),
+        readString("/article/front/article-meta/permissions/license/license-p")));
+    article.setPages(buildPages(readString("/article/front/article-meta/counts/page-count/@count")));
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
     article.setIssue(readString("/article/front/article-meta/issue"));
@@ -181,7 +182,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     article.setCollaborativeAuthors(parseCollaborativeAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
-    article.setUrl(buildUrl());
+    article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
 
     article.setRelatedArticles(buildRelatedArticles(readNodeList("//related-article")));
   }
@@ -211,9 +212,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   /**
    * @return the appropriate value for the rights property of {@link Article}, based on the article XML.
    */
-  private String buildRights() throws XmlContentException {
-    String holder = readString("/article/front/article-meta/permissions/copyright-holder");
-    String license = readString("/article/front/article-meta/permissions/license/license-p");
+  private static String buildRights(String holder, String license) throws XmlContentException {
     if (license == null) {
       throw new XmlContentException("Required license statement is omitted");
     }
@@ -226,8 +225,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   /**
    * @return the appropriate value for the pages property of {@link Article}, based on the article XML.
    */
-  private String buildPages() {
-    String pageCount = readString("/article/front/article-meta/counts/page-count/@count");
+  private static String buildPages(String pageCount) {
     if (Strings.isNullOrEmpty(pageCount)) {
       return null;
     } else {
@@ -255,8 +253,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   /**
    * @return a valid URL to the article (base on the DOI)
    */
-  private String buildUrl() {
-    String doi = readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']");
+  private static String buildUrl(String doi) {
     return "http://dx.doi.org/" + URLEncoder.encode(doi);
   }
 
@@ -296,7 +293,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
   }
 
 
-  private String parseLanguage(String language) {
+  private static String parseLanguage(String language) {
     if (language == null) {
       log.warn("Language not specified in article XML; defaulting to English");
       return "en"; // Formerly hard-coded for all articles, so it's the most sensible default
@@ -372,7 +369,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @param collabNodes XML nodes representing "collab" elements
    * @return a list of their text content
    */
-  private List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
+  private static List<String> parseCollaborativeAuthors(List<Node> collabNodes) {
     List<String> collabStrings = Lists.newArrayListWithCapacity(collabNodes.size());
     for (Node collabNode : collabNodes) {
       StringBuilder text = new StringBuilder();
