@@ -37,7 +37,7 @@ import java.io.InputStream;
 @Controller
 public class VolumeCrudController extends DoiBasedCrudController {
 
-  private static final String VOLUME_NAMESPACE = "/volume/";
+  private static final String VOLUME_NAMESPACE = "/volumes/";
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
 
   private static final String DISPLAY_PARAM = "display";

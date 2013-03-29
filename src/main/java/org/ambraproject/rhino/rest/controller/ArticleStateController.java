@@ -33,6 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_NAMESPACE;
+import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_TEMPLATE;
+
+
 /**
  * Controller class used for reading and writing an article's state after its creation.
  */
@@ -41,16 +45,14 @@ public class ArticleStateController extends DoiBasedCrudController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleStateController.class);
 
-  private static final String ARTICLE_STATE_ROOT = "/article/state";
-  private static final String ARTICLE_STATE_NAMESPACE = ARTICLE_STATE_ROOT + "/";
-  private static final String ARTICLE_STATE_TEMPLATE = ARTICLE_STATE_NAMESPACE + "**";
+  private static final String ARTICLE_STATE_PARAM = "state";
 
   @Autowired
   private ArticleStateService articleStateService;
 
   @Override
   protected String getNamespacePrefix() {
-    return ARTICLE_STATE_NAMESPACE;
+    return ARTICLE_NAMESPACE;
   }
 
   @Override
@@ -66,7 +68,7 @@ public class ArticleStateController extends DoiBasedCrudController {
    * @param format
    * @throws IOException
    */
-  @RequestMapping(value = ARTICLE_STATE_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {ARTICLE_STATE_PARAM})
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
@@ -83,7 +85,7 @@ public class ArticleStateController extends DoiBasedCrudController {
    * @param response HttpServletResponse
    * @throws IOException
    */
-  @RequestMapping(value = ARTICLE_STATE_TEMPLATE, method = RequestMethod.PUT)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT, params = {ARTICLE_STATE_PARAM})
   public void write(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
 

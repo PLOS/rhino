@@ -110,12 +110,12 @@ def run_test_on_article(case):
     section('Running article test for', case.article_doi())
 
     with open(case.xml_path()) as f:
-        create = requests.post(SERVER_HOST + '/article', files={'xml': f})
+        create = requests.post(SERVER_HOST + '/articles', files={'xml': f})
     report('Create article', create)
 
     url_args = {'host': SERVER_HOST, 'doi': case.article_doi()}
-    article_id = '{host}/article/{doi}'.format(**url_args)
-    xml_asset_id = '{host}/asset/{doi}.xml'.format(**url_args)
+    article_id = '{host}/articles/{doi}'.format(**url_args)
+    xml_asset_id = '{host}/assetfiles/{doi}.xml'.format(**url_args)
 
     read_meta = requests.get(article_id)
     report('Read article metadata', read_meta)
@@ -129,13 +129,13 @@ def run_test_on_article(case):
     for asset_case in case.assets:
         fields = {'doi': asset_case.doi(), 'ext': asset_case.extension}
         with open(asset_case.path()) as f:
-            upload_asset = requests.post(SERVER_HOST + '/asset',
+            upload_asset = requests.post(SERVER_HOST + '/assetfiles',
                                          data=fields, files={'file': f})
         report('Upload asset: ' + asset_case.brief_name(), upload_asset)
 
     # Read each asset
     for asset_case in case.assets:
-        asset_id = '{host}/asset-meta/{doi}.{suffix}'.format(
+        asset_id = '{host}/assets/{doi}.{suffix}'.format(
             suffix=asset_case.suffix, **url_args)
         read_asset_meta = requests.get(asset_id)
         report('Read asset metadata: ' + asset_case.brief_name(),

@@ -56,9 +56,9 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
 
-  private static final String ARTICLE_ROOT = "/article";
-  private static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
-  private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
+  static final String ARTICLE_ROOT = "/articles";
+  static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
+  static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
 
   /**
    * The request parameter whose value is the XML file being uploaded for a create operation.
@@ -67,10 +67,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
 
   @Autowired
   private ArticleCrudService articleCrudService;
-  @Autowired
-  private AssetCrudService assetCrudService;
-  @Autowired
-  private PingbackReadService pingbackReadService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -90,15 +86,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleCrudService.listDois(receiver, mf);
-  }
-
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {"pingbacks"})
-  public void listPingbacks(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
-      throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    pingbackReadService.listByArticle(receiver, mf, PingbackReadService.OrderBy.COUNT);
   }
 
   /**
@@ -173,16 +160,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleCrudService.readMetadata(receiver, id, mf);
-  }
-
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"pingbacks"})
-  public void readPingbacks(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
-      throws FileStoreException, IOException {
-    ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    pingbackReadService.read(receiver, id, mf);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)

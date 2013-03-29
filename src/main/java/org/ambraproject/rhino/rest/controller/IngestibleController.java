@@ -46,7 +46,7 @@ import java.io.IOException;
 @Controller
 public class IngestibleController extends DoiBasedCrudController {
 
-  private static final String INGESTIBLE_ROOT = "/ingestible";
+  private static final String INGESTIBLE_ROOT = "/ingestibles";
   private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
   private static final String INGESTIBLE_TEMPLATE = INGESTIBLE_NAMESPACE + "**";
 

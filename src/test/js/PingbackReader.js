@@ -22,7 +22,7 @@ var SERVER_ROOT = 'http://localhost:8080/';
 function main() {
   $('#jsWarning').hide();
   $.ajax({
-    url: SERVER_ROOT + 'article?pingbacks',
+    url: SERVER_ROOT + 'articles?pingbacks',
     dataType: 'jsonp',
     success: function (data, textStatus, jqXHR) {
       populateArticleTable(data);
@@ -69,7 +69,7 @@ function fetchPingbacks(article) {
   var fetchBox = $('<span/>');
   fetchBox.append($('<h3/>').text(headerText));
   $.ajax({
-    url: SERVER_ROOT + 'article/' + doiAsIdentifier(article.doi) + '?pingbacks',
+    url: SERVER_ROOT + 'articles/' + doiAsIdentifier(article.doi) + '?pingbacks',
     dataType: 'jsonp',
     success: function (data, textStatus, jqXHR) {
       populatePingbacks(fetchBox, data);
