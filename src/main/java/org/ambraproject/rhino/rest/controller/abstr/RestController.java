@@ -22,7 +22,6 @@ import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -35,8 +34,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -203,12 +204,13 @@ public abstract class RestController {
    * @throws IOException
    */
   protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
-    InputStream is = request.getInputStream();
+    InputStream is = null;
     Gson gson = new Gson();
     boolean threw = true;
     T result;
     try {
-      result = gson.fromJson(IOUtils.toString(is), clazz);
+      is = request.getInputStream();
+      result = gson.fromJson(new BufferedReader(new InputStreamReader(is)), clazz);
       threw = false;
     } catch (JsonParseException e) {
       throw new RestClientException("Request body contains invalid JSON", HttpStatus.BAD_REQUEST);
