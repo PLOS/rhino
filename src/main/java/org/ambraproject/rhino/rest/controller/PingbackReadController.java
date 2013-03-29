@@ -21,7 +21,7 @@ package org.ambraproject.rhino.rest.controller;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
@@ -35,29 +35,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_NAMESPACE;
-import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_ROOT;
-import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_TEMPLATE;
-
 
 @Controller
-public class PingbackReadController extends DoiBasedCrudController {
+public class PingbackReadController extends ArticleSpaceController {
 
   private static final String PINGBACK_PARAM = "pingbacks";
 
-  @Override
-  protected String getNamespacePrefix() {
-    return ARTICLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
-
-
   @Autowired
   private PingbackReadService pingbackReadService;
+
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {PINGBACK_PARAM})
   public void listPingbacks(HttpServletRequest request, HttpServletResponse response,

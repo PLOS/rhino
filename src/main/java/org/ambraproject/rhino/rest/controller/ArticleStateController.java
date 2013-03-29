@@ -17,7 +17,7 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
@@ -33,15 +33,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_NAMESPACE;
-import static org.ambraproject.rhino.rest.controller.ArticleCrudController.ARTICLE_TEMPLATE;
-
 
 /**
  * Controller class used for reading and writing an article's state after its creation.
  */
 @Controller
-public class ArticleStateController extends DoiBasedCrudController {
+public class ArticleStateController extends ArticleSpaceController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleStateController.class);
 
@@ -50,15 +47,6 @@ public class ArticleStateController extends DoiBasedCrudController {
   @Autowired
   private ArticleStateService articleStateService;
 
-  @Override
-  protected String getNamespacePrefix() {
-    return ARTICLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
 
   /**
    * Reads the state of an article.

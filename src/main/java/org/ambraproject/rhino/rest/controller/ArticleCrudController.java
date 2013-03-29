@@ -24,16 +24,12 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
-import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,31 +48,14 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends DoiBasedCrudController {
+public class ArticleCrudController extends ArticleSpaceController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
-
-  static final String ARTICLE_ROOT = "/articles";
-  static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
-  static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
 
   /**
    * The request parameter whose value is the XML file being uploaded for a create operation.
    */
   private static final String ARTICLE_XML_FIELD = "xml";
-
-  @Autowired
-  private ArticleCrudService articleCrudService;
-
-  @Override
-  protected String getNamespacePrefix() {
-    return ARTICLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
 
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
