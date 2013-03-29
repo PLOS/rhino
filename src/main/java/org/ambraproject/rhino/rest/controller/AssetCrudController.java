@@ -49,7 +49,7 @@ import java.io.InputStream;
 @Controller
 public class AssetCrudController extends DoiBasedCrudController {
 
-  private static final String ASSET_ROOT = "/asset";
+  private static final String ASSET_ROOT = "/assetfiles";
   private static final String ASSET_NAMESPACE = ASSET_ROOT + "/";
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
 

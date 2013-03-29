@@ -24,16 +24,12 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
-import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -44,7 +40,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -52,35 +47,14 @@ import java.io.InputStream;
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
 @Controller
-public class ArticleCrudController extends DoiBasedCrudController {
+public class ArticleCrudController extends ArticleSpaceController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
-
-  private static final String ARTICLE_ROOT = "/article";
-  private static final String ARTICLE_NAMESPACE = ARTICLE_ROOT + '/';
-  private static final String ARTICLE_TEMPLATE = ARTICLE_NAMESPACE + "**";
 
   /**
    * The request parameter whose value is the XML file being uploaded for a create operation.
    */
   private static final String ARTICLE_XML_FIELD = "xml";
-
-  @Autowired
-  private ArticleCrudService articleCrudService;
-  @Autowired
-  private AssetCrudService assetCrudService;
-  @Autowired
-  private PingbackReadService pingbackReadService;
-
-  @Override
-  protected String getNamespacePrefix() {
-    return ARTICLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
 
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
@@ -90,15 +64,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleCrudService.listDois(receiver, mf);
-  }
-
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {"pingbacks"})
-  public void listPingbacks(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
-      throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    pingbackReadService.listByArticle(receiver, mf, PingbackReadService.OrderBy.COUNT);
   }
 
   /**
@@ -130,41 +95,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 
-  /**
-   * Create an article based on a POST containing an article .zip archive file.
-   * <p/>
-   * TODO: this method may never be used in production, since we've decided, at least for now, that we will use the
-   * ingest and ingested directories that the current admin app uses instead of posting zips directly.
-   *
-   * @param response      response to the request
-   * @param requestFile   body of the archive param, with the encoded article .zip file
-   * @param forceReingest if present, re-ingestion of an existing article is allowed; otherwise, if the article already
-   *                      exists, it is an error
-   * @throws IOException
-   * @throws FileStoreException
-   */
-  @RequestMapping(value = "/zip", method = RequestMethod.POST)
-  public void zipUpload(HttpServletRequest request, HttpServletResponse response,
-                        @RequestParam("archive") MultipartFile requestFile,
-                        @RequestParam(value = "force_reingest", required = false) String forceReingest)
-      throws IOException, FileStoreException {
-
-    String archiveName = requestFile.getOriginalFilename();
-    String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
-    requestFile.transferTo(new File(zipFilename));
-    Article result = articleCrudService.writeArchive(zipFilename,
-        Optional.<ArticleIdentity>absent(),
-
-        // If forceReingest is the empty string, the parameter was present.  Only
-        // treat null as false.
-        forceReingest == null ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY);
-    response.setStatus(HttpStatus.CREATED.value());
-
-    // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
-  }
-
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
@@ -173,16 +103,6 @@ public class ArticleCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleCrudService.readMetadata(receiver, id, mf);
-  }
-
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {"pingbacks"})
-  public void readPingbacks(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
-      throws FileStoreException, IOException {
-    ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    pingbackReadService.read(receiver, id, mf);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)

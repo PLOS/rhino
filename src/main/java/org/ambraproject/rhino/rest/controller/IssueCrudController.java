@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class IssueCrudController extends DoiBasedCrudController {
 
-  private static final String ISSUE_NAMESPACE = "/issue/";
+  private static final String ISSUE_NAMESPACE = "/issues/";
   private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
 
   private static final String DISPLAY_PARAM = "display";
