@@ -35,6 +35,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.test.DummyResponseReceiver;
+import org.ambraproject.rhino.util.StringReplacer;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -414,26 +415,25 @@ public class IngestionTest extends BaseRhinoTest {
    */
   private static String massageXml(CharSequence text) {
     text = CharMatcher.WHITESPACE.collapseFrom(text, ' ');
-    text = WHITESPACE_BETWEEN_TAGS.matcher(text).replaceAll("><");
-    text = SELF_CLOSING_TAG.matcher(text).replaceAll("<$1$2></$1>");
-    text = AMPERSAND_ESCAPE_IN_TAG_ATTR.matcher(text).replaceAll("$1&$2");
-    return text.toString();
+    return XML_MASSAGER.replace(text);
   }
 
-  private static final Pattern WHITESPACE_BETWEEN_TAGS = Pattern.compile(">\\s+<");
-  private static final Pattern SELF_CLOSING_TAG = Pattern.compile(""
-      + "<"
-      + "([^>\\s]+)" // Tag name.
-      + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
-      + "/>"
-  );
-  private static final Pattern AMPERSAND_ESCAPE_IN_TAG_ATTR = Pattern.compile(""
-      + "(<[^>]*"    // Stuff in the tag before the attribute begins
-      + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
-      + "&amp;"      // The escaped ampersand
-      + "([^>\"]*\"" // Closes the attribute
-      + "[^>]*>)"    // Closes the tag
-  );
+  private static final StringReplacer XML_MASSAGER = StringReplacer.builder()
+      .replaceRegex(">\\s+<", "><") // Whitespace between tags
+      .replaceRegex("" // Self-closing tags
+          + "<"
+          + "([^>\\s]+)"   // Tag name.
+          + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
+          + "/>",
+          "<$1$2></$1>")
+      .replaceRegex("" // Ampersands escaped within a tag attribute
+          + "(<[^>]*"    // Stuff in the tag before the attribute begins
+          + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
+          + "&amp;"      // The escaped ampersand
+          + "([^>\"]*\"" // Closes the attribute
+          + "[^>]*>)",   // Closes the tag
+          "$1&$2")
+      .build();
 
   private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
                                          List<? extends CharSequence> actual, List<? extends CharSequence> expected) {
