@@ -159,7 +159,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
   private void setFromXml(Article article) throws XmlContentException {
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
-    article.seteIssn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]"));
+    article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
     article.setRights(buildRights(readString("/article/front/article-meta/permissions/copyright-holder"),
         readString("/article/front/article-meta/permissions/license/license-p")));
@@ -207,6 +207,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       }
     }
     return null;
+  }
+
+  private static String checkEissn(String eissn) throws XmlContentException {
+    if (eissn == null) {
+      throw new XmlContentException("Required eIssn is omitted");
+    }
+    return eissn;
   }
 
   /**
