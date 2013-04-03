@@ -231,7 +231,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
     // Article to be persisted at this point.
     persistArticle(article, xmlData);
-    addAssetFiles(article, zip);
+    try {
+      addAssetFiles(article, zip);
+    } catch (RestClientException rce) {
+
+      // If there is an error processing the assets, delete the article we created
+      // above, since it won't be valid.
+      delete(ArticleIdentity.create(article));
+      throw rce;
+    }
     return article;
   }
 

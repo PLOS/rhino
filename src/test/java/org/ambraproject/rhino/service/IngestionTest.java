@@ -334,6 +334,33 @@ public class IngestionTest extends BaseRhinoTest {
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
   }
 
+  /**
+   * Tests ingestion of an intentionally bad .zip file to confirm that all article entities
+   * are deleted after the error.
+   */
+  @Test
+  public void testArchiveError() throws Exception {
+    createTestJournal("1932-6203");
+
+    // An intentionally-constructed bad zip file that contains asset files not referenced
+    // in the XML.  (This seems like the easiest way to make ingestion blow up when
+    // processing an asset.)
+    String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "bad_zips"
+        + File.separator + "pone.0060593.zip";
+    try {
+      Article article = articleCrudService.writeArchive(zipPath,
+          Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+      fail("Ingesting bad zip did not throw exception");
+    } catch (RestClientException expected) {
+      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    List<Article> articles = hibernateTemplate.findByCriteria(DetachedCriteria
+        .forClass(Article.class)
+        .add(Restrictions.eq("doi", "info:doi/10.1371/journal.pone.0060593")));
+    assertEquals(articles.size(), 0, "Bad zip archive left a row in article!");
+  }
+
   private static boolean compare(AssertionCollector results, Class<?> objectType, String fieldName,
                                  @Nullable Object actual, @Nullable Object expected) {
     return compare(results, objectType.getSimpleName(), fieldName, actual, expected);
