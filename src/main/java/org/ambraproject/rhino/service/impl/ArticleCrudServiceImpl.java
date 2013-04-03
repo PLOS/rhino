@@ -31,6 +31,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.content.ArticleOutputView;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
@@ -575,7 +576,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    writeJson(receiver, article);
+    ArticleOutputView view = ArticleOutputView.create(article, syndicationService);
+    writeJson(receiver, view);
   }
 
   /**

@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.rhino.content.ArticleOutputView;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -99,6 +100,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   public Gson entityGson() {
     GsonBuilder builder = new GsonBuilder();
     builder.setPrettyPrinting();
+
+    builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
 
     final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{
         "ID", // Internal to the database
