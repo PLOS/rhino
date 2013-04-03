@@ -74,6 +74,7 @@ public class ArticleOutputView {
    * Adapter object that produces the desired JSON output from a view instance.
    */
   public static final JsonSerializer<ArticleOutputView> SERIALIZER = new JsonSerializer<ArticleOutputView>() {
+
     @Override
     public JsonElement serialize(ArticleOutputView src, Type typeOfSrc, JsonSerializationContext context) {
       Article article = src.article;
@@ -82,13 +83,31 @@ public class ArticleOutputView {
       PublicationState pubState = PublicationState.BY_CONSTANT.get(article.getState());
       serialized.addProperty("doi", article.getDoi()); // Force it to be printed first, for human-friendliness
       serialized.addProperty("state", pubState.name().toLowerCase()); // Instead of the int value
-      serialized.add("syndications", context.serialize(src.syndications));
+      serialized.add("syndications", serializeSyndications(src.syndications, context));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 
       return serialized;
     }
+
+    /**
+     * Represent the list of syndications as an object whose keys are the syndication targets.
+     */
+    private JsonElement serializeSyndications(Collection<Syndication> syndications, JsonSerializationContext context) {
+      JsonObject syndicationsByTarget = new JsonObject();
+      for (Syndication syndication : syndications) {
+        JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
+
+        // Exclude redundant members
+        syndicationJson.remove("doi");
+        syndicationJson.remove("target");
+
+        syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
+      }
+      return syndicationsByTarget;
+    }
+
   };
 
 }
