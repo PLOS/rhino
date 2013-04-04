@@ -1,12 +1,9 @@
 package org.ambraproject.rhino.content;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -27,27 +24,14 @@ import java.util.Collection;
 public class ArticleOutputView {
 
   /**
-   * The state constants given in {@link Article}, with names chosen for this API.
+   * The state constants given in {@link Article} mapped onto names chosen for this API.
    */
-  private static enum PublicationState {
-    PUBLISHED(Article.STATE_ACTIVE),
-    INGESTED(Article.STATE_UNPUBLISHED),
-    DISABLED(Article.STATE_DISABLED);
-
-    private final int constant;
-
-    private PublicationState(int constant) {
-      this.constant = constant;
-    }
-
-    public static final ImmutableMap<Integer, PublicationState> BY_CONSTANT =
-        Maps.uniqueIndex(Iterators.forArray(values()), new Function<PublicationState, Integer>() {
-          @Override
-          public Integer apply(PublicationState input) {
-            return input.constant;
-          }
-        });
-  }
+  private static final ImmutableBiMap<Integer, String> PUBLICATION_STATE_CONSTANTS = ImmutableBiMap.<Integer, String>builder()
+      .put(Article.STATE_ACTIVE, "published")
+      .put(Article.STATE_UNPUBLISHED, "ingested")
+      .put(Article.STATE_DISABLED, "disabled")
+      .build();
+  private static final ImmutableBiMap<String, Integer> PUBLICATION_STATE_NAMES = PUBLICATION_STATE_CONSTANTS.inverse();
 
   private final Article article;
   private final ImmutableCollection<Syndication> syndications;
@@ -79,10 +63,17 @@ public class ArticleOutputView {
     public JsonElement serialize(ArticleOutputView src, Type typeOfSrc, JsonSerializationContext context) {
       Article article = src.article;
       JsonObject serialized = new JsonObject();
-
-      PublicationState pubState = PublicationState.BY_CONSTANT.get(article.getState());
       serialized.addProperty("doi", article.getDoi()); // Force it to be printed first, for human-friendliness
-      serialized.addProperty("state", pubState.name().toLowerCase()); // Instead of the int value
+
+      int articleState = article.getState();
+      String pubState = PUBLICATION_STATE_CONSTANTS.get(articleState);
+      if (pubState == null) {
+        String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
+            articleState, PUBLICATION_STATE_CONSTANTS.keySet().toString());
+        throw new IllegalStateException(message);
+      }
+      serialized.addProperty("state", pubState);
+
       serialized.add("syndications", serializeSyndications(src.syndications, context));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
