@@ -2,15 +2,18 @@ package org.ambraproject.rhino.content;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -18,15 +21,54 @@ import java.util.Map;
  */
 public class ArticleInputView implements ArticleJson {
 
-  private final Optional<Integer> publicationState;
-  private final ImmutableMap<String, String> syndicationUpdates;
+  public static class SyndicationUpdate {
+    private final String target;
+    private final String status;
 
-  private ArticleInputView(Integer publicationState, Map<String, String> syndicationUpdates) {
+    private SyndicationUpdate(String target, String status) {
+      Preconditions.checkArgument(StringUtils.isNotBlank(target));
+      Preconditions.checkArgument(SYNDICATION_STATUSES.contains(status));
+      this.target = target;
+      this.status = status;
+    }
+
+    public String getTarget() {
+      return target;
+    }
+
+    public String getStatus() {
+      return status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      SyndicationUpdate that = (SyndicationUpdate) o;
+      return status.equals(that.status) && target.equals(that.target);
+    }
+
+    @Override
+    public int hashCode() {
+      return 31 * target.hashCode() + status.hashCode();
+    }
+
+    @Override
+    public String toString() {
+      return "SyndicationUpdate{" + "status='" + status + '\'' + ", target='" + target + '\'' + '}';
+    }
+  }
+
+
+  private final Optional<Integer> publicationState;
+  private final ImmutableCollection<SyndicationUpdate> syndicationUpdates;
+
+  private ArticleInputView(Integer publicationState, Collection<SyndicationUpdate> syndicationUpdates) {
     Preconditions.checkArgument(publicationState == null || PUBLICATION_STATE_CONSTANTS.containsKey(publicationState));
     this.publicationState = Optional.fromNullable(publicationState);
     this.syndicationUpdates = (syndicationUpdates == null)
-        ? ImmutableMap.<String, String>of()
-        : ImmutableMap.copyOf(syndicationUpdates);
+        ? ImmutableList.<SyndicationUpdate>of()
+        : ImmutableList.copyOf(syndicationUpdates);
   }
 
   /**
@@ -41,12 +83,11 @@ public class ArticleInputView implements ArticleJson {
 
   /**
    * Get the set of updates to status fields of {@link org.ambraproject.models.Syndication} objects associated with the
-   * article. The map's keys are syndication targets and the values are the new status values. An empty map indicates no
-   * updates.
+   * article.
    *
    * @return the set of syndication status updates
    */
-  public ImmutableMap<String, String> getSyndicationUpdates() {
+  public ImmutableCollection<SyndicationUpdate> getSyndicationUpdates() {
     return syndicationUpdates;
   }
 
@@ -64,10 +105,10 @@ public class ArticleInputView implements ArticleJson {
         pubStateConstant = PUBLICATION_STATE_NAMES.get(pubStateName);
       }
 
-      Map<String, String> syndicationUpdates = null;
+      Collection<SyndicationUpdate> syndicationUpdates = null;
       JsonElement syndicationsObject = jsonObject.get(MemberNames.SYNDICATIONS);
       if (syndicationsObject != null) {
-        syndicationUpdates = Maps.newLinkedHashMap();
+        Map<String, SyndicationUpdate> syndicationUpdateMap = Maps.newLinkedHashMap();
         for (Map.Entry<String, JsonElement> entry : syndicationsObject.getAsJsonObject().entrySet()) {
           String target = entry.getKey();
           String status = entry.getValue().getAsJsonObject().get(MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
@@ -75,12 +116,41 @@ public class ArticleInputView implements ArticleJson {
           if (!SYNDICATION_STATUSES.contains(status)) {
             throw new JsonParseException("Not a valid syndication status: " + status);
           }
-          syndicationUpdates.put(target, status);
+
+          SyndicationUpdate update = new SyndicationUpdate(target, status);
+          SyndicationUpdate previous = syndicationUpdateMap.put(target, update);
+          if (previous != null && !previous.getStatus().equals(status)) {
+            String message = String.format("Multiple values submitted for %s: %s, %s",
+                target, previous.getStatus(), status);
+            throw new JsonParseException(message);
+          }
         }
+        syndicationUpdates = syndicationUpdateMap.values();
       }
 
       return new ArticleInputView(pubStateConstant, syndicationUpdates);
     }
   };
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ArticleInputView that = (ArticleInputView) o;
+
+    if (!publicationState.equals(that.publicationState)) return false;
+    if (!syndicationUpdates.equals(that.syndicationUpdates)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 1;
+    result = 31 * publicationState.hashCode();
+    result = 31 * result + syndicationUpdates.hashCode();
+    return result;
+  }
 
 }
