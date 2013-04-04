@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.content;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
@@ -23,19 +22,9 @@ import java.util.Collection;
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
  * a default dump of the article, plus a few added or augmented.
  */
-public class ArticleOutputView {
+public class ArticleOutputView implements ArticleJson {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
-
-  /**
-   * The state constants given in {@link Article} mapped onto names chosen for this API.
-   */
-  private static final ImmutableBiMap<Integer, String> PUBLICATION_STATE_CONSTANTS = ImmutableBiMap.<Integer, String>builder()
-      .put(Article.STATE_ACTIVE, "published")
-      .put(Article.STATE_UNPUBLISHED, "ingested")
-      .put(Article.STATE_DISABLED, "disabled")
-      .build();
-  private static final ImmutableBiMap<String, Integer> PUBLICATION_STATE_NAMES = PUBLICATION_STATE_CONSTANTS.inverse();
 
   private final Article article;
   private final ImmutableCollection<Syndication> syndications;
@@ -68,7 +57,7 @@ public class ArticleOutputView {
     public JsonElement serialize(ArticleOutputView src, Type typeOfSrc, JsonSerializationContext context) {
       Article article = src.article;
       JsonObject serialized = new JsonObject();
-      serialized.addProperty("doi", article.getDoi()); // Force it to be printed first, for human-friendliness
+      serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
       int articleState = article.getState();
       String pubState = PUBLICATION_STATE_CONSTANTS.get(articleState);
@@ -77,9 +66,9 @@ public class ArticleOutputView {
             articleState, PUBLICATION_STATE_CONSTANTS.keySet().toString());
         throw new IllegalStateException(message);
       }
-      serialized.addProperty("state", pubState);
+      serialized.addProperty(MemberNames.STATE, pubState);
 
-      serialized.add("syndications", serializeSyndications(src.syndications, context));
+      serialized.add(MemberNames.SYNDICATIONS, serializeSyndications(src.syndications, context));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
@@ -96,8 +85,8 @@ public class ArticleOutputView {
         JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
 
         // Exclude redundant members
-        syndicationJson.remove("doi");
-        syndicationJson.remove("target");
+        syndicationJson.remove(MemberNames.DOI);
+        syndicationJson.remove(MemberNames.SYNDICATION_TARGET);
 
         syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
       }
