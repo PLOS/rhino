@@ -96,41 +96,55 @@ public class ArticleInputView implements ArticleJson {
     public ArticleInputView deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
         throws JsonParseException {
       JsonObject jsonObject = json.getAsJsonObject();
-
-      Integer pubStateConstant = null;
-      JsonElement stateValue = jsonObject.get(MemberNames.STATE);
-      if (stateValue != null) {
-        String pubStateName = stateValue.getAsJsonPrimitive().getAsString();
-        pubStateName = pubStateName.toLowerCase();
-        pubStateConstant = PUBLICATION_STATE_NAMES.get(pubStateName);
-      }
-
-      Collection<SyndicationUpdate> syndicationUpdates = null;
-      JsonElement syndicationsObject = jsonObject.get(MemberNames.SYNDICATIONS);
-      if (syndicationsObject != null) {
-        Map<String, SyndicationUpdate> syndicationUpdateMap = Maps.newLinkedHashMap();
-        for (Map.Entry<String, JsonElement> entry : syndicationsObject.getAsJsonObject().entrySet()) {
-          String target = entry.getKey();
-          String status = entry.getValue().getAsJsonObject().get(MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
-          status = status.toUpperCase();
-          if (!SYNDICATION_STATUSES.contains(status)) {
-            throw new JsonParseException("Not a valid syndication status: " + status);
-          }
-
-          SyndicationUpdate update = new SyndicationUpdate(target, status);
-          SyndicationUpdate previous = syndicationUpdateMap.put(target, update);
-          if (previous != null && !previous.getStatus().equals(status)) {
-            String message = String.format("Multiple values submitted for %s: %s, %s",
-                target, previous.getStatus(), status);
-            throw new JsonParseException(message);
-          }
-        }
-        syndicationUpdates = syndicationUpdateMap.values();
-      }
-
+      Integer pubStateConstant = getPublicationState(jsonObject);
+      Collection<SyndicationUpdate> syndicationUpdates = getSyndicationUpdates(jsonObject);
       return new ArticleInputView(pubStateConstant, syndicationUpdates);
     }
+
+    private Collection<SyndicationUpdate> getSyndicationUpdates(JsonObject jsonObject) {
+      JsonElement syndicationsObject = jsonObject.get(MemberNames.SYNDICATIONS);
+      if (syndicationsObject == null) {
+        return null;
+      }
+
+      Map<String, SyndicationUpdate> syndicationUpdateMap = Maps.newLinkedHashMap();
+      for (Map.Entry<String, JsonElement> entry : syndicationsObject.getAsJsonObject().entrySet()) {
+        String target = entry.getKey();
+        String status = entry.getValue().getAsJsonObject().get(MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
+        status = status.toUpperCase();
+        if (!SYNDICATION_STATUSES.contains(status)) {
+          throw new JsonParseException("Not a valid syndication status: " + status);
+        }
+
+        SyndicationUpdate update = new SyndicationUpdate(target, status);
+        SyndicationUpdate previous = syndicationUpdateMap.put(target, update);
+        if (previous != null && !previous.getStatus().equals(status)) {
+          String message = String.format("Multiple statuses submitted for %s: %s, %s",
+              target, previous.getStatus(), status);
+          throw new JsonParseException(message);
+        }
+      }
+      return syndicationUpdateMap.values();
+    }
+
+    private Integer getPublicationState(JsonObject jsonObject) {
+      JsonElement stateValue = jsonObject.get(MemberNames.STATE);
+      if (stateValue == null) {
+        return null;
+      }
+
+      String pubStateName = stateValue.getAsJsonPrimitive().getAsString();
+      pubStateName = pubStateName.toLowerCase();
+      Integer pubStateConstant = PUBLICATION_STATE_NAMES.get(pubStateName);
+      if (pubStateConstant == null) {
+        String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
+            pubStateName, PUBLICATION_STATE_NAMES.keySet());
+        throw new JsonParseException(message);
+      }
+      return pubStateConstant;
+    }
   };
+
 
   @Override
   public boolean equals(Object o) {
@@ -148,9 +162,15 @@ public class ArticleInputView implements ArticleJson {
   @Override
   public int hashCode() {
     int result = 1;
-    result = 31 * publicationState.hashCode();
+    result = 31 * result + publicationState.hashCode();
     result = 31 * result + syndicationUpdates.hashCode();
     return result;
   }
 
+  @Override
+  public String toString() {
+    return "ArticleInputView{"
+        + "publicationState=" + publicationState
+        + ", syndicationUpdates=" + syndicationUpdates + '}';
+  }
 }
