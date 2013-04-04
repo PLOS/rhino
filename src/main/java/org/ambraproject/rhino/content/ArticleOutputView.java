@@ -13,6 +13,8 @@ import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -22,6 +24,8 @@ import java.util.Collection;
  * a default dump of the article, plus a few added or augmented.
  */
 public class ArticleOutputView {
+
+  private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   /**
    * The state constants given in {@link Article} mapped onto names chosen for this API.
@@ -42,13 +46,14 @@ public class ArticleOutputView {
   }
 
   public static ArticleOutputView create(Article article, SyndicationService syndicationService) {
-    Collection<Syndication> syndications = null;
+    Collection<Syndication> syndications;
     try {
       syndications = syndicationService.getSyndications(article.getDoi());
     } catch (NoSuchArticleIdException e) {
-      // Fall through and let it be set in the if-null block
+      throw new RuntimeException(e); // should be impossible
     }
     if (syndications == null) {
+      log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
     return new ArticleOutputView(article, syndications);
