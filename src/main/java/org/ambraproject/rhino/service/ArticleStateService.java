@@ -14,10 +14,9 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.rhino.content.ArticleState;
+import org.ambraproject.models.Article;
+import org.ambraproject.rhino.content.ArticleInputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
 
 import java.io.IOException;
 
@@ -27,31 +26,12 @@ import java.io.IOException;
 public interface ArticleStateService {
 
   /**
-   * Returns an article's state.
-   *
-   * @param articleId
-   * @return ArticleState
-   */
-  ArticleState read(ArticleIdentity articleId);
-
-  /**
-   * Writes an article's state to the response.
-   *
-   * @param receiver  response for the current request
-   * @param articleId wraps the article's DOI
-   * @param format    the desired metadata format
-   * @throws IOException
-   */
-  void read(ResponseReceiver receiver, ArticleIdentity articleId, MetadataFormat format)
-      throws IOException;
-
-  /**
-   * Writes an ArticleState object to the persistent article identified by articleId.
+   * Writes a set of client inputs to the persistent article identified by articleId.
    *
    * @param articleId identifies the article whose state we are updating
-   * @param state     state to be written
-   * @return the state after updates are applied
+   * @param input     the client-submitted values to update
+   * @return the article after updates are applied
    */
-  ArticleState write(ArticleIdentity articleId, ArticleState state)
+  public abstract Article update(ArticleIdentity articleId, ArticleInputView input)
       throws FileStoreException, IOException;
 }

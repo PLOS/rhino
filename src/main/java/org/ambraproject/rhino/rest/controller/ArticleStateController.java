@@ -14,7 +14,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.rhino.content.ArticleState;
+import org.ambraproject.rhino.content.ArticleInputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
@@ -27,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,29 +41,9 @@ public class ArticleStateController extends ArticleSpaceController {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleStateController.class);
 
-  private static final String ARTICLE_STATE_PARAM = "state";
-
   @Autowired
   private ArticleStateService articleStateService;
 
-
-  /**
-   * Reads the state of an article.
-   *
-   * @param request  HttpServletRequest
-   * @param response HttpServletResponse
-   * @param format
-   * @throws IOException
-   */
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {ARTICLE_STATE_PARAM})
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
-      throws IOException {
-
-    ArticleIdentity id = parse(request);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    articleStateService.read(receiver, id, MetadataFormat.getFromParameter(format, true));
-  }
 
   /**
    * Sets the state of an article based on JSON in the request.
@@ -73,14 +52,14 @@ public class ArticleStateController extends ArticleSpaceController {
    * @param response HttpServletResponse
    * @throws IOException
    */
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PUT, params = {ARTICLE_STATE_PARAM})
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH)
   public void write(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
 
     ArticleIdentity id = parse(request);
-    ArticleState state = readJsonFromRequest(request, ArticleState.class);
-    articleStateService.write(id, state);
+    ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
+    articleStateService.update(id, input);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    articleStateService.read(receiver, id, MetadataFormat.JSON);
+    articleCrudService.readMetadata(receiver, id, MetadataFormat.JSON);
   }
 }

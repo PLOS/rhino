@@ -1,9 +1,10 @@
 package org.ambraproject.rhino.content;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -13,7 +14,6 @@ import com.google.gson.JsonParseException;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -61,14 +61,14 @@ public class ArticleInputView implements ArticleJson {
 
 
   private final Optional<Integer> publicationState;
-  private final ImmutableCollection<SyndicationUpdate> syndicationUpdates;
+  private final ImmutableMap<String, SyndicationUpdate> syndicationUpdates;
 
-  private ArticleInputView(Integer publicationState, Collection<SyndicationUpdate> syndicationUpdates) {
+  private ArticleInputView(Integer publicationState, Map<String, SyndicationUpdate> syndicationUpdates) {
     Preconditions.checkArgument(publicationState == null || PUBLICATION_STATE_CONSTANTS.containsKey(publicationState));
     this.publicationState = Optional.fromNullable(publicationState);
     this.syndicationUpdates = (syndicationUpdates == null)
-        ? ImmutableList.<SyndicationUpdate>of()
-        : ImmutableList.copyOf(syndicationUpdates);
+        ? ImmutableMap.<String, SyndicationUpdate>of()
+        : ImmutableMap.copyOf(syndicationUpdates);
   }
 
   /**
@@ -87,8 +87,13 @@ public class ArticleInputView implements ArticleJson {
    *
    * @return the set of syndication status updates
    */
-  public ImmutableCollection<SyndicationUpdate> getSyndicationUpdates() {
-    return syndicationUpdates;
+  public ImmutableList<SyndicationUpdate> getSyndicationUpdates() {
+    return syndicationUpdates.values().asList();
+  }
+
+  @VisibleForTesting
+  public SyndicationUpdate getSyndicationUpdate(String target) {
+    return syndicationUpdates.get(target);
   }
 
   public static final JsonDeserializer<ArticleInputView> DESERIALIZER = new JsonDeserializer<ArticleInputView>() {
@@ -97,11 +102,11 @@ public class ArticleInputView implements ArticleJson {
         throws JsonParseException {
       JsonObject jsonObject = json.getAsJsonObject();
       Integer pubStateConstant = getPublicationState(jsonObject);
-      Collection<SyndicationUpdate> syndicationUpdates = getSyndicationUpdates(jsonObject);
+      Map<String, SyndicationUpdate> syndicationUpdates = getSyndicationUpdates(jsonObject);
       return new ArticleInputView(pubStateConstant, syndicationUpdates);
     }
 
-    private Collection<SyndicationUpdate> getSyndicationUpdates(JsonObject jsonObject) {
+    private Map<String, SyndicationUpdate> getSyndicationUpdates(JsonObject jsonObject) {
       JsonElement syndicationsObject = jsonObject.get(MemberNames.SYNDICATIONS);
       if (syndicationsObject == null) {
         return null;
@@ -124,7 +129,7 @@ public class ArticleInputView implements ArticleJson {
           throw new JsonParseException(message);
         }
       }
-      return syndicationUpdateMap.values();
+      return syndicationUpdateMap;
     }
 
     private Integer getPublicationState(JsonObject jsonObject) {

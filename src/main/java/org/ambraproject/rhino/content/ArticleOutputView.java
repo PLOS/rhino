@@ -1,8 +1,11 @@
 package org.ambraproject.rhino.content;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -27,12 +30,19 @@ public class ArticleOutputView implements ArticleJson {
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
-  private final ImmutableCollection<Syndication> syndications;
+  private final ImmutableMap<String, Syndication> syndications;
 
   private ArticleOutputView(Article article, Collection<Syndication> syndications) {
     this.article = Preconditions.checkNotNull(article);
-    this.syndications = ImmutableList.copyOf(syndications);
+    this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
   }
+
+  private static final Function<Syndication, String> GET_TARGET = new Function<Syndication, String>() {
+    @Override
+    public String apply(Syndication input) {
+      return input.getTarget();
+    }
+  };
 
   public static ArticleOutputView create(Article article, SyndicationService syndicationService) {
     Collection<Syndication> syndications;
@@ -46,6 +56,16 @@ public class ArticleOutputView implements ArticleJson {
       syndications = ImmutableList.of();
     }
     return new ArticleOutputView(article, syndications);
+  }
+
+  @VisibleForTesting
+  public Article getArticle() {
+    return article;
+  }
+
+  @VisibleForTesting
+  public Syndication getSyndication(String target) {
+    return syndications.get(target);
   }
 
   /**
@@ -68,7 +88,7 @@ public class ArticleOutputView implements ArticleJson {
       }
       serialized.addProperty(MemberNames.STATE, pubState);
 
-      serialized.add(MemberNames.SYNDICATIONS, serializeSyndications(src.syndications, context));
+      serialized.add(MemberNames.SYNDICATIONS, serializeSyndications(src.syndications.values(), context));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);

@@ -24,6 +24,7 @@ import com.google.gson.JsonParseException;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,6 +48,9 @@ import java.io.StringWriter;
 public abstract class RestController {
 
   private static final Logger log = LoggerFactory.getLogger(RestController.class);
+
+  @Autowired
+  private Gson entityGson;
 
   /**
    * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
@@ -205,15 +209,14 @@ public abstract class RestController {
    */
   protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
     InputStream is = null;
-    Gson gson = new Gson();
     boolean threw = true;
     T result;
     try {
       is = request.getInputStream();
-      result = gson.fromJson(new BufferedReader(new InputStreamReader(is)), clazz);
+      result = entityGson.fromJson(new BufferedReader(new InputStreamReader(is)), clazz);
       threw = false;
     } catch (JsonParseException e) {
-      throw new RestClientException("Request body contains invalid JSON", HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Request body contains invalid JSON", HttpStatus.BAD_REQUEST, e);
     } finally {
       Closeables.close(is, threw);
     }

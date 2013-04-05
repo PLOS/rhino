@@ -15,12 +15,16 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
+import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.content.ArticleState;
+import org.ambraproject.rhino.content.ArticleInputView;
+import org.ambraproject.rhino.content.ArticleOutputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
+import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
@@ -34,9 +38,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 /**
  * Tests for {@link org.ambraproject.rhino.service.impl.ArticleStateServiceImpl}
@@ -52,7 +54,13 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   private ArticleCrudService articleCrudService;
 
   @Autowired
+  private SyndicationService syndicationService;
+
+  @Autowired
   private Configuration ambraConfiguration;
+
+  @Autowired
+  private Gson entityGson;
 
   @Test
   public void testServiceAutowiring() {
@@ -77,25 +85,41 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
   @Test
   public void testPublication() throws Exception {
+    final String crossref = "CROSSREF";
+    final String pmc = "PMC";
+
     Article article = articleCrudService.writeArchive(TEST_DATA_DIR + "pone.0056489.zip",
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
 
-    ArticleState state = articleStateService.read(articleId);
-    assertFalse(state.isPublished());
-    assertEquals(state.getCrossRefSyndicationState(), ArticleState.SyndicationState.PENDING);
-    assertEquals(state.getPmcSyndicationState(), ArticleState.SyndicationState.PENDING);
+    ArticleOutputView outputView = ArticleOutputView.create(article, syndicationService);
+    assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
+    assertEquals(outputView.getSyndication(crossref).getStatus(), Syndication.STATUS_PENDING);
+    assertEquals(outputView.getSyndication(pmc).getStatus(), Syndication.STATUS_PENDING);
 
-    state = new ArticleState();
-    state.setPublished(true);
-    state.setCrossRefSyndicationState(ArticleState.SyndicationState.IN_PROGRESS);
-    state.setPmcSyndicationState(ArticleState.SyndicationState.IN_PROGRESS);
-    state = articleStateService.write(articleId, state);
+    String inputJson = ""
+        + "{"
+        + "  \"state\": \"published\","
+        + "  \"syndications\": {"
+        + "    \"CROSSREF\": {"
+        + "      \"status\": \"IN_PROGRESS\""
+        + "    },"
+        + "    \"PMC\": {"
+        + "      \"status\": \"IN_PROGRESS\""
+        + "    }"
+        + "  }"
+        + "}";
+    ArticleInputView inputView = entityGson.fromJson(inputJson, ArticleInputView.class);
+    assertEquals(inputView.getPublicationState().get().intValue(), Article.STATE_ACTIVE);
+    assertEquals(inputView.getSyndicationUpdate(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
+    assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);
+    article = articleStateService.update(articleId, inputView);
 
-    assertTrue(state.isPublished());
-    assertEquals(state.getCrossRefSyndicationState(), ArticleState.SyndicationState.IN_PROGRESS);
-    assertEquals(state.getPmcSyndicationState(), ArticleState.SyndicationState.IN_PROGRESS);
+    ArticleOutputView result = ArticleOutputView.create(article, syndicationService);
+    assertEquals(result.getArticle().getState(), Article.STATE_ACTIVE);
+    assertEquals(result.getSyndication(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
+    assertEquals(result.getSyndication(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);
     ArticleStateServiceImpl impl = (ArticleStateServiceImpl) articleStateService;
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
     assertEquals(dummySender.messagesSent.size(), 3);
