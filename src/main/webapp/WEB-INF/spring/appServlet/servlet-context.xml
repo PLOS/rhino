@@ -95,6 +95,7 @@
   <beans:bean id="articleService" class="org.ambraproject.service.article.ArticleServiceImpl">
     <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
     <beans:property name="permissionsService" ref="permissionsService"/>
+    <beans:property name="crossRefLookupService" ref="crossRefLookupService"/>
   </beans:bean>
 
   <beans:bean id="httpConnectionManagerParams" class="org.apache.commons.httpclient.params.HttpConnectionManagerParams">
