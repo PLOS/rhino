@@ -98,21 +98,6 @@
     <beans:property name="crossRefLookupService" ref="crossRefLookupService"/>
   </beans:bean>
 
-  <beans:bean id="httpConnectionManagerParams" class="org.apache.commons.httpclient.params.HttpConnectionManagerParams">
-    <!-- time out after 30 sec -->
-    <beans:property name="soTimeout" value="30000"/>
-    <beans:property name="connectionTimeout" value="30000"/>
-  </beans:bean>
-
-  <beans:bean id="multiThreadedHttpConnectionManager"
-        class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager">
-    <beans:property name="params" ref="httpConnectionManagerParams"/>
-  </beans:bean>
-
-  <beans:bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
-    <beans:constructor-arg index="0" ref="multiThreadedHttpConnectionManager"/>
-  </beans:bean>
-
   <beans:bean id="articleClassifier" class="org.ambraproject.service.article.AIArticleClassifier">
     <beans:property name="httpClient" ref="httpClient"/>
     <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>

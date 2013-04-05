@@ -45,6 +45,8 @@ import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -137,6 +139,16 @@ public class RhinoConfiguration extends BaseConfiguration {
   public org.apache.commons.configuration.Configuration ambraConfiguration() {
     // Fetch from Ambra's custom container
     return ConfigurationStore.getInstance().getConfiguration();
+  }
+
+  @Bean
+  public HttpClient httpClient() {
+    HttpConnectionManagerParams params = new HttpConnectionManagerParams();
+    params.setSoTimeout(30000);
+    params.setConnectionTimeout(30000);
+    MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
+    manager.setParams(params);
+    return new HttpClient(manager);
   }
 
   @Bean
