@@ -61,6 +61,10 @@ public class ArticleStateController extends ArticleSpaceController {
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
 
+    // TODO: remove when the dev/TNG-52 branch of plos-queue is deployed
+    if (true) {  // Silly compiler, so easy to fool.
+      throw new UnsupportedOperationException("Article state methods are not yet ready.");
+    }
     ArticleIdentity id = parse(request);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
     articleStateService.read(receiver, id, MetadataFormat.getFromParameter(format, true));
@@ -77,6 +81,10 @@ public class ArticleStateController extends ArticleSpaceController {
   public void write(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
 
+    // TODO: remove when the dev/TNG-52 branch of plos-queue is deployed
+    if (true) {  // Silly compiler, so easy to fool.
+      throw new UnsupportedOperationException("Article state methods are not yet ready.");
+    }
     ArticleIdentity id = parse(request);
     ArticleState state = readJsonFromRequest(request, ArticleState.class);
     articleStateService.write(id, state);
