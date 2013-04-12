@@ -13,7 +13,8 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.inject.internal.Preconditions;
+
+import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
@@ -53,7 +54,9 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
   @Override
   public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     Preconditions.checkArgument(format == MetadataFormat.JSON);
-    File ingestDir = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY));
+    String ingestSourceDirName = ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY);
+    Preconditions.checkNotNull(ingestSourceDirName); // should be covered by webapp's built-in defaults
+    File ingestDir = new File(ingestSourceDirName);
     File[] archives = ingestDir.listFiles(new FilenameFilter() {
       @Override
       public boolean accept(File dir, String name) {
@@ -61,6 +64,9 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
         return m.matches();
       }
     });
+    if (archives == null) {
+      throw new RuntimeException("Directory not found: " + ingestDir);
+    }
 
     List<String> results = new ArrayList<String>(archives.length);
     for (File archive : archives) {
