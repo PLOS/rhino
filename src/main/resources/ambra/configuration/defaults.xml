@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  $HeadURL::                                                                                     $
+  $Id$
+
+  Copyright (c) 2007-2010 by Public Library of Science
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  This file contains most of the defaults for the ambra webapp. However, there may be additional
+  defaults in the conf-helper library's global-defaults.xml. Additionally, if in dev mode, some
+  of these values may be overridden by settings in defaults-dev.xml. Finally, look for overrides
+  in /etc/ambra/ambra.xml.
+
+  See also libs/conf-helper/src/main/resources/globa-defaults.xml
+-->
+<config>
+  <ambra>
+    <network>
+      <hosts>
+        <!-- Set hosts.default to FQHN (not localhost) if installing all components on one host
+          (or to webhead FQHN for multiple host installation) -->
+        <default>localhost</default>
+        <mailhost>localhost</mailhost>
+        <!-- For multibox install, change the following entires to the appropriate FQHNs -->
+        <cas>${ambra.network.hosts.default}</cas>
+        <registration>${ambra.network.hosts.cas}</registration>
+        <fedora>${ambra.network.hosts.default}</fedora>
+        <mulgara>${ambra.network.hosts.default}</mulgara>
+        <ambra>${ambra.network.hosts.default}</ambra>
+      </hosts>
+    </network>
+    <platform>
+      <host>${ambra.network.hosts.default}:${ambra.network.ports.default}</host>
+      <port>
+        <http>${ambra.network.ports.default}</http>
+        <https>${ambra.network.ports.ambra-ssl}</https>
+        <doi>${ambra.network.ports.default}</doi>
+      </port>
+      <appContext>admin</appContext>
+      <guid-prefix>info:doi/0.0/</guid-prefix>
+      <resourceSubDir/><!-- used only if web resources like images/css are deployed in a separate directory; rarely used  -->
+
+      <!-- The DOI url prefix to use for this server -->
+      <doiUrlPrefix>http://dx.doi.org/</doiUrlPrefix>
+
+      <!-- common display constants -->
+      <name>Ambra</name>
+      <email>
+        <general>webmaster@example.org</general>
+        <feedback>webmaster@example.org</feedback>
+        <autoingest>webmaster@example.org</autoingest>
+        <errors>webmaster@example.org</errors>
+      </email>
+      <copyright>
+        This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License\,
+        http://creativecommons.org/licenses/by-sa/3.0/
+      </copyright>
+      <webserverUrl>http://${ambra.network.hosts.default}:${ambra.network.ports.default}${ambra.platform.appContext}/</webserverUrl>
+      <!--
+      These settings control how we cache freemarker templates.
+      For more information, check out the following web page:
+      http://fmpp.sourceforge.net/freemarker/pgui_config_templateloading.html
+      -->
+      <template_cache>
+        <strong>350</strong>
+        <soft>100</soft>
+        <update_delay>600</update_delay>
+      </template_cache>
+
+      <!--
+        This is the competing interest start date
+        Any comments made before this date will not display
+        "I have no competing interest" text
+        This must be in the dd/mm/yyyy format
+      -->
+      <cisStartDate>3/20/2009</cisStartDate>
+    </platform>
+
+    <!-- virtual journal config -->
+    <virtualJournals>
+      <!-- Location of journal template files -->
+      <templateDir>/usr/local/ambra/templates</templateDir>
+      <!-- config for default journal -->
+      <default>AmbraJournal</default>
+      <!-- comma separated list of virtual journal names -->
+      <journals>AmbraJournal,OverlayJournal</journals>
+    </virtualJournals>
+
+    <services>
+      <queue>
+        <refreshCitedArticles>activemq:plos.updatedCitedArticles?transacted=false</refreshCitedArticles>
+      </queue>
+
+      <!-- Some default values for when the reindex occurs for academic editors -->
+      <academic-editor-reindex>
+        <indexingMailReceiver>dev@plos.org</indexingMailReceiver>
+        <reindex-cron>0 0 0 ? * SUN</reindex-cron>
+      </academic-editor-reindex>
+
+      <ingest>
+        <default>org/ambraproject/article/service/pmc2obj.xslt</default>
+        <dtd_2_3>org/ambraproject/article/service/pmc2obj.xslt</dtd_2_3>
+        <dtd_3_0>org/ambraproject/article/service/pmc2obj-v3.xslt</dtd_3_0>
+      </ingest>
+
+      <articletransform>
+        <default>/articleTransform.xsl</default>
+        <dtd_2_3>/articleTransform.xsl</dtd_2_3>
+        <dtd_3_0>/articleTransform-v3.xsl</dtd_3_0>
+      </articletransform>
+
+      <fulldoitransform>
+        <default>/fullDOI.xsl</default>
+        <dtd_2_3>/fullDOI.xsl</dtd_2_3>
+        <dtd_3_0>/fullDOI.xsl</dtd_3_0>
+      </fulldoitransform>
+
+      <objinfotransform>
+        <default>/objInfo.xsl</default>
+        <dtd_2_3>/objInfo.xsl</dtd_2_3>
+        <dtd_3_0>/objInfo-v3.xsl</dtd_3_0>
+      </objinfotransform>
+      
+      <!-- URLs to access the CAS Single Signon Server.
+        login: the login page
+        logout: the logout page
+        proxy-receptor: the URL for getting a proxy ticket using a PGT
+        proxy-validate: the URL to validate/authenticate proxy and regular tickets
+      -->
+      <cas>
+        <url>
+          <base>https://${ambra.network.hosts.cas}:${ambra.network.ports.cas-ssl}/cas</base>
+          <login>${ambra.services.cas.url.base}/login</login>
+          <logout>${ambra.services.cas.url.base}/logout</logout>
+          <proxy-receptor>${ambra.services.cas.url.base}/proxy</proxy-receptor>
+          <proxy-validate>${ambra.services.cas.url.base}/proxyValidate</proxy-validate>
+        </url>
+      </cas>
+
+      <documentManagement>
+        <ingestSourceDir>
+          /var/spool/ambra/ingestion-queue
+        </ingestSourceDir>
+        <ingestDestinationDir>
+          /var/spool/ambra/ingested
+        </ingestDestinationDir>
+        <documentPrefix>${ambra.platform.guid-prefix}journal.</documentPrefix>
+      </documentManagement>
+
+      <registration>
+        <appContext>/ambra-registration</appContext><!-- app context for registration -->
+        <url>
+          <base>
+            https://${ambra.network.hosts.cas}:${ambra.network.ports.cas-ssl}${ambra.services.registration.appContext}
+          </base>
+          <!-- properties below are used by pub app to determine where to send the user for certain actions -->
+          <registration>${ambra.services.registration.url.base}/register.action</registration>
+          <change-password>${ambra.services.registration.url.base}/changePassword.action</change-password>
+          <change-email>${ambra.services.registration.url.base}/changeEmail.action</change-email>
+        </url>
+      </registration>
+
+      <xreftransform>
+        <default>/crossref.xsl</default>
+        <dtd_2_3>/crossref.xsl</dtd_2_3>
+        <dtd_3_0>/crossref_v3.xsl</dtd_3_0>
+      </xreftransform>
+
+      <!-- crossref information - set parameters and sendToXref to true to turn on -->
+      <crossref>
+        <plos>
+          <doiurl>http://${ambra.network.hosts.default}:${ambra.network.ports.doi}/ambra-doi-resolver/</doiurl><!-- URL where your URIs can be found -->
+          <email>webmaster@example.org</email><!-- email address to send info to -->
+        </plos>
+        <login>crossref-username</login><!-- crossref login -->
+        <password>crossref-password</password><!-- crossref password -->
+        <area>test</area><!-- set to "live" to activate, "test" for dev -->
+        <sendToXref>false</sendToXref><!-- Set to true to turn on crossref posting -->
+        <post>
+          <url>
+            http://doi.crossref.org/servlet/deposit?operation=doMDUpload&amp;login_id=${ambra.services.crossref.login}&amp;login_passwd=${ambra.services.crossref.password}&amp;area=${ambra.services.crossref.area}
+          </url>
+        </post>
+        <query>
+          <url>
+            http://search.crossref.org/links
+          </url>
+        </query>
+        <guestquery>
+          <url>http://www.crossref.org/guestquery/</url>
+        </guestquery>
+        <xsl>crossref.xsl</xsl>
+      </crossref>
+
+      <pubget>
+        <url>http://pubget.com/widgetizer/links_hash</url>
+      </pubget>
+
+      <!-- FIXME: failover:tcp://address:port of ActiveMQ broker -->
+      <activemq>tcp://${ambra.network.hosts.default}:61616</activemq>
+
+      <browse>
+        <sortOptions>
+          <option displayName="Date\, newest first">publication_date desc\, id desc</option>
+        </sortOptions>
+      </browse>
+    </services>
+    <articleTypeList>
+      <articleType>
+        <typeUri>http://rdf.plos.org/RDF/articleType/Research%20Article</typeUri>
+        <typeHeading>Research Article</typeHeading>
+        <typeHeadingPlural>Research Articles</typeHeadingPlural>
+        <typeCode>research_article</typeCode>
+        <default>true</default>
+      </articleType>
+      <articleType>
+        <typeUri>http://rdf.plos.org/RDF/articleType/Issue%20Image</typeUri>
+        <typeHeading>Issue Image</typeHeading>
+        <typeHeadingPlural>Issue Images</typeHeadingPlural>
+        <typeCode>issue_image</typeCode>
+      </articleType>
+    </articleTypeList>
+
+  </ambra>
+
+  <!-- See the AmbraStruts2Filter dispatcher on how struts constants are configured -->
+  <struts>
+    <devMode>false</devMode>
+  </struts>
+
+</config>
