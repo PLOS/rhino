@@ -224,6 +224,14 @@
           <option displayName="Date\, newest first">publication_date desc\, id desc</option>
         </sortOptions>
       </browse>
+
+      <ai>
+        <url></url>
+      </ai>
+      <raptor>
+        <url></url>
+      </raptor>
+
     </services>
     <articleTypeList>
       <articleType>
