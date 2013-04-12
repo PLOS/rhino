@@ -49,7 +49,8 @@
       </port>
       <appContext>admin</appContext>
       <guid-prefix>info:doi/0.0/</guid-prefix>
-      <resourceSubDir/><!-- used only if web resources like images/css are deployed in a separate directory; rarely used  -->
+      <resourceSubDir/>
+      <!-- used only if web resources like images/css are deployed in a separate directory; rarely used  -->
 
       <!-- The DOI url prefix to use for this server -->
       <doiUrlPrefix>http://dx.doi.org/</doiUrlPrefix>
@@ -66,7 +67,8 @@
         This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License\,
         http://creativecommons.org/licenses/by-sa/3.0/
       </copyright>
-      <webserverUrl>http://${ambra.network.hosts.default}:${ambra.network.ports.default}${ambra.platform.appContext}/</webserverUrl>
+      <webserverUrl>http://${ambra.network.hosts.default}:${ambra.network.ports.default}${ambra.platform.appContext}/
+      </webserverUrl>
       <!--
       These settings control how we cache freemarker templates.
       For more information, check out the following web page:
@@ -131,7 +133,7 @@
         <dtd_2_3>/objInfo.xsl</dtd_2_3>
         <dtd_3_0>/objInfo-v3.xsl</dtd_3_0>
       </objinfotransform>
-      
+
       <!-- URLs to access the CAS Single Signon Server.
         login: the login page
         logout: the logout page
@@ -159,7 +161,8 @@
       </documentManagement>
 
       <registration>
-        <appContext>/ambra-registration</appContext><!-- app context for registration -->
+        <appContext>/ambra-registration</appContext>
+        <!-- app context for registration -->
         <url>
           <base>
             https://${ambra.network.hosts.cas}:${ambra.network.ports.cas-ssl}${ambra.services.registration.appContext}
@@ -180,13 +183,19 @@
       <!-- crossref information - set parameters and sendToXref to true to turn on -->
       <crossref>
         <plos>
-          <doiurl>http://${ambra.network.hosts.default}:${ambra.network.ports.doi}/ambra-doi-resolver/</doiurl><!-- URL where your URIs can be found -->
-          <email>webmaster@example.org</email><!-- email address to send info to -->
+          <doiurl>http://${ambra.network.hosts.default}:${ambra.network.ports.doi}/ambra-doi-resolver/</doiurl>
+          <!-- URL where your URIs can be found -->
+          <email>webmaster@example.org</email>
+          <!-- email address to send info to -->
         </plos>
-        <login>crossref-username</login><!-- crossref login -->
-        <password>crossref-password</password><!-- crossref password -->
-        <area>test</area><!-- set to "live" to activate, "test" for dev -->
-        <sendToXref>false</sendToXref><!-- Set to true to turn on crossref posting -->
+        <login>crossref-username</login>
+        <!-- crossref login -->
+        <password>crossref-password</password>
+        <!-- crossref password -->
+        <area>test</area>
+        <!-- set to "live" to activate, "test" for dev -->
+        <sendToXref>false</sendToXref>
+        <!-- Set to true to turn on crossref posting -->
         <post>
           <url>
             http://doi.crossref.org/servlet/deposit?operation=doMDUpload&amp;login_id=${ambra.services.crossref.login}&amp;login_passwd=${ambra.services.crossref.password}&amp;area=${ambra.services.crossref.area}
