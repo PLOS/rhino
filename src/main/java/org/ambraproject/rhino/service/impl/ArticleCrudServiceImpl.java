@@ -564,6 +564,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setFetchMode("assets", FetchMode.JOIN)
             .setFetchMode("journals", FetchMode.JOIN)
             .setFetchMode("journals.volumes", FetchMode.JOIN)
+            .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {
