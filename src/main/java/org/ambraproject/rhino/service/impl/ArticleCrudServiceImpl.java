@@ -22,6 +22,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import com.google.inject.internal.Preconditions;
@@ -602,10 +603,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException {
+  public void listDois(ResponseReceiver receiver, Multimap<String, String> parameters, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Article.class)
+    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
+
+    Collection<String> stateParam = parameters.get("state");
+    if (!stateParam.isEmpty()) {
+      Collection<Integer> stateConstants = ArticleOutputView.publicationStateNamesToConstants(stateParam);
+      criteria.add(Restrictions.in("state", stateConstants));
+    }
+
+    List<?> dois = hibernateTemplate.findByCriteria(criteria
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         .setProjection(Projections.property("doi"))
         .addOrder(Order.asc("lastModified"))

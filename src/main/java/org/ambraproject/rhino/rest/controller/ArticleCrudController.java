@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -63,7 +64,7 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    articleCrudService.listDois(receiver, mf);
+    articleCrudService.listDois(receiver, getParameters(request), mf);
   }
 
   /**

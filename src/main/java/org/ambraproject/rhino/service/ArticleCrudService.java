@@ -19,6 +19,8 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimap;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -113,12 +115,17 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void setAssetService(AssetCrudService assetService);
 
   /**
-   * List the DOIs of all ingested articles.
+   * List the DOIs of all ingested articles, or a described subset.
+   * <p/>
+   * The {@code parameters} map contains parameters as described by the API. If the map is empty, return all articles.
+   * Implementations should allow unexpected keys in the map and silently ignore them, to allow a controller simply pass
+   * in all parameters from an actual request.
    *
-   * @param receiver the receiver to which to write the list
-   * @param format   the desired list format
-   * @throws IOException
+   * @param receiver   the receiver to which to write the list
+   * @param parameters query parameters describing the set of articles to list
+   * @param format     the desired list format  @throws IOException
    */
-  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+  public abstract void listDois(ResponseReceiver receiver, Multimap<String, String> parameters,
+                                MetadataFormat format) throws IOException;
 
 }

@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Map;
 
 /**
  * Controller that sends HTTP responses to RESTful requests.
@@ -226,4 +229,21 @@ public abstract class RestController {
 
     return result;
   }
+
+  protected static ImmutableListMultimap<String, String> getParameters(ServletRequest request) {
+    Map<String, String[]> parameterMap = request.getParameterMap();
+    if (parameterMap.isEmpty()) {
+      return ImmutableListMultimap.of(); // avoid constructing a builder
+    }
+    ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
+    for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+      String key = entry.getKey();
+      String[] values = entry.getValue();
+      for (int i = 0; i < values.length; i++) {
+        builder.put(key, values[i]);
+      }
+    }
+    return builder.build();
+  }
+
 }
