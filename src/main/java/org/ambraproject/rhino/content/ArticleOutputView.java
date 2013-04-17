@@ -118,18 +118,12 @@ public class ArticleOutputView implements ArticleJson {
 
   };
 
-  public static Collection<Integer> publicationStateNamesToConstants(Collection<String> stateNames) {
-    ImmutableSet.Builder<Integer> builder = ImmutableSet.builder();
-    for (String stateName : stateNames) {
-      Integer stateConstant = PUBLICATION_STATE_NAMES.get(stateName);
-      if (stateConstant == null) {
-        String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
-            stateName, PUBLICATION_STATE_NAMES.keySet().toString());
-        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-      }
-      builder.add(stateConstant);
-    }
-    return builder.build();
+  public static Integer convertPublicationStateName(String stateName) {
+    return PUBLICATION_STATE_NAMES.get(stateName);
+  }
+
+  public static ImmutableSet<String> getValidPublicationStateNames() {
+    return PUBLICATION_STATE_NAMES.keySet();
   }
 
 }
