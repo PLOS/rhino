@@ -119,7 +119,7 @@ public class ArticleOutputView implements ArticleJson {
   };
 
   public static Integer convertPublicationStateName(String stateName) {
-    return PUBLICATION_STATE_NAMES.get(stateName);
+    return PUBLICATION_STATE_NAMES.get(stateName.toLowerCase());
   }
 
   public static ImmutableSet<String> getValidPublicationStateNames() {
