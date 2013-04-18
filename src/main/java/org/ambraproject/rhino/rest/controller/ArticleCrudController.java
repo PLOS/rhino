@@ -19,14 +19,12 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
-import org.ambraproject.rhino.content.ArticleOutputView;
+import org.ambraproject.rhino.content.ArticleCriteria;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
@@ -45,7 +43,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Controller for _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -61,33 +60,26 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String ARTICLE_XML_FIELD = "xml";
 
   private static final String PUB_STATE_PARAM = "state";
+  private static final String SYND_STATUS_PARAM = "syndication";
 
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
                        @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format,
-                       @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates)
+                       @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
+                       @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
-    articleCrudService.listDois(receiver, mf, transformPublicationStates(pubStates));
+    ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses));
+    articleCrudService.listDois(receiver, mf, articleCriteria);
   }
 
-  private static Optional<? extends Collection<Integer>> transformPublicationStates(String[] publicationStates) {
-    if (publicationStates == null || publicationStates.length == 0) {
-      return Optional.absent();
-    }
-    ImmutableSet.Builder<Integer> builder = ImmutableSet.builder();
-    for (String stateName : publicationStates) {
-      Integer stateConstant = ArticleOutputView.convertPublicationStateName(stateName);
-      if (stateConstant == null) {
-        String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
-            stateName, ArticleOutputView.getValidPublicationStateNames().toString());
-        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-      }
-      builder.add(stateConstant);
-    }
-    return Optional.of(builder.build());
+  /*
+   * Null-safe utility method for Arrays.asList. Put somewhere for reuse?
+   */
+  private static <E> List<E> asList(E[] array) {
+    return (array == null) ? null : Arrays.asList(array);
   }
 
 

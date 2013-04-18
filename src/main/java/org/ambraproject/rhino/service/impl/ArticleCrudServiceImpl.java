@@ -31,6 +31,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.content.ArticleCriteria;
 import org.ambraproject.rhino.content.ArticleOutputView;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
@@ -604,16 +605,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void listDois(ResponseReceiver receiver, MetadataFormat format,
-                       Optional<? extends Collection<Integer>> publicationStates)
+                       ArticleCriteria articleCriteria)
       throws IOException {
     assert format == MetadataFormat.JSON;
-    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
-
-    if (publicationStates.isPresent()) {
-      criteria.add(Restrictions.in("state", publicationStates.get()));
-    }
-
-    List<?> dois = hibernateTemplate.findByCriteria(criteria
+    List<?> dois = hibernateTemplate.findByCriteria(articleCriteria.get()
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         .setProjection(Projections.property("doi"))
         .addOrder(Order.asc("lastModified"))
