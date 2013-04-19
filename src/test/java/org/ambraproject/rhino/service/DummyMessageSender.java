@@ -24,6 +24,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
+import java.util.Map;
 
 /**
  * Implementation of {@link MessageSender} for testing.
@@ -52,5 +53,10 @@ public class DummyMessageSender implements MessageSender {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public void sendMessage(String destination, Object body, Map<String, Object> headers) {
+    throw new UnsupportedOperationException();
   }
 }

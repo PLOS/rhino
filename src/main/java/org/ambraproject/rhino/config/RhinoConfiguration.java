@@ -26,6 +26,8 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.rhino.content.ArticleInputView;
+import org.ambraproject.rhino.content.ArticleOutputView;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -42,6 +44,11 @@ import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
+import org.ambraproject.service.crossref.CrossRefLookupService;
+import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -100,6 +107,9 @@ public class RhinoConfiguration extends BaseConfiguration {
     GsonBuilder builder = new GsonBuilder();
     builder.setPrettyPrinting();
 
+    builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
+    builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
+
     final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{
         "ID", // Internal to the database
     });
@@ -135,6 +145,26 @@ public class RhinoConfiguration extends BaseConfiguration {
     // Fetch from Ambra's custom container
     return ConfigurationStore.getInstance().getConfiguration();
   }
+
+  @Bean
+  public HttpClient httpClient() {
+    HttpConnectionManagerParams params = new HttpConnectionManagerParams();
+    params.setSoTimeout(30000);
+    params.setConnectionTimeout(30000);
+    MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
+    manager.setParams(params);
+    return new HttpClient(manager);
+  }
+
+  @Bean
+  public CrossRefLookupService crossRefLookupService(HttpClient httpClient,
+                                                     org.apache.commons.configuration.Configuration ambraConfiguration) {
+    CrossRefLookupServiceImpl service = new CrossRefLookupServiceImpl();
+    service.setHttpClient(httpClient);
+    service.setCrossRefUrl((String) ambraConfiguration.getProperty("ambra.services.crossref.query.url"));
+    return service;
+  }
+
 
   @Bean
   public ArticleCrudService articleCrudService() {
