@@ -7,11 +7,16 @@ import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -80,17 +85,27 @@ public class ArticleCriteria implements ArticleJson {
   }
 
 
-  public DetachedCriteria get() {
-    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
+  /**
+   * Fetch a list of DOIs of articles in the system that match this object's criteria.
+   *
+   * @param hibernateTemplate the system's Hibernate template
+   * @return a list of article DOIs
+   */
+  public List<String> apply(HibernateTemplate hibernateTemplate) {
+    Preconditions.checkNotNull(hibernateTemplate);
+    if (syndicationStatuses.isPresent()) {
+      // TODO Handle this case
+    }
 
+    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
     if (publicationStates.isPresent()) {
       criteria = criteria.add(Restrictions.in("state", publicationStates.get()));
     }
-
-    // TODO Apply syndicationStatuses
-    // (Is this even possible/feasible with DetachedCriteria? It involves joining. Might prefer HQL.
-
-    return criteria;
+    List<?> result = hibernateTemplate.findByCriteria(criteria
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        .setProjection(Projections.property("doi"))
+        .addOrder(Order.asc("lastModified")));
+    return (List<String>) result;
   }
 
 }

@@ -54,8 +54,6 @@ import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -608,11 +606,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
                        ArticleCriteria articleCriteria)
       throws IOException {
     assert format == MetadataFormat.JSON;
-    List<?> dois = hibernateTemplate.findByCriteria(articleCriteria.get()
-        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        .setProjection(Projections.property("doi"))
-        .addOrder(Order.asc("lastModified"))
-    );
+    List<String> dois = articleCriteria.apply(hibernateTemplate);
     writeJson(receiver, dois);
   }
 
