@@ -5,6 +5,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,11 +13,13 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -114,5 +117,13 @@ public class ArticleOutputView implements ArticleJson {
     }
 
   };
+
+  public static Integer convertPublicationStateName(String stateName) {
+    return PUBLICATION_STATE_NAMES.get(stateName.toLowerCase());
+  }
+
+  public static ImmutableSet<String> getValidPublicationStateNames() {
+    return PUBLICATION_STATE_NAMES.keySet();
+  }
 
 }

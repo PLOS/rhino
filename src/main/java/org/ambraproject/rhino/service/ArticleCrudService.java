@@ -28,6 +28,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -113,12 +114,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void setAssetService(AssetCrudService assetService);
 
   /**
-   * List the DOIs of all ingested articles.
+   * List the DOIs of all ingested articles, or a described subset.
    *
-   * @param receiver the receiver to which to write the list
-   * @param format   the desired list format
-   * @throws IOException
+   * @param receiver          the receiver to which to write the list
+   * @param format            the desired list format  @throws IOException
+   * @param publicationStates if present, show only articles that are in one of these states
    */
-  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format,
+                                Optional<? extends Collection<Integer>> publicationStates)
+      throws IOException;
 
 }

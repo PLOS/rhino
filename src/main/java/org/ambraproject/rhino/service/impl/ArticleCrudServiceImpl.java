@@ -603,10 +603,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void listDois(ResponseReceiver receiver, MetadataFormat format) throws IOException {
+  public void listDois(ResponseReceiver receiver, MetadataFormat format,
+                       Optional<? extends Collection<Integer>> publicationStates)
+      throws IOException {
     assert format == MetadataFormat.JSON;
-    List<?> dois = hibernateTemplate.findByCriteria(DetachedCriteria
-        .forClass(Article.class)
+    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
+
+    if (publicationStates.isPresent()) {
+      criteria.add(Restrictions.in("state", publicationStates.get()));
+    }
+
+    List<?> dois = hibernateTemplate.findByCriteria(criteria
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         .setProjection(Projections.property("doi"))
         .addOrder(Order.asc("lastModified"))
