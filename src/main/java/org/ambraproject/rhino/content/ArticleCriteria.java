@@ -8,13 +8,18 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +38,15 @@ public class ArticleCriteria implements ArticleJson {
     this.syndicationStatuses = Preconditions.checkNotNull(syndicationStatuses);
   }
 
+  /**
+   * Create an object describing a set of articles.
+   *
+   * @param clientPubStates    include all articles whose publication state is one of these; {@code null} to include all
+   *                           articles regardless of publication state
+   * @param clientSyndStatuses include all articles whose publication state is one of these; {@code null} to include all
+   *                           articles regardless of publication state
+   * @return
+   */
   public static ArticleCriteria create(Collection<String> clientPubStates, Collection<String> clientSyndStatuses) {
     Optional<ImmutableSet<Integer>> publicationStateConstants;
     if (CollectionUtils.isEmpty(clientPubStates)) {
@@ -59,6 +73,7 @@ public class ArticleCriteria implements ArticleJson {
         if (!SYNDICATION_STATUSES.contains(clientSyndStatus)) {
           throw unrecognizedInputs("syndication status", clientSyndStatuses, SYNDICATION_STATUSES);
         }
+        builder.add(clientSyndStatus);
       }
       syndicationStatusConstants = Optional.of(builder.build());
     }
@@ -94,7 +109,7 @@ public class ArticleCriteria implements ArticleJson {
   public List<String> apply(HibernateTemplate hibernateTemplate) {
     Preconditions.checkNotNull(hibernateTemplate);
     if (syndicationStatuses.isPresent()) {
-      // TODO Handle this case
+      return findBySyndication(hibernateTemplate);
     }
 
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
@@ -107,5 +122,25 @@ public class ArticleCriteria implements ArticleJson {
         .addOrder(Order.asc("lastModified")));
     return (List<String>) result;
   }
+
+  /*
+   * Special-case hack requiring weird logic.
+   */
+  private List<String> findBySyndication(HibernateTemplate hibernateTemplate) {
+    return hibernateTemplate.execute(new HibernateCallback<List<String>>() {
+      @Override
+      public List<String> doInHibernate(Session session) throws HibernateException, SQLException {
+        Query query = session.createQuery(SYND_QUERY);
+        query.setParameterList("syndStatuses", syndicationStatuses.get());
+        query.setParameterList("pubStates", publicationStates.or(PUBLICATION_STATE_CONSTANTS.keySet()));
+        return query.list();
+      }
+    });
+  }
+
+  private static final String SYND_QUERY = ""
+      + "select distinct a.doi from Article a, Syndication s "
+      + "where (a.doi = s.doi) and (s.status in (:syndStatuses)) and (a.state in (:pubStates)) "
+      + "order by a.lastModified asc";
 
 }
