@@ -31,7 +31,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,7 +103,7 @@ public class AssetCrudController extends DoiBasedCrudController {
     }
 
     response.setStatus(result.getStatus().value());
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     assetCrudService.readMetadata(receiver, fileIdentity.forAsset(), MetadataFormat.JSON);
   }
 

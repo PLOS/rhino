@@ -25,7 +25,7 @@ import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.PlosDoiUtils;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -79,7 +79,7 @@ public class IngestibleController extends DoiBasedCrudController {
       throws IOException {
 
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     ingestibleService.read(receiver, mf);
   }
 
@@ -119,7 +119,7 @@ public class IngestibleController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 }

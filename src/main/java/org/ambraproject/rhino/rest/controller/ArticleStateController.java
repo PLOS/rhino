@@ -20,7 +20,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class ArticleStateController extends ArticleSpaceController {
     ArticleIdentity id = parse(request);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     articleCrudService.readMetadata(receiver, id, MetadataFormat.JSON);
   }
 }

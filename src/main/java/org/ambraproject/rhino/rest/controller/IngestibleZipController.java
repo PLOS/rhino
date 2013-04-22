@@ -9,7 +9,7 @@ import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletJsonpReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -63,7 +63,7 @@ public class IngestibleZipController extends RestController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletJsonpReceiver.create(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 
