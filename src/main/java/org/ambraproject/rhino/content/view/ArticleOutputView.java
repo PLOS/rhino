@@ -28,7 +28,7 @@ import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATI
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
  * a default dump of the article, plus a few added or augmented.
  */
-public class ArticleOutputView {
+public class ArticleOutputView implements ArticleView {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
@@ -59,6 +59,11 @@ public class ArticleOutputView {
       syndications = ImmutableList.of();
     }
     return new ArticleOutputView(article, syndications);
+  }
+
+  @Override
+  public String getDoi() {
+    return article.getDoi();
   }
 
   @VisibleForTesting
@@ -99,23 +104,24 @@ public class ArticleOutputView {
       return serialized;
     }
 
-    /**
-     * Represent the list of syndications as an object whose keys are the syndication targets.
-     */
-    private JsonElement serializeSyndications(Collection<Syndication> syndications, JsonSerializationContext context) {
-      JsonObject syndicationsByTarget = new JsonObject();
-      for (Syndication syndication : syndications) {
-        JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
-
-        // Exclude redundant members
-        syndicationJson.remove(MemberNames.DOI);
-        syndicationJson.remove(MemberNames.SYNDICATION_TARGET);
-
-        syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
-      }
-      return syndicationsByTarget;
-    }
-
   };
+
+  /**
+   * Represent the list of syndications as an object whose keys are the syndication targets.
+   */
+  static JsonElement serializeSyndications(Collection<? extends Syndication> syndications,
+                                           JsonSerializationContext context) {
+    JsonObject syndicationsByTarget = new JsonObject();
+    for (Syndication syndication : syndications) {
+      JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
+
+      // Exclude redundant members
+      syndicationJson.remove(MemberNames.DOI);
+      syndicationJson.remove(MemberNames.SYNDICATION_TARGET);
+
+      syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
+    }
+    return syndicationsByTarget;
+  }
 
 }
