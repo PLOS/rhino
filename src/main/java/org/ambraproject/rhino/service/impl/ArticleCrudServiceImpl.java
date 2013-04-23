@@ -606,8 +606,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
                        ArticleCriteria articleCriteria)
       throws IOException {
     assert format == MetadataFormat.JSON;
-    List<String> dois = articleCriteria.apply(hibernateTemplate);
-    writeJson(receiver, dois);
+    writeJson(receiver, articleCriteria.apply(hibernateTemplate));
   }
 
   @Required

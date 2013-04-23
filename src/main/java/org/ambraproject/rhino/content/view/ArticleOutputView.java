@@ -96,7 +96,10 @@ public class ArticleOutputView implements ArticleView {
       }
       serialized.addProperty(MemberNames.STATE, pubState);
 
-      serialized.add(MemberNames.SYNDICATIONS, serializeSyndications(src.syndications.values(), context));
+      JsonElement syndications = serializeSyndications(src.syndications.values(), context);
+      if (syndications != null) {
+        serialized.add(MemberNames.SYNDICATIONS, syndications);
+      }
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
@@ -111,6 +114,9 @@ public class ArticleOutputView implements ArticleView {
    */
   static JsonElement serializeSyndications(Collection<? extends Syndication> syndications,
                                            JsonSerializationContext context) {
+    if (syndications == null) {
+      return null;
+    }
     JsonObject syndicationsByTarget = new JsonObject();
     for (Syndication syndication : syndications) {
       JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();

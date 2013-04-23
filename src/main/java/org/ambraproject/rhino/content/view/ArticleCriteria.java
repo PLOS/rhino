@@ -1,10 +1,13 @@
 package org.ambraproject.rhino.content.view;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
@@ -13,6 +16,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.http.HttpStatus;
@@ -110,41 +114,94 @@ public class ArticleCriteria {
    * @param hibernateTemplate the system's Hibernate template
    * @return a list of article DOIs
    */
-  public List<String> apply(HibernateTemplate hibernateTemplate) {
+  public Object apply(HibernateTemplate hibernateTemplate) {
     Preconditions.checkNotNull(hibernateTemplate);
     if (syndicationStatuses.isPresent()) {
       return findBySyndication(hibernateTemplate);
     }
 
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
+    ProjectionList projectionList = Projections.projectionList().add(Projections.property("doi"));
     if (publicationStates.isPresent()) {
       criteria = criteria.add(Restrictions.in("state", publicationStates.get()));
+      projectionList = projectionList.add(Projections.property("state"));
     }
     List<?> result = hibernateTemplate.findByCriteria(criteria
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        .setProjection(Projections.property("doi"))
+        .setProjection(projectionList)
         .addOrder(Order.asc("lastModified")));
-    return (List<String>) result;
+    return publicationStates.isPresent()
+        ? new ArticleViewList(Lists.transform((List<Object[]>) result, DOI_AND_STATE_AS_VIEW))
+        : new DoiList((List<String>) result);
   }
+
+  private static final Function<Object[], ArticleView> DOI_AND_STATE_AS_VIEW = new Function<Object[], ArticleView>() {
+    @Override
+    public ArticleView apply(Object[] input) {
+      String doi = (String) input[0];
+      Integer pubStateConstant = (Integer) input[1];
+      String pubStateName = ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS.get(pubStateConstant);
+      return new ArticleStateView(doi, pubStateName, null);
+    }
+  };
+
+
+  // Optimization parameter; doesn't matter if it's off. Main use case is "CROSSREF" and "PMC".
+  private static final int EXPECTED_SYNDICATION_TARGETS = 2;
 
   /*
    * Special-case hack requiring weird logic.
    */
-  private List<String> findBySyndication(HibernateTemplate hibernateTemplate) {
-    return hibernateTemplate.execute(new HibernateCallback<List<String>>() {
+  private ArticleViewList findBySyndication(HibernateTemplate hibernateTemplate) {
+    List<Object[]> results = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
-      public List<String> doInHibernate(Session session) throws HibernateException, SQLException {
+      public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery(SYND_QUERY);
         query.setParameterList("syndStatuses", syndicationStatuses.get());
         query.setParameterList("pubStates", publicationStates.or(PUBLICATION_STATE_CONSTANTS.keySet()));
         return query.list();
       }
     });
+
+    List<ArticleStateView> views = Lists.newArrayListWithExpectedSize(results.size() / EXPECTED_SYNDICATION_TARGETS);
+    ArticleStateViewBuilder builder = null;
+    for (Object[] result : results) {
+      String doi = (String) result[0];
+      Integer pubStateConstant = (Integer) result[1];
+      String pubStateName = ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS.get(pubStateConstant);
+      Syndication syndication = (Syndication) result[2];
+
+      if (builder == null || !doi.equals(builder.doi)) {
+        if (builder != null) {
+          views.add(builder.build());
+        }
+        builder = new ArticleStateViewBuilder(doi, pubStateName);
+      }
+      builder.syndications.add(syndication);
+    }
+
+    return new ArticleViewList(views);
   }
 
   private static final String SYND_QUERY = ""
-      + "select distinct a.doi from Article a, Syndication s "
+      + "select a.doi, a.state, s from Article a, Syndication s "
       + "where (a.doi = s.doi) and (s.status in (:syndStatuses)) and (a.state in (:pubStates)) "
-      + "order by a.lastModified asc";
+      + "order by a.lastModified asc, a.doi asc";
+
+  private static class ArticleStateViewBuilder {
+    private final String doi;
+    private final String state;
+    private final List<Syndication> syndications;
+
+    public ArticleStateViewBuilder(String doi, String state) {
+      this.doi = Preconditions.checkNotNull(doi);
+      this.state = Preconditions.checkNotNull(state);
+      this.syndications = Lists.newArrayListWithExpectedSize(EXPECTED_SYNDICATION_TARGETS);
+    }
+
+    public ArticleStateView build() {
+      return new ArticleStateView(doi, state, syndications);
+    }
+  }
 
 }
