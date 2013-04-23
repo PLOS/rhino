@@ -31,6 +31,8 @@ import java.util.Set;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.SYNDICATION_STATUSES;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateConstant;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * Criteria from an API client describing a subset of articles.
@@ -62,9 +64,9 @@ public class ArticleCriteria {
     } else {
       ImmutableSet.Builder<Integer> builder = ImmutableSet.builder();
       for (String clientPubState : clientPubStates) {
-        Integer pubStateConstant = PUBLICATION_STATE_NAMES.get(clientPubState.toLowerCase());
+        Integer pubStateConstant = getPublicationStateConstant(clientPubState);
         if (pubStateConstant == null) {
-          throw unrecognizedInputs("publication state", clientPubStates, PUBLICATION_STATE_NAMES.keySet());
+          throw unrecognizedInputs("publication state", clientPubStates, PUBLICATION_STATE_NAMES);
         }
         builder.add(pubStateConstant);
       }
@@ -140,7 +142,7 @@ public class ArticleCriteria {
     public ArticleView apply(Object[] input) {
       String doi = (String) input[0];
       Integer pubStateConstant = (Integer) input[1];
-      String pubStateName = ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS.get(pubStateConstant);
+      String pubStateName = getPublicationStateName(pubStateConstant);
       return new ArticleStateView(doi, pubStateName, null);
     }
   };
@@ -158,7 +160,7 @@ public class ArticleCriteria {
       public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery(SYND_QUERY);
         query.setParameterList("syndStatuses", syndicationStatuses.get());
-        query.setParameterList("pubStates", publicationStates.or(PUBLICATION_STATE_CONSTANTS.keySet()));
+        query.setParameterList("pubStates", publicationStates.or(PUBLICATION_STATE_CONSTANTS));
         return query.list();
       }
     });
@@ -168,7 +170,7 @@ public class ArticleCriteria {
     for (Object[] result : results) {
       String doi = (String) result[0];
       Integer pubStateConstant = (Integer) result[1];
-      String pubStateName = ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS.get(pubStateConstant);
+      String pubStateName = getPublicationStateName(pubStateConstant);
       Syndication syndication = (Syndication) result[2];
 
       if (builder == null || !doi.equals(builder.doi)) {

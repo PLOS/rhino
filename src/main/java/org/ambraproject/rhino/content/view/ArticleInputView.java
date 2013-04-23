@@ -20,6 +20,7 @@ import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNam
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.SYNDICATION_STATUSES;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateConstant;
 
 /**
  * A view of an update to an article's state as submitted by a REST client.
@@ -69,7 +70,7 @@ public class ArticleInputView {
   private final ImmutableMap<String, SyndicationUpdate> syndicationUpdates;
 
   private ArticleInputView(Integer publicationState, Map<String, SyndicationUpdate> syndicationUpdates) {
-    Preconditions.checkArgument(publicationState == null || PUBLICATION_STATE_CONSTANTS.containsKey(publicationState));
+    Preconditions.checkArgument(publicationState == null || PUBLICATION_STATE_CONSTANTS.contains(publicationState));
     this.publicationState = Optional.fromNullable(publicationState);
     this.syndicationUpdates = (syndicationUpdates == null)
         ? ImmutableMap.<String, SyndicationUpdate>of()
@@ -145,10 +146,10 @@ public class ArticleInputView {
 
       String pubStateName = stateValue.getAsJsonPrimitive().getAsString();
       pubStateName = pubStateName.toLowerCase();
-      Integer pubStateConstant = PUBLICATION_STATE_NAMES.get(pubStateName);
+      Integer pubStateConstant = getPublicationStateConstant(pubStateName);
       if (pubStateConstant == null) {
         String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
-            pubStateName, PUBLICATION_STATE_NAMES.keySet());
+            pubStateName, PUBLICATION_STATE_NAMES);
         throw new JsonParseException(message);
       }
       return pubStateConstant;

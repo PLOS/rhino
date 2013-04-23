@@ -23,6 +23,7 @@ import java.util.Collection;
 
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
@@ -88,10 +89,10 @@ public class ArticleOutputView implements ArticleView {
       serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
       int articleState = article.getState();
-      String pubState = PUBLICATION_STATE_CONSTANTS.get(articleState);
+      String pubState = getPublicationStateName(articleState);
       if (pubState == null) {
         String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
-            articleState, PUBLICATION_STATE_CONSTANTS.keySet().toString());
+            articleState, PUBLICATION_STATE_CONSTANTS);
         throw new IllegalStateException(message);
       }
       serialized.addProperty(MemberNames.STATE, pubState);
