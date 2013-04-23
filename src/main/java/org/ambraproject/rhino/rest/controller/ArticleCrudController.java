@@ -22,7 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
-import org.ambraproject.rhino.content.ArticleCriteria;
+import org.ambraproject.rhino.content.view.ArticleCriteria;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;

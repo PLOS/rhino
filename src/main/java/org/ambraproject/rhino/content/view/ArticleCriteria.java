@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content;
+package org.ambraproject.rhino.content.view;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;

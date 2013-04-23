@@ -14,7 +14,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.rhino.content.ArticleInputView;
+import org.ambraproject.rhino.content.view.ArticleInputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;

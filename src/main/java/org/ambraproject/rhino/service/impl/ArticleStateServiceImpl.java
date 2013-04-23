@@ -22,7 +22,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.queue.MessageSender;
-import org.ambraproject.rhino.content.ArticleInputView;
+import org.ambraproject.rhino.content.view.ArticleInputView;
 import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;

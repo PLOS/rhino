@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content;
+package org.ambraproject.rhino.content.view;
 
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableSet;

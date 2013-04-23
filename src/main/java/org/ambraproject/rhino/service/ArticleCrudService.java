@@ -21,7 +21,7 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
-import org.ambraproject.rhino.content.ArticleCriteria;
+import org.ambraproject.rhino.content.view.ArticleCriteria;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
