@@ -16,10 +16,15 @@ import org.apache.commons.lang.StringUtils;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.SYNDICATION_STATUSES;
+
 /**
  * A view of an update to an article's state as submitted by a REST client.
  */
-public class ArticleInputView implements ArticleJson {
+public class ArticleInputView {
 
   public static class SyndicationUpdate {
     private final String target;

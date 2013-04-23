@@ -24,10 +24,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.SYNDICATION_STATUSES;
+
 /**
  * Criteria from an API client describing a subset of articles.
  */
-public class ArticleCriteria implements ArticleJson {
+public class ArticleCriteria {
 
   private final Optional<ImmutableSet<Integer>> publicationStates;
   private final Optional<ImmutableSet<String>> syndicationStatuses;

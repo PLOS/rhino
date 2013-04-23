@@ -8,7 +8,10 @@ import org.ambraproject.models.Syndication;
 /*
  * Constants.
  */
-interface ArticleJson {
+class ArticleJsonConstants {
+  private ArticleJsonConstants() {
+    throw new AssertionError("Not instantiable");
+  }
 
   /**
    * The integer constants that represent publication states, as given in {@link Article}, mapped onto names chosen for
@@ -29,7 +32,11 @@ interface ArticleJson {
    * Names of JSON members that are meaningful for input. (Other member names appearing in output are auto-generated
    * when Gson serialized an {@link Article} object.
    */
-  public static interface MemberNames {
+  static class MemberNames {
+    private MemberNames() {
+      throw new AssertionError("Not instantiable");
+    }
+
     public static final String DOI = "doi";
     public static final String STATE = "state";
     public static final String SYNDICATIONS = "syndications";

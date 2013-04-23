@@ -21,11 +21,14 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+
 /**
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
  * a default dump of the article, plus a few added or augmented.
  */
-public class ArticleOutputView implements ArticleJson {
+public class ArticleOutputView {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
