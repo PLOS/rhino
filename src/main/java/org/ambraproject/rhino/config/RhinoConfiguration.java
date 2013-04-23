@@ -113,7 +113,7 @@ public class RhinoConfiguration extends BaseConfiguration {
     builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
     builder.registerTypeAdapter(ArticleStateView.class, ArticleStateView.SERIALIZER);
     builder.registerTypeAdapter(ArticleViewList.class, ArticleViewList.SERIALIZER);
-    builder.registerTypeAdapter(DoiList.class, DoiList.SERIALIZER);
+    builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
 
     final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{

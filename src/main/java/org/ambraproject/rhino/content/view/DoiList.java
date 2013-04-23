@@ -1,14 +1,16 @@
 package org.ambraproject.rhino.content.view;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Lists;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class DoiList {
 
@@ -18,17 +20,50 @@ public class DoiList {
     this.dois = Collections.unmodifiableCollection(dois);
   }
 
-  public static final JsonSerializer<DoiList> SERIALIZER = new JsonSerializer<DoiList>() {
+  @VisibleForTesting
+  public Collection<String> getDois() {
+    return dois;
+  }
+
+  /*
+   * Prefer TypeAdapter over JsonSerializer where we can get away with it, because TypeAdapter streams.
+   */
+  public static final TypeAdapter<DoiList> ADAPTER = new TypeAdapter<DoiList>() {
     @Override
-    public JsonElement serialize(DoiList src, Type typeOfSrc, JsonSerializationContext context) {
-      JsonObject serializedList = new JsonObject();
-      for (String doi : src.dois) {
-        String key = ArticleIdentity.removeScheme(doi);
-        JsonObject serializedItem = new JsonObject();
-        serializedItem.addProperty(ArticleJsonConstants.MemberNames.DOI, doi);
-        serializedList.add(key, serializedItem);
+    public void write(JsonWriter out, DoiList value) throws IOException {
+      out.beginObject();
+      for (String doi : value.dois) {
+        out.name(ArticleIdentity.removeScheme(doi));
+        out.beginObject();
+        out.name(ArticleJsonConstants.MemberNames.DOI);
+        out.value(doi);
+        out.endObject();
       }
-      return serializedList;
+      out.endObject();
+    }
+
+    @Override
+    public DoiList read(JsonReader in) throws IOException {
+      List<String> buffer = Lists.newArrayList();
+      in.beginObject();
+      while (in.hasNext()) {
+        in.nextName();
+        in.beginObject();
+        String doi = null;
+        while (in.hasNext()) {
+          if (ArticleJsonConstants.MemberNames.DOI.equals(in.nextName())) {
+            doi = in.nextString();
+          } else {
+            in.skipValue();
+          }
+        }
+        if (doi != null) {
+          buffer.add(doi);
+        }
+        in.endObject();
+      }
+      in.endObject();
+      return new DoiList(buffer);
     }
   };
 

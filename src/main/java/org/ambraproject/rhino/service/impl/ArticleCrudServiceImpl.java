@@ -33,6 +33,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.view.ArticleCriteria;
 import org.ambraproject.rhino.content.view.ArticleOutputView;
+import org.ambraproject.rhino.content.view.DoiList;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;

@@ -30,11 +30,15 @@ import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.content.view.ArticleCriteria;
+import org.ambraproject.rhino.content.view.DoiList;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -231,4 +235,23 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003188.xml.meta"));
     assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml.orig"));
   }
+
+  @Test
+  public void testListDois() throws IOException {
+    Article a1 = new Article();
+    a1.setDoi("info:doi/10.0/test1");
+    a1.seteIssn("1932-6203");
+    hibernateTemplate.save(a1);
+
+    Article a2 = new Article();
+    a2.setDoi("info:doi/10.0/test2");
+    a2.seteIssn(a1.geteIssn());
+    hibernateTemplate.save(a2);
+
+    DummyResponseReceiver response = new DummyResponseReceiver();
+    articleCrudService.listDois(response, MetadataFormat.JSON, ArticleCriteria.create(null, null));
+    DoiList doiList = entityGson.fromJson(response.read(), DoiList.class);
+    assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
+  }
+
 }
