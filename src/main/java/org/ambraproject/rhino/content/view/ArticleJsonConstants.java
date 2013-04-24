@@ -72,6 +72,7 @@ import org.ambraproject.models.Syndication;
     public static final String SYNDICATIONS = "syndications";
     public static final String SYNDICATION_TARGET = "target";
     public static final String SYNDICATION_STATUS = "status";
+    public static final String PINGBACKS = "pingbacks";
   }
 
   /**

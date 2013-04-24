@@ -27,6 +27,7 @@ import org.ambraproject.rhino.content.view.ArticlePingbackView;
 import org.ambraproject.rhino.content.view.ArticleViewList;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.hibernate.criterion.DetachedCriteria;
@@ -34,6 +35,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.Date;
@@ -77,16 +79,32 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
   @Override
   public void read(ResponseReceiver receiver, ArticleIdentity article, MetadataFormat format) throws IOException {
     Preconditions.checkNotNull(article);
-    long articleId = DataAccessUtils.longResult(hibernateTemplate.findByCriteria(
+    assert format == MetadataFormat.JSON;
+    writeJson(receiver, loadPingbacks(article));
+  }
+
+  @Override
+  public List<Pingback> loadPingbacks(Article article) {
+    return loadPingbacks(article.getID());
+  }
+
+  @Override
+  public List<Pingback> loadPingbacks(ArticleIdentity article) {
+    Long articleId = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", article.getKey()))
             .setProjection(Projections.property("ID"))));
-    List<?> results = hibernateTemplate.findByCriteria(
+    if (articleId == null) {
+      throw new RestClientException("Article not found: " + article.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    return loadPingbacks(articleId);
+  }
+
+  private List<Pingback> loadPingbacks(long articleId) {
+    return hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Pingback.class)
             .add(Restrictions.eq("articleID", articleId))
-            .addOrder(Order.desc("created"))
-    );
-    writeJson(receiver, results);
+            .addOrder(Order.desc("created")));
   }
 
 }

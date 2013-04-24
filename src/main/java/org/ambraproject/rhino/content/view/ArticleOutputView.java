@@ -11,7 +11,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -20,6 +22,8 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
@@ -35,10 +39,12 @@ public class ArticleOutputView implements ArticleView {
 
   private final Article article;
   private final ImmutableMap<String, Syndication> syndications;
+  private final ImmutableList<Pingback> pingbacks;
 
-  private ArticleOutputView(Article article, Collection<Syndication> syndications) {
+  private ArticleOutputView(Article article, Collection<Syndication> syndications, Collection<Pingback> pingbacks) {
     this.article = Preconditions.checkNotNull(article);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
+    this.pingbacks = ImmutableList.copyOf(pingbacks);
   }
 
   private static final Function<Syndication, String> GET_TARGET = new Function<Syndication, String>() {
@@ -48,7 +54,9 @@ public class ArticleOutputView implements ArticleView {
     }
   };
 
-  public static ArticleOutputView create(Article article, SyndicationService syndicationService) {
+  public static ArticleOutputView create(Article article,
+                                         SyndicationService syndicationService,
+                                         PingbackReadService pingbackReadService) {
     Collection<Syndication> syndications;
     try {
       syndications = syndicationService.getSyndications(article.getDoi());
@@ -59,7 +67,8 @@ public class ArticleOutputView implements ArticleView {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
-    return new ArticleOutputView(article, syndications);
+    List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
+    return new ArticleOutputView(article, syndications, pingbacks);
   }
 
   @Override
@@ -101,6 +110,16 @@ public class ArticleOutputView implements ArticleView {
       if (syndications != null) {
         serialized.add(MemberNames.SYNDICATIONS, syndications);
       }
+
+      // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
+      serialized.addProperty("pingbackCount", src.pingbacks.size());
+      if (!src.pingbacks.isEmpty()) {
+        // The service guarantees that the list is ordered by timestamp
+        Date mostRecent = src.pingbacks.get(0).getLastModified();
+        serialized.add("mostRecentPingback", context.serialize(mostRecent));
+      }
+
+      serialized.add(MemberNames.PINGBACKS, context.serialize(src.pingbacks));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);

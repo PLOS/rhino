@@ -33,7 +33,6 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.view.ArticleCriteria;
 import org.ambraproject.rhino.content.view.ArticleOutputView;
-import org.ambraproject.rhino.content.view.DoiList;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
@@ -47,6 +46,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.apache.commons.lang.StringUtils;
@@ -58,6 +58,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -88,6 +89,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
   private AssetCrudService assetService;
+
+  @Autowired
+  protected PingbackReadService pingbackReadService;
+
 
   private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
@@ -577,7 +582,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    ArticleOutputView view = ArticleOutputView.create(article, syndicationService);
+    ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
     writeJson(receiver, view);
   }
 
