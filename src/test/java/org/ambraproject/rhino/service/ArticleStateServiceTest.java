@@ -20,8 +20,8 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.content.ArticleInputView;
-import org.ambraproject.rhino.content.ArticleOutputView;
+import org.ambraproject.rhino.content.view.ArticleInputView;
+import org.ambraproject.rhino.content.view.ArticleOutputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -55,6 +55,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
   @Autowired
   private SyndicationService syndicationService;
+
+  @Autowired
+  private PingbackReadService pingbackReadService;
 
   @Autowired
   private Configuration ambraConfiguration;
@@ -93,7 +96,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
 
-    ArticleOutputView outputView = ArticleOutputView.create(article, syndicationService);
+    ArticleOutputView outputView = ArticleOutputView.create(article, syndicationService, pingbackReadService);
     assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
     assertEquals(outputView.getSyndication(crossref).getStatus(), Syndication.STATUS_PENDING);
     assertEquals(outputView.getSyndication(pmc).getStatus(), Syndication.STATUS_PENDING);
@@ -116,7 +119,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(inputView.getSyndicationUpdate(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);
     article = articleStateService.update(articleId, inputView);
 
-    ArticleOutputView result = ArticleOutputView.create(article, syndicationService);
+    ArticleOutputView result = ArticleOutputView.create(article, syndicationService, pingbackReadService);
     assertEquals(result.getArticle().getState(), Article.STATE_ACTIVE);
     assertEquals(result.getSyndication(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
     assertEquals(result.getSyndication(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);

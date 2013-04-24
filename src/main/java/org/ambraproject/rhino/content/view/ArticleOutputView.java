@@ -1,43 +1,50 @@
-package org.ambraproject.rhino.content;
+package org.ambraproject.rhino.content.view;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
-import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
  * a default dump of the article, plus a few added or augmented.
  */
-public class ArticleOutputView implements ArticleJson {
+public class ArticleOutputView implements ArticleView {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
   private final ImmutableMap<String, Syndication> syndications;
+  private final ImmutableList<Pingback> pingbacks;
 
-  private ArticleOutputView(Article article, Collection<Syndication> syndications) {
+  private ArticleOutputView(Article article, Collection<Syndication> syndications, Collection<Pingback> pingbacks) {
     this.article = Preconditions.checkNotNull(article);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
+    this.pingbacks = ImmutableList.copyOf(pingbacks);
   }
 
   private static final Function<Syndication, String> GET_TARGET = new Function<Syndication, String>() {
@@ -47,7 +54,9 @@ public class ArticleOutputView implements ArticleJson {
     }
   };
 
-  public static ArticleOutputView create(Article article, SyndicationService syndicationService) {
+  public static ArticleOutputView create(Article article,
+                                         SyndicationService syndicationService,
+                                         PingbackReadService pingbackReadService) {
     Collection<Syndication> syndications;
     try {
       syndications = syndicationService.getSyndications(article.getDoi());
@@ -58,7 +67,13 @@ public class ArticleOutputView implements ArticleJson {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
-    return new ArticleOutputView(article, syndications);
+    List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
+    return new ArticleOutputView(article, syndications, pingbacks);
+  }
+
+  @Override
+  public String getDoi() {
+    return article.getDoi();
   }
 
   @VisibleForTesting
@@ -83,15 +98,28 @@ public class ArticleOutputView implements ArticleJson {
       serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
       int articleState = article.getState();
-      String pubState = PUBLICATION_STATE_CONSTANTS.get(articleState);
+      String pubState = getPublicationStateName(articleState);
       if (pubState == null) {
         String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
-            articleState, PUBLICATION_STATE_CONSTANTS.keySet().toString());
+            articleState, PUBLICATION_STATE_CONSTANTS);
         throw new IllegalStateException(message);
       }
       serialized.addProperty(MemberNames.STATE, pubState);
 
-      serialized.add(MemberNames.SYNDICATIONS, serializeSyndications(src.syndications.values(), context));
+      JsonElement syndications = serializeSyndications(src.syndications.values(), context);
+      if (syndications != null) {
+        serialized.add(MemberNames.SYNDICATIONS, syndications);
+      }
+
+      // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
+      serialized.addProperty("pingbackCount", src.pingbacks.size());
+      if (!src.pingbacks.isEmpty()) {
+        // The service guarantees that the list is ordered by timestamp
+        Date mostRecent = src.pingbacks.get(0).getLastModified();
+        serialized.add("mostRecentPingback", context.serialize(mostRecent));
+      }
+
+      serialized.add(MemberNames.PINGBACKS, context.serialize(src.pingbacks));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
@@ -99,31 +127,27 @@ public class ArticleOutputView implements ArticleJson {
       return serialized;
     }
 
-    /**
-     * Represent the list of syndications as an object whose keys are the syndication targets.
-     */
-    private JsonElement serializeSyndications(Collection<Syndication> syndications, JsonSerializationContext context) {
-      JsonObject syndicationsByTarget = new JsonObject();
-      for (Syndication syndication : syndications) {
-        JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
-
-        // Exclude redundant members
-        syndicationJson.remove(MemberNames.DOI);
-        syndicationJson.remove(MemberNames.SYNDICATION_TARGET);
-
-        syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
-      }
-      return syndicationsByTarget;
-    }
-
   };
 
-  public static Integer convertPublicationStateName(String stateName) {
-    return PUBLICATION_STATE_NAMES.get(stateName.toLowerCase());
-  }
+  /**
+   * Represent the list of syndications as an object whose keys are the syndication targets.
+   */
+  static JsonElement serializeSyndications(Collection<? extends Syndication> syndications,
+                                           JsonSerializationContext context) {
+    if (syndications == null) {
+      return null;
+    }
+    JsonObject syndicationsByTarget = new JsonObject();
+    for (Syndication syndication : syndications) {
+      JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
 
-  public static ImmutableSet<String> getValidPublicationStateNames() {
-    return PUBLICATION_STATE_NAMES.keySet();
+      // Exclude redundant members
+      syndicationJson.remove(MemberNames.DOI);
+      syndicationJson.remove(MemberNames.SYNDICATION_TARGET);
+
+      syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
+    }
+    return syndicationsByTarget;
   }
 
 }

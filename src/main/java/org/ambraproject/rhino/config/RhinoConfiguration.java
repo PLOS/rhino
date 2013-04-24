@@ -26,8 +26,11 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.rhino.content.ArticleInputView;
-import org.ambraproject.rhino.content.ArticleOutputView;
+import org.ambraproject.rhino.content.view.ArticleInputView;
+import org.ambraproject.rhino.content.view.ArticleOutputView;
+import org.ambraproject.rhino.content.view.ArticleStateView;
+import org.ambraproject.rhino.content.view.ArticleViewList;
+import org.ambraproject.rhino.content.view.DoiList;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -108,6 +111,9 @@ public class RhinoConfiguration extends BaseConfiguration {
     builder.setPrettyPrinting();
 
     builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
+    builder.registerTypeAdapter(ArticleStateView.class, ArticleStateView.SERIALIZER);
+    builder.registerTypeAdapter(ArticleViewList.class, ArticleViewList.SERIALIZER);
+    builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
 
     final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{

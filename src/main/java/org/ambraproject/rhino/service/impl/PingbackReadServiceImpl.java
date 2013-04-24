@@ -20,12 +20,14 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
+import org.ambraproject.rhino.content.view.ArticlePingbackView;
+import org.ambraproject.rhino.content.view.ArticleViewList;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.hibernate.criterion.DetachedCriteria;
@@ -33,32 +35,23 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public class PingbackReadServiceImpl extends AmbraService implements PingbackReadService {
 
-  private static class ArticleListView {
-    private final Object doi;
-    private final Object title;
-    private final Object articleUrl;
-    private final Object pingbackCount;
-    private final Object mostRecentPingback;
-
-    private ArticleListView(Object[] queryResult) {
-      this.doi = queryResult[0];
-      this.title = queryResult[1];
-      this.articleUrl = queryResult[2];
-      this.pingbackCount = queryResult[3];
-      this.mostRecentPingback = queryResult[4];
-    }
-  }
-
-  private static Function<Object[], ArticleListView> AS_VIEW = new Function<Object[], ArticleListView>() {
+  private static Function<Object[], ArticlePingbackView> AS_VIEW = new Function<Object[], ArticlePingbackView>() {
     @Override
-    public ArticleListView apply(Object[] input) {
-      return new ArticleListView(input);
+    public ArticlePingbackView apply(Object[] input) {
+      String doi = (String) input[0];
+      String title = (String) input[1];
+      String url = (String) input[2];
+      Long pingbackCount = (Long) input[3];
+      Date mostRecentPingback = (Date) input[4];
+      return new ArticlePingbackView(doi, title, url, pingbackCount, mostRecentPingback);
     }
   };
 
@@ -79,33 +72,39 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
         + "from Pingback as p, Article as a where p.articleID = a.ID "
         + "order by mostRecent desc "
     );
-    List<ArticleListView> resultView = Lists.transform(results, AS_VIEW);
-    writeJson(receiver, resultView);
+    List<ArticlePingbackView> resultView = Lists.transform(results, AS_VIEW);
+    writeJson(receiver, new ArticleViewList(resultView));
   }
 
   @Override
   public void read(ResponseReceiver receiver, ArticleIdentity article, MetadataFormat format) throws IOException {
     Preconditions.checkNotNull(article);
-    long articleId = DataAccessUtils.longResult(hibernateTemplate.findByCriteria(
+    assert format == MetadataFormat.JSON;
+    writeJson(receiver, loadPingbacks(article));
+  }
+
+  @Override
+  public List<Pingback> loadPingbacks(Article article) {
+    return loadPingbacks(article.getID());
+  }
+
+  @Override
+  public List<Pingback> loadPingbacks(ArticleIdentity article) {
+    Long articleId = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", article.getKey()))
             .setProjection(Projections.property("ID"))));
-    List<?> results = hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Pingback.class)
-            .add(Restrictions.eq("articleID", articleId))
-            .addOrder(Order.desc("created"))
-    );
-    writeJson(receiver, results);
+    if (articleId == null) {
+      throw new RestClientException("Article not found: " + article.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    return loadPingbacks(articleId);
   }
 
-  private static ImmutableMap<String, Object> view(Article article, Pingback pingback) {
-    ImmutableMap.Builder<String, Object> view = ImmutableMap.<String, Object>builder();
-    view.put("articleDoi", article.getDoi())
-        .put("url", pingback.getUrl())
-        .put("title", pingback.getTitle())
-        .put("created", pingback.getCreated())
-        .put("lastModified", pingback.getLastModified());
-    return view.build();
+  private List<Pingback> loadPingbacks(long articleId) {
+    return hibernateTemplate.findByCriteria(
+        DetachedCriteria.forClass(Pingback.class)
+            .add(Restrictions.eq("articleID", articleId))
+            .addOrder(Order.desc("created")));
   }
 
 }

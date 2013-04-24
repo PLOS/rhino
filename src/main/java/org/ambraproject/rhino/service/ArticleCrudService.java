@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.ambraproject.rhino.content.view.ArticleCriteria;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -28,7 +29,6 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -116,12 +116,11 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * List the DOIs of all ingested articles, or a described subset.
    *
-   * @param receiver          the receiver to which to write the list
-   * @param format            the desired list format  @throws IOException
-   * @param publicationStates if present, show only articles that are in one of these states
+   * @param receiver        the receiver to which to write the list
+   * @param format          the desired list format  @throws IOException
+   * @param articleCriteria description of the subset of articles to list
    */
-  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format,
-                                Optional<? extends Collection<Integer>> publicationStates)
+  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format, ArticleCriteria articleCriteria)
       throws IOException;
 
 }

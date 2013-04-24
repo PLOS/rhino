@@ -15,6 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -26,9 +27,24 @@
 <p>This is the root page of the REST API for Ambra services.</p>
 
 <ul>
-  <li><a href="articles">/articles</a></li>
+  <li><a href="articles">/articles</a>
+    <ul>
+      <li>
+        ?state=
+        <c:forEach items="${stateParams}" var="stateParam">
+          <a href="articles?state=${stateParam}">${stateParam}</a>
+        </c:forEach>
+      </li>
+      <li>
+        ?syndication=
+        <c:forEach items="${syndStatuses}" var="syndStatus">
+          <a href="articles?syndication=${syndStatus}">${syndStatus}</a>
+        </c:forEach>
+      </li>
+      <li><a href="articles?pingbacks">?pingbacks</a></li>
+    </ul>
+  </li>
   <li><a href="ingestibles">/ingestibles</a></li>
-  <li><a href="articles?pingbacks">/articles?pingbacks</a></li>
   <li><a href="config">/config</a></li>
 </ul>
 
