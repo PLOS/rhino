@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Syndication;
 
-/* package-private */ class ArticleJsonConstants {
+public class ArticleJsonConstants {
   private ArticleJsonConstants() {
     throw new AssertionError("Not instantiable");
   }
