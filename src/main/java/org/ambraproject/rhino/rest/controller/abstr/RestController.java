@@ -246,4 +246,30 @@ public abstract class RestController {
     return builder.build();
   }
 
+  /**
+   * Interpret a request parameter value as a boolean value. The argument should be a {@code String} supplied by a
+   * {@link org.springframework.web.bind.annotation.RequestParam}-supplied value.
+   * <p/>
+   * The parameter is generally expected to be a flag-style URI parameter. For example, the client sends a request to
+   * {@code http://example.com/api?foo} and the controller method has an argument {@code @RequestParam("foo") String
+   * fooParam}. Then {@code fooParam} would have the value {@code ""}. If the client leaves {@code ?foo} off the URI,
+   * then {@code fooParam} would be {@code null}. Hence, this method interprets {@code null} as {@code false} and
+   * non-null strings in general, including the empty string, as {@code true}.
+   * <p/>
+   * However, the string {@code "false"} is (case-insensitively) interpreted as boolean {@code false}, so the client has
+   * the option of sending to {@code http://example.com/api?foo=true} or {@code http://example.com/api?foo=false} and
+   * getting sensible behavior. (This is especially handy for client scripts whose authors want to pass actual boolean
+   * primitives, not strings, to their request library.)
+   * <p/>
+   * Contrast {@link Boolean#valueOf(String)}, which converts {@code null} and the empty string to {@code false}. Also
+   * contrast {@code @RequestParam} on a {@code boolean} argument, which expects {@code "true"} or {@code "false"} as a
+   * value and rejects other input.
+   *
+   * @param parameter a request parameter
+   * @return the parameter interpreted as a boolean value
+   */
+  protected static boolean booleanParameter(String parameter) {
+    return (parameter != null) && !Boolean.toString(false).equalsIgnoreCase(parameter);
+  }
+
 }

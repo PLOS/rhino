@@ -30,6 +30,7 @@ public final class PlosDoiUtils {
       PLOS_JOURNAL_DOI_RE,
       PLOS_VOLUME_DOI_RE,
   };
+  private static final Pattern PLOS_ARCHIVE_FILE_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.zip");
 
   private PlosDoiUtils() {
   }

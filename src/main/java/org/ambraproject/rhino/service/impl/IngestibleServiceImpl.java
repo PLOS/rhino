@@ -15,7 +15,6 @@ package org.ambraproject.rhino.service.impl;
 
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
@@ -29,8 +28,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * {@inheritDoc}
@@ -43,7 +40,12 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
   private static final String INGEST_DEST_DIR_KEY
       = "ambra.services.documentManagement.ingestDestinationDir";
 
-  private static final Pattern ARCHIVE_FILE_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.zip");
+  private static final FilenameFilter ZIP_FILENAME_FILTER = new FilenameFilter() {
+    @Override
+    public boolean accept(File dir, String name) {
+      return name.endsWith(".zip");
+    }
+  };
 
   @Autowired
   private Configuration ambraConfiguration;
@@ -57,24 +59,14 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
     String ingestSourceDirName = ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY);
     Preconditions.checkNotNull(ingestSourceDirName); // should be covered by webapp's built-in defaults
     File ingestDir = new File(ingestSourceDirName);
-    File[] archives = ingestDir.listFiles(new FilenameFilter() {
-      @Override
-      public boolean accept(File dir, String name) {
-        Matcher m = ARCHIVE_FILE_RE.matcher(name.toLowerCase());
-        return m.matches();
-      }
-    });
+    File[] archives = ingestDir.listFiles(ZIP_FILENAME_FILTER);
     if (archives == null) {
       throw new RuntimeException("Directory not found: " + ingestDir);
     }
 
     List<String> results = new ArrayList<String>(archives.length);
     for (File archive : archives) {
-
-      // Since the rest of the API uses DOIs as identifiers, we do here as well, instead
-      // of the .zip archive filename.
-      String filename = archive.getName();
-      results.add("info:doi/10.1371/journal." + filename.substring(0, filename.length() - 4));
+      results.add(archive.getName());
     }
     Collections.sort(results);
     writeJson(receiver, results);
@@ -84,14 +76,12 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    * {@inheritDoc}
    */
   @Override
-  public File getIngestibleArchive(ArticleIdentity articleIdentity) throws IOException {
-    return getIngestSourceArchive(articleIdentity);
+  public File getIngestibleArchive(String filename) throws IOException {
+    return getIngestSourceArchive(filename);
   }
 
-  private File getIngestSourceArchive(ArticleIdentity articleIdentity) throws IOException {
-    String doi = articleIdentity.getIdentifier();
-    File result = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY) + File.separator
-        + doi.substring(doi.length() - "pfoo.1234567".length()) + ".zip");
+  private File getIngestSourceArchive(String filename) throws IOException {
+    File result = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY), filename);
     if (!result.canRead()) {
       throw new FileNotFoundException("Archive not found: " + result.getCanonicalPath());
     }
@@ -102,11 +92,9 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    * {@inheritDoc}
    */
   @Override
-  public File archiveIngested(ArticleIdentity articleIdentity) throws IOException {
-    File source = getIngestSourceArchive(articleIdentity);
-    String doi = articleIdentity.getIdentifier();
-    File dest = new File(ambraConfiguration.getString(INGEST_DEST_DIR_KEY) + File.separator
-        + doi.substring(doi.length() - "pfoo.1234567".length()) + ".zip");
+  public File archiveIngested(String filename) throws IOException {
+    File source = getIngestSourceArchive(filename);
+    File dest = new File(ambraConfiguration.getString(INGEST_DEST_DIR_KEY), filename);
     if (!source.renameTo(dest)) {
       throw new IOException(String.format("Could not move %s to %s", source.getCanonicalPath(),
           dest.getCanonicalPath()));

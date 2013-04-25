@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 
@@ -38,19 +37,19 @@ public interface IngestibleService {
   /**
    * Returns the zip archive in the ingest directory corresponding to the given article.
    *
-   * @param articleIdentity specifies the article DOI
+   * @param filename the filename of an ingestible archive
    * @return File pointing to the .zip archive
    * @throws java.io.FileNotFoundException if the archive does not exist
    */
-  File getIngestibleArchive(ArticleIdentity articleIdentity) throws IOException;
+  File getIngestibleArchive(String filename) throws IOException;
 
   /**
    * Moves the archive from the ingest directory to the ingested directory. Should be called immediately after an
    * archive is ingested from the ingest directory.
    *
-   * @param articleIdentity specifies the article that was just ingested
+   * @param filename the filename of the archive that was just ingested
    * @return the File in the ingested directory where the archive was moved to
    * @throws IOException
    */
-  File archiveIngested(ArticleIdentity articleIdentity) throws IOException;
+  File archiveIngested(String filename) throws IOException;
 }

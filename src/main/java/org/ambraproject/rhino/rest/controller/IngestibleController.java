@@ -23,7 +23,6 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
-import org.ambraproject.rhino.util.PlosDoiUtils;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,35 +86,32 @@ public class IngestibleController extends DoiBasedCrudController {
    * Ingests an archive present in the ingest source directory.
    *
    * @param response      HttpServletResponse
-   * @param doi           a DOI corresponding to an article whose .zip archive is present in the ingest source
-   *                      directory
+   * @param name          the name of an ingestible archive present in the ingest source directory
    * @param forceReingest if present, we will reingest the article if it already exists
    * @throws IOException
    * @throws FileStoreException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = "doi") String doi,
+                     @RequestParam(value = "name") String name,
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
-    if (!PlosDoiUtils.validate(doi)) {
-      throw new RestClientException("Invalid DOI: " + doi, HttpStatus.METHOD_NOT_ALLOWED);
-    }
-    ArticleIdentity ai = ArticleIdentity.create(doi);
     File archive;
     try {
-      archive = ingestibleService.getIngestibleArchive(ai);
+      archive = ingestibleService.getIngestibleArchive(name);
     } catch (FileNotFoundException fnfe) {
-      throw new RestClientException("Could not find zip archive for: " + doi,
+      throw new RestClientException("Could not find ingestible archive for: " + name,
           HttpStatus.METHOD_NOT_ALLOWED, fnfe);
     }
-    Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), Optional.of(ai),
 
-        // If forceReingest is the empty string, the parameter was present.  Only
-        // treat null as false.
-        forceReingest == null ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY);
-    ingestibleService.archiveIngested(ai);
+    WriteMode reingestMode = booleanParameter(forceReingest) ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY;
+
+    // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
+    Optional<ArticleIdentity> expectedId = Optional.absent();
+
+    Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), expectedId, reingestMode);
+    ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
