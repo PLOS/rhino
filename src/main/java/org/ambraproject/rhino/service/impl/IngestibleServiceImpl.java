@@ -15,7 +15,6 @@ package org.ambraproject.rhino.service.impl;
 
 
 import com.google.common.base.Preconditions;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
@@ -70,11 +69,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
 
     List<String> results = new ArrayList<String>(archives.length);
     for (File archive : archives) {
-
-      // Since the rest of the API uses DOIs as identifiers, we do here as well, instead
-      // of the .zip archive filename.
-      String filename = archive.getName();
-      results.add("info:doi/10.1371/journal." + filename.substring(0, filename.length() - 4));
+      results.add(archive.getName());
     }
     Collections.sort(results);
     writeJson(receiver, results);
@@ -84,14 +79,12 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    * {@inheritDoc}
    */
   @Override
-  public File getIngestibleArchive(ArticleIdentity articleIdentity) throws IOException {
-    return getIngestSourceArchive(articleIdentity);
+  public File getIngestibleArchive(String filename) throws IOException {
+    return getIngestSourceArchive(filename);
   }
 
-  private File getIngestSourceArchive(ArticleIdentity articleIdentity) throws IOException {
-    String doi = articleIdentity.getIdentifier();
-    File result = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY) + File.separator
-        + doi.substring(doi.length() - "pfoo.1234567".length()) + ".zip");
+  private File getIngestSourceArchive(String filename) throws IOException {
+    File result = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY), filename);
     if (!result.canRead()) {
       throw new FileNotFoundException("Archive not found: " + result.getCanonicalPath());
     }
@@ -102,11 +95,9 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    * {@inheritDoc}
    */
   @Override
-  public File archiveIngested(ArticleIdentity articleIdentity) throws IOException {
-    File source = getIngestSourceArchive(articleIdentity);
-    String doi = articleIdentity.getIdentifier();
-    File dest = new File(ambraConfiguration.getString(INGEST_DEST_DIR_KEY) + File.separator
-        + doi.substring(doi.length() - "pfoo.1234567".length()) + ".zip");
+  public File archiveIngested(String filename) throws IOException {
+    File source = getIngestSourceArchive(filename);
+    File dest = new File(ambraConfiguration.getString(INGEST_DEST_DIR_KEY), filename);
     if (!source.renameTo(dest)) {
       throw new IOException(String.format("Could not move %s to %s", source.getCanonicalPath(),
           dest.getCanonicalPath()));
