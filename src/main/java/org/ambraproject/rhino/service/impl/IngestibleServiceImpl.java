@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * {@inheritDoc}
@@ -42,7 +40,12 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
   private static final String INGEST_DEST_DIR_KEY
       = "ambra.services.documentManagement.ingestDestinationDir";
 
-  private static final Pattern ARCHIVE_FILE_RE = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.zip");
+  private static final FilenameFilter ZIP_FILENAME_FILTER = new FilenameFilter() {
+    @Override
+    public boolean accept(File dir, String name) {
+      return name.endsWith(".zip");
+    }
+  };
 
   @Autowired
   private Configuration ambraConfiguration;
@@ -56,13 +59,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
     String ingestSourceDirName = ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY);
     Preconditions.checkNotNull(ingestSourceDirName); // should be covered by webapp's built-in defaults
     File ingestDir = new File(ingestSourceDirName);
-    File[] archives = ingestDir.listFiles(new FilenameFilter() {
-      @Override
-      public boolean accept(File dir, String name) {
-        Matcher m = ARCHIVE_FILE_RE.matcher(name.toLowerCase());
-        return m.matches();
-      }
-    });
+    File[] archives = ingestDir.listFiles(ZIP_FILENAME_FILTER);
     if (archives == null) {
       throw new RuntimeException("Directory not found: " + ingestDir);
     }
