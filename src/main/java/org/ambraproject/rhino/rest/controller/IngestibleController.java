@@ -105,9 +105,7 @@ public class IngestibleController extends DoiBasedCrudController {
           HttpStatus.METHOD_NOT_ALLOWED, fnfe);
     }
 
-    // If forceReingest is the empty string, the parameter was present.  Only
-    // treat null as false.
-    WriteMode reingestMode = forceReingest == null ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY;
+    WriteMode reingestMode = booleanParameter(forceReingest) ? WriteMode.CREATE_ONLY : WriteMode.WRITE_ANY;
 
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
     Optional<ArticleIdentity> expectedId = Optional.absent();
