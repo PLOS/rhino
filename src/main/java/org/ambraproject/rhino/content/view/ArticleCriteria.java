@@ -181,6 +181,9 @@ public class ArticleCriteria {
       }
       builder.syndications.add(syndication);
     }
+    if (builder != null) {
+      views.add(builder.build());
+    }
 
     return new ArticleViewList(views);
   }
