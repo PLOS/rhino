@@ -14,6 +14,10 @@ import java.util.Collection;
 
 import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
 
+/**
+ * A view of an article containing only its stateful attributes that can be modified by the client directly. This is the
+ * output analogue to {@link ArticleInputView}.
+ */
 public class ArticleStateView implements ArticleView {
 
   private final String doi;
