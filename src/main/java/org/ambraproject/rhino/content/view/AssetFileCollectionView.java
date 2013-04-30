@@ -50,16 +50,11 @@ public class AssetFileCollectionView {
     return serializeInitializedAssetFiles(assets, context);
   }
 
+  /*
+   * Simple serialization. This method is a hook in case something more complex is needed.
+   */
   private static JsonObject serializeAsset(ArticleAsset asset, JsonSerializationContext context) {
-    JsonObject jsonObject = context.serialize(asset).getAsJsonObject();
-
-    String extension = asset.getExtension();
-    if (StringUtils.isNotBlank(extension)) {
-      String filename = ArticleIdentity.removeScheme(asset.getDoi()) + '.' + extension;
-      jsonObject.addProperty("filename", filename);
-    }
-
-    return jsonObject;
+    return context.serialize(asset).getAsJsonObject();
   }
 
   /*
