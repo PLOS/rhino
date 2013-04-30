@@ -7,7 +7,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -23,18 +22,6 @@ public class AssetCollectionView {
       buffer.put(asset.getDoi(), asset);
     }
     this.assets = buffer.build();
-  }
-
-  private static JsonObject serializeAsset(ArticleAsset asset, JsonSerializationContext context) {
-    JsonObject jsonObject = context.serialize(asset).getAsJsonObject();
-
-    String extension = asset.getExtension();
-    if (StringUtils.isNotBlank(extension)) {
-      String filename = ArticleIdentity.removeScheme(asset.getDoi()) + '.' + extension;
-      jsonObject.addProperty("filename", filename);
-    }
-
-    return jsonObject;
   }
 
   public static final JsonSerializer<AssetCollectionView> SERIALIZER = new JsonSerializer<AssetCollectionView>() {
