@@ -10,12 +10,14 @@
         prefix    - the doi prefix (for PLOS 10.1371)
         article_name - the first part of the article zip name.
 
-   Ex. repackage.py "https://webprod.plosjournals.org" "10.1371" "pone.0033205"
+   Ex. repackage.py --server="https://webprod.plosjournals.org"  "pone.0033205"
 """
 
 from __future__ import print_function
 from __future__ import with_statement
 from cStringIO import StringIO
+from optparse import OptionParser
+
 import os, sys, string
 import requests
 import zipfile
@@ -79,7 +81,9 @@ URI_TMPL = """info:doi/{prefix}/journal.{name}"""
 """ ***** DOI Template *****"""
 DOI_TMPL = """{prefix}/journal.{name}"""
 
-FETCH_URL_TMPL = 'http://www.plosone.org/article/fetchObject.action?uri={uri}&representation={ext}'
+FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
+
+LIVE_SERVER = 'http://www.plosone.org'
 
 """*****************************************************"""
 """
@@ -152,12 +156,10 @@ def report(description, response):
         print(line)
     print()
 
-CORPUS_PATH = '/home/rskonnord/corpus/' # TODO Remove hard-coding
-
-OUTPUT_PATH = 'output'
 
 def fetchBinary(filename, url):
-	r = requests.get(url)
+        print( url )
+	r = requests.get(url, verify=False)
 	if r.status_code == 200:
 		with open(filename, 'wb') as f:
 			for chunk in r.iter_content(1024):
@@ -165,20 +167,20 @@ def fetchBinary(filename, url):
 	else:
 		print("not downloaded  " + url)
 
-def make_zip(name, manifest, md, assetTupleList):
-    fetch = requests.get(FETCH_URL_TMPL.format(uri=md['URI'], ext='XML'))
+def make_zip(rhinoServer, name, manifest, md, assetTupleList):
+    fetch = requests.get(FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
     zip_path = os.path.join('.', name + '.zip')
     with zipfile.ZipFile(zip_path, mode='w') as zf:
 	    zf.writestr(md['xml_file'], fetch.content, compress_type=zipfile.ZIP_DEFLATED)
 	    zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
-	    url = FETCH_URL_TMPL.format(uri=md['URI'], ext='PDF')
+	    url = FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='pdf')
 	    fetchBinary(md['pdf_file'], url)
 	    zf.write(md['pdf_file'], md['pdf_file'] , compress_type=zipfile.ZIP_DEFLATED)
 	    os.remove(md['pdf_file'])
 	    for t in assetTupleList:
-		    (assetName, assetUri, ext) = t
-		    print(assetUri)
-		    url = FETCH_URL_TMPL.format(uri=assetUri, ext=ext)
+		    (assetName, assetDOI, ext) = t
+		    print(assetDOI)
+		    url = FETCH_URL_TMPL.format(server=rhinoServer, doi=assetDOI, ext=ext.lower())
 		    name = '{name}.{ext}'.format(name=assetName, ext=ext.lower()) 
 		    fetchBinary(name, url)
 		    zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
@@ -192,7 +194,7 @@ def buildReps(name, reps, prefix='10.1371'):
 	nfeTuples = []
 	for ext in reps:
 		fn = '{name}.{ext}'.format(name=name, ext=ext.lower())
-		nfeTuples.append((name, URI_TMPL.format(prefix=prefix, name=name), ext))
+		nfeTuples.append((name, DOI_TMPL.format(prefix=prefix, name=name), ext))
 		repsTags.append(REPRESENTATION_TMPL.format(name=ext,entry=fn))
 	return (string.joinfields(repsTags, "\n       "), nfeTuples)
 """
@@ -230,17 +232,29 @@ def build_manifest_xml(md):
 	(objectTags, nueTuples) = buildObjectTags(md)
 	return (MANIFEST_TMPL.format(article=articleTag, objects=objectTags), nueTuples)				
 	
-def main(argv=None):
-	if argv is None:
-		argv = sys.argv
-	base_url = argv[1]
-	prefix = argv[2]
-	names = argv[3:]
+def main(options, args):
 	
-	for name in names:
-		manifest_dict = fetchManifestInfo( name, base_url, prefix )
+	for name in args:
+                print('Fetch manifest')
+		manifest_dict = fetchManifestInfo( name, options.rhinoServer, options.prefix )
+                print('Build manifest')
 		(manifest, assetTupleList) = build_manifest_xml(manifest_dict)
-		make_zip(name, manifest, manifest_dict, assetTupleList)
+                print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
+		make_zip(options.rhinoServer, name, manifest, manifest_dict, assetTupleList)
 
 if __name__ == "__main__":
-	sys.exit(main())
+
+        usage = "usage: %prog [options] arg1 arg2 ..."
+        parser = OptionParser(usage=usage)
+        parser.add_option('--server', action='store', type='string', 
+                          dest='rhinoServer', metavar='SERVER', 
+                          help='rhino server url ex. "https://webprod.plosjournals.org"')
+        parser.add_option('--prefix', action='store', type='string', dest='prefix', 
+                          default='10.1371', metavar='PREFIX', 
+                          help='prefix used in constructing article DOI.i [default: %default]')
+          
+        (options, args) = parser.parse_args()
+        if len(args) < 1:
+                parser.error('incorrect number of arguments.')
+                sys.exit(1)
+	sys.exit(main(options, args))
