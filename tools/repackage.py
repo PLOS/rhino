@@ -83,7 +83,6 @@ DOI_TMPL = """{prefix}/journal.{name}"""
 
 FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
 
-LIVE_SERVER = 'http://www.plosone.org'
 
 """*****************************************************"""
 """
@@ -118,7 +117,6 @@ def fetchManifestInfo(name, base_url, prefix='10.1371'):
 	         'assets' : assets
 	        }
 	
-RHINO_URL = 'https://webprod.plosjournals.org'
 _BANNER_WIDTH = 79
 
 def pretty_dict_repr(d):
@@ -156,9 +154,12 @@ def report(description, response):
         print(line)
     print()
 
-
+"""
+    Most of the files other than the article xml is 
+    binary in nature. Fetch the data and write it to
+    a temporary file.
+"""
 def fetchBinary(filename, url):
-        print( url )
 	r = requests.get(url, verify=False)
 	if r.status_code == 200:
 		with open(filename, 'wb') as f:
@@ -166,7 +167,10 @@ def fetchBinary(filename, url):
 				f.write(chunk)
 	else:
 		print("not downloaded  " + url)
-
+"""
+    Take the information we have gather about the article so far
+    and create the zip.
+"""
 def make_zip(rhinoServer, name, manifest, md, assetTupleList):
     fetch = requests.get(FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
     zip_path = os.path.join('.', name + '.zip')
