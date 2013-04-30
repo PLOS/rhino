@@ -10,6 +10,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class AssetCollectionView {
@@ -30,7 +31,8 @@ public class AssetCollectionView {
       JsonObject byAssetId = new JsonObject();
       for (Map.Entry<String, Collection<ArticleAsset>> entry : src.assets.asMap().entrySet()) {
         String assetId = ArticleIdentity.removeScheme(entry.getKey());
-        JsonElement byFileId = AssetFileCollectionView.serializeAssetFiles(entry.getValue(), context);
+        List<ArticleAsset> assetFiles = (List<ArticleAsset>) entry.getValue(); // cast is safe because it's a ListMultimap
+        JsonElement byFileId = AssetFileCollectionView.serializeAssetFiles(assetFiles, context);
         byAssetId.add(assetId, byFileId);
       }
       return byAssetId;

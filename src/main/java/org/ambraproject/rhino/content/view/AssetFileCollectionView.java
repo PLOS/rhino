@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.content.view;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A serializable view of a group of assets that all have the same DOI, possibly representing different files.
@@ -32,13 +32,20 @@ public class AssetFileCollectionView {
     }
   };
 
+  /*
+   * Simple serialization. This method is a hook in case something more complex is needed.
+   */
+  private static JsonObject serializeAsset(ArticleAsset asset, JsonSerializationContext context) {
+    return context.serialize(asset).getAsJsonObject();
+  }
+
   /* package-private */
-  static JsonElement serializeAssetFiles(Collection<ArticleAsset> assets, JsonSerializationContext context) {
+  static JsonElement serializeAssetFiles(List<ArticleAsset> assets, JsonSerializationContext context) {
     if (assets.isEmpty()) {
       return new JsonArray();
     }
     if (assets.size() == 1) {
-      ArticleAsset only = Iterables.getOnlyElement(assets);
+      ArticleAsset only = assets.get(0);
       if (only.getExtension().isEmpty()) {
         // Just one uninitialized asset.
         // It doesn't have a file identity, so return it in a plain array instead of keyed by file ID.
@@ -48,13 +55,6 @@ public class AssetFileCollectionView {
       }
     }
     return serializeInitializedAssetFiles(assets, context);
-  }
-
-  /*
-   * Simple serialization. This method is a hook in case something more complex is needed.
-   */
-  private static JsonObject serializeAsset(ArticleAsset asset, JsonSerializationContext context) {
-    return context.serialize(asset).getAsJsonObject();
   }
 
   /*
