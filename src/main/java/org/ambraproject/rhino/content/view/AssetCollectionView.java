@@ -43,17 +43,8 @@ public class AssetCollectionView {
       JsonObject byAssetId = new JsonObject();
       for (Map.Entry<String, Collection<ArticleAsset>> entry : src.assets.asMap().entrySet()) {
         String assetId = ArticleIdentity.removeScheme(entry.getKey());
-        JsonObject byAssetFileId = new JsonObject();
-        for (ArticleAsset asset : entry.getValue()) {
-          String extension = asset.getExtension();
-          String assetFileId = StringUtils.isBlank(extension) ? assetId : assetId + '.' + extension;
-          if (byAssetFileId.has(assetFileId)) {
-            // Data integrity rules should make this impossible.
-            throw new RuntimeException("Asset file ID collision: " + assetFileId);
-          }
-          byAssetFileId.add(assetFileId, serializeAsset(asset, context));
-        }
-        byAssetId.add(assetId, byAssetFileId);
+        JsonElement byFileId = AssetFileCollectionView.serializeAssetFiles(entry.getValue(), context);
+        byAssetId.add(assetId, byFileId);
       }
       return byAssetId;
     }
