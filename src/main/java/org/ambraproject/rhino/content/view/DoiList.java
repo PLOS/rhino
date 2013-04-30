@@ -12,6 +12,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A list of bare DOIs that can be serialized to JSON with structure identical to {@link ArticleViewList}.
+ */
 public class DoiList {
 
   private final Collection<String> dois;

@@ -10,6 +10,11 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * A list of article views that are keyed by DOI. The list should be serialized as a JSON object: the members are the
+ * objects in the list, and the member names are the objects' REST IDs. An object's REST ID is the same as its DOI
+ * without the {@code "info:doi/"} prefix.
+ */
 public class ArticleViewList {
 
   private final Collection<? extends ArticleView> views;

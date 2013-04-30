@@ -4,6 +4,10 @@ import com.google.common.base.Preconditions;
 
 import java.util.Date;
 
+/**
+ * A view of an article that contains a digest of its associated pingbacks (and some other data that's friendly to a
+ * particular client-side use case).
+ */
 public class ArticlePingbackView implements ArticleView {
 
   private final String doi;
