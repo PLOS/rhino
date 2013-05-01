@@ -23,13 +23,13 @@ import requests
 import zipfile
 import json
 
-"""
-***********************************************
-     Text templates used in
-     repetative string creation.
-***********************************************
-"""
-""" ***** Manifest DTD template *****"""
+
+# ***********************************************
+#      Text templates used in
+#      repetative string creation.
+# ***********************************************
+
+# ***** Manifest DTD template *****
 DTD_TEXT = """
 <!ELEMENT manifest (articleBundle) >
 <!ELEMENT articleBundle (article, object*) >
@@ -46,7 +46,7 @@ DTD_TEXT = """
     entry       CDATA          #REQUIRED >
 """
 
-""" ***** Skeletal Manifest Template ***** """
+# ***** Skeletal Manifest Template *****
 MANIFEST_TMPL = """
 <?xml version="1.1"?>
 <!DOCTYPE manifest SYSTEM "manifest.dtd">
@@ -58,50 +58,49 @@ MANIFEST_TMPL = """
 </manifest>
 """
 
-""" ***** Manifest Object Entries *****"""
+# ***** Manifest Object Entries *****
 OBJECT_TMPL = """
      <object uri="{uri}" {strkimage}>
         {reps}
      </object>
 """
 
-""" ***** Object Representation Template ***** """
+# ***** Object Representation Template *****
 REPRESENTATION_TMPL = """<representation name="{name}" entry="{entry}" />"""
 
-""" ***** Manifest Article Template *****"""
+# ***** Manifest Article Template *****
 ARTICLE_TMPL = """
      <article uri="{uri}" main-entry="{fname}">
         {reps}
      </article>
 """
 
-""" ***** URI Template *****"""
+# ***** URI Template *****
 URI_TMPL = """info:doi/{prefix}/journal.{name}"""
 
-""" ***** DOI Template *****"""
+# ***** DOI Template *****
 DOI_TMPL = """{prefix}/journal.{name}"""
 
 FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
 
 
-"""*****************************************************"""
-"""
-    Fetch the information necessary to build a manifest from
-    Rhino.
-"""
+# *****************************************************
 def fetchManifestInfo(name, base_url, prefix='10.1371'):
+    """
+    Fetch the information necessary to build a manifest from Rhino.
+    """
     doi = DOI_TMPL.format(prefix=prefix, name=name)
     uri = URI_TMPL.format(prefix=prefix, name=name)
     url = base_url + '/api/articles/{doi}'.format(doi=doi)
     response = requests.get(url, verify=False)
 
-    """Load JSON into a Python object and use some values from it."""
+    # Load JSON into a Python object and use some values from it.
     article = json.loads(response.content)
     assets = {}
     for asset in article['assets']:
         ext = asset['extension']
         asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
-        """ Technically the pdf and xml article file is not an object """
+        # Technically the pdf and xml article file is not an object
         if asset_name == name:
             continue
         if asset_name in assets:
@@ -154,12 +153,11 @@ def report(description, response):
         print(line)
     print()
 
-"""
-    Most of the files other than the article xml is
-    binary in nature. Fetch the data and write it to
-    a temporary file.
-"""
 def fetchBinary(filename, url):
+    """
+    Most of the files other than the article xml is binary in nature. Fetch
+    the data and write it to a temporary file.
+    """
     r = requests.get(url, verify=False)
     if r.status_code == 200:
         with open(filename, 'wb') as f:
@@ -167,11 +165,12 @@ def fetchBinary(filename, url):
                 f.write(chunk)
     else:
         print("not downloaded  " + url)
-"""
-    Take the information we have gather about the article so far
-    and create the zip.
-"""
+
 def make_zip(rhinoServer, name, manifest, md, assetTupleList):
+    """
+    Take the information we have gather about the article so far and create
+    the zip.
+    """
     fetch = requests.get(FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
     zip_path = os.path.join('.', name + '.zip')
     with zipfile.ZipFile(zip_path, mode='w') as zf:
@@ -189,11 +188,12 @@ def make_zip(rhinoServer, name, manifest, md, assetTupleList):
             fetchBinary(name, url)
             zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
             os.remove(name)
-"""
-   Build a set of representation entities and tuples
-   with the name, uri and extension of the the asset.
-"""
+
 def buildReps(name, reps, prefix='10.1371'):
+    """
+    Build a set of representation entities and tuples with the name, uri
+    and extension of the the asset.
+    """
     repsTags = []
     nfeTuples = []
     for ext in reps:
@@ -201,12 +201,12 @@ def buildReps(name, reps, prefix='10.1371'):
         nfeTuples.append((name, DOI_TMPL.format(prefix=prefix, name=name), ext))
         repsTags.append(REPRESENTATION_TMPL.format(name=ext,entry=fn))
     return (string.joinfields(repsTags, "\n       "), nfeTuples)
-"""
-   Build a set of object entities and collect a list
-   of tuples containing the name, uri and extension of
-   the the respresentaions of that object.
-"""
+
 def buildObjectTags(md):
+    """
+    Build a set of object entities and collect a list of tuples containing
+    the name, uri and extension of the the respresentaions of that object.
+    """
     objects = []
     objectTuples = []
     strkImage = md['strkImageURI']
@@ -219,19 +219,19 @@ def buildObjectTags(md):
         objects.append(OBJECT_TMPL.format(uri=asset_uri, strkimage=strkValue,reps=reps))
     return (string.joinfields(objects, '\n'), objectTuples)
 
-"""
-   Build a Article entity with the the XML and PDF representation
-   tags included.
-"""
 def buildArticleTag(md):
+    """
+    Build a Article entity with the the XML and PDF representation tags
+    included.
+    """
     xmlRep = REPRESENTATION_TMPL.format(name='XML', entry=md['xml_file'])
     pdfRep = REPRESENTATION_TMPL.format(name='PDF', entry=md['pdf_file'])
     return ARTICLE_TMPL.format(uri=md['URI'], fname=md['xml_file'], reps=xmlRep + "\n        " + pdfRep)
 
-"""
-   Build the manifest for the specified article.
-"""
 def build_manifest_xml(md):
+    """
+    Build the manifest for the specified article.
+    """
     articleTag = buildArticleTag(md)
     (objectTags, nueTuples) = buildObjectTags(md)
     return (MANIFEST_TMPL.format(article=articleTag, objects=objectTags), nueTuples)
