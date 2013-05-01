@@ -32,23 +32,35 @@ import json
 """ ***** Manifest DTD template *****"""
 DTD_TEXT = """
 <!ELEMENT manifest (articleBundle) >
+
 <!ELEMENT articleBundle (article, object*) >
+
+<!-- the article. 'main-entry' specifies the zip entry that contains the nlm
+   - article xml; this must match one of the contained representations
+   -->
 <!ELEMENT article (representation+) >
 <!ATTLIST article
-    uri         CDATA          #REQUIRED
+    uri         CDATA          #REQUIRED 
     main-entry  CDATA          #REQUIRED >
+
+<!-- all included secondary objects (images, movies, data, etc) -->
 <!ELEMENT object (representation+) >
 <!ATTLIST object
-    uri         CDATA          #REQUIRED >
+    uri         CDATA          #REQUIRED 
+    strkImage   CDATA          #IMPLIED          >
+
+<!-- a specific representation.
+   - 'name' is the name (label) to store this representation under;
+   - 'entry' specifies the entry in the zip that contains this representation
+   -->
 <!ELEMENT representation EMPTY >
 <!ATTLIST representation
-    name        CDATA          #REQUIRED
+    name        CDATA          #REQUIRED 
     entry       CDATA          #REQUIRED >
-"""
+""".lstrip()
 
 """ ***** Skeletal Manifest Template ***** """
-MANIFEST_TMPL = """
-<?xml version="1.1"?>
+MANIFEST_TMPL = """<?xml version="1.1"  encoding="UTF-8"?>
 <!DOCTYPE manifest SYSTEM "manifest.dtd">
 <manifest>
   <articleBundle>
@@ -56,14 +68,12 @@ MANIFEST_TMPL = """
     {objects}
   </articleBundle>
 </manifest>
-"""
+""".lstrip()
 
 """ ***** Manifest Object Entries *****"""
-OBJECT_TMPL = """
-     <object uri="{uri}" {strkimage}> 
+OBJECT_TMPL = """    <object uri="{uri}" {strkimage}> 
         {reps}
-     </object>
-"""
+     </object>"""
 
 """ ***** Object Representation Template ***** """
 REPRESENTATION_TMPL = """<representation name="{name}" entry="{entry}" />"""
@@ -72,8 +82,7 @@ REPRESENTATION_TMPL = """<representation name="{name}" entry="{entry}" />"""
 ARTICLE_TMPL = """
      <article uri="{uri}" main-entry="{fname}">
         {reps}
-     </article>
-"""
+     </article>"""
 
 """ ***** URI Template *****"""
 URI_TMPL = """info:doi/{prefix}/journal.{name}"""
