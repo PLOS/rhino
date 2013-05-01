@@ -18,10 +18,14 @@ from __future__ import with_statement
 from cStringIO import StringIO
 from optparse import OptionParser
 
-import os, sys, string
-import requests
-import zipfile
+import itertools
 import json
+import os
+import re
+import requests
+import string
+import sys
+import zipfile
 
 
 # ***********************************************
@@ -76,13 +80,14 @@ ARTICLE_TMPL = """
 """
 
 # ***** URI Template *****
-URI_TMPL = """info:doi/{prefix}/journal.{name}"""
+URI_TMPL = """info:doi/{name}"""
 
 # ***** DOI Template *****
 DOI_TMPL = """{prefix}/journal.{name}"""
 
-FETCH_URL_TMPL = '{server}/assetfiles/{doi}.{ext}'
+FETCH_URL_TMPL = '{server}/assetfiles/{afid}'
 
+DOI_PATTERN = re.compile(r'(\d+\.\d+/)?(journal\.)?(.*)\.([^.]*)')
 
 # *****************************************************
 def fetchManifestInfo(name, base_url, prefix='10.1371'):
@@ -96,23 +101,27 @@ def fetchManifestInfo(name, base_url, prefix='10.1371'):
 
     # Load JSON into a Python object and use some values from it.
     article = json.loads(response.content)
-    assets = {}
-    for asset in article['assets']:
-        ext = asset['extension']
-        asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
-        # Technically the pdf and xml article file is not an object
-        if asset_name == name:
-            continue
-        if asset_name in assets:
-            assets[asset_name].append(ext)
-        else:
-            assets[asset_name] = [ext]
+    assets = dict((asset_name, asset_files.keys())
+                  for (asset_name, asset_files) in article['assets'].items())
+
+    xml_asset = None
+    pdf_asset = None
+    if doi in assets:
+        for root_asset in assets[doi]:
+            if root_asset.upper().endswith('.XML'):
+                xml_asset = root_asset
+            if root_asset.upper().endswith('.PDF'):
+                pdf_asset = root_asset
+        del assets[doi]
+
     return { 'URI' : uri,
              'doi' : doi,
              'prefix' : prefix,
              'xml_file' : '{name}.{ext}'.format(name=name, ext='xml'),
              'pdf_file' : '{name}.{ext}'.format(name=name, ext='pdf'),
-             'strkImageURI' : article['strkImgURI'],
+             'xml_asset' : xml_asset,
+             'pdf_asset' : pdf_asset,
+             'strkImageURI' : article.get('strkImgURI'),
              'assets' : assets
             }
 
@@ -164,44 +173,58 @@ def fetchBinary(filename, url):
             for chunk in r.iter_content(1024):
                 f.write(chunk)
     else:
-        print("not downloaded  " + url)
+        raise Exception("not downloaded  " + url)
 
-def make_zip(rhinoServer, name, manifest, md, assetTupleList):
+def make_zip(rhinoServer, name, manifest, md):
     """
     Take the information we have gather about the article so far and create
     the zip.
     """
-    fetch = requests.get(FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
+
+    xml_asset_url = FETCH_URL_TMPL.format(server=rhinoServer, afid=md['xml_asset'])
+    fetch = requests.get(xml_asset_url, verify=False)
+    if fetch.status_code != 200:
+        raise Exception("Could not retrieve XML")
     zip_path = os.path.join('.', name + '.zip')
     with zipfile.ZipFile(zip_path, mode='w') as zf:
         zf.writestr('MANIFEST.xml', manifest, compress_type=zipfile.ZIP_DEFLATED)
         zf.writestr(md['xml_file'], fetch.content, compress_type=zipfile.ZIP_DEFLATED)
         zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
-        url = FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='pdf')
+
+        url = FETCH_URL_TMPL.format(server=rhinoServer, afid=md['pdf_asset'])
         fetchBinary(md['pdf_file'], url)
         zf.write(md['pdf_file'], md['pdf_file'] , compress_type=zipfile.ZIP_DEFLATED)
         os.remove(md['pdf_file'])
-        for t in assetTupleList:
-            (assetName, assetDOI, ext) = t
-            print(assetDOI)
-            url = FETCH_URL_TMPL.format(server=rhinoServer, doi=assetDOI, ext=ext.lower())
+
+        asset_file_ids = itertools.chain(*md['assets'].values())
+        for asset_file_id in asset_file_ids:
+            assetName, ext = infer_filename(asset_file_id)
+            url = FETCH_URL_TMPL.format(server=rhinoServer, afid=asset_file_id)
             name = '{name}.{ext}'.format(name=assetName, ext=ext.lower())
             fetchBinary(name, url)
             zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
             os.remove(name)
 
-def buildReps(name, reps, prefix='10.1371'):
+def infer_filename(asset_file_id):
+    """Infer the PLOS-form file name and extension from the DOI.
+
+    TODO: Generify
+    """
+    g = DOI_PATTERN.match(asset_file_id).groups()
+    return g[2], g[3]
+
+def buildReps(name, asset_file_ids, prefix='10.1371'):
     """
     Build a set of representation entities and tuples with the name, uri
     and extension of the the asset.
     """
     repsTags = []
-    nfeTuples = []
-    for ext in reps:
+    for asset_file_id in asset_file_ids:
+        name, ext = infer_filename(asset_file_id)
         fn = '{name}.{ext}'.format(name=name, ext=ext.lower())
-        nfeTuples.append((name, DOI_TMPL.format(prefix=prefix, name=name), ext))
         repsTags.append(REPRESENTATION_TMPL.format(name=ext,entry=fn))
-    return (string.joinfields(repsTags, "\n       "), nfeTuples)
+    reps = ('\n' + (8 * ' ')).join(repsTags)
+    return reps
 
 def buildObjectTags(md):
     """
@@ -210,15 +233,15 @@ def buildObjectTags(md):
     """
     objects = []
     objectTuples = []
-    strkImage = md['strkImageURI']
-    for (k, v) in md['assets'].items():
-        asset_uri =  URI_TMPL.format(prefix=md['prefix'], name=k)
+    strkImage = md.get('strkImageURI')
+    for (asset_id, asset_file_ids) in md['assets'].items():
+        asset_uri =  URI_TMPL.format(prefix=md['prefix'], name=asset_id)
         strkValue = ''
-        if strkImage == asset_uri : strkValue = 'strkImage="True"'
-        (reps, nueTuples) = buildReps(k, v)
-        objectTuples += nueTuples
+        if strkImage == asset_uri:
+            strkValue = 'strkImage="True"'
+        reps = buildReps(asset_id, asset_file_ids)
         objects.append(OBJECT_TMPL.format(uri=asset_uri, strkimage=strkValue,reps=reps))
-    return (string.joinfields(objects, '\n'), objectTuples)
+    return '\n'.join(objects)
 
 def buildArticleTag(md):
     """
@@ -234,8 +257,8 @@ def build_manifest_xml(md):
     Build the manifest for the specified article.
     """
     articleTag = buildArticleTag(md)
-    (objectTags, nueTuples) = buildObjectTags(md)
-    return (MANIFEST_TMPL.format(article=articleTag, objects=objectTags), nueTuples)
+    objectTags = buildObjectTags(md)
+    return MANIFEST_TMPL.format(article=articleTag, objects=objectTags)
 
 def main(options, args):
 
@@ -243,9 +266,9 @@ def main(options, args):
         print('Fetch manifest')
         manifest_dict = fetchManifestInfo( name, options.rhinoServer, options.prefix )
         print('Build manifest')
-        (manifest, assetTupleList) = build_manifest_xml(manifest_dict)
+        manifest = build_manifest_xml(manifest_dict)
         print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
-        make_zip(options.rhinoServer, name, manifest, manifest_dict, assetTupleList)
+        make_zip(options.rhinoServer, name, manifest, manifest_dict)
 
 if __name__ == "__main__":
 
@@ -253,7 +276,7 @@ if __name__ == "__main__":
     parser = OptionParser(usage=usage)
     parser.add_option('--server', action='store', type='string',
                       dest='rhinoServer', metavar='SERVER',
-                      help='rhino server url ex. "https://webprod.plosjournals.org"')
+                      help='rhino server url ex. "https://webprod.plosjournals.org/api"')
     parser.add_option('--prefix', action='store', type='string', dest='prefix',
                       default='10.1371', metavar='PREFIX',
                       help='prefix used in constructing article DOI.i [default: %default]')
