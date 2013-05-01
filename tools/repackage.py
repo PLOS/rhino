@@ -10,7 +10,7 @@
         prefix    - the doi prefix (for PLOS 10.1371)
         article_name - the first part of the article zip name.
 
-   Ex. repackage.py --server="https://webprod.plosjournals.org"  "pone.0033205"
+   Ex. repackage.py --server="https://webprod.plosjournals.org/api"  "pone.0033205"
 """
 
 from __future__ import print_function
@@ -81,7 +81,7 @@ URI_TMPL = """info:doi/{prefix}/journal.{name}"""
 # ***** DOI Template *****
 DOI_TMPL = """{prefix}/journal.{name}"""
 
-FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
+FETCH_URL_TMPL = '{server}/assetfiles/{doi}.{ext}'
 
 
 # *****************************************************
@@ -91,7 +91,7 @@ def fetchManifestInfo(name, base_url, prefix='10.1371'):
     """
     doi = DOI_TMPL.format(prefix=prefix, name=name)
     uri = URI_TMPL.format(prefix=prefix, name=name)
-    url = base_url + '/api/articles/{doi}'.format(doi=doi)
+    url = base_url + '/articles/{doi}'.format(doi=doi)
     response = requests.get(url, verify=False)
 
     # Load JSON into a Python object and use some values from it.
