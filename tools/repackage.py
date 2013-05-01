@@ -25,7 +25,7 @@ import json
 
 """
 ***********************************************
-     Text templates used in 
+     Text templates used in
      repetative string creation.
 ***********************************************
 """
@@ -60,7 +60,7 @@ MANIFEST_TMPL = """
 
 """ ***** Manifest Object Entries *****"""
 OBJECT_TMPL = """
-     <object uri="{uri}" {strkimage}> 
+     <object uri="{uri}" {strkimage}>
         {reps}
      </object>
 """
@@ -86,37 +86,37 @@ FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
 
 """*****************************************************"""
 """
-    Fetch the information necessary to build a manifest from 
+    Fetch the information necessary to build a manifest from
     Rhino.
 """
 def fetchManifestInfo(name, base_url, prefix='10.1371'):
-	doi = DOI_TMPL.format(prefix=prefix, name=name)
-	uri = URI_TMPL.format(prefix=prefix, name=name)
-	url = base_url + '/api/articles/{doi}'.format(doi=doi)
-	response = requests.get(url, verify=False)	
-	
-	"""Load JSON into a Python object and use some values from it."""
-	article = json.loads(response.content)
-	assets = {}
-	for asset in article['assets']:
-		ext = asset['extension']
-		asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
-		""" Technically the pdf and xml article file is not an object """
-		if asset_name == name:
-			continue
-		if asset_name in assets:
-			assets[asset_name].append(ext)
-		else:
-			assets[asset_name] = [ext]
-	return { 'URI' : uri,
-	         'doi' : doi,
-	         'prefix' : prefix,
-	         'xml_file' : '{name}.{ext}'.format(name=name, ext='xml'),
-	         'pdf_file' : '{name}.{ext}'.format(name=name, ext='pdf'),
-	         'strkImageURI' : article['strkImgURI'],
-	         'assets' : assets
-	        }
-	
+    doi = DOI_TMPL.format(prefix=prefix, name=name)
+    uri = URI_TMPL.format(prefix=prefix, name=name)
+    url = base_url + '/api/articles/{doi}'.format(doi=doi)
+    response = requests.get(url, verify=False)
+
+    """Load JSON into a Python object and use some values from it."""
+    article = json.loads(response.content)
+    assets = {}
+    for asset in article['assets']:
+        ext = asset['extension']
+        asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
+        """ Technically the pdf and xml article file is not an object """
+        if asset_name == name:
+            continue
+        if asset_name in assets:
+            assets[asset_name].append(ext)
+        else:
+            assets[asset_name] = [ext]
+    return { 'URI' : uri,
+             'doi' : doi,
+             'prefix' : prefix,
+             'xml_file' : '{name}.{ext}'.format(name=name, ext='xml'),
+             'pdf_file' : '{name}.{ext}'.format(name=name, ext='pdf'),
+             'strkImageURI' : article['strkImgURI'],
+             'assets' : assets
+            }
+
 _BANNER_WIDTH = 79
 
 def pretty_dict_repr(d):
@@ -155,18 +155,18 @@ def report(description, response):
     print()
 
 """
-    Most of the files other than the article xml is 
+    Most of the files other than the article xml is
     binary in nature. Fetch the data and write it to
     a temporary file.
 """
 def fetchBinary(filename, url):
-	r = requests.get(url, verify=False)
-	if r.status_code == 200:
-		with open(filename, 'wb') as f:
-			for chunk in r.iter_content(1024):
-				f.write(chunk)
-	else:
-		print("not downloaded  " + url)
+    r = requests.get(url, verify=False)
+    if r.status_code == 200:
+        with open(filename, 'wb') as f:
+            for chunk in r.iter_content(1024):
+                f.write(chunk)
+    else:
+        print("not downloaded  " + url)
 """
     Take the information we have gather about the article so far
     and create the zip.
@@ -175,90 +175,90 @@ def make_zip(rhinoServer, name, manifest, md, assetTupleList):
     fetch = requests.get(FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
     zip_path = os.path.join('.', name + '.zip')
     with zipfile.ZipFile(zip_path, mode='w') as zf:
-	    zf.writestr(md['xml_file'], fetch.content, compress_type=zipfile.ZIP_DEFLATED)
-	    zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
-	    url = FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='pdf')
-	    fetchBinary(md['pdf_file'], url)
-	    zf.write(md['pdf_file'], md['pdf_file'] , compress_type=zipfile.ZIP_DEFLATED)
-	    os.remove(md['pdf_file'])
-	    for t in assetTupleList:
-		    (assetName, assetDOI, ext) = t
-		    print(assetDOI)
-		    url = FETCH_URL_TMPL.format(server=rhinoServer, doi=assetDOI, ext=ext.lower())
-		    name = '{name}.{ext}'.format(name=assetName, ext=ext.lower()) 
-		    fetchBinary(name, url)
-		    zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
-		    os.remove(name)
+        zf.writestr(md['xml_file'], fetch.content, compress_type=zipfile.ZIP_DEFLATED)
+        zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
+        url = FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='pdf')
+        fetchBinary(md['pdf_file'], url)
+        zf.write(md['pdf_file'], md['pdf_file'] , compress_type=zipfile.ZIP_DEFLATED)
+        os.remove(md['pdf_file'])
+        for t in assetTupleList:
+            (assetName, assetDOI, ext) = t
+            print(assetDOI)
+            url = FETCH_URL_TMPL.format(server=rhinoServer, doi=assetDOI, ext=ext.lower())
+            name = '{name}.{ext}'.format(name=assetName, ext=ext.lower())
+            fetchBinary(name, url)
+            zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
+            os.remove(name)
 """
    Build a set of representation entities and tuples
    with the name, uri and extension of the the asset.
 """
 def buildReps(name, reps, prefix='10.1371'):
-	repsTags = []
-	nfeTuples = []
-	for ext in reps:
-		fn = '{name}.{ext}'.format(name=name, ext=ext.lower())
-		nfeTuples.append((name, DOI_TMPL.format(prefix=prefix, name=name), ext))
-		repsTags.append(REPRESENTATION_TMPL.format(name=ext,entry=fn))
-	return (string.joinfields(repsTags, "\n       "), nfeTuples)
+    repsTags = []
+    nfeTuples = []
+    for ext in reps:
+        fn = '{name}.{ext}'.format(name=name, ext=ext.lower())
+        nfeTuples.append((name, DOI_TMPL.format(prefix=prefix, name=name), ext))
+        repsTags.append(REPRESENTATION_TMPL.format(name=ext,entry=fn))
+    return (string.joinfields(repsTags, "\n       "), nfeTuples)
 """
    Build a set of object entities and collect a list
    of tuples containing the name, uri and extension of
    the the respresentaions of that object.
-"""	
+"""
 def buildObjectTags(md):
-	objects = []
-	objectTuples = []
-	strkImage = md['strkImageURI']
-	for (k, v) in md['assets'].items():
-		asset_uri =  URI_TMPL.format(prefix=md['prefix'], name=k)
-		strkValue = ''
-		if strkImage == asset_uri : strkValue = 'strkImage="True"' 
-		(reps, nueTuples) = buildReps(k, v)
-		objectTuples += nueTuples
-		objects.append(OBJECT_TMPL.format(uri=asset_uri, strkimage=strkValue,reps=reps))
-	return (string.joinfields(objects, '\n'), objectTuples)
-	
+    objects = []
+    objectTuples = []
+    strkImage = md['strkImageURI']
+    for (k, v) in md['assets'].items():
+        asset_uri =  URI_TMPL.format(prefix=md['prefix'], name=k)
+        strkValue = ''
+        if strkImage == asset_uri : strkValue = 'strkImage="True"'
+        (reps, nueTuples) = buildReps(k, v)
+        objectTuples += nueTuples
+        objects.append(OBJECT_TMPL.format(uri=asset_uri, strkimage=strkValue,reps=reps))
+    return (string.joinfields(objects, '\n'), objectTuples)
+
 """
    Build a Article entity with the the XML and PDF representation
    tags included.
 """
 def buildArticleTag(md):
-	xmlRep = REPRESENTATION_TMPL.format(name='XML', entry=md['xml_file']) 
-	pdfRep = REPRESENTATION_TMPL.format(name='PDF', entry=md['pdf_file']) 
-	return ARTICLE_TMPL.format(uri=md['URI'], fname=md['xml_file'], reps=xmlRep + "\n        " + pdfRep)
+    xmlRep = REPRESENTATION_TMPL.format(name='XML', entry=md['xml_file'])
+    pdfRep = REPRESENTATION_TMPL.format(name='PDF', entry=md['pdf_file'])
+    return ARTICLE_TMPL.format(uri=md['URI'], fname=md['xml_file'], reps=xmlRep + "\n        " + pdfRep)
 
 """
    Build the manifest for the specified article.
-"""	
+"""
 def build_manifest_xml(md):
-	articleTag = buildArticleTag(md)
-	(objectTags, nueTuples) = buildObjectTags(md)
-	return (MANIFEST_TMPL.format(article=articleTag, objects=objectTags), nueTuples)				
-	
+    articleTag = buildArticleTag(md)
+    (objectTags, nueTuples) = buildObjectTags(md)
+    return (MANIFEST_TMPL.format(article=articleTag, objects=objectTags), nueTuples)
+
 def main(options, args):
-	
-	for name in args:
-                print('Fetch manifest')
-		manifest_dict = fetchManifestInfo( name, options.rhinoServer, options.prefix )
-                print('Build manifest')
-		(manifest, assetTupleList) = build_manifest_xml(manifest_dict)
-                print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
-		make_zip(options.rhinoServer, name, manifest, manifest_dict, assetTupleList)
+
+    for name in args:
+        print('Fetch manifest')
+        manifest_dict = fetchManifestInfo( name, options.rhinoServer, options.prefix )
+        print('Build manifest')
+        (manifest, assetTupleList) = build_manifest_xml(manifest_dict)
+        print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
+        make_zip(options.rhinoServer, name, manifest, manifest_dict, assetTupleList)
 
 if __name__ == "__main__":
 
-        usage = "usage: %prog [options] arg1 arg2 ..."
-        parser = OptionParser(usage=usage)
-        parser.add_option('--server', action='store', type='string', 
-                          dest='rhinoServer', metavar='SERVER', 
-                          help='rhino server url ex. "https://webprod.plosjournals.org"')
-        parser.add_option('--prefix', action='store', type='string', dest='prefix', 
-                          default='10.1371', metavar='PREFIX', 
-                          help='prefix used in constructing article DOI.i [default: %default]')
-          
-        (options, args) = parser.parse_args()
-        if len(args) < 1:
-                parser.error('incorrect number of arguments.')
-                sys.exit(1)
-	sys.exit(main(options, args))
+    usage = "usage: %prog [options] arg1 arg2 ..."
+    parser = OptionParser(usage=usage)
+    parser.add_option('--server', action='store', type='string',
+                      dest='rhinoServer', metavar='SERVER',
+                      help='rhino server url ex. "https://webprod.plosjournals.org"')
+    parser.add_option('--prefix', action='store', type='string', dest='prefix',
+                      default='10.1371', metavar='PREFIX',
+                      help='prefix used in constructing article DOI.i [default: %default]')
+
+    (options, args) = parser.parse_args()
+    if len(args) < 1:
+        parser.error('incorrect number of arguments.')
+        sys.exit(1)
+    sys.exit(main(options, args))
