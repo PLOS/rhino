@@ -4,12 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.models.Syndication;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Type;
 import java.util.Collection;
 
 import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
@@ -18,7 +16,7 @@ import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
  * A view of an article containing only its stateful attributes that can be modified by the client directly. This is the
  * output analogue to {@link ArticleInputView}.
  */
-public class ArticleStateView implements ArticleView {
+public class ArticleStateView implements JsonOutputView, ArticleView {
 
   private final String doi;
   @Nullable
@@ -37,15 +35,13 @@ public class ArticleStateView implements ArticleView {
     return doi;
   }
 
-  public static final JsonSerializer<ArticleStateView> SERIALIZER = new JsonSerializer<ArticleStateView>() {
-    @Override
-    public JsonElement serialize(ArticleStateView src, Type typeOfSrc, JsonSerializationContext context) {
-      JsonObject serialized = new JsonObject();
-      serialized.addProperty(MemberNames.DOI, src.doi);
-      serialized.addProperty(MemberNames.STATE, src.publicationState);
-      serialized.add(MemberNames.SYNDICATIONS, ArticleOutputView.serializeSyndications(src.syndications, context));
-      return serialized;
-    }
-  };
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    JsonObject serialized = new JsonObject();
+    serialized.addProperty(MemberNames.DOI, doi);
+    serialized.addProperty(MemberNames.STATE, publicationState);
+    serialized.add(MemberNames.SYNDICATIONS, ArticleOutputView.serializeSyndications(syndications, context));
+    return serialized;
+  }
 
 }

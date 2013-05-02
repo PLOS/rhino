@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
@@ -20,7 +19,6 @@ import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +31,7 @@ import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationSta
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
  * a default dump of the article, plus a few added or augmented.
  */
-public class ArticleOutputView implements ArticleView {
+public class ArticleOutputView implements JsonOutputView, ArticleView {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
@@ -86,57 +84,49 @@ public class ArticleOutputView implements ArticleView {
     return syndications.get(target);
   }
 
-  /**
-   * Adapter object that produces the desired JSON output from a view instance.
-   */
-  public static final JsonSerializer<ArticleOutputView> SERIALIZER = new JsonSerializer<ArticleOutputView>() {
-    @Override
-    public JsonElement serialize(ArticleOutputView src, Type typeOfSrc, JsonSerializationContext context) {
-      Article article = src.article;
-      JsonObject serialized = new JsonObject();
-      serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    JsonObject serialized = new JsonObject();
+    serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
-      int articleState = article.getState();
-      String pubState = getPublicationStateName(articleState);
-      if (pubState == null) {
-        String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
-            articleState, PUBLICATION_STATE_CONSTANTS);
-        throw new IllegalStateException(message);
-      }
-      serialized.addProperty(MemberNames.STATE, pubState);
-
-      JsonElement syndications = serializeSyndications(src.syndications.values(), context);
-      if (syndications != null) {
-        serialized.add(MemberNames.SYNDICATIONS, syndications);
-      }
-      serializePingbackDigest(src, serialized, context);
-      serialized.add("assets", context.serialize(new AssetCollectionView(article.getAssets())));
-
-      JsonObject baseJson = context.serialize(article).getAsJsonObject();
-      serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
-
-      serialized.add(MemberNames.PINGBACKS, context.serialize(src.pingbacks));
-
-      return serialized;
+    int articleState = article.getState();
+    String pubState = getPublicationStateName(articleState);
+    if (pubState == null) {
+      String message = String.format("Article.state field has unexpected value (%d). Expected one of: %s",
+          articleState, PUBLICATION_STATE_CONSTANTS);
+      throw new IllegalStateException(message);
     }
-  };
+    serialized.addProperty(MemberNames.STATE, pubState);
+
+    JsonElement syndications = serializeSyndications(this.syndications.values(), context);
+    if (syndications != null) {
+      serialized.add(MemberNames.SYNDICATIONS, syndications);
+    }
+    serializePingbackDigest(serialized, context);
+    serialized.add("assets", context.serialize(new AssetCollectionView(article.getAssets())));
+
+    JsonObject baseJson = context.serialize(article).getAsJsonObject();
+    serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
+
+    serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+
+    return serialized;
+  }
 
   /**
    * Add fields summarizing pingback data. These are redundant to the explicit list of pingback objects, but include
    * them anyway so that ArticlePingbackView is a subset of ArticleOutputView.
    *
-   * @param src        the view containing the pingbacks
    * @param serialized the JSON object to modify by adding pingback digest values
    * @param context    the JSON context
    * @return the modified object
    */
-  private static JsonObject serializePingbackDigest(ArticleOutputView src, JsonObject serialized,
-                                                    JsonSerializationContext context) {
+  private JsonObject serializePingbackDigest(JsonObject serialized, JsonSerializationContext context) {
     // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
-    serialized.addProperty("pingbackCount", src.pingbacks.size());
-    if (!src.pingbacks.isEmpty()) {
+    serialized.addProperty("pingbackCount", pingbacks.size());
+    if (!pingbacks.isEmpty()) {
       // The service guarantees that the list is ordered by timestamp
-      Date mostRecent = src.pingbacks.get(0).getLastModified();
+      Date mostRecent = pingbacks.get(0).getLastModified();
       serialized.add("mostRecentPingback", context.serialize(mostRecent));
     }
     return serialized;

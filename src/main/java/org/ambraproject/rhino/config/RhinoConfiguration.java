@@ -49,6 +49,7 @@ import org.ambraproject.rhino.view.ArticleViewList;
 import org.ambraproject.rhino.view.AssetCollectionView;
 import org.ambraproject.rhino.view.AssetFileCollectionView;
 import org.ambraproject.rhino.view.DoiList;
+import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
 import org.apache.commons.httpclient.HttpClient;
@@ -112,11 +113,13 @@ public class RhinoConfiguration extends BaseConfiguration {
     GsonBuilder builder = new GsonBuilder();
     builder.setPrettyPrinting();
 
-    builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
-    builder.registerTypeAdapter(ArticleStateView.class, ArticleStateView.SERIALIZER);
-    builder.registerTypeAdapter(ArticleViewList.class, ArticleViewList.SERIALIZER);
-    builder.registerTypeAdapter(AssetCollectionView.class, AssetCollectionView.SERIALIZER);
-    builder.registerTypeAdapter(AssetFileCollectionView.class, AssetFileCollectionView.SERIALIZER);
+    ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
+        ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, AssetCollectionView.class,
+        AssetFileCollectionView.class);
+    for (Class<? extends JsonOutputView> viewClass : outputViews) {
+      builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
+    }
+
     builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
 

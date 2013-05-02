@@ -3,10 +3,8 @@ package org.ambraproject.rhino.view;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 
-import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,7 +13,7 @@ import java.util.List;
  * objects in the list, and the member names are the objects' REST IDs. An object's REST ID is the same as its DOI
  * without the {@code "info:doi/"} prefix.
  */
-public class ArticleViewList {
+public class ArticleViewList implements JsonOutputView {
 
   private final List<? extends ArticleView> views;
 
@@ -24,16 +22,14 @@ public class ArticleViewList {
     this.views = Collections.unmodifiableList(views);
   }
 
-  public static final JsonSerializer<ArticleViewList> SERIALIZER = new JsonSerializer<ArticleViewList>() {
-    @Override
-    public JsonElement serialize(ArticleViewList src, Type typeOfSrc, JsonSerializationContext context) {
-      JsonObject serializedList = new JsonObject();
-      for (ArticleView view : src.views) {
-        String key = ArticleIdentity.removeScheme(view.getDoi());
-        serializedList.add(key, context.serialize(view));
-      }
-      return serializedList;
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    JsonObject serializedList = new JsonObject();
+    for (ArticleView view : views) {
+      String key = ArticleIdentity.removeScheme(view.getDoi());
+      serializedList.add(key, context.serialize(view));
     }
-  };
+    return serializedList;
+  }
 
 }
