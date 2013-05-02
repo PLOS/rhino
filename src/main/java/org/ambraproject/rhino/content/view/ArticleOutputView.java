@@ -90,7 +90,6 @@ public class ArticleOutputView implements ArticleView {
    * Adapter object that produces the desired JSON output from a view instance.
    */
   public static final JsonSerializer<ArticleOutputView> SERIALIZER = new JsonSerializer<ArticleOutputView>() {
-
     @Override
     public JsonElement serialize(ArticleOutputView src, Type typeOfSrc, JsonSerializationContext context) {
       Article article = src.article;
@@ -110,26 +109,38 @@ public class ArticleOutputView implements ArticleView {
       if (syndications != null) {
         serialized.add(MemberNames.SYNDICATIONS, syndications);
       }
-
-      // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
-      serialized.addProperty("pingbackCount", src.pingbacks.size());
-      if (!src.pingbacks.isEmpty()) {
-        // The service guarantees that the list is ordered by timestamp
-        Date mostRecent = src.pingbacks.get(0).getLastModified();
-        serialized.add("mostRecentPingback", context.serialize(mostRecent));
-      }
-
-      serialized.add(MemberNames.PINGBACKS, context.serialize(src.pingbacks));
-
+      serializePingbackDigest(src, serialized, context);
       serialized.add("assets", context.serialize(new AssetCollectionView(article.getAssets())));
 
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 
+      serialized.add(MemberNames.PINGBACKS, context.serialize(src.pingbacks));
+
       return serialized;
     }
-
   };
+
+  /**
+   * Add fields summarizing pingback data. These are redundant to the explicit list of pingback objects, but include
+   * them anyway so that ArticlePingbackView is a subset of ArticleOutputView.
+   *
+   * @param src        the view containing the pingbacks
+   * @param serialized the JSON object to modify by adding pingback digest values
+   * @param context    the JSON context
+   * @return the modified object
+   */
+  private static JsonObject serializePingbackDigest(ArticleOutputView src, JsonObject serialized,
+                                                    JsonSerializationContext context) {
+    // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
+    serialized.addProperty("pingbackCount", src.pingbacks.size());
+    if (!src.pingbacks.isEmpty()) {
+      // The service guarantees that the list is ordered by timestamp
+      Date mostRecent = src.pingbacks.get(0).getLastModified();
+      serialized.add("mostRecentPingback", context.serialize(mostRecent));
+    }
+    return serialized;
+  }
 
   /**
    * Represent the list of syndications as an object whose keys are the syndication targets.
@@ -142,11 +153,6 @@ public class ArticleOutputView implements ArticleView {
     JsonObject syndicationsByTarget = new JsonObject();
     for (Syndication syndication : syndications) {
       JsonObject syndicationJson = context.serialize(syndication).getAsJsonObject();
-
-      // Exclude redundant members
-      syndicationJson.remove(MemberNames.DOI);
-      syndicationJson.remove(MemberNames.SYNDICATION_TARGET);
-
       syndicationsByTarget.add(syndication.getTarget(), syndicationJson);
     }
     return syndicationsByTarget;
