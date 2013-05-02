@@ -1,35 +1,23 @@
 package org.ambraproject.rhino.view;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * A list of article views that are keyed by DOI. The list should be serialized as a JSON object: the members are the
  * objects in the list, and the member names are the objects' REST IDs. An object's REST ID is the same as its DOI
  * without the {@code "info:doi/"} prefix.
  */
-public class ArticleViewList implements JsonOutputView {
+public class ArticleViewList extends KeyedListView<ArticleView> {
 
-  private final List<? extends ArticleView> views;
-
-  public ArticleViewList(List<? extends ArticleView> views) {
-    // Prefer an O(1) wrapper to ImmutableList because it generally will be a big list
-    this.views = Collections.unmodifiableList(views);
+  public ArticleViewList(Collection<? extends ArticleView> values) {
+    super(values);
   }
 
   @Override
-  public JsonElement serialize(JsonSerializationContext context) {
-    JsonObject serializedList = new JsonObject();
-    for (ArticleView view : views) {
-      String key = ArticleIdentity.removeScheme(view.getDoi());
-      serializedList.add(key, context.serialize(view));
-    }
-    return serializedList;
+  protected String getKey(ArticleView value) {
+    return ArticleIdentity.removeScheme(value.getDoi());
   }
 
 }
