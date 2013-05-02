@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
@@ -25,9 +25,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateName;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as

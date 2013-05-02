@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -28,11 +28,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.SYNDICATION_STATUSES;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateConstant;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateName;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.SYNDICATION_STATUSES;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateConstant;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * Criteria from an API client describing a subset of articles.

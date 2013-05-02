@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;

@@ -14,13 +14,13 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.rhino.content.view.ArticleInputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
+import org.ambraproject.rhino.view.ArticleInputView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

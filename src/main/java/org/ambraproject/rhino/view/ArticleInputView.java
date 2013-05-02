@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -16,11 +16,11 @@ import org.apache.commons.lang.StringUtils;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.SYNDICATION_STATUSES;
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.getPublicationStateConstant;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.SYNDICATION_STATUSES;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateConstant;
 
 /**
  * A view of an update to an article's state as submitted by a REST client.

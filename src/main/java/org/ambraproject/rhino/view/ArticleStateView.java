@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-import static org.ambraproject.rhino.content.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
 
 /**
  * A view of an article containing only its stateful attributes that can be modified by the client directly. This is the

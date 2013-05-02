@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view;
 
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.gson.JsonElement;

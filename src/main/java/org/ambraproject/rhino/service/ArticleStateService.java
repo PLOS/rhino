@@ -15,8 +15,8 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
-import org.ambraproject.rhino.content.view.ArticleInputView;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.view.ArticleInputView;
 
 import java.io.IOException;
 
