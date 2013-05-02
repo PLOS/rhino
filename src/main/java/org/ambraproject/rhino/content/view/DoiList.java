@@ -8,7 +8,6 @@ import com.google.gson.stream.JsonWriter;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,14 +16,15 @@ import java.util.List;
  */
 public class DoiList {
 
-  private final Collection<String> dois;
+  private final List<String> dois;
 
-  public DoiList(Collection<String> dois) {
-    this.dois = Collections.unmodifiableCollection(dois);
+  public DoiList(List<String> dois) {
+    // Prefer an O(1) wrapper to ImmutableList because it generally will be a big list
+    this.dois = Collections.unmodifiableList(dois);
   }
 
   @VisibleForTesting
-  public Collection<String> getDois() {
+  public List<String> getDois() {
     return dois;
   }
 
@@ -54,7 +54,8 @@ public class DoiList {
         in.beginObject();
         String doi = null;
         while (in.hasNext()) {
-          if (ArticleJsonConstants.MemberNames.DOI.equals(in.nextName())) {
+          String name = in.nextName();
+          if (ArticleJsonConstants.MemberNames.DOI.equals(name)) {
             doi = in.nextString();
           } else {
             in.skipValue();

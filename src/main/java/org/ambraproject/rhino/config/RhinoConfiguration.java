@@ -30,6 +30,8 @@ import org.ambraproject.rhino.content.view.ArticleInputView;
 import org.ambraproject.rhino.content.view.ArticleOutputView;
 import org.ambraproject.rhino.content.view.ArticleStateView;
 import org.ambraproject.rhino.content.view.ArticleViewList;
+import org.ambraproject.rhino.content.view.AssetCollectionView;
+import org.ambraproject.rhino.content.view.AssetFileCollectionView;
 import org.ambraproject.rhino.content.view.DoiList;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -113,6 +115,8 @@ public class RhinoConfiguration extends BaseConfiguration {
     builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
     builder.registerTypeAdapter(ArticleStateView.class, ArticleStateView.SERIALIZER);
     builder.registerTypeAdapter(ArticleViewList.class, ArticleViewList.SERIALIZER);
+    builder.registerTypeAdapter(AssetCollectionView.class, AssetCollectionView.SERIALIZER);
+    builder.registerTypeAdapter(AssetFileCollectionView.class, AssetFileCollectionView.SERIALIZER);
     builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
 

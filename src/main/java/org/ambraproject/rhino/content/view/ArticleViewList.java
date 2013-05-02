@@ -7,8 +7,8 @@ import com.google.gson.JsonSerializer;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * A list of article views that are keyed by DOI. The list should be serialized as a JSON object: the members are the
@@ -17,10 +17,11 @@ import java.util.Collections;
  */
 public class ArticleViewList {
 
-  private final Collection<? extends ArticleView> views;
+  private final List<? extends ArticleView> views;
 
-  public ArticleViewList(Collection<? extends ArticleView> views) {
-    this.views = Collections.unmodifiableCollection(views);
+  public ArticleViewList(List<? extends ArticleView> views) {
+    // Prefer an O(1) wrapper to ImmutableList because it generally will be a big list
+    this.views = Collections.unmodifiableList(views);
   }
 
   public static final JsonSerializer<ArticleViewList> SERIALIZER = new JsonSerializer<ArticleViewList>() {

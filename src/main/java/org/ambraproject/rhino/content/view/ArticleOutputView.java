@@ -121,6 +121,8 @@ public class ArticleOutputView implements ArticleView {
 
       serialized.add(MemberNames.PINGBACKS, context.serialize(src.pingbacks));
 
+      serialized.add("assets", context.serialize(new AssetCollectionView(article.getAssets())));
+
       JsonObject baseJson = context.serialize(article).getAsJsonObject();
       serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 

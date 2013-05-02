@@ -22,6 +22,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.content.view.AssetFileCollectionView;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -283,7 +284,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (assets.isEmpty()) {
       throw reportNotFound(id);
     }
-    writeJson(receiver, assets);
+    writeJson(receiver, new AssetFileCollectionView(assets));
   }
 
   /**
