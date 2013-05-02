@@ -45,6 +45,7 @@
     </ul>
   </li>
   <li><a href="ingestibles">/ingestibles</a></li>
+  <li><a href="journals">/journals</a></li>
   <li><a href="config">/config</a></li>
 </ul>
 

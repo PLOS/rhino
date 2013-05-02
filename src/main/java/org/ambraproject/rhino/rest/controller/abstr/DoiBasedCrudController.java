@@ -35,8 +35,6 @@ import java.io.OutputStream;
  */
 public abstract class DoiBasedCrudController extends RestController {
 
-  protected static final String METADATA_FORMAT_PARAM = "format";
-
   /**
    * Return the URL prefix that describes the RESTful namespace that this controller handles. It should include a
    * leading and trailing slash. Typically this is a constant.
