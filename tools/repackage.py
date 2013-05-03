@@ -90,8 +90,9 @@ URI_TMPL = """info:doi/{prefix}/journal.{name}"""
 """ ***** DOI Template *****"""
 DOI_TMPL = """{prefix}/journal.{name}"""
 
-FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
-
+FETCH_ARTICLE_INFO_TMPL = '{server}/api/articles/{doi}'
+FETCH_FILE_RHINO_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
+FETCH_FILE_AMBRA_TMPL = '{server}/article/fetchObject.action?uri=info:doi/{doi}&representation={ext}'
 
 """*****************************************************"""
 """
@@ -102,15 +103,13 @@ def fetchManifestInfo(name, options):
         (base_url, prefix) = (options.rhinoServer, options.prefix)
         doi = DOI_TMPL.format(prefix=prefix, name=name)
 	uri = URI_TMPL.format(prefix=prefix, name=name)
-	url = base_url + '/api/articles/{doi}'.format(doi=doi)
+	url = FETCH_ARTICLE_INFO_TMPL.format(server=base_url, doi=doi)
 	response = requests.get(url, verify=False)	
 	
 	"""Load JSON into a Python object and use some values from it."""
 	article = json.loads(response.content)
 	assets = {}
-        strkImageURI = ''
-        if 'strkImageURI' in article:
-                strkImageURI = article['strkImgURI'] 
+        strkImageURI = article['strkImgURI'] if 'strkImageURI' in article else ''
 	for asset in article['assets']:
                 ext = asset['extension']
                 asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
@@ -185,20 +184,20 @@ def fetchBinary(filename, url):
     and create the zip.
 """
 def make_zip(rhinoServer, name, manifest, md, assetTupleList):
-    fetch = requests.get(FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
+    fetch = requests.get(FETCH_FILE_RHINO_TMPL.format(server=rhinoServer, doi=md['doi'], ext='xml'), verify=False)
     zip_path = os.path.join('.', name + '.zip')
     with zipfile.ZipFile(zip_path, mode='w') as zf:
             zf.writestr('MANIFEST.xml', manifest, compress_type=zipfile.ZIP_DEFLATED)
 	    zf.writestr(md['xml_file'], fetch.content, compress_type=zipfile.ZIP_DEFLATED)
 	    zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
-	    url = FETCH_URL_TMPL.format(server=rhinoServer, doi=md['doi'], ext='pdf')
+	    url = FETCH_FILE_RHINO_TMPL.format(server=rhinoServer, doi=md['doi'], ext='pdf')
 	    fetchBinary(md['pdf_file'], url)
 	    zf.write(md['pdf_file'], md['pdf_file'] , compress_type=zipfile.ZIP_DEFLATED)
 	    os.remove(md['pdf_file'])
 	    for t in assetTupleList:
 		    (assetName, assetDOI, ext) = t
 		    print(assetDOI)
-		    url = FETCH_URL_TMPL.format(server=rhinoServer, doi=assetDOI, ext=ext.lower())
+		    url = FETCH_FILE_RHINO_TMPL.format(server=rhinoServer, doi=assetDOI, ext=ext.lower())
 		    name = '{name}.{ext}'.format(name=assetName, ext=ext.lower()) 
 		    fetchBinary(name, url)
 		    zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
@@ -226,8 +225,7 @@ def buildObjectTags(md):
 	strkImage = md['strkImageURI']
 	for (k, v) in md['assets'].items():
 		asset_uri =  URI_TMPL.format(prefix=md['prefix'], name=k)
-		strkValue = ''
-		if strkImage == asset_uri : strkValue = 'strkImage="True"' 
+		strkValue = 'strkImage="True"' if strkImage == asset_uri else ''
 		(reps, nueTuples) = buildReps(k, v)
 		objectTuples += nueTuples
 		objects.append(OBJECT_TMPL.format(uri=asset_uri, strkimage=strkValue,reps=reps))
