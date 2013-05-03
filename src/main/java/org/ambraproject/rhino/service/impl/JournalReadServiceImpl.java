@@ -5,6 +5,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.journal.JournalListView;
+import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
         DetachedCriteria.forClass(Journal.class)
             .setFetchMode("volumes", FetchMode.JOIN)
             .setFetchMode("volumes.issues", FetchMode.JOIN)
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
     );
     writeJson(receiver, new JournalListView(journals));
   }
