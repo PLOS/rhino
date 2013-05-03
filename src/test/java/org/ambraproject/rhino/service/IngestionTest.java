@@ -335,8 +335,8 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   /**
-   * Tests ingestion of an intentionally bad .zip file to confirm that all article entities
-   * are deleted after the error.
+   * Tests ingestion of an intentionally bad .zip file to confirm that all article entities are deleted after the
+   * error.
    */
   @Test
   public void testArchiveError() throws Exception {

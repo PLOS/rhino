@@ -1,23 +1,22 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view.asset;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.view.JsonOutputView;
 import org.apache.commons.lang.StringUtils;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * A serializable view of a group of assets that all have the same DOI, possibly representing different files.
  */
-public class AssetFileCollectionView {
+public class AssetFileCollectionView implements JsonOutputView {
 
   private final ImmutableList<ArticleAsset> assets;
 
@@ -25,12 +24,10 @@ public class AssetFileCollectionView {
     this.assets = ImmutableList.copyOf(assets);
   }
 
-  public static final JsonSerializer<AssetFileCollectionView> SERIALIZER = new JsonSerializer<AssetFileCollectionView>() {
-    @Override
-    public JsonElement serialize(AssetFileCollectionView src, Type typeOfSrc, JsonSerializationContext context) {
-      return serializeAssetFiles(src.assets, context);
-    }
-  };
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    return serializeAssetFiles(assets, context);
+  }
 
   /*
    * Simple serialization. This method is a hook in case something more complex is needed.

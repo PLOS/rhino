@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;

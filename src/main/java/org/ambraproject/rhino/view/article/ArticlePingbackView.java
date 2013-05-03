@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.content.view;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.base.Preconditions;
 
@@ -8,7 +8,9 @@ import java.util.Date;
  * A view of an article that contains a digest of its associated pingbacks (and some other data that's friendly to a
  * particular client-side use case).
  */
-public class ArticlePingbackView implements ArticleView {
+public class ArticlePingbackView
+    implements ArticleView // Don't implement JsonOutputView; Gson's reflection-based serialization suffices
+{
 
   private final String doi;
   private final String title;
@@ -30,9 +32,5 @@ public class ArticlePingbackView implements ArticleView {
   public String getDoi() {
     return doi;
   }
-
-  /*
-   * No JsonSerializer needed; Gson's reflection-based serialization behavior is fine.
-   */
 
 }

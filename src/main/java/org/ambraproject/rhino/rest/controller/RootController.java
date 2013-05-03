@@ -3,7 +3,7 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
-import org.ambraproject.rhino.content.view.ArticleJsonConstants;
+import org.ambraproject.rhino.view.article.ArticleJsonConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;

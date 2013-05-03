@@ -26,13 +26,6 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.rhino.content.view.ArticleInputView;
-import org.ambraproject.rhino.content.view.ArticleOutputView;
-import org.ambraproject.rhino.content.view.ArticleStateView;
-import org.ambraproject.rhino.content.view.ArticleViewList;
-import org.ambraproject.rhino.content.view.AssetCollectionView;
-import org.ambraproject.rhino.content.view.AssetFileCollectionView;
-import org.ambraproject.rhino.content.view.DoiList;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -49,6 +42,14 @@ import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
+import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleInputView;
+import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.ArticleStateView;
+import org.ambraproject.rhino.view.article.ArticleViewList;
+import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.rhino.view.asset.AssetCollectionView;
+import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
 import org.apache.commons.httpclient.HttpClient;
@@ -112,23 +113,22 @@ public class RhinoConfiguration extends BaseConfiguration {
     GsonBuilder builder = new GsonBuilder();
     builder.setPrettyPrinting();
 
-    builder.registerTypeAdapter(ArticleOutputView.class, ArticleOutputView.SERIALIZER);
-    builder.registerTypeAdapter(ArticleStateView.class, ArticleStateView.SERIALIZER);
-    builder.registerTypeAdapter(ArticleViewList.class, ArticleViewList.SERIALIZER);
-    builder.registerTypeAdapter(AssetCollectionView.class, AssetCollectionView.SERIALIZER);
-    builder.registerTypeAdapter(AssetFileCollectionView.class, AssetFileCollectionView.SERIALIZER);
+    ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
+        ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, AssetCollectionView.class,
+        AssetFileCollectionView.class);
+    for (Class<? extends JsonOutputView> viewClass : outputViews) {
+      builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
+    }
+
     builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
 
-    final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{
-        "ID", // Internal to the database
-    });
     builder.setExclusionStrategies(
         new ExclusionStrategy() {
           @Override
           public boolean shouldSkipField(FieldAttributes f) {
             final String name = f.getName();
-            if (namesToExclude.contains(name)) {
+            if ("ID".equals(name) /* internal to the database */) {
               return true;
             }
 
