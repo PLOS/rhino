@@ -98,8 +98,9 @@ FETCH_URL_TMPL = '{server}/api/assetfiles/{doi}.{ext}'
     Fetch the information necessary to build a manifest from 
     Rhino.
 """
-def fetchManifestInfo(name, base_url, prefix='10.1371'):
-	doi = DOI_TMPL.format(prefix=prefix, name=name)
+def fetchManifestInfo(name, options):
+        (base_url, prefix) = (options.rhinoServer, options.prefix)
+        doi = DOI_TMPL.format(prefix=prefix, name=name)
 	uri = URI_TMPL.format(prefix=prefix, name=name)
 	url = base_url + '/api/articles/{doi}'.format(doi=doi)
 	response = requests.get(url, verify=False)	
@@ -107,9 +108,12 @@ def fetchManifestInfo(name, base_url, prefix='10.1371'):
 	"""Load JSON into a Python object and use some values from it."""
 	article = json.loads(response.content)
 	assets = {}
+        strkImageURI = ''
+        if 'strkImageURI' in article:
+                strkImageURI = article['strkImgURI'] 
 	for asset in article['assets']:
-		ext = asset['extension']
-		asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
+                ext = asset['extension']
+                asset_name = string.joinfields(asset['doi'].split(".")[2:], '.')
 		""" Technically the pdf and xml article file is not an object """
 		if asset_name == name:
 			continue
@@ -122,7 +126,7 @@ def fetchManifestInfo(name, base_url, prefix='10.1371'):
 	         'prefix' : prefix,
 	         'xml_file' : '{name}.{ext}'.format(name=name, ext='xml'),
 	         'pdf_file' : '{name}.{ext}'.format(name=name, ext='pdf'),
-	         'strkImageURI' : article['strkImgURI'],
+	         'strkImageURI' : strkImageURI,
 	         'assets' : assets
 	        }
 	
@@ -247,14 +251,21 @@ def build_manifest_xml(md):
 	return (MANIFEST_TMPL.format(article=articleTag, objects=objectTags), nueTuples)				
 	
 def main(options, args):
-	
+        failedArticles = []
 	for name in args:
-                print('Fetch manifest')
-		manifest_dict = fetchManifestInfo( name, options.rhinoServer, options.prefix )
-                print('Build manifest')
-		(manifest, assetTupleList) = build_manifest_xml(manifest_dict)
-                print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
-		make_zip(options.rhinoServer, name, manifest, manifest_dict, assetTupleList)
+               try:
+                       print('Fetch manifest')
+                       manifest_dict = fetchManifestInfo(name=name, options=options)
+                       print('Build manifest')
+		       (manifest, assetTupleList) = build_manifest_xml(manifest_dict)
+                       print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
+		       make_zip(options.rhinoServer, name, manifest, manifest_dict, assetTupleList)
+               except (ValueError, KeyError) as e:
+                       failedArticles.append(name)
+                       sys.stderr.write('Error with  {0}: {1}'.format(name, e))
+        if len(failedArticles) > 0:
+               print('Articles that failed to repackage.')
+               print(failedArticles) 
 
 if __name__ == "__main__":
 
