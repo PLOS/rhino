@@ -123,15 +123,12 @@ public class RhinoConfiguration extends BaseConfiguration {
     builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
 
-    final ImmutableSet<String> namesToExclude = ImmutableSet.copyOf(new String[]{
-        "ID", // Internal to the database
-    });
     builder.setExclusionStrategies(
         new ExclusionStrategy() {
           @Override
           public boolean shouldSkipField(FieldAttributes f) {
             final String name = f.getName();
-            if (namesToExclude.contains(name)) {
+            if ("ID".equals(name) /* internal to the database */) {
               return true;
             }
 
