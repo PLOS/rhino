@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -16,12 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.SYNDICATION_STATUSES;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateConstant;
-
 /**
  * A view of an update to an article's state as submitted by a REST client.
  */
@@ -33,7 +27,7 @@ public class ArticleInputView {
 
     private SyndicationUpdate(String target, String status) {
       Preconditions.checkArgument(StringUtils.isNotBlank(target));
-      Preconditions.checkArgument(SYNDICATION_STATUSES.contains(status));
+      Preconditions.checkArgument(ArticleJsonConstants.SYNDICATION_STATUSES.contains(status));
       this.target = target;
       this.status = status;
     }
@@ -70,7 +64,7 @@ public class ArticleInputView {
   private final ImmutableMap<String, SyndicationUpdate> syndicationUpdates;
 
   private ArticleInputView(Integer publicationState, Map<String, SyndicationUpdate> syndicationUpdates) {
-    Preconditions.checkArgument(publicationState == null || PUBLICATION_STATE_CONSTANTS.contains(publicationState));
+    Preconditions.checkArgument(publicationState == null || ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS.contains(publicationState));
     this.publicationState = Optional.fromNullable(publicationState);
     this.syndicationUpdates = (syndicationUpdates == null)
         ? ImmutableMap.<String, SyndicationUpdate>of()
@@ -113,7 +107,7 @@ public class ArticleInputView {
     }
 
     private Map<String, SyndicationUpdate> getSyndicationUpdates(JsonObject jsonObject) {
-      JsonElement syndicationsObject = jsonObject.get(MemberNames.SYNDICATIONS);
+      JsonElement syndicationsObject = jsonObject.get(ArticleJsonConstants.MemberNames.SYNDICATIONS);
       if (syndicationsObject == null) {
         return null;
       }
@@ -121,9 +115,9 @@ public class ArticleInputView {
       Map<String, SyndicationUpdate> syndicationUpdateMap = Maps.newLinkedHashMap();
       for (Map.Entry<String, JsonElement> entry : syndicationsObject.getAsJsonObject().entrySet()) {
         String target = entry.getKey();
-        String status = entry.getValue().getAsJsonObject().get(MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
+        String status = entry.getValue().getAsJsonObject().get(ArticleJsonConstants.MemberNames.SYNDICATION_STATUS).getAsJsonPrimitive().getAsString();
         status = status.toUpperCase();
-        if (!SYNDICATION_STATUSES.contains(status)) {
+        if (!ArticleJsonConstants.SYNDICATION_STATUSES.contains(status)) {
           throw new JsonParseException("Not a valid syndication status: " + status);
         }
 
@@ -139,17 +133,17 @@ public class ArticleInputView {
     }
 
     private Integer getPublicationState(JsonObject jsonObject) {
-      JsonElement stateValue = jsonObject.get(MemberNames.STATE);
+      JsonElement stateValue = jsonObject.get(ArticleJsonConstants.MemberNames.STATE);
       if (stateValue == null) {
         return null;
       }
 
       String pubStateName = stateValue.getAsJsonPrimitive().getAsString();
       pubStateName = pubStateName.toLowerCase();
-      Integer pubStateConstant = getPublicationStateConstant(pubStateName);
+      Integer pubStateConstant = ArticleJsonConstants.getPublicationStateConstant(pubStateName);
       if (pubStateConstant == null) {
         String message = String.format("Unrecognized publication state: \"%s\". Expected one of: %s",
-            pubStateName, PUBLICATION_STATE_NAMES);
+            pubStateName, ArticleJsonConstants.PUBLICATION_STATE_NAMES);
         throw new JsonParseException(message);
       }
       return pubStateConstant;

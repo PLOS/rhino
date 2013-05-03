@@ -30,7 +30,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.view.AssetFileCollectionView;
+import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;

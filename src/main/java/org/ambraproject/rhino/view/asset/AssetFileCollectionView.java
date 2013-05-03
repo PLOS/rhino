@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.asset;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.view.JsonOutputView;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;

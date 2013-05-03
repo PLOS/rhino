@@ -1,6 +1,7 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.article;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;
 

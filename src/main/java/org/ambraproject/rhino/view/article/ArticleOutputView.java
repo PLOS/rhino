@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
@@ -14,6 +14,8 @@ import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
+import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.asset.AssetCollectionView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
@@ -23,9 +25,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateName;
+import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
+import static org.ambraproject.rhino.view.article.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as

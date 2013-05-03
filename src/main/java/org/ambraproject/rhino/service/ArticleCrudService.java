@@ -25,7 +25,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.view.ArticleCriteria;
+import org.ambraproject.rhino.view.article.ArticleCriteria;
 
 import java.io.IOException;
 import java.io.InputStream;

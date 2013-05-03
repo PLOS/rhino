@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.article;
 
 /**
  * A serializable view object representing an article or some subset of an article's data.

@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
@@ -6,11 +6,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.view.JsonOutputView;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 
-import static org.ambraproject.rhino.view.ArticleJsonConstants.MemberNames;
+import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
 
 /**
  * A view of an article containing only its stateful attributes that can be modified by the client directly. This is the

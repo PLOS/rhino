@@ -27,7 +27,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
-import org.ambraproject.rhino.view.ArticleInputView;
+import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.configuration.Configuration;

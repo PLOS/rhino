@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.article;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -27,12 +27,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.PUBLICATION_STATE_NAMES;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.SYNDICATION_STATUSES;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateConstant;
-import static org.ambraproject.rhino.view.ArticleJsonConstants.getPublicationStateName;
 
 /**
  * Criteria from an API client describing a subset of articles.
@@ -64,9 +58,9 @@ public class ArticleCriteria {
     } else {
       ImmutableSet.Builder<Integer> builder = ImmutableSet.builder();
       for (String clientPubState : clientPubStates) {
-        Integer pubStateConstant = getPublicationStateConstant(clientPubState);
+        Integer pubStateConstant = ArticleJsonConstants.getPublicationStateConstant(clientPubState);
         if (pubStateConstant == null) {
-          throw unrecognizedInputs("publication state", clientPubStates, PUBLICATION_STATE_NAMES);
+          throw unrecognizedInputs("publication state", clientPubStates, ArticleJsonConstants.PUBLICATION_STATE_NAMES);
         }
         builder.add(pubStateConstant);
       }
@@ -80,8 +74,8 @@ public class ArticleCriteria {
       ImmutableSet.Builder<String> builder = ImmutableSet.builder();
       for (String clientSyndStatus : clientSyndStatuses) {
         clientSyndStatus = clientSyndStatus.toUpperCase();
-        if (!SYNDICATION_STATUSES.contains(clientSyndStatus)) {
-          throw unrecognizedInputs("syndication status", clientSyndStatuses, SYNDICATION_STATUSES);
+        if (!ArticleJsonConstants.SYNDICATION_STATUSES.contains(clientSyndStatus)) {
+          throw unrecognizedInputs("syndication status", clientSyndStatuses, ArticleJsonConstants.SYNDICATION_STATUSES);
         }
         builder.add(clientSyndStatus);
       }
@@ -142,7 +136,7 @@ public class ArticleCriteria {
     public ArticleView apply(Object[] input) {
       String doi = (String) input[0];
       Integer pubStateConstant = (Integer) input[1];
-      String pubStateName = getPublicationStateName(pubStateConstant);
+      String pubStateName = ArticleJsonConstants.getPublicationStateName(pubStateConstant);
       return new ArticleStateView(doi, pubStateName, null);
     }
   };
@@ -160,7 +154,7 @@ public class ArticleCriteria {
       public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery(SYND_QUERY);
         query.setParameterList("syndStatuses", syndicationStatuses.get());
-        query.setParameterList("pubStates", publicationStates.or(PUBLICATION_STATE_CONSTANTS));
+        query.setParameterList("pubStates", publicationStates.or(ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS));
         return query.list();
       }
     });
@@ -170,7 +164,7 @@ public class ArticleCriteria {
     for (Object[] result : results) {
       String doi = (String) result[0];
       Integer pubStateConstant = (Integer) result[1];
-      String pubStateName = getPublicationStateName(pubStateConstant);
+      String pubStateName = ArticleJsonConstants.getPublicationStateName(pubStateConstant);
       Syndication syndication = (Syndication) result[2];
 
       if (builder == null || !doi.equals(builder.doi)) {
