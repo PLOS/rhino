@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class JournalReadController extends RestController {
+public class JournalCrudController extends RestController {
 
   private static final String JOURNAL_ROOT = "/journals";
 
