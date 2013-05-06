@@ -36,23 +36,35 @@ import zipfile
 # ***** Manifest DTD template *****
 DTD_TEXT = """
 <!ELEMENT manifest (articleBundle) >
+
 <!ELEMENT articleBundle (article, object*) >
+
+<!-- the article. 'main-entry' specifies the zip entry that contains the nlm
+   - article xml; this must match one of the contained representations
+   -->
 <!ELEMENT article (representation+) >
 <!ATTLIST article
     uri         CDATA          #REQUIRED
     main-entry  CDATA          #REQUIRED >
+
+<!-- all included secondary objects (images, movies, data, etc) -->
 <!ELEMENT object (representation+) >
 <!ATTLIST object
-    uri         CDATA          #REQUIRED >
+    uri         CDATA          #REQUIRED
+    strkImage   CDATA          #IMPLIED          >
+
+<!-- a specific representation.
+   - 'name' is the name (label) to store this representation under;
+   - 'entry' specifies the entry in the zip that contains this representation
+   -->
 <!ELEMENT representation EMPTY >
 <!ATTLIST representation
     name        CDATA          #REQUIRED
     entry       CDATA          #REQUIRED >
-"""
+""".lstrip()
 
 # ***** Skeletal Manifest Template *****
-MANIFEST_TMPL = """
-<?xml version="1.1"?>
+MANIFEST_TMPL = """<?xml version="1.1"  encoding="UTF-8"?>
 <!DOCTYPE manifest SYSTEM "manifest.dtd">
 <manifest>
   <articleBundle>
@@ -60,14 +72,12 @@ MANIFEST_TMPL = """
     {objects}
   </articleBundle>
 </manifest>
-"""
+""".lstrip()
 
 # ***** Manifest Object Entries *****
-OBJECT_TMPL = """
-     <object uri="{uri}" {strkimage}>
+OBJECT_TMPL = """    <object uri="{uri}" {strkimage}>
         {reps}
-     </object>
-"""
+     </object>"""
 
 # ***** Object Representation Template *****
 REPRESENTATION_TMPL = """<representation name="{name}" entry="{entry}" />"""
@@ -76,8 +86,7 @@ REPRESENTATION_TMPL = """<representation name="{name}" entry="{entry}" />"""
 ARTICLE_TMPL = """
      <article uri="{uri}" main-entry="{fname}">
         {reps}
-     </article>
-"""
+     </article>"""
 
 # ***** URI Template *****
 URI_TMPL = """info:doi/{name}"""
@@ -85,18 +94,21 @@ URI_TMPL = """info:doi/{name}"""
 # ***** DOI Template *****
 DOI_TMPL = """{prefix}/journal.{name}"""
 
-FETCH_URL_TMPL = '{server}/assetfiles/{afid}'
+FETCH_ARTICLE_INFO_TMPL = '{server}/articles/{doi}'
+FETCH_FILE_RHINO_TMPL = '{server}/assetfiles/{afid}'
+FETCH_FILE_AMBRA_TMPL = '{server}/article/fetchObject.action?uri=info:doi/{doi}&representation={ext}'
 
 DOI_PATTERN = re.compile(r'(\d+\.\d+/)?(journal\.)?(.*)\.([^.]*)')
 
 # *****************************************************
-def fetchManifestInfo(name, base_url, prefix='10.1371'):
+def fetchManifestInfo(name, options):
     """
     Fetch the information necessary to build a manifest from Rhino.
     """
+    (base_url, prefix) = (options.rhinoServer, options.prefix)
     doi = DOI_TMPL.format(prefix=prefix, name=name)
     uri = URI_TMPL.format(prefix=prefix, name=name)
-    url = base_url + '/articles/{doi}'.format(doi=doi)
+    url = FETCH_ARTICLE_INFO_TMPL.format(server=base_url, doi=doi)
     response = requests.get(url, verify=False)
 
     # Load JSON into a Python object and use some values from it.
@@ -121,7 +133,7 @@ def fetchManifestInfo(name, base_url, prefix='10.1371'):
              'pdf_file' : '{name}.{ext}'.format(name=name, ext='pdf'),
              'xml_asset' : xml_asset,
              'pdf_asset' : pdf_asset,
-             'strkImageURI' : article.get('strkImgURI'),
+             'strkImageURI' : article.get('strkImgURI', ''),
              'assets' : assets
             }
 
@@ -181,7 +193,7 @@ def make_zip(rhinoServer, name, manifest, md):
     the zip.
     """
 
-    xml_asset_url = FETCH_URL_TMPL.format(server=rhinoServer, afid=md['xml_asset'])
+    xml_asset_url = FETCH_FILE_RHINO_TMPL.format(server=rhinoServer, afid=md['xml_asset'])
     fetch = requests.get(xml_asset_url, verify=False)
     if fetch.status_code != 200:
         raise Exception("Could not retrieve XML")
@@ -191,7 +203,7 @@ def make_zip(rhinoServer, name, manifest, md):
         zf.writestr(md['xml_file'], fetch.content, compress_type=zipfile.ZIP_DEFLATED)
         zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
 
-        url = FETCH_URL_TMPL.format(server=rhinoServer, afid=md['pdf_asset'])
+        url = FETCH_FILE_RHINO_TMPL.format(server=rhinoServer, afid=md['pdf_asset'])
         fetchBinary(md['pdf_file'], url)
         zf.write(md['pdf_file'], md['pdf_file'] , compress_type=zipfile.ZIP_DEFLATED)
         os.remove(md['pdf_file'])
@@ -199,7 +211,7 @@ def make_zip(rhinoServer, name, manifest, md):
         asset_file_ids = itertools.chain(*md['assets'].values())
         for asset_file_id in asset_file_ids:
             assetName, ext = infer_filename(asset_file_id)
-            url = FETCH_URL_TMPL.format(server=rhinoServer, afid=asset_file_id)
+            url = FETCH_FILE_RHINO_TMPL.format(server=rhinoServer, afid=asset_file_id)
             name = '{name}.{ext}'.format(name=assetName, ext=ext.lower())
             fetchBinary(name, url)
             zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
@@ -236,9 +248,7 @@ def buildObjectTags(md):
     strkImage = md.get('strkImageURI')
     for (asset_id, asset_file_ids) in md['assets'].items():
         asset_uri =  URI_TMPL.format(prefix=md['prefix'], name=asset_id)
-        strkValue = ''
-        if strkImage == asset_uri:
-            strkValue = 'strkImage="True"'
+        strkValue = 'strkImage="True"' if strkImage == asset_uri else ''
         reps = buildReps(asset_id, asset_file_ids)
         objects.append(OBJECT_TMPL.format(uri=asset_uri, strkimage=strkValue,reps=reps))
     return '\n'.join(objects)
@@ -261,14 +271,21 @@ def build_manifest_xml(md):
     return MANIFEST_TMPL.format(article=articleTag, objects=objectTags)
 
 def main(options, args):
-
+    failedArticles = []
     for name in args:
-        print('Fetch manifest')
-        manifest_dict = fetchManifestInfo( name, options.rhinoServer, options.prefix )
-        print('Build manifest')
-        manifest = build_manifest_xml(manifest_dict)
-        print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
-        make_zip(options.rhinoServer, name, manifest, manifest_dict)
+        try:
+            print('Fetch manifest')
+            manifest_dict = fetchManifestInfo(name=name, options=options)
+            print('Build manifest')
+            manifest = build_manifest_xml(manifest_dict)
+            print('Zip it up {s}  {n}'.format(s=options.rhinoServer, n=name))
+            make_zip(options.rhinoServer, name, manifest, manifest_dict)
+        except (ValueError, KeyError) as e:
+            failedArticles.append(name)
+            sys.stderr.write('Error with  {0}: {1}'.format(name, e))
+    if len(failedArticles) > 0:
+        print('Articles that failed to repackage.')
+        print(failedArticles)
 
 if __name__ == "__main__":
 
