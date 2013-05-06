@@ -18,10 +18,13 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Optional;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 
 public interface IssueCrudService {
 
-  public abstract void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri);
+  public abstract void create(DoiBasedIdentity volumeId, DoiBasedIdentity issueId,
+                              Optional<String> displayName, Optional<ArticleIdentity> imageArticleId);
 
 }

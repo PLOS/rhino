@@ -18,13 +18,17 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Optional;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +51,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
   private static final String ID_PARAM = "id";
   private static final String DISPLAY_PARAM = "display";
   private static final String JOURNAL_PARAM = "journal";
+  private static final String IMAGE_PARAM = "image";
 
   @Override
   protected String getNamespacePrefix() {
@@ -55,22 +60,23 @@ public class VolumeCrudController extends DoiBasedCrudController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
+  @Autowired
+  private IssueCrudService issueCrudService;
 
 
-  private static void validateNonEmpty(String name, String value) {
-    if (value.isEmpty()) {
+  private static String validateNonEmpty(String name, String value) {
+    if (StringUtils.isBlank(value)) {
       String message = "Non-blank value required for parameter: " + name;
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
+    return value;
   }
 
   @RequestMapping(value = VOLUME_ROOT, method = RequestMethod.POST)
   public ResponseEntity<?> create(@RequestParam(ID_PARAM) String volumeId,
                                   @RequestParam(DISPLAY_PARAM) String displayName,
                                   @RequestParam(JOURNAL_PARAM) String journalKey) {
-    volumeId = volumeId.trim();
-    validateNonEmpty(ID_PARAM, volumeId);
-    DoiBasedIdentity id = DoiBasedIdentity.create(volumeId);
+    DoiBasedIdentity id = DoiBasedIdentity.create(validateNonEmpty(ID_PARAM, volumeId));
     volumeCrudService.create(id, displayName, journalKey);
     return reportCreated();
   }
@@ -83,6 +89,21 @@ public class VolumeCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     volumeCrudService.read(receiver, id, mf);
+  }
+
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
+  public ResponseEntity<?> createIssue(HttpServletRequest request,
+                                       @RequestParam(value = ID_PARAM) String issue,
+                                       @RequestParam(value = DISPLAY_PARAM, required = false) String displayName,
+                                       @RequestParam(value = IMAGE_PARAM, required = false) String imageArticle) {
+    DoiBasedIdentity volumeId = parse(request);
+    DoiBasedIdentity issueId = DoiBasedIdentity.create(validateNonEmpty(ID_PARAM, issue));
+
+    Optional<ArticleIdentity> imageArticleId = (imageArticle == null) ? Optional.<ArticleIdentity>absent()
+        : Optional.of(ArticleIdentity.create(validateNonEmpty(IMAGE_PARAM, imageArticle)));
+
+    issueCrudService.create(volumeId, issueId, Optional.fromNullable(displayName), imageArticleId);
+    return reportCreated();
   }
 
 }

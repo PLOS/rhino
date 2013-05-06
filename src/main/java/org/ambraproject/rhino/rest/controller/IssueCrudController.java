@@ -18,17 +18,10 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IssueCrudController extends DoiBasedCrudController {
@@ -48,15 +41,5 @@ public class IssueCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
-
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam(DISPLAY_PARAM) String displayName,
-                                  @RequestParam(VOLUME_PARAM) String volumeUri,
-                                  @RequestParam(IMAGE_PARAM) String imageUri) {
-    DoiBasedIdentity issueId = parse(request);
-    issueCrudService.create(volumeUri, issueId, displayName, imageUri);
-    return reportCreated();
-  }
 
 }

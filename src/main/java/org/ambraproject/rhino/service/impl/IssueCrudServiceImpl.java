@@ -18,8 +18,10 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Optional;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -34,20 +36,21 @@ import java.util.List;
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
   @Override
-  public void create(String volumeUri, DoiBasedIdentity issueId, String issueDisplayName, String issueImageUri) {
+  public void create(DoiBasedIdentity volumeId, DoiBasedIdentity issueId,
+                     Optional<String> displayName, Optional<ArticleIdentity> imageArticleId) {
     Issue issue = new Issue();
-    issue.setIssueUri(issueId.getKey());
-    issue.setDisplayName(issueDisplayName);
-    issue.setImageUri(issueImageUri);
+    issue.setIssueUri(issueId.getIdentifier()); // not getKey
+    issue.setDisplayName(displayName.or(""));
+    issue.setImageUri(imageArticleId.isPresent() ? imageArticleId.get().getKey() : "");
 
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", volumeUri))
+            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
             .setFetchMode("issues", FetchMode.JOIN)
         ));
     if (volume == null) {
-      throw new RestClientException("Volume not found for volumeUri: " + volumeUri, HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Volume not found for volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);
     }
     List<Issue> volumeIssues = volume.getIssues();
     volumeIssues.add(issue);
