@@ -282,7 +282,7 @@ def main(options, args):
             make_zip(options.rhinoServer, name, manifest, manifest_dict)
         except (ValueError, KeyError) as e:
             failedArticles.append(name)
-            sys.stderr.write('Error with  {0}: {1}'.format(name, e))
+            print('Error with {0}: {1}'.format(name, e), file=sys.stderr)
     if len(failedArticles) > 0:
         print('Articles that failed to repackage.')
         print(failedArticles)
