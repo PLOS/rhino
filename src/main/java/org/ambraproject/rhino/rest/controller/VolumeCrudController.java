@@ -18,12 +18,15 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.io.Closeables;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.apache.commons.io.IOUtils;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,15 +34,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 
 @Controller
 public class VolumeCrudController extends DoiBasedCrudController {
 
-  private static final String VOLUME_NAMESPACE = "/volumes/";
+  private static final String VOLUME_ROOT = "/volumes";
+  private static final String VOLUME_NAMESPACE = VOLUME_ROOT + '/';
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
 
+  private static final String ID_PARAM = "id";
   private static final String DISPLAY_PARAM = "display";
   private static final String JOURNAL_PARAM = "journal";
 
@@ -52,34 +57,32 @@ public class VolumeCrudController extends DoiBasedCrudController {
   private VolumeCrudService volumeCrudService;
 
 
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> create(HttpServletRequest request,
+  private static void validateNonEmpty(String name, String value) {
+    if (value.isEmpty()) {
+      String message = "Non-blank value required for parameter: " + name;
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @RequestMapping(value = VOLUME_ROOT, method = RequestMethod.POST)
+  public ResponseEntity<?> create(@RequestParam(ID_PARAM) String volumeId,
                                   @RequestParam(DISPLAY_PARAM) String displayName,
                                   @RequestParam(JOURNAL_PARAM) String journalKey) {
-    DoiBasedIdentity id = parse(request);
+    volumeId = volumeId.trim();
+    validateNonEmpty(ID_PARAM, volumeId);
+    DoiBasedIdentity id = DoiBasedIdentity.create(volumeId);
     volumeCrudService.create(id, displayName, journalKey);
     return reportCreated();
   }
 
-  /*
-   * Always assume the user wants the metadata as JSON.
-   *
-   * TODO: Add way to specify metadata format to API and make this consistent with it.
-   */
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
     DoiBasedIdentity id = parse(request);
-    InputStream stream = null;
-    byte[] data;
-    boolean threw = true;
-    try {
-      stream = volumeCrudService.readJson(id);
-      data = IOUtils.toByteArray(stream);
-      threw = false;
-    } finally {
-      Closeables.close(stream, threw);
-    }
-    return respondWithPlainText(new String(data));
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    volumeCrudService.read(receiver, id, mf);
   }
 
 }

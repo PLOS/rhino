@@ -22,22 +22,26 @@ import com.google.common.base.Preconditions;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
 
   @Override
   public void create(DoiBasedIdentity id, String displayName, String journalKey) {
+    Preconditions.checkNotNull(id);
+    Preconditions.checkNotNull(displayName);
+
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -53,7 +57,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
     Volume volume = new Volume();
     volume.setVolumeUri(id.getKey());
-    volume.setDisplayName(Preconditions.checkNotNull(displayName));
+    volume.setDisplayName(displayName);
 
     List<Volume> volumeList = journal.getVolumes();
     volumeList.add(volume);
@@ -61,7 +65,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   @Override
-  public InputStream readJson(DoiBasedIdentity id) {
+  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
+    assert mf == MetadataFormat.JSON;
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Volume.class)
@@ -71,8 +76,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     if (volume == null) {
       throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    String volString = entityGson.toJson(volume);
-    return new ByteArrayInputStream(volString.getBytes());
+    writeJson(receiver, volume);
   }
 
 }
