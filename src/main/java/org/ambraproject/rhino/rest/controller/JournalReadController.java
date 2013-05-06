@@ -7,6 +7,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,17 @@ public class JournalReadController extends RestController {
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    journalReadService.read(receiver, mf);
+    journalReadService.listKeys(receiver, mf);
+  }
+
+  @RequestMapping(value = JOURNAL_ROOT + "/{journalKey}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable String journalKey,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    journalReadService.read(receiver, journalKey, mf);
   }
 
 }

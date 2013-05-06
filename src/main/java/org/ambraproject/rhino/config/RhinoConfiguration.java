@@ -52,6 +52,7 @@ import org.ambraproject.rhino.view.article.ArticleViewList;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.asset.AssetCollectionView;
 import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
+import org.ambraproject.rhino.view.journal.JournalKeyView;
 import org.ambraproject.rhino.view.journal.JournalListView;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
@@ -118,7 +119,7 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
         ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, AssetCollectionView.class,
-        AssetFileCollectionView.class, JournalListView.class);
+        AssetFileCollectionView.class, JournalListView.class, JournalKeyView.class);
     for (Class<? extends JsonOutputView> viewClass : outputViews) {
       builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
     }
