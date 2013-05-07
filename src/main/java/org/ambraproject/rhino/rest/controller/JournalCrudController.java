@@ -68,7 +68,7 @@ public class JournalCrudController extends RestController {
     }
     DoiBasedIdentity volumeId = DoiBasedIdentity.create(volumeUri);
 
-    volumeCrudService.create(volumeId, displayName, journalKey);
+    volumeCrudService.create(volumeId, journalKey, displayName);
 
     return reportCreated(volumeId.getIdentifier());
   }

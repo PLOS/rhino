@@ -38,7 +38,7 @@ import java.util.List;
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
 
   @Override
-  public void create(DoiBasedIdentity id, String displayName, String journalKey) {
+  public void create(DoiBasedIdentity id, String journalKey, String displayName) {
     Preconditions.checkNotNull(id);
     Preconditions.checkNotNull(displayName);
 

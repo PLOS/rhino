@@ -79,7 +79,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
                                   @RequestParam(DISPLAY_PARAM) String displayName,
                                   @RequestParam(JOURNAL_PARAM) String journalKey) {
     DoiBasedIdentity id = DoiBasedIdentity.create(validateNonEmpty(ID_PARAM, volumeId));
-    volumeCrudService.create(id, displayName, journalKey);
+    volumeCrudService.create(id, journalKey, displayName);
     return reportCreated();
   }
 

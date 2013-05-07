@@ -56,7 +56,7 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
     String displayName = "volumeDisplay";
 
     Journal testJournal = getTestJournal();
-    volumeCrudService.create(volumeId, displayName, testJournal.getJournalKey());
+    volumeCrudService.create(volumeId, testJournal.getJournalKey(), displayName);
 
     testJournal = getTestJournal();
     List<Volume> testJournalVolumes = testJournal.getVolumes();

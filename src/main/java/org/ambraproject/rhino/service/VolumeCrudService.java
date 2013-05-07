@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public interface VolumeCrudService {
 
-  public abstract void create(DoiBasedIdentity id, String displayName, String journalKey);
+  public abstract void create(DoiBasedIdentity id, String journalKey, String displayName);
 
   public abstract void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException;
 
