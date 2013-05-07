@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -160,6 +159,18 @@ public abstract class RestController {
   }
 
   /**
+   * Report that a RESTful operation to create an entity succeeded. The returned object (if returned from a {@link
+   * RequestMapping}) will cause the REST response to indicate a "Created" HTTP status and provide the identifier of the
+   * created object to the client.
+   *
+   * @param identifier the identifier of the created object
+   * @return a response indicating "Created"
+   */
+  protected ResponseEntity<String> reportCreated(String identifier) {
+    return new ResponseEntity<String>(identifier, HttpStatus.CREATED);
+  }
+
+  /**
    * Report an error condition to the REST client. The brief error message is sent as the response body, with the
    * response code specified when the exception object was created. The stack trace is not included because we generally
    * expect the client to fix the error with a simple change to input.
@@ -204,7 +215,7 @@ public abstract class RestController {
   }
 
   /**
-   * De-serializes a JSON object from an HTTP request.  As a side effect of calling this method, the InputStream
+   * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this method, the InputStream
    * associated with the request will be closed.
    *
    * @param request HttpServletRequest
@@ -214,24 +225,6 @@ public abstract class RestController {
    * @throws IOException
    */
   protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
-    Optional<T> value = readOptionalJsonFromRequest(request, clazz);
-    if (!value.isPresent()) {
-      throw new RestClientException("Request body must contain JSON", HttpStatus.BAD_REQUEST);
-    }
-    return value.get();
-  }
-
-  /**
-   * De-serializes a JSON object from an HTTP request, if JSON is present in the request body.  As a side effect of
-   * calling this method, the InputStream associated with the request will be closed.
-   *
-   * @param request HttpServletRequest
-   * @param clazz   class of the bean we are de-serializing
-   * @param <T>     type of the bean we are de-serializing
-   * @return JSON de-serialized to a bean, or "absent" if the request body was empty
-   * @throws IOException
-   */
-  protected <T> Optional<T> readOptionalJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
     InputStream is = null;
     boolean threw = true;
     T result;
@@ -244,7 +237,11 @@ public abstract class RestController {
     } finally {
       Closeables.close(is, threw);
     }
-    return Optional.fromNullable(result);
+    if (result == null) {
+      throw new RestClientException("Request body must contain JSON", HttpStatus.BAD_REQUEST);
+    }
+
+    return result;
   }
 
   protected static ImmutableListMultimap<String, String> getParameters(ServletRequest request) {

@@ -1,15 +1,19 @@
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,14 +57,20 @@ public class JournalCrudController extends RestController {
   }
 
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.POST)
-  public void createVolume(HttpServletRequest request, HttpServletResponse response,
-                           @PathVariable String journalKey,
-                           @RequestParam(ID_PARAM) String volume)
+  public ResponseEntity<String> createVolume(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
-    DoiBasedIdentity volumeId = DoiBasedIdentity.create(volume);
-    Optional<VolumeInputView> volumeInputView = readOptionalJsonFromRequest(request, VolumeInputView.class);
-    String displayName = volumeInputView.or(new VolumeInputView()).getDisplayName();
+    VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
+    String displayName = Strings.nullToEmpty(input.getDisplayName());
+
+    String volumeUri = input.getVolumeUri();
+    if (StringUtils.isBlank(volumeUri)) {
+      throw new RestClientException("volumeUri required", HttpStatus.BAD_REQUEST);
+    }
+    DoiBasedIdentity volumeId = DoiBasedIdentity.create(volumeUri);
+
     volumeCrudService.create(volumeId, displayName, journalKey);
+
+    return reportCreated(volumeId.getIdentifier());
   }
 
 }
