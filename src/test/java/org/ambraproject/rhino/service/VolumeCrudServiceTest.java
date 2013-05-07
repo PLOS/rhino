@@ -18,9 +18,11 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -56,7 +58,8 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
     String displayName = "volumeDisplay";
 
     Journal testJournal = getTestJournal();
-    volumeCrudService.create(volumeId, testJournal.getJournalKey(), displayName);
+    volumeCrudService.create(volumeId, testJournal.getJournalKey(),
+        Optional.of(displayName), Optional.<ArticleIdentity>absent());
 
     testJournal = getTestJournal();
     List<Volume> testJournalVolumes = testJournal.getVolumes();

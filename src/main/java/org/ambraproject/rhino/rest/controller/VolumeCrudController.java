@@ -74,15 +74,6 @@ public class VolumeCrudController extends DoiBasedCrudController {
     return value;
   }
 
-  @RequestMapping(value = VOLUME_ROOT, method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam(ID_PARAM) String volumeId,
-                                  @RequestParam(DISPLAY_PARAM) String displayName,
-                                  @RequestParam(JOURNAL_PARAM) String journalKey) {
-    DoiBasedIdentity id = DoiBasedIdentity.create(validateNonEmpty(ID_PARAM, volumeId));
-    volumeCrudService.create(id, journalKey, displayName);
-    return reportCreated();
-  }
-
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)

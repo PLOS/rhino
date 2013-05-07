@@ -18,9 +18,11 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -38,7 +40,8 @@ import java.util.List;
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
 
   @Override
-  public void create(DoiBasedIdentity id, String journalKey, String displayName) {
+  public void create(DoiBasedIdentity id, String journalKey,
+                     Optional<String> displayName, Optional<ArticleIdentity> imageArticle) {
     Preconditions.checkNotNull(id);
     Preconditions.checkNotNull(displayName);
 
@@ -57,7 +60,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
     Volume volume = new Volume();
     volume.setVolumeUri(id.getKey());
-    volume.setDisplayName(displayName);
+    volume.setDisplayName(displayName.or(""));
+    volume.setImageUri(imageArticle.isPresent() ? imageArticle.get().getKey() : "");
 
     List<Volume> volumeList = journal.getVolumes();
     volumeList.add(volume);

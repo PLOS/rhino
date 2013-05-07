@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Strings;
+import com.google.common.base.Optional;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -60,7 +61,7 @@ public class JournalCrudController extends RestController {
   public ResponseEntity<String> createVolume(HttpServletRequest request, @PathVariable String journalKey)
       throws IOException {
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
-    String displayName = Strings.nullToEmpty(input.getDisplayName());
+    Optional<String> displayName = Optional.fromNullable(input.getDisplayName());
 
     String volumeUri = input.getVolumeUri();
     if (StringUtils.isBlank(volumeUri)) {
@@ -68,7 +69,11 @@ public class JournalCrudController extends RestController {
     }
     DoiBasedIdentity volumeId = DoiBasedIdentity.create(volumeUri);
 
-    volumeCrudService.create(volumeId, journalKey, displayName);
+    String imageUri = input.getImageUri();
+    Optional<ArticleIdentity> imageArticle = (imageUri == null) ? Optional.<ArticleIdentity>absent()
+        : Optional.of(ArticleIdentity.create(imageUri));
+
+    volumeCrudService.create(volumeId, journalKey, displayName, imageArticle);
 
     return reportCreated(volumeId.getIdentifier());
   }

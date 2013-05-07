@@ -18,6 +18,8 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Optional;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
@@ -26,7 +28,8 @@ import java.io.IOException;
 
 public interface VolumeCrudService {
 
-  public abstract void create(DoiBasedIdentity id, String journalKey, String displayName);
+  public abstract void create(DoiBasedIdentity id, String journalKey,
+                              Optional<String> displayName, Optional<ArticleIdentity> imageArticle);
 
   public abstract void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException;
 
