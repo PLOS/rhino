@@ -18,20 +18,27 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class IssueCrudController extends DoiBasedCrudController {
 
   private static final String ISSUE_NAMESPACE = "/issues/";
   private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
-
-  private static final String DISPLAY_PARAM = "display";
-  private static final String VOLUME_PARAM = "volume";
-  private static final String IMAGE_PARAM = "image";
 
   @Override
   protected String getNamespacePrefix() {
@@ -41,5 +48,15 @@ public class IssueCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
+
+  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    DoiBasedIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    issueCrudService.read(receiver, id, mf);
+  }
 
 }

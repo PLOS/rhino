@@ -23,17 +23,34 @@ import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
+import java.io.IOException;
 import java.util.List;
 
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
+
+  @Override
+  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
+    assert mf == MetadataFormat.JSON;
+    Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Issue.class)
+            .add(Restrictions.eq("issueUri", id.getIdentifier())) // not getKey
+        ));
+    if (issue == null) {
+      throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    writeJson(receiver, issue);
+  }
 
   @Override
   public void create(DoiBasedIdentity volumeId, DoiBasedIdentity issueId,

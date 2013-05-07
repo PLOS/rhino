@@ -21,8 +21,14 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+
+import java.io.IOException;
 
 public interface IssueCrudService {
+
+  public abstract void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException;
 
   public abstract void create(DoiBasedIdentity volumeId, DoiBasedIdentity issueId,
                               Optional<String> displayName, Optional<ArticleIdentity> imageArticleId);
