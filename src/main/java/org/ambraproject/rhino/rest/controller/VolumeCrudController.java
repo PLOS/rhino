@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -28,6 +29,7 @@ import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
+import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,17 +94,22 @@ public class VolumeCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> createIssue(HttpServletRequest request,
-                                       @RequestParam(value = ID_PARAM) String issue,
-                                       @RequestParam(value = DISPLAY_PARAM, required = false) String displayName,
-                                       @RequestParam(value = IMAGE_PARAM, required = false) String imageArticle) {
+  public ResponseEntity<?> createIssue(HttpServletRequest request) throws IOException {
     DoiBasedIdentity volumeId = parse(request);
-    DoiBasedIdentity issueId = DoiBasedIdentity.create(validateNonEmpty(ID_PARAM, issue));
+    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
+    Optional<String> displayName = Optional.fromNullable(input.getDisplayName());
 
-    Optional<ArticleIdentity> imageArticleId = (imageArticle == null) ? Optional.<ArticleIdentity>absent()
-        : Optional.of(ArticleIdentity.create(validateNonEmpty(IMAGE_PARAM, imageArticle)));
+    String issueUri = input.getIssueUri();
+    if (StringUtils.isBlank(issueUri)) {
+      throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
+    }
+    DoiBasedIdentity issueId = DoiBasedIdentity.create(issueUri);
 
-    issueCrudService.create(volumeId, issueId, Optional.fromNullable(displayName), imageArticleId);
+    String imageUri = input.getImageUri();
+    Optional<ArticleIdentity> imageArticleId = Strings.isNullOrEmpty(imageUri) ? Optional.<ArticleIdentity>absent()
+        : Optional.of(ArticleIdentity.create(imageUri));
+
+    issueCrudService.create(volumeId, issueId, displayName, imageArticleId);
     return reportCreated();
   }
 
