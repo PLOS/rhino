@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -203,7 +204,7 @@ public abstract class RestController {
   }
 
   /**
-   * De-serializes a JSON object from an HTTP PUT request.  As a side effect of calling this method, the InputStream
+   * De-serializes a JSON object from an HTTP request.  As a side effect of calling this method, the InputStream
    * associated with the request will be closed.
    *
    * @param request HttpServletRequest
@@ -213,6 +214,24 @@ public abstract class RestController {
    * @throws IOException
    */
   protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
+    Optional<T> value = readOptionalJsonFromRequest(request, clazz);
+    if (!value.isPresent()) {
+      throw new RestClientException("Request body must contain JSON", HttpStatus.BAD_REQUEST);
+    }
+    return value.get();
+  }
+
+  /**
+   * De-serializes a JSON object from an HTTP request, if JSON is present in the request body.  As a side effect of
+   * calling this method, the InputStream associated with the request will be closed.
+   *
+   * @param request HttpServletRequest
+   * @param clazz   class of the bean we are de-serializing
+   * @param <T>     type of the bean we are de-serializing
+   * @return JSON de-serialized to a bean, or "absent" if the request body was empty
+   * @throws IOException
+   */
+  protected <T> Optional<T> readOptionalJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
     InputStream is = null;
     boolean threw = true;
     T result;
@@ -225,11 +244,7 @@ public abstract class RestController {
     } finally {
       Closeables.close(is, threw);
     }
-    if (result == null) {
-      throw new RestClientException("Request body must contain JSON", HttpStatus.BAD_REQUEST);
-    }
-
-    return result;
+    return Optional.fromNullable(result);
   }
 
   protected static ImmutableListMultimap<String, String> getParameters(ServletRequest request) {
