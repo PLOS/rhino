@@ -5,7 +5,9 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.journal.JournalKeyView;
+import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -33,6 +35,17 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
             .setProjection(Projections.property("journalKey"))
     );
     writeJson(receiver, new JournalKeyView(journalKeys));
+  }
+
+  @Override
+  public void listJournals(ResponseReceiver receiver, MetadataFormat format) throws IOException {
+    assert format == MetadataFormat.JSON;
+    List<Journal> journals = hibernateTemplate.findByCriteria(
+        DetachedCriteria.forClass(Journal.class)
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+    );
+    KeyedListView<JournalNonAssocView> view = JournalNonAssocView.wrapList(journals);
+    writeJson(receiver, view);
   }
 
   @Override

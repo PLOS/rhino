@@ -43,7 +43,7 @@ public class JournalCrudController extends RestController {
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    journalReadService.listKeys(receiver, mf);
+    journalReadService.listJournals(receiver, mf);
   }
 
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)

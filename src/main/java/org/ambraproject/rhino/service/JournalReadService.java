@@ -9,6 +9,8 @@ public interface JournalReadService {
 
   public abstract void listKeys(ResponseReceiver receiver, MetadataFormat format) throws IOException;
 
+  public abstract void listJournals(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+
   public abstract void read(ResponseReceiver receiver, String journalKey, MetadataFormat format) throws IOException;
 
 }
