@@ -29,8 +29,6 @@ public class JournalCrudController extends RestController {
   private static final String JOURNAL_ROOT = "/journals";
   private static final String JOURNAL_TEMPLATE = JOURNAL_ROOT + "/{journalKey}";
 
-  private static final String ID_PARAM = "id";
-
   @Autowired
   private JournalReadService journalReadService;
   @Autowired

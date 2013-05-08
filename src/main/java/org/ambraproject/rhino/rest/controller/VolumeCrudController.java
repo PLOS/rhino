@@ -48,11 +48,6 @@ public class VolumeCrudController extends DoiBasedCrudController {
   private static final String VOLUME_NAMESPACE = VOLUME_ROOT + '/';
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
 
-  private static final String ID_PARAM = "id";
-  private static final String DISPLAY_PARAM = "display";
-  private static final String JOURNAL_PARAM = "journal";
-  private static final String IMAGE_PARAM = "image";
-
   @Override
   protected String getNamespacePrefix() {
     return VOLUME_NAMESPACE;
@@ -63,14 +58,6 @@ public class VolumeCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
-
-  private static String validateNonEmpty(String name, String value) {
-    if (StringUtils.isBlank(value)) {
-      String message = "Non-blank value required for parameter: " + name;
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-    return value;
-  }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
