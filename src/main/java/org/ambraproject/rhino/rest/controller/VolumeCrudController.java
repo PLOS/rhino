@@ -18,9 +18,6 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Strings;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -99,23 +96,16 @@ public class VolumeCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
-  public ResponseEntity<?> createIssue(HttpServletRequest request) throws IOException {
+  public ResponseEntity<String> createIssue(HttpServletRequest request) throws IOException {
     DoiBasedIdentity volumeId = parse(request);
-    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
-    Optional<String> displayName = Optional.fromNullable(input.getDisplayName());
 
-    String issueUri = input.getIssueUri();
-    if (StringUtils.isBlank(issueUri)) {
+    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
+    if (StringUtils.isBlank(input.getIssueUri())) {
       throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
     }
-    DoiBasedIdentity issueId = DoiBasedIdentity.create(issueUri);
 
-    String imageUri = input.getImageUri();
-    Optional<ArticleIdentity> imageArticleId = Strings.isNullOrEmpty(imageUri) ? Optional.<ArticleIdentity>absent()
-        : Optional.of(ArticleIdentity.create(imageUri));
-
-    issueCrudService.create(volumeId, issueId, displayName, imageArticleId);
-    return reportCreated();
+    DoiBasedIdentity issueId = issueCrudService.create(volumeId, input);
+    return reportCreated(issueId.getIdentifier());
   }
 
 }

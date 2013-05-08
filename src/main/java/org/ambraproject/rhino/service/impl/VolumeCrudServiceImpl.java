@@ -101,6 +101,9 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
             .add(Restrictions.eq("volumeUri", volumeId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
+    if (volume == null) {
+      throw new RestClientException("Volume not found at URI=" + volumeId.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
     volume = applyInput(volume, input);
     hibernateTemplate.update(volume);
   }

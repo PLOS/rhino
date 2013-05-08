@@ -18,7 +18,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -27,6 +27,8 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -52,13 +54,35 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     writeJson(receiver, issue);
   }
 
+  private static Issue applyInput(Issue issue, IssueInputView input) {
+    String issueUri = input.getIssueUri();
+    if (issueUri != null) {
+      DoiBasedIdentity issueId = DoiBasedIdentity.create(issueUri);
+      issue.setIssueUri(issueId.getIdentifier()); // not getKey
+    }
+
+    String displayName = input.getDisplayName();
+    if (displayName != null) {
+      issue.setDisplayName(displayName);
+    } else if (issue.getDisplayName() == null) {
+      issue.setDisplayName("");
+    }
+
+    String imageUri = input.getImageUri();
+    if (imageUri != null) {
+      ArticleIdentity imageArticleId = ArticleIdentity.create(imageUri);
+      issue.setImageUri(imageArticleId.getKey());
+    } else if (issue.getImageUri() == null) {
+      issue.setImageUri("");
+    }
+
+    return issue;
+  }
+
   @Override
-  public void create(DoiBasedIdentity volumeId, DoiBasedIdentity issueId,
-                     Optional<String> displayName, Optional<ArticleIdentity> imageArticleId) {
-    Issue issue = new Issue();
-    issue.setIssueUri(issueId.getIdentifier()); // not getKey
-    issue.setDisplayName(displayName.or(""));
-    issue.setImageUri(imageArticleId.isPresent() ? imageArticleId.get().getKey() : "");
+  public DoiBasedIdentity create(DoiBasedIdentity volumeId, IssueInputView input) {
+    Preconditions.checkNotNull(volumeId);
+    Preconditions.checkNotNull(input.getIssueUri());
 
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -69,9 +93,29 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     if (volume == null) {
       throw new RestClientException("Volume not found for volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);
     }
+
+    Issue issue = applyInput(new Issue(), input);
     List<Issue> volumeIssues = volume.getIssues();
     volumeIssues.add(issue);
     hibernateTemplate.update(volume);
+
+    return DoiBasedIdentity.create(issue.getIssueUri());
+  }
+
+  @Override
+  public void update(DoiBasedIdentity issueId, IssueInputView input) {
+    Preconditions.checkNotNull(input);
+    Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Issue.class)
+            .add(Restrictions.eq("issueUri", issueId.getIdentifier()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (issue == null) {
+      throw new RestClientException("Issue not found for issueUri: " + issueId.getIdentifier(), HttpStatus.BAD_REQUEST);
+    }
+    issue = applyInput(issue, input);
+    hibernateTemplate.update(issue);
   }
 
 }

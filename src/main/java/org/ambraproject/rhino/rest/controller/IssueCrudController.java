@@ -24,6 +24,7 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
+import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,19 @@ public class IssueCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     issueCrudService.read(receiver, id, mf);
+  }
+
+  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response,
+                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    DoiBasedIdentity issueId = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
+    issueCrudService.update(issueId, input);
+
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    issueCrudService.read(receiver, issueId, mf);
   }
 
 }
