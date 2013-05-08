@@ -2,7 +2,7 @@ package org.ambraproject.rhino.view.journal;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Collections2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -11,7 +11,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * A view of a {@link Journal} object that does not serialize its associative {@code volumes} field. Therefore, it is
@@ -64,8 +63,8 @@ public class JournalNonAssocView implements JsonOutputView {
    * @param journals the journals to wrap
    * @return the view
    */
-  public static KeyedListView<JournalNonAssocView> wrapList(List<Journal> journals) {
-    List<JournalNonAssocView> viewList = Lists.transform(journals, WRAP);
+  public static KeyedListView<JournalNonAssocView> wrapList(Collection<Journal> journals) {
+    Collection<JournalNonAssocView> viewList = Collections2.transform(journals, WRAP);
     return new ListView(viewList);
   }
 

@@ -2,7 +2,7 @@ package org.ambraproject.rhino.view.journal;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Collections2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -12,7 +12,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;
-import java.util.List;
 
 public class VolumeOutputView implements JsonOutputView {
 
@@ -48,8 +47,8 @@ public class VolumeOutputView implements JsonOutputView {
     }
   }
 
-  public static KeyedListView<VolumeOutputView> wrapList(List<Volume> volumes) {
-    List<VolumeOutputView> viewList = Lists.transform(volumes, WRAP);
+  public static KeyedListView<VolumeOutputView> wrapList(Collection<Volume> volumes) {
+    Collection<VolumeOutputView> viewList = Collections2.transform(volumes, WRAP);
     return new ListView(viewList);
   }
 

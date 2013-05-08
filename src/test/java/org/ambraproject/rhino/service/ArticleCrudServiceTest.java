@@ -37,6 +37,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.test.DummyResponseReceiver;
+import org.ambraproject.rhino.test.TestEnvironmentUtil;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.apache.commons.io.IOUtils;
@@ -91,8 +92,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
           .add(Restrictions.eq("eIssn", eissn)));
       if (!existing.isEmpty())
         continue;
-      Journal journal = new Journal();
-      journal.seteIssn(eissn);
+      Journal journal = TestEnvironmentUtil.createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }

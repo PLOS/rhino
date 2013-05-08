@@ -22,6 +22,7 @@ import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
+import org.ambraproject.rhino.test.TestEnvironmentUtil;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -80,8 +81,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
           .add(Restrictions.eq("eIssn", eissn)));
       if (!existing.isEmpty())
         continue;
-      Journal journal = new Journal();
-      journal.seteIssn(eissn);
+      Journal journal = TestEnvironmentUtil.createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }

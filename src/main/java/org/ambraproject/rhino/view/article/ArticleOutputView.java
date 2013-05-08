@@ -10,12 +10,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.AssetCollectionView;
+import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
@@ -24,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
@@ -106,6 +110,10 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     }
     serializePingbackDigest(serialized, context);
     serialized.add("assets", context.serialize(new AssetCollectionView(article.getAssets())));
+
+    Set<Journal> journals = article.getJournals();
+    KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
+    serialized.add("journals", context.serialize(journalsView));
 
     JsonObject baseJson = context.serialize(article).getAsJsonObject();
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);

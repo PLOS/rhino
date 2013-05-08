@@ -35,6 +35,7 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.test.DummyResponseReceiver;
+import org.ambraproject.rhino.test.TestEnvironmentUtil;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -236,9 +237,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("eIssn", eissn))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
     if (journal == null) {
-      journal = new Journal();
-      journal.setTitle("Test Journal " + eissn);
-      journal.seteIssn(eissn);
+      journal = TestEnvironmentUtil.createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }
