@@ -4,12 +4,12 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Collections;
 
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
 
