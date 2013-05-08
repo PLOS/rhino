@@ -1,11 +1,11 @@
 package org.ambraproject.rhino.view;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * An output view of objects, which presents those objects as members of one big JSON object.
@@ -14,10 +14,10 @@ import java.util.Collection;
  */
 public abstract class KeyedListView<T> implements JsonOutputView {
 
-  private final ImmutableList<T> values;
+  private final Collection<T> values; // may contain nulls -- Hibernate quirk?
 
   public KeyedListView(Collection<? extends T> values) {
-    this.values = ImmutableList.copyOf(values);
+    this.values = Collections.unmodifiableCollection(values);
   }
 
   /**
@@ -32,6 +32,7 @@ public abstract class KeyedListView<T> implements JsonOutputView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serializedList = new JsonObject();
     for (T value : values) {
+      if (value == null) continue;
       String key = getKey(value);
       if (serializedList.has(key)) {
         throw new IllegalStateException("Collision on key: " + key);

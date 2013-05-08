@@ -28,6 +28,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -120,7 +121,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     if (volume == null) {
       throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    writeJson(receiver, volume);
+    writeJson(receiver, new VolumeOutputView(volume));
   }
 
 }

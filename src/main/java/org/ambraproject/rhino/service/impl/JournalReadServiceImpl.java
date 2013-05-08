@@ -8,6 +8,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.journal.JournalKeyView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
+import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -62,7 +63,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     if (journal == null) {
       throw new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND);
     }
-    writeJson(receiver, journal);
+    writeJson(receiver, new JournalOutputView(journal));
   }
 
 }
