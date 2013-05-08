@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
@@ -28,6 +27,8 @@ import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -39,11 +40,35 @@ import java.util.List;
 
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
 
+  private static Volume applyInput(Volume volume, VolumeInputView input) {
+    String volumeUri = input.getVolumeUri();
+    if (volumeUri != null) {
+      DoiBasedIdentity volumeId = DoiBasedIdentity.create(volumeUri);
+      volume.setVolumeUri(volumeId.getKey());
+    }
+
+    String displayName = input.getDisplayName();
+    if (displayName != null) {
+      volume.setDisplayName(displayName);
+    } else if (volume.getDisplayName() == null) {
+      volume.setDisplayName("");
+    }
+
+    String imageUri = input.getImageUri();
+    if (imageUri != null) {
+      ArticleIdentity imageArticleId = ArticleIdentity.create(imageUri);
+      volume.setImageUri(imageArticleId.getKey());
+    } else if (volume.getImageUri() == null) {
+      volume.setImageUri("");
+    }
+
+    return volume;
+  }
+
   @Override
-  public void create(DoiBasedIdentity id, String journalKey,
-                     Optional<String> displayName, Optional<ArticleIdentity> imageArticle) {
-    Preconditions.checkNotNull(id);
-    Preconditions.checkNotNull(displayName);
+  public DoiBasedIdentity create(String journalKey, VolumeInputView input) {
+    Preconditions.checkNotNull(journalKey);
+    Preconditions.checkNotNull(input.getVolumeUri());
 
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
@@ -58,14 +83,26 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
       throw new RestClientException(message, status);
     }
 
-    Volume volume = new Volume();
-    volume.setVolumeUri(id.getKey());
-    volume.setDisplayName(displayName.or(""));
-    volume.setImageUri(imageArticle.isPresent() ? imageArticle.get().getKey() : "");
+    Volume volume = applyInput(new Volume(), input);
 
     List<Volume> volumeList = journal.getVolumes();
     volumeList.add(volume);
     hibernateTemplate.update(journal);
+
+    return DoiBasedIdentity.create(volume.getVolumeUri());
+  }
+
+  @Override
+  public void update(DoiBasedIdentity volumeId, VolumeInputView input) {
+    Preconditions.checkNotNull(input);
+    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Volume.class)
+            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    volume = applyInput(volume, input);
+    hibernateTemplate.update(volume);
   }
 
   @Override

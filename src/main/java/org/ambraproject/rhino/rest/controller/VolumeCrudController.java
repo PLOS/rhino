@@ -30,6 +30,7 @@ import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,6 +83,19 @@ public class VolumeCrudController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     volumeCrudService.read(receiver, id, mf);
+  }
+
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response,
+                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    DoiBasedIdentity volumeId = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
+    volumeCrudService.update(volumeId, input);
+
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    volumeCrudService.read(receiver, volumeId, mf);
   }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
