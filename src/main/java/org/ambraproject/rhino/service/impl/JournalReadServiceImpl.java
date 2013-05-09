@@ -12,6 +12,7 @@ import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,18 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   @Autowired
   private HibernateTemplate hibernateTemplate;
 
+  private static DetachedCriteria journalCriteria() {
+    return DetachedCriteria.forClass(Journal.class)
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        .addOrder(Order.asc("journalKey"))
+        ;
+  }
+
   @Override
   public void listKeys(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    List<String> journalKeys = hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Journal.class)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-            .setProjection(Projections.property("journalKey"))
+    List<String> journalKeys = hibernateTemplate.findByCriteria(journalCriteria()
+        .setProjection(Projections.property("journalKey"))
     );
     writeJson(receiver, new JournalKeyView(journalKeys));
   }
@@ -41,10 +47,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   @Override
   public void listJournals(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    List<Journal> journals = hibernateTemplate.findByCriteria(
-        DetachedCriteria.forClass(Journal.class)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-    );
+    List<Journal> journals = hibernateTemplate.findByCriteria(journalCriteria());
     KeyedListView<JournalNonAssocView> view = JournalNonAssocView.wrapList(journals);
     writeJson(receiver, view);
   }
@@ -53,12 +56,10 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   public void read(ResponseReceiver receiver, String journalKey, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
-        hibernateTemplate.findByCriteria(
-            DetachedCriteria.forClass(Journal.class)
-                .add(Restrictions.eq("journalKey", journalKey))
-                .setFetchMode("volumes", FetchMode.JOIN)
-                .setFetchMode("volumes.issues", FetchMode.JOIN)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        hibernateTemplate.findByCriteria(journalCriteria()
+            .add(Restrictions.eq("journalKey", journalKey))
+            .setFetchMode("volumes", FetchMode.JOIN)
+            .setFetchMode("volumes.issues", FetchMode.JOIN)
         ));
     if (journal == null) {
       throw new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND);
