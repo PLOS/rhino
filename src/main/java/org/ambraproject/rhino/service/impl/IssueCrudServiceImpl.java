@@ -46,7 +46,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", id.getIdentifier())) // not getKey
+            .add(Restrictions.eq("issueUri", id.getKey()))
         ));
     if (issue == null) {
       throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
@@ -58,7 +58,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     String issueUri = input.getIssueUri();
     if (issueUri != null) {
       DoiBasedIdentity issueId = DoiBasedIdentity.create(issueUri);
-      issue.setIssueUri(issueId.getIdentifier()); // not getKey
+      issue.setIssueUri(issueId.getKey());
     }
 
     String displayName = input.getDisplayName();
@@ -108,7 +108,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", issueId.getIdentifier()))
+            .add(Restrictions.eq("issueUri", issueId.getKey()))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (issue == null) {
