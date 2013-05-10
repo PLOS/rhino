@@ -36,7 +36,7 @@ public class DoiList {
     public void write(JsonWriter out, DoiList value) throws IOException {
       out.beginObject();
       for (String doi : value.dois) {
-        out.name(DoiBasedIdentity.removeScheme(doi));
+        out.name(DoiBasedIdentity.asIdentifier(doi));
         out.beginObject();
         out.name(ArticleJsonConstants.MemberNames.DOI);
         out.value(doi);

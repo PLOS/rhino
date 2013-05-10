@@ -65,7 +65,7 @@ public class DoiBasedIdentity {
    * @param doi a non-null DOI
    * @return a DOI that does not start with {@code "info:doi/"}
    */
-  public static String removeScheme(String doi) {
+  public static String asIdentifier(String doi) {
     return doi.startsWith(DOI_SCHEME_VALUE) ? doi.substring(DOI_SCHEME_VALUE.length()) : doi;
   }
 

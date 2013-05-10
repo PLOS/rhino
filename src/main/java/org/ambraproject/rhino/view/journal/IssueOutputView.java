@@ -49,7 +49,7 @@ public class IssueOutputView implements JsonOutputView {
 
     @Override
     protected String getKey(IssueOutputView value) {
-      return DoiBasedIdentity.removeScheme(value.issue.getIssueUri());
+      return DoiBasedIdentity.asIdentifier(value.issue.getIssueUri());
     }
   }
 

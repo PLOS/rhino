@@ -61,7 +61,7 @@ public class AssetFileCollectionView implements JsonOutputView {
     JsonObject byAssetFileId = new JsonObject();
     String commonAssetId = null;
     for (ArticleAsset asset : assets) {
-      String assetId = DoiBasedIdentity.removeScheme(asset.getDoi());
+      String assetId = DoiBasedIdentity.asIdentifier(asset.getDoi());
       if (commonAssetId == null) {
         commonAssetId = assetId;
       } else if (!commonAssetId.equals(assetId)) {

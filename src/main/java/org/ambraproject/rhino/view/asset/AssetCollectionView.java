@@ -28,7 +28,7 @@ public class AssetCollectionView implements JsonOutputView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject byAssetId = new JsonObject();
     for (Map.Entry<String, Collection<ArticleAsset>> entry : assets.asMap().entrySet()) {
-      String assetId = DoiBasedIdentity.removeScheme(entry.getKey());
+      String assetId = DoiBasedIdentity.asIdentifier(entry.getKey());
       List<ArticleAsset> assetFiles = (List<ArticleAsset>) entry.getValue(); // cast is safe because it's a ListMultimap
       JsonElement byFileId = AssetFileCollectionView.serializeAssetFiles(assetFiles, context);
       byAssetId.add(assetId, byFileId);

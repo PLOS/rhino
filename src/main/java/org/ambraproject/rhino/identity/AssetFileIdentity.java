@@ -72,7 +72,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
   }
 
   public static AssetFileIdentity create(String identifier, String extension) {
-    return new AssetFileIdentity(removeScheme(identifier), extension);
+    return new AssetFileIdentity(asIdentifier(identifier), extension);
   }
 
   public static AssetFileIdentity from(ArticleAsset asset) {

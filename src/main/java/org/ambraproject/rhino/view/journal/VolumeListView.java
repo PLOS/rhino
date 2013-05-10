@@ -14,7 +14,7 @@ public class VolumeListView extends KeyedListView<Volume> {
 
   @Override
   protected String getKey(Volume value) {
-    return DoiBasedIdentity.removeScheme(value.getVolumeUri());
+    return DoiBasedIdentity.asIdentifier(value.getVolumeUri());
   }
 
 }

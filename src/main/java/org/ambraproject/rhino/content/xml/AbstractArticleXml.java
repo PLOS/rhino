@@ -97,7 +97,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
       log.warn("An asset node ({}) does not have DOI as expected", assetNode.getNodeName());
       return null;
     }
-    return DoiBasedIdentity.removeScheme(doi);
+    return DoiBasedIdentity.asIdentifier(doi);
   }
 
   /**

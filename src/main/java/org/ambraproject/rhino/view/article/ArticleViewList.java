@@ -18,7 +18,7 @@ public class ArticleViewList extends KeyedListView<ArticleView> {
 
   @Override
   protected String getKey(ArticleView value) {
-    return DoiBasedIdentity.removeScheme(value.getDoi());
+    return DoiBasedIdentity.asIdentifier(value.getDoi());
   }
 
 }

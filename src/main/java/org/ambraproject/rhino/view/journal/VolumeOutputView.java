@@ -43,7 +43,7 @@ public class VolumeOutputView implements JsonOutputView {
 
     @Override
     protected String getKey(VolumeOutputView value) {
-      return DoiBasedIdentity.removeScheme(value.volume.getVolumeUri());
+      return DoiBasedIdentity.asIdentifier(value.volume.getVolumeUri());
     }
   }
 

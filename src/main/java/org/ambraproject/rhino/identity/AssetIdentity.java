@@ -31,7 +31,7 @@ public class AssetIdentity extends DoiBasedIdentity {
    * @return an identifier for the asset that ignored its associated file, if any
    */
   public static AssetIdentity from(ArticleAsset asset) {
-    return AssetIdentity.create(removeScheme(asset.getDoi()));
+    return AssetIdentity.create(asIdentifier(asset.getDoi()));
   }
 
 
