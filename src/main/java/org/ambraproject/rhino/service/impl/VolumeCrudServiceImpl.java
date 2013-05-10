@@ -21,23 +21,56 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.ambraproject.rhino.view.journal.VolumeOutputView;
+import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudService {
 
+  private static Volume applyInput(Volume volume, VolumeInputView input) {
+    String volumeUri = input.getVolumeUri();
+    if (volumeUri != null) {
+      DoiBasedIdentity volumeId = DoiBasedIdentity.create(volumeUri);
+      volume.setVolumeUri(volumeId.getKey());
+    }
+
+    String displayName = input.getDisplayName();
+    if (displayName != null) {
+      volume.setDisplayName(displayName);
+    } else if (volume.getDisplayName() == null) {
+      volume.setDisplayName("");
+    }
+
+    String imageUri = input.getImageUri();
+    if (imageUri != null) {
+      ArticleIdentity imageArticleId = ArticleIdentity.create(imageUri);
+      volume.setImageUri(imageArticleId.getKey());
+    } else if (volume.getImageUri() == null) {
+      volume.setImageUri("");
+    }
+
+    return volume;
+  }
+
   @Override
-  public void create(DoiBasedIdentity id, String displayName, String journalKey) {
+  public DoiBasedIdentity create(String journalKey, VolumeInputView input) {
+    Preconditions.checkNotNull(journalKey);
+    Preconditions.checkNotNull(input.getVolumeUri());
+
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -51,17 +84,34 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
       throw new RestClientException(message, status);
     }
 
-    Volume volume = new Volume();
-    volume.setVolumeUri(id.getKey());
-    volume.setDisplayName(Preconditions.checkNotNull(displayName));
+    Volume volume = applyInput(new Volume(), input);
 
     List<Volume> volumeList = journal.getVolumes();
     volumeList.add(volume);
     hibernateTemplate.update(journal);
+
+    return DoiBasedIdentity.create(volume.getVolumeUri());
   }
 
   @Override
-  public InputStream readJson(DoiBasedIdentity id) {
+  public void update(DoiBasedIdentity volumeId, VolumeInputView input) {
+    Preconditions.checkNotNull(input);
+    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Volume.class)
+            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (volume == null) {
+      throw new RestClientException("Volume not found at URI=" + volumeId.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    volume = applyInput(volume, input);
+    hibernateTemplate.update(volume);
+  }
+
+  @Override
+  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
+    assert mf == MetadataFormat.JSON;
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Volume.class)
@@ -71,8 +121,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     if (volume == null) {
       throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    String volString = entityGson.toJson(volume);
-    return new ByteArrayInputStream(volString.getBytes());
+    writeJson(receiver, new VolumeOutputView(volume));
   }
 
 }

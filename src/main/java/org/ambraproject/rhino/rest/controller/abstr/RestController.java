@@ -159,6 +159,18 @@ public abstract class RestController {
   }
 
   /**
+   * Report that a RESTful operation to create an entity succeeded. The returned object (if returned from a {@link
+   * RequestMapping}) will cause the REST response to indicate a "Created" HTTP status and provide the identifier of the
+   * created object to the client.
+   *
+   * @param identifier the identifier of the created object
+   * @return a response indicating "Created"
+   */
+  protected ResponseEntity<String> reportCreated(String identifier) {
+    return new ResponseEntity<String>(identifier, HttpStatus.CREATED);
+  }
+
+  /**
    * Report an error condition to the REST client. The brief error message is sent as the response body, with the
    * response code specified when the exception object was created. The stack trace is not included because we generally
    * expect the client to fix the error with a simple change to input.

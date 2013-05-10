@@ -80,8 +80,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
           .add(Restrictions.eq("eIssn", eissn)));
       if (!existing.isEmpty())
         continue;
-      Journal journal = new Journal();
-      journal.seteIssn(eissn);
+      Journal journal = createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }

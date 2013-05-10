@@ -18,12 +18,19 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.io.Closeables;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.apache.commons.io.IOUtils;
+import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.ServletResponseReceiver;
+import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.ambraproject.rhino.view.journal.VolumeInputView;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,17 +38,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 
 @Controller
 public class VolumeCrudController extends DoiBasedCrudController {
 
-  private static final String VOLUME_NAMESPACE = "/volumes/";
+  private static final String VOLUME_ROOT = "/volumes";
+  private static final String VOLUME_NAMESPACE = VOLUME_ROOT + '/';
   private static final String VOLUME_TEMPLATE = VOLUME_NAMESPACE + "**";
-
-  private static final String DISPLAY_PARAM = "display";
-  private static final String JOURNAL_PARAM = "journal";
 
   @Override
   protected String getNamespacePrefix() {
@@ -50,36 +55,44 @@ public class VolumeCrudController extends DoiBasedCrudController {
 
   @Autowired
   private VolumeCrudService volumeCrudService;
+  @Autowired
+  private IssueCrudService issueCrudService;
 
 
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam(DISPLAY_PARAM) String displayName,
-                                  @RequestParam(JOURNAL_PARAM) String journalKey) {
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
     DoiBasedIdentity id = parse(request);
-    volumeCrudService.create(id, displayName, journalKey);
-    return reportCreated();
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    volumeCrudService.read(receiver, id, mf);
   }
 
-  /*
-   * Always assume the user wants the metadata as JSON.
-   *
-   * TODO: Add way to specify metadata format to API and make this consistent with it.
-   */
-  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
-  public ResponseEntity<?> read(HttpServletRequest request) throws IOException {
-    DoiBasedIdentity id = parse(request);
-    InputStream stream = null;
-    byte[] data;
-    boolean threw = true;
-    try {
-      stream = volumeCrudService.readJson(id);
-      data = IOUtils.toByteArray(stream);
-      threw = false;
-    } finally {
-      Closeables.close(stream, threw);
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response,
+                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    DoiBasedIdentity volumeId = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
+    volumeCrudService.update(volumeId, input);
+
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    volumeCrudService.read(receiver, volumeId, mf);
+  }
+
+  @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
+  public ResponseEntity<String> createIssue(HttpServletRequest request) throws IOException {
+    DoiBasedIdentity volumeId = parse(request);
+
+    IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
+    if (StringUtils.isBlank(input.getIssueUri())) {
+      throw new RestClientException("issueUri required", HttpStatus.BAD_REQUEST);
     }
-    return respondWithPlainText(new String(data));
+
+    DoiBasedIdentity issueId = issueCrudService.create(volumeId, input);
+    return reportCreated(issueId.getIdentifier());
   }
 
 }

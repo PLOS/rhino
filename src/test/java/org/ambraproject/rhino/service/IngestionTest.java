@@ -236,9 +236,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("eIssn", eissn))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
     if (journal == null) {
-      journal = new Journal();
-      journal.setTitle("Test Journal " + eissn);
-      journal.seteIssn(eissn);
+      journal = createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }

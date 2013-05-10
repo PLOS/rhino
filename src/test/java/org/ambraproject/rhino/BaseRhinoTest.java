@@ -18,11 +18,13 @@
 
 package org.ambraproject.rhino;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.config.TestConfiguration;
 import org.apache.commons.io.IOUtils;
@@ -180,6 +182,22 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
       cases.add(new Object[]{prefixed(articleDoi), articleFile, prefixed(assetDoi), assetFile});
     }
     return cases.toArray(new Object[cases.size()][]);
+  }
+
+  /**
+   * Create a dummy journal with required non-null fields filled in.
+   *
+   * @param eissn the dummy journal's eIssn
+   * @return a new dummy journal object
+   */
+  protected static Journal createDummyJournal(String eissn) {
+    Preconditions.checkNotNull(eissn);
+    Journal journal = new Journal();
+    String title = "Test Journal " + eissn;
+    journal.setTitle(title);
+    journal.setJournalKey(title.replaceAll("\\s|-", ""));
+    journal.seteIssn(eissn);
+    return journal;
   }
 
 }
