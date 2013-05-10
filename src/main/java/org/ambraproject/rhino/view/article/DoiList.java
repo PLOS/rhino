@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class DoiList {
     public void write(JsonWriter out, DoiList value) throws IOException {
       out.beginObject();
       for (String doi : value.dois) {
-        out.name(ArticleIdentity.removeScheme(doi));
+        out.name(DoiBasedIdentity.removeScheme(doi));
         out.beginObject();
         out.name(ArticleJsonConstants.MemberNames.DOI);
         out.value(doi);

@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Issue;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.article.DoiList;
@@ -49,7 +49,7 @@ public class IssueOutputView implements JsonOutputView {
 
     @Override
     protected String getKey(IssueOutputView value) {
-      return ArticleIdentity.removeScheme(value.issue.getIssueUri());
+      return DoiBasedIdentity.removeScheme(value.issue.getIssueUri());
     }
   }
 

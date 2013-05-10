@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.util.Collection;
@@ -28,7 +28,7 @@ public class AssetCollectionView implements JsonOutputView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject byAssetId = new JsonObject();
     for (Map.Entry<String, Collection<ArticleAsset>> entry : assets.asMap().entrySet()) {
-      String assetId = ArticleIdentity.removeScheme(entry.getKey());
+      String assetId = DoiBasedIdentity.removeScheme(entry.getKey());
       List<ArticleAsset> assetFiles = (List<ArticleAsset>) entry.getValue(); // cast is safe because it's a ListMultimap
       JsonElement byFileId = AssetFileCollectionView.serializeAssetFiles(assetFiles, context);
       byAssetId.add(assetId, byFileId);

@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Volume;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 
@@ -43,7 +43,7 @@ public class VolumeOutputView implements JsonOutputView {
 
     @Override
     protected String getKey(VolumeOutputView value) {
-      return ArticleIdentity.removeScheme(value.volume.getVolumeUri());
+      return DoiBasedIdentity.removeScheme(value.volume.getVolumeUri());
     }
   }
 

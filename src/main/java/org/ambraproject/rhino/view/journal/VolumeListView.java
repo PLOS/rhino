@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.view.journal;
 
 import org.ambraproject.models.Volume;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;
@@ -14,7 +14,7 @@ public class VolumeListView extends KeyedListView<Volume> {
 
   @Override
   protected String getKey(Volume value) {
-    return ArticleIdentity.removeScheme(value.getVolumeUri());
+    return DoiBasedIdentity.removeScheme(value.getVolumeUri());
   }
 
 }

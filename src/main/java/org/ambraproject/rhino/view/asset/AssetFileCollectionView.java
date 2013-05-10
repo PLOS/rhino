@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.apache.commons.lang.StringUtils;
 
@@ -61,7 +61,7 @@ public class AssetFileCollectionView implements JsonOutputView {
     JsonObject byAssetFileId = new JsonObject();
     String commonAssetId = null;
     for (ArticleAsset asset : assets) {
-      String assetId = ArticleIdentity.removeScheme(asset.getDoi());
+      String assetId = DoiBasedIdentity.removeScheme(asset.getDoi());
       if (commonAssetId == null) {
         commonAssetId = assetId;
       } else if (!commonAssetId.equals(assetId)) {

@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.view.article;
 
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ public class ArticleViewList extends KeyedListView<ArticleView> {
 
   @Override
   protected String getKey(ArticleView value) {
-    return ArticleIdentity.removeScheme(value.getDoi());
+    return DoiBasedIdentity.removeScheme(value.getDoi());
   }
 
 }
