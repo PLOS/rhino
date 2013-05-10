@@ -53,7 +53,6 @@ import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.asset.AssetCollectionView;
 import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
-import org.ambraproject.rhino.view.journal.JournalKeyView;
 import org.ambraproject.rhino.view.journal.JournalListView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -124,7 +123,7 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
         ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, AssetCollectionView.class,
-        AssetFileCollectionView.class, JournalListView.class, JournalKeyView.class,
+        AssetFileCollectionView.class, JournalListView.class,
         JournalNonAssocView.class, JournalNonAssocView.ListView.class, VolumeListView.class,
         VolumeOutputView.class, VolumeOutputView.ListView.class, JournalOutputView.class,
         IssueOutputView.class, IssueOutputView.ListView.class);

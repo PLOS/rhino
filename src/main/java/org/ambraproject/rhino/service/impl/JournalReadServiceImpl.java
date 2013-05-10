@@ -6,14 +6,12 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.KeyedListView;
-import org.ambraproject.rhino.view.journal.JournalKeyView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -33,15 +31,6 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         .addOrder(Order.asc("journalKey"))
         ;
-  }
-
-  @Override
-  public void listKeys(ResponseReceiver receiver, MetadataFormat format) throws IOException {
-    assert format == MetadataFormat.JSON;
-    List<String> journalKeys = hibernateTemplate.findByCriteria(journalCriteria()
-        .setProjection(Projections.property("journalKey"))
-    );
-    writeJson(receiver, new JournalKeyView(journalKeys));
   }
 
   @Override
