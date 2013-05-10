@@ -41,7 +41,6 @@ public class JournalNonAssocView implements JsonOutputView {
     serialized.addProperty("imageUri", journal.getImageUri());
     serialized.addProperty("title", journal.getTitle());
     serialized.addProperty("description", journal.getDescription());
-    serialized.add("currentIssue", context.serialize(journal.getCurrentIssue()));
     return serialized;
   }
 
