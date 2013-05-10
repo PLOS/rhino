@@ -28,6 +28,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
+import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -51,7 +52,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     if (issue == null) {
       throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    writeJson(receiver, issue);
+    writeJson(receiver, new IssueOutputView(issue));
   }
 
   private static Issue applyInput(Issue issue, IssueInputView input) {

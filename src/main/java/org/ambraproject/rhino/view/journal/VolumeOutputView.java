@@ -24,7 +24,7 @@ public class VolumeOutputView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(volume).getAsJsonObject();
-    IssueListView issueView = new IssueListView(volume.getIssues());
+    KeyedListView<IssueOutputView> issueView = IssueOutputView.wrapList(volume.getIssues());
     serialized.add("issues", context.serialize(issueView));
     return serialized;
   }
