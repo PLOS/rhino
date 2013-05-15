@@ -161,8 +161,15 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
-    article.setRights(buildRights(readString("/article/front/article-meta/permissions/copyright-holder"),
-        readString("/article/front/article-meta/permissions/license/license-p")));
+
+    String rights = readString("/article/front/article-meta/copyright-statement");
+    if (rights == null) {
+      rights = buildRights(
+          readString("/article/front/article-meta/permissions/copyright-holder"),
+          readString("/article/front/article-meta/permissions/license/license-p"));
+    }
+    article.setRights(rights);
+
     article.setPages(buildPages(readString("/article/front/article-meta/counts/page-count/@count")));
     article.seteLocationId(readString("/article/front/article-meta/elocation-id"));
     article.setVolume(readString("/article/front/article-meta/volume"));
