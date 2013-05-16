@@ -284,7 +284,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         String extension = fields[fields.length - 1].toUpperCase();
         String doi = manifest.getUriForFile(filename);
         if (doi == null) {
-          throw new RestClientException("File does not appear in manifest: " + filename, HttpStatus.BAD_REQUEST);
+          throw new RestClientException("File does not appear in manifest: " + filename,
+              HttpStatus.METHOD_NOT_ALLOWED);
         }
 
         InputStream is = zipFile.getInputStream(entry);
