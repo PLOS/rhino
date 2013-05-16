@@ -13,7 +13,10 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.collect.ImmutableMap;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 /**
  * Represents the manifest of an article .zip archive.
@@ -42,4 +45,27 @@ public class ManifestXml extends XpathReader {
   public String getStrkImgURI() {
     return readString("//object[@strkImage='True']/@uri");
   }
+
+  private transient ImmutableMap<String, String> uriMap;
+
+  public String getUriForFile(String filename) {
+    ImmutableMap<String, String> uriMap = (this.uriMap == null) ? (this.uriMap = buildUriMap()) : this.uriMap;
+    return uriMap.get(filename);
+  }
+
+  private ImmutableMap<String, String> buildUriMap() {
+    ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+    List<Node> objectNodes = readNodeList("//article|//object");
+    for (Node objectNode : objectNodes) {
+      // TODO: Is there an efficient way to pull this logic into an XPath query?
+      String uri = readString("@uri", objectNode);
+      List<Node> representationNode = readNodeList("child::representation", objectNode);
+      for (Node reprNode : representationNode) {
+        String filename = readString("@entry", reprNode);
+        builder.put(filename, uri);
+      }
+    }
+    return builder.build();
+  }
+
 }
