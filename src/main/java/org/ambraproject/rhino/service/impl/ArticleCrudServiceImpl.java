@@ -21,10 +21,10 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
-import com.google.inject.internal.Preconditions;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -238,7 +238,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     // Article to be persisted at this point.
     persistArticle(article, xmlData);
     try {
-      addAssetFiles(article, zip);
+      addAssetFiles(article, zip, manifest);
     } catch (RestClientException rce) {
 
       // If there is an error processing the assets, delete the article we created
@@ -268,7 +268,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return !matcher.find();
   }
 
-  private void addAssetFiles(Article article, ZipFile zipFile)
+  private void addAssetFiles(Article article, ZipFile zipFile, ManifestXml manifest)
       throws IOException, FileStoreException {
 
     // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
@@ -276,13 +276,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Enumeration<? extends ZipEntry> entries = zipFile.entries();
     while (entries.hasMoreElements()) {
       ZipEntry entry = entries.nextElement();
-      if (shouldSaveAssetFile(entry.getName())) {
-        String[] fields = entry.getName().split("\\.");
+      String filename = entry.getName();
+      if (shouldSaveAssetFile(filename)) {
+        String[] fields = filename.split("\\.");
 
         // Not sure why, but the existing admin code always converts the extension to UPPER.
         String extension = fields[fields.length - 1].toUpperCase();
-        String doi = "info:doi/10.1371/journal."
-            + entry.getName().substring(0, entry.getName().lastIndexOf('.'));
+        String doi = manifest.getUriForFile(filename);
+        if (doi == null) {
+          throw new RestClientException("File does not appear in manifest: " + filename, HttpStatus.BAD_REQUEST);
+        }
+
         InputStream is = zipFile.getInputStream(entry);
         boolean threw = true;
         try {
