@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class AssetMetadataController extends DoiBasedCrudController {
+public class AssetController extends DoiBasedCrudController {
 
   private static final String ASSET_META_NAMESPACE = "/assets/";
   private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";

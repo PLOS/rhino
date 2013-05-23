@@ -47,7 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Controller
-public class AssetCrudController extends DoiBasedCrudController {
+public class AssetFileCrudController extends DoiBasedCrudController {
 
   private static final String ASSET_ROOT = "/assetfiles";
   private static final String ASSET_NAMESPACE = ASSET_ROOT + "/";
