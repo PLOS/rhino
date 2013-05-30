@@ -10,7 +10,6 @@ import org.ambraproject.models.Issue;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
-import org.ambraproject.rhino.view.article.DoiList;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,9 +28,8 @@ public class IssueOutputView implements JsonOutputView {
 
     serialized.remove("articleDois");
     List<String> articleDois = issue.getArticleDois();
-    DoiList articlesView = new DoiList(articleDois);
-    serialized.add("articleOrder", context.serialize(articleDois, List.class));
-    serialized.add("articles", context.serialize(articlesView));
+    articleDois = DoiBasedIdentity.asIdentifiers(articleDois);
+    serialized.add("articleOrder", context.serialize(articleDois));
 
     return serialized;
   }

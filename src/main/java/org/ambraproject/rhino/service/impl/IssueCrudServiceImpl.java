@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -81,20 +80,12 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-      issue.setArticleDois(asArticleKeys(inputArticleDois));
+      issue.setArticleDois(DoiBasedIdentity.asKeys(inputArticleDois));
     } else if (issue.getArticleDois() == null) {
       issue.setArticleDois(new ArrayList<String>(0));
     }
 
     return issue;
-  }
-
-  private static List<String> asArticleKeys(List<String> doiInput) {
-    List<String> keys = Lists.newArrayListWithCapacity(doiInput.size());
-    for (String doi : doiInput) {
-      keys.add(ArticleIdentity.create(doi).getKey());
-    }
-    return keys;
   }
 
   @Override
