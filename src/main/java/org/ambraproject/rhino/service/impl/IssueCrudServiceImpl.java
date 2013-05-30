@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -37,6 +38,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
@@ -77,7 +79,22 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
       issue.setImageUri("");
     }
 
+    List<String> inputArticleDois = input.getArticleOrder();
+    if (inputArticleDois != null) {
+      issue.setArticleDois(asArticleKeys(inputArticleDois));
+    } else if (issue.getArticleDois() == null) {
+      issue.setArticleDois(new ArrayList<String>(0));
+    }
+
     return issue;
+  }
+
+  private static List<String> asArticleKeys(List<String> doiInput) {
+    List<String> keys = Lists.newArrayListWithCapacity(doiInput.size());
+    for (String doi : doiInput) {
+      keys.add(ArticleIdentity.create(doi).getKey());
+    }
+    return keys;
   }
 
   @Override

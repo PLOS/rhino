@@ -30,6 +30,7 @@ public class IssueOutputView implements JsonOutputView {
     serialized.remove("articleDois");
     List<String> articleDois = issue.getArticleDois();
     DoiList articlesView = new DoiList(articleDois);
+    serialized.add("articleOrder", context.serialize(articleDois, List.class));
     serialized.add("articles", context.serialize(articlesView));
 
     return serialized;
