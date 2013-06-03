@@ -78,6 +78,11 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
       issue.setImageUri("");
     }
 
+    Boolean respectOrder = input.getRespectOrder();
+    if (respectOrder != null) {
+      issue.setRespectOrder(respectOrder);
+    }
+
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
       issue.setArticleDois(DoiBasedIdentity.asKeys(inputArticleDois));

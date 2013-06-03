@@ -10,6 +10,7 @@ public class IssueInputView {
   private String issueUri;
   private String displayName;
   private String imageUri;
+  private Boolean respectOrder;
   private List<String> articleOrder;
 
   public String getIssueUri() {
@@ -22,6 +23,10 @@ public class IssueInputView {
 
   public String getImageUri() {
     return imageUri;
+  }
+
+  public Boolean getRespectOrder() {
+    return respectOrder;
   }
 
   public List<String> getArticleOrder() {
