@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.models.Article;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -32,6 +33,7 @@ import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -56,7 +58,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     writeJson(receiver, new IssueOutputView(issue));
   }
 
-  private static Issue applyInput(Issue issue, IssueInputView input) {
+  private Issue applyInput(Issue issue, IssueInputView input) {
     String issueUri = input.getIssueUri();
     if (issueUri != null) {
       DoiBasedIdentity issueId = DoiBasedIdentity.create(issueUri);
@@ -73,7 +75,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     String imageUri = input.getImageUri();
     if (imageUri != null) {
       ArticleIdentity imageArticleId = ArticleIdentity.create(imageUri);
-      issue.setImageUri(imageArticleId.getKey());
+      if (!imageArticleId.getKey().equals(issue.getImageUri())) {
+        updateImageArticle(issue, imageArticleId);
+      }
     } else if (issue.getImageUri() == null) {
       issue.setImageUri("");
     }
@@ -91,6 +95,36 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     }
 
     return issue;
+  }
+
+  /**
+   * Change an issue's image article. This also changes the issue's title and description to match those of the image
+   * article.
+   *
+   * @param issue          the image to modify
+   * @param imageArticleId the identity of the new image article
+   * @throws RestClientException if {@code imageArticleId} doesn't match an existing article
+   */
+  private void updateImageArticle(Issue issue, ArticleIdentity imageArticleId) {
+    Preconditions.checkNotNull(imageArticleId);
+    Object[] result = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
+        DetachedCriteria.forClass(Article.class)
+            .add(Restrictions.eq("doi", imageArticleId.getKey()))
+            .setProjection(Projections.projectionList()
+                .add(Projections.property("title"))
+                .add(Projections.property("description"))
+            )
+    ));
+    if (result == null) {
+      String message = "imageUri must belong to an existing article: " + imageArticleId.getIdentifier();
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+    String title = (String) result[0];
+    String description = (String) result[1];
+
+    issue.setImageUri(imageArticleId.getKey());
+    issue.setTitle(title);
+    issue.setDescription(description);
   }
 
   @Override
