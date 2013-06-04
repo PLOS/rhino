@@ -19,6 +19,10 @@
 package org.ambraproject.rhino.identity;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
@@ -66,7 +70,55 @@ public class DoiBasedIdentity {
    * @return a DOI that does not start with {@code "info:doi/"}
    */
   public static String asIdentifier(String doi) {
-    return doi.startsWith(DOI_SCHEME_VALUE) ? doi.substring(DOI_SCHEME_VALUE.length()) : doi;
+    if (!doi.startsWith(DOI_SCHEME_VALUE)) {
+      return doi;
+    }
+    doi = doi.substring(DOI_SCHEME_VALUE.length());
+    if (doi.startsWith(DOI_SCHEME_VALUE)) {
+      throw new IllegalArgumentException("DOI starts with " + DOI_SCHEME_VALUE + DOI_SCHEME_VALUE);
+    }
+    return doi;
+  }
+
+  /**
+   * Represent a collection of identifier strings as REST-friendly identifiers (with no {@code "info:doi/"}). The order
+   * of the argument collection is preserved.
+   *
+   * @param dois
+   * @return
+   */
+  public static List<String> asIdentifiers(Collection<String> dois) {
+    List<String> identifiers = Lists.newArrayListWithCapacity(dois.size());
+    for (String doi : dois) {
+      identifiers.add(asIdentifier(doi));
+    }
+    return identifiers;
+  }
+
+  /**
+   * Return the DOI formatted as a database key value. Under Ambra's current data model, it is prefixed with {@code
+   * "info:doi/"}.
+   *
+   * @param doi a DOI or DOI-like identifier
+   * @return the key value
+   */
+  public static String asKey(String doi) {
+    return doi.startsWith(DOI_SCHEME_VALUE) ? doi : DOI_SCHEME_VALUE + doi;
+  }
+
+  /**
+   * Represent a collection of identifier strings as database key values (with {@code "info:doi/"}). The order of the
+   * argument collection is preserved.
+   *
+   * @param dois
+   * @return
+   */
+  public static List<String> asKeys(Collection<String> dois) {
+    List<String> keys = Lists.newArrayListWithCapacity(dois.size());
+    for (String doi : dois) {
+      keys.add(asKey(doi));
+    }
+    return keys;
   }
 
   /**
@@ -90,7 +142,7 @@ public class DoiBasedIdentity {
    * @return the key value
    */
   public String getKey() {
-    return DOI_SCHEME_VALUE + identifier;
+    return asKey(identifier);
   }
 
   @Override
