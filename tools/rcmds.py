@@ -1,9 +1,9 @@
 #!/usr/bin/python2
 
 """
-    Scrape article XMLs and package them for ingestion.
+    Generalized commandline tool that uses Rhino for the heavy lifting.    
 
-    Usage: repackage.py rhino_url prefix article_name
+    Usage: rcmds.py rhino_url prefix article_name
 
     Note:
         rhino_url - is the usl to the rhino SOA for the system you are interested in.
@@ -17,6 +17,9 @@ from __future__ import print_function
 from __future__ import with_statement
 from cStringIO import StringIO
 from optparse import OptionParser
+from boto.s3.connection import S3Connection
+from boto.s3.connection import Location
+from BeautifulSoup import BeautifulSoup
 
 import itertools
 import json
@@ -26,7 +29,15 @@ import requests
 import string
 import sys
 import zipfile
+import md5
 
+AWS_SECRET_ACCESS_KEY = '/Hz4EISxG9Qca4bTgNMFz/DBb7F/teFB8kZSHLsB'
+AWS_ACCESS_KEY_ID='0XBSZRK13633TWKA9202'
+ARTICLE_FLD_LIST = [ 'doi', 'strkImgURI', 'title', 'state', 'eIssn', 
+                    'eLocationId', 'journal', 'language', 'rights', 'url' ]
+ASSET_FLD_LIST  = [ 'doi', 'contentType', 'contentType',  
+                    'extension', 'title', 'lastModified', 'created', 
+                    'contextElement', 'size']
 
 # ***********************************************
 #      Text templates used in
@@ -103,6 +114,13 @@ FETCH_FILE_AMBRA_TMPL = '{server}/{rver}/article/fetchObject.action?uri=info:doi
 DOI_PATTERN = re.compile(r'(\d+\.\d+/)?(journal\.)?(.*)\.([^.]*)')
 
 # *****************************************************
+def doi2s3key(doi):
+    """
+    """
+    (prefix, suffix) = string.split(doi, '/')
+    newSuffix = string.replace(suffix, '.', '/')
+    return '{p}/{s}'.format(p=prefix, s=newSuffix)
+    
 def doGet(url, verify=False):
     """
     Requests for Humans is not so human after all.
@@ -128,13 +146,14 @@ def fetchArticleList(options):
         raise Exception("Article list failed  " + url)
     return [ doi for (doi, _) in articleList.items() ] 
 
-def fetchArticleMeta(name, options):
+def fetchArticleMeta(options, doi=None, afid=None):
     """
-    Fetch the article meta-data.
-       -name : the article FSID ex. pone.1234567
+    Given an Article ID or an Asset DOI return
+    the meta-data
     """
     (base_url, prefix, rver) = (options.rhinoServer, options.prefix, options.rver)
-    doi = DOI_TMPL.format(prefix=prefix, name=name)
+    if (doi == None):
+        doi = DOI_TMPL.format(prefix=prefix, name=afid)
     url = FETCH_ARTICLE_INFO_TMPL.format(server=base_url, rver=rver, doi=doi)
     r = doGet(url, verify=options.verify)
     if r.status_code == 200:
@@ -164,7 +183,7 @@ def fetchAssetMeta(options, doi=None, afid=None):
 def fetchAssetFiles(name, options):
     """
     """
-    article = fetchArticleMeta(name, options)
+    article = fetchArticleMeta(optionsi, afid=name)
     assetFiles = dict((asset_name, asset_files.keys())
                   for (asset_name, asset_files) in article['assets'].items())
     return assetFiles
@@ -178,7 +197,7 @@ def fetchManifestInfo(name, options):
     uri = URI_TMPL.format(name=doi)
 
     # Load JSON into a Python object and use some values from it.
-    article = fetchArticleMeta(name, options)
+    article = fetchArticleMeta(options, afid=name)
     assets = dict((asset_name, asset_files.keys())
                   for (asset_name, asset_files) in article['assets'].items())
 
@@ -242,20 +261,23 @@ def report(description, response):
 
 def fetchBinary(filename, url):
     """
-    Most of the files other than the article xml is binary in nature. Fetch
-    the data and write it to a temporary file.
+    Most of the files other than the article xml are binary in nature. 
+    Fetch the data and write it to a temporary file.
     """
+    m = md5.new()
     r = doGet(url)
     if r.status_code == 200:
         with open(filename, 'wb') as f:
             for chunk in r.iter_content(1024):
+                m.update(chunk)
                 f.write(chunk)
     else:
         raise Exception("not downloaded  " + url)
+    return m.hexdigest()
 
 def make_zip(options, name, manifest, md):
     """
-    Take the information we have gather about the article so far and create
+    Take the information we have gathered about the article so far and create
     the zip.
     """
     (base_url, prefix, rver) = (options.rhinoServer, options.prefix, options.rver)
@@ -279,12 +301,14 @@ def make_zip(options, name, manifest, md):
             assetName, ext = infer_filename(asset_file_id)
             url = FETCH_FILE_RHINO_TMPL.format(server=base_url, rver=rver, afid=asset_file_id)
             name = '{name}.{ext}'.format(name=assetName, ext=ext.lower())
-            fetchBinary(name, url)
+            digest = fetchBinary(name, url)
+            print("Digest: " + digest + " : " + name)
             zf.write(name, name , compress_type=zipfile.ZIP_DEFLATED)
             os.remove(name)
 
 def infer_filename(asset_file_id):
-    """Infer the PLOS-form file name and extension from the DOI.
+    """
+    Infer the PLOS-form file name and extension from the DOI.
 
     TODO: Generify
     """
@@ -336,7 +360,65 @@ def build_manifest_xml(md):
     objectTags = buildObjectTags(md)
     return MANIFEST_TMPL.format(article=articleTag, objects=objectTags)
 
+def headerLength(h):
+    sum = 0
+    for k,v in h.iteritems():
+        value = v
+        if not isinstance(value, str):
+            print(k)
+            value = str(value) 
+        sum += len(value.encode('utf-8'))
+    print(sum)
+    return sum
+
+def s3_put_article(bucket, doi):
+    """
+    """
+    (base_url, prefix, rver) = (options.rhinoServer, options.prefix, options.rver)
+    def callback(trans, left): print('(Transfered {0} of {1})'.format(trans,left))
+    meta = fetchArticleMeta(options, doi=doi)
+    articleHeader = {'article-{key}'.format(key=k) : meta.get(k, '') for k in ARTICLE_FLD_LIST}
+
+    for k,v in meta['assets'].iteritems():
+        baseKey = doi2s3key(k)
+        # print("BaseKey:  " + baseKey)
+        for k2, v2 in v.iteritems():
+            assetHeader = {'asset-{key}'.format(key=k) : v2.get(k, '') for k in ASSET_FLD_LIST}
+            #desc = assetHeader['asset-description']
+            #assetHeader['asset-description'] = desc[:512]
+            assetTitle = assetHeader['asset-title']
+            articleTitle = articleHeader['article-title']
+            if assetTitle == articleTitle:
+                assetHeader['asset-title'] = ''
+            articleHeader.update(assetHeader)
+            sz = articleHeader['asset-size']
+            articleHeader['asset-size'] = str(sz) 
+            l = headerLength(articleHeader)
+            if l > 2048:
+		diff = l - 2049
+                print(' diff : ' + diff)
+                #desc = assetHeader['asset-description']
+                #assetHeader['asset-description'] = desc[:diff]
+            (a, b) =  infer_filename(k2)
+            fname = '{a}.{b}'.format(a=a,b=b).lower()
+            # print('k2: ' + k2 + '  ' + fname)
+            fullKey = '{base}/{a}.{b}'.format(base=baseKey,a=a, b=b).lower()
+            url = FETCH_FILE_RHINO_TMPL.format(server=base_url, rver=rver, afid=k2)
+            digest = fetchBinary(fname, url)
+            print(fullKey)
+            s3key =  bucket.new_key(fullKey)
+            for k3, v3 in articleHeader.iteritems():
+                s3key.set_metadata(k3, v3)
+            s3key.set_metadata('asset-md5', digest)
+            print(pretty_dict_repr(articleHeader))
+            s3key.set_contents_from_filename(fname, cb=callback, reduced_redundancy=True)
+            os.remove(fname)
+
 def cmd_repackage(options, args):
+    """
+    Given a list of file IDs (ie pone.1234567) find the associated
+    assets and repackage them into a zip file.
+    """
     failedArticles = []
     for name in args:
         try:
@@ -358,15 +440,21 @@ def cmd_list_dois(options):
     """
     List the DOIs associated with the prefix
     """
+    if (options.regx != None):
+       prog = re.compile(options.regx) 
+
     articleList = fetchArticleList(options)
     for doi in articleList:
-        print(doi)
+        if prog == None:
+            print(doi)
+        elif prog.search(doi):
+            print(doi)
 
 def cmd_meta(options, args):
     """
     """
     for name in args:
-        meta = fetchArticleMeta(name, options)
+        meta = fetchArticleMeta(options, afid=name)
         print(pretty_dict_repr(meta))    
 
 def cmd_assetmeta(options, args):
@@ -375,6 +463,37 @@ def cmd_assetmeta(options, args):
     for name in args:
         meta = fetchAssetMeta(options, afid=name)
         print(pretty_dict_repr(meta))
+
+def cmd_copy_2_s3(options, args):
+    """
+    """
+    (base_url, prefix, rver) = (options.rhinoServer, options.prefix, options.rver)
+    failedDois = []
+    fltr = None
+
+    if (options.regx != None):
+       fltr = re.compile(options.regx)
+
+    if len(args) == 0:
+        doiList = fetchArticleList(options)
+    else:
+        doiList = ['{prefix}/{suffix}'.format(prefix=prefix, suffix=name) for name in args]
+
+    conn = S3Connection(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    bucket = conn.get_bucket(options.bucket)
+    for doi in doiList:
+        try:
+            if fltr == None:
+                s3_put_article(bucket, doi)
+            elif fltr.search(doi):
+                s3_put_article(bucket, doi)
+        except Exception as e:
+            failedDois.append(doi)
+            print('Error with {0}: {1}'.format(doi, e), file=sys.stderr)
+    
+    print('The follow DOIs failed to copy to S3')
+    for n in failedDois:
+        print(n)
 
 def cmd_assetfiles(options, args):
     """
@@ -399,6 +518,8 @@ def main(options, args):
         cmd_assetfiles(options, args)
     elif cmd == 'LIST':
         cmd_list_dois(options) 
+    elif cmd == 'C2S3':
+        cmd_copy_2_s3(options, args)
 
 if __name__ == "__main__":
     """
@@ -430,6 +551,15 @@ if __name__ == "__main__":
     parser.add_option('--verify', action='store_true', dest='verify',
                       default=False, metavar='VERIFY',
                       help='Require certificates for https. [default: %default]')
+    parser.add_option('--s3location', action='store', dest='s3location',
+                      default=Location.USWest, metavar='S3LOCATION',
+                      help='S3 service location. [default: %default]')
+    parser.add_option('--bucket', action='store', dest='bucket',
+                      default=Location.USWest + '.pub.plos.org', metavar='BUCKET',
+                      help='S3 bucket name. [default: %default]')
+    parser.add_option('--regx', action='store', dest='regx',
+                      default=None, metavar='REGX',
+                      help='REGX used to filter results. [default: %default]')
 
 
     (options, args) = parser.parse_args()
