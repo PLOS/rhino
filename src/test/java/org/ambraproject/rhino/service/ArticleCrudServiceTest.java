@@ -23,12 +23,19 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Annotation;
+import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
+import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -55,6 +62,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -253,4 +261,55 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }
 
+  @Test
+  public void testCommentsAndCorrections() throws Exception {
+    String doiStub = SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
+    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doi = articleId.getIdentifier();
+    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
+    TestInputStream input = TestInputStream.of(sampleData);
+    Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
+    assertArticleExistence(articleId, true);
+
+    UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
+    hibernateTemplate.save(creator);
+    Annotation correction = new Annotation();
+    correction.setCreator(creator);
+    correction.setArticleID(article.getID());
+    correction.setAnnotationUri("fakeCorrectionAnnotationUri");
+    correction.setType(AnnotationType.FORMAL_CORRECTION);
+    correction.setTitle("Test Correction");
+    correction.setBody("Test Correction Body");
+    hibernateTemplate.save(correction);
+
+    Annotation comment = new Annotation();
+    comment.setCreator(creator);
+    comment.setArticleID(article.getID());
+    comment.setAnnotationUri("fakeCommentAnnotationUri");
+    comment.setType(AnnotationType.COMMENT);
+    comment.setTitle("Test Comment");
+    comment.setBody("Test Comment Body");
+    hibernateTemplate.save(comment);
+
+    DummyResponseReceiver drr = new DummyResponseReceiver();
+    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON);
+    String json = drr.read();
+    assertTrue(json.length() > 0);
+
+    JsonParser parser = new JsonParser();
+    JsonObject obj = parser.parse(json).getAsJsonObject();
+    assertEquals(obj.get("doi").getAsString(), "info:doi/10.1371/journal.pone.0038869");
+    JsonObject assets = obj.getAsJsonObject("assets");
+    JsonObject corrections = assets.getAsJsonObject("corrections");
+    assertEquals(corrections.entrySet().size(), 1);
+    String correctionJson = corrections.getAsJsonObject(
+        "info:doi/10.1371/journal.pone.0038869.FormalCorrection.0001").toString();
+    Gson gson = new Gson();
+    Annotation actual = gson.fromJson(correctionJson, Annotation.class);
+    assertEquals(actual, correction);
+
+    // TODO: test comments once that is implemented.
+    // TODO: test parent/child relationships between comments/corrections and replies.
+  }
 }

@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Annotation;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -573,6 +574,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
             .setFetchMode("assets", FetchMode.JOIN)
+            .setFetchMode("annotations", FetchMode.JOIN)
             .setFetchMode("journals", FetchMode.JOIN)
             .setFetchMode("journals.volumes", FetchMode.JOIN)
             .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
@@ -587,7 +589,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
     assert format == MetadataFormat.JSON;
-    ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
+    List<Annotation> annotations = hibernateTemplate.find("from Annotation where articleID = ?", article.getID());
+    ArticleOutputView view = ArticleOutputView.create(article, annotations, syndicationService, pingbackReadService);
     writeJson(receiver, view);
   }
 
