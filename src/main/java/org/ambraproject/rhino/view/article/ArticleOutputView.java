@@ -51,8 +51,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private ArticleOutputView(Article article, Collection<Annotation> annotations, Collection<Syndication> syndications,
       Collection<Pingback> pingbacks) {
     this.article = Preconditions.checkNotNull(article);
-    annotations = annotations == null ? new ArrayList<Annotation>() : annotations;
-    this.annotations = ImmutableList.copyOf(annotations);
+    this.annotations = (annotations == null) ? ImmutableList.<Annotation>of() : ImmutableList.copyOf(annotations);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
   }

@@ -3,6 +3,7 @@ package org.ambraproject.rhino.view.asset;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,14 +24,8 @@ public class AssetCollectionView implements JsonOutputView {
   /**
    * AnnotationTypes that are considered corrections.
    */
-  private static ImmutableSet<AnnotationType> CORRECTION_TYPES;
-  static {
-    ImmutableSet.Builder<AnnotationType> builder = ImmutableSet.builder();
-    builder.add(AnnotationType.FORMAL_CORRECTION);
-    builder.add(AnnotationType.MINOR_CORRECTION);
-    builder.add(AnnotationType.RETRACTION);
-    CORRECTION_TYPES = builder.build();
-  }
+  private static final ImmutableSet<AnnotationType> CORRECTION_TYPES = Sets.immutableEnumSet(
+      AnnotationType.FORMAL_CORRECTION, AnnotationType.MINOR_CORRECTION, AnnotationType.RETRACTION);
 
   private final ImmutableListMultimap<String, ArticleAsset> assets;
 
