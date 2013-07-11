@@ -277,7 +277,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Annotation correction = new Annotation();
     correction.setCreator(creator);
     correction.setArticleID(article.getID());
-    correction.setAnnotationUri("fakeCorrectionAnnotationUri");
+    correction.setAnnotationUri("info:doi/10.1371/annotation/test_correction");
     correction.setType(AnnotationType.FORMAL_CORRECTION);
     correction.setTitle("Test Correction");
     correction.setBody("Test Correction Body");
@@ -286,7 +286,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Annotation comment = new Annotation();
     comment.setCreator(creator);
     comment.setArticleID(article.getID());
-    comment.setAnnotationUri("fakeCommentAnnotationUri");
+    comment.setAnnotationUri("info:doi/10.1371/annotation/test_comment");
     comment.setType(AnnotationType.COMMENT);
     comment.setTitle("Test Comment");
     comment.setBody("Test Comment Body");
@@ -303,8 +303,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     JsonObject assets = obj.getAsJsonObject("assets");
     JsonObject corrections = assets.getAsJsonObject("corrections");
     assertEquals(corrections.entrySet().size(), 1);
-    String correctionJson = corrections.getAsJsonObject(
-        "info:doi/10.1371/journal.pone.0038869.FormalCorrection.0001").toString();
+    String correctionJson = corrections.getAsJsonObject("info:doi/10.1371/annotation/test_correction").toString();
     Gson gson = new Gson();
     Annotation actual = gson.fromJson(correctionJson, Annotation.class);
     assertEquals(actual, correction);

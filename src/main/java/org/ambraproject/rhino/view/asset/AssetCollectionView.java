@@ -44,7 +44,7 @@ public class AssetCollectionView implements JsonOutputView {
     int correctionNum = 1;
     for (Annotation annotation : annotations) {
       if (CORRECTION_TYPES.contains(annotation.getType())) {
-        builder.put(getCorrectionKey(article, annotation, correctionNum++), annotation);
+        builder.put(annotation.getAnnotationUri(), annotation);
       }
     }
     this.corrections = builder.build();
@@ -67,17 +67,5 @@ public class AssetCollectionView implements JsonOutputView {
     }
     serialized.add("corrections", correctionsMap);
     return serialized;
-  }
-
-  /**
-   * Generates the pseudo-DOI used to identify a correction associated with an article.
-   *
-   * @param article article the correction is associated with
-   * @param annotation correction annotation
-   * @param sequenceNum number of the correction
-   * @return the pseudo-DOI that will be used as a key when serializing
-   */
-  private String getCorrectionKey(Article article, Annotation annotation, int sequenceNum) {
-    return String.format("%s.%s.%04d", article.getDoi(), annotation.getType().toString(), sequenceNum);
   }
 }
