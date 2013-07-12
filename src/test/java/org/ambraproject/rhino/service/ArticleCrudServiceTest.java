@@ -24,9 +24,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
@@ -60,9 +61,9 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -277,11 +278,20 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Annotation correction = new Annotation();
     correction.setCreator(creator);
     correction.setArticleID(article.getID());
-    correction.setAnnotationUri("info:doi/10.1371/annotation/test_correction");
+    correction.setAnnotationUri("info:doi/10.1371/annotation/test_correction_1");
     correction.setType(AnnotationType.FORMAL_CORRECTION);
-    correction.setTitle("Test Correction");
-    correction.setBody("Test Correction Body");
+    correction.setTitle("Test Correction One");
+    correction.setBody("Test Correction One Body");
     hibernateTemplate.save(correction);
+
+    Annotation correction2 = new Annotation();
+    correction2.setCreator(creator);
+    correction2.setArticleID(article.getID());
+    correction2.setAnnotationUri("info:doi/10.1371/annotation/test_correction_2");
+    correction2.setType(AnnotationType.MINOR_CORRECTION);
+    correction2.setTitle("Test Correction Two");
+    correction2.setBody("Test Correction Two Body");
+    hibernateTemplate.save(correction2);
 
     Annotation comment = new Annotation();
     comment.setCreator(creator);
@@ -301,12 +311,14 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     JsonObject obj = parser.parse(json).getAsJsonObject();
     assertEquals(obj.get("doi").getAsString(), "info:doi/10.1371/journal.pone.0038869");
     JsonObject assets = obj.getAsJsonObject("assets");
-    JsonObject corrections = assets.getAsJsonObject("corrections");
-    assertEquals(corrections.entrySet().size(), 1);
-    String correctionJson = corrections.getAsJsonObject("info:doi/10.1371/annotation/test_correction").toString();
+    JsonArray corrections = assets.getAsJsonArray("corrections");
+
+    List<String> expected = new ArrayList<String>(2);
+    expected.add("info:doi/10.1371/annotation/test_correction_1");
+    expected.add("info:doi/10.1371/annotation/test_correction_2");
     Gson gson = new Gson();
-    Annotation actual = gson.fromJson(correctionJson, Annotation.class);
-    assertEquals(actual, correction);
+    List<String> actual = gson.fromJson(corrections.toString(), new TypeToken<List<String>>(){}.getType());
+    assertEquals(actual, expected);
 
     // TODO: test comments once that is implemented.
     // TODO: test parent/child relationships between comments/corrections and replies.

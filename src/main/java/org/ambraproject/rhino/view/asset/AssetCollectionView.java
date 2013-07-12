@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.view.asset;
 
 import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
@@ -15,7 +14,9 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class AssetCollectionView implements JsonOutputView {
 
   private final ImmutableListMultimap<String, ArticleAsset> assets;
 
-  private final ImmutableMap<String, Annotation> corrections;
+  private final List<String> correctionDois;
 
   public AssetCollectionView(Article article, List<Annotation> annotations) {
     Iterable<ArticleAsset> assets = article.getAssets();
@@ -40,14 +41,13 @@ public class AssetCollectionView implements JsonOutputView {
     this.assets = buffer.build();
 
     // TODO: comments.  Right now only deal with correction annotations.
-    ImmutableMap.Builder<String, Annotation> builder = ImmutableMap.builder();
-    int correctionNum = 1;
+    List correctionDoisMutable = new ArrayList<String>();
     for (Annotation annotation : annotations) {
       if (CORRECTION_TYPES.contains(annotation.getType())) {
-        builder.put(annotation.getAnnotationUri(), annotation);
+        correctionDoisMutable.add(annotation.getAnnotationUri());
       }
     }
-    this.corrections = builder.build();
+    correctionDois = Collections.unmodifiableList(correctionDoisMutable);
   }
 
   @Override
@@ -61,11 +61,11 @@ public class AssetCollectionView implements JsonOutputView {
     }
 
     // TODO: consider moving this into an AnnotationCollectionView if necessary.
-    JsonObject correctionsMap = new JsonObject();
-    for (Map.Entry<String, Annotation> entry : corrections.entrySet()) {
-      correctionsMap.add(entry.getKey(), context.serialize(entry.getValue()));
+    JsonArray corrections = new JsonArray();
+    for (String correctionDoi : correctionDois) {
+      corrections.add(context.serialize(correctionDoi));
     }
-    serialized.add("corrections", correctionsMap);
+    serialized.add("corrections", corrections);
     return serialized;
   }
 }
