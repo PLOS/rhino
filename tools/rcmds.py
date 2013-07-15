@@ -360,16 +360,6 @@ def build_manifest_xml(md):
     objectTags = buildObjectTags(md)
     return MANIFEST_TMPL.format(article=articleTag, objects=objectTags)
 
-def headerLength(h):
-    sum = 0
-    for k,v in h.iteritems():
-        value = v
-        if not isinstance(value, str):
-            print(k)
-            value = str(value) 
-        sum += len(value.encode('utf-8'))
-    print(sum)
-    return sum
 
 def s3_put_article(bucket, doi):
     """
@@ -384,21 +374,11 @@ def s3_put_article(bucket, doi):
         # print("BaseKey:  " + baseKey)
         for k2, v2 in v.iteritems():
             assetHeader = {'asset-{key}'.format(key=k) : v2.get(k, '') for k in ASSET_FLD_LIST}
-            #desc = assetHeader['asset-description']
-            #assetHeader['asset-description'] = desc[:512]
             assetTitle = assetHeader['asset-title']
             articleTitle = articleHeader['article-title']
             if assetTitle == articleTitle:
                 assetHeader['asset-title'] = ''
             articleHeader.update(assetHeader)
-            sz = articleHeader['asset-size']
-            articleHeader['asset-size'] = str(sz) 
-            l = headerLength(articleHeader)
-            if l > 2048:
-		diff = l - 2049
-                print(' diff : ' + diff)
-                #desc = assetHeader['asset-description']
-                #assetHeader['asset-description'] = desc[:diff]
             (a, b) =  infer_filename(k2)
             fname = '{a}.{b}'.format(a=a,b=b).lower()
             # print('k2: ' + k2 + '  ' + fname)
@@ -410,7 +390,7 @@ def s3_put_article(bucket, doi):
             for k3, v3 in articleHeader.iteritems():
                 s3key.set_metadata(k3, v3)
             s3key.set_metadata('asset-md5', digest)
-            print(pretty_dict_repr(articleHeader))
+            #print(pretty_dict_repr(articleHeader))
             s3key.set_contents_from_filename(fname, cb=callback, reduced_redundancy=True)
             os.remove(fname)
 
@@ -440,6 +420,7 @@ def cmd_list_dois(options):
     """
     List the DOIs associated with the prefix
     """
+    prog = None
     if (options.regx != None):
        prog = re.compile(options.regx) 
 
