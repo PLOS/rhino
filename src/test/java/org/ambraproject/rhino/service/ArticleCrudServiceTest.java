@@ -48,6 +48,7 @@ import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.views.AnnotationView;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -63,8 +64,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -337,9 +340,31 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertTrue(json.length() > 0);
 
     gson = new Gson();
-    Annotation actualAnnotation = gson.fromJson(json, Annotation.class);
-    assertEquals(actualAnnotation, correction);
+    AnnotationView actualAnnotation = gson.fromJson(json, AnnotationView.class);
+    Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
+
+    // We can't use vanilla assertEquals because AnnotationView has a property, ID, set to
+    // the underlying annotationID.  That property is not in the returned JSON, by design.
+    assertAnnotationsEqual(actualAnnotation,
+        new AnnotationView(correction, article.getDoi(), article.getTitle(), replies));
 
     // TODO: test parent/child relationships between comments/corrections and replies.
+  }
+
+  private void assertAnnotationsEqual(AnnotationView actual, AnnotationView expected) {
+    assertEquals(actual.getAnnotationUri(), expected.getAnnotationUri());
+    assertEquals(actual.getArticleDoi(), expected.getArticleDoi());
+    assertEquals(actual.getArticleTitle(), expected.getArticleTitle());
+    assertEquals(actual.getParentID(), expected.getParentID());
+    assertEquals(actual.getBody(), expected.getBody());
+    assertEquals(actual.getCitation(), expected.getCitation());
+    assertEquals(actual.getCompetingInterestStatement(), expected.getCompetingInterestStatement());
+    assertEquals(actual.getCreatorID(), expected.getCreatorID());
+    assertEquals(actual.getCreatorDisplayName(), expected.getCreatorDisplayName());
+    assertEquals(actual.getCreatorFormattedName(), expected.getCreatorFormattedName());
+    assertEquals(actual.getTitle(), expected.getTitle());
+    assertEquals(actual.getType(), expected.getType());
+
+    // TODO: replies
   }
 }
