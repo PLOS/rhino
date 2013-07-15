@@ -70,4 +70,11 @@ public class AssetIdentity extends DoiBasedIdentity {
     asset.setExtension("");
   }
 
+  /**
+   * @return true if this AssetIdentity identifies an annotation-related asset, such as a correction,
+   *     comment, or reply.
+   */
+  public boolean isAnnotation() {
+    return getIdentifier().startsWith("10.1371/annotation/");
+  }
 }

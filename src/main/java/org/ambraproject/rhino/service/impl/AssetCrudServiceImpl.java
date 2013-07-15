@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Annotation;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -275,16 +276,31 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     assert format == MetadataFormat.JSON;
-    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (assets.isEmpty()) {
-      throw reportNotFound(id);
+    if (id.isAnnotation()) {
+      List<Annotation> annotations = hibernateTemplate.find(
+          "from Annotation where annotationURI = ?", id.getKey());
+      if (annotations.isEmpty()) {
+
+        // TODO: consider a different exception subtype.
+        throw reportNotFound(id);
+      } else if (annotations.size() > 1) {
+
+        // Should never happen.
+        throw new RuntimeException("Multiple annotations found for " + id.getIdentifier());
+      }
+      writeJson(receiver, annotations.get(0));
+    } else {
+      @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+          hibernateTemplate.findByCriteria(DetachedCriteria
+              .forClass(ArticleAsset.class)
+              .add(Restrictions.eq("doi", id.getKey()))
+              .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+          ));
+      if (assets.isEmpty()) {
+        throw reportNotFound(id);
+      }
+      writeJson(receiver, new AssetFileCollectionView(assets));
     }
-    writeJson(receiver, new AssetFileCollectionView(assets));
   }
 
   /**

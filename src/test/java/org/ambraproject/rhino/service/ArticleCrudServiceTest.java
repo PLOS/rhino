@@ -40,6 +40,7 @@ import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
@@ -319,6 +320,18 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Gson gson = new Gson();
     List<String> actual = gson.fromJson(corrections.toString(), new TypeToken<List<String>>(){}.getType());
     assertEquals(actual, expected);
+
+    // TODO: this really should live in AssetCrudServiceTest, but since we've already
+    // set up a parent article, it's here for now.
+    AssetIdentity assetIdentity = AssetIdentity.create("info:doi/10.1371/annotation/test_correction_1");
+    drr = new DummyResponseReceiver();
+    assetCrudService.readMetadata(drr, assetIdentity, MetadataFormat.JSON);
+    json = drr.read();
+    assertTrue(json.length() > 0);
+
+    gson = new Gson();
+    Annotation actualAnnotation = gson.fromJson(json, Annotation.class);
+    assertEquals(actualAnnotation, correction);
 
     // TODO: test comments once that is implemented.
     // TODO: test parent/child relationships between comments/corrections and replies.
