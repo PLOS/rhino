@@ -321,6 +321,13 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     List<String> actual = gson.fromJson(corrections.toString(), new TypeToken<List<String>>(){}.getType());
     assertEquals(actual, expected);
 
+    JsonArray comments = assets.getAsJsonArray("comments");
+    expected = new ArrayList<String>(1);
+    expected.add("info:doi/10.1371/annotation/test_comment");
+    gson = new Gson();
+    actual = gson.fromJson(comments.toString(), new TypeToken<List<String>>(){}.getType());
+    assertEquals(actual, expected);
+
     // TODO: this really should live in AssetCrudServiceTest, but since we've already
     // set up a parent article, it's here for now.
     AssetIdentity assetIdentity = AssetIdentity.create("info:doi/10.1371/annotation/test_correction_1");
@@ -333,7 +340,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Annotation actualAnnotation = gson.fromJson(json, Annotation.class);
     assertEquals(actualAnnotation, correction);
 
-    // TODO: test comments once that is implemented.
     // TODO: test parent/child relationships between comments/corrections and replies.
   }
 }

@@ -32,6 +32,8 @@ public class AssetCollectionView implements JsonOutputView {
 
   private final List<String> correctionDois;
 
+  private final List<String> commentDois;
+
   public AssetCollectionView(Article article, List<Annotation> annotations) {
     Iterable<ArticleAsset> assets = article.getAssets();
     ImmutableListMultimap.Builder<String, ArticleAsset> buffer = ImmutableListMultimap.builder();
@@ -40,14 +42,9 @@ public class AssetCollectionView implements JsonOutputView {
     }
     this.assets = buffer.build();
 
-    // TODO: comments.  Right now only deal with correction annotations.
-    List correctionDoisMutable = new ArrayList<String>();
-    for (Annotation annotation : annotations) {
-      if (CORRECTION_TYPES.contains(annotation.getType())) {
-        correctionDoisMutable.add(annotation.getAnnotationUri());
-      }
-    }
-    correctionDois = Collections.unmodifiableList(correctionDoisMutable);
+    correctionDois = getAnnotationDoisByType(annotations, AnnotationType.FORMAL_CORRECTION,
+        AnnotationType.MINOR_CORRECTION, AnnotationType.RETRACTION);
+    commentDois = getAnnotationDoisByType(annotations, AnnotationType.COMMENT);
   }
 
   @Override
@@ -60,12 +57,46 @@ public class AssetCollectionView implements JsonOutputView {
       serialized.add(assetId, byFileId);
     }
 
-    // TODO: consider moving this into an AnnotationCollectionView if necessary.
-    JsonArray corrections = new JsonArray();
-    for (String correctionDoi : correctionDois) {
-      corrections.add(context.serialize(correctionDoi));
-    }
-    serialized.add("corrections", corrections);
+    serialized.add("corrections", serializeAsList(context, correctionDois));
+    serialized.add("comments", serializeAsList(context, commentDois));
     return serialized;
+  }
+
+  /**
+   * Returns a list of all the DOIs for annotations that have at least one of the given types.
+   *
+   * @param annotations input Annotation objects
+   * @param types any of these AnnotationTypes will be selected
+   * @return list of DOIs of Annotations that match
+   */
+  private List<String> getAnnotationDoisByType(List<Annotation> annotations, AnnotationType... types) {
+    List doisMutable = new ArrayList<String>();
+    for (Annotation annotation : annotations) {
+
+      // Not using a Set since most of the time, this method will only get called with a single
+      // annotation type.  For corrections, they'll be three.
+      for (AnnotationType type : types) {
+        if (type.equals(annotation.getType())) {
+          doisMutable.add(annotation.getAnnotationUri());
+          break;
+        }
+      }
+    }
+    return Collections.unmodifiableList(doisMutable);
+  }
+
+  /**
+   * Serializes the given List of Strings as a JSON array.
+   *
+   * @param context JsonSerializationContext
+   * @param strings Strings to serialize
+   * @return JsonArray containing the given Strings
+   */
+  private JsonArray serializeAsList(JsonSerializationContext context, List<String> strings) {
+    JsonArray results = new JsonArray();
+    for (String s : strings) {
+      results.add(context.serialize(s));
+    }
+    return results;
   }
 }
