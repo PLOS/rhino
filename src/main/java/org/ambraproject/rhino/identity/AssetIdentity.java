@@ -75,6 +75,6 @@ public class AssetIdentity extends DoiBasedIdentity {
    *     comment, or reply.
    */
   public boolean isAnnotation() {
-    return getIdentifier().startsWith("10.1371/annotation/");
+    return getIdentifier().startsWith("10.1371/annotation/") || getIdentifier().startsWith("10.1371/reply/");
   }
 }
