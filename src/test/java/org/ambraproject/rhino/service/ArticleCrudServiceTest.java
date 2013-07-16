@@ -64,6 +64,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -288,6 +289,39 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     correction.setBody("Test Correction One Body");
     hibernateTemplate.save(correction);
 
+    // Reply to the correction.
+    Annotation reply = new Annotation();
+    reply.setCreator(creator);
+    reply.setArticleID(article.getID());
+    reply.setAnnotationUri("info:doi/10.1371/reply/test_reply_level_1");
+    reply.setParentID(correction.getID());
+    reply.setType(AnnotationType.REPLY);
+    reply.setTitle("Test Reply Level 1");
+    reply.setBody("Test Reply Level 1 Body");
+    hibernateTemplate.save(reply);
+
+    // Another first-level reply to the correction.
+    Annotation reply2 = new Annotation();
+    reply2.setCreator(creator);
+    reply2.setArticleID(article.getID());
+    reply2.setAnnotationUri("info:doi/10.1371/reply/test_reply_2_level_1");
+    reply2.setParentID(correction.getID());
+    reply2.setType(AnnotationType.REPLY);
+    reply2.setTitle("Test Reply 2 Level 1");
+    reply2.setBody("Test Reply 2 Level 1 Body");
+    hibernateTemplate.save(reply2);
+
+    // Reply to the first reply.
+    Annotation reply3 = new Annotation();
+    reply3.setCreator(creator);
+    reply3.setArticleID(article.getID());
+    reply3.setAnnotationUri("info:doi/10.1371/reply/test_reply_3_level_2");
+    reply3.setParentID(reply.getID());
+    reply3.setType(AnnotationType.REPLY);
+    reply3.setTitle("Test Reply 3 Level 2");
+    reply3.setBody("Test Reply 3 Level 2 Body");
+    hibernateTemplate.save(reply3);
+
     Annotation correction2 = new Annotation();
     correction2.setCreator(creator);
     correction2.setArticleID(article.getID());
@@ -342,13 +376,36 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     gson = new Gson();
     AnnotationView actualAnnotation = gson.fromJson(json, AnnotationView.class);
     Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
+    replies.put(correction.getID(), Arrays.asList(reply, reply2));
+    replies.put(reply.getID(), Arrays.asList(reply3));
 
     // We can't use vanilla assertEquals because AnnotationView has a property, ID, set to
     // the underlying annotationID.  That property is not in the returned JSON, by design.
     assertAnnotationsEqual(actualAnnotation,
         new AnnotationView(correction, article.getDoi(), article.getTitle(), replies));
 
-    // TODO: test parent/child relationships between comments/corrections and replies.
+    // Test a comment with no replies.
+    assetIdentity = AssetIdentity.create("info:doi/10.1371/annotation/test_comment");
+    drr = new DummyResponseReceiver();
+    assetCrudService.readMetadata(drr, assetIdentity, MetadataFormat.JSON);
+    json = drr.read();
+    gson = new Gson();
+    actualAnnotation = gson.fromJson(json, AnnotationView.class);
+    replies = new HashMap<Long, List<Annotation>>();
+    assertAnnotationsEqual(actualAnnotation,
+        new AnnotationView(comment, article.getDoi(), article.getTitle(), replies));
+
+    // Retrieve a first-level reply to a correction directly (which has a child correction).
+    assetIdentity = AssetIdentity.create("info:doi/10.1371/reply/test_reply_level_1");
+    drr = new DummyResponseReceiver();
+    assetCrudService.readMetadata(drr, assetIdentity, MetadataFormat.JSON);
+    json = drr.read();
+    gson = new Gson();
+    actualAnnotation = gson.fromJson(json, AnnotationView.class);
+    replies = new HashMap<Long, List<Annotation>>();
+    replies.put(reply.getID(), Arrays.asList(reply3));
+    assertAnnotationsEqual(actualAnnotation,
+        new AnnotationView(reply, article.getDoi(), article.getTitle(), replies));
   }
 
   private void assertAnnotationsEqual(AnnotationView actual, AnnotationView expected) {
@@ -364,7 +421,14 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(actual.getCreatorFormattedName(), expected.getCreatorFormattedName());
     assertEquals(actual.getTitle(), expected.getTitle());
     assertEquals(actual.getType(), expected.getType());
+    assertEquals(actual.getTotalNumReplies(), expected.getTotalNumReplies());
 
-    // TODO: replies
+    // Don't test this one.  AnnotationView made the dubious choice of setting the last
+    // reply date to NOW() if there are no replies.
+//    assertEquals(actual.getLastReplyDate(), expected.getLastReplyDate());
+    assertEquals(actual.getReplies().length, expected.getReplies().length);
+    for (int i = 0; i < actual.getReplies().length; i++) {
+      assertAnnotationsEqual(actual.getReplies()[i], expected.getReplies()[i]);
+    }
   }
 }
