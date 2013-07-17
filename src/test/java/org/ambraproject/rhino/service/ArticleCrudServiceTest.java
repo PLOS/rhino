@@ -23,15 +23,24 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Annotation;
+import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
+import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
@@ -39,6 +48,7 @@ import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.views.AnnotationView;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -53,8 +63,12 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -253,4 +267,168 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }
 
+  @Test
+  public void testCommentsAndCorrections() throws Exception {
+    String doiStub = SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
+    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doi = articleId.getIdentifier();
+    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
+    TestInputStream input = TestInputStream.of(sampleData);
+    Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
+    assertArticleExistence(articleId, true);
+
+    UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
+    hibernateTemplate.save(creator);
+    Annotation correction = new Annotation();
+    correction.setCreator(creator);
+    correction.setArticleID(article.getID());
+    correction.setAnnotationUri("info:doi/10.1371/annotation/test_correction_1");
+    correction.setType(AnnotationType.FORMAL_CORRECTION);
+    correction.setTitle("Test Correction One");
+    correction.setBody("Test Correction One Body");
+    hibernateTemplate.save(correction);
+
+    // Reply to the correction.
+    Annotation reply = new Annotation();
+    reply.setCreator(creator);
+    reply.setArticleID(article.getID());
+    reply.setAnnotationUri("info:doi/10.1371/reply/test_reply_level_1");
+    reply.setParentID(correction.getID());
+    reply.setType(AnnotationType.REPLY);
+    reply.setTitle("Test Reply Level 1");
+    reply.setBody("Test Reply Level 1 Body");
+    hibernateTemplate.save(reply);
+
+    // Another first-level reply to the correction.
+    Annotation reply2 = new Annotation();
+    reply2.setCreator(creator);
+    reply2.setArticleID(article.getID());
+    reply2.setAnnotationUri("info:doi/10.1371/reply/test_reply_2_level_1");
+    reply2.setParentID(correction.getID());
+    reply2.setType(AnnotationType.REPLY);
+    reply2.setTitle("Test Reply 2 Level 1");
+    reply2.setBody("Test Reply 2 Level 1 Body");
+    hibernateTemplate.save(reply2);
+
+    // Reply to the first reply.
+    Annotation reply3 = new Annotation();
+    reply3.setCreator(creator);
+    reply3.setArticleID(article.getID());
+    reply3.setAnnotationUri("info:doi/10.1371/reply/test_reply_3_level_2");
+    reply3.setParentID(reply.getID());
+    reply3.setType(AnnotationType.REPLY);
+    reply3.setTitle("Test Reply 3 Level 2");
+    reply3.setBody("Test Reply 3 Level 2 Body");
+    hibernateTemplate.save(reply3);
+
+    Annotation correction2 = new Annotation();
+    correction2.setCreator(creator);
+    correction2.setArticleID(article.getID());
+    correction2.setAnnotationUri("info:doi/10.1371/annotation/test_correction_2");
+    correction2.setType(AnnotationType.MINOR_CORRECTION);
+    correction2.setTitle("Test Correction Two");
+    correction2.setBody("Test Correction Two Body");
+    hibernateTemplate.save(correction2);
+
+    Annotation comment = new Annotation();
+    comment.setCreator(creator);
+    comment.setArticleID(article.getID());
+    comment.setAnnotationUri("info:doi/10.1371/annotation/test_comment");
+    comment.setType(AnnotationType.COMMENT);
+    comment.setTitle("Test Comment");
+    comment.setBody("Test Comment Body");
+    hibernateTemplate.save(comment);
+
+    DummyResponseReceiver drr = new DummyResponseReceiver();
+    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON);
+    String json = drr.read();
+    assertTrue(json.length() > 0);
+
+    JsonParser parser = new JsonParser();
+    JsonObject obj = parser.parse(json).getAsJsonObject();
+    assertEquals(obj.get("doi").getAsString(), "info:doi/10.1371/journal.pone.0038869");
+    JsonObject assets = obj.getAsJsonObject("assets");
+    JsonArray corrections = assets.getAsJsonArray("corrections");
+
+    List<String> expected = new ArrayList<String>(2);
+    expected.add("info:doi/10.1371/annotation/test_correction_1");
+    expected.add("info:doi/10.1371/annotation/test_correction_2");
+    Gson gson = new Gson();
+    List<String> actual = gson.fromJson(corrections.toString(), new TypeToken<List<String>>(){}.getType());
+    assertEquals(actual, expected);
+
+    JsonArray comments = assets.getAsJsonArray("comments");
+    expected = new ArrayList<String>(1);
+    expected.add("info:doi/10.1371/annotation/test_comment");
+    gson = new Gson();
+    actual = gson.fromJson(comments.toString(), new TypeToken<List<String>>(){}.getType());
+    assertEquals(actual, expected);
+
+    // TODO: this really should live in AssetCrudServiceTest, but since we've already
+    // set up a parent article, it's here for now.
+    AssetIdentity assetIdentity = AssetIdentity.create("info:doi/10.1371/annotation/test_correction_1");
+    drr = new DummyResponseReceiver();
+    assetCrudService.readMetadata(drr, assetIdentity, MetadataFormat.JSON);
+    json = drr.read();
+    assertTrue(json.length() > 0);
+
+    gson = new Gson();
+    AnnotationView actualAnnotation = gson.fromJson(json, AnnotationView.class);
+    Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
+    replies.put(correction.getID(), Arrays.asList(reply, reply2));
+    replies.put(reply.getID(), Arrays.asList(reply3));
+
+    // We can't use vanilla assertEquals because AnnotationView has a property, ID, set to
+    // the underlying annotationID.  That property is not in the returned JSON, by design.
+    assertAnnotationsEqual(actualAnnotation,
+        new AnnotationView(correction, article.getDoi(), article.getTitle(), replies));
+
+    // Test a comment with no replies.
+    assetIdentity = AssetIdentity.create("info:doi/10.1371/annotation/test_comment");
+    drr = new DummyResponseReceiver();
+    assetCrudService.readMetadata(drr, assetIdentity, MetadataFormat.JSON);
+    json = drr.read();
+    gson = new Gson();
+    actualAnnotation = gson.fromJson(json, AnnotationView.class);
+    replies = new HashMap<Long, List<Annotation>>();
+    assertAnnotationsEqual(actualAnnotation,
+        new AnnotationView(comment, article.getDoi(), article.getTitle(), replies));
+
+    // Retrieve a first-level reply to a correction directly (which has a child correction).
+    assetIdentity = AssetIdentity.create("info:doi/10.1371/reply/test_reply_level_1");
+    drr = new DummyResponseReceiver();
+    assetCrudService.readMetadata(drr, assetIdentity, MetadataFormat.JSON);
+    json = drr.read();
+    gson = new Gson();
+    actualAnnotation = gson.fromJson(json, AnnotationView.class);
+    replies = new HashMap<Long, List<Annotation>>();
+    replies.put(reply.getID(), Arrays.asList(reply3));
+    assertAnnotationsEqual(actualAnnotation,
+        new AnnotationView(reply, article.getDoi(), article.getTitle(), replies));
+  }
+
+  private void assertAnnotationsEqual(AnnotationView actual, AnnotationView expected) {
+    assertEquals(actual.getAnnotationUri(), expected.getAnnotationUri());
+    assertEquals(actual.getArticleDoi(), expected.getArticleDoi());
+    assertEquals(actual.getArticleTitle(), expected.getArticleTitle());
+    assertEquals(actual.getParentID(), expected.getParentID());
+    assertEquals(actual.getBody(), expected.getBody());
+    assertEquals(actual.getCitation(), expected.getCitation());
+    assertEquals(actual.getCompetingInterestStatement(), expected.getCompetingInterestStatement());
+    assertEquals(actual.getCreatorID(), expected.getCreatorID());
+    assertEquals(actual.getCreatorDisplayName(), expected.getCreatorDisplayName());
+    assertEquals(actual.getCreatorFormattedName(), expected.getCreatorFormattedName());
+    assertEquals(actual.getTitle(), expected.getTitle());
+    assertEquals(actual.getType(), expected.getType());
+    assertEquals(actual.getTotalNumReplies(), expected.getTotalNumReplies());
+
+    // Don't test this one.  AnnotationView made the dubious choice of setting the last
+    // reply date to NOW() if there are no replies.
+//    assertEquals(actual.getLastReplyDate(), expected.getLastReplyDate());
+    assertEquals(actual.getReplies().length, expected.getReplies().length);
+    for (int i = 0; i < actual.getReplies().length; i++) {
+      assertAnnotationsEqual(actual.getReplies()[i], expected.getReplies()[i]);
+    }
+  }
 }

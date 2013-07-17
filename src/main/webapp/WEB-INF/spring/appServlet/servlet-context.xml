@@ -101,6 +101,7 @@
   <beans:bean id="articleClassifier" class="org.ambraproject.service.article.AIArticleClassifier">
     <beans:property name="httpClient" ref="httpClient"/>
     <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>
+    <beans:property name="thesaurus" value="${ambra.services.ai.thesaurus}"/>
   </beans:bean>
 
   <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"

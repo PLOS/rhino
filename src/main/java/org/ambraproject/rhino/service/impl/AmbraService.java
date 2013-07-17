@@ -216,4 +216,27 @@ public abstract class AmbraService {
     }
   }
 
+  /**
+   * Loads a single entity from the datastore based on some unique property.
+   *
+   * @param hql Hibernate Query Language string specifying the select.  Should have a single parameter
+   *     corresponding to id.  Example: "from Foo where fooID = ?"
+   * @param id unique identifier for the entity
+   * @param <S> type of the identifier
+   * @param <T> type of the entity being queried/returned
+   * @return the retrieved entity
+   * @throws RestClientException if no entity is found matching the given ID
+   */
+  protected <S, T> T findSingleEntity(String hql, S id) {
+    List<T> results = hibernateTemplate.find(hql, id);
+    if (results.isEmpty()) {
+      String message = "Item not found at the provided ID: " + id;
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+    } else if (results.size() > 1) {
+
+      // Should never happen.
+      throw new RuntimeException("Multiple entities found for " + id);
+    }
+    return results.get(0);
+  }
 }
