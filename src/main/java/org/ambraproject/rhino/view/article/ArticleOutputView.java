@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.Annotation;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
@@ -25,7 +24,6 @@ import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -46,12 +44,10 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final Article article;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
-  private final ImmutableList<Annotation> annotations;
 
-  private ArticleOutputView(Article article, Collection<Annotation> annotations, Collection<Syndication> syndications,
+  private ArticleOutputView(Article article, Collection<Syndication> syndications,
       Collection<Pingback> pingbacks) {
     this.article = Preconditions.checkNotNull(article);
-    this.annotations = (annotations == null) ? ImmutableList.<Annotation>of() : ImmutableList.copyOf(annotations);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
   }
@@ -73,7 +69,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    * @param pingbackReadService
    * @return view of the article and associated data
    */
-  public static ArticleOutputView create(Article article, List<Annotation> annotations,
+  public static ArticleOutputView create(Article article,
                                          SyndicationService syndicationService,
                                          PingbackReadService pingbackReadService) {
     Collection<Syndication> syndications;
@@ -87,7 +83,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       syndications = ImmutableList.of();
     }
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, annotations, syndications, pingbacks);
+    return new ArticleOutputView(article, syndications, pingbacks);
   }
 
   @Override
@@ -124,7 +120,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       serialized.add(MemberNames.SYNDICATIONS, syndications);
     }
     serializePingbackDigest(serialized, context);
-    serialized.add("assets", context.serialize(new AssetCollectionView(article, annotations)));
+    serialized.add("assets", context.serialize(new AssetCollectionView(article)));
 
     Set<Journal> journals = article.getJournals();
     KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
