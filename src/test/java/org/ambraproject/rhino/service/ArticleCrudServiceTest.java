@@ -23,6 +23,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
+import com.google.gson.Gson;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -53,6 +54,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -227,5 +229,27 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     articleCrudService.listDois(response, MetadataFormat.JSON, ArticleCriteria.create(null, null));
     DoiList doiList = entityGson.fromJson(response.read(), DoiList.class);
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
+  }
+
+  @Test
+  public void testArticleType() throws Exception {
+    String doiStub = SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
+    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doi = articleId.getIdentifier();
+    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
+    TestInputStream input = TestInputStream.of(sampleData);
+    Article article = articleCrudService.write(input, Optional.of(articleId),
+        DoiBasedCrudService.WriteMode.CREATE_ONLY);
+
+    DummyResponseReceiver drr = new DummyResponseReceiver();
+    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON);
+    String json = drr.read();
+    assertTrue(json.length() > 0);
+    Gson gson = new Gson();
+    Map<?, ?> articleMap = gson.fromJson(json, Map.class);
+    assertEquals(articleMap.get("doi"), articleId.getKey());
+    assertEquals(articleMap.get("title"), article.getTitle());
+    assertEquals(articleMap.get("articleType"), "Research Article");
   }
 }

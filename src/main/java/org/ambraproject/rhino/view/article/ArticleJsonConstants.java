@@ -73,6 +73,7 @@ public class ArticleJsonConstants {
     public static final String SYNDICATION_TARGET = "target";
     public static final String SYNDICATION_STATUS = "status";
     public static final String PINGBACKS = "pingbacks";
+    public static final String ARTICLE_TYPE = "articleType";
   }
 
   /**

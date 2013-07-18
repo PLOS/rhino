@@ -21,6 +21,8 @@ import org.ambraproject.rhino.view.asset.AssetCollectionView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
+import org.ambraproject.util.Rhino;
+import org.ambraproject.views.article.ArticleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,6 +107,8 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
+    ArticleType articleType = Rhino.getKnownArticleType(article.getTypes());
+    serialized.addProperty(MemberNames.ARTICLE_TYPE, articleType.getHeading());
 
     int articleState = article.getState();
     String pubState = getPublicationStateName(articleState);
