@@ -21,8 +21,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.Annotation;
-import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -33,7 +31,6 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
-import org.ambraproject.views.AnnotationView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -51,9 +48,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
 
