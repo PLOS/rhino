@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -35,6 +36,7 @@ import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
@@ -234,4 +236,8 @@ public class RhinoConfiguration extends BaseConfiguration {
     return new JournalReadServiceImpl();
   }
 
+  @Bean
+  public AnnotationCrudService annotationCrudService() {
+    return new AnnotationCrudServiceImpl();
+  }
 }

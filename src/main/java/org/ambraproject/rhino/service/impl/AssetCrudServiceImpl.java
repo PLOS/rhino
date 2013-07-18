@@ -280,54 +280,16 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     assert format == MetadataFormat.JSON;
-    if (id.isAnnotation()) {
-      writeJson(receiver, buildAnnotationView(id));
-    } else {
-      @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
-          hibernateTemplate.findByCriteria(DetachedCriteria
-              .forClass(ArticleAsset.class)
-              .add(Restrictions.eq("doi", id.getKey()))
-              .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-          ));
-      if (assets.isEmpty()) {
-        throw reportNotFound(id);
-      }
-      writeJson(receiver, new AssetFileCollectionView(assets));
+    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (assets.isEmpty()) {
+      throw reportNotFound(id);
     }
-  }
-
-  /**
-   * Loads an annotation and builds a serializable view of it.
-   *
-   * @param id AssetIdentity identifying the annotation
-   * @return view object reflecting the annotation
-   */
-  private AnnotationView buildAnnotationView(AssetIdentity id) {
-    Annotation annotation = findSingleEntity("from Annotation where annotationURI = ?", id.getKey());
-    Article article = findSingleEntity("from Article where articleID = ?", annotation.getArticleID());
-    Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(),
-        new HashMap<Long, List<Annotation>>());
-    return new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies);
-  }
-
-  /**
-   * Recursively loads all child replies for a given annotation.  That is, loads the full reply
-   * tree given an annotation that is the root.
-   *
-   * @param annotationId specifies the root annotation
-   * @param results the partial results during the recursion.  The initial caller should pass
-   *     in an empty map.
-   * @return a map from annotationID to list of child replies
-   */
-  private Map<Long, List<Annotation>> findAnnotationReplies(long annotationId, Map<Long, List<Annotation>> results) {
-    List<Annotation> children = hibernateTemplate.find("from Annotation where parentID = ?", annotationId);
-    if (children != null && !children.isEmpty()) {
-      results.put(annotationId, children);
-      for (Annotation child : children) {
-        results = findAnnotationReplies(child.getID(), results);
-      }
-    }
-    return results;
+    writeJson(receiver, new AssetFileCollectionView(assets));
   }
 
   /**

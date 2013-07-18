@@ -22,9 +22,11 @@ import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.queue.MessageSender;
 import org.ambraproject.queue.MessageServiceImpl;
+import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.DummyMessageSender;
+import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
@@ -145,5 +147,10 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public ArticleStateService articleStateService() {
     return new ArticleStateServiceImpl();
+  }
+
+  @Bean
+  public AnnotationCrudService annotationCrudService() {
+    return new AnnotationCrudServiceImpl();
   }
 }

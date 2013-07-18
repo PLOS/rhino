@@ -20,6 +20,7 @@ package org.ambraproject.rhino;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.config.TestConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -200,4 +202,31 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
     return journal;
   }
 
+  protected static TestInputStream alterStream(InputStream stream, String from, String to) throws IOException {
+    String content;
+    try {
+      content = IOUtils.toString(stream, "UTF-8");
+    } finally {
+      stream.close();
+    }
+    content = content.replace(from, to);
+    return TestInputStream.of(content);
+  }
+
+  /**
+   * Adds journal entities for the test article set.
+   */
+  protected void addExpectedJournals() {
+    final ImmutableSet<String> testCaseEissns = ImmutableSet.of("1932-6203");
+
+    for (String eissn : testCaseEissns) {
+      List<?> existing = hibernateTemplate.findByCriteria(DetachedCriteria
+          .forClass(Journal.class)
+          .add(Restrictions.eq("eIssn", eissn)));
+      if (!existing.isEmpty())
+        continue;
+      Journal journal = createDummyJournal(eissn);
+      hibernateTemplate.save(journal);
+    }
+  }
 }
