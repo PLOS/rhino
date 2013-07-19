@@ -63,9 +63,9 @@ public class AnnotationCrudController extends DoiBasedCrudController {
   @Override
   protected String getIdentifier(HttpServletRequest request) {
     String namespacePrefix;
-    if (request.getRequestURI().startsWith(CORRECTION_NAMESPACE)) {
+    if (request.getRequestURI().contains(CORRECTION_NAMESPACE)) {
       namespacePrefix = CORRECTION_NAMESPACE;
-    } else if (request.getRequestURI().startsWith(COMMENT_NAMESPACE)) {
+    } else if (request.getRequestURI().contains(COMMENT_NAMESPACE)) {
       namespacePrefix = COMMENT_NAMESPACE;
     } else {
       throw new IllegalArgumentException("Unknown namespace prefix: " + request.getRequestURI());
