@@ -38,4 +38,17 @@ public interface AnnotationCrudService {
    */
   public void readCorrections(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)
     throws IOException;
+
+  /**
+   * Forwards all comments, and any replies associated with them, for a given article
+   * to the receiver.  The comments are returned as a list.  Each comment has a
+   * "replies" list that contains any replies (recursively).
+   *
+   * @param receiver wraps the response object
+   * @param articleIdentity identifies the article
+   * @param format must currently be MetadataFormat.JSON
+   * @throws IOException
+   */
+  public void readComments(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)
+      throws IOException;
 }

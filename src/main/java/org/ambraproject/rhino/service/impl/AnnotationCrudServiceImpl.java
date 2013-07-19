@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * {@inheritDoc}
@@ -46,6 +47,28 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    */
   public void readCorrections(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
       throws IOException {
+    readAnnotations(receiver, id, format, CORRECTION_TYPES);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void readComments(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+      throws IOException {
+    readAnnotations(receiver, id, format, Sets.immutableEnumSet(AnnotationType.COMMENT));
+  }
+
+  /**
+   * Forwards annotations matching the given types to the receiver.
+   *
+   * @param receiver wraps the response object
+   * @param id identifies the article
+   * @param format must currently be MetadataFormat.JSON
+   * @param annotationTypes set of annotation types to select
+   * @throws IOException
+   */
+  private void readAnnotations(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format,
+      Set<AnnotationType> annotationTypes) throws IOException {
     if (format != MetadataFormat.JSON) {
       throw new IllegalArgumentException("Only JSON is supported");
     }
@@ -59,7 +82,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     // we want to return about a given annotation.  It also handles nested replies.
     List<AnnotationView> results = new ArrayList<AnnotationView>(annotations.size());
     for (Annotation annotation : annotations) {
-      if (CORRECTION_TYPES.contains(annotation.getType())) {
+      if (annotationTypes.contains(annotation.getType())) {
         Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), annotations,
             new HashMap<Long, List<Annotation>>());
         results.add(new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies));

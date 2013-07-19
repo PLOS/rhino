@@ -148,7 +148,16 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     assertAnnotationsEqual(actualAnnotations.get(1),
         new AnnotationView(correction2, article.getDoi(), article.getTitle(), replies));
 
-    // TODO: test comments
+    // Comment with no replies.
+    drr = new DummyResponseReceiver();
+    annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
+    json = drr.read();
+    gson = new Gson();
+    List<AnnotationView> actualComments = gson.fromJson(json, new TypeToken<List<AnnotationView>>(){}.getType());
+    assertEquals(actualComments.size(), 1);
+    replies = new HashMap<Long, List<Annotation>>();
+    assertAnnotationsEqual(actualComments.get(0),
+        new AnnotationView(comment, article.getDoi(), article.getTitle(), replies));
   }
 
   private void assertAnnotationsEqual(AnnotationView actual, AnnotationView expected) {
