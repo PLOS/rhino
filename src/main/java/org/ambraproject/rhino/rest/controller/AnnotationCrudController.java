@@ -31,23 +31,46 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Controller that handles CRUD for article corrections.
+ * Controller that handles CRUD for article corrections and comments.
+ * Although the API presents these entities as unrelated, article-level things,
+ * they currently share a common backend implementation, which is why they're
+ * in the same controller (and service).
  *
  * TODO: CUD
  */
 @Controller
-public class CorrectionCrudController extends DoiBasedCrudController {
+public class AnnotationCrudController extends DoiBasedCrudController {
 
   private static final String CORRECTION_ROOT = "/corrections";
   private static final String CORRECTION_NAMESPACE = CORRECTION_ROOT + '/';
   private static final String CORRECTION_TEMPLATE = CORRECTION_NAMESPACE + "**";
 
+  private static final String COMMENT_ROOT = "/comments";
+  private static final String COMMENT_NAMESPACE = COMMENT_ROOT + '/';
+  private static final String COMMENT_TEMPLATE = COMMENT_NAMESPACE + "**";
+
   @Autowired
   private AnnotationCrudService annotationCrudService;
 
+  // Bit of a hack: since this controller class handles two namespace prefixes,
+  // we don't use getNamespacePrefix() and instead override getIdentifier().
+
   @Override
   protected final String getNamespacePrefix() {
-    return CORRECTION_NAMESPACE;
+    throw new IllegalStateException("Should never be called");
+  }
+
+  @Override
+  protected String getIdentifier(HttpServletRequest request) {
+    String namespacePrefix;
+    if (request.getRequestURI().startsWith(CORRECTION_NAMESPACE)) {
+      namespacePrefix = CORRECTION_NAMESPACE;
+    } else if (request.getRequestURI().startsWith(COMMENT_NAMESPACE)) {
+      namespacePrefix = COMMENT_NAMESPACE;
+    } else {
+      throw new IllegalArgumentException("Unknown namespace prefix: " + request.getRequestURI());
+    }
+    return getFullPathVariable(request, namespacePrefix);
   }
 
   @Override
@@ -67,12 +90,33 @@ public class CorrectionCrudController extends DoiBasedCrudController {
    * @throws IOException
    */
   @RequestMapping(value = CORRECTION_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
+  public void readCorrections(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     annotationCrudService.readCorrections(receiver, id, mf);
+  }
+
+  /**
+   * Handles GET/read requests for all the comments associated with an article.
+   * The response will be a list of objects representing comments.  Each comment
+   * has a "replies" list that contains any replies (recursively).
+   *
+   * @param request HttpServletRequest
+   * @param response HttpServletResponse
+   * @param format must be "json" currently
+   * @throws FileStoreException
+   * @throws IOException
+   */
+  @RequestMapping(value = COMMENT_TEMPLATE, method = RequestMethod.GET)
+  public void readComments(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws FileStoreException, IOException {
+    ArticleIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    annotationCrudService.readComments(receiver, id, mf);
   }
 }
