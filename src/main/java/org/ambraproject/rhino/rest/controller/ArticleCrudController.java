@@ -24,13 +24,16 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
+import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,6 +65,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String PUB_STATE_PARAM = "state";
   private static final String SYND_STATUS_PARAM = "syndication";
 
+  @Autowired
+  private AnnotationCrudService annotationCrudService;
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
@@ -112,14 +117,41 @@ public class ArticleCrudController extends ArticleSpaceController {
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 
+  /**
+   * Retrieves either metadata about an article (default), or entities associated with an
+   * article depending on the parameters.
+   *
+   * @param request HttpServletRequest
+   * @param response HttpServletResponse
+   * @param format must be MetadataFormat.JSON
+   * @param comments if present, the response will be a list of objects representing
+   *     comments associated with the article, instead of the article metadata.
+   *     Each comment has a "replies" list that contains any replies (recursively).
+   * @param corrections if present, the response will be a list of objects representing
+   *     corrections associated with the article, instead of the article metadata.
+   *     The structure of corrections are similar to commments--they can have any number
+   *     of recursively nested replies.
+   * @throws FileStoreException
+   * @throws IOException
+   */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format,
+                   @RequestParam(value = "comments", required = false) String comments,
+                   @RequestParam(value = "corrections", required = false) String corrections)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    articleCrudService.readMetadata(receiver, id, mf);
+    if (booleanParameter(comments) && booleanParameter(corrections)) {
+      throw new RestClientException("Cannot specify both comments and corrections", HttpStatus.BAD_REQUEST);
+    } else if (booleanParameter(comments)) {
+      annotationCrudService.readComments(receiver, id, mf);
+    } else if (booleanParameter(corrections)) {
+      annotationCrudService.readCorrections(receiver, id, mf);
+    } else {
+      articleCrudService.readMetadata(receiver, id, mf);
+    }
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
