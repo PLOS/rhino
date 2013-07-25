@@ -6,7 +6,7 @@
   "rights":
   ". This is an open-access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the Creative Commons CC0 public domain dedication.",
   "language":"en","format":"text/xml","pages":"1-11","eLocationId":
-  "e19216","strkImgURI":"","date":"May 6, 2011 12:00:00 AM","volume":"6",
+  "e19216","strkImgURI":"","date":"2011-05-06T07:00:00Z","volume":"6",
   "issue":"5","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0019216","collaborativeAuthors":[],
@@ -619,3 +619,4 @@
       "surnames":"El-Cheikh","suffix":""}],"editors":[{"fullName":
       "David Joseph Diemert","givenNames":"David Joseph","surnames":
       "Diemert","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

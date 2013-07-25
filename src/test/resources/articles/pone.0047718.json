@@ -6,7 +6,7 @@
   "rights":
   "Grujić et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-8","eLocationId":"e47718",
-  "strkImgURI":"","date":"Nov 19, 2012 12:00:00 AM","volume":"7","issue":
+  "strkImgURI":"","date":"2012-11-19T08:00:00Z","volume":"7","issue":
   "11","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0047718","collaborativeAuthors":[],
@@ -1452,3 +1452,4 @@
       "Arne","surnames":"Traulsen","suffix":""}],"editors":[{"fullName":
       "Matjaz Perc","givenNames":"Matjaz","surnames":"Perc","suffix":""}],
   "journals":[{"eIssn":"1932-6203"}]}
+

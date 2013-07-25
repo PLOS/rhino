@@ -18,14 +18,8 @@
 
 package org.ambraproject.rhino.config;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
-import org.ambraproject.models.AmbraEntity;
-import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -46,20 +40,7 @@ import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
-import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.rhino.view.article.ArticleOutputView;
-import org.ambraproject.rhino.view.article.ArticleStateView;
-import org.ambraproject.rhino.view.article.ArticleViewList;
-import org.ambraproject.rhino.view.article.DoiList;
-import org.ambraproject.rhino.view.asset.AssetCollectionView;
-import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
-import org.ambraproject.rhino.view.journal.IssueOutputView;
-import org.ambraproject.rhino.view.journal.JournalListView;
-import org.ambraproject.rhino.view.journal.JournalNonAssocView;
-import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.ambraproject.rhino.view.journal.VolumeListView;
-import org.ambraproject.rhino.view.journal.VolumeOutputView;
+import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
 import org.apache.commons.httpclient.HttpClient;
@@ -120,47 +101,7 @@ public class RhinoConfiguration extends BaseConfiguration {
    */
   @Bean
   public Gson entityGson() {
-    GsonBuilder builder = new GsonBuilder();
-    builder.setPrettyPrinting();
-
-    ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
-        ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, AssetCollectionView.class,
-        AssetFileCollectionView.class, JournalListView.class,
-        JournalNonAssocView.class, JournalNonAssocView.ListView.class, VolumeListView.class,
-        VolumeOutputView.class, VolumeOutputView.ListView.class, JournalOutputView.class,
-        IssueOutputView.class, IssueOutputView.ListView.class);
-    for (Class<? extends JsonOutputView> viewClass : outputViews) {
-      builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
-    }
-
-    builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
-    builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
-
-    builder.setExclusionStrategies(
-        new ExclusionStrategy() {
-          @Override
-          public boolean shouldSkipField(FieldAttributes f) {
-            final String name = f.getName();
-            if ("ID".equals(name) /* internal to the database */) {
-              return true;
-            }
-
-            // Prevent infinite recursion on ArticleRelationship.parentArticle
-            if (ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass())
-                && AmbraEntity.class.isAssignableFrom(f.getDeclaredClass())) {
-              return true;
-            }
-
-            return false;
-          }
-
-          @Override
-          public boolean shouldSkipClass(Class<?> clazz) {
-            return false;
-          }
-        }
-    );
-    return builder.create();
+    return JsonAdapterUtil.buildGson();
   }
 
   @Bean

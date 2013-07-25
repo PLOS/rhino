@@ -6,7 +6,7 @@
   "rights":
   "Wilson, IPTc Taskforce. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-12","eLocationId":
-  "e16976","strkImgURI":"","date":"Feb 14, 2011 12:00:00 AM","volume":"6",
+  "e16976","strkImgURI":"","date":"2011-02-14T08:00:00Z","volume":"6",
   "issue":"2","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0016976","collaborativeAuthors":[
@@ -532,3 +532,4 @@
       "Anne L. Wilson","givenNames":"Anne L.","surnames":"Wilson","suffix":
       ""}],"editors":[{"fullName":"David Diemert","givenNames":"David",
       "surnames":"Diemert","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

@@ -6,7 +6,7 @@
   "rights":
   "Griffiths et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-13","eLocationId":
-  "e12008","strkImgURI":"","date":"Aug 2, 2010 12:00:00 AM","volume":"5",
+  "e12008","strkImgURI":"","date":"2010-08-02T07:00:00Z","volume":"5",
   "issue":"8","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0012008","collaborativeAuthors":[],
@@ -739,3 +739,4 @@
       "givenNames":"Angela","surnames":"Mead","suffix":""}],"editors":[{
       "fullName":"Brian Gratwicke","givenNames":"Brian","surnames":
       "Gratwicke","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

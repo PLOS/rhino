@@ -5,7 +5,7 @@
   "rights":
   "Marchisio, Stelling. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-13","eLocationId":
-  "e1001083","strkImgURI":"","date":"Feb 17, 2011 12:00:00 AM","volume":
+  "e1001083","strkImgURI":"","date":"2011-02-17T08:00:00Z","volume":
   "7","issue":"2","journal":"PLoS Comput Biol","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pcbi.1001083","collaborativeAuthors":[],
@@ -1267,3 +1267,4 @@
       "Jörg","surnames":"Stelling","suffix":""}],"editors":[{"fullName":
       "Jason A. Papin","givenNames":"Jason A.","surnames":"Papin","suffix":
       ""}],"journals":[{"eIssn":"1553-7358"}]}
+

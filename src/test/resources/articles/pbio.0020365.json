@@ -6,7 +6,7 @@
   "rights":
   ". This is an open-access article distributed under the terms of the Creative Commons Public Domain Declaration, which stipulates that, once placed in the public domain, this work may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
   "language":"en","format":"text/xml","eLocationId":"e365","strkImgURI":"",
-  "date":"Oct 26, 2004 12:00:00 AM","volume":"2","issue":"11","journal":
+  "date":"2004-10-26T07:00:00Z","volume":"2","issue":"11","journal":
   "PLoS Biol","publisherLocation":"San Francisco, USA","publisherName":
   "Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pbio.0020365","collaborativeAuthors":[],
@@ -362,3 +362,4 @@
       "Wise","suffix":""}],"editors":[{"fullName":"Wolfram Schultz",
       "givenNames":"","surnames":"Wolfram Schultz","suffix":""}],"journals":[
     {"eIssn":"1545-7885"}]}
+

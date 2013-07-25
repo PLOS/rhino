@@ -6,7 +6,7 @@
   "rights":
   "Fluge et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-13","eLocationId":
-  "e26358","strkImgURI":"","date":"Oct 19, 2011 12:00:00 AM","volume":"6",
+  "e26358","strkImgURI":"","date":"2011-10-19T07:00:00Z","volume":"6",
   "issue":"10","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0026358","collaborativeAuthors":[],
@@ -535,3 +535,4 @@
       "Olav Mella","givenNames":"Olav","surnames":"Mella","suffix":""}],
   "editors":[{"fullName":"Markus Reindl","givenNames":"Markus","surnames":
       "Reindl","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

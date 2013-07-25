@@ -6,7 +6,7 @@
   "rights":
   "Felisberto-Rodrigues et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-10","eLocationId":
-  "e45847","strkImgURI":"","date":"Oct 8, 2012 12:00:00 AM","volume":"7",
+  "e45847","strkImgURI":"","date":"2012-10-08T07:00:00Z","volume":"7",
   "issue":"10","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0045847","collaborativeAuthors":[],
@@ -1793,3 +1793,4 @@
   "editors":[{"fullName":"Narayanaswamy Srinivasan","givenNames":
       "Narayanaswamy","surnames":"Srinivasan","suffix":""}],"journals":[{
       "eIssn":"1932-6203"}]}
+

@@ -6,7 +6,7 @@
   "rights":
   "Häussler, Becker. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-8","eLocationId":
-  "e1000166","strkImgURI":"","date":"Sep 26, 2008 12:00:00 AM","volume":
+  "e1000166","strkImgURI":"","date":"2008-09-26T07:00:00Z","volume":
   "4","issue":"9","journal":"PLoS Pathog","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.ppat.1000166","collaborativeAuthors":[],
@@ -593,3 +593,4 @@
       "Tanja","surnames":"Becker","suffix":""}],"editors":[{"fullName":
       "Frederick M. Ausubel","givenNames":"Frederick M.","surnames":
       "Ausubel","suffix":""}],"journals":[{"eIssn":"1553-7374"}]}
+

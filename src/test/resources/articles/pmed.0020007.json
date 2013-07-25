@@ -6,7 +6,7 @@
   "rights":
   "Margaret Gatz. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.",
   "language":"en","format":"text/xml","eLocationId":"e7","strkImgURI":"",
-  "date":"Jan 25, 2005 12:00:00 AM","volume":"2","issue":"1","journal":
+  "date":"2005-01-25T08:00:00Z","volume":"2","issue":"1","journal":
   "PLoS Med","publisherLocation":"San Francisco, USA","publisherName":
   "Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pmed.0020007","collaborativeAuthors":[],
@@ -57,3 +57,4 @@
       "info:doi/10.1371/journal.pmed.0020031","type":"companion"}],"authors":
   [{"fullName":"Margaret Gatz","givenNames":"Margaret","surnames":"Gatz",
       "suffix":""}],"editors":[],"journals":[{"eIssn":"1549-1676"}]}
+

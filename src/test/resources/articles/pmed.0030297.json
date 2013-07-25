@@ -5,7 +5,7 @@
   "rights":
   "McGonagle and McDermott. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-7","eLocationId":"e297",
-  "strkImgURI":"","date":"Aug 29, 2006 12:00:00 AM","volume":"3","issue":
+  "strkImgURI":"","date":"2006-08-29T07:00:00Z","volume":"3","issue":
   "8","journal":"PLoS Med","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pmed.0030297","collaborativeAuthors":[],
@@ -312,3 +312,4 @@
       "Michael F McDermott","givenNames":"Michael F","surnames":
       "McDermott","suffix":""}],"editors":[],"journals":[{"eIssn":
       "1549-1676"}]}
+

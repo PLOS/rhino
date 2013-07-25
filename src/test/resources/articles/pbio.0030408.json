@@ -3,7 +3,7 @@
   "1545-7885","state":1,"archiveName":"pbio.0030408.zip","rights":
   "Public Library of Science. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","eLocationId":"e408","strkImgURI":"",
-  "date":"Oct 18, 2005 12:00:00 AM","volume":"3","issue":"11","journal":
+  "date":"2005-10-18T07:00:00Z","volume":"3","issue":"11","journal":
   "PLoS Biol","publisherLocation":"San Francisco, USA","publisherName":
   "Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pbio.0030408","collaborativeAuthors":[],
@@ -35,3 +35,4 @@
       "otherArticleDoi":"info:doi/10.1371/journal.pbio.0030362","type":
       "companion"}],"authors":[],"editors":[],"journals":[{"eIssn":
       "1545-7885"}]}
+

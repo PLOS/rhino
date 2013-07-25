@@ -6,7 +6,7 @@
   "rights":
   "Jung et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-14","eLocationId":"e45",
-  "strkImgURI":"","date":"Feb 15, 2008 12:00:00 AM","volume":"4","issue":
+  "strkImgURI":"","date":"2008-02-15T08:00:00Z","volume":"4","issue":
   "2","journal":"PLoS Pathog","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.ppat.0040045","collaborativeAuthors":[],
@@ -883,3 +883,4 @@
       "James W","surnames":"Kronstad","suffix":""}],"editors":[{"fullName":
       "Hiten D Madhani","givenNames":"Hiten D","surnames":"Madhani","suffix":
       ""}],"journals":[{"eIssn":"1553-7374"}]}
+

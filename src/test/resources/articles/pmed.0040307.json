@@ -6,7 +6,7 @@
   "rights":
   "Pemberton et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-4","eLocationId":"e307",
-  "strkImgURI":"","date":"Oct 23, 2007 12:00:00 AM","volume":"4","issue":
+  "strkImgURI":"","date":"2007-10-23T07:00:00Z","volume":"4","issue":
   "10","journal":"PLoS Med","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pmed.0040307","collaborativeAuthors":[],
@@ -230,3 +230,4 @@
       "suffix":""},{"fullName":"Peter Townsend","givenNames":"Peter",
       "surnames":"Townsend","suffix":""}],"editors":[],"journals":[{"eIssn":
       "1549-1676"}]}
+

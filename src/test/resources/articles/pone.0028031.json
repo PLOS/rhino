@@ -6,7 +6,7 @@
   "rights":
   "Roshandel et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-8","eLocationId":"e28031",
-  "strkImgURI":"","date":"Nov 21, 2011 12:00:00 AM","volume":"6","issue":
+  "strkImgURI":"","date":"2011-11-21T08:00:00Z","volume":"6","issue":
   "11","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0028031","collaborativeAuthors":[
@@ -456,3 +456,4 @@
       "givenNames":"Terence W.","surnames":"O\u0027Neill","suffix":""}],
   "editors":[{"fullName":"Sudha Agarwal","givenNames":"Sudha","surnames":
       "Agarwal","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

@@ -6,7 +6,7 @@
   "rights":
   "Morrhaye et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-7","eLocationId":"e5668",
-  "strkImgURI":"","date":"May 22, 2009 12:00:00 AM","volume":"4","issue":
+  "strkImgURI":"","date":"2009-05-22T07:00:00Z","volume":"4","issue":
   "5","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0005668","collaborativeAuthors":[],
@@ -549,3 +549,4 @@
       "surnames":"Geenen","suffix":""}],"editors":[{"fullName":
       "Derya Unutmaz","givenNames":"Derya","surnames":"Unutmaz","suffix":
       ""}],"journals":[{"eIssn":"1932-6203"}]}
+

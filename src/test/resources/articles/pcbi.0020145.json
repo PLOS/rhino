@@ -6,7 +6,7 @@
   "rights":
   "Xia et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-16","eLocationId":"e145",
-  "strkImgURI":"","date":"Nov 24, 2006 12:00:00 AM","volume":"2","issue":
+  "strkImgURI":"","date":"2006-11-24T08:00:00Z","volume":"2","issue":
   "11","journal":"PLoS Comput Biol","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pcbi.0020145","collaborativeAuthors":[],
@@ -537,3 +537,4 @@
       "Jing-Dong J","surnames":"Han","suffix":""}],"editors":[{"fullName":
       "Diana Murray","givenNames":"Diana","surnames":"Murray","suffix":""}],
   "journals":[{"eIssn":"1553-7358"}]}
+

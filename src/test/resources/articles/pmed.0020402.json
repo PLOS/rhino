@@ -3,7 +3,7 @@
   "pmed.0020402.zip","rights":
   "Public Library of Science. This is an open-access article distributed under the terms of the Creative Commons Public Domain Declaration, which stipulates that, once placed in the public domain, this work may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
   "language":"en","format":"text/xml","eLocationId":"e402","strkImgURI":"",
-  "date":"Nov 1, 2005 12:00:00 AM","volume":"2","issue":"11","journal":
+  "date":"2005-11-01T08:00:00Z","volume":"2","issue":"11","journal":
   "PLoS Med","publisherLocation":"San Francisco, USA","publisherName":
   "Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pmed.0020402","collaborativeAuthors":[],
@@ -34,3 +34,4 @@
       "otherArticleDoi":"info:doi/10.1371/journal.pmed.0020333","type":
       "companion"}],"authors":[],"editors":[],"journals":[{"eIssn":
       "1549-1676"}]}
+

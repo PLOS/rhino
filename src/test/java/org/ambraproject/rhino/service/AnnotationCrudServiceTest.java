@@ -31,7 +31,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,9 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
   @Autowired
   private AnnotationCrudService annotationCrudService;
+
+  @Autowired
+  protected Gson entityGson;
 
   /**
    * Create journals with all eIssn values mentioned in test cases' XML files.
@@ -76,6 +81,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     correction.setTitle("Test Correction One");
     correction.setBody("Test Correction One Body");
     hibernateTemplate.save(correction);
+    Date correctionCreated = new Date();
 
     // Reply to the correction.
     Annotation reply = new Annotation();
@@ -133,8 +139,21 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     String json = drr.read();
     assertTrue(json.length() > 0);
 
+    // Confirm that date strings in the JSON are formatted as ISO8601 ("2012-04-23T18:25:43.511Z").
+    // We have to do this at a lower level since AnnotationView exposes the created field as
+    // a Java Date instead of a String.
     Gson gson = new Gson();
-    List<AnnotationView> actualAnnotations = gson.fromJson(json, new TypeToken<List<AnnotationView>>(){}.getType());
+    List correctionsList = gson.fromJson(json, List.class);
+    Map correctionMap = (Map) correctionsList.get(0);
+    String createdStr = (String) correctionMap.get("created");
+
+    // TODO: this might fail near midnight, if we're unlucky and the hibernate
+    // entity gets saved just before midnight, and this is executed just after.
+    assertTrue(createdStr.startsWith(new SimpleDateFormat("yyyy-MM-dd'T'").format(correctionCreated)), createdStr);
+
+    // Now deserialize to AnnotationView to do more comparisons.
+    List<AnnotationView> actualAnnotations = entityGson.fromJson(json,
+        new TypeToken<List<AnnotationView>>(){}.getType());
     assertEquals(actualAnnotations.size(), 2);
     Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
     replies.put(correction.getID(), Arrays.asList(reply, reply2));
@@ -152,8 +171,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     drr = new DummyResponseReceiver();
     annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
     json = drr.read();
-    gson = new Gson();
-    List<AnnotationView> actualComments = gson.fromJson(json, new TypeToken<List<AnnotationView>>(){}.getType());
+    List<AnnotationView> actualComments = entityGson.fromJson(json, new TypeToken<List<AnnotationView>>(){}.getType());
     assertEquals(actualComments.size(), 1);
     replies = new HashMap<Long, List<Annotation>>();
     assertAnnotationsEqual(actualComments.get(0),

@@ -5,7 +5,7 @@
   "rights":
   "Public Library of Science. This is an open-access article distributed\n            under the terms of the Creative Commons Attribution License, which permits unrestricted\n            use, distribution, and reproduction in any medium, provided the original author and\n            source are credited.",
   "language":"en","format":"text/xml","pages":"1-2","eLocationId":"e0",
-  "strkImgURI":"","date":"Dec 20, 2006 12:00:00 AM","volume":"1","issue":
+  "strkImgURI":"","date":"2006-12-20T08:00:00Z","volume":"1","issue":
   "1","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0000000","collaborativeAuthors":[],
@@ -79,3 +79,4 @@
       "surnames":"Yao","suffix":""}],"editors":[{"fullName":
       "Pete Binfield","givenNames":"Pete","surnames":"Binfield","suffix":
       ""}],"journals":[{"eIssn":"1932-6203"}]}
+

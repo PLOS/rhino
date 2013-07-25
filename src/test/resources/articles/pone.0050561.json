@@ -6,7 +6,7 @@
   "rights":
   ". This is an open-access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the Creative Commons CC0 public domain dedication.",
   "language":"en","format":"text/xml","pages":"1-19","eLocationId":
-  "e50561","strkImgURI":"","date":"Dec 4, 2012 12:00:00 AM","volume":"7",
+  "e50561","strkImgURI":"","date":"2012-12-04T08:00:00Z","volume":"7",
   "issue":"12","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0050561","collaborativeAuthors":[],
@@ -881,3 +881,4 @@
       "Makrigiannis","suffix":""}],"editors":[{"fullName":"Laurel L. Lenz",
       "givenNames":"Laurel L.","surnames":"Lenz","suffix":""}],"journals":[{
       "eIssn":"1932-6203"}]}
+

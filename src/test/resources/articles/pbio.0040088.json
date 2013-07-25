@@ -5,7 +5,7 @@
   "rights":
   "Drummond et al. This is an open-access article distributed under the\n        terms of the Creative Commons Attribution License, which permits unrestricted use,\n        distribution, and reproduction in any medium, provided the original author and source are\n        credited.",
   "language":"en","format":"text/xml","eLocationId":"e88","strkImgURI":"",
-  "date":"Mar 14, 2006 12:00:00 AM","volume":"4","issue":"5","journal":
+  "date":"2006-03-14T08:00:00Z","volume":"4","issue":"5","journal":
   "PLoS Biol","publisherLocation":"San Francisco, USA","publisherName":
   "Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pbio.0040088","collaborativeAuthors":[],
@@ -313,3 +313,4 @@
       "givenNames":"Andrew","surnames":"Rambaut","suffix":""}],"editors":[{
       "fullName":"David Penny","givenNames":"David","surnames":"Penny",
       "suffix":""}],"journals":[{"eIssn":"1545-7885"}]}
+

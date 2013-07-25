@@ -6,7 +6,7 @@
   "rights":
   "Leung et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-12","eLocationId":
-  "e40478","strkImgURI":"","date":"Jul 10, 2012 12:00:00 AM","volume":"7",
+  "e40478","strkImgURI":"","date":"2012-07-10T07:00:00Z","volume":"7",
   "issue":"7","journal":"PLoS ONE","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0040478","collaborativeAuthors":[],
@@ -782,3 +782,4 @@
       "Tillie-Louise","surnames":"Hackett","suffix":""}],"editors":[{
       "fullName":"Jonas Fuxe","givenNames":"Jonas","surnames":"Fuxe",
       "suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

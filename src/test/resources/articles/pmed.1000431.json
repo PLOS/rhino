@@ -6,7 +6,7 @@
   "rights":
   "Kesselheim et al. This is an open-access article distributed under\n                the terms of the Creative Commons Attribution License, which permits unrestricted\n                use, distribution, and reproduction in any medium, provided the original author and\n                source are credited.",
   "language":"en","format":"text/xml","pages":"1-9","eLocationId":
-  "e1000431","strkImgURI":"","date":"Apr 5, 2011 12:00:00 AM","volume":"8",
+  "e1000431","strkImgURI":"","date":"2011-04-05T07:00:00Z","volume":"8",
   "issue":"4","journal":"PLoS Med","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pmed.1000431","collaborativeAuthors":[],
@@ -446,3 +446,4 @@
       "suffix":""}],"editors":[{"fullName":"Joseph S. Ross","givenNames":
       "Joseph S.","surnames":"Ross","suffix":""}],"journals":[{"eIssn":
       "1549-1676"}]}
+

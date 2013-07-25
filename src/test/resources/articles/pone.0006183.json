@@ -5,7 +5,7 @@
   "rights":
   ". This is an open-access article distributed under the terms of the Creative Commons Public Domain declaration which stipulates that, once placed in the public domain, this work may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
   "language":"en","format":"text/xml","pages":"1-8","eLocationId":"e6183",
-  "strkImgURI":"","date":"Jul 10, 2009 12:00:00 AM","volume":"4","issue":
+  "strkImgURI":"","date":"2009-07-10T07:00:00Z","volume":"4","issue":
   "7","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0006183","collaborativeAuthors":[],
@@ -650,3 +650,4 @@
       "surnames":"Leopold","suffix":""}],"editors":[{"fullName":
       "Mark W. Greenlee","givenNames":"Mark W.","surnames":"Greenlee",
       "suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+

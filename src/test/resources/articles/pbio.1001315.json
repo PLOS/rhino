@@ -6,7 +6,7 @@
   "rights":
   "Izquierdo-Useros et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-15","eLocationId":
-  "e1001315","strkImgURI":"","date":"Apr 24, 2012 12:00:00 AM","volume":
+  "e1001315","strkImgURI":"","date":"2012-04-24T07:00:00Z","volume":
   "10","issue":"4","journal":"PLoS Biol","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pbio.1001315","collaborativeAuthors":[],
@@ -945,3 +945,4 @@
       "Martinez-Picado","suffix":""}],"editors":[{"fullName":
       "Michael Emerman","givenNames":"Michael","surnames":"Emerman","suffix":
       ""}],"journals":[{"eIssn":"1545-7885"}]}
+

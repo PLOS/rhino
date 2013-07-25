@@ -6,7 +6,7 @@
   "rights":
   "Unterholzner et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-15","eLocationId":
-  "e1002247","strkImgURI":"","date":"Sep 8, 2011 12:00:00 AM","volume":"7",
+  "e1002247","strkImgURI":"","date":"2011-09-08T07:00:00Z","volume":"7",
   "issue":"9","journal":"PLoS Pathog","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.ppat.1002247","collaborativeAuthors":[],
@@ -871,3 +871,4 @@
       "Andrew G.","surnames":"Bowie","suffix":""}],"editors":[{"fullName":
       "R. Mark L. Buller","givenNames":"R. Mark L.","surnames":"Buller",
       "suffix":""}],"journals":[{"eIssn":"1553-7374"}]}
+

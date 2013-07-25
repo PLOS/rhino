@@ -5,7 +5,7 @@
   "rights":
   "Liti, Louis. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-7","eLocationId":
-  "e1002912","strkImgURI":"","date":"Aug 16, 2012 12:00:00 AM","volume":
+  "e1002912","strkImgURI":"","date":"2012-08-16T07:00:00Z","volume":
   "8","issue":"8","journal":"PLoS Genet","publisherLocation":
   "San Francisco, USA","publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pgen.1002912","collaborativeAuthors":[],
@@ -676,3 +676,4 @@
       "surnames":"Louis","suffix":""}],"editors":[{"fullName":
       "Justin C. Fay","givenNames":"Justin C.","surnames":"Fay","suffix":
       ""}],"journals":[{"eIssn":"1553-7404"}]}
+

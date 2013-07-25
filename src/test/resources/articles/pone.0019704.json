@@ -6,7 +6,7 @@
   "rights":
   "Salo et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
   "language":"en","format":"text/xml","pages":"1-9","eLocationId":"e19704",
-  "strkImgURI":"","date":"May 11, 2011 12:00:00 AM","volume":"6","issue":
+  "strkImgURI":"","date":"2011-05-11T07:00:00Z","volume":"6","issue":
   "5","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
   "publisherName":"Public Library of Science","url":
   "http://dx.doi.org/10.1371%2Fjournal.pone.0019704","collaborativeAuthors":[],
@@ -496,3 +496,4 @@
       "Toivonen","suffix":""}],"editors":[{"fullName":
       "Sharon Gursky-Doyen","givenNames":"Sharon","surnames":
       "Gursky-Doyen","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+
