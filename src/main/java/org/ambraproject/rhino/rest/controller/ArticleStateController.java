@@ -55,11 +55,6 @@ public class ArticleStateController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH)
   public void write(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
-
-    // TODO: remove when the dev/TNG-52 branch of plos-queue is deployed
-    if (true) {  // Silly compiler, so easy to fool.
-      throw new UnsupportedOperationException("Article state methods are not yet ready.");
-    }
     ArticleIdentity id = parse(request);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);
