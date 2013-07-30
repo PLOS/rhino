@@ -49,7 +49,7 @@
     <rhombat.version>1.0.0-BUILD-SNAPSHOT</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <filestore.version>1.0.1</filestore.version>
-    <camel.version>2.6.0</camel.version>
+    <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
   </properties>
 
