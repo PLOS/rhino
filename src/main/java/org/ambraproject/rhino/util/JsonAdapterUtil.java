@@ -24,9 +24,12 @@ import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.ambraproject.rhino.view.journal.VolumeListView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
+import org.ambraproject.rhombat.gson.Iso8601CalendarAdapter;
 import org.ambraproject.rhombat.gson.Iso8601DateAdapter;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 public final class JsonAdapterUtil {
@@ -72,6 +75,8 @@ public final class JsonAdapterUtil {
     builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
     builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
     builder.registerTypeAdapter(Date.class, new Iso8601DateAdapter());
+    builder.registerTypeAdapter(Calendar.class, new Iso8601CalendarAdapter());
+    builder.registerTypeAdapter(GregorianCalendar.class, new Iso8601CalendarAdapter());
 
     builder.setExclusionStrategies(
         new ExclusionStrategy() {
