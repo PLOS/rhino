@@ -18,6 +18,7 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.AssetCollectionView;
+import org.ambraproject.rhino.view.asset.Figure;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -129,6 +130,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     Set<Journal> journals = article.getJournals();
     KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
+
+    List<Figure> figures = Figure.listFigures(article);
+    serialized.add("figures", context.serialize(figures));
 
     JsonObject baseJson = context.serialize(article).getAsJsonObject();
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
