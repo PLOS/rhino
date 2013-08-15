@@ -20,6 +20,7 @@ from optparse import OptionParser
 from boto.s3.connection import S3Connection
 from boto.s3.connection import Location
 from BeautifulSoup import BeautifulSoup
+from time import sleep
 
 import itertools
 import json
@@ -31,8 +32,9 @@ import sys
 import zipfile
 import md5
 
-AWS_SECRET_ACCESS_KEY = '/Hz4EISxG9Qca4bTgNMFz/DBb7F/teFB8kZSHLsB'
-AWS_ACCESS_KEY_ID='0XBSZRK13633TWKA9202'
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
+
 ARTICLE_FLD_LIST = [ 'doi', 'strkImgURI', 'title', 'state', 'eIssn', 
                     'eLocationId', 'journal', 'language', 'rights', 'url' ]
 ASSET_FLD_LIST  = [ 'doi', 'contentType', 'contentType',  
@@ -112,6 +114,10 @@ FETCH_FILE_RHINO_TMPL = '{server}/{rver}/assetfiles/{afid}'
 FETCH_FILE_AMBRA_TMPL = '{server}/{rver}/article/fetchObject.action?uri=info:doi/{doi}&representation={ext}'
 
 DOI_PATTERN = re.compile(r'(\d+\.\d+/)?(journal\.)?(.*)\.([^.]*)')
+
+# ***** Bucket List Templates *****
+BUCKET_LIST_JRNL_TMPL = '{prefix}/journal/{jrnlid}/'
+
 
 # *****************************************************
 def doi2s3key(doi):
@@ -371,7 +377,6 @@ def s3_put_article(bucket, doi):
 
     for k,v in meta['assets'].iteritems():
         baseKey = doi2s3key(k)
-        # print("BaseKey:  " + baseKey)
         for k2, v2 in v.iteritems():
             assetHeader = {'asset-{key}'.format(key=k) : v2.get(k, '') for k in ASSET_FLD_LIST}
             assetTitle = assetHeader['asset-title']
@@ -381,18 +386,29 @@ def s3_put_article(bucket, doi):
             articleHeader.update(assetHeader)
             (a, b) =  infer_filename(k2)
             fname = '{a}.{b}'.format(a=a,b=b).lower()
-            # print('k2: ' + k2 + '  ' + fname)
             fullKey = '{base}/{a}.{b}'.format(base=baseKey,a=a, b=b).lower()
             url = FETCH_FILE_RHINO_TMPL.format(server=base_url, rver=rver, afid=k2)
-            digest = fetchBinary(fname, url)
             print(fullKey)
-            s3key =  bucket.new_key(fullKey)
-            for k3, v3 in articleHeader.iteritems():
-                s3key.set_metadata(k3, v3)
-            s3key.set_metadata('asset-md5', digest)
-            #print(pretty_dict_repr(articleHeader))
-            s3key.set_contents_from_filename(fname, cb=callback, reduced_redundancy=True)
-            os.remove(fname)
+            if bucket.get_key(fullKey) == None:
+                digest = fetchBinary(fname, url)
+                s3key =  bucket.new_key(fullKey)
+                for k3, v3 in articleHeader.iteritems():
+                    s3key.set_metadata(k3, v3)
+                s3key.set_metadata('asset-md5', digest)
+                retry = 10
+                while(retry > 0):
+                    try:
+                        s3key.set_contents_from_filename(fname, cb=callback, reduced_redundancy=True)
+                        retry = 0
+                    except:
+                        if --retry == 0:
+                            os.remove(fname)
+                            print('Failed to s3_put_article : ' + fname)
+                            raise
+                        sleep(2)
+                os.remove(fname)
+            else:
+                print("Key already exist: " + fullKey)
 
 def cmd_repackage(options, args):
     """
@@ -476,6 +492,50 @@ def cmd_copy_2_s3(options, args):
     for n in failedDois:
         print(n)
 
+def s3Key2doi(key):
+    sk = key.split('/')
+    return sk[0] + '/' + '.'.join(sk[1:4])
+
+def s3list_dois(options):
+    conn = S3Connection(aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    bucket = conn.get_bucket(options.bucket)
+    pf = BUCKET_LIST_JRNL_TMPL.format(prefix=options.prefix, jrnlid=options.jrnlid)
+    rs = bucket.list(prefix=pf, delimiter='/')
+    return [s3Key2doi(k.name) for k in rs]
+
+def cmd_s3list_dois(options):
+    doiLst = s3list_dois(options) 
+    for doi in doiLst:
+        print(doi)
+
+def s3_shallow_diff(options):
+    doiMap = {}
+    rsltLst = []
+    fltr = re.compile('journal\.'+options.jrnlid)
+
+    doiLst = s3list_dois(options) 
+    for doi in doiLst:
+        doiMap[doi] = 1
+
+    doiLst = fetchArticleList(options)
+    for doi in doiLst:
+        if fltr.search(doi):
+            if not doiMap.has_key(doi):
+                rsltLst.append(doi)
+    return rsltLst 
+
+def cmd_s3_diff(options):
+    doiLst = s3_shallow_diff(options)
+    for doi in doiLst:
+        print(doi) 
+
+def cmd_s3_shallow_copy(options):
+    doi2copy = s3_shallow_diff(options)
+    doi2copy = [ string.replace(doi, options.prefix + '/' , '') for doi in doi2copy ]
+    print('Preparing to copy ...')
+    cmd_copy_2_s3(options, doi2copy)
+    
+
 def cmd_assetfiles(options, args):
     """
     """
@@ -499,8 +559,14 @@ def main(options, args):
         cmd_assetfiles(options, args)
     elif cmd == 'LIST':
         cmd_list_dois(options) 
+    elif cmd == 'S3LIST':
+        cmd_s3list_dois(options)
     elif cmd == 'C2S3':
         cmd_copy_2_s3(options, args)
+    elif cmd == 'S3DIFF':
+        cmd_s3_diff(options)
+    elif cmd == 'S3-SHALLOW-CP':
+        cmd_s3_shallow_copy(options)
 
 if __name__ == "__main__":
     """
@@ -510,6 +576,7 @@ if __name__ == "__main__":
     
     COMAND                   Description
      LIST            List the DOI's within a perfix
+     S3LIST
      REPACKAGE       Repackage the list of article names into zip packages.
      META            Dump the meta-data for the list of article names.
      ASSET-META      Dump the asset meta-data for the list of article names.
@@ -521,8 +588,8 @@ if __name__ == "__main__":
                       dest='command', default='LIST', metavar='COMMAND',
                       help='Command to execute. LIST, REPACKAGE [default: %default]')
     parser.add_option('--server', action='store', type='string',
-                      dest='rhinoServer', metavar='SERVER',
-                      help='rhino server url ex. "https://webprod.plosjournals.org/api"')
+                      dest='rhinoServer', default='http://api.plosjournals.org', metavar='SERVER',
+                      help='rhino server url ex. [default: %default]')
     parser.add_option('--prefix', action='store', type='string', dest='prefix',
                       default='10.1371', metavar='PREFIX',
                       help='prefix used in constructing article DOI. [default: %default]')
@@ -541,6 +608,9 @@ if __name__ == "__main__":
     parser.add_option('--regx', action='store', dest='regx',
                       default=None, metavar='REGX',
                       help='REGX used to filter results. [default: %default]')
+    parser.add_option('--jrnlid', action='store', dest='jrnlid',
+                      default='pone', metavar='JRNLID',
+                      help='JRNLID specifies a journal to execute the command on. [default: %default]')
 
 
     (options, args) = parser.parse_args()
