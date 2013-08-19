@@ -86,27 +86,27 @@ public class Figure {
    */
   public static ImmutableList<Figure> listFigures(Article article) {
     Preconditions.checkNotNull(article);
-    Map<String, ArticleAsset> originals = Maps.newLinkedHashMap();
-    Multimap<String, ArticleAsset> thumbnails = LinkedListMultimap.create();
+    Map<AssetIdentity, ArticleAsset> originals = Maps.newLinkedHashMap();
+    Multimap<AssetIdentity, ArticleAsset> thumbnails = LinkedListMultimap.create();
     for (ArticleAsset asset : article.getAssets()) {
+      AssetIdentity identity = AssetIdentity.from(asset);
       String extension = asset.getExtension();
       if (ORIGINAL_SUFFIX.equals(extension)) {
-        ArticleAsset previous = originals.put(asset.getDoi(), asset);
+        ArticleAsset previous = originals.put(identity, asset);
         if (previous != null) {
           String message = String.format("Collision on original figures: %s; %s",
               previous.getDoi(), asset.getDoi());
           throw new RuntimeException(message);
         }
       } else if (THUMBNAIL_EXTENSIONS.contains(extension)) {
-        thumbnails.put(asset.getDoi(), asset);
+        thumbnails.put(identity, asset);
       }
     }
 
     List<Figure> figures = Lists.newArrayListWithCapacity(originals.size());
-    for (Map.Entry<String, ArticleAsset> entry : originals.entrySet()) {
-      String id = entry.getKey();
+    for (Map.Entry<AssetIdentity, ArticleAsset> entry : originals.entrySet()) {
       ArticleAsset originalFigure = entry.getValue();
-      Collection<ArticleAsset> figureThumbnails = thumbnails.get(id);
+      Collection<ArticleAsset> figureThumbnails = thumbnails.get(entry.getKey());
       figures.add(create(originalFigure, figureThumbnails));
     }
     return ImmutableList.copyOf(figures);
