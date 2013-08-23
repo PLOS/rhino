@@ -64,10 +64,6 @@ public class Figure {
     return thumbnails;
   }
 
-  public ImmutableList<ArticleAsset> getAllAssets() {
-    return ImmutableList.<ArticleAsset>builder().add(original).addAll(thumbnails).build();
-  }
-
   // Hard-coded values replicating legacy, extension-based figure logic
   private static final String ORIGINAL_SUFFIX = "TIF";
   private static final ImmutableSet<String> THUMBNAIL_EXTENSIONS = ImmutableSet.of("PNG_S", "PNG_M", "PNG_I", "PNG_L");
