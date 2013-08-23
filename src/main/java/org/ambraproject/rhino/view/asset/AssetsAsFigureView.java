@@ -1,30 +1,24 @@
 package org.ambraproject.rhino.view.asset;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.util.Collection;
-import java.util.List;
 
 public class AssetsAsFigureView implements JsonOutputView {
 
-  private final ImmutableList<ArticleAsset> assets;
   private final Figure figure;
+  private final ArticleIdentity parentArticleIdentity;
 
-  public AssetsAsFigureView(Collection<ArticleAsset> assets) {
-    this.assets = ImmutableList.copyOf(assets);
-
-    List<Figure> figures = Figure.listFigures(this.assets);
-    if (figures.size() != 1) {
-      String message = "ArticleAsset objects passed to AssetsAsFigureView must all have one DOI in common";
-      throw new IllegalArgumentException(message);
-    }
-    this.figure = figures.get(0);
+  public AssetsAsFigureView(Figure figure, ArticleIdentity parentArticleIdentity) {
+    this.figure = Preconditions.checkNotNull(figure);
+    this.parentArticleIdentity = Preconditions.checkNotNull(parentArticleIdentity);
   }
 
   @Override
@@ -34,10 +28,12 @@ public class AssetsAsFigureView implements JsonOutputView {
 
     JsonObject serialized = new JsonObject();
     serialized.addProperty("doi", assetId.getIdentifier());
+    serialized.addProperty("parentArticleId", parentArticleIdentity.getIdentifier());
     serialized.addProperty("contextElement", original.getContextElement());
     serialized.addProperty("title", original.getTitle());
     serialized.addProperty("description", original.getDescription());
 
+    Collection<ArticleAsset> assets = figure.getAllAssets();
     serialized.add("assetfiles", context.serialize(new AssetFileCollectionView(assets)));
 
     return serialized;

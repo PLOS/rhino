@@ -33,6 +33,7 @@ import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.AssetsAsFigureView;
+import org.ambraproject.rhino.view.asset.Figure;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -305,7 +306,14 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void readMetadataAsFigure(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     Collection<ArticleAsset> assets = findArticleAssets(id);
-    writeJson(receiver, new AssetsAsFigureView(assets));
+    List<Figure> figures = Figure.listFigures(assets);
+    if (figures.size() != 1) {
+      // findArticleAssets should be defined such that this impossible
+      throw new RuntimeException("Expected ArticleAsset objects have one DOI in common");
+    }
+    Figure figure = figures.get(0);
+    ArticleIdentity parentArticleIdentity = findArticleFor(AssetIdentity.from(figure.getOriginal()));
+    writeJson(receiver, new AssetsAsFigureView(figure, parentArticleIdentity));
   }
 
   /**
