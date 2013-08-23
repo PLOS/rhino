@@ -18,6 +18,7 @@ import org.ambraproject.rhino.view.article.ArticleViewList;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.asset.AssetCollectionView;
 import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
+import org.ambraproject.rhino.view.asset.AssetsAsFigureView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalListView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
@@ -67,7 +68,7 @@ public final class JsonAdapterUtil {
         AssetFileCollectionView.class, JournalListView.class,
         JournalNonAssocView.class, JournalNonAssocView.ListView.class, VolumeListView.class,
         VolumeOutputView.class, VolumeOutputView.ListView.class, JournalOutputView.class,
-        IssueOutputView.class, IssueOutputView.ListView.class);
+        IssueOutputView.class, IssueOutputView.ListView.class, AssetsAsFigureView.class);
     for (Class<? extends JsonOutputView> viewClass : outputViews) {
       builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
     }

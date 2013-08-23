@@ -11,7 +11,6 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 
 import java.util.Collection;
@@ -35,36 +34,35 @@ public class Figure {
   /**
    * The ID of an asset (i.e., group of asset files) that represents a figure.
    */
-  private final String id;
+  private final AssetIdentity id;
 
   /**
-   * The ID of the asset file that represents the original (high-resolution) version of a figure.
+   * The asset file that represents the original (high-resolution) version of a figure.
    */
-  private final String original;
+  private final ArticleAsset original;
 
   /**
-   * The IDs of asset files that are meant to be thumbnail versions of the figure.
+   * The asset files that are meant to be thumbnail versions of the figure, in order by size.
    */
-  private final ImmutableList<String> thumbnails;
+  private final ImmutableList<ArticleAsset> thumbnails;
 
-  private Figure(String id, String original, List<String> thumbnails) {
+  public Figure(AssetIdentity id, ArticleAsset original, List<ArticleAsset> thumbnails) {
     this.id = Preconditions.checkNotNull(id);
     this.original = Preconditions.checkNotNull(original);
     this.thumbnails = ImmutableList.copyOf(thumbnails);
   }
 
-  public String getId() {
+  public AssetIdentity getId() {
     return id;
   }
 
-  public String getOriginal() {
+  public ArticleAsset getOriginal() {
     return original;
   }
 
-  public ImmutableList<String> getThumbnails() {
+  public ImmutableList<ArticleAsset> getThumbnails() {
     return thumbnails;
   }
-
 
   // Hard-coded values replicating legacy, extension-based figure logic
   private static final String ORIGINAL_SUFFIX = "TIF";
@@ -85,10 +83,20 @@ public class Figure {
    * @return
    */
   public static ImmutableList<Figure> listFigures(Article article) {
-    Preconditions.checkNotNull(article);
+    return listFigures(article.getAssets());
+  }
+
+  /**
+   * Produce a list of the figures among a collection of assets.
+   *
+   * @param assets
+   * @return
+   */
+  public static ImmutableList<Figure> listFigures(Collection<ArticleAsset> assets) {
+    Preconditions.checkNotNull(assets);
     Map<AssetIdentity, ArticleAsset> originals = Maps.newLinkedHashMap();
     Multimap<AssetIdentity, ArticleAsset> thumbnails = LinkedListMultimap.create();
-    for (ArticleAsset asset : article.getAssets()) {
+    for (ArticleAsset asset : assets) {
       AssetIdentity identity = AssetIdentity.from(asset);
       String extension = asset.getExtension();
       if (ORIGINAL_SUFFIX.equals(extension)) {
@@ -113,14 +121,9 @@ public class Figure {
   }
 
   private static Figure create(ArticleAsset original, Collection<ArticleAsset> thumbnails) {
-    String figureId = AssetIdentity.from(original).getIdentifier();
-    String originalFileId = AssetFileIdentity.from(original).getFilePath();
-    List<String> thumbnailFileIds = Lists.newArrayListWithCapacity(thumbnails.size());
+    AssetIdentity figureId = AssetIdentity.from(original);
     List<ArticleAsset> sortedThumbnails = THUMBNAIL_ORDER.sortedCopy(thumbnails);
-    for (ArticleAsset thumbnail : sortedThumbnails) {
-      thumbnailFileIds.add(AssetFileIdentity.from(thumbnail).getFilePath());
-    }
-    return new Figure(figureId, originalFileId, thumbnailFileIds);
+    return new Figure(figureId, original, sortedThumbnails);
   }
 
 

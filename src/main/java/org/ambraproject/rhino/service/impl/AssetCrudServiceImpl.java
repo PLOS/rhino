@@ -32,6 +32,7 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
+import org.ambraproject.rhino.view.asset.AssetsAsFigureView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -272,10 +273,14 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
   }
 
-  @Override
-  public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
-      throws IOException {
-    assert format == MetadataFormat.JSON;
+  /**
+   * Find article asset objects.
+   *
+   * @param id the asset ID
+   * @return a collection of all {@code ArticleAsset} objects whose DOI matches the ID
+   * @throws RestClientException if no asset files exist with that ID
+   */
+  private Collection<ArticleAsset> findArticleAssets(AssetIdentity id) {
     @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(ArticleAsset.class)
@@ -285,7 +290,22 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (assets.isEmpty()) {
       throw reportNotFound(id);
     }
+    return assets;
+  }
+
+  @Override
+  public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+      throws IOException {
+    assert format == MetadataFormat.JSON;
+    Collection<ArticleAsset> assets = findArticleAssets(id);
     writeJson(receiver, new AssetFileCollectionView(assets));
+  }
+
+  @Override
+  public void readMetadataAsFigure(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+      throws IOException {
+    Collection<ArticleAsset> assets = findArticleAssets(id);
+    writeJson(receiver, new AssetsAsFigureView(assets));
   }
 
   /**
