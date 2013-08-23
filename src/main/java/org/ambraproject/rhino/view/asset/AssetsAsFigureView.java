@@ -14,18 +14,21 @@ import java.util.List;
 public class AssetsAsFigureView implements JsonOutputView {
 
   private final ImmutableList<ArticleAsset> assets;
+  private final Figure figure;
 
   public AssetsAsFigureView(Collection<ArticleAsset> assets) {
     this.assets = ImmutableList.copyOf(assets);
+
+    List<Figure> figures = Figure.listFigures(this.assets);
+    if (figures.size() != 1) {
+      String message = "ArticleAsset objects passed to AssetsAsFigureView must all have one DOI in common";
+      throw new IllegalArgumentException(message);
+    }
+    this.figure = figures.get(0);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    List<Figure> figures = Figure.listFigures(assets);
-    if (figures.size() != 1) {
-      throw new RuntimeException("Expected exactly one figure among supplied assets");
-    }
-    Figure figure = figures.get(0);
     AssetIdentity assetId = figure.getId();
     ArticleAsset original = figure.getOriginal();
 
