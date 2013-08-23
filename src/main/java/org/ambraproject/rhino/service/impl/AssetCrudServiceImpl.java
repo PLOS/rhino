@@ -22,6 +22,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -305,6 +306,21 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
     hibernateTemplate.delete(asset);
     fileStoreService.deleteFile(fsid);
+  }
+
+  @Override
+  public ArticleIdentity findArticleFor(AssetIdentity id) {
+    String articleDoi = (String) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.find(
+            "select distinct a.doi "
+                + "from Article a join a.assets b "
+                + "where b.doi = ?",
+            id.getKey()
+        ));
+    if (articleDoi == null) {
+      throw new RestClientException("Asset not found for: " + id.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    return ArticleIdentity.create(articleDoi);
   }
 
 }

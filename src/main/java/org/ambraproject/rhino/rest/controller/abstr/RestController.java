@@ -139,6 +139,19 @@ public abstract class RestController {
   }
 
   /**
+   * Return a JSON response with an "OK" status code. This should be used only for small objects; arbitrarily long JSON
+   * responses should be streamed.
+   *
+   * @param value the object to serialize into the response body
+   * @return the response object
+   */
+  protected ResponseEntity<String> respondWithJson(Object value) {
+    String json = entityGson.toJson(value);
+    HttpHeaders headers = makeContentTypeHeader(MediaType.APPLICATION_JSON);
+    return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+  }
+
+  /**
    * Report that a RESTful operation succeeded. The returned object (if returned from a {@link RequestMapping}) will
    * cause the REST response to indicate an "OK" HTTP status and have an empty response body.
    *

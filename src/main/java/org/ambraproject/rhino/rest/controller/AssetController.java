@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
@@ -25,6 +26,7 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,6 +63,17 @@ public class AssetController extends DoiBasedCrudController {
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     assetCrudService.readMetadata(receiver, id, mf);
+  }
+
+  @RequestMapping(value = ASSET_META_TEMPLATE, params = {"articleFor"}, method = RequestMethod.GET)
+  public ResponseEntity<String> articleFor(HttpServletRequest request, //HttpServletResponse response,
+                                           @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    AssetIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    assert mf == MetadataFormat.JSON;
+    ArticleIdentity articleIdentity = assetCrudService.findArticleFor(id);
+    return respondWithJson(articleIdentity.getIdentifier());
   }
 
 }
