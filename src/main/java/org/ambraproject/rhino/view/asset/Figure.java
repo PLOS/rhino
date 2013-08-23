@@ -66,7 +66,7 @@ public class Figure {
 
   // Hard-coded values replicating legacy, extension-based figure logic
   private static final String ORIGINAL_SUFFIX = "TIF";
-  private static final ImmutableSet<String> THUMBNAIL_EXTENSIONS = ImmutableSet.of("PNG_S", "PNG_M", "PNG_I", "PNG_L");
+  private static final ImmutableSet<String> THUMBNAIL_EXTENSIONS = ImmutableSet.of("PNG_S", "PNG_I", "PNG_M", "PNG_L");
   private static final Ordering<ArticleAsset> THUMBNAIL_ORDER = Ordering
       .explicit(THUMBNAIL_EXTENSIONS.asList())
       .onResultOf(new Function<ArticleAsset, String>() {
