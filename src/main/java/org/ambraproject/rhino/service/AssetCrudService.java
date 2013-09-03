@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
@@ -71,6 +72,16 @@ public interface AssetCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
+   * Read the metadata of a figure asset. The output contains the figure metadata, as defined by the "original" asset
+   * file, plus the individual asset file objects.
+   *
+   * @param receiver the receiver to which the metadata should be written
+   * @param id       the identity of the asset to read
+   * @param format   the desired metadata format
+   */
+  public abstract void readMetadataAsFigure(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format) throws IOException;
+
+  /**
    * Overwrite an existing asset's file with a new file.
    *
    * @param fileContent the file to write
@@ -78,4 +89,11 @@ public interface AssetCrudService extends DoiBasedCrudService {
    */
   public abstract void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException;
 
+  /**
+   * Return the identity of the article to which an asset belongs.
+   *
+   * @param id the asset's identity
+   * @return the article's identity
+   */
+  public abstract ArticleIdentity findArticleFor(AssetIdentity id);
 }

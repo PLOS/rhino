@@ -18,6 +18,8 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.AssetCollectionView;
+import org.ambraproject.rhino.view.asset.Figure;
+import org.ambraproject.rhino.view.asset.FigureView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -48,7 +50,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<Pingback> pingbacks;
 
   private ArticleOutputView(Article article, Collection<Syndication> syndications,
-      Collection<Pingback> pingbacks) {
+                            Collection<Pingback> pingbacks) {
     this.article = Preconditions.checkNotNull(article);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
@@ -64,9 +66,8 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   /**
    * Creates a new view of the given article and associated data.
    *
-   * @param article primary entity
-   * @param annotations any annotations associated with the article.  May be
-   *     null if none are present.
+   * @param article             primary entity
+   * @param annotations         any annotations associated with the article.  May be null if none are present.
    * @param syndicationService
    * @param pingbackReadService
    * @return view of the article and associated data
@@ -129,6 +130,10 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     Set<Journal> journals = article.getJournals();
     KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
+
+    List<Figure> figures = Figure.listFigures(article);
+    List<FigureView> figureViews = FigureView.asViewList(figures);
+    serialized.add("figures", context.serialize(figureViews));
 
     JsonObject baseJson = context.serialize(article).getAsJsonObject();
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
