@@ -20,33 +20,30 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import java.io.IOException;
 
 /**
- * Service that handles corrections, comments, and replies associated with articles.
- * For legacy reasons, these are referred to internally as "annotations," and they
- * share a common implementation.
+ * Service that handles corrections, comments, and replies associated with articles. For legacy reasons, these are
+ * referred to internally as "annotations," and they share a common implementation.
  */
 public interface AnnotationCrudService {
 
   /**
-   * Forwards all corrections, and any replies associated with them, for a given article
-   * to the receiver.  The corrections are returned as a list.  Each correction
-   * has a "replies" list that contains any replies (recursively).
+   * Forwards all corrections, and any replies associated with them, for a given article to the receiver.  The
+   * corrections are returned as a list.  Each correction has a "replies" list that contains any replies (recursively).
    *
-   * @param receiver wraps the response object
+   * @param receiver        wraps the response object
    * @param articleIdentity identifies the article
-   * @param format must currently be MetadataFormat.JSON
+   * @param format          must currently be MetadataFormat.JSON
    * @throws IOException
    */
   public void readCorrections(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)
-    throws IOException;
+      throws IOException;
 
   /**
-   * Forwards all comments, and any replies associated with them, for a given article
-   * to the receiver.  The comments are returned as a list.  Each comment has a
-   * "replies" list that contains any replies (recursively).
+   * Forwards all comments, and any replies associated with them, for a given article to the receiver.  The comments are
+   * returned as a list.  Each comment has a "replies" list that contains any replies (recursively).
    *
-   * @param receiver wraps the response object
+   * @param receiver        wraps the response object
    * @param articleIdentity identifies the article
-   * @param format must currently be MetadataFormat.JSON
+   * @param format          must currently be MetadataFormat.JSON
    * @throws IOException
    */
   public void readComments(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)

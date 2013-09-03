@@ -219,9 +219,9 @@ public abstract class AmbraService {
   /**
    * Loads a single entity from the datastore based on some unique property.
    *
-   * @param hql Hibernate Query Language string specifying the select.  Should have a single parameter
-   *     corresponding to id.  Example: "from Foo where fooID = ?"
-   * @param id unique identifier for the entity
+   * @param hql Hibernate Query Language string specifying the select.  Should have a single parameter corresponding to
+   *            id.  Example: "from Foo where fooID = ?"
+   * @param id  unique identifier for the entity
    * @param <S> type of the identifier
    * @param <T> type of the entity being queried/returned
    * @return the retrieved entity

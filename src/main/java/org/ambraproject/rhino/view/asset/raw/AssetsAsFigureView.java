@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.asset;
+package org.ambraproject.rhino.view.asset.raw;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;

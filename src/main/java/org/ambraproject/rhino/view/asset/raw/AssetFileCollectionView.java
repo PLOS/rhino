@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.asset;
+package org.ambraproject.rhino.view.asset.raw;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
