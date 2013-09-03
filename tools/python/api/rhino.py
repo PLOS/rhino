@@ -8,18 +8,8 @@ This module exports one class 'Rhino'
 """
 from __future__ import print_function
 from __future__ import with_statement
-from cStringIO import StringIO
-from BeautifulSoup import BeautifulSoup
-from time import sleep
 
-import itertools
-import json
-import os
-import re
-import requests
-import string
-import sys
-import md5
+import json, re, requests, md5
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -27,7 +17,7 @@ __version__   = '0.1'
 
 class Rhino:
     """
-    class Rhino is the python client for the ReST API for PLOS's Open Access publishing system. 
+    Class Rhino is the python client for PLOS's Open Access publishing system API. 
     """
     _DOI_TMPL        = '{prefix}/'
     _ARTICLES_TMPL   = '{server}/{rver}/articles'
@@ -35,7 +25,8 @@ class Rhino:
     _ASSETS_TMPL     = '{server}/{rver}/assets/{prefix}/'
     _ASSETFILES_TMPL = '{server}/{rver}/assetfiles/{prefix}/'
     
-    def __init__(self, rhinoServer='http://api.plosjournals.org/', prefix='10.1371', rver='v1', verify=False, regx='.*'):
+    def __init__(self, rhinoServer='http://api.plosjournals.org/', prefix='10.1371', 
+                     rver='v1', verify=False, regx='.*'):
         self.rhinoServer = rhinoServer
         self.prefix      = prefix
         self.verify      = verify
@@ -98,12 +89,10 @@ class Rhino:
             articles = json.loads(r.content)
         else:
             raise Exception('articles verb failed : ' + url)
-        result = []
         # Return only doi's matched by filter
         for (doi, _) in articles.items():
             if self.filterRegx.search(doi):
-                result.append(doi) 
-        return result
+                yield(doi) 
     
     def article(self, doiSuffix):
         """
