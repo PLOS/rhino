@@ -95,7 +95,7 @@ class s3:
             doiSuffix = '/'.join(afidSuffix.lower().split('.')[:-1])
             fullAFID = u'{p}/{s}/{a}'.format(p=self.prefix, s=doiSuffix, a=afidSuffix.lower())
         else:
-            raise Exception('invalid afid suffix ' + doiSuffix)
+            raise Exception('s3:invalid afid suffix ' + doiSuffix)
         return fullAFID
 
     def _s3keyPath2doi(self, s3keyPath):
@@ -114,8 +114,36 @@ class s3:
         elif  elemLst[1].lower() == 'image':
             fullAFID = u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[-1:]))
         else:
-            raise Exception('invalid s3 key ' + s3key)
+            raise Exception('s3:invalid s3 key ' + s3key)
         return fullAFID
+
+    def _getAssetMeta(self, afidSuffix):
+        """
+        """
+        fullKey = self._afid2s3key(afidSuffix)
+        mdata = self.bucket.get_key(fullKey).metadata
+        result = dict()
+        for k in mdata.iterkeys():
+            lk = k.lower()
+            if lk == 'asset-contenttype':
+                result['contentType'] = mdata[k]
+            elif lk == 'asset-contextelement':
+                result['contextElement'] = mdata[k]
+            elif lk == 'asset-created':
+                result['created'] = mdata[k]
+            elif lk == 'asset-doi':
+                result['doi'] = mdata[k]
+            elif lk == 'asset-extension':
+                result['extension'] = mdata[k]
+            elif lk == 'asset-lastmodified':
+                result['lastModified'] = mdata[k]
+            elif lk == 'asset-title':
+                result['lastModified'] = mdata[k]
+            elif lk == 'asset-size':
+                result['size'] = mdata[k]
+        result['md5'] = mdata['asset-md5']
+        result['description'] = 'S3 does not support descriptions'
+        return result
          
     def _getBinary(self, fname):
         return
@@ -186,8 +214,20 @@ class s3:
             assets[self._s3keyPath2doi(assetDOI)] = afids
         return assets
 
-    def asset(self, ):
-        return
+    def asset(self, doiSuffix):
+        """
+        """
+        pp = pprint.PrettyPrinter(indent=2)
+        theAssets = self.assets(doiSuffix)
+        assetRslt = dict()
+        for (doi, afids) in theAssets.iteritems():
+            for fullAFID in afids:
+                afid = fullAFID.split('/')
+                if afid[0] == self.prefix:
+                    assetRslt[afid[1]] = self._getAssetMeta(afid[1])
+                else:
+                    raise Exception('s3:invalid s3 prefix ' + fullAFID)
+        return assetRslt
 
     def assetFile(self, afidSuffix, fname=None):
         """
@@ -196,8 +236,8 @@ class s3:
         """
         if fname == None:
             fname = self._ext2upper(afidSuffix)
-        afids3key = self._afid2s3key(afidSuffix)
-        #return self._getBinary(fname, url)
+        fullKey = self._afid2s3key(afidSuffix)
+        return self.bucket.get_key(fullKey).get_contents_to_filename(fname)
         
 if __name__ == "__main__":
     """
@@ -205,8 +245,6 @@ if __name__ == "__main__":
     import argparse
     import pprint
     pp = pprint.PrettyPrinter(indent=2)
-    """
-    """
     parser = argparse.ArgumentParser(description='S3 API client module.')
     parser.add_argument('command', help="articles, article")
     parser.add_argument('doiList', nargs='*', help="list of doi's")
@@ -230,6 +268,10 @@ if __name__ == "__main__":
         s3 = s3()
         for doi in args.doiList:
            pp.pprint(s3.assets(doi))
+    elif args.command == 'asset':
+        s3 = s3()
+        for doi in args.doiList:
+           pp.pprint(s3.asset(doi))
     elif args.command == 'assetfile':
         s3 = s3()
         for afid in args.doiList:
