@@ -19,7 +19,7 @@ public class GroomedFigureView implements JsonOutputView {
   public static enum FigureType {
     ORIGINAL("TIF"),
     SMALL("PNG_S"),
-    INTERMEDIATE("PNG_I"),
+    INLINE("PNG_I"),
     MEDIUM("PNG_M"),
     LARGE("PNG_L");
 
