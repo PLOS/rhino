@@ -17,9 +17,7 @@ import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
-import org.ambraproject.rhino.view.asset.raw.AssetCollectionView;
-import org.ambraproject.rhino.view.asset.raw.Figure;
-import org.ambraproject.rhino.view.asset.raw.FigureView;
+import org.ambraproject.rhino.view.asset.groomed.GroomedAssetCollectionView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -124,16 +122,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     if (syndications != null) {
       serialized.add(MemberNames.SYNDICATIONS, syndications);
     }
-    serializePingbackDigest(serialized, context);
-    serialized.add("assets", context.serialize(new AssetCollectionView(article)));
+
+    serialized.add("assets", context.serialize(GroomedAssetCollectionView.create(article)));
 
     Set<Journal> journals = article.getJournals();
     KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
-
-    List<Figure> figures = Figure.listFigures(article);
-    List<FigureView> figureViews = FigureView.asViewList(figures);
-    serialized.add("figures", context.serialize(figureViews));
 
     JsonObject baseJson = context.serialize(article).getAsJsonObject();
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
