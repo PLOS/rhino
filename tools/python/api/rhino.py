@@ -76,7 +76,7 @@ class Rhino:
                     f.write(chunk)
                 f.close()
         else:
-            raise Exception("failed to get binary:  " + url)
+            raise Exception('rhino:failed to get binary ' + url)
         return m.hexdigest()
   
     def articles(self):
@@ -88,7 +88,7 @@ class Rhino:
             # Load JSON into a Python object and use some values from it.
             articles = json.loads(r.content)
         else:
-            raise Exception('articles verb failed : ' + url)
+            raise Exception('rhino:articles verb failed ' + url)
         # Return only doi's matched by filter
         for (doi, _) in articles.items():
             if self.filterRegx.search(doi):
@@ -105,7 +105,7 @@ class Rhino:
             # Load JSON into a Python object and use some values from it.
             article = json.loads(r.content)
         else:
-            raise Exception("article meta-data not found: " + url)
+            raise Exception('rhino:article meta-data not found ' + url)
         return article
 
     def assets(self, doiSuffix):
@@ -163,8 +163,23 @@ class Rhino:
             # Load JSON into a Python object and use some values from it.
             asset = json.loads(r.content)
         else:
-            raise Exception("asset meta-data not found: " + url)
+            raise Exception('rhino:asset meta-data not found ' + url)
         return asset    
+
+    def assetall(self, adoiSuffix):
+        """
+        """
+        assets = self.assets(adoiSuffix)
+        result = dict()
+        for (doi, afids) in assets.iteritems():
+            for fullAFID in afids:
+                afid = fullAFID.split('/')
+                if afid[0] == self.prefix:
+                    afidSuf = '.'.join(afid[1].split('.')[:-1])
+                    result.update(self.asset(afidSuf))
+                else:
+                    raise Exception('s3:invalid s3 prefix ' + fullAFID)
+        return result
 
     def assetFile(self, afidSuffix, fname=None):
         """
@@ -205,6 +220,10 @@ if __name__ == "__main__":
         rh = Rhino()
         for doi in args.doiList:
             pp.pprint(rh.asset(doi))
+    elif args.command == 'assetall':
+        rh = Rhino()
+        for doi in args.doiList:
+            pp.pprint(rh.assetall(doi))
     elif args.command == 'assetfile':
         rh = Rhino()
         for doi in args.doiList:

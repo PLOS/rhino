@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """
+
 """
 from __future__ import print_function
 from __future__ import with_statement
@@ -7,17 +8,34 @@ from cStringIO import StringIO
 from boto.s3.connection import S3Connection
 from boto.s3.connection import Location
 
-import json
-import os
-import re
-import requests
-import string
-import sys
-import md5
+import os, sys, re, string, requests, md5, json
+
+__author__    = 'Bill OConnor'
+__copyright__ = 'Copyright 2013, PLOS'
+__version__   = '0.1'
 
 class s3:
     """
     """
+    _FOREWARD_MDATA_MAP = { 'asset-contenttype':'contentType',
+                         'asset-contextelement' : 'contextElement',
+                         'asset-created' : 'created',
+                         'asset-doi': 'doi',
+                         'asset-extension': 'extension',
+                         'asset-lastmodified': 'lastModified',
+                         'asset-title': 'lastModified',
+                         'asset-size': 'size'
+                       }
+    _REVERSE_MDATA_MAP = { 'contentType' : 'asset-contenttype',
+                           'contextElement' : 'asset-contextelement',
+                           'created' : 'asset-created',
+                           'doi' : 'asset-doi',
+                           'extension' : 'asset-extension',
+                           'lastModified' : 'asset-lastmodified',
+                           'lastModified' : 'asset-title',
+                           'size' : 'asset-size'
+                         }
+
     _AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     _AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
     _JRNL_IDS = ['pone', 'pmed', 'ppat', 'pbio', 'pgen', 'pcbi', 'pntd' ]
@@ -34,6 +52,24 @@ class s3:
                                      aws_secret_access_key=self._AWS_SECRET_ACCESS_KEY)
         self.bucket = self.conn.get_bucket(bucketID) 
         return
+
+    def _forewardmap(self, name):
+        """
+        Map a s3 meta-data name to the rhino equivalent.
+        """
+        if self._FOREWARD_MDATA_MAP.has_key(name):
+            return self._FOREWARD_MDATA_MAP[name]
+        else:
+            return None
+
+    def _reversemap(self, name): 
+        """
+        Map a rhino meta-data name to the s3 equivalent.
+        """
+        if self._REVERSE_MDATA_MAP.has_key(name):
+            return self._REVERSE_MDATA_MAP[name]
+        else:
+            return None
 
     def _ext2upper(self, fname):
         """
@@ -83,6 +119,7 @@ class s3:
 
         ex. 10.1371/journal.PLOSID.XXXXXXXX.XML -> 
             10.1371/journal/PLOSID/XXXXXXXX/PLOSID.XXXXXXXX.xml
+            
             10.1371/image.PLOSID.vxx.ixx.xml ->
             10.1371/image/PLOSID/vxx/ixx/image.PLOSID.vxx.ixx.xml  
         """
@@ -125,22 +162,10 @@ class s3:
         result = dict()
         for k in mdata.iterkeys():
             lk = k.lower()
-            if lk == 'asset-contenttype':
-                result['contentType'] = mdata[k]
-            elif lk == 'asset-contextelement':
-                result['contextElement'] = mdata[k]
-            elif lk == 'asset-created':
-                result['created'] = mdata[k]
-            elif lk == 'asset-doi':
-                result['doi'] = mdata[k]
-            elif lk == 'asset-extension':
-                result['extension'] = mdata[k]
-            elif lk == 'asset-lastmodified':
-                result['lastModified'] = mdata[k]
-            elif lk == 'asset-title':
-                result['lastModified'] = mdata[k]
-            elif lk == 'asset-size':
-                result['size'] = mdata[k]
+            mappedKey = self._forewardmap(lk)
+            if mappedKey:
+                result[self._forewardmap(lk)] = mdata[k]
+        
         result['md5'] = mdata['asset-md5']
         result['description'] = 'S3 does not support descriptions'
         return result
@@ -166,6 +191,9 @@ class s3:
 
     def articles(self):
         """
+        Get a list of DOIs from the s3 bucket keys. This is some what
+        DOI specific. For image articles we need to iterate over 3
+        levels. For journals 2. 
         """
         # Get the image article DOIs
         bklstRslt = self.bucket.list(delimiter='/', prefix=self.prefix + '/image/')
@@ -214,20 +242,32 @@ class s3:
             assets[self._s3keyPath2doi(assetDOI)] = afids
         return assets
 
-    def asset(self, doiSuffix):
+    def asset(self, adoiSuffix):
         """
         """
-        pp = pprint.PrettyPrinter(indent=2)
-        theAssets = self.assets(doiSuffix)
-        assetRslt = dict()
-        for (doi, afids) in theAssets.iteritems():
+        assets = self.assets(adoiSuffix)
+        result = dict()
+        fullDOI = '{p}/{s}'.format(p=self.prefix, s=adoiSuffix)
+        afids = assets[fullDOI]
+        for fullAFID in afids:
+           afid = fullAFID.split('/')
+           if afid[0] == self.prefix:
+               result[fullAFID] = self._getAssetMeta(afid[1])
+           else:
+               raise Exception('s3:invalid s3 prefix ' + fullAFID)
+        return result
+
+    def assetall(self, adoiSuffix):
+        assets = self.assets(adoiSuffix)
+        result = dict()
+        for (adoi, afids) in assets.iteritems():
             for fullAFID in afids:
                 afid = fullAFID.split('/')
                 if afid[0] == self.prefix:
-                    assetRslt[afid[1]] = self._getAssetMeta(afid[1])
+                    result[fullAFID] = self._getAssetMeta(afid[1])
                 else:
                     raise Exception('s3:invalid s3 prefix ' + fullAFID)
-        return assetRslt
+        return result
 
     def assetFile(self, afidSuffix, fname=None):
         """
@@ -264,6 +304,10 @@ if __name__ == "__main__":
         s3 = s3()
         for k in s3.articles():
             print(k)
+    elif args.command == 'article':
+        s3 = s3()
+        for artcl in args.doiList:
+           print(s3.article(artcl))
     elif args.command == 'assets':
         s3 = s3()
         for doi in args.doiList:
@@ -272,6 +316,10 @@ if __name__ == "__main__":
         s3 = s3()
         for doi in args.doiList:
            pp.pprint(s3.asset(doi))
+    elif args.command == 'assetall':
+        s3 = s3()
+        for doi in args.doiList:
+           pp.pprint(s3.assetall(doi))
     elif args.command == 'assetfile':
         s3 = s3()
         for afid in args.doiList:
