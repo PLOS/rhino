@@ -49,21 +49,13 @@ public class GroomedFigureView implements JsonOutputView {
       serialized.add(field.getMemberName(), context.serialize(field.access(original)));
     }
 
-    serialized.add("original", context.serialize(new AssetFileView(original)));
+    serialized.add("original", context.serialize(AssetFileView.create(original)));
 
     JsonObject serializedThumbnails = new JsonObject();
     for (Map.Entry<FigureType, ArticleAsset> entry : thumbnails.entrySet()) {
       String key = entry.getKey().name().toLowerCase();
-      ArticleAsset thumbnail = entry.getValue();
-      JsonObject serializedThumbnail = (JsonObject) context.serialize(new AssetFileView(thumbnail));
-
-      // Exclude members already shown one level up
-      JsonObject thumbnailMetadata = (JsonObject) serializedThumbnail.get("metadata");
-      for (FigureMetadataField field : FigureMetadataField.values()) {
-        thumbnailMetadata.remove(field.getMemberName());
-      }
-
-      serializedThumbnails.add(key, serializedThumbnail);
+      AssetFileView thumbnailView = AssetFileView.create(entry.getValue());
+      serializedThumbnails.add(key, context.serialize(thumbnailView));
     }
     serialized.add("thumbnails", serializedThumbnails);
 

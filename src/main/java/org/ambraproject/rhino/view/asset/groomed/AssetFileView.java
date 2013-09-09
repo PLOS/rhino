@@ -10,9 +10,22 @@ import org.ambraproject.rhino.view.JsonOutputView;
 public class AssetFileView implements JsonOutputView {
 
   private final ArticleAsset asset;
+  private final boolean includeFigureFields;
 
-  public AssetFileView(ArticleAsset asset) {
+  private AssetFileView(ArticleAsset asset, boolean includeFigureFields) {
     this.asset = Preconditions.checkNotNull(asset);
+    this.includeFigureFields = includeFigureFields;
+  }
+
+  /**
+   * Create a view of the asset file, suppressing
+   */
+  public static AssetFileView create(ArticleAsset asset) {
+    return new AssetFileView(asset, false);
+  }
+
+  public static AssetFileView createWithFullMetadata(ArticleAsset asset) {
+    return new AssetFileView(asset, true);
   }
 
   @Override
@@ -20,7 +33,15 @@ public class AssetFileView implements JsonOutputView {
     JsonObject serialized = new JsonObject();
     AssetFileIdentity identity = AssetFileIdentity.from(asset);
     serialized.addProperty("file", identity.getFilePath());
-    serialized.add("metadata", context.serialize(asset));
+
+    JsonObject serializedMetadata = (JsonObject) context.serialize(asset);
+    if (!includeFigureFields) {
+      for (FigureMetadataField field : FigureMetadataField.values()) {
+        serializedMetadata.remove(field.getMemberName());
+      }
+    }
+    serialized.add("metadata", serializedMetadata);
+
     return serialized;
   }
 

@@ -59,8 +59,10 @@ public class GroomedAssetCollectionView {
       }
     }
 
-    AssetFileView articleXmlView = new AssetFileView(articleXml);
-    AssetFileView articlePdfView = new AssetFileView(articlePdf);
+    // By legacy convention, these asset files have figure fields that are redundant to the article itself.
+    // So, suppress those fields the same way as for a figure thumbnail.
+    AssetFileView articleXmlView = AssetFileView.create(articleXml);
+    AssetFileView articlePdfView = AssetFileView.create(articlePdf);
 
     List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figures.keySet().size());
     for (Collection<ArticleAsset> figureAssetCollection : figures.asMap().values()) {
@@ -69,7 +71,8 @@ public class GroomedAssetCollectionView {
 
     List<AssetFileView> miscellaneousViews = Lists.newArrayListWithCapacity(miscellaneous.size());
     for (ArticleAsset asset : miscellaneous) {
-      miscellaneousViews.add(new AssetFileView(asset));
+      // Leave in figure-specific fields; they don't show up anywhere else.
+      miscellaneousViews.add(AssetFileView.createWithFullMetadata(asset));
     }
 
     return new GroomedAssetCollectionView(articleXmlView, articlePdfView, figureViews, miscellaneousViews);
