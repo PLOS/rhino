@@ -7,7 +7,6 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView.FigureType;
 
 import java.util.Collection;
 import java.util.List;
@@ -53,7 +52,7 @@ public class GroomedAssetCollectionView {
         } else {
           miscellaneous.add(asset);
         }
-      } else if (FigureType.getExtensions().contains(asset.getExtension())) {
+      } else if (FigureType.getAllExtensions().contains(asset.getExtension())) {
         figures.put(asset.getDoi(), asset);
       } else {
         miscellaneous.add(asset);

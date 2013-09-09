@@ -2,8 +2,6 @@ package org.ambraproject.rhino.view.asset.groomed;
 
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
@@ -15,47 +13,6 @@ import java.util.Collection;
 import java.util.Map;
 
 public class GroomedFigureView implements JsonOutputView {
-
-  public static enum FigureType {
-    ORIGINAL("TIF"),
-    SMALL("PNG_S"),
-    INLINE("PNG_I"),
-    MEDIUM("PNG_M"),
-    LARGE("PNG_L");
-
-    private final ImmutableSet<String> associatedExtensions;
-
-    private FigureType(String... associatedExtensions) {
-      this.associatedExtensions = ImmutableSet.copyOf(associatedExtensions);
-    }
-
-    private static final ImmutableMap<String, FigureType> TYPES_BY_EXTENSION;
-
-    static {
-      ImmutableMap.Builder<String, FigureType> builder = ImmutableMap.builder();
-      for (FigureType figureType : values()) {
-        for (String extension : figureType.associatedExtensions) {
-          builder.put(extension.toUpperCase(), figureType);
-        }
-      }
-      TYPES_BY_EXTENSION = builder.build();
-    }
-
-    static ImmutableSet<String> getExtensions() {
-      return TYPES_BY_EXTENSION.keySet();
-    }
-
-    static FigureType fromExtension(String extension) {
-      FigureType figureType = TYPES_BY_EXTENSION.get(extension.toUpperCase());
-      if (figureType == null) {
-        String message = String.format("Figure extension not matched: \"%s\". Expected one of: %s",
-            extension, getExtensions());
-        throw new IllegalArgumentException(message);
-      }
-      return figureType;
-    }
-  }
-
 
   private final ArticleAsset original;
   private final Map<FigureType, ArticleAsset> thumbnails;
@@ -75,7 +32,7 @@ public class GroomedFigureView implements JsonOutputView {
     ArticleAsset original = byType.remove(FigureType.ORIGINAL);
     if (original == null) {
       String message = "Original asset not found. Expected an asset with an extension: "
-          + FigureType.ORIGINAL.associatedExtensions;
+          + FigureType.ORIGINAL.getAssociatedExtensions();
       throw new IllegalArgumentException(message);
     }
 
