@@ -72,16 +72,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
-   * Read the metadata of a figure asset. The output contains the figure metadata, as defined by the "original" asset
-   * file, plus the individual asset file objects.
-   *
-   * @param receiver the receiver to which the metadata should be written
-   * @param id       the identity of the asset to read
-   * @param format   the desired metadata format
-   */
-  public abstract void readMetadataAsFigure(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format) throws IOException;
-
-  /**
    * Overwrite an existing asset's file with a new file.
    *
    * @param fileContent the file to write
