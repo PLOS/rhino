@@ -122,6 +122,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     if (syndications != null) {
       serialized.add(MemberNames.SYNDICATIONS, syndications);
     }
+    serializePingbackDigest(serialized, context);
 
     serialized.add("assets", context.serialize(GroomedAssetCollectionView.create(article)));
 
