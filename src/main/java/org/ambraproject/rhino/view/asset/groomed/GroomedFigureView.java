@@ -53,7 +53,14 @@ public class GroomedFigureView implements JsonOutputView {
     for (Map.Entry<FigureType, ArticleAsset> entry : thumbnails.entrySet()) {
       String key = entry.getKey().name().toLowerCase();
       ArticleAsset thumbnail = entry.getValue();
-      serializedThumbnails.add(key, context.serialize(new AssetFileView(thumbnail)));
+      JsonObject serializedThumbnail = (JsonObject) context.serialize(new AssetFileView(thumbnail));
+
+      // Exclude members already shown one level up
+      JsonObject thumbnailMetadata = (JsonObject) serializedThumbnail.get("metadata");
+      thumbnailMetadata.remove("title");
+      thumbnailMetadata.remove("description");
+
+      serializedThumbnails.add(key, serializedThumbnail);
     }
     serialized.add("thumbnails", serializedThumbnails);
 
