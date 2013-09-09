@@ -18,12 +18,15 @@ public class AssetFileView implements JsonOutputView {
   }
 
   /**
-   * Create a view of the asset file, suppressing
+   * Create a view of the asset file, suppressing metadata fields that would be shown for a parent figure..
    */
   public static AssetFileView create(ArticleAsset asset) {
     return new AssetFileView(asset, false);
   }
 
+  /**
+   * Create a view of the asset file, showing all stored metadata.
+   */
   public static AssetFileView createWithFullMetadata(ArticleAsset asset) {
     return new AssetFileView(asset, true);
   }
