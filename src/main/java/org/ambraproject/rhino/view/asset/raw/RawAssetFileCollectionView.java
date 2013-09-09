@@ -16,11 +16,11 @@ import java.util.List;
 /**
  * A serializable view of a group of assets that all have the same DOI, possibly representing different files.
  */
-public class AssetFileCollectionView implements JsonOutputView {
+public class RawAssetFileCollectionView implements JsonOutputView {
 
   private final ImmutableList<ArticleAsset> assets;
 
-  public AssetFileCollectionView(Collection<? extends ArticleAsset> assets) {
+  public RawAssetFileCollectionView(Collection<? extends ArticleAsset> assets) {
     this.assets = ImmutableList.copyOf(assets);
   }
 

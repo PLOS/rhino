@@ -16,10 +16,10 @@ import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleStateView;
 import org.ambraproject.rhino.view.article.ArticleViewList;
 import org.ambraproject.rhino.view.article.DoiList;
-import org.ambraproject.rhino.view.asset.groomed.AssetFileView;
+import org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView;
-import org.ambraproject.rhino.view.asset.raw.AssetCollectionView;
-import org.ambraproject.rhino.view.asset.raw.AssetFileCollectionView;
+import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
+import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalListView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
@@ -65,12 +65,12 @@ public final class JsonAdapterUtil {
     builder.setPrettyPrinting();
 
     ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
-        ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, AssetCollectionView.class,
-        AssetFileCollectionView.class, JournalListView.class,
+        ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, RawAssetCollectionView.class,
+        RawAssetFileCollectionView.class, JournalListView.class,
         JournalNonAssocView.class, JournalNonAssocView.ListView.class, VolumeListView.class,
         VolumeOutputView.class, VolumeOutputView.ListView.class, JournalOutputView.class,
         IssueOutputView.class, IssueOutputView.ListView.class,
-        GroomedFigureView.class, AssetFileView.class);
+        GroomedFigureView.class, GroomedAssetFileView.class);
     for (Class<? extends JsonOutputView> viewClass : outputViews) {
       builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
     }

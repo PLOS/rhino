@@ -7,12 +7,12 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 
-public class AssetFileView implements JsonOutputView {
+public class GroomedAssetFileView implements JsonOutputView {
 
   private final ArticleAsset asset;
   private final boolean includeFigureFields;
 
-  private AssetFileView(ArticleAsset asset, boolean includeFigureFields) {
+  private GroomedAssetFileView(ArticleAsset asset, boolean includeFigureFields) {
     this.asset = Preconditions.checkNotNull(asset);
     this.includeFigureFields = includeFigureFields;
   }
@@ -20,15 +20,15 @@ public class AssetFileView implements JsonOutputView {
   /**
    * Create a view of the asset file, suppressing metadata fields that would be shown for a parent figure..
    */
-  public static AssetFileView create(ArticleAsset asset) {
-    return new AssetFileView(asset, false);
+  public static GroomedAssetFileView create(ArticleAsset asset) {
+    return new GroomedAssetFileView(asset, false);
   }
 
   /**
    * Create a view of the asset file, showing all stored metadata.
    */
-  public static AssetFileView createWithFullMetadata(ArticleAsset asset) {
-    return new AssetFileView(asset, true);
+  public static GroomedAssetFileView createWithFullMetadata(ArticleAsset asset) {
+    return new GroomedAssetFileView(asset, true);
   }
 
   @Override

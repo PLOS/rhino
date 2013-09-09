@@ -11,25 +11,25 @@ import org.ambraproject.models.ArticleAsset;
 import java.util.Collection;
 import java.util.List;
 
-public class GroomedAssetCollectionView {
+public class GroomedAssetsView {
 
   // For Gson's default serialization.
-  private final AssetFileView articleXml;
-  private final AssetFileView articlePdf;
+  private final GroomedAssetFileView articleXml;
+  private final GroomedAssetFileView articlePdf;
   private final ImmutableList<GroomedFigureView> figures;
-  private final ImmutableList<AssetFileView> miscellaneous;
+  private final ImmutableList<GroomedAssetFileView> miscellaneousAssetFiles;
 
-  private GroomedAssetCollectionView(AssetFileView articleXml,
-                                     AssetFileView articlePdf,
-                                     List<GroomedFigureView> figures,
-                                     List<AssetFileView> miscellaneous) {
+  private GroomedAssetsView(GroomedAssetFileView articleXml,
+                            GroomedAssetFileView articlePdf,
+                            List<GroomedFigureView> figures,
+                            List<GroomedAssetFileView> miscellaneousAssetFiles) {
     this.articleXml = Preconditions.checkNotNull(articleXml);
     this.articlePdf = articlePdf; // nullable
     this.figures = ImmutableList.copyOf(figures);
-    this.miscellaneous = ImmutableList.copyOf(miscellaneous);
+    this.miscellaneousAssetFiles = ImmutableList.copyOf(miscellaneousAssetFiles);
   }
 
-  public static GroomedAssetCollectionView create(Article article) {
+  public static GroomedAssetsView create(Article article) {
     final List<ArticleAsset> assets = article.getAssets();
 
     ArticleAsset articleXml = null;
@@ -52,7 +52,7 @@ public class GroomedAssetCollectionView {
         } else {
           miscellaneous.add(asset);
         }
-      } else if (FigureType.getAllExtensions().contains(asset.getExtension())) {
+      } else if (FigureFileType.getAllExtensions().contains(asset.getExtension())) {
         figures.put(asset.getDoi(), asset);
       } else {
         miscellaneous.add(asset);
@@ -61,21 +61,21 @@ public class GroomedAssetCollectionView {
 
     // By legacy convention, these asset files have figure fields that are redundant to the article itself.
     // So, suppress those fields the same way as for a figure thumbnail.
-    AssetFileView articleXmlView = AssetFileView.create(articleXml);
-    AssetFileView articlePdfView = AssetFileView.create(articlePdf);
+    GroomedAssetFileView articleXmlView = GroomedAssetFileView.create(articleXml);
+    GroomedAssetFileView articlePdfView = GroomedAssetFileView.create(articlePdf);
 
     List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figures.keySet().size());
     for (Collection<ArticleAsset> figureAssetCollection : figures.asMap().values()) {
       figureViews.add(GroomedFigureView.create(figureAssetCollection));
     }
 
-    List<AssetFileView> miscellaneousViews = Lists.newArrayListWithCapacity(miscellaneous.size());
+    List<GroomedAssetFileView> miscellaneousViews = Lists.newArrayListWithCapacity(miscellaneous.size());
     for (ArticleAsset asset : miscellaneous) {
       // Leave in figure-specific fields; they don't show up anywhere else.
-      miscellaneousViews.add(AssetFileView.createWithFullMetadata(asset));
+      miscellaneousViews.add(GroomedAssetFileView.createWithFullMetadata(asset));
     }
 
-    return new GroomedAssetCollectionView(articleXmlView, articlePdfView, figureViews, miscellaneousViews);
+    return new GroomedAssetsView(articleXmlView, articlePdfView, figureViews, miscellaneousViews);
   }
 
 }
