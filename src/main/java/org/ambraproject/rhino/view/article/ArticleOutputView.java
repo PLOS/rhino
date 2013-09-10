@@ -132,13 +132,17 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
 
-    // Raw view of assets
-    serialized.add("assets", context.serialize(new RawAssetCollectionView(article)));
-
     JsonObject baseJson = context.serialize(article).getAsJsonObject();
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 
     serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+
+    /*
+     * Because it is so bulky, put the raw asset view at the bottom (overwriting the default serialization of the
+     * native article.assets field) for better human readability.
+     */
+    serialized.remove("assets"); // otherwise the new value would be inserted in the old position
+    serialized.add("assets", context.serialize(new RawAssetCollectionView(article)));
 
     return serialized;
   }
