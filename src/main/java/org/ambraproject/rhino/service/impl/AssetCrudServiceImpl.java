@@ -31,6 +31,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -298,6 +299,15 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     assert format == MetadataFormat.JSON;
     Collection<ArticleAsset> assets = findArticleAssets(id);
     writeJson(receiver, new RawAssetFileCollectionView(assets));
+  }
+
+  @Override
+  public void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+      throws IOException {
+    Collection<ArticleAsset> assets = findArticleAssets(id);
+    GroomedFigureView figureView = GroomedFigureView.create(assets);
+    figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
+    writeJson(receiver, figureView);
   }
 
   /**
