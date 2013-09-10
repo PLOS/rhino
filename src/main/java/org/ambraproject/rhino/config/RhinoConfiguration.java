@@ -19,7 +19,10 @@
 package org.ambraproject.rhino.config;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
+import org.ambraproject.rhino.config.json.AdapterRegistry;
+import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -41,6 +44,7 @@ import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
+import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
 import org.apache.commons.httpclient.HttpClient;
@@ -54,6 +58,8 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -101,7 +107,19 @@ public class RhinoConfiguration extends BaseConfiguration {
    */
   @Bean
   public Gson entityGson() {
-    return JsonAdapterUtil.buildGson();
+    GsonBuilder builder = JsonAdapterUtil.makeGsonBuilder();
+    builder.setPrettyPrinting();
+
+    // Bulk-apply special cases defined in org.ambraproject.rhino.config.json
+    builder.setExclusionStrategies(ExclusionSpecialCase.values());
+    for (Class<? extends JsonOutputView> viewClass : AdapterRegistry.getOutputViewClasses()) {
+      builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
+    }
+    for (Map.Entry<Type, Object> entry : AdapterRegistry.getCustomAdapters().entrySet()) {
+      builder.registerTypeAdapter(entry.getKey(), entry.getValue());
+    }
+
+    return builder.create();
   }
 
   @Bean
