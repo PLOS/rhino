@@ -1,31 +1,9 @@
 package org.ambraproject.rhino.util;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.ambraproject.models.AmbraEntity;
-import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.rhino.view.article.ArticleOutputView;
-import org.ambraproject.rhino.view.article.ArticleStateView;
-import org.ambraproject.rhino.view.article.ArticleViewList;
-import org.ambraproject.rhino.view.article.DoiList;
-import org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView;
-import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView;
-import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
-import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
-import org.ambraproject.rhino.view.journal.IssueOutputView;
-import org.ambraproject.rhino.view.journal.JournalListView;
-import org.ambraproject.rhino.view.journal.JournalNonAssocView;
-import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.ambraproject.rhino.view.journal.VolumeListView;
-import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.ambraproject.rhombat.gson.Iso8601CalendarAdapter;
 import org.ambraproject.rhombat.gson.Iso8601DateAdapter;
 
@@ -58,53 +36,19 @@ public final class JsonAdapterUtil {
   }
 
   /**
-   * @return a Gson object suitable for serializing rhino responses
+   * Create a {@code GsonBuilder} preconfigured with utility adapters.
+   *
+   * @return a {@code GsonBuilder} object
    */
-  public static Gson buildGson() {
+  public static GsonBuilder makeGsonBuilder() {
     GsonBuilder builder = new GsonBuilder();
-    builder.setPrettyPrinting();
 
-    ImmutableSet<Class<? extends JsonOutputView>> outputViews = ImmutableSet.of(
-        ArticleOutputView.class, ArticleStateView.class, ArticleViewList.class, RawAssetCollectionView.class,
-        RawAssetFileCollectionView.class, JournalListView.class,
-        JournalNonAssocView.class, JournalNonAssocView.ListView.class, VolumeListView.class,
-        VolumeOutputView.class, VolumeOutputView.ListView.class, JournalOutputView.class,
-        IssueOutputView.class, IssueOutputView.ListView.class,
-        GroomedFigureView.class, GroomedAssetFileView.class);
-    for (Class<? extends JsonOutputView> viewClass : outputViews) {
-      builder.registerTypeAdapter(viewClass, JsonOutputView.SERIALIZER);
-    }
-
-    builder.registerTypeAdapter(DoiList.class, DoiList.ADAPTER);
-    builder.registerTypeAdapter(ArticleInputView.class, ArticleInputView.DESERIALIZER);
     builder.registerTypeAdapter(Date.class, new Iso8601DateAdapter());
-    builder.registerTypeAdapter(Calendar.class, new Iso8601CalendarAdapter());
-    builder.registerTypeAdapter(GregorianCalendar.class, new Iso8601CalendarAdapter());
+    Iso8601CalendarAdapter calendarAdapter = new Iso8601CalendarAdapter();
+    builder.registerTypeAdapter(Calendar.class, calendarAdapter);
+    builder.registerTypeAdapter(GregorianCalendar.class, calendarAdapter);
 
-    builder.setExclusionStrategies(
-        new ExclusionStrategy() {
-          @Override
-          public boolean shouldSkipField(FieldAttributes f) {
-            final String name = f.getName();
-            if ("ID".equals(name) /* internal to the database */) {
-              return true;
-            }
-
-            // Prevent infinite recursion on ArticleRelationship.parentArticle
-            if (ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass())
-                && AmbraEntity.class.isAssignableFrom(f.getDeclaredClass())) {
-              return true;
-            }
-
-            return false;
-          }
-
-          @Override
-          public boolean shouldSkipClass(Class<?> clazz) {
-            return false;
-          }
-        }
-    );
-    return builder.create();
+    return builder;
   }
+
 }
