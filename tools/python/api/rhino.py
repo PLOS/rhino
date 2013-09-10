@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 """
 PLOS Rhino API Module.
 
@@ -9,7 +8,7 @@ This module exports one class 'Rhino'
 from __future__ import print_function
 from __future__ import with_statement
 
-import json, re, requests, md5
+import os, sys, json, re, requests, md5
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -78,7 +77,17 @@ class Rhino:
         else:
             raise Exception('rhino:failed to get binary ' + url)
         return m.hexdigest()
-  
+
+    def _afidsFromDoi(self, doiSuffix):
+        """
+        Given a DOI Suffix return a list of AFIDs 
+        """
+        assets = self.assets(doiSuffix)
+        for (adoi, afids) in assets.iteritems():
+            for fullAFID in afids:
+                (p, afid) = fullAFID.split('/')
+                yield afid
+
     def articles(self):
         """
         List of article DOI's for the given Server and Prefix.
@@ -107,6 +116,15 @@ class Rhino:
         else:
             raise Exception('rhino:article meta-data not found ' + url)
         return article
+
+    def rmArticle(self, doiSuffix):
+        """
+        Not implemented for Rhino
+        """
+        #for afid in self._afidsFromDoi(doiSuffix):
+        #    print(afid)
+        raise NotImplemented('rhino: not implemented for fhino')
+        return
 
     def assets(self, doiSuffix):
         """
@@ -191,41 +209,48 @@ class Rhino:
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getBinary(fname, url)
 
+    def articleFiles(self, doiSuffix):
+        """
+        Download files for all AFIDs associated with this DOI. 
+        """
+        os.mkdir(doiSuffix)
+        os.chdir('./'+ doiSuffix)
+        dwnldList = []
+        for afid in self._afidsFromDoi(doiSuffix):
+            self.assetFile(afid)
+            dwnldList.append(afid)
+        os.chdir('../')
+        return { doiSuffix : dwnldList }
 
 if __name__ == "__main__":
     import argparse   
     import pprint 
+ 
+    # Main command dispatcher.
+    dispatch = { 'articlefiles' : lambda repo, doiList: [ repo.articleFiles(doi) for doi in doiList ],
+                 'article'      : lambda repo, doiList: [ repo.article(doi) for doi in doiList ],
+                 'articles'     : lambda repo, doiList: repo.articles(),
+                 'rm-article'   : lambda repo, doiList: [ repo.rmArticle(doi) for doi in doiList ],
+                 'assets'       : lambda repo, doiList: [ repo.assets(doi) for doi in doiList ],
+                 'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
+                 'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
+               }
+
     pp = pprint.PrettyPrinter(indent=2)
-    """
-    """
     parser = argparse.ArgumentParser(description='Rhino API client module.')
-    parser.add_argument('command', help="articles, article")
+    parser.add_argument('--server', help='specify a Rhino server url.')
+    parser.add_argument('--prefix', help='specify a DOI prefix.')
+    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll")
     parser.add_argument('doiList', nargs='*', help="list of doi's")
     args = parser.parse_args()
+
+    try:
+        for val in dispatch[args.command](Rhino(), args.doiList):
+            pp.pprint(val)
+    except Exception as e:
+        sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
+        sys.exit(1)
+
+    sys.exit(0)
+        
     
-    if args.command == 'articles':
-        rh = Rhino()
-        dois = rh.articles()
-        for d in dois:
-            print(d)
-    elif args.command == 'article':
-        rh = Rhino()
-        for doi in args.doiList:
-            pp.pprint(rh.article(doi))
-    elif args.command == 'assets':
-        rh = Rhino()
-        for doi in args.doiList:
-            pp.pprint(rh.assets(doi))
-    elif args.command == 'asset':
-        rh = Rhino()
-        for doi in args.doiList:
-            pp.pprint(rh.asset(doi))
-    elif args.command == 'assetall':
-        rh = Rhino()
-        for doi in args.doiList:
-            pp.pprint(rh.assetall(doi))
-    elif args.command == 'assetfile':
-        rh = Rhino()
-        for doi in args.doiList:
-            rh.assetFile(doi)
-           

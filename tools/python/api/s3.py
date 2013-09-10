@@ -325,7 +325,8 @@ class S3:
 
     def articleFiles(self, doiSuffix):
         """
-        Download files for all AFIDs associated with this 
+        Download files for all AFIDs associated with this
+        DOI. 
         """
         os.mkdir(doiSuffix)
         os.chdir('./'+ doiSuffix)
@@ -368,5 +369,11 @@ if __name__ == "__main__":
     parser.add_argument('doiList', nargs='*', help="list of doi's")
     args = parser.parse_args()
 
-    for val in dispatch[args.command](S3(), args.doiList):
-        pp.pprint(val)
+    try:
+        for val in dispatch[args.command](S3(), args.doiList):
+            pp.pprint(val)
+    except Exception as e:
+        sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
+        sys.exit(1)
+
+    sys.exit(0)
