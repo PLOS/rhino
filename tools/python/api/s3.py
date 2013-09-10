@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 """
+    PLOS S3 repo module.
+
+    Some definitions:
+
+        DOI: a unique identifier  
 
 """
 from __future__ import print_function
@@ -14,7 +19,7 @@ __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
 __version__   = '0.1'
 
-class s3:
+class S3:
     """
     """
     _FOREWARD_MDATA_MAP = { 'asset-contenttype':'contentType',
@@ -132,7 +137,7 @@ class s3:
             doiSuffix = '/'.join(afidSuffix.lower().split('.')[:-1])
             fullAFID = u'{p}/{s}/{a}'.format(p=self.prefix, s=doiSuffix, a=afidSuffix.lower())
         else:
-            raise Exception('s3:invalid afid suffix ' + doiSuffix)
+            raise Exception('s3:invalid afid suffix ' + afidSuffix)
         return fullAFID
 
     def _s3keyPath2doi(self, s3keyPath):
@@ -148,11 +153,21 @@ class s3:
         elemLst[-1] = self._ext2upper(elemLst[-1])
         if elemLst[1].lower() == 'journal':
             fullAFID = u'{p}/journal.{s}'.format(p=elemLst[0], s= '.'.join(elemLst[-1:]))    
-        elif  elemLst[1].lower() == 'image':
+        elif elemLst[1].lower() == 'image':
             fullAFID = u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[-1:]))
         else:
             raise Exception('s3:invalid s3 key ' + s3key)
         return fullAFID
+    
+    def _afidsFromDoi(self, doiSuffix):
+        """
+        Given a DOI Suffix return a list of AFIDs 
+        """
+        assets = self.assets(doiSuffix)
+        for (adoi, afids) in assets.iteritems():
+            for fullAFID in afids:
+                (p, afid) = fullAFID.split('/')
+                yield afid
 
     def _getAssetMeta(self, afidSuffix):
         """
@@ -182,7 +197,25 @@ class s3:
         """
         """
         fullKey = self._afid2s3key(afidSuffix)
-        return self.bucket.get_key(fullKey)
+        # keys = self.bucket.list_versions(prefix=fullKey, delimiter='/')
+        keys = [ self.bucket.get_key(fullKey) ]
+        for k in keys:
+            mdata = k.metadata
+            mdata['S3:name'] = k.name
+            mdata['S3:cache_control'] = k.cache_control
+            mdata['S3:content_type'] = k.content_type
+            mdata['S3:content_encoding'] = k.content_encoding
+            mdata['S3:content_disposition'] = k.content_disposition
+            mdata['S3:content_language'] = k.content_language
+            mdata['S3:etag'] = k.etag
+            mdata['S3:last_modified'] = k.last_modified
+            mdata['S3:owner'] = k.owner
+            mdata['S3:storage_class'] = k.storage_class
+            mdata['S3:md5'] = k.md5
+            mdata['S3:size'] = k.size
+            mdata['S3:version_id'] = k.version_id
+            mdata['S3:encrypted'] = k.encrypted        
+        return mdata
 
     def bucket_names(self):
         """
@@ -212,11 +245,21 @@ class s3:
     
     def article(self, doiSuffix):
         """
+        Since s3 in only storing article data at this point 
+        the article meta-data is not available.
         """
-        raise Exception('s3:article not supported')    
+        raise NotImplementedError('s3:article not supported')    
+
+    def rmArticle(self, doiSuffix):
+        """
+        """
+        for afid in self._afidsFromDoi(doiSuffix):
+            print(self._afid2s3key(afid))
 
     def assets(self, doiSuffix):
         """
+        Return a map with ADOI's as keys and a list of
+        AFIDs for each ADOI.
         """
         artDOI = '{p}/{s}'.format(p=self.prefix, s=doiSuffix)
         assets = {}
@@ -244,6 +287,7 @@ class s3:
 
     def asset(self, adoiSuffix):
         """
+        Given an ADOI dump the meta-data 
         """
         assets = self.assets(adoiSuffix)
         result = dict()
@@ -258,69 +302,71 @@ class s3:
         return result
 
     def assetall(self, adoiSuffix):
+        """
+        
+        """
         assets = self.assets(adoiSuffix)
         result = dict()
         for (adoi, afids) in assets.iteritems():
             for fullAFID in afids:
                 afid = fullAFID.split('/')
-                if afid[0] == self.prefix:
-                    result[fullAFID] = self._getAssetMeta(afid[1])
-                else:
-                    raise Exception('s3:invalid s3 prefix ' + fullAFID)
+                result[fullAFID] = self._getAssetMeta(afid[1])
         return result
 
     def assetFile(self, afidSuffix, fname=None):
         """
-        Retreive the actual asset data. If the name is not
+        Retreive the actual asset data. If the file name is not
         specified use the afid as the file name.
         """
         if fname == None:
             fname = self._ext2upper(afidSuffix)
         fullKey = self._afid2s3key(afidSuffix)
         return self.bucket.get_key(fullKey).get_contents_to_filename(fname)
+
+    def articleFiles(self, doiSuffix):
+        """
+        Download files for all AFIDs associated with this 
+        """
+        os.mkdir(doiSuffix)
+        os.chdir('./'+ doiSuffix)
+        dwnldList = []
+        for afid in self._afidsFromDoi(doiSuffix):
+            self.assetFile(afid)
+            dwnldList.append(afid)    
+        os.chdir('../')
+        return { doiSuffix : dwnldList }
+
+    def putArticle(self, doiSuffix):
+        """
+        """
+        return
         
 if __name__ == "__main__":
     """
+    Main entry point for command line execution. 
     """
     import argparse
     import pprint
+
+    # Main command dispatcher.
+    dispatch = { 'buckets'      : lambda repo, doiList: repo.bucket_names(),
+                 'keycheck'     : lambda repo, doiList: [ repo.keycheck(afid) for afid in doiList ],
+                 'articlefiles' : lambda repo, doiList: [ repo.articleFiles(doi) for doi in doiList ],
+                 'article'      : lambda repo, doiList: [ repo.article(doi) for doi in doiList ],
+                 'articles'     : lambda repo, doiList: repo.articles(),
+                 'rm-article'   : lambda repo, doiList: [ repo.rmArticle(doi) for doi in doiList ],
+                 'assets'       : lambda repo, doiList: [ repo.assets(doi) for doi in doiList ],
+                 'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
+                 'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
+               }
+
     pp = pprint.PrettyPrinter(indent=2)
     parser = argparse.ArgumentParser(description='S3 API client module.')
-    parser.add_argument('command', help="articles, article")
+    parser.add_argument('--bucket', help='specify an S3 buckt to use.')
+    parser.add_argument('--prefix', help='specify a DOI prefix.')
+    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, buckets, keycheck")
     parser.add_argument('doiList', nargs='*', help="list of doi's")
     args = parser.parse_args()
 
-    if args.command == 'buckets':
-        s3 = s3()
-        names = s3.bucket_names()
-        for n in names:
-            print(n)
-    elif args.command == 'keycheck':
-        s3 = s3()
-        for afid in args.doiList:
-           theKey = s3.keycheck(afid)
-           pp.pprint(theKey.metadata)
-    elif args.command == 'articles':
-        s3 = s3()
-        for k in s3.articles():
-            print(k)
-    elif args.command == 'article':
-        s3 = s3()
-        for artcl in args.doiList:
-           print(s3.article(artcl))
-    elif args.command == 'assets':
-        s3 = s3()
-        for doi in args.doiList:
-           pp.pprint(s3.assets(doi))
-    elif args.command == 'asset':
-        s3 = s3()
-        for doi in args.doiList:
-           pp.pprint(s3.asset(doi))
-    elif args.command == 'assetall':
-        s3 = s3()
-        for doi in args.doiList:
-           pp.pprint(s3.assetall(doi))
-    elif args.command == 'assetfile':
-        s3 = s3()
-        for afid in args.doiList:
-            s3.assetFile(afid)
+    for val in dispatch[args.command](S3(), args.doiList):
+        pp.pprint(val)
