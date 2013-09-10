@@ -49,7 +49,7 @@ enum FigureFileType {
     if (figureFileType == null) {
       String message = String.format("Figure extension not matched: \"%s\". Expected one of: %s",
           extension, getAllExtensions());
-      throw new IllegalArgumentException(message);
+      throw new NotAFigureException(message);
     }
     return figureFileType;
   }

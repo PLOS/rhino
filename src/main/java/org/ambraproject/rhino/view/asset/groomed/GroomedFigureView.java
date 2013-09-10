@@ -39,7 +39,7 @@ public class GroomedFigureView implements JsonOutputView {
     if (original == null) {
       String message = "Original asset not found. Expected an asset with an extension: "
           + FigureFileType.ORIGINAL.getAssociatedExtensions();
-      throw new IllegalArgumentException(message);
+      throw new NotAFigureException(message);
     }
 
     return new GroomedFigureView(original, byType);
