@@ -306,7 +306,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     Collection<ArticleAsset> assets = findArticleAssets(id);
-    GroomedFigureView figureView = null;
+    GroomedFigureView figureView;
     try {
       figureView = GroomedFigureView.create(assets);
     } catch (NotAFigureException e) {
