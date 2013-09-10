@@ -72,7 +72,7 @@ public class AssetController extends DoiBasedCrudController {
     AssetIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    assetCrudService.readMetadataAsFigure(receiver, id, mf);
+    assetCrudService.readFigureMetadata(receiver, id, mf);
   }
 
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"articleFor"}, method = RequestMethod.GET)

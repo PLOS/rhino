@@ -31,9 +31,8 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.view.asset.AssetFileCollectionView;
-import org.ambraproject.rhino.view.asset.AssetsAsFigureView;
-import org.ambraproject.rhino.view.asset.Figure;
+import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView;
+import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -299,21 +298,16 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throws IOException {
     assert format == MetadataFormat.JSON;
     Collection<ArticleAsset> assets = findArticleAssets(id);
-    writeJson(receiver, new AssetFileCollectionView(assets));
+    writeJson(receiver, new RawAssetFileCollectionView(assets));
   }
 
   @Override
-  public void readMetadataAsFigure(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     Collection<ArticleAsset> assets = findArticleAssets(id);
-    List<Figure> figures = Figure.listFigures(assets);
-    if (figures.size() != 1) {
-      // findArticleAssets should be defined such that this impossible
-      throw new RuntimeException("Expected ArticleAsset objects have one DOI in common");
-    }
-    Figure figure = figures.get(0);
-    ArticleIdentity parentArticleIdentity = findArticleFor(AssetIdentity.from(figure.getOriginal()));
-    writeJson(receiver, new AssetsAsFigureView(figure, parentArticleIdentity));
+    GroomedFigureView figureView = GroomedFigureView.create(assets);
+    figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
+    writeJson(receiver, figureView);
   }
 
   /**

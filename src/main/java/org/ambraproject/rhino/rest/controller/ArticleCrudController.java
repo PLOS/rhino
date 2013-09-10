@@ -118,19 +118,18 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
-   * Retrieves either metadata about an article (default), or entities associated with an
-   * article depending on the parameters.
+   * Retrieves either metadata about an article (default), or entities associated with an article depending on the
+   * parameters.
    *
-   * @param request HttpServletRequest
-   * @param response HttpServletResponse
-   * @param format must be MetadataFormat.JSON
-   * @param comments if present, the response will be a list of objects representing
-   *     comments associated with the article, instead of the article metadata.
-   *     Each comment has a "replies" list that contains any replies (recursively).
-   * @param corrections if present, the response will be a list of objects representing
-   *     corrections associated with the article, instead of the article metadata.
-   *     The structure of corrections are similar to commments--they can have any number
-   *     of recursively nested replies.
+   * @param request     HttpServletRequest
+   * @param response    HttpServletResponse
+   * @param format      must be MetadataFormat.JSON
+   * @param comments    if present, the response will be a list of objects representing comments associated with the
+   *                    article, instead of the article metadata. Each comment has a "replies" list that contains any
+   *                    replies (recursively).
+   * @param corrections if present, the response will be a list of objects representing corrections associated with the
+   *                    article, instead of the article metadata. The structure of corrections are similar to
+   *                    commments--they can have any number of recursively nested replies.
    * @throws FileStoreException
    * @throws IOException
    */

@@ -17,9 +17,8 @@ import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
-import org.ambraproject.rhino.view.asset.AssetCollectionView;
-import org.ambraproject.rhino.view.asset.Figure;
-import org.ambraproject.rhino.view.asset.FigureView;
+import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
+import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -125,20 +124,25 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       serialized.add(MemberNames.SYNDICATIONS, syndications);
     }
     serializePingbackDigest(serialized, context);
-    serialized.add("assets", context.serialize(new AssetCollectionView(article)));
 
     Set<Journal> journals = article.getJournals();
     KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
 
-    List<Figure> figures = Figure.listFigures(article);
-    List<FigureView> figureViews = FigureView.asViewList(figures);
-    serialized.add("figures", context.serialize(figureViews));
+    GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
+    JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
 
     JsonObject baseJson = context.serialize(article).getAsJsonObject();
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 
     serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+
+    /*
+     * Because it is so bulky, put the raw asset view at the bottom (overwriting the default serialization of the
+     * native article.assets field) for better human readability.
+     */
+    serialized.remove("assets"); // otherwise the new value would be inserted in the old position
+    serialized.add("assets", context.serialize(new RawAssetCollectionView(article)));
 
     return serialized;
   }

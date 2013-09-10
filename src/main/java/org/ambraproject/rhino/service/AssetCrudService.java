@@ -79,7 +79,8 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id       the identity of the asset to read
    * @param format   the desired metadata format
    */
-  public abstract void readMetadataAsFigure(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format) throws IOException;
+  public abstract void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+      throws IOException;
 
   /**
    * Overwrite an existing asset's file with a new file.
@@ -96,4 +97,5 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @return the article's identity
    */
   public abstract ArticleIdentity findArticleFor(AssetIdentity id);
+
 }

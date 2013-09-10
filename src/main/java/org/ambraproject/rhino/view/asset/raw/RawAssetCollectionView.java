@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view.asset;
+package org.ambraproject.rhino.view.asset.raw;
 
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.gson.JsonElement;
@@ -13,11 +13,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class AssetCollectionView implements JsonOutputView {
+public class RawAssetCollectionView implements JsonOutputView {
 
   private final ImmutableListMultimap<String, ArticleAsset> assets;
 
-  public AssetCollectionView(Article article) {
+  public RawAssetCollectionView(Article article) {
     Iterable<ArticleAsset> assets = article.getAssets();
     ImmutableListMultimap.Builder<String, ArticleAsset> buffer = ImmutableListMultimap.builder();
     for (ArticleAsset asset : assets) {
@@ -32,7 +32,7 @@ public class AssetCollectionView implements JsonOutputView {
     for (Map.Entry<String, Collection<ArticleAsset>> entry : assets.asMap().entrySet()) {
       String assetId = DoiBasedIdentity.asIdentifier(entry.getKey());
       List<ArticleAsset> assetFiles = (List<ArticleAsset>) entry.getValue(); // cast is safe because it's a ListMultimap
-      JsonElement byFileId = AssetFileCollectionView.serializeAssetFiles(assetFiles, context);
+      JsonElement byFileId = RawAssetFileCollectionView.serializeAssetFiles(assetFiles, context);
       serialized.add(assetId, byFileId);
     }
     return serialized;

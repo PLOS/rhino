@@ -61,14 +61,14 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   /**
    * Forwards annotations matching the given types to the receiver.
    *
-   * @param receiver wraps the response object
-   * @param id identifies the article
-   * @param format must currently be MetadataFormat.JSON
+   * @param receiver        wraps the response object
+   * @param id              identifies the article
+   * @param format          must currently be MetadataFormat.JSON
    * @param annotationTypes set of annotation types to select
    * @throws IOException
    */
   private void readAnnotations(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format,
-      Set<AnnotationType> annotationTypes) throws IOException {
+                               Set<AnnotationType> annotationTypes) throws IOException {
     if (format != MetadataFormat.JSON) {
       throw new IllegalArgumentException("Only JSON is supported");
     }
@@ -92,16 +92,15 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   /**
-   * Recursively loads all child replies for a given annotation.  That is, loads the full reply
-   * tree given an annotation that is the root.
+   * Recursively loads all child replies for a given annotation.  That is, loads the full reply tree given an annotation
+   * that is the root.
    *
    * @param annotationId specifies the root annotation
-   * @param results the partial results during the recursion.  The initial caller should pass
-   *     in an empty map.
+   * @param results      the partial results during the recursion.  The initial caller should pass in an empty map.
    * @return a map from annotationID to list of child replies
    */
   private Map<Long, List<Annotation>> findAnnotationReplies(Long annotationId, List<Annotation> allArticleAnnotations,
-      Map<Long, List<Annotation>> results) {
+                                                            Map<Long, List<Annotation>> results) {
     List<Annotation> children = new ArrayList<Annotation>();
     for (Annotation annotation : allArticleAnnotations) {
       if (annotationId.equals(annotation.getParentID())) {
