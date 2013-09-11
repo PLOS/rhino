@@ -62,7 +62,7 @@ public class GroomedAssetsView {
     // By legacy convention, these asset files have figure fields that are redundant to the article itself.
     // So, suppress those fields the same way as for a figure thumbnail.
     GroomedAssetFileView articleXmlView = GroomedAssetFileView.create(articleXml);
-    GroomedAssetFileView articlePdfView = GroomedAssetFileView.create(articlePdf);
+    GroomedAssetFileView articlePdfView = (articlePdf == null) ? null : GroomedAssetFileView.create(articlePdf);
 
     List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figures.keySet().size());
     for (Collection<ArticleAsset> figureAssetCollection : figures.asMap().values()) {
