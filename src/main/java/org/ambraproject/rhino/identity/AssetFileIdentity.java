@@ -24,7 +24,7 @@ import com.google.common.base.Strings;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.util.ImmutableMimetypesFileTypeMap;
+import org.ambraproject.rhino.util.ContentTypeInference;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,14 +36,6 @@ import java.util.regex.Pattern;
  * An identifier for one file that corresponds to an asset. It is uniquely identified by a DOI and file extension.
  */
 public class AssetFileIdentity extends DoiBasedIdentity {
-
-  private static final ImmutableMimetypesFileTypeMap MIMETYPES = new ImmutableMimetypesFileTypeMap();
-
-  private static final String TIFF_EXTENSION = "tif";
-
-  private static final String PDF_EXTENSION = "pdf";
-
-  private static final String MP4_EXTENSION = "mp4";
 
   private final String extension;
 
@@ -132,22 +124,10 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    * @return the content type
    */
   public MediaType getContentType() {
-    if (XML_EXTENSION.equalsIgnoreCase(getFileExtension())) {
-      return MediaType.TEXT_XML;
-    }
     if (PNG_THUMBNAIL.matcher(getFileExtension()).matches()) {
       return MediaType.IMAGE_PNG;
     }
-    if (TIFF_EXTENSION.equalsIgnoreCase(getFileExtension())) {
-      return new MediaType("image", "tiff");
-    }
-    if (PDF_EXTENSION.equalsIgnoreCase(getFileExtension())) {
-      return new MediaType("application", "pdf");
-    }
-    if (MP4_EXTENSION.equalsIgnoreCase(getFileExtension())) {
-      return new MediaType("video", "mp4");
-    }
-    String mimeType = MIMETYPES.getContentType(getFilePath());
+    String mimeType = ContentTypeInference.inferContentType(getFilePath());
     return MediaType.parseMediaType(mimeType);
   }
 
