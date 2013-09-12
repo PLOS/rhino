@@ -20,6 +20,7 @@ public class ContentTypeInference {
 
   private static final MimetypesFileTypeMap BUILT_IN = new MimetypesFileTypeMap(); // unmodifiable by convention
   private static final Map<String, String> HARD_CODED = buildHardCodedMap(); // case-insensitive, unmodifiable
+  private static final String BUILT_IN_DEFAULT = "application/octet-stream";
 
   /*
    * From a legacy list of hard-coded constants (in "pmc2obj-v3.xslt"), mostly based on PLOS use cases.
@@ -87,7 +88,15 @@ public class ContentTypeInference {
    */
   public static String inferContentType(String filename) {
     String mimeType = HARD_CODED.get(getFileExtension(filename));
-    return (mimeType != null) ? mimeType : BUILT_IN.getContentType(filename);
+    if (mimeType != null) {
+      return mimeType;
+    }
+    mimeType = BUILT_IN.getContentType(filename);
+    if (BUILT_IN_DEFAULT.equals(mimeType)) {
+      // Try again, case-insensitively
+      mimeType = BUILT_IN.getContentType(filename.toLowerCase());
+    }
+    return mimeType;
   }
 
 }
