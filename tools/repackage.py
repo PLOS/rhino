@@ -89,7 +89,7 @@ ARTICLE_TMPL = """
      </article>"""
 
 # ***** URI Template *****
-URI_TMPL = """info:doi/{name}"""
+URI_TMPL = """info:doi/{prefix}/journal.{name}"""
 
 # ***** DOI Template *****
 DOI_TMPL = """{prefix}/journal.{name}"""
