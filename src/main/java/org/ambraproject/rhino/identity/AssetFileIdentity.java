@@ -75,10 +75,26 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     return new AssetFileIdentity(asIdentifier(identifier), extension);
   }
 
+  /**
+   * Check whether an asset has been initialized with a file representation.
+   *
+   * @param asset the asset
+   * @return {@code true} if the asset has an associated file
+   */
+  public static boolean hasFile(ArticleAsset asset) {
+    return !Strings.isNullOrEmpty(asset.getExtension());
+  }
+
+  /**
+   * Create an identity representing an asset object with a file representation.
+   *
+   * @param asset the asset
+   * @return the identity
+   * @throws IllegalArgumentException if the asset does not have a file (i.e., if {@code !hasFile(asset)})
+   */
   public static AssetFileIdentity from(ArticleAsset asset) {
-    String extension = asset.getExtension();
-    Preconditions.checkArgument(!Strings.isNullOrEmpty(extension), "Asset is not associated with a file");
-    return AssetFileIdentity.create(asset.getDoi(), extension);
+    Preconditions.checkArgument(hasFile(asset), "Asset is not associated with a file");
+    return AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
   }
 
   /**

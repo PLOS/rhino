@@ -34,8 +34,11 @@ public class GroomedAssetFileView implements JsonOutputView {
   @Override
   public JsonObject serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    AssetFileIdentity identity = AssetFileIdentity.from(asset);
-    serialized.addProperty("file", identity.getFilePath());
+
+    if (AssetFileIdentity.hasFile(asset)) {
+      AssetFileIdentity identity = AssetFileIdentity.from(asset);
+      serialized.addProperty("file", identity.getFilePath());
+    } // else, there is no file that goes with this uninitialized asset
 
     JsonObject serializedMetadata = (JsonObject) context.serialize(asset);
     if (!includeFigureFields) {
