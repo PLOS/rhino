@@ -5,6 +5,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
@@ -14,6 +15,7 @@ import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 public class GroomedFigureView implements JsonOutputView {
 
@@ -25,6 +27,7 @@ public class GroomedFigureView implements JsonOutputView {
                             Map<FigureFileType, ArticleAsset> thumbnails) {
     this.original = Preconditions.checkNotNull(original);
     this.thumbnails = ImmutableSortedMap.copyOf(thumbnails);
+    Preconditions.checkArgument(!this.thumbnails.isEmpty());
     Preconditions.checkArgument(!this.thumbnails.containsKey(FigureFileType.ORIGINAL));
     this.parentArticleId = Optional.absent();
   }
@@ -39,6 +42,12 @@ public class GroomedFigureView implements JsonOutputView {
     if (original == null) {
       String message = "Original asset not found. Expected an asset with an extension: "
           + FigureFileType.ORIGINAL.getAssociatedExtensions();
+      throw new NotAFigureException(message);
+    }
+    if (byType.isEmpty()) {
+      Set<String> thumbnailExtensions = Sets.difference(
+          FigureFileType.getAllExtensions(), FigureFileType.ORIGINAL.getAssociatedExtensions());
+      String message = "Thumbnails not found. Expected an asset with an extension: " + thumbnailExtensions;
       throw new NotAFigureException(message);
     }
 

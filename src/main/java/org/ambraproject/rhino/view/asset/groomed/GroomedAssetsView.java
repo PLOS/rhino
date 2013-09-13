@@ -66,7 +66,12 @@ public class GroomedAssetsView {
 
     List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figures.keySet().size());
     for (Collection<ArticleAsset> figureAssetCollection : figures.asMap().values()) {
-      figureViews.add(GroomedFigureView.create(figureAssetCollection));
+      if (figureAssetCollection.size() == 1) {
+        // A figure would have an original image and at least one thumbnail. Assume this is a supp info asset.
+        miscellaneous.addAll(figureAssetCollection);
+      } else {
+        figureViews.add(GroomedFigureView.create(figureAssetCollection));
+      }
     }
 
     List<GroomedAssetFileView> miscellaneousViews = Lists.newArrayListWithCapacity(miscellaneous.size());
