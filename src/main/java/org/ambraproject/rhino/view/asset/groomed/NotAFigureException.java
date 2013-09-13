@@ -5,11 +5,11 @@ package org.ambraproject.rhino.view.asset.groomed;
  */
 public class NotAFigureException extends RuntimeException {
 
-   NotAFigureException(String message, Throwable cause) {
+  NotAFigureException(String message, Throwable cause) {
     super(message, cause);
   }
 
-   NotAFigureException(String message) {
+  NotAFigureException(String message) {
     super(message);
   }
 
