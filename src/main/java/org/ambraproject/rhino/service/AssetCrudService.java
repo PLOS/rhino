@@ -83,6 +83,16 @@ public interface AssetCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
+   * Read the metadata of a single asset file.
+   *
+   * @param receiver the receiver to which the metadata should be written
+   * @param id       the identity of the asset file to read
+   * @param format   the desired metadata format
+   */
+  public void readFileMetadata(ResponseReceiver receiver, AssetFileIdentity id, MetadataFormat format)
+      throws IOException;
+
+  /**
    * Overwrite an existing asset's file with a new file.
    *
    * @param fileContent the file to write

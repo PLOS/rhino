@@ -29,13 +29,6 @@ public class RawAssetFileCollectionView implements JsonOutputView {
     return serializeAssetFiles(assets, context);
   }
 
-  /*
-   * Simple serialization. This method is a hook in case something more complex is needed.
-   */
-  private static JsonObject serializeAsset(ArticleAsset asset, JsonSerializationContext context) {
-    return context.serialize(asset).getAsJsonObject();
-  }
-
   /* package-private */
   static JsonElement serializeAssetFiles(List<ArticleAsset> assets, JsonSerializationContext context) {
     if (assets.isEmpty()) {
@@ -47,7 +40,8 @@ public class RawAssetFileCollectionView implements JsonOutputView {
         // Just one uninitialized asset.
         // It doesn't have a file identity, so return it in a plain array instead of keyed by file ID.
         JsonArray uninitialized = new JsonArray();
-        uninitialized.add(serializeAsset(only, context));
+        JsonElement serializedAsset = context.serialize(new RawAssetFileView(only));
+        uninitialized.add(serializedAsset);
         return uninitialized;
       }
     }
@@ -79,7 +73,8 @@ public class RawAssetFileCollectionView implements JsonOutputView {
         throw new RuntimeException("Asset file ID collision: " + assetFileId);
       }
 
-      byAssetFileId.add(assetFileId, serializeAsset(asset, context));
+      JsonElement serializedAsset = context.serialize(new RawAssetFileView(asset));
+      byAssetFileId.add(assetFileId, serializedAsset);
     }
     return byAssetFileId;
   }

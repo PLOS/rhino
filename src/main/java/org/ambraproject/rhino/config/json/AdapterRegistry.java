@@ -41,6 +41,7 @@ public class AdapterRegistry {
       org.ambraproject.rhino.view.asset.groomed.GroomedFigureView.class,
       org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView.class,
       org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class,
+      org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class,
 
       org.ambraproject.rhino.view.journal.IssueOutputView.class,
       org.ambraproject.rhino.view.journal.JournalListView.class,

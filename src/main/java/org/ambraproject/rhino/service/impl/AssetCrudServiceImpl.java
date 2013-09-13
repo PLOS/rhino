@@ -34,6 +34,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView;
 import org.ambraproject.rhino.view.asset.groomed.NotAFigureException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
+import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -315,6 +316,24 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
     figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
     writeJson(receiver, figureView);
+  }
+
+  @Override
+  public void readFileMetadata(ResponseReceiver receiver, AssetFileIdentity id, MetadataFormat format)
+      throws IOException {
+    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(ArticleAsset.class)
+            .add(Restrictions.eq("doi", id.getKey()))
+            .add(Restrictions.eq("extension", id.getFileExtension()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+    if (assets.isEmpty()) {
+      throw reportNotFound(id);
+    }
+
+    ArticleAsset asset = DataAccessUtils.requiredUniqueResult(assets);
+    writeJson(receiver, new RawAssetFileView(asset));
   }
 
   /**

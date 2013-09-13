@@ -72,6 +72,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private static final String DOI_PARAM = "doi";
   private static final String EXTENSION_PARAM = "ext";
   private static final String FILE_PARAM = "file";
+  private static final String METADATA_PARAM = "metadata";
 
   /**
    * Dispatch an action to upload a file for an asset. When the client does this action, the asset ought to already
@@ -175,6 +176,16 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     } finally {
       Closeables.close(fileStream, threw);
     }
+  }
+
+  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = {METADATA_PARAM})
+  public void readMetadata(HttpServletRequest request, HttpServletResponse response,
+                           @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+      throws IOException {
+    AssetFileIdentity id = parse(request);
+    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    assetCrudService.readFileMetadata(receiver, id, mf);
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
