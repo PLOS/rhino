@@ -69,9 +69,6 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    */
   private void readAnnotations(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format,
                                Set<AnnotationType> annotationTypes) throws IOException {
-    if (format != MetadataFormat.JSON) {
-      throw new IllegalArgumentException("Only JSON is supported");
-    }
     Article article = findSingleEntity("FROM Article WHERE doi = ?", id.getKey());
 
     // We have to get all annotations for an article, not just corrections, since we want to
@@ -88,7 +85,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         results.add(new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies));
       }
     }
-    writeJson(receiver, results);
+    serializeMetadata(format, receiver, results);
   }
 
   /**

@@ -298,9 +298,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
-    assert format == MetadataFormat.JSON;
     Collection<ArticleAsset> assets = findArticleAssets(id);
-    writeJson(receiver, new RawAssetFileCollectionView(assets));
+    serializeMetadata(format, receiver, new RawAssetFileCollectionView(assets));
   }
 
   @Override
@@ -315,7 +314,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
     }
     figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
-    writeJson(receiver, figureView);
+    serializeMetadata(format, receiver, figureView);
   }
 
   @Override
@@ -333,7 +332,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
 
     ArticleAsset asset = DataAccessUtils.requiredUniqueResult(assets);
-    writeJson(receiver, new RawAssetFileView(asset));
+    serializeMetadata(format, receiver, new RawAssetFileView(asset));
   }
 
   /**

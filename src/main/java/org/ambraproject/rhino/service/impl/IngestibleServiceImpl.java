@@ -55,7 +55,6 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    */
   @Override
   public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
-    Preconditions.checkArgument(format == MetadataFormat.JSON);
     String ingestSourceDirName = ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY);
     Preconditions.checkNotNull(ingestSourceDirName); // should be covered by webapp's built-in defaults
     File ingestDir = new File(ingestSourceDirName);
@@ -69,7 +68,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
       results.add(archive.getName());
     }
     Collections.sort(results);
-    writeJson(receiver, results);
+    serializeMetadata(format, receiver, results);
   }
 
   /**

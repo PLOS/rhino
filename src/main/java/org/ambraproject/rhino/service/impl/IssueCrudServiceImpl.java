@@ -46,7 +46,6 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
   @Override
   public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
-    assert mf == MetadataFormat.JSON;
     Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Issue.class)
@@ -55,7 +54,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     if (issue == null) {
       throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    writeJson(receiver, new IssueOutputView(issue));
+    serializeMetadata(mf, receiver, new IssueOutputView(issue));
   }
 
   private Issue applyInput(Issue issue, IssueInputView input) {
