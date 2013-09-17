@@ -95,50 +95,14 @@ public enum MetadataFormat {
 
   private static final Splitter CONTENT_TYPE_SPLITTER = Splitter.on(',');
 
-  /**
-   * Provide a metadata format for a request. Match the content types listed in the {@code Accept} header to the first
-   * available supported format, or return the default format if none of the formats listed is supported. If there is no
-   * {@code Accept} header, return the default format.
-   * <p/>
-   * Example usage in controller:
-   * <pre>   @RequestMapping
-   *   public void serve(HttpServletRequest request) {
-   *     MetadataFormat mf = MetadataFormat.getFromRequest(request);
-   *   }
-   * </pre>
-   *
-   * @param request the request
-   * @return the metadata format to use
-   */
-  public static MetadataFormat getFromRequest(HttpServletRequest request) {
-    return getFromAcceptHeader(request.getHeader(ACCEPT_HEADER_NAME));
-  }
-
-  /**
-   * Provide a metadata format for a set of headers. Match the content types listed in the {@code Accept} header to the
-   * first available supported format, or return the default format if none of the formats listed is supported. If there
-   * is no {@code Accept} header, return the default format.
-   * <p/>
-   * Example usage in controller:
-   * <pre>   @RequestMapping
-   *   public void serve(@RequestHeader HttpHeaders headers) {
-   *     MetadataFormat mf = getFromHeaders(headers);
-   *   }
-   * </pre>
-   *
-   * @param headers the headers from a request
-   * @return the metadata format to use
-   */
-  public static MetadataFormat getFromHeaders(HttpHeaders headers) {
-    List<String> values = headers.get(ACCEPT_HEADER_NAME);
-    if (values == null || values.isEmpty()) return DEFAULT;
-    return getFromAcceptHeader(values.get(0));
-  }
 
   /**
    * Provide a metadata format for a {@code Accept} header value. Match the content types listed in the header to the
    * first available supported format, or return the default format if none of the formats listed is supported. If there
    * is no {@code Accept} header, return the default format.
+   * <p/>
+   * This is the preferred way to get the metadata format in a controller method that doesn't otherwise need to receive
+   * an {@code HttpServletRequest} or {@code HttpHeaders} object from Spring.
    * <p/>
    * Example usage in controller:
    * <pre>   @RequestMapping
@@ -162,6 +126,54 @@ public enum MetadataFormat {
       }
     }
     return DEFAULT;
+  }
+
+  /**
+   * Provide a metadata format for a request. Match the content types listed in the {@code Accept} header to the first
+   * available supported format, or return the default format if none of the formats listed is supported. If there is no
+   * {@code Accept} header, return the default format.
+   * <p/>
+   * In general, controllers should call this method only if they already receive an {@code HttpServletRequest} from
+   * Spring for some other reason. If you access the headers only to get the metadata format, prefer {@link
+   * #getFromAcceptHeader(String)}.
+   * <p/>
+   * Example usage in controller:
+   * <pre>   @RequestMapping
+   *   public void serve(HttpServletRequest request) {
+   *     MetadataFormat mf = MetadataFormat.getFromRequest(request);
+   *   }
+   * </pre>
+   *
+   * @param request the request
+   * @return the metadata format to use
+   */
+  public static MetadataFormat getFromRequest(HttpServletRequest request) {
+    return getFromAcceptHeader(request.getHeader(ACCEPT_HEADER_NAME));
+  }
+
+  /**
+   * Provide a metadata format for a set of headers. Match the content types listed in the {@code Accept} header to the
+   * first available supported format, or return the default format if none of the formats listed is supported. If there
+   * is no {@code Accept} header, return the default format.
+   * <p/>
+   * In general, controllers should call this method only if they already receive an {@code HttpHeaders} object from
+   * Spring for some other reason. If you access the headers only to get the metadata format, prefer {@link
+   * #getFromAcceptHeader(String)}.
+   * <p/>
+   * Example usage in controller:
+   * <pre>   @RequestMapping
+   *   public void serve(@RequestHeader HttpHeaders headers) {
+   *     MetadataFormat mf = getFromHeaders(headers);
+   *   }
+   * </pre>
+   *
+   * @param headers the headers from a request
+   * @return the metadata format to use
+   */
+  public static MetadataFormat getFromHeaders(HttpHeaders headers) {
+    List<String> values = headers.get(ACCEPT_HEADER_NAME);
+    if (values == null || values.isEmpty()) return DEFAULT;
+    return getFromAcceptHeader(values.get(0));
   }
 
 }
