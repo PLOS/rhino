@@ -115,11 +115,15 @@ public enum MetadataFormat {
    * @return the metadata format to use
    */
   public static MetadataFormat getFromAcceptHeader(String acceptHeaderValue) {
-    if (Strings.isNullOrEmpty(acceptHeaderValue)) return DEFAULT;
+    if (Strings.isNullOrEmpty(acceptHeaderValue)) {
+      return DEFAULT;
+    }
     String contentTypeList = upToFirstSemicolon(acceptHeaderValue);
     for (String contentType : CONTENT_TYPE_SPLITTER.split(contentTypeList)) {
       contentType = contentType.trim();
-      if (isWildcardMatchingDefault(contentType)) return DEFAULT;
+      if (isWildcardMatchingDefault(contentType)) {
+        return DEFAULT;
+      }
       MetadataFormat metadataFormat = BY_CONTENT_TYPE.get(contentType);
       if (metadataFormat != null) {
         return metadataFormat;
@@ -172,8 +176,7 @@ public enum MetadataFormat {
    */
   public static MetadataFormat getFromHeaders(HttpHeaders headers) {
     List<String> values = headers.get(ACCEPT_HEADER_NAME);
-    if (values == null || values.isEmpty()) return DEFAULT;
-    return getFromAcceptHeader(values.get(0));
+    return (values == null || values.isEmpty()) ? DEFAULT : getFromAcceptHeader(values.get(0));
   }
 
 }
