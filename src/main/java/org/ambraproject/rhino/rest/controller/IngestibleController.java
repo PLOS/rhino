@@ -69,12 +69,10 @@ public class IngestibleController extends DoiBasedCrudController {
    * Method that lists all ingestible archives in the ingest source directory.
    *
    * @param response HttpServletResponse
-   * @param format   format of the response.  Currently only JSON is supported.
    * @throws IOException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
 
     MetadataFormat mf = MetadataFormat.getFromRequest(request);

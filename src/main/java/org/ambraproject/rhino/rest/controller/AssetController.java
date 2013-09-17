@@ -30,7 +30,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,8 +55,7 @@ public class AssetController extends DoiBasedCrudController {
   private AssetCrudService assetCrudService;
 
   @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     AssetIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
@@ -66,8 +64,7 @@ public class AssetController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"figure"}, method = RequestMethod.GET)
-  public void readAsFigure(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void readAsFigure(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     AssetIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
@@ -76,8 +73,7 @@ public class AssetController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"articleFor"}, method = RequestMethod.GET)
-  public ResponseEntity<String> articleFor(HttpServletRequest request,
-                                           @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public ResponseEntity<String> articleFor(HttpServletRequest request)
       throws IOException {
     AssetIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);

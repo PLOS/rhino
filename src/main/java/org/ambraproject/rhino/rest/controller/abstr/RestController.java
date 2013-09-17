@@ -55,8 +55,6 @@ public abstract class RestController {
   @Autowired
   private Gson entityGson;
 
-  protected static final String METADATA_FORMAT_PARAM = "format";
-
   /**
    * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
    * consists of one or more URI path elements that the API defines as a prefix for a class of RESTful "nouns" and must

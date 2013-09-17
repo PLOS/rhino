@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +34,7 @@ public class JournalCrudController extends RestController {
   private VolumeCrudService volumeCrudService;
 
   @RequestMapping(value = JOURNAL_ROOT, method = RequestMethod.GET)
-  public void listJournals(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void listJournals(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
@@ -45,8 +43,7 @@ public class JournalCrudController extends RestController {
 
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable String journalKey,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+                   @PathVariable String journalKey)
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);

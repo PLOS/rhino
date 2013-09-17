@@ -29,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,8 +45,7 @@ public class PingbackReadController extends ArticleSpaceController {
 
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {PINGBACK_PARAM})
-  public void listPingbacks(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void listPingbacks(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
@@ -55,8 +53,7 @@ public class PingbackReadController extends ArticleSpaceController {
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {PINGBACK_PARAM})
-  public void readPingbacks(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void readPingbacks(HttpServletRequest request, HttpServletResponse response)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);

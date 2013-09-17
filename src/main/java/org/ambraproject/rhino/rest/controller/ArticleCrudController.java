@@ -70,7 +70,6 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format,
                        @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
                        @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
       throws IOException {
@@ -135,7 +134,6 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format,
                    @RequestParam(value = "comments", required = false) String comments,
                    @RequestParam(value = "corrections", required = false) String corrections)
       throws FileStoreException, IOException {

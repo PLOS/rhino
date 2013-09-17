@@ -35,7 +35,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,8 +59,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
 
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
@@ -70,8 +68,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
-  public void update(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity volumeId = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
