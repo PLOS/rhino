@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,21 +36,23 @@ public class JournalCrudController extends RestController {
   private VolumeCrudService volumeCrudService;
 
   @RequestMapping(value = JOURNAL_ROOT, method = RequestMethod.GET)
-  public void listJournals(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void listJournals(HttpServletResponse response,
+                           @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                           @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    MetadataFormat mf = MetadataFormat.getFromAcceptHeader(accept);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     journalReadService.listJournals(receiver, mf);
   }
 
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
+  public void read(HttpServletResponse response,
                    @PathVariable String journalKey,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+                   @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                   @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    MetadataFormat mf = MetadataFormat.getFromAcceptHeader(accept);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     journalReadService.read(receiver, journalKey, mf);
   }
 

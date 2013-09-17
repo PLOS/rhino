@@ -29,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,21 +50,19 @@ public class IssueCrudController extends DoiBasedCrudController {
 
 
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     issueCrudService.read(receiver, id, mf);
   }
 
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
-  public void update(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
+  public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity issueId = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 

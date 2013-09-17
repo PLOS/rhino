@@ -111,7 +111,6 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
   @Override
   public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
-    assert mf == MetadataFormat.JSON;
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Volume.class)
@@ -121,7 +120,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     if (volume == null) {
       throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    writeJson(receiver, new VolumeOutputView(volume));
+    serializeMetadata(mf, receiver, new VolumeOutputView(volume));
   }
 
 }

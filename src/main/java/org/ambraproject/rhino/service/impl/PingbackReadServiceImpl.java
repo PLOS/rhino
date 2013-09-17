@@ -73,14 +73,14 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
         + "order by mostRecent desc "
     );
     List<ArticlePingbackView> resultView = Lists.transform(results, AS_VIEW);
-    writeJson(receiver, new ArticleViewList(resultView));
+    serializeMetadata(format, receiver, new ArticleViewList(resultView));
   }
 
   @Override
   public void read(ResponseReceiver receiver, ArticleIdentity article, MetadataFormat format) throws IOException {
     Preconditions.checkNotNull(article);
     assert format == MetadataFormat.JSON;
-    writeJson(receiver, loadPingbacks(article));
+    serializeMetadata(format, receiver, loadPingbacks(article));
   }
 
   @Override

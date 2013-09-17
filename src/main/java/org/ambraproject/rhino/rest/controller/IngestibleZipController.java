@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -46,9 +45,10 @@ public class IngestibleZipController extends RestController {
    *
    */
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
-  public void zipUpload(HttpServletRequest request, HttpServletResponse response,
+  public void zipUpload(HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
-                        @RequestParam(value = "force_reingest", required = false) String forceReingest)
+                        @RequestParam(value = "force_reingest", required = false) String forceReingest,
+                        @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
       throws IOException, FileStoreException {
 
     String archiveName = requestFile.getOriginalFilename();
@@ -63,7 +63,7 @@ public class IngestibleZipController extends RestController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 

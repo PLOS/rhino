@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.service.article.ArticleClassifier;
@@ -202,7 +203,12 @@ public abstract class AmbraService {
    * @param entity   the object to describe in JSON
    * @throws IOException if the response can't be written to
    */
-  protected void writeJson(ResponseReceiver receiver, Object entity) throws IOException {
+  protected void serializeMetadata(MetadataFormat format, ResponseReceiver receiver, Object entity) throws IOException {
+    if (Preconditions.checkNotNull(format) != MetadataFormat.JSON) {
+      // AssertionError because this should be unreachable as long as JSON is the only value of MetadataFormat.
+      // If a new MetadataFormat is added, either support it below, default to JSON, or provide a user-friendly error.
+      throw new AssertionError("JSON is the only supported format");
+    }
     Writer writer = null;
     boolean threw = true;
     try {

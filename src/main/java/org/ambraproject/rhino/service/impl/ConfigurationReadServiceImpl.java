@@ -19,9 +19,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
 
   @Override
   public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
-    Preconditions.checkNotNull(format);
-    assert format == MetadataFormat.JSON;
-    writeJson(receiver, convertToMap(ambraConfiguration));
+    serializeMetadata(format, receiver, convertToMap(ambraConfiguration));
   }
 
   /**

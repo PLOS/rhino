@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,13 +70,14 @@ public class ArticleCrudController extends ArticleSpaceController {
   private AnnotationCrudService annotationCrudService;
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
-  public void listDois(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format,
+  public void listDois(HttpServletResponse response,
                        @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
-                       @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
+                       @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses,
+                       @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                       @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    MetadataFormat mf = MetadataFormat.getFromAcceptHeader(accept);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses));
     articleCrudService.listDois(receiver, mf, articleCriteria);
   }
@@ -97,8 +99,9 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws FileStoreException
    */
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
+  public void create(HttpServletResponse response,
+                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile,
+                     @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
       throws IOException, FileStoreException {
     Article result;
     InputStream requestBody = null;
@@ -113,7 +116,7 @@ public class ArticleCrudController extends ArticleSpaceController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 
@@ -123,7 +126,6 @@ public class ArticleCrudController extends ArticleSpaceController {
    *
    * @param request     HttpServletRequest
    * @param response    HttpServletResponse
-   * @param format      must be MetadataFormat.JSON
    * @param comments    if present, the response will be a list of objects representing comments associated with the
    *                    article, instead of the article metadata. Each comment has a "replies" list that contains any
    *                    replies (recursively).
@@ -135,12 +137,11 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format,
                    @RequestParam(value = "comments", required = false) String comments,
                    @RequestParam(value = "corrections", required = false) String corrections)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     if (booleanParameter(comments) && booleanParameter(corrections)) {
       throw new RestClientException("Cannot specify both comments and corrections", HttpStatus.BAD_REQUEST);

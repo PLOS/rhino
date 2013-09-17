@@ -587,9 +587,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
-    assert format == MetadataFormat.JSON;
     ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
-    writeJson(receiver, view);
+    serializeMetadata(format, receiver, view);
   }
 
   /**
@@ -617,8 +616,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void listDois(ResponseReceiver receiver, MetadataFormat format,
                        ArticleCriteria articleCriteria)
       throws IOException {
-    assert format == MetadataFormat.JSON;
-    writeJson(receiver, articleCriteria.apply(hibernateTemplate));
+    serializeMetadata(format, receiver, articleCriteria.apply(hibernateTemplate));
   }
 
   @Required
