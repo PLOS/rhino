@@ -185,8 +185,20 @@ class S3:
         result['description'] = 'S3 does not support descriptions'
         return result
          
-    def _getBinary(self, fname):
-        return
+    def _getBinary(self, fname, fullKey):
+        """
+        Most of the files other than the article xml are binary in nature.
+        Fetch the data and write it to a temporary file. Return the MD5
+        hash of the fle contents.
+        """
+        m = md5.new()
+        k = self.bucket.get_key(fullKey)
+        with open(fname, 'wb') as f:
+            for chunk in k:
+                m.update(chunk)
+                f.write(chunk)
+            f.close()
+        return m.hexdigest() 
 
     def buckets(self):
         """
@@ -321,7 +333,7 @@ class S3:
         if fname == None:
             fname = self._ext2upper(afidSuffix)
         fullKey = self._afid2s3key(afidSuffix)
-        return self.bucket.get_key(fullKey).get_contents_to_filename(fname)
+        return self._getBinary(fname, fullKey)
 
     def articleFiles(self, doiSuffix):
         """
@@ -330,12 +342,9 @@ class S3:
         """
         os.mkdir(doiSuffix)
         os.chdir('./'+ doiSuffix)
-        dwnldList = []
-        for afid in self._afidsFromDoi(doiSuffix):
-            self.assetFile(afid)
-            dwnldList.append(afid)    
+        result = { doiSuffix : [ (afid, self.assetFile(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
         os.chdir('../')
-        return { doiSuffix : dwnldList }
+        return result 
 
     def putArticle(self, doiSuffix):
         """
@@ -374,6 +383,7 @@ if __name__ == "__main__":
             pp.pprint(val)
     except Exception as e:
         sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
+        traceback.print_exc(file=sys.stdout)
         sys.exit(1)
 
     sys.exit(0)

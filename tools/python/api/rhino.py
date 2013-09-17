@@ -8,7 +8,7 @@ This module exports one class 'Rhino'
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, json, re, requests, md5
+import os, sys, traceback, json, re, requests, md5
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -215,12 +215,9 @@ class Rhino:
         """
         os.mkdir(doiSuffix)
         os.chdir('./'+ doiSuffix)
-        dwnldList = []
-        for afid in self._afidsFromDoi(doiSuffix):
-            self.assetFile(afid)
-            dwnldList.append(afid)
+        result = { doiSuffix : [ (afid, self.assetFile(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
         os.chdir('../')
-        return { doiSuffix : dwnldList }
+        return result
 
 if __name__ == "__main__":
     import argparse   
@@ -249,6 +246,7 @@ if __name__ == "__main__":
             pp.pprint(val)
     except Exception as e:
         sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
+        traceback.print_exc(file=sys.stdout)
         sys.exit(1)
 
     sys.exit(0)
