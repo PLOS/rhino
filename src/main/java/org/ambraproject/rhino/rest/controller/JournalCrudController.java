@@ -38,7 +38,7 @@ public class JournalCrudController extends RestController {
   public void listJournals(HttpServletRequest request, HttpServletResponse response,
                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     journalReadService.listJournals(receiver, mf);
   }
@@ -48,7 +48,7 @@ public class JournalCrudController extends RestController {
                    @PathVariable String journalKey,
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     journalReadService.read(receiver, journalKey, mf);
   }

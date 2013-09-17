@@ -74,7 +74,7 @@ public class ArticleCrudController extends ArticleSpaceController {
                        @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
                        @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses));
     articleCrudService.listDois(receiver, mf, articleCriteria);
@@ -140,7 +140,7 @@ public class ArticleCrudController extends ArticleSpaceController {
                    @RequestParam(value = "corrections", required = false) String corrections)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     if (booleanParameter(comments) && booleanParameter(corrections)) {
       throw new RestClientException("Cannot specify both comments and corrections", HttpStatus.BAD_REQUEST);

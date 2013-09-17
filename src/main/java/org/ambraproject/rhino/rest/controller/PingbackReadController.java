@@ -49,7 +49,7 @@ public class PingbackReadController extends ArticleSpaceController {
   public void listPingbacks(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     pingbackReadService.listByArticle(receiver, mf, PingbackReadService.OrderBy.COUNT);
   }
@@ -59,7 +59,7 @@ public class PingbackReadController extends ArticleSpaceController {
                             @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     pingbackReadService.read(receiver, id, mf);
   }

@@ -55,7 +55,7 @@ public class IssueCrudController extends DoiBasedCrudController {
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
     DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     issueCrudService.read(receiver, id, mf);
   }
@@ -65,7 +65,7 @@ public class IssueCrudController extends DoiBasedCrudController {
                      @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
     DoiBasedIdentity issueId = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 

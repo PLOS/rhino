@@ -183,7 +183,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
     AssetFileIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     assetCrudService.readFileMetadata(receiver, id, mf);
   }

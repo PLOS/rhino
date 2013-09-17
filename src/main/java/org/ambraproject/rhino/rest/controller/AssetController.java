@@ -60,7 +60,7 @@ public class AssetController extends DoiBasedCrudController {
                    @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
     AssetIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     assetCrudService.readMetadata(receiver, id, mf);
   }
@@ -70,7 +70,7 @@ public class AssetController extends DoiBasedCrudController {
                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
     AssetIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     assetCrudService.readFigureMetadata(receiver, id, mf);
   }
@@ -80,7 +80,7 @@ public class AssetController extends DoiBasedCrudController {
                                            @RequestParam(value = METADATA_FORMAT_PARAM, required = false) String format)
       throws IOException {
     AssetIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromParameter(format, true);
+    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     assert mf == MetadataFormat.JSON;
     ArticleIdentity articleIdentity = assetCrudService.findArticleFor(id);
     return respondWithJson(articleIdentity.getIdentifier());
