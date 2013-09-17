@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.net.MediaType;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -66,16 +67,36 @@ public class ServletResponseReceiver implements ResponseReceiver {
    */
   public static ServletResponseReceiver createForJson(HttpServletRequest request,
                                                       HttpServletResponse response) {
-    String jsonpCallback = request.getParameter("callback");
+    return createForJson(request.getParameter("callback"), response);
+  }
+
+  /**
+   * Wrap a response for writing JSON or JSONP.
+   * <p/>
+   * Example usage in controller:
+   * <pre>   @RequestMapping
+   *   public void serve(@RequestParam(value = "callback", required = false) String jsonp,
+   *                     HttpServletResponse response) {
+   *     ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
+   *   }
+   * </pre>
+   *
+   * @param callbackParameter the request parameter that specifies a callback for JSONP, or {@code null} if the request
+   *                          contained none
+   * @param response          the response object to write to
+   * @return the wrapped response object
+   */
+  public static ServletResponseReceiver createForJson(@Nullable String callbackParameter,
+                                                      HttpServletResponse response) {
     MediaType mediaType;
     String prefix, suffix;
-    if (jsonpCallback == null) {
+    if (callbackParameter == null) {
       mediaType = MediaType.JSON_UTF_8;
       prefix = "";
       suffix = "\n";
     } else {
       mediaType = MediaType.JAVASCRIPT_UTF_8;
-      prefix = jsonpCallback + '(';
+      prefix = callbackParameter + '(';
       suffix = ")\n";
     }
 

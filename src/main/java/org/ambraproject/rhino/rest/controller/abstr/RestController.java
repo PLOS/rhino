@@ -55,6 +55,9 @@ public abstract class RestController {
   @Autowired
   private Gson entityGson;
 
+  protected static final String ACCEPT_REQUEST_HEADER = "Accept";
+  protected static final String JSONP_CALLBACK_PARAM = "callback";
+
   /**
    * Retrieve a RESTful argument that consists of the entire request URL after a namespace prefix. The namespace prefix
    * consists of one or more URI path elements that the API defines as a prefix for a class of RESTful "nouns" and must

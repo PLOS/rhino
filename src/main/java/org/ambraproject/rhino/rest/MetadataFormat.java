@@ -142,7 +142,7 @@ public enum MetadataFormat {
    * <p/>
    * Example usage in controller:
    * <pre>   @RequestMapping
-   *   public void serve(@RequestHeader("Accept") String accept) {
+   *   public void serve(@RequestHeader(value = "Accept", required = false) String accept) {
    *     MetadataFormat mf = getFromAcceptHeader(accept);
    *   }
    * </pre>

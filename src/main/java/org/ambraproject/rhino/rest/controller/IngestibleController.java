@@ -28,6 +28,7 @@ import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,12 +73,13 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws IOException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  public void read(HttpServletResponse response,
+                   @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                   @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
       throws IOException {
-
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    ingestibleService.read(receiver, mf);
+    MetadataFormat metadataFormat = MetadataFormat.getFromAcceptHeader(accept);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
+    ingestibleService.read(receiver, metadataFormat);
   }
 
   /**
@@ -90,9 +92,10 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
-  public void ingest(HttpServletRequest request, HttpServletResponse response,
+  public void ingest(HttpServletResponse response,
                      @RequestParam(value = "name") String name,
-                     @RequestParam(value = "force_reingest", required = false) String forceReingest)
+                     @RequestParam(value = "force_reingest", required = false) String forceReingest,
+                     @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
       throws IOException, FileStoreException {
 
     File archive;
@@ -113,7 +116,7 @@ public class IngestibleController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
   }
 }

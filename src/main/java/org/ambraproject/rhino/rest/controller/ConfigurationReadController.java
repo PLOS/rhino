@@ -7,10 +7,11 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -21,9 +22,13 @@ public class ConfigurationReadController extends RestController {
   private ConfigurationReadService configurationReadService;
 
   @RequestMapping(value = "/config", method = RequestMethod.GET)
-  public void readConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    configurationReadService.read(receiver, MetadataFormat.JSON);
+  public void readConfig(HttpServletResponse response,
+                         @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                         @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
+      throws IOException {
+    MetadataFormat metadataFormat = MetadataFormat.getFromAcceptHeader(accept);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
+    configurationReadService.read(receiver, metadataFormat);
   }
 
 }
