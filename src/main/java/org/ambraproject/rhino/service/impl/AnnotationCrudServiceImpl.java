@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -86,7 +87,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
     // We have to get all annotations for an article, not just corrections, since we want to
     // include any replies to the corrections.
-    List<Annotation> annotations = hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
+    List<Annotation> annotations = fetchAllAnnotations(article);
 
     // AnnotationView is an ambra component that is convenient here since it encapsulates everything
     // we want to return about a given annotation.  It also handles nested replies.
@@ -99,6 +100,16 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       }
     }
     serializeMetadata(format, receiver, results);
+  }
+
+  /**
+   * Fetch all annotations that belong to an article.
+   *
+   * @param article the article
+   * @return the collection of annotations
+   */
+  private List<Annotation> fetchAllAnnotations(Article article) {
+    return hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
   }
 
   /**
@@ -146,9 +157,14 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
-    // TODO: Define serialization view? (AnnotationView is intended for Ambra's old presentation layer)
-    // This always shows "replies: []" even if the comment actually has replies. TODO: Fix
-    AnnotationView view = new AnnotationView(comment, null, null, null);
+    // TODO: Make this more efficient. Three queries is too many.
+    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .add(Restrictions.eq("ID", comment.getArticleID()))
+        ));
+    Map<Long, List<Annotation>> replies = findAnnotationReplies(comment.getID(), fetchAllAnnotations(article),
+        new LinkedHashMap<Long, List<Annotation>>());
+    AnnotationView view = new AnnotationView(comment, article.getDoi(), article.getTitle(), replies);
     serializeMetadata(format, receiver, view);
   }
 
