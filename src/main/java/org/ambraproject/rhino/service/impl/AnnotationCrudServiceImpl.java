@@ -19,13 +19,20 @@ import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.views.AnnotationView;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +48,12 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    */
   private static final ImmutableSet<AnnotationType> CORRECTION_TYPES = Sets.immutableEnumSet(
       AnnotationType.FORMAL_CORRECTION, AnnotationType.MINOR_CORRECTION, AnnotationType.RETRACTION);
+
+  /**
+   * AnnotationTypes that are considered to be comments.
+   */
+  private static final ImmutableSet<AnnotationType> COMMENT_TYPES = Sets.immutableEnumSet(
+      Sets.difference(EnumSet.allOf(AnnotationType.class), CORRECTION_TYPES));
 
   /**
    * {@inheritDoc}
@@ -113,4 +126,30 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     }
     return results;
   }
+
+  @Override
+  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format) throws IOException {
+    Annotation comment = (Annotation) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
+            .add(Restrictions.eq("annotationUri", commentId.getKey()))
+        ));
+    if (comment == null) {
+      throw reportNotFound(commentId);
+    }
+
+    AnnotationType annotationType = comment.getType();
+    if (!COMMENT_TYPES.contains(annotationType)) {
+      String message = String.format(""
+          + "Comment not found at ID: %s\n"
+          + "(An annotation has that ID, but its type is: %s)",
+          commentId.getIdentifier(), annotationType);
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+    }
+
+    // TODO: Define serialization view? (AnnotationView is intended for Ambra's old presentation layer)
+    // This always shows "replies: []" even if the comment actually has replies. TODO: Fix
+    AnnotationView view = new AnnotationView(comment, null, null, null);
+    serializeMetadata(format, receiver, view);
+  }
+
 }

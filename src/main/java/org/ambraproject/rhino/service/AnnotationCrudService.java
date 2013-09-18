@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 
@@ -48,4 +49,16 @@ public interface AnnotationCrudService {
    */
   public void readComments(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)
       throws IOException;
+
+  /**
+   * Writes the comment data for a single comment to the receiver.
+   *
+   * @param receiver  wraps the response object
+   * @param commentId identifies the comment
+   * @param format
+   * @throws IOException
+   */
+  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
+      throws IOException;
+
 }
