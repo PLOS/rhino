@@ -19,14 +19,22 @@ import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.views.AnnotationView;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,6 +49,12 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    */
   private static final ImmutableSet<AnnotationType> CORRECTION_TYPES = Sets.immutableEnumSet(
       AnnotationType.FORMAL_CORRECTION, AnnotationType.MINOR_CORRECTION, AnnotationType.RETRACTION);
+
+  /**
+   * AnnotationTypes that are considered to be comments.
+   */
+  private static final ImmutableSet<AnnotationType> COMMENT_TYPES = Sets.immutableEnumSet(
+      Sets.difference(EnumSet.allOf(AnnotationType.class), CORRECTION_TYPES));
 
   /**
    * {@inheritDoc}
@@ -73,7 +87,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
     // We have to get all annotations for an article, not just corrections, since we want to
     // include any replies to the corrections.
-    List<Annotation> annotations = hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
+    List<Annotation> annotations = fetchAllAnnotations(article);
 
     // AnnotationView is an ambra component that is convenient here since it encapsulates everything
     // we want to return about a given annotation.  It also handles nested replies.
@@ -86,6 +100,16 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       }
     }
     serializeMetadata(format, receiver, results);
+  }
+
+  /**
+   * Fetch all annotations that belong to an article.
+   *
+   * @param article the article
+   * @return the collection of annotations
+   */
+  private List<Annotation> fetchAllAnnotations(Article article) {
+    return hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
   }
 
   /**
@@ -113,4 +137,35 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     }
     return results;
   }
+
+  @Override
+  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format) throws IOException {
+    Annotation comment = (Annotation) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
+            .add(Restrictions.eq("annotationUri", commentId.getKey()))
+        ));
+    if (comment == null) {
+      throw reportNotFound(commentId);
+    }
+
+    AnnotationType annotationType = comment.getType();
+    if (!COMMENT_TYPES.contains(annotationType)) {
+      String message = String.format(""
+          + "Comment not found at ID: %s\n"
+          + "(An annotation has that ID, but its type is: %s)",
+          commentId.getIdentifier(), annotationType);
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+    }
+
+    // TODO: Make this more efficient. Three queries is too many.
+    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+            .add(Restrictions.eq("ID", comment.getArticleID()))
+        ));
+    Map<Long, List<Annotation>> replies = findAnnotationReplies(comment.getID(), fetchAllAnnotations(article),
+        new LinkedHashMap<Long, List<Annotation>>());
+    AnnotationView view = new AnnotationView(comment, article.getDoi(), article.getTitle(), replies);
+    serializeMetadata(format, receiver, view);
+  }
+
 }
