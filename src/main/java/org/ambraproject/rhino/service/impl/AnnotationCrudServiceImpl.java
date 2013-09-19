@@ -139,33 +139,47 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format) throws IOException {
-    Annotation comment = (Annotation) DataAccessUtils.uniqueResult((List<?>)
+  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
+      throws IOException {
+    readAnnotation(receiver, commentId, format, COMMENT_TYPES);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void readCorrection(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
+      throws IOException {
+    readAnnotation(receiver, commentId, format, CORRECTION_TYPES);
+  }
+
+  private void readAnnotation(ResponseReceiver receiver, DoiBasedIdentity annotationId, MetadataFormat format,
+      Set<AnnotationType> acceptedTypes) throws IOException {
+    Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
-            .add(Restrictions.eq("annotationUri", commentId.getKey()))
+            .add(Restrictions.eq("annotationUri", annotationId.getKey()))
         ));
-    if (comment == null) {
-      throw reportNotFound(commentId);
+    if (annotation == null) {
+      throw reportNotFound(annotationId);
     }
 
-    AnnotationType annotationType = comment.getType();
-    if (!COMMENT_TYPES.contains(annotationType)) {
+    AnnotationType annotationType = annotation.getType();
+    if (!acceptedTypes.contains(annotationType)) {
       String message = String.format(""
-          + "Comment not found at ID: %s\n"
+          + "Annotation not found at ID: %s\n"
           + "(An annotation has that ID, but its type is: %s)",
-          commentId.getIdentifier(), annotationType);
+          annotationId.getIdentifier(), annotationType);
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
     // TODO: Make this more efficient. Three queries is too many.
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("ID", comment.getArticleID()))
+            .add(Restrictions.eq("ID", annotation.getArticleID()))
         ));
-    Map<Long, List<Annotation>> replies = findAnnotationReplies(comment.getID(), fetchAllAnnotations(article),
+    Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), fetchAllAnnotations(article),
         new LinkedHashMap<Long, List<Annotation>>());
-    AnnotationView view = new AnnotationView(comment, article.getDoi(), article.getTitle(), replies);
+    AnnotationView view = new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies);
     serializeMetadata(format, receiver, view);
   }
-
 }

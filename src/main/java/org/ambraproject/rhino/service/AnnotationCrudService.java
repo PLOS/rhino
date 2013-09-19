@@ -51,7 +51,7 @@ public interface AnnotationCrudService {
       throws IOException;
 
   /**
-   * Writes the comment data for a single comment to the receiver.
+   * Reads the comment data for a single comment to the receiver.
    *
    * @param receiver  wraps the response object
    * @param commentId identifies the comment
@@ -61,4 +61,14 @@ public interface AnnotationCrudService {
   public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
       throws IOException;
 
+  /**
+   * Reads the data for a single article correction to the receiver.
+   *
+   * @param receiver  wraps the response object
+   * @param correctionId identifies the correction
+   * @param format
+   * @throws IOException
+   */
+  public void readCorrection(ResponseReceiver receiver, DoiBasedIdentity correctionId, MetadataFormat format)
+      throws IOException;
 }
