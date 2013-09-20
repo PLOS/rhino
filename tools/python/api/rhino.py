@@ -78,6 +78,18 @@ class Rhino:
             raise Exception('rhino:failed to get binary ' + url)
         return m.hexdigest()
 
+    def _getMD5(self, url):
+        """
+        """
+        m = md5.new()
+        r = self._doGet(url)
+        if r.status_code == 200:
+           for chunk in r.iter_content(1024):
+               m.update(chunk)
+        else:
+           raise Exception('rhino:failed to get MD5 ' + url)
+        return m.hexdigest()
+
     def _afidsFromDoi(self, doiSuffix):
         """
         Given a DOI Suffix return a list of AFIDs 
@@ -199,6 +211,12 @@ class Rhino:
                     raise Exception('s3:invalid s3 prefix ' + fullAFID)
         return result
 
+    def assetFileMD5(self, afidSuffix):
+        """
+        """
+        url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
+        return self._getMD5(url)
+
     def assetFile(self, afidSuffix, fname=None):
         """
         Retreive the actual asset data. If the name is not 
@@ -231,13 +249,14 @@ if __name__ == "__main__":
                  'assets'       : lambda repo, doiList: [ repo.assets(doi) for doi in doiList ],
                  'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
                  'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
+                 'md5'          : lambda repo, doiList: [ repo.assetFileMD5(adoi) for adoi in doiList ],
                }
 
     pp = pprint.PrettyPrinter(indent=2)
     parser = argparse.ArgumentParser(description='Rhino API client module.')
     parser.add_argument('--server', help='specify a Rhino server url.')
     parser.add_argument('--prefix', help='specify a DOI prefix.')
-    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll")
+    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5")
     parser.add_argument('doiList', nargs='*', help="list of doi's")
     args = parser.parse_args()
 
