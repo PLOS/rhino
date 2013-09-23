@@ -47,6 +47,7 @@ public class VolumeCrudServiceTest extends BaseRhinoTest {
             .forClass(Journal.class)
             .add(Restrictions.eq("journalKey", TEST_JOURNAL_KEY))
             .setFetchMode("volumes", FetchMode.JOIN)
+            .setFetchMode("articleList", FetchMode.JOIN)
         ));
   }
 

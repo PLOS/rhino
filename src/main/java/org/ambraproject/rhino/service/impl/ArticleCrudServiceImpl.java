@@ -371,6 +371,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               .forClass(Journal.class)
               .add(Restrictions.eq("eIssn", eissn))
               .setFetchMode("volumes", FetchMode.JOIN) // so the article can be dumped to JSON later
+              .setFetchMode("articleList", FetchMode.JOIN)
               .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
@@ -577,6 +578,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
             .setFetchMode("journals", FetchMode.JOIN)
             .setFetchMode("journals.volumes", FetchMode.JOIN)
             .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
+            .setFetchMode("journals.articleList", FetchMode.JOIN)
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (article == null) {

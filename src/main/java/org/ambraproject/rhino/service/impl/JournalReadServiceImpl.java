@@ -47,6 +47,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
             .add(Restrictions.eq("journalKey", journalKey))
             .setFetchMode("volumes", FetchMode.JOIN)
             .setFetchMode("volumes.issues", FetchMode.JOIN)
+            .setFetchMode("articleList", FetchMode.JOIN)
         ));
     if (journal == null) {
       throw new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND);

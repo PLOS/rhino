@@ -257,6 +257,7 @@ public class IngestionTest extends BaseRhinoTest {
             .forClass(Article.class)
             .setFetchMode("journals", FetchMode.JOIN)
             .setFetchMode("journals.volumes", FetchMode.JOIN)
+            .setFetchMode("journals.articleList", FetchMode.JOIN)
             .add(Restrictions.eq("doi", caseDoi))));
     assertNotNull(actual, "Failed to create article with expected DOI");
 
