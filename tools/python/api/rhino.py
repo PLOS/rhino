@@ -80,6 +80,8 @@ class Rhino:
 
     def _getMD5(self, url):
         """
+        Read from the URL byte by byte calculating
+        the MD5 hash. 
         """
         m = md5.new()
         r = self._doGet(url)

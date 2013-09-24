@@ -78,6 +78,10 @@ class S3:
 
     def _ext2upper(self, fname):
         """
+        _ext2upper returns the file name with the extension upper cased.
+
+        The file extension is assumed to start at the last period
+        in the file name and continue on to the end of the string.
         """
         newfname = fname.split('.')
         newfname[-1] = newfname[-1].upper()
@@ -85,6 +89,10 @@ class S3:
 
     def _ext2lower(self, fname):
         """
+        _ext2lower returns the file name with the extension lowered cased.
+
+        The file extension is assumed to start at the last period
+        in the file name and continue on to the end of the string.
         """
         newfname = fname.split('.')
         newfname[-1] = newfname[-1].lower()
@@ -142,6 +150,10 @@ class S3:
 
     def _s3keyPath2doi(self, s3keyPath):
         """
+        Use an S3 based key to create the DOI associated with the key. 
+        
+        ex: 10.1371/journal/pone/1234567/journal.pone.1234567.xml ->
+            10.1371/journal.pone.1234567
         """
         elemLst = s3keyPath.split('/')
         return u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[1:-1]))
@@ -202,11 +214,15 @@ class S3:
 
     def buckets(self):
         """
+        Return a list of all the buckets associated with this account.
         """
         return self.conn.get_all_buckets()
 
     def keycheck(self, afidSuffix):
         """
+        Ultimately data is associate with unique 
+        asset file ids. keycheck returns the meta-data
+        assocated with this afid.
         """
         fullKey = self._afid2s3key(afidSuffix)
         # keys = self.bucket.list_versions(prefix=fullKey, delimiter='/')
@@ -231,6 +247,7 @@ class S3:
 
     def bucket_names(self):
         """
+        Return a list of bucket names.
         """
         return [ b.name for b in self.conn.get_all_buckets()]
 
@@ -325,6 +342,15 @@ class S3:
                 result[fullAFID] = self._getAssetMeta(afid[1])
         return result
 
+    def assetFileMD5(self, afidSuffix):
+        """
+        It just so happens the etag component of
+        the key is also the md5 hash. 
+        """
+        fullKey = self._afid2s3key(afidSuffix)
+        k = self.bucket.get_key(fullKey)
+        return string.strip(k.etag, '"') 
+
     def assetFile(self, afidSuffix, fname=None):
         """
         Retreive the actual asset data. If the file name is not
@@ -368,13 +394,14 @@ if __name__ == "__main__":
                  'assets'       : lambda repo, doiList: [ repo.assets(doi) for doi in doiList ],
                  'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
                  'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
+                 'md5'          : lambda repo, doiList: [ repo.assetFileMD5(adoi) for adoi in doiList ],
                }
 
     pp = pprint.PrettyPrinter(indent=2)
     parser = argparse.ArgumentParser(description='S3 API client module.')
     parser.add_argument('--bucket', help='specify an S3 buckt to use.')
     parser.add_argument('--prefix', help='specify a DOI prefix.')
-    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, buckets, keycheck")
+    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5, buckets, keycheck")
     parser.add_argument('doiList', nargs='*', help="list of doi's")
     args = parser.parse_args()
 
