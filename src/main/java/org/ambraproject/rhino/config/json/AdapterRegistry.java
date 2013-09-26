@@ -33,6 +33,8 @@ public class AdapterRegistry {
    */
   private static final Class[] JSON_OUTPUT_VIEW_CLASSES = {
 
+      org.ambraproject.rhino.view.JsonWrapper.class,
+
       org.ambraproject.rhino.view.article.ArticleOutputView.class,
       org.ambraproject.rhino.view.article.ArticleStateView.class,
       org.ambraproject.rhino.view.article.ArticleViewList.class,

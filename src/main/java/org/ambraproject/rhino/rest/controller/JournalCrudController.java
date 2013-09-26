@@ -48,12 +48,17 @@ public class JournalCrudController extends RestController {
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletResponse response,
                    @PathVariable String journalKey,
+                   @RequestParam(value = "inTheNewsArticles", required = false) String inTheNewsArticles,
                    @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
                    @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
       throws IOException {
     MetadataFormat mf = MetadataFormat.getFromAcceptHeader(accept);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    journalReadService.read(receiver, journalKey, mf);
+    if (booleanParameter(inTheNewsArticles)) {
+      journalReadService.readInTheNewsArticles(receiver, journalKey, mf);
+    } else {
+      journalReadService.read(receiver, journalKey, mf);
+    }
   }
 
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.POST)
