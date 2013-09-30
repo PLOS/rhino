@@ -28,29 +28,34 @@ public class AdapterRegistry {
    * interface shouldn't have to know about its implementations. But Gson's API seems to necessitate it, unless we've
    * missed something so far.
    * <p/>
-   * When you define a new {@code JsonOutputView}, you must add it to the array below before Gson will use the
-   * interface. (Please follow the existing code style for human-friendliness.)
+   * When you define a new {@code JsonOutputView}, you must add it here before Gson will use the interface. (Please
+   * follow the existing code style for human-friendliness.)
    */
-  private static final Class[] JSON_OUTPUT_VIEW_CLASSES = {
+  private static final ImmutableList<Class<? extends JsonOutputView>> JSON_OUTPUT_VIEW_CLASSES = ImmutableList.<Class<? extends JsonOutputView>>builder()
+      /*
+       * Using a builder and 'add' calls is the best way to check at compile time that each class
+       * implements JsonOutputView. Because of type erasure, this is not possible in an array,
+       * including the varargs that would be used in a large ImmutableList.of(...) expression.
+       */
 
-      org.ambraproject.rhino.view.article.ArticleOutputView.class,
-      org.ambraproject.rhino.view.article.ArticleStateView.class,
-      org.ambraproject.rhino.view.article.ArticleViewList.class,
+      .add(org.ambraproject.rhino.view.article.ArticleOutputView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
 
-      org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class,
-      org.ambraproject.rhino.view.asset.groomed.GroomedFigureView.class,
-      org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView.class,
-      org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class,
-      org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class,
+      .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
+      .add(org.ambraproject.rhino.view.asset.groomed.GroomedFigureView.class)
+      .add(org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView.class)
+      .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
+      .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
-      org.ambraproject.rhino.view.journal.IssueOutputView.class,
-      org.ambraproject.rhino.view.journal.JournalListView.class,
-      org.ambraproject.rhino.view.journal.JournalNonAssocView.class,
-      org.ambraproject.rhino.view.journal.JournalOutputView.class,
-      org.ambraproject.rhino.view.journal.VolumeListView.class,
-      org.ambraproject.rhino.view.journal.VolumeOutputView.class,
+      .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
+      .add(org.ambraproject.rhino.view.journal.JournalListView.class)
+      .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.class)
+      .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
+      .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
+      .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
 
-  };
+      .build();
 
   /**
    * A map from data types to custom adapters. An adapter defined here will be applied by default when Gson encounters
@@ -65,16 +70,8 @@ public class AdapterRegistry {
       .build();
 
 
-  @SuppressWarnings("unchecked") // use isAssignableFrom to check parameter correctness manually
   public static ImmutableCollection<Class<? extends JsonOutputView>> getOutputViewClasses() {
-    for (Class<?> classObj : JSON_OUTPUT_VIEW_CLASSES) {
-      if (!JsonOutputView.class.isAssignableFrom(classObj)) {
-        String message = String.format("%s does not implement %s",
-            classObj.getName(), JsonOutputView.class.getName());
-        throw new AssertionError(message);
-      }
-    }
-    return ImmutableList.<Class<? extends JsonOutputView>>copyOf(JSON_OUTPUT_VIEW_CLASSES);
+    return JSON_OUTPUT_VIEW_CLASSES;
   }
 
   public static ImmutableMap<Type, Object> getCustomAdapters() {
