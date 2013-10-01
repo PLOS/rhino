@@ -100,7 +100,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
 
     // Return the result
-    return new WriteResult<ArticleAsset>(assetToPersist, WriteResult.Action.CREATED);
+    return new WriteResult<>(assetToPersist, WriteResult.Action.CREATED);
   }
 
   /**

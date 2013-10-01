@@ -91,7 +91,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
     // AnnotationView is an ambra component that is convenient here since it encapsulates everything
     // we want to return about a given annotation.  It also handles nested replies.
-    List<AnnotationView> results = new ArrayList<AnnotationView>(annotations.size());
+    List<AnnotationView> results = new ArrayList<>(annotations.size());
     for (Annotation annotation : annotations) {
       if (annotationTypes.contains(annotation.getType())) {
         Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), annotations,
@@ -122,7 +122,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    */
   private Map<Long, List<Annotation>> findAnnotationReplies(Long annotationId, List<Annotation> allArticleAnnotations,
                                                             Map<Long, List<Annotation>> results) {
-    List<Annotation> children = new ArrayList<Annotation>();
+    List<Annotation> children = new ArrayList<>();
     for (Annotation annotation : allArticleAnnotations) {
       if (annotationId.equals(annotation.getParentID())) {
         children.add(annotation);

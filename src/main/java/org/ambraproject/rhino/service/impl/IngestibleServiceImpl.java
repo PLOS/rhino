@@ -63,7 +63,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
       throw new RuntimeException("Directory not found: " + ingestDir);
     }
 
-    List<String> results = new ArrayList<String>(archives.length);
+    List<String> results = new ArrayList<>(archives.length);
     for (File archive : archives) {
       results.add(archive.getName());
     }

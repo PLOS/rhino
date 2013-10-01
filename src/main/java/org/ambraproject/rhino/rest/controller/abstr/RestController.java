@@ -126,7 +126,7 @@ public abstract class RestController {
    * @return the response object
    */
   private static ResponseEntity<String> respondWithPlainText(CharSequence text, HttpStatus status) {
-    return new ResponseEntity<String>(text.toString(), makeContentTypeHeader(MediaType.TEXT_PLAIN), status);
+    return new ResponseEntity<>(text.toString(), makeContentTypeHeader(MediaType.TEXT_PLAIN), status);
   }
 
   /**
@@ -149,7 +149,7 @@ public abstract class RestController {
   protected ResponseEntity<String> respondWithJson(Object value) {
     String json = entityGson.toJson(value);
     HttpHeaders headers = makeContentTypeHeader(MediaType.APPLICATION_JSON);
-    return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+    return new ResponseEntity<>(json, headers, HttpStatus.OK);
   }
 
   /**
@@ -159,7 +159,7 @@ public abstract class RestController {
    * @return a response indicating "OK"
    */
   protected ResponseEntity<Object> reportOk() {
-    return new ResponseEntity<Object>(HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   /**
@@ -169,7 +169,7 @@ public abstract class RestController {
    * @return a response indicating "Created"
    */
   protected ResponseEntity<Object> reportCreated() {
-    return new ResponseEntity<Object>(HttpStatus.CREATED);
+    return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
   /**
@@ -181,7 +181,7 @@ public abstract class RestController {
    * @return a response indicating "Created"
    */
   protected ResponseEntity<String> reportCreated(String identifier) {
-    return new ResponseEntity<String>(identifier, HttpStatus.CREATED);
+    return new ResponseEntity<>(identifier, HttpStatus.CREATED);
   }
 
   /**
