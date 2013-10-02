@@ -31,12 +31,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -147,9 +149,12 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Map correctionMap = (Map) correctionsList.get(0);
     String createdStr = (String) correctionMap.get("created");
 
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'");
+    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
     // TODO: this might fail near midnight, if we're unlucky and the hibernate
     // entity gets saved just before midnight, and this is executed just after.
-    assertTrue(createdStr.startsWith(new SimpleDateFormat("yyyy-MM-dd'T'").format(correctionCreated)), createdStr);
+    assertTrue(createdStr.startsWith(dateFormat.format(correctionCreated)), createdStr);
 
     // Now deserialize to AnnotationView to do more comparisons.
     List<AnnotationView> actualAnnotations = entityGson.fromJson(json,
