@@ -22,13 +22,14 @@ __version__   = '0.1'
 class S3:
     """
     """
-    _FOREWARD_MDATA_MAP = { 'asset-contenttype':'contentType',
+    _FOREWARD_MDATA_MAP = { 
+                         'asset-contenttype':'contentType',
                          'asset-contextelement' : 'contextElement',
                          'asset-created' : 'created',
                          'asset-doi': 'doi',
                          'asset-extension': 'extension',
                          'asset-lastmodified': 'lastModified',
-                         'asset-title': 'lastModified',
+                         'asset-title': 'title',
                          'asset-size': 'size'
                        }
     _REVERSE_MDATA_MAP = { 'contentType' : 'asset-contenttype',
@@ -37,13 +38,22 @@ class S3:
                            'doi' : 'asset-doi',
                            'extension' : 'asset-extension',
                            'lastModified' : 'asset-lastmodified',
-                           'lastModified' : 'asset-title',
+                           'title' : 'asset-title',
                            'size' : 'asset-size'
                          }
 
     _AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     _AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
     _JRNL_IDS = ['pone', 'pmed', 'ppat', 'pbio', 'pgen', 'pcbi', 'pntd' ]
+    
+    # List of article meta-data fields accepted by this repo 
+    _ARTICLE_FLD_LIST = [ 'doi', 'strkImgURI', 'title', 'state', 'eIssn',
+                    'eLocationId', 'journal', 'language', 'rights', 'url' ]
+
+    # List of asset meta-data fields accepted by this repo
+    _ASSET_FLD_LIST  = [ 'doi', 'contentType', 'extension', 'title', 
+                         'lastModified', 'created', 'contextElement', 'size']
+
 
     def __init__(self, bucketID='us-west-1.pub.plos.org', prefix='10.1371'):
         """
@@ -211,6 +221,12 @@ class S3:
                 f.write(chunk)
             f.close()
         return m.hexdigest() 
+    
+    def articleMetaAccepted():
+        return _ARTICLE_FLD_LIST
+
+    def assetMetaAccepted():
+        return _ASSET_FLD_LIST
 
     def buckets(self):
         """
@@ -372,8 +388,9 @@ class S3:
         os.chdir('../')
         return result 
 
-    def putArticle(self, doiSuffix):
+    def putAfid(self, afid, fname, meta):
         """
+        
         """
         return
         
