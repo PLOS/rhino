@@ -109,12 +109,34 @@
 
   <beans:bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration" />
 
+  <beans:bean id="jmsConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+    <beans:property name="brokerURL" value="${ambra.services.activemq}"/>
+  </beans:bean>
+
+  <!-- setup spring jms TX manager -->
+  <beans:bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    <beans:property name="connectionFactory" ref="jmsConnectionFactory"/>
+  </beans:bean>
+
+  <!-- define Camel activemq component -->
+  <beans:bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <beans:property name="connectionFactory" ref="jmsConnectionFactory"/>
+    <beans:property name="transacted" value="true"/>
+    <beans:property name="transactionManager" ref="jmsTransactionManager"/>
+    <beans:property name="recoveryInterval" value="10000"/>
+    <beans:property name="receiveTimeout" value="5000"/>
+  </beans:bean>
+
+  <beans:bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <beans:property name="transactionManager" ref="jmsTransactionManager"/>
+  </beans:bean>
+
   <camel:camelContext xmlns="http://camel.apache.org/schema/spring">
     <camel:jmxAgent id="plos-queue" createConnector="false"/>
     <camel:template id="messageProducerTemplate"/>
   </camel:camelContext>
 
-  <beans:bean id="messageSender" class="org.ambraproject.queue.CamelSender">
+  <beans:bean id="messageSender" class="org.ambraproject.queue.CamelSender" depends-on="activemq">
     <beans:property name="producerTemplate" ref="messageProducerTemplate"/>
   </beans:bean>
 
