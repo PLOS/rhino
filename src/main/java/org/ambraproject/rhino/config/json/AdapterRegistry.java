@@ -37,6 +37,7 @@ public class AdapterRegistry {
        * implements JsonOutputView. Because of type erasure, this is not possible in an array,
        * including the varargs that would be used in a large ImmutableList.of(...) expression.
        */
+      .add(org.ambraproject.rhino.view.JsonWrapper.class)
 
       .add(org.ambraproject.rhino.view.article.ArticleOutputView.class)
       .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
