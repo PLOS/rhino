@@ -140,5 +140,14 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     List<String> pmcMessages = dummySender.messagesSent.get("activemq:fake.pmc.queue");
     assertEquals(pmcMessages.size(), 1);
     XMLUnit.compareXML(expectedSyndication, pmcMessages.get(0));
+
+    // Confirm that disabling the article removes it from the solr index.
+    inputView = entityGson.fromJson("{'state': 'disabled'}", ArticleInputView.class);
+    article = articleStateService.update(articleId, inputView);
+    assertEquals(article.getState(), Article.STATE_DISABLED);
+    assertEquals(dummySender.messagesSent.size(), 4);
+    List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
+    assertEquals(deletionMessages.size(), 1);
+    assertEquals(deletionMessages.get(0), article.getDoi());
   }
 }

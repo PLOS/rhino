@@ -186,8 +186,8 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       messageSender.sendMessage(ambraConfiguration.getString(
           "ambra.services.search.articleIndexingQueue", null), doc);
     } else {
-
-      // TODO: remove from solr index upon unpublication
+      messageSender.sendMessage(ambraConfiguration.getString("ambra.services.search.articleDeleteQueue", null),
+          articleId.getKey());
     }
   }
 
