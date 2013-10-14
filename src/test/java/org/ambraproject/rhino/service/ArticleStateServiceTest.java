@@ -21,6 +21,7 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
@@ -31,6 +32,7 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -39,6 +41,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 
 /**
  * Tests for {@link org.ambraproject.rhino.service.impl.ArticleStateServiceImpl}
@@ -149,5 +152,14 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
     assertEquals(deletionMessages.size(), 1);
     assertEquals(deletionMessages.get(0), article.getDoi());
+
+    // Attempting to publish the disabled article should fail.
+    inputView = entityGson.fromJson("{'state': 'published'}", ArticleInputView.class);
+    try {
+      article = articleStateService.update(articleId, inputView);
+      fail("Publication of disabled article succeeded");
+    } catch (RestClientException expected) {
+      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
+    }
   }
 }

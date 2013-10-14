@@ -201,7 +201,12 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
     Optional<Integer> updatedState = input.getPublicationState();
     if (updatedState.isPresent()) {
-      article.setState(updatedState.get());
+      if (updatedState.get() == Article.STATE_ACTIVE && article.getState() == Article.STATE_DISABLED) {
+        throw new RestClientException("A disabled article cannot be published; it must first be re-ingested",
+            HttpStatus.METHOD_NOT_ALLOWED);
+      } else {
+        article.setState(updatedState.get());
+      }
     }
 
     for (ArticleInputView.SyndicationUpdate update : input.getSyndicationUpdates()) {
