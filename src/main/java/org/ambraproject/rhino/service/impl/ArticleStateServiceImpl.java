@@ -17,6 +17,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.io.Closeables;
+import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
@@ -27,6 +28,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
+import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
@@ -50,6 +52,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -68,6 +71,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
   @Autowired
   private Configuration ambraConfiguration;
+
+  @Autowired
+  private IngestibleService ingestibleService;
 
   /**
    * Helper method to set the syndication state for the appropriate target based on the status property of the
@@ -230,6 +236,11 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     boolean isPublished = (article.getState() == Article.STATE_ACTIVE);
     updateSolrIndex(articleId, article, isPublished);
     hibernateTemplate.update(article);
+
+    if (updatedState.isPresent() && updatedState.get() == Article.STATE_DISABLED) {
+      deleteFilestoreFiles(articleId);
+      ingestibleService.revertArchive(articleId);
+    }
     return article;
   }
 
@@ -245,5 +256,22 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
           HttpStatus.NOT_FOUND);
     }
     return result;
+  }
+
+  /**
+   * Deletes all the files associated with an article from the filestore.
+   *
+   * @param articleId identifies the article
+   * @throws FileStoreException
+   * @throws IOException
+   */
+  private void deleteFilestoreFiles(ArticleIdentity articleId) throws FileStoreException, IOException {
+    String articleRoot = FSIDMapper.zipToFSID(articleId.getKey(), "");
+    Map<String, String> files = fileStoreService.listFiles(articleRoot);
+
+    for (String file : files.keySet()) {
+      String fullFile = FSIDMapper.zipToFSID(articleId.getKey(), file);
+      fileStoreService.deleteFile(fullFile);
+    }
   }
 }

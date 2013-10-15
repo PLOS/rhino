@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 
@@ -52,4 +53,15 @@ public interface IngestibleService {
    * @throws IOException
    */
   File archiveIngested(String filename) throws IOException;
+
+  /**
+   * Attempts to move the article archive package from the ingest destination directory to
+   * the ingest source directory--that is, from the "finished" dir into the "start" dir.
+   *
+   * @param articleId identifies the article archive
+   * @return true if the archive file was found and moved; false if it was not found in the
+   *     ingest destination dir
+   * @throws IOException
+   */
+  boolean revertArchive(ArticleIdentity articleId) throws IOException;
 }
