@@ -20,6 +20,7 @@
     <services>
       <search>
         <articleIndexingQueue>activemq:fake.indexing.queue</articleIndexingQueue>
+        <articleDeleteQueue>activemq:fake.delete.queue</articleDeleteQueue>
       </search>
       <syndications>
         <syndication target="PMC">

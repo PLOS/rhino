@@ -15,10 +15,12 @@ package org.ambraproject.rhino.service.impl;
 
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
@@ -99,5 +101,24 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
           dest.getCanonicalPath()));
     }
     return dest;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean revertArchive(ArticleIdentity articleId) throws IOException {
+
+    // Mostly copied from old admin codebase
+    // org.ambraproject.admin.service.impl.DocumentManagementServiceImpl.revertIngestedQueue
+    String archiveName = articleId.getArticleCode() + ".zip";
+    File fromFile = new File(ambraConfiguration.getString(INGEST_DEST_DIR_KEY), archiveName);
+    if (fromFile.exists()) {
+      File toFile = new File(ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY), archiveName);
+      FileUtils.moveFile(fromFile, toFile);
+      return true;
+    } else {
+      return false;
+    }
   }
 }
