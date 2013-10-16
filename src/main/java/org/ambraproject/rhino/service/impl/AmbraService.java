@@ -22,6 +22,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.io.Closeables;
+import com.google.common.io.Closer;
 import com.google.gson.Gson;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
@@ -51,6 +52,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
@@ -196,6 +198,17 @@ public abstract class AmbraService {
     }
   }
 
+
+  /**
+   * TODO: Extract as runtime configuration value
+   *
+   * @see #serializeMetadataSafely
+   * @see #serializeMetadataDirectly
+   */
+  private static final boolean BUFFER_JSON = true;
+
+  private static final int JSON_BUFFER_INITIAL_SIZE = 0x400;
+
   /**
    * Write JSON describing an object.
    *
@@ -209,18 +222,52 @@ public abstract class AmbraService {
       // If a new MetadataFormat is added, either support it below, default to JSON, or provide a user-friendly error.
       throw new AssertionError("JSON is the only supported format");
     }
-    Writer writer = null;
-    boolean threw = true;
-    try {
-      receiver.setCharacterEncoding(Charsets.UTF_8);
-      writer = receiver.getWriter();
-      writer = new BufferedWriter(writer);
-      entityGson.toJson(entity, writer);
-      threw = false;
-    } finally {
-      Closeables.close(writer, threw);
+    if (BUFFER_JSON) {
+      serializeMetadataSafely(receiver, entity);
+    } else {
+      serializeMetadataDirectly(receiver, entity);
     }
   }
+
+  /**
+   * Buffer the JSON into memory before we open the response stream. This ensures that any exception thrown by {@code
+   * toJson} and caught by Spring will be correctly shown in the response to the client.
+   */
+  private void serializeMetadataSafely(ResponseReceiver receiver, Object entity) throws IOException {
+    StringWriter stringWriter = new StringWriter(JSON_BUFFER_INITIAL_SIZE);
+    entityGson.toJson(entity, stringWriter);
+
+    Closer closer = Closer.create();
+    try {
+      receiver.setCharacterEncoding(Charsets.UTF_8);
+      Writer writer = closer.register(new BufferedWriter(receiver.getWriter()));
+      writer.write(stringWriter.toString());
+    } catch (Throwable t) {
+      throw closer.rethrow(t);
+    } finally {
+      closer.close();
+    }
+  }
+
+  /**
+   * Write the JSON directly to the response stream. This improves performance if the JSON is long, but risks ungraceful
+   * degradation. Specifically, if {@code toJson} throws an exception, Spring will silently error out on the response
+   * (probably sending an "OK" status code but an empty response body) instead of correctly reporting it to the client
+   * as a 500 error and providing the stack trace.
+   */
+  private void serializeMetadataDirectly(ResponseReceiver receiver, Object entity) throws IOException {
+    Closer closer = Closer.create();
+    try {
+      receiver.setCharacterEncoding(Charsets.UTF_8);
+      Writer writer = closer.register(new BufferedWriter(receiver.getWriter()));
+      entityGson.toJson(entity, writer);
+    } catch (Throwable t) {
+      throw closer.rethrow(t);
+    } finally {
+      closer.close();
+    }
+  }
+
 
   /**
    * Loads a single entity from the datastore based on some unique property.
