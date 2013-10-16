@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableSet;
  */
 enum FigureFileType {
 
-  ORIGINAL("TIF"),
+  ORIGINAL("TIF", "TIFF"),
   SMALL("PNG_S"),
   INLINE("PNG_I"),
   MEDIUM("PNG_M"),

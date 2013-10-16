@@ -66,11 +66,24 @@ public class GroomedAssetsView {
 
     List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figures.keySet().size());
     for (Collection<ArticleAsset> figureAssetCollection : figures.asMap().values()) {
+
+      GroomedFigureView groomedFigureView;
       if (figureAssetCollection.size() == 1) {
         // A figure would have an original image and at least one thumbnail. Assume this is a supp info asset.
+        groomedFigureView = null;
+      } else {
+        try {
+          groomedFigureView = GroomedFigureView.create(figureAssetCollection);
+        } catch (NotAFigureException e) {
+          groomedFigureView = null;
+        }
+      }
+
+      if (groomedFigureView == null) {
+        // figureAssetCollection doesn't match how we expect a figure to be represented
         miscellaneous.addAll(figureAssetCollection);
       } else {
-        figureViews.add(GroomedFigureView.create(figureAssetCollection));
+        figureViews.add(groomedFigureView);
       }
     }
 
