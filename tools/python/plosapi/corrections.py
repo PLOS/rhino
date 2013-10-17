@@ -6,20 +6,39 @@
     were submitted to PMC. Using ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/PMC-ids.csv.gz
     I the filtered out the all but the corrections into a csv.
     The csv was then used as input to collect the xml. 
+
+    Note a couple of bogus things done:
+    1. The DOI and PMCID are in specific columns of the CSV
+    2. The bogus string replacements to get rid of namespace 
+       stuff. (XML rant here)
+
+    
 """
 from __future__ import print_function
 from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, md5, csv
+from lxml import etree
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
 __version__   = '0.1'
 
 class Corrections:
-    _OAI_XMLTMPL = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:{id}&metadataPrefix=pmc'
+
+    _HEADER = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+"""
+
+    _OAI_XML_TMPL = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:{id}&metadataPrefix=pmc'
     
+    _NSPACE1 = '{http://www.openarchives.org/OAI/2.0/}'
+    _NSPACE2 = '{http://dtd.nlm.nih.gov/2.0/xsd/archivearticle}'
+    _QUERY_STR = './/{ns1}GetRecord/{ns1}record/{ns1}metadata'
+
     def __init__(self):
+        self._QUERY_STR = self._QUERY_STR.format(ns1=self._NSPACE1, ns2=self._NSPACE2)
         return
 
     def _doGet(self, url):
@@ -32,7 +51,7 @@ class Corrections:
         else:
             return requests.get(url)
 
-    def _getBinary(self, fname, url):
+    def _getBinary(self, url):
         """
         Most of the files other than the article xml are binary in nature.
         Fetch the data and write it to a temporary file. Return the MD5
@@ -41,14 +60,10 @@ class Corrections:
         m = md5.new()
         r = self._doGet(url)
         if r.status_code == 200:
-            with open(fname, 'wb') as f:
-                for chunk in r.iter_content(1024):
-                    m.update(chunk)
-                    f.write(chunk)
-                f.close()
+            m.update(r.content)
         else:
             raise Exception('rhino:failed to get binary ' + url)
-        return m.hexdigest()
+        return (r.content, m.hexdigest())
 
     def _getMD5(self, url):
         """
@@ -79,13 +94,23 @@ class Corrections:
             for row in reader:
                 # The DOI is expected in the 7th column
                 # Use it for the file name.
-                doi = row[6].replace('/','_') + '.xml'
+                fname = row[6].replace('/','_') + '.xml'
                 # The PMCID in the 9th column
                 pmcid = row[8].replace('PMC', '')
-                url = self._OAI_XMLTMPL.format(id=pmcid)
-                md5 = self._getBinary(doi, url)
-                yield (pmcid, doi, md5)
-            
+                url = self._OAI_XML_TMPL.format(id=pmcid)
+                (text, md5) = self._getBinary(url)
+                tree = etree.fromstring(text)
+                root = tree.findall(self._QUERY_STR)[0]
+                child = root[0]
+                newText = etree.tostring(child,  encoding='utf-8')
+                newText = newText.replace('xmlns="http://dtd.nlm.nih.gov/2.0/xsd/archivearticle"', '')
+                newText = newText.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
+                newText = newText.replace('xsi:schemaLocation="http://dtd.nlm.nih.gov/archiving/2.3/xsd/archivearticle.xsd"', '')
+                with open(fname, 'wb') as f:
+                    f.write(self._HEADER)
+                    f.write(newText)
+                    f.close()
+                yield (pmcid, fname, md5)
         os.chdir('../')
 
 if __name__ == "__main__":

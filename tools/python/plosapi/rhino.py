@@ -76,7 +76,7 @@ class Rhino:
                 f.close()
         else:
             raise Exception('rhino:failed to get binary ' + url)
-        return m.hexdigest()
+        return (fname, m.hexdigest())
 
     def _getMD5(self, url):
         """
@@ -210,7 +210,7 @@ class Rhino:
                     afidSuf = '.'.join(afid[1].split('.')[:-1])
                     result.update(self.asset(afidSuf))
                 else:
-                    raise Exception('s3:invalid s3 prefix ' + fullAFID)
+                    raise Exception('rhino:invalid s3 prefix ' + fullAFID)
         return result
 
     def assetFileMD5(self, afidSuffix):
@@ -219,7 +219,7 @@ class Rhino:
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getMD5(url)
 
-    def assetFile(self, afidSuffix, fname=None):
+    def getAfid(self, afidSuffix, fname=None):
         """
         Retreive the actual asset data. If the name is not 
         specified use the afid as the file name.
@@ -228,6 +228,12 @@ class Rhino:
             fname = afidSuffix
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getBinary(fname, url)
+    
+    def putAfid(self, afidSuffix, fname, articleMeta, assetMeta, md5, prefix=None,
+                  cb=None, reduce_redundancy=True, retry=5, wait=2):    
+        """
+        """
+        raise NotImplementedError('rhino:article not supported') 
 
     def articleFiles(self, doiSuffix):
         """
@@ -235,7 +241,7 @@ class Rhino:
         """
         os.mkdir(doiSuffix)
         os.chdir('./'+ doiSuffix)
-        result = { doiSuffix : [ (afid, self.assetFile(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
+        result = { doiSuffix : [ (afid, self.getAfid(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
         os.chdir('../')
         return result
 

@@ -12,8 +12,9 @@ from __future__ import with_statement
 from cStringIO import StringIO
 from boto.s3.connection import S3Connection
 from boto.s3.connection import Location
+from time import sleep
 
-import os, sys, re, string, requests, md5, json
+import os, sys, re, string, requests, md5, json, traceback
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -51,8 +52,8 @@ class S3:
                     'eLocationId', 'journal', 'language', 'rights', 'url' ]
 
     # List of asset meta-data fields accepted by this repo
-    _ASSET_FLD_LIST  = [ 'doi', 'contentType', 'extension', 'title', 
-                         'lastModified', 'created', 'contextElement', 'size']
+    _ASSET_FLD_LIST  = [ 'doi', 'title', 'contentType', 'contextElement', 'extension',  
+                         'lastModified', 'created', 'size']
 
 
     def __init__(self, bucketID='us-west-1.pub.plos.org', prefix='10.1371'):
@@ -67,6 +68,28 @@ class S3:
                                      aws_secret_access_key=self._AWS_SECRET_ACCESS_KEY)
         self.bucket = self.conn.get_bucket(bucketID) 
         return
+
+    def _assetMeta(self, mData):
+        """
+        Extract the fields of interest from the asset
+        meta-data. 
+        """
+        newMData = dict()
+        # Alas not all asset meta-data has all the same fields.
+        for f in self._ASSET_FLD_LIST:
+            if mData.has_key(f): newMData['asset-' + f] = mData[f] 
+        return newMData
+
+    def _articleMeta(self, mData):
+        """
+        Extract the fields of interest from the article
+        meta-data.
+        """
+        newMData = dict()
+        # Alas not all asset meta-data has all the same fields.
+        for f in self._ASSET_FLD_LIST:
+            if mData.has_key(f): newMData['article-' + f] = mData[f]
+        return newMData
 
     def _forewardmap(self, name):
         """
@@ -129,7 +152,7 @@ class S3:
         keySuffix = string.replace(doiSuffix, '.', '/')
         return u'{p}/{s}/'.format(p=self.prefix, s=keySuffix)
 
-    def _afid2s3key(self, afidSuffix):
+    def _afid2s3key(self, afidSuffix, prefix=None):
         """
         Given a PLOS specific asset file ID (AFID) return a 
         PLOS specific S3 key.
@@ -146,14 +169,16 @@ class S3:
             10.1371/image.PLOSID.vxx.ixx.xml ->
             10.1371/image/PLOSID/vxx/ixx/image.PLOSID.vxx.ixx.xml  
         """
+        if not prefix: prefix = self.prefix
+
         if afidSuffix.lower().startswith('journal'):
             doiSuffix = '/'.join(afidSuffix.lower().split('.')[:-1])
             newAFID = '.'.join(afidSuffix.lower().split('.')[1:])
-            fullAFID = u'{p}/{s}/{a}'.format(p=self.prefix, s=doiSuffix, a=newAFID)
+            fullAFID = u'{p}/{s}/{a}'.format(p=prefix, s=doiSuffix, a=newAFID)
         elif afidSuffix.lower().startswith('image'):
             # Get everything except the extensions
             doiSuffix = '/'.join(afidSuffix.lower().split('.')[:-1])
-            fullAFID = u'{p}/{s}/{a}'.format(p=self.prefix, s=doiSuffix, a=afidSuffix.lower())
+            fullAFID = u'{p}/{s}/{a}'.format(p=prefix, s=doiSuffix, a=afidSuffix.lower())
         else:
             raise Exception('s3:invalid afid suffix ' + afidSuffix)
         return fullAFID
@@ -194,8 +219,8 @@ class S3:
     def _getAssetMeta(self, afidSuffix):
         """
         """
-        fullKey = self._afid2s3key(afidSuffix)
-        mdata = self.bucket.get_key(fullKey).metadata
+        keyID = self._afid2s3key(afidSuffix)
+        mdata = self.bucket.get_key(keyID).metadata
         result = dict()
         for k in mdata.iterkeys():
             lk = k.lower()
@@ -220,14 +245,8 @@ class S3:
                 m.update(chunk)
                 f.write(chunk)
             f.close()
-        return m.hexdigest() 
+        return (fname, m.hexdigest()) 
     
-    def articleMetaAccepted():
-        return _ARTICLE_FLD_LIST
-
-    def assetMetaAccepted():
-        return _ASSET_FLD_LIST
-
     def buckets(self):
         """
         Return a list of all the buckets associated with this account.
@@ -240,9 +259,9 @@ class S3:
         asset file ids. keycheck returns the meta-data
         assocated with this afid.
         """
-        fullKey = self._afid2s3key(afidSuffix)
+        keyID = self._afid2s3key(afidSuffix)
         # keys = self.bucket.list_versions(prefix=fullKey, delimiter='/')
-        keys = [ self.bucket.get_key(fullKey) ]
+        keys = [ self.bucket.get_key(keyID) ]
         for k in keys:
             mdata = k.metadata
             mdata['S3:name'] = k.name
@@ -271,7 +290,7 @@ class S3:
         """
         Get a list of DOIs from the s3 bucket keys. This is some what
         DOI specific. For image articles we need to iterate over 3
-        levels. For journals 2. 
+        levels. For journals only 2. 
         """
         # Get the image article DOIs
         bklstRslt = self.bucket.list(delimiter='/', prefix=self.prefix + '/image/')
@@ -348,7 +367,6 @@ class S3:
 
     def assetall(self, adoiSuffix):
         """
-        
         """
         assets = self.assets(adoiSuffix)
         result = dict()
@@ -363,19 +381,69 @@ class S3:
         It just so happens the etag component of
         the key is also the md5 hash. 
         """
-        fullKey = self._afid2s3key(afidSuffix)
-        k = self.bucket.get_key(fullKey)
+        keyID = self._afid2s3key(afidSuffix)
+        k = self.bucket.get_key(keyID)
         return string.strip(k.etag, '"') 
 
-    def assetFile(self, afidSuffix, fname=None):
+    def getAfid(self, afidSuffix, fname=None):
         """
         Retreive the actual asset data. If the file name is not
         specified use the afid as the file name.
         """
         if fname == None:
             fname = self._ext2upper(afidSuffix)
-        fullKey = self._afid2s3key(afidSuffix)
-        return self._getBinary(fname, fullKey)
+        keyID = self._afid2s3key(afidSuffix)
+        return self._getBinary(fname, keyID)
+
+    def putAfid(self, afidSuffix, fname, articleMeta, assetMeta, md5, prefix=None,
+                  force=False, cb=None, reduce_redundancy=True, retry=5, wait=2):
+        """
+        """
+        status = 'FAILED'
+        # See if the key exists
+        keyID = self._afid2s3key(afidSuffix, prefix)
+        s3key = self.bucket.get_key(keyID)
+        if not s3key == None:
+            status = 'EXIST'
+            # yes - see if they are the same
+            if not force and (s3key.etag.replace('"','') == md5):
+                status += ' IDENTICAL'   
+                return (afidSuffix, fname, md5, status)
+        else:
+            s3key = self.bucket.new_key(keyID)
+
+        # Use the default prefix if not specified.
+        if not prefix: prefix = self.prefix
+        
+        # Merge the article and asset meta-data
+        mData = self._articleMeta(articleMeta)
+        mData.update(self._assetMeta(assetMeta))
+        mData['asset-md5'] = md5
+
+        # Remove duplicate info
+        k = 'asset-title'
+        k2 = 'article-title'
+        if mData.has_key(k) and (mData[k] == mData[k2]): 
+            mData[k] = ''
+
+        s3key.content_type = mData['asset-contentType']
+
+        # Copy the meta-data
+        [ s3key.set_metadata(k, v) for k,v in mData.iteritems() ]
+        cnt = 0
+        # Sometimes S3 doesn't respond quickly 
+        while(cnt < retry):
+            try:
+                s3key.set_contents_from_filename(fname, cb=cb, reduced_redundancy=reduce_redundancy)
+                status = 'COPIED'
+                cnt = retry
+            except Exception as e:
+               if ++cnt >= retry:
+                   s = 'S3:putAfid - failed transfer {f} after {rt} retries.\n {msg}'
+                   raise Exception(s.format(f=fname, rt=retry, msg=e.message))
+               sleep(wait)
+
+        return (afidSuffix, fname, md5, status) 
 
     def articleFiles(self, doiSuffix):
         """
@@ -384,16 +452,10 @@ class S3:
         """
         os.mkdir(doiSuffix)
         os.chdir('./'+ doiSuffix)
-        result = { doiSuffix : [ (afid, self.assetFile(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
+        result = { doiSuffix : [ (afid, self.getAfid(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
         os.chdir('../')
         return result 
 
-    def putAfid(self, afid, fname, meta):
-        """
-        
-        """
-        return
-        
 if __name__ == "__main__":
     """
     Main entry point for command line execution. 
@@ -402,16 +464,16 @@ if __name__ == "__main__":
     import pprint
 
     # Main command dispatcher.
-    dispatch = { 'buckets'      : lambda repo, doiList: repo.bucket_names(),
-                 'keycheck'     : lambda repo, doiList: [ repo.keycheck(afid) for afid in doiList ],
-                 'articlefiles' : lambda repo, doiList: [ repo.articleFiles(doi) for doi in doiList ],
-                 'article'      : lambda repo, doiList: [ repo.article(doi) for doi in doiList ],
-                 'articles'     : lambda repo, doiList: repo.articles(),
-                 'rm-article'   : lambda repo, doiList: [ repo.rmArticle(doi) for doi in doiList ],
-                 'assets'       : lambda repo, doiList: [ repo.assets(doi) for doi in doiList ],
-                 'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
-                 'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
-                 'md5'          : lambda repo, doiList: [ repo.assetFileMD5(adoi) for adoi in doiList ],
+    dispatch = { 'buckets'      : lambda repo, params: repo.bucket_names(),
+                 'keycheck'     : lambda repo, params: [ repo.keycheck(afid) for afid in params ],
+                 'articlefiles' : lambda repo, params: [ repo.articleFiles(doi) for doi in params ],
+                 'article'      : lambda repo, params: [ repo.article(doi) for doi in params ],
+                 'articles'     : lambda repo, params: repo.articles(),
+                 'rm-article'   : lambda repo, params: [ repo.rmArticle(doi) for doi in params ],
+                 'assets'       : lambda repo, params: [ repo.assets(doi) for doi in params ],
+                 'asset'        : lambda repo, params: [ repo.asset(doi) for doi in params ],
+                 'assetall'     : lambda repo, params: [ repo.assetall(doi) for doi in params ],
+                 'md5'          : lambda repo, params: [ repo.assetFileMD5(adoi) for adoi in params ],
                }
 
     pp = pprint.PrettyPrinter(indent=2)
@@ -419,11 +481,11 @@ if __name__ == "__main__":
     parser.add_argument('--bucket', help='specify an S3 buckt to use.')
     parser.add_argument('--prefix', help='specify a DOI prefix.')
     parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5, buckets, keycheck")
-    parser.add_argument('doiList', nargs='*', help="list of doi's")
+    parser.add_argument('params', nargs='*', help="command parameters")
     args = parser.parse_args()
 
     try:
-        for val in dispatch[args.command](S3(), args.doiList):
+        for val in dispatch[args.command](S3(), args.params):
             pp.pprint(val)
     except Exception as e:
         sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
