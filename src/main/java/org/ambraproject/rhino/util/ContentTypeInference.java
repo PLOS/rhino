@@ -22,7 +22,8 @@ public class ContentTypeInference {
 
   /*
    * From a legacy list of hard-coded constants (in "pmc2obj-v3.xslt"), mostly based on PLOS use cases.
-   * Omits any case that appeared in "pmc2obj-v3.xslt" but is covered by MimetypesFileTypeMap.
+   * Omits any case that appeared in "pmc2obj-v3.xslt" but was covered by MimetypesFileTypeMap as of Java 6.
+   * Some cases omitted from here may not be covered in Java 7 due to http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7096063
    */
   private static final Map<String, String> HARD_CODED = ImmutableMap.<String, String>builder()
 
@@ -71,6 +72,37 @@ public class ContentTypeInference {
 
       .build();
 
+  /*
+   * A list of cases that should be covered by MimetypesFileTypeMap but for http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=7096063
+   * Check for these before allowing MimetypesFileTypeMap to default to "application/octet-stream"
+   */
+  private static final Map<String, String> WORKAROUNDS = ImmutableMap.<String, String>builder()
+
+      .put("aif", "audio/x-aiff")
+      .put("aiff", "audio/x-aiff")
+      .put("au", "audio/basic")
+      .put("avi", "video/x-msvideo")
+      .put("gif", "image/gif")
+      .put("htm", "text/html")
+      .put("html", "text/html")
+      .put("ief", "image/ief")
+      .put("jpg", "image/jpeg")
+      .put("jpeg", "image/jpeg")
+      .put("jpe", "image/jpeg")
+      .put("mid", "audio/midi")
+      .put("midi", "audio/midi")
+      .put("mov", "video/quicktime")
+      .put("qt", "video/quicktime")
+      .put("mpg", "video/mpeg")
+      .put("mpeg", "video/mpeg")
+      .put("ps", "application/postscript")
+      .put("tif", "image/tiff")
+      .put("tiff", "image/tiff")
+      .put("txt", "text/plain")
+      .put("wav", "audio/x-wav")
+
+      .build();
+
 
   private static String getFileExtension(String filename) {
     int index = filename.lastIndexOf('.');
@@ -84,7 +116,8 @@ public class ContentTypeInference {
    * @return the "Content-Type" header value
    */
   public static String inferContentType(String filename) {
-    String mimeType = HARD_CODED.get(getFileExtension(filename).toLowerCase());
+    String extension = getFileExtension(filename).toLowerCase();
+    String mimeType = HARD_CODED.get(extension);
     if (mimeType != null) {
       return mimeType;
     }
@@ -92,6 +125,13 @@ public class ContentTypeInference {
     if (BUILT_IN_DEFAULT.equals(mimeType)) {
       // Try again, case-insensitively
       mimeType = BUILT_IN.getContentType(filename.toLowerCase());
+      if (BUILT_IN_DEFAULT.equals(mimeType)) {
+        // Try again from the hard-coded list of cases that work around a possible bug in BUILT_IN
+        String mimeTypeWorkaround = WORKAROUNDS.get(extension);
+        if (mimeTypeWorkaround != null) {
+          return mimeTypeWorkaround;
+        }
+      }
     }
     return mimeType;
   }
