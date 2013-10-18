@@ -117,23 +117,34 @@ public class ContentTypeInference {
    */
   public static String inferContentType(String filename) {
     String extension = getFileExtension(filename).toLowerCase();
-    String mimeType = HARD_CODED.get(extension);
+    String mimeType;
+
+    // Check the hard-coded dictionary of supported types
+    mimeType = HARD_CODED.get(extension);
     if (mimeType != null) {
       return mimeType;
     }
+
+    // Look it up in the MIME type dictionary provided by Java
     mimeType = BUILT_IN.getContentType(filename);
-    if (BUILT_IN_DEFAULT.equals(mimeType)) {
-      // Try again, case-insensitively
-      mimeType = BUILT_IN.getContentType(filename.toLowerCase());
-      if (BUILT_IN_DEFAULT.equals(mimeType)) {
-        // Try again from the hard-coded list of cases that work around a possible bug in BUILT_IN
-        String mimeTypeWorkaround = WORKAROUNDS.get(extension);
-        if (mimeTypeWorkaround != null) {
-          return mimeTypeWorkaround;
-        }
-      }
+    if (!BUILT_IN_DEFAULT.equals(mimeType)) {
+      return mimeType;
     }
-    return mimeType;
+
+    // Try again, case-insensitively
+    mimeType = BUILT_IN.getContentType(filename.toLowerCase());
+    if (!BUILT_IN_DEFAULT.equals(mimeType)) {
+      return mimeType;
+    }
+
+    // Check the dictionary of cases that work around a Java 7 bug
+    mimeType = WORKAROUNDS.get(extension);
+    if (mimeType != null) {
+      return mimeType;
+    }
+
+    // Type unrecognized
+    return BUILT_IN_DEFAULT;
   }
 
 }
