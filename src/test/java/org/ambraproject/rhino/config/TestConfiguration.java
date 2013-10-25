@@ -25,10 +25,12 @@ import org.ambraproject.queue.MessageServiceImpl;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.DummyMessageSender;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ClassificationServiceImpl;
 import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
@@ -152,5 +154,10 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public AnnotationCrudService annotationCrudService() {
     return new AnnotationCrudServiceImpl();
+  }
+
+  @Bean
+  public ClassificationService classificationService() {
+    return new ClassificationServiceImpl(null);
   }
 }

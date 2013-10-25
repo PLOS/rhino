@@ -232,6 +232,22 @@
         <url></url>
       </raptor>
 
+      <!--This stuff is strictly to keep org.ambraproject.service.search.SolrSearchService happy.
+          More specifically, org.ambraproject.rhino.service.impl.ClassificationServiceImpl has an
+          instance of org.ambraproject.service.taxonomy.TaxonomyServiceImpl, which in turn has
+          an instance of org.ambraproject.service.search.SolrSearchService.  The latter two
+          classes are in the ambra-base code.  ClassificationServiceImpl doesn't currently call
+          anything that relies on SolrSearchService, but unless these properties are defined,
+          we'll get an error at server startup.                                           -->
+      <search>
+        <sortOptions>
+          <option displayName="Relevance">score desc\, publication_date desc\, id desc</option>
+        </sortOptions>
+        <keywordFields>
+          <field displayName="Abstract">abstract</field>
+        </keywordFields>
+      </search>
+
     </services>
     <articleTypeList>
       <articleType>

@@ -27,6 +27,7 @@ import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -37,6 +38,7 @@ import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ClassificationServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
@@ -47,6 +49,7 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
+import org.ambraproject.service.taxonomy.TaxonomyService;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
@@ -198,5 +201,10 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public AnnotationCrudService annotationCrudService() {
     return new AnnotationCrudServiceImpl();
+  }
+
+  @Bean
+  public ClassificationService classificationService(TaxonomyService taxonomyService) {
+    return new ClassificationServiceImpl(taxonomyService);
   }
 }
