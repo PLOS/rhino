@@ -70,16 +70,21 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
   public void read(String journal, String parent, ResponseReceiver receiver, MetadataFormat format)
       throws IOException, ApplicationException {
     CategoryView categoryView = taxonomyService.parseCategories(journal);
-    if (!Strings.isNullOrEmpty(parent)) {
+    if (parent == null) {
+      parent = "";
+    } else {
       String[] levels = parent.split("/");
       for (String level : levels) {
         categoryView = categoryView.getChild(level);
+      }
+      if (parent.charAt(0) != '/') {
+        parent = '/' + parent;
       }
     }
     Map<String, SortedSet<String>> tree = CategoryUtils.getShortTree(categoryView);
     List<Result> results = new ArrayList<>(tree.size());
     for (Map.Entry<String, SortedSet<String>> entry : tree.entrySet()) {
-      results.add(new Result(entry.getKey(), entry.getValue().size()));
+      results.add(new Result(parent + '/' + entry.getKey(), entry.getValue().size()));
     }
     Collections.sort(results);
     serializeMetadata(format, receiver, results);
