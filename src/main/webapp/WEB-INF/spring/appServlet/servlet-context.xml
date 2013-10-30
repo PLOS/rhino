@@ -152,6 +152,25 @@
 <!--    <beans:property name="journalService" ref="journalService"/> -->
   </beans:bean>
 
+  <!-- Note: the next two beans are included only because taxonomyService depends on them,
+       even though our current use of this class doesn't call them.                      -->
+  <beans:bean id="solrServerFactory" class="org.ambraproject.service.search.SolrServerFactory">
+    <beans:constructor-arg ref="ambraConfiguration"/>
+  </beans:bean>
+
+  <beans:bean id="searchService" class="org.ambraproject.service.search.SolrSearchService">
+    <beans:property name="configuration" ref="ambraConfiguration"/>
+    <beans:property name="serverFactory" ref="solrServerFactory"/>
+  </beans:bean>
+
+  <beans:bean id="taxonomyCache" class="org.ambraproject.service.cache.EternalCache" />
+
+  <beans:bean id="taxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
+    <beans:property name="cache" ref="taxonomyCache" />
+    <beans:property name="searchService" ref="searchService" />
+    <beans:property name="sessionFactory" ref="hibernateSessionFactory" />
+  </beans:bean>
+
   <mvc:interceptors>
     <beans:bean class="org.ambraproject.rhino.rest.LoggingInterceptor"/>
   </mvc:interceptors>
