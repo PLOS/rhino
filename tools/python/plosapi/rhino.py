@@ -23,6 +23,7 @@ class Rhino:
     _ARTICLE_TMPL    = '{server}/{rver}/articles/{prefix}/'
     _ASSETS_TMPL     = '{server}/{rver}/assets/{prefix}/'
     _ASSETFILES_TMPL = '{server}/{rver}/assetfiles/{prefix}/'
+    _ARCTILE_DOI_CACHE = dict()
     
     def __init__(self, rhinoServer='http://api.plosjournals.org/', prefix='10.1371', 
                      rver='v1', verify=False, regx='.*'):
@@ -49,6 +50,12 @@ class Rhino:
           self._ASSETFILES_TMPL.format(server=rhinoServer, rver=rver, prefix=prefix) + '{afid}'
         self._ARTICLE_TMPL = \
           self._ARTICLE_TMPL.format(server=rhinoServer, rver=rver, prefix=prefix) + '{suffix}'
+
+    def _stripPrefix(self, doi, strip):
+        """
+        """
+        if not strip: return doi
+        return doi.replace('{p}/'.format(p=self.prefix), '')
 
     def _doGet(self, url):
         """
@@ -102,20 +109,29 @@ class Rhino:
                 (p, afid) = fullAFID.split('/')
                 yield afid
 
-    def articles(self):
+    def articles(self, useCache=False, stripPrefix=False):
         """
         List of article DOI's for the given Server and Prefix.
+        
+        The useCache parameter turns caching of DOIs on or off.
+        This is to be used in situations where getting multiple lists 
+        of DOIs would slow down processing.
         """
-        r = self._doGet(self.articlesReq)
-        if r.status_code == 200:
-            # Load JSON into a Python object and use some values from it.
-            articles = json.loads(r.content)
+        if useCache and not len(self._ARTICLE_DOI_CACHE) == 0:
+            for k in self._ARTICLE_DOI_CACHE.keys():
+                yield self._stripPrefix(k, stripPrefix)
         else:
-            raise Exception('rhino:articles verb failed ' + url)
-        # Return only doi's matched by filter
-        for (doi, _) in articles.items():
-            if self.filterRegx.search(doi):
-                yield(doi) 
+            r = self._doGet(self.articlesReq)
+            if r.status_code == 200:
+                # Load JSON into a Python object and use some values from it.
+                articles = json.loads(r.content)
+            else:
+                raise Exception('rhino:articles verb failed ' + url)
+            # Return only doi's matched by filter
+            for (doi, _) in articles.items():
+                if self.filterRegx.search(doi):
+                    if useCache: self._ARTICLE_DOI_CACHE[doi] = 1
+                    yield(self._stripPrefix(doi, stripPrefix)) 
     
     def article(self, doiSuffix):
         """

@@ -45,7 +45,7 @@ class S3:
 
     _AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     _AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
-    _JRNL_IDS = ['pone', 'pmed', 'ppat', 'pbio', 'pgen', 'pcbi', 'pntd' ]
+    _JRNL_IDS = ['pone', 'pmed', 'ppat', 'pbio', 'pgen', 'pcbi', 'pntd', 'pctr', 'pcol' ]
     
     # List of article meta-data fields accepted by this repo 
     _ARTICLE_FLD_LIST = [ 'doi', 'strkImgURI', 'title', 'state', 'eIssn',
@@ -54,6 +54,8 @@ class S3:
     # List of asset meta-data fields accepted by this repo
     _ASSET_FLD_LIST  = [ 'doi', 'title', 'contentType', 'contextElement', 'extension',  
                          'lastModified', 'created', 'size']
+
+    _ARCTILE_DOI_CACHE = dict()
 
 
     def __init__(self, bucketID='us-west-1.pub.plos.org', prefix='10.1371'):
@@ -68,6 +70,10 @@ class S3:
                                      aws_secret_access_key=self._AWS_SECRET_ACCESS_KEY)
         self.bucket = self.conn.get_bucket(bucketID) 
         return
+
+    def _stripPrefix(self, doi, strip):
+        if not strip: return doi
+        return doi.replace('{p}/'.format(p=self.prefix), '')
 
     def _assetMeta(self, mData):
         """
@@ -286,26 +292,52 @@ class S3:
         """
         return [ b.name for b in self.conn.get_all_buckets()]
 
-    def articles(self):
+    def has_doi(self, doiSuffix):
+        """
+        In this case if the article has assets for
+        this doiSuffix then the DOI exists. That is not 
+        say that a complete copy of all the assets exist
+        on S3.
+        """
+        s3keyPath = self._doi2s3keyPath(doiSuffix)
+        # If there exist any keys with this DOI return True
+        bklstRslt = self.bucket.list(delimiter='/', prefix=s3keyPath)
+        return not len(bklstRslt) == 0
+
+    def articles(self, useCache=False, stripPrefix=False):
         """
         Get a list of DOIs from the s3 bucket keys. This is some what
         DOI specific. For image articles we need to iterate over 3
-        levels. For journals only 2. 
+        levels. For journals only 2.
+
+        The useCache parameter turns caching of DOIs on or off.
+        This is to be used in situations where getting multiple lists 
+        of DOIs would slow down processing.  
         """
-        # Get the image article DOIs
-        bklstRslt = self.bucket.list(delimiter='/', prefix=self.prefix + '/image/')
-        for p1 in bklstRslt:
-            bklstRslt2 = self.bucket.list(delimiter='/', prefix=p1.name)
-            for p2 in bklstRslt2:
-                bklstRslt3 = self.bucket.list(delimiter='/', prefix=p2.name)
-                for k in bklstRslt3:
-                   yield self._s3keyPath2doi(k.name)
-        # Get the journal DOIs 
-        prefixLst = [ '{p}/journal/{id}/'.format(p=self.prefix, id=jrnlid) for jrnlid in self._JRNL_IDS ] 
-        for p in prefixLst:
-            bklstRslt = self.bucket.list(delimiter='/', prefix=p) 
-            for k in bklstRslt:
-                yield self._s3keyPath2doi(k.name)
+        if useCache and not len(self._ARTICLE_DOI_CACHE) == 0:
+            for k in self._ARTICLE_DOI_CACHE.keys():
+                yield self._stripPrefix(k, stripPrefix)
+        else:
+            # Get the image article DOIs
+            bklstRslt = self.bucket.list(delimiter='/', prefix=self.prefix + '/image/')
+            for p1 in bklstRslt:
+                bklstRslt2 = self.bucket.list(delimiter='/', prefix=p1.name)
+                for p2 in bklstRslt2:
+                    bklstRslt3 = self.bucket.list(delimiter='/', prefix=p2.name)
+                    for k in bklstRslt3:
+                        fullDOI = self._s3keyPath2doi(k.name)
+                        if useCache: self._ARTICLE_DOI_CACHE[fullDOI] = 1
+                        yield self._stripPrefix(fullDOI, stripPrefix)
+            # Get the journal DOIs
+            # TODO: Need to rethink this - jrnl list should be had from reading
+            #       the bucket. 
+            prefixLst = [ '{p}/journal/{id}/'.format(p=self.prefix, id=jrnlid) for jrnlid in self._JRNL_IDS ] 
+            for p in prefixLst:
+                bklstRslt = self.bucket.list(delimiter='/', prefix=p) 
+                for k in bklstRslt:
+                    fullDOI = self._s3keyPath2doi(k.name)
+                    if useCache: self._ARTICLE_DOI_CACHE[fullDOI] = 1
+                    yield self._stripPrefix(fullDOI, stripPrefix)
     
     def article(self, doiSuffix):
         """

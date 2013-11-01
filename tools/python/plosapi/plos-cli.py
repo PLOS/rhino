@@ -6,12 +6,11 @@ from __future__ import print_function
 from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, md5
+from plosapi import Rhino, S3, Currents
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
 __version__   = '0.1'
-
-from plosapi import Rhino, S3, Currents
 
 class print_appender():
     """
@@ -87,13 +86,13 @@ def doiDiff(srcRepo, dstRepo, matchOnly=''):
     '-+' - DOI not on source but on destination
     ''   - match any of the above.
     """
-    diffs = {}
-    # Assume source only 
-    for doi in src.articles():
+    diffs = dict()
+    # Assume source only
+    for doi in srcRepo.articles():
         diffs[doi] = '+-'
     # Flag them as existing on both 
-    # or just destination 
-    for doi in dst.articles():
+    # or just destination
+    for doi in dstRepo.articles():
         if diffs.has_key(doi):
             diffs[doi] = '++'
         else:
@@ -120,9 +119,12 @@ def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
         status = 'FAILED: {adoi} {msg}'.format(adoi=afidSuffix, msg=e.message)
         fname = '' 
         md5 = ''
-    else:
-        # If there are no exceptions - complete
-        os.remove(fname)
+    finally:
+        # If it failed to get the file there will be an exception
+        # so cleanup if necessary.i getAfid defaults to using
+        # afidSuffix as the file name.
+        if os.path.exists(afidSuffix):
+            os.remove(afidSuffix)
     return (afidSuffix, fname, md5, status) 
     
 def adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
@@ -153,12 +155,13 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
         articleMData = srcRepo.article(doiSuffix)
         os.mkdir(doiSuffix)
         os.chdir('./'+ doiSuffix)
-
-        for copy_result in adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
-           appender.append(copy_result)
-
-        os.chdir('../')
-        os.removedirs(doiSuffix) 
+        try:
+            for copy_result in adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
+                # Result Tuple (afidSuffix, fname, md5, status)
+                appender.append(copy_result)
+        finally:
+            os.chdir('../')
+            os.removedirs(doiSuffix) 
     return  
     
 def backup(srcRepo, dstRepo, appender):
@@ -166,7 +169,13 @@ def backup(srcRepo, dstRepo, appender):
     Basic backup command. Start with a list of ODI's that
     are on the SourceRepo and copy all the assets to the 
     DestinationRepo.
+
+    Since we are doing a backup we will only diff with 
+    what is available on the source repo. 
     """
+    # Turn the cache on to prevent fetching DOI list twice.
+    srcArticles = srcRepo.articles(useCache=True, stripPrefix=True)
+ 
     for doi in doiDiff(srcRepo, dstRepo, matchOnly='+-'):
         # Not interested in prefix - remove it.
         doiSuffix = doi.replace(srcRepo.prefix + '/', '')
@@ -185,7 +194,7 @@ if __name__ == "__main__":
     parser.add_argument('--bucket', default='us-west-1.pub.plos.org', 
                          help='specifiy the S3 bucket. Default: %(default)s')
     parser.add_argument('--prefix', default='10.1371', help='specify a DOI prefix.  Default: %(default)s')
-    parser.add_argument('--matchOnly', metavar='"+-"', default='+-', 
+    parser.add_argument('--matchOnly', metavar='+-', default='+-', 
                          help='source and destination matching criteria. [-+, +-, ++, ""]')
     parser.add_argument('command', help='doidiff [no params] | '
                                         'assetdiff [doi suffixes] | ' 
@@ -194,18 +203,17 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Main command dispatcher.
-    dispatch = { 'doidiff'   : lambda src, dst, apd: [apd.append(rslt) for rslt in doiDiff(src, dst, matchOnly=args.matchOnly)], 
-                 'assetdiff' : lambda src, dst, apd: [apd.append(rslt) for rslt in assetDiff(args.params, src, dst, matchOnly=args.matchOnly)],
-                 'doicopy'   : lambda src, dst, apd: doiCopy(args.params, src, dst, apd) ,
-                 'backup'    : lambda src, dst, apd: backup(src, dst, apd) }
+    dispatch = { 'doidiff'   : 
+                   lambda src, dst, apd: [apd.append(rslt) for rslt in doiDiff(src, dst, matchOnly=args.matchOnly)], 
+                 'assetdiff' : 
+                   lambda src, dst, apd: [apd.append(rslt) for rslt in assetDiff(args.params, src, dst, matchOnly=args.matchOnly)],
+                 'doicopy'   : 
+                   lambda src, dst, apd: doiCopy(args.params, src, dst, apd) ,
+                 'backup'    : 
+                   lambda src, dst, apd: backup(src, dst, apd) }
 
     src = Rhino(rhinoServer=args.server, prefix=args.prefix)
     dst = S3(bucketID=args.bucket, prefix=args.prefix)
-    try:
-        apd = print_appender()
-        dispatch[args.command](src, dst, apd)
-    except Exception as e:
-        sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
-        traceback.print_exc(file=sys.stdout)
-        sys.exit(1)
+    apd = print_appender()
+    dispatch[args.command](src, dst, apd)
     sys.exit(0)
