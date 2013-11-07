@@ -89,7 +89,6 @@ public class MemcacheProvider implements Cache {
     throw new UnsupportedOperationException();
   }
 
-  @Required
   public void setMemcacheClient(MemcacheClient client) throws IOException {
     this.client = client;
     client.connect();
