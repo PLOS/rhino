@@ -163,12 +163,22 @@
     <beans:property name="serverFactory" ref="solrServerFactory"/>
   </beans:bean>
 
-  <beans:bean id="taxonomyCache" class="org.ambraproject.service.cache.EternalCache" />
+  <beans:bean id="memcacheClient" class="org.ambraproject.rhombat.cache.MemcacheClient">
+    <beans:constructor-arg index="0" value="${ambra.services.memcached.host}"/>
+    <beans:constructor-arg index="1" value="${ambra.services.memcached.port}"/>
+    <beans:constructor-arg index="2" value="${ambra.services.memcached.appPrefix}"/>
+    <beans:constructor-arg index="3" value="${ambra.services.memcached.defaultTimeout}"/>
+  </beans:bean>
+
+  <beans:bean id="taxonomyCache" class="org.ambraproject.rhino.cache.MemcacheProvider">
+    <beans:property name="memcacheClient" ref="memcacheClient"/>
+  </beans:bean>
 
   <beans:bean id="taxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
     <beans:property name="cache" ref="taxonomyCache" />
     <beans:property name="searchService" ref="searchService" />
     <beans:property name="sessionFactory" ref="hibernateSessionFactory" />
+    <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 
   <mvc:interceptors>

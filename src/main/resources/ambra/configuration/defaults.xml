@@ -248,6 +248,13 @@
         </keywordFields>
       </search>
 
+      <memcached>
+        <host>localhost</host>
+        <port>11211</port>
+        <appPrefix>rhino</appPrefix>
+        <defaultTimeout>3600</defaultTimeout>
+      </memcached>
+
     </services>
     <articleTypeList>
       <articleType>
