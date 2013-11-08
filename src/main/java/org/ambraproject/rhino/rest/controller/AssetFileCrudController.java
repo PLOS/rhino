@@ -137,19 +137,25 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       // retrieve a file's mtime, so we have to get this info from the ambra DB instead.
       Article article = articleCrudService.findArticleById(articleId.get());
       setLastModifiedHeader(response, article.getLastModified());
-      try {
-        provideXmlFor(response, articleId.get());
-        return;
-      } catch (RestClientException e) {
-        /*
-         * If there was no such article, it might still be a regular asset whose type happens to be XML.
-         * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
-         * the same "not found" response anyway.)
-         */
+      if (checkIfModifiedSince(request, article.getLastModified())) {
+        try {
+          provideXmlFor(response, articleId.get());
+          return;
+        } catch (RestClientException e) {
+          /*
+           * If there was no such article, it might still be a regular asset whose type happens to be XML.
+           * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
+           * the same "not found" response anyway.)
+           */
 
-        if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
-          throw e; // Anything other than "not found" is unexpected
+          if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
+            throw e; // Anything other than "not found" is unexpected
+          }
         }
+      } else {
+
+        // !checkIfModifiedSince
+        response.setStatus(HttpStatus.NOT_MODIFIED.value());
       }
     }
 

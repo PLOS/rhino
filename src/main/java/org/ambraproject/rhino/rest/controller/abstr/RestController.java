@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
@@ -321,5 +322,27 @@ public abstract class RestController {
     calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
     calendar.setTime(lastModified);
     response.addHeader("Last-Modified", HttpDateUtil.format(calendar));
+  }
+
+  /**
+   * Checks for the presence of an "If-Modified-Since" header on the request.  If it exists,
+   * returns true iff lastModified is after the date in the header.  That is, returns true
+   * if we should send content, and false if a 304 Not Modified response is appropriate.
+   *
+   * @param request HttpServletRequest
+   * @param lastModified last modified date of the entity being requested
+   * @return true if we should send the entity, false if we should send a 304 response
+   */
+  protected boolean checkIfModifiedSince(HttpServletRequest request, Date lastModified) {
+    String ifModifiedSince = request.getHeader("If-Modified-Since");
+    if (Strings.isNullOrEmpty(ifModifiedSince)) {
+      return true;
+    } else {
+      Calendar headerCal = HttpDateUtil.parse(ifModifiedSince);
+      Calendar lastModifiedCal = Calendar.getInstance();
+      lastModifiedCal.setTimeZone(TimeZone.getTimeZone("GMT"));
+      lastModifiedCal.setTime(lastModified);
+      return lastModifiedCal.after(headerCal);
+    }
   }
 }
