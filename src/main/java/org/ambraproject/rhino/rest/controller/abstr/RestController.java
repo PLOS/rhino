@@ -23,6 +23,7 @@ import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Controller that sends HTTP responses to RESTful requests.
@@ -305,4 +310,16 @@ public abstract class RestController {
     return (parameter != null) && !Boolean.toString(false).equalsIgnoreCase(parameter);
   }
 
+  /**
+   * Sets the Last-Modified header of the response appropriately.
+   *
+   * @param response HttpServletResponse
+   * @param lastModified date to set the header to
+   */
+  protected void setLastModifiedHeader(HttpServletResponse response, Date lastModified) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+    calendar.setTime(lastModified);
+    response.addHeader("Last-Modified", HttpDateUtil.format(calendar));
+  }
 }
