@@ -50,7 +50,7 @@ def assetDiff(doiSuffixes, srcRepo, dstRepo, matchOnly=''):
     for doiSuffix in doiSuffixes:
         srcAssets = srcRepo.assets(doiSuffix)
         dstAssets = dstRepo.assets(doiSuffix)
-        diffs = {}
+        diffs = dict() 
         for adoi,afids in srcAssets.iteritems():
             for afid in afids:
                 k = '{afid}'.format(adoi=adoi, afid=afid)
@@ -104,9 +104,19 @@ def doiDiff(srcRepo, dstRepo, matchOnly=''):
            if v == matchOnly:
                yield k
         else:
+           # matchOnly == ''
            # Output everything 
            yield (k, v)
 
+def deepDiff(srcRepo, dstRepo, appender, matchOnly='+-'):
+    for doi in srcRepo.articles(stripPrefix=True):
+        try:
+            for afid in assetDiff([doi], srcRepo, dstRepo, matchOnly):
+                appender.append(afid)
+        except Exception as e:
+            appender.append(e.message)
+    return
+            
 def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
     """
     Private AFID copy.  
@@ -135,7 +145,7 @@ def adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
     for adoi,afids in srcAssets.iteritems():
         adoiSuffix = adoi.replace(srcRepo.prefix + '/', '')
         # Asset returns a key value pair where 
-        # key = afid  and  value = assetmeta-data
+        # key = afid  and  value = asset meta-data
         for afid,assetMData in srcRepo.asset(adoiSuffix).iteritems():
             afidSuffix = afid.replace(srcRepo.prefix + '/', '')
             # copy to the destination and yield the result
@@ -152,16 +162,19 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
         appender.append('Copying {doi}'.format(doi=doiSuffix))
         # Get the meta-data before making the directory
         # If an exception is thrown we will not have to clean up.
-        articleMData = srcRepo.article(doiSuffix)
-        os.mkdir(doiSuffix)
-        os.chdir('./'+ doiSuffix)
         try:
+            articleMData = srcRepo.article(doiSuffix)
+            os.mkdir(doiSuffix)
+            os.chdir('./'+ doiSuffix)
             for copy_result in adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
                 # Result Tuple (afidSuffix, fname, md5, status)
                 appender.append(copy_result)
+        except:
+            appender.append('Copy Failed {doi}'.format(doi=doiSuffix))
         finally:
             os.chdir('../')
-            os.removedirs(doiSuffix) 
+            if os.path.exists(doiSuffix):
+                os.removedirs(doiSuffix) 
     return  
     
 def backup(srcRepo, dstRepo, appender):
@@ -194,21 +207,35 @@ if __name__ == "__main__":
     parser.add_argument('--bucket', default='us-west-1.pub.plos.org', 
                          help='specifiy the S3 bucket. Default: %(default)s')
     parser.add_argument('--prefix', default='10.1371', help='specify a DOI prefix.  Default: %(default)s')
-    parser.add_argument('--matchOnly', metavar='+-', default='+-', 
+    parser.add_argument('--matchOnly', metavar='"+-"', default='+-', 
                          help='source and destination matching criteria. [-+, +-, ++, ""]')
+    parser.add_argument('--file', default=None, help='File name of alternate input params list.')
     parser.add_argument('command', help='doidiff [no params] | '
+                                        'doicopy [doi suffixes] | '
                                         'assetdiff [doi suffixes] | ' 
                                         'backup  [no params]')
     parser.add_argument('params', nargs='*', help="command dependent parameters")
     args = parser.parse_args()
+    params = args.params
+
+    # if the 
+    if args.file:
+        pf = open(args.file, 'r')
+        params = []
+        for p in pf:
+            print(p)
+            params.append(p.strip())
+        pf.close()
 
     # Main command dispatcher.
     dispatch = { 'doidiff'   : 
-                   lambda src, dst, apd: [apd.append(rslt) for rslt in doiDiff(src, dst, matchOnly=args.matchOnly)], 
+                   lambda src, dst, apd: [apd.append(rslt) for rslt in doiDiff(src, dst, matchOnly=args.matchOnly)],
+                 'deepdiff' :
+                   lambda src, dst, apd: deepDiff(src, dst, apd, matchOnly=args.matchOnly),  
                  'assetdiff' : 
-                   lambda src, dst, apd: [apd.append(rslt) for rslt in assetDiff(args.params, src, dst, matchOnly=args.matchOnly)],
+                   lambda src, dst, apd: [apd.append(rslt) for rslt in assetDiff(params, src, dst, matchOnly=args.matchOnly)],
                  'doicopy'   : 
-                   lambda src, dst, apd: doiCopy(args.params, src, dst, apd) ,
+                   lambda src, dst, apd: doiCopy(params, src, dst, apd) ,
                  'backup'    : 
                    lambda src, dst, apd: backup(src, dst, apd) }
 
