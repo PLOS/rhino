@@ -18,6 +18,7 @@ import org.ambraproject.rhombat.cache.MemcacheClient;
 import org.ambraproject.service.cache.Cache;
 import org.ambraproject.service.cache.NullCache;
 import org.apache.commons.configuration.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ import java.io.IOException;
  */
 public final class CacheFactory {
 
+  @Autowired
   private Configuration configuration;
 
   private static final CacheFactory factory = new CacheFactory();
@@ -50,10 +52,5 @@ public final class CacheFactory {
       result.setMemcacheClient(client);
       return result;
     }
-  }
-
-  @Required
-  public void setConfiguration(Configuration configuration) {
-    this.configuration = configuration;
   }
 }
