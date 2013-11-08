@@ -163,9 +163,7 @@
     <beans:property name="serverFactory" ref="solrServerFactory"/>
   </beans:bean>
 
-  <beans:bean id="cacheFactory" class="org.ambraproject.rhino.cache.CacheFactory" factory-method="getInstance">
-    <beans:property name="configuration" ref="ambraConfiguration"/>
-  </beans:bean>
+  <beans:bean id="cacheFactory" class="org.ambraproject.rhino.cache.CacheFactory" factory-method="getInstance" />
 
   <beans:bean id="rhinoCache" factory-bean="cacheFactory" factory-method="getCache"/>
 
