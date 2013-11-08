@@ -15,12 +15,17 @@ package org.ambraproject.rhino.cache;
 
 import org.ambraproject.rhombat.cache.MemcacheClient;
 import org.ambraproject.service.cache.Cache;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Implementation of {@link Cache} that uses memcached as its store.
+ * <p/>
+ * Note that one limitation of this implementation is that values must implement {@link Serializable}.
+ * I didn't want to add this constraint to {@link Cache}, since it already has implementations that
+ * work with non-Serializable objects.  If non-Serializable objects are added to this cache, the
+ * operation will fail at runtime.
  */
 public class MemcacheProvider implements Cache {
 
@@ -57,20 +62,29 @@ public class MemcacheProvider implements Cache {
    */
   @Override
   public <T, E extends Exception> T get(Object key, Lookup<T, E> lookup) throws E {
-    T result = client.get(key.toString());
-    if (result == null) {
-      result = lookup.lookup();
-      client.put(key.toString(), result);
+    Serializable serializableResult = client.get(key.toString());
+    if (serializableResult == null) {
+      T result = lookup.lookup();
+      client.put(key.toString(), (Serializable) result);
+      return result;
+    } else {
+      return (T) serializableResult;
     }
-    return result;
   }
 
   /**
-   * {@inheritDoc}
+   * Adds a key/value pair to the cache, overwriting it if one already exists.
+   *
+   * @param key cache key
+   * @param val Item wrapping the value
+   * @throws IllegalArgumentException if the wrapped value does not implement {@link Serializable}
    */
   @Override
   public void put(Object key, Item val) {
-    client.put(key.toString(), val.getValue());
+    if (!(val.getValue() instanceof Serializable)) {
+      throw new IllegalArgumentException("Values inserted must implement java.io.Serializable");
+    }
+    client.put(key.toString(), (Serializable) val.getValue());
   }
 
   /**
