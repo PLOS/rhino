@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+	<front>
+		<journal-meta>
+    <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+    <journal-id journal-id-type="publisher-id">plos</journal-id>
+    <journal-id journal-id-type="pmc">plosone</journal-id>
+    <journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group>
+    <issn pub-type="epub">1932-6203</issn>
+    <publisher><publisher-name>Public Library of Science</publisher-name>
+    <publisher-loc>San Francisco, USA</publisher-loc></publisher>
+    </journal-meta><article-meta>
+			<article-id pub-id-type="publisher-id">PONE-D-13-16110</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0077317</article-id><article-categories><subj-group subj-group-type="heading">
+    <subject>Research Article</subject></subj-group></article-categories><title-group>
+				<article-title>Effect of Statin Use on Outcomes of Adults with Candidemia</article-title>
+			<alt-title alt-title-type="running-head">Candidemia in Statin Users</alt-title>
+      </title-group>
+			<contrib-group>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Cuervo</surname>
+						<given-names>Guillermo</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Garcia-Vidal</surname>
+						<given-names>Carolina</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+					<xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Nucci</surname>
+						<given-names>Marcio</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Puchades</surname>
+						<given-names>Francesc</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff3"><sup>3</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Fernández-Ruiz</surname>
+						<given-names>Mario</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff4"><sup>4</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Mykietiuk</surname>
+						<given-names>Analía</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff5"><sup>5</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Manzur</surname>
+						<given-names>Adriana</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff6"><sup>6</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Gudiol</surname>
+						<given-names>Carlota</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Pemán</surname>
+						<given-names>Javier</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff3"><sup>3</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Viasus</surname>
+						<given-names>Diego</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Ayats</surname>
+						<given-names>Josefina</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+				<contrib xlink:type="simple" contrib-type="author">
+					<name name-style="western">
+						<surname>Carratalà</surname>
+						<given-names>Jordi</given-names>
+					</name>
+					<xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+				</contrib>
+			</contrib-group>
+			<aff id="aff1"><label>1</label> <addr-line>Hospital Universitari de Bellvitge, IDIBELL (Institut D’investigació Biomèdica de Bellvitge), Universitat de Barcelona, Barcelona, Spain</addr-line></aff>
+			<aff id="aff2"><label>2</label> <addr-line>University Hospital, Universidade Federal do Rio de Janeiro, Rio de Janeiro, Brazil</addr-line></aff>
+			<aff id="aff3"><label>3</label> <addr-line>Hospital Universitari i Politecnic “La Fe”, Valencia, Spain</addr-line></aff>
+			<aff id="aff4"><label>4</label> <addr-line>Hospital Universitario “12 de Octubre”, Instituto de Investigación Hospital 12 de Octubre (i+12), Madrid, Spain</addr-line></aff>
+			<aff id="aff5"><label>5</label> <addr-line>Hospital Interzonal de Agudos “Dr. Rodolfo Rossi”, La Plata, Argentina</addr-line></aff>
+			<aff id="aff6"><label>6</label> <addr-line>Hospital “Dr. Guillermo Rawson”, San Juan, Argentina</addr-line></aff>
+			<contrib-group><contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Andes</surname>
+            <given-names>David R.</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+        </contrib-group><aff id="edit1"><addr-line>University of Wisconsin Medical School, United States of America</addr-line></aff><author-notes>
+				<corresp id="cor1">* E-mail: <email xlink:type="simple">carolgv75@hotmail.com</email></corresp>
+			<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn><fn fn-type="con"><p>Conceived and designed the experiments: GC CGV MN FP MFR A. Mykietiuk A. Manzur CG JP DV JA JC. Performed the experiments: GC CGV MN FP MFR A. Mykietiuk A. Manzur) CG JP DV JA JC. Analyzed the data: GC CGV. Contributed reagents/materials/analysis tools: GC CGV MN FP MFR A. Mykietiuk A. Manzur CG JP DV JA JC. Wrote the manuscript: GC CGV. </p></fn></author-notes>
+			<pub-date pub-type="collection"><year>2013</year></pub-date><pub-date pub-type="epub">
+        <day>14</day>
+        <month>10</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>8</volume><issue>10</issue><elocation-id>e77317</elocation-id><history><date date-type="received">
+          <day>21</day>
+          <month>4</month>
+          <year>2013</year>
+        </date>
+        <date date-type="accepted">
+          <day>9</day>
+          <month>9</month>
+          <year>2013</year>
+        </date>
+      </history><permissions>
+    <copyright-year>2013</copyright-year><copyright-holder>Cuervo et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license>
+    </permissions><abstract>
+				<sec sec-type="headed">
+					<title>Background</title><p>Statins have immunomodulatory properties and hinder <italic>Candida</italic> growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.</p>
+					
+				</sec>
+				<sec sec-type="headed">
+					<title>Methods and Findings</title><p>Multicenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p=.36). <italic>Candida albicans</italic> was the most commonly isolated species, followed by <italic>C. parapsilosis</italic>, <italic>C. tropicalis</italic>, <italic>C. glabrata</italic>, and <italic>C. krusei</italic>. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p=.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03–1.14; p=.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04–0.26; p=&lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03–0.93; p=.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p=0.77 and 40% vs. 44%; p=.66).</p>
+					
+				</sec>
+				<sec sec-type="headed">
+					<title>Conclusions</title><p>The use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.</p>
+				</sec>
+			</abstract>
+		<funding-group><funding-statement>This study was supported by research grants from the Ministerio de Sanidad y Consumo, Instituto de Salud Carlos III [FIS 10/01318] and Ministerio de Ciencia e Innovación, Instituto de Salud Carlos III – co-financed by the European Development Regional Fund “A way to achieve Europe” ERDF, Spanish Network for the Research in Infectious Diseases [REIPI RD06/0008]. Dr. Garcia-Vidal is the recipient of a Juan de la Cierva research grant from the Instituto de Salud Carlos III, Madrid, Spain. Dr. Viasus is the recipient of a research grant from REIPI. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group></article-meta>
+	</front>
+	<body>
+		<sec id="s1" sec-type="introduction">
+			<title>Introduction</title>
+			<p>Candidemia is a common cause of nosocomial bloodstream infections worldwide [<xref ref-type="bibr" rid="B1">1</xref>,<xref ref-type="bibr" rid="B2">2</xref>] and is associated with significant morbidity, prolonged hospital stay, high mortality and increased health care costs [<xref ref-type="bibr" rid="B3">3</xref>]. Importantly, some investigators report that overall mortality has not decreased over the past decades [<xref ref-type="bibr" rid="B1">1</xref>-<xref ref-type="bibr" rid="B4">4</xref>].</p>
+			<p>Hydroxymethylglutaryl-CoA reductase inhibitors, also known as statins, are increasingly used in clinical practice to treat dyslipidemia. Statin therapy has been shown to decrease cardiovascular events and mortality from coronary artery disease [<xref ref-type="bibr" rid="B5">5</xref>]. Interestingly, statins exhibit potent anti-inflammatory, anticoagulant, and anti-oxidative effects called “pleiotropic properties” [<xref ref-type="bibr" rid="B6">6</xref>]. Due to these properties, it has been suggested that these drugs may have beneficial effects during sepsis. Experimental and observational studies [<xref ref-type="bibr" rid="B7">7</xref>,<xref ref-type="bibr" rid="B8">8</xref>] have shown that statin therapy reduces inflammatory cytokines [<xref ref-type="bibr" rid="B9">9</xref>]. There is an increasing interest in determining whether statins improve prognosis of patients with severe infections. The results of certain observational studies suggest that statins may reduce mortality in patients suffering from sepsis [<xref ref-type="bibr" rid="B8">8</xref>,<xref ref-type="bibr" rid="B10">10</xref>,<xref ref-type="bibr" rid="B11">11</xref>], bacteremia [<xref ref-type="bibr" rid="B12">12</xref>], community-acquired bacterial pneumonia [<xref ref-type="bibr" rid="B7">7</xref>,<xref ref-type="bibr" rid="B13">13</xref>,<xref ref-type="bibr" rid="B14">14</xref>] and even influenza [<xref ref-type="bibr" rid="B15">15</xref>,<xref ref-type="bibr" rid="B16">16</xref>]. On the other hand, in vitro studies have found that statins have an intrinsic antifungal effect, hindering fungal growth [<xref ref-type="bibr" rid="B17">17</xref>]. </p>
+			<p>However, information evaluating the effects of statin therapy on clinical outcomes of patients with candidemia is scarce. The purpose of this study is to assess whether prior statin use is associated with a decreased risk of mortality in a large multicenter cohort of adult patients with candidemia.</p>
+		</sec>
+		<sec id="s2" sec-type="methods">
+			<title>Methods</title>
+			<sec id="s2.1">
+				<title>Setting, patients, and study design</title>
+				<p>We performed a retrospective multicenter study of all episodes of candidemia occurring in hospitalized adult patients between January 2005 and December 2011 at six tertiary teaching institutions in three different countries: three in Spain, two in Argentina and one in Brazil. Only the first episode of candidemia for each patient was analyzed. The following information was carefully collected from medical records: demographic characteristics, comorbidities, statin use and other concurrent cardiovascular medications (aspirin, beta blockers and angiotensin II-converting enzyme inhibitors), clinical features, sources of candidemia, causative species, antifungal therapy and outcomes. Episodes of candidemia occurring in statin users were compared with those occurring in statin non-users. To protect personal privacy, identifying information of each patient in the electronic database was encrypted. Informed consent was waived by the Clinical Research Ethics Committee because no intervention was involved and no patient identifying information was included.</p>
+			</sec>
+			<sec id="s2.2">
+				<title>Definitions</title>
+				<p>Candidemia and catheter-related candidemia were defined on the basis of the guidelines of the Infectious Diseases Society of America [<xref ref-type="bibr" rid="B1">1</xref>]. Secondary candidemia was defined as a documented concurrent infection caused by the same <italic>Candida</italic> species at a site other than the catheter [<xref ref-type="bibr" rid="B18">18</xref>]. An episode of candidemia was considered to be nosocomially acquired, community-acquired or healthcare-associated as described elsewhere [<xref ref-type="bibr" rid="B19">19</xref>]. Statin use was considered to be present in those patients who were taking a statin (simvastatin, atorvastatin, lovastatin, pravastatin or rosuvastatin) within the 7 days prior to the candidemia episode. Seven days period was used due to pleitropic effects of statins may persist despite temporary cessation of administration.  The use of other cardiovascular drugs like aspirin, beta-blockers and angiotensin II-converting enzyme (ACE) inhibitors was considered to be present in patients who were taking these drugs within the 30 days prior to the candidemia episode. The diagnosis of septic shock was based on a systolic blood pressure of less than 90 mm Hg and peripheral hypoperfusion with the need for vasopressors [<xref ref-type="bibr" rid="B20">20</xref>]. Neutropenia was considered when the granulocyte count was &lt;500/ mm<sup>3</sup>. Empirical antifungal therapy was considered to be appropriate when the <italic>Candida</italic> isolates showed in vitro susceptibility to the antifungal drug administered. When antifungal susceptibility testing was not available, we considered fluconazole, amphotericin B or an equinocandin as appropriate empirical antifungal treatment for <italic>Candida albicans</italic>, <italic>Candida tropicalis</italic>, <italic>Candida parapsilosis</italic> and <italic>Candida lusitaniae</italic>. For <italic>Candida glabrata</italic> and <italic>Candida krusei</italic>, empirical antifungal treatment was considered to be appropriate when an equinocandin or amphotericin B was administered. The early, 14 days and overall case-fatality rates were defined as death from any cause within five, fourteen and 30 days after the onset of candidemia respectively.</p>
+			</sec>
+			<sec id="s2.3">
+				<title>Microbiological studies</title>
+				<p>Two sets of two blood samples were drawn from patients with suspected bloodstream infection. Blood samples were processed by the BACTEC 9240 system (Becton Dickinson Microbiology Systems, Franklin Lakes, NJ, USA) with an incubation period of five days. If yeast cells were observed after microscopic examination of Gram stain, blood bottles were subcultured onto Sabouraud agar plates (BD BBL StrackerTM PlatesTM, Heidelberg, Germany) and chromogenic media (CAN2 ChromID™Candida Agar, BioMerieux, Paris, France).  Yeast isolates were identified by conventional methods. In vitro antifungal activity was studied by a commercial microdilution method (YeastOne®Sensitre®, TREK Diagnostic Systems Ltd, England) or by E-test (BioMerieux SA, Paris, France), in accordance with the manufacturer’s instructions. Antifungal susceptibility of isolates was classified according to the Clinical and Laboratory Standards Institute M27-A3 document [<xref ref-type="bibr" rid="B21">21</xref>].</p>
+			</sec>
+			<sec id="s2.4">
+				<title>Statistical analysis</title>
+				<p>The results were analyzed using SPSS version 15.0 (SPSS Inc., Chicago, IL, USA). To detect significant differences between groups, we used the Chi-square test or Fisher’s exact test for categorical variables and the Student t-test or Mann-Whitney test for continuous variables, as appropriate. We performed a multivariate logistic regression analysis of factors potentially associated with mortality included all variables that were significant in the univariate analysis. Due to the baseline imbalances between patients, a propensity score for receiving statin therapy was added to the model. The propensity score (PS), probability of receiving statins, was calculated using multivariate logistic regression model and included the following variables: age, Charlson index, place of acquisition (inpatient or outpatient, with the first as a reference), neutropenia and urinary catheter. The model showed a P value of 0,646 for the Hosmer-Lemeshow test and an area under curve of 0.73, showing good predictive ability. The relative risks were expressed as adjusted odds ratios (AOR) and 95% confidence intervals. Goodness-of-fit of the final model was assessed by the Hosmer-Lemeshow test. Statistical significance was established at α=0.05. All reported p-values are two-tailed. </p>
+			</sec>
+		</sec>
+		<sec id="s3" sec-type="results">
+			<title>Results</title>
+			<sec id="s3.1">
+				<title>Patient characteristics</title><p>Over the study period we documented 326 candidemias, 44 (13.5%) occurring in statin users and 282 (86.5%) in statin non-users. The epidemiological and clinical characteristics of the patients are outlined in <xref ref-type="table" rid="pone-0077317-t001">Table 1</xref>. Comparing with statin non-users, statin users were older and more frequently had chronic renal disease, diabetes mellitus and chronic heart disease. The presence of a urinary catheter was also more frequent in this group. Conversely, statin users had less chronic liver disease and neutropenia. The median value of APACHE II at candidemia diagnosis was similar in the two groups. </p>
+				<table-wrap id="pone-0077317-t001" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0077317.t001</object-id><label>Table 1</label>
+					<caption>
+						<title>Clinical characteristics of patients by statin group.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"/>
+								<th rowspan="1" colspan="1"><bold>Statin users (n=44) No. (%)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Statin non-users (n=282) No. (%)</bold></th>
+								<th rowspan="1" colspan="1"><bold><italic>p</italic>-value</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Demographics</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Male sex</bold></td>
+								<td rowspan="1" colspan="1">24 (54.5)</td>
+								<td rowspan="1" colspan="1">165 (58.5)</td>
+								<td rowspan="1" colspan="1">.620</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Age, median (IQR) years</bold></td>
+								<td rowspan="1" colspan="1">64 (56-74)</td>
+								<td rowspan="1" colspan="1">57 (43-70)</td>
+								<td rowspan="1" colspan="1"><bold>.006</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Comorbid conditions</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chronic renal disease</bold></td>
+								<td rowspan="1" colspan="1">18 (40.9)</td>
+								<td rowspan="1" colspan="1">63 (22.3)</td>
+								<td rowspan="1" colspan="1"><bold>.008</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Dialysis</bold></td>
+								<td rowspan="1" colspan="1">6 (13.6)</td>
+								<td rowspan="1" colspan="1">17 (6)</td>
+								<td rowspan="1" colspan="1">.067</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Diabetes mellitus</bold></td>
+								<td rowspan="1" colspan="1">22 (50)</td>
+								<td rowspan="1" colspan="1">67 (23.8)</td>
+								<td rowspan="1" colspan="1"><bold>&lt;.001</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>COPD</bold></td>
+								<td rowspan="1" colspan="1">10 (22.7)</td>
+								<td rowspan="1" colspan="1">57 (20.2)</td>
+								<td rowspan="1" colspan="1">.710</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chronic heart disease</bold></td>
+								<td rowspan="1" colspan="1">25 (56.8)</td>
+								<td rowspan="1" colspan="1">61 (21.6)</td>
+								<td rowspan="1" colspan="1">&lt;.001</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Cerebrovascular disease</bold></td>
+								<td rowspan="1" colspan="1">8 (18.2)</td>
+								<td rowspan="1" colspan="1">40 (14.2)</td>
+								<td rowspan="1" colspan="1">.505</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Liver disease</bold></td>
+								<td rowspan="1" colspan="1">2 (4.5)</td>
+								<td rowspan="1" colspan="1">52 (18.4)</td>
+								<td rowspan="1" colspan="1"><bold>.021</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Malignancy</bold></td>
+								<td rowspan="1" colspan="1">16 (36.4)</td>
+								<td rowspan="1" colspan="1">111 (39.4)</td>
+								<td rowspan="1" colspan="1">.692</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Stem cell transplantation</bold></td>
+								<td rowspan="1" colspan="1">2 (4.5)</td>
+								<td rowspan="1" colspan="1">20 (7.1)</td>
+								<td rowspan="1" colspan="1">.394</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Graft versus Host disease</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">8 (2.8)</td>
+								<td rowspan="1" colspan="1">.273</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Solid organ transplantation</bold></td>
+								<td rowspan="1" colspan="1">6 (13.6)</td>
+								<td rowspan="1" colspan="1">26 (9.2)</td>
+								<td rowspan="1" colspan="1">.364</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>HIV infection</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">14 (5)</td>
+								<td rowspan="1" colspan="1">.131</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Risk factors</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>ICU stay</bold></td>
+								<td rowspan="1" colspan="1">20 (45.5)</td>
+								<td rowspan="1" colspan="1">132 (46.8)</td>
+								<td rowspan="1" colspan="1">.802</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Mechanical ventilation</bold></td>
+								<td rowspan="1" colspan="1">18 (40.9)</td>
+								<td rowspan="1" colspan="1">103 (36.5)</td>
+								<td rowspan="1" colspan="1">.636</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Total parenteral nutrition</bold></td>
+								<td rowspan="1" colspan="1">13 (29.5)</td>
+								<td rowspan="1" colspan="1">88 (31.2)</td>
+								<td rowspan="1" colspan="1">.768</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Vasopressor therapy</bold></td>
+								<td rowspan="1" colspan="1">10 (22.7)</td>
+								<td rowspan="1" colspan="1">78 (27.7)</td>
+								<td rowspan="1" colspan="1">.430</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Previous surgery</bold></td>
+								<td rowspan="1" colspan="1">23 (52.3)</td>
+								<td rowspan="1" colspan="1">112 (39.7)</td>
+								<td rowspan="1" colspan="1">.120</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Catheter placement (&gt;48h)</bold></td>
+								<td rowspan="1" colspan="1">41 (93.2)</td>
+								<td rowspan="1" colspan="1">248 (87.9)</td>
+								<td rowspan="1" colspan="1">.360</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Urinary catheter</bold></td>
+								<td rowspan="1" colspan="1">32 (72.7)</td>
+								<td rowspan="1" colspan="1">130 (46.1)</td>
+								<td rowspan="1" colspan="1"><bold>.002</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Neutropenia</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">42 (14.9)</td>
+								<td rowspan="1" colspan="1"><bold>.006</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Chemotherapy</bold></td>
+								<td rowspan="1" colspan="1">4 (9.1)</td>
+								<td rowspan="1" colspan="1">58 (20.6)</td>
+								<td rowspan="1" colspan="1">.070</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Radiotherapy</bold></td>
+								<td rowspan="1" colspan="1">1 (2.3)</td>
+								<td rowspan="1" colspan="1">9 (3.2)</td>
+								<td rowspan="1" colspan="1">.735</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Corticosteroid therapy</bold></td>
+								<td rowspan="1" colspan="1">15 (34.1)</td>
+								<td rowspan="1" colspan="1">133 (47.2)</td>
+								<td rowspan="1" colspan="1">.122</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Prior antibiotic therapy</bold></td>
+								<td rowspan="1" colspan="1">41 (93.2)</td>
+								<td rowspan="1" colspan="1">256 (90.8)</td>
+								<td rowspan="1" colspan="1">.801</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Immunosuppressive therapy</bold></td>
+								<td rowspan="1" colspan="1">10 (22.7)</td>
+								<td rowspan="1" colspan="1">65 (23)</td>
+								<td rowspan="1" colspan="1">.953</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Antifungal prophylaxis</bold></td>
+								<td rowspan="1" colspan="1">2 (4.5)</td>
+								<td rowspan="1" colspan="1">35 (12.4)</td>
+								<td rowspan="1" colspan="1">.120</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Clinical characteristics (at candidemia diagnosis)</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Fever</bold></td>
+								<td rowspan="1" colspan="1">38 (86.4)</td>
+								<td rowspan="1" colspan="1">213 (75.5)</td>
+								<td rowspan="1" colspan="1">.169</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Hypotension</bold></td>
+								<td rowspan="1" colspan="1">26 (59.1)</td>
+								<td rowspan="1" colspan="1">125 (44.3)</td>
+								<td rowspan="1" colspan="1">.293</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Vasopressor therapy requirement</bold></td>
+								<td rowspan="1" colspan="1">16 (36.4)</td>
+								<td rowspan="1" colspan="1">83 (29.4)</td>
+								<td rowspan="1" colspan="1">.402</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Acute renal failure</bold></td>
+								<td rowspan="1" colspan="1">18 (40.9)</td>
+								<td rowspan="1" colspan="1">81 (28.7)</td>
+								<td rowspan="1" colspan="1">.127</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Confusion</bold></td>
+								<td rowspan="1" colspan="1">20 (45.5)</td>
+								<td rowspan="1" colspan="1">98 (34.8)</td>
+								<td rowspan="1" colspan="1">.217</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>APACHE II, median (IQR)</bold></td>
+								<td rowspan="1" colspan="1">18 (11-23)</td>
+								<td rowspan="1" colspan="1">16 (11-23)</td>
+								<td rowspan="1" colspan="1">.365</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+			</sec>
+			<sec id="s3.2">
+				<title><italic>Candida</italic> species</title>
+				<p>Among the species, the most frequent was <italic>Candida albicans</italic> followed by <italic>C. parapsilosis, C. tropicalis, C. glabrata</italic>, and <italic>C. krusei</italic> without significant differences between statin users and statin non-users. The place of acquisition, the likely source of infection and the species isolated are detailed in <xref ref-type="table" rid="pone-0077317-t002">Table 2</xref>.</p>
+				<table-wrap id="pone-0077317-t002" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0077317.t002</object-id><label>Table 2</label>
+					<caption>
+						<title>Sources of candidemia and <italic>Candida</italic> species according to statin groups.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"/>
+								<th rowspan="1" colspan="1"><bold>Statin users (n=44) No. (%)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Statin non-users (n=282) No. (%)</bold></th>
+								<th rowspan="1" colspan="1"><bold><italic>p</italic>-value</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Site of acquisition <xref ref-type="table-fn" rid="ngtab2.1">*</xref></bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">.018</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Nosocomially-acquired</bold></td>
+								<td rowspan="1" colspan="1">37 (84.1)</td>
+								<td rowspan="1" colspan="1">242 (85.8)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Community-acquired</bold></td>
+								<td rowspan="1" colspan="1">7 (15.9)</td>
+								<td rowspan="1" colspan="1">15 (5.3)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Healthcare-associated</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">23 (8.2)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Source of infection</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">.615</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Urinary tract</bold> </td>
+								<td rowspan="1" colspan="1">8 (18.2)</td>
+								<td rowspan="1" colspan="1">29 (10.3)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Digestive tract and abdomen</bold></td>
+								<td rowspan="1" colspan="1">4 (9.1)</td>
+								<td rowspan="1" colspan="1">44 (15.6)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Catheter related infection</bold></td>
+								<td rowspan="1" colspan="1">9 (20.5)</td>
+								<td rowspan="1" colspan="1">64 (22.7)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Skin and soft tissue</bold></td>
+								<td rowspan="1" colspan="1">1 (2.3)</td>
+								<td rowspan="1" colspan="1">3 (1.1)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Surgical site infection</bold></td>
+								<td rowspan="1" colspan="1">1 (2.3)</td>
+								<td rowspan="1" colspan="1">3 (1.1)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Endocarditis</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">3 (1.1)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Unknown</bold> </td>
+								<td rowspan="1" colspan="1">21 (47.7)</td>
+								<td rowspan="1" colspan="1">134 (47.5)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Others</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">2 (0.7)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>Candida</italic> species</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>C. albicans</italic></bold></td>
+								<td rowspan="1" colspan="1">21 (47.7)</td>
+								<td rowspan="1" colspan="1">121 (42.9)</td>
+								<td rowspan="1" colspan="1">.549</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>C. parapsilosis</italic></bold></td>
+								<td rowspan="1" colspan="1">13 (29.5)</td>
+								<td rowspan="1" colspan="1">53 (18.8)</td>
+								<td rowspan="1" colspan="1">.099</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>C. glabrata</italic></bold></td>
+								<td rowspan="1" colspan="1">3 (6.8)</td>
+								<td rowspan="1" colspan="1">32 (11.3)</td>
+								<td rowspan="1" colspan="1">.367</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>C. tropicalis</italic></bold></td>
+								<td rowspan="1" colspan="1">6 (13.6)</td>
+								<td rowspan="1" colspan="1">41 (14.5)</td>
+								<td rowspan="1" colspan="1">.874</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>C. krusei</italic></bold></td>
+								<td rowspan="1" colspan="1">1 (2.3)</td>
+								<td rowspan="1" colspan="1">11 (3.9)</td>
+								<td rowspan="1" colspan="1">.594</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold><italic>C. lusitaniae</italic></bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">2 (0.7)</td>
+								<td rowspan="1" colspan="1">.575</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Others</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">22 (7.8)</td>
+								<td rowspan="1" colspan="1">.055</td>
+							</tr>
+						</tbody>
+					</table>
+					<table-wrap-foot>
+						<fn id="ngtab2.1">
+							<label>*</label>
+							
+							<p>The site of acquisition was not known in 2 patients.</p>
+						</fn>
+					</table-wrap-foot>
+				</table-wrap>
+			</sec>
+			<sec id="s3.3">
+				<title>Treatment and outcomes</title>
+				<p>The treatment and clinical outcomes are detailed in <xref ref-type="table" rid="pone-0077317-t003">Table 3</xref>. More than 70% of patients received an appropriate empirical antifungal treatment without significant differences between groups. The most frequently used drug was fluconazole, followed by anidulafungin. No significant differences were found in catheter removal between groups. No differences were observed in persistent candidemia, instability after 48 hours of treatment or septic metastases. The early case fatality rate was lower among statin users (n=2: 4.5% vs. n=48: 17%; p=.031). After adjusting for Propensity Score, the statins also decrease the probability of early case-fatality rate significantly (p = 0.014).  This effect was not observed with any of the other cardiovascular drugs analyzed, including aspirin (odds ratio [OR], 1.5; 95% confidence interval [CI], 0.65–3.5; p=0.34), beta blockers (OR, 0.69; 95% CI, 0.23–2.0; p=0.49) or with ACE inhibitors (OR, 0.69; 95% CI, 0.3–1.5; p=0.36). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p=0.77 and 40% vs. 44%; p=.66, respectively). The results were equivalent when neutropenic patients were excluded. </p>
+				<table-wrap id="pone-0077317-t003" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0077317.t003</object-id><label>Table 3</label>
+					<caption>
+						<title>Treatments and clinical outcomes of patients by statin groups.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"/>
+								<th rowspan="1" colspan="1"><bold>Statin users (n=44) No. (%)</bold></th>
+								<th rowspan="1" colspan="1"><bold>Statin non-users (n=282) No. (%)</bold></th>
+								<th rowspan="1" colspan="1"><bold><italic>p</italic>-value</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Appropriate empirical antifungal treatment</bold></td>
+								<td rowspan="1" colspan="1">34 (77.3)</td>
+								<td rowspan="1" colspan="1">203 (71.9)</td>
+								<td rowspan="1" colspan="1">.464</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Antifungal drug selected</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1">.864</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Fluconazole</bold></td>
+								<td rowspan="1" colspan="1">21 (61.7)</td>
+								<td rowspan="1" colspan="1">117 (57.6)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Itraconazole</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">1 (0.5)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Voriconazole</bold></td>
+								<td rowspan="1" colspan="1">1 (2.9)</td>
+								<td rowspan="1" colspan="1">7 (3.4)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Anidulafungin</bold></td>
+								<td rowspan="1" colspan="1">4 (11)</td>
+								<td rowspan="1" colspan="1">22 (10.8)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Caspofungin</bold></td>
+								<td rowspan="1" colspan="1">5 (15)</td>
+								<td rowspan="1" colspan="1">18 (8.8)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Micafungin</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">10 (4.9)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Amphotericin B deoxycholate</bold></td>
+								<td rowspan="1" colspan="1">3 (8.8)</td>
+								<td rowspan="1" colspan="1">20 (9.8)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Liposomal Amphotericin B</bold></td>
+								<td rowspan="1" colspan="1">0 (0)</td>
+								<td rowspan="1" colspan="1">8 (3.9)</td>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Catheter removal</bold> </td>
+								<td rowspan="1" colspan="1">33 (75)</td>
+								<td rowspan="1" colspan="1">157 (55.7)</td>
+								<td rowspan="1" colspan="1">.138</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Outcomes</bold></td>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+								<td rowspan="1" colspan="1"/>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>ICU admission</bold></td>
+								<td rowspan="1" colspan="1">13 (29.5)</td>
+								<td rowspan="1" colspan="1">88 (31.2)</td>
+								<td rowspan="1" colspan="1">.734</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Mechanical ventilation</bold></td>
+								<td rowspan="1" colspan="1">12 (27.3)</td>
+								<td rowspan="1" colspan="1">85 (30.1)</td>
+								<td rowspan="1" colspan="1">.596</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Instability (at 48h)</bold></td>
+								<td rowspan="1" colspan="1">15 (34.1)</td>
+								<td rowspan="1" colspan="1">103 (36.5)</td>
+								<td rowspan="1" colspan="1">.840</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Persistent candidemia</bold></td>
+								<td rowspan="1" colspan="1">5 (11.4)</td>
+								<td rowspan="1" colspan="1">41 (14.5)</td>
+								<td rowspan="1" colspan="1">.645</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Septic metastases</bold></td>
+								<td rowspan="1" colspan="1">2 (4.5)</td>
+								<td rowspan="1" colspan="1">13 (4.6)</td>
+								<td rowspan="1" colspan="1">.529</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Early case-fatality rate (5d</bold>) </td>
+								<td rowspan="1" colspan="1">2 (4.5)</td>
+								<td rowspan="1" colspan="1">48 (17)</td>
+								<td rowspan="1" colspan="1"><bold>.031</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Fourteen days case-fatality rate (14d</bold>)</td>
+								<td rowspan="1" colspan="1">12 (27)</td>
+								<td rowspan="1" colspan="1">83 (29)</td>
+								<td rowspan="1" colspan="1">.77</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Overall case-fatality rate (30d)</bold></td>
+								<td rowspan="1" colspan="1">18 (40.1)</td>
+								<td rowspan="1" colspan="1">124 (44)</td>
+								<td rowspan="1" colspan="1">.663</td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+			</sec>
+			<sec id="s3.4">
+				<title>Independent factors associated with early case-fatality rate</title>
+				<p>Multivariate analysis adjusted for risk factors associated with mortality and including the propensity score is described in <xref ref-type="table" rid="pone-0077317-t004">Table 4</xref>. The APACHE II score was an independent factors related to mortality (AOR, 1.08; 95% CI, 1.03-1.14; p=.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04-0.26; p=&lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03–0.93; p=.041).</p>
+				<table-wrap id="pone-0077317-t004" position="float">
+					<object-id pub-id-type="doi">10.1371/journal.pone.0077317.t004</object-id><label>Table 4</label>
+					<caption>
+						<title>Independent factors associated with early case-fatality rate: multivariate analysis.</title>
+					</caption>
+					<table>
+						<colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup>
+						<thead>
+							<tr>
+								<th rowspan="1" colspan="1"><bold>Characteristic</bold></th>
+								<th rowspan="1" colspan="1"><bold>Adjusted odds ratio (AOR)</bold></th>
+								<th rowspan="1" colspan="1"><bold>95% confidence interval</bold></th>
+								<th rowspan="1" colspan="1"><bold><italic>p</italic>-value</bold></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Age</bold></td>
+								<td rowspan="1" colspan="1">0.98</td>
+								<td rowspan="1" colspan="1">0.95-1.005</td>
+								<td rowspan="1" colspan="1">.104</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Sex</bold></td>
+								<td rowspan="1" colspan="1">1.50</td>
+								<td rowspan="1" colspan="1">0.63-3.60</td>
+								<td rowspan="1" colspan="1">.360</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Charlson Comorbidity Index</bold></td>
+								<td rowspan="1" colspan="1">1.09</td>
+								<td rowspan="1" colspan="1">0.93-1.27</td>
+								<td rowspan="1" colspan="1">.307</td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>APACHE II score</bold></td>
+								<td rowspan="1" colspan="1"><bold>1.08</bold></td>
+								<td rowspan="1" colspan="1"><bold>1.03-1.14</bold></td>
+								<td rowspan="1" colspan="1"><bold>.002</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Aproppiate empirical antifungal therapy</bold></td>
+								<td rowspan="1" colspan="1"><bold>0.11</bold></td>
+								<td rowspan="1" colspan="1"><bold>0.04-0.26</bold></td>
+								<td rowspan="1" colspan="1"><bold>&lt;.001</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>PS</bold></td>
+								<td rowspan="1" colspan="1"><bold>260</bold></td>
+								<td rowspan="1" colspan="1"><bold>1.06-63525</bold></td>
+								<td rowspan="1" colspan="1"><bold>.048</bold></td>
+							</tr>
+							<tr>
+								<td rowspan="1" colspan="1"><bold>Statin therapy</bold></td>
+								<td rowspan="1" colspan="1"><bold>0.17</bold></td>
+								<td rowspan="1" colspan="1"><bold>0.03–0.93</bold></td>
+								<td rowspan="1" colspan="1"><bold>.041</bold></td>
+							</tr>
+						</tbody>
+					</table>
+				</table-wrap>
+			</sec>
+		</sec>
+		<sec id="s4" sec-type="discussion">
+			<title>Discussion</title>
+			<p>In this multicenter study involving a large number of hospitalized adults with candidemia, we found that patients who had received statins had lower early case-fatality rate compared with those who were not receiving statins. Interestingly, the survival benefit observed persisted after adjustment for confounders by multivariate analysis.</p>
+			<p>To date, candidemia remains to be associated with significant morbidity and mortality. In the present study, the overall case-fatality rate exceeded 40%, similar to those reported in most series [<xref ref-type="bibr" rid="B3">3</xref>,<xref ref-type="bibr" rid="B22">22</xref>–<xref ref-type="bibr" rid="B26">26</xref>]. The early case-fatality rate was 4.5%. This figure is difficult to compare with others obtained in previous series because little information is available regarding frequency and associated factors. We found that APACHE II score was an independent factors related to mortality whereas an appropriate empirical antifungal therapy and prior statin use were independently associated with lower early case-fatality.</p>
+			<p>Statins were also associated with a lower overall (30d) case-fatality rate in ICU patients with candidemia in a previous single-center study conducted by Forrest et al [<xref ref-type="bibr" rid="B27">27</xref>]. That study had a small sample size (45 patients, including 15 statin users) and the exposure groups presented significant differences in APACHE II score. However, the overall survival benefit was not statistically significant when adjusted for APACHE II score. Another recent single-center study [<xref ref-type="bibr" rid="B28">28</xref>] did not show any benefit in the outcomes of patient with candidemia receiving statins. It was a small study (14 statin users) and did not evaluate the differences in the severity of the disease between groups. None of these studies analyzed the effect of statins in early mortality.</p>
+			<p>It might be speculated that the lower early case-fatality rates observed in statin users are due to the pleiotropic effects of statins. There is substantial evidence from basic science of the immunonodulatory role of statins in patients with sepsis, who present reductions in proinflammatory cytokines (TNF-α and IL-6) [<xref ref-type="bibr" rid="B9">9</xref>], induction of haem oxygenase, direct alteration of leucocyte-endothelial cell interaction and a reduction in the expression of MHC II [<xref ref-type="bibr" rid="B29">29</xref>]. Previous investigations have noted the role of statins in the maintenance of microvascular integrity with restoration of the normal endothelium functioning, and the inhibition of cell adhesion molecules [<xref ref-type="bibr" rid="B30">30</xref>–<xref ref-type="bibr" rid="B32">32</xref>]. Thus statins may have a critical role in the early course of candidemia. Moreover, statins have demonstrated a direct antifungal effect: the inhibition of HMG-CoA reductase affects the synthesis of ergosterol, which strongly inhibits the growth of <italic>Candida</italic> species. Statins can also cause deletions in the mitochondrial genome of yeasts, hampering fungal growth [<xref ref-type="bibr" rid="B17">17</xref>]. Furthermore, synergy between statins and fluconazole has been reported, although not at clinically achievable concentrations [<xref ref-type="bibr" rid="B33">33</xref>].</p>
+			<p>Our study did not shown significant differences in overall case fatality rate between statins users and non-statins users. It should be noted, however, that host factors are the most important factors related with late death in patients with infection [<xref ref-type="bibr" rid="B34">34</xref>–<xref ref-type="bibr" rid="B36">36</xref>]. Poor prognosis within the first 30-days of candidemia is a marker of the fragile status of patients with candidemia. Therefore, it seems reasonable that a potential immunomodulatory treatment have not effect in late deaths.</p>
+			<p>Some researchers have suggested that the beneficial effects of statins observed in infectious diseases may actually reflect a healthy user bias. If this was true, this “healthy user behaviour” would result in apparent benefit for all classes of cardiovascular drugs [<xref ref-type="bibr" rid="B7">7</xref>,<xref ref-type="bibr" rid="B13">13</xref>]. However, none of the concomitant cardiovascular drugs (aspirin, beta-blockers and ACE inhibitors) were independently associated with mortality in the present study. </p>
+			<p>Our study has some limitations that should be noted. Firstly, it was retrospective and ha a small sample size of patients receiving statins. Secondly, most patients received empirical treatment with fluconazole. This practice may not necessarily reflect antifungal empirical choices at this time, after ESCMID recommendations for equinocandins use [<xref ref-type="bibr" rid="B37">37</xref>,<xref ref-type="bibr" rid="B38">38</xref>]. Thirdly, it did not specifically account for types of statins. Fourth, we also understand that the gut tolerance needed for statin administration could select a subgroup of patients in better conditions, even in the absence of differences in the APACHE II score between groups. Finally, the ideal timing for initiating statins with respect to the onset of sepsis is still unknown. Our patients were on chronic treatment with statins at onset of candidemia. The role of statins administered <italic>de novo</italic> in the context of a <italic>Candida</italic> sepsis should be analyzed in further studies. </p>
+			<p>In conclusion, the results of this multicenter study with a large cohort of hospitalized patients showed that prior statins use may improve the early case fatality rate in patients with candidemia.  However, overall mortality was not different between patients receiving statins and those without this drug. This early beneficial effect of statins deserves to be evaluated in randomized trials. </p>
+		</sec>
+		<sec id="s5">
+			<title>Ethics Approval</title>
+			<p>This retrospective observational study was conducted in accordance with the Declaration of Helsinki and was approved by the Institutional Review Board of the Comité Ético de Investigación Clínica del Hospital Universitari de Bellvitge (Clinical Research Ethics Committee, Hospital Universitari de Bellvitge). To protect personal privacy, identifying information of each patient in the electronic database was encrypted. Informed consent was waived by the Clinical Research Ethics Committee because no intervention was involved and no patient identifying information was included.</p>
+		</sec>
+	</body>
+	<back>
+		<ref-list>
+			<title>References</title>
+			<ref id="B1">
+				<label>1</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pappas</surname><given-names>PG</given-names></name>, <name name-style="western"><surname>Kauffman</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Andes</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Benjamin</surname><given-names>DK Jr</given-names></name>, <name name-style="western"><surname>Calandra</surname><given-names>TF</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>Guidelines for the management of candidiasis: 2009 update by the Infectious Diseases Society of America</article-title>. <source>Clin Infect Dis</source> <volume>48</volume>: <fpage>503</fpage>–<lpage>535</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/596757" xlink:type="simple">10.1086/596757</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19191635" xlink:type="simple">19191635</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B2">
+				<label>2</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Flückiger</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Marchetti</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Bille</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Eggimann</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Zimmerli</surname><given-names>S</given-names></name> <etal>et al.</etal> (<year>2006</year>) <article-title>Treatment options of invasive fungal infections in adults</article-title>. <source>Swiss Med Wkly</source> <volume>136</volume>: <fpage>447</fpage>–<lpage>463</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16937323" xlink:type="simple">16937323</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B3">
+				<label>3</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Horn</surname><given-names>DL</given-names></name>, <name name-style="western"><surname>Neofytos</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Anaissie</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Fishman</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Steinbach</surname><given-names>WJ</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>Epidemiology and Outcomes of Candidemia in 2019 Patients: Data from the Prospective Antifungal Therapy Alliance Registry</article-title>. <source>Clin Infect Dis</source> <volume>48</volume>: <fpage>1695</fpage>–<lpage>1703</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/599039" xlink:type="simple">10.1086/599039</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19441981" xlink:type="simple">19441981</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B4">
+				<label>4</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Morgan</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Meltzer</surname><given-names>MI</given-names></name>, <name name-style="western"><surname>Plikaytis</surname><given-names>BD</given-names></name>, <name name-style="western"><surname>Sofair</surname><given-names>AN</given-names></name>, <name name-style="western"><surname>Huie-White</surname><given-names>S</given-names></name> <etal>et al.</etal> (<year>2005</year>) <article-title>Excess mortality, hospital stay, and cost due to candidemia: a case-control study using data from population-based candidemia surveillance</article-title>. <source>Infect Control Hosp Epidemiol</source> <volume>26</volume>: <fpage>540</fpage>-<lpage>547</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/502581" xlink:type="simple">10.1086/502581</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/16018429" xlink:type="simple">16018429</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B5">
+				<label>5</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brugts</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Yetgin</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Hoeks</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Gotto</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Shepherd</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>The benefits of statins in people without established cardiovascular disease but with cardiovascular risk factors: meta-analysis of randomised controlled trials</article-title>. <source>BMJ</source> <volume>338</volume>: <fpage>b2376</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1136/bmj.b2376" xlink:type="simple">10.1136/bmj.b2376</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19567909" xlink:type="simple">19567909</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B6">
+				<label>6</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liao</surname><given-names>JK</given-names></name>, <name name-style="western"><surname>Laufs</surname><given-names>U</given-names></name> (<year>2005</year>) <article-title>Pleiotropic effects of statins</article-title>. <source>Annu Rev Pharmacol Toxicol</source> <volume>45</volume>: <fpage>89</fpage>–<lpage>118</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.pharmtox.45.120403.095748" xlink:type="simple">10.1146/annurev.pharmtox.45.120403.095748</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15822172" xlink:type="simple">15822172</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B7">
+				<label>7</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Viasus</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Garcia-Vidal</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gudiol</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Carratalà</surname><given-names>J</given-names></name> (<year>2010</year>) <article-title>Statins for community-acquired pneumonia: current state of the science</article-title>. <source>Eur J Clin Microbiol Infect Dis</source> <volume>29</volume>: <fpage>143</fpage>–<lpage>152</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10096-009-0835-0" xlink:type="simple">10.1007/s10096-009-0835-0</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19943074" xlink:type="simple">19943074</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B8">
+				<label>8</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gao</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Linhartova</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Johnston</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Thickett</surname><given-names>DR</given-names></name> (<year>2008</year>) <article-title>Statins and sepsis</article-title>. <source>Br J Anaesth</source> <volume>100</volume>: <fpage>288</fpage>–<lpage>298</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bja/aem406" xlink:type="simple">10.1093/bja/aem406</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18276651" xlink:type="simple">18276651</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B9">
+				<label>9</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Novack</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Eisinger</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Frenkel</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Terblanche</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Adhikari</surname><given-names>NK</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>The effects of statin therapy on inflammatory cytokines in patients with bacterial infections: a randomized doubleblind placebo controlled clinical trial</article-title>. <source>Intensive Care Med</source> <volume>35</volume>: <fpage>1255</fpage>-<lpage>1260</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00134-009-1429-0" xlink:type="simple">10.1007/s00134-009-1429-0</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19205663" xlink:type="simple">19205663</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B10">
+				<label>10</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Almog</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Shefer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Novack</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Maimon</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Barski</surname><given-names>L</given-names></name> <etal>et al.</etal> (<year>2004</year>) <article-title>Prior statin therapy is associated with a decreased rate of severe sepsis</article-title>. <source>Circulation</source> <volume>110</volume>: <fpage>880</fpage>-<lpage>885</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/01.CIR.0000138932.17956.F1" xlink:type="simple">10.1161/01.CIR.0000138932.17956.F1</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15289367" xlink:type="simple">15289367</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B11">
+				<label>11</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Peng</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Guo</surname><given-names>Z</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>Systematic Review and Meta-Analysis on the Association between Outpatient Statins Use and Infectious Disease-Related Mortality</article-title>. <source>PLOS ONE</source> <volume>7</volume>(<issue-id>12</issue-id>): <fpage>e51548</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0051548" xlink:type="simple">10.1371/journal.pone.0051548</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/23284711" xlink:type="simple">23284711</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B12">
+				<label>12</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liappis</surname><given-names>AP</given-names></name>, <name name-style="western"><surname>Kan</surname><given-names>VL</given-names></name>, <name name-style="western"><surname>Rochester</surname><given-names>CG</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>GL</given-names></name> (<year>2001</year>) <article-title>The effect of statins on mortality in patients with bacteremia</article-title>. <source>Clin Infect Dis</source> <volume>33</volume>: <fpage>1352</fpage>–<lpage>1357</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/323334" xlink:type="simple">10.1086/323334</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/11565076" xlink:type="simple">11565076</ext-link>. </mixed-citation>
+			</ref>
+			<ref id="B13">
+				<label>13</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Thomsen</surname><given-names>RW</given-names></name>, <name name-style="western"><surname>Riis</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kornum</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Christensen</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Johnsen</surname><given-names>SP</given-names></name> <etal>et al.</etal> (<year>2008</year>) <article-title>Preadmission use of statins and outcomes after hospitalization with pneumonia: population-based cohort study of 29,900 patients</article-title>. <source>Arch Intern Med</source> <volume>168</volume>: <fpage>2081</fpage>-<lpage>2087</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1001/archinte.168.19.2081" xlink:type="simple">10.1001/archinte.168.19.2081</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18955636" xlink:type="simple">18955636</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B14">
+				<label>14</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Khan</surname><given-names>AR</given-names></name>, <name name-style="western"><surname>Riaz</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bin Abdulhak</surname><given-names>AA</given-names></name>, <name name-style="western"><surname>Al-Tannir</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Garbati</surname><given-names>MA</given-names></name> <etal>et al.</etal> (<year>2013</year>) <article-title>The role of statins in prevention and treatment of community acquired pneumonia: a systematic review and meta-analysis</article-title>. <source>PLOS ONE</source> <volume>8</volume>(<issue-id>1</issue-id>): <fpage>e52929</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0052929" xlink:type="simple">10.1371/journal.pone.0052929</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/23349694" xlink:type="simple">23349694</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B15">
+				<label>15</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bearman</surname><given-names>GM</given-names></name>, <name name-style="western"><surname>Shankaran</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Elam</surname><given-names>K</given-names></name> (<year>2010</year>) <article-title>Treatment of Severe Cases of Pandemic (H1N1) 2009 Influenza: Review of Antivirals and Adjuvant Therapy</article-title>. <source>Recent Pat Antiinfect Drugs Discov</source> <volume>5</volume>: <fpage>152</fpage>-<lpage>156</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2174/157489110791233513" xlink:type="simple">10.2174/157489110791233513</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20334616" xlink:type="simple">20334616</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B16">
+				<label>16</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kwong</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Redelmeier</surname><given-names>DA</given-names></name> (<year>2009</year>) <article-title>Influenza morbidity and mortality in elderly patients receiving statins: a cohort study</article-title>. <source>PLOS ONE</source> <volume>4</volume>(<issue-id>11</issue-id>): <fpage>e8087</fpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0008087" xlink:type="simple">10.1371/journal.pone.0008087</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19956645" xlink:type="simple">19956645</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B17">
+				<label>17</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Westermeyer</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Macreadie</surname><given-names>IG</given-names></name> (<year>2007</year>) <article-title>Simvastatin reduces ergosterol levels, inhibits growth and causes loss of mtDNA in Candida <italic>glabrata</italic></article-title>. <source>FEMS Yeast Res</source> <volume>7</volume>: <fpage>436</fpage>-<lpage>441</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1567-1364.2006.00194.x" xlink:type="simple">10.1111/j.1567-1364.2006.00194.x</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17257373" xlink:type="simple">17257373</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B18">
+				<label>18</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pittet</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Wenzel</surname><given-names>RP</given-names></name> (<year>1995</year>) <article-title>Nosocomial bloodstream infections. Secular trends in rates, mortality, and contribution to total hospital deaths</article-title>. <source>Arch Intern Med</source> <volume>155</volume>: <fpage>1177</fpage>-<lpage>1184</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1001/archinte.1995.00430110089009" xlink:type="simple">10.1001/archinte.1995.00430110089009</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/7763123" xlink:type="simple">7763123</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B19">
+				<label>19</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>ND</given-names></name>, <name name-style="western"><surname>Kaye</surname><given-names>KS</given-names></name>, <name name-style="western"><surname>Stout</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>McGarry</surname><given-names>SA</given-names></name>, <name name-style="western"><surname>Trivette</surname><given-names>SL</given-names></name> <etal>et al.</etal> (<year>2002</year>) <article-title>Health care associated bloodstream infections in adults: a reason to change the accepted definition of community-acquired infections</article-title>. <source>Ann Intern Med</source> <volume>137</volume>: <fpage>791</fpage>–<lpage>797</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.7326/0003-4819-137-10-200211190-00007" xlink:type="simple">10.7326/0003-4819-137-10-200211190-00007</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/12435215" xlink:type="simple">12435215</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B20">
+				<label>20</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garcia-Vidal</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Ardanuy</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Tubau</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Viasus</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Dorca</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2010</year>) <article-title>Pneumococcal pneumonia presenting with septic shock: host- and pathogen-related factors and outcomes</article-title>. <source>Thorax</source> <volume>65</volume>: <fpage>77</fpage>-<lpage>81</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1136/thx.2010.150961.1" xlink:type="simple">10.1136/thx.2010.150961.1</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19996337" xlink:type="simple">19996337</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B21">
+				<label>21</label>
+				<mixed-citation publication-type="book" xlink:type="simple"><collab xlink:type="simple">Clinical and Laboratory Standards Institute</collab> (<year>2008</year>). <source>Reference method for broth dilution antifungal susceptibility testing of yeasts, approved standard</source>. <publisher-loc>Wayne, PA</publisher-loc>: <publisher-name>Clinical and Laboratory Standards Institute</publisher-name>. <comment>CLSI Document M27</comment><comment>-A3</comment></mixed-citation>
+			</ref>
+			<ref id="B22">
+				<label>22</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Almirante</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Rodríguez</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Park</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Cuenca-Estrella</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Planes</surname><given-names>AM</given-names></name> <etal>et al.</etal> (<year>2005</year>) <article-title>Epidemiology and Predictors of Mortality in Cases of Candida Bloodstream Infection: Results from Population-Based Surveillance, Barcelona, Spain, from 2002 to 2003</article-title>. <source>J Clin Microbiol</source> <volume>43</volume>: <fpage>1829</fpage>–<lpage>1835</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JCM.43.4.1829-1835.2005" xlink:type="simple">10.1128/JCM.43.4.1829-1835.2005</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15815004" xlink:type="simple">15815004</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B23">
+				<label>23</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pemán</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Cantón</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Gobernado</surname><given-names>M</given-names></name> (<year>2005</year>) <article-title>Epidemiology and antifungal susceptibility of Candida species isolated from blood: results of a 2-year multicentre study in Spain</article-title>. <source>Eur J Clin Microbiol Infect Dis</source> <volume>24</volume>: <fpage>23</fpage>–<lpage>30</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10096-004-1267-5" xlink:type="simple">10.1007/s10096-004-1267-5</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/15619060" xlink:type="simple">15619060</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B24">
+				<label>24</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nace</surname><given-names>HL</given-names></name>, <name name-style="western"><surname>Horn</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Neofytos</surname><given-names>D</given-names></name> (<year>2009</year>) <article-title>Epidemiology and outcome of multiple-species candidemia at a tertiary care center between 2004 and 2007</article-title>. <source>Diagn Microbiol Infect Dis</source> <volume>64</volume>: <fpage>289</fpage>–<lpage>294</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.diagmicrobio.2009.03.010" xlink:type="simple">10.1016/j.diagmicrobio.2009.03.010</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19376670" xlink:type="simple">19376670</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B25">
+				<label>25</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pappas</surname><given-names>PG</given-names></name>, <name name-style="western"><surname>Rex</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hamill</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Larsen</surname><given-names>RA</given-names></name> <etal>et al.</etal> (<year>2003</year>) <article-title>A Prospective Observational Study of candidemia: epidemiology, therapy, and inﬂuences on mortality in hospitalized adult and pediatric patients</article-title>. <source>Clin Infect Dis</source> <volume>37</volume>: <fpage>634</fpage>–<lpage>643</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/376906" xlink:type="simple">10.1086/376906</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/12942393" xlink:type="simple">12942393</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B26">
+				<label>26</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gudlaugsson</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Gillespie</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Vande Berg</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Hu</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2003</year>) <article-title>Attributable mortality of nosocomial candidemia, revisited</article-title>. <source>Clin Infect Dis</source> <volume>37</volume>: <fpage>1172</fpage>–<lpage>1177</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/378745" xlink:type="simple">10.1086/378745</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/14557960" xlink:type="simple">14557960</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B27">
+				<label>27</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Forrest</surname><given-names>GN</given-names></name>, <name name-style="western"><surname>Kopack</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Perencevich</surname><given-names>EN</given-names></name> (<year>2010</year>) <article-title>Statins in candidemia: clinical outcomes from a matched cohort study</article-title>. <source>BMC Infect Dis</source> <volume>10</volume>: <fpage>152</fpage>-<lpage>159</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2334-10-152" xlink:type="simple">10.1186/1471-2334-10-152</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/20525374" xlink:type="simple">20525374</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B28">
+				<label>28</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Welch</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Liappis</surname><given-names>AP</given-names></name>, <name name-style="western"><surname>Kan</surname><given-names>VL</given-names></name> (<year>2013</year>) <article-title>Candidemia outcomes not improved with statin use</article-title>. <source>Med Mycol</source> <volume>51</volume>: <fpage>219</fpage>-<lpage>222</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3109/13693786.2012.692490" xlink:type="simple">10.3109/13693786.2012.692490</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/22662759" xlink:type="simple">22662759</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B29">
+				<label>29</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Terblanche</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Almog</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Rosenson</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>TS</given-names></name>, <name name-style="western"><surname>Hackam</surname><given-names>DG</given-names></name> (<year>2007</year>) <article-title>Statins and sepsis: multiple modifications at multiple levels</article-title>. <source>Lancet Infect Dis</source> <volume>7</volume>: <fpage>358</fpage>-<lpage>368</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S1473-3099(07)70111-1" xlink:type="simple">10.1016/S1473-3099(07)70111-1</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17448939" xlink:type="simple">17448939</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B30">
+				<label>30</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Subramani</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Kathirvel</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Leo</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Kuntamallappanavar</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Uttam Singh</surname><given-names>T</given-names></name> <etal>et al.</etal> (<year>2009</year>) <article-title>Atorvastatin restores the impaired vascular endothelium-dependent relaxations mediated by nitric oxide and endothelium-derived hyperpolarizing factors but not hypotension in sepsis</article-title>. <source>J Cardiovasc Pharmacol</source> <volume>54</volume>: <fpage>526</fpage>-<lpage>534</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1097/FJC.0b013e3181bfafd6" xlink:type="simple">10.1097/FJC.0b013e3181bfafd6</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/19755915" xlink:type="simple">19755915</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B31">
+				<label>31</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alvarez de Sotomayor</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Vega</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mingorance</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Marhuenda</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Herrera</surname><given-names>MD</given-names></name> (<year>2008</year>) <article-title>Effects of HMG-CoA reductase inhibition by simvastatin on vascular dysfunction induced by lipopolysaccharide in rats</article-title>. <source>Pharmacologist</source> <volume>82</volume>: <fpage>89</fpage>-<lpage>96</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18509252" xlink:type="simple">18509252</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B32">
+				<label>32</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McGown</surname><given-names>CC</given-names></name>, <name name-style="western"><surname>Brookes</surname><given-names>ZLS</given-names></name> (<year>2007</year>) <article-title>Beneficial effects of statins on the microcirculation during sepsis: the role of nitric oxide</article-title>. <source>Br J Anaesth</source> <volume>98</volume>: <fpage>163</fpage>–<lpage>175</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bja/ael358" xlink:type="simple">10.1093/bja/ael358</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/17251210" xlink:type="simple">17251210</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B33">
+				<label>33</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nash</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Burgess</surname><given-names>DS</given-names></name>, <name name-style="western"><surname>Talbert</surname><given-names>RL</given-names></name> (<year>2002</year>) <article-title>Effect of fluvastatin and pravastatin, HMG-CoA reductase inhibitors, on fluconazole activity against <italic>Candida</italic> <italic>albicans</italic></article-title>. <source>J Med Microbiol</source> <volume>51</volume>: <fpage>105</fpage>-<lpage>109</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/11863260" xlink:type="simple">11863260</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B34">
+				<label>34</label>
+				<mixed-citation publication-type="journal" xlink:type="simple">AUSTRIAN R, GOLD JAustrian R. Gold J (<year>1964</year>) <article-title>Pneumococcal bacteremia with especial reference to bacteremic pneumococcal pneumonia</article-title>. <source>Ann Intern Med</source> <volume>60</volume>: <fpage>759</fpage>-<lpage>770</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.7326/0003-4819-60-5-759" xlink:type="simple">10.7326/0003-4819-60-5-759</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/14156606" xlink:type="simple">14156606</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B35">
+				<label>35</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garcia-Vidal</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Fernández-Sabé</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Carratalà</surname><given-names>J</given-names></name> <etal>et al.</etal> (<year>2008</year>) <article-title>Early mortality in patients with community acquired pneumonia: causes and risk factors</article-title>. <source>Eur Respir J</source> <volume>32</volume>: <fpage>733</fpage>–<lpage>739</lpage>. doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1183/09031936.00128107" xlink:type="simple">10.1183/09031936.00128107</ext-link>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/18508820" xlink:type="simple">18508820</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B36">
+				<label>36</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wiersinga</surname><given-names>WJ</given-names></name> (<year>2011</year>) <article-title>Current insights in sepsis: from pathogenesis to new treatment targets</article-title>. <source>Curr Opin Crit Care</source> <volume>5</volume>: <fpage>480</fpage>-<lpage>486</lpage>. PubMed: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/21900767" xlink:type="simple">21900767</ext-link>.</mixed-citation>
+			</ref>
+			<ref id="B37">
+				<label>37</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ullmann</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Akova</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Herbrecht</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Viscoli</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Arendrup</surname><given-names>MC</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>ESCMID guideline for the diagnosis and management of Candida diseases 2012: adults with  haematological malignancies and after haematopoietic stem cell transplantation (HCT)</article-title>. <source>Clin Microbiol Infect</source> <volume>18</volume> (<issue-id>7</issue-id>): <fpage>53</fpage>–<lpage>67</lpage>.</mixed-citation>
+			</ref>
+			<ref id="B38">
+				<label>38</label>
+				<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cornely</surname><given-names>OA</given-names></name>, <name name-style="western"><surname>Bassetti</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Calandra</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Garbino</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Kullberg</surname><given-names>BJ</given-names></name> <etal>et al.</etal> (<year>2012</year>) <article-title>ESCMID guideline for the diagnosis and management of Candida diseases 2012: non-neutropenic adult patients</article-title>. <source>Clin Microbiol Infect</source>; <volume>18</volume> (<issue-id>7</issue-id>): <fpage>19</fpage>–<lpage>37</lpage>.</mixed-citation>
+			</ref>
+		</ref-list>
+	</back>
+</article>
