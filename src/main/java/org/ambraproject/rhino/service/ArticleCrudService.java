@@ -88,6 +88,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void delete(ArticleIdentity id) throws FileStoreException;
 
   /**
+   * Loads and returns article metadata.
+   *
+   * @param id specifies the article
+   * @return Article object encapsulating metadata
+   */
+  public abstract Article findArticleById(DoiBasedIdentity id);
+
+  /**
    * Read the metadata of an article.
    *
    * @param receiver the receiver object to which to send the metadata

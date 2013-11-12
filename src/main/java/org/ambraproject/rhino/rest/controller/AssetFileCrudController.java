@@ -21,6 +21,7 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -130,19 +131,31 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
     Optional<ArticleIdentity> articleId = id.forArticle();
     if (articleId.isPresent()) {
-      try {
-        provideXmlFor(response, articleId.get());
-        return;
-      } catch (RestClientException e) {
-        /*
-         * If there was no such article, it might still be a regular asset whose type happens to be XML.
-         * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
-         * the same "not found" response anyway.)
-         */
 
-        if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
-          throw e; // Anything other than "not found" is unexpected
+      // We want to set the Last-Modified header appropriately, so that clients can cache article
+      // XML if they choose to.  Unfortunately, the filestore interface doesn't have a way to
+      // retrieve a file's mtime, so we have to get this info from the ambra DB instead.
+      Article article = articleCrudService.findArticleById(articleId.get());
+      setLastModifiedHeader(response, article.getLastModified());
+      if (checkIfModifiedSince(request, article.getLastModified())) {
+        try {
+          provideXmlFor(response, articleId.get());
+          return;
+        } catch (RestClientException e) {
+          /*
+           * If there was no such article, it might still be a regular asset whose type happens to be XML.
+           * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
+           * the same "not found" response anyway.)
+           */
+
+          if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
+            throw e; // Anything other than "not found" is unexpected
+          }
         }
+      } else {
+
+        // !checkIfModifiedSince
+        response.setStatus(HttpStatus.NOT_MODIFIED.value());
       }
     }
 

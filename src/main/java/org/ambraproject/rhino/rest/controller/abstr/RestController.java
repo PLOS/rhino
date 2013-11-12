@@ -18,11 +18,13 @@
 
 package org.ambraproject.rhino.rest.controller.abstr;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +39,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Controller that sends HTTP responses to RESTful requests.
@@ -305,4 +311,38 @@ public abstract class RestController {
     return (parameter != null) && !Boolean.toString(false).equalsIgnoreCase(parameter);
   }
 
+  /**
+   * Sets the Last-Modified header of the response appropriately.
+   *
+   * @param response HttpServletResponse
+   * @param lastModified date to set the header to
+   */
+  protected void setLastModifiedHeader(HttpServletResponse response, Date lastModified) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+    calendar.setTime(lastModified);
+    response.addHeader("Last-Modified", HttpDateUtil.format(calendar));
+  }
+
+  /**
+   * Checks for the presence of an "If-Modified-Since" header on the request.  If it exists,
+   * returns true iff lastModified is after the date in the header.  That is, returns true
+   * if we should send content, and false if a 304 Not Modified response is appropriate.
+   *
+   * @param request HttpServletRequest
+   * @param lastModified last modified date of the entity being requested
+   * @return true if we should send the entity, false if we should send a 304 response
+   */
+  protected boolean checkIfModifiedSince(HttpServletRequest request, Date lastModified) {
+    String ifModifiedSince = request.getHeader("If-Modified-Since");
+    if (Strings.isNullOrEmpty(ifModifiedSince)) {
+      return true;
+    } else {
+      Calendar headerCal = HttpDateUtil.parse(ifModifiedSince);
+      Calendar lastModifiedCal = Calendar.getInstance();
+      lastModifiedCal.setTimeZone(TimeZone.getTimeZone("GMT"));
+      lastModifiedCal.setTime(lastModified);
+      return lastModifiedCal.after(headerCal);
+    }
+  }
 }

@@ -106,7 +106,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @param id the article's identity
    * @return the article, or {@code null} if not found
    */
-  private Article findArticleById(DoiBasedIdentity id) {
+  public Article findArticleById(DoiBasedIdentity id) {
     return (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)

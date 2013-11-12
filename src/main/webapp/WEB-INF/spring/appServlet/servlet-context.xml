@@ -163,12 +163,15 @@
     <beans:property name="serverFactory" ref="solrServerFactory"/>
   </beans:bean>
 
-  <beans:bean id="taxonomyCache" class="org.ambraproject.service.cache.EternalCache" />
+  <beans:bean id="cacheFactory" class="org.ambraproject.rhino.cache.CacheFactory" factory-method="getInstance" />
+
+  <beans:bean id="rhinoCache" factory-bean="cacheFactory" factory-method="getCache"/>
 
   <beans:bean id="taxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
-    <beans:property name="cache" ref="taxonomyCache" />
+    <beans:property name="cache" ref="rhinoCache" />
     <beans:property name="searchService" ref="searchService" />
     <beans:property name="sessionFactory" ref="hibernateSessionFactory" />
+    <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 
   <mvc:interceptors>
