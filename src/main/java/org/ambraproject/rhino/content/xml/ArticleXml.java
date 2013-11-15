@@ -25,6 +25,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
@@ -46,7 +47,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -94,19 +94,19 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       }
     }
 
-    // Remove <graphic> nodes that don't share a DOI with another asset.
-    // (Why not just add them separately? Doing it this way preserves document order.)
-    for (Map.Entry<String, Collection<Node>> entry : nodeMap.asMap().entrySet()) {
-      Collection<Node> nodes = entry.getValue();
-      if (nodes.size() <= 1) {
-        continue; // The DOI is unique, so keep the one node even if it is a <graphic>
-      }
-      for (Iterator<Node> iterator = nodes.iterator(); iterator.hasNext(); ) {
-        Node node = iterator.next();
-        if (GRAPHIC.equals(node.getNodeName())) {
-          iterator.remove();
-        }
-      }
+    // Remove edge-case elements that don't represent assets
+    // Iterate and remove to preserve the document order
+    Collection<List<Node>> nodeGroups = Multimaps.asMap(nodeMap).values();
+    for (Iterator<List<Node>> iterator = nodeGroups.iterator(); iterator.hasNext(); ) {
+      List<Node> nodeGroup = iterator.next();
+
+      if ((nodeGroup.size() == 1) && nodeGroup.get(0).getNodeName().equals(TABLE_WRAP)) {
+        // Remove the whole group if it's only a <table-wrap> with no <graphic>
+        iterator.remove();
+      } else if ((nodeGroup.size() == 2) && nodeGroup.get(1).getNodeName().equals(GRAPHIC)) {
+        // If it's a <fig> or <table-wrap> with a nested <graphic>, remove the <graphic>
+        nodeGroup.remove(1);
+      } // If the group is a <graphic> by itself, keep it
     }
 
     return new AssetNodesByDoi(nodeMap);
