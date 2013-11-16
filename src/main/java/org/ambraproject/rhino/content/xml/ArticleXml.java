@@ -25,7 +25,6 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAuthor;
@@ -42,11 +41,10 @@ import org.w3c.dom.Node;
 
 import java.net.URLEncoder;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -94,22 +92,32 @@ public class ArticleXml extends AbstractArticleXml<Article> {
       }
     }
 
-    // Remove edge-case elements that don't represent assets
-    // Iterate and remove to preserve the document order
-    Collection<List<Node>> nodeGroups = Multimaps.asMap(nodeMap).values();
-    for (Iterator<List<Node>> iterator = nodeGroups.iterator(); iterator.hasNext(); ) {
-      List<Node> nodeGroup = iterator.next();
-
-      if ((nodeGroup.size() == 1) && nodeGroup.get(0).getNodeName().equals(TABLE_WRAP)) {
-        // Remove the whole group if it's only a <table-wrap> with no <graphic>
-        iterator.remove();
-      } else if ((nodeGroup.size() == 2) && nodeGroup.get(1).getNodeName().equals(GRAPHIC)) {
-        // If it's a <fig> or <table-wrap> with a nested <graphic>, remove the <graphic>
-        nodeGroup.remove(1);
-      } // If the group is a <graphic> by itself, keep it
+    // Replace <graphic> nodes without changing keys or iteration order
+    for (Map.Entry<String, Node> entry : nodeMap.entries()) {
+      Node node = entry.getValue();
+      if (node.getNodeName().equals(GRAPHIC)) {
+        entry.setValue(replaceGraphicNode(node));
+      }
     }
 
     return new AssetNodesByDoi(nodeMap);
+  }
+
+  /**
+   * Return the node that should represent the asset for a "graphic" node.
+   *
+   * @param node a node such that {@code node.getNodeName().equals(GRAPHIC)}
+   * @return the corresponding asset node
+   */
+  private static Node replaceGraphicNode(Node node) {
+    Node parent = node.getParentNode();
+    if (ASSET_WITH_OBJID.contains(parent.getNodeName())) {
+      return parent;
+    }
+    if (parent.getNodeName().equals("alternatives")) {
+      return parent.getParentNode();
+    }
+    return node;
   }
 
   /**

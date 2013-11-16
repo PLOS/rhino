@@ -22,7 +22,6 @@ import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -77,9 +76,8 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
   protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
       "supplementary-material", "inline-formula", "disp-formula", GRAPHIC);
 
-  // An XPath expression that will match any node with one of the names above
-  protected static final String ASSET_EXPRESSION = String.format("//(%s)",
-      Joiner.on('|').join(Iterables.concat(ASSET_WITH_OBJID, ASSET_WITH_HREF)));
+  // An XPath expression that will match any node with one of the name in ASSET_WITH_HREF
+  protected static final String ASSET_EXPRESSION = String.format("//(%s)", Joiner.on('|').join(ASSET_WITH_HREF));
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
