@@ -111,10 +111,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    */
   private static Node replaceGraphicNode(Node node) {
     Node parent = node.getParentNode();
-    if (ASSET_WITH_OBJID.contains(parent.getNodeName())) {
+    if (GRAPHIC_NODE_PARENTS.contains(parent.getNodeName())) {
       return parent;
     }
-    if (parent.getNodeName().equals("alternatives")) {
+    if (parent.getNodeName().equals(ALTERNATIVES)) {
       return parent.getParentNode();
     }
     return node;

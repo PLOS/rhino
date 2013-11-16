@@ -22,6 +22,7 @@ import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -68,27 +69,30 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends XpathRea
   }
 
   // Node names that get special handling
-  protected static final String TABLE_WRAP = "table-wrap";
   protected static final String GRAPHIC = "graphic";
+  protected static final String TABLE_WRAP = "table-wrap";
+  protected static final String ALTERNATIVES = "alternatives";
 
-  // The node-names for nodes that can be an asset, separated by where to find the DOI
-  protected static final ImmutableSet<String> ASSET_WITH_OBJID = ImmutableSet.of(TABLE_WRAP, "fig");
-  protected static final ImmutableSet<String> ASSET_WITH_HREF = ImmutableSet.of(
+  // The node-names for nodes that can be an asset on their own
+  protected static final ImmutableSet<String> ASSET_NODE_NAMES = ImmutableSet.of(
       "supplementary-material", "inline-formula", "disp-formula", GRAPHIC);
 
-  // An XPath expression that will match any node with one of the name in ASSET_WITH_HREF
-  protected static final String ASSET_EXPRESSION = String.format("//(%s)", Joiner.on('|').join(ASSET_WITH_HREF));
+  // The node-names for nodes that can be an asset if they have a descendant <graphic> node
+  protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
+
+  // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES
+  protected static final String ASSET_EXPRESSION = String.format("//(%s)", Joiner.on('|').join(ASSET_NODE_NAMES));
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
     String doi;
-    if (ASSET_WITH_OBJID.contains(nodeName)) {
+    if (GRAPHIC_NODE_PARENTS.contains(nodeName)) {
       doi = readString("object-id[@pub-id-type=\"doi\"]", assetNode);
-    } else if (ASSET_WITH_HREF.contains(nodeName)) {
+    } else if (ASSET_NODE_NAMES.contains(nodeName)) {
       doi = readHrefAttribute(assetNode);
     } else {
       String message = String.format("Received a node of type \"%s\"; expected one of: %s",
-          nodeName, ASSET_EXPRESSION);
+          nodeName, Iterables.concat(ASSET_NODE_NAMES, GRAPHIC_NODE_PARENTS));
       throw new IllegalArgumentException(message);
     }
     if (doi == null) {
