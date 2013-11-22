@@ -12,11 +12,19 @@ import com.google.common.collect.ImmutableSet;
  */
 enum FigureFileType {
 
+  // The original, highest-resolution copy. Expected to be present for all figures.
   ORIGINAL("TIF", "TIFF"),
+
+  // Resized thumbnails for "normal" figures, which under PLOS's naming scheme have DOIs like *.g000 or *.t000
   SMALL("PNG_S"),
   INLINE("PNG_I"),
   MEDIUM("PNG_M"),
-  LARGE("PNG_L");
+  LARGE("PNG_L"),
+
+  // Resized image for inline graphics
+  // For PLOS articles, this includes math expressions with DOIs like *.e000
+  GRAPHIC("PNG");
+
 
   private final ImmutableSet<String> associatedExtensions;
 
