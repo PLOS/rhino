@@ -9,6 +9,7 @@ from __future__ import print_function
 from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, md5
+from StringIO import StringIO
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -78,7 +79,7 @@ class Rhino:
         if r.status_code == 200:
             with open(fname, 'wb') as f:
                 for chunk in r.iter_content(1024):
-                    m.update(chunk)
+                    m.update(StringIO(chunk).encode('utf-8'))
                     f.write(chunk)
                 f.close()
         else:

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 """
     PLOS S3 repo module.
 
@@ -428,13 +429,14 @@ class S3:
         return self._getBinary(fname, keyID)
 
     def putAfid(self, afidSuffix, fname, articleMeta, assetMeta, md5, prefix=None,
-                  force=False, cb=None, reduce_redundancy=True, retry=5, wait=2):
+                  force=False, cb=None, reduced_redundancy=True, retry=5, wait=2):
         """
         """
         status = 'FAILED'
         # See if the key exists
         keyID = self._afid2s3key(afidSuffix, prefix)
         s3key = self.bucket.get_key(keyID)
+
         if not s3key == None:
             status = 'EXIST'
             # yes - see if they are the same
@@ -443,6 +445,8 @@ class S3:
                 return (afidSuffix, fname, md5, status)
         else:
             s3key = self.bucket.new_key(keyID)
+
+        s3key.set_metadata('Content-Disposition', 'attachment; filename="{f}"'.format(f=fname))
 
         # Use the default prefix if not specified.
         if not prefix: prefix = self.prefix
@@ -458,15 +462,15 @@ class S3:
         if mData.has_key(k) and (mData[k] == mData[k2]): 
             mData[k] = ''
 
-        s3key.content_type = mData['asset-contentType']
-
+        s3key.set_metadata('Content-Type', mData['asset-contentType'].encode('utf-8'))
+        s3key.set_metadata('Content-Language', 'en'.encode('utf-8'))
         # Copy the meta-data
         [ s3key.set_metadata(k, v) for k,v in mData.iteritems() ]
         cnt = 0
         # Sometimes S3 doesn't respond quickly 
         while(cnt < retry):
             try:
-                s3key.set_contents_from_filename(fname, cb=cb, reduced_redundancy=reduce_redundancy)
+                s3key.set_contents_from_filename(fname, cb=cb, reduced_redundancy=reduced_redundancy)
                 status = 'COPIED'
                 cnt = retry
             except Exception as e:
