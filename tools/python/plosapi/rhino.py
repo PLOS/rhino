@@ -8,7 +8,7 @@ This module exports one class 'Rhino'
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, traceback, json, re, requests, md5
+import os, sys, traceback, json, re, requests, hashlib
 from StringIO import StringIO
 
 __author__    = 'Bill OConnor'
@@ -64,22 +64,22 @@ class Rhino:
         The verfiy parameter fails if the URL is not https:(
         """
         if url.lower().startswith('https:'):
-            return requests.get(url, verify=self.verify)
+            return requests.get(url, stream=True, verify=self.verify)
         else:
-            return requests.get(url)
+            return requests.get(url, stream=True)
 
     def _getBinary(self, fname, url):
         """
         Most of the files other than the article xml are binary in nature.
         Fetch the data and write it to a temporary file. Return the MD5
-        hash of the fle contents.
+        hash of the file contents.
         """
-        m = md5.new()
+        m = hashlib.md5()
         r = self._doGet(url)
         if r.status_code == 200:
             with open(fname, 'wb') as f:
-                for chunk in r.iter_content(1024):
-                    m.update(StringIO(chunk).encode('utf-8'))
+                for chunk in r.iter_content(1024*1024,decode_unicode=False):
+                    # m.update(chunk)
                     f.write(chunk)
                 f.close()
         else:
@@ -91,7 +91,7 @@ class Rhino:
         Read from the URL byte by byte calculating
         the MD5 hash. 
         """
-        m = md5.new()
+        m = hashlib.md5()
         r = self._doGet(url)
         if r.status_code == 200:
            for chunk in r.iter_content(1024):

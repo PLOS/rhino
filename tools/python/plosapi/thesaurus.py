@@ -13,7 +13,7 @@ import StringIO
 from lxml import etree
 from xml.sax.saxutils import escape
 
-__author__    = 'Bill OConnor'
+__author__    = 'Jono Finger & Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
 __version__   = '0.1'
 
@@ -21,18 +21,22 @@ class Thesaurus():
     """
     """
     _SERVER_URL = 'http://tax.plos.org:9080/servlet/dh'
-    _REQUEST_TMPLT =  "<TMMAI project='plosthes.2013-6' location = '.'>" \
+    _REQUEST_TMPLT =  "<TMMAI project='{tName}' location = '.'>" \
                          "<Method name='getSuggestedTermsFullPaths' returnType='java.util.Vector'/>"\
                          "<VectorParam>"\
                             "<VectorElement>{theText}</VectorElement>"\
                          "</VectorParam>"\
                       "</TMMAI>"
     _TERM_PATH = '/TMMAI/VectorReturn/VectorElement'
+    _THESAURUS = None
 
-    def buildRequest(self, theText):
+    def __init__(self, thesaurusName='plosthes.2013-6'):
+        self._THESARUS = thesaurusName
+           
+    def buildRequest(self, theText, thesaurusName=None):
         """
         """
-        return self._REQUEST_TMPLT.format(theText=escape(theText.encode('utf-8')))
+        return self._REQUEST_TMPLT.format(tName=self._THESARUS, theText=escape(theText.encode('utf-8')))
 
     def getSubjectTerms(self, theText):
         """
@@ -56,6 +60,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Thesaurus Client client module.')
     parser.add_argument('--file', help='Name of file containing text to assign subject areas.')
+    parser.add_argument('--thesaurus' , default='plosthes.2013-6', help='default thesaurus name.')
     parser.add_argument('command', help='subjects')
     parser.add_argument('params', nargs='*', help="command parameters")
     args = parser.parse_args()
@@ -65,10 +70,8 @@ if __name__ == "__main__":
     else:
         fl = [ StringIO.StringIO(s) for s in args.params ]
 
-    print('Start')
-
     if args.command == 'subjects':
-        t = Thesaurus()
+        t = Thesaurus(args.thesaurus)
         for f in fl:
             (status, terms) = t.getSubjectTerms(f.read())
             if status == 'OK':
