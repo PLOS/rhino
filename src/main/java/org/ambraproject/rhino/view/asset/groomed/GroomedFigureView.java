@@ -15,7 +15,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 public class GroomedFigureView implements JsonOutputView {
 
@@ -32,6 +31,14 @@ public class GroomedFigureView implements JsonOutputView {
     this.parentArticleId = Optional.absent();
   }
 
+
+  // These exceptions are routinely caught (for "miscellaneous" assets -- see GroomedAssetsView),
+  // so it's worth it not to build these strings from sets over and over
+  private static final String ORIGINAL_NOT_FOUND_MESSAGE = "Original asset not found. Expected an asset with an extension: "
+      + FigureFileType.ORIGINAL.getAssociatedExtensions();
+  private static final String THUMBNAIL_NOT_FOUND_MESSAGE = "Thumbnails not found. Expected an asset with an extension: "
+      + Sets.difference(FigureFileType.getAllExtensions(), FigureFileType.ORIGINAL.getAssociatedExtensions());
+
   public static GroomedFigureView create(Collection<ArticleAsset> figureAssets) {
     Map<FigureFileType, ArticleAsset> byType = Maps.newEnumMap(FigureFileType.class);
     for (ArticleAsset asset : figureAssets) {
@@ -40,15 +47,10 @@ public class GroomedFigureView implements JsonOutputView {
 
     ArticleAsset original = byType.remove(FigureFileType.ORIGINAL);
     if (original == null) {
-      String message = "Original asset not found. Expected an asset with an extension: "
-          + FigureFileType.ORIGINAL.getAssociatedExtensions();
-      throw new NotAFigureException(message);
+      throw new NotAFigureException(ORIGINAL_NOT_FOUND_MESSAGE);
     }
     if (byType.isEmpty()) {
-      Set<String> thumbnailExtensions = Sets.difference(
-          FigureFileType.getAllExtensions(), FigureFileType.ORIGINAL.getAssociatedExtensions());
-      String message = "Thumbnails not found. Expected an asset with an extension: " + thumbnailExtensions;
-      throw new NotAFigureException(message);
+      throw new NotAFigureException(THUMBNAIL_NOT_FOUND_MESSAGE);
     }
 
     return new GroomedFigureView(original, byType);

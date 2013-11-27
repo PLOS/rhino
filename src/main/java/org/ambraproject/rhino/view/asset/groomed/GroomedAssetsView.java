@@ -64,24 +64,25 @@ public class GroomedAssetsView {
     GroomedAssetFileView articleXmlView = GroomedAssetFileView.create(articleXml);
     GroomedAssetFileView articlePdfView = (articlePdf == null) ? null : GroomedAssetFileView.create(articlePdf);
 
-    List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figures.keySet().size());
-    for (Collection<ArticleAsset> figureAssetCollection : figures.asMap().values()) {
+    Collection<Collection<ArticleAsset>> figureAssetGroups = figures.asMap().values();
+    List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figureAssetGroups.size());
+    for (Collection<ArticleAsset> figureAssetGroup : figureAssetGroups) {
 
       GroomedFigureView groomedFigureView;
-      if (figureAssetCollection.size() == 1) {
+      if (figureAssetGroup.size() == 1) {
         // A figure would have an original image and at least one thumbnail. Assume this is a supp info asset.
         groomedFigureView = null;
       } else {
         try {
-          groomedFigureView = GroomedFigureView.create(figureAssetCollection);
+          groomedFigureView = GroomedFigureView.create(figureAssetGroup);
         } catch (NotAFigureException e) {
           groomedFigureView = null;
         }
       }
 
       if (groomedFigureView == null) {
-        // figureAssetCollection doesn't match how we expect a figure to be represented
-        miscellaneous.addAll(figureAssetCollection);
+        // figureAssetGroup doesn't match how we expect a figure to be represented
+        miscellaneous.addAll(figureAssetGroup);
       } else {
         figureViews.add(groomedFigureView);
       }
