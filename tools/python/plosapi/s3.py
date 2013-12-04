@@ -15,7 +15,7 @@ from boto.s3.connection import S3Connection
 from boto.s3.connection import Location
 from time import sleep
 
-import os, sys, re, string, requests, md5, json, traceback
+import os, sys, re, string, requests, hashlib, json, traceback
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -245,7 +245,7 @@ class S3:
         Fetch the data and write it to a temporary file. Return the MD5
         hash of the fle contents.
         """
-        m = md5.new()
+        m = hashlib.md5()
         k = self.bucket.get_key(fullKey)
         with open(fname, 'wb') as f:
             for chunk in k:
@@ -470,7 +470,7 @@ class S3:
         # Sometimes S3 doesn't respond quickly 
         while(cnt < retry):
             try:
-                s3key.set_contents_from_filename(fname, cb=cb, reduced_redundancy=reduced_redundancy)
+                s3key.set_contents_from_filename(fname, cb=cb, replace=True, reduced_redundancy=reduced_redundancy)
                 status = 'COPIED'
                 cnt = retry
             except Exception as e:

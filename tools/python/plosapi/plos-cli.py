@@ -5,7 +5,7 @@
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, traceback, json, re, requests, md5
+import os, sys, traceback, json, re, requests, hashlib 
 from plosapi import Rhino, S3, Currents
 
 __author__    = 'Bill OConnor'

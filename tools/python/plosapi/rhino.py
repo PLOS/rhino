@@ -79,7 +79,7 @@ class Rhino:
         if r.status_code == 200:
             with open(fname, 'wb') as f:
                 for chunk in r.iter_content(1024*1024,decode_unicode=False):
-                    # m.update(chunk)
+                    m.update(chunk)
                     f.write(chunk)
                 f.close()
         else:

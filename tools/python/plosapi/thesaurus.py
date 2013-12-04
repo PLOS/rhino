@@ -36,7 +36,7 @@ class Thesaurus():
     def buildRequest(self, theText, thesaurusName=None):
         """
         """
-        return self._REQUEST_TMPLT.format(tName=self._THESARUS, theText=escape(theText.encode('utf-8')))
+        return self._REQUEST_TMPLT.format(tName=self._THESARUS, theText=escape(theText))
 
     def getSubjectTerms(self, theText):
         """
