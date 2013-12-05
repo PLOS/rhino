@@ -11,13 +11,9 @@ import org.ambraproject.rhino.view.JsonWrapper;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -34,13 +30,6 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
 
   @Autowired
   private HibernateTemplate hibernateTemplate;
-
-  private static DetachedCriteria journalCriteria() {
-    return DetachedCriteria.forClass(Journal.class)
-        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        .addOrder(Order.asc("journalKey"))
-        ;
-  }
 
   @Override
   public void listJournals(ResponseReceiver receiver, MetadataFormat format) throws IOException {
@@ -97,9 +86,6 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
             .add(Restrictions.eq("journalKey", journalKey))
-            .setFetchMode("volumes", FetchMode.JOIN)
-            .setFetchMode("volumes.issues", FetchMode.JOIN)
-            .setFetchMode("articleList", FetchMode.JOIN)
         ));
     if (journal == null) {
       throw new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND);

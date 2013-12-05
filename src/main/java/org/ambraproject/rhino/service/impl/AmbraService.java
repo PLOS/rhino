@@ -26,6 +26,7 @@ import com.google.common.io.Closer;
 import com.google.gson.Gson;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -35,7 +36,9 @@ import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -89,6 +92,15 @@ public abstract class AmbraService {
             .setProjection(Projections.rowCount())
         ));
     return count > 0L;
+  }
+
+  protected static DetachedCriteria journalCriteria() {
+    return DetachedCriteria.forClass(Journal.class)
+        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        .setFetchMode("volumes", FetchMode.JOIN)
+        .setFetchMode("volumes.issues", FetchMode.JOIN)
+        .setFetchMode("articleList", FetchMode.JOIN)
+        .addOrder(Order.asc("journalKey"));
   }
 
   protected RestClientException reportNotFound(DoiBasedIdentity id) {

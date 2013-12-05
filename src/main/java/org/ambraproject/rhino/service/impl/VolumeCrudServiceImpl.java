@@ -73,11 +73,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
 
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Journal.class)
+        hibernateTemplate.findByCriteria(journalCriteria()
             .add(Restrictions.eq("journalKey", journalKey))
-            .setFetchMode("volumes", FetchMode.JOIN)
-            .setFetchMode("articleList", FetchMode.JOIN)
         ));
     if (journal == null) {
       String message = "Journal not found for journal key: " + journalKey;

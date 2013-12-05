@@ -367,12 +367,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       journals = Sets.newHashSetWithExpectedSize(0);
     } else {
       Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-          hibernateTemplate.findByCriteria(DetachedCriteria
-              .forClass(Journal.class)
+          hibernateTemplate.findByCriteria(journalCriteria()
               .add(Restrictions.eq("eIssn", eissn))
-              .setFetchMode("volumes", FetchMode.JOIN) // so the article can be dumped to JSON later
-              .setFetchMode("articleList", FetchMode.JOIN)
-              .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
+          ));
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
         throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
