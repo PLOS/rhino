@@ -1,8 +1,6 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Collections2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -26,13 +24,6 @@ public class JournalNonAssocView implements JsonOutputView {
     this.journal = Preconditions.checkNotNull(journal);
   }
 
-  private static final Function<Journal, JournalNonAssocView> WRAP = new Function<Journal, JournalNonAssocView>() {
-    @Override
-    public JournalNonAssocView apply(Journal input) {
-      return new JournalNonAssocView(input);
-    }
-  };
-
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
@@ -44,14 +35,19 @@ public class JournalNonAssocView implements JsonOutputView {
     return serialized;
   }
 
-  public static class ListView extends KeyedListView<JournalNonAssocView> {
-    private ListView(Collection<? extends JournalNonAssocView> values) {
+  public static class ListView extends KeyedListView<Journal> {
+    private ListView(Collection<? extends Journal> values) {
       super(values);
     }
 
     @Override
-    protected String getKey(JournalNonAssocView value) {
-      return value.journal.getJournalKey();
+    protected String getKey(Journal value) {
+      return value.getJournalKey();
+    }
+
+    @Override
+    protected Object wrap(Journal value) {
+      return new JournalNonAssocView(value);
     }
   }
 
@@ -62,9 +58,8 @@ public class JournalNonAssocView implements JsonOutputView {
    * @param journals the journals to wrap
    * @return the view
    */
-  public static KeyedListView<JournalNonAssocView> wrapList(Collection<Journal> journals) {
-    Collection<JournalNonAssocView> viewList = Collections2.transform(journals, WRAP);
-    return new ListView(viewList);
+  public static KeyedListView<Journal> wrapList(Collection<Journal> journals) {
+    return new ListView(journals);
   }
 
 }

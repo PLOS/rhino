@@ -1,8 +1,6 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Collections2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -34,27 +32,24 @@ public class IssueOutputView implements JsonOutputView {
     return serialized;
   }
 
-  private static final Function<Issue, IssueOutputView> WRAP = new Function<Issue, IssueOutputView>() {
-    @Override
-    public IssueOutputView apply(Issue input) {
-      return new IssueOutputView(input);
-    }
-  };
-
-  public static class ListView extends KeyedListView<IssueOutputView> {
-    private ListView(Collection<? extends IssueOutputView> values) {
+  public static class ListView extends KeyedListView<Issue> {
+    private ListView(Collection<? extends Issue> values) {
       super(values);
     }
 
     @Override
-    protected String getKey(IssueOutputView value) {
-      return DoiBasedIdentity.asIdentifier(value.issue.getIssueUri());
+    protected String getKey(Issue value) {
+      return DoiBasedIdentity.asIdentifier(value.getIssueUri());
+    }
+
+    @Override
+    protected Object wrap(Issue value) {
+      return new IssueOutputView(value);
     }
   }
 
-  public static KeyedListView<IssueOutputView> wrapList(Collection<Issue> issues) {
-    Collection<IssueOutputView> viewList = Collections2.transform(issues, WRAP);
-    return new ListView(viewList);
+  public static KeyedListView<Issue> wrapList(Collection<Issue> issues) {
+    return new ListView(issues);
   }
 
 }

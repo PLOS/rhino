@@ -126,7 +126,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serializePingbackDigest(serialized, context);
 
     Set<Journal> journals = article.getJournals();
-    KeyedListView<JournalNonAssocView> journalsView = JournalNonAssocView.wrapList(journals);
+    KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);

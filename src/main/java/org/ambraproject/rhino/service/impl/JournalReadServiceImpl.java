@@ -34,7 +34,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   @Override
   public void listJournals(ResponseReceiver receiver, MetadataFormat format) throws IOException {
     List<Journal> journals = hibernateTemplate.findByCriteria(journalCriteria());
-    KeyedListView<JournalNonAssocView> view = JournalNonAssocView.wrapList(journals);
+    KeyedListView<Journal> view = JournalNonAssocView.wrapList(journals);
     serializeMetadata(format, receiver, view);
   }
 

@@ -11,7 +11,7 @@ import java.util.Collections;
 /**
  * An output view of objects, which presents those objects as members of one big JSON object.
  *
- * @param <T> the value type
+ * @param <T> the value type to represent
  */
 public abstract class KeyedListView<T> implements JsonOutputView {
 
@@ -29,6 +29,16 @@ public abstract class KeyedListView<T> implements JsonOutputView {
    */
   protected abstract String getKey(T value);
 
+  /**
+   * Represent a value in a serializable view. By default, just use the value as the view.
+   *
+   * @param value the object to represent
+   * @return the view
+   */
+  protected Object wrap(T value) {
+    return value;
+  }
+
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serializedList = new JsonObject();
@@ -38,7 +48,8 @@ public abstract class KeyedListView<T> implements JsonOutputView {
       if (serializedList.has(key)) {
         throw new IllegalStateException("Collision on key: " + key);
       }
-      serializedList.add(key, context.serialize(value));
+      Object view = wrap(value);
+      serializedList.add(key, context.serialize(view));
     }
     return serializedList;
   }

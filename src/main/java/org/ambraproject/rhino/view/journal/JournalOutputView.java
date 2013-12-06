@@ -29,7 +29,7 @@ public class JournalOutputView implements JsonOutputView {
     JsonObject serialized = context.serialize(journal).getAsJsonObject();
 
     List<Volume> volumes = journal.getVolumes();
-    KeyedListView<VolumeOutputView> volumeView = VolumeOutputView.wrapList(volumes);
+    KeyedListView<Volume> volumeView = VolumeOutputView.wrapList(volumes);
     serialized.add("volumes", context.serialize(volumeView));
 
     Issue currentIssue = journal.getCurrentIssue();
