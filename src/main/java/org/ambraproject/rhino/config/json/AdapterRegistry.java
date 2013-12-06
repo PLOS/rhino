@@ -50,11 +50,14 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
+      .add(org.ambraproject.rhino.view.journal.IssueOutputView.ListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.class)
+      .add(org.ambraproject.rhino.view.journal.JournalNonAssocView.ListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalOutputView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
+      .add(org.ambraproject.rhino.view.journal.VolumeOutputView.ListView.class)
 
       .build();
 
