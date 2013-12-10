@@ -99,13 +99,9 @@ class Corrections:
                 pmcid = row[8].replace('PMC', '')
                 url = self._OAI_XML_TMPL.format(id=pmcid)
                 (text, md5) = self._getBinary(url)
-                tree = etree.fromstring(text)
-                root = tree.findall(self._QUERY_STR)[0]
-                child = root[0]
-                newText = etree.tostring(child,  encoding='utf-8')
                 with open(fname, 'wb') as f:
-                    f.write(self._HEADER)
-                    f.write(newText)
+                    #f.write(self._HEADER)
+                    f.write(text)
                     f.close()
                 yield (pmcid, fname, md5)
         os.chdir('../')
