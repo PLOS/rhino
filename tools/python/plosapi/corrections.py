@@ -103,9 +103,6 @@ class Corrections:
                 root = tree.findall(self._QUERY_STR)[0]
                 child = root[0]
                 newText = etree.tostring(child,  encoding='utf-8')
-                newText = newText.replace('xmlns="http://dtd.nlm.nih.gov/2.0/xsd/archivearticle"', '')
-                newText = newText.replace('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
-                newText = newText.replace('xsi:schemaLocation="http://dtd.nlm.nih.gov/archiving/2.3/xsd/archivearticle.xsd"', '')
                 with open(fname, 'wb') as f:
                     f.write(self._HEADER)
                     f.write(newText)
