@@ -76,8 +76,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -249,27 +247,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return article;
   }
 
-  private static final Pattern ZIP_ENTRY_EXCLUDE_RE = Pattern.compile("\\.xml(\\.\\w+)?");
-
   /**
    * Determines if we should save a file contained within an article archive as an asset.
    *
-   * @param filename the name of a file within a .zip archive
+   * @param filename           the name of a file within a .zip archive
+   * @param articleXmlFilename the file name for the article XML, as given by the manifest (must be lowercase)
    * @return true if this file should be persisted as an asset
    */
   @VisibleForTesting
-  public static boolean shouldSaveAssetFile(String filename) {
+  public static boolean shouldSaveAssetFile(String filename, String articleXmlFilename) {
     Preconditions.checkNotNull(filename);
     filename = filename.toLowerCase().trim();
-    if (filename.startsWith("manifest.")) {
-      return false;
-    }
-    Matcher matcher = ZIP_ENTRY_EXCLUDE_RE.matcher(filename);
-    return !matcher.find();
+    return !(filename.startsWith("manifest.") || filename.startsWith(articleXmlFilename));
   }
 
   private void addAssetFiles(Article article, ZipFile zipFile, ManifestXml manifest)
       throws IOException, FileStoreException {
+    String articleXmlFilename = manifest.getArticleXml().toLowerCase();
 
     // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
 
@@ -277,7 +271,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     while (entries.hasMoreElements()) {
       ZipEntry entry = entries.nextElement();
       String filename = entry.getName();
-      if (shouldSaveAssetFile(filename)) {
+      if (shouldSaveAssetFile(filename, articleXmlFilename)) {
         String[] fields = filename.split("\\.");
 
         // Not sure why, but the existing admin code always converts the extension to UPPER.
