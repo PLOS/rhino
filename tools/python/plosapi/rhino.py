@@ -68,13 +68,17 @@ class Rhino:
         else:
             return requests.get(url, stream=True)
 
-    def _getBinary(self, fname, url):
+    def _getBinary(self, fname, url, useHash='MD5'):
         """
         Most of the files other than the article xml are binary in nature.
-        Fetch the data and write it to a temporary file. Return the MD5
+        Fetch the data and write it to a temporary file. Return the MD5 | SHA1
         hash of the file contents.
         """
-        m = hashlib.md5()
+        if useHash == 'MD5':
+            m = hashlib.md5()
+        else:
+            m = hashlib.sha1()
+
         r = self._doGet(url)
         if r.status_code == 200:
             with open(fname, 'wb') as f:
@@ -94,10 +98,24 @@ class Rhino:
         m = hashlib.md5()
         r = self._doGet(url)
         if r.status_code == 200:
-           for chunk in r.iter_content(1024):
+           for chunk in r.iter_content(64*1024):
                m.update(chunk)
         else:
            raise Exception('rhino:failed to get MD5 ' + url)
+        return m.hexdigest()
+
+    def _getSHA1(self, url):
+        """
+        Read from the URL byte by byte calculating
+        the SHA1 hash. 
+        """
+        m = hashlib.sha1()
+        r = self._doGet(url)
+        if r.status_code == 200:
+           for chunk in r.iter_content(64*1024):
+               m.update(chunk)
+        else:
+           raise Exception('rhino:failed to get SHA1 ' + url)
         return m.hexdigest()
 
     def _afidsFromDoi(self, doiSuffix):
@@ -227,16 +245,26 @@ class Rhino:
                     afidSuf = '.'.join(afid[1].split('.')[:-1])
                     result.update(self.asset(afidSuf))
                 else:
-                    raise Exception('rhino:invalid s3 prefix ' + fullAFID)
+                    raise Exception('rhino:invalid prefix ' + fullAFID)
         return result
 
     def assetFileMD5(self, afidSuffix):
         """
+        Return the MD5 hash for the asser identified by
+        the afid suffix.
         """
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getMD5(url)
 
-    def getAfid(self, afidSuffix, fname=None):
+    def assetFileSHA1(self, afidSuffix):
+        """
+        Return the SHA1 hash for the asset identified by the 
+        afid suffix.
+        """
+        url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
+        return self._getSHA1(url)
+
+    def getAfid(self, afidSuffix, fname=None, useHash='MD5'):
         """
         Retreive the actual asset data. If the name is not 
         specified use the afid as the file name.
@@ -244,7 +272,7 @@ class Rhino:
         if fname == None:
             fname = afidSuffix
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
-        return self._getBinary(fname, url)
+        return self._getBinary(fname, url, useHash=useHash)
     
     def putAfid(self, afidSuffix, fname, articleMeta, assetMeta, md5, prefix=None,
                   cb=None, reduce_redundancy=True, retry=5, wait=2):    
