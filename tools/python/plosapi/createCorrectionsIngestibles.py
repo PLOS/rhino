@@ -6,13 +6,17 @@
 
   Accepts a source directory location and a destination directory location
 
-  This script looks at every file (XML) in the source directory given
-  Run an XSL Transform on the XML
-  Tries to correct a bunch of known errors in our data
-  Dowloads from the plos website any associated resources
-  Creates a manifest file
-  Create a zip archive with the XML and write this to disk
+  This script:
+  * Looks at every file (XML) in the source directory given
+  * Runs a XSL Transform on the XML to make it PLOS friendly
+  * Dowloads from the plos website any associated resources
+  * Tries to correct a bunch of known errors in XML and asset names
+  * Creates a manifest file
+  * Creates a zip archive with the XML and writes this to disk for each article XML
 """
+
+# Attention.  There are a number of places where I 'fudge' the data to get around
+# errors.  Everyplace I do that in the code below has a "#FIX_DATA" text next to it
 
 import sys, zipfile, shutil, os, httplib2, json, urllib2, csv, tarfile, MySQLdb, re
 from urlparse import urlparse
@@ -35,10 +39,7 @@ articleNodeTransform = etree.XSLT(articleNodeXslt)
 plosifyArticleXslt = etree.XML(open('xsl/plosifyArticle.xsl', 'r').read())
 plosifyArticleTransform = etree.XSLT(plosifyArticleXslt)
 
-#Global script arguments
-args = None
-
-def createIngestableForArticle(file):
+def createIngestableForArticle(file, destination):
   articleXML = open(file, 'r').read()
   articleDOM = etree.XML(articleXML)
   articleDOM = plosifyArticle(articleDOM)
@@ -70,7 +71,7 @@ def createIngestableForArticle(file):
   if(correctedArticleDOI == None):
     raise Exception("Can not find corrected article DOI")
 
-  #Huh?  
+  #Some really bad data here.  The annotations are flat out wrong?  HUH?  
   #FIX_DATA
   if(correctionDOI == "10.1371/annotation/8f2ddf91-3499-4627-9a91-449b78465f9d"):
     correctionDOI = "10.1371/annotation/1345f9b0-016e-4123-9e72-6ccc4fa17ba2"
@@ -90,37 +91,42 @@ def createIngestableForArticle(file):
   if(correctionDOI == "10.1371/annotation/a40342be-8f9e-4650-a845-1e91ff06c27c"):
     correctionDOI = "10.1371/annotation/56ccf999-c461-4598-a883-55fbac9751a6"
 
-  #Fix another inconsistancy
+  #Fix another inconsistancy, some DOIs have info:doi/, some not.
   #FIX_DATA
   correctedArticleDOI = correctedArticleDOI.replace("info:doi/","")
-  correctedArticleBody = getCorrectedArticleBodyFromDB(correctionDOI)
+  annotationBody = getAnnotationBodyFromDB(correctionDOI)
 
-  assetURLs = getAssetsFromAnnotationBody(correctedArticleBody)
+  assetURLs = getAssetsFromAnnotationBody(annotationBody)
   assetDict = fetchCorrectionAssets(assetURLs)
 
-  articleDOM = fixCorrectionBody(assetDict, correctedArticleBody, articleDOM)
+  articleDOM = replaceCorrectionBody(assetDict, annotationBody, articleDOM)
 
   #Create Manifest and write to temp folder
-  manifestFile = createManifest(correctionDOI, assetDict)
+  #manifestFile = createManifest(correctionDOI, assetDict)
+  manifestFile = None
   xmlFile = "{0}/{1}.xml".format(tempFolder, 
     correctionDOI.replace("10.1371/annotation/",""))
+  
   #Write XML to disk
-  writeFile(xmlFile,  etree.tostring(articleDOM))
+  #Kludgy way of appending XML DOC Type data.  TODO: Improve on this?
+  writeFile(xmlFile,  """<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE article
+    PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+  """ + etree.tostring(articleDOM))
 
-  writeZipFile(correctionDOI, xmlFile, manifestFile, assetDict)
+  writeZipFile(correctionDOI, xmlFile, manifestFile, assetDict, destination)
   
   #TODO: cleanup
 
 #Create zip and place in destination
-def writeZipFile(correctionDOI, xmlFile, manifestFile, assetDict):
-  zipFileName = "{0}/{1}.zip".format(args.destination, correctionDOI.replace("10.1371/annotation/",""))
+def writeZipFile(correctionDOI, xmlFile, manifestFile, assetDict, destination):
+  zipFileName = "{0}/{1}.zip".format(destination, correctionDOI.replace("10.1371/annotation/",""))
 
   zipFile = zipfile.ZipFile(zipFileName, "w")
   zipFile.write(xmlFile, os.path.basename(xmlFile), zipfile.ZIP_DEFLATED)
-  zipFile.write(xmlFile, os.path.basename(manifestFile), zipfile.ZIP_DEFLATED)
+  #zipFile.write(manifestFile, os.path.basename(manifestFile), zipfile.ZIP_DEFLATED)
 
   for assetDOI, assetData in assetDict.iteritems():
-    zipFile.write(assetData["fileName"], os.path.basename(assetData["fileName"]), zipfile.ZIP_DEFLATED)
+    zipFile.write(assetData["filePathName"], assetData["filename"], zipfile.ZIP_DEFLATED)
 
   zipFile.close()
 
@@ -134,6 +140,8 @@ def fetchCorrectionAssets(assetURLs):
   for assetURL in assetURLs:
     filename = basename(urlparse(assetURL).path)
 
+    #A lot of our assets have inconsitant names.  Here I attempt to bring
+    #them in line
     #FIX_DATA
     if(filename == "pgen.1000235.cn.g006.tif"):
       filename = "pgen.1000235.g006.cn.tif"
@@ -167,67 +175,76 @@ def fetchCorrectionAssets(assetURLs):
 
     ##TODO: More cleanup
 
-    assetFileName = "{0}/{1}".format(cacheFolder, filename)
+    assetFilePathName = "{0}/{1}".format(cacheFolder, filename)
     
-    print assetFileName
+    print assetFilePathName
     
-    if not os.path.exists(assetFileName):
+    if not os.path.exists(assetFilePathName):
       resp, content = httplib2.Http().request(assetURL)
-      with open(assetFileName, "wb") as f:
+      with open(assetFilePathName, "wb") as f:
         f.write(content)
 
-    assetDOI, extension = functionCreateAssetDOI(assetFileName)
-    results[assetDOI] = { "url": assetURL, "fileName": assetFileName, "extension": extension }
+    assetDOI, extension = functionCreateAssetDOI(assetFilePathName)
+    results[assetDOI] = { "url": assetURL, "filename": filename,
+      "filePathName": assetFilePathName, 
+      "extension": extension }
 
   return results
 
-def functionCreateAssetDOI(assetFileName):
+def functionCreateAssetDOI(assetFilePathName):
   #Given: pone.0040621.g002.cn.tif return pone.0040621.g002.cn
-  path, assetDOI = os.path.split(assetFileName)
+  path, assetDOI = os.path.split(assetFilePathName)
   assetDOI, extension = os.path.splitext(assetDOI)
 
-  print "assetDOI: {0}".format(assetDOI)
+  #splitext leaves the period attached
+  extension = extension.lstrip(".")
+  assetDOI = "10.1371/journal.{0}".format(assetDOI)
+
+  print "assetDOI: {0}, Extension: {1}".format(assetDOI, extension)
   return assetDOI, extension
 
-def fixCorrectionBody(assetDict, correctedArticleBody, articleDOM):
+def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
   #Fix invalid XML characters
-  correctedArticleBody = correctedArticleBody.replace("&","&amp;").replace('>', '&gt;').replace('<', '&lt;')
+  annotationBody = annotationBody.replace("&","&amp;").replace('>', '&gt;').replace('<', '&lt;')
 
   for assetDOI, assetData in assetDict.iteritems():
-    print assetDOI
-    assetType = assetDOI.split(".")[2]
+    #print assetDOI
+    assetType = assetDOI.split(".")[4]
 
-    #print correctedArticleBody
+    #print annotationBody
+
+    print "assetType: {0}".format(assetType)
 
     #Handle new PDF?
     if(assetType == "cn" or "s" in assetType):
-      correctedArticleBody = correctedArticleBody.replace(assetData["url"], """
+      annotationBody = annotationBody.replace(assetData["url"], """
           <supplementary-material content-type="local-data">
-            <media xlink:href="{0}" mimetype="application" mime-subtype="{1}">
+            <media xlink:href="info:doi/{0}" mimetype="application" mime-subtype="{1}" xlink:type=\"simple\">
               <caption></caption>
             </media>
           </supplementary-material>
         """.format(assetDOI, assetData["extension"]))
 
     if("g" in assetType):
-      correctedArticleBody = correctedArticleBody.replace(assetData["url"], "<fig><graphic xlink:href=\"{0}\"/></fig>".format(assetDOI))
+      print assetData["url"]
+      annotationBody = annotationBody.replace(assetData["url"], "<fig><graphic xlink:href=\"info:doi/{0}\" xlink:type=\"simple\"/></fig>".format(assetDOI))
       
-  #print correctedArticleBody
+  #print annotationBody
 
   #There should only ever be one body, this is just easy to write / read
   #article
-  correctedArticleBody = "<p xmlns:xlink=\"http://www.w3.org/1999/xlink\">{0}</p>".format(correctedArticleBody.replace("&","&amp;"))
-  #print correctedArticleBody
-  articleDOM.replace(articleDOM.find("body"), etree.fromstring(correctedArticleBody))
+  annotationBody = "<p xmlns:xlink=\"http://www.w3.org/1999/xlink\">{0}</p>".format(annotationBody.replace("&","&amp;"))
+  #print annotationBody
+  articleDOM.replace(articleDOM.find("body"), etree.fromstring(annotationBody))
   
   #TODO: Handle e0
   #TODO: Handle t0
     
   return articleDOM
 
-def getAssetsFromAnnotationBody(correctedArticleBody):
+def getAssetsFromAnnotationBody(annotationBody):
   #http://stackoverflow.com/questions/6883049/regex-to-find-urls-in-string-in-python
-  urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', correctedArticleBody)
+  urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', annotationBody)
   results = set()
   
   for url in urls:
@@ -239,8 +256,7 @@ def getAssetsFromAnnotationBody(correctedArticleBody):
 
   return results
 
-
-def getCorrectedArticleBodyFromDB(correctionDOI):
+def getAnnotationBodyFromDB(correctionDOI):
   cur = con.cursor()
   sql = "select body from annotation where annotationURI = 'info:doi/{0}'".format(correctionDOI)
 
@@ -253,13 +269,6 @@ def getCorrectedArticleBodyFromDB(correctionDOI):
     return row[0].replace("http://plos", "http://www.plos")
 
   raise Exception("Cound not find annotation for {0}".format(correctionDOI))
-
-def fetchFigureFromPMC(PMCID, assetDOI, tempFolder):
-  print "Fetch from PMC: {0},{1}".format(PMCID, assetDOI)
-
-  localFile = zipfile.ZipFile(getPMCData(PMCID))
-  for name in localFile.nameList():
-    print name
 
 #Get the corrected article DOI from the XML
 #The XML comes in many flavors:
@@ -323,6 +332,7 @@ def writeFile(path, contents):
   finally:
     f.close()
 
+#Get the DOI for a given PMID
 def getPMID2Doi(pmcRefID):
   filename = "{0}/doi-{1}.json".format(cacheFolder,pmcRefID)
 
@@ -349,57 +359,6 @@ def getCorrectionDOI(articleDOM):
   #Yeah, could make this a lot safer
   return articleDOM.findall(".//article-id[@pub-id-type='doi']")[0].text
 
-def getPMCData(PMCID):
-  remoteFilename = getArchiveForPMCID(PMCID)
-  localFilename = "{0}/{1}.tar.gz".format(cacheFolder, PMCID)
-
-  if not os.path.exists(localFilename):
-    print "Loading PMC file {0}".format(remoteFilename)
-
-    f = open(localFilename, 'wb')
-    ftp = FTP("ftp.ncbi.nlm.nih.gov")
-    ftp.login("anonymous", "anonymous")
-    ftp.retrbinary("RETR /pub/pmc/{0}".format(remoteFilename), f.write)
-    f.close()
-    ftp.quit()
-
-    tfile = tarfile.open(localFilename, 'r:gz')
-    tfile = tarfile.open(localFilename, 'r:gz')
-    dirCreated = tfile.getmembers()[0]
-    tfile.extractall(cacheFolder)
-
-    print "Created: {0}".format(localFilename)
-  else:
-    print "Used cached: {0}".format(localFilename)
-
-  return localFilename 
-
-def getArchiveForPMCID(pmcID):
-  filename = "{0}/file_list.csv".format(cacheFolder)
-  pmcID = "PMC{0}".format(pmcID)
-
-  with open(filename, 'rb') as f:
-    mycsv = csv.reader(f)
-    for row in mycsv:
-      if(row[2] == pmcID):
-        return row[0]
-
-  return None
-
-def getPMCList():
-  localFilename = "{0}/file_list.csv".format(cacheFolder)
-
-  if not os.path.exists(localFilename):
-    print "Loading PMC file list"
-
-    f = open(localFilename, 'wb')
-    ftp = FTP("ftp.ncbi.nlm.nih.gov")
-    ftp.login("anonymous", "anonymous")
-    ftp.retrbinary("RETR /pub/pmc/file_list.csv", f.write)
-    f.close()
-    ftp.quit()
-
-
 # <?xml version="1.0" encoding="UTF-8"?>
 # <!DOCTYPE manifest SYSTEM "manifest.dtd">
 # <manifest>
@@ -419,9 +378,9 @@ def createManifest(correctionDOI, assetDict):
   for assetDOI, assetData in assetDict.iteritems():
     objectInfo = objectInfo + """
       <object uri="info:doi/{0}">
-        <representation name="{1}" entry="{2} />
+        <representation name="{1}" entry="{2}" />
       </object>
-    """.format(assetDOI, assetData["extension"].upper(), assetData["fileName"])
+    """.format(assetDOI, assetData["extension"].upper(), assetData["filename"])
 
   articleInfo = """
     <article uri="info:doi/{0}" main-entry="{1}.xml">
@@ -495,13 +454,10 @@ if __name__ == "__main__":
   if not os.path.exists(cacheFolder):
     os.makedirs(cacheFolder)
 
-  #Fetch list of archives from PMC
-  getPMCList()
-
   for filename in listdir(args.source):
     filename = args.source + "/" + filename
     print filename
-    createIngestableForArticle(filename)
+    createIngestableForArticle(filename, args.destination)
   
   con.close()
 
