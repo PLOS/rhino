@@ -17,15 +17,18 @@ public class GroomedAssetsView {
   private final GroomedAssetFileView articleXml;
   private final GroomedAssetFileView articlePdf;
   private final ImmutableList<GroomedImageView> figures;
+  private final ImmutableList<GroomedImageView> graphics;
   private final ImmutableList<GroomedAssetFileView> miscellaneousAssetFiles;
 
   private GroomedAssetsView(GroomedAssetFileView articleXml,
                             GroomedAssetFileView articlePdf,
                             List<GroomedImageView> figures,
+                            List<GroomedImageView> graphics,
                             List<GroomedAssetFileView> miscellaneousAssetFiles) {
     this.articleXml = Preconditions.checkNotNull(articleXml);
     this.articlePdf = articlePdf; // nullable
     this.figures = ImmutableList.copyOf(figures);
+    this.graphics = ImmutableList.copyOf(graphics);
     this.miscellaneousAssetFiles = ImmutableList.copyOf(miscellaneousAssetFiles);
   }
 
@@ -65,7 +68,8 @@ public class GroomedAssetsView {
     GroomedAssetFileView articlePdfView = (articlePdf == null) ? null : GroomedAssetFileView.create(articlePdf);
 
     Collection<Collection<ArticleAsset>> figureAssetGroups = figures.asMap().values();
-    List<GroomedImageView> figureViews = Lists.newArrayListWithCapacity(figureAssetGroups.size());
+    List<GroomedImageView> figureViews = Lists.newArrayList();
+    List<GroomedImageView> graphicViews = Lists.newArrayList();
     for (Collection<ArticleAsset> figureAssetGroup : figureAssetGroups) {
 
       GroomedImageView groomedImageView;
@@ -84,7 +88,18 @@ public class GroomedAssetsView {
         // figureAssetGroup doesn't match how we expect a figure to be represented
         miscellaneous.addAll(figureAssetGroup);
       } else {
-        figureViews.add(groomedImageView);
+        List<GroomedImageView> viewType;
+        switch (groomedImageView.getImageType()) {
+          case FIGURE:
+            viewType = figureViews;
+            break;
+          case GRAPHIC:
+            viewType = graphicViews;
+            break;
+          default:
+            throw new AssertionError();
+        }
+        viewType.add(groomedImageView);
       }
     }
 
@@ -94,7 +109,7 @@ public class GroomedAssetsView {
       miscellaneousViews.add(GroomedAssetFileView.createWithFullMetadata(asset));
     }
 
-    return new GroomedAssetsView(articleXmlView, articlePdfView, figureViews, miscellaneousViews);
+    return new GroomedAssetsView(articleXmlView, articlePdfView, figureViews, graphicViews, miscellaneousViews);
   }
 
 }
