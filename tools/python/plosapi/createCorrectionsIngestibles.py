@@ -11,7 +11,6 @@
   * Runs a XSL Transform on the XML to make it PLOS friendly
   * Dowloads from the plos website any associated resources
   * Tries to correct a bunch of known errors in XML and asset names
-  * Creates a manifest file
   * Creates a zip archive with the XML and writes this to disk for each article XML
 """
 
@@ -101,9 +100,6 @@ def createIngestableForArticle(file, destination):
 
   articleDOM = replaceCorrectionBody(assetDict, annotationBody, articleDOM)
 
-  #Create Manifest and write to temp folder
-  #manifestFile = createManifest(correctionDOI, assetDict)
-  manifestFile = None
   xmlFile = "{0}/{1}.xml".format(tempFolder, 
     correctionDOI.replace("10.1371/annotation/",""))
   
@@ -113,17 +109,16 @@ def createIngestableForArticle(file, destination):
     PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
   """ + etree.tostring(articleDOM))
 
-  writeZipFile(correctionDOI, xmlFile, manifestFile, assetDict, destination)
+  writeZipFile(correctionDOI, xmlFile, assetDict, destination)
   
   #TODO: cleanup
 
 #Create zip and place in destination
-def writeZipFile(correctionDOI, xmlFile, manifestFile, assetDict, destination):
+def writeZipFile(correctionDOI, xmlFile, assetDict, destination):
   zipFileName = "{0}/{1}.zip".format(destination, correctionDOI.replace("10.1371/annotation/",""))
 
   zipFile = zipfile.ZipFile(zipFileName, "w")
   zipFile.write(xmlFile, os.path.basename(xmlFile), zipfile.ZIP_DEFLATED)
-  #zipFile.write(manifestFile, os.path.basename(manifestFile), zipfile.ZIP_DEFLATED)
 
   for assetDOI, assetData in assetDict.iteritems():
     zipFile.write(assetData["filePathName"], assetData["filename"], zipfile.ZIP_DEFLATED)
@@ -173,7 +168,56 @@ def fetchCorrectionAssets(assetURLs):
     if(filename == "pbio.0060178.cn.g002.tif"):
       filename = "pbio.0060178.g002.cn.tif"
 
-    ##TODO: More cleanup
+    #Sup info?
+    if(filename == "pone.0049461.001.cn.pdf"):
+      filename = "pone.0049461.s001.cn.pdf"
+
+    if(filename == "pone.0049342.001.cn.tif"):
+      filename = "pone.0049342.g001.cn.tif"
+
+    if(filename == "pone.0050183.001.cn.docx"):
+      filename = "pone.0050183.s001.cn.docx"
+
+    if(filename == "pone.0040125.001.cn.tif"):
+      filename = "pone.0040125.g001.cn.tif"
+      
+    if(filename == "pone.0001511.006.cn.tif"):
+      filename = "pone.0001511.g006.cn.tif" 
+      
+    if(filename == "pone.0025359.001.cn.docx"):
+      filename = "pone.0025359.s001.cn.docx" 
+
+    if(filename == "pone.0059499.001.cn.docx"):
+      filename = "pone.0059499.s001.cn.docx" 
+      
+    if(filename == "pone.0056544.001.cn.tif"):
+      filename = "pone.0056544.s001.cn.tif" 
+
+    if(filename == "pone.0052603.001.cn.tif"):
+      filename = "pone.0052603.g001.cn.tif" 
+
+    if(filename == "pone.0052603.002.cn.tif"):
+      filename = "pone.0052603.g002.cn.tif"
+
+    if(filename == "pone.0052603.003.cn.tif"):
+      filename = "pone.0052603.g003.cn.tif" 
+
+    if(filename == "pone.0052603.004.cn.tif"):
+      filename = "pone.0052603.g004.cn.tif" 
+
+    if(filename == "pone.0052603.005.cn.tif"):
+      filename = "pone.0052603.g005.cn.tif" 
+
+    if(filename == "pone.0071506.001.cn.pdf"):
+      filename = "pone.0071506.s001.cn.pdf" 
+
+    if(filename == "pone.0059317.001.cn.tif"):
+      filename = "pone.0059317.g001.cn.tif" 
+
+    if(filename == "pone.0055847.001.cn.tif"):
+      filename = "pone.0055847.g001.cn.tif"
+
+    ##TODO: More cleanup?
 
     assetFilePathName = "{0}/{1}".format(cacheFolder, filename)
     
@@ -210,10 +254,8 @@ def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
   for assetDOI, assetData in assetDict.iteritems():
     #print assetDOI
     assetType = assetDOI.split(".")[4]
-
+    IDedAsset = False
     #print annotationBody
-
-    print "assetType: {0}".format(assetType)
 
     #Handle new PDF?
     if(assetType == "cn" or "s" in assetType):
@@ -224,11 +266,23 @@ def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
             </media>
           </supplementary-material>
         """.format(assetDOI, assetData["extension"]))
+      IDedAsset = True
 
-    if("g" in assetType):
-      print assetData["url"]
+    if("g" in assetType or "t" in assetType):
       annotationBody = annotationBody.replace(assetData["url"], "<fig><graphic xlink:href=\"info:doi/{0}\" xlink:type=\"simple\"/></fig>".format(assetDOI))
+      IDedAsset = True
+
+    if("e" in assetType):
+      annotationBody = annotationBody.replace(assetData["url"], "<disp-formula><graphic xlink:href=\"info:doi/{0}\" xlink:type=\"simple\"/></disp-formula>".format(assetDOI))
+      IDedAsset = True
+
+    #Crazy values?  Fix somehow?
+    #10.1371_annotation_b5fe70a2-b190-496c-80b4-53e2aa4885d2.xml
+    #10.1371_annotation_eb238f0f-7582-4318-af95-64ac98d3b0be.xml
       
+    if(IDedAsset == False):
+      raise Exception("I don't know how to format assets of type : '{0}'".format(assetType))
+
   #print annotationBody
 
   #There should only ever be one body, this is just easy to write / read
@@ -237,14 +291,19 @@ def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
   #print annotationBody
   articleDOM.replace(articleDOM.find("body"), etree.fromstring(annotationBody))
   
-  #TODO: Handle e0
   #TODO: Handle t0
     
   return articleDOM
 
 def getAssetsFromAnnotationBody(annotationBody):
+  #Get around issue with:
+  #http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1000590
+  #http://www.plosgenetics.org/corrections/pgen.1000590.e003.cn.tif<br/
+  #FIX_DATA
+  temp = annotationBody.replace("<br/", " ")
+
   #http://stackoverflow.com/questions/6883049/regex-to-find-urls-in-string-in-python
-  urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', annotationBody)
+  urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', temp)
   results = set()
   
   for url in urls:
@@ -334,13 +393,18 @@ def writeFile(path, contents):
 
 #Get the DOI for a given PMID
 def getPMID2Doi(pmcRefID):
-  filename = "{0}/doi-{1}.json".format(cacheFolder,pmcRefID)
+  #The XSL is little aggressive.  Get around issue here with the replace
+  pmcRefID = pmcRefID.replace("info:doi/","")
 
+  filename = "{0}/doi-{1}.json".format(cacheFolder,pmcRefID)
+  print filename
   doi = readFile(filename)
 
   if(doi == None):
     url = "http://www.pmid2doi.org/rest/json/doi/{0}".format(pmcRefID)
+    print url
     resp, content = httplib2.Http().request(url)
+    print content
     jsonResponse = json.loads(content)
     doi = jsonResponse["doi"]
     writeFile(filename, doi)
