@@ -42,7 +42,7 @@ public class GroomedAssetFileView implements JsonOutputView {
 
     JsonObject serializedMetadata = (JsonObject) context.serialize(asset);
     if (!includeFigureFields) {
-      for (FigureMetadataField field : FigureMetadataField.values()) {
+      for (ImageMetadataField field : ImageMetadataField.values()) {
         serializedMetadata.remove(field.getMemberName());
       }
     }
