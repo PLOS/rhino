@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 
 import java.lang.reflect.Type;
 
@@ -44,7 +45,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
 
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
-      .add(org.ambraproject.rhino.view.asset.groomed.GroomedFigureView.class)
+      .add(GroomedImageView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
