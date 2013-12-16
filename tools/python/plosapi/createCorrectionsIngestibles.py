@@ -96,7 +96,7 @@ def createIngestableForArticle(file, destination):
   annotationBody = getAnnotationBodyFromDB(correctionDOI)
 
   assetURLs = getAssetsFromAnnotationBody(annotationBody)
-  assetDict = fetchCorrectionAssets(assetURLs)
+  assetDict = fetchCorrectionAssets(correctionDOI, assetURLs)
 
   articleDOM = replaceCorrectionBody(assetDict, annotationBody, articleDOM)
 
@@ -104,14 +104,24 @@ def createIngestableForArticle(file, destination):
     correctionDOI.replace("10.1371/annotation/",""))
   
   #Write XML to disk
-  #Kludgy way of appending XML DOC Type data.  TODO: Improve on this?
+  #Kludgy way of appending XML DOC Type data and flipping DTDs
+  #TODO: Improve on this?
+  finalXML = etree.tostring(articleDOM)
+  finalXML = finalXML.replace("http://jats.nlm.nih.gov/archiving/1.0/xsd/JATS-archivearticle1.xsd",
+    "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd")
   writeFile(xmlFile,  """<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE article
     PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
-  """ + etree.tostring(articleDOM))
+  """ + finalXML)
 
   writeZipFile(correctionDOI, xmlFile, assetDict, destination)
   
-  #TODO: cleanup
+  print "Zip file for {0} created!".format(correctionDOI)
+  cleanFolder(tempFolder)
+
+def cleanFolder(folder):
+  for file_path in os.listdir(folder):
+    file_path = os.path.join(folder, file_path)
+    os.unlink(file_path)
 
 #Create zip and place in destination
 def writeZipFile(correctionDOI, xmlFile, assetDict, destination):
@@ -128,8 +138,8 @@ def writeZipFile(correctionDOI, xmlFile, assetDict, destination):
   return
 
 #Fetch correction assets, build up a dictionary of the results
-#Cache the binary data
-def fetchCorrectionAssets(assetURLs):
+#Cache the binary data renaming things with the correctionDOI in mind
+def fetchCorrectionAssets(correctionDOI, assetURLs):
   results = dict()
 
   for assetURL in assetURLs:
@@ -219,9 +229,11 @@ def fetchCorrectionAssets(assetURLs):
 
     ##TODO: More cleanup?
 
+    #We actually want the asset filename and DOI to look like:
+    #10.1371/annotation/56ccf999-c461-4598-a883-55fbac9751a6.g001.cn.tif
+    #and: 56ccf999-c461-4598-a883-55fbac9751a6.g001.cn.tif
+    filename = "{0}.{1}".format(correctionDOI[19:], filename[13:])
     assetFilePathName = "{0}/{1}".format(cacheFolder, filename)
-    
-    print assetFilePathName
     
     if not os.path.exists(assetFilePathName):
       resp, content = httplib2.Http().request(assetURL)
@@ -233,16 +245,19 @@ def fetchCorrectionAssets(assetURLs):
       "filePathName": assetFilePathName, 
       "extension": extension }
 
+    print "Fetched asset '{0}' and named it '{1}'".format(assetURL, filename)
+
   return results
 
 def functionCreateAssetDOI(assetFilePathName):
-  #Given: pone.0040621.g002.cn.tif return pone.0040621.g002.cn
+  #Given: pone.0040621.g002.cn.tif return 10.1371/annotation/56ccf999-c461-4598-a883-55fbac9751a6.g002.cn
   path, assetDOI = os.path.split(assetFilePathName)
   assetDOI, extension = os.path.splitext(assetDOI)
 
   #splitext leaves the period attached
   extension = extension.lstrip(".")
-  assetDOI = "10.1371/journal.{0}".format(assetDOI)
+  #Remove the "pone.0068166." text part of the asset DOI
+  assetDOI = "10.1371/annotation/{0}".format(assetDOI)
 
   print "assetDOI: {0}, Extension: {1}".format(assetDOI, extension)
   return assetDOI, extension
@@ -253,7 +268,7 @@ def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
 
   for assetDOI, assetData in assetDict.iteritems():
     #print assetDOI
-    assetType = assetDOI.split(".")[4]
+    assetType = assetDOI.split(".")[2]
     IDedAsset = False
     #print annotationBody
 
@@ -283,15 +298,9 @@ def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
     if(IDedAsset == False):
       raise Exception("I don't know how to format assets of type : '{0}'".format(assetType))
 
-  #print annotationBody
-
   #There should only ever be one body, this is just easy to write / read
-  #article
-  annotationBody = "<p xmlns:xlink=\"http://www.w3.org/1999/xlink\">{0}</p>".format(annotationBody.replace("&","&amp;"))
-  #print annotationBody
+  annotationBody = "<body xmlns:xlink=\"http://www.w3.org/1999/xlink\">{0}</body>".format(annotationBody.replace("&","&amp;"))
   articleDOM.replace(articleDOM.find("body"), etree.fromstring(annotationBody))
-  
-  #TODO: Handle t0
     
   return articleDOM
 
@@ -325,6 +334,7 @@ def getAnnotationBodyFromDB(correctionDOI):
   rows = cur.fetchall()
   for row in rows:
     #FIX_DATA
+    print "Fetched annotation '{0}' from database.".format(correctionDOI)
     return row[0].replace("http://plos", "http://www.plos")
 
   raise Exception("Cound not find annotation for {0}".format(correctionDOI))
@@ -397,14 +407,12 @@ def getPMID2Doi(pmcRefID):
   pmcRefID = pmcRefID.replace("info:doi/","")
 
   filename = "{0}/doi-{1}.json".format(cacheFolder,pmcRefID)
-  print filename
   doi = readFile(filename)
 
   if(doi == None):
     url = "http://www.pmid2doi.org/rest/json/doi/{0}".format(pmcRefID)
     print url
     resp, content = httplib2.Http().request(url)
-    print content
     jsonResponse = json.loads(content)
     doi = jsonResponse["doi"]
     writeFile(filename, doi)
@@ -492,6 +500,7 @@ def plosifyArticle(articleDOM):
   articleDOM = removeNSTransform(articleDOM)
   articleDOM = plosifyArticleTransform(articleDOM)
   
+  print "PLOSIFIED Article XML"
   #TODO: Better way to do this?
   return etree.fromstring(str(articleDOM))
 
@@ -520,7 +529,7 @@ if __name__ == "__main__":
 
   for filename in listdir(args.source):
     filename = args.source + "/" + filename
-    print filename
+    print "Creating zip archive for: {0}".format(filename)
     createIngestableForArticle(filename, args.destination)
   
   con.close()
