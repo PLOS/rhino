@@ -11,7 +11,7 @@
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, traceback, hashlib
+import os, sys, traceback, hashlib, time
 from plosapi import Rhino
 from pymogile import Client, MogileFSError
 
@@ -22,34 +22,62 @@ __version__   = '0.1'
 def stripPrefix(s):
     return s.replace('10.1371/', '')
 
-def migrate(rh, ds, dois, dataOnly):
+def migrateDoi(rh, ds, doiCnt, doi, assets, dataOnly):
+    TRANS_FAILED = 'trans|{cnt}|{doi}|{adoi}|{afid}|{c}|{lm}|{t}|{hashID}.SHA1|FAILED_AFID'
+    TRANS_OK     = 'trans|{cnt}|{doi}|{adoi}|{afid}|{c}|{lm}|{t}|{hashID}.SHA1|OK'
+
+    _doi = stripPrefix(doi)
+    # Get the assets associated with the DOI
+    for adoi,afids in assets.iteritems():
+         _adoi = stripPrefix(adoi)
+         # Get the files associated with that asset ID
+         for afid, meta in afids.iteritems():
+             _afid = stripPrefix(afid)
+             lm = meta['lastModified']
+             cType = meta['contentType']
+             created = meta['created']
+             try:
+                 # Temporarily store this to a file
+                 # and get the SHA1 hash.
+                 (fname, hashID) = rh.getAfid(_afid, useHash='SHA1')
+                 if not dataOnly:
+	             #Store the stuff to mogile here
+                     print('Write to Mogile')
+                 # Out put enough info to build a repo database.
+	         print(TRANS_OK.format(cnt=doiCnt,doi=doi,adoi=adoi,afid=afid,c=created,lm=lm,t=cType,hashID=hashID))
+	     except Exception as e:
+                 print(TRANS_FAILED.format(cnt=doiCnt,doi=doi,adoi=adoi,afid=afid,c=created,lm=lm,t=cType,hashID='NONE'))
+             finally:
+                 if os.path.exists(_afid):
+                     os.remove(_afid)
+
+def migrate(rh, ds, dois, dataOnly, retry=3):
+    print('DOIs to process: {n}'.format(n=str(len(dois))))
+    doiCnt = 0
     # Always start with the DOI
     # Even if the migration fails the 
-    # number of files duplicated in a 
+    # number of files redone in a DOI 
     # will be small.   
     for doi in dois:
-        _doi = stripPrefix(doi)
+        doiRtry = retry
+        doiCnt += 1
         # Get the assets associated with the DOI
-        for adoi in rh.assets(_doi):
-            _adoi = stripPrefix(adoi)
-            # Get the files associated with that asset ID
-            for afid in rh.asset(_adoi):
-                _afid = stripPrefix(afid)
-                try:
-                    # Temporarily store this to a file
-                    # and get the SHA1 hash.
-                    (fname, hashID) = rh.getAfid(_afid, useHash='SHA1')
-                    if not dataOnly:
-                        #Store the stuff to mogile here
-                        print('Write to Mogile')
-                    # Out put enough info to build a repo database.
-                    print('{doi}|{adoi}|{afid}|{hashID}'.format(doi=doi,adoi=adoi,afid=afid,hashID=hashID))
-                except Exception as e:
-                    print('{doi}|{adoi}|{afid}|{hashID}'.format(doi=doi,adoi=adoi,afid=afid,hashID='FAILED'))
-                finally:
-                    if os.path.exists(_afid):
-                        os.remove(_afid)
-
+        while(True and doiRtry > 0):
+           try:
+               _doi = stripPrefix(doi)
+               article = rh.article(_doi)
+               assets = article['assets']
+               lm = article['lastModified']
+               print('info|{cnt}|{doi}|{lm}|INITIATED'.format(cnt=doiCnt, doi=doi, lm=lm))
+               migrateDoi(rh, ds, doiCnt, doi, assets, dataOnly)
+               doiRtry = -1
+               print('info|{cnt}|{doi}|{lm}|OK'.format(cnt=doiCnt, doi=doi, lm=lm))
+           except Exception as e:
+               doiRtry -= 1
+               time.sleep(60*9)
+        if doiRtry == 0:
+            print('info|{cnt}|{doi}|{lm}|FAILED'.format(cnt=doiCnt,doi=doi,lm='NONE'))
+ 
 if __name__ == "__main__":
     import argparse
     import pprint
