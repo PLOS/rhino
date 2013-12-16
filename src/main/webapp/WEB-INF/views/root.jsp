@@ -25,6 +25,7 @@
 <body>
 
 <p>This is the root page of the REST API for Ambra services.</p>
+<p>Version: ${version}</p>
 
 <ul>
   <li><a href="articles">/articles</a>
