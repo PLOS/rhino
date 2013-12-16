@@ -34,7 +34,7 @@ public class RootController {
   public ModelAndView rootPage(ModelAndView model) throws IOException {
     model.addObject("stateParams", ArticleJsonConstants.PUBLICATION_STATE_NAMES);
     model.addObject("syndStatuses", SYNDICATION_STATUSES_LOWERCASE);
-    model.addObject("version", configurationReadService.getVersion());
+    model.addObject("buildProperties", configurationReadService.getBuildProperties());
 
     model.setViewName("root");
     return model;

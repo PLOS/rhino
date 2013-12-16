@@ -29,7 +29,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
    * {@inheritDoc}
    */
   @Override
-  public String getVersion() throws IOException {
+  public Properties getBuildProperties() throws IOException {
     Properties properties = new Properties();
     Closer closer = Closer.create();
     try {
@@ -40,7 +40,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     } finally {
       closer.close();
     }
-    return (String) properties.get("version");
+    return properties;
   }
 
   /**
@@ -52,7 +52,10 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   private Map<String, Object> convertToMap(Configuration configuration) throws IOException {
     Preconditions.checkNotNull(configuration);
     Map<String, Object> map = Maps.newLinkedHashMap();
-    map.put("version", getVersion());
+    Properties buildProperties = getBuildProperties();
+    for (String key : buildProperties.stringPropertyNames()) {
+      map.put(key, buildProperties.get(key));
+    }
     for (Iterator<?> iterator = configuration.getKeys(); iterator.hasNext(); ) {
       String key = (String) iterator.next();
       Object property = configuration.getProperty(key);
