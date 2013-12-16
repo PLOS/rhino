@@ -44,5 +44,19 @@
   <xsl:template match="@xlink:href[parent::related-article]">
     <xsl:attribute name="xlink:href">info:doi/<xsl:value-of select="../@xlink:href"/></xsl:attribute>
   </xsl:template>
+
+  <!-- fix up PMC attribute value -->
+  <xsl:template match="@pub-id-type">
+    <xsl:attribute name="pub-id-type">
+      <xsl:choose>
+        <xsl:when test=". = 'pmc'">
+          <xsl:text>pmcid</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="." />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+  </xsl:template>
 </xsl:stylesheet>
 

@@ -107,8 +107,7 @@ def createIngestableForArticle(file, destination):
   #Kludgy way of appending XML DOC Type data and flipping DTDs
   #TODO: Improve on this?
   finalXML = etree.tostring(articleDOM)
-  finalXML = finalXML.replace("http://jats.nlm.nih.gov/archiving/1.0/xsd/JATS-archivearticle1.xsd",
-    "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd")
+  finalXML = finalXML.replace(" xsi:schemaLocation=\"http://jats.nlm.nih.gov/archiving/1.0/xsd/JATS-archivearticle1.xsd\"","")
   writeFile(xmlFile,  """<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE article
     PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
   """ + finalXML)
@@ -299,7 +298,7 @@ def replaceCorrectionBody(assetDict, annotationBody, articleDOM):
       raise Exception("I don't know how to format assets of type : '{0}'".format(assetType))
 
   #There should only ever be one body, this is just easy to write / read
-  annotationBody = "<body xmlns:xlink=\"http://www.w3.org/1999/xlink\">{0}</body>".format(annotationBody.replace("&","&amp;"))
+  annotationBody = "<body xmlns:xlink=\"http://www.w3.org/1999/xlink\"><p>{0}</p></body>".format(annotationBody.replace("&","&amp;"))
   articleDOM.replace(articleDOM.find("body"), etree.fromstring(annotationBody))
     
   return articleDOM
@@ -425,7 +424,7 @@ def getPMID2Doi(pmcRefID):
 #XPATH helper functions
 def getCorrectionPMCID(articleDOM):
   #Yeah, could make this a lot safer
-  return articleDOM.findall(".//article-id[@pub-id-type='pmc']")[0].text
+  return articleDOM.findall(".//article-id[@pub-id-type='pmcid']")[0].text
 
 def getCorrectionDOI(articleDOM):
   #Yeah, could make this a lot safer
