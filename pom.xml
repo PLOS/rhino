@@ -41,6 +41,8 @@
   </licenses>
 
   <properties>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+    <buildDate>${maven.build.timestamp}</buildDate>
     <java-version>1.7</java-version>
     <org.springframework-version>3.2.2.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
@@ -177,15 +179,6 @@
           <artifactId>spring-context-support</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-
-    <!--the war dependency is necessary to overlay classes, ftls, etc. when building the war-->
-    <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>ambra-webapp</artifactId>
-      <version>${ambra.version}</version>
-      <type>war</type>
-      <scope>runtime</scope>
     </dependency>
 
     <!--This allows us to reuse test code from ambra-->
@@ -372,6 +365,14 @@
 
   <build>
     <finalName>rhino</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <plugins>
       <!--warpath plugin allows us to use warpath dependencies to get transitive dependencies from the war-->
       <plugin>
@@ -387,33 +388,11 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.1.1</version>
-        <configuration>
-          <overlays>
-            <overlay>
-              <groupId>org.ambraproject</groupId>
-              <artifactId>ambra-webapp</artifactId>
-              <!--Specify what to include from ambra to keep the war small-->
-              <includes>
-                <!--classes and hibernate mappings-->
-                <include>WEB-INF/classes/**/*.class</include>
-                <include>WEB-INF/hibernateMappings/*</include>
-
-                <include>WEB-INF/profaneWords.xml</include>
-                <include>WEB-INF/countryList.xml</include>
-                <!--templates for the struts 'theme'-->
-                <include>template/**</include>
-              </includes>
-              <excludes>
-                <!--The warpath plugin will populate WEB-INF/lib-->
-                <exclude>WEB-INF/lib/*</exclude>
-              </excludes>
-            </overlay>
-          </overlays>
-        </configuration>
       </plugin>
 
       <plugin>
