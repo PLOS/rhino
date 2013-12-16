@@ -16,4 +16,9 @@ public interface ConfigurationReadService {
    */
   public abstract void read(ResponseReceiver receiver, MetadataFormat format) throws IOException;
 
+  /**
+   * @return the project.version property as defined in the project's pom.xml file
+   * @throws IOException
+   */
+  public abstract String getVersion() throws IOException;
 }
