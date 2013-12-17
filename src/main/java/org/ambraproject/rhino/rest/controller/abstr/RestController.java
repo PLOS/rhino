@@ -77,9 +77,10 @@ public abstract class RestController {
    * the request URI string ourselves.
    *
    * @param request   the HTTP request for a REST action
-   * @param optional if true, null will be returned if no additional path exists after the namespace; if false,
-   *     IllegalArgumentException will be thrown if this is the case
-   * @param namespace the namespace in which the request was received  @return the contents of the request path after the namespace prefix
+   * @param optional  if true, null will be returned if no additional path exists after the namespace; if false,
+   *                  IllegalArgumentException will be thrown if this is the case
+   * @param namespace the namespace in which the request was received  @return the contents of the request path after
+   *                  the namespace prefix
    * @throws IllegalArgumentException if the request URI does not start with the namespace or if the namespace does not
    *                                  end with a slash, and optional is false
    */
@@ -207,7 +208,8 @@ public abstract class RestController {
   public ResponseEntity<String> reportClientError(RestClientException e) {
     HttpStatus status = e.getResponseStatus();
     log.info("Reporting error to client (" + status + ")", e);
-    return respondWithPlainText(e.getMessage(), status);
+    String message = e.getMessage().trim() + '\n';
+    return respondWithPlainText(message, status);
   }
 
   /**
@@ -314,7 +316,7 @@ public abstract class RestController {
   /**
    * Sets the Last-Modified header of the response appropriately.
    *
-   * @param response HttpServletResponse
+   * @param response     HttpServletResponse
    * @param lastModified date to set the header to
    */
   protected void setLastModifiedHeader(HttpServletResponse response, Date lastModified) {
@@ -325,11 +327,11 @@ public abstract class RestController {
   }
 
   /**
-   * Checks for the presence of an "If-Modified-Since" header on the request.  If it exists,
-   * returns true iff lastModified is after the date in the header.  That is, returns true
-   * if we should send content, and false if a 304 Not Modified response is appropriate.
+   * Checks for the presence of an "If-Modified-Since" header on the request.  If it exists, returns true iff
+   * lastModified is after the date in the header.  That is, returns true if we should send content, and false if a 304
+   * Not Modified response is appropriate.
    *
-   * @param request HttpServletRequest
+   * @param request      HttpServletRequest
    * @param lastModified last modified date of the entity being requested
    * @return true if we should send the entity, false if we should send a 304 response
    */
