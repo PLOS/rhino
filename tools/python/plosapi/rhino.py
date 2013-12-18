@@ -290,6 +290,15 @@ class Rhino:
         os.chdir('../')
         return result
 
+    def doiMissing(self, dois):
+        missing = []
+        for doi in dois:
+            try:
+                a = self.article(doi.replace('10.1371/',''))
+            except:
+                missing.append(doi)
+        return missing
+
 if __name__ == "__main__":
     import argparse   
     import pprint 
@@ -303,18 +312,31 @@ if __name__ == "__main__":
                  'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
                  'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
                  'md5'          : lambda repo, doiList: [ repo.assetFileMD5(adoi) for adoi in doiList ],
+                 'missing'      : lambda repo, doiList: repo.doiMissing(doiList),
                }
 
     pp = pprint.PrettyPrinter(indent=2)
     parser = argparse.ArgumentParser(description='Rhino API client module.')
     parser.add_argument('--server', help='specify a Rhino server url.')
     parser.add_argument('--prefix', help='specify a DOI prefix.')
-    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5")
-    parser.add_argument('doiList', nargs='*', help="list of doi's")
+    parser.add_argument('--file', default=None, help='File name of alternate input params list.')
+    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5, missing")
+    parser.add_argument('params', nargs='*', help="parameter list for commands")
     args = parser.parse_args()
+    params = args.params
+
+    # If --file is true get what would normally
+    # be params on the command line from a file
+    # where each line is a separate parameter.
+    if args.file:
+        fp = open(args.file, 'r')
+        params = []
+        for p in fp:
+            params.append(p.strip())
+        fp.close()
 
     try:
-        for val in dispatch[args.command](Rhino(), args.doiList):
+        for val in dispatch[args.command](Rhino(), params):
             pp.pprint(val)
     except Exception as e:
         sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))

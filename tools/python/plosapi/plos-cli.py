@@ -7,6 +7,7 @@ from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, hashlib 
 from plosapi import Rhino, S3, Currents
+from sqlalchemy import create_engine
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -179,7 +180,7 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
     
 def backup(srcRepo, dstRepo, appender):
     """
-    Basic backup command. Start with a list of ODI's that
+    Basic backup command. Start with a list of DOI's that
     are on the SourceRepo and copy all the assets to the 
     DestinationRepo.
 
@@ -218,14 +219,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
     params = args.params
 
-    # if the 
+    # If --file is true get what would normally
+    # be params on the command line from a file
+    # where each line is a separate parameter.
     if args.file:
-        pf = open(args.file, 'r')
+        fp = open(args.file, 'r')
         params = []
-        for p in pf:
-            print(p)
+        for p in fp:
             params.append(p.strip())
-        pf.close()
+        fp.close()
 
     # Main command dispatcher.
     dispatch = { 'doidiff'   : 

@@ -22,9 +22,26 @@ __version__   = '0.1'
 def stripPrefix(s):
     return s.replace('10.1371/', '')
 
+def md5(fname):
+    md5 = hashlib.md5()
+    f = open(fname, 'rb')
+    for data in f.read(1024*512):
+        md5.update(data)
+    f.close()
+    return md5.hexdigest()
+    
+
 def migrateDoi(rh, ds, doiCnt, doi, assets, dataOnly):
-    TRANS_FAILED = 'trans|{cnt}|{doi}|{adoi}|{afid}|{c}|{lm}|{t}|{hashID}.SHA1|FAILED_AFID'
-    TRANS_OK     = 'trans|{cnt}|{doi}|{adoi}|{afid}|{c}|{lm}|{t}|{hashID}.SHA1|OK'
+    '''
+    All the information we need is in Assests. As
+    each asset is migrated output a line of meta-data
+    for it. This will be used to build the repo database
+    after all is complete. This will also allow efficient 
+    updating.
+    '''
+
+    TRANS_FAILED = 'trans|{cnt}|{doi}|{adoi}|{afid}|{c}|{lm}|{t}|{s}|{hashID}.SHA1|{md5}.MD5|FAILED_AFID'
+    TRANS_OK     = 'trans|{cnt}|{doi}|{adoi}|{afid}|{c}|{lm}|{t}|{s}|{hashID}.SHA1|{md5}.MD5|OK'
 
     _doi = stripPrefix(doi)
     # Get the assets associated with the DOI
@@ -36,22 +53,34 @@ def migrateDoi(rh, ds, doiCnt, doi, assets, dataOnly):
              lm = meta['lastModified']
              cType = meta['contentType']
              created = meta['created']
+             size = meta['size']
              try:
-                 # Temporarily store this to a file
-                 # and get the SHA1 hash.
-                 (fname, hashID) = rh.getAfid(_afid, useHash='SHA1')
+                 hashID = 'DATA_ONLY'
+                 md5Hash = 'DATA_ONLY'
                  if not dataOnly:
+                     # Temporarily store this to a file
+                     # and get the SHA1 hash.
+                     (fname, hashID) = rh.getAfid(_afid, useHash='SHA1')
+                     md5Hash = md5(fname)
 	             #Store the stuff to mogile here
-                     print('Write to Mogile')
-                 # Out put enough info to build a repo database.
-	         print(TRANS_OK.format(cnt=doiCnt,doi=doi,adoi=adoi,afid=afid,c=created,lm=lm,t=cType,hashID=hashID))
+                     #print('Write to Mogile')
+                     #fp = open(_afid, 'rb')
+                     #ds.store_file(hashID+'.SHA1', fp)
+                 # Output enough info to build a repo database.
+	         print(TRANS_OK.format(cnt=doiCnt,doi=doi,adoi=adoi,afid=afid,c=created,lm=lm,t=cType,s=size,hashID=hashID,md5=md5Hash))
 	     except Exception as e:
-                 print(TRANS_FAILED.format(cnt=doiCnt,doi=doi,adoi=adoi,afid=afid,c=created,lm=lm,t=cType,hashID='NONE'))
+                 print(TRANS_FAILED.format(cnt=doiCnt,doi=doi,adoi=adoi,afid=afid,c=created,lm=lm,t=cType,s=size,hashID='NONE',md5='NONE'))
              finally:
                  if os.path.exists(_afid):
                      os.remove(_afid)
 
 def migrate(rh, ds, dois, dataOnly, retry=3):
+    '''
+    Go through each doi and try to migrate the assets.
+    Attempt to handle failure with retries else skip to 
+    the next DOI. Hopefull this will allow us to create a
+    a list of failed DOI to magrate after the fact.
+    '''
     print('DOIs to process: {n}'.format(n=str(len(dois))))
     doiCnt = 0
     # Always start with the DOI
@@ -90,7 +119,7 @@ if __name__ == "__main__":
     parser.add_argument('--srcDomain', default='plos_production', help='Mogile domain to migrate from.')
     parser.add_argument('--file', default='None', help='Use a file to provide doi to migrate.')
     parser.add_argument('-listDOIs', action='store_true', help='List all the availible DOIs to stdout.')
-    parser.add_argument('-dataOnly', action='store_true', help='Output repo data only.')
+    parser.add_argument('-dataOnly', action='store_true', help='Output repo data only. No hash.')
     args = parser.parse_args()
 
     rh = Rhino(rhinoServer=args.server)
@@ -126,7 +155,9 @@ if __name__ == "__main__":
             os._exit(0)
 
     # Create a Mogile Client
-    # datastore = Client(domain=args.srcDomain, trackers=[args.tracker])
+    #if not args.dataOnly:
+    #    datastore = Client(domain=args.srcDomain, trackers=[args.tracker])
+    #else:
     datastore = None
     migrate(rh, datastore, dois, args.dataOnly)
 
