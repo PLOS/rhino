@@ -200,6 +200,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     String doi = article.getDoi();
 
+    createReciprocalRelationships(article);
+
     try {
 
       // This method needs the article to have already been persisted to the DB.
@@ -215,6 +217,84 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid();
     write(xmlData, fsid);
     return fsid;
+  }
+
+  /**
+   * Set {@link ArticleRelationship} values on an article that has just been ingested.
+   *
+   * @param ingested
+   */
+  private void createReciprocalRelationships(Article ingested) {
+    Preconditions.checkState(ingested.getID() != null, "Article must have already been persisted");
+
+    List<ArticleRelationship> relationships = ingested.getRelatedArticles();
+    Set<String> relatedArticleIds = Sets.newHashSetWithExpectedSize(relationships.size());
+
+    for (ArticleRelationship relationship : relationships) {
+      relatedArticleIds.add(relationship.getOtherArticleDoi());
+      Article relatedArticle = (Article) DataAccessUtils.uniqueResult(
+          hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+              .add(Restrictions.eq("doi", relationship.getOtherArticleDoi()))));
+      if (relatedArticle == null) {
+        continue; // related article isn't in system
+      }
+      relationship.setOtherArticleID(relatedArticle.getID());
+      hibernateTemplate.update(relationship);
+
+      ArticleRelationship reciprocal = findRelationshipTo(relatedArticle, ingested);
+      if (reciprocal != null) {
+        reciprocal.setOtherArticleID(ingested.getID());
+        hibernateTemplate.update(reciprocal);
+      } else {
+        reciprocal = new ArticleRelationship();
+        reciprocal.setParentArticle(relatedArticle);
+        reciprocal.setOtherArticleID(ingested.getID());
+        reciprocal.setOtherArticleDoi(ingested.getDoi());
+        reciprocal.setType(relationship.getType());
+
+        relatedArticle.getRelatedArticles().add(reciprocal);
+        hibernateTemplate.update(relatedArticle);
+      }
+    }
+
+    DetachedCriteria inboundCriteria = DetachedCriteria.forClass(Article.class);
+    if (!relatedArticleIds.isEmpty()) {
+      inboundCriteria = inboundCriteria.add(Restrictions.not(Restrictions.in("doi", relatedArticleIds)));
+    }
+    inboundCriteria = inboundCriteria.createCriteria("relatedArticles")
+        .add(Restrictions.eq("otherArticleDoi", ingested.getDoi()));
+    List<Article> articlesWithInboundRelationships = hibernateTemplate.findByCriteria(inboundCriteria);
+    if (!articlesWithInboundRelationships.isEmpty()) {
+      for (Article inboundArticle : articlesWithInboundRelationships) {
+        ArticleRelationship inboundRelationship = findRelationshipTo(inboundArticle, ingested);
+        if (inboundRelationship == null) {
+          throw new RuntimeException(); // query should make this impossible
+        }
+        inboundRelationship.setOtherArticleID(ingested.getID());
+        hibernateTemplate.update(inboundRelationship);
+
+        ArticleRelationship reciprocal = new ArticleRelationship();
+        reciprocal.setParentArticle(ingested);
+        reciprocal.setOtherArticleID(inboundArticle.getID());
+        reciprocal.setOtherArticleDoi(inboundArticle.getDoi());
+        reciprocal.setType(inboundRelationship.getType());
+        ingested.getRelatedArticles().add(reciprocal);
+      }
+      hibernateTemplate.update(ingested);
+    }
+  }
+
+  /**
+   * Find a relationship from one article to another, if it is stored in the source's related articles. Return null if
+   * none exists.
+   */
+  private static ArticleRelationship findRelationshipTo(Article source, Article target) {
+    for (ArticleRelationship relationship : source.getRelatedArticles()) {
+      if (relationship.getOtherArticleDoi().equals(target.getDoi())) {
+        return relationship;
+      }
+    }
+    return null;
   }
 
   /**
