@@ -126,10 +126,23 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     issue.setDescription(description);
   }
 
+  private Issue findIssue(DoiBasedIdentity issueId) {
+    return (Issue) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Issue.class)
+            .add(Restrictions.eq("issueUri", issueId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+  }
+
   @Override
   public DoiBasedIdentity create(DoiBasedIdentity volumeId, IssueInputView input) {
     Preconditions.checkNotNull(volumeId);
-    Preconditions.checkNotNull(input.getIssueUri());
+
+    DoiBasedIdentity issueId = DoiBasedIdentity.create(input.getIssueUri());
+    if (findIssue(issueId) != null) {
+      throw new RestClientException("Issue already exists with issueUri: " + issueId.getIdentifier(), HttpStatus.BAD_REQUEST);
+    }
 
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
@@ -152,12 +165,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   @Override
   public void update(DoiBasedIdentity issueId, IssueInputView input) {
     Preconditions.checkNotNull(input);
-    Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", issueId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+    Issue issue = findIssue(issueId);
     if (issue == null) {
       throw new RestClientException("Issue not found for issueUri: " + issueId.getIdentifier(), HttpStatus.BAD_REQUEST);
     }
