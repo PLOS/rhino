@@ -5,13 +5,77 @@
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, traceback, json, re, requests, hashlib 
+import os, sys, traceback, json, re, requests, hashlib, zipfile
 from plosapi import Rhino, S3, Currents
 from sqlalchemy import create_engine
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
 __version__   = '0.1'
+
+# ***********************************************
+#      Text templates used in
+#      repetative string creation.
+# ***********************************************
+
+# ***** Manifest DTD template *****
+DTD_TEXT = """
+<!ELEMENT manifest (articleBundle) >
+
+<!ELEMENT articleBundle (article, object*) >
+
+<!-- the article. 'main-entry' specifies the zip entry that contains the nlm
+   - article xml; this must match one of the contained representations
+   -->
+<!ELEMENT article (representation+) >
+<!ATTLIST article
+    uri         CDATA          #REQUIRED
+    main-entry  CDATA          #REQUIRED >
+
+<!-- all included secondary objects (images, movies, data, etc) -->
+<!ELEMENT object (representation+) >
+<!ATTLIST object
+    uri         CDATA          #REQUIRED
+    strkImage   CDATA          #IMPLIED          >
+
+<!-- a specific representation.
+   - 'name' is the name (label) to store this representation under;
+   - 'entry' specifies the entry in the zip that contains this representation
+   -->
+<!ELEMENT representation EMPTY >
+<!ATTLIST representation
+    name        CDATA          #REQUIRED
+    entry       CDATA          #REQUIRED >
+""".lstrip()
+
+# ***** Skeletal Manifest Template *****
+MANIFEST_TMPL = """<?xml version="1.1"  encoding="UTF-8"?>
+<!DOCTYPE manifest SYSTEM "manifest.dtd">
+<manifest>
+  <articleBundle>
+    {article}
+    {objects}
+  </articleBundle>
+</manifest>
+""".lstrip()
+
+# ***** Manifest Object Entries *****
+OBJECT_TMPL = """     <object uri="{uri}" {strkimage}>
+        {reps}
+     </object>"""
+
+# ***** Object Representation Template *****
+REPRESENTATION_TMPL = """<representation name="{ext}" entry="{filename}" />"""
+
+# ***** Manifest Article Template *****
+ARTICLE_TMPL = """
+     <article uri="{uri}" main-entry="{fname}">
+        {reps}
+     </article>"""
+
+# ***** URI Template *****
+URI_TMPL = """info:doi/{doi}"""
+
 
 class print_appender():
     """
@@ -43,6 +107,109 @@ class list_appender():
         """
         self.lst.append(obj)
         return self.lst
+
+def _stripPrefix(doi, srcRepo):
+    return doi.replace(srcRepo.prefix + '/','')
+
+def _stripJournal(s):
+    s = s.replace('10.1371/','')
+    return s.replace('journal.','')
+
+def _extractNameExt(s):
+    s_split = s.split('.')
+    return (_stripJournal(s), s_split[len(s_split)-1])
+
+
+def _representationTags(afids):
+    """
+    Build a set of representation entities and tuples with the name, uri
+    and extension of the the asset.
+    """
+    repsTags = []
+    for afid in afids:
+        (fname, ext) = _extractNameExt(afid)
+        repsTags.append(REPRESENTATION_TMPL.format(ext=ext, filename=fname))
+    return '\n        '.join(repsTags)
+
+def _manifestInfo(doi, srcRepo):
+    """
+    """
+    doiSuffix = _stripPrefix(doi, srcRepo)
+    article = srcRepo.article(doiSuffix)
+    assets = article['assets']
+        
+    # Get the XML and PDF representations
+    for afid in assets[doi]:
+        _afid = _stripJournal(afid)
+        if _afid.lower().endswith('.xml'):
+            xml_afid = _afid
+        elif _afid.lower().endswith('.pdf'):
+            pdf_afid = _afid
+    
+    # Remove the XML and PDF representations
+    # from all the rest.
+    del assets[doi]
+
+    return { 'URI' : URI_TMPL.format(doi=doi),
+             'doi' : doi,
+             'prefix' : srcRepo.prefix,
+             'xml_afid' : xml_afid,
+             'pdf_afid' : pdf_afid,
+             'strkImageURI' : article.get('strkImgURI', ''),
+             'assets' : assets
+            }
+
+def _objectTags(manifestInfo):
+    """
+    Build a set of object entities and collect a list of tuples containing
+    the name, uri and extension of the the respresentaions of that object.
+    """
+    objTags = []
+    strkImage = manifestInfo.get('strkImageURI')
+    
+    for (adoi, afids) in manifestInfo['assets'].iteritems():
+        auri =  URI_TMPL.format(doi=adoi)
+        strkValue = 'strkImage="True"' if strkImage == auri else ''
+        repTags = _representationTags(afids)
+        objTags.append(OBJECT_TMPL.format(uri=auri, strkimage=strkValue,reps=repTags))
+    return '\n'.join(objTags)
+
+def _articleTags(mi):
+    """
+    Build a Article entity with the the XML and PDF representation tags
+    included.
+    """
+    xmlRepTag = REPRESENTATION_TMPL.format(ext='XML', filename=mi['xml_afid'])
+    pdfRepTag = REPRESENTATION_TMPL.format(ext='PDF', filename=mi['pdf_afid'])
+    return ARTICLE_TMPL.format(uri=mi['URI'], fname=mi['xml_afid'], reps=xmlRepTag + '\n        ' + pdfRepTag)
+
+def _manifestXML(doi, srcRepo):
+    """
+    Build the manifest for the specified article.
+    """
+    mi = _manifestInfo(doi, srcRepo)
+    articleTags = _articleTags(mi)
+    objectTags = _objectTags(mi)
+    return MANIFEST_TMPL.format(article=articleTags, objects=objectTags)
+
+def repackage(dois, srcRepo, apd):
+    """
+    Repackage an article as a zip file for ingestion.
+    """
+    for doi in dois:
+        doiSuffix = _stripPrefix(doi, srcRepo)
+        manifestXML = _manifestXML(doi, srcRepo) 
+        srcRepo.articleFiles(doiSuffix)
+        with zipfile.ZipFile(_stripJournal(doiSuffix) + '.zip', mode='w') as zf:
+            zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
+            zf.writestr('MANIFEST.xml', manifestXML, compress_type=zipfile.ZIP_DEFLATED)
+            for (dpath, _, fnames) in os.walk(doiSuffix):
+                for fname in fnames:
+                    fullFile = '{p}/{f}'.format(p=dpath, f=fname)            
+                    apd.append('Adding: ' + fullFile)
+                    zf.write(fullFile, _stripJournal(fname), compress_type=zipfile.ZIP_DEFLATED)
+            zf.close()
+
 
 def assetDiff(doiSuffixes, srcRepo, dstRepo, matchOnly=''):
     """
@@ -214,7 +381,8 @@ if __name__ == "__main__":
     parser.add_argument('command', help='doidiff [no params] | '
                                         'doicopy [doi suffixes] | '
                                         'assetdiff [doi suffixes] | ' 
-                                        'backup  [no params]')
+                                        'backup  [no params] | \n'
+                                        'repackage')
     parser.add_argument('params', nargs='*', help="command dependent parameters")
     args = parser.parse_args()
     params = args.params
@@ -239,7 +407,9 @@ if __name__ == "__main__":
                  'doicopy'   : 
                    lambda src, dst, apd: doiCopy(params, src, dst, apd) ,
                  'backup'    : 
-                   lambda src, dst, apd: backup(src, dst, apd) }
+                   lambda src, dst, apd: backup(src, dst, apd),
+                 'repackage'    :
+                   lambda src, dst, apd: repackage(args.params, src, apd), }
 
     src = Rhino(rhinoServer=args.server, prefix=args.prefix)
     dst = S3(bucketID=args.bucket, prefix=args.prefix)

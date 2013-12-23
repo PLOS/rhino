@@ -295,7 +295,9 @@ class Rhino:
         for doi in dois:
             try:
                 a = self.article(doi.replace('10.1371/',''))
+                print('Found: ' + doi)
             except:
+                print('Missing: ' + doi)
                 missing.append(doi)
         return missing
 
@@ -329,9 +331,11 @@ if __name__ == "__main__":
     # be params on the command line from a file
     # where each line is a separate parameter.
     if args.file:
+        print('Reading parameters from ' + args.file)
         fp = open(args.file, 'r')
         params = []
         for p in fp:
+            print('Adding: ' + p)
             params.append(p.strip())
         fp.close()
 
