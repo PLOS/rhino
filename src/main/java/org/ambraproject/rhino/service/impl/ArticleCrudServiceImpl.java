@@ -22,6 +22,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
@@ -269,16 +270,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
+   * Special cases of article relationship types where the reciprocal relationships are asymmetric.
+   * <p/>
+   * For example, if A is a "retracted-article" of B, then B must be a "retraction" of A.
+   */
+  private static final ImmutableBiMap<String, String> RECIPROCAL_TYPES = ImmutableBiMap.<String, String>builder()
+      .put("corrected-article", "correction-forward")
+      .put("retracted-article", "retraction")
+      .build();
+
+  /**
    * Set up a reciprocal relationship from {@code parentArticle} to {@code otherArticle}. That is, assuming {@code
    * relationship} is a pre-existing relationship from {@code otherArticle} to {@code parentArticle}, this method
    * creates a new relationship that reciprocates it.
+   * <p/>
+   * The type of the new, reciprocal relationship is the same as that of the first relationship unless it is one of the
+   * asymmetric relations described in {@link #RECIPROCAL_TYPES}.
    */
   private static void reciprocate(ArticleRelationship relationship, Article parentArticle, Article otherArticle) {
     ArticleRelationship reciprocal = new ArticleRelationship();
     reciprocal.setParentArticle(parentArticle);
     reciprocal.setOtherArticleID(otherArticle.getID());
     reciprocal.setOtherArticleDoi(otherArticle.getDoi());
-    reciprocal.setType(relationship.getType());
+
+    String relationshipType = relationship.getType();
+    String reciprocalType = RECIPROCAL_TYPES.get(relationshipType);
+    reciprocalType = (reciprocalType == null) ? relationshipType : reciprocalType;
+    reciprocal.setType(reciprocalType);
 
     parentArticle.getRelatedArticles().add(reciprocal);
   }
