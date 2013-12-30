@@ -31,8 +31,8 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.view.asset.groomed.GroomedFigureView;
-import org.ambraproject.rhino.view.asset.groomed.NotAFigureException;
+import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
+import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
 import org.hibernate.Criteria;
@@ -306,10 +306,10 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
       throws IOException {
     Collection<ArticleAsset> assets = findArticleAssets(id);
-    GroomedFigureView figureView;
+    GroomedImageView figureView;
     try {
-      figureView = GroomedFigureView.create(assets);
-    } catch (NotAFigureException e) {
+      figureView = GroomedImageView.create(assets);
+    } catch (UncategorizedAssetException e) {
       String message = "Not a figure asset: " + id.getIdentifier();
       throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
     }

@@ -25,6 +25,10 @@
 <body>
 
 <p>This is the root page of the REST API for Ambra services.</p>
+<pre>
+Version: ${buildProperties.version}
+Built at ${buildProperties.buildDate} by ${buildProperties.buildUser}
+</pre>
 
 <ul>
   <li><a href="articles">/articles</a>

@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.io.Closeables;
 import com.google.common.io.Closer;
 import com.google.gson.Gson;
@@ -183,7 +184,12 @@ public abstract class AmbraService {
       // Get a new DocumentBuilder every time because because it isn't thread-safe
       return newDocumentBuilder().parse(stream);
     } catch (SAXException e) {
-      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+      String message = "Invalid XML";
+      String causeMessage = e.getMessage();
+      if (!Strings.isNullOrEmpty(causeMessage)) {
+        message = message + ": " + causeMessage;
+      }
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
     } finally {
       stream.close();
     }

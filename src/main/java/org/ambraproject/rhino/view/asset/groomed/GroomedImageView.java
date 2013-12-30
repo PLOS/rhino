@@ -3,6 +3,7 @@ package org.ambraproject.rhino.view.asset.groomed;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -16,48 +17,73 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import java.util.Collection;
 import java.util.Map;
 
-public class GroomedFigureView implements JsonOutputView {
+public class GroomedImageView implements JsonOutputView {
+
+  enum ImageType {FIGURE, GRAPHIC}
 
   private final ArticleAsset original;
-  private final Map<FigureFileType, ArticleAsset> thumbnails;
+  private final Map<ImageFileType, ArticleAsset> thumbnails;
   private Optional<ArticleIdentity> parentArticleId;
+  private final ImageType imageType;
 
-  private GroomedFigureView(ArticleAsset original,
-                            Map<FigureFileType, ArticleAsset> thumbnails) {
+  private GroomedImageView(ArticleAsset original,
+                           Map<ImageFileType, ArticleAsset> thumbnails,
+                           ImageType imageType) {
     this.original = Preconditions.checkNotNull(original);
     this.thumbnails = ImmutableSortedMap.copyOf(thumbnails);
     Preconditions.checkArgument(!this.thumbnails.isEmpty());
-    Preconditions.checkArgument(!this.thumbnails.containsKey(FigureFileType.ORIGINAL));
+    Preconditions.checkArgument(!this.thumbnails.containsKey(ImageFileType.ORIGINAL));
     this.parentArticleId = Optional.absent();
+    this.imageType = Preconditions.checkNotNull(imageType);
   }
 
+
+  private static final ImmutableSet<ImageFileType> FIGURE_TYPES = Sets.immutableEnumSet(
+      ImageFileType.SMALL, ImageFileType.INLINE, ImageFileType.MEDIUM, ImageFileType.LARGE);
+  private static final ImmutableSet<ImageFileType> GRAPHIC_TYPES = Sets.immutableEnumSet(ImageFileType.GRAPHIC);
 
   // These exceptions are routinely caught (for "miscellaneous" assets -- see GroomedAssetsView),
   // so it's worth it not to build these strings from sets over and over
   private static final String ORIGINAL_NOT_FOUND_MESSAGE = "Original asset not found. Expected an asset with an extension: "
-      + FigureFileType.ORIGINAL.getAssociatedExtensions();
+      + ImageFileType.ORIGINAL.getAssociatedExtensions();
   private static final String THUMBNAIL_NOT_FOUND_MESSAGE = "Thumbnails not found. Expected an asset with an extension: "
-      + Sets.difference(FigureFileType.getAllExtensions(), FigureFileType.ORIGINAL.getAssociatedExtensions());
+      + Sets.difference(ImageFileType.getAllExtensions(), ImageFileType.ORIGINAL.getAssociatedExtensions());
+  private static final String UNCATEGORIZED_EXCEPTION = String.format(
+      "Failed to categorize asset as an image. Expected thumbnails to be either %s (figure) or %s (graphic).",
+      FIGURE_TYPES, GRAPHIC_TYPES);
 
-  public static GroomedFigureView create(Collection<ArticleAsset> figureAssets) {
-    Map<FigureFileType, ArticleAsset> byType = Maps.newEnumMap(FigureFileType.class);
+  public static GroomedImageView create(Collection<ArticleAsset> figureAssets) {
+    Map<ImageFileType, ArticleAsset> byType = Maps.newEnumMap(ImageFileType.class);
     for (ArticleAsset asset : figureAssets) {
-      byType.put(FigureFileType.fromExtension(asset.getExtension()), asset);
+      byType.put(ImageFileType.fromExtension(asset.getExtension()), asset);
     }
 
-    ArticleAsset original = byType.remove(FigureFileType.ORIGINAL);
+    ArticleAsset original = byType.remove(ImageFileType.ORIGINAL);
     if (original == null) {
-      throw new NotAFigureException(ORIGINAL_NOT_FOUND_MESSAGE);
+      throw new UncategorizedAssetException(ORIGINAL_NOT_FOUND_MESSAGE);
     }
     if (byType.isEmpty()) {
-      throw new NotAFigureException(THUMBNAIL_NOT_FOUND_MESSAGE);
+      throw new UncategorizedAssetException(THUMBNAIL_NOT_FOUND_MESSAGE);
     }
 
-    return new GroomedFigureView(original, byType);
+    ImageType imageType;
+    if (GRAPHIC_TYPES.equals(byType.keySet())) {
+      imageType = ImageType.GRAPHIC;
+    } else if (FIGURE_TYPES.equals(byType.keySet())) {
+      imageType = ImageType.FIGURE;
+    } else {
+      throw new UncategorizedAssetException(UNCATEGORIZED_EXCEPTION);
+    }
+
+    return new GroomedImageView(original, byType, imageType);
   }
 
   public AssetIdentity getIdentity() {
     return AssetIdentity.from(original);
+  }
+
+  ImageType getImageType() {
+    return imageType;
   }
 
   /**
@@ -68,7 +94,7 @@ public class GroomedFigureView implements JsonOutputView {
    * @throws IllegalStateException if a parent article has already been set
    * @throws NullPointerException  if {@code parentArticleId} is null
    */
-  public GroomedFigureView setParentArticle(ArticleIdentity parentArticleId) {
+  public GroomedImageView setParentArticle(ArticleIdentity parentArticleId) {
     Preconditions.checkState(!this.parentArticleId.isPresent());
     this.parentArticleId = Optional.of(parentArticleId);
     return this;
@@ -84,14 +110,14 @@ public class GroomedFigureView implements JsonOutputView {
     }
 
     // Pull figure-level metadata values from the original (ignore those of thumbnails)
-    for (FigureMetadataField field : FigureMetadataField.values()) {
+    for (ImageMetadataField field : ImageMetadataField.values()) {
       serialized.add(field.getMemberName(), context.serialize(field.access(original)));
     }
 
     serialized.add("original", context.serialize(GroomedAssetFileView.create(original)));
 
     JsonObject serializedThumbnails = new JsonObject();
-    for (Map.Entry<FigureFileType, ArticleAsset> entry : thumbnails.entrySet()) {
+    for (Map.Entry<ImageFileType, ArticleAsset> entry : thumbnails.entrySet()) {
       String key = entry.getKey().name().toLowerCase();
       GroomedAssetFileView thumbnailView = GroomedAssetFileView.create(entry.getValue());
       serializedThumbnails.add(key, context.serialize(thumbnailView));

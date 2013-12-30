@@ -66,10 +66,23 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     return volume;
   }
 
+  private Volume findVolume(DoiBasedIdentity volumeId) {
+    return (Volume) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(DetachedCriteria
+            .forClass(Volume.class)
+            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+  }
+
   @Override
   public DoiBasedIdentity create(String journalKey, VolumeInputView input) {
     Preconditions.checkNotNull(journalKey);
-    Preconditions.checkNotNull(input.getVolumeUri());
+
+    DoiBasedIdentity volumeId = DoiBasedIdentity.create(input.getVolumeUri());
+    if (findVolume(volumeId) != null) {
+      throw new RestClientException("Volume already exists with volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);
+    }
 
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
@@ -94,12 +107,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   @Override
   public void update(DoiBasedIdentity volumeId, VolumeInputView input) {
     Preconditions.checkNotNull(input);
-    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+    Volume volume = findVolume(volumeId);
     if (volume == null) {
       throw new RestClientException("Volume not found at URI=" + volumeId.getIdentifier(), HttpStatus.NOT_FOUND);
     }

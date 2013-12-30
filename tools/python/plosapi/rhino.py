@@ -68,13 +68,17 @@ class Rhino:
         else:
             return requests.get(url, stream=True)
 
-    def _getBinary(self, fname, url):
+    def _getBinary(self, fname, url, useHash='MD5'):
         """
         Most of the files other than the article xml are binary in nature.
-        Fetch the data and write it to a temporary file. Return the MD5
+        Fetch the data and write it to a temporary file. Return the MD5 | SHA1
         hash of the file contents.
         """
-        m = hashlib.md5()
+        if useHash == 'MD5':
+            m = hashlib.md5()
+        else:
+            m = hashlib.sha1()
+
         r = self._doGet(url)
         if r.status_code == 200:
             with open(fname, 'wb') as f:
@@ -94,10 +98,24 @@ class Rhino:
         m = hashlib.md5()
         r = self._doGet(url)
         if r.status_code == 200:
-           for chunk in r.iter_content(1024):
+           for chunk in r.iter_content(64*1024):
                m.update(chunk)
         else:
            raise Exception('rhino:failed to get MD5 ' + url)
+        return m.hexdigest()
+
+    def _getSHA1(self, url):
+        """
+        Read from the URL byte by byte calculating
+        the SHA1 hash. 
+        """
+        m = hashlib.sha1()
+        r = self._doGet(url)
+        if r.status_code == 200:
+           for chunk in r.iter_content(64*1024):
+               m.update(chunk)
+        else:
+           raise Exception('rhino:failed to get SHA1 ' + url)
         return m.hexdigest()
 
     def _afidsFromDoi(self, doiSuffix):
@@ -227,16 +245,26 @@ class Rhino:
                     afidSuf = '.'.join(afid[1].split('.')[:-1])
                     result.update(self.asset(afidSuf))
                 else:
-                    raise Exception('rhino:invalid s3 prefix ' + fullAFID)
+                    raise Exception('rhino:invalid prefix ' + fullAFID)
         return result
 
     def assetFileMD5(self, afidSuffix):
         """
+        Return the MD5 hash for the asser identified by
+        the afid suffix.
         """
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getMD5(url)
 
-    def getAfid(self, afidSuffix, fname=None):
+    def assetFileSHA1(self, afidSuffix):
+        """
+        Return the SHA1 hash for the asset identified by the 
+        afid suffix.
+        """
+        url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
+        return self._getSHA1(url)
+
+    def getAfid(self, afidSuffix, fname=None, useHash='MD5'):
         """
         Retreive the actual asset data. If the name is not 
         specified use the afid as the file name.
@@ -244,7 +272,7 @@ class Rhino:
         if fname == None:
             fname = afidSuffix
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
-        return self._getBinary(fname, url)
+        return self._getBinary(fname, url, useHash=useHash)
     
     def putAfid(self, afidSuffix, fname, articleMeta, assetMeta, md5, prefix=None,
                   cb=None, reduce_redundancy=True, retry=5, wait=2):    
@@ -262,6 +290,17 @@ class Rhino:
         os.chdir('../')
         return result
 
+    def doiMissing(self, dois):
+        missing = []
+        for doi in dois:
+            try:
+                a = self.article(doi.replace('10.1371/',''))
+                print('Found: ' + doi)
+            except:
+                print('Missing: ' + doi)
+                missing.append(doi)
+        return missing
+
 if __name__ == "__main__":
     import argparse   
     import pprint 
@@ -275,18 +314,33 @@ if __name__ == "__main__":
                  'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
                  'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
                  'md5'          : lambda repo, doiList: [ repo.assetFileMD5(adoi) for adoi in doiList ],
+                 'missing'      : lambda repo, doiList: repo.doiMissing(doiList),
                }
 
     pp = pprint.PrettyPrinter(indent=2)
     parser = argparse.ArgumentParser(description='Rhino API client module.')
     parser.add_argument('--server', help='specify a Rhino server url.')
     parser.add_argument('--prefix', help='specify a DOI prefix.')
-    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5")
-    parser.add_argument('doiList', nargs='*', help="list of doi's")
+    parser.add_argument('--file', default=None, help='File name of alternate input params list.')
+    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5, missing")
+    parser.add_argument('params', nargs='*', help="parameter list for commands")
     args = parser.parse_args()
+    params = args.params
+
+    # If --file is true get what would normally
+    # be params on the command line from a file
+    # where each line is a separate parameter.
+    if args.file:
+        print('Reading parameters from ' + args.file)
+        fp = open(args.file, 'r')
+        params = []
+        for p in fp:
+            print('Adding: ' + p)
+            params.append(p.strip())
+        fp.close()
 
     try:
-        for val in dispatch[args.command](Rhino(), args.doiList):
+        for val in dispatch[args.command](Rhino(), params):
             pp.pprint(val)
     except Exception as e:
         sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))

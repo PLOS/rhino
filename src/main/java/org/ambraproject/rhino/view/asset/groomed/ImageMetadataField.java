@@ -5,7 +5,7 @@ import org.ambraproject.models.ArticleAsset;
 /**
  * Fields that should be shown as a property of the entire figure and suppressed from the thumbnail metadata.
  */
-enum FigureMetadataField {
+enum ImageMetadataField {
 
   TITLE("title") {
     @Override
@@ -28,7 +28,7 @@ enum FigureMetadataField {
 
   private final String memberName;
 
-  private FigureMetadataField(String memberName) {
+  private ImageMetadataField(String memberName) {
     this.memberName = memberName;
   }
 

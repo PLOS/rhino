@@ -130,12 +130,14 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     AssetFileIdentity id = parse(request);
 
     Optional<ArticleIdentity> articleId = id.forArticle();
-    if (articleId.isPresent()) {
+    Article article = articleId.isPresent()
+        ? articleCrudService.findArticleById(articleId.get()) // null if the file is XML, but not the article XML
+        : null; // if the file type is not XML
+    if (article != null) {
 
       // We want to set the Last-Modified header appropriately, so that clients can cache article
       // XML if they choose to.  Unfortunately, the filestore interface doesn't have a way to
       // retrieve a file's mtime, so we have to get this info from the ambra DB instead.
-      Article article = articleCrudService.findArticleById(articleId.get());
       setLastModifiedHeader(response, article.getLastModified());
       if (checkIfModifiedSince(request, article.getLastModified())) {
         try {

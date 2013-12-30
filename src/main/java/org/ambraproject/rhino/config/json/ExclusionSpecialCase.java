@@ -31,13 +31,15 @@ public enum ExclusionSpecialCase implements ExclusionStrategy {
 
   /**
    * When serializing {@code ArticleRelationship} objects, leave out any reference to other persistent entities, because
-   * they can cause infinite recursion. Serialize only the primitive {@code ArticleRelationship} fields.
+   * they can cause infinite recursion. Serialize only the primitive {@code ArticleRelationship} fields. Also suppress
+   * raw foreign keys.
    */
   ARTICLE_RELATIONSHIP {
     @Override
     public boolean shouldSkipField(FieldAttributes f) {
-      return ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass())
-          && AmbraEntity.class.isAssignableFrom(f.getDeclaredClass());
+      return ArticleRelationship.class.isAssignableFrom(f.getDeclaringClass()) &&
+          (AmbraEntity.class.isAssignableFrom(f.getDeclaredClass())
+              || f.getName().equals("otherArticleID"));
     }
 
     @Override

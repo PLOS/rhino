@@ -16,16 +16,19 @@ public class GroomedAssetsView {
   // For Gson's default serialization.
   private final GroomedAssetFileView articleXml;
   private final GroomedAssetFileView articlePdf;
-  private final ImmutableList<GroomedFigureView> figures;
+  private final ImmutableList<GroomedImageView> figures;
+  private final ImmutableList<GroomedImageView> graphics;
   private final ImmutableList<GroomedAssetFileView> miscellaneousAssetFiles;
 
   private GroomedAssetsView(GroomedAssetFileView articleXml,
                             GroomedAssetFileView articlePdf,
-                            List<GroomedFigureView> figures,
+                            List<GroomedImageView> figures,
+                            List<GroomedImageView> graphics,
                             List<GroomedAssetFileView> miscellaneousAssetFiles) {
     this.articleXml = Preconditions.checkNotNull(articleXml);
     this.articlePdf = articlePdf; // nullable
     this.figures = ImmutableList.copyOf(figures);
+    this.graphics = ImmutableList.copyOf(graphics);
     this.miscellaneousAssetFiles = ImmutableList.copyOf(miscellaneousAssetFiles);
   }
 
@@ -52,7 +55,7 @@ public class GroomedAssetsView {
         } else {
           miscellaneous.add(asset);
         }
-      } else if (FigureFileType.getAllExtensions().contains(asset.getExtension())) {
+      } else if (ImageFileType.getAllExtensions().contains(asset.getExtension())) {
         figures.put(asset.getDoi(), asset);
       } else {
         miscellaneous.add(asset);
@@ -65,26 +68,38 @@ public class GroomedAssetsView {
     GroomedAssetFileView articlePdfView = (articlePdf == null) ? null : GroomedAssetFileView.create(articlePdf);
 
     Collection<Collection<ArticleAsset>> figureAssetGroups = figures.asMap().values();
-    List<GroomedFigureView> figureViews = Lists.newArrayListWithCapacity(figureAssetGroups.size());
+    List<GroomedImageView> figureViews = Lists.newArrayList();
+    List<GroomedImageView> graphicViews = Lists.newArrayList();
     for (Collection<ArticleAsset> figureAssetGroup : figureAssetGroups) {
 
-      GroomedFigureView groomedFigureView;
+      GroomedImageView groomedImageView;
       if (figureAssetGroup.size() == 1) {
         // A figure would have an original image and at least one thumbnail. Assume this is a supp info asset.
-        groomedFigureView = null;
+        groomedImageView = null;
       } else {
         try {
-          groomedFigureView = GroomedFigureView.create(figureAssetGroup);
-        } catch (NotAFigureException e) {
-          groomedFigureView = null;
+          groomedImageView = GroomedImageView.create(figureAssetGroup);
+        } catch (UncategorizedAssetException e) {
+          groomedImageView = null;
         }
       }
 
-      if (groomedFigureView == null) {
+      if (groomedImageView == null) {
         // figureAssetGroup doesn't match how we expect a figure to be represented
         miscellaneous.addAll(figureAssetGroup);
       } else {
-        figureViews.add(groomedFigureView);
+        List<GroomedImageView> viewType;
+        switch (groomedImageView.getImageType()) {
+          case FIGURE:
+            viewType = figureViews;
+            break;
+          case GRAPHIC:
+            viewType = graphicViews;
+            break;
+          default:
+            throw new AssertionError();
+        }
+        viewType.add(groomedImageView);
       }
     }
 
@@ -94,7 +109,7 @@ public class GroomedAssetsView {
       miscellaneousViews.add(GroomedAssetFileView.createWithFullMetadata(asset));
     }
 
-    return new GroomedAssetsView(articleXmlView, articlePdfView, figureViews, miscellaneousViews);
+    return new GroomedAssetsView(articleXmlView, articlePdfView, figureViews, graphicViews, miscellaneousViews);
   }
 
 }
