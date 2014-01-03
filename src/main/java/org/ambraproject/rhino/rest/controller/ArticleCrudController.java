@@ -132,13 +132,18 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @param corrections if present, the response will be a list of objects representing corrections associated with the
    *                    article, instead of the article metadata. The structure of corrections are similar to
    *                    commments--they can have any number of recursively nested replies.
+   * @param authors     if present, the response will be a list of objects representing the authors
+   *                    of the article.  While the article metadata contains author names, this list will
+   *                    contain more author information than the article metadata, such as author affiliations,
+   *                    corresponding author, etc.
    * @throws FileStoreException
    * @throws IOException
    */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = "comments", required = false) String comments,
-                   @RequestParam(value = "corrections", required = false) String corrections)
+                   @RequestParam(value = "corrections", required = false) String corrections,
+                   @RequestParam(value = "authors", required = false) String authors)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
@@ -149,6 +154,8 @@ public class ArticleCrudController extends ArticleSpaceController {
       annotationCrudService.readComments(receiver, id, mf);
     } else if (booleanParameter(corrections)) {
       annotationCrudService.readCorrections(receiver, id, mf);
+    } else if (booleanParameter(authors)) {
+      articleCrudService.readAuthors(receiver, id, mf);
     } else {
       articleCrudService.readMetadata(receiver, id, mf);
     }
