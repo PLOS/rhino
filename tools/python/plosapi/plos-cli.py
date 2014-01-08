@@ -7,7 +7,7 @@ from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, hashlib, zipfile
 from plosapi import Rhino, S3, Currents
-from sqlalchemy import create_engine
+#from sqlalchemy import create_engine
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -76,7 +76,6 @@ ARTICLE_TMPL = """
 # ***** URI Template *****
 URI_TMPL = """info:doi/{doi}"""
 
-
 class print_appender():
     """
     """
@@ -119,7 +118,6 @@ def _extractNameExt(s):
     s_split = s.split('.')
     return (_stripJournal(s), s_split[len(s_split)-1])
 
-
 def _representationTags(afids):
     """
     Build a set of representation entities and tuples with the name, uri
@@ -159,15 +157,15 @@ def _manifestInfo(doi, srcRepo):
              'assets' : assets
             }
 
-def _objectTags(manifestInfo):
+def _objectTags(mi):
     """
     Build a set of object entities and collect a list of tuples containing
     the name, uri and extension of the the respresentaions of that object.
     """
     objTags = []
-    strkImage = manifestInfo.get('strkImageURI')
+    strkImage = mi.get('strkImageURI')
     
-    for (adoi, afids) in manifestInfo['assets'].iteritems():
+    for (adoi, afids) in mi['assets'].iteritems():
         auri =  URI_TMPL.format(doi=adoi)
         strkValue = 'strkImage="True"' if strkImage == auri else ''
         repTags = _representationTags(afids)
@@ -198,18 +196,26 @@ def repackage(dois, srcRepo, apd):
     """
     for doi in dois:
         doiSuffix = _stripPrefix(doi, srcRepo)
-        manifestXML = _manifestXML(doi, srcRepo) 
-        srcRepo.articleFiles(doiSuffix)
         with zipfile.ZipFile(_stripJournal(doiSuffix) + '.zip', mode='w') as zf:
-            zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
-            zf.writestr('MANIFEST.xml', manifestXML, compress_type=zipfile.ZIP_DEFLATED)
-            for (dpath, _, fnames) in os.walk(doiSuffix):
-                for fname in fnames:
-                    fullFile = '{p}/{f}'.format(p=dpath, f=fname)            
-                    apd.append('Adding: ' + fullFile)
-                    zf.write(fullFile, _stripJournal(fname), compress_type=zipfile.ZIP_DEFLATED)
-            zf.close()
-
+            try:
+                manifestXML = _manifestXML(doi, srcRepo) 
+                srcRepo.articleFiles(doiSuffix)
+                zf.writestr('manifest.dtd', DTD_TEXT, compress_type=zipfile.ZIP_DEFLATED)
+                zf.writestr('MANIFEST.xml', manifestXML, compress_type=zipfile.ZIP_DEFLATED)
+                apd.append('Processing: ' + doi)
+                for (dpath, _, fnames) in os.walk(doiSuffix):
+                    for fname in fnames:
+                       fullFile = '{p}/{f}'.format(p=dpath, f=fname)            
+                       zf.write(fullFile, _stripJournal(fname), compress_type=zipfile.ZIP_DEFLATED)
+                       os.remove(fullFile)
+                zf.close()
+                os.removedirs(doiSuffix)
+            except Exception as e:
+                apd.append('FAILED: {d} : {e}'.format(d=doi, e=e))
+                zf.close()
+                fname = _stripJournal(doiSuffix) + '.zip'
+                if os.path.exists(fname):
+                    os.remove(fname)
 
 def assetDiff(doiSuffixes, srcRepo, dstRepo, matchOnly=''):
     """
@@ -365,6 +371,40 @@ def backup(srcRepo, dstRepo, appender):
         doiCopy([ doiSuffix ], srcRepo, dstRepo, appender)
     return 
 
+def ingestibles(params, srcRepo, apd):
+    """
+    List the available files for ingest.
+    """
+    for name in srcRepo.ingestibles():
+        apd.append(name)        
+
+def ingest(params, srcRepo, apd):
+    """
+    Given a list of file names that exist
+    in the ingest directory - perform an 
+    ingest.
+    """
+    for zName in params:
+        try:
+            print('Ingesting: {n}'.format(n=zName))
+            srcRepo.ingestZipQ(zName)
+        except Exception as e:
+            print('Failed: {n} {msg}'.format(n=zName, msg=e.message.encode('utf-8')))
+
+def publish(params, srcRepo, apd):
+    """
+    Given a list of file names that exist
+    in the ingest directory - perform an 
+    ingest.
+    """
+    for doi in params:
+        try:
+            print('Publishing: {n}'.format(n=doi))
+            srcRepo.publish(doi)
+        except Exception as e:
+            print('Failed: {n} {msg}'.format(n=doi, msg=e.message.encode('utf-8')))
+
+    
 if __name__ == "__main__":
     import argparse
 
@@ -382,7 +422,9 @@ if __name__ == "__main__":
                                         'doicopy [doi suffixes] | '
                                         'assetdiff [doi suffixes] | ' 
                                         'backup  [no params] | \n'
-                                        'repackage')
+                                        'repackage | '
+                                        'ingestibles |'
+                                        'ingest [zips in Q]' )
     parser.add_argument('params', nargs='*', help="command dependent parameters")
     args = parser.parse_args()
     params = args.params
@@ -394,7 +436,7 @@ if __name__ == "__main__":
         fp = open(args.file, 'r')
         params = []
         for p in fp:
-            params.append(p.strip())
+            params.append(p.replace("'",'').strip())
         fp.close()
 
     # Main command dispatcher.
@@ -409,7 +451,14 @@ if __name__ == "__main__":
                  'backup'    : 
                    lambda src, dst, apd: backup(src, dst, apd),
                  'repackage'    :
-                   lambda src, dst, apd: repackage(args.params, src, apd), }
+                   lambda src, _, apd: repackage(params, src, apd), 
+                 'ingestibles'  :
+                   lambda src, _, apd: ingestibles(params, src, apd),
+                 'ingest'  :
+                   lambda src, _, apd: ingest(params, src, apd),
+                 'publish' :
+                   lambda src, _, apd: publish(params, src, apd),
+                }
 
     src = Rhino(rhinoServer=args.server, prefix=args.prefix)
     dst = S3(bucketID=args.bucket, prefix=args.prefix)
