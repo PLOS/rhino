@@ -24,6 +24,8 @@ class Rhino:
     _ARTICLE_TMPL    = '{server}/{rver}/articles/{prefix}/'
     _ASSETS_TMPL     = '{server}/{rver}/assets/{prefix}/'
     _ASSETFILES_TMPL = '{server}/{rver}/assetfiles/{prefix}/'
+    _INGESTIBLES_TMPL = '{server}/{rver}/ingestibles'
+
     _ARCTILE_DOI_CACHE = dict()
     
     def __init__(self, rhinoServer='http://api.plosjournals.org/', prefix='10.1371', 
@@ -39,6 +41,7 @@ class Rhino:
         """
         self.filterRegx = re.compile(regx)
         self.articlesReq = self._ARTICLES_TMPL.format(server=rhinoServer, rver=rver)
+        self.ingestiblesReq = self._INGESTIBLES_TMPL.format(server=rhinoServer, rver=rver)
         """
         Maybe this is bad form but we want to initialize the template as
         much as possible and only once. We will have to format in the DOI
@@ -67,6 +70,28 @@ class Rhino:
             return requests.get(url, stream=True, verify=self.verify)
         else:
             return requests.get(url, stream=True)
+
+    def _doPost(self, url, payLoad):
+        """
+        Requests for Humans not so human after all.
+        The verfiy parameter fails if the URL is not https:(
+        """
+        if url.lower().startswith('https:'):
+            return requests.post(url, data=payLoad, stream=True, verify=self.verify)
+        else:
+            return requests.post(url, data=payLoad, stream=True)
+
+    def _doPatch(self, url, payLoad):
+        """
+        Requests for Humans not so human after all.
+        The verfiy parameter fails if the URL is not https:(
+        """
+        _payLoad = json.dumps(payLoad)
+        _headers = {'content-type': 'application/json'}
+        if url.lower().startswith('https:'):
+            return requests.patch(url, data=_payLoad, headers=_headers, verify=self.verify)
+        else:
+            return requests.patch(url, data=_payLoad, headers=_headers)
 
     def _getBinary(self, fname, url, useHash='MD5'):
         """
@@ -128,6 +153,42 @@ class Rhino:
                 (p, afid) = fullAFID.split('/')
                 yield afid
 
+    def ingestZipQ(self, zName):
+        """
+        Given the zip filename 
+        """
+        r = self._doPost(self.ingestiblesReq, { 'name': zName })        
+        if r.status_code == 200:
+            return json.loads(r.content)
+        else:
+            raise Exception('rhino:ingestZipQ verb failed ' + r.text)
+
+    def ingestibles(self):
+        """
+        """
+        r = self._doGet(self.ingestiblesReq)
+        if r.status_code == 200:
+            # Load JSON into a Python object and use some values from it.
+            ingestibles = json.loads(r.content)
+        else:
+            raise Exception('rhino:igestibles verb failed ' + url)
+        # Return only doi's matched by filter
+        for name in ingestibles:
+            yield(name.replace("'",'').encode('utf-8')) 
+
+    def publish(self, doiSuffix):
+        """
+        """
+        if doiSuffix.startswith(self.prefix):
+            doiSuffix = self._stripPrefix(doiSuffix, True)
+
+        url = self._ARTICLE_TMPL.format(suffix=doiSuffix)
+        r = self._doPatch(url, {'state': 'published'})
+        if r.status_code == 200:
+            return json.loads(r.content)
+        else:
+            raise Exception('rhino:publish verb failed ' + r.text)
+
     def articles(self, useCache=False, stripPrefix=False):
         """
         List of article DOI's for the given Server and Prefix.
@@ -151,7 +212,7 @@ class Rhino:
                 if self.filterRegx.search(doi):
                     if useCache: self._ARTICLE_DOI_CACHE[doi] = 1
                     yield(self._stripPrefix(doi, stripPrefix)) 
-    
+
     def article(self, doiSuffix):
         """
         Get the meta-data associated with the artile DOI.
@@ -292,13 +353,13 @@ class Rhino:
 
     def doiMissing(self, dois):
         missing = []
-        for doi in dois:
-            try:
-                a = self.article(doi.replace('10.1371/',''))
-                print('Found: ' + doi)
-            except:
-                print('Missing: ' + doi)
-                missing.append(doi)
+        _dois = dict ((doi, 0) for doi in dois)
+        for found_doi in self.articles():
+            if _dois.has_key(found_doi):
+               _dois[found_doi] = 1
+        for k,v in _dois.iteritems():
+            if v == 0:
+                missing.append(k)
         return missing
 
 if __name__ == "__main__":
@@ -306,23 +367,36 @@ if __name__ == "__main__":
     import pprint 
  
     # Main command dispatcher.
-    dispatch = { 'articlefiles' : lambda repo, doiList: [ repo.articleFiles(doi) for doi in doiList ],
-                 'article'      : lambda repo, doiList: [ repo.article(doi) for doi in doiList ],
-                 'articles'     : lambda repo, doiList: repo.articles(),
-                 'rm-article'   : lambda repo, doiList: [ repo.rmArticle(doi) for doi in doiList ],
-                 'assets'       : lambda repo, doiList: [ repo.assets(doi) for doi in doiList ],
-                 'asset'        : lambda repo, doiList: [ repo.asset(doi) for doi in doiList ],
-                 'assetall'     : lambda repo, doiList: [ repo.assetall(doi) for doi in doiList ],
-                 'md5'          : lambda repo, doiList: [ repo.assetFileMD5(adoi) for adoi in doiList ],
-                 'missing'      : lambda repo, doiList: repo.doiMissing(doiList),
+    dispatch = { 'articlefiles' : lambda repo, params: [ repo.articleFiles(doi) for doi in params ],
+                 'article'      : lambda repo, params: [ repo.article(doi) for doi in params ],
+                 'articles'     : lambda repo, _     : repo.articles(),
+                 'rm-article'   : lambda repo, params: [ repo.rmArticle(doi) for doi in params ],
+                 'assets'       : lambda repo, params: [ repo.assets(doi) for doi in params ],
+                 'asset'        : lambda repo, params: [ repo.asset(doi) for doi in params ],
+                 'assetall'     : lambda repo, params: [ repo.assetall(doi) for doi in params ],
+                 'md5'          : lambda repo, params: [ repo.assetFileMD5(adoi) for adoi in params ],
+                 'missing'      : lambda repo, params: repo.doiMissing(params),
+                 'ingestibles'  : lambda repo, _     : [ name for name in repo.ingestibles()],
+                 'ingest'       : lambda repo, params: [ repo.ingestZipQ(zName) for zName in params ],
+                 'publish'      : lambda repo, params: [ repo.publish(doi) for doi in params ],
                }
 
     pp = pprint.PrettyPrinter(indent=2)
     parser = argparse.ArgumentParser(description='Rhino API client module.')
-    parser.add_argument('--server', help='specify a Rhino server url.')
-    parser.add_argument('--prefix', help='specify a DOI prefix.')
+    parser.add_argument('--server', default='http://api.plosjournals.org', help='specify a Rhino server url.')
+    parser.add_argument('--prefix', default='10.1371', help='specify a DOI prefix.')
+    parser.add_argument('--rver', default='v1', help='rhino version')
     parser.add_argument('--file', default=None, help='File name of alternate input params list.')
-    parser.add_argument('command', help="articles, article, articlefiles, assets, asset, assetfile, assetAll, md5, missing")
+    parser.add_argument('command', help='articles | '
+                                        'article DOI-SUFFIX | '
+                                        'articlefiles DOI-SUFFIX | '
+                                        'assets DOI-SUFFIX | '
+                                        'asset ASSET-DOI-SUFFIX | '
+                                        'assetfile | ' 
+                                        'assetAll  | '
+                                        'md5  | '
+                                        'missing | ' 
+                                        'ingestibles | ')
     parser.add_argument('params', nargs='*', help="parameter list for commands")
     args = parser.parse_args()
     params = args.params
@@ -331,22 +405,20 @@ if __name__ == "__main__":
     # be params on the command line from a file
     # where each line is a separate parameter.
     if args.file:
-        print('Reading parameters from ' + args.file)
         fp = open(args.file, 'r')
         params = []
         for p in fp:
-            print('Adding: ' + p)
             params.append(p.strip())
         fp.close()
 
     try:
-        for val in dispatch[args.command](Rhino(), params):
+        r = Rhino(rhinoServer=args.server, prefix=args.prefix, rver=args.rver)
+        for val in dispatch[args.command](r, params):
             pp.pprint(val)
     except Exception as e:
-        sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message))
+        sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message.encode('utf-8')))
         traceback.print_exc(file=sys.stdout)
         sys.exit(1)
 
     sys.exit(0)
         
-    
