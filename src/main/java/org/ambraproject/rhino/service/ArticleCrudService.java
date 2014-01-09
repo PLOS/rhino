@@ -119,6 +119,18 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format)
       throws IOException;
 
+  /**
+   * Read information about the authors of an article.
+   *
+   * @param receiver the receiver object to which to send the metadata
+   * @param id specifies the article
+   * @param format the desired metadata format
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  public abstract void readAuthors(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+      throws IOException, FileStoreException;
+
   public abstract void setAssetService(AssetCrudService assetService);
 
   /**

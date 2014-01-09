@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Represents the manifest of an article .zip archive.
  */
-public class ManifestXml extends XpathReader {
+public class ManifestXml extends AbstractXpathReader {
 
   /**
    * Constructor.

@@ -60,6 +60,7 @@ import java.util.Set;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 public class ArticleCrudServiceTest extends BaseRhinoTest {
@@ -251,5 +252,44 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(articleMap.get("doi"), articleId.getKey());
     assertEquals(articleMap.get("title"), article.getTitle());
     assertEquals(articleMap.get("articleType"), "Research Article");
+  }
+
+  @Test
+  public void testArticleAuthors() throws Exception {
+    String doiStub = SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
+    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doi = articleId.getIdentifier();
+    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
+    TestInputStream input = TestInputStream.of(sampleData);
+    Article article = articleCrudService.write(input, Optional.of(articleId),
+        DoiBasedCrudService.WriteMode.CREATE_ONLY);
+
+    DummyResponseReceiver drr = new DummyResponseReceiver();
+    articleCrudService.readAuthors(drr, articleId, MetadataFormat.JSON);
+    String json = drr.read();
+    assertTrue(json.length() > 0);
+    Gson gson = new Gson();
+    List<?> authors = gson.fromJson(json, List.class);
+
+    assertEquals(authors.size(), 5);
+    Map<?, ?> author = (Map<?, ?>) authors.get(0);
+    assertEquals(author.get("fullName"), "Taha Yasseri");
+    assertNotNull(author.get("corresponding"));
+    List<?> affiliations = (List<?>) author.get("affiliations");
+    assertEquals(affiliations.size(), 1);
+    assertEquals(affiliations.get(0),
+        "Department of Theoretical Physics, Budapest University of Technology and Economics, Budapest, Hungary");
+
+    // Example of an author with two affiliations
+    author = (Map<?, ?>) authors.get(3);
+    assertEquals(author.get("fullName"), "Andr\u00e1s Kornai");
+    assertNull(author.get("corresponding"));
+    affiliations = (List<?>) author.get("affiliations");
+    assertEquals(affiliations.size(), 2);
+    assertEquals(affiliations.get(0),
+        "Department of Theoretical Physics, Budapest University of Technology and Economics, Budapest, Hungary");
+    assertEquals(affiliations.get(1),
+        "Computer and Automation Research Institute, Hungarian Academy of Sciences, Budapest, Hungary");
   }
 }

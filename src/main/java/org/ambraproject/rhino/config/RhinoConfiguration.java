@@ -23,6 +23,7 @@ import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
+import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -206,5 +207,10 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ClassificationService classificationService(TaxonomyService taxonomyService) {
     return new ClassificationServiceImpl(taxonomyService);
+  }
+
+  @Bean
+  public XpathReader xpathReader() {
+    return new XpathReader();
   }
 }
