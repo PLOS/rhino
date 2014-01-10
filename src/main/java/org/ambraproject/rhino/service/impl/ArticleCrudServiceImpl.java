@@ -356,10 +356,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     try {
       addAssetFiles(article, zip, manifest);
     } catch (RestClientException rce) {
-
-      // If there is an error processing the assets, delete the article we created
-      // above, since it won't be valid.
-      delete(ArticleIdentity.create(article));
+      try {
+        // If there is an error processing the assets, delete the article we created
+        // above, since it won't be valid.
+        delete(ArticleIdentity.create(article));
+      } catch (RuntimeException | FileStoreException exceptionOnDeletion) {
+        exceptionOnDeletion.addSuppressed(rce);
+        throw exceptionOnDeletion;
+      }
       throw rce;
     }
     return article;
