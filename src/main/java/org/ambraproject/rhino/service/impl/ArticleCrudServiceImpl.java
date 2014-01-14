@@ -273,6 +273,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * Special cases of article relationship types where the reciprocal relationships are asymmetric.
    * <p/>
    * For example, if A is a "retracted-article" of B, then B must be a "retraction" of A.
+   * <p/>
+   * TODO: Reduce code duplication with org.ambraproject.article.service.IngesterImpl.RECIPROCAL_TYPES
    */
   private static final ImmutableBiMap<String, String> RECIPROCAL_TYPES = ImmutableBiMap.<String, String>builder()
       .put("corrected-article", "correction-forward")
