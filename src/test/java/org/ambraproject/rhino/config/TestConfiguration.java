@@ -22,6 +22,7 @@ import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.queue.MessageSender;
 import org.ambraproject.queue.MessageServiceImpl;
+import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -159,5 +160,10 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public ClassificationService classificationService() {
     return new ClassificationServiceImpl(null);
+  }
+
+  @Bean
+  public XpathReader xpathReader() {
+    return new XpathReader();
   }
 }

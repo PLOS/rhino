@@ -89,7 +89,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     // Set the asset entity's file-specific fields
     assetToPersist.setExtension(assetFileId.getFileExtension());
     assetToPersist.setContentType(assetFileId.getContentType().toString());
-    assetToPersist.setContextElement(assetFileId.getContextElement());
     assetToPersist.setSize(assetData.length);
 
     // Persist to the database
@@ -175,6 +174,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     newAsset.setDoi(oldAsset.getDoi());
     newAsset.setTitle(oldAsset.getTitle());
     newAsset.setDescription(oldAsset.getDescription());
+    newAsset.setContextElement(oldAsset.getContextElement());
     return newAsset;
   }
 

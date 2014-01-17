@@ -1,15 +1,10 @@
 /*
- * Copyright (c) 2006-2012 by Public Library of Science
- * http://plos.org
- * http://ambraproject.org
- *
+ * $HeadURL$
+ * $Id$
+ * Copyright (c) 2006-2014 by Public Library of Science http://plos.org http://ambraproject.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -18,93 +13,41 @@
 
 package org.ambraproject.rhino.content.xml;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import org.ambraproject.rhino.util.NodeListAdapter;
-import org.apache.commons.lang.StringUtils;
+import org.ambraproject.rhino.shared.XPathExtractor;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.util.List;
+import javax.xml.xpath.XPathException;
 
 /**
- * A container for a node of XML data that reads it with XPath queries.
- * <p/>
- * Instances of this class are not thread-safe because they hold an instance of {@link XPath} to use.
+ * Implementation of {@link org.ambraproject.rhino.shared.XPathExtractor}.  This is only
+ * used in certain cases where we share code with ambra.  For most common cases, you
+ * should extend {@link AbstractXpathReader} instead of using this.
  */
-public abstract class XpathReader {
+public class XpathReader extends AbstractXpathReader implements XPathExtractor {
 
-  protected final Node xml;
-  private final XPath xPath;
-
-  protected XpathReader(Node xml) {
-    this.xml = Preconditions.checkNotNull(xml);
-
-    // XPath isn't thread-safe, so we need one per instance of this class
-    this.xPath = XPathFactory.newInstance().newXPath();
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Node selectNode(Node node, String query) throws XPathException {
+    return readNode(query, node);
   }
 
   /**
-   * Define default text formatting for this object. By default, just calls {@link org.w3c.dom.Node#getTextContent()}.
-   * Override for something different. Returns null on null input.
-   *
-   * @param node an XML node
-   * @return the node's text content with optional formatting
+   * {@inheritDoc}
    */
-  protected String getTextFromNode(Node node) {
-    return (node == null) ? null : node.getTextContent();
+  @Override
+  public NodeList selectNodes(Node node, String query) throws XPathException {
+    return (NodeList) xPath.evaluate(query, node, XPathConstants.NODESET);
   }
 
-  protected String readString(String query) {
-    return readString(query, xml);
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String selectString(Node node, String query) throws XPathException {
+    return readString(query, node);
   }
-
-  protected String readString(String query, Node node) {
-    Node stringNode = readNode(query, node);
-    if (stringNode == null) {
-      return null;
-    }
-    String text = getTextFromNode(stringNode);
-    return (StringUtils.isBlank(text) ? null : text);
-  }
-
-  protected Node readNode(String query) {
-    return readNode(query, xml);
-  }
-
-  protected Node readNode(String query, Node node) {
-    try {
-      return (Node) xPath.evaluate(query, node, XPathConstants.NODE);
-    } catch (XPathExpressionException e) {
-      throw new InvalidXPathException(query, e);
-    }
-  }
-
-  protected List<Node> readNodeList(String query) {
-    return readNodeList(query, xml);
-  }
-
-  protected List<Node> readNodeList(String query, Node node) {
-    NodeList nodeList;
-    try {
-      nodeList = (NodeList) xPath.evaluate(query, node, XPathConstants.NODESET);
-    } catch (XPathExpressionException e) {
-      throw new InvalidXPathException(query, e);
-    }
-    return NodeListAdapter.wrap(nodeList);
-  }
-
-  protected List<String> readTextList(String query) {
-    List<Node> nodeList = readNodeList(query);
-    List<String> textList = Lists.newArrayListWithCapacity(nodeList.size());
-    for (Node node : nodeList) {
-      textList.add(getTextFromNode(node));
-    }
-    return textList;
-  }
-
 }

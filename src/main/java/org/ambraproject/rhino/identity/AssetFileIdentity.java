@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -129,38 +128,6 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     }
     String mimeType = ContentTypeInference.inferContentType(getFilePath());
     return MediaType.parseMediaType(mimeType);
-  }
-
-  private static final Pattern DOI_TO_CONTEXT_ELEMENT_RE
-      = Pattern.compile("p[a-z]{3}\\.\\d{7}\\.?([tgs]\\d+)?");
-
-  /**
-   * @return the contextElement property associated with this asset file.  This has only four values: "fig",
-   *         "table-wrap", "supplementary-material", or null, for figures, tables, supplemental material, or everything
-   *         else.
-   */
-  public String getContextElement() {
-    Matcher m = DOI_TO_CONTEXT_ELEMENT_RE.matcher(getIdentifier());
-    if (!m.find()) {
-      return null;
-    }
-    String extra = m.group(1);
-    if (extra == null) {
-      return null;
-    }
-    switch (extra.charAt(0)) {
-      case 'g':
-        return "fig";
-
-      case 't':
-        return "table-wrap";
-
-      case 's':
-        return "supplementary-material";
-
-      default:
-        return null;
-    }
   }
 
   /**

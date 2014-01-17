@@ -37,6 +37,7 @@ import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
+import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -46,10 +47,13 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
+import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -92,6 +96,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   protected PingbackReadService pingbackReadService;
 
+  @Autowired
+  private XpathReader xpathReader;
 
   private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
@@ -370,10 +376,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     try {
       addAssetFiles(article, zip, manifest);
     } catch (RestClientException rce) {
-
-      // If there is an error processing the assets, delete the article we created
-      // above, since it won't be valid.
-      delete(ArticleIdentity.create(article));
+      try {
+        // If there is an error processing the assets, delete the article we created
+        // above, since it won't be valid.
+        delete(ArticleIdentity.create(article));
+      } catch (RuntimeException | FileStoreException exceptionOnDeletion) {
+        exceptionOnDeletion.addSuppressed(rce);
+        throw exceptionOnDeletion;
+      }
       throw rce;
     }
     return article;
@@ -714,6 +724,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
     ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
     serializeMetadata(format, receiver, view);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void readAuthors(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+      throws IOException, FileStoreException {
+    Document doc = parseXml(readXml(id));
+    List<AuthorView> authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+    List<ArticleAuthorView> views = ArticleAuthorView.createList(authors);
+    serializeMetadata(format, receiver, views);
   }
 
   /**
