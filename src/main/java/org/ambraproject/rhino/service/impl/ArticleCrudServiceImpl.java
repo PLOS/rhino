@@ -23,6 +23,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
@@ -79,6 +80,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -183,7 +185,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     relateToJournals(article);
     populateCategories(article, doc);
     initializeAssets(article, xml, xmlDataLength);
-    populateRelatedArticles(article);
+    populateRelatedArticles(article, xml);
 
     return article;
   }
@@ -570,7 +572,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     assets.add(xmlAsset);
   }
 
-  private void populateRelatedArticles(Article article) {
+  private void populateRelatedArticles(Article article, ArticleXml xml) {
+    List<ArticleRelationship> xmlRelationships = xml.parseRelatedArticles();
+    if (article.getRelatedArticles() == null) {
+      // Ingesting for the first time
+      article.setRelatedArticles(xmlRelationships);
+    } else {
+      // Re-ingesting. Modify persistent values in place.
+      modifyRelatedArticles(article.getRelatedArticles(), xmlRelationships);
+    }
+
     for (ArticleRelationship relationship : article.getRelatedArticles()) {
       relationship.setParentArticle(article);
 
@@ -582,10 +593,51 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       if (otherArticle != null) {
         relationship.setOtherArticleID(otherArticle.getID());
       }
-      /*
-       * The article not being in our system is documented as a valid use case (see Javadoc on ArticleRelationship).
-       * TODO: Do we want to send a warning to the client just in case?
-       */
+    }
+  }
+
+  /**
+   * Modify persistent values in place to match XML. This is a workaround to avoid relying on Hibernate's cascading
+   * delete behavior, with would normally let us just remove the old list and replace it with a new one. As a kludge, if
+   * a new value has the same "other article DOI" as an old one, modify the old one to match the new one instead of
+   * replacing it.
+   * <p/>
+   * TODO: Un-kludge
+   *
+   * @param persistentList the list to modify
+   * @param parsedList     the list of desired values
+   */
+  private void modifyRelatedArticles(List<ArticleRelationship> persistentList, List<ArticleRelationship> parsedList) {
+    // Map preexisting relationships by their target DOI
+    Map<String, ArticleRelationship> preexistingMap = Maps.newHashMapWithExpectedSize(persistentList.size());
+    for (ArticleRelationship preexisting : persistentList) {
+      ArticleRelationship previous = preexistingMap.put(preexisting.getOtherArticleDoi(), preexisting);
+      if (previous != null) {
+        log.warn("Multiple relationships to {}", preexisting.getOtherArticleDoi());
+        // Leave the other one to be modified.
+        // In case there should actually be more than one, the others will be created new after the first is modified.
+        hibernateTemplate.delete(previous);
+      }
+    }
+
+    // For each relationship in XML, modify the preexisting one in place, or add a new one if there is none
+    for (ArticleRelationship parsed : parsedList) {
+      String target = parsed.getOtherArticleDoi();
+      ArticleRelationship preexisting = preexistingMap.remove(target);
+      if (preexisting != null) {
+        preexisting.setType(parsed.getType());
+      } else {
+        persistentList.add(parsed);
+      }
+    }
+
+    // Delete each preexisting relationship that does not appear in latest XML
+    for (ArticleRelationship preexisting : preexistingMap.values()) {
+      persistentList.remove(preexisting);
+
+      // See method-level Javadoc. With cascading delete, removing from the list should be sufficient.
+      // But as a workaround, delete it manually.
+      hibernateTemplate.delete(preexisting);
     }
   }
 

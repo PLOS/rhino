@@ -198,8 +198,6 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setCollaborativeAuthors(parseCollaborativeAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
-
-    article.setRelatedArticles(buildRelatedArticles(readNodeList("//related-article")));
   }
 
   /**
@@ -406,7 +404,16 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return collabStrings;
   }
 
-  private List<ArticleRelationship> buildRelatedArticles(List<Node> relatedArticleNodes) {
+  /**
+   * Parse {@link ArticleRelationship} objects from XML.
+   * <p/>
+   * These are returned from here, rather than set in the {@link Article} object during normal parsing, so they can get
+   * special handling.
+   *
+   * @return the article relationships defined by the XML
+   */
+  public List<ArticleRelationship> parseRelatedArticles() {
+    List<Node> relatedArticleNodes = readNodeList("//related-article");
     List<ArticleRelationship> relatedArticles = Lists.newArrayListWithCapacity(relatedArticleNodes.size());
     for (Node relatedArticleNode : relatedArticleNodes) {
       ArticleRelationship relatedArticle = new ArticleRelationship();
