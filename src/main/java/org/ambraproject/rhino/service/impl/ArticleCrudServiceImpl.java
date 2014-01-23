@@ -305,11 +305,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     reciprocal.setOtherArticleDoi(otherArticle.getDoi());
 
     String relationshipType = relationship.getType();
-    String reciprocalType = RECIPROCAL_TYPES.get(relationshipType);
-    reciprocalType = (reciprocalType == null) ? relationshipType : reciprocalType;
-    reciprocal.setType(reciprocalType);
+    reciprocal.setType(getReciprocalType(relationshipType));
 
     parentArticle.getRelatedArticles().add(reciprocal);
+  }
+
+  private static String getReciprocalType(String relationshipType) {
+    String reciprocalType = RECIPROCAL_TYPES.get(relationshipType);
+    return (reciprocalType == null) ? relationshipType : reciprocalType;
   }
 
   /**
@@ -332,6 +335,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleRelationship reciprocal = findRelationshipTo(relatedArticle, ingested);
     if (reciprocal != null) {
       reciprocal.setOtherArticleID(ingested.getID());
+      reciprocal.setType(getReciprocalType(relationship.getType()));
       hibernateTemplate.update(reciprocal);
     } else {
       reciprocate(relationship, relatedArticle, ingested);
@@ -611,9 +615,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           DetachedCriteria.forClass(Article.class)
               .add(Restrictions.eq("doi", otherArticleDoi))
       ));
-      if (otherArticle != null) {
-        relationship.setOtherArticleID(otherArticle.getID());
-      }
+      relationship.setOtherArticleID(otherArticle == null ? null : otherArticle.getID());
     }
   }
 
