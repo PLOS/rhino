@@ -654,14 +654,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
     }
 
-    // Delete each preexisting relationship that does not appear in latest XML
-    for (ArticleRelationship preexisting : preexistingMap.values()) {
-      persistentList.remove(preexisting);
-
-      // See method-level Javadoc. With cascading delete, removing from the list should be sufficient.
-      // But as a workaround, delete it manually.
-      hibernateTemplate.delete(preexisting);
-    }
+    /*
+     * Delete preexisting relationships not found in the present XML.
+     *
+     * This deletes relationships that were created from the XML in a previous ingestion but deleted in this draft.
+     * It also deletes reciprocal relationships created from the XML of other articles that refer to this one,
+     * but those will be created again in createReciprocalRelationships.
+     */
+    persistentList.removeAll(preexistingMap.values());
   }
 
   /**
