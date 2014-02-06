@@ -79,7 +79,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     correction.setCreator(creator);
     correction.setArticleID(article.getID());
     correction.setAnnotationUri("info:doi/10.1371/annotation/test_correction_1");
-    correction.setType(AnnotationType.FORMAL_CORRECTION);
+//    correction.setType(AnnotationType.FORMAL_CORRECTION); // TODO: AMEC-2275
     correction.setTitle("Test Correction One");
     correction.setBody("Test Correction One Body");
     hibernateTemplate.save(correction);
@@ -122,7 +122,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     correction2.setCreator(creator);
     correction2.setArticleID(article.getID());
     correction2.setAnnotationUri("info:doi/10.1371/annotation/test_correction_2");
-    correction2.setType(AnnotationType.MINOR_CORRECTION);
+//    correction2.setType(AnnotationType.MINOR_CORRECTION); // TODO: AMEC-2275
     correction2.setTitle("Test Correction Two");
     correction2.setBody("Test Correction Two Body");
     hibernateTemplate.save(correction2);
