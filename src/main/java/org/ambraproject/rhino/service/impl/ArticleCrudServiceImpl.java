@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
+import org.ambraproject.ApplicationException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -55,6 +56,7 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
+import org.ambraproject.views.article.ArticleType;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -75,6 +77,7 @@ import org.w3c.dom.Node;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -530,20 +533,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private void populateCategories(Article article, Document xml) {
 
-    // Attempt to assign categories to the article based on the taxonomy server.  However,
+    // Attempt to assign categories to the non-amendment article based on the taxonomy server.  However,
     // we still want to ingest the article even if this process fails.
-    List<String> terms = null;
+    List<String> terms;
+
     try {
-      terms = articleClassifier.classifyArticle(xml);
+      if (!isAmendment(article)) {
+        terms = articleClassifier.classifyArticle(xml);
+        if (terms != null && terms.size() > 0) {
+          articleService.setArticleCategories(article, terms);
+        } else {
+          article.setCategories(new HashSet<Category>());
+        }
+      } else {
+        article.setCategories(new HashSet<Category>());
+      }
     } catch (Exception e) {
       log.warn("Taxonomy server not responding, but ingesting article anyway", e);
     }
-    if (terms != null && terms.size() > 0) {
-      articleService.setArticleCategories(article, terms);
-    } else {
-      article.setCategories(new HashSet<Category>());
-    }
   }
+
 
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
     AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
@@ -824,5 +833,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Required
   public void setAssetService(AssetCrudService assetService) {
     this.assetService = assetService;
+  }
+
+  /**
+   * Check the type of the article for taxonomy classification using the article object
+   * @param article the article
+   * @return true if the article is an amendment (correction, eoc or retraction)
+   * @throws org.ambraproject.ApplicationException
+   * @throws NoSuchArticleIdException
+   */
+  private boolean isAmendment(Article article) throws ApplicationException, NoSuchArticleIdException {
+    ArticleType articleType = ArticleType.getDefaultArticleType();
+
+    for (String artTypeUri : article.getTypes()) {
+      if (ArticleType.getKnownArticleTypeForURI(URI.create(artTypeUri)) != null) {
+        articleType = ArticleType.getKnownArticleTypeForURI(URI.create(artTypeUri));
+        break;
+      }
+    }
+    if (articleType == null) {
+      throw new ApplicationException("Unable to resolve article type for: " + article.getDoi());
+    }
+     git
+    return ArticleType.isCorrectionArticle(articleType) || ArticleType.isEocArticle(articleType) || ArticleType.isRetractionArticle(articleType) ;
   }
 }
