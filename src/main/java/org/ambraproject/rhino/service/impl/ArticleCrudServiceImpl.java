@@ -854,7 +854,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (articleType == null) {
       throw new ApplicationException("Unable to resolve article type for: " + article.getDoi());
     }
-     git
     return ArticleType.isCorrectionArticle(articleType) || ArticleType.isEocArticle(articleType) || ArticleType.isRetractionArticle(articleType) ;
   }
 }
