@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -50,7 +51,9 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -272,6 +275,19 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());
       throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
+    }
+  }
+
+  @Override
+  public List<URL> reproxy(AssetFileIdentity assetId) throws IOException {
+    if (!assetExistsAt(assetId)) {
+      throw reportNotFound(assetId);
+    }
+    try {
+      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid());
+      return ImmutableList.copyOf(urls);
+    } catch (FileStoreException e) {
+      throw new IOException(e);
     }
   }
 
