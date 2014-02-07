@@ -553,7 +553,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-
   private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
     AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
