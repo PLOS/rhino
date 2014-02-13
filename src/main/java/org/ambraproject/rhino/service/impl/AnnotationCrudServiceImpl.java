@@ -41,14 +41,6 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   /**
    * {@inheritDoc}
    */
-  public void readCorrections(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
-      throws IOException {
-    throw new RuntimeException("Corrections are temporarily unsupported"); // TODO: AMEC-2275
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   public void readComments(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
       throws IOException {
     readAnnotations(receiver, id, format);
@@ -121,15 +113,6 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
       throws IOException {
     readAnnotation(receiver, commentId, format);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void readCorrection(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
-      throws IOException {
-    throw new RuntimeException("Corrections are temporarily unsupported"); // TODO: AMEC-2275
   }
 
   private void readAnnotation(ResponseReceiver receiver, DoiBasedIdentity annotationId, MetadataFormat format)

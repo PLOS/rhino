@@ -24,7 +24,6 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
@@ -124,36 +123,27 @@ public class ArticleCrudController extends ArticleSpaceController {
    * Retrieves either metadata about an article (default), or entities associated with an article depending on the
    * parameters.
    *
-   * @param request     HttpServletRequest
-   * @param response    HttpServletResponse
-   * @param comments    if present, the response will be a list of objects representing comments associated with the
-   *                    article, instead of the article metadata. Each comment has a "replies" list that contains any
-   *                    replies (recursively).
-   * @param corrections if present, the response will be a list of objects representing corrections associated with the
-   *                    article, instead of the article metadata. The structure of corrections are similar to
-   *                    commments--they can have any number of recursively nested replies.
-   * @param authors     if present, the response will be a list of objects representing the authors
-   *                    of the article.  While the article metadata contains author names, this list will
-   *                    contain more author information than the article metadata, such as author affiliations,
-   *                    corresponding author, etc.
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
+   * @param comments if present, the response will be a list of objects representing comments associated with the
+   *                 article, instead of the article metadata. Each comment has a "replies" list that contains any
+   *                 replies (recursively).
+   * @param authors  if present, the response will be a list of objects representing the authors of the article.  While
+   *                 the article metadata contains author names, this list will contain more author information than the
+   *                 article metadata, such as author affiliations, corresponding author, etc.
    * @throws FileStoreException
    * @throws IOException
    */
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = "comments", required = false) String comments,
-                   @RequestParam(value = "corrections", required = false) String corrections,
                    @RequestParam(value = "authors", required = false) String authors)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     MetadataFormat mf = MetadataFormat.getFromRequest(request);
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    if (booleanParameter(comments) && booleanParameter(corrections)) {
-      throw new RestClientException("Cannot specify both comments and corrections", HttpStatus.BAD_REQUEST);
-    } else if (booleanParameter(comments)) {
+    if (booleanParameter(comments)) {
       annotationCrudService.readComments(receiver, id, mf);
-    } else if (booleanParameter(corrections)) {
-      annotationCrudService.readCorrections(receiver, id, mf);
     } else if (booleanParameter(authors)) {
       articleCrudService.readAuthors(receiver, id, mf);
     } else {
