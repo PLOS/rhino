@@ -13,31 +13,25 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.views.AnnotationView;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * {@inheritDoc}
@@ -45,55 +39,32 @@ import java.util.Set;
 public class AnnotationCrudServiceImpl extends AmbraService implements AnnotationCrudService {
 
   /**
-   * AnnotationTypes that are considered to be corrections.
-   */
-  private static final ImmutableSet<AnnotationType> CORRECTION_TYPES = Sets.immutableEnumSet(
-      AnnotationType.FORMAL_CORRECTION, AnnotationType.MINOR_CORRECTION, AnnotationType.RETRACTION);
-
-  /**
-   * AnnotationTypes that are considered to be comments.
-   */
-  private static final ImmutableSet<AnnotationType> COMMENT_TYPES = Sets.immutableEnumSet(
-      Sets.difference(EnumSet.allOf(AnnotationType.class), CORRECTION_TYPES));
-
-  /**
-   * {@inheritDoc}
-   */
-  public void readCorrections(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
-      throws IOException {
-    readAnnotations(receiver, id, format, CORRECTION_TYPES);
-  }
-
-  /**
    * {@inheritDoc}
    */
   public void readComments(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
       throws IOException {
-    readAnnotations(receiver, id, format, Sets.immutableEnumSet(AnnotationType.COMMENT));
+    readAnnotations(receiver, id, format);
   }
 
   /**
    * Forwards annotations matching the given types to the receiver.
    *
-   * @param receiver        wraps the response object
-   * @param id              identifies the article
-   * @param format          must currently be MetadataFormat.JSON
-   * @param annotationTypes set of annotation types to select
+   * @param receiver wraps the response object
+   * @param id       identifies the article
+   * @param format   must currently be MetadataFormat.JSON
    * @throws IOException
    */
-  private void readAnnotations(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format,
-                               Set<AnnotationType> annotationTypes) throws IOException {
+  private void readAnnotations(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+      throws IOException {
     Article article = findSingleEntity("FROM Article WHERE doi = ?", id.getKey());
 
-    // We have to get all annotations for an article, not just corrections, since we want to
-    // include any replies to the corrections.
     List<Annotation> annotations = fetchAllAnnotations(article);
 
     // AnnotationView is an ambra component that is convenient here since it encapsulates everything
     // we want to return about a given annotation.  It also handles nested replies.
     List<AnnotationView> results = new ArrayList<>(annotations.size());
     for (Annotation annotation : annotations) {
-      if (annotationTypes.contains(annotation.getType())) {
+      if (AnnotationType.COMMENT.equals(annotation.getType())) {
         Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), annotations,
             new HashMap<Long, List<Annotation>>());
         results.add(new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies));
@@ -141,35 +112,17 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   @Override
   public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
       throws IOException {
-    readAnnotation(receiver, commentId, format, COMMENT_TYPES);
+    readAnnotation(receiver, commentId, format);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void readCorrection(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
+  private void readAnnotation(ResponseReceiver receiver, DoiBasedIdentity annotationId, MetadataFormat format)
       throws IOException {
-    readAnnotation(receiver, commentId, format, CORRECTION_TYPES);
-  }
-
-  private void readAnnotation(ResponseReceiver receiver, DoiBasedIdentity annotationId, MetadataFormat format,
-      Set<AnnotationType> acceptedTypes) throws IOException {
     Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
             .add(Restrictions.eq("annotationUri", annotationId.getKey()))
         ));
     if (annotation == null) {
       throw reportNotFound(annotationId);
-    }
-
-    AnnotationType annotationType = annotation.getType();
-    if (!acceptedTypes.contains(annotationType)) {
-      String message = String.format(""
-          + "Annotation not found at ID: %s\n"
-          + "(An annotation has that ID, but its type is: %s)",
-          annotationId.getIdentifier(), annotationType);
-      throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
     // TODO: Make this more efficient. Three queries is too many.

@@ -27,18 +27,6 @@ import java.io.IOException;
 public interface AnnotationCrudService {
 
   /**
-   * Forwards all corrections, and any replies associated with them, for a given article to the receiver.  The
-   * corrections are returned as a list.  Each correction has a "replies" list that contains any replies (recursively).
-   *
-   * @param receiver        wraps the response object
-   * @param articleIdentity identifies the article
-   * @param format          must currently be MetadataFormat.JSON
-   * @throws IOException
-   */
-  public void readCorrections(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)
-      throws IOException;
-
-  /**
    * Forwards all comments, and any replies associated with them, for a given article to the receiver.  The comments are
    * returned as a list.  Each comment has a "replies" list that contains any replies (recursively).
    *
@@ -61,14 +49,4 @@ public interface AnnotationCrudService {
   public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
       throws IOException;
 
-  /**
-   * Reads the data for a single article correction to the receiver.
-   *
-   * @param receiver  wraps the response object
-   * @param correctionId identifies the correction
-   * @param format
-   * @throws IOException
-   */
-  public void readCorrection(ResponseReceiver receiver, DoiBasedIdentity correctionId, MetadataFormat format)
-      throws IOException;
 }

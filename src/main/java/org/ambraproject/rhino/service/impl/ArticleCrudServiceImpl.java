@@ -22,10 +22,12 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
+import org.ambraproject.ApplicationException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -54,6 +56,7 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
+import org.ambraproject.views.article.ArticleType;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -74,6 +77,7 @@ import org.w3c.dom.Node;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -277,18 +281,41 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
+   * Special cases of article relationship types where the reciprocal relationships are asymmetric.
+   * <p/>
+   * For example, if A is a "retracted-article" of B, then B must be a "retraction" of A.
+   * <p/>
+   * TODO: Reduce code duplication with org.ambraproject.article.service.IngesterImpl.RECIPROCAL_TYPES
+   */
+  private static final ImmutableBiMap<String, String> RECIPROCAL_TYPES = ImmutableBiMap.<String, String>builder()
+      .put("corrected-article", "correction-forward")
+      .put("retracted-article", "retraction")
+      .put("object-of-concern", "expressed-concern")
+      .build();
+
+  /**
    * Set up a reciprocal relationship from {@code parentArticle} to {@code otherArticle}. That is, assuming {@code
    * relationship} is a pre-existing relationship from {@code otherArticle} to {@code parentArticle}, this method
    * creates a new relationship that reciprocates it.
+   * <p/>
+   * The type of the new, reciprocal relationship is the same as that of the first relationship unless it is one of the
+   * asymmetric relations described in {@link #RECIPROCAL_TYPES}.
    */
   private static void reciprocate(ArticleRelationship relationship, Article parentArticle, Article otherArticle) {
     ArticleRelationship reciprocal = new ArticleRelationship();
     reciprocal.setParentArticle(parentArticle);
     reciprocal.setOtherArticleID(otherArticle.getID());
     reciprocal.setOtherArticleDoi(otherArticle.getDoi());
-    reciprocal.setType(relationship.getType());
+
+    String relationshipType = relationship.getType();
+    reciprocal.setType(getReciprocalType(relationshipType));
 
     parentArticle.getRelatedArticles().add(reciprocal);
+  }
+
+  private static String getReciprocalType(String relationshipType) {
+    String reciprocalType = RECIPROCAL_TYPES.get(relationshipType);
+    return (reciprocalType == null) ? relationshipType : reciprocalType;
   }
 
   /**
@@ -311,6 +338,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ArticleRelationship reciprocal = findRelationshipTo(relatedArticle, ingested);
     if (reciprocal != null) {
       reciprocal.setOtherArticleID(ingested.getID());
+      reciprocal.setType(getReciprocalType(relationship.getType()));
       hibernateTemplate.update(reciprocal);
     } else {
       reciprocate(relationship, relatedArticle, ingested);
@@ -505,18 +533,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private void populateCategories(Article article, Document xml) {
 
-    // Attempt to assign categories to the article based on the taxonomy server.  However,
+    // Attempt to assign categories to the non-amendment article based on the taxonomy server.  However,
     // we still want to ingest the article even if this process fails.
-    List<String> terms = null;
+    List<String> terms;
+
     try {
-      terms = articleClassifier.classifyArticle(xml);
+      if (!isAmendment(article)) {
+        terms = articleClassifier.classifyArticle(xml);
+        if (terms != null && terms.size() > 0) {
+          articleService.setArticleCategories(article, terms);
+        } else {
+          article.setCategories(new HashSet<Category>());
+        }
+      } else {
+        article.setCategories(new HashSet<Category>());
+      }
     } catch (Exception e) {
       log.warn("Taxonomy server not responding, but ingesting article anyway", e);
-    }
-    if (terms != null && terms.size() > 0) {
-      articleService.setArticleCategories(article, terms);
-    } else {
-      article.setCategories(new HashSet<Category>());
     }
   }
 
@@ -590,9 +623,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           DetachedCriteria.forClass(Article.class)
               .add(Restrictions.eq("doi", otherArticleDoi))
       ));
-      if (otherArticle != null) {
-        relationship.setOtherArticleID(otherArticle.getID());
-      }
+      relationship.setOtherArticleID(otherArticle == null ? null : otherArticle.getID());
     }
   }
 
@@ -801,5 +832,27 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Required
   public void setAssetService(AssetCrudService assetService) {
     this.assetService = assetService;
+  }
+
+  /**
+   * Check the type of the article for taxonomy classification using the article object
+   * @param article the article
+   * @return true if the article is an amendment (correction, eoc or retraction)
+   * @throws org.ambraproject.ApplicationException
+   * @throws NoSuchArticleIdException
+   */
+  private boolean isAmendment(Article article) throws ApplicationException, NoSuchArticleIdException {
+    ArticleType articleType = ArticleType.getDefaultArticleType();
+
+    for (String artTypeUri : article.getTypes()) {
+      if (ArticleType.getKnownArticleTypeForURI(URI.create(artTypeUri)) != null) {
+        articleType = ArticleType.getKnownArticleTypeForURI(URI.create(artTypeUri));
+        break;
+      }
+    }
+    if (articleType == null) {
+      throw new ApplicationException("Unable to resolve article type for: " + article.getDoi());
+    }
+    return ArticleType.isCorrectionArticle(articleType) || ArticleType.isEocArticle(articleType) || ArticleType.isRetractionArticle(articleType) ;
   }
 }
