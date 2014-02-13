@@ -62,126 +62,128 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     addExpectedJournals();
   }
 
-//  @Test
-//  public void testCommentsAndCorrections() throws Exception {
-//    String doiStub = SAMPLE_ARTICLES.get(0);
-//    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
-//    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
-//    String doi = articleId.getIdentifier();
-//    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
-//    TestInputStream input = TestInputStream.of(sampleData);
-//    Article article = articleCrudService.write(input, Optional.of(articleId),
-//        DoiBasedCrudService.WriteMode.CREATE_ONLY);
-//
-//    UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
-//    hibernateTemplate.save(creator);
-//    Annotation correction = new Annotation();
-//    correction.setCreator(creator);
-//    correction.setArticleID(article.getID());
-//    correction.setAnnotationUri("info:doi/10.1371/annotation/test_correction_1");
-////    correction.setType(AnnotationType.FORMAL_CORRECTION); // TODO: AMEC-2275
-//    correction.setTitle("Test Correction One");
-//    correction.setBody("Test Correction One Body");
-//    hibernateTemplate.save(correction);
-//    Date correctionCreated = new Date();
-//
-//    // Reply to the correction.
-//    Annotation reply = new Annotation();
-//    reply.setCreator(creator);
-//    reply.setArticleID(article.getID());
-//    reply.setAnnotationUri("info:doi/10.1371/reply/test_reply_level_1");
-//    reply.setParentID(correction.getID());
-//    reply.setType(AnnotationType.REPLY);
-//    reply.setTitle("Test Reply Level 1");
-//    reply.setBody("Test Reply Level 1 Body");
-//    hibernateTemplate.save(reply);
-//
-//    // Another first-level reply to the correction.
-//    Annotation reply2 = new Annotation();
-//    reply2.setCreator(creator);
-//    reply2.setArticleID(article.getID());
-//    reply2.setAnnotationUri("info:doi/10.1371/reply/test_reply_2_level_1");
-//    reply2.setParentID(correction.getID());
-//    reply2.setType(AnnotationType.REPLY);
-//    reply2.setTitle("Test Reply 2 Level 1");
-//    reply2.setBody("Test Reply 2 Level 1 Body");
-//    hibernateTemplate.save(reply2);
-//
-//    // Reply to the first reply.
-//    Annotation reply3 = new Annotation();
-//    reply3.setCreator(creator);
-//    reply3.setArticleID(article.getID());
-//    reply3.setAnnotationUri("info:doi/10.1371/reply/test_reply_3_level_2");
-//    reply3.setParentID(reply.getID());
-//    reply3.setType(AnnotationType.REPLY);
-//    reply3.setTitle("Test Reply 3 Level 2");
-//    reply3.setBody("Test Reply 3 Level 2 Body");
-//    hibernateTemplate.save(reply3);
-//
-//    Annotation correction2 = new Annotation();
-//    correction2.setCreator(creator);
-//    correction2.setArticleID(article.getID());
-//    correction2.setAnnotationUri("info:doi/10.1371/annotation/test_correction_2");
-////    correction2.setType(AnnotationType.MINOR_CORRECTION); // TODO: AMEC-2275
-//    correction2.setTitle("Test Correction Two");
-//    correction2.setBody("Test Correction Two Body");
-//    hibernateTemplate.save(correction2);
-//
-//    Annotation comment = new Annotation();
-//    comment.setCreator(creator);
-//    comment.setArticleID(article.getID());
-//    comment.setAnnotationUri("info:doi/10.1371/annotation/test_comment");
-//    comment.setType(AnnotationType.COMMENT);
-//    comment.setTitle("Test Comment");
-//    comment.setBody("Test Comment Body");
-//    hibernateTemplate.save(comment);
-//
-//    DummyResponseReceiver drr = new DummyResponseReceiver();
-//    annotationCrudService.readCorrections(drr, articleId, MetadataFormat.JSON);
-//    String json = drr.read();
-//    assertTrue(json.length() > 0);
-//
-//    // Confirm that date strings in the JSON are formatted as ISO8601 ("2012-04-23T18:25:43.511Z").
-//    // We have to do this at a lower level since AnnotationView exposes the created field as
-//    // a Java Date instead of a String.
-//    Gson gson = new Gson();
-//    List correctionsList = gson.fromJson(json, List.class);
-//    Map correctionMap = (Map) correctionsList.get(0);
-//    String createdStr = (String) correctionMap.get("created");
-//
-//    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'");
-//    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-//
-//    // TODO: this might fail near midnight, if we're unlucky and the hibernate
-//    // entity gets saved just before midnight, and this is executed just after.
-//    assertTrue(createdStr.startsWith(dateFormat.format(correctionCreated)), createdStr);
-//
-//    // Now deserialize to AnnotationView to do more comparisons.
-//    List<AnnotationView> actualAnnotations = entityGson.fromJson(json,
-//        new TypeToken<List<AnnotationView>>(){}.getType());
-//    assertEquals(actualAnnotations.size(), 2);
-//    Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
-//    replies.put(correction.getID(), Arrays.asList(reply, reply2));
-//    replies.put(reply.getID(), Arrays.asList(reply3));
-//
-//    // We can't use vanilla assertEquals because AnnotationView has a property, ID, set to
-//    // the underlying annotationID.  That property is not in the returned JSON, by design.
-//    assertAnnotationsEqual(actualAnnotations.get(0),
-//        new AnnotationView(correction, article.getDoi(), article.getTitle(), replies));
-//    replies = new HashMap<Long, List<Annotation>>();
-//    assertAnnotationsEqual(actualAnnotations.get(1),
-//        new AnnotationView(correction2, article.getDoi(), article.getTitle(), replies));
-//
-//    // Comment with no replies.
-//    drr = new DummyResponseReceiver();
-//    annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
-//    json = drr.read();
-//    List<AnnotationView> actualComments = entityGson.fromJson(json, new TypeToken<List<AnnotationView>>(){}.getType());
-//    assertEquals(actualComments.size(), 1);
-//    replies = new HashMap<Long, List<Annotation>>();
-//    assertAnnotationsEqual(actualComments.get(0),
-//        new AnnotationView(comment, article.getDoi(), article.getTitle(), replies));
-//  }
+  @Test
+  public void testComments() throws Exception {
+    String doiStub = SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
+    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doi = articleId.getIdentifier();
+    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
+    TestInputStream input = TestInputStream.of(sampleData);
+    Article article = articleCrudService.write(input, Optional.of(articleId),
+        DoiBasedCrudService.WriteMode.CREATE_ONLY);
+
+    UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
+    hibernateTemplate.save(creator);
+    Annotation comment1 = new Annotation();
+    comment1.setCreator(creator);
+    comment1.setArticleID(article.getID());
+    comment1.setAnnotationUri("info:doi/10.1371/annotation/test_comment_1");
+    comment1.setType(AnnotationType.COMMENT);
+    comment1.setTitle("Test Comment One");
+    comment1.setBody("Test Comment One Body");
+    hibernateTemplate.save(comment1);
+    Date commentCreated = new Date();
+
+    // Reply to the comment.
+    Annotation reply = new Annotation();
+    reply.setCreator(creator);
+    reply.setArticleID(article.getID());
+    reply.setAnnotationUri("info:doi/10.1371/reply/test_reply_level_1");
+    reply.setParentID(comment1.getID());
+    reply.setType(AnnotationType.REPLY);
+    reply.setTitle("Test Reply Level 1");
+    reply.setBody("Test Reply Level 1 Body");
+    hibernateTemplate.save(reply);
+
+    // Another first-level reply to the comment.
+    Annotation reply2 = new Annotation();
+    reply2.setCreator(creator);
+    reply2.setArticleID(article.getID());
+    reply2.setAnnotationUri("info:doi/10.1371/reply/test_reply_2_level_1");
+    reply2.setParentID(comment1.getID());
+    reply2.setType(AnnotationType.REPLY);
+    reply2.setTitle("Test Reply 2 Level 1");
+    reply2.setBody("Test Reply 2 Level 1 Body");
+    hibernateTemplate.save(reply2);
+
+    // Reply to the first reply.
+    Annotation reply3 = new Annotation();
+    reply3.setCreator(creator);
+    reply3.setArticleID(article.getID());
+    reply3.setAnnotationUri("info:doi/10.1371/reply/test_reply_3_level_2");
+    reply3.setParentID(reply.getID());
+    reply3.setType(AnnotationType.REPLY);
+    reply3.setTitle("Test Reply 3 Level 2");
+    reply3.setBody("Test Reply 3 Level 2 Body");
+    hibernateTemplate.save(reply3);
+
+    Annotation comment2 = new Annotation();
+    comment2.setCreator(creator);
+    comment2.setArticleID(article.getID());
+    comment2.setAnnotationUri("info:doi/10.1371/annotation/test_comment_2");
+    comment2.setType(AnnotationType.COMMENT);
+    comment2.setTitle("Test Comment Two");
+    comment2.setBody("Test Comment Two Body");
+    hibernateTemplate.save(comment2);
+
+    Annotation comment3 = new Annotation();
+    comment3.setCreator(creator);
+    comment3.setArticleID(article.getID());
+    comment3.setAnnotationUri("info:doi/10.1371/annotation/test_comment_3");
+    comment3.setType(AnnotationType.COMMENT);
+    comment3.setTitle("Test Comment");
+    comment3.setBody("Test Comment Body");
+    hibernateTemplate.save(comment3);
+
+    DummyResponseReceiver drr = new DummyResponseReceiver();
+    annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
+    String json = drr.read();
+    assertTrue(json.length() > 0);
+
+    // Confirm that date strings in the JSON are formatted as ISO8601 ("2012-04-23T18:25:43.511Z").
+    // We have to do this at a lower level since AnnotationView exposes the created field as
+    // a Java Date instead of a String.
+    Gson gson = new Gson();
+    List commentsList = gson.fromJson(json, List.class);
+    Map commentMap = (Map) commentsList.get(0);
+    String createdStr = (String) commentMap.get("created");
+
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'");
+    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+    // TODO: this might fail near midnight, if we're unlucky and the hibernate
+    // entity gets saved just before midnight, and this is executed just after.
+    assertTrue(createdStr.startsWith(dateFormat.format(commentCreated)), createdStr);
+
+    // Now deserialize to AnnotationView to do more comparisons.
+    List<AnnotationView> actualAnnotations = entityGson.fromJson(json,
+        new TypeToken<List<AnnotationView>>() {
+        }.getType());
+    assertEquals(actualAnnotations.size(), 3);
+    Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
+    replies.put(comment1.getID(), Arrays.asList(reply, reply2));
+    replies.put(reply.getID(), Arrays.asList(reply3));
+
+    // We can't use vanilla assertEquals because AnnotationView has a property, ID, set to
+    // the underlying annotationID.  That property is not in the returned JSON, by design.
+    assertAnnotationsEqual(actualAnnotations.get(0),
+        new AnnotationView(comment1, article.getDoi(), article.getTitle(), replies));
+    replies = new HashMap<Long, List<Annotation>>();
+    assertAnnotationsEqual(actualAnnotations.get(1),
+        new AnnotationView(comment2, article.getDoi(), article.getTitle(), replies));
+
+    // Comment with no replies.
+    drr = new DummyResponseReceiver();
+    annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
+    json = drr.read();
+    List<AnnotationView> actualComments = entityGson.fromJson(json, new TypeToken<List<AnnotationView>>() {
+    }.getType());
+    assertEquals(actualComments.size(), 3);
+    replies = new HashMap<Long, List<Annotation>>();
+    assertAnnotationsEqual(actualComments.get(2),
+        new AnnotationView(comment3, article.getDoi(), article.getTitle(), replies));
+  }
 
   private void assertAnnotationsEqual(AnnotationView actual, AnnotationView expected) {
     assertEquals(actual.getAnnotationUri(), expected.getAnnotationUri());
