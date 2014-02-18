@@ -18,9 +18,11 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -46,6 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.List;
 
 @Controller
 public class AssetFileCrudController extends DoiBasedCrudController {
@@ -58,6 +63,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
+  @Autowired
+  protected FileStoreService fileStoreService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -124,6 +131,11 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     return reportOk();
   }
 
+  private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
+  private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
+  private static final String REPROXY_CACHE_FOR_HEADER =
+      REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
+
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
@@ -161,15 +173,37 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
-    InputStream fileStream = null;
-    boolean threw = true;
-    try {
-      fileStream = assetCrudService.read(id);
-      respondWithStream(fileStream, response, id);
-      threw = false;
-    } finally {
-      Closeables.close(fileStream, threw);
+    if (clientSupportsReproxy(request) && fileStoreService.hasXReproxy()) {
+      List<URL> reproxyUrls = assetCrudService.reproxy(id);
+      String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
+
+      response.setStatus(HttpStatus.OK.value());
+      response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
+      response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
+    } else {
+      InputStream fileStream = null;
+      boolean threw = true;
+      try {
+        fileStream = assetCrudService.read(id);
+        respondWithStream(fileStream, response, id);
+        threw = false;
+      } finally {
+        Closeables.close(fileStream, threw);
+      }
     }
+  }
+
+  private boolean clientSupportsReproxy(HttpServletRequest request) {
+    Enumeration headers = request.getHeaders("X-Proxy-Capabilities");
+    if (headers == null) {
+      return false;
+    }
+    while (headers.hasMoreElements()) {
+      if ("reproxy-file".equals(headers.nextElement())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

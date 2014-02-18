@@ -28,6 +28,8 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
 
 public interface AssetCrudService extends DoiBasedCrudService {
 
@@ -51,6 +53,15 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @return a stream containing the file data
    */
   public abstract InputStream read(AssetFileIdentity id);
+
+  /**
+   * Return the data needed to build reproxying headers for an asset.
+   *
+   * @param assetId the identifier of the asset being proxied
+   * @return a list of reproxy URLs
+   * @throws IOException
+   */
+  public abstract List<URL> reproxy(AssetFileIdentity assetId) throws IOException;
 
   /**
    * Delete an asset and its associated file.
@@ -107,5 +118,4 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @return the article's identity
    */
   public abstract ArticleIdentity findArticleFor(AssetIdentity id);
-
 }
