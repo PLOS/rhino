@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class GroomedImageView implements JsonOutputView {
 
-  enum ImageType {FIGURE, GRAPHIC}
+  static enum ImageType {FIGURE, GRAPHIC}
 
   private final ArticleAsset original;
   private final Map<ImageFileType, ArticleAsset> thumbnails;
@@ -55,7 +55,20 @@ public class GroomedImageView implements JsonOutputView {
   public static GroomedImageView create(Collection<ArticleAsset> figureAssets) {
     Map<ImageFileType, ArticleAsset> byType = Maps.newEnumMap(ImageFileType.class);
     for (ArticleAsset asset : figureAssets) {
-      byType.put(ImageFileType.fromExtension(asset.getExtension()), asset);
+      ImageFileType imageFileType;
+      try {
+        imageFileType = ImageFileType.fromExtension(asset.getExtension());
+      } catch (UncategorizedAssetException e) {
+        /*
+         * The legacy data model allows figures to have alternative representations under the same DOI. (Two known
+         * cases: 10.1371/journal.pntd.0000072.g002 and 10.1371/journal.pntd.0000085.g003 both include a PostScript
+         * file with the extension "EPS".) In the article-level view, these will be picked up as "miscellaneous" assets
+         * separate from the figure assets. So, exclude them when we are presenting a view of only the figure, If they
+         * are all skipped this way, it will be picked up as an error (the asset is not a figure) below.
+         */
+        continue;
+      }
+      byType.put(imageFileType, asset);
     }
 
     ArticleAsset original = byType.remove(ImageFileType.ORIGINAL);
@@ -69,7 +82,7 @@ public class GroomedImageView implements JsonOutputView {
     ImageType imageType;
     if (GRAPHIC_TYPES.equals(byType.keySet())) {
       imageType = ImageType.GRAPHIC;
-    } else if (FIGURE_TYPES.equals(byType.keySet())) {
+    } else if (FIGURE_TYPES.containsAll(byType.keySet())) {
       imageType = ImageType.FIGURE;
     } else {
       throw new UncategorizedAssetException(UNCATEGORIZED_EXCEPTION);
