@@ -847,6 +847,7 @@ public class IngestionTest extends BaseRhinoTest {
     List<Syndication> expected = new ArrayList<Syndication>(2);
     expected.add(buildExpectedSyndication("CROSSREF", article));
     expected.add(buildExpectedSyndication("PMC", article));
+    expected.add(buildExpectedSyndication("PUBMED", article));
     List<Syndication> actual = hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Syndication.class)
             .add(Restrictions.eq("doi", article.getDoi()))
