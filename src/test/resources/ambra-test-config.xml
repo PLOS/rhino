@@ -31,6 +31,10 @@
           <name>Crossref</name>
           <queue>activemq:fake.crossref.queue</queue>
         </syndication>
+        <syndication target="PUBMED">
+          <name>PubMed</name>
+          <queue>activemq:fake.pubmed.queue</queue>
+        </syndication>
       </syndications>
     </services>
   </ambra>
