@@ -213,6 +213,15 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       } else {
         article.setState(updatedState.get());
       }
+
+      boolean isPublished = (article.getState() == Article.STATE_ACTIVE);
+      updateSolrIndex(articleId, article, isPublished);
+      hibernateTemplate.update(article);
+
+      if (updatedState.get() == Article.STATE_DISABLED) {
+        deleteFilestoreFiles(articleId);
+        ingestibleService.revertArchive(articleId);
+      }
     }
 
     for (ArticleInputView.SyndicationUpdate update : input.getSyndicationUpdates()) {
@@ -233,14 +242,6 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       // TODO: un-syndicate, if necessary.
     }
 
-    boolean isPublished = (article.getState() == Article.STATE_ACTIVE);
-    updateSolrIndex(articleId, article, isPublished);
-    hibernateTemplate.update(article);
-
-    if (updatedState.isPresent() && updatedState.get() == Article.STATE_DISABLED) {
-      deleteFilestoreFiles(articleId);
-      ingestibleService.revertArchive(articleId);
-    }
     return article;
   }
 
