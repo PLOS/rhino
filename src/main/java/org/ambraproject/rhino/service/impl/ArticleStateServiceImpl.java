@@ -23,7 +23,6 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.queue.MessageSender;
-import org.ambraproject.rhino.content.ArticleState;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -74,21 +73,6 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
   @Autowired
   private IngestibleService ingestibleService;
-
-  /**
-   * Helper method to set the syndication state for the appropriate target based on the status property of the
-   * Syndication object.
-   *
-   * @param state       ArticleState object that will be modified
-   * @param syndication Syndication we are reading from
-   */
-  private void setSyndicationState(ArticleState state, Syndication syndication) {
-    ArticleState.SyndicationTarget target
-        = ArticleState.SyndicationTarget.valueOf(syndication.getTarget());
-    ArticleState.SyndicationState syndicationState
-        = ArticleState.SyndicationState.valueOf(syndication.getStatus());
-    state.setSyndicationState(target, syndicationState);
-  }
 
   /**
    * Attaches additional XML info to an article document specifying the journals it is published in.
