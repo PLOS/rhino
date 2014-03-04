@@ -63,9 +63,6 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   private PingbackReadService pingbackReadService;
 
   @Autowired
-  private Configuration ambraConfiguration;
-
-  @Autowired
   private Gson entityGson;
 
   @Test
