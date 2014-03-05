@@ -538,7 +538,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     List<String> terms;
 
     try {
-      if (!isAmendment(article)) {
+      if (!articleService.isAmendment(article)) {
         terms = articleClassifier.classifyArticle(xml);
         if (terms != null && terms.size() > 0) {
           articleService.setArticleCategories(article, terms);
@@ -832,27 +832,5 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Required
   public void setAssetService(AssetCrudService assetService) {
     this.assetService = assetService;
-  }
-
-  /**
-   * Check the type of the article for taxonomy classification using the article object
-   * @param article the article
-   * @return true if the article is an amendment (correction, eoc or retraction)
-   * @throws org.ambraproject.ApplicationException
-   * @throws NoSuchArticleIdException
-   */
-  private boolean isAmendment(Article article) throws ApplicationException, NoSuchArticleIdException {
-    ArticleType articleType = ArticleType.getDefaultArticleType();
-
-    for (String artTypeUri : article.getTypes()) {
-      if (ArticleType.getKnownArticleTypeForURI(URI.create(artTypeUri)) != null) {
-        articleType = ArticleType.getKnownArticleTypeForURI(URI.create(artTypeUri));
-        break;
-      }
-    }
-    if (articleType == null) {
-      throw new ApplicationException("Unable to resolve article type for: " + article.getDoi());
-    }
-    return ArticleType.isCorrectionArticle(articleType) || ArticleType.isEocArticle(articleType) || ArticleType.isRetractionArticle(articleType) ;
   }
 }
