@@ -16,7 +16,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
-import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -145,11 +144,8 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   private void updateSolrIndex(ArticleIdentity articleId, Article article, boolean isPublished)
       throws FileStoreException, IOException {
     if (isPublished) {
-      InputStream xml = null;
-      boolean threw = true;
       Document doc;
-      try {
-        xml = articleCrudService.readXml(articleId);
+      try (InputStream xml = articleCrudService.readXml(articleId)) {
 
         // TODO: is it necessary and/or performant to create a new one of these each
         // time?  The old admin codebase a DocumentBuilderFactory as an instance field
@@ -167,9 +163,6 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
         } catch (SAXException se) {
           throw new RuntimeException("Bad XML retrieved from filestore for " + article.getDoi(), se);
         }
-        threw = false;
-      } finally {
-        Closeables.close(xml, threw);
       }
       doc = appendJournals(doc, articleId);
       doc = appendStrikingImage(doc, article);

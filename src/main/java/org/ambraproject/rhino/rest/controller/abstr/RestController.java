@@ -20,7 +20,6 @@ package org.ambraproject.rhino.rest.controller.abstr;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -252,17 +251,11 @@ public abstract class RestController {
    * @throws IOException
    */
   protected <T> T readJsonFromRequest(HttpServletRequest request, Class<T> clazz) throws IOException {
-    InputStream is = null;
-    boolean threw = true;
     T result;
-    try {
-      is = request.getInputStream();
+    try (InputStream is = request.getInputStream()) {
       result = entityGson.fromJson(new BufferedReader(new InputStreamReader(is)), clazz);
-      threw = false;
     } catch (JsonParseException e) {
       throw new RestClientException("Request body contains invalid JSON", HttpStatus.BAD_REQUEST, e);
-    } finally {
-      Closeables.close(is, threw);
     }
     if (result == null) {
       throw new RestClientException("Request body must contain JSON", HttpStatus.BAD_REQUEST);

@@ -22,8 +22,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.io.Closeables;
-import com.google.common.io.Closer;
 import com.google.gson.Gson;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
@@ -118,20 +116,16 @@ public abstract class AmbraService {
    */
   protected static byte[] readClientInput(InputStream input) {
     Preconditions.checkNotNull(input);
-    byte[] data;
     try {
-      boolean threw = true;
       try {
-        data = IOUtils.toByteArray(input);
-        threw = false;
+        return IOUtils.toByteArray(input);
       } finally {
-        Closeables.close(input, threw);
+        input.close();
       }
     } catch (IOException e) {
       String message = "Error reading provided file: " + e.getMessage();
       throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
     }
-    return data;
   }
 
   /**
@@ -141,31 +135,17 @@ public abstract class AmbraService {
    * @param fileData the data to write, as raw bytes
    * @param fsid     the file store ID
    * @throws org.ambraproject.filestore.FileStoreException
-   *
    * @throws IOException
    */
   protected void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
-    OutputStream output = null;
-    boolean threw = true;
-    try {
-      output = fileStoreService.getFileOutStream(fsid, fileData.length);
+    try (OutputStream output = fileStoreService.getFileOutStream(fsid, fileData.length)) {
       output.write(fileData);
-      threw = false;
-    } finally {
-      Closeables.close(output, threw);
     }
   }
 
   protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
-    InputStream stream = null;
-    boolean threw = true;
-    try {
-      stream = new ByteArrayInputStream(bytes);
-      Document document = parseXml(stream);
-      threw = false;
-      return document;
-    } finally {
-      Closeables.close(stream, threw);
+    try (InputStream stream = new ByteArrayInputStream(bytes)) {
+      return parseXml(stream);
     }
   }
 
@@ -255,15 +235,9 @@ public abstract class AmbraService {
     StringWriter stringWriter = new StringWriter(JSON_BUFFER_INITIAL_SIZE);
     entityGson.toJson(entity, stringWriter);
 
-    Closer closer = Closer.create();
-    try {
-      receiver.setCharacterEncoding(Charsets.UTF_8);
-      Writer writer = closer.register(new BufferedWriter(receiver.getWriter()));
+    receiver.setCharacterEncoding(Charsets.UTF_8);
+    try (Writer writer = new BufferedWriter(receiver.getWriter())) {
       writer.write(stringWriter.toString());
-    } catch (Throwable t) {
-      throw closer.rethrow(t);
-    } finally {
-      closer.close();
     }
   }
 
@@ -274,15 +248,9 @@ public abstract class AmbraService {
    * as a 500 error and providing the stack trace.
    */
   private void serializeMetadataDirectly(ResponseReceiver receiver, Object entity) throws IOException {
-    Closer closer = Closer.create();
-    try {
-      receiver.setCharacterEncoding(Charsets.UTF_8);
-      Writer writer = closer.register(new BufferedWriter(receiver.getWriter()));
+    receiver.setCharacterEncoding(Charsets.UTF_8);
+    try (Writer writer = new BufferedWriter(receiver.getWriter())) {
       entityGson.toJson(entity, writer);
-    } catch (Throwable t) {
-      throw closer.rethrow(t);
-    } finally {
-      closer.close();
     }
   }
 

@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -103,14 +102,8 @@ public class ArticleCrudController extends ArticleSpaceController {
                      @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
       throws IOException, FileStoreException {
     Article result;
-    InputStream requestBody = null;
-    boolean threw = true;
-    try {
-      requestBody = requestFile.getInputStream();
+    try (InputStream requestBody = requestFile.getInputStream()) {
       result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
-      threw = false;
-    } finally {
-      Closeables.close(requestBody, threw);
     }
     response.setStatus(HttpStatus.CREATED.value());
 

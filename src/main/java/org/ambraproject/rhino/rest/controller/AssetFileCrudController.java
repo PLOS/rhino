@@ -20,7 +20,6 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.models.Article;
@@ -101,14 +100,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       throws IOException, FileStoreException {
     AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
     WriteResult<ArticleAsset> result;
-    InputStream fileContent = null;
-    boolean threw = true;
-    try {
-      fileContent = assetFile.getInputStream();
+    try (InputStream fileContent = assetFile.getInputStream()) {
       result = assetCrudService.upload(fileContent, fileIdentity);
-      threw = false;
-    } finally {
-      Closeables.close(fileContent, threw);
     }
 
     response.setStatus(result.getStatus().value());
@@ -119,14 +112,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException, FileStoreException {
     AssetFileIdentity id = parse(request);
-    InputStream fileContent = null;
-    boolean threw = true;
-    try {
-      fileContent = request.getInputStream();
+    try (InputStream fileContent = request.getInputStream()) {
       assetCrudService.overwrite(fileContent, id);
-      threw = false;
-    } finally {
-      Closeables.close(fileContent, threw);
     }
     return reportOk();
   }
@@ -181,14 +168,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     } else {
-      InputStream fileStream = null;
-      boolean threw = true;
-      try {
-        fileStream = assetCrudService.read(id);
+      try (InputStream fileStream = assetCrudService.read(id)) {
         respondWithStream(fileStream, response, id);
-        threw = false;
-      } finally {
-        Closeables.close(fileStream, threw);
       }
     }
   }
@@ -216,14 +197,8 @@ public class AssetFileCrudController extends DoiBasedCrudController {
    */
   private void provideXmlFor(HttpServletResponse response, ArticleIdentity article)
       throws FileStoreException, IOException {
-    InputStream fileStream = null;
-    boolean threw = true;
-    try {
-      fileStream = articleCrudService.readXml(article);
+    try (InputStream fileStream = articleCrudService.readXml(article)) {
       respondWithStream(fileStream, response, article.forXmlAsset());
-      threw = false;
-    } finally {
-      Closeables.close(fileStream, threw);
     }
   }
 
