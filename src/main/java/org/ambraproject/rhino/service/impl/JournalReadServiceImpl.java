@@ -11,20 +11,17 @@ import org.ambraproject.rhino.view.JsonWrapper;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JournalReadServiceImpl extends AmbraService implements JournalReadService {
 
@@ -54,30 +51,27 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
 
     // A bit of a hack...
     final String key = journalKey.toLowerCase() + "_news";
-    List<Article> articles = hibernateTemplate.execute(new HibernateCallback<List<Article>>() {
-      @Override
-      public List<Article> doInHibernate(Session session) throws HibernateException, SQLException {
 
-        // Since ArticleList's foreign key into Article is doi, and not articleID, it doesn't appear
-        // possible to do this in a single HQL query.
-        Query q = session.createQuery("SELECT al from ArticleList al WHERE al.listCode = :listCode");
-        q.setParameter("listCode", key);
-        List<ArticleList> articleLists = q.list();
-        if (articleLists.size() == 0) {
-          throw new RestClientException(journalKey + " has no in the news article list", HttpStatus.NOT_FOUND);
-        } else if (articleLists.size() > 1) {
-          throw new IllegalStateException(String.format("Expected 1 articleList for %s, got %d",
-              journalKey, articleLists.size()));
-        }
-        q = session.createQuery("SELECT a from Article a WHERE doi IN (:dois)");
-        q.setParameterList("dois", articleLists.get(0).getArticleDois());
-        return q.list();
-      }
-    });
+    // articleList.sortOrder is not exposed as a hibernate property for some reason (although it's a column
+    // in the underlying table).  We rely on the fact that sortOrder is part of the primary key for
+    // articleListJoinTable to ensure that DOIs are returned in the correct order.  This seems sketchy to
+    // me but I don't feel like changing the ambra model class right now.
+    ArticleList list = (ArticleList) DataAccessUtils.requiredUniqueResult(hibernateTemplate.findByNamedParam(
+        "SELECT al from ArticleList al WHERE al.listCode = :listCode", "listCode", key));
+    List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
+        "SELECT a from Article a WHERE doi IN (:dois)", "dois", list.getArticleDois());
+    if (articles.size() != list.getArticleDois().size()) {
+      throw new IllegalStateException("Cannot find all articles for articleList " + key);
+    }
 
-    List<JsonWrapper<Article>> results = new ArrayList<>(articles.size());
+    // The results of the last query might not be in the order we want them in...
+    Map<String, Article> articleMap = new HashMap<>();
     for (Article article : articles) {
-      results.add(new JsonWrapper<Article>(article, "doi", "title"));
+      articleMap.put(article.getDoi(), article);
+    }
+    List<JsonWrapper<Article>> results = new ArrayList<>(articles.size());
+    for (String doi : list.getArticleDois()) {
+      results.add(new JsonWrapper<Article>(articleMap.get(doi), "doi", "title"));
     }
     serializeMetadata(format, receiver, results);
   }
