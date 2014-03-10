@@ -25,6 +25,11 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     serializeMetadata(format, receiver, convertToMap(ambraConfiguration));
   }
 
+  @Override
+  public void readBuildProperties(ResponseReceiver receiver, MetadataFormat format) throws IOException {
+    serializeMetadata(format, receiver, getBuildProperties());
+  }
+
   /**
    * {@inheritDoc}
    */

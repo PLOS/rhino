@@ -31,4 +31,14 @@ public class ConfigurationReadController extends RestController {
     configurationReadService.read(receiver, metadataFormat);
   }
 
+  @RequestMapping(value = "/build", method = RequestMethod.GET)
+  public void readBuild(HttpServletResponse response,
+                        @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                        @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
+      throws IOException {
+    MetadataFormat metadataFormat = MetadataFormat.getFromAcceptHeader(accept);
+    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
+    configurationReadService.readBuildProperties(receiver, metadataFormat);
+  }
+
 }
