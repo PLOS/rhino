@@ -5,7 +5,7 @@
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, traceback, json, re, requests, hashlib, zipfile
+import os, sys, traceback, json, re, requests, hashlib, zipfile, urllib
 from plosapi import Rhino, S3, Currents
 #from sqlalchemy import create_engine
 
@@ -217,6 +217,17 @@ def repackage(dois, srcRepo, apd):
                 if os.path.exists(fname):
                     os.remove(fname)
 
+def file_to_params(fname):
+    """
+    """
+    fp = open(fname, 'r')
+    params = []
+    for p in fp:
+        _p = p.replace("u'",'').strip()
+        params.append(_p.replace("'",''))
+    fp.close()
+    return params
+
 def assetDiff(doiSuffixes, srcRepo, dstRepo, matchOnly=''):
     """
     
@@ -307,8 +318,8 @@ def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
         # If it failed to get the file there will be an exception
         # so cleanup if necessary.i getAfid defaults to using
         # afidSuffix as the file name.
-        if os.path.exists(afidSuffix):
-            os.remove(afidSuffix)
+        if os.path.exists(fname):
+            os.remove(fname)
     return (afidSuffix, fname, md5, status) 
     
 def adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
@@ -336,19 +347,23 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
         appender.append('Copying {doi}'.format(doi=doiSuffix))
         # Get the meta-data before making the directory
         # If an exception is thrown we will not have to clean up.
+        dname = urllib.quote(doiSuffix, '')
         try:
             articleMData = srcRepo.article(doiSuffix)
-            os.mkdir(doiSuffix)
-            os.chdir('./'+ doiSuffix)
+            os.mkdir(dname)
+            os.chdir('./{d}'.format(d=dname))
             for copy_result in adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
                 # Result Tuple (afidSuffix, fname, md5, status)
                 appender.append(copy_result)
-        except:
+        except Exception as e:
             appender.append('Copy Failed {doi}'.format(doi=doiSuffix))
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            traceback.print_exception(exc_type, exc_value, exc_traceback,
+                              limit=2, file=sys.stdout)
         finally:
             os.chdir('../')
-            if os.path.exists(doiSuffix):
-                os.removedirs(doiSuffix) 
+            if os.path.exists(dname):
+                os.removedirs(dname) 
     return  
     
 def backup(srcRepo, dstRepo, appender):
@@ -433,11 +448,7 @@ if __name__ == "__main__":
     # be params on the command line from a file
     # where each line is a separate parameter.
     if args.file:
-        fp = open(args.file, 'r')
-        params = []
-        for p in fp:
-            params.append(p.replace("'",'').strip())
-        fp.close()
+        params = file_to_params(args.file)
 
     # Main command dispatcher.
     dispatch = { 'doidiff'   : 

@@ -8,7 +8,7 @@ This module exports one class 'Rhino'
 from __future__ import print_function
 from __future__ import with_statement
 
-import os, sys, traceback, json, re, requests, hashlib
+import os, sys, traceback, json, re, requests, hashlib, urllib
 from StringIO import StringIO
 
 __author__    = 'Bill OConnor'
@@ -150,14 +150,14 @@ class Rhino:
         assets = self.assets(doiSuffix)
         for (adoi, afids) in assets.iteritems():
             for fullAFID in afids:
-                (p, afid) = fullAFID.split('/')
+                (p, afid) = fullAFID.split('/', 1)
                 yield afid
 
     def ingestZipQ(self, zName):
         """
         Given the zip filename 
         """
-        r = self._doPost(self.ingestiblesReq, { 'name': zName })        
+        r = self._doPost(self.ingestiblesReq, { 'name': zName, 'force_reingest': '' })        
         if r.status_code == 200:
             return json.loads(r.content)
         else:
@@ -331,9 +331,20 @@ class Rhino:
         specified use the afid as the file name.
         """
         if fname == None:
-            fname = afidSuffix
+            fname = urllib.quote(afidSuffix,'')
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getBinary(fname, url, useHash=useHash)
+
+    def getXML(self, doi):
+        try:
+            doiSuffix = self._stripPrefix(doi, True)
+            result = self.getAfid(doiSuffix + '.xml')
+            print('COMPLETE getXML: ' + doi)
+        except:
+            result = 'FAILED: ' + doi
+            print('FAILED getXML: ' + doi)
+   
+        return result 
     
     def putAfid(self, afidSuffix, fname, articleMeta, assetMeta, md5, prefix=None,
                   cb=None, reduce_redundancy=True, retry=5, wait=2):    
@@ -345,13 +356,18 @@ class Rhino:
         """
         Download files for all AFIDs associated with this DOI. 
         """
-        os.mkdir(doiSuffix)
-        os.chdir('./'+ doiSuffix)
+        dname = urllib.quote(doiSuffix, '')
+        os.mkdir(dname)
+        os.chdir('./'+ dname)
         result = { doiSuffix : [ (afid, self.getAfid(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
         os.chdir('../')
         return result
 
     def doiMissing(self, dois):
+        '''
+        Given a list of doi's return a list of 
+        of doi's that do not ext on this source. 
+        '''
         missing = []
         _dois = dict ((doi, 0) for doi in dois)
         for found_doi in self.articles():
@@ -379,6 +395,7 @@ if __name__ == "__main__":
                  'ingestibles'  : lambda repo, _     : [ name for name in repo.ingestibles()],
                  'ingest'       : lambda repo, params: [ repo.ingestZipQ(zName) for zName in params ],
                  'publish'      : lambda repo, params: [ repo.publish(doi) for doi in params ],
+                 'articlexml'   : lambda repo, params: [ repo.getXML(doi) for doi in params ],
                }
 
     pp = pprint.PrettyPrinter(indent=2)
@@ -392,7 +409,6 @@ if __name__ == "__main__":
                                         'articlefiles DOI-SUFFIX | '
                                         'assets DOI-SUFFIX | '
                                         'asset ASSET-DOI-SUFFIX | '
-                                        'assetfile | ' 
                                         'assetAll  | '
                                         'md5  | '
                                         'missing | ' 

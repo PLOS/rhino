@@ -15,7 +15,7 @@ from boto.s3.connection import S3Connection
 from boto.s3.connection import Location
 from time import sleep
 
-import os, sys, re, string, requests, hashlib, json, traceback
+import os, sys, re, string, requests, hashlib, json, traceback, urllib
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -44,8 +44,9 @@ class S3:
                            'size' : 'asset-size'
                          }
 
-    _AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-    _AWS_ACCESS_KEY_ID= os.environ['AWS_ACCESS_KEY_ID']
+    _AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    _AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+
     _JRNL_IDS = ['pone', 'pmed', 'ppat', 'pbio', 'pgen', 'pcbi', 'pntd', 'pctr', 'pcol' ]
     
     # List of article meta-data fields accepted by this repo 
@@ -67,9 +68,11 @@ class S3:
         """
         self.bucketID = bucketID
         self.prefix = prefix
-        self.conn = S3Connection(aws_access_key_id=self._AWS_ACCESS_KEY_ID, 
+        
+        if self._AWS_ACCESS_KEY_ID and self._AWS_SECRET_ACCESS_KEY:
+            self.conn = S3Connection(aws_access_key_id=self._AWS_ACCESS_KEY_ID, 
                                      aws_secret_access_key=self._AWS_SECRET_ACCESS_KEY)
-        self.bucket = self.conn.get_bucket(bucketID) 
+            self.bucket = self.conn.get_bucket(bucketID) 
         return
 
     def _stripPrefix(self, doi, strip):
@@ -171,10 +174,13 @@ class S3:
         append the afidSuffix.
 
         ex. 10.1371/journal.PLOSID.XXXXXXXX.XML -> 
-            10.1371/journal/PLOSID/XXXXXXXX/PLOSID.XXXXXXXX.xml
+            (S3 Key) 10.1371/journal/PLOSID/XXXXXXXX/PLOSID.XXXXXXXX.xml
             
             10.1371/image.PLOSID.vxx.ixx.xml ->
-            10.1371/image/PLOSID/vxx/ixx/image.PLOSID.vxx.ixx.xml  
+            10.1371/image/PLOSID/vxx/ixx/image.PLOSID.vxx.ixx.xml
+           
+            10.1371/annotation/XXXXXXXXXXXXXXX.xml ->
+            10.1371/annotation/XXXXXXXXXXXXXXX.xml  
         """
         if not prefix: prefix = self.prefix
 
@@ -186,6 +192,8 @@ class S3:
             # Get everything except the extensions
             doiSuffix = '/'.join(afidSuffix.lower().split('.')[:-1])
             fullAFID = u'{p}/{s}/{a}'.format(p=prefix, s=doiSuffix, a=afidSuffix.lower())
+        elif afidSuffix.lower().startswith('annotation'):
+            fullAFID = u'{p}/{a}'.format(p=prefix, a=afidSuffix.lower()) 
         else:
             raise Exception('s3:invalid afid suffix ' + afidSuffix)
         return fullAFID
@@ -198,7 +206,11 @@ class S3:
             10.1371/journal.pone.1234567
         """
         elemLst = s3keyPath.split('/')
-        return u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[1:-1]))
+        if elemLst[1] == 'annotation':
+           fullDOI = u'{p}/{s}'.format(p=elemLst[0], s= '/'.join(elemLst[1:-1]))
+        else:
+           fullDOI = u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[1:-1]))
+        return fullDOI
 
     def _s3key2afid(self, s3key):
         """
@@ -209,6 +221,8 @@ class S3:
             fullAFID = u'{p}/journal.{s}'.format(p=elemLst[0], s= '.'.join(elemLst[-1:]))    
         elif elemLst[1].lower() == 'image':
             fullAFID = u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[-1:]))
+        elif elemLst[1].lower() == 'annotation':
+            fullAFID = s3key
         else:
             raise Exception('s3:invalid s3 key ' + s3key)
         return fullAFID
@@ -220,8 +234,8 @@ class S3:
         assets = self.assets(doiSuffix)
         for (adoi, afids) in assets.iteritems():
             for fullAFID in afids:
-                (p, afid) = fullAFID.split('/')
-                yield afid
+                (p, afid) = fullAFID.split('/', 1)
+                yield afid 
 
     def _getAssetMeta(self, afidSuffix):
         """
@@ -339,6 +353,13 @@ class S3:
                     fullDOI = self._s3keyPath2doi(k.name)
                     if useCache: self._ARTICLE_DOI_CACHE[fullDOI] = 1
                     yield self._stripPrefix(fullDOI, stripPrefix)
+            # Get the annotation DOIs
+            prefix = '{p}/annotation/'.format(p=self.prefix) 
+            bklstRslt = self.bucket.list(delimiter='/', prefix=p)
+            for k in bklstRslt:
+                fullDOI = self._s3keyPath2doi(k.name)
+                if useCache: self._ARTICLE_DOI_CACHE[fullDOI] = 1
+                yield self._stripPrefix(fullDOI, stripPrefix)
     
     def article(self, doiSuffix):
         """
@@ -424,7 +445,7 @@ class S3:
         specified use the afid as the file name.
         """
         if fname == None:
-            fname = self._ext2upper(afidSuffix)
+            fname = urllib.quote(self._ext2upper(afidSuffix))
         keyID = self._afid2s3key(afidSuffix)
         return self._getBinary(fname, keyID)
 
@@ -486,8 +507,9 @@ class S3:
         Download files for all AFIDs associated with this
         DOI. 
         """
-        os.mkdir(doiSuffix)
-        os.chdir('./'+ doiSuffix)
+        dname = urllib.quote(doiSuffix)
+        os.mkdir(dname)
+        os.chdir('./{d}'.format(d=dname))
         result = { doiSuffix : [ (afid, self.getAfid(afid)) for afid in self._afidsFromDoi(doiSuffix) ] }
         os.chdir('../')
         return result 
