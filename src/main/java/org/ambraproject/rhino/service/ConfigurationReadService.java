@@ -27,4 +27,10 @@ public interface ConfigurationReadService {
    * @throws IOException
    */
   public abstract Properties getBuildProperties() throws IOException;
+
+  /**
+   * Respond with a JSON object containing all values from {@link #getBuildProperties()}.
+   */
+  public void readBuildProperties(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+
 }
