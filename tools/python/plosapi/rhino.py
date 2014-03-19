@@ -93,27 +93,28 @@ class Rhino:
         else:
             return requests.patch(url, data=_payLoad, headers=_headers)
 
-    def _getBinary(self, fname, url, useHash='MD5'):
+    def _getBinary(self, fname, url):
         """
         Most of the files other than the article xml are binary in nature.
         Fetch the data and write it to a temporary file. Return the MD5 | SHA1
         hash of the file contents.
         """
-        if useHash == 'MD5':
-            m = hashlib.md5()
-        else:
-            m = hashlib.sha1()
+        size = 0
+        m5 = hashlib.md5()
+        s1 = hashlib.sha1()
 
         r = self._doGet(url)
         if r.status_code == 200:
             with open(fname, 'wb') as f:
                 for chunk in r.iter_content(1024*1024,decode_unicode=False):
-                    m.update(chunk)
+                    m5.update(chunk)
+                    s1.update(chunk)
                     f.write(chunk)
+                size = f.tell()
                 f.close()
         else:
             raise Exception('rhino:failed to get binary ' + url)
-        return (fname, m.hexdigest())
+        return (fname, m5.hexdigest(), s1.hexdigest(), r.headers.get('content-type'), size)
 
     def _getMD5(self, url):
         """
@@ -325,7 +326,7 @@ class Rhino:
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
         return self._getSHA1(url)
 
-    def getAfid(self, afidSuffix, fname=None, useHash='MD5'):
+    def getAfid(self, afidSuffix, fname=None):
         """
         Retreive the actual asset data. If the name is not 
         specified use the afid as the file name.
@@ -333,7 +334,7 @@ class Rhino:
         if fname == None:
             fname = urllib.quote(afidSuffix,'')
         url = self._ASSETFILES_TMPL.format(afid=afidSuffix)
-        return self._getBinary(fname, url, useHash=useHash)
+        return self._getBinary(fname, url)
 
     def getXML(self, doi):
         try:

@@ -259,14 +259,17 @@ class S3:
         Fetch the data and write it to a temporary file. Return the MD5
         hash of the fle contents.
         """
-        m = hashlib.md5()
+        m5 = hashlib.md5()
+        s1 = hashlib.sha1()
+
         k = self.bucket.get_key(fullKey)
         with open(fname, 'wb') as f:
             for chunk in k:
-                m.update(chunk)
+                m5.update(chunk)
+                s1.update(chunk)
                 f.write(chunk)
             f.close()
-        return (fname, m.hexdigest()) 
+        return (fname, m5.hexdigest(), s1.hexdigest(), k.content_type, k.size) 
     
     def buckets(self):
         """
