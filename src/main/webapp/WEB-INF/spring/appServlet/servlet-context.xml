@@ -62,23 +62,6 @@
     <beans:property name="jndiName" value="java:comp/env/ambra/FileStore"/>
   </beans:bean>
 
-  <beans:bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-    <beans:property name="dataSource" ref="hibernateDataSource"/>
-    <beans:property name="mappingLocations">
-      <beans:list>
-        <beans:value>classpath:org/ambraproject/models/*.hbm.xml</beans:value>
-      </beans:list>
-    </beans:property>
-    <beans:property name="hibernateProperties">
-      <beans:props>
-        <!-- We might use MySQLInnoDBDialect instead -->
-        <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
-        <beans:prop key="hibernate.show_sql">false</beans:prop>
-        <beans:prop key="hibernate.format_sql">false</beans:prop>
-      </beans:props>
-    </beans:property>
-  </beans:bean>
-
   <beans:bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
     <beans:property name="cacheName" value="RolesCache"/>
   </beans:bean>
@@ -88,12 +71,12 @@
   </beans:bean>
 
   <beans:bean id="permissionsService" class="org.ambraproject.service.permission.PermissionsServiceImpl">
-    <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
+    <beans:property name="sessionFactory" ref="sessionFactory"/>
     <beans:property name="rolesCache" ref="rolesCache"/>
   </beans:bean>
 
   <beans:bean id="articleService" class="org.ambraproject.service.article.ArticleServiceImpl">
-    <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
+    <beans:property name="sessionFactory" ref="sessionFactory"/>
     <beans:property name="permissionsService" ref="permissionsService"/>
     <beans:property name="crossRefLookupService" ref="crossRefLookupService"/>
   </beans:bean>
@@ -146,7 +129,7 @@
   </beans:bean>
 
   <beans:bean id="syndicationService" class="org.ambraproject.service.syndication.impl.SyndicationServiceImpl">
-    <beans:property name="sessionFactory" ref="hibernateSessionFactory"/>
+    <beans:property name="sessionFactory" ref="sessionFactory"/>
     <beans:property name="ambraConfiguration" ref="ambraConfiguration"/>
     <beans:property name="messageService" ref="messageService"/>
 <!--    <beans:property name="journalService" ref="journalService"/> -->
@@ -170,7 +153,7 @@
   <beans:bean id="taxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
     <beans:property name="cache" ref="rhinoCache" />
     <beans:property name="searchService" ref="searchService" />
-    <beans:property name="sessionFactory" ref="hibernateSessionFactory" />
+    <beans:property name="sessionFactory" ref="sessionFactory" />
     <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 

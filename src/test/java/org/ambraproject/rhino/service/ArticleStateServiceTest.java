@@ -96,7 +96,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
 
-    ArticleOutputView outputView = ArticleOutputView.create(article, syndicationService, pingbackReadService);
+    ArticleOutputView outputView = ArticleOutputView.create(article, false, syndicationService, pingbackReadService);
     assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
     assertEquals(outputView.getSyndication(crossref).getStatus(), Syndication.STATUS_PENDING);
     assertEquals(outputView.getSyndication(pmc).getStatus(), Syndication.STATUS_PENDING);
@@ -124,7 +124,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), Syndication.STATUS_IN_PROGRESS);
     article = articleStateService.update(articleId, inputView);
 
-    ArticleOutputView result = ArticleOutputView.create(article, syndicationService, pingbackReadService);
+    ArticleOutputView result = ArticleOutputView.create(article, false, syndicationService, pingbackReadService);
     assertEquals(result.getArticle().getState(), Article.STATE_ACTIVE);
     assertEquals(result.getSyndication(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
     assertEquals(result.getSyndication(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);

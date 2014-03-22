@@ -36,6 +36,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
@@ -50,7 +51,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
-public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
+
+// TODO: try to get the tests to work transactionally--I was having much pain with this.
+public abstract class BaseRhinoTest extends /* AbstractTransactionalTestNGSpringContextTests */ AbstractTestNGSpringContextTests {
 
   @Autowired
   protected HibernateTemplate hibernateTemplate;

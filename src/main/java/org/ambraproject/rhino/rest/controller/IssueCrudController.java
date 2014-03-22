@@ -27,6 +27,7 @@ import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -48,7 +49,7 @@ public class IssueCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
-
+  @Transactional(readOnly = true)
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -58,6 +59,7 @@ public class IssueCrudController extends DoiBasedCrudController {
     issueCrudService.read(receiver, id, mf);
   }
 
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {

@@ -7,6 +7,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ public class ConfigurationReadController extends RestController {
   @Autowired
   private ConfigurationReadService configurationReadService;
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = "/config", method = RequestMethod.GET)
   public void readConfig(HttpServletResponse response,
                          @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
@@ -31,6 +33,7 @@ public class ConfigurationReadController extends RestController {
     configurationReadService.read(receiver, metadataFormat);
   }
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = "/build", method = RequestMethod.GET)
   public void readBuild(HttpServletResponse response,
                         @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,

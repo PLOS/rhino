@@ -244,7 +244,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
     DummyResponseReceiver drr = new DummyResponseReceiver();
-    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON);
+    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON, true);
     String json = drr.read();
     assertTrue(json.length() > 0);
     Gson gson = new Gson();

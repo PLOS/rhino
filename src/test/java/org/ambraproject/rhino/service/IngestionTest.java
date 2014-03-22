@@ -47,6 +47,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -275,7 +276,7 @@ public class IngestionTest extends BaseRhinoTest {
     DummyResponseReceiver response = new DummyResponseReceiver();
 
     // Mostly we want to test that this method call doesn't crash or hang
-    articleCrudService.readMetadata(response, article, metadataFormat);
+    articleCrudService.readMetadata(response, article, metadataFormat, true);
 
     assertFalse(StringUtils.isBlank(response.read()));
   }
@@ -378,7 +379,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   private AssertionCollector compareArticle(Article actual, Article expected,
                                             boolean assetFilesExpected) {
-    AssertionCollector results = new AssertionCollector();
+    AssertionCollector results = new AssertionCollector(true);
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
@@ -390,7 +391,13 @@ public class IngestionTest extends BaseRhinoTest {
     } else {
       compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
     }
-    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
+
+    // Since citedArticles are lazily loaded, and this test doesn't currently execute transactionally,
+    // we have to reload the actual citations separately.
+    // TODO: fix this.
+    List<CitedArticle> actualCitations = hibernateTemplate.find("FROM CitedArticle WHERE articleID = ?",
+        actual.getID());
+    compareCitationLists(results, actualCitations, expected.getCitedArticles());
     assertSyndications(results, actual);
     return results;
   }

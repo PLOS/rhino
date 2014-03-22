@@ -21,6 +21,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +44,7 @@ public class TaxonomyController extends RestController {
   @Autowired
   private ClassificationService classificationService;
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
   public void readRoot(HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "journal", required = true) String journal,

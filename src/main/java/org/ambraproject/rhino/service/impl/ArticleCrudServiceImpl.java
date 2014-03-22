@@ -27,7 +27,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
-import org.ambraproject.ApplicationException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -56,7 +55,6 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
-import org.ambraproject.views.article.ArticleType;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -77,7 +75,6 @@ import org.w3c.dom.Node;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -214,6 +211,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     createReciprocalRelationships(article);
 
+//    hibernateTemplate.flush();
     try {
 
       // This method needs the article to have already been persisted to the DB.
@@ -764,7 +762,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format) throws IOException {
+  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format,
+                           boolean excludeCitations) throws IOException {
     assert format == MetadataFormat.JSON;
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
@@ -780,12 +779,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
-    readMetadata(receiver, article, format);
+    readMetadata(receiver, article, format, excludeCitations);
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
-    ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
+  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format, boolean excludeCitations)
+      throws IOException {
+    ArticleOutputView view = ArticleOutputView.create(article, excludeCitations, syndicationService,
+        pingbackReadService);
     serializeMetadata(format, receiver, view);
   }
 
