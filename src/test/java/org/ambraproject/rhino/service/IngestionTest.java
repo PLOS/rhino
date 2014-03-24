@@ -379,7 +379,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   private AssertionCollector compareArticle(Article actual, Article expected,
                                             boolean assetFilesExpected) {
-    AssertionCollector results = new AssertionCollector(true);
+    AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
