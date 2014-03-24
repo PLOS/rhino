@@ -27,6 +27,7 @@ import org.ambraproject.models.CitedArticlePerson;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -237,7 +238,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("eIssn", eissn))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
     if (journal == null) {
-      journal = createDummyJournal(eissn);
+      journal = RhinoTestHelper.createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }
@@ -247,7 +248,7 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    Article actual = articleCrudService.write(new TestFile(xmlFile).read(),
+    Article actual = articleCrudService.write(new RhinoTestHelper.TestFile(xmlFile).read(),
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");

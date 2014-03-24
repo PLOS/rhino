@@ -39,8 +39,10 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.annotation.Nullable;
 import java.net.URLEncoder;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -165,7 +167,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     article.setState(Article.STATE_UNPUBLISHED);
   }
 
-  private void setFromXml(Article article) throws XmlContentException {
+  private void setFromXml(final Article article) throws XmlContentException {
     article.setTitle(buildXmlExcerpt(readNode("/article/front/article-meta/title-group/article-title")));
     article.seteIssn(checkEissn(readString("/article/front/journal-meta/issn[@pub-type=\"epub\"]")));
     article.setDescription(buildXmlExcerpt(findAbstractNode()));
@@ -188,16 +190,91 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     article.setLanguage(parseLanguage(readString("/article/@xml:lang")));
     article.setDate(parseDate(readNode("/article/front/article-meta/pub-date[@pub-type=\"epub\"]")));
-    article.setTypes(buildArticleTypes());
-    article.setCitedArticles(parseCitations(readNodeList("/article/back/ref-list/ref")));
-    article.setAuthors(readAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name")));
-    article.setEditors(readEditors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name")));
 
-    article.setCollaborativeAuthors(parseCollaborativeAuthors(readNodeList(
-        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab")));
+    // We have to be careful when setting Article properties that have a one-to-many relationship with entities
+    // that are marked 'cascade="all-delete-orphans"' in the hibernate config.  This is especially important
+    // during reingestion.  If we call the setter of such a property, and it's already populated, then the old
+    // entries are garbage-collected and eventually deleted from the database.  This is usually not what we
+    // want, and it leads to bugs.
+
+    // TODO: this can probably be made more elegant with lambdas once we are on Java 8.
+
+    final Set<String> newTypes = buildArticleTypes();
+    setDeletableChildrenRelationship(article, article.getTypes(), newTypes, new Runnable() {
+      @Override public void run() {
+        article.setTypes(newTypes);
+      }
+    });
+
+    final List<CitedArticle> newCitedArticles = parseCitations(readNodeList("/article/back/ref-list/ref"));
+    setDeletableChildrenRelationship(article, article.getCitedArticles(), newCitedArticles, new Runnable() {
+      @Override public void run() {
+        article.setCitedArticles(newCitedArticles);
+      }
+    });
+
+    final List<ArticleAuthor> newAuthors = readAuthors(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name"));
+    setDeletableChildrenRelationship(article, article.getAuthors(), newAuthors, new Runnable() {
+      @Override public void run() {
+        article.setAuthors(newAuthors);
+      }
+    });
+
+    final List<ArticleEditor> newEditors = readEditors(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name"));
+    setDeletableChildrenRelationship(article, article.getEditors(), newEditors, new Runnable() {
+      @Override public void run() {
+        article.setEditors(newEditors);
+      }
+    });
+
+    final List<String> newCollaborativeAuthors = parseCollaborativeAuthors(readNodeList(
+        "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
+    setDeletableChildrenRelationship(article, article.getCollaborativeAuthors(), newCollaborativeAuthors,
+        new Runnable() {
+          @Override public void run() {
+            article.setCollaborativeAuthors(newCollaborativeAuthors);
+          }
+    });
+
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
+  }
+
+  /**
+   * Safely sets a property of an article that has a one-to-many relationship, and is automatically deleted
+   * when dissociated from the parent.  The collection will only be set if it differs from the values already
+   * defined.
+   * <p/>
+   * For example, instead of <pre>article.setFoo(newStuff);</pre>
+   * you should instead do
+   * <pre>
+   *   setDeletableChildrenRelationship(article, article.getFoo(), newStuff, new Runnable() {
+   *     public void run() {
+   *       article.setFoo(newStuff);
+   *     }
+   *   }
+   * </pre>
+   *
+   * @param article parent object
+   * @param existingValues existing values obtained by calling the getter on article
+   * @param newValues new values that will be set if they differ from existingValues
+   * @param setter encapsulates the property's setter method, which will be called with newValues when run
+   */
+  private void setDeletableChildrenRelationship(Article article, @Nullable Collection existingValues,
+                                                Collection newValues, Runnable setter) {
+    if (!newValues.equals(existingValues)) {
+      if (existingValues != null) {
+
+        // This is the safe and recommended way to work with a hibernate all-delete-orphan property.  Instead
+        // of calling the setter with the new collection, work with the existing collection, which is already
+        // imbued with hibernate magic.
+        existingValues.clear();
+        existingValues.addAll(newValues);
+      } else {
+        setter.run();
+      }
+    }
   }
 
   /**
