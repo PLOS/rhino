@@ -35,10 +35,10 @@ import static org.testng.Assert.assertEquals;
  */
 public class JournalReadServiceTest extends BaseRhinoTest {
 
-  private static final String[][] ARTICLE_LIST = new String[][] {
-      new String[] {"info:doi/10.1371/journal.pone.3333333", "Title 3"},
-      new String[] {"info:doi/10.1371/journal.pone.2222222", "Title 2"},
-      new String[] {"info:doi/10.1371/journal.pone.1111111", "Title 1"}
+  private static final String[][] ARTICLE_LIST = new String[][]{
+      new String[]{"info:doi/10.1371/journal.pone.3333333", "Title 3"},
+      new String[]{"info:doi/10.1371/journal.pone.2222222", "Title 2"},
+      new String[]{"info:doi/10.1371/journal.pone.1111111", "Title 1"}
   };
 
   @Autowired

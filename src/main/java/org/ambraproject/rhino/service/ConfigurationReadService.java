@@ -18,12 +18,10 @@ public interface ConfigurationReadService {
   public abstract void read(ResponseReceiver receiver, MetadataFormat format) throws IOException;
 
   /**
-   * Returns a {@link Properties} instance with information about how the application
-   * was built.
+   * Returns a {@link Properties} instance with information about how the application was built.
    *
-   * @return Properties object that will contain at least three entries: "version", specifying
-   *     the version in the pom.xml; "buildDate", specifying when the build occurred; and
-   *     "buildUser", specifying who performed the build
+   * @return Properties object that will contain at least three entries: "version", specifying the version in the
+   * pom.xml; "buildDate", specifying when the build occurred; and "buildUser", specifying who performed the build
    * @throws IOException
    */
   public abstract Properties getBuildProperties() throws IOException;

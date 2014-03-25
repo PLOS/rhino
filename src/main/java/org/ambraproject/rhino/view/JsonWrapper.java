@@ -22,8 +22,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Class intended for JSON serialization that wraps some other object.  The constructor
- * allows you to specify which properties on the underlying object you want serialized.
+ * Class intended for JSON serialization that wraps some other object.  The constructor allows you to specify which
+ * properties on the underlying object you want serialized.
  */
 public class JsonWrapper<T> implements JsonOutputView {
 
@@ -34,9 +34,8 @@ public class JsonWrapper<T> implements JsonOutputView {
   /**
    * Constructor.
    *
-   * @param target the underlying object to base the serialization on
-   * @param propertiesToInclude only these properties of target will be serialized; all others
-   *     will not be visible
+   * @param target              the underlying object to base the serialization on
+   * @param propertiesToInclude only these properties of target will be serialized; all others will not be visible
    */
   public JsonWrapper(T target, String... propertiesToInclude) {
     this.target = Preconditions.checkNotNull(target);

@@ -42,7 +42,6 @@ public class IngestibleZipController extends RestController {
    *                      exists, it is an error
    * @throws java.io.IOException
    * @throws org.ambraproject.filestore.FileStoreException
-   *
    */
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
   public void zipUpload(HttpServletResponse response,

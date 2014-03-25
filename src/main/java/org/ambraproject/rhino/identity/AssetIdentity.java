@@ -45,7 +45,7 @@ public class AssetIdentity extends DoiBasedIdentity {
    *
    * @param asset the asset to check
    * @return {@code true} if the asset is associated with a file with a known extension; {@code false} if it has been
-   *         marked as "file-less" by {@link #setNoFile}
+   * marked as "file-less" by {@link #setNoFile}
    * @throws NullPointerException if the asset has not either had its extension set or explicitly marked as fileless
    *                              with {@link #setNoFile}
    */

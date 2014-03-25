@@ -21,9 +21,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathException;
 
 /**
- * Implementation of {@link org.ambraproject.rhino.shared.XPathExtractor}.  This is only
- * used in certain cases where we share code with ambra.  For most common cases, you
- * should extend {@link AbstractXpathReader} instead of using this.
+ * Implementation of {@link org.ambraproject.rhino.shared.XPathExtractor}.  This is only used in certain cases where we
+ * share code with ambra.  For most common cases, you should extend {@link AbstractXpathReader} instead of using this.
  */
 public class XpathReader extends AbstractXpathReader implements XPathExtractor {
 
