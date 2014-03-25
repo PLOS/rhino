@@ -22,7 +22,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
@@ -100,14 +99,8 @@ public abstract class BaseRhinoTest extends AbstractTestNGSpringContextTests {
 
     public TestFile(File fileLocation) throws IOException {
       this.fileLocation = fileLocation;
-      InputStream stream = null;
-      boolean threw = true;
-      try {
-        stream = new FileInputStream(this.fileLocation);
+      try (InputStream stream = new FileInputStream(this.fileLocation)) {
         fileData = IOUtils.toByteArray(stream);
-        threw = false;
-      } finally {
-        Closeables.close(stream, threw);
       }
     }
 

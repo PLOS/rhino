@@ -26,7 +26,6 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.common.io.Closeables;
 import org.ambraproject.ApplicationException;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
@@ -434,13 +433,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               HttpStatus.METHOD_NOT_ALLOWED);
         }
 
-        InputStream is = zipFile.getInputStream(entry);
-        boolean threw = true;
-        try {
+        try (InputStream is = zipFile.getInputStream(entry)) {
           assetService.upload(is, AssetFileIdentity.create(doi, extension));
-          threw = false;
-        } finally {
-          Closeables.close(is, threw);
         }
       }
     }
@@ -480,16 +474,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (entry == null) {
       return null;
     }
-    InputStream is = zipFile.getInputStream(entry);
-    byte[] bytes;
-    boolean threw = true;
-    try {
-      bytes = readClientInput(is);
-      threw = false;
-    } finally {
-      Closeables.close(is, threw);
+    try (InputStream is = zipFile.getInputStream(entry)) {
+      return readClientInput(is);
     }
-    return bytes;
   }
 
   /**

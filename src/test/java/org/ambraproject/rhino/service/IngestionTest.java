@@ -14,7 +14,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
-import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
@@ -209,15 +208,8 @@ public class IngestionTest extends BaseRhinoTest {
   private Article readReferenceCase(File jsonFile) throws IOException {
     Preconditions.checkNotNull(jsonFile);
     Article article;
-    Reader input = null;
-    boolean threw = true;
-    try {
-      input = new FileReader(jsonFile);
-      input = new BufferedReader(input);
+    try (Reader input = new BufferedReader(new FileReader(jsonFile))) {
       article = entityGson.fromJson(input, Article.class);
-      threw = false;
-    } finally {
-      Closeables.close(input, threw);
     }
     createTestJournal(article.geteIssn());
 
