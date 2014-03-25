@@ -212,8 +212,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     String doi = article.getDoi();
 
     createReciprocalRelationships(article);
-
-//    hibernateTemplate.flush();
     try {
 
       // This method needs the article to have already been persisted to the DB.
