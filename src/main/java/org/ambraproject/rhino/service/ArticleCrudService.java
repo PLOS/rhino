@@ -24,6 +24,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.MetadataFormat;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 
@@ -98,25 +99,21 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of an article.
    *
-   * @param receiver the receiver object to which to send the metadata
    * @param id       the identifier of the article
-   * @param format   the desired metadata format
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format)
+  public abstract MetadataRetriever readMetadata(DoiBasedIdentity id)
       throws IOException;
 
   /**
    * Read the metadata of an article.
    *
-   * @param receiver the receiver object to which to send the metadata
    * @param article  the article
-   * @param format   the desired metadata format
    * @throws org.ambraproject.rhino.rest.RestClientException
    *          if the DOI does not belong to an article
    */
-  public abstract void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format)
+  public abstract MetadataRetriever readMetadata(Article article)
       throws IOException;
 
   /**

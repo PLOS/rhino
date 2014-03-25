@@ -25,10 +25,8 @@ import java.util.TimeZone;
  * Generally, one instance of this class is constructed per request for a single entity of metadata (for example, there
  * is one object for reading the metadata for one article). Identifying information for that entity should be passed in
  * to the subclass's constructor or, more likely, viewed closure-style from inside an anonymous subclass.
- *
- * @param <T> the type of object serialized to the response
  */
-public abstract class MetadataRetriever<T> {
+public abstract class MetadataRetriever {
 
   /**
    * Get an object representing a piece of metadata.
@@ -36,7 +34,7 @@ public abstract class MetadataRetriever<T> {
    * @return the object
    * @throws IOException
    */
-  protected abstract T getMetadata() throws IOException;
+  protected abstract Object getMetadata() throws IOException;
 
   /**
    * Return the last-modified date for this object's metadata.
@@ -84,7 +82,7 @@ public abstract class MetadataRetriever<T> {
     if (!checkIfModifiedSince(request, lastModified)) {
       response.setStatus(HttpStatus.NOT_MODIFIED.value());
     } else {
-      T metadata = Preconditions.checkNotNull(getMetadata());
+      Object metadata = Preconditions.checkNotNull(getMetadata());
       if (bufferResponseBody()) {
         serializeMetadataSafely(request, response, gson, metadata);
       } else {
@@ -135,7 +133,7 @@ public abstract class MetadataRetriever<T> {
    * Buffer the JSON into memory before we open the response stream. This ensures that any exception thrown by {@code
    * toJson} and caught by Spring will be correctly shown in the response to the client.
    */
-  private void serializeMetadataSafely(HttpServletRequest request, HttpServletResponse response, Gson gson, T metadata)
+  private void serializeMetadataSafely(HttpServletRequest request, HttpServletResponse response, Gson gson, Object metadata)
       throws IOException {
     StringWriter stringWriter = new StringWriter(JSON_BUFFER_INITIAL_SIZE);
     gson.toJson(metadata, stringWriter);
@@ -151,7 +149,7 @@ public abstract class MetadataRetriever<T> {
    * (probably sending an "OK" status code but an empty response body) instead of correctly reporting it to the client
    * as a 500 error and providing the stack trace.
    */
-  private void serializeMetadataDirectly(HttpServletRequest request, HttpServletResponse response, Gson gson, T metadata)
+  private void serializeMetadataDirectly(HttpServletRequest request, HttpServletResponse response, Gson gson, Object metadata)
       throws IOException {
     try (PrintWriter writer = openJsonResponseBody(request, response)) {
       gson.toJson(metadata, writer);

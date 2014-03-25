@@ -10,9 +10,8 @@ import java.util.Calendar;
  * A retriever that translates a timestamped persistent entity into a view.
  *
  * @param <E> the persistent entity type
- * @param <V> the view type
  */
-public abstract class EntityMetadataRetriever<E extends AmbraEntity, V> extends MetadataRetriever<V> {
+public abstract class EntityMetadataRetriever<E extends AmbraEntity> extends MetadataRetriever {
 
   private E entity = null;
 
@@ -39,7 +38,7 @@ public abstract class EntityMetadataRetriever<E extends AmbraEntity, V> extends 
   }
 
   @Override
-  protected final V getMetadata() throws IOException {
+  protected final Object getMetadata() throws IOException {
     return Preconditions.checkNotNull(getView(getEntity()));
   }
 
@@ -49,6 +48,6 @@ public abstract class EntityMetadataRetriever<E extends AmbraEntity, V> extends 
    * @param entity the entity
    * @return a view representing the entity
    */
-  protected abstract V getView(E entity);
+  protected abstract Object getView(E entity);
 
 }

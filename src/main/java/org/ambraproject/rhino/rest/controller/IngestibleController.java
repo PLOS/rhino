@@ -92,10 +92,9 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws FileStoreException
    */
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
-  public void ingest(HttpServletResponse response,
+  public void ingest(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(value = "name") String name,
-                     @RequestParam(value = "force_reingest", required = false) String forceReingest,
-                     @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
+                     @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     File archive;
@@ -116,7 +115,6 @@ public class IngestibleController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
+    articleCrudService.readMetadata(result).respond(request, response, entityGson);
   }
 }

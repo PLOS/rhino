@@ -35,6 +35,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.ambraproject.rhino.util.StringReplacer;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -264,12 +265,10 @@ public class IngestionTest extends BaseRhinoTest {
   }
 
   private void testReadMetadata(Article article, MetadataFormat metadataFormat) throws IOException {
-    DummyResponseReceiver response = new DummyResponseReceiver();
-
     // Mostly we want to test that this method call doesn't crash or hang
-    articleCrudService.readMetadata(response, article, metadataFormat);
+    MetadataRetriever response = articleCrudService.readMetadata(article);
 
-    assertFalse(StringUtils.isBlank(response.read()));
+    assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }
 
   @Test(dataProvider = "generatedZipIngestionData")

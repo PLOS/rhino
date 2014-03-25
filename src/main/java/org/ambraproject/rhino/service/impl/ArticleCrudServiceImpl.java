@@ -28,6 +28,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.ambraproject.ApplicationException;
 import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -49,6 +50,8 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
+import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
@@ -751,29 +754,51 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format) throws IOException {
-    assert format == MetadataFormat.JSON;
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setFetchMode("assets", FetchMode.JOIN)
-            .setFetchMode("articleType", FetchMode.JOIN)
-            .setFetchMode("journals", FetchMode.JOIN)
-            .setFetchMode("journals.volumes", FetchMode.JOIN)
-            .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
-            .setFetchMode("journals.articleList", FetchMode.JOIN)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (article == null) {
-      throw reportNotFound(id);
-    }
-    readMetadata(receiver, article, format);
+  public MetadataRetriever readMetadata(final DoiBasedIdentity id) throws IOException {
+    return new EntityMetadataRetriever<Article>(){
+      @Override
+      protected Article fetchEntity() {
+        Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+                .add(Restrictions.eq("doi", id.getKey()))
+                .setFetchMode("assets", FetchMode.JOIN)
+                .setFetchMode("articleType", FetchMode.JOIN)
+                .setFetchMode("journals", FetchMode.JOIN)
+                .setFetchMode("journals.volumes", FetchMode.JOIN)
+                .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
+                .setFetchMode("journals.articleList", FetchMode.JOIN)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            ));
+        if (article == null) {
+          throw reportNotFound(id);
+        }
+        return article;
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return createArticleView(entity);
+      }
+    };
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
-    ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
-    serializeMetadata(format, receiver, view);
+  public MetadataRetriever readMetadata(final Article article) throws IOException {
+    return new EntityMetadataRetriever<Article>(){
+      @Override
+      protected Article fetchEntity() {
+        return article;
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return createArticleView(entity);
+      }
+    };
+  }
+
+  private ArticleOutputView createArticleView(Article article) {
+    return ArticleOutputView.create(article, syndicationService, pingbackReadService);
   }
 
   /**

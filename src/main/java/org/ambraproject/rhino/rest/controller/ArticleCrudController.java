@@ -97,9 +97,8 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws FileStoreException
    */
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletResponse response,
-                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile,
-                     @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
+  public void create(HttpServletRequest request, HttpServletResponse response,
+                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
       throws IOException, FileStoreException {
     Article result;
     try (InputStream requestBody = requestFile.getInputStream()) {
@@ -108,8 +107,7 @@ public class ArticleCrudController extends ArticleSpaceController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
+    articleCrudService.readMetadata(result).respond(request, response, entityGson);
   }
 
   /**
@@ -140,7 +138,7 @@ public class ArticleCrudController extends ArticleSpaceController {
     } else if (booleanParameter(authors)) {
       articleCrudService.readAuthors(receiver, id, mf);
     } else {
-      articleCrudService.readMetadata(receiver, id, mf);
+      articleCrudService.readMetadata(id).respond(request, response, entityGson);
     }
   }
 

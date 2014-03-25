@@ -243,9 +243,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Article article = articleCrudService.write(input, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
-    DummyResponseReceiver drr = new DummyResponseReceiver();
-    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON);
-    String json = drr.read();
+    String json = articleCrudService.readMetadata(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<?, ?> articleMap = gson.fromJson(json, Map.class);

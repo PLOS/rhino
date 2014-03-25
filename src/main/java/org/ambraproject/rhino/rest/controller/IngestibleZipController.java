@@ -4,12 +4,9 @@ import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -42,13 +40,11 @@ public class IngestibleZipController extends RestController {
    *                      exists, it is an error
    * @throws java.io.IOException
    * @throws org.ambraproject.filestore.FileStoreException
-   *
    */
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
-  public void zipUpload(HttpServletResponse response,
+  public void zipUpload(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
-                        @RequestParam(value = "force_reingest", required = false) String forceReingest,
-                        @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
+                        @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     String archiveName = requestFile.getOriginalFilename();
@@ -63,8 +59,7 @@ public class IngestibleZipController extends RestController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
+    articleCrudService.readMetadata(result).respond(request, response, entityGson);
   }
 
 }

@@ -58,7 +58,7 @@ public abstract class RestController {
   private static final Logger log = LoggerFactory.getLogger(RestController.class);
 
   @Autowired
-  private Gson entityGson;
+  protected Gson entityGson;
 
   protected static final String ACCEPT_REQUEST_HEADER = "Accept";
   protected static final String JSONP_CALLBACK_PARAM = "callback";
