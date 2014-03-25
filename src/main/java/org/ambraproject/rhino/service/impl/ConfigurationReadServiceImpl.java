@@ -2,14 +2,14 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
@@ -20,13 +20,33 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   private Configuration ambraConfiguration;
 
   @Override
-  public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
-    serializeMetadata(format, receiver, convertToMap(ambraConfiguration));
+  public MetadataRetriever read() throws IOException {
+    return new MetadataRetriever() {
+      @Override
+      protected Object getMetadata() throws IOException {
+        return convertToMap(ambraConfiguration);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
   @Override
-  public void readBuildProperties(ResponseReceiver receiver, MetadataFormat format) throws IOException {
-    serializeMetadata(format, receiver, getBuildProperties());
+  public MetadataRetriever readBuildProperties() throws IOException {
+    return new MetadataRetriever() {
+      @Override
+      protected Object getMetadata() throws IOException {
+        return getBuildProperties();
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
   /**

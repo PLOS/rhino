@@ -19,11 +19,8 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,21 +50,17 @@ public class IssueCrudController extends DoiBasedCrudController {
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    issueCrudService.read(receiver, id, mf);
+    issueCrudService.read(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity issueId = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    issueCrudService.read(receiver, issueId, mf);
+    issueCrudService.read(issueId).respond(request, response, entityGson);
   }
 
 }

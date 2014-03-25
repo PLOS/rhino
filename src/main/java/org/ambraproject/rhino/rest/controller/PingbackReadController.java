@@ -20,17 +20,12 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,22 +42,16 @@ public class PingbackReadController extends ArticleSpaceController {
 
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {PINGBACK_PARAM})
-  public void listPingbacks(HttpServletResponse response,
-                            @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
-                            @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
+  public void listPingbacks(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromAcceptHeader(accept);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    pingbackReadService.listByArticle(receiver, mf, PingbackReadService.OrderBy.COUNT);
+    pingbackReadService.listByArticle(PingbackReadService.OrderBy.COUNT).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {PINGBACK_PARAM})
   public void readPingbacks(HttpServletRequest request, HttpServletResponse response)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    pingbackReadService.read(receiver, id, mf);
+    pingbackReadService.read(id).respond(request, response, entityGson);
   }
 
 

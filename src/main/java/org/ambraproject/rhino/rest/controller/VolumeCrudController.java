@@ -19,13 +19,10 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.apache.commons.lang.StringUtils;
@@ -62,21 +59,17 @@ public class VolumeCrudController extends DoiBasedCrudController {
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    volumeCrudService.read(receiver, id, mf);
+    volumeCrudService.read(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity volumeId = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
     VolumeInputView input = readJsonFromRequest(request, VolumeInputView.class);
     volumeCrudService.update(volumeId, input);
 
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    volumeCrudService.read(receiver, volumeId, mf);
+    volumeCrudService.read(volumeId).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)

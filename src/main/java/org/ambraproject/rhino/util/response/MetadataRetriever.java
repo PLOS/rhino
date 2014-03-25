@@ -37,7 +37,8 @@ public abstract class MetadataRetriever {
   protected abstract Object getMetadata() throws IOException;
 
   /**
-   * Return the last-modified date for this object's metadata.
+   * Return the last-modified date for this object's metadata. May return {@code null} for volative data that always may
+   * be assumed to have been modified since it was last accessed.
    *
    * @return the date
    * @throws IOException
@@ -77,9 +78,11 @@ public abstract class MetadataRetriever {
     Preconditions.checkNotNull(response);
     Preconditions.checkNotNull(gson);
 
-    Calendar lastModified = Preconditions.checkNotNull(getLastModifiedDate());
-    response.addHeader("Last-Modified", HttpDateUtil.format(lastModified));
-    if (!checkIfModifiedSince(request, lastModified)) {
+    Calendar lastModified = getLastModifiedDate();
+    if (lastModified != null) {
+      response.addHeader("Last-Modified", HttpDateUtil.format(lastModified));
+    }
+    if (lastModified != null && !checkIfModifiedSince(request, lastModified)) {
       response.setStatus(HttpStatus.NOT_MODIFIED.value());
     } else {
       Object metadata = Preconditions.checkNotNull(getMetadata());

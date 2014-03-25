@@ -23,9 +23,7 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.util.response.MetadataRetriever;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 
 import java.io.IOException;
@@ -113,13 +111,11 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read information about the authors of an article.
    *
-   * @param receiver the receiver object to which to send the metadata
-   * @param id       specifies the article
-   * @param format   the desired metadata format
+   * @param id specifies the article
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract void readAuthors(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+  public abstract MetadataRetriever readAuthors(ArticleIdentity id)
       throws IOException, FileStoreException;
 
   public abstract void setAssetService(AssetCrudService assetService);
@@ -127,11 +123,9 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * List the DOIs of all ingested articles, or a described subset.
    *
-   * @param receiver        the receiver to which to write the list
-   * @param format          the desired list format  @throws IOException
    * @param articleCriteria description of the subset of articles to list
    */
-  public abstract void listDois(ResponseReceiver receiver, MetadataFormat format, ArticleCriteria articleCriteria)
+  public abstract MetadataRetriever listDois(ArticleCriteria articleCriteria)
       throws IOException;
 
 }

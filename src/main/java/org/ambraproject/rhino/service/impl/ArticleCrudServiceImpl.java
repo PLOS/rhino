@@ -27,7 +27,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -43,7 +42,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -51,7 +49,6 @@ import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
 import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
 import org.ambraproject.rhino.util.response.MetadataRetriever;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
@@ -78,6 +75,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -752,7 +750,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public MetadataRetriever readMetadata(final DoiBasedIdentity id) throws IOException {
-    return new EntityMetadataRetriever<Article>(){
+    return new EntityMetadataRetriever<Article>() {
       @Override
       protected Article fetchEntity() {
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
@@ -781,7 +779,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public MetadataRetriever readMetadata(final Article article) throws IOException {
-    return new EntityMetadataRetriever<Article>(){
+    return new EntityMetadataRetriever<Article>() {
       @Override
       protected Article fetchEntity() {
         return article;
@@ -802,12 +800,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void readAuthors(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+  public MetadataRetriever readAuthors(final ArticleIdentity id)
       throws IOException, FileStoreException {
-    Document doc = parseXml(readXml(id));
-    List<AuthorView> authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
-    List<ArticleAuthorView> views = ArticleAuthorView.createList(authors);
-    serializeMetadata(format, receiver, views);
+    return new MetadataRetriever() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null; // Unsupported for now
+      }
+
+      @Override
+      protected Object getMetadata() throws IOException {
+        Document doc;
+        try {
+          doc = parseXml(readXml(id));
+        } catch (FileStoreException e) {
+          throw new IOException(e);
+        }
+        List<AuthorView> authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+        return ArticleAuthorView.createList(authors);
+      }
+    };
   }
 
   /**
@@ -832,10 +844,19 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void listDois(ResponseReceiver receiver, MetadataFormat format,
-                       ArticleCriteria articleCriteria)
+  public MetadataRetriever listDois(final ArticleCriteria articleCriteria)
       throws IOException {
-    serializeMetadata(format, receiver, articleCriteria.apply(hibernateTemplate));
+    return new MetadataRetriever() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+
+      @Override
+      protected Object getMetadata() throws IOException {
+        return articleCriteria.apply(hibernateTemplate);
+      }
+    };
   }
 
   @Required

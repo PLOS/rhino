@@ -1,10 +1,7 @@
 package org.ambraproject.rhino.rest.controller.abstr;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +29,7 @@ public class CommentCrudController extends DoiBasedCrudController {
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     DoiBasedIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    annotationCrudService.readComment(receiver, id, mf);
+    annotationCrudService.readComment(id).respond(request, response, entityGson);
   }
 
 }

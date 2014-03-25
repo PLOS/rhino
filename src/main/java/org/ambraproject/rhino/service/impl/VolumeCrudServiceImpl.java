@@ -23,10 +23,10 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.hibernate.Criteria;
@@ -116,17 +116,27 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   @Override
-  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
-    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", id.getKey()))
-            .setFetchMode("issues", FetchMode.JOIN)
-        ));
-    if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    serializeMetadata(mf, receiver, new VolumeOutputView(volume));
+  public MetadataRetriever read(final DoiBasedIdentity id) throws IOException {
+    return new EntityMetadataRetriever<Volume>() {
+      @Override
+      protected Volume fetchEntity() {
+        Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria
+                .forClass(Volume.class)
+                .add(Restrictions.eq("volumeUri", id.getKey()))
+                .setFetchMode("issues", FetchMode.JOIN)
+            ));
+        if (volume == null) {
+          throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+        }
+        return volume;
+      }
+
+      @Override
+      protected Object getView(Volume volume) {
+        return new VolumeOutputView(volume);
+      }
+    };
   }
 
 }

@@ -27,11 +27,12 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityCollectionMetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
@@ -311,43 +312,69 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public MetadataRetriever readMetadata(final AssetIdentity id)
       throws IOException {
-    Collection<ArticleAsset> assets = findArticleAssets(id);
-    serializeMetadata(format, receiver, new RawAssetFileCollectionView(assets));
+    return new EntityCollectionMetadataRetriever<ArticleAsset>() {
+      @Override
+      protected Collection<? extends ArticleAsset> fetchEntities() {
+        return findArticleAssets(id);
+      }
+
+      @Override
+      protected Object getView(Collection<? extends ArticleAsset> assets) {
+        return new RawAssetFileCollectionView(assets);
+      }
+    };
   }
 
   @Override
-  public void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public MetadataRetriever readFigureMetadata(final AssetIdentity id)
       throws IOException {
-    Collection<ArticleAsset> assets = findArticleAssets(id);
-    GroomedImageView figureView;
-    try {
-      figureView = GroomedImageView.create(assets);
-    } catch (UncategorizedAssetException e) {
-      String message = "Not a figure asset: " + id.getIdentifier();
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
-    }
-    figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
-    serializeMetadata(format, receiver, figureView);
+    return new EntityCollectionMetadataRetriever<ArticleAsset>() {
+      @Override
+      protected Collection<? extends ArticleAsset> fetchEntities() {
+        return findArticleAssets(id);
+      }
+
+      @Override
+      protected Object getView(Collection<? extends ArticleAsset> assets) {
+        GroomedImageView figureView;
+        try {
+          figureView = GroomedImageView.create(assets);
+        } catch (UncategorizedAssetException e) {
+          String message = "Not a figure asset: " + id.getIdentifier();
+          throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
+        }
+        figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
+        return figureView;
+      }
+    };
   }
 
   @Override
-  public void readFileMetadata(ResponseReceiver receiver, AssetFileIdentity id, MetadataFormat format)
+  public MetadataRetriever readFileMetadata(final AssetFileIdentity id)
       throws IOException {
-    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .add(Restrictions.eq("extension", id.getFileExtension()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (assets.isEmpty()) {
-      throw reportNotFound(id);
-    }
+    return new EntityMetadataRetriever<ArticleAsset>() {
+      @Override
+      protected ArticleAsset fetchEntity() {
+        @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+            hibernateTemplate.findByCriteria(DetachedCriteria
+                .forClass(ArticleAsset.class)
+                .add(Restrictions.eq("doi", id.getKey()))
+                .add(Restrictions.eq("extension", id.getFileExtension()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            ));
+        if (assets.isEmpty()) {
+          throw reportNotFound(id);
+        }
+        return DataAccessUtils.requiredUniqueResult(assets);
+      }
 
-    ArticleAsset asset = DataAccessUtils.requiredUniqueResult(assets);
-    serializeMetadata(format, receiver, new RawAssetFileView(asset));
+      @Override
+      protected Object getView(ArticleAsset asset) {
+        return new RawAssetFileView(asset);
+      }
+    };
   }
 
   /**

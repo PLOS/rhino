@@ -16,9 +16,8 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.IngestibleService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
    * {@inheritDoc}
    */
   @Override
-  public void read(ResponseReceiver receiver, MetadataFormat format) throws IOException {
+  public MetadataRetriever read() throws IOException {
     String ingestSourceDirName = ambraConfiguration.getString(INGEST_SOURCE_DIR_KEY);
     Preconditions.checkNotNull(ingestSourceDirName); // should be covered by webapp's built-in defaults
     File ingestDir = new File(ingestSourceDirName);
@@ -65,12 +65,23 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
       throw new RuntimeException("Directory not found: " + ingestDir);
     }
 
-    List<String> results = new ArrayList<>(archives.length);
+    final List<String> results = new ArrayList<>(archives.length);
     for (File archive : archives) {
       results.add(archive.getName());
     }
     Collections.sort(results);
-    serializeMetadata(format, receiver, results);
+
+    return new MetadataRetriever() {
+      @Override
+      protected Object getMetadata() throws IOException {
+        return results;
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
   /**

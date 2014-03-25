@@ -17,8 +17,7 @@ import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.test.DummyResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
@@ -70,10 +69,8 @@ public class JournalReadServiceTest extends BaseRhinoTest {
     articleList.setListCode("testjournal19326203_news");
     hibernateTemplate.save(articleList);
 
-    DummyResponseReceiver resp = new DummyResponseReceiver();
-    journalReadService.readInTheNewsArticles(resp, "TestJournal19326203", MetadataFormat.JSON);
-    Gson gson = new Gson();
-    List actual = gson.fromJson(resp.read(), List.class);
+    MetadataRetriever resp = journalReadService.readInTheNewsArticles("TestJournal19326203");
+    List actual = entityGson.fromJson(resp.readJson(entityGson), List.class);
     assertEquals(actual.size(), expected.size());
     for (int i = 0; i < actual.size(); i++) {
       Map<String, String> map = (Map<String, String>) actual.get(i);

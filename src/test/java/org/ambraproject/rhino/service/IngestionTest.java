@@ -30,10 +30,8 @@ import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
-import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.apache.commons.lang.StringUtils;
@@ -261,10 +259,10 @@ public class IngestionTest extends BaseRhinoTest {
       log.error(failure.toString());
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
-    testReadMetadata(actual, MetadataFormat.JSON);
+    testReadMetadata(actual);
   }
 
-  private void testReadMetadata(Article article, MetadataFormat metadataFormat) throws IOException {
+  private void testReadMetadata(Article article) throws IOException {
     // Mostly we want to test that this method call doesn't crash or hang
     MetadataRetriever response = articleCrudService.readMetadata(article);
 

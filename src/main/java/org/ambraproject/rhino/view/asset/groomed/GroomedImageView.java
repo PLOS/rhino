@@ -52,7 +52,7 @@ public class GroomedImageView implements JsonOutputView {
       "Failed to categorize asset as an image. Expected thumbnails to be either %s (figure) or %s (graphic).",
       FIGURE_TYPES, GRAPHIC_TYPES);
 
-  public static GroomedImageView create(Collection<ArticleAsset> figureAssets) {
+  public static GroomedImageView create(Collection<? extends ArticleAsset> figureAssets) {
     Map<ImageFileType, ArticleAsset> byType = Maps.newEnumMap(ImageFileType.class);
     for (ArticleAsset asset : figureAssets) {
       ImageFileType imageFileType;

@@ -19,8 +19,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 
 import java.io.IOException;
@@ -31,6 +30,6 @@ public interface VolumeCrudService {
 
   public abstract void update(DoiBasedIdentity volumeId, VolumeInputView input);
 
-  public abstract void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException;
+  public abstract MetadataRetriever read(DoiBasedIdentity id) throws IOException;
 
 }

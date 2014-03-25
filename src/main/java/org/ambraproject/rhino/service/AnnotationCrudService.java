@@ -15,8 +15,7 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 
 import java.io.IOException;
 
@@ -30,23 +29,19 @@ public interface AnnotationCrudService {
    * Forwards all comments, and any replies associated with them, for a given article to the receiver.  The comments are
    * returned as a list.  Each comment has a "replies" list that contains any replies (recursively).
    *
-   * @param receiver        wraps the response object
    * @param articleIdentity identifies the article
-   * @param format          must currently be MetadataFormat.JSON
    * @throws IOException
    */
-  public void readComments(ResponseReceiver receiver, ArticleIdentity articleIdentity, MetadataFormat format)
+  public MetadataRetriever readComments(ArticleIdentity articleIdentity)
       throws IOException;
 
   /**
    * Reads the comment data for a single comment to the receiver.
    *
-   * @param receiver  wraps the response object
    * @param commentId identifies the comment
-   * @param format
    * @throws IOException
    */
-  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
+  public MetadataRetriever readComment(DoiBasedIdentity commentId)
       throws IOException;
 
 }

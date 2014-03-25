@@ -20,11 +20,8 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -58,26 +55,20 @@ public class AssetController extends DoiBasedCrudController {
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     AssetIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    assetCrudService.readMetadata(receiver, id, mf);
+    assetCrudService.readMetadata(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"figure"}, method = RequestMethod.GET)
   public void readAsFigure(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     AssetIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    assetCrudService.readFigureMetadata(receiver, id, mf);
+    assetCrudService.readFigureMetadata(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"articleFor"}, method = RequestMethod.GET)
   public ResponseEntity<String> articleFor(HttpServletRequest request)
       throws IOException {
     AssetIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    assert mf == MetadataFormat.JSON;
     ArticleIdentity articleIdentity = assetCrudService.findArticleFor(id);
     return respondWithJson(articleIdentity.getIdentifier());
   }

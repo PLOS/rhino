@@ -22,8 +22,6 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.ambraproject.views.AnnotationView;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,9 +134,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     comment3.setBody("Test Comment Body");
     hibernateTemplate.save(comment3);
 
-    DummyResponseReceiver drr = new DummyResponseReceiver();
-    annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
-    String json = drr.read();
+    String json = annotationCrudService.readComments(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
 
     // Confirm that date strings in the JSON are formatted as ISO8601 ("2012-04-23T18:25:43.511Z").
@@ -174,9 +170,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
         new AnnotationView(comment2, article.getDoi(), article.getTitle(), replies));
 
     // Comment with no replies.
-    drr = new DummyResponseReceiver();
-    annotationCrudService.readComments(drr, articleId, MetadataFormat.JSON);
-    json = drr.read();
+    json = annotationCrudService.readComments(articleId).readJson(entityGson);
     List<AnnotationView> actualComments = entityGson.fromJson(json, new TypeToken<List<AnnotationView>>() {
     }.getType());
     assertEquals(actualComments.size(), 3);

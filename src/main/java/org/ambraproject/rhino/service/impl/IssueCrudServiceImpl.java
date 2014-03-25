@@ -24,10 +24,10 @@ import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Criteria;
@@ -45,16 +45,26 @@ import java.util.List;
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
   @Override
-  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
-    Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", id.getKey()))
-        ));
-    if (issue == null) {
-      throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    serializeMetadata(mf, receiver, new IssueOutputView(issue));
+  public MetadataRetriever read(final DoiBasedIdentity id) throws IOException {
+    return new EntityMetadataRetriever<Issue>() {
+      @Override
+      protected Issue fetchEntity() {
+        Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria
+                .forClass(Issue.class)
+                .add(Restrictions.eq("issueUri", id.getKey()))
+            ));
+        if (issue == null) {
+          throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+        }
+        return issue;
+      }
+
+      @Override
+      protected Object getView(Issue issue) {
+        return new IssueOutputView(issue);
+      }
+    };
   }
 
   private Issue applyInput(Issue issue, IssueInputView input) {

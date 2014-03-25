@@ -13,14 +13,14 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.views.AnnotationView;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -28,6 +28,8 @@ import org.springframework.dao.support.DataAccessUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,36 +43,55 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   /**
    * {@inheritDoc}
    */
-  public void readComments(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+  public MetadataRetriever readComments(ArticleIdentity id)
       throws IOException {
-    readAnnotations(receiver, id, format);
+    return readAnnotations(id);
+  }
+
+  private static Date getLatestLastModified(Iterable<? extends AmbraEntity> values) {
+    Date lastOfAll = null;
+    for (AmbraEntity entity : values) {
+      Date lastModified = entity.getLastModified();
+      if (lastOfAll == null || (lastModified != null && lastModified.after(lastOfAll))) {
+        lastOfAll = lastModified;
+      }
+    }
+    return lastOfAll;
   }
 
   /**
    * Forwards annotations matching the given types to the receiver.
    *
-   * @param receiver wraps the response object
-   * @param id       identifies the article
-   * @param format   must currently be MetadataFormat.JSON
+   * @param id identifies the article
    * @throws IOException
    */
-  private void readAnnotations(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+  private MetadataRetriever readAnnotations(final ArticleIdentity id)
       throws IOException {
-    Article article = findSingleEntity("FROM Article WHERE doi = ?", id.getKey());
-
-    List<Annotation> annotations = fetchAllAnnotations(article);
-
-    // AnnotationView is an ambra component that is convenient here since it encapsulates everything
-    // we want to return about a given annotation.  It also handles nested replies.
-    List<AnnotationView> results = new ArrayList<>(annotations.size());
-    for (Annotation annotation : annotations) {
-      if (AnnotationType.COMMENT.equals(annotation.getType())) {
-        Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), annotations,
-            new HashMap<Long, List<Annotation>>());
-        results.add(new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies));
+    return new MetadataRetriever() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        // Requires searching of nested replies. Unsupported for now.
+        return null;
       }
-    }
-    serializeMetadata(format, receiver, results);
+
+      @Override
+      protected Object getMetadata() throws IOException {
+        Article article = findSingleEntity("FROM Article WHERE doi = ?", id.getKey());
+        List<Annotation> annotations = fetchAllAnnotations(article);
+
+        // AnnotationView is an ambra component that is convenient here since it encapsulates everything
+        // we want to return about a given annotation.  It also handles nested replies.
+        List<AnnotationView> results = new ArrayList<>(annotations.size());
+        for (Annotation annotation : annotations) {
+          if (AnnotationType.COMMENT.equals(annotation.getType())) {
+            Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), annotations,
+                new HashMap<Long, List<Annotation>>());
+            results.add(new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies));
+          }
+        }
+        return results;
+      }
+    };
   }
 
   /**
@@ -110,29 +131,40 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public void readComment(ResponseReceiver receiver, DoiBasedIdentity commentId, MetadataFormat format)
+  public MetadataRetriever readComment(DoiBasedIdentity commentId)
       throws IOException {
-    readAnnotation(receiver, commentId, format);
+    return readAnnotation(commentId);
   }
 
-  private void readAnnotation(ResponseReceiver receiver, DoiBasedIdentity annotationId, MetadataFormat format)
+  private MetadataRetriever readAnnotation(final DoiBasedIdentity annotationId)
       throws IOException {
-    Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
-            .add(Restrictions.eq("annotationUri", annotationId.getKey()))
-        ));
-    if (annotation == null) {
-      throw reportNotFound(annotationId);
-    }
+    return new MetadataRetriever() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        // Requires searching of nested replies. Unsupported for now.
+        return null;
+      }
 
-    // TODO: Make this more efficient. Three queries is too many.
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("ID", annotation.getArticleID()))
-        ));
-    Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), fetchAllAnnotations(article),
-        new LinkedHashMap<Long, List<Annotation>>());
-    AnnotationView view = new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies);
-    serializeMetadata(format, receiver, view);
+      @Override
+      protected Object getMetadata() throws IOException {
+        Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
+                .add(Restrictions.eq("annotationUri", annotationId.getKey()))
+            ));
+        if (annotation == null) {
+          throw reportNotFound(annotationId);
+        }
+
+        // TODO: Make this more efficient. Three queries is too many.
+        Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+                .add(Restrictions.eq("ID", annotation.getArticleID()))
+            ));
+        Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), fetchAllAnnotations(article),
+            new LinkedHashMap<Long, List<Annotation>>());
+
+        return new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies);
+      }
+    };
   }
 }

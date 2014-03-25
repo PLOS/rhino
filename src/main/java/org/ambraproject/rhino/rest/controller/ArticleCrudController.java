@@ -22,12 +22,9 @@ import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,16 +64,12 @@ public class ArticleCrudController extends ArticleSpaceController {
   private AnnotationCrudService annotationCrudService;
 
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
-  public void listDois(HttpServletResponse response,
+  public void listDois(HttpServletRequest request, HttpServletResponse response,
                        @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
-                       @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses,
-                       @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
-                       @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
+                       @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
       throws IOException {
-    MetadataFormat mf = MetadataFormat.getFromAcceptHeader(accept);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
     ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses));
-    articleCrudService.listDois(receiver, mf, articleCriteria);
+    articleCrudService.listDois(articleCriteria).respond(request, response, entityGson);
   }
 
   /*
@@ -131,12 +123,10 @@ public class ArticleCrudController extends ArticleSpaceController {
                    @RequestParam(value = "authors", required = false) String authors)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
     if (booleanParameter(comments)) {
-      annotationCrudService.readComments(receiver, id, mf);
+      annotationCrudService.readComments(id).respond(request, response, entityGson);
     } else if (booleanParameter(authors)) {
-      articleCrudService.readAuthors(receiver, id, mf);
+      articleCrudService.readAuthors(id).respond(request, response, entityGson);
     } else {
       articleCrudService.readMetadata(id).respond(request, response, entityGson);
     }

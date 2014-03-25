@@ -32,11 +32,10 @@ import org.ambraproject.models.Category;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
-import org.ambraproject.rhino.test.DummyResponseReceiver;
+import org.ambraproject.rhino.util.response.MetadataRetriever;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.apache.commons.io.IOUtils;
@@ -226,9 +225,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     a2.seteIssn(a1.geteIssn());
     hibernateTemplate.save(a2);
 
-    DummyResponseReceiver response = new DummyResponseReceiver();
-    articleCrudService.listDois(response, MetadataFormat.JSON, ArticleCriteria.create(null, null));
-    DoiList doiList = entityGson.fromJson(response.read(), DoiList.class);
+    MetadataRetriever response = articleCrudService.listDois(ArticleCriteria.create(null, null));
+    DoiList doiList = entityGson.fromJson(response.readJson(entityGson), DoiList.class);
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }
 
@@ -263,9 +261,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     Article article = articleCrudService.write(input, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
-    DummyResponseReceiver drr = new DummyResponseReceiver();
-    articleCrudService.readAuthors(drr, articleId, MetadataFormat.JSON);
-    String json = drr.read();
+    String json = articleCrudService.readAuthors(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     List<?> authors = gson.fromJson(json, List.class);
