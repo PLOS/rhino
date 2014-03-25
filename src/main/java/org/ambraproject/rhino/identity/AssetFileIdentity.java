@@ -134,8 +134,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    * Get file store identifier for the data associated with the article or asset that this object identifies.
    *
    * @return the FSID (file store identifier)
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *          if the DOI can't be parsed and converted into an FSID
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI can't be parsed and converted into an FSID
    */
   public String getFsid() {
     String fsid = FSIDMapper.doiTofsid(getKey(), getFileExtension());

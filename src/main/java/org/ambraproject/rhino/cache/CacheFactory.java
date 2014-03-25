@@ -19,13 +19,12 @@ import org.ambraproject.service.cache.Cache;
 import org.ambraproject.service.cache.NullCache;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 
 import java.io.IOException;
 
 /**
- * Factory class that produces an appropriate instance of {@link Cache} based on the
- * runtime configuration in /etc/ambra/ambra.xml.
+ * Factory class that produces an appropriate instance of {@link Cache} based on the runtime configuration in
+ * /etc/ambra/ambra.xml.
  */
 public final class CacheFactory {
 
@@ -34,7 +33,8 @@ public final class CacheFactory {
 
   private static final CacheFactory factory = new CacheFactory();
 
-  private CacheFactory() {}
+  private CacheFactory() {
+  }
 
   public static CacheFactory getInstance() {
     return factory;

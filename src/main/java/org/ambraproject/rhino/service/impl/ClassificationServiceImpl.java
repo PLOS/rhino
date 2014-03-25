@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Strings;
 import org.ambraproject.ApplicationException;
 import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.service.ClassificationService;

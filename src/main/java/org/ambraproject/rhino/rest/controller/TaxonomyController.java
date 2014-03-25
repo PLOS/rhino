@@ -45,9 +45,9 @@ public class TaxonomyController extends RestController {
 
   @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
   public void readRoot(HttpServletRequest request, HttpServletResponse response,
-      @RequestParam(value = "journal", required = true) String journal,
-      @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
-      @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept) throws Exception {
+                       @RequestParam(value = "journal", required = true) String journal,
+                       @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
+                       @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept) throws Exception {
     String parent = getFullPathVariable(request, true, TAXONOMY_NAMESPACE);
     if (!Strings.isNullOrEmpty(parent)) {
       parent = URLDecoder.decode(parent, "UTF-8");

@@ -43,8 +43,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @param file       the XML data for the article
    * @param suppliedId the identifier supplied for the article, if any
    * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *                            if the DOI is already used
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
@@ -59,8 +58,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @param filename   path to the local .zip file
    * @param suppliedId the identifier supplied for the article, if any
    * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *                            if the DOI is already used
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    * @throws FileStoreException
    */
@@ -72,8 +70,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param id the identifier of the article
    * @return a stream containing the XML file
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *                            if the DOI does not belong to an article
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    * @throws FileStoreException
    */
   public abstract InputStream readXml(ArticleIdentity id) throws FileStoreException;
@@ -82,8 +79,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
    *
    * @param id the identifier of the article to delete
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *                            if the DOI does not belong to an article
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    * @throws FileStoreException
    */
   public abstract void delete(ArticleIdentity id) throws FileStoreException;
@@ -99,9 +95,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of an article.
    *
-   * @param id       the identifier of the article
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *          if the DOI does not belong to an article
+   * @param id the identifier of the article
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
   public abstract MetadataRetriever readMetadata(DoiBasedIdentity id)
       throws IOException;
@@ -109,9 +104,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of an article.
    *
-   * @param article  the article
-   * @throws org.ambraproject.rhino.rest.RestClientException
-   *          if the DOI does not belong to an article
+   * @param article the article
+   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
   public abstract MetadataRetriever readMetadata(Article article)
       throws IOException;
@@ -120,8 +114,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * Read information about the authors of an article.
    *
    * @param receiver the receiver object to which to send the metadata
-   * @param id specifies the article
-   * @param format the desired metadata format
+   * @param id       specifies the article
+   * @param format   the desired metadata format
    * @throws IOException
    * @throws FileStoreException
    */

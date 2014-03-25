@@ -12,10 +12,9 @@ public interface JournalReadService {
   public abstract void read(ResponseReceiver receiver, String journalKey, MetadataFormat format) throws IOException;
 
   /**
-   * Writes a list of "in the news" articles to the response.  The implementation will be journal-specific,
-   * and some journals may not define this list at all, in which case an exception will be thrown.
-   * Each list element corresponds to an article.  The articles' title and doi properties will be
-   * present, but other article properties may not be.
+   * Writes a list of "in the news" articles to the response.  The implementation will be journal-specific, and some
+   * journals may not define this list at all, in which case an exception will be thrown. Each list element corresponds
+   * to an article.  The articles' title and doi properties will be present, but other article properties may not be.
    *
    * @param receiver
    * @param journalKey

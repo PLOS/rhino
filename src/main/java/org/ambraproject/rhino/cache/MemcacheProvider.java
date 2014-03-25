@@ -22,10 +22,9 @@ import java.io.Serializable;
 /**
  * Implementation of {@link Cache} that uses memcached as its store.
  * <p/>
- * Note that one limitation of this implementation is that values must implement {@link Serializable}.
- * I didn't want to add this constraint to {@link Cache}, since it already has implementations that
- * work with non-Serializable objects.  If non-Serializable objects are added to this cache, the
- * operation will fail at runtime.
+ * Note that one limitation of this implementation is that values must implement {@link Serializable}. I didn't want to
+ * add this constraint to {@link Cache}, since it already has implementations that work with non-Serializable objects.
+ * If non-Serializable objects are added to this cache, the operation will fail at runtime.
  */
 public class MemcacheProvider implements Cache {
 

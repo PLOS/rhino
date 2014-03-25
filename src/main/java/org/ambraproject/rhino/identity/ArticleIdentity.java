@@ -66,9 +66,8 @@ public class ArticleIdentity extends DoiBasedIdentity {
   }
 
   /**
-   * @return the "short form" of the DOI for this article that is often used as an internal
-   *     identifier.  For example, if the full DOI is "10.1371/journal.pone.0077074", this
-   *     method will return "pone.0077074".
+   * @return the "short form" of the DOI for this article that is often used as an internal identifier.  For example, if
+   * the full DOI is "10.1371/journal.pone.0077074", this method will return "pone.0077074".
    */
   public String getArticleCode() {
     String identifier = getIdentifier();

@@ -20,8 +20,7 @@ import org.ambraproject.rhino.util.response.ResponseReceiver;
 import java.io.IOException;
 
 /**
- * Service class that deals with the hierarchy of taxonomic terms as they relate to the
- * articles in a given journal.
+ * Service class that deals with the hierarchy of taxonomic terms as they relate to the articles in a given journal.
  */
 // I really wanted to call this TaxonomyService.  Unfortunately, the implementation delegates
 // to org.ambraproject.service.taxonomy.TaxonomyService right now, and I thought it would just
@@ -29,14 +28,14 @@ import java.io.IOException;
 public interface ClassificationService {
 
   /**
-   * Forwards the child terms of a given taxonomic subject area to the receiver, along with
-   * the counts of children for each child.
+   * Forwards the child terms of a given taxonomic subject area to the receiver, along with the counts of children for
+   * each child.
    *
-   * @param journal journal key specifying the journal
-   * @param parent the parent subject category that we will return children for.  If null or
-   *     empty, the root of the hierarchy will be used.
+   * @param journal  journal key specifying the journal
+   * @param parent   the parent subject category that we will return children for.  If null or empty, the root of the
+   *                 hierarchy will be used.
    * @param receiver JSON receiver
-   * @param format specifies the format of the response.  Currently only JSON is supported.
+   * @param format   specifies the format of the response.  Currently only JSON is supported.
    * @throws IOException
    * @throws ApplicationException
    */
