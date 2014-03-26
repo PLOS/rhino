@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2012 by Public Library of Science
+ * Copyright (c) 2006-2014 by Public Library of Science
  * http://plos.org
  * http://ambraproject.org
  *
@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
@@ -59,9 +60,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.sql.DataSource;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Properties;
@@ -110,9 +116,11 @@ public class RhinoConfiguration extends BaseConfiguration {
    * Gson instance for serializing Ambra entities into human-friendly JSON.
    */
   @Bean
-  public Gson entityGson() {
+  public Gson entityGson(RuntimeConfiguration runtimeConfiguration) {
     GsonBuilder builder = JsonAdapterUtil.makeGsonBuilder();
-    builder.setPrettyPrinting();
+    if (runtimeConfiguration.prettyPrintJson()) {
+      builder.setPrettyPrinting();
+    }
 
     // Bulk-apply special cases defined in org.ambraproject.rhino.config.json
     builder.setExclusionStrategies(ExclusionSpecialCase.values());
@@ -212,5 +220,31 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public XpathReader xpathReader() {
     return new XpathReader();
+  }
+
+  @Bean
+  public Yaml yaml() {
+    return new Yaml();
+  }
+
+  @Bean
+  public RuntimeConfiguration runtimeConfiguration(Yaml yaml) throws Exception {
+    final File configPath = new File("/etc/ambra/rhino.yaml");
+    if (!configPath.exists()) {
+      throw new RuntimeConfigurationException(configPath.getAbsolutePath() + " not found");
+    }
+
+    YamlConfiguration runtimeConfiguration;
+    Reader reader = null;
+    boolean threw = true;
+    try {
+      reader = new BufferedReader(new FileReader(configPath));
+      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(reader, YamlConfiguration.UserFields.class));
+      threw = false;
+    } finally {
+      Closeables.close(reader, threw);
+    }
+
+    return runtimeConfiguration;
   }
 }

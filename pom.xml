@@ -132,6 +132,12 @@
       <version>${rhombat.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.13</version>
+    </dependency>
+
     <!-- ========================= Begin Ambra inclusions ========================= -->
 
     <dependency>
