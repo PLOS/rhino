@@ -54,7 +54,9 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
@@ -298,28 +300,39 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * @return a collection of all {@code ArticleAsset} objects whose DOI matches the ID
    * @throws RestClientException if no asset files exist with that ID
    */
-  private Collection<ArticleAsset> findArticleAssets(AssetIdentity id) {
-    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (assets.isEmpty()) {
-      throw reportNotFound(id);
+  private abstract class ArticleAssetsRetriever extends EntityCollectionMetadataRetriever<ArticleAsset> {
+    private final AssetIdentity id;
+
+    protected ArticleAssetsRetriever(AssetIdentity id) {
+      this.id = Preconditions.checkNotNull(id);
     }
-    return assets;
+
+    @Override
+    protected final Calendar getLastModifiedDate() throws IOException {
+      Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+          "select max(lastModified) from ArticleAsset where doi = ?", id.getKey()));
+      return (lastModified == null) ? null : copyToCalendar(lastModified);
+    }
+
+    @Override
+    protected final Collection<? extends ArticleAsset> fetchEntities() {
+      @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+          hibernateTemplate.findByCriteria(DetachedCriteria
+              .forClass(ArticleAsset.class)
+              .add(Restrictions.eq("doi", id.getKey()))
+              .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+          ));
+      if (assets.isEmpty()) {
+        throw reportNotFound(id);
+      }
+      return assets;
+    }
   }
 
   @Override
   public MetadataRetriever readMetadata(final AssetIdentity id)
       throws IOException {
-    return new EntityCollectionMetadataRetriever<ArticleAsset>() {
-      @Override
-      protected Collection<? extends ArticleAsset> fetchEntities() {
-        return findArticleAssets(id);
-      }
-
+    return new ArticleAssetsRetriever(id) {
       @Override
       protected Object getView(Collection<? extends ArticleAsset> assets) {
         return new RawAssetFileCollectionView(assets);
@@ -330,12 +343,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public MetadataRetriever readFigureMetadata(final AssetIdentity id)
       throws IOException {
-    return new EntityCollectionMetadataRetriever<ArticleAsset>() {
-      @Override
-      protected Collection<? extends ArticleAsset> fetchEntities() {
-        return findArticleAssets(id);
-      }
-
+    return new ArticleAssetsRetriever(id) {
       @Override
       protected Object getView(Collection<? extends ArticleAsset> assets) {
         GroomedImageView figureView;

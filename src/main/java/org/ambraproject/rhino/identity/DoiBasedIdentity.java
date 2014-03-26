@@ -34,7 +34,7 @@ import java.util.List;
 public class DoiBasedIdentity {
 
   protected static final String DOI_SCHEME_VALUE = "info:doi/";
-  protected static final String XML_EXTENSION = "xml";
+  protected static final String XML_EXTENSION = "XML";
 
   private final String identifier; // non-null, non-empty, doesn't contain ':'
 
