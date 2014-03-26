@@ -77,6 +77,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -752,6 +753,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public MetadataRetriever readMetadata(final DoiBasedIdentity id) throws IOException {
     return new EntityMetadataRetriever<Article>() {
       @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+            "select lastModified from Article where doi = ?", id.getKey()));
+        if (lastModified == null) {
+          return null;
+        }
+        return copyToCalendar(lastModified);
+      }
+
+      @Override
       protected Article fetchEntity() {
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
@@ -805,7 +816,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new MetadataRetriever() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        return null; // Unsupported for now
+        AssetFileIdentity xmlAssetIdentity = id.forXmlAsset();
+        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+            "select lastModified from ArticleAsset where doi = ? and extension = ?",
+            xmlAssetIdentity.getKey(), xmlAssetIdentity.getFileExtension()));
+        if (lastModified == null) {
+          throw reportNotFound(id);
+        }
+        return copyToCalendar(lastModified);
       }
 
       @Override
