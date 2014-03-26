@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,12 +50,13 @@ public class ArticleStateController extends ArticleSpaceController {
    * @param response HttpServletResponse
    * @throws IOException
    */
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH)
   public void write(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
     ArticleIdentity id = parse(request);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);
-    articleCrudService.readMetadata(id).respond(request, response, entityGson);
+    articleCrudService.readMetadata(id, false).respond(request, response, entityGson);
   }
 }

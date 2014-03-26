@@ -35,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,6 +90,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
    * @throws IOException
    * @throws FileStoreException
    */
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
   public void upload(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(value = DOI_PARAM) String assetDoi,
@@ -105,6 +107,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     assetCrudService.readMetadata(fileIdentity.forAsset()).respond(request, response, entityGson);
   }
 
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
   public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException, FileStoreException {
     AssetFileIdentity id = parse(request);
@@ -119,6 +122,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
@@ -198,6 +202,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     }
   }
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = {METADATA_PARAM})
   public void readMetadata(HttpServletRequest request, HttpServletResponse response)
       throws IOException {

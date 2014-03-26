@@ -26,6 +26,7 @@ import org.ambraproject.models.CitedArticlePerson;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -227,7 +228,7 @@ public class IngestionTest extends BaseRhinoTest {
             .add(Restrictions.eq("eIssn", eissn))
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)));
     if (journal == null) {
-      journal = createDummyJournal(eissn);
+      journal = RhinoTestHelper.createDummyJournal(eissn);
       hibernateTemplate.save(journal);
     }
   }
@@ -237,7 +238,7 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    Article actual = articleCrudService.write(new TestFile(xmlFile).read(),
+    Article actual = articleCrudService.write(new RhinoTestHelper.TestFile(xmlFile).read(),
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
@@ -264,7 +265,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void testReadMetadata(Article article) throws IOException {
     // Mostly we want to test that this method call doesn't crash or hang
-    MetadataRetriever response = articleCrudService.readMetadata(article);
+    MetadataRetriever response = articleCrudService.readMetadata(article, true);
 
     assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }
@@ -379,7 +380,13 @@ public class IngestionTest extends BaseRhinoTest {
     } else {
       compareAssetsWithoutExpectedFiles(results, actual.getAssets(), expected.getAssets());
     }
-    compareCitationLists(results, actual.getCitedArticles(), expected.getCitedArticles());
+
+    // Since citedArticles are lazily loaded, and this test doesn't currently execute transactionally,
+    // we have to reload the actual citations separately.
+    // TODO: fix this.
+    List<CitedArticle> actualCitations = hibernateTemplate.find("FROM CitedArticle WHERE articleID = ?",
+        actual.getID());
+    compareCitationLists(results, actualCitations, expected.getCitedArticles());
     assertSyndications(results, actual);
     return results;
   }

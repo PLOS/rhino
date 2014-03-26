@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +64,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Autowired
   private AnnotationCrudService annotationCrudService;
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
                        @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
@@ -88,6 +90,7 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    * @throws FileStoreException
    */
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
@@ -99,7 +102,7 @@ public class ArticleCrudController extends ArticleSpaceController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result).respond(request, response, entityGson);
+    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
   }
 
   /**
@@ -117,10 +120,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws FileStoreException
    * @throws IOException
    */
+  @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = "comments", required = false) String comments,
-                   @RequestParam(value = "authors", required = false) String authors)
+                   @RequestParam(value = "authors", required = false) String authors,
+                   @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
     if (booleanParameter(comments)) {
@@ -128,10 +133,11 @@ public class ArticleCrudController extends ArticleSpaceController {
     } else if (booleanParameter(authors)) {
       articleCrudService.readAuthors(id).respond(request, response, entityGson);
     } else {
-      articleCrudService.readMetadata(id).respond(request, response, entityGson);
+      articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
     }
   }
 
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
   public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
     ArticleIdentity id = parse(request);

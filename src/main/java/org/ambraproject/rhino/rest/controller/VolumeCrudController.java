@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -54,7 +55,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
   @Autowired
   private IssueCrudService issueCrudService;
 
-
+  @Transactional(readOnly = true)
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -62,6 +63,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
     volumeCrudService.read(id).respond(request, response, entityGson);
   }
 
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.PATCH)
   public void update(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -72,6 +74,7 @@ public class VolumeCrudController extends DoiBasedCrudController {
     volumeCrudService.read(volumeId).respond(request, response, entityGson);
   }
 
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = VOLUME_TEMPLATE, method = RequestMethod.POST)
   public ResponseEntity<String> createIssue(HttpServletRequest request) throws IOException {
     DoiBasedIdentity volumeId = parse(request);

@@ -93,20 +93,22 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of an article.
    *
-   * @param id the identifier of the article
+   * @param id               the identifier of the article
+   * @param excludeCitations if true, no citation information will be included in the response (useful for performance
+   *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract MetadataRetriever readMetadata(DoiBasedIdentity id)
-      throws IOException;
+  public abstract MetadataRetriever readMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
 
   /**
    * Read the metadata of an article.
    *
-   * @param article the article
+   * @param article          the article
+   * @param excludeCitations if true, no citation information will be included in the response (useful for performance
+   *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract MetadataRetriever readMetadata(Article article)
-      throws IOException;
+  public abstract MetadataRetriever readMetadata(Article article, boolean excludeCitations) throws IOException;
 
   /**
    * Read information about the authors of an article.

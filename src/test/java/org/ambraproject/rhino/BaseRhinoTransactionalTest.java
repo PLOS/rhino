@@ -1,15 +1,10 @@
 /*
- * Copyright (c) 2006-2012 by Public Library of Science
- * http://plos.org
- * http://ambraproject.org
- *
+ * $HeadURL$
+ * $Id$
+ * Copyright (c) 2006-2014 by Public Library of Science http://plos.org http://ambraproject.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -24,14 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
+/**
+ * Base class for a test where each test method is run in its own Spring/Hibernate transaction.
+ *
+ * TODO: make BaseRhinoTest transactional, and remove this.  IngestionTest currently breaks when this is done.
+ */
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
-
-// TODO: try to get the tests to work transactionally--I was having much pain with this.
-public abstract class BaseRhinoTest extends /* AbstractTransactionalTestNGSpringContextTests */ AbstractTestNGSpringContextTests {
+public class BaseRhinoTransactionalTest extends AbstractTransactionalTestNGSpringContextTests {
 
   @Autowired
   protected HibernateTemplate hibernateTemplate;

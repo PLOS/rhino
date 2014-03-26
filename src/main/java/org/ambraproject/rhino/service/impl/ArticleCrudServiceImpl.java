@@ -119,6 +119,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
+            .setFetchMode("articleType", FetchMode.JOIN)
+            .setFetchMode("citedArticles", FetchMode.JOIN)
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
@@ -211,7 +213,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     String doi = article.getDoi();
 
     createReciprocalRelationships(article);
-
     try {
 
       // This method needs the article to have already been persisted to the DB.
@@ -750,7 +751,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public MetadataRetriever readMetadata(final DoiBasedIdentity id) throws IOException {
+  public MetadataRetriever readMetadata(final DoiBasedIdentity id, final boolean excludeCitations) throws IOException {
     return new EntityMetadataRetriever<Article>() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
@@ -783,13 +784,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(Article entity) {
-        return createArticleView(entity);
+        return createArticleView(entity, excludeCitations);
       }
     };
   }
 
   @Override
-  public MetadataRetriever readMetadata(final Article article) throws IOException {
+  public MetadataRetriever readMetadata(final Article article, final boolean excludeCitations) throws IOException {
     return new EntityMetadataRetriever<Article>() {
       @Override
       protected Article fetchEntity() {
@@ -798,13 +799,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(Article entity) {
-        return createArticleView(entity);
+        return createArticleView(entity, excludeCitations);
       }
     };
   }
 
-  private ArticleOutputView createArticleView(Article article) {
-    return ArticleOutputView.create(article, syndicationService, pingbackReadService);
+  private ArticleOutputView createArticleView(Article article, boolean excludeCitations) {
+    return ArticleOutputView.create(article, excludeCitations, syndicationService, pingbackReadService);
   }
 
   /**

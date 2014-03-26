@@ -9,6 +9,8 @@ import com.google.common.collect.Lists;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
+import static org.testng.Assert.assertEquals;
+
 /**
  * An object that does multiple "soft" assertions for equality. That is, it does all the assertions and then reports
  * which ones failed, rather than halting on the first failed assertion.
@@ -20,11 +22,23 @@ public class AssertionCollector {
 
   private final Collection<Success> successes;
   private final Collection<Failure> failures;
+  private final boolean failFast;
 
-  public AssertionCollector() {
+  /**
+   * Constructor.
+   *
+   * @param failFast if true, the test will throw an assertion error upon the first failed assertion.  If false,
+   *                 all failures will be collected and reported at the end of the test.
+   */
+  public AssertionCollector(boolean failFast) {
     super();
+    this.failFast = failFast;
     successes = Lists.newArrayList();
     failures = Lists.newArrayList();
+  }
+
+  public AssertionCollector() {
+    this(false);
   }
 
   public int getSuccessCount() {
@@ -72,7 +86,12 @@ public class AssertionCollector {
       successes.add(new Success(objectName, fieldName, expected));
       return true;
     }
-    failures.add(new Failure(objectName, fieldName, actual, expected));
+    Failure failure = new Failure(objectName, fieldName, actual, expected);
+    if (failFast) {
+      assertEquals(actual, expected, failure.toString());
+    } else {
+      failures.add(failure);
+    }
     return false;
   }
 

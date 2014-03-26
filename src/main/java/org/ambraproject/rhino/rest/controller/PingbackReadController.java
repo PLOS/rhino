@@ -24,6 +24,7 @@ import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -40,13 +41,14 @@ public class PingbackReadController extends ArticleSpaceController {
   @Autowired
   private PingbackReadService pingbackReadService;
 
-
+  @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {PINGBACK_PARAM})
   public void listPingbacks(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     pingbackReadService.listByArticle(PingbackReadService.OrderBy.COUNT).respond(request, response, entityGson);
   }
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {PINGBACK_PARAM})
   public void readPingbacks(HttpServletRequest request, HttpServletResponse response)
       throws FileStoreException, IOException {

@@ -25,6 +25,7 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -51,6 +52,7 @@ public class AssetController extends DoiBasedCrudController {
   @Autowired
   private AssetCrudService assetCrudService;
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -58,6 +60,7 @@ public class AssetController extends DoiBasedCrudController {
     assetCrudService.readMetadata(id).respond(request, response, entityGson);
   }
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"figure"}, method = RequestMethod.GET)
   public void readAsFigure(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -65,6 +68,7 @@ public class AssetController extends DoiBasedCrudController {
     assetCrudService.readFigureMetadata(id).respond(request, response, entityGson);
   }
 
+  @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_META_TEMPLATE, params = {"articleFor"}, method = RequestMethod.GET)
   public ResponseEntity<String> articleFor(HttpServletRequest request)
       throws IOException {

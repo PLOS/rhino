@@ -29,7 +29,8 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
-import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.BaseRhinoTransactionalTest;
+import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -62,7 +63,7 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
-public class ArticleCrudServiceTest extends BaseRhinoTest {
+public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -114,12 +115,12 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     final ArticleIdentity articleId = ArticleIdentity.create(doi);
     final String key = articleId.getKey();
 
-    final TestFile sampleFile = new TestFile(fileLocation);
-    final byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
+    final RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(fileLocation);
+    final byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
 
     assertArticleExistence(articleId, false);
 
-    TestInputStream input = TestInputStream.of(sampleData);
+    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
@@ -161,7 +162,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     assertEquals(readData, sampleData);
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
-    input = TestInputStream.of(updated);
+    input = RhinoTestHelper.TestInputStream.of(updated);
     article = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
@@ -181,11 +182,11 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
     String extension = assetFilePath.substring(assetFilePath.lastIndexOf('.') + 1);
     final AssetFileIdentity assetId = AssetFileIdentity.create(testAssetDoi, extension);
     final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
-    TestInputStream input = new TestFile(articleFile).read();
-    input = alterStream(input, articleDoi, articleDoi);
+    RhinoTestHelper.TestInputStream input = new RhinoTestHelper.TestFile(articleFile).read();
+    input = RhinoTestHelper.alterStream(input, articleDoi, articleDoi);
     Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
 
-    TestInputStream assetFileStream = new TestFile(assetFile).read();
+    RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId);
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
@@ -232,16 +233,17 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
   @Test
   public void testArticleType() throws Exception {
-    String doiStub = SAMPLE_ARTICLES.get(0);
-    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
-    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doiStub = RhinoTestHelper.SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
+    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
+        "src/test/resources/articles/" + doiStub + ".xml"));
     String doi = articleId.getIdentifier();
-    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
-    TestInputStream input = TestInputStream.of(sampleData);
+    byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
+    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Article article = articleCrudService.write(input, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
-    String json = articleCrudService.readMetadata(articleId).readJson(entityGson);
+    String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<?, ?> articleMap = gson.fromJson(json, Map.class);
@@ -252,12 +254,13 @@ public class ArticleCrudServiceTest extends BaseRhinoTest {
 
   @Test
   public void testArticleAuthors() throws Exception {
-    String doiStub = SAMPLE_ARTICLES.get(0);
-    ArticleIdentity articleId = ArticleIdentity.create(prefixed(doiStub));
-    TestFile sampleFile = new TestFile(new File("src/test/resources/articles/" + doiStub + ".xml"));
+    String doiStub = RhinoTestHelper.SAMPLE_ARTICLES.get(0);
+    ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
+    RhinoTestHelper.TestFile sampleFile = new RhinoTestHelper.TestFile(new File(
+        "src/test/resources/articles/" + doiStub + ".xml"));
     String doi = articleId.getIdentifier();
-    byte[] sampleData = IOUtils.toByteArray(alterStream(sampleFile.read(), doi, doi));
-    TestInputStream input = TestInputStream.of(sampleData);
+    byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
+    RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Article article = articleCrudService.write(input, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
