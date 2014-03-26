@@ -13,6 +13,7 @@ import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,7 @@ public class IngestibleZipController extends RestController {
    * @throws java.io.IOException
    * @throws org.ambraproject.filestore.FileStoreException
    */
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
   public void zipUpload(HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
@@ -63,7 +65,7 @@ public class IngestibleZipController extends RestController {
 
     // Report the written data, as JSON, in the response.
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
+    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON, false);
   }
 
 }

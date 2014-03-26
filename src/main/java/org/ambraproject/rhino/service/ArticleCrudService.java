@@ -97,10 +97,12 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @param receiver the receiver object to which to send the metadata
    * @param id       the identifier of the article
    * @param format   the desired metadata format
+   * @param excludeCitations if true, no citation information will be included in the response (useful
+   *                         for performance reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format)
-      throws IOException;
+  public abstract void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format,
+                                    boolean excludeCitations) throws IOException;
 
   /**
    * Read the metadata of an article.
@@ -108,10 +110,12 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @param receiver the receiver object to which to send the metadata
    * @param article  the article
    * @param format   the desired metadata format
+   * @param excludeCitations if true, no citation information will be included in the response (useful
+   *                         for performance reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format)
-      throws IOException;
+  public abstract void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format,
+                                    boolean excludeCitations) throws IOException;
 
   /**
    * Read information about the authors of an article.
