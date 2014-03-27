@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @param <E> the persistent entity type
  */
-public abstract class EntityCollectionMetadataRetriever<E extends AmbraEntity> extends MetadataRetriever {
+public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends Transceiver {
 
   private Collection<? extends E> entities = null;
 

@@ -13,7 +13,7 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 
@@ -34,5 +34,5 @@ public interface ClassificationService {
    *                hierarchy will be used.
    * @throws IOException
    */
-  MetadataRetriever read(String journal, String parent) throws IOException;
+  Transceiver read(String journal, String parent) throws IOException;
 }

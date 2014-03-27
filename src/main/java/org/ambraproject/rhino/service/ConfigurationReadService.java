@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service;
 
 
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -13,7 +13,7 @@ public interface ConfigurationReadService {
    *
    * @throws IOException
    */
-  public abstract MetadataRetriever read() throws IOException;
+  public abstract Transceiver read() throws IOException;
 
   /**
    * Returns a {@link Properties} instance with information about how the application was built.
@@ -27,6 +27,6 @@ public interface ConfigurationReadService {
   /**
    * Respond with a JSON object containing all values from {@link #getBuildProperties()}.
    */
-  public MetadataRetriever readBuildProperties() throws IOException;
+  public Transceiver readBuildProperties() throws IOException;
 
 }

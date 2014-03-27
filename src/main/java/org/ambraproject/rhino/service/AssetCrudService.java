@@ -23,7 +23,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,7 +76,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    *
    * @param id the identity of the asset to read
    */
-  public abstract MetadataRetriever readMetadata(AssetIdentity id)
+  public abstract Transceiver readMetadata(AssetIdentity id)
       throws IOException;
 
   /**
@@ -85,7 +85,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    *
    * @param id the identity of the asset to read
    */
-  public abstract MetadataRetriever readFigureMetadata(AssetIdentity id)
+  public abstract Transceiver readFigureMetadata(AssetIdentity id)
       throws IOException;
 
   /**
@@ -93,7 +93,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    *
    * @param id the identity of the asset file to read
    */
-  public MetadataRetriever readFileMetadata(AssetFileIdentity id)
+  public Transceiver readFileMetadata(AssetFileIdentity id)
       throws IOException;
 
   /**

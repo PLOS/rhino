@@ -1,14 +1,14 @@
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 
 public interface JournalReadService {
 
-  public abstract MetadataRetriever listJournals() throws IOException;
+  public abstract Transceiver listJournals() throws IOException;
 
-  public abstract MetadataRetriever read(String journalKey) throws IOException;
+  public abstract Transceiver read(String journalKey) throws IOException;
 
   /**
    * Writes a list of "in the news" articles to the response.  The implementation will be journal-specific, and some
@@ -18,6 +18,6 @@ public interface JournalReadService {
    * @param journalKey
    * @throws IOException
    */
-  public abstract MetadataRetriever readInTheNewsArticles(String journalKey)
+  public abstract Transceiver readInTheNewsArticles(String journalKey)
       throws IOException;
 }

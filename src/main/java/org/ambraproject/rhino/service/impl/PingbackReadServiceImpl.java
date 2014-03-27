@@ -25,8 +25,8 @@ import org.ambraproject.models.Pingback;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.util.response.EntityCollectionMetadataRetriever;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticlePingbackView;
 import org.ambraproject.rhino.view.article.ArticleViewList;
 import org.hibernate.criterion.DetachedCriteria;
@@ -57,8 +57,8 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
   };
 
   @Override
-  public MetadataRetriever listByArticle(OrderBy orderBy) throws IOException {
-    return new MetadataRetriever() {
+  public Transceiver listByArticle(OrderBy orderBy) throws IOException {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null; // Unsupported for now
@@ -88,8 +88,8 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
   }
 
   @Override
-  public MetadataRetriever read(final ArticleIdentity article) throws IOException {
-    return new EntityCollectionMetadataRetriever<Pingback>() {
+  public Transceiver read(final ArticleIdentity article) throws IOException {
+    return new EntityCollectionTransceiver<Pingback>() {
       @Override
       protected Collection<? extends Pingback> fetchEntities() {
         return loadPingbacks(article);

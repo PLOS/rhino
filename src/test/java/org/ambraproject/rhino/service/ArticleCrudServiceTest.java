@@ -36,7 +36,7 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.apache.commons.io.IOUtils;
@@ -226,7 +226,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     a2.seteIssn(a1.geteIssn());
     hibernateTemplate.save(a2);
 
-    MetadataRetriever response = articleCrudService.listDois(ArticleCriteria.create(null, null));
+    Transceiver response = articleCrudService.listDois(ArticleCriteria.create(null, null));
     DoiList doiList = entityGson.fromJson(response.readJson(entityGson), DoiList.class);
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }

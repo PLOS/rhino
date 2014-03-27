@@ -5,9 +5,9 @@ import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalReadService;
-import org.ambraproject.rhino.util.response.EntityCollectionMetadataRetriever;
-import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.JsonWrapper;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -31,8 +31,8 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   private HibernateTemplate hibernateTemplate;
 
   @Override
-  public MetadataRetriever listJournals() throws IOException {
-    return new EntityCollectionMetadataRetriever<Journal>() {
+  public Transceiver listJournals() throws IOException {
+    return new EntityCollectionTransceiver<Journal>() {
       @Override
       protected Collection<? extends Journal> fetchEntities() {
         return hibernateTemplate.findByCriteria(journalCriteria());
@@ -46,8 +46,8 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   }
 
   @Override
-  public MetadataRetriever read(final String journalKey) throws IOException {
-    return new EntityMetadataRetriever<Journal>() {
+  public Transceiver read(final String journalKey) throws IOException {
+    return new EntityTransceiver<Journal>() {
       @Override
       protected Journal fetchEntity() {
         return loadJournal(journalKey);
@@ -64,9 +64,9 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
    * {@inheritDoc}
    */
   @Override
-  public MetadataRetriever readInTheNewsArticles(final String journalKey)
+  public Transceiver readInTheNewsArticles(final String journalKey)
       throws IOException {
-    return new MetadataRetriever() {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null; // Unsupported on this operation for now

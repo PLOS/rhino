@@ -34,7 +34,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.StringReplacer;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -265,7 +265,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   private void testReadMetadata(Article article) throws IOException {
     // Mostly we want to test that this method call doesn't crash or hang
-    MetadataRetriever response = articleCrudService.readMetadata(article, true);
+    Transceiver response = articleCrudService.readMetadata(article, true);
 
     assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }

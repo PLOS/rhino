@@ -20,7 +20,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.views.AnnotationView;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -43,7 +43,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   /**
    * {@inheritDoc}
    */
-  public MetadataRetriever readComments(ArticleIdentity id)
+  public Transceiver readComments(ArticleIdentity id)
       throws IOException {
     return readAnnotations(id);
   }
@@ -65,9 +65,9 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    * @param id identifies the article
    * @throws IOException
    */
-  private MetadataRetriever readAnnotations(final ArticleIdentity id)
+  private Transceiver readAnnotations(final ArticleIdentity id)
       throws IOException {
-    return new MetadataRetriever() {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         // Requires searching of nested replies. Unsupported for now.
@@ -131,14 +131,14 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
   }
 
   @Override
-  public MetadataRetriever readComment(DoiBasedIdentity commentId)
+  public Transceiver readComment(DoiBasedIdentity commentId)
       throws IOException {
     return readAnnotation(commentId);
   }
 
-  private MetadataRetriever readAnnotation(final DoiBasedIdentity annotationId)
+  private Transceiver readAnnotation(final DoiBasedIdentity annotationId)
       throws IOException {
-    return new MetadataRetriever() {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         // Requires searching of nested replies. Unsupported for now.

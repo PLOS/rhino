@@ -14,7 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public interface IngestibleService {
    *
    * @throws IOException
    */
-  MetadataRetriever read() throws IOException;
+  Transceiver read() throws IOException;
 
   /**
    * Returns the zip archive in the ingest directory corresponding to the given article.

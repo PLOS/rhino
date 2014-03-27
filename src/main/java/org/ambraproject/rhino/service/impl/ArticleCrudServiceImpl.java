@@ -47,8 +47,8 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
-import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
@@ -752,8 +752,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public MetadataRetriever readMetadata(final DoiBasedIdentity id, final boolean excludeCitations) throws IOException {
-    return new EntityMetadataRetriever<Article>() {
+  public Transceiver readMetadata(final DoiBasedIdentity id, final boolean excludeCitations) throws IOException {
+    return new EntityTransceiver<Article>() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
@@ -791,8 +791,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public MetadataRetriever readMetadata(final Article article, final boolean excludeCitations) throws IOException {
-    return new EntityMetadataRetriever<Article>() {
+  public Transceiver readMetadata(final Article article, final boolean excludeCitations) throws IOException {
+    return new EntityTransceiver<Article>() {
       @Override
       protected Article fetchEntity() {
         return article;
@@ -813,9 +813,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public MetadataRetriever readAuthors(final ArticleIdentity id)
+  public Transceiver readAuthors(final ArticleIdentity id)
       throws IOException, FileStoreException {
-    return new MetadataRetriever() {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         AssetFileIdentity xmlAssetIdentity = id.forXmlAsset();
@@ -864,9 +864,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public MetadataRetriever listDois(final ArticleCriteria articleCriteria)
+  public Transceiver listDois(final ArticleCriteria articleCriteria)
       throws IOException {
-    return new MetadataRetriever() {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null;

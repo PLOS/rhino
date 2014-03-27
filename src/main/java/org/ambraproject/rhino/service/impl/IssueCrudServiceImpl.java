@@ -26,8 +26,8 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Criteria;
@@ -45,8 +45,8 @@ import java.util.List;
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
   @Override
-  public MetadataRetriever read(final DoiBasedIdentity id) throws IOException {
-    return new EntityMetadataRetriever<Issue>() {
+  public Transceiver read(final DoiBasedIdentity id) throws IOException {
+    return new EntityTransceiver<Issue>() {
       @Override
       protected Issue fetchEntity() {
         Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)

@@ -26,7 +26,7 @@ import java.util.TimeZone;
  * is one object for reading the metadata for one article). Identifying information for that entity should be passed in
  * to the subclass's constructor or, more likely, viewed closure-style from inside an anonymous subclass.
  */
-public abstract class MetadataRetriever {
+public abstract class Transceiver {
 
   /**
    * Get an object representing a piece of metadata.

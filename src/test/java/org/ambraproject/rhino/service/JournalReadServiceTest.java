@@ -16,7 +16,7 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.rhino.BaseRhinoTest;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
@@ -68,7 +68,7 @@ public class JournalReadServiceTest extends BaseRhinoTest {
     articleList.setListCode("testjournal19326203_news");
     hibernateTemplate.save(articleList);
 
-    MetadataRetriever resp = journalReadService.readInTheNewsArticles("TestJournal19326203");
+    Transceiver resp = journalReadService.readInTheNewsArticles("TestJournal19326203");
     List actual = entityGson.fromJson(resp.readJson(entityGson), List.class);
     assertEquals(actual.size(), expected.size());
     for (int i = 0; i < actual.size(); i++) {

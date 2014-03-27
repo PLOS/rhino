@@ -25,8 +25,8 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.hibernate.Criteria;
@@ -116,8 +116,8 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   @Override
-  public MetadataRetriever read(final DoiBasedIdentity id) throws IOException {
-    return new EntityMetadataRetriever<Volume>() {
+  public Transceiver read(final DoiBasedIdentity id) throws IOException {
+    return new EntityTransceiver<Volume>() {
       @Override
       protected Volume fetchEntity() {
         Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)

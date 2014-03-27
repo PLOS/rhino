@@ -3,7 +3,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +20,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   private Configuration ambraConfiguration;
 
   @Override
-  public MetadataRetriever read() throws IOException {
-    return new MetadataRetriever() {
+  public Transceiver read() throws IOException {
+    return new Transceiver() {
       @Override
       protected Object getMetadata() throws IOException {
         return convertToMap(ambraConfiguration);
@@ -35,8 +35,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   }
 
   @Override
-  public MetadataRetriever readBuildProperties() throws IOException {
-    return new MetadataRetriever() {
+  public Transceiver readBuildProperties() throws IOException {
+    return new Transceiver() {
       @Override
       protected Object getMetadata() throws IOException {
         return getBuildProperties();

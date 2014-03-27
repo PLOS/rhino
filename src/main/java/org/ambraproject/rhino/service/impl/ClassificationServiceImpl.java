@@ -15,7 +15,7 @@ package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.ApplicationException;
 import org.ambraproject.rhino.service.ClassificationService;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.service.taxonomy.TaxonomyService;
 import org.ambraproject.util.CategoryUtils;
 import org.ambraproject.views.CategoryView;
@@ -66,8 +66,8 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
    * {@inheritDoc}
    */
   @Override
-  public MetadataRetriever read(final String journal, final String parentArg) throws IOException {
-    return new MetadataRetriever() {
+  public Transceiver read(final String journal, final String parentArg) throws IOException {
+    return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
         return null; // Unsupported for now

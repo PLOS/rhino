@@ -23,7 +23,7 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 
 import java.io.IOException;
@@ -98,7 +98,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract MetadataRetriever readMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
+  public abstract Transceiver readMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
 
   /**
    * Read the metadata of an article.
@@ -108,7 +108,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract MetadataRetriever readMetadata(Article article, boolean excludeCitations) throws IOException;
+  public abstract Transceiver readMetadata(Article article, boolean excludeCitations) throws IOException;
 
   /**
    * Read information about the authors of an article.
@@ -117,7 +117,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws IOException
    * @throws FileStoreException
    */
-  public abstract MetadataRetriever readAuthors(ArticleIdentity id)
+  public abstract Transceiver readAuthors(ArticleIdentity id)
       throws IOException, FileStoreException;
 
   public abstract void setAssetService(AssetCrudService assetService);
@@ -127,7 +127,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    *
    * @param articleCriteria description of the subset of articles to list
    */
-  public abstract MetadataRetriever listDois(ArticleCriteria articleCriteria)
+  public abstract Transceiver listDois(ArticleCriteria articleCriteria)
       throws IOException;
 
 }

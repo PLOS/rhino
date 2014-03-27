@@ -15,7 +15,7 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 
@@ -32,7 +32,7 @@ public interface AnnotationCrudService {
    * @param articleIdentity identifies the article
    * @throws IOException
    */
-  public MetadataRetriever readComments(ArticleIdentity articleIdentity)
+  public Transceiver readComments(ArticleIdentity articleIdentity)
       throws IOException;
 
   /**
@@ -41,7 +41,7 @@ public interface AnnotationCrudService {
    * @param commentId identifies the comment
    * @throws IOException
    */
-  public MetadataRetriever readComment(DoiBasedIdentity commentId)
+  public Transceiver readComment(DoiBasedIdentity commentId)
       throws IOException;
 
 }

@@ -30,9 +30,9 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
-import org.ambraproject.rhino.util.response.EntityCollectionMetadataRetriever;
-import org.ambraproject.rhino.util.response.EntityMetadataRetriever;
-import org.ambraproject.rhino.util.response.MetadataRetriever;
+import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
@@ -302,7 +302,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * @return a collection of all {@code ArticleAsset} objects whose DOI matches the ID
    * @throws RestClientException if no asset files exist with that ID
    */
-  private abstract class ArticleAssetsRetriever extends EntityCollectionMetadataRetriever<ArticleAsset> {
+  private abstract class ArticleAssetsRetriever extends EntityCollectionTransceiver<ArticleAsset> {
     private final AssetIdentity id;
 
     protected ArticleAssetsRetriever(AssetIdentity id) {
@@ -332,7 +332,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public MetadataRetriever readMetadata(final AssetIdentity id)
+  public Transceiver readMetadata(final AssetIdentity id)
       throws IOException {
     return new ArticleAssetsRetriever(id) {
       @Override
@@ -343,7 +343,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public MetadataRetriever readFigureMetadata(final AssetIdentity id)
+  public Transceiver readFigureMetadata(final AssetIdentity id)
       throws IOException {
     return new ArticleAssetsRetriever(id) {
       @Override
@@ -362,9 +362,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   @Override
-  public MetadataRetriever readFileMetadata(final AssetFileIdentity id)
+  public Transceiver readFileMetadata(final AssetFileIdentity id)
       throws IOException {
-    return new EntityMetadataRetriever<ArticleAsset>() {
+    return new EntityTransceiver<ArticleAsset>() {
       @Override
       protected ArticleAsset fetchEntity() {
         @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)

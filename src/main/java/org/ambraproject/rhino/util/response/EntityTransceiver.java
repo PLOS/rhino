@@ -11,7 +11,7 @@ import java.util.Calendar;
  *
  * @param <E> the persistent entity type
  */
-public abstract class EntityMetadataRetriever<E extends AmbraEntity> extends MetadataRetriever {
+public abstract class EntityTransceiver<E extends AmbraEntity> extends Transceiver {
 
   private E entity = null;
 
