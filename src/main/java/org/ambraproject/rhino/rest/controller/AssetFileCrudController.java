@@ -26,6 +26,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -122,11 +123,34 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
 
+  /**
+   * Serve an identified asset file.
+   */
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException, FileStoreException {
-    AssetFileIdentity id = parse(request);
+    read(request, response, parse(request));
+  }
+
+  /**
+   * Given the identity of an asset with exactly one associated file, serve the file. Respond with an error if it does
+   * not have exactly one file.
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = {"unique"})
+  public void readUnique(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, FileStoreException {
+    AssetIdentity assetId = AssetIdentity.create(getIdentifier(request));
+    AssetFileIdentity assetFileId = assetCrudService.findOnlyFile(assetId);
+    if (assetFileId == null) {
+      throw new RestClientException("No asset found with ID: " + assetId.getIdentifier(), HttpStatus.NOT_FOUND);
+    }
+    read(request, response, assetFileId);
+  }
+
+  private void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
+      throws IOException, FileStoreException {
 
     Optional<ArticleIdentity> articleId = id.forArticle();
     Article article = articleId.isPresent()

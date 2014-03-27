@@ -422,4 +422,19 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     return ArticleIdentity.create(articleDoi);
   }
 
+  @Override
+  public AssetFileIdentity findOnlyFile(AssetIdentity assetId) {
+    List<String> extensions = hibernateTemplate.find("select extension from ArticleAsset where doi = ?", assetId.getKey());
+    switch (extensions.size()) {
+      case 0:
+        return null;
+      case 1:
+        return AssetFileIdentity.create(assetId.getIdentifier(), extensions.get(0));
+      default:
+        String message = String.format("Expected one extension for asset ID \"%s\". Found: %s",
+            assetId.getIdentifier(), extensions);
+        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }
