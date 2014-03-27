@@ -51,8 +51,8 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
       protected Issue fetchEntity() {
         Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(Issue.class)
-                .add(Restrictions.eq("issueUri", id.getKey()))
+                    .forClass(Issue.class)
+                    .add(Restrictions.eq("issueUri", id.getKey()))
             ));
         if (issue == null) {
           throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
@@ -120,8 +120,8 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
         DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", imageArticleId.getKey()))
             .setProjection(Projections.projectionList()
-                .add(Projections.property("title"))
-                .add(Projections.property("description"))
+                    .add(Projections.property("title"))
+                    .add(Projections.property("description"))
             )
     ));
     if (result == null) {
@@ -139,9 +139,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   private Issue findIssue(DoiBasedIdentity issueId) {
     return (Issue) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", issueId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Issue.class)
+                .add(Restrictions.eq("issueUri", issueId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -156,9 +156,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-            .setFetchMode("issues", FetchMode.JOIN)
+                .forClass(Volume.class)
+                .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+                .setFetchMode("issues", FetchMode.JOIN)
         ));
     if (volume == null) {
       throw new RestClientException("Volume not found for volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);

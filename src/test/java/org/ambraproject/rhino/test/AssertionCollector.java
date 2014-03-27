@@ -27,8 +27,8 @@ public class AssertionCollector {
   /**
    * Constructor.
    *
-   * @param failFast if true, the test will throw an assertion error upon the first failed assertion.  If false,
-   *                 all failures will be collected and reported at the end of the test.
+   * @param failFast if true, the test will throw an assertion error upon the first failed assertion.  If false, all
+   *                 failures will be collected and reported at the end of the test.
    */
   public AssertionCollector(boolean failFast) {
     super();

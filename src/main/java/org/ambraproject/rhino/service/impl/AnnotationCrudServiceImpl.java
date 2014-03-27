@@ -149,7 +149,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       protected Object getMetadata() throws IOException {
         Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
-                .add(Restrictions.eq("annotationUri", annotationId.getKey()))
+                    .add(Restrictions.eq("annotationUri", annotationId.getKey()))
             ));
         if (annotation == null) {
           throw reportNotFound(annotationId);
@@ -158,7 +158,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         // TODO: Make this more efficient. Three queries is too many.
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                .add(Restrictions.eq("ID", annotation.getArticleID()))
+                    .add(Restrictions.eq("ID", annotation.getArticleID()))
             ));
         Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), fetchAllAnnotations(article),
             new LinkedHashMap<Long, List<Annotation>>());

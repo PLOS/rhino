@@ -26,7 +26,8 @@ public class RootController {
         public String apply(String input) {
           return input.toLowerCase();
         }
-      }));
+      }
+  ));
 
   /**
    * Serve the root page to a browser.

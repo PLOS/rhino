@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.rhino.BaseRhinoTest;

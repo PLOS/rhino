@@ -77,7 +77,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throws FileStoreException, IOException {
     List<ArticleAsset> assets = (List<ArticleAsset>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetFileId.getKey())));
+            .add(Restrictions.eq("doi", assetFileId.getKey()))
+    );
 
     // Set up the Hibernate entity that we want to modify
     ArticleAsset assetToPersist = createAssetToAdd(assetFileId, assets);
@@ -220,7 +221,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             query.setParameter("assetDoi", assetDoi);
             return query.list();
           }
-        }));
+        })
+    );
     final BigInteger parentArticleId = Preconditions.checkNotNull((BigInteger) result[0]);
     int maxSortOrder = (Integer) result[1];
     final int newSortOrder = maxSortOrder + 1;
@@ -251,8 +253,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .add(Restrictions.eq("extension", id.getFileExtension()))
+                .add(Restrictions.eq("doi", id.getKey()))
+                .add(Restrictions.eq("extension", id.getFileExtension()))
         ));
     if (asset == null) {
       throw new RestClientException("Asset not found at: " + id, HttpStatus.NOT_FOUND);
@@ -318,9 +320,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     protected final Collection<? extends ArticleAsset> fetchEntities() {
       @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
           hibernateTemplate.findByCriteria(DetachedCriteria
-              .forClass(ArticleAsset.class)
-              .add(Restrictions.eq("doi", id.getKey()))
-              .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                  .forClass(ArticleAsset.class)
+                  .add(Restrictions.eq("doi", id.getKey()))
+                  .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
           ));
       if (assets.isEmpty()) {
         throw reportNotFound(id);
@@ -367,10 +369,10 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       protected ArticleAsset fetchEntity() {
         @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
             hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(ArticleAsset.class)
-                .add(Restrictions.eq("doi", id.getKey()))
-                .add(Restrictions.eq("extension", id.getFileExtension()))
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                    .forClass(ArticleAsset.class)
+                    .add(Restrictions.eq("doi", id.getKey()))
+                    .add(Restrictions.eq("extension", id.getFileExtension()))
+                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             ));
         if (assets.isEmpty()) {
           throw reportNotFound(id);
@@ -392,9 +394,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void delete(AssetFileIdentity assetId) throws FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(ArticleAsset.class)
+                .add(Restrictions.eq("doi", assetId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
       throw reportNotFound(assetId);

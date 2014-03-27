@@ -75,11 +75,11 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
         //  ORDER BY pb.mostRecent DESC;
 
         List<Object[]> results = hibernateTemplate.find(""
-            + "select distinct a.doi, a.title, a.url, "
-            + "  (select count(*) from Pingback where articleID = a.ID) as pingbackCount, "
-            + "  (select max(created) from Pingback where articleID = a.ID) as mostRecent " // TODO Eliminate duplication?
-            + "from Pingback as p, Article as a where p.articleID = a.ID "
-            + "order by mostRecent desc "
+                + "select distinct a.doi, a.title, a.url, "
+                + "  (select count(*) from Pingback where articleID = a.ID) as pingbackCount, "
+                + "  (select max(created) from Pingback where articleID = a.ID) as mostRecent " // TODO Eliminate duplication?
+                + "from Pingback as p, Article as a where p.articleID = a.ID "
+                + "order by mostRecent desc "
         );
         List<ArticlePingbackView> resultView = Lists.transform(results, AS_VIEW);
         return new ArticleViewList(resultView);
@@ -112,7 +112,8 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
     Long articleId = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", article.getKey()))
-            .setProjection(Projections.property("ID"))));
+            .setProjection(Projections.property("ID"))
+    ));
     if (articleId == null) {
       throw new RestClientException("Article not found: " + article.getIdentifier(), HttpStatus.NOT_FOUND);
     }
@@ -123,7 +124,8 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
     return hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Pingback.class)
             .add(Restrictions.eq("articleID", articleId))
-            .addOrder(Order.desc("created")));
+            .addOrder(Order.desc("created"))
+    );
   }
 
 }

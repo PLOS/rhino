@@ -201,14 +201,16 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     final Set<String> newTypes = buildArticleTypes();
     setDeletableChildrenRelationship(article, article.getTypes(), newTypes, new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         article.setTypes(newTypes);
       }
     });
 
     final List<CitedArticle> newCitedArticles = parseCitations(readNodeList("/article/back/ref-list/ref"));
     setDeletableChildrenRelationship(article, article.getCitedArticles(), newCitedArticles, new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         article.setCitedArticles(newCitedArticles);
       }
     });
@@ -216,7 +218,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     final List<ArticleAuthor> newAuthors = readAuthors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/name"));
     setDeletableChildrenRelationship(article, article.getAuthors(), newAuthors, new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         article.setAuthors(newAuthors);
       }
     });
@@ -224,7 +227,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     final List<ArticleEditor> newEditors = readEditors(readNodeList(
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"editor\"]/name"));
     setDeletableChildrenRelationship(article, article.getEditors(), newEditors, new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         article.setEditors(newEditors);
       }
     });
@@ -233,18 +237,19 @@ public class ArticleXml extends AbstractArticleXml<Article> {
         "/article/front/article-meta/contrib-group/contrib[@contrib-type=\"author\"]/collab"));
     setDeletableChildrenRelationship(article, article.getCollaborativeAuthors(), newCollaborativeAuthors,
         new Runnable() {
-          @Override public void run() {
+          @Override
+          public void run() {
             article.setCollaborativeAuthors(newCollaborativeAuthors);
           }
-    });
+        }
+    );
 
     article.setUrl(buildUrl(readString("/article/front/article-meta/article-id[@pub-id-type = 'doi']")));
   }
 
   /**
-   * Safely sets a property of an article that has a one-to-many relationship, and is automatically deleted
-   * when dissociated from the parent.  The collection will only be set if it differs from the values already
-   * defined.
+   * Safely sets a property of an article that has a one-to-many relationship, and is automatically deleted when
+   * dissociated from the parent.  The collection will only be set if it differs from the values already defined.
    * <p/>
    * For example, instead of <pre>article.setFoo(newStuff);</pre>
    * you should instead do
@@ -256,10 +261,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    *   }
    * </pre>
    *
-   * @param article parent object
+   * @param article        parent object
    * @param existingValues existing values obtained by calling the getter on article
-   * @param newValues new values that will be set if they differ from existingValues
-   * @param setter encapsulates the property's setter method, which will be called with newValues when run
+   * @param newValues      new values that will be set if they differ from existingValues
+   * @param setter         encapsulates the property's setter method, which will be called with newValues when run
    */
   private void setDeletableChildrenRelationship(Article article, @Nullable Collection existingValues,
                                                 Collection newValues, Runnable setter) {

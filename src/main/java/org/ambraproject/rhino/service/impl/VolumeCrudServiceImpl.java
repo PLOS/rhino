@@ -69,9 +69,9 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   private Volume findVolume(DoiBasedIdentity volumeId) {
     return (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Volume.class)
+                .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -87,7 +87,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
-            .add(Restrictions.eq("journalKey", journalKey))
+                .add(Restrictions.eq("journalKey", journalKey))
         ));
     if (journal == null) {
       String message = "Journal not found for journal key: " + journalKey;
@@ -122,9 +122,9 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
       protected Volume fetchEntity() {
         Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(Volume.class)
-                .add(Restrictions.eq("volumeUri", id.getKey()))
-                .setFetchMode("issues", FetchMode.JOIN)
+                    .forClass(Volume.class)
+                    .add(Restrictions.eq("volumeUri", id.getKey()))
+                    .setFetchMode("issues", FetchMode.JOIN)
             ));
         if (volume == null) {
           throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);

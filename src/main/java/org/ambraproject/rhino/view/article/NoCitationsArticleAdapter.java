@@ -33,9 +33,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Simple adapter for {@link Article} that hides the citedArticles field.  Needed since the gson library
- * will serialize everything, and sometimes we don't want it to trigger hibernate lazy loading on this
- * field for performance reasons.
+ * Simple adapter for {@link Article} that hides the citedArticles field.  Needed since the gson library will serialize
+ * everything, and sometimes we don't want it to trigger hibernate lazy loading on this field for performance reasons.
  */
 public final class NoCitationsArticleAdapter {
 

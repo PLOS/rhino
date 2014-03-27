@@ -108,7 +108,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   private Journal loadJournal(String journalKey) {
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
-            .add(Restrictions.eq("journalKey", journalKey))
+                .add(Restrictions.eq("journalKey", journalKey))
         ));
     if (journal == null) {
       throw new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND);

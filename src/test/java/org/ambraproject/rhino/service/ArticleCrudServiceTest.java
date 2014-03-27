@@ -127,9 +127,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     Article stored = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", key))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Article.class)
+                .add(Restrictions.eq("doi", key))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored, "ArticleCrudService.create did not store an article");
     assertEquals(stored.getDoi(), key);
@@ -191,9 +191,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(ArticleAsset.class)
+                .add(Restrictions.eq("doi", assetId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored.getContextElement());
     assertNotNull(stored.getContentType());

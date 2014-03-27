@@ -117,11 +117,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Article findArticleById(DoiBasedIdentity id) {
     return (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setFetchMode("articleType", FetchMode.JOIN)
-            .setFetchMode("citedArticles", FetchMode.JOIN)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Article.class)
+                .add(Restrictions.eq("doi", id.getKey()))
+                .setFetchMode("articleType", FetchMode.JOIN)
+                .setFetchMode("citedArticles", FetchMode.JOIN)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -327,7 +327,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private void reciprocateOutboundRelationship(Article ingested, ArticleRelationship relationship) {
     Article relatedArticle = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", relationship.getOtherArticleDoi()))));
+            .add(Restrictions.eq("doi", relationship.getOtherArticleDoi())))
+    );
     if (relatedArticle == null) {
       return; // The referenced article does not exist in the system, so do nothing.
     }
@@ -501,7 +502,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } else {
       Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
           hibernateTemplate.findByCriteria(journalCriteria()
-              .add(Restrictions.eq("eIssn", eissn))
+                  .add(Restrictions.eq("eIssn", eissn))
           ));
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
@@ -767,14 +768,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Article fetchEntity() {
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                .add(Restrictions.eq("doi", id.getKey()))
-                .setFetchMode("assets", FetchMode.JOIN)
-                .setFetchMode("articleType", FetchMode.JOIN)
-                .setFetchMode("journals", FetchMode.JOIN)
-                .setFetchMode("journals.volumes", FetchMode.JOIN)
-                .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
-                .setFetchMode("journals.articleList", FetchMode.JOIN)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                    .add(Restrictions.eq("doi", id.getKey()))
+                    .setFetchMode("assets", FetchMode.JOIN)
+                    .setFetchMode("articleType", FetchMode.JOIN)
+                    .setFetchMode("journals", FetchMode.JOIN)
+                    .setFetchMode("journals.volumes", FetchMode.JOIN)
+                    .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
+                    .setFetchMode("journals.articleList", FetchMode.JOIN)
+                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             ));
         if (article == null) {
           throw reportNotFound(id);

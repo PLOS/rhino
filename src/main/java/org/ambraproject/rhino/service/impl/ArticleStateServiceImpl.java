@@ -88,7 +88,8 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
             DetachedCriteria.forClass(Article.class)
                 .setFetchMode("journals", FetchMode.JOIN)
                 .add(Restrictions.eq("doi", articleId.getKey()))
-        ));
+        )
+    );
     Set<Journal> journals = article.getJournals();
 
     Element additionalInfoElement = doc.createElementNS(XML_NAMESPACE, "ambra");
@@ -225,9 +226,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
   private Article loadArticle(ArticleIdentity articleId) {
     Article result = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", articleId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Article.class)
+                .add(Restrictions.eq("doi", articleId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (result == null) {
       throw new RestClientException("Article not found: " + articleId.getIdentifier(),

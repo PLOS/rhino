@@ -74,7 +74,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
    * asset.
    *
-   * @param id       the identity of the asset to read
+   * @param id the identity of the asset to read
    */
   public abstract MetadataRetriever readMetadata(AssetIdentity id)
       throws IOException;
@@ -83,7 +83,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * Read the metadata of a figure asset. The output contains the figure metadata, as defined by the "original" asset
    * file, plus the individual asset file objects.
    *
-   * @param id       the identity of the asset to read
+   * @param id the identity of the asset to read
    */
   public abstract MetadataRetriever readFigureMetadata(AssetIdentity id)
       throws IOException;
@@ -91,7 +91,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
   /**
    * Read the metadata of a single asset file.
    *
-   * @param id       the identity of the asset file to read
+   * @param id the identity of the asset file to read
    */
   public MetadataRetriever readFileMetadata(AssetFileIdentity id)
       throws IOException;

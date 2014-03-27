@@ -443,18 +443,20 @@ public class IngestionTest extends BaseRhinoTest {
   private static final StringReplacer XML_MASSAGER = StringReplacer.builder()
       .replaceRegex(">\\s+<", "><") // Whitespace between tags
       .replaceRegex("" // Self-closing tags
-          + "<"
-          + "([^>\\s]+)"   // Tag name.
-          + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
-          + "/>",
-          "<$1$2></$1>")
+              + "<"
+              + "([^>\\s]+)"   // Tag name.
+              + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
+              + "/>",
+          "<$1$2></$1>"
+      )
       .replaceRegex("" // Ampersands escaped within a tag attribute
-          + "(<[^>]*"    // Stuff in the tag before the attribute begins
-          + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
-          + "&amp;"      // The escaped ampersand
-          + "([^>\"]*\"" // Closes the attribute
-          + "[^>]*>)",   // Closes the tag
-          "$1&$2")
+              + "(<[^>]*"    // Stuff in the tag before the attribute begins
+              + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
+              + "&amp;"      // The escaped ampersand
+              + "([^>\"]*\"" // Closes the attribute
+              + "[^>]*>)",   // Closes the tag
+          "$1&$2"
+      )
       .build();
 
   private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
@@ -847,7 +849,8 @@ public class IngestionTest extends BaseRhinoTest {
     List<Syndication> actual = hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Syndication.class)
             .add(Restrictions.eq("doi", article.getDoi()))
-            .addOrder(Order.asc("target")));
+            .addOrder(Order.asc("target"))
+    );
 
     int commonSize = Math.min(expected.size(), actual.size());
     for (int i = 0; i < commonSize; i++) {

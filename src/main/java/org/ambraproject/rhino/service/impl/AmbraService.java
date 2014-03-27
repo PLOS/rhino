@@ -81,8 +81,8 @@ public abstract class AmbraService {
   protected boolean exists(DetachedCriteria criteria) {
     long count = (Long) DataAccessUtils.requiredSingleResult((List<?>)
         hibernateTemplate.findByCriteria(criteria
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-            .setProjection(Projections.rowCount())
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .setProjection(Projections.rowCount())
         ));
     return count > 0L;
   }

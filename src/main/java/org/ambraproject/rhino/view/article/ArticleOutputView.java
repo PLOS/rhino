@@ -10,7 +10,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
-import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
@@ -28,7 +27,6 @@ import org.ambraproject.views.article.ArticleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -70,9 +68,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    * Creates a new view of the given article and associated data.
    *
    * @param article             primary entity
-   * @param excludeCitations if true, don't serialize citation information
+   * @param excludeCitations    if true, don't serialize citation information
    * @param syndicationService
-   * @param pingbackReadService   @return view of the article and associated data
+   * @param pingbackReadService @return view of the article and associated data
    */
   public static ArticleOutputView create(Article article,
                                          boolean excludeCitations,

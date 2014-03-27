@@ -41,7 +41,8 @@ import java.util.regex.Pattern;
  */
 public final class RhinoTestHelper {
 
-  private RhinoTestHelper() {}
+  private RhinoTestHelper() {
+  }
 
   /**
    * Mock input stream that yields a constant string and keeps track of whether it has been closed.

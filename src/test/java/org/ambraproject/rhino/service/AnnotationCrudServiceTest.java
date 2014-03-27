@@ -157,7 +157,8 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     // Now deserialize to AnnotationView to do more comparisons.
     List<AnnotationView> actualAnnotations = entityGson.fromJson(json,
         new TypeToken<List<AnnotationView>>() {
-        }.getType());
+        }.getType()
+    );
     assertEquals(actualAnnotations.size(), 3);
     Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
     replies.put(comment1.getID(), Arrays.asList(reply, reply2));
