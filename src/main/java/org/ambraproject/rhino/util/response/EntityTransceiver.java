@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 /**
- * A retriever that translates a timestamped persistent entity into a view.
+ * A "transceiver" that translates a timestamped persistent entity into a view.
  *
  * @param <E> the persistent entity type
  */
@@ -20,7 +20,7 @@ public abstract class EntityTransceiver<E extends AmbraEntity> extends Transceiv
   }
 
   /**
-   * Retrieve the entity from the persistence tier.
+   * Read the entity from the persistence tier.
    *
    * @return the entity
    */
@@ -30,7 +30,7 @@ public abstract class EntityTransceiver<E extends AmbraEntity> extends Transceiv
    * {@inheritDoc}
    * <p/>
    * This class fetches the full persistent entity and uses built-in last-modified date. Subclasses may override this
-   * method to return the last-modified date without retrieving the rest of the entity for a performance improvement.
+   * method to return the last-modified date without reading the rest of the entity for a performance improvement.
    */
   @Override
   protected Calendar getLastModifiedDate() throws IOException {

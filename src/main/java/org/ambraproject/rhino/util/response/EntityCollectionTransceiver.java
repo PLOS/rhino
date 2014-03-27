@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * A retriever that translates a collection of timestamped persistent entities into a view.
+ * A "transceiver" that translates a collection of timestamped persistent entities into a view.
  *
  * @param <E> the persistent entity type
  */
@@ -22,7 +22,7 @@ public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends
   }
 
   /**
-   * Retrieve the entity from the persistence tier.
+   * Read the entities from the persistence tier.
    *
    * @return the entity
    */
@@ -32,7 +32,7 @@ public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends
    * {@inheritDoc}
    * <p/>
    * This class fetches the full set of persistent entities and uses the maximum built-in last-modified date. Subclasses
-   * may override this method to return the last-modified date without retrieving the rest of the data for a performance
+   * may override this method to return the last-modified date without reading the rest of the data for a performance
    * improvement.
    */
   @Override
@@ -53,10 +53,10 @@ public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends
   }
 
   /**
-   * Translate the entity into a view object.
+   * Translate the collection of entities into a view object.
    *
-   * @param entity the entity
-   * @return a view representing the entity
+   * @param entities the entities
+   * @return a view representing the collection of entities
    */
   protected abstract Object getView(Collection<? extends E> entities);
 

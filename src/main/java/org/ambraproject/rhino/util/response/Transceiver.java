@@ -19,12 +19,22 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * A service extends this class to provide callbacks with which to check the last-modified date of data and retrieve the
- * data if needed. A controller calls this class's public method to write the data to a response.
+ * This class encapsulates data returned from the service layer and presents it to the controller layer.
  * <p/>
- * Generally, one instance of this class is constructed per request for a single entity of metadata (for example, there
- * is one object for reading the metadata for one article). Identifying information for that entity should be passed in
- * to the subclass's constructor or, more likely, viewed closure-style from inside an anonymous subclass.
+ * This class bridges a gap between the two layers and fills a different role for each. To the service layer, this class
+ * is an interface that defines callbacks (the {@code protected abstract} methods) for such operations as retrieving an
+ * object from persistence or looking up a last-modified timestamp (and maybe more in the future). To the controller
+ * layer, this class is a utility that (using the {@link #respond} method) parses a RESTful request and formats the
+ * response. The service layer should never need to see types like {@link HttpServletRequest} and {@link
+ * HttpServletResponse}, and the controller layer should never need to see the actual data entities being served.
+ * <p/>
+ * The class name uses the metaphor of a "transceiver" because of this dual role: in the service layer, it
+ * <em>receives</em> data from persistence; in the controller layer, it <em>transmits</em> responses to the client.
+ * <p/>
+ * Generally, one instance of this class is constructed (in the service layer) per service call. For example, there is a
+ * call to read an article's metadata, so the service constructs a {@code Transceiver} object that reads the metadata
+ * for that particular article. Typically this would be done by passing the relevant identifier to the subclass's
+ * constructor or, more often, referring to it closure-style from inside an anonymous subclass.
  */
 public abstract class Transceiver {
 
@@ -37,8 +47,8 @@ public abstract class Transceiver {
   protected abstract Object getMetadata() throws IOException;
 
   /**
-   * Return the last-modified date for this object's metadata. May return {@code null} for volative data that always may
-   * be assumed to have been modified since it was last accessed.
+   * Return the last-modified date for this object's data. May return {@code null} for volatile data that always may be
+   * assumed to have been modified since it was last accessed, or if looking up the last-modified date is unsupported.
    *
    * @return the date
    * @throws IOException
@@ -61,16 +71,16 @@ public abstract class Transceiver {
   }
 
   /**
-   * Respond with the the metadata according to a request.
+   * Respond with data according to a request.
    * <p/>
    * If the request contains a "Last-Modified" header and the value in question has not been modified since the given
    * date, respond with a 304 ("Not Modified") status code and omit the rest of the response.
    * <p/>
    * If the request provides a JSONP callback parameter, use it to provide a JSONP response.
    *
-   * @param request  a request for metadata
+   * @param request  a service request
    * @param response the object that will receive the response
-   * @param gson     an object containing the context's rules for serializing metadata
+   * @param gson     an object containing the context's rules for serializing data to responses
    * @throws IOException
    */
   public final void respond(HttpServletRequest request, HttpServletResponse response, Gson gson) throws IOException {
@@ -85,20 +95,20 @@ public abstract class Transceiver {
     if (lastModified != null && !checkIfModifiedSince(request, lastModified)) {
       response.setStatus(HttpStatus.NOT_MODIFIED.value());
     } else {
-      Object metadata = Preconditions.checkNotNull(getMetadata());
+      Object responseData = Preconditions.checkNotNull(getMetadata());
       if (bufferResponseBody()) {
-        serializeMetadataSafely(request, response, gson, metadata);
+        serializeMetadataSafely(request, response, gson, responseData);
       } else {
-        serializeMetadataDirectly(request, response, gson, metadata);
+        serializeMetadataDirectly(request, response, gson, responseData);
       }
     }
   }
 
   /**
-   * Dump this object's metadata directly to a string as JSON. For testing only.
+   * Dump this object's response directly to a string as JSON. For testing only.
    *
-   * @param gson an object containing the context's rules for serializing metadata
-   * @return the metadata as a JSON string
+   * @param gson an object containing the context's rules for serializing data to responses
+   * @return the response body as a JSON string
    * @throws IOException
    */
   @VisibleForTesting
@@ -125,6 +135,12 @@ public abstract class Transceiver {
     }
   }
 
+  /**
+   * @return {@code true} if responses should be buffered fully to memory before opening a response stream
+   * @see #serializeMetadataSafely
+   * @see #serializeMetadataDirectly
+   */
+  // TODO: Make configurable (which is tricky because Transceivers aren't Spring beans)
   protected boolean bufferResponseBody() {
     return true;
   }
@@ -136,10 +152,10 @@ public abstract class Transceiver {
    * Buffer the JSON into memory before we open the response stream. This ensures that any exception thrown by {@code
    * toJson} and caught by Spring will be correctly shown in the response to the client.
    */
-  private void serializeMetadataSafely(HttpServletRequest request, HttpServletResponse response, Gson gson, Object metadata)
+  private void serializeMetadataSafely(HttpServletRequest request, HttpServletResponse response, Gson gson, Object responseData)
       throws IOException {
     StringWriter stringWriter = new StringWriter(JSON_BUFFER_INITIAL_SIZE);
-    gson.toJson(metadata, stringWriter);
+    gson.toJson(responseData, stringWriter);
 
     try (PrintWriter writer = openJsonResponseBody(request, response)) {
       writer.write(stringWriter.toString());
@@ -152,10 +168,10 @@ public abstract class Transceiver {
    * (probably sending an "OK" status code but an empty response body) instead of correctly reporting it to the client
    * as a 500 error and providing the stack trace.
    */
-  private void serializeMetadataDirectly(HttpServletRequest request, HttpServletResponse response, Gson gson, Object metadata)
+  private void serializeMetadataDirectly(HttpServletRequest request, HttpServletResponse response, Gson gson, Object responseData)
       throws IOException {
     try (PrintWriter writer = openJsonResponseBody(request, response)) {
-      gson.toJson(metadata, writer);
+      gson.toJson(responseData, writer);
     }
   }
 
