@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.CitedArticle;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
@@ -27,6 +28,7 @@ import org.ambraproject.views.article.ArticleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -47,12 +49,14 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final Article article;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
+  private final boolean excludeCitations;
 
   private ArticleOutputView(Article article, Collection<Syndication> syndications,
-                            Collection<Pingback> pingbacks) {
+                            Collection<Pingback> pingbacks, boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
+    this.excludeCitations = excludeCitations;
   }
 
   private static final Function<Syndication, String> GET_TARGET = new Function<Syndication, String>() {
@@ -66,12 +70,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    * Creates a new view of the given article and associated data.
    *
    * @param article             primary entity
-   * @param annotations         any annotations associated with the article.  May be null if none are present.
+   * @param excludeCitations if true, don't serialize citation information
    * @param syndicationService
-   * @param pingbackReadService
-   * @return view of the article and associated data
+   * @param pingbackReadService   @return view of the article and associated data
    */
   public static ArticleOutputView create(Article article,
+                                         boolean excludeCitations,
                                          SyndicationService syndicationService,
                                          PingbackReadService pingbackReadService) {
     Collection<Syndication> syndications;
@@ -85,7 +89,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       syndications = ImmutableList.of();
     }
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, syndications, pingbacks);
+    return new ArticleOutputView(article, syndications, pingbacks, excludeCitations);
   }
 
   @Override
@@ -132,7 +136,18 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
 
-    JsonObject baseJson = context.serialize(article).getAsJsonObject();
+    JsonObject baseJson;
+    if (excludeCitations) {
+
+      // The problem here is that serialize will call all getters, and some may be hibernate collections
+      // that are lazily initialized.  For performance reasons, we sometimes don't want these lazy queries
+      // to fire.  Since we have to decide whether to do this conditionally, this adapter approach seems
+      // best (if we use an ExclusionStrategy it will apply globally).
+      baseJson = context.serialize(new NoCitationsArticleAdapter(article)).getAsJsonObject();
+    } else {
+      baseJson = context.serialize(article).getAsJsonObject();
+    }
+
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 
     serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));

@@ -42,12 +42,14 @@ import org.ambraproject.service.syndication.impl.SyndicationServiceImpl;
 import org.ambraproject.testutils.AmbraTestConfigurationFactory;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.yaml.snakeyaml.Yaml;
-
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +58,9 @@ import java.util.Properties;
 
 @Configuration
 @Import(RhinoConfiguration.class)
+
+// TODO: get tests to work transactionally
+/* @EnableTransactionManagement(proxyTargetClass = true) */
 public class TestConfiguration extends BaseConfiguration {
 
   /**
@@ -88,6 +93,13 @@ public class TestConfiguration extends BaseConfiguration {
     bean.setHibernateProperties(hibernateProperties);
 
     return bean;
+  }
+
+  @Bean
+  public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+    HibernateTransactionManager manager = new HibernateTransactionManager();
+    manager.setSessionFactory(sessionFactory);
+    return manager;
   }
 
   @Bean

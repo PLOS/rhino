@@ -7,6 +7,7 @@ import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.view.article.ArticleJsonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,7 @@ public class RootController {
   /**
    * Serve the root page to a browser.
    */
+  @Transactional(readOnly = true)
   @RequestMapping(value = "/")
   public ModelAndView rootPage(ModelAndView model) throws IOException {
     model.addObject("stateParams", ArticleJsonConstants.PUBLICATION_STATE_NAMES);

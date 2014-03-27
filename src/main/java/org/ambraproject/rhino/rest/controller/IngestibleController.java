@@ -28,6 +28,7 @@ import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,6 +73,7 @@ public class IngestibleController extends DoiBasedCrudController {
    * @param response HttpServletResponse
    * @throws IOException
    */
+  @Transactional(readOnly = true)
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
   public void read(HttpServletResponse response,
                    @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
@@ -91,6 +93,7 @@ public class IngestibleController extends DoiBasedCrudController {
    * @throws IOException
    * @throws FileStoreException
    */
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletResponse response,
                      @RequestParam(value = "name") String name,
@@ -117,6 +120,6 @@ public class IngestibleController extends DoiBasedCrudController {
 
     // Report the written data, as JSON, in the response.
     ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON);
+    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON, false);
   }
 }

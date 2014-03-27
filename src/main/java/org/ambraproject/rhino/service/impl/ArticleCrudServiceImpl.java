@@ -117,6 +117,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         hibernateTemplate.findByCriteria(DetachedCriteria
             .forClass(Article.class)
             .add(Restrictions.eq("doi", id.getKey()))
+            .setFetchMode("articleType", FetchMode.JOIN)
+            .setFetchMode("citedArticles", FetchMode.JOIN)
             .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
@@ -209,7 +211,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     String doi = article.getDoi();
 
     createReciprocalRelationships(article);
-
     try {
 
       // This method needs the article to have already been persisted to the DB.
@@ -748,7 +749,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format) throws IOException {
+  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format,
+                           boolean excludeCitations) throws IOException {
     assert format == MetadataFormat.JSON;
     Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
@@ -764,12 +766,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
-    readMetadata(receiver, article, format);
+    readMetadata(receiver, article, format, excludeCitations);
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format) throws IOException {
-    ArticleOutputView view = ArticleOutputView.create(article, syndicationService, pingbackReadService);
+  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format, boolean excludeCitations)
+      throws IOException {
+    ArticleOutputView view = ArticleOutputView.create(article, excludeCitations, syndicationService,
+        pingbackReadService);
     serializeMetadata(format, receiver, view);
   }
 

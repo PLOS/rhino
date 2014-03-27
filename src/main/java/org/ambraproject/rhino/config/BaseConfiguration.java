@@ -24,6 +24,8 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Code common to both the main and testing configurations.
@@ -39,7 +41,19 @@ abstract class BaseConfiguration {
     if (mappingLocations.length == 0) {
       throw new IllegalStateException("Config error: No Ambra data models found");
     }
-    sessionFactoryBean.setMappingLocations(mappingLocations);
+
+    // For performance reasons, we want the ability to lazily load Article.citedArticles.
+    // We do this by substituting in our own Hibernate Article mapping, since the one
+    // in ambra-models uses eager loading (and changing it in ambra would likely break
+    // things there).
+    List<Resource> finalResources = new ArrayList<>(mappingLocations.length);
+    for (Resource resource : mappingLocations) {
+      if (!"Article.hbm.xml".equals(resource.getFilename())) {
+        finalResources.add(resource);
+      }
+    }
+    finalResources.add(context.getResource("classpath:ambra/configuration/Article.hbm.xml"));
+    sessionFactoryBean.setMappingLocations(finalResources.toArray(new Resource[finalResources.size()]));
   }
 
 }
