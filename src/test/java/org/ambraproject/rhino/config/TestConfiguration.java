@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.io.Closeables;
 import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.queue.MessageSender;
@@ -45,10 +46,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
@@ -165,5 +168,21 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public XpathReader xpathReader() {
     return new XpathReader();
+  }
+
+  @Bean
+  public RuntimeConfiguration runtimeConfiguration(Yaml yaml) throws Exception {
+    YamlConfiguration runtimeConfiguration;
+    InputStream is = null;
+    boolean threw = true;
+    try {
+      is = TestConfiguration.class.getClassLoader().getResourceAsStream("rhino-test.yaml");
+      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.UserFields.class));
+      threw = false;
+    } finally {
+      Closeables.close(is, threw);
+    }
+
+    return runtimeConfiguration;
   }
 }
