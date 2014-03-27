@@ -75,7 +75,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         Article article = findSingleEntity("FROM Article WHERE doi = ?", id.getKey());
         List<Annotation> annotations = fetchAllAnnotations(article);
 
@@ -146,7 +146,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         Annotation annotation = (Annotation) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
                     .add(Restrictions.eq("annotationUri", annotationId.getKey()))

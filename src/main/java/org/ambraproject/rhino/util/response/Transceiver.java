@@ -39,12 +39,13 @@ import java.util.TimeZone;
 public abstract class Transceiver {
 
   /**
-   * Get an object representing a piece of metadata.
+   * Get an object representing the data that is being requested from the service. It will be serialized to JSON to form
+   * the response.
    *
    * @return the object
    * @throws IOException
    */
-  protected abstract Object getMetadata() throws IOException;
+  protected abstract Object getData() throws IOException;
 
   /**
    * Return the last-modified date for this object's data. May return {@code null} for volatile data that always may be
@@ -95,11 +96,11 @@ public abstract class Transceiver {
     if (lastModified != null && !checkIfModifiedSince(request, lastModified)) {
       response.setStatus(HttpStatus.NOT_MODIFIED.value());
     } else {
-      Object responseData = Preconditions.checkNotNull(getMetadata());
+      Object responseData = Preconditions.checkNotNull(getData());
       if (bufferResponseBody()) {
-        serializeMetadataSafely(request, response, gson, responseData);
+        serializeSafely(request, response, gson, responseData);
       } else {
-        serializeMetadataDirectly(request, response, gson, responseData);
+        serializeDirectly(request, response, gson, responseData);
       }
     }
   }
@@ -113,7 +114,7 @@ public abstract class Transceiver {
    */
   @VisibleForTesting
   public String readJson(Gson gson) throws IOException {
-    return gson.toJson(getMetadata());
+    return gson.toJson(getData());
   }
 
   /**
@@ -137,8 +138,8 @@ public abstract class Transceiver {
 
   /**
    * @return {@code true} if responses should be buffered fully to memory before opening a response stream
-   * @see #serializeMetadataSafely
-   * @see #serializeMetadataDirectly
+   * @see #serializeSafely
+   * @see #serializeDirectly
    */
   // TODO: Make configurable (which is tricky because Transceivers aren't Spring beans)
   protected boolean bufferResponseBody() {
@@ -152,7 +153,7 @@ public abstract class Transceiver {
    * Buffer the JSON into memory before we open the response stream. This ensures that any exception thrown by {@code
    * toJson} and caught by Spring will be correctly shown in the response to the client.
    */
-  private void serializeMetadataSafely(HttpServletRequest request, HttpServletResponse response, Gson gson, Object responseData)
+  private void serializeSafely(HttpServletRequest request, HttpServletResponse response, Gson gson, Object responseData)
       throws IOException {
     StringWriter stringWriter = new StringWriter(JSON_BUFFER_INITIAL_SIZE);
     gson.toJson(responseData, stringWriter);
@@ -168,7 +169,7 @@ public abstract class Transceiver {
    * (probably sending an "OK" status code but an empty response body) instead of correctly reporting it to the client
    * as a 500 error and providing the stack trace.
    */
-  private void serializeMetadataDirectly(HttpServletRequest request, HttpServletResponse response, Gson gson, Object responseData)
+  private void serializeDirectly(HttpServletRequest request, HttpServletResponse response, Gson gson, Object responseData)
       throws IOException {
     try (PrintWriter writer = openJsonResponseBody(request, response)) {
       gson.toJson(responseData, writer);

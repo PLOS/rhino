@@ -74,7 +74,7 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         String parent = parentArg;
         CategoryView categoryView;
         try {

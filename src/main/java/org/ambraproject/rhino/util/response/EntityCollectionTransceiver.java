@@ -48,7 +48,7 @@ public abstract class EntityCollectionTransceiver<E extends AmbraEntity> extends
   }
 
   @Override
-  protected final Object getMetadata() throws IOException {
+  protected final Object getData() throws IOException {
     return Preconditions.checkNotNull(getView(getEntities()));
   }
 

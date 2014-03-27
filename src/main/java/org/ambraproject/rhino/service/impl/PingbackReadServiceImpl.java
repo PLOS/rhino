@@ -65,7 +65,7 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         // Here is what this is intended to do, in SQL:
         //  SELECT article.doi, article.title, pb.count, pb.mostRecent
         //  FROM article INNER JOIN

@@ -73,7 +73,7 @@ public class IngestibleServiceImpl extends AmbraService implements IngestibleSer
 
     return new Transceiver() {
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         return results;
       }
 

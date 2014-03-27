@@ -73,7 +73,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         loadJournal(journalKey);  // just to ensure journalKey is valid
 
         // A bit of a hack...

@@ -23,7 +23,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   public Transceiver read() throws IOException {
     return new Transceiver() {
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         return convertToMap(ambraConfiguration);
       }
 
@@ -38,7 +38,7 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   public Transceiver readBuildProperties() throws IOException {
     return new Transceiver() {
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         return getBuildProperties();
       }
 

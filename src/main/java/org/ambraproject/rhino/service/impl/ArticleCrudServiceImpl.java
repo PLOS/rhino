@@ -829,7 +829,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         Document doc;
         try {
           doc = parseXml(readXml(id));
@@ -873,7 +873,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
 
       @Override
-      protected Object getMetadata() throws IOException {
+      protected Object getData() throws IOException {
         return articleCriteria.apply(hibernateTemplate);
       }
     };
