@@ -17,19 +17,15 @@ import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,13 +71,9 @@ public class IngestibleController extends DoiBasedCrudController {
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET)
-  public void read(HttpServletResponse response,
-                   @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
-                   @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept)
+  public void read(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    MetadataFormat metadataFormat = MetadataFormat.getFromAcceptHeader(accept);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    ingestibleService.read(receiver, metadataFormat);
+    ingestibleService.read().respond(request, response, entityGson);
   }
 
   /**
@@ -95,10 +87,9 @@ public class IngestibleController extends DoiBasedCrudController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
-  public void ingest(HttpServletResponse response,
+  public void ingest(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(value = "name") String name,
-                     @RequestParam(value = "force_reingest", required = false) String forceReingest,
-                     @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp)
+                     @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException, FileStoreException {
 
     File archive;
@@ -119,7 +110,6 @@ public class IngestibleController extends DoiBasedCrudController {
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    articleCrudService.readMetadata(receiver, result, MetadataFormat.JSON, false);
+    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
   }
 }

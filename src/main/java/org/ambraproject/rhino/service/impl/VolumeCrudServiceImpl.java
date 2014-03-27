@@ -23,10 +23,10 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.VolumeInputView;
 import org.ambraproject.rhino.view.journal.VolumeOutputView;
 import org.hibernate.Criteria;
@@ -69,9 +69,9 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   private Volume findVolume(DoiBasedIdentity volumeId) {
     return (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Volume.class)
+                .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -87,7 +87,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     // TODO Transaction safety
     Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
-            .add(Restrictions.eq("journalKey", journalKey))
+                .add(Restrictions.eq("journalKey", journalKey))
         ));
     if (journal == null) {
       String message = "Journal not found for journal key: " + journalKey;
@@ -116,17 +116,27 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
   }
 
   @Override
-  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
-    Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", id.getKey()))
-            .setFetchMode("issues", FetchMode.JOIN)
-        ));
-    if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    serializeMetadata(mf, receiver, new VolumeOutputView(volume));
+  public Transceiver read(final DoiBasedIdentity id) throws IOException {
+    return new EntityTransceiver<Volume>() {
+      @Override
+      protected Volume fetchEntity() {
+        Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria
+                    .forClass(Volume.class)
+                    .add(Restrictions.eq("volumeUri", id.getKey()))
+                    .setFetchMode("issues", FetchMode.JOIN)
+            ));
+        if (volume == null) {
+          throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+        }
+        return volume;
+      }
+
+      @Override
+      protected Object getView(Volume volume) {
+        return new VolumeOutputView(volume);
+      }
+    };
   }
 
 }

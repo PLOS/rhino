@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -11,11 +11,9 @@ public interface ConfigurationReadService {
   /**
    * Write all values from the Ambra configuration.
    *
-   * @param receiver the response to which to write the configuration values
-   * @param format   the format in which to write
    * @throws IOException
    */
-  public abstract void read(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+  public abstract Transceiver read() throws IOException;
 
   /**
    * Returns a {@link Properties} instance with information about how the application was built.
@@ -29,6 +27,6 @@ public interface ConfigurationReadService {
   /**
    * Respond with a JSON object containing all values from {@link #getBuildProperties()}.
    */
-  public void readBuildProperties(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+  public Transceiver readBuildProperties() throws IOException;
 
 }

@@ -14,8 +14,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,11 +28,9 @@ public interface IngestibleService {
   /**
    * Writes a list of all ingestible archives to the response.
    *
-   * @param receiver JSON receiver
-   * @param format   specifies the format of the response.  Currently only JSON is supported.
    * @throws IOException
    */
-  void read(ResponseReceiver receiver, MetadataFormat format) throws IOException;
+  Transceiver read() throws IOException;
 
   /**
    * Returns the zip archive in the ingest directory corresponding to the given article.

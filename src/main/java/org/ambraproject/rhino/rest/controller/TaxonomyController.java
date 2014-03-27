@@ -14,15 +14,11 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Strings;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ClassificationService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,15 +43,12 @@ public class TaxonomyController extends RestController {
   @Transactional(readOnly = true)
   @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
   public void readRoot(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = "journal", required = true) String journal,
-                       @RequestParam(value = JSONP_CALLBACK_PARAM, required = false) String jsonp,
-                       @RequestHeader(value = ACCEPT_REQUEST_HEADER, required = false) String accept) throws Exception {
+                       @RequestParam(value = "journal", required = true) String journal)
+      throws Exception {
     String parent = getFullPathVariable(request, true, TAXONOMY_NAMESPACE);
     if (!Strings.isNullOrEmpty(parent)) {
       parent = URLDecoder.decode(parent, "UTF-8");
     }
-    MetadataFormat metadataFormat = MetadataFormat.getFromAcceptHeader(accept);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(jsonp, response);
-    classificationService.read(journal, parent, receiver, metadataFormat);
+    classificationService.read(journal, parent).respond(request, response, entityGson);
   }
 }

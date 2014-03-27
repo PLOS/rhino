@@ -27,11 +27,12 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
@@ -53,7 +54,9 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
@@ -74,7 +77,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throws FileStoreException, IOException {
     List<ArticleAsset> assets = (List<ArticleAsset>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetFileId.getKey())));
+            .add(Restrictions.eq("doi", assetFileId.getKey()))
+    );
 
     // Set up the Hibernate entity that we want to modify
     ArticleAsset assetToPersist = createAssetToAdd(assetFileId, assets);
@@ -217,7 +221,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             query.setParameter("assetDoi", assetDoi);
             return query.list();
           }
-        }));
+        })
+    );
     final BigInteger parentArticleId = Preconditions.checkNotNull((BigInteger) result[0]);
     int maxSortOrder = (Integer) result[1];
     final int newSortOrder = maxSortOrder + 1;
@@ -248,8 +253,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .add(Restrictions.eq("extension", id.getFileExtension()))
+                .add(Restrictions.eq("doi", id.getKey()))
+                .add(Restrictions.eq("extension", id.getFileExtension()))
         ));
     if (asset == null) {
       throw new RestClientException("Asset not found at: " + id, HttpStatus.NOT_FOUND);
@@ -297,57 +302,89 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * @return a collection of all {@code ArticleAsset} objects whose DOI matches the ID
    * @throws RestClientException if no asset files exist with that ID
    */
-  private Collection<ArticleAsset> findArticleAssets(AssetIdentity id) {
-    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (assets.isEmpty()) {
-      throw reportNotFound(id);
+  private abstract class ArticleAssetsRetriever extends EntityCollectionTransceiver<ArticleAsset> {
+    private final AssetIdentity id;
+
+    protected ArticleAssetsRetriever(AssetIdentity id) {
+      this.id = Preconditions.checkNotNull(id);
     }
-    return assets;
+
+    @Override
+    protected final Calendar getLastModifiedDate() throws IOException {
+      Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+          "select max(lastModified) from ArticleAsset where doi = ?", id.getKey()));
+      return (lastModified == null) ? null : copyToCalendar(lastModified);
+    }
+
+    @Override
+    protected final Collection<? extends ArticleAsset> fetchEntities() {
+      @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+          hibernateTemplate.findByCriteria(DetachedCriteria
+                  .forClass(ArticleAsset.class)
+                  .add(Restrictions.eq("doi", id.getKey()))
+                  .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+          ));
+      if (assets.isEmpty()) {
+        throw reportNotFound(id);
+      }
+      return assets;
+    }
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public Transceiver readMetadata(final AssetIdentity id)
       throws IOException {
-    Collection<ArticleAsset> assets = findArticleAssets(id);
-    serializeMetadata(format, receiver, new RawAssetFileCollectionView(assets));
+    return new ArticleAssetsRetriever(id) {
+      @Override
+      protected Object getView(Collection<? extends ArticleAsset> assets) {
+        return new RawAssetFileCollectionView(assets);
+      }
+    };
   }
 
   @Override
-  public void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public Transceiver readFigureMetadata(final AssetIdentity id)
       throws IOException {
-    Collection<ArticleAsset> assets = findArticleAssets(id);
-    GroomedImageView figureView;
-    try {
-      figureView = GroomedImageView.create(assets);
-    } catch (UncategorizedAssetException e) {
-      String message = "Not a figure asset: " + id.getIdentifier();
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
-    }
-    figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
-    serializeMetadata(format, receiver, figureView);
+    return new ArticleAssetsRetriever(id) {
+      @Override
+      protected Object getView(Collection<? extends ArticleAsset> assets) {
+        GroomedImageView figureView;
+        try {
+          figureView = GroomedImageView.create(assets);
+        } catch (UncategorizedAssetException e) {
+          String message = "Not a figure asset: " + id.getIdentifier();
+          throw new RestClientException(message, HttpStatus.BAD_REQUEST, e);
+        }
+        figureView.setParentArticle(findArticleFor(figureView.getIdentity()));
+        return figureView;
+      }
+    };
   }
 
   @Override
-  public void readFileMetadata(ResponseReceiver receiver, AssetFileIdentity id, MetadataFormat format)
+  public Transceiver readFileMetadata(final AssetFileIdentity id)
       throws IOException {
-    @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .add(Restrictions.eq("extension", id.getFileExtension()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (assets.isEmpty()) {
-      throw reportNotFound(id);
-    }
+    return new EntityTransceiver<ArticleAsset>() {
+      @Override
+      protected ArticleAsset fetchEntity() {
+        @SuppressWarnings("unchecked") List<ArticleAsset> assets = ((List<ArticleAsset>)
+            hibernateTemplate.findByCriteria(DetachedCriteria
+                    .forClass(ArticleAsset.class)
+                    .add(Restrictions.eq("doi", id.getKey()))
+                    .add(Restrictions.eq("extension", id.getFileExtension()))
+                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            ));
+        if (assets.isEmpty()) {
+          throw reportNotFound(id);
+        }
+        return DataAccessUtils.requiredUniqueResult(assets);
+      }
 
-    ArticleAsset asset = DataAccessUtils.requiredUniqueResult(assets);
-    serializeMetadata(format, receiver, new RawAssetFileView(asset));
+      @Override
+      protected Object getView(ArticleAsset asset) {
+        return new RawAssetFileView(asset);
+      }
+    };
   }
 
   /**
@@ -357,9 +394,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public void delete(AssetFileIdentity assetId) throws FileStoreException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(ArticleAsset.class)
+                .add(Restrictions.eq("doi", assetId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
       throw reportNotFound(assetId);

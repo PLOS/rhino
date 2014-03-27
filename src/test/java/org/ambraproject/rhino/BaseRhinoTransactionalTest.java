@@ -25,7 +25,7 @@ import org.testng.annotations.DataProvider;
 
 /**
  * Base class for a test where each test method is run in its own Spring/Hibernate transaction.
- *
+ * <p/>
  * TODO: make BaseRhinoTest transactional, and remove this.  IngestionTest currently breaks when this is done.
  */
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)

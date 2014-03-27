@@ -21,8 +21,7 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,9 +30,9 @@ public interface PingbackReadService {
 
   public static enum OrderBy {DATE, COUNT;}
 
-  public abstract void listByArticle(ResponseReceiver receiver, MetadataFormat format, OrderBy orderBy) throws IOException;
+  public abstract Transceiver listByArticle(OrderBy orderBy) throws IOException;
 
-  public abstract void read(ResponseReceiver receiver, ArticleIdentity article, MetadataFormat format) throws IOException;
+  public abstract Transceiver read(ArticleIdentity article) throws IOException;
 
   public abstract List<Pingback> loadPingbacks(Article article);
 

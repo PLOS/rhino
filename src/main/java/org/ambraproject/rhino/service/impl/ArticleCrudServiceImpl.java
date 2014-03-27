@@ -42,13 +42,13 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
@@ -75,7 +75,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -115,11 +117,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Article findArticleById(DoiBasedIdentity id) {
     return (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setFetchMode("articleType", FetchMode.JOIN)
-            .setFetchMode("citedArticles", FetchMode.JOIN)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Article.class)
+                .add(Restrictions.eq("doi", id.getKey()))
+                .setFetchMode("articleType", FetchMode.JOIN)
+                .setFetchMode("citedArticles", FetchMode.JOIN)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -325,7 +327,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private void reciprocateOutboundRelationship(Article ingested, ArticleRelationship relationship) {
     Article relatedArticle = (Article) DataAccessUtils.uniqueResult(
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", relationship.getOtherArticleDoi()))));
+            .add(Restrictions.eq("doi", relationship.getOtherArticleDoi())))
+    );
     if (relatedArticle == null) {
       return; // The referenced article does not exist in the system, so do nothing.
     }
@@ -499,7 +502,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } else {
       Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
           hibernateTemplate.findByCriteria(journalCriteria()
-              .add(Restrictions.eq("eIssn", eissn))
+                  .add(Restrictions.eq("eIssn", eissn))
           ));
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
@@ -749,44 +752,94 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat format,
-                           boolean excludeCitations) throws IOException {
-    assert format == MetadataFormat.JSON;
-    Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-            .add(Restrictions.eq("doi", id.getKey()))
-            .setFetchMode("assets", FetchMode.JOIN)
-            .setFetchMode("articleType", FetchMode.JOIN)
-            .setFetchMode("journals", FetchMode.JOIN)
-            .setFetchMode("journals.volumes", FetchMode.JOIN)
-            .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
-            .setFetchMode("journals.articleList", FetchMode.JOIN)
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
-    if (article == null) {
-      throw reportNotFound(id);
-    }
-    readMetadata(receiver, article, format, excludeCitations);
+  public Transceiver readMetadata(final DoiBasedIdentity id, final boolean excludeCitations) throws IOException {
+    return new EntityTransceiver<Article>() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+            "select lastModified from Article where doi = ?", id.getKey()));
+        if (lastModified == null) {
+          return null;
+        }
+        return copyToCalendar(lastModified);
+      }
+
+      @Override
+      protected Article fetchEntity() {
+        Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+                    .add(Restrictions.eq("doi", id.getKey()))
+                    .setFetchMode("assets", FetchMode.JOIN)
+                    .setFetchMode("articleType", FetchMode.JOIN)
+                    .setFetchMode("journals", FetchMode.JOIN)
+                    .setFetchMode("journals.volumes", FetchMode.JOIN)
+                    .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
+                    .setFetchMode("journals.articleList", FetchMode.JOIN)
+                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+            ));
+        if (article == null) {
+          throw reportNotFound(id);
+        }
+        return article;
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return createArticleView(entity, excludeCitations);
+      }
+    };
   }
 
   @Override
-  public void readMetadata(ResponseReceiver receiver, Article article, MetadataFormat format, boolean excludeCitations)
-      throws IOException {
-    ArticleOutputView view = ArticleOutputView.create(article, excludeCitations, syndicationService,
-        pingbackReadService);
-    serializeMetadata(format, receiver, view);
+  public Transceiver readMetadata(final Article article, final boolean excludeCitations) throws IOException {
+    return new EntityTransceiver<Article>() {
+      @Override
+      protected Article fetchEntity() {
+        return article;
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return createArticleView(entity, excludeCitations);
+      }
+    };
+  }
+
+  private ArticleOutputView createArticleView(Article article, boolean excludeCitations) {
+    return ArticleOutputView.create(article, excludeCitations, syndicationService, pingbackReadService);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void readAuthors(ResponseReceiver receiver, ArticleIdentity id, MetadataFormat format)
+  public Transceiver readAuthors(final ArticleIdentity id)
       throws IOException, FileStoreException {
-    Document doc = parseXml(readXml(id));
-    List<AuthorView> authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
-    List<ArticleAuthorView> views = ArticleAuthorView.createList(authors);
-    serializeMetadata(format, receiver, views);
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        AssetFileIdentity xmlAssetIdentity = id.forXmlAsset();
+        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+            "select lastModified from ArticleAsset where doi = ? and extension = ?",
+            xmlAssetIdentity.getKey(), xmlAssetIdentity.getFileExtension()));
+        if (lastModified == null) {
+          throw reportNotFound(id);
+        }
+        return copyToCalendar(lastModified);
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        Document doc;
+        try {
+          doc = parseXml(readXml(id));
+        } catch (FileStoreException e) {
+          throw new IOException(e);
+        }
+        List<AuthorView> authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+        return ArticleAuthorView.createList(authors);
+      }
+    };
   }
 
   /**
@@ -811,10 +864,19 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public void listDois(ResponseReceiver receiver, MetadataFormat format,
-                       ArticleCriteria articleCriteria)
+  public Transceiver listDois(final ArticleCriteria articleCriteria)
       throws IOException {
-    serializeMetadata(format, receiver, articleCriteria.apply(hibernateTemplate));
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        return articleCriteria.apply(hibernateTemplate);
+      }
+    };
   }
 
   @Required

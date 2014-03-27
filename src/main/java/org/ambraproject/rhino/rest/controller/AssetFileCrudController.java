@@ -26,14 +26,11 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,8 +104,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     }
 
     response.setStatus(result.getStatus().value());
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    assetCrudService.readMetadata(receiver, fileIdentity.forAsset(), MetadataFormat.JSON);
+    assetCrudService.readMetadata(fileIdentity.forAsset()).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -211,9 +207,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   public void readMetadata(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     AssetFileIdentity id = parse(request);
-    MetadataFormat mf = MetadataFormat.getFromRequest(request);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    assetCrudService.readFileMetadata(receiver, id, mf);
+    assetCrudService.readFileMetadata(id).respond(request, response, entityGson);
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)

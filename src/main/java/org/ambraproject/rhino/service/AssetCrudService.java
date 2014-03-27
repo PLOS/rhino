@@ -23,8 +23,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,32 +74,26 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
    * asset.
    *
-   * @param receiver the receiver to which the metadata should be written
-   * @param id       the identity of the asset to read
-   * @param format   the desired metadata format
+   * @param id the identity of the asset to read
    */
-  public abstract void readMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public abstract Transceiver readMetadata(AssetIdentity id)
       throws IOException;
 
   /**
    * Read the metadata of a figure asset. The output contains the figure metadata, as defined by the "original" asset
    * file, plus the individual asset file objects.
    *
-   * @param receiver the receiver to which the metadata should be written
-   * @param id       the identity of the asset to read
-   * @param format   the desired metadata format
+   * @param id the identity of the asset to read
    */
-  public abstract void readFigureMetadata(ResponseReceiver receiver, AssetIdentity id, MetadataFormat format)
+  public abstract Transceiver readFigureMetadata(AssetIdentity id)
       throws IOException;
 
   /**
    * Read the metadata of a single asset file.
    *
-   * @param receiver the receiver to which the metadata should be written
-   * @param id       the identity of the asset file to read
-   * @param format   the desired metadata format
+   * @param id the identity of the asset file to read
    */
-  public void readFileMetadata(ResponseReceiver receiver, AssetFileIdentity id, MetadataFormat format)
+  public Transceiver readFileMetadata(AssetFileIdentity id)
       throws IOException;
 
   /**

@@ -29,16 +29,14 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
-import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
-import org.ambraproject.rhino.test.DummyResponseReceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.apache.commons.io.IOUtils;
@@ -49,7 +47,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -130,9 +127,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     Article stored = (Article) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Article.class)
-            .add(Restrictions.eq("doi", key))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Article.class)
+                .add(Restrictions.eq("doi", key))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored, "ArticleCrudService.create did not store an article");
     assertEquals(stored.getDoi(), key);
@@ -194,9 +191,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     ArticleAsset stored = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(ArticleAsset.class)
-            .add(Restrictions.eq("doi", assetId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(ArticleAsset.class)
+                .add(Restrictions.eq("doi", assetId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     assertNotNull(stored.getContextElement());
     assertNotNull(stored.getContentType());
@@ -229,9 +226,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     a2.seteIssn(a1.geteIssn());
     hibernateTemplate.save(a2);
 
-    DummyResponseReceiver response = new DummyResponseReceiver();
-    articleCrudService.listDois(response, MetadataFormat.JSON, ArticleCriteria.create(null, null));
-    DoiList doiList = entityGson.fromJson(response.read(), DoiList.class);
+    Transceiver response = articleCrudService.listDois(ArticleCriteria.create(null, null));
+    DoiList doiList = entityGson.fromJson(response.readJson(entityGson), DoiList.class);
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }
 
@@ -247,9 +243,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     Article article = articleCrudService.write(input, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
-    DummyResponseReceiver drr = new DummyResponseReceiver();
-    articleCrudService.readMetadata(drr, articleId, MetadataFormat.JSON, true);
-    String json = drr.read();
+    String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<?, ?> articleMap = gson.fromJson(json, Map.class);
@@ -270,9 +264,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     Article article = articleCrudService.write(input, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
-    DummyResponseReceiver drr = new DummyResponseReceiver();
-    articleCrudService.readAuthors(drr, articleId, MetadataFormat.JSON);
-    String json = drr.read();
+    String json = articleCrudService.readAuthors(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     List<?> authors = gson.fromJson(json, List.class);

@@ -15,11 +15,8 @@ package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleStateService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
-import org.ambraproject.rhino.util.response.ServletResponseReceiver;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +57,6 @@ public class ArticleStateController extends ArticleSpaceController {
     ArticleIdentity id = parse(request);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);
-    ResponseReceiver receiver = ServletResponseReceiver.createForJson(request, response);
-    articleCrudService.readMetadata(receiver, id, MetadataFormat.JSON, false);
+    articleCrudService.readMetadata(id, false).respond(request, response, entityGson);
   }
 }

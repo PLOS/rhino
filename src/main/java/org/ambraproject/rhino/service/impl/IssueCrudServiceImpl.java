@@ -24,10 +24,10 @@ import org.ambraproject.models.Issue;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.EntityTransceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Criteria;
@@ -45,16 +45,26 @@ import java.util.List;
 public class IssueCrudServiceImpl extends AmbraService implements IssueCrudService {
 
   @Override
-  public void read(ResponseReceiver receiver, DoiBasedIdentity id, MetadataFormat mf) throws IOException {
-    Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", id.getKey()))
-        ));
-    if (issue == null) {
-      throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
-    }
-    serializeMetadata(mf, receiver, new IssueOutputView(issue));
+  public Transceiver read(final DoiBasedIdentity id) throws IOException {
+    return new EntityTransceiver<Issue>() {
+      @Override
+      protected Issue fetchEntity() {
+        Issue issue = (Issue) DataAccessUtils.uniqueResult((List<?>)
+            hibernateTemplate.findByCriteria(DetachedCriteria
+                    .forClass(Issue.class)
+                    .add(Restrictions.eq("issueUri", id.getKey()))
+            ));
+        if (issue == null) {
+          throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+        }
+        return issue;
+      }
+
+      @Override
+      protected Object getView(Issue issue) {
+        return new IssueOutputView(issue);
+      }
+    };
   }
 
   private Issue applyInput(Issue issue, IssueInputView input) {
@@ -110,8 +120,8 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
         DetachedCriteria.forClass(Article.class)
             .add(Restrictions.eq("doi", imageArticleId.getKey()))
             .setProjection(Projections.projectionList()
-                .add(Projections.property("title"))
-                .add(Projections.property("description"))
+                    .add(Projections.property("title"))
+                    .add(Projections.property("description"))
             )
     ));
     if (result == null) {
@@ -129,9 +139,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   private Issue findIssue(DoiBasedIdentity issueId) {
     return (Issue) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Issue.class)
-            .add(Restrictions.eq("issueUri", issueId.getKey()))
-            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .forClass(Issue.class)
+                .add(Restrictions.eq("issueUri", issueId.getKey()))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
   }
 
@@ -146,9 +156,9 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     Volume volume = (Volume) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
-            .forClass(Volume.class)
-            .add(Restrictions.eq("volumeUri", volumeId.getKey()))
-            .setFetchMode("issues", FetchMode.JOIN)
+                .forClass(Volume.class)
+                .add(Restrictions.eq("volumeUri", volumeId.getKey()))
+                .setFetchMode("issues", FetchMode.JOIN)
         ));
     if (volume == null) {
       throw new RestClientException("Volume not found for volumeUri: " + volumeId.getIdentifier(), HttpStatus.BAD_REQUEST);

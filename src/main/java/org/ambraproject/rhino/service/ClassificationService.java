@@ -13,9 +13,7 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.ApplicationException;
-import org.ambraproject.rhino.rest.MetadataFormat;
-import org.ambraproject.rhino.util.response.ResponseReceiver;
+import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 
@@ -31,14 +29,10 @@ public interface ClassificationService {
    * Forwards the child terms of a given taxonomic subject area to the receiver, along with the counts of children for
    * each child.
    *
-   * @param journal  journal key specifying the journal
-   * @param parent   the parent subject category that we will return children for.  If null or empty, the root of the
-   *                 hierarchy will be used.
-   * @param receiver JSON receiver
-   * @param format   specifies the format of the response.  Currently only JSON is supported.
+   * @param journal journal key specifying the journal
+   * @param parent  the parent subject category that we will return children for.  If null or empty, the root of the
+   *                hierarchy will be used.
    * @throws IOException
-   * @throws ApplicationException
    */
-  void read(String journal, String parent, ResponseReceiver receiver, MetadataFormat format)
-      throws IOException, ApplicationException;
+  Transceiver read(String journal, String parent) throws IOException;
 }

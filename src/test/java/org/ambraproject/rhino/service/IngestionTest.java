@@ -31,11 +31,10 @@ import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.MetadataFormat;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
-import org.ambraproject.rhino.test.DummyResponseReceiver;
 import org.ambraproject.rhino.util.StringReplacer;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -47,7 +46,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -262,16 +260,14 @@ public class IngestionTest extends BaseRhinoTest {
       log.error(failure.toString());
     }
     assertEquals(failures.size(), 0, "Mismatched Article fields for " + expected.getDoi());
-    testReadMetadata(actual, MetadataFormat.JSON);
+    testReadMetadata(actual);
   }
 
-  private void testReadMetadata(Article article, MetadataFormat metadataFormat) throws IOException {
-    DummyResponseReceiver response = new DummyResponseReceiver();
-
+  private void testReadMetadata(Article article) throws IOException {
     // Mostly we want to test that this method call doesn't crash or hang
-    articleCrudService.readMetadata(response, article, metadataFormat, true);
+    Transceiver response = articleCrudService.readMetadata(article, true);
 
-    assertFalse(StringUtils.isBlank(response.read()));
+    assertFalse(StringUtils.isBlank(response.readJson(entityGson)));
   }
 
   @Test(dataProvider = "generatedZipIngestionData")
@@ -447,18 +443,20 @@ public class IngestionTest extends BaseRhinoTest {
   private static final StringReplacer XML_MASSAGER = StringReplacer.builder()
       .replaceRegex(">\\s+<", "><") // Whitespace between tags
       .replaceRegex("" // Self-closing tags
-          + "<"
-          + "([^>\\s]+)"   // Tag name.
-          + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
-          + "/>",
-          "<$1$2></$1>")
+              + "<"
+              + "([^>\\s]+)"   // Tag name.
+              + "([^>]*?)\\s*" // Attributes, if any. (Exclude trailing whitespace from captured group.)
+              + "/>",
+          "<$1$2></$1>"
+      )
       .replaceRegex("" // Ampersands escaped within a tag attribute
-          + "(<[^>]*"    // Stuff in the tag before the attribute begins
-          + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
-          + "&amp;"      // The escaped ampersand
-          + "([^>\"]*\"" // Closes the attribute
-          + "[^>]*>)",   // Closes the tag
-          "$1&$2")
+              + "(<[^>]*"    // Stuff in the tag before the attribute begins
+              + "\"[^>\"]*)" // Stuff in the attribute before the escaped ampersand
+              + "&amp;"      // The escaped ampersand
+              + "([^>\"]*\"" // Closes the attribute
+              + "[^>]*>)",   // Closes the tag
+          "$1&$2"
+      )
       .build();
 
   private static void compareMarkupLists(AssertionCollector results, Class<?> objectType, String fieldName,
@@ -851,7 +849,8 @@ public class IngestionTest extends BaseRhinoTest {
     List<Syndication> actual = hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Syndication.class)
             .add(Restrictions.eq("doi", article.getDoi()))
-            .addOrder(Order.asc("target")));
+            .addOrder(Order.asc("target"))
+    );
 
     int commonSize = Math.min(expected.size(), actual.size());
     for (int i = 0; i < commonSize; i++) {
