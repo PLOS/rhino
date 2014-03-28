@@ -112,6 +112,21 @@ public class AssetFileIdentity extends DoiBasedIdentity {
   }
 
   /**
+   * Return the portion of the full file path that, if it were a path on an actual file system, would be the name of the
+   * file. In other words, everything after the final {@code '/'} character, or the full string if there is none.
+   * <p/>
+   * Note that DOIs are not file paths and that slashes within them do not necessarily denote a directory hierarchy.
+   *
+   * @return the file name
+   */
+  public String getFileName() {
+    String identifier = getIdentifier();
+    int lastSlashIndex = identifier.lastIndexOf('/');
+    String fileName = (lastSlashIndex < 0) ? identifier : identifier.substring(lastSlashIndex + 1);
+    return fileName + '.' + getFileExtension();
+  }
+
+  /**
    * PLOS idiosyncrasy: this file extension is used for PNG images.
    */
   private static final Pattern PNG_THUMBNAIL = Pattern.compile("PNG_\\w", Pattern.CASE_INSENSITIVE);

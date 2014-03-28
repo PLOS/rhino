@@ -55,6 +55,7 @@ public abstract class DoiBasedCrudController extends RestController {
                                    AssetFileIdentity identity)
       throws IOException {
     response.setContentType(identity.getContentType().toString());
+    response.setHeader("Content-Disposition", "attachment; filename=" + identity.getFileName());
 
     try (OutputStream responseStream = response.getOutputStream()) {
       IOUtils.copy(readStream, responseStream);
