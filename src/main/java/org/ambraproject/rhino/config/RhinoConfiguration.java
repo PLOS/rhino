@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.config;
 
-import com.google.common.io.Closeables;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
@@ -251,7 +250,8 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     YamlConfiguration runtimeConfiguration;
     try (Reader reader = new BufferedReader(new FileReader(configPath))) {
-      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(reader, YamlConfiguration.UserFields.class));
+      YamlConfiguration.UserFields configValues = yaml.loadAs(reader, YamlConfiguration.UserFields.class);
+      runtimeConfiguration = new YamlConfiguration(configValues);
     }
 
     return runtimeConfiguration;

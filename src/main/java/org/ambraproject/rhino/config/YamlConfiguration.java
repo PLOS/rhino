@@ -19,16 +19,31 @@
 
 package org.ambraproject.rhino.config;
 
+/**
+ * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain
+ * values that are required to start up the server and its behavior.
+ */
 public class YamlConfiguration implements RuntimeConfiguration {
+
+  // TODO add a validate function that can check for
+  // * required values and throw meaning errors when they are not present
+  // * supply meaning default values
 
   private final UserFields uf;
 
   public YamlConfiguration(UserFields uf) {
-    this.uf = uf;
+    // if the yaml file doesn't contain anything, UserFields object will be null
+
+    if (uf == null) {
+      this.uf = new UserFields();
+    } else {
+      this.uf = uf;
+    }
   }
 
   public static class UserFields {
-    private boolean prettyPrintJson;
+    // the default value should be true
+    private boolean prettyPrintJson = true;
 
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
