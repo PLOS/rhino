@@ -250,14 +250,8 @@ public class RhinoConfiguration extends BaseConfiguration {
     }
 
     YamlConfiguration runtimeConfiguration;
-    Reader reader = null;
-    boolean threw = true;
-    try {
-      reader = new BufferedReader(new FileReader(configPath));
+    try (Reader reader = new BufferedReader(new FileReader(configPath))) {
       runtimeConfiguration = new YamlConfiguration(yaml.loadAs(reader, YamlConfiguration.UserFields.class));
-      threw = false;
-    } finally {
-      Closeables.close(reader, threw);
     }
 
     return runtimeConfiguration;
