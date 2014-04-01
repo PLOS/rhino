@@ -32,6 +32,7 @@ import java.util.Map;
 public class DummyMessageSender implements MessageSender {
 
   public ListMultimap<String, String> messagesSent = LinkedListMultimap.create();
+  public Map<String, Object> headersSent;
 
   @Override
   public void sendMessage(String destination, String body) {
@@ -57,6 +58,7 @@ public class DummyMessageSender implements MessageSender {
 
   @Override
   public void sendMessage(String destination, Object body, Map<String, Object> headers) {
-    throw new UnsupportedOperationException();
+    messagesSent.put(destination, (String)body);
+    headersSent = headers;
   }
 }

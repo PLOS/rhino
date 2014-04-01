@@ -26,6 +26,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.routes.CrossRefLookupRoutes;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
@@ -41,6 +42,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.fail;
 
 /**
@@ -131,7 +133,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(result.getSyndication(pubmed).getStatus(), Syndication.STATUS_IN_PROGRESS);
     ArticleStateServiceImpl impl = (ArticleStateServiceImpl) articleStateService;
     DummyMessageSender dummySender = (DummyMessageSender) impl.messageSender;
-    assertEquals(dummySender.messagesSent.size(), 4);
+    assertEquals(dummySender.messagesSent.size(), 5);
 
     List<String> solrMessages = dummySender.messagesSent.get("activemq:fake.indexing.queue");
     assertEquals(solrMessages.size(), 1);
@@ -156,7 +158,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     inputView = entityGson.fromJson("{'state': 'disabled'}", ArticleInputView.class);
     article = articleStateService.update(articleId, inputView);
     assertEquals(article.getState(), Article.STATE_DISABLED);
-    assertEquals(dummySender.messagesSent.size(), 5);
+    assertEquals(dummySender.messagesSent.size(), 6);
     List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
     assertEquals(deletionMessages.size(), 1);
     assertEquals(deletionMessages.get(0), article.getDoi());
@@ -169,5 +171,14 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
     }
+
+    //Make sure we sent the item to the cross ref queue
+    List<String> citedArticlesQueue = dummySender.messagesSent.get("activemq:fake.citedArticles.queue");
+    assertEquals(citedArticlesQueue.size(), 1);
+    assertEquals(citedArticlesQueue.get(0), article.getDoi());
+    assertEquals(dummySender.headersSent.size(), 1);
+    String[] headerKeys = dummySender.headersSent.keySet().toArray(new String[1]);
+    assertEquals(headerKeys[0], CrossRefLookupRoutes.HEADER_AUTH_ID);
+    assertNull(dummySender.headersSent.get(0));
   }
 }
