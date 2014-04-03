@@ -143,7 +143,7 @@ public abstract class Transceiver {
    */
   // TODO: Make configurable (which is tricky because Transceivers aren't Spring beans)
   protected boolean bufferResponseBody() {
-    return true;
+    return false;
   }
 
   private static final int JSON_BUFFER_INITIAL_SIZE = 0x400;
