@@ -308,7 +308,7 @@ def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
     """
     try:
         # Download the source file
-        (fname, md5) = srcRepo.getAfid(afidSuffix)
+        (fname, md5, sha1, content_type, size) = srcRepo.getAfid(afidSuffix)
         ( _, _, _, status) = dstRepo.putAfid(afidSuffix, fname, articleMData, assetMData, md5, cb=None)
     except Exception as e:
         status = 'FAILED: {adoi} {msg}'.format(adoi=afidSuffix, msg=e.message)
@@ -318,6 +318,7 @@ def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
         # If it failed to get the file there will be an exception
         # so cleanup if necessary.i getAfid defaults to using
         # afidSuffix as the file name.
+        print(fname)
         if os.path.exists(fname):
             os.remove(fname)
     return (afidSuffix, fname, md5, status) 
@@ -348,10 +349,10 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
         # Get the meta-data before making the directory
         # If an exception is thrown we will not have to clean up.
         dname = urllib.quote(doiSuffix, '')
+        os.mkdir(dname)
+        os.chdir('./{d}'.format(d=dname))
         try:
             articleMData = srcRepo.article(doiSuffix)
-            os.mkdir(dname)
-            os.chdir('./{d}'.format(d=dname))
             for copy_result in adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
                 # Result Tuple (afidSuffix, fname, md5, status)
                 appender.append(copy_result)
@@ -360,6 +361,7 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
             exc_type, exc_value, exc_traceback = sys.exc_info()
             traceback.print_exception(exc_type, exc_value, exc_traceback,
                               limit=2, file=sys.stdout)
+            continue
         finally:
             os.chdir('../')
             if os.path.exists(dname):

@@ -207,7 +207,7 @@ class S3:
         """
         elemLst = s3keyPath.split('/')
         if elemLst[1] == 'annotation':
-           fullDOI = u'{p}/{s}'.format(p=elemLst[0], s= '/'.join(elemLst[1:-1]))
+           fullDOI = u'{p}/{a}/{s}'.format(p=elemLst[0], a=elemLst[1], s=elemLst[2].split('.')[0])
         else:
            fullDOI = u'{p}/{s}'.format(p=elemLst[0], s= '.'.join(elemLst[1:-1]))
         return fullDOI
@@ -358,7 +358,7 @@ class S3:
                     yield self._stripPrefix(fullDOI, stripPrefix)
             # Get the annotation DOIs
             prefix = '{p}/annotation/'.format(p=self.prefix) 
-            bklstRslt = self.bucket.list(delimiter='/', prefix=p)
+            bklstRslt = self.bucket.list(delimiter='/', prefix=prefix)
             for k in bklstRslt:
                 fullDOI = self._s3keyPath2doi(k.name)
                 if useCache: self._ARTICLE_DOI_CACHE[fullDOI] = 1
