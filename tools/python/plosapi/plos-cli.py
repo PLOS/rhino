@@ -308,7 +308,7 @@ def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
     """
     try:
         # Download the source file
-        (fname, md5) = srcRepo.getAfid(afidSuffix)
+        (fname, md5, sha1, content_type, size) = srcRepo.getAfid(afidSuffix)
         ( _, _, _, status) = dstRepo.putAfid(afidSuffix, fname, articleMData, assetMData, md5, cb=None)
     except Exception as e:
         status = 'FAILED: {adoi} {msg}'.format(adoi=afidSuffix, msg=e.message)
@@ -318,6 +318,7 @@ def _afidCopy(afidSuffix, srcRepo, dstRepo, articleMData, assetMData):
         # If it failed to get the file there will be an exception
         # so cleanup if necessary.i getAfid defaults to using
         # afidSuffix as the file name.
+        print(fname)
         if os.path.exists(fname):
             os.remove(fname)
     return (afidSuffix, fname, md5, status) 
@@ -348,10 +349,10 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
         # Get the meta-data before making the directory
         # If an exception is thrown we will not have to clean up.
         dname = urllib.quote(doiSuffix, '')
+        os.mkdir(dname)
+        os.chdir('./{d}'.format(d=dname))
         try:
             articleMData = srcRepo.article(doiSuffix)
-            os.mkdir(dname)
-            os.chdir('./{d}'.format(d=dname))
             for copy_result in adoiCopy(doiSuffix, srcRepo, dstRepo, articleMData):
                 # Result Tuple (afidSuffix, fname, md5, status)
                 appender.append(copy_result)
@@ -360,6 +361,7 @@ def doiCopy(doiSuffixes, srcRepo, dstRepo, appender):
             exc_type, exc_value, exc_traceback = sys.exc_info()
             traceback.print_exception(exc_type, exc_value, exc_traceback,
                               limit=2, file=sys.stdout)
+            continue
         finally:
             os.chdir('../')
             if os.path.exists(dname):
@@ -418,7 +420,36 @@ def publish(params, srcRepo, apd):
             srcRepo.publish(doi)
         except Exception as e:
             print('Failed: {n} {msg}'.format(n=doi, msg=e.message.encode('utf-8')))
+    return
 
+def dumparticle(params, src, apd, outDir='./'):
+    
+    oldDir = os.path.realpath('./')
+    os.chdir(outDir)
+    for doi in params:
+        try:
+            print('Article Dump: {doi}'.format(doi=doi))
+            dname = urllib.quote(doi, '')
+            metaData = src.article(doi)
+            rslt = src.articleFiles(_stripPrefix(doi, src))
+            fp = open('{d}/{doi}-meta.json'.format(d=dname, doi=dname), 'w')
+            json.dump(metaData, fp)
+            fp.close()
+            fp = open('{d}/{doi}-asset-meta.json'.format(d=dname, doi=dname), 'w')
+            json.dump(rslt, fp)
+            fp.close()
+            lst = rslt[doi]
+            for row in lst:
+               (_, d) = row
+               (afid, m, s, mt, sz) = d
+               print('{doi}, {lm}, {afid}, {m}, {s}, {mt}, {sz}, csv-data'.format(doi=doi, lm=metaData['lastModified'], afid=afid, m=m, sz=sz, mt=mt, s=s))
+        except Exception as e:
+            apd.append(e)
+            print('FAILED: {doi}'.format(doi=doi))
+            print('rm -rf {d}/{doi} #Cleanup'.format(doi=doi, d=outDir))
+            print('./plos-cli.py --directory {d} dumparticle {doi} > {redo}.redo #redo'.format(d=outDir, doi=doi, redo=dname))
+    os.chdir(oldDir)
+    return
     
 if __name__ == "__main__":
     import argparse
@@ -433,13 +464,16 @@ if __name__ == "__main__":
     parser.add_argument('--matchOnly', metavar='"+-"', default='+-', 
                          help='source and destination matching criteria. [-+, +-, ++, ""]')
     parser.add_argument('--file', default=None, help='File name of alternate input params list.')
+    parser.add_argument('--directory', default='./', help='Target directory for data dumps.')
     parser.add_argument('command', help='doidiff [no params] | '
                                         'doicopy [doi suffixes] | '
                                         'assetdiff [doi suffixes] | ' 
                                         'backup  [no params] | \n'
                                         'repackage | '
-                                        'ingestibles |'
-                                        'ingest [zips in Q]' )
+                                        'ingestibles | '
+                                        'ingest [zips in Q] | '
+                                        'dumparticle [doi suffixes] | '
+                                   )
     parser.add_argument('params', nargs='*', help="command dependent parameters")
     args = parser.parse_args()
     params = args.params
@@ -469,6 +503,8 @@ if __name__ == "__main__":
                    lambda src, _, apd: ingest(params, src, apd),
                  'publish' :
                    lambda src, _, apd: publish(params, src, apd),
+                 'dumparticle' :
+                   lambda src, _, apd: dumparticle(params, src, apd, outDir=args.directory),
                 }
 
     src = Rhino(rhinoServer=args.server, prefix=args.prefix)

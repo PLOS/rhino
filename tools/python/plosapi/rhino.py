@@ -10,6 +10,7 @@ from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, hashlib, urllib
 from StringIO import StringIO
+from datetime import datetime
 
 __author__    = 'Bill OConnor'
 __copyright__ = 'Copyright 2013, PLOS'
@@ -382,7 +383,8 @@ class Rhino:
 if __name__ == "__main__":
     import argparse   
     import pprint 
- 
+    from datetime import datetime
+
     # Main command dispatcher.
     dispatch = { 'articlefiles' : lambda repo, params: [ repo.articleFiles(doi) for doi in params ],
                  'article'      : lambda repo, params: [ repo.article(doi) for doi in params ],
@@ -429,9 +431,11 @@ if __name__ == "__main__":
         fp.close()
 
     try:
+        print('start:' + datetime.now().isoformat())
         r = Rhino(rhinoServer=args.server, prefix=args.prefix, rver=args.rver)
         for val in dispatch[args.command](r, params):
             pp.pprint(val)
+        print('finish:' + datetime.now().isoformat())
     except Exception as e:
         sys.stderr.write('Exception: {msg}.\n'.format(msg=e.message.encode('utf-8')))
         traceback.print_exc(file=sys.stdout)
