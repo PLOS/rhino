@@ -18,6 +18,9 @@
       <guid-prefix>info:doi/0.0/</guid-prefix>
     </platform>
     <services>
+      <queue>
+        <refreshCitedArticles>activemq:fake.citedArticles.queue</refreshCitedArticles>
+      </queue>
       <search>
         <articleIndexingQueue>activemq:fake.indexing.queue</articleIndexingQueue>
         <articleDeleteQueue>activemq:fake.delete.queue</articleDeleteQueue>

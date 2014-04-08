@@ -28,13 +28,17 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.view.article.ArticleInputView;
+import org.ambraproject.routes.CrossRefLookupRoutes;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
+import org.apache.camel.CamelExecutionException;
 import org.apache.commons.configuration.Configuration;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -49,6 +53,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,6 +62,8 @@ import java.util.Set;
  * {@inheritDoc}
  */
 public class ArticleStateServiceImpl extends AmbraService implements ArticleStateService {
+
+  private static final Logger log = LoggerFactory.getLogger(ArticleStateServiceImpl.class);
 
   private static final String XML_NAMESPACE = "http://www.ambraproject.org/article/additionalInfo";
 
@@ -196,6 +203,10 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       updateSolrIndex(articleId, article, isPublished);
       hibernateTemplate.update(article);
 
+      if (updatedState.get() == Article.STATE_ACTIVE) {
+        queueCrossRefRefresh(article.getDoi());
+      }
+
       if (updatedState.get() == Article.STATE_DISABLED) {
         deleteFilestoreFiles(articleId);
         ingestibleService.revertArchive(articleId);
@@ -221,6 +232,28 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     }
 
     return article;
+  }
+
+  /**
+   * Send a message to the queue to refresh the cited articles via cross ref
+   */
+  @SuppressWarnings("unchecked")
+  private void queueCrossRefRefresh(String doi) {
+    String refreshCitedArticlesQueue = ambraConfiguration.getString("ambra.services.queue.refreshCitedArticles", null);
+    if (refreshCitedArticlesQueue != null) {
+      try {
+        messageSender.sendMessage(refreshCitedArticlesQueue, doi, new HashMap() {{
+          //Appending null for the header auth ID.  It's OK because the article must be in a published
+          //state and the authID should not be checked
+          put(CrossRefLookupRoutes.HEADER_AUTH_ID, null);
+        }});
+      } catch (CamelExecutionException ex) {
+        log.error(ex.getMessage(), ex);
+        throw new RuntimeException("Failed to queue job for refreshing article references, is the queue running?");
+      }
+    } else {
+      throw new RuntimeException("Refresh cited articles queue not defined. No route created.");
+    }
   }
 
   private Article loadArticle(ArticleIdentity articleId) {
