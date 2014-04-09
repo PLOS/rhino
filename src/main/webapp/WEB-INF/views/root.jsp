@@ -46,6 +46,7 @@ Built at ${buildProperties.buildDate} by ${buildProperties.buildUser}
         </c:forEach>
       </li>
       <li><a href="articles?pingbacks">?pingbacks</a></li>
+      <li><a href="articles?date">?date</a></li>
     </ul>
   </li>
   <li><a href="ingestibles">/ingestibles</a></li>
