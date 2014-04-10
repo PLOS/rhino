@@ -19,3 +19,9 @@ target/
 
 # Temporary files #
 *~
+
+# Backup files #
+
+
+# Backup files #
+*.versionsBackup
