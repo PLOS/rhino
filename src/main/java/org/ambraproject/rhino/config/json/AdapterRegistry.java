@@ -3,6 +3,7 @@ package org.ambraproject.rhino.config.json;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import org.ambraproject.rhino.view.AnnotationOutputView;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
@@ -59,6 +60,8 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.journal.VolumeListView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.class)
       .add(org.ambraproject.rhino.view.journal.VolumeOutputView.ListView.class)
+
+      .add(org.ambraproject.rhino.view.AnnotationOutputView.class)
 
       .build();
 

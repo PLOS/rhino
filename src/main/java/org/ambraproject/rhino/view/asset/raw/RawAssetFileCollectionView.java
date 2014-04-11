@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.view.asset.raw;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -8,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleVisibility;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
@@ -19,18 +21,22 @@ import java.util.List;
 public class RawAssetFileCollectionView implements JsonOutputView {
 
   private final ImmutableList<ArticleAsset> assets;
+  private final ArticleVisibility parentArticle;
 
-  public RawAssetFileCollectionView(Collection<? extends ArticleAsset> assets) {
+  public RawAssetFileCollectionView(Collection<? extends ArticleAsset> assets, ArticleVisibility parentArticle) {
     this.assets = ImmutableList.copyOf(assets);
+    this.parentArticle = Preconditions.checkNotNull(parentArticle);
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
-    return serializeAssetFiles(assets, context);
+    return serializeAssetFiles(assets, parentArticle, context);
   }
 
   /* package-private */
-  static JsonElement serializeAssetFiles(List<ArticleAsset> assets, JsonSerializationContext context) {
+  static JsonElement serializeAssetFiles(List<ArticleAsset> assets,
+                                         ArticleVisibility parentArticle,
+                                         JsonSerializationContext context) {
     if (assets.isEmpty()) {
       return new JsonArray();
     }
@@ -40,18 +46,20 @@ public class RawAssetFileCollectionView implements JsonOutputView {
         // Just one uninitialized asset.
         // It doesn't have a file identity, so return it in a plain array instead of keyed by file ID.
         JsonArray uninitialized = new JsonArray();
-        JsonElement serializedAsset = context.serialize(new RawAssetFileView(only));
+        JsonElement serializedAsset = context.serialize(new RawAssetFileView(only, parentArticle));
         uninitialized.add(serializedAsset);
         return uninitialized;
       }
     }
-    return serializeInitializedAssetFiles(assets, context);
+    return serializeInitializedAssetFiles(assets, parentArticle, context);
   }
 
   /*
    * A set of assets with associated files. Key them by file ID. Expect none to be uninitialized.
    */
-  private static JsonObject serializeInitializedAssetFiles(Collection<ArticleAsset> assets, JsonSerializationContext context) {
+  private static JsonObject serializeInitializedAssetFiles(Collection<ArticleAsset> assets,
+                                                           ArticleVisibility parentArticle,
+                                                           JsonSerializationContext context) {
     JsonObject byAssetFileId = new JsonObject();
     String commonAssetId = null;
     for (ArticleAsset asset : assets) {
@@ -73,7 +81,7 @@ public class RawAssetFileCollectionView implements JsonOutputView {
         throw new RuntimeException("Asset file ID collision: " + assetFileId);
       }
 
-      JsonElement serializedAsset = context.serialize(new RawAssetFileView(asset));
+      JsonElement serializedAsset = context.serialize(new RawAssetFileView(asset, parentArticle));
       byAssetFileId.add(assetFileId, serializedAsset);
     }
     return byAssetFileId;

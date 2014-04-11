@@ -10,9 +10,9 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleVisibility;
 
 import java.util.Collection;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class GroomedImageView implements JsonOutputView {
 
   private final ArticleAsset original;
   private final Map<ImageFileType, ArticleAsset> thumbnails;
-  private Optional<ArticleIdentity> parentArticleId;
+  private Optional<ArticleVisibility> parentArticleVisibility;
   private final ImageType imageType;
 
   private GroomedImageView(ArticleAsset original,
@@ -33,7 +33,7 @@ public class GroomedImageView implements JsonOutputView {
     this.thumbnails = ImmutableSortedMap.copyOf(thumbnails);
     Preconditions.checkArgument(!this.thumbnails.isEmpty());
     Preconditions.checkArgument(!this.thumbnails.containsKey(ImageFileType.ORIGINAL));
-    this.parentArticleId = Optional.absent();
+    this.parentArticleVisibility = Optional.absent();
     this.imageType = Preconditions.checkNotNull(imageType);
   }
 
@@ -100,16 +100,16 @@ public class GroomedImageView implements JsonOutputView {
   }
 
   /**
-   * Add a parent article ID to the view.
+   * Add parent article information to the view.
    *
-   * @param parentArticleId the article ID to add as the figure's parent
+   * @param parentArticleVisibility the article information to add as the figure's parent
    * @return this object
    * @throws IllegalStateException if a parent article has already been set
    * @throws NullPointerException  if {@code parentArticleId} is null
    */
-  public GroomedImageView setParentArticle(ArticleIdentity parentArticleId) {
-    Preconditions.checkState(!this.parentArticleId.isPresent());
-    this.parentArticleId = Optional.of(parentArticleId);
+  public GroomedImageView setParentArticle(ArticleVisibility parentArticleVisibility) {
+    Preconditions.checkState(!this.parentArticleVisibility.isPresent());
+    this.parentArticleVisibility = Optional.of(parentArticleVisibility);
     return this;
   }
 
@@ -118,8 +118,8 @@ public class GroomedImageView implements JsonOutputView {
     JsonObject serialized = new JsonObject();
     serialized.addProperty("doi", original.getDoi());
 
-    if (parentArticleId.isPresent()) {
-      serialized.addProperty("parentArticleId", parentArticleId.get().getIdentifier());
+    if (parentArticleVisibility.isPresent()) {
+      serialized.add("parentArticle", context.serialize(parentArticleVisibility.get()));
     }
 
     // Pull figure-level metadata values from the original (ignore those of thumbnails)

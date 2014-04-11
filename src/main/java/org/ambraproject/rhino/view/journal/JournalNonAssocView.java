@@ -58,7 +58,7 @@ public class JournalNonAssocView implements JsonOutputView {
    * @param journals the journals to wrap
    * @return the view
    */
-  public static KeyedListView<Journal> wrapList(Collection<? extends Journal> journals) {
+  public static ListView wrapList(Collection<? extends Journal> journals) {
     return new ListView(journals);
   }
 

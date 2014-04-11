@@ -21,7 +21,9 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.AnnotationOutputView;
 import org.ambraproject.views.AnnotationView;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
@@ -158,12 +160,13 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         // TODO: Make this more efficient. Three queries is too many.
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+                    .setFetchMode("journals", FetchMode.JOIN)
                     .add(Restrictions.eq("ID", annotation.getArticleID()))
             ));
         Map<Long, List<Annotation>> replies = findAnnotationReplies(annotation.getID(), fetchAllAnnotations(article),
             new LinkedHashMap<Long, List<Annotation>>());
 
-        return new AnnotationView(annotation, article.getDoi(), article.getTitle(), replies);
+        return new AnnotationOutputView(annotation, article, replies);
       }
     };
   }

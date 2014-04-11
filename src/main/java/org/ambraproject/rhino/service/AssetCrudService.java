@@ -20,7 +20,6 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -103,14 +102,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param id          the identity of the asset
    */
   public abstract void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException;
-
-  /**
-   * Return the identity of the article to which an asset belongs.
-   *
-   * @param id the asset's identity
-   * @return the article's identity
-   */
-  public abstract ArticleIdentity findArticleFor(AssetIdentity id);
 
   /**
    * Find the identity of the only file for an asset.
