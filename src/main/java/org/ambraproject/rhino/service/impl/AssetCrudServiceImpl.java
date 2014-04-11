@@ -338,7 +338,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     return new ArticleAssetsRetriever(id) {
       @Override
       protected Object getView(Collection<? extends ArticleAsset> assets) {
-        return new RawAssetFileCollectionView(assets);
+        ArticleVisibility parentArticle = findArticleFor(id);
+        return new RawAssetFileCollectionView(assets, parentArticle);
       }
     };
   }
@@ -383,7 +384,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
 
       @Override
       protected Object getView(ArticleAsset asset) {
-        return new RawAssetFileView(asset);
+        ArticleVisibility parentArticle = findArticleFor(id.forAsset());
+        return new RawAssetFileView(asset, parentArticle);
       }
     };
   }
