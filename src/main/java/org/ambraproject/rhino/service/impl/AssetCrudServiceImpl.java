@@ -23,7 +23,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -33,6 +33,7 @@ import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleVisibility;
 import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
@@ -407,19 +408,23 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     fileStoreService.deleteFile(fsid);
   }
 
-  @Override
-  public ArticleIdentity findArticleFor(AssetIdentity id) {
-    String articleDoi = (String) DataAccessUtils.uniqueResult((List<?>)
+  private ArticleVisibility findArticleFor(AssetIdentity id) {
+    Object[] articleResult = (Object[]) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.find(
-            "select distinct a.doi "
+            "select distinct a.doi, a.state "
                 + "from Article a join a.assets b "
                 + "where b.doi = ?",
             id.getKey()
         ));
+    String articleDoi = (String) articleResult[0];
+    Integer articleState = (Integer) articleResult[1];
     if (articleDoi == null) {
       throw new RestClientException("Asset not found for: " + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
-    return ArticleIdentity.create(articleDoi);
+
+    List<Journal> journalResult = hibernateTemplate.find("select journals from Article where doi = ?", articleDoi);
+
+    return new ArticleVisibility(articleDoi, articleState, journalResult);
   }
 
   @Override

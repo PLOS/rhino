@@ -68,13 +68,4 @@ public class AssetController extends DoiBasedCrudController {
     assetCrudService.readFigureMetadata(id).respond(request, response, entityGson);
   }
 
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_TEMPLATE, params = {"articleFor"}, method = RequestMethod.GET)
-  public ResponseEntity<String> articleFor(HttpServletRequest request)
-      throws IOException {
-    AssetIdentity id = parse(request);
-    ArticleIdentity articleIdentity = assetCrudService.findArticleFor(id);
-    return respondWithJson(articleIdentity.getIdentifier());
-  }
-
 }
