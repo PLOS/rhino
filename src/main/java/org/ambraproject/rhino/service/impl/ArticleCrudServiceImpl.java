@@ -154,6 +154,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
                                          WriteMode mode, int xmlDataLength) {
+    return populateArticleFromXml(doc, null, suppliedId, mode, xmlDataLength);
+  }
+  /**
+   * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
+   * responsibility of the caller.
+   *
+   * @param doc           Document describing the article XML
+   * @param manifestXml   The manifestXml document
+   * @param suppliedId    the indentifier supplied for the article by the external caller, if any
+   * @param mode          whether to attempt a create or update
+   * @param xmlDataLength the number of bytes in the uploaded XML file
+   * @return the created Article
+   * @throws IOException
+   */
+
+  private Article populateArticleFromXml(Document doc, ManifestXml manifestXml,
+                                         Optional<ArticleIdentity> suppliedId,
+                                         WriteMode mode, int xmlDataLength) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -188,7 +206,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     relateToJournals(article);
     populateCategories(article, doc);
-    initializeAssets(article, xml, xmlDataLength);
+    initializeAssets(article, manifestXml, xml, xmlDataLength);
     populateRelatedArticles(article, xml);
 
     return article;
@@ -376,7 +394,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ManifestXml manifest = new ManifestXml(manifestDoc);
     byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
     Document doc = parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
+    Article article = populateArticleFromXml(doc, manifest, suppliedId, mode, xmlData.length);
     article.setArchiveName(new File(filename).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 
@@ -541,10 +559,41 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private void initializeAssets(final Article article, ArticleXml xml, int xmlDataLength) {
+  private void initializeAssets(final Article article, ManifestXml manifestXml, ArticleXml xml, int xmlDataLength) {
     AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
     Collection<String> assetDois = assetNodes.getDois();
+    String strikingImageDOI = null;
+
+    //Get the striking image DOI for the assets, a fix for:
+    //BAU-4.
+    //
+    //It's possible that this method was called for ingesting a new version of the article XML
+    //without the manifest.  In this case we want to be sure to not delete the striking
+    //image from the database
+    //
+    //This should cover 6 use cases:
+    //There is no striking image (for update and create)
+    //Striking image defined in article XML, but not a special asset (for update and create)
+    //Striking image defined in manifest, and as a special asset (for update and create)
+
+    if(manifestXml != null) {
+      strikingImageDOI = manifestXml.getStrkImgURI();
+    } else {
+      strikingImageDOI = article.getStrkImgURI();
+
+      if(strikingImageDOI == null) {
+        if(assets != null) {
+          //One last check of the existing database rows.
+          for (ArticleAsset asset : assets) {
+            if (asset.getDoi().contains(".strk.")) {
+              strikingImageDOI = asset.getDoi();
+              break;
+            }
+          }
+        }
+      }
+    }
 
     if (assets == null) {  // create
       assets = Lists.newArrayListWithCapacity(assetDois.size());
@@ -583,6 +632,34 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
       assets.add(asset);
     }
+
+    //Add the striking image to the assets, a fix for:
+    //BAU-4
+    if(strikingImageDOI != null) {
+      //Check to make sure the asset doesn't exist already
+      //Sometimes the striking image is a regular image
+      boolean found = false;
+      for(ArticleAsset asset : assets) {
+        if(asset.getDoi().equals(strikingImageDOI)) {
+          found = true;
+          break;
+        }
+      }
+
+      if(!found) {
+        ArticleAsset strkImageAsset = new ArticleAsset();
+        strkImageAsset.setDoi(strikingImageDOI);
+        strkImageAsset.setExtension("");
+        strkImageAsset.setTitle("");
+        strkImageAsset.setDescription("");
+        strkImageAsset.setContextElement("");
+        assets.add(strkImageAsset);
+        log.debug("Added striking image, DOI: {}", strikingImageDOI);
+      } else {
+        log.debug("Used existing striking image, DOI: {}", strikingImageDOI);
+      }
+    }
+
     ArticleAsset xmlAsset = new ArticleAsset();
     xmlAsset.setDoi(article.getDoi());
     xmlAsset.setExtension("XML");
