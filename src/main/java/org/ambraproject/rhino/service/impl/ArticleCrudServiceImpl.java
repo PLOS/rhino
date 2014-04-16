@@ -154,7 +154,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
                                          WriteMode mode, int xmlDataLength) {
-    return populateArticleFromXml(doc, null, suppliedId, mode, xmlDataLength);
+    return populateArticleFromXml(doc, Optional.<ManifestXml> absent(), suppliedId, mode, xmlDataLength);
   }
   /**
    * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
@@ -169,7 +169,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @throws IOException
    */
 
-  private Article populateArticleFromXml(Document doc, ManifestXml manifestXml,
+  private Article populateArticleFromXml(Document doc, Optional<ManifestXml> manifestXml,
                                          Optional<ArticleIdentity> suppliedId,
                                          WriteMode mode, int xmlDataLength) {
     ArticleXml xml = new ArticleXml(doc);
@@ -394,7 +394,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     ManifestXml manifest = new ManifestXml(manifestDoc);
     byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
     Document doc = parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, manifest, suppliedId, mode, xmlData.length);
+    Article article = populateArticleFromXml(doc, Optional.fromNullable(manifest), suppliedId, mode, xmlData.length);
     article.setArchiveName(new File(filename).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 
@@ -559,7 +559,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  private void initializeAssets(final Article article, ManifestXml manifestXml, ArticleXml xml, int xmlDataLength) {
+  private void initializeAssets(final Article article, Optional<ManifestXml> manifestXml, ArticleXml xml, int xmlDataLength) {
     AssetNodesByDoi assetNodes = xml.findAllAssetNodes();
     List<ArticleAsset> assets = article.getAssets();
     Collection<String> assetDois = assetNodes.getDois();
@@ -577,8 +577,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     //Striking image defined in article XML, but not a special asset (for update and create)
     //Striking image defined in manifest, and as a special asset (for update and create)
 
-    if(manifestXml != null) {
-      strikingImageDOI = manifestXml.getStrkImgURI();
+    if(manifestXml.isPresent()) {
+      strikingImageDOI = manifestXml.get().getStrkImgURI();
     } else {
       strikingImageDOI = article.getStrkImgURI();
 
