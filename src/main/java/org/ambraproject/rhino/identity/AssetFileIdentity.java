@@ -84,7 +84,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    * @throws IllegalArgumentException if the asset does not have a file (i.e., if {@code !hasFile(asset)})
    */
   public static AssetFileIdentity from(ArticleAsset asset) {
-    Preconditions.checkArgument(hasFile(asset), "Asset is not associated with a file");
+    Preconditions.checkArgument(hasFile(asset), "Asset is not associated with a file. (DOI:" + asset.getDoi() + ", Extension:" + asset.getExtension() + ")");
     return AssetFileIdentity.create(asset.getDoi(), asset.getExtension());
   }
 
