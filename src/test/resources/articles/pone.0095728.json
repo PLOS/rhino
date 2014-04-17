@@ -1,0 +1,2836 @@
+{
+  "doi": "info:doi/10.1371/journal.pone.0095728",
+  "title": "The Mucosal Adjuvant Cyclic di-AMP Exerts Immune Stimulatory Effects on Dendritic Cells and Macrophages",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0095728.zip",
+  "description": "\u003cp\u003eThe cyclic di-nucleotide bis-(3′,5′)-cyclic dimeric adenosine monophosphate (c-di-AMP) is a candidate mucosal adjuvant with proven efficacy in preclinical models. It was shown to promote specific humoral and cellular immune responses following mucosal administration. To date, there is only fragmentary knowledge on the cellular and molecular mode of action of c-di-AMP. Here, we report on the identification of dendritic cells and macrophages as target cells of c-di-AMP. We show that c-di-AMP induces the cell surface up-regulation of T cell co-stimulatory molecules as well as the production of interferon-β. Those responses were characterized by \u003citalic\u003ein vitro\u003c/italic\u003e experiments with murine and human immune cells and \u003citalic\u003ein vivo\u003c/italic\u003e studies in mice. Analyses of dendritic cell subsets revealed conventional dendritic cells as principal responders to stimulation by c-di-AMP. We discuss the impact of the reported antigen presenting cell activation on the previously observed adjuvant effects of c-di-AMP in mouse immunization studies.\u003c/p\u003e",
+  "rights": "Škrnjug et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-9",
+  "eLocationId": "e95728",
+  "strkImgURI": "info:doi/10.1371/journal.pone.0095728.strk",
+  "date": "2014-04-22T07:00:00Z",
+  "volume": "9",
+  "issue": "4",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0095728",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": [
+    {
+      "path": "/TopLevel2/term2",
+      "created": "2014-04-16T22:00:05.868Z",
+      "lastModified": "2014-04-16T22:00:30.255Z"
+    },
+    {
+      "path": "/TopLevel1/term1",
+      "created": "2014-04-16T22:00:05.868Z",
+      "lastModified": "2014-04-16T22:00:30.255Z"
+    }
+  ],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g001",
+      "contextElement": "fig",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure 1",
+      "description": "\u003ctitle\u003eC-di-AMP does not directly affect murine T cell proliferation \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine splenocytes were sorted for CD4\u003csup\u003e+\u003c/sup\u003e and CD8\u003csup\u003e+\u003c/sup\u003e T cells (CD62L\u003csup\u003ehigh\u003c/sup\u003e, CD44\u003csup\u003elow\u003c/sup\u003e, CD25\u003csup\u003e−\u003c/sup\u003e) and treated with either 5 µg/ml c-di-AMP, 5 µg/ml concanavalin A (ConA; positive control), or left untreated (control) in the presence of \u003csup\u003e3\u003c/sup\u003eH-thymidine. As a measure for proliferation, \u003csup\u003e3\u003c/sup\u003eH-thymidine incorporation in T cells was determined by scintillation. The error bars show SEM for n \u003d 3. Differences were statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***), \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*) or non-significant (n. s.) with respect to the control.\u003c/p\u003e",
+      "size": 257816,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g001",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_I",
+      "title": "Figure 1",
+      "description": "\u003ctitle\u003eC-di-AMP does not directly affect murine T cell proliferation \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine splenocytes were sorted for CD4\u003csup\u003e+\u003c/sup\u003e and CD8\u003csup\u003e+\u003c/sup\u003e T cells (CD62L\u003csup\u003ehigh\u003c/sup\u003e, CD44\u003csup\u003elow\u003c/sup\u003e, CD25\u003csup\u003e−\u003c/sup\u003e) and treated with either 5 µg/ml c-di-AMP, 5 µg/ml concanavalin A (ConA; positive control), or left untreated (control) in the presence of \u003csup\u003e3\u003c/sup\u003eH-thymidine. As a measure for proliferation, \u003csup\u003e3\u003c/sup\u003eH-thymidine incorporation in T cells was determined by scintillation. The error bars show SEM for n \u003d 3. Differences were statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***), \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*) or non-significant (n. s.) with respect to the control.\u003c/p\u003e",
+      "size": 19752,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g001",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_L",
+      "title": "Figure 1",
+      "description": "\u003ctitle\u003eC-di-AMP does not directly affect murine T cell proliferation \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine splenocytes were sorted for CD4\u003csup\u003e+\u003c/sup\u003e and CD8\u003csup\u003e+\u003c/sup\u003e T cells (CD62L\u003csup\u003ehigh\u003c/sup\u003e, CD44\u003csup\u003elow\u003c/sup\u003e, CD25\u003csup\u003e−\u003c/sup\u003e) and treated with either 5 µg/ml c-di-AMP, 5 µg/ml concanavalin A (ConA; positive control), or left untreated (control) in the presence of \u003csup\u003e3\u003c/sup\u003eH-thymidine. As a measure for proliferation, \u003csup\u003e3\u003c/sup\u003eH-thymidine incorporation in T cells was determined by scintillation. The error bars show SEM for n \u003d 3. Differences were statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***), \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*) or non-significant (n. s.) with respect to the control.\u003c/p\u003e",
+      "size": 101403,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g001",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_M",
+      "title": "Figure 1",
+      "description": "\u003ctitle\u003eC-di-AMP does not directly affect murine T cell proliferation \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine splenocytes were sorted for CD4\u003csup\u003e+\u003c/sup\u003e and CD8\u003csup\u003e+\u003c/sup\u003e T cells (CD62L\u003csup\u003ehigh\u003c/sup\u003e, CD44\u003csup\u003elow\u003c/sup\u003e, CD25\u003csup\u003e−\u003c/sup\u003e) and treated with either 5 µg/ml c-di-AMP, 5 µg/ml concanavalin A (ConA; positive control), or left untreated (control) in the presence of \u003csup\u003e3\u003c/sup\u003eH-thymidine. As a measure for proliferation, \u003csup\u003e3\u003c/sup\u003eH-thymidine incorporation in T cells was determined by scintillation. The error bars show SEM for n \u003d 3. Differences were statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***), \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*) or non-significant (n. s.) with respect to the control.\u003c/p\u003e",
+      "size": 37228,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g001",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_S",
+      "title": "Figure 1",
+      "description": "\u003ctitle\u003eC-di-AMP does not directly affect murine T cell proliferation \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine splenocytes were sorted for CD4\u003csup\u003e+\u003c/sup\u003e and CD8\u003csup\u003e+\u003c/sup\u003e T cells (CD62L\u003csup\u003ehigh\u003c/sup\u003e, CD44\u003csup\u003elow\u003c/sup\u003e, CD25\u003csup\u003e−\u003c/sup\u003e) and treated with either 5 µg/ml c-di-AMP, 5 µg/ml concanavalin A (ConA; positive control), or left untreated (control) in the presence of \u003csup\u003e3\u003c/sup\u003eH-thymidine. As a measure for proliferation, \u003csup\u003e3\u003c/sup\u003eH-thymidine incorporation in T cells was determined by scintillation. The error bars show SEM for n \u003d 3. Differences were statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***), \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*) or non-significant (n. s.) with respect to the control.\u003c/p\u003e",
+      "size": 10098,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g002",
+      "contextElement": "fig",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure 2",
+      "description": "\u003ctitle\u003eC-di-AMP activates murine immune cells \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine bone marrow derived model dendritic cells (DCs, CD11c\u003csup\u003e+\u003c/sup\u003e) and model macrophages (MΦs, CD11b\u003csup\u003e+\u003c/sup\u003e) were incubated for 24 h with 5 µg/ml c-di-AMP or medium without additives (control). Cells were decorated with fluorescently labeled antibodies against MHC class II and the co-stimulatory molecules CD80 and CD86. The diagram shows the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3.\u003c/p\u003e",
+      "size": 166366,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g002",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_I",
+      "title": "Figure 2",
+      "description": "\u003ctitle\u003eC-di-AMP activates murine immune cells \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine bone marrow derived model dendritic cells (DCs, CD11c\u003csup\u003e+\u003c/sup\u003e) and model macrophages (MΦs, CD11b\u003csup\u003e+\u003c/sup\u003e) were incubated for 24 h with 5 µg/ml c-di-AMP or medium without additives (control). Cells were decorated with fluorescently labeled antibodies against MHC class II and the co-stimulatory molecules CD80 and CD86. The diagram shows the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3.\u003c/p\u003e",
+      "size": 33627,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g002",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_L",
+      "title": "Figure 2",
+      "description": "\u003ctitle\u003eC-di-AMP activates murine immune cells \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine bone marrow derived model dendritic cells (DCs, CD11c\u003csup\u003e+\u003c/sup\u003e) and model macrophages (MΦs, CD11b\u003csup\u003e+\u003c/sup\u003e) were incubated for 24 h with 5 µg/ml c-di-AMP or medium without additives (control). Cells were decorated with fluorescently labeled antibodies against MHC class II and the co-stimulatory molecules CD80 and CD86. The diagram shows the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3.\u003c/p\u003e",
+      "size": 94580,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g002",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_M",
+      "title": "Figure 2",
+      "description": "\u003ctitle\u003eC-di-AMP activates murine immune cells \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine bone marrow derived model dendritic cells (DCs, CD11c\u003csup\u003e+\u003c/sup\u003e) and model macrophages (MΦs, CD11b\u003csup\u003e+\u003c/sup\u003e) were incubated for 24 h with 5 µg/ml c-di-AMP or medium without additives (control). Cells were decorated with fluorescently labeled antibodies against MHC class II and the co-stimulatory molecules CD80 and CD86. The diagram shows the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3.\u003c/p\u003e",
+      "size": 73572,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g002",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_S",
+      "title": "Figure 2",
+      "description": "\u003ctitle\u003eC-di-AMP activates murine immune cells \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003eMurine bone marrow derived model dendritic cells (DCs, CD11c\u003csup\u003e+\u003c/sup\u003e) and model macrophages (MΦs, CD11b\u003csup\u003e+\u003c/sup\u003e) were incubated for 24 h with 5 µg/ml c-di-AMP or medium without additives (control). Cells were decorated with fluorescently labeled antibodies against MHC class II and the co-stimulatory molecules CD80 and CD86. The diagram shows the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3.\u003c/p\u003e",
+      "size": 12980,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g003",
+      "contextElement": "fig",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure 3",
+      "description": "\u003ctitle\u003eC-di-AMP up-regulates T cell co-stimulatory molecules preferentially on conventional murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) \u003citalic\u003eIn vivo\u003c/italic\u003e effects of c-di-AMP on mouse APCs. Flow cytometric analysis of DCs (CD11c\u003csup\u003e+\u003c/sup\u003e) and MΦs (CD11c\u003csup\u003e−\u003c/sup\u003e, CD11b\u003csup\u003e+\u003c/sup\u003e) from the nose-associated lymphoid tissue (NALT), the cervical lymph nodes (CLN) or the mediastinal lymph nodes (MLN) 24 h after i. n. administration of c-di-AMP in mice. (\u003cbold\u003eB\u003c/bold\u003e) \u003citalic\u003eIn vitro\u003c/italic\u003e effects of c-di-AMP on mouse DCs. Murine bone marrow derived model conventional (cDCs) and plasmacytoid DCs (pDCs) were generated by culturing in the presence of Flt3l and incubated for 24 h with 5 µg/ml c-di-AMP or without additives (control). Cells were decorated with fluorescently labeled antibodies against identification markers CD11c (DCs), CD11b (cDCs), B220 (pDCs), and MHC class II, CD80 and CD86. The diagrams show the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.01 (**) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 637152,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g003",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_I",
+      "title": "Figure 3",
+      "description": "\u003ctitle\u003eC-di-AMP up-regulates T cell co-stimulatory molecules preferentially on conventional murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) \u003citalic\u003eIn vivo\u003c/italic\u003e effects of c-di-AMP on mouse APCs. Flow cytometric analysis of DCs (CD11c\u003csup\u003e+\u003c/sup\u003e) and MΦs (CD11c\u003csup\u003e−\u003c/sup\u003e, CD11b\u003csup\u003e+\u003c/sup\u003e) from the nose-associated lymphoid tissue (NALT), the cervical lymph nodes (CLN) or the mediastinal lymph nodes (MLN) 24 h after i. n. administration of c-di-AMP in mice. (\u003cbold\u003eB\u003c/bold\u003e) \u003citalic\u003eIn vitro\u003c/italic\u003e effects of c-di-AMP on mouse DCs. Murine bone marrow derived model conventional (cDCs) and plasmacytoid DCs (pDCs) were generated by culturing in the presence of Flt3l and incubated for 24 h with 5 µg/ml c-di-AMP or without additives (control). Cells were decorated with fluorescently labeled antibodies against identification markers CD11c (DCs), CD11b (cDCs), B220 (pDCs), and MHC class II, CD80 and CD86. The diagrams show the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.01 (**) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 31704,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g003",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_L",
+      "title": "Figure 3",
+      "description": "\u003ctitle\u003eC-di-AMP up-regulates T cell co-stimulatory molecules preferentially on conventional murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) \u003citalic\u003eIn vivo\u003c/italic\u003e effects of c-di-AMP on mouse APCs. Flow cytometric analysis of DCs (CD11c\u003csup\u003e+\u003c/sup\u003e) and MΦs (CD11c\u003csup\u003e−\u003c/sup\u003e, CD11b\u003csup\u003e+\u003c/sup\u003e) from the nose-associated lymphoid tissue (NALT), the cervical lymph nodes (CLN) or the mediastinal lymph nodes (MLN) 24 h after i. n. administration of c-di-AMP in mice. (\u003cbold\u003eB\u003c/bold\u003e) \u003citalic\u003eIn vitro\u003c/italic\u003e effects of c-di-AMP on mouse DCs. Murine bone marrow derived model conventional (cDCs) and plasmacytoid DCs (pDCs) were generated by culturing in the presence of Flt3l and incubated for 24 h with 5 µg/ml c-di-AMP or without additives (control). Cells were decorated with fluorescently labeled antibodies against identification markers CD11c (DCs), CD11b (cDCs), B220 (pDCs), and MHC class II, CD80 and CD86. The diagrams show the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.01 (**) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 275743,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g003",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_M",
+      "title": "Figure 3",
+      "description": "\u003ctitle\u003eC-di-AMP up-regulates T cell co-stimulatory molecules preferentially on conventional murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) \u003citalic\u003eIn vivo\u003c/italic\u003e effects of c-di-AMP on mouse APCs. Flow cytometric analysis of DCs (CD11c\u003csup\u003e+\u003c/sup\u003e) and MΦs (CD11c\u003csup\u003e−\u003c/sup\u003e, CD11b\u003csup\u003e+\u003c/sup\u003e) from the nose-associated lymphoid tissue (NALT), the cervical lymph nodes (CLN) or the mediastinal lymph nodes (MLN) 24 h after i. n. administration of c-di-AMP in mice. (\u003cbold\u003eB\u003c/bold\u003e) \u003citalic\u003eIn vitro\u003c/italic\u003e effects of c-di-AMP on mouse DCs. Murine bone marrow derived model conventional (cDCs) and plasmacytoid DCs (pDCs) were generated by culturing in the presence of Flt3l and incubated for 24 h with 5 µg/ml c-di-AMP or without additives (control). Cells were decorated with fluorescently labeled antibodies against identification markers CD11c (DCs), CD11b (cDCs), B220 (pDCs), and MHC class II, CD80 and CD86. The diagrams show the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.01 (**) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 64690,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g003",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_S",
+      "title": "Figure 3",
+      "description": "\u003ctitle\u003eC-di-AMP up-regulates T cell co-stimulatory molecules preferentially on conventional murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) \u003citalic\u003eIn vivo\u003c/italic\u003e effects of c-di-AMP on mouse APCs. Flow cytometric analysis of DCs (CD11c\u003csup\u003e+\u003c/sup\u003e) and MΦs (CD11c\u003csup\u003e−\u003c/sup\u003e, CD11b\u003csup\u003e+\u003c/sup\u003e) from the nose-associated lymphoid tissue (NALT), the cervical lymph nodes (CLN) or the mediastinal lymph nodes (MLN) 24 h after i. n. administration of c-di-AMP in mice. (\u003cbold\u003eB\u003c/bold\u003e) \u003citalic\u003eIn vitro\u003c/italic\u003e effects of c-di-AMP on mouse DCs. Murine bone marrow derived model conventional (cDCs) and plasmacytoid DCs (pDCs) were generated by culturing in the presence of Flt3l and incubated for 24 h with 5 µg/ml c-di-AMP or without additives (control). Cells were decorated with fluorescently labeled antibodies against identification markers CD11c (DCs), CD11b (cDCs), B220 (pDCs), and MHC class II, CD80 and CD86. The diagrams show the normalized median fluorescence intensity (fold increase as compared to the control) analyzed by flow cytometry. Error bars are SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.01 (**) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 12107,
+      "created": "2014-04-16T22:00:30.241Z",
+      "lastModified": "2014-04-16T22:00:30.241Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g004",
+      "contextElement": "fig",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure 4",
+      "description": "\u003ctitle\u003eC-di-AMP induces IFN-β production in murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) C-di-AMP targets the \u003citalic\u003eIFNB\u003c/italic\u003e promoter in DCs and monocytes/macrophages/granulocytes \u003citalic\u003ein vivo\u003c/italic\u003e. Mice of indicated phenotypes were i. n. treated with c-di-AMP: “CD4+” indicates T cell specific, “CD19+” B cell specifc, “LysM+” monocyte/macrophage/granulocyte specific, and “CD11c+” DC specific control of luciferase expression by the IFN-β promoter. Quantification of \u003citalic\u003ein vivo\u003c/italic\u003e imaging signals derived from luciferase activity at different time points is shown for n \u003d 5. Results are expressed as average of radiance (in photons/s/cm\u003csup\u003e2\u003c/sup\u003e/steridian). Error bars are SEM. (\u003cbold\u003eB\u003c/bold\u003e) C-di-AMP induces IFN-β production in DCs \u003citalic\u003ein vitro\u003c/italic\u003e. BMDCs were cultured in the presence of GM-CSF or Flt3l, as indicated on the x axis. IFN-β secretion was determined in the culture medium by ELISA. Error bars are SEM, n \u003d 3.\u003c/p\u003e",
+      "size": 1015542,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g004",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_I",
+      "title": "Figure 4",
+      "description": "\u003ctitle\u003eC-di-AMP induces IFN-β production in murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) C-di-AMP targets the \u003citalic\u003eIFNB\u003c/italic\u003e promoter in DCs and monocytes/macrophages/granulocytes \u003citalic\u003ein vivo\u003c/italic\u003e. Mice of indicated phenotypes were i. n. treated with c-di-AMP: “CD4+” indicates T cell specific, “CD19+” B cell specifc, “LysM+” monocyte/macrophage/granulocyte specific, and “CD11c+” DC specific control of luciferase expression by the IFN-β promoter. Quantification of \u003citalic\u003ein vivo\u003c/italic\u003e imaging signals derived from luciferase activity at different time points is shown for n \u003d 5. Results are expressed as average of radiance (in photons/s/cm\u003csup\u003e2\u003c/sup\u003e/steridian). Error bars are SEM. (\u003cbold\u003eB\u003c/bold\u003e) C-di-AMP induces IFN-β production in DCs \u003citalic\u003ein vitro\u003c/italic\u003e. BMDCs were cultured in the presence of GM-CSF or Flt3l, as indicated on the x axis. IFN-β secretion was determined in the culture medium by ELISA. Error bars are SEM, n \u003d 3.\u003c/p\u003e",
+      "size": 55628,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g004",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_L",
+      "title": "Figure 4",
+      "description": "\u003ctitle\u003eC-di-AMP induces IFN-β production in murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) C-di-AMP targets the \u003citalic\u003eIFNB\u003c/italic\u003e promoter in DCs and monocytes/macrophages/granulocytes \u003citalic\u003ein vivo\u003c/italic\u003e. Mice of indicated phenotypes were i. n. treated with c-di-AMP: “CD4+” indicates T cell specific, “CD19+” B cell specifc, “LysM+” monocyte/macrophage/granulocyte specific, and “CD11c+” DC specific control of luciferase expression by the IFN-β promoter. Quantification of \u003citalic\u003ein vivo\u003c/italic\u003e imaging signals derived from luciferase activity at different time points is shown for n \u003d 5. Results are expressed as average of radiance (in photons/s/cm\u003csup\u003e2\u003c/sup\u003e/steridian). Error bars are SEM. (\u003cbold\u003eB\u003c/bold\u003e) C-di-AMP induces IFN-β production in DCs \u003citalic\u003ein vitro\u003c/italic\u003e. BMDCs were cultured in the presence of GM-CSF or Flt3l, as indicated on the x axis. IFN-β secretion was determined in the culture medium by ELISA. Error bars are SEM, n \u003d 3.\u003c/p\u003e",
+      "size": 780382,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g004",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_M",
+      "title": "Figure 4",
+      "description": "\u003ctitle\u003eC-di-AMP induces IFN-β production in murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) C-di-AMP targets the \u003citalic\u003eIFNB\u003c/italic\u003e promoter in DCs and monocytes/macrophages/granulocytes \u003citalic\u003ein vivo\u003c/italic\u003e. Mice of indicated phenotypes were i. n. treated with c-di-AMP: “CD4+” indicates T cell specific, “CD19+” B cell specifc, “LysM+” monocyte/macrophage/granulocyte specific, and “CD11c+” DC specific control of luciferase expression by the IFN-β promoter. Quantification of \u003citalic\u003ein vivo\u003c/italic\u003e imaging signals derived from luciferase activity at different time points is shown for n \u003d 5. Results are expressed as average of radiance (in photons/s/cm\u003csup\u003e2\u003c/sup\u003e/steridian). Error bars are SEM. (\u003cbold\u003eB\u003c/bold\u003e) C-di-AMP induces IFN-β production in DCs \u003citalic\u003ein vitro\u003c/italic\u003e. BMDCs were cultured in the presence of GM-CSF or Flt3l, as indicated on the x axis. IFN-β secretion was determined in the culture medium by ELISA. Error bars are SEM, n \u003d 3.\u003c/p\u003e",
+      "size": 120004,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g004",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_S",
+      "title": "Figure 4",
+      "description": "\u003ctitle\u003eC-di-AMP induces IFN-β production in murine dendritic cells (DCs).\u003c/title\u003e \u003cp\u003e(\u003cbold\u003eA\u003c/bold\u003e) C-di-AMP targets the \u003citalic\u003eIFNB\u003c/italic\u003e promoter in DCs and monocytes/macrophages/granulocytes \u003citalic\u003ein vivo\u003c/italic\u003e. Mice of indicated phenotypes were i. n. treated with c-di-AMP: “CD4+” indicates T cell specific, “CD19+” B cell specifc, “LysM+” monocyte/macrophage/granulocyte specific, and “CD11c+” DC specific control of luciferase expression by the IFN-β promoter. Quantification of \u003citalic\u003ein vivo\u003c/italic\u003e imaging signals derived from luciferase activity at different time points is shown for n \u003d 5. Results are expressed as average of radiance (in photons/s/cm\u003csup\u003e2\u003c/sup\u003e/steridian). Error bars are SEM. (\u003cbold\u003eB\u003c/bold\u003e) C-di-AMP induces IFN-β production in DCs \u003citalic\u003ein vitro\u003c/italic\u003e. BMDCs were cultured in the presence of GM-CSF or Flt3l, as indicated on the x axis. IFN-β secretion was determined in the culture medium by ELISA. Error bars are SEM, n \u003d 3.\u003c/p\u003e",
+      "size": 14496,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g005",
+      "contextElement": "fig",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure 5",
+      "description": "\u003ctitle\u003eC-di-AMP preferentially activates human myeloid dendritic cells (DCs) \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003ePBMC-derived human plasmacytoid DCs (pDC) or myeloid (conventional) DCs (mDC) were incubated for 24 h in the presence of 60 µg/ml c-di-AMP or without additive (control). (\u003cbold\u003eA\u003c/bold\u003e) Cells were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (mDC), CD303 (pDC) CD80, CD83 and CD86, and analyzed by flow cytometry. Normalized median fluorescence intensity (MDFI) is shown as fold increase compared to the control. Error bars show SEM for n \u003d 3. (\u003cbold\u003eB\u003c/bold\u003e) The medium from the cultured mDC or pDC was analyzed for IFN-β secretion by ELISA. Error bars show SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 276764,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g005",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_I",
+      "title": "Figure 5",
+      "description": "\u003ctitle\u003eC-di-AMP preferentially activates human myeloid dendritic cells (DCs) \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003ePBMC-derived human plasmacytoid DCs (pDC) or myeloid (conventional) DCs (mDC) were incubated for 24 h in the presence of 60 µg/ml c-di-AMP or without additive (control). (\u003cbold\u003eA\u003c/bold\u003e) Cells were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (mDC), CD303 (pDC) CD80, CD83 and CD86, and analyzed by flow cytometry. Normalized median fluorescence intensity (MDFI) is shown as fold increase compared to the control. Error bars show SEM for n \u003d 3. (\u003cbold\u003eB\u003c/bold\u003e) The medium from the cultured mDC or pDC was analyzed for IFN-β secretion by ELISA. Error bars show SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 42602,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g005",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_L",
+      "title": "Figure 5",
+      "description": "\u003ctitle\u003eC-di-AMP preferentially activates human myeloid dendritic cells (DCs) \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003ePBMC-derived human plasmacytoid DCs (pDC) or myeloid (conventional) DCs (mDC) were incubated for 24 h in the presence of 60 µg/ml c-di-AMP or without additive (control). (\u003cbold\u003eA\u003c/bold\u003e) Cells were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (mDC), CD303 (pDC) CD80, CD83 and CD86, and analyzed by flow cytometry. Normalized median fluorescence intensity (MDFI) is shown as fold increase compared to the control. Error bars show SEM for n \u003d 3. (\u003cbold\u003eB\u003c/bold\u003e) The medium from the cultured mDC or pDC was analyzed for IFN-β secretion by ELISA. Error bars show SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 122727,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g005",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_M",
+      "title": "Figure 5",
+      "description": "\u003ctitle\u003eC-di-AMP preferentially activates human myeloid dendritic cells (DCs) \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003ePBMC-derived human plasmacytoid DCs (pDC) or myeloid (conventional) DCs (mDC) were incubated for 24 h in the presence of 60 µg/ml c-di-AMP or without additive (control). (\u003cbold\u003eA\u003c/bold\u003e) Cells were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (mDC), CD303 (pDC) CD80, CD83 and CD86, and analyzed by flow cytometry. Normalized median fluorescence intensity (MDFI) is shown as fold increase compared to the control. Error bars show SEM for n \u003d 3. (\u003cbold\u003eB\u003c/bold\u003e) The medium from the cultured mDC or pDC was analyzed for IFN-β secretion by ELISA. Error bars show SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 46278,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.g005",
+      "contextElement": "fig",
+      "contentType": "image/png",
+      "extension": "PNG_S",
+      "title": "Figure 5",
+      "description": "\u003ctitle\u003eC-di-AMP preferentially activates human myeloid dendritic cells (DCs) \u003citalic\u003ein vitro\u003c/italic\u003e.\u003c/title\u003e \u003cp\u003ePBMC-derived human plasmacytoid DCs (pDC) or myeloid (conventional) DCs (mDC) were incubated for 24 h in the presence of 60 µg/ml c-di-AMP or without additive (control). (\u003cbold\u003eA\u003c/bold\u003e) Cells were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (mDC), CD303 (pDC) CD80, CD83 and CD86, and analyzed by flow cytometry. Normalized median fluorescence intensity (MDFI) is shown as fold increase compared to the control. Error bars show SEM for n \u003d 3. (\u003cbold\u003eB\u003c/bold\u003e) The medium from the cultured mDC or pDC was analyzed for IFN-β secretion by ELISA. Error bars show SEM for n \u003d 3. Differences are statistically significant at \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.001 (***) or \u003citalic\u003ep\u003c/italic\u003e\u0026lt;0.05 (*).\u003c/p\u003e",
+      "size": 13019,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.s001",
+      "contextElement": "supplementary-material",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure S1",
+      "description": "\u003cp\u003e\u003cbold\u003eC-di AMP-stimulated murine DCs and MΦs respond with the up-regulation of CD80, CD86 and MHC class II.\u003c/bold\u003e BMDCs or MΦs were incubated for 24 h in the presence of 5 µg/ml c-di-AMP or without additive (untreated control). Cells were decorated with fluorochrome-conjugated antibodies specific for CD80, CD86 and MHC class II, and analyzed by flow cytometry. The TLR ligand LPS was used as control stimulator to assess if the cells were generally activatable. Histograms of flow cytometry measurements represent a single experiment. The data collected from multiple experiments are summarized in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0095728-g002\"\u003efigure 2\u003c/xref\u003e. The x axis displays fluorescence intensity (at a logarithmic scale) that was recorded with fluorescent antibodies against the indicated molecules CD80, CD86 or MHC class II. The signals derive from living singlet cells and are selected by gating based on forward/sideward scatter (for singlet cell identification) and fluorescent live/dead marker (low intensity on live cells) and fluorescent antibody (high intensity) analysis.\u003c/p\u003e \u003cp\u003e(TIF)\u003c/p\u003e",
+      "size": 1381260,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.s002",
+      "contextElement": "supplementary-material",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure S2",
+      "description": "\u003cp\u003e\u003cbold\u003eC-di-AMP up-regulates T cell co-stimulatory molecules preferentially on conventional murine dendritic cells (DCs).\u003c/bold\u003e (\u003cbold\u003eA\u003c/bold\u003e) 24 h after i. n. application of c-di-AMP in mice DCs and macrophages (MΦs) were isolated from nose-associated tissue (NALT), cervical lymph nodes (CLN) or mediastinal lymph nodes (MLN) and decorated with fluorochrome-conjugated antibodies specific for the identification markers of DCs (CD11c\u003csup\u003e+\u003c/sup\u003e) or MΦs (CD11b\u003csup\u003e+\u003c/sup\u003e, CD11c\u003csup\u003e−\u003c/sup\u003e), and for CD80, CD86, MHC class II and analyzed by flow cytometry. (\u003cbold\u003eB\u003c/bold\u003e) Bone marrow derived \u003citalic\u003ein vitro\u003c/italic\u003e model DCs were grown in the presence of Flt3l and stimulated for 24 h in the presence of 5 µg/ml c-di-AMP. They were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (DCs), CD11b (conventional DCs, cDCs), B220 (plasmacytoid DCs, pDCs), CD80 and CD86, then analyzed by flow cytometry. Histograms of flow cytometry measurements represent a single experiment. The data collected from multiple experiments are summarized in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0095728-g003\"\u003efigure 3\u003c/xref\u003e. The x axis displays fluorescence intensity (on a logarithmic scale) that was recorded with fluorescent antibodies against the indicated molecules CD80, CD86 or MHC class II. The signals are derived from living singlet cells positive for the indicated identification marker and are selected by gating based on forward/sideward scatter (for singlet cell identification) and fluorescent live/dead marker (low intensity on live cells) and fluorescent antibody (high intensity) analysis.\u003c/p\u003e \u003cp\u003e(TIF)\u003c/p\u003e",
+      "size": 1400424,
+      "created": "2014-04-16T22:00:30.242Z",
+      "lastModified": "2014-04-16T22:00:30.242Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.s003",
+      "contextElement": "supplementary-material",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "Figure S3",
+      "description": "\u003cp\u003e\u003cbold\u003eC-di-AMP stimulated human myeloid (conventional) DCs (mDCs) but not plasmacytoid DCs (pDCs) respond with the up-regulation of surface CD80, CD83 and CD86.\u003c/bold\u003e PBMC-derived human pDCs or mDCs were incubated for 24 h in the presence of 60 µg/ml c-di-AMP or without additive (untreated control). Cells were decorated with fluorochrome-conjugated antibodies specific for the identification markers CD11c (mDC), CD303 (pDC) and CD80, CD83, CD86 and analyzed by flow cytometry. The TLR ligands LPS (for mDCs) and CpG (for pDCs) were used as control stimulators to if the cells were generally activatable. Histograms of flow cytometry measurements represent a single experiment with the DC subsets originating from one and the same donor. The data collected from multiple donors are summarized in \u003cxref ref-type\u003d\"fig\" rid\u003d\"pone-0095728-g005\"\u003efigure 5a\u003c/xref\u003e. The x axis displays fluorescence intensity (at a logarithmic scale) that was recorded with fluorescent antibodies against the indicated molecules CD80, CD83 or CD86. The signals derive from living singlet cells positive for the DC subset identification marker and are selected by gating based on forward/sideward scatter (for singlet cell identification) and fluorescent live/dead marker (low intensity on live cells) and fluorescent antibody (high intensity) analysis.\u003c/p\u003e \u003cp\u003e(TIF)\u003c/p\u003e",
+      "size": 1393958,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.strk",
+      "contextElement": "",
+      "contentType": "image/tiff",
+      "extension": "TIF",
+      "title": "",
+      "description": "",
+      "size": 374392,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.strk",
+      "contextElement": "",
+      "contentType": "image/png",
+      "extension": "PNG_I",
+      "title": "",
+      "description": "",
+      "size": 40235,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.strk",
+      "contextElement": "",
+      "contentType": "image/png",
+      "extension": "PNG_L",
+      "title": "",
+      "description": "",
+      "size": 324889,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.strk",
+      "contextElement": "",
+      "contentType": "image/png",
+      "extension": "PNG_M",
+      "title": "",
+      "description": "",
+      "size": 98121,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728.strk",
+      "contextElement": "",
+      "contentType": "image/png",
+      "extension": "PNG_S",
+      "title": "",
+      "description": "",
+      "size": 13529,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "The Mucosal Adjuvant Cyclic di-AMP Exerts Immune Stimulatory Effects on Dendritic Cells and Macrophages",
+      "description": "\u003cp\u003eThe cyclic di-nucleotide bis-(3′,5′)-cyclic dimeric adenosine monophosphate (c-di-AMP) is a candidate mucosal adjuvant with proven efficacy in preclinical models. It was shown to promote specific humoral and cellular immune responses following mucosal administration. To date, there is only fragmentary knowledge on the cellular and molecular mode of action of c-di-AMP. Here, we report on the identification of dendritic cells and macrophages as target cells of c-di-AMP. We show that c-di-AMP induces the cell surface up-regulation of T cell co-stimulatory molecules as well as the production of interferon-β. Those responses were characterized by \u003citalic\u003ein vitro\u003c/italic\u003e experiments with murine and human immune cells and \u003citalic\u003ein vivo\u003c/italic\u003e studies in mice. Analyses of dendritic cell subsets revealed conventional dendritic cells as principal responders to stimulation by c-di-AMP. We discuss the impact of the reported antigen presenting cell activation on the previously observed adjuvant effects of c-di-AMP in mouse immunization studies.\u003c/p\u003e",
+      "size": 1566622,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0095728",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "The Mucosal Adjuvant Cyclic di-AMP Exerts Immune Stimulatory Effects on Dendritic Cells and Macrophages",
+      "description": "\u003cp\u003eThe cyclic di-nucleotide bis-(3′,5′)-cyclic dimeric adenosine monophosphate (c-di-AMP) is a candidate mucosal adjuvant with proven efficacy in preclinical models. It was shown to promote specific humoral and cellular immune responses following mucosal administration. To date, there is only fragmentary knowledge on the cellular and molecular mode of action of c-di-AMP. Here, we report on the identification of dendritic cells and macrophages as target cells of c-di-AMP. We show that c-di-AMP induces the cell surface up-regulation of T cell co-stimulatory molecules as well as the production of interferon-β. Those responses were characterized by \u003citalic\u003ein vitro\u003c/italic\u003e experiments with murine and human immune cells and \u003citalic\u003ein vivo\u003c/italic\u003e studies in mice. Analyses of dendritic cell subsets revealed conventional dendritic cells as principal responders to stimulation by c-di-AMP. We discuss the impact of the reported antigen presenting cell activation on the previously observed adjuvant effects of c-di-AMP in mouse immunization studies.\u003c/p\u003e",
+      "size": 90255,
+      "created": "2014-04-16T22:00:30.243Z",
+      "lastModified": "2014-04-16T22:00:30.243Z"
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Cyclic di-nucleotides: new era for small molecules as adjuvants",
+      "pages": "168-176",
+      "eLocationID": "168",
+      "journal": "Microb Biotechnol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Libanova",
+          "givenNames": "R",
+          "surnames": "Libanova",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.214Z",
+          "lastModified": "2014-04-16T22:00:30.214Z"
+        },
+        {
+          "fullName": "PD Becker",
+          "givenNames": "PD",
+          "surnames": "Becker",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.214Z",
+          "lastModified": "2014-04-16T22:00:30.214Z"
+        },
+        {
+          "fullName": "CA Guzman",
+          "givenNames": "CA",
+          "surnames": "Guzman",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.214Z",
+          "lastModified": "2014-04-16T22:00:30.214Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.214Z",
+      "lastModified": "2014-04-16T22:00:30.214Z"
+    },
+    {
+      "key": "2",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 488,
+      "volume": "488",
+      "title": "The prokaryote messenger c-di-GMP triggers stalk cell differentiation in Dictyostelium",
+      "pages": "680-683",
+      "eLocationID": "680",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ZH Chen",
+          "givenNames": "ZH",
+          "surnames": "Chen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.215Z",
+          "lastModified": "2014-04-16T22:00:30.215Z"
+        },
+        {
+          "fullName": "P Schaap",
+          "givenNames": "P",
+          "surnames": "Schaap",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.215Z",
+          "lastModified": "2014-04-16T22:00:30.215Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.214Z",
+      "lastModified": "2014-04-16T22:00:30.214Z"
+    },
+    {
+      "key": "3",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "c-di-AMP is a new second messenger in Staphylococcus aureus with a role in controlling cell size and envelope stress",
+      "pages": "e1002217",
+      "eLocationID": "e1002217",
+      "journal": "PLoS Pathog",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RM Corrigan",
+          "givenNames": "RM",
+          "surnames": "Corrigan",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "JC Abbott",
+          "givenNames": "JC",
+          "surnames": "Abbott",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "H Burhenne",
+          "givenNames": "H",
+          "surnames": "Burhenne",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "V Kaever",
+          "givenNames": "V",
+          "surnames": "Kaever",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "A Grundling",
+          "givenNames": "A",
+          "surnames": "Grundling",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.215Z",
+      "lastModified": "2014-04-16T22:00:30.215Z"
+    },
+    {
+      "key": "4",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 9,
+      "volume": "9",
+      "title": "Pseudomonas aeruginosa cupA-encoded fimbriae expression is regulated by a GGDEF and EAL domain-dependent modulation of the intracellular level of cyclic diguanylate",
+      "pages": "2475-2485",
+      "eLocationID": "2475",
+      "journal": "Environ Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Meissner",
+          "givenNames": "A",
+          "surnames": "Meissner",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "V Wild",
+          "givenNames": "V",
+          "surnames": "Wild",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "R Simm",
+          "givenNames": "R",
+          "surnames": "Simm",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "M Rohde",
+          "givenNames": "M",
+          "surnames": "Rohde",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        },
+        {
+          "fullName": "C Erck",
+          "givenNames": "C",
+          "surnames": "Erck",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.216Z",
+          "lastModified": "2014-04-16T22:00:30.216Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.216Z",
+      "lastModified": "2014-04-16T22:00:30.216Z"
+    },
+    {
+      "key": "5",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 12,
+      "volume": "12",
+      "title": "c-di-AMP reports DNA integrity during sporulation in Bacillus subtilis",
+      "pages": "594-601",
+      "eLocationID": "594",
+      "journal": "EMBO Rep",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "Y Oppenheimer-Shaanan",
+          "givenNames": "Y",
+          "surnames": "Oppenheimer-Shaanan",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "E Wexselblatt",
+          "givenNames": "E",
+          "surnames": "Wexselblatt",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "J Katzhendler",
+          "givenNames": "J",
+          "surnames": "Katzhendler",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "E Yavin",
+          "givenNames": "E",
+          "surnames": "Yavin",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "S Ben-Yehuda",
+          "givenNames": "S",
+          "surnames": "Ben-Yehuda",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.216Z",
+      "lastModified": "2014-04-16T22:00:30.216Z"
+    },
+    {
+      "key": "6",
+      "year": 2013,
+      "displayYear": "2013",
+      "volumeNumber": 498,
+      "volume": "498",
+      "title": "cGAS produces a 2′-5′-linked cyclic dinucleotide second messenger that activates STING",
+      "pages": "380-384",
+      "eLocationID": "380",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Ablasser",
+          "givenNames": "A",
+          "surnames": "Ablasser",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "M Goldeck",
+          "givenNames": "M",
+          "surnames": "Goldeck",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "T Cavlar",
+          "givenNames": "T",
+          "surnames": "Cavlar",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "T Deimling",
+          "givenNames": "T",
+          "surnames": "Deimling",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        },
+        {
+          "fullName": "G Witte",
+          "givenNames": "G",
+          "surnames": "Witte",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.217Z",
+          "lastModified": "2014-04-16T22:00:30.217Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.217Z",
+      "lastModified": "2014-04-16T22:00:30.217Z"
+    },
+    {
+      "key": "7",
+      "year": 2013,
+      "displayYear": "2013",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "The innate immune DNA sensor cGAS produces a noncanonical cyclic dinucleotide that activates human STING",
+      "pages": "1355-1361",
+      "eLocationID": "1355",
+      "journal": "Cell Rep",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "EJ Diner",
+          "givenNames": "EJ",
+          "surnames": "Diner",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "DL Burdette",
+          "givenNames": "DL",
+          "surnames": "Burdette",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "SC Wilson",
+          "givenNames": "SC",
+          "surnames": "Wilson",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "KM Monroe",
+          "givenNames": "KM",
+          "surnames": "Monroe",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "CA Kellenberger",
+          "givenNames": "CA",
+          "surnames": "Kellenberger",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.217Z",
+      "lastModified": "2014-04-16T22:00:30.217Z"
+    },
+    {
+      "key": "8",
+      "year": 2013,
+      "displayYear": "2013",
+      "volumeNumber": 339,
+      "volume": "339",
+      "title": "Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway",
+      "pages": "786-791",
+      "eLocationID": "786",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Sun",
+          "givenNames": "L",
+          "surnames": "Sun",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "J Wu",
+          "givenNames": "J",
+          "surnames": "Wu",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "F Du",
+          "givenNames": "F",
+          "surnames": "Du",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "X Chen",
+          "givenNames": "X",
+          "surnames": "Chen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        },
+        {
+          "fullName": "ZJ Chen",
+          "givenNames": "ZJ",
+          "surnames": "Chen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.218Z",
+          "lastModified": "2014-04-16T22:00:30.218Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.218Z",
+      "lastModified": "2014-04-16T22:00:30.218Z"
+    },
+    {
+      "key": "9",
+      "year": 2013,
+      "displayYear": "2013",
+      "volumeNumber": 339,
+      "volume": "339",
+      "title": "Cyclic GMP-AMP is an endogenous second messenger in innate immune signaling by cytosolic DNA",
+      "pages": "826-830",
+      "eLocationID": "826",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Wu",
+          "givenNames": "J",
+          "surnames": "Wu",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "L Sun",
+          "givenNames": "L",
+          "surnames": "Sun",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "X Chen",
+          "givenNames": "X",
+          "surnames": "Chen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "F Du",
+          "givenNames": "F",
+          "surnames": "Du",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "H Shi",
+          "givenNames": "H",
+          "surnames": "Shi",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.218Z",
+      "lastModified": "2014-04-16T22:00:30.218Z"
+    },
+    {
+      "key": "10",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 27,
+      "volume": "27",
+      "title": "c-di-GMP as a vaccine adjuvant enhances protection against systemic methicillin-resistant Staphylococcus aureus (MRSA) infection",
+      "pages": "4867-4873",
+      "eLocationID": "4867",
+      "journal": "Vaccine",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DL Hu",
+          "givenNames": "DL",
+          "surnames": "Hu",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "K Narita",
+          "givenNames": "K",
+          "surnames": "Narita",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "M Hyodo",
+          "givenNames": "M",
+          "surnames": "Hyodo",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "Y Hayakawa",
+          "givenNames": "Y",
+          "surnames": "Hayakawa",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        },
+        {
+          "fullName": "A Nakane",
+          "givenNames": "A",
+          "surnames": "Nakane",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.219Z",
+          "lastModified": "2014-04-16T22:00:30.219Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.219Z",
+      "lastModified": "2014-04-16T22:00:30.219Z"
+    },
+    {
+      "key": "11",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 178,
+      "volume": "178",
+      "title": "Bacterial c-di-GMP is an immunostimulatory molecule",
+      "pages": "2171-2181",
+      "eLocationID": "2171",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DK Karaolis",
+          "givenNames": "DK",
+          "surnames": "Karaolis",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "TK Means",
+          "givenNames": "TK",
+          "surnames": "Means",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "D Yang",
+          "givenNames": "D",
+          "surnames": "Yang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "M Takahashi",
+          "givenNames": "M",
+          "surnames": "Takahashi",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "T Yoshimura",
+          "givenNames": "T",
+          "surnames": "Yoshimura",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.219Z",
+      "lastModified": "2014-04-16T22:00:30.219Z"
+    },
+    {
+      "key": "12",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 75,
+      "volume": "75",
+      "title": "Cyclic di-GMP stimulates protective innate immunity in bacterial pneumonia",
+      "pages": "4942-4950",
+      "eLocationID": "4942",
+      "journal": "Infect Immun",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DK Karaolis",
+          "givenNames": "DK",
+          "surnames": "Karaolis",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "MW Newstead",
+          "givenNames": "MW",
+          "surnames": "Newstead",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "X Zeng",
+          "givenNames": "X",
+          "surnames": "Zeng",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "M Hyodo",
+          "givenNames": "M",
+          "surnames": "Hyodo",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        },
+        {
+          "fullName": "Y Hayakawa",
+          "givenNames": "Y",
+          "surnames": "Hayakawa",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.220Z",
+          "lastModified": "2014-04-16T22:00:30.220Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.220Z",
+      "lastModified": "2014-04-16T22:00:30.220Z"
+    },
+    {
+      "key": "13",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 206,
+      "volume": "206",
+      "title": "A host type I interferon response is induced by cytosolic sensing of the bacterial second messenger cyclic-di-GMP",
+      "pages": "1899-1911",
+      "eLocationID": "1899",
+      "journal": "J Exp Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SM McWhirter",
+          "givenNames": "SM",
+          "surnames": "McWhirter",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "R Barbalat",
+          "givenNames": "R",
+          "surnames": "Barbalat",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "KM Monroe",
+          "givenNames": "KM",
+          "surnames": "Monroe",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "MF Fontana",
+          "givenNames": "MF",
+          "surnames": "Fontana",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "M Hyodo",
+          "givenNames": "M",
+          "surnames": "Hyodo",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.220Z",
+      "lastModified": "2014-04-16T22:00:30.220Z"
+    },
+    {
+      "key": "14",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 26,
+      "volume": "26",
+      "title": "c-di-GMP is an effective immunomodulator and vaccine adjuvant against pneumococcal infection",
+      "pages": "4676-4685",
+      "eLocationID": "4676",
+      "journal": "Vaccine",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AD Ogunniyi",
+          "givenNames": "AD",
+          "surnames": "Ogunniyi",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "JC Paton",
+          "givenNames": "JC",
+          "surnames": "Paton",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "AC Kirby",
+          "givenNames": "AC",
+          "surnames": "Kirby",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "JA McCullers",
+          "givenNames": "JA",
+          "surnames": "McCullers",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        },
+        {
+          "fullName": "J Cook",
+          "givenNames": "J",
+          "surnames": "Cook",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.221Z",
+          "lastModified": "2014-04-16T22:00:30.221Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.221Z",
+      "lastModified": "2014-04-16T22:00:30.221Z"
+    },
+    {
+      "key": "15",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 79,
+      "volume": "79",
+      "title": "The N-ethyl-N-nitrosourea-induced Goldenticket mouse mutant reveals an essential function of Sting in the in vivo interferon response to Listeria monocytogenes and cyclic dinucleotides",
+      "pages": "688-694",
+      "eLocationID": "688",
+      "journal": "Infect Immun",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JD Sauer",
+          "givenNames": "JD",
+          "surnames": "Sauer",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "K Sotelo-Troha",
+          "givenNames": "K",
+          "surnames": "Sotelo-Troha",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "J von Moltke",
+          "givenNames": "J",
+          "surnames": "von Moltke",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "KM Monroe",
+          "givenNames": "KM",
+          "surnames": "Monroe",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "CS Rae",
+          "givenNames": "CS",
+          "surnames": "Rae",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.221Z",
+      "lastModified": "2014-04-16T22:00:30.221Z"
+    },
+    {
+      "key": "16",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 164,
+      "volume": "164",
+      "title": "CD4 and CD8 expression by dendritic cell subtypes in mouse thymus and spleen",
+      "pages": "2978-2986",
+      "eLocationID": "2978",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Vremec",
+          "givenNames": "D",
+          "surnames": "Vremec",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "J Pooley",
+          "givenNames": "J",
+          "surnames": "Pooley",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "H Hochrein",
+          "givenNames": "H",
+          "surnames": "Hochrein",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "L Wu",
+          "givenNames": "L",
+          "surnames": "Wu",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "K Shortman",
+          "givenNames": "K",
+          "surnames": "Shortman",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.222Z",
+      "lastModified": "2014-04-16T22:00:30.222Z"
+    },
+    {
+      "key": "17",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 328,
+      "volume": "328",
+      "title": "c-di-AMP secreted by intracellular Listeria monocytogenes activates a host type I interferon response",
+      "pages": "1703-1705",
+      "eLocationID": "1703",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JJ Woodward",
+          "givenNames": "JJ",
+          "surnames": "Woodward",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "AT Iavarone",
+          "givenNames": "AT",
+          "surnames": "Iavarone",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        },
+        {
+          "fullName": "DA Portnoy",
+          "givenNames": "DA",
+          "surnames": "Portnoy",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.222Z",
+          "lastModified": "2014-04-16T22:00:30.222Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.222Z",
+      "lastModified": "2014-04-16T22:00:30.222Z"
+    },
+    {
+      "key": "18",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 29,
+      "volume": "29",
+      "title": "Bis-(3′,5′)-cyclic dimeric adenosine monophosphate: strong Th1/Th2/Th17 promoting mucosal adjuvant",
+      "pages": "5210-5220",
+      "eLocationID": "5210",
+      "journal": "Vaccine",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "T Ebensen",
+          "givenNames": "T",
+          "surnames": "Ebensen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "R Libanova",
+          "givenNames": "R",
+          "surnames": "Libanova",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "K Schulze",
+          "givenNames": "K",
+          "surnames": "Schulze",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "T Yevsa",
+          "givenNames": "T",
+          "surnames": "Yevsa",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "M Morr",
+          "givenNames": "M",
+          "surnames": "Morr",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.223Z",
+      "lastModified": "2014-04-16T22:00:30.223Z"
+    },
+    {
+      "key": "19",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 28,
+      "volume": "28",
+      "title": "The member of the cyclic di-nucleotide family bis-(3′, 5′)-cyclic dimeric inosine monophosphate exerts potent activity as mucosal adjuvant",
+      "pages": "2249-2258",
+      "eLocationID": "2249",
+      "journal": "Vaccine",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Libanova",
+          "givenNames": "R",
+          "surnames": "Libanova",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "T Ebensen",
+          "givenNames": "T",
+          "surnames": "Ebensen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "K Schulze",
+          "givenNames": "K",
+          "surnames": "Schulze",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "D Bruhn",
+          "givenNames": "D",
+          "surnames": "Bruhn",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        },
+        {
+          "fullName": "M Norder",
+          "givenNames": "M",
+          "surnames": "Norder",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.223Z",
+          "lastModified": "2014-04-16T22:00:30.223Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.223Z",
+      "lastModified": "2014-04-16T22:00:30.223Z"
+    },
+    {
+      "key": "20",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 478,
+      "volume": "478",
+      "title": "STING is a direct innate immune sensor of cyclic di-GMP",
+      "pages": "515-518",
+      "eLocationID": "515",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DL Burdette",
+          "givenNames": "DL",
+          "surnames": "Burdette",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "KM Monroe",
+          "givenNames": "KM",
+          "surnames": "Monroe",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "K Sotelo-Troha",
+          "givenNames": "K",
+          "surnames": "Sotelo-Troha",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "JS Iwig",
+          "givenNames": "JS",
+          "surnames": "Iwig",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "B Eckert",
+          "givenNames": "B",
+          "surnames": "Eckert",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.223Z",
+      "lastModified": "2014-04-16T22:00:30.223Z"
+    },
+    {
+      "key": "21",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 36,
+      "volume": "36",
+      "title": "Structural analysis of the STING adaptor protein reveals a hydrophobic dimer interface and mode of cyclic di-GMP binding",
+      "pages": "1073-1086",
+      "eLocationID": "1073",
+      "journal": "Immunity",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Ouyang",
+          "givenNames": "S",
+          "surnames": "Ouyang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "X Song",
+          "givenNames": "X",
+          "surnames": "Song",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "Y Wang",
+          "givenNames": "Y",
+          "surnames": "Wang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "H Ru",
+          "givenNames": "H",
+          "surnames": "Ru",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        },
+        {
+          "fullName": "N Shaw",
+          "givenNames": "N",
+          "surnames": "Shaw",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.224Z",
+          "lastModified": "2014-04-16T22:00:30.224Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.224Z",
+      "lastModified": "2014-04-16T22:00:30.224Z"
+    },
+    {
+      "key": "22",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 13,
+      "volume": "13",
+      "title": "The helicase DDX41 recognizes the bacterial secondary messengers cyclic di-GMP and cyclic di-AMP to activate a type I interferon immune response",
+      "pages": "1155-1161",
+      "eLocationID": "1155",
+      "journal": "Nat Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Parvatiyar",
+          "givenNames": "K",
+          "surnames": "Parvatiyar",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.225Z",
+          "lastModified": "2014-04-16T22:00:30.225Z"
+        },
+        {
+          "fullName": "Z Zhang",
+          "givenNames": "Z",
+          "surnames": "Zhang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.225Z",
+          "lastModified": "2014-04-16T22:00:30.225Z"
+        },
+        {
+          "fullName": "RM Teles",
+          "givenNames": "RM",
+          "surnames": "Teles",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.225Z",
+          "lastModified": "2014-04-16T22:00:30.225Z"
+        },
+        {
+          "fullName": "S Ouyang",
+          "givenNames": "S",
+          "surnames": "Ouyang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.225Z",
+          "lastModified": "2014-04-16T22:00:30.225Z"
+        },
+        {
+          "fullName": "Y Jiang",
+          "givenNames": "Y",
+          "surnames": "Jiang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.225Z",
+          "lastModified": "2014-04-16T22:00:30.225Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.224Z",
+      "lastModified": "2014-04-16T22:00:30.224Z"
+    },
+    {
+      "key": "23",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Pattern recognition receptors: sentinels in innate immunity and targets of new vaccine adjuvants",
+      "pages": "237-256",
+      "eLocationID": "237",
+      "journal": "Expert Rev Vaccines",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Olive",
+          "givenNames": "C",
+          "surnames": "Olive",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.225Z",
+          "lastModified": "2014-04-16T22:00:30.225Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.225Z",
+      "lastModified": "2014-04-16T22:00:30.225Z"
+    },
+    {
+      "key": "24",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 109,
+      "volume": "109",
+      "title": "The control of adaptive immune responses by the innate immune system",
+      "pages": "87-124",
+      "eLocationID": "87",
+      "journal": "Adv Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Schenten",
+          "givenNames": "D",
+          "surnames": "Schenten",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.226Z",
+          "lastModified": "2014-04-16T22:00:30.226Z"
+        },
+        {
+          "fullName": "R Medzhitov",
+          "givenNames": "R",
+          "surnames": "Medzhitov",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.226Z",
+          "lastModified": "2014-04-16T22:00:30.226Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.225Z",
+      "lastModified": "2014-04-16T22:00:30.225Z"
+    },
+    {
+      "key": "25",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 12,
+      "volume": "12",
+      "title": "Immunomodulatory functions of type I interferons",
+      "pages": "125-135",
+      "eLocationID": "125",
+      "journal": "Nat Rev Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JM Gonzalez-Navajas",
+          "givenNames": "JM",
+          "surnames": "Gonzalez-Navajas",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.226Z",
+          "lastModified": "2014-04-16T22:00:30.226Z"
+        },
+        {
+          "fullName": "J Lee",
+          "givenNames": "J",
+          "surnames": "Lee",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.226Z",
+          "lastModified": "2014-04-16T22:00:30.226Z"
+        },
+        {
+          "fullName": "M David",
+          "givenNames": "M",
+          "surnames": "David",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.226Z",
+          "lastModified": "2014-04-16T22:00:30.226Z"
+        },
+        {
+          "fullName": "E Raz",
+          "givenNames": "E",
+          "surnames": "Raz",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.226Z",
+          "lastModified": "2014-04-16T22:00:30.226Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.226Z",
+      "lastModified": "2014-04-16T22:00:30.226Z"
+    },
+    {
+      "key": "26",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 90,
+      "volume": "90",
+      "title": "Modulation of T-cell function by type I interferon",
+      "pages": "492-497",
+      "eLocationID": "492",
+      "journal": "Immunol Cell Biol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DF Tough",
+          "givenNames": "DF",
+          "surnames": "Tough",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.227Z",
+          "lastModified": "2014-04-16T22:00:30.227Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.226Z",
+      "lastModified": "2014-04-16T22:00:30.226Z"
+    },
+    {
+      "key": "27",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Vaccines: from empirical development to rational design",
+      "pages": "e1003001",
+      "eLocationID": "e1003001",
+      "journal": "PLoS Pathog",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Rueckert",
+          "givenNames": "C",
+          "surnames": "Rueckert",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.227Z",
+          "lastModified": "2014-04-16T22:00:30.227Z"
+        },
+        {
+          "fullName": "CA Guzman",
+          "givenNames": "CA",
+          "surnames": "Guzman",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.227Z",
+          "lastModified": "2014-04-16T22:00:30.227Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.227Z",
+      "lastModified": "2014-04-16T22:00:30.227Z"
+    },
+    {
+      "key": "28",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 30,
+      "volume": "30",
+      "title": "Polyethyleneimine is a potent mucosal adjuvant for viral glycoprotein antigens",
+      "pages": "883-888",
+      "eLocationID": "883",
+      "journal": "Nat Biotechnol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "F Wegmann",
+          "givenNames": "F",
+          "surnames": "Wegmann",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "KH Gartlan",
+          "givenNames": "KH",
+          "surnames": "Gartlan",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "AM Harandi",
+          "givenNames": "AM",
+          "surnames": "Harandi",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "SA Brinckmann",
+          "givenNames": "SA",
+          "surnames": "Brinckmann",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "M Coccia",
+          "givenNames": "M",
+          "surnames": "Coccia",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.227Z",
+      "lastModified": "2014-04-16T22:00:30.227Z"
+    },
+    {
+      "key": "29",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Distribution of primed T cells and antigen-loaded antigen presenting cells following intranasal immunization in mice",
+      "pages": "e19346",
+      "eLocationID": "e19346",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Ciabattini",
+          "givenNames": "A",
+          "surnames": "Ciabattini",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "E Pettini",
+          "givenNames": "E",
+          "surnames": "Pettini",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "F Fiorino",
+          "givenNames": "F",
+          "surnames": "Fiorino",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "G Prota",
+          "givenNames": "G",
+          "surnames": "Prota",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        },
+        {
+          "fullName": "G Pozzi",
+          "givenNames": "G",
+          "surnames": "Pozzi",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.228Z",
+          "lastModified": "2014-04-16T22:00:30.228Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.228Z",
+      "lastModified": "2014-04-16T22:00:30.228Z"
+    },
+    {
+      "key": "30",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 37,
+      "volume": "37",
+      "title": "Mediastinal lymph node CD8alpha- DC initiate antigen presentation following intranasal coadministration of alpha-GalCer",
+      "pages": "2127-2137",
+      "eLocationID": "2127",
+      "journal": "Eur J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SY Ko",
+          "givenNames": "SY",
+          "surnames": "Ko",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "KA Lee",
+          "givenNames": "KA",
+          "surnames": "Lee",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "HJ Youn",
+          "givenNames": "HJ",
+          "surnames": "Youn",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "YJ Kim",
+          "givenNames": "YJ",
+          "surnames": "Kim",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "HJ Ko",
+          "givenNames": "HJ",
+          "surnames": "Ko",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.228Z",
+      "lastModified": "2014-04-16T22:00:30.228Z"
+    },
+    {
+      "key": "31",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 49,
+      "volume": "49",
+      "title": "Development of antigen-specific T cells in mediastinal lymph nodes after intranasal immunization",
+      "pages": "334-339",
+      "eLocationID": "334",
+      "journal": "Methods",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Vendetti",
+          "givenNames": "S",
+          "surnames": "Vendetti",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "A Riccomi",
+          "givenNames": "A",
+          "surnames": "Riccomi",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "DR Negri",
+          "givenNames": "DR",
+          "surnames": "Negri",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "F Veglia",
+          "givenNames": "F",
+          "surnames": "Veglia",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        },
+        {
+          "fullName": "E Sciaraffia",
+          "givenNames": "E",
+          "surnames": "Sciaraffia",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.229Z",
+          "lastModified": "2014-04-16T22:00:30.229Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.229Z",
+      "lastModified": "2014-04-16T22:00:30.229Z"
+    },
+    {
+      "key": "32",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 205,
+      "volume": "205",
+      "title": "Clearance of influenza virus from the lung depends on migratory langerin+CD11b- but not plasmacytoid dendritic cells",
+      "pages": "1621-1634",
+      "eLocationID": "1621",
+      "journal": "J Exp Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "CH GeurtsvanKessel",
+          "givenNames": "CH",
+          "surnames": "GeurtsvanKessel",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "MA Willart",
+          "givenNames": "MA",
+          "surnames": "Willart",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "LS van Rijt",
+          "givenNames": "LS",
+          "surnames": "van Rijt",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "F Muskens",
+          "givenNames": "F",
+          "surnames": "Muskens",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "M Kool",
+          "givenNames": "M",
+          "surnames": "Kool",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.229Z",
+      "lastModified": "2014-04-16T22:00:30.229Z"
+    },
+    {
+      "key": "33",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 80,
+      "volume": "80",
+      "title": "Listeria monocytogenes strain-specific impairment of the TetR regulator underlies the drastic increase in cyclic di-AMP secretion and beta interferon-inducing ability",
+      "pages": "2323-2332",
+      "eLocationID": "2323",
+      "journal": "Infect Immun",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "T Yamamoto",
+          "givenNames": "T",
+          "surnames": "Yamamoto",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "H Hara",
+          "givenNames": "H",
+          "surnames": "Hara",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "K Tsuchiya",
+          "givenNames": "K",
+          "surnames": "Tsuchiya",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "S Sakai",
+          "givenNames": "S",
+          "surnames": "Sakai",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        },
+        {
+          "fullName": "R Fang",
+          "givenNames": "R",
+          "surnames": "Fang",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.230Z",
+          "lastModified": "2014-04-16T22:00:30.230Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.230Z",
+      "lastModified": "2014-04-16T22:00:30.230Z"
+    },
+    {
+      "key": "34",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Production of IFN-beta during Listeria monocytogenes infection is restricted to monocyte/macrophage lineage",
+      "pages": "e18543",
+      "eLocationID": "e18543",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Solodova",
+          "givenNames": "E",
+          "surnames": "Solodova",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "J Jablonska",
+          "givenNames": "J",
+          "surnames": "Jablonska",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "S Weiss",
+          "givenNames": "S",
+          "surnames": "Weiss",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "S Lienenklaus",
+          "givenNames": "S",
+          "surnames": "Lienenklaus",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.230Z",
+      "lastModified": "2014-04-16T22:00:30.230Z"
+    },
+    {
+      "key": "35",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "A fluorescence reporter model defines “Tip-DCs” as the cellular source of interferon beta in murine listeriosis",
+      "pages": "e15567",
+      "eLocationID": "e15567",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P Dresing",
+          "givenNames": "P",
+          "surnames": "Dresing",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "S Borkens",
+          "givenNames": "S",
+          "surnames": "Borkens",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "M Kocur",
+          "givenNames": "M",
+          "surnames": "Kocur",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "S Kropp",
+          "givenNames": "S",
+          "surnames": "Kropp",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        },
+        {
+          "fullName": "S Scheu",
+          "givenNames": "S",
+          "surnames": "Scheu",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.231Z",
+          "lastModified": "2014-04-16T22:00:30.231Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.231Z",
+      "lastModified": "2014-04-16T22:00:30.231Z"
+    },
+    {
+      "key": "36",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 296,
+      "volume": "296",
+      "title": "Lung environment determines unique phenotype of alveolar macrophages",
+      "pages": "L936-946",
+      "eLocationID": "L936",
+      "journal": "Am J Physiol Lung Cell Mol Physiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AM Guth",
+          "givenNames": "AM",
+          "surnames": "Guth",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "WJ Janssen",
+          "givenNames": "WJ",
+          "surnames": "Janssen",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "CM Bosio",
+          "givenNames": "CM",
+          "surnames": "Bosio",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "EC Crouch",
+          "givenNames": "EC",
+          "surnames": "Crouch",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "PM Henson",
+          "givenNames": "PM",
+          "surnames": "Henson",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.231Z",
+      "lastModified": "2014-04-16T22:00:30.231Z"
+    },
+    {
+      "key": "37",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 84,
+      "volume": "84",
+      "title": "Temporal and spatial resolution of type I and III interferon responses in vivo",
+      "pages": "8626-8638",
+      "eLocationID": "8626",
+      "journal": "J Virol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JE Pulverer",
+          "givenNames": "JE",
+          "surnames": "Pulverer",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "U Rand",
+          "givenNames": "U",
+          "surnames": "Rand",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "S Lienenklaus",
+          "givenNames": "S",
+          "surnames": "Lienenklaus",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "D Kugel",
+          "givenNames": "D",
+          "surnames": "Kugel",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        },
+        {
+          "fullName": "N Zietara",
+          "givenNames": "N",
+          "surnames": "Zietara",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.232Z",
+          "lastModified": "2014-04-16T22:00:30.232Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.232Z",
+      "lastModified": "2014-04-16T22:00:30.232Z"
+    },
+    {
+      "key": "38",
+      "year": 2014,
+      "displayYear": "2014",
+      "volumeNumber": 192,
+      "volume": "192",
+      "title": "MPYS/STING-mediated TNF-alpha, not type I IFN, is essential for the mucosal adjuvant activity of (3′-5′)-cyclic-di-guanosine-monophosphate in vivo",
+      "pages": "492-502",
+      "eLocationID": "492",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SM Blaauboer",
+          "givenNames": "SM",
+          "surnames": "Blaauboer",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        },
+        {
+          "fullName": "VD Gabrielle",
+          "givenNames": "VD",
+          "surnames": "Gabrielle",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        },
+        {
+          "fullName": "L Jin",
+          "givenNames": "L",
+          "surnames": "Jin",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.232Z",
+      "lastModified": "2014-04-16T22:00:30.232Z"
+    },
+    {
+      "key": "39",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "Induction and function of type I and III interferon in response to viral infection",
+      "pages": "476-486",
+      "eLocationID": "476",
+      "journal": "Curr Opin Virol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DE Levy",
+          "givenNames": "DE",
+          "surnames": "Levy",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        },
+        {
+          "fullName": "IJ Marie",
+          "givenNames": "IJ",
+          "surnames": "Marie",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        },
+        {
+          "fullName": "JE Durbin",
+          "givenNames": "JE",
+          "surnames": "Durbin",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.233Z",
+      "lastModified": "2014-04-16T22:00:30.233Z"
+    },
+    {
+      "key": "40",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 183,
+      "volume": "183",
+      "title": "Novel reporter mouse reveals constitutive and inflammatory expression of IFN-beta in vivo",
+      "pages": "3229-3236",
+      "eLocationID": "3229",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Lienenklaus",
+          "givenNames": "S",
+          "surnames": "Lienenklaus",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        },
+        {
+          "fullName": "M Cornitescu",
+          "givenNames": "M",
+          "surnames": "Cornitescu",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.233Z",
+          "lastModified": "2014-04-16T22:00:30.233Z"
+        },
+        {
+          "fullName": "N Zietara",
+          "givenNames": "N",
+          "surnames": "Zietara",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "M Lyszkiewicz",
+          "givenNames": "M",
+          "surnames": "Lyszkiewicz",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "N Gekara",
+          "givenNames": "N",
+          "surnames": "Gekara",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.233Z",
+      "lastModified": "2014-04-16T22:00:30.233Z"
+    },
+    {
+      "key": "41",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 223,
+      "volume": "223",
+      "title": "An advanced culture method for generating large quantities of highly pure dendritic cells from mouse bone marrow",
+      "pages": "77-92",
+      "eLocationID": "77",
+      "journal": "J Immunol Methods",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MB Lutz",
+          "givenNames": "MB",
+          "surnames": "Lutz",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "N Kukutsch",
+          "givenNames": "N",
+          "surnames": "Kukutsch",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "AL Ogilvie",
+          "givenNames": "AL",
+          "surnames": "Ogilvie",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "S Rossner",
+          "givenNames": "S",
+          "surnames": "Rossner",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "F Koch",
+          "givenNames": "F",
+          "surnames": "Koch",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.234Z",
+      "lastModified": "2014-04-16T22:00:30.234Z"
+    },
+    {
+      "key": "42",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 174,
+      "volume": "174",
+      "title": "Cutting edge: generation of splenic CD8+ and CD8- dendritic cell equivalents in Fms-like tyrosine kinase 3 ligand bone marrow cultures",
+      "pages": "6592-6597",
+      "eLocationID": "6592",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SH Naik",
+          "givenNames": "SH",
+          "surnames": "Naik",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.234Z",
+          "lastModified": "2014-04-16T22:00:30.234Z"
+        },
+        {
+          "fullName": "AI Proietto",
+          "givenNames": "AI",
+          "surnames": "Proietto",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        },
+        {
+          "fullName": "NS Wilson",
+          "givenNames": "NS",
+          "surnames": "Wilson",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        },
+        {
+          "fullName": "A Dakic",
+          "givenNames": "A",
+          "surnames": "Dakic",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        },
+        {
+          "fullName": "P Schnorrer",
+          "givenNames": "P",
+          "surnames": "Schnorrer",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.234Z",
+      "lastModified": "2014-04-16T22:00:30.234Z"
+    },
+    {
+      "key": "43",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.235Z",
+      "lastModified": "2014-04-16T22:00:30.235Z"
+    },
+    {
+      "key": "44",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 595,
+      "volume": "595",
+      "title": "Isolation of human blood DC subtypes",
+      "pages": "45-54",
+      "eLocationID": "45",
+      "journal": "Methods Mol Biol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AJ Kassianos",
+          "givenNames": "AJ",
+          "surnames": "Kassianos",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        },
+        {
+          "fullName": "SL Jongbloed",
+          "givenNames": "SL",
+          "surnames": "Jongbloed",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        },
+        {
+          "fullName": "DN Hart",
+          "givenNames": "DN",
+          "surnames": "Hart",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        },
+        {
+          "fullName": "KJ Radford",
+          "givenNames": "KJ",
+          "surnames": "Radford",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.235Z",
+          "lastModified": "2014-04-16T22:00:30.235Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.235Z",
+      "lastModified": "2014-04-16T22:00:30.235Z"
+    },
+    {
+      "key": "45",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 100,
+      "volume": "100",
+      "title": "Characterization of human blood dendritic cell subsets",
+      "pages": "4512-4520",
+      "eLocationID": "4512",
+      "journal": "Blood",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KP MacDonald",
+          "givenNames": "KP",
+          "surnames": "MacDonald",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.236Z",
+          "lastModified": "2014-04-16T22:00:30.236Z"
+        },
+        {
+          "fullName": "DJ Munster",
+          "givenNames": "DJ",
+          "surnames": "Munster",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.236Z",
+          "lastModified": "2014-04-16T22:00:30.236Z"
+        },
+        {
+          "fullName": "GJ Clark",
+          "givenNames": "GJ",
+          "surnames": "Clark",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.236Z",
+          "lastModified": "2014-04-16T22:00:30.236Z"
+        },
+        {
+          "fullName": "A Dzionek",
+          "givenNames": "A",
+          "surnames": "Dzionek",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.236Z",
+          "lastModified": "2014-04-16T22:00:30.236Z"
+        },
+        {
+          "fullName": "J Schmitz",
+          "givenNames": "J",
+          "surnames": "Schmitz",
+          "suffix": "",
+          "created": "2014-04-16T22:00:30.236Z",
+          "lastModified": "2014-04-16T22:00:30.236Z"
+        }
+      ],
+      "editors": [],
+      "created": "2014-04-16T22:00:30.235Z",
+      "lastModified": "2014-04-16T22:00:30.235Z"
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Ivana Škrnjug",
+      "givenNames": "Ivana",
+      "surnames": "Škrnjug",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    },
+    {
+      "fullName": "Christine Rueckert",
+      "givenNames": "Christine",
+      "surnames": "Rueckert",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    },
+    {
+      "fullName": "Rimma Libanova",
+      "givenNames": "Rimma",
+      "surnames": "Libanova",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    },
+    {
+      "fullName": "Stefan Lienenklaus",
+      "givenNames": "Stefan",
+      "surnames": "Lienenklaus",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    },
+    {
+      "fullName": "Siegfried Weiss",
+      "givenNames": "Siegfried",
+      "surnames": "Weiss",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    },
+    {
+      "fullName": "Carlos A. Guzmán",
+      "givenNames": "Carlos A.",
+      "surnames": "Guzmán",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Roger Le Grand",
+      "givenNames": "Roger",
+      "surnames": "Le Grand",
+      "suffix": "",
+      "created": "2014-04-16T22:00:30.236Z",
+      "lastModified": "2014-04-16T22:00:30.236Z"
+    }
+  ],
+  "journals": [
+    {
+      "journalKey": "TestJournal19326203",
+      "eIssn": "1932-6203",
+      "title": "Test Journal 1932-6203",
+      "volumes": [],
+      "articleList": [],
+      "created": "2014-04-16T22:00:05.353Z",
+      "lastModified": "2014-04-16T22:00:05.353Z"
+    }
+  ],
+  "created": "2014-04-16T22:00:30.212Z",
+  "lastModified": "2014-04-16T22:00:30.212Z"
+}
