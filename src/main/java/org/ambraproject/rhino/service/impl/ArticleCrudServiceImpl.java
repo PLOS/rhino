@@ -586,6 +586,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         if(assets != null) {
           //One last check of the existing database rows.
           for (ArticleAsset asset : assets) {
+            //TODO: There should be some way to specify an asset in the asset table as the striking image
             if (asset.getDoi().contains(".strk.")) {
               strikingImageDOI = asset.getDoi();
               break;
