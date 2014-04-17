@@ -103,14 +103,4 @@ public interface AssetCrudService extends DoiBasedCrudService {
    */
   public abstract void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException;
 
-  /**
-   * Find the identity of the only file for an asset.
-   *
-   * @param assetId the identity of an asset
-   * @return the identity of the only file belonging to the asset, or {@code null} if the asset has no associated files
-   * or does not exist
-   * @throws org.ambraproject.rhino.rest.RestClientException if the asset has more than one file
-   */
-  public abstract AssetFileIdentity findOnlyFile(AssetIdentity assetId);
-
 }
