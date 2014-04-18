@@ -648,15 +648,15 @@ public class IngestionTest extends BaseRhinoTest {
        */
       expectedContextElement = actualContextElement;
     }
-    compare(results, ArticleAsset.class, "contextElement", actualContextElement, expectedContextElement);
+    compare(results, ArticleAsset.class, "contextElement(" + actual.getDoi() + ")", actualContextElement, expectedContextElement);
 
-    compareMarkupText(results, ArticleAsset.class, "title", actual.getTitle(), expected.getTitle());
-    compareMarkupText(results, ArticleAsset.class, "description", actual.getDescription(), expected.getDescription());
+    compareMarkupText(results, ArticleAsset.class, "title(" + actual.getDoi() + ")", actual.getTitle(), expected.getTitle());
+    compareMarkupText(results, ArticleAsset.class, "description(" + actual.getDoi() + ")", actual.getDescription(), expected.getDescription());
 
     if (assetFileExpected) {
-      compare(results, ArticleAsset.class, "extension", actual.getExtension(), expected.getExtension());
-      compare(results, ArticleAsset.class, "contentType", actual.getContentType(), expected.getContentType());
-      compare(results, ArticleAsset.class, "size", actual.getSize(), expected.getSize());
+      compare(results, ArticleAsset.class, "extension(" + actual.getDoi() + ")", actual.getExtension(), expected.getExtension());
+      compare(results, ArticleAsset.class, "contentType(" + actual.getDoi() + ")", actual.getContentType(), expected.getContentType());
+      compare(results, ArticleAsset.class, "size(" + actual.getDoi() + ")", actual.getSize(), expected.getSize());
     }
   }
 
