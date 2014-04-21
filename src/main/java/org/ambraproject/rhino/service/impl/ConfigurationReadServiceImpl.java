@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.service.ConfigurationReadService;
+import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
 
   @Autowired
   private Configuration ambraConfiguration;
+
+  @Autowired
+  private GitInfo gitInfo;
 
   @Override
   public Transceiver read() throws IOException {
@@ -58,6 +62,8 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     try (InputStream is = getClass().getResourceAsStream("/version.properties")) {
       properties.load(is);
     }
+
+    properties.setProperty("gitCommitIdAbbrev", gitInfo.getCommitIdAbbrev());
     return properties;
   }
 
