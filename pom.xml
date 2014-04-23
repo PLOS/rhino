@@ -366,13 +366,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Git Info -->
-    <dependency>
-      <groupId>pl.project13.maven</groupId>
-      <artifactId>git-commit-id-plugin</artifactId>
-      <version>2.1.9</version>
-    </dependency>
-
   </dependencies>
 
 
@@ -517,7 +510,7 @@
           <skipPoms>true</skipPoms>
           <generateGitPropertiesFile>false</generateGitPropertiesFile>
           <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
-          <failOnNoGitDirectory>true</failOnNoGitDirectory>
+          <failOnNoGitDirectory>false</failOnNoGitDirectory>
           <skip>false</skip>
           <excludeProperties/>
           <gitDescribe>

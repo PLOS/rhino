@@ -83,7 +83,6 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:git.properties")
 public class RhinoConfiguration extends BaseConfiguration {
 
   /**
