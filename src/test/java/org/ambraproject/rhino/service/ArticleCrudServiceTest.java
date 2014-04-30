@@ -226,7 +226,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     a2.seteIssn(a1.geteIssn());
     hibernateTemplate.save(a2);
 
-    Transceiver response = articleCrudService.listDois(ArticleCriteria.create(null, null));
+    Transceiver response = articleCrudService.listDois(ArticleCriteria.create(null, null, false));
     DoiList doiList = entityGson.fromJson(response.readJson(entityGson), DoiList.class);
     assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }

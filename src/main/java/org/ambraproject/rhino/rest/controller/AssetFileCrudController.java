@@ -172,6 +172,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
 
       response.setStatus(HttpStatus.OK.value());
+      setContentHeaders(response, id);
       response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     } else {

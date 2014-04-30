@@ -58,6 +58,7 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   private static final String ARTICLE_XML_FIELD = "xml";
 
+  private static final String DATE_PARAM = "date";
   private static final String PUB_STATE_PARAM = "state";
   private static final String SYND_STATUS_PARAM = "syndication";
 
@@ -67,10 +68,12 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
+                       @RequestParam(value = DATE_PARAM, required = false) String includeLastModifiedDate,
                        @RequestParam(value = PUB_STATE_PARAM, required = false) String[] pubStates,
                        @RequestParam(value = SYND_STATUS_PARAM, required = false) String[] syndStatuses)
       throws IOException {
-    ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses));
+    ArticleCriteria articleCriteria = ArticleCriteria.create(asList(pubStates), asList(syndStatuses),
+        booleanParameter(includeLastModifiedDate));
     articleCrudService.listDois(articleCriteria).respond(request, response, entityGson);
   }
 

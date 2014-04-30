@@ -25,6 +25,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -35,23 +36,28 @@ public class ArticleCriteria {
 
   private final Optional<ImmutableSet<Integer>> publicationStates;
   private final Optional<ImmutableSet<String>> syndicationStatuses;
+  private final boolean includeLastModifiedDate;
 
   private ArticleCriteria(Optional<ImmutableSet<Integer>> publicationStates,
-                          Optional<ImmutableSet<String>> syndicationStatuses) {
+                          Optional<ImmutableSet<String>> syndicationStatuses, boolean includeLastModifiedDate) {
     this.publicationStates = Preconditions.checkNotNull(publicationStates);
     this.syndicationStatuses = Preconditions.checkNotNull(syndicationStatuses);
+    this.includeLastModifiedDate = includeLastModifiedDate;
   }
 
   /**
-   * Create an object describing a set of articles.
+   * Create an object describing a set of articles and how to display them.
    *
-   * @param clientPubStates    include all articles whose publication state is one of these; {@code null} to include all
-   *                           articles regardless of publication state
-   * @param clientSyndStatuses include all articles whose publication state is one of these; {@code null} to include all
-   *                           articles regardless of publication state
+   * @param clientPubStates         include all articles whose publication state is one of these; {@code null} to
+   *                                include all articles regardless of publication state
+   * @param clientSyndStatuses      include all articles whose publication state is one of these; {@code null} to
+   *                                include all articles regardless of publication state
+   * @param includeLastModifiedDate display lastModifiedDate with each article
    * @return
    */
-  public static ArticleCriteria create(Collection<String> clientPubStates, Collection<String> clientSyndStatuses) {
+  public static ArticleCriteria create(Collection<String> clientPubStates,
+                                       Collection<String> clientSyndStatuses,
+                                       boolean includeLastModifiedDate) {
     Optional<ImmutableSet<Integer>> publicationStateConstants;
     if (CollectionUtils.isEmpty(clientPubStates)) {
       publicationStateConstants = Optional.absent();
@@ -82,7 +88,7 @@ public class ArticleCriteria {
       syndicationStatusConstants = Optional.of(builder.build());
     }
 
-    return new ArticleCriteria(publicationStateConstants, syndicationStatusConstants);
+    return new ArticleCriteria(publicationStateConstants, syndicationStatusConstants, includeLastModifiedDate);
   }
 
   /*
@@ -116,19 +122,23 @@ public class ArticleCriteria {
       return findBySyndication(hibernateTemplate);
     }
 
-    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class);
     ProjectionList projectionList = Projections.projectionList().add(Projections.property("doi"));
-    if (publicationStates.isPresent()) {
-      criteria = criteria.add(Restrictions.in("state", publicationStates.get()));
-      projectionList = projectionList.add(Projections.property("state"));
-    }
-    List<?> result = hibernateTemplate.findByCriteria(criteria
+    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         .setProjection(projectionList)
-        .addOrder(Order.asc("lastModified")));
-    return publicationStates.isPresent()
-        ? new ArticleViewList(Lists.transform((List<Object[]>) result, DOI_AND_STATE_AS_VIEW))
-        : new DoiList((List<String>) result);
+        .addOrder(Order.asc("lastModified"));
+    if (publicationStates.isPresent()) {
+      criteria = criteria.add(Restrictions.in("state", publicationStates.get()));
+      projectionList.add(Projections.property("state"));
+      return new ArticleViewList(Lists.transform((List<Object[]>) hibernateTemplate.findByCriteria(criteria),
+          DOI_AND_STATE_AS_VIEW));
+    }
+    if (includeLastModifiedDate) {
+      projectionList.add(Projections.property("lastModified"));
+      return new ArticleViewList(Lists.transform((List<Object[]>) hibernateTemplate.findByCriteria(criteria),
+          DOI_AND_TIMESTAMP_AS_VIEW));
+    }
+    return new DoiList((List<String>) hibernateTemplate.findByCriteria(criteria));
   }
 
   private static final Function<Object[], ArticleView> DOI_AND_STATE_AS_VIEW = new Function<Object[], ArticleView>() {
@@ -140,6 +150,29 @@ public class ArticleCriteria {
       return new ArticleStateView(doi, pubStateName, null);
     }
   };
+  private static final Function<Object[], ArticleView> DOI_AND_TIMESTAMP_AS_VIEW = new Function<Object[], ArticleView>() {
+    @Override
+    public ArticleView apply(Object[] input) {
+      String doi = (String) input[0];
+      Date lastModified = (Date) input[1];
+      return new TimestampedDoi(doi, lastModified);
+    }
+  };
+
+  private static class TimestampedDoi implements ArticleView {
+    private final String doi;
+    private final Date lastModified;
+
+    private TimestampedDoi(String doi, Date lastModified) {
+      this.doi = Preconditions.checkNotNull(doi);
+      this.lastModified = Preconditions.checkNotNull(lastModified);
+    }
+
+    @Override
+    public String getDoi() {
+      return doi;
+    }
+  }
 
 
   // Optimization parameter; doesn't matter if it's off. Main use case is "CROSSREF" and "PMC".

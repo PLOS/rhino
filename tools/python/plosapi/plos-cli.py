@@ -6,6 +6,7 @@ from __future__ import print_function
 from __future__ import with_statement
 
 import os, sys, traceback, json, re, requests, hashlib, zipfile, urllib
+import sqlite3
 from plosapi import Rhino, S3, Currents
 #from sqlalchemy import create_engine
 
@@ -17,6 +18,9 @@ __version__   = '0.1'
 #      Text templates used in
 #      repetative string creation.
 # ***********************************************
+
+_ASSET_DB = 'importData.db'
+_ASSET_TABLE = 'assetData'
 
 # ***** Manifest DTD template *****
 DTD_TEXT = """
@@ -448,7 +452,48 @@ def dumparticle(params, src, apd, outDir='./'):
             print('FAILED: {doi}'.format(doi=doi))
             print('rm -rf {d}/{doi} #Cleanup'.format(doi=doi, d=outDir))
             print('./plos-cli.py --directory {d} dumparticle {doi} > {redo}.redo #redo'.format(d=outDir, doi=doi, redo=dname))
+        finally:
+            os.chdir(outDir)
+
     os.chdir(oldDir)
+    return
+
+def map_dois(src):
+    print("Get all doi's")
+    doiMap = { _stripPrefix(d,src): 'NEW' for d in src.articles()}
+    print('Lookup doi info we have already processed')
+    conn = sqlite3.connect(_ASSET_DB)
+    c = conn.cursor()
+    c.execute('''select DISTINCT doi,lastmod from {tb}'''.format(tb=_ASSET_TABLE))     
+    doiMap = dict()
+    print("Set lastMod")
+    for row in c:
+        doiMap[row[0]] = row[1]
+    conn.close()
+    return doiMap
+
+def check_modified(params, src, apd):
+    doi_map = map_dois(src)
+    for k,v in doi_map.iteritems():
+        article_meta = src.article(k)
+        if v != article_meta['lastModified']:
+            doi_map[k] = 'UPDATE'
+            print('UPDATE: ' + k)
+    return doi_map
+
+def importcsv(params, src, apd):
+
+    conn = sqlite3.connect(_ASSET_DB)
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS {tb}(doi, lastmod, asid, md5, sha1, cont_type, sz);'''.format(tb=_ASSET_TABLE))
+    c.execute('''CREATE INDEX IF NOT EXISTS doiIDX on {tb}(doi); '''.format(tb=_ASSET_TABLE))
+    fname = params[0]
+    fp = open(fname, 'r')
+    for row in fp:
+        t = tuple([ t.strip() for t in row.split(',')])
+        c.execute('''INSERT INTO assetData values (?,?,?,?,?,?,?)''', t[:-1])
+    conn.commit()
+    conn.close()
     return
     
 if __name__ == "__main__":
@@ -473,6 +518,8 @@ if __name__ == "__main__":
                                         'ingestibles | '
                                         'ingest [zips in Q] | '
                                         'dumparticle [doi suffixes] | '
+                                        'importcsv [csvfile] | '
+                                        'checkmod  | '                                    
                                    )
     parser.add_argument('params', nargs='*', help="command dependent parameters")
     args = parser.parse_args()
@@ -505,6 +552,11 @@ if __name__ == "__main__":
                    lambda src, _, apd: publish(params, src, apd),
                  'dumparticle' :
                    lambda src, _, apd: dumparticle(params, src, apd, outDir=args.directory),
+                 'importcsv' :
+                   lambda src, _, apd: importcsv(params, src, apd),
+                 'checkmod' :
+                   lambda src, _, apd: check_modified(params, src, apd),
+
                 }
 
     src = Rhino(rhinoServer=args.server, prefix=args.prefix)
