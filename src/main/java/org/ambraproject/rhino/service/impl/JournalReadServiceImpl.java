@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.collect.ImmutableList;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Journal;
@@ -73,7 +74,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
       }
 
       @Override
-      protected Object getData() throws IOException {
+      protected List<JsonWrapper<Article>> getData() throws IOException {
         loadJournal(journalKey);  // just to ensure journalKey is valid
 
         // A bit of a hack...
@@ -85,9 +86,13 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
         // me but I don't feel like changing the ambra model class right now.
         ArticleList list = (ArticleList) DataAccessUtils.requiredUniqueResult(hibernateTemplate.findByNamedParam(
             "SELECT al from ArticleList al WHERE al.listCode = :listCode", "listCode", key));
+        List<String> articleDois = list.getArticleDois();
+        if (articleDois.isEmpty()) {
+          return ImmutableList.of();
+        }
         List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
-            "SELECT a from Article a WHERE doi IN (:dois)", "dois", list.getArticleDois());
-        if (articles.size() != list.getArticleDois().size()) {
+            "SELECT a from Article a WHERE doi IN (:dois)", "dois", articleDois);
+        if (articles.size() != articleDois.size()) {
           throw new IllegalStateException("Cannot find all articles for articleList " + key);
         }
 
@@ -97,7 +102,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
           articleMap.put(article.getDoi(), article);
         }
         List<JsonWrapper<Article>> results = new ArrayList<>(articles.size());
-        for (String doi : list.getArticleDois()) {
+        for (String doi : articleDois) {
           results.add(new JsonWrapper<Article>(articleMap.get(doi), "doi", "title"));
         }
         return results;
