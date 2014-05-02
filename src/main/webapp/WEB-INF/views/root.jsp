@@ -28,6 +28,7 @@
 <pre>
 Version: ${buildProperties.version}
 Built at ${buildProperties.buildDate} by ${buildProperties.buildUser}
+Commit: ${buildProperties.gitCommitIdAbbrev}
 </pre>
 
 <ul>

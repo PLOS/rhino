@@ -48,6 +48,8 @@
   <context:component-scan base-package="org.ambraproject.rhino"/>
   <context:annotation-config/>
 
+  <context:property-placeholder location="classpath:git.properties" ignore-unresolvable="true" />
+
   <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <!-- <beans:property name="maxUploadSize" value=""/> -->
   </beans:bean>
