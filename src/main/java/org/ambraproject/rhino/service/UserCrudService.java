@@ -16,26 +16,32 @@
  * limitations under the License.
  */
 
-package org.ambraproject.rhino.view.user;
+package org.ambraproject.rhino.service;
 
-import org.ambraproject.rhino.view.KeyedStringList;
+import org.ambraproject.rhino.util.response.Transceiver;
 
-import java.util.Collection;
+import java.io.IOException;
 
-public class AuthIdList extends KeyedStringList {
+/**
+ * Service that deals with users
+ */
+public interface UserCrudService {
 
-  public AuthIdList(Collection<String> authIds) {
-    super(authIds);
-  }
+  /**
+   * List all the users
+   *
+   * @return list of users
+   * @throws IOException
+   */
+  public abstract Transceiver listUsers() throws IOException;
 
-  @Override
-  protected String extractIdentifier(String value) {
-    return value;
-  }
-
-  @Override
-  protected String getMemberName() {
-    return "authId";
-  }
+  /**
+   * UserProfile object for a given authId
+   *
+   * @param authId authId
+   * @return UserProfile object
+   * @throws IOException
+   */
+  public abstract Transceiver read(String authId) throws IOException;
 
 }
