@@ -3,10 +3,11 @@ package org.ambraproject.rhino.config.json;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.ambraproject.rhino.view.AnnotationOutputView;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
 
@@ -73,7 +74,8 @@ public class AdapterRegistry {
    * Unlike {@link #JSON_OUTPUT_VIEW_CLASSES}, this is not so much an apparent kludge but normal Gson configuration.
    */
   private static final ImmutableMap<Type, Object> CUSTOM_ADAPTERS = ImmutableMap.<Type, Object>builder()
-      .put(DoiList.class, DoiList.ADAPTER)
+      .put(DoiList.class, KeyedStringList.ADAPTER)
+      .put(AuthIdList.class, KeyedStringList.ADAPTER)
       .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
       .build();
 
