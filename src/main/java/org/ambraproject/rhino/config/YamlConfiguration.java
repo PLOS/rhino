@@ -19,9 +19,11 @@
 
 package org.ambraproject.rhino.config;
 
+import java.io.File;
+
 /**
- * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain
- * values that are required to start up the server and its behavior.
+ * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain values that
+ * are required to start up the server and its behavior.
  */
 public class YamlConfiguration implements RuntimeConfiguration {
 
@@ -45,8 +47,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     // the default value should be true
     private boolean prettyPrintJson = true;
 
+    private File devModeRepo = null;
+
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
+    }
+
+    public void setDevModeRepo(File devModeRepo) {
+      this.devModeRepo = devModeRepo;
     }
   }
 
@@ -58,4 +66,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return uf.prettyPrintJson;
   }
 
+  @Override
+  public File devModeRepo() {
+    return uf.devModeRepo;
+  }
 }

@@ -125,8 +125,8 @@ public abstract class RestController {
    * @param status the response status code
    * @return the response object
    */
-  protected static ResponseEntity<?> respondWithStatus(HttpStatus status) {
-    return new ResponseEntity<Object>(status);
+  protected static <T> ResponseEntity<T> respondWithStatus(HttpStatus status) {
+    return new ResponseEntity<>(status);
   }
 
   /**

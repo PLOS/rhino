@@ -19,6 +19,8 @@
 
 package org.ambraproject.rhino.config;
 
+import java.io.File;
+
 /**
  * Interface that represents configurable values that are only known at server startup time.
  */
@@ -26,8 +28,16 @@ public interface RuntimeConfiguration {
 
   /**
    * determine if json should be formatted or not
+   *
    * @return false when formatting is turned off
    */
   boolean prettyPrintJson();
+
+  /**
+   * Return a local file path at which to simulate a content repository API, if in dev mode.
+   *
+   * @return the path, or {@code null} if not in dev mode
+   */
+  File devModeRepo();
 
 }
