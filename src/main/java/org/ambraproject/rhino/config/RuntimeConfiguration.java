@@ -20,6 +20,7 @@
 package org.ambraproject.rhino.config;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.
@@ -38,6 +39,8 @@ public interface RuntimeConfiguration {
    *
    * @return the path, or {@code null} if not in dev mode
    */
-  File devModeRepo();
+  File getDevModeRepo();
+
+  java.net.URI getContentRepoAddress();
 
 }

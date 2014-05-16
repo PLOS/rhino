@@ -20,6 +20,7 @@
 package org.ambraproject.rhino.config;
 
 import java.io.File;
+import java.net.URI;
 
 /**
  * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain values that
@@ -44,10 +45,10 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   public static class UserFields {
-    // the default value should be true
-    private boolean prettyPrintJson = true;
 
+    private boolean prettyPrintJson = true; // the default value should be true
     private File devModeRepo = null;
+    private URI contentRepoAddress = null;
 
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
@@ -55,6 +56,10 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
     public void setDevModeRepo(File devModeRepo) {
       this.devModeRepo = devModeRepo;
+    }
+
+    public void setcontentRepoAddress(URI contentRepoAddress) {
+      this.contentRepoAddress = contentRepoAddress;
     }
   }
 
@@ -67,7 +72,13 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   @Override
-  public File devModeRepo() {
+  public File getDevModeRepo() {
     return uf.devModeRepo;
   }
+
+  @Override
+  public URI getContentRepoAddress() {
+    return uf.contentRepoAddress;
+  }
+
 }
