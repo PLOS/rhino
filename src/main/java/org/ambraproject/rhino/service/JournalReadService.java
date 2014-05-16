@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
@@ -9,6 +10,8 @@ public interface JournalReadService {
   public abstract Transceiver listJournals() throws IOException;
 
   public abstract Transceiver read(String journalKey) throws IOException;
+
+  public abstract Transceiver readCurrentIssue(String journalKey);
 
   /**
    * Writes a list of "in the news" articles to the response.  The implementation will be journal-specific, and some
