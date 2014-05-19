@@ -16,13 +16,14 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
-import org.ambraproject.filestore.FSIDMapper;
 import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.queue.MessageSender;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -53,9 +54,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -208,7 +209,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       }
 
       if (updatedState.get() == Article.STATE_DISABLED) {
-        deleteFilestoreFiles(articleId);
+        deleteFilestoreFiles(articleId, article.getAssets());
         ingestibleService.revertArchive(articleId);
       }
     }
@@ -274,16 +275,15 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * Deletes all the files associated with an article from the filestore.
    *
    * @param articleId identifies the article
+   * @param assets    the article's asset objects (representing all associated files)
    * @throws FileStoreException
    * @throws IOException
    */
-  private void deleteFilestoreFiles(ArticleIdentity articleId) throws FileStoreException, IOException {
-    String articleRoot = FSIDMapper.zipToFSID(articleId.getKey(), "");
-    Map<String, String> files = fileStoreService.listFiles(articleRoot);
-
-    for (String file : files.keySet()) {
-      String fullFile = FSIDMapper.zipToFSID(articleId.getKey(), file);
-      fileStoreService.deleteFile(fullFile);
+  private void deleteFilestoreFiles(ArticleIdentity articleId, Collection<ArticleAsset> assets)
+      throws FileStoreException, IOException {
+    fileStoreService.deleteFile(articleId.forXmlAsset().getFsid());
+    for (ArticleAsset asset : assets) {
+      fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid());
     }
   }
 }
