@@ -34,6 +34,7 @@ import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
@@ -45,6 +46,7 @@ import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
+import org.ambraproject.rhino.service.impl.UserCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -265,4 +267,10 @@ public class RhinoConfiguration extends BaseConfiguration {
     GitInfo gitInfo = new GitInfo(environment);
     return gitInfo;
   }
+
+  @Bean
+  public UserCrudService userCrudService() {
+    return new UserCrudServiceImpl();
+  }
+
 }

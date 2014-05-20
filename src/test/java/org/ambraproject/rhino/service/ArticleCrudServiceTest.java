@@ -18,8 +18,10 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
@@ -38,7 +40,6 @@ import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
-import org.ambraproject.rhino.view.article.DoiList;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -227,8 +228,17 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     hibernateTemplate.save(a2);
 
     Transceiver response = articleCrudService.listDois(ArticleCriteria.create(null, null, false));
-    DoiList doiList = entityGson.fromJson(response.readJson(entityGson), DoiList.class);
-    assertEquals(ImmutableSet.copyOf(doiList.getDois()), ImmutableSet.of(a1.getDoi(), a2.getDoi()));
+    Map<?, ?> doiList = entityGson.fromJson(response.readJson(entityGson), Map.class);
+
+    // Kludge! Extract DOI values from object bodies
+    ImmutableSet<String> dois = ImmutableSet.copyOf(Collections2.transform(doiList.values(), new Function<Object, String>() {
+      @Override
+      public String apply(Object input) {
+        return (String) ((Map) input).get("doi");
+      }
+    }));
+
+    assertEquals(dois, ImmutableSet.of(a1.getDoi(), a2.getDoi()));
   }
 
   @Test
