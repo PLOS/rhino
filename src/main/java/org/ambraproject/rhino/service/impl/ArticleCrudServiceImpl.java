@@ -404,6 +404,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     persistArticle(article, xmlData);
     try {
       addAssetFiles(article, zip, manifest);
+      hibernateTemplate.refresh(article); // force awareness of new asset objects that addAssetFiles kludged in
     } catch (RestClientException rce) {
       try {
         // If there is an error processing the assets, delete the article we created
