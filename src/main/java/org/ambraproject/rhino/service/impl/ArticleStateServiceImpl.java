@@ -54,7 +54,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -209,7 +208,9 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
       }
 
       if (updatedState.get() == Article.STATE_DISABLED) {
-        deleteFilestoreFiles(articleId, article.getAssets());
+        for (ArticleAsset asset : article.getAssets()) {
+          fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid());
+        }
         ingestibleService.revertArchive(articleId);
       }
     }
@@ -271,18 +272,4 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
     return result;
   }
 
-  /**
-   * Deletes all the files associated with an article from the filestore.
-   *
-   * @param articleId identifies the article
-   * @param assets    the article's asset objects (representing all associated files)
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  private void deleteFilestoreFiles(ArticleIdentity articleId, Collection<ArticleAsset> assets)
-      throws FileStoreException, IOException {
-    for (ArticleAsset asset : assets) {
-      fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid());
-    }
-  }
 }
