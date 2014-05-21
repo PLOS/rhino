@@ -281,7 +281,6 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    */
   private void deleteFilestoreFiles(ArticleIdentity articleId, Collection<ArticleAsset> assets)
       throws FileStoreException, IOException {
-    fileStoreService.deleteFile(articleId.forXmlAsset().getFsid());
     for (ArticleAsset asset : assets) {
       fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid());
     }
