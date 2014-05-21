@@ -20,7 +20,6 @@
 package org.ambraproject.rhino.config;
 
 import java.io.File;
-import java.net.URL;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.

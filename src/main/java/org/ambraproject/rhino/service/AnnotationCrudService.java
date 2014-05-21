@@ -20,8 +20,8 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import java.io.IOException;
 
 /**
- * Service that handles comments and replies associated with articles. For legacy reasons, these are
- * referred to internally as "annotations," and they share a common implementation.
+ * Service that handles comments and replies associated with articles. For legacy reasons, these are referred to
+ * internally as "annotations," and they share a common implementation.
  */
 public interface AnnotationCrudService {
 

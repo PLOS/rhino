@@ -61,13 +61,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
-import org.yaml.snakeyaml.Yaml;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.yaml.snakeyaml.Yaml;
+
 import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.File;
