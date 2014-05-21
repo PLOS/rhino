@@ -34,6 +34,7 @@ import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
@@ -45,6 +46,7 @@ import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
+import org.ambraproject.rhino.service.impl.UserCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -59,13 +61,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
-import org.yaml.snakeyaml.Yaml;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.yaml.snakeyaml.Yaml;
+
 import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.File;
@@ -265,4 +267,10 @@ public class RhinoConfiguration extends BaseConfiguration {
     GitInfo gitInfo = new GitInfo(environment);
     return gitInfo;
   }
+
+  @Bean
+  public UserCrudService userCrudService() {
+    return new UserCrudServiceImpl();
+  }
+
 }

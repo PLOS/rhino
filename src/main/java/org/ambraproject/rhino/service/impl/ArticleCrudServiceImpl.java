@@ -154,8 +154,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   private Article populateArticleFromXml(Document doc, Optional<ArticleIdentity> suppliedId,
                                          WriteMode mode, int xmlDataLength) {
-    return populateArticleFromXml(doc, Optional.<ManifestXml> absent(), suppliedId, mode, xmlDataLength);
+    return populateArticleFromXml(doc, Optional.<ManifestXml>absent(), suppliedId, mode, xmlDataLength);
   }
+
   /**
    * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
    * responsibility of the caller.
@@ -577,13 +578,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     //Striking image defined in article XML, but not a special asset (for update and create)
     //Striking image defined in manifest, and as a special asset (for update and create)
 
-    if(manifestXml.isPresent()) {
+    if (manifestXml.isPresent()) {
       strikingImageDOI = manifestXml.get().getStrkImgURI();
     } else {
       strikingImageDOI = article.getStrkImgURI();
 
-      if(strikingImageDOI == null) {
-        if(assets != null) {
+      if (strikingImageDOI == null) {
+        if (assets != null) {
           //One last check of the existing database rows.
           for (ArticleAsset asset : assets) {
             //TODO: There should be some way to specify an asset in the asset table as the striking image
@@ -636,18 +637,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     //Add the striking image to the assets, a fix for:
     //BAU-4
-    if(strikingImageDOI != null) {
+    if (strikingImageDOI != null) {
       //Check to make sure the asset doesn't exist already
       //Sometimes the striking image is a regular image
       boolean found = false;
-      for(ArticleAsset asset : assets) {
-        if(asset.getDoi().equals(strikingImageDOI)) {
+      for (ArticleAsset asset : assets) {
+        if (asset.getDoi().equals(strikingImageDOI)) {
           found = true;
           break;
         }
       }
 
-      if(!found) {
+      if (!found) {
         ArticleAsset strkImageAsset = new ArticleAsset();
         strkImageAsset.setDoi(strikingImageDOI);
         strkImageAsset.setExtension("");
