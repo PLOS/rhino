@@ -114,8 +114,9 @@ class Rhino:
                 size = f.tell()
                 f.close()
         else:
-            raise Exception('rhino:failed to get binary ' + url)
-        return (fname, m5.hexdigest(), s1.hexdigest(), r.headers.get('content-type'), size)
+            return (fname, 'NONE', 'NONE', 'NONE', 0, 'FAILED')
+            #raise Exception('rhino:failed to get binary ' + url)
+        return (fname, m5.hexdigest(), s1.hexdigest(), r.headers.get('content-type'), size, 'OK')
 
     def _getMD5(self, url):
         """
@@ -191,7 +192,7 @@ class Rhino:
         else:
             raise Exception('rhino:publish verb failed ' + r.text)
 
-    def articles(self, useCache=False, stripPrefix=False):
+    def articles(self, useCache=False, stripPrefix=False, lastModified=False):
         """
         List of article DOI's for the given Server and Prefix.
         
@@ -200,20 +201,27 @@ class Rhino:
         of DOIs would slow down processing.
         """
         if useCache and not len(self._ARTICLE_DOI_CACHE) == 0:
-            for k in self._ARTICLE_DOI_CACHE.keys():
-                yield self._stripPrefix(k, stripPrefix)
+            for (k,v) in self._ARTICLE_DOI_CACHE.items():
+                yield v 
         else:
-            r = self._doGet(self.articlesReq)
+            rq = self.articlesReq
+            if lastModified:
+                rq = rq + '?date'
+            r = self._doGet(rq)
             if r.status_code == 200:
                 # Load JSON into a Python object and use some values from it.
                 articles = json.loads(r.content)
             else:
                 raise Exception('rhino:articles verb failed ' + url)
             # Return only doi's matched by filter
-            for (doi, _) in articles.items():
+            for (doi, doi_lm) in articles.items():
                 if self.filterRegx.search(doi):
-                    if useCache: self._ARTICLE_DOI_CACHE[doi] = 1
-                    yield(self._stripPrefix(doi, stripPrefix)) 
+                    if lastModified:
+                        rslt = (self._stripPrefix(doi, stripPrefix), doi_lm['lastModified'])
+                    else:
+                        rslt = (self._stripPrefix(doi, stripPrefix))
+                    if useCache: self._ARTICLE_DOI_CACHE[doi] = rslt
+                    yield rslt 
 
     def article(self, doiSuffix):
         """
@@ -388,7 +396,7 @@ if __name__ == "__main__":
     # Main command dispatcher.
     dispatch = { 'articlefiles' : lambda repo, params: [ repo.articleFiles(doi) for doi in params ],
                  'article'      : lambda repo, params: [ repo.article(doi) for doi in params ],
-                 'articles'     : lambda repo, _     : repo.articles(),
+                 'articles'     : lambda repo, _     : repo.articles(lastModified=True),
                  'rm-article'   : lambda repo, params: [ repo.rmArticle(doi) for doi in params ],
                  'assets'       : lambda repo, params: [ repo.assets(doi) for doi in params ],
                  'asset'        : lambda repo, params: [ repo.asset(doi) for doi in params ],

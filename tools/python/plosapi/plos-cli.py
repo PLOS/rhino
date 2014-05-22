@@ -445,7 +445,7 @@ def dumparticle(params, src, apd, outDir='./'):
             lst = rslt[doi]
             for row in lst:
                (_, d) = row
-               (afid, m, s, mt, sz) = d
+               (afid, m, s, mt, sz, _) = d
                print('{doi}, {lm}, {afid}, {m}, {s}, {mt}, {sz}, csv-data'.format(doi=doi, lm=metaData['lastModified'], afid=afid, m=m, sz=sz, mt=mt, s=s))
         except Exception as e:
             apd.append(e)

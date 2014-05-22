@@ -10,6 +10,7 @@
 from __future__ import print_function
 from __future__ import with_statement
 import sys, string, urllib
+from plosapi import Rhino
 
 _DB_PROLOG = '''
 USE {dbname};
@@ -72,6 +73,57 @@ def mogupload(infile, args):
     print(mog_str.format(up=args.basedir, d=args.mogdomain, k=sha1, dname=dname, fname=fname))
   return
 
+def moginfo(infile, args):
+  """
+  """
+  mog_str = "echo -n '{k} ' ; mogfileinfo --domain={d} --key='{k}' | grep http | tr '\\n' ' '; echo ''"
+  for row in infile:
+    (doi, ts, afid, md5, sha1, ct, sz, dname, fname) = decode_row(row)
+    print(mog_str.format(key=sha1,d=args.mogdomain, k=sha1))
+  return
+
+def diff_new(infile, args):
+  """
+  """
+  old = dict()
+  for row in infile:
+    (doi, ts, afid, md5, sha1, ct, sz, dname, fname) = decode_row(row)
+    old['10.1371/'+doi] = ts
+  rhino = Rhino()
+  current = dict()
+  for (doi, mod_date) in rhino.articles(lastModified=True):
+    mod_date = mod_date.replace('T', ' ')
+    mod_date = mod_date.replace('Z', '')
+    current[doi] = mod_date
+    
+  for (doi, mod_date) in current.iteritems():
+      if not old.has_key(doi):
+         print(doi.replace('10.1371/', ''))
+  return
+
+def diff_mod(infile, args):
+  """
+  """
+  old = dict()
+  for row in infile:
+    (doi, ts, afid, md5, sha1, ct, sz, dname, fname) = decode_row(row)
+    old['10.1371/'+doi] = ts
+  rhino = Rhino()
+  current = dict()
+  for (doi, mod_date) in rhino.articles(lastModified=True):
+    mod_date = mod_date.replace('T', ' ')
+    mod_date = mod_date.replace('Z', '')
+    current[doi] = mod_date
+
+  for (doi, mod_date) in old.iteritems():
+    if not current.has_key(doi):
+      continue
+      #print(doi + ' missing')
+    elif not current[doi] == mod_date:
+      print(doi.replace('10.1371/', ''))
+
+  return
+
 def mk_filestore(infile, args):
   """
   """
@@ -109,7 +161,7 @@ if __name__ == '__main__':
   parser.add_argument('--mogdomain', default='plos_repo', help='MogileFS domain to upload to.')
   parser.add_argument('--basedir', default='', help='Base directory to include in script file paths.')
   parser.add_argument('--baseout', default='', help='Base directory to use for output in some scripts.')
-  parser.add_argument('command', help='Commands: db | mogupload | filestore') 
+  parser.add_argument('command', help='Commands: db | moginfo | mogupload | diff | filestore') 
   #parser.add_argument('params', nargs='*', help="parameter list for commands")
   args = parser.parse_args()
   #params = args.params
@@ -124,6 +176,18 @@ if __name__ == '__main__':
 
   if args.command == 'mogupload':
     mogupload(infile, args)
+    sys.exit(0)
+
+  if args.command == 'moginfo':
+    moginfo(infile, args)
+    sys.exit(0)
+
+  if args.command == 'diffnew':
+    diff_new(infile, args)
+    sys.exit(0)
+
+  if args.command == 'diffmod':
+    diff_mod(infile, args)
     sys.exit(0)
 
   if args.command == 'filestore':
