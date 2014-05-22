@@ -13,13 +13,19 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
+import org.ambraproject.models.Issue;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 /**
  * Test for {@link JournalReadServiceImpl}
@@ -41,6 +49,36 @@ public class JournalReadServiceTest extends BaseRhinoTest {
 
   @Autowired
   private JournalReadService journalReadService;
+
+  @Test
+  public void testListJournals() throws IOException {
+    Map<String, ?> journals = entityGson.fromJson(journalReadService.listJournals().readJson(entityGson), Map.class);
+    assertTrue(journals.size() > 0);
+    Map<String, ?> journal = (Map<String, ?>) journals.values().iterator().next();
+    assertTrue(journal.keySet().containsAll(ImmutableSet.of("journalKey", "eIssn")));
+  }
+
+  @Test
+  public void testReadCurrentIssue() throws IOException {
+    Journal journal = (Journal) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Journal.class)).get(0);
+    try {
+      journalReadService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson);
+      fail("Expected RestClientException");
+    } catch (RestClientException e) {
+      // expected
+    }
+
+    Issue issue = new Issue();
+    String testIssueUri = "testIssue";
+    issue.setIssueUri(testIssueUri);
+    journal.setCurrentIssue(issue);
+    hibernateTemplate.update(journal);
+
+    Map<?, ?> currentIssueResult = entityGson.fromJson(
+        journalReadService.readCurrentIssue(journal.getJournalKey()).readJson(entityGson),
+        Map.class);
+    assertEquals(currentIssueResult.get("issueUri"), testIssueUri);
+  }
 
   @Test
   public void testReadInTheNewsArticles() throws Exception {
