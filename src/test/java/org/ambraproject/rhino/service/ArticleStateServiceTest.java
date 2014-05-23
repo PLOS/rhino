@@ -16,12 +16,16 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import org.ambraproject.filestore.FileStoreException;
+import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.view.article.ArticleInputView;
@@ -38,11 +42,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 /**
@@ -63,6 +71,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
 
   @Autowired
   private PingbackReadService pingbackReadService;
+
+  @Autowired
+  private FileStoreService fileStoreService;
 
   @Autowired
   private Gson entityGson;
@@ -87,6 +98,14 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     }
   }
 
+  private void checkFileExistence(String fsid, boolean expectedToExist) throws IOException {
+    try (InputStream stream = fileStoreService.getFileInStream(fsid)) {
+      assertTrue(expectedToExist);
+    } catch (FileStoreException e) {
+      assertFalse(expectedToExist);
+    }
+  }
+
   @Test
   public void testPublication() throws Exception {
     final String crossref = "CROSSREF";
@@ -97,6 +116,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
+    for (ArticleAsset asset : article.getAssets()) {
+      checkFileExistence(AssetFileIdentity.from(asset).getFsid(), true);
+    }
 
     ArticleOutputView outputView = ArticleOutputView.create(article, false, syndicationService, pingbackReadService);
     assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
@@ -162,6 +184,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     List<String> deletionMessages = dummySender.messagesSent.get("activemq:fake.delete.queue");
     assertEquals(deletionMessages.size(), 1);
     assertEquals(deletionMessages.get(0), article.getDoi());
+    for (ArticleAsset asset : article.getAssets()) {
+      checkFileExistence(AssetFileIdentity.from(asset).getFsid(), false);
+    }
 
     // Attempting to publish the disabled article should fail.
     inputView = entityGson.fromJson("{'state': 'published'}", ArticleInputView.class);
