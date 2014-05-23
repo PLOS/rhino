@@ -1,8 +1,10 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
+import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalReadService;
@@ -10,8 +12,13 @@ import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.JsonWrapper;
+import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -57,6 +64,39 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
       @Override
       protected Object getView(Journal journal) {
         return new JournalOutputView(journal);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readCurrentIssue(final String journalKey) {
+    Preconditions.checkNotNull(journalKey);
+    return new EntityTransceiver<Issue>() {
+      private Object queryJournalProjection(Projection projection) {
+        return DataAccessUtils.singleResult((List<?>) hibernateTemplate.findByCriteria(
+            DetachedCriteria.forClass(Journal.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.eq("journalKey", journalKey))
+                .setProjection(Preconditions.checkNotNull(projection))
+        ));
+      }
+
+      @Override
+      protected Issue fetchEntity() {
+        Issue result = (Issue) queryJournalProjection(Projections.property("currentIssue"));
+        if (result == null) {
+          // Neither failure case is expected, so indulge in an extra query to give a more informative message.
+          Long count = (Long) queryJournalProjection(Projections.rowCount());
+          String message = (count == 0L) ? journalNotFoundMessage(journalKey)
+              : String.format("Journal found with key \"%s\", but its current issue is not set", journalKey);
+          throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+        }
+        return result;
+      }
+
+      @Override
+      protected Object getView(Issue issue) {
+        return new IssueOutputView(issue);
       }
     };
   }
@@ -110,13 +150,17 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
     };
   }
 
+  private static String journalNotFoundMessage(String journalKey) {
+    return "No journal found with key: " + journalKey;
+  }
+
   private Journal loadJournal(String journalKey) {
     Journal journal = (Journal) DataAccessUtils.singleResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria()
                 .add(Restrictions.eq("journalKey", journalKey))
         ));
     if (journal == null) {
-      throw new RestClientException("No journal found with key: " + journalKey, HttpStatus.NOT_FOUND);
+      throw new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND);
     }
     return journal;
   }
