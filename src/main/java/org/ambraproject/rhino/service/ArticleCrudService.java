@@ -28,6 +28,7 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -129,5 +130,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract Transceiver listDois(ArticleCriteria articleCriteria)
       throws IOException;
+
+  /**
+   * List the DOIs, titles, and publication dates of all articles published after a certain threshold.
+   *
+   * @param journalKey journal to search
+   * @param threshold  return all articles published after this date
+   */
+  public abstract Transceiver listRecent(String journalKey, Calendar threshold) throws IOException;
 
 }

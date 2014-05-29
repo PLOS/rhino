@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -62,8 +63,13 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String PUB_STATE_PARAM = "state";
   private static final String SYND_STATUS_PARAM = "syndication";
 
+  private static final String RECENT_PARAM = "publishedWithin";
+  private static final String JOURNAL_PARAM = "journal";
+
   @Autowired
   private AnnotationCrudService annotationCrudService;
+
+  private static final int SECONDS_PER_DAY = 60 * 60 * 24;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
@@ -82,6 +88,18 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   private static <E> List<E> asList(E[] array) {
     return (array == null) ? null : Arrays.asList(array);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_ROOT, params = {RECENT_PARAM, JOURNAL_PARAM}, method = RequestMethod.GET)
+  public void listRecent(HttpServletRequest request, HttpServletResponse response,
+                         @RequestParam(value = RECENT_PARAM, required = true) String publishedWithin,
+                         @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey)
+      throws IOException {
+    double days = Double.parseDouble(publishedWithin);
+    Calendar threshold = Calendar.getInstance();
+    threshold.add(Calendar.SECOND, (int) (-days * SECONDS_PER_DAY));
+    articleCrudService.listRecent(journalKey, threshold).respond(request, response, entityGson);
   }
 
 

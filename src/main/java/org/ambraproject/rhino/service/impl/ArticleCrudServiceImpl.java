@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -52,6 +53,7 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.RecentArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang.StringUtils;
@@ -955,6 +957,38 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Object getData() throws IOException {
         return articleCriteria.apply(hibernateTemplate);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver listRecent(final String journalKey, final Calendar threshold) throws IOException {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        List<Object[]> results = hibernateTemplate.find("" +
+                "select a.doi, a.title, a.date " +
+                "from Article a, Journal j " +
+                "where j in elements(a.journals) and j.journalKey = ? and a.date >= ? " +
+                "order by a.date desc",
+            journalKey, threshold.getTime()
+        );
+
+        return Lists.transform(results, new Function<Object[], RecentArticleView>() {
+          @Override
+          public RecentArticleView apply(Object[] result) {
+            String doi = (String) result[0];
+            String title = (String) result[1];
+            Date date = (Date) result[2];
+            ArticleIdentity article = ArticleIdentity.create(doi);
+            return new RecentArticleView(article, title, date);
+          }
+        });
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }
