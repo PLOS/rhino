@@ -26,6 +26,7 @@ import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
+import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +64,11 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String PUB_STATE_PARAM = "state";
   private static final String SYND_STATUS_PARAM = "syndication";
 
-  private static final String RECENT_PARAM = "publishedWithin";
+  private static final String RECENT_PARAM = "since";
   private static final String JOURNAL_PARAM = "journal";
 
   @Autowired
   private AnnotationCrudService annotationCrudService;
-
-  private static final int SECONDS_PER_DAY = 60 * 60 * 24;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
@@ -93,12 +92,10 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, params = {RECENT_PARAM, JOURNAL_PARAM}, method = RequestMethod.GET)
   public void listRecent(HttpServletRequest request, HttpServletResponse response,
-                         @RequestParam(value = RECENT_PARAM, required = true) String publishedWithin,
+                         @RequestParam(value = RECENT_PARAM, required = true) String since,
                          @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey)
       throws IOException {
-    double days = Double.parseDouble(publishedWithin);
-    Calendar threshold = Calendar.getInstance();
-    threshold.add(Calendar.SECOND, (int) (-days * SECONDS_PER_DAY));
+    Calendar threshold = HttpDateUtil.parse(since);
     articleCrudService.listRecent(journalKey, threshold).respond(request, response, entityGson);
   }
 
