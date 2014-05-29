@@ -66,6 +66,7 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   private static final String RECENT_PARAM = "since";
   private static final String JOURNAL_PARAM = "journal";
+  private static final String MINIMUM_PARAM = "min";
 
   @Autowired
   private AnnotationCrudService annotationCrudService;
@@ -93,10 +94,12 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_ROOT, params = {RECENT_PARAM, JOURNAL_PARAM}, method = RequestMethod.GET)
   public void listRecent(HttpServletRequest request, HttpServletResponse response,
                          @RequestParam(value = RECENT_PARAM, required = true) String since,
-                         @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey)
+                         @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey,
+                         @RequestParam(value = MINIMUM_PARAM, required = false) Integer minimum)
       throws IOException {
+    Optional<Integer> minArg = (minimum != null && minimum > 0) ? Optional.of(minimum) : Optional.<Integer>absent();
     Calendar threshold = HttpDateUtil.parse(since);
-    articleCrudService.listRecent(journalKey, threshold).respond(request, response, entityGson);
+    articleCrudService.listRecent(journalKey, threshold, minArg).respond(request, response, entityGson);
   }
 
 

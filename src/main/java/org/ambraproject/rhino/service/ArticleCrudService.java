@@ -132,11 +132,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
-   * List the DOIs, titles, and publication dates of all articles published after a certain threshold.
+   * List the DOIs, titles, and publication dates of all articles published after a certain threshold. If a minimum
+   * result count is provided, go past the threshold to return that many if necessary.
    *
    * @param journalKey journal to search
    * @param threshold  return all articles published after this date
+   * @param minimum    minimum result count
    */
-  public abstract Transceiver listRecent(String journalKey, Calendar threshold) throws IOException;
+  public abstract Transceiver listRecent(String journalKey, Calendar threshold, Optional<Integer> minimum) throws IOException;
 
 }
