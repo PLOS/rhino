@@ -26,6 +26,7 @@ import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
+import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -61,6 +63,10 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String DATE_PARAM = "date";
   private static final String PUB_STATE_PARAM = "state";
   private static final String SYND_STATUS_PARAM = "syndication";
+
+  private static final String RECENT_PARAM = "since";
+  private static final String JOURNAL_PARAM = "journal";
+  private static final String MINIMUM_PARAM = "min";
 
   @Autowired
   private AnnotationCrudService annotationCrudService;
@@ -82,6 +88,18 @@ public class ArticleCrudController extends ArticleSpaceController {
    */
   private static <E> List<E> asList(E[] array) {
     return (array == null) ? null : Arrays.asList(array);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_ROOT, params = {RECENT_PARAM, JOURNAL_PARAM}, method = RequestMethod.GET)
+  public void listRecent(HttpServletRequest request, HttpServletResponse response,
+                         @RequestParam(value = RECENT_PARAM, required = true) String since,
+                         @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey,
+                         @RequestParam(value = MINIMUM_PARAM, required = false) Integer minimum)
+      throws IOException {
+    Optional<Integer> minArg = (minimum != null && minimum > 0) ? Optional.of(minimum) : Optional.<Integer>absent();
+    Calendar threshold = HttpDateUtil.parse(since);
+    articleCrudService.listRecent(journalKey, threshold, minArg).respond(request, response, entityGson);
   }
 
 

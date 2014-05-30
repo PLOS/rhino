@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -52,12 +53,14 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.RecentArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -955,6 +958,61 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Object getData() throws IOException {
         return articleCriteria.apply(hibernateTemplate);
+      }
+    };
+  }
+
+  @Override
+  public Transceiver listRecent(final String journalKey,
+                                final Calendar threshold,
+                                final Optional<Integer> minimum)
+      throws IOException {
+    return new Transceiver() {
+      @Override
+      protected List<RecentArticleView> getData() throws IOException {
+        // Get all articles more recent than the threshold
+        List<Object[]> results = hibernateTemplate.find("" +
+                "select a.doi, a.title, a.date " +
+                "from Article a, Journal j " +
+                "where j in elements(a.journals) and j.journalKey = ? and a.date >= ? " +
+                "order by a.date desc",
+            journalKey, threshold.getTime()
+        );
+
+        if (minimum.isPresent() && results.size() < minimum.get()) {
+          // Not enough results. Get enough past the threshold to meet the minimum.
+          results = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() { // bwong
+            @Override
+            public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+              // Need a Query object for setMaxResults
+              Query query = session.createQuery("" +
+                  "select a.doi, a.title, a.date " +
+                  "from Article a, Journal j " +
+                  "where j in elements(a.journals) and j.journalKey = ? " +
+                  "order by a.date desc");
+              query.setString(0, journalKey);
+              query.setMaxResults(minimum.get());
+              return query.list();
+            }
+          });
+        }
+
+        // Transform into results view.
+        return Lists.transform(results, new Function<Object[], RecentArticleView>() {
+          @Override
+          public RecentArticleView apply(Object[] result) {
+            String doi = (String) result[0];
+            String title = (String) result[1];
+            Date date = (Date) result[2];
+            ArticleIdentity article = ArticleIdentity.create(doi);
+            return new RecentArticleView(article, title, date);
+          }
+        });
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }
