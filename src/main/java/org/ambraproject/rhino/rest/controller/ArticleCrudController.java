@@ -97,11 +97,11 @@ public class ArticleCrudController extends ArticleSpaceController {
                          @RequestParam(value = RECENT_PARAM, required = true) String since,
                          @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey,
                          @RequestParam(value = MINIMUM_PARAM, required = false) Integer minimum,
-                         @RequestParam(value = TYPE_PARAM, required = false) String type)
+                         @RequestParam(value = TYPE_PARAM, required = false) String[] types)
       throws IOException {
     Calendar threshold = HttpDateUtil.parse(since);
     Optional<Integer> minArg = (minimum != null && minimum > 0) ? Optional.of(minimum) : Optional.<Integer>absent();
-    Optional<String> typesArg = Optional.fromNullable(type);
+    List<String> typesArg = asList(types);
     articleCrudService.listRecent(journalKey, threshold, minArg, typesArg).respond(request, response, entityGson);
   }
 
