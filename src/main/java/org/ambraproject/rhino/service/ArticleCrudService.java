@@ -134,11 +134,18 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * List the DOIs, titles, and publication dates of all articles published after a certain threshold. If a minimum
    * result count is provided, go past the threshold to return that many if necessary.
+   * <p/>
+   * Can filter only by one article type. It would be nice to be able to allow multiple types, but this makes for a more
+   * complex query and isn't currently needed, so it's unsupported for now.
    *
-   * @param journalKey journal to search
-   * @param threshold  return all articles published after this date
-   * @param minimum    minimum result count
+   * @param journalKey  journal to search
+   * @param threshold   return all articles published after this date
+   * @param minimum     minimum result count
+   * @param articleType if present, return only articles of this type
    */
-  public abstract Transceiver listRecent(String journalKey, Calendar threshold, Optional<Integer> minimum) throws IOException;
+  public abstract Transceiver listRecent(String journalKey, Calendar threshold,
+                                         Optional<Integer> minimum,
+                                         Optional<String> articleType)
+      throws IOException;
 
 }
