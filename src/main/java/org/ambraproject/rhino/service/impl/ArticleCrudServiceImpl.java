@@ -1041,7 +1041,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
                 "filtered by multiple article types. " +
                 "To make a valid query, client must either " +
                 "(1) omit the 'min' parameter, " +
-                "(2) use no more than 'type' parameter, or " +
+                "(2) use no more than one 'type' parameter, or " +
                 "(3) include the wildcard type parameter ('type=*').";
             throw new RestClientException(message, HttpStatus.BAD_REQUEST);
           }
