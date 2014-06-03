@@ -78,6 +78,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -962,39 +963,88 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     };
   }
 
+  private static final String ARTICLE_TYPE_WILDCARD = "*";
+
   @Override
   public Transceiver listRecent(final String journalKey,
                                 final Calendar threshold,
-                                final Optional<Integer> minimum)
+                                final Optional<Integer> minimum,
+                                final List<String> articleTypes)
       throws IOException {
     return new Transceiver() {
+
+      /**
+       * Execute a query.
+       * @param forceMinimum if false, use {@code threshold}; if true, use {@code minimum} ({@code minimum}
+       *                     <em>must</em> be present if {@code forceMinimum} is true)
+       * @param articleType  if absent, return results of all article types; if present, filter results for that type
+       */
+      private List<Object[]> query(final boolean forceMinimum, final Optional<String> articleType) {
+        return hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
+          @Override
+          public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+            StringBuilder hql = new StringBuilder(211)
+                .append("select distinct a.doi, a.title, a.date ")
+                .append("from Article a, Journal j ")
+                .append("where j in elements(a.journals) and j.journalKey = :journalKey");
+            if (!forceMinimum) {
+              hql.append(" and a.date >= :threshold");
+            }
+            if (articleType.isPresent()) {
+              hql.append(" and :articleType in elements(a.types)");
+            }
+            hql.append(" order by a.date desc");
+
+            Query query = session.createQuery(hql.toString());
+            query.setString("journalKey", journalKey);
+            if (forceMinimum) {
+              query.setMaxResults(minimum.get());
+            } else {
+              query.setDate("threshold", threshold.getTime());
+            }
+            if (articleType.isPresent()) {
+              query.setString("articleType", articleType.get());
+            }
+
+            return query.list();
+          }
+        });
+      }
+
       @Override
       protected List<RecentArticleView> getData() throws IOException {
+        List<Object[]> results;
+
         // Get all articles more recent than the threshold
-        List<Object[]> results = hibernateTemplate.find("" +
-                "select a.doi, a.title, a.date " +
-                "from Article a, Journal j " +
-                "where j in elements(a.journals) and j.journalKey = ? and a.date >= ? " +
-                "order by a.date desc",
-            journalKey, threshold.getTime()
-        );
+        if (articleTypes == null) {
+          results = query(false, Optional.<String>absent());
+        } else {
+          results = new ArrayList<>();
+          for (String articleType : articleTypes) {
+            Optional<String> articleTypeArg = articleType.equals(ARTICLE_TYPE_WILDCARD)
+                ? Optional.<String>absent() : Optional.of(articleType);
+            results.addAll(query(false, articleTypeArg));
+          }
+        }
 
         if (minimum.isPresent() && results.size() < minimum.get()) {
+          int minimumValue = minimum.get();
           // Not enough results. Get enough past the threshold to meet the minimum.
-          results = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() { // bwong
-            @Override
-            public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-              // Need a Query object for setMaxResults
-              Query query = session.createQuery("" +
-                  "select a.doi, a.title, a.date " +
-                  "from Article a, Journal j " +
-                  "where j in elements(a.journals) and j.journalKey = ? " +
-                  "order by a.date desc");
-              query.setString(0, journalKey);
-              query.setMaxResults(minimum.get());
-              return query.list();
-            }
-          });
+          // Ignore order of articleTypes and get the union of all.
+          if (articleTypes == null || articleTypes.contains(ARTICLE_TYPE_WILDCARD)) {
+            results = query(true, Optional.<String>absent());
+          } else if (articleTypes.size() == 1) {
+            results = query(true, Optional.of(articleTypes.get(0)));
+          } else {
+            String message = "" +
+                "Service does not support queries for a minimum number of recent articles " +
+                "filtered by multiple article types. " +
+                "To make a valid query, client must either " +
+                "(1) omit the 'min' parameter, " +
+                "(2) use no more than one 'type' parameter, or " +
+                "(3) include the wildcard type parameter ('type=*').";
+            throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+          }
         }
 
         // Transform into results view.
