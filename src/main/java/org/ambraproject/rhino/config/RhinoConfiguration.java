@@ -25,7 +25,6 @@ import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -63,7 +62,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
@@ -266,9 +264,8 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public GitInfo gitInfo(Environment environment) {
-    GitInfo gitInfo = new GitInfo(environment);
-    return gitInfo;
+  public GitInfo gitInfo() {
+    return new GitInfo();
   }
 
   @Bean
