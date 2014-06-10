@@ -19,7 +19,6 @@
 
 package org.ambraproject.rhino.config;
 
-import java.io.File;
 import java.net.URI;
 
 /**
@@ -47,15 +46,10 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class UserFields {
 
     private boolean prettyPrintJson = true; // the default value should be true
-    private File devModeRepo = null;
     private URI contentRepoAddress = null;
 
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
-    }
-
-    public void setDevModeRepo(File devModeRepo) {
-      this.devModeRepo = devModeRepo;
     }
 
     public void setcontentRepoAddress(URI contentRepoAddress) {
@@ -69,11 +63,6 @@ public class YamlConfiguration implements RuntimeConfiguration {
   @Override
   public boolean prettyPrintJson() {
     return uf.prettyPrintJson;
-  }
-
-  @Override
-  public File getDevModeRepo() {
-    return uf.devModeRepo;
   }
 
   @Override

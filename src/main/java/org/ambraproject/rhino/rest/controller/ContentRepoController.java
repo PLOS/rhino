@@ -29,17 +29,12 @@ public class ContentRepoController extends RestController {
                                  @PathVariable("version") String version)
       throws IOException {
     URI contentRepoAddress = runtimeConfiguration.getContentRepoAddress();
-    File devModeRepo = runtimeConfiguration.getDevModeRepo();
-    if (contentRepoAddress != null && devModeRepo != null) {
-      String message = String.format("Both contentRepoAddress (%s) and devModeRepo (%s) are in configuration.",
-          contentRepoAddress, devModeRepo);
-      throw new RuntimeException(message);
-    } else if (contentRepoAddress != null) {
-      return serveFromRemoteRepo(contentRepoAddress, bucket, key, version);
-    } else if (devModeRepo != null) {
-      return serveInDevMode(devModeRepo, bucket, key);
+    if (contentRepoAddress != null) {
+      return "file".equals(contentRepoAddress.getScheme())
+          ? serveInDevMode(contentRepoAddress, bucket, key, version)
+          : serveFromRemoteRepo(contentRepoAddress, bucket, key, version);
     } else {
-      throw new RuntimeException("contentRepoAddress or devModeRepo required in configuration");
+      throw new RuntimeException("contentRepoAddress required in configuration");
     }
   }
 
@@ -52,9 +47,9 @@ public class ContentRepoController extends RestController {
     return new ResponseEntity<Object>(headers, HttpStatus.FOUND);
   }
 
-  private static ResponseEntity<String> serveInDevMode(File devModeRepo, String bucket, String key)
+  private static ResponseEntity<String> serveInDevMode(URI devModeRepo, String bucket, String key, String version)
       throws IOException {
-    File path = new File(devModeRepo, bucket + '/' + key);
+    File path = new File(devModeRepo.getPath(), bucket + '/' + key);
     if (!path.exists()) {
       return respondWithStatus(HttpStatus.NOT_FOUND);
     }
