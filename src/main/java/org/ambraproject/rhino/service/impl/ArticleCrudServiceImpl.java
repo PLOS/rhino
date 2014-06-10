@@ -190,7 +190,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           doi.getIdentifier(), suppliedId.get().getIdentifier());
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
-    String fsid = doi.forXmlAsset().getFsid(); // do this first, to fail fast if the DOI is invalid
+
+    String fsid = doi.forXmlAsset().getFsid(fileStoreService.objectIDMapper()); // do this first, to fail fast if the DOI is invalid
 
     Article article = findArticleById(doi);
     final boolean creating = (article == null);
@@ -248,7 +249,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());
-    String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid();
+    String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid(fileStoreService.objectIDMapper());
     write(xmlData, fsid);
     return fsid;
   }
@@ -832,7 +833,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
 
     // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileInStream(id.forXmlAsset().getFsid());
+    return fileStoreService.getFileInStream(id.forXmlAsset().getFsid(fileStoreService.objectIDMapper()));
   }
 
   @Override
@@ -935,15 +936,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (article == null) {
       throw reportNotFound(id);
     }
-    String fsid = id.forXmlAsset().getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
 
     for (ArticleAsset asset : article.getAssets()) {
       if (AssetIdentity.hasFile(asset)) {
-        String assetFsid = AssetFileIdentity.from(asset).getFsid();
+        String assetFsid = AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper());
         fileStoreService.deleteFile(assetFsid);
       }
     }
-    fileStoreService.deleteFile(fsid);
     hibernateTemplate.delete(article);
   }
 

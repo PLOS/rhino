@@ -209,7 +209,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
       if (updatedState.get() == Article.STATE_DISABLED) {
         for (ArticleAsset asset : article.getAssets()) {
-          fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid());
+          fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()));
         }
         ingestibleService.revertArchive(articleId);
       }

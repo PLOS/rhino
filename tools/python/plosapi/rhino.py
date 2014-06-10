@@ -212,7 +212,7 @@ class Rhino:
                 # Load JSON into a Python object and use some values from it.
                 articles = json.loads(r.content)
             else:
-                raise Exception('rhino:articles verb failed ' + url)
+                raise Exception('rhino:articles verb failed ' + self.articlesReq)
             # Return only doi's matched by filter
             for (doi, doi_lm) in articles.items():
                 if self.filterRegx.search(doi):

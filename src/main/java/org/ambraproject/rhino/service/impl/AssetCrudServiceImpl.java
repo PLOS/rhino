@@ -89,7 +89,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
      * to know the final size before we can open a stream to the file store. Also, we need to measure the size anyway
      * to record as an asset field.
      */
-    String assetFsid = assetFileId.getFsid();
+    String assetFsid = assetFileId.getFsid(fileStoreService.objectIDMapper());
     byte[] assetData = readClientInput(file);
     write(assetData, assetFsid);
 
@@ -261,7 +261,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException("Asset not found at: " + id, HttpStatus.NOT_FOUND);
     }
 
-    String fsid = id.getFsid();
+    String fsid = id.getFsid(fileStoreService.objectIDMapper());
     byte[] assetData = readClientInput(fileContent);
     write(assetData, fsid);
   }
@@ -275,7 +275,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw reportNotFound(assetId);
     }
     try {
-      return fileStoreService.getFileInStream(assetId.getFsid());
+      return fileStoreService.getFileInStream(assetId.getFsid(fileStoreService.objectIDMapper()));
     } catch (FileStoreException e) {
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());
@@ -289,7 +289,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw reportNotFound(assetId);
     }
     try {
-      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid());
+      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid(fileStoreService.objectIDMapper()));
       return ImmutableList.copyOf(urls);
     } catch (FileStoreException e) {
       throw new IOException(e);
@@ -404,7 +404,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (asset == null) {
       throw reportNotFound(assetId);
     }
-    String fsid = assetId.getFsid(); // make sure we get a valid FSID, as an additional check before deleting anything
+    String fsid = assetId.getFsid(fileStoreService.objectIDMapper()); // make sure we get a valid FSID, as an additional check before deleting anything
 
     hibernateTemplate.delete(asset);
     fileStoreService.deleteFile(fsid);

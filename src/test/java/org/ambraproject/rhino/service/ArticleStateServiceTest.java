@@ -117,7 +117,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
     for (ArticleAsset asset : article.getAssets()) {
-      checkFileExistence(AssetFileIdentity.from(asset).getFsid(), true);
+      checkFileExistence(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()), true);
     }
 
     ArticleOutputView outputView = ArticleOutputView.create(article, false, syndicationService, pingbackReadService);
@@ -185,7 +185,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(deletionMessages.size(), 1);
     assertEquals(deletionMessages.get(0), article.getDoi());
     for (ArticleAsset asset : article.getAssets()) {
-      checkFileExistence(AssetFileIdentity.from(asset).getFsid(), false);
+      checkFileExistence(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()), false);
     }
 
     // Attempting to publish the disabled article should fail.

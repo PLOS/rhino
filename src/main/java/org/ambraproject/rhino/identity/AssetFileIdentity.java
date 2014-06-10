@@ -21,7 +21,7 @@ package org.ambraproject.rhino.identity;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import org.ambraproject.filestore.FSIDMapper;
+import org.ambraproject.filestore.ObjectIDMapper;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.ContentTypeInference;
@@ -151,8 +151,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    * @return the FSID (file store identifier)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI can't be parsed and converted into an FSID
    */
-  public String getFsid() {
-    String fsid = FSIDMapper.doiTofsid(getKey(), getFileExtension());
+  public String getFsid(ObjectIDMapper objectIDMapper) {
+    String fsid = objectIDMapper.doiTofsid(getKey(), getFileExtension());
     if (fsid.isEmpty()) {
       throw new RestClientException("DOI does not match expected format", HttpStatus.BAD_REQUEST);
     }

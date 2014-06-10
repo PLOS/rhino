@@ -50,7 +50,7 @@
     <ambra.version>2.9.21</ambra.version>
     <rhombat.version>1.0.1</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
-    <filestore.version>1.1.0</filestore.version>
+    <filestore.version>1.2.0</filestore.version>
     <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
   </properties>
