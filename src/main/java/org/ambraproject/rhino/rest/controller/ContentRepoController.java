@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,15 @@ public class ContentRepoController extends RestController {
 
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
+
+  @RequestMapping("repo/")
+  public ResponseEntity<String> getRepoAddress() {
+    URI contentRepoAddress = runtimeConfiguration.getContentRepoAddress();
+    if (contentRepoAddress == null) {
+      throw new RestClientException("contentRepoAddress is not configured", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<>(contentRepoAddress.toString(), HttpStatus.OK);
+  }
 
   @RequestMapping("repo/{bucket}/{key}/{version}")
   public ResponseEntity<?> serve(@PathVariable("bucket") String bucket,
