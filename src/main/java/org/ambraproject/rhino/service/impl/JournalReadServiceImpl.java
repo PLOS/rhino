@@ -132,7 +132,8 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
             return (Object[]) query.uniqueResult();
           }
         });
-        VolumeNonAssocView parentVolumeView = VolumeNonAssocView.fromArray(parentVolumeResults);
+        VolumeNonAssocView parentVolumeView = (parentVolumeResults == null) ? null
+            : VolumeNonAssocView.fromArray(parentVolumeResults);
 
         return new IssueOutputView(issue, parentVolumeView);
       }

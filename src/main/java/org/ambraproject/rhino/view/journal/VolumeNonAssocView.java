@@ -29,9 +29,6 @@ public class VolumeNonAssocView {
    * Convenience method for building from a SELECT'ed array of query results.
    */
   public static VolumeNonAssocView fromArray(Object[] array) {
-    if (array == null) {
-      return null;
-    }
     Preconditions.checkArgument(array.length == 5);
     return new VolumeNonAssocView(
         (String) array[0], (String) array[1], (String) array[2], (String) array[3], (String) array[4]);
