@@ -2,6 +2,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Issue;
@@ -15,7 +16,11 @@ import org.ambraproject.rhino.view.JsonWrapper;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
+import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
@@ -23,12 +28,16 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +80,28 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
   @Override
   public Transceiver readCurrentIssue(final String journalKey) {
     Preconditions.checkNotNull(journalKey);
-    return new EntityTransceiver<Issue>() {
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        // Look ahead to the parent volume, and return the max lastModified date between it and the issue.
+        return hibernateTemplate.execute(new HibernateCallback<Calendar>() {
+          @Override
+          public Calendar doInHibernate(Session session) throws HibernateException, SQLException {
+            String hql = "select i.lastModified, v.lastModified " +
+                "from Journal j, Issue i, Volume v " +
+                "where j.journalKey = :journalKey " +
+                "and i = j.currentIssue " +
+                "and i in elements(v.issues)";
+            Query query = session.createQuery(hql);
+            query.setParameter("journalKey", journalKey);
+            Object[] results = (Object[]) query.uniqueResult();
+
+            Date mostRecent = (Date) Collections.max(Arrays.asList(results));
+            return copyToCalendar(mostRecent);
+          }
+        });
+      }
+
       private Object queryJournalProjection(Projection projection) {
         return DataAccessUtils.singleResult((List<?>) hibernateTemplate.findByCriteria(
             DetachedCriteria.forClass(Journal.class)
@@ -82,21 +112,30 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
       }
 
       @Override
-      protected Issue fetchEntity() {
-        Issue result = (Issue) queryJournalProjection(Projections.property("currentIssue"));
-        if (result == null) {
+      protected Object getData() throws IOException {
+        final Issue issue = (Issue) queryJournalProjection(Projections.property("currentIssue"));
+        if (issue == null) {
           // Neither failure case is expected, so indulge in an extra query to give a more informative message.
           Long count = (Long) queryJournalProjection(Projections.rowCount());
           String message = (count == 0L) ? journalNotFoundMessage(journalKey)
               : String.format("Journal found with key \"%s\", but its current issue is not set", journalKey);
           throw new RestClientException(message, HttpStatus.BAD_REQUEST);
         }
-        return result;
-      }
 
-      @Override
-      protected Object getView(Issue issue) {
-        return new IssueOutputView(issue);
+        Object[] parentVolumeResults = hibernateTemplate.execute(new HibernateCallback<Object[]>() {
+          @Override
+          public Object[] doInHibernate(Session session) throws HibernateException, SQLException {
+            String hql = "select volumeUri, displayName, imageUri, title, description " +
+                "from Volume where :issue in elements(issues)";
+            Query query = session.createQuery(hql);
+            query.setParameter("issue", issue);
+            return (Object[]) query.uniqueResult();
+          }
+        });
+        VolumeNonAssocView parentVolumeView = (parentVolumeResults == null) ? null
+            : VolumeNonAssocView.fromArray(parentVolumeResults);
+
+        return new IssueOutputView(issue, parentVolumeView);
       }
     };
   }
