@@ -6,6 +6,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
+import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
@@ -16,6 +17,9 @@ import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
@@ -23,9 +27,11 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -95,8 +101,17 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
       }
 
       @Override
-      protected Object getView(Issue issue) {
-        return new IssueOutputView(issue);
+      protected Object getView(final Issue issue) {
+        Volume parentVolume = hibernateTemplate.execute(new HibernateCallback<Volume>() {
+          @Override
+          public Volume doInHibernate(Session session) throws HibernateException, SQLException {
+            Query query = session.createQuery("from Volume where :issue in elements(issues)");
+            query.setParameter("issue", issue);
+            return (Volume) query.uniqueResult();
+          }
+        });
+
+        return new IssueOutputView(issue, parentVolume);
       }
     };
   }
