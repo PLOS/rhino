@@ -15,26 +15,16 @@ import java.util.Collection;
 public class VolumeOutputView implements JsonOutputView {
 
   private final Volume volume;
-  private final boolean showIssues;
 
   public VolumeOutputView(Volume volume) {
-    this(volume, true);
-  }
-
-  public VolumeOutputView(Volume volume, boolean showIssues) {
     this.volume = Preconditions.checkNotNull(volume);
-    this.showIssues = showIssues;
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(volume).getAsJsonObject();
-    if (showIssues) {
-      KeyedListView<Issue> issueView = IssueOutputView.wrapList(volume.getIssues());
-      serialized.add("issues", context.serialize(issueView));
-    } else {
-      serialized.remove("issues");
-    }
+    KeyedListView<Issue> issueView = IssueOutputView.wrapList(volume.getIssues());
+    serialized.add("issues", context.serialize(issueView));
     return serialized;
   }
 

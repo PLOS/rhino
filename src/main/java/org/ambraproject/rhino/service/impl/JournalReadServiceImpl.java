@@ -6,7 +6,6 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
-import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
@@ -16,6 +15,7 @@ import org.ambraproject.rhino.view.JsonWrapper;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
+import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -102,16 +102,21 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
 
       @Override
       protected Object getView(final Issue issue) {
-        Volume parentVolume = hibernateTemplate.execute(new HibernateCallback<Volume>() {
+        // TODO Does this break EntityTransceiver.getLastModifiedDate() ?
+        // (The volume might have changed since the last time the issue changed.)
+        Object[] parentVolumeResults = hibernateTemplate.execute(new HibernateCallback<Object[]>() {
           @Override
-          public Volume doInHibernate(Session session) throws HibernateException, SQLException {
-            Query query = session.createQuery("from Volume where :issue in elements(issues)");
+          public Object[] doInHibernate(Session session) throws HibernateException, SQLException {
+            String hql = "select volumeUri, displayName, imageUri, title, description " +
+                "from Volume where :issue in elements(issues)";
+            Query query = session.createQuery(hql);
             query.setParameter("issue", issue);
-            return (Volume) query.uniqueResult();
+            return (Object[]) query.uniqueResult();
           }
         });
+        VolumeNonAssocView parentVolumeView = VolumeNonAssocView.fromArray(parentVolumeResults);
 
-        return new IssueOutputView(issue, parentVolume);
+        return new IssueOutputView(issue, parentVolumeView);
       }
     };
   }

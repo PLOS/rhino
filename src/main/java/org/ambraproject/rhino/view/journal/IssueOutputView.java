@@ -17,15 +17,15 @@ import java.util.List;
 public class IssueOutputView implements JsonOutputView {
 
   private final Issue issue;
-  private final Optional<Volume> parentVolume;
+  private final Optional<Object> parentVolumeView;
 
   public IssueOutputView(Issue issue) {
     this(issue, null);
   }
 
-  public IssueOutputView(Issue issue, Volume parentVolume) {
+  public IssueOutputView(Issue issue, Object parentVolumeView) {
     this.issue = Preconditions.checkNotNull(issue);
-    this.parentVolume = Optional.fromNullable(parentVolume);
+    this.parentVolumeView = Optional.fromNullable(parentVolumeView);
   }
 
   @Override
@@ -37,9 +37,8 @@ public class IssueOutputView implements JsonOutputView {
     articleDois = DoiBasedIdentity.asIdentifiers(articleDois);
     serialized.add("articleOrder", context.serialize(articleDois));
 
-    if (parentVolume.isPresent()) {
-      VolumeOutputView volumeView = new VolumeOutputView(parentVolume.get(), false);
-      serialized.add("parentVolume", context.serialize(volumeView));
+    if (parentVolumeView.isPresent()) {
+      serialized.add("parentVolume", context.serialize(parentVolumeView.get()));
     }
 
     return serialized;
