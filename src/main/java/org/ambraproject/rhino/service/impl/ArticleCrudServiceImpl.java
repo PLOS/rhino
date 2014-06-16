@@ -1019,15 +1019,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           results = query(false, Optional.<String>absent());
         } else {
           results = new ArrayList<>();
+          Set<String> uniqueDois = new HashSet<>();
+
+          // Query for each article type separately and concatenate the results,
+          // in order to preserve the "preference order" in the articleTypes list.
           for (String articleType : articleTypes) {
             Optional<String> articleTypeArg = articleType.equals(ARTICLE_TYPE_WILDCARD)
                 ? Optional.<String>absent() : Optional.of(articleType);
-            results.addAll(query(false, articleTypeArg));
+            List<Object[]> queryResults = query(false, articleTypeArg);
+
+            // Add each query result to 'results' only if the DOI is not already in 'uniqueDois'
+            for (Object[] queryResult : queryResults) {
+              if (uniqueDois.add((String) queryResult[0])) {
+                results.add(queryResult);
+              }
+            }
           }
         }
 
         if (minimum.isPresent() && results.size() < minimum.get()) {
-          int minimumValue = minimum.get();
           // Not enough results. Get enough past the threshold to meet the minimum.
           // Ignore order of articleTypes and get the union of all.
           if (articleTypes == null || articleTypes.contains(ARTICLE_TYPE_WILDCARD)) {

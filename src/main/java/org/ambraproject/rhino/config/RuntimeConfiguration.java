@@ -19,7 +19,7 @@
 
 package org.ambraproject.rhino.config;
 
-import java.io.File;
+import java.net.URI;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.
@@ -34,12 +34,11 @@ public interface RuntimeConfiguration {
   boolean prettyPrintJson();
 
   /**
-   * Return a local file path at which to simulate a content repository API, if in dev mode.
+   * Return a URI at which to connect to a content repository API. If the URI has the {@code file} scheme (e.g., {@code
+   * file:///home/me/myDummyRepo/}), will simulate a "dev mode" content repository using files in that directory.
    *
-   * @return the path, or {@code null} if not in dev mode
+   * @return the content repository URI
    */
-  File getDevModeRepo();
-
-  java.net.URI getContentRepoAddress();
+  URI getContentRepoAddress();
 
 }
