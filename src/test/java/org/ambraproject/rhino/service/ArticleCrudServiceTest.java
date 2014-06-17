@@ -63,6 +63,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertEqualsNoOrder;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -161,7 +162,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     Category cat2 = new Category();
     cat2.setPath("/TopLevel2/term2");
     expectedCategories.add(cat2);
-    assertEquals(stored.getCategories(), expectedCategories);
+    assertEqualsNoOrder(stored.getCategories().keySet().toArray(), expectedCategories.toArray());
 
     byte[] readData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(readData, sampleData);

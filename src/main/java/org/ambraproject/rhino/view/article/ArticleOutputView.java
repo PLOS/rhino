@@ -144,6 +144,13 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       baseJson = context.serialize(new NoCitationsArticleAdapter(article)).getAsJsonObject();
     } else {
       baseJson = context.serialize(article).getAsJsonObject();
+
+      /**
+       * Categories in the model class is actually a map with weights
+       * I didn't want to alter the rhino API, so I override the categories property here
+       * to be a map
+       */
+      baseJson.add("categories", context.serialize(article.getCategories().keySet()));
     }
 
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);

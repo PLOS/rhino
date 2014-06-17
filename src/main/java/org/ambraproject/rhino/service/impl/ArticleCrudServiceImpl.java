@@ -83,6 +83,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -548,7 +549,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // Attempt to assign categories to the non-amendment article based on the taxonomy server.  However,
     // we still want to ingest the article even if this process fails.
-    List<String> terms;
+    Map<String, Integer> terms;
 
     try {
       if (!articleService.isAmendment(article)) {
@@ -556,10 +557,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         if (terms != null && terms.size() > 0) {
           articleService.setArticleCategories(article, terms);
         } else {
-          article.setCategories(new HashSet<Category>());
+          article.setCategories(new HashMap<Category, Integer>());
         }
       } else {
-        article.setCategories(new HashSet<Category>());
+        article.setCategories(new HashMap<Category, Integer>());
       }
     } catch (Exception e) {
       log.warn("Taxonomy server not responding, but ingesting article anyway", e);
@@ -854,6 +855,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
                     .add(Restrictions.eq("doi", id.getKey()))
+                    .setFetchMode("categories", FetchMode.JOIN)
                     .setFetchMode("assets", FetchMode.JOIN)
                     .setFetchMode("articleType", FetchMode.JOIN)
                     .setFetchMode("journals", FetchMode.JOIN)
@@ -865,6 +867,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         if (article == null) {
           throw reportNotFound(id);
         }
+
+        /**
+         * Hibernate just returns a shallow map with proxy objects.  Make
+         * Sure here everything is loaded.  In the future we'll probably want to change the
+         * the categories property of this class to be a map
+         */
+        Map<Category, Integer> copy = new HashMap<>(article.getCategories().size());
+        for(Map.Entry<Category, Integer> entry : article.getCategories().entrySet()) {
+          Category c = new Category();
+          c.setPath(entry.getKey().getPath());
+          c.setCreated(entry.getKey().getCreated());
+          c.setLastModified(entry.getKey().getLastModified());
+          copy.put(c, entry.getValue());
+        }
+
+        article.setCategories(copy);
+
         return article;
       }
 

@@ -35,6 +35,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleTestView;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -205,11 +206,15 @@ public class IngestionTest extends BaseRhinoTest {
     return provideIngestionCases(JSON_SUFFIX, ZIP_SUFFIX, ZIP_DATA_PATH).toArray(new Object[0][]);
   }
 
-  private Article readReferenceCase(File jsonFile) throws IOException {
+  /**
+   * Categories in the model class is actually a map with weights
+   * I didn't want to alter the rhino API, so for unit tests I use a custom view
+   */
+  private ArticleTestView readReferenceCase(File jsonFile) throws IOException {
     Preconditions.checkNotNull(jsonFile);
-    Article article;
+    ArticleTestView article;
     try (Reader input = new BufferedReader(new FileReader(jsonFile))) {
-      article = entityGson.fromJson(input, Article.class);
+      article = entityGson.fromJson(input, ArticleTestView.class);
     }
     createTestJournal(article.geteIssn());
 
@@ -235,7 +240,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Test(dataProvider = "generatedIngestionData")
   public void testIngestion(File jsonFile, File xmlFile) throws Exception {
-    final Article expected = readReferenceCase(jsonFile);
+    final ArticleTestView expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
     Article actual = articleCrudService.write(new RhinoTestHelper.TestFile(xmlFile).read(),
@@ -272,7 +277,7 @@ public class IngestionTest extends BaseRhinoTest {
 
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
-    final Article expected = readReferenceCase(jsonFile);
+    final ArticleTestView expected = readReferenceCase(jsonFile);
     Article actual = articleCrudService.writeArchive(zipFile.getCanonicalPath(),
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
@@ -366,13 +371,13 @@ public class IngestionTest extends BaseRhinoTest {
     return results.compare(objectName, fieldName, actual, expected);
   }
 
-  private AssertionCollector compareArticle(Article actual, Article expected,
+  private AssertionCollector compareArticle(Article actual, ArticleTestView expected,
                                             boolean assetFilesExpected) {
     AssertionCollector results = new AssertionCollector();
     compareArticleFields(results, actual, expected);
     comparePersonLists(results, Article.class, "authors", actual.getAuthors(), expected.getAuthors());
     comparePersonLists(results, Article.class, "editors", actual.getEditors(), expected.getEditors());
-    compareCategorySets(results, actual.getCategories(), expected.getCategories());
+    compareCategorySets(results, actual.getCategories().keySet(), expected.getCategories());
     compareJournalSets(results, actual.getJournals(), expected.getJournals());
     compareRelationshipLists(results, actual.getRelatedArticles(), expected.getRelatedArticles());
     if (assetFilesExpected) {
@@ -500,7 +505,7 @@ public class IngestionTest extends BaseRhinoTest {
    * @param actual
    * @param expected
    */
-  private void compareArticleFields(AssertionCollector results, Article actual, Article expected) {
+  private void compareArticleFields(AssertionCollector results, Article actual, ArticleTestView expected) {
     compare(results, Article.class, "doi", actual.getDoi(), expected.getDoi());
     compareMarkupText(results, Article.class, "title", actual.getTitle(), expected.getTitle());
     compare(results, Article.class, "eIssn", actual.geteIssn(), expected.geteIssn());
@@ -821,7 +826,7 @@ public class IngestionTest extends BaseRhinoTest {
   /**
    * Tests some Article fields that are only populated if we ingest a .zip archive.
    */
-  private void compareArchiveFields(AssertionCollector results, Article actual, Article expected) {
+  private void compareArchiveFields(AssertionCollector results, Article actual, ArticleTestView expected) {
     compare(results, Article.class, "archiveName", actual.getArchiveName(),
         expected.getArchiveName());
     compare(results, Article.class, "strkImgURI", Strings.nullToEmpty(actual.getStrkImgURI()),
