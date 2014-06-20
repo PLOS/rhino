@@ -14,6 +14,7 @@
 <!-- Ambra Configuration file -->
 <config> 
   <ambra>
+    <advancedUsageLogging>true</advancedUsageLogging>
     <platform>
       <guid-prefix>info:doi/0.0/</guid-prefix>
     </platform>

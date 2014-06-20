@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import org.ambraproject.models.UserLogin;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.UserCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +55,15 @@ public class UserCrudController extends RestController {
   public void read(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
     userCrudService.read(authId).respond(request, response, entityGson);
   }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = USER_TEMPLATE, method = RequestMethod.POST)
+  public void createUserLogin(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
+
+    UserLogin input = readJsonFromRequest(request, UserLogin.class);
+    userCrudService.createUserLogin(authId, input);
+
+    userCrudService.read(authId).respond(request, response, entityGson);
+  }
+
 }
