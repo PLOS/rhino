@@ -409,7 +409,20 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     persistArticle(article, xmlData);
     try {
       addAssetFiles(article, zip, manifest);
-      hibernateTemplate.refresh(article); // force awareness of new asset objects that addAssetFiles kludged in
+
+      /*
+       * Refresh the article in order to force it contain any new asset file objects that might have been inserted into
+       * the database without being reflected in Hibernate. See the raw-SQL kludge in
+       * org.ambraproject.rhino.service.impl.AssetCrudServiceImpl.saveAssetForcingParentArticle
+       * for one possible cause.
+       *
+       * MUST flush before refreshing. Otherwise, updates in the Hibernate buffer may be dropped unsaved. Observed in
+       * at least one case, with the "hibernateTemplate.update" statement in
+       * org.ambraproject.rhino.service.impl.AssetCrudServiceImpl.upload
+       * not being persisted. That's bad.
+       */
+      hibernateTemplate.flush();
+      hibernateTemplate.refresh(article);
     } catch (RestClientException rce) {
       try {
         // If there is an error processing the assets, delete the article we created
