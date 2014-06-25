@@ -73,6 +73,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -879,23 +880,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         if (article == null) {
           throw reportNotFound(id);
         }
-
-        /**
-         * Hibernate just returns a shallow map with proxy objects.  Make
-         * Sure here everything is loaded.  In the future we'll probably want to change the
-         * the categories property of this class to be a map
-         */
-        Map<Category, Integer> copy = new HashMap<>(article.getCategories().size());
-        for(Map.Entry<Category, Integer> entry : article.getCategories().entrySet()) {
-          Category c = new Category();
-          c.setPath(entry.getKey().getPath());
-          c.setCreated(entry.getKey().getCreated());
-          c.setLastModified(entry.getKey().getLastModified());
-          copy.put(c, entry.getValue());
-        }
-
-        article.setCategories(copy);
-
         return article;
       }
 

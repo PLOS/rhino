@@ -23,11 +23,13 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
@@ -44,10 +46,13 @@ import org.ambraproject.service.syndication.SyndicationService;
 import org.ambraproject.views.article.ArticleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.getPublicationStateName;
@@ -147,6 +152,15 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
 
+    Map<Category, Integer> categoryMap = article.getCategories();
+    Collection<CategoryView> categoryViews = Lists.newArrayListWithCapacity(categoryMap.size());
+    for (Map.Entry<Category, Integer> entry : categoryMap.entrySet()) {
+      Category category = JsonAdapterUtil.forceHibernateLazyLoad(entry.getKey(), Category.class);
+      int weight = entry.getValue();
+      categoryViews.add(new CategoryView(category, weight));
+    }
+    serialized.add("categories", context.serialize(categoryViews));
+
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
 
@@ -160,13 +174,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       baseJson = context.serialize(new NoCitationsArticleAdapter(article)).getAsJsonObject();
     } else {
       baseJson = context.serialize(article).getAsJsonObject();
-
-      /**
-       * Categories in the model class is actually a map with weights
-       * I didn't want to alter the rhino API, so I override the categories property here
-       * to be a map
-       */
-      baseJson.add("categories", context.serialize(article.getCategories().keySet()));
     }
 
     serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);

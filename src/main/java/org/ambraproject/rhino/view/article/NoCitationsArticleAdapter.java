@@ -23,13 +23,10 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -59,12 +56,12 @@ public final class NoCitationsArticleAdapter {
   private String url;
   private List<String> collaborativeAuthors;
   private Set<String> types;
-  private Set<Category> categories;
   private List<ArticleAsset> assets;
   private List<ArticleRelationship> relatedArticles;
   private List<ArticleAuthor> authors;
   private List<ArticleEditor> editors;
   private Set<Journal> journals;
+  // Omit Map<Category, Integer> categories: it's handled in ArticleOutputView.serialize() via CategoryView
 
   public NoCitationsArticleAdapter(Article article) {
     doi = article.getDoi();
@@ -93,21 +90,6 @@ public final class NoCitationsArticleAdapter {
     authors = article.getAuthors();
     editors = article.getEditors();
     journals = article.getJournals();
-
-    /**
-     * Hibernate just returns a shallow map with proxy objects.  Make
-     * Sure here everything is loaded.  In the future we'll probably want to change the
-     * the categories property of this class to be a map
-     */
-    Set<Category> copy = new HashSet<>(article.getCategories().size());
-    for(Map.Entry<Category, Integer> entry : article.getCategories().entrySet()) {
-      Category c = new Category();
-      c.setPath(entry.getKey().getPath());
-      c.setCreated(entry.getKey().getCreated());
-      c.setLastModified(entry.getKey().getLastModified());
-      copy.add(c);
-    }
-    categories = copy;
   }
 
   @Override
