@@ -23,18 +23,7 @@
     "http://rdf.plos.org/RDF/articleType/Research%20Article",
     "http://rdf.plos.org/RDF/articleType/research-article"
   ],
-  "categories": [
-    {
-      "path": "/TopLevel2/term2",
-      "created": "2014-04-16T22:00:05.868Z",
-      "lastModified": "2014-04-16T22:00:30.255Z"
-    },
-    {
-      "path": "/TopLevel1/term1",
-      "created": "2014-04-16T22:00:05.868Z",
-      "lastModified": "2014-04-16T22:00:30.255Z"
-    }
-  ],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pone.0095728.g001",

@@ -23,7 +23,7 @@
     "http://rdf.plos.org/RDF/articleType/Essay",
     "http://rdf.plos.org/RDF/articleType/discussion"
   ],
-  "categories": [],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pmed.0040307",

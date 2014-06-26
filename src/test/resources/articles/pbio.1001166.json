@@ -23,7 +23,7 @@
     "http://rdf.plos.org/RDF/articleType/Book%20Review%2FScience%20in%20the%20Media",
     "http://rdf.plos.org/RDF/articleType/book-review"
   ],
-  "categories": [],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pbio.1001166",

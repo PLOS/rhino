@@ -23,32 +23,7 @@
     "http://rdf.plos.org/RDF/articleType/Research%20Article",
     "http://rdf.plos.org/RDF/articleType/research-article"
   ],
-  "categories": [
-    {
-      "path": "/Biology and life sciences/Anatomy and physiology/Musculoskeletal system/Limbs (anatomy)/Arms/Hands"
-    },
-    {
-      "path": "/Biology and life sciences/Anatomy and physiology/Musculoskeletal system/Limbs (anatomy)/Arms/Hands/Fingers"
-    },
-    {
-      "path": "/Biology and life sciences/Neuroscience/Cognitive science/Cognition/Animal cognition"
-    },
-    {
-      "path": "/Biology and life sciences/Psychology/Behavior"
-    },
-    {
-      "path": "/Biology and life sciences/Psychology/Sensory perception"
-    },
-    {
-      "path": "/Biology and life sciences/Zoology/Animal behavior"
-    },
-    {
-      "path": "/Biology and life sciences/Zoology/Animals/Vertebrates/Mammals/Primates"
-    },
-    {
-      "path": "/Biology and life sciences/Zoology/Animals/Vertebrates/Mammals/Primates/Monkeys"
-    }
-  ],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pone.0056182",

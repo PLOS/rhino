@@ -22,7 +22,7 @@
     "http://rdf.plos.org/RDF/articleType/Correspondence",
     "http://rdf.plos.org/RDF/articleType/letter"
   ],
-  "categories": [],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pcbi.0020083",

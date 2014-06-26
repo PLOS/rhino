@@ -22,7 +22,7 @@
     "http://rdf.plos.org/RDF/articleType/Research%20Article",
     "http://rdf.plos.org/RDF/articleType/research-article"
   ],
-  "categories": [],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pbio.0020365",

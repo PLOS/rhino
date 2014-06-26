@@ -23,7 +23,7 @@
     "http://rdf.plos.org/RDF/articleType/Review",
     "http://rdf.plos.org/RDF/articleType/review-article"
   ],
-  "categories": [],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pone.0012008",

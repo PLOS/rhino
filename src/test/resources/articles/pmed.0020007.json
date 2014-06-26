@@ -22,7 +22,7 @@
     "http://rdf.plos.org/RDF/articleType/Best%20Practice",
     "http://rdf.plos.org/RDF/articleType/discussion"
   ],
-  "categories": [],
+  "categories": {},
   "assets": [
     {
       "doi": "info:doi/10.1371/journal.pmed.0020007",
