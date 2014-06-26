@@ -1,459 +1,1530 @@
-{"doi":"info:doi/10.1371/journal.pone.0028031","title":
-  "Polymorphisms in Genes Involved in the NF-κB Signalling Pathway Are Associated with Bone Mineral Density, Geometry and Turnover in Men",
-  "eIssn":"1932-6203","state":1,"archiveName":"pone.0028031.zip",
-  "description":
-  "\u003csec\u003e\u003ctitle\u003eIntroduction\u003c/title\u003e\u003cp\u003eIn this study, we aimed to investigate the association between single nucleotide polymorphisms (SNPs) within two genes involved in the NF-κB cascade (\u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e) and bone mineral density (BMD) assessed at different skeletal sites, radial geometric parameters and bone turnover.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods\u003c/title\u003e\u003cp\u003eTen \u003citalic\u003eGPR177\u003c/italic\u003e SNPs previously associated with BMD with genome-wide significance and twelve tag SNPs (r\u003csup\u003e2\u003c/sup\u003e≥0.8) within \u003citalic\u003eMAP3K14\u003c/italic\u003e (±10 kb) were genotyped in 2359 men aged 40–79 years recruited from 8 centres for participation in the European Male Aging Study (EMAS). Measurement of bone turnover markers (PINP and CTX-I) in the serum and quantitative ultrasound (QUS) at the calcaneus were performed in all centres. Dual energy X-ray absorptiometry (DXA), at the lumbar spine and hip, and peripheral quantitative computed tomography (pQCT), at the distal and midshaft radius, were performed in a subsample (2 centres). Linear regression was used to test for association between the SNPs and bone measures under an additive genetic model adjusting for study centre.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eResults\u003c/title\u003e\u003cp\u003eWe validated the associations between SNPs in \u003citalic\u003eGPR177\u003c/italic\u003e and BMD\u003csub\u003ea\u003c/sub\u003e previously reported and also observed evidence of pleiotrophic effects on density and geometry. Rs2772300 in \u003citalic\u003eGPR177\u003c/italic\u003e was associated with increased total hip and LS BMD\u003csub\u003ea\u003c/sub\u003e, increased total and cortical vBMD at the radius and increased cortical area, thickness and stress strain index. We also found evidence of association with BMD\u003csub\u003ea\u003c/sub\u003e, vBMD, geometric parameters and CTX-I for SNPs in \u003citalic\u003eMAP3K14\u003c/italic\u003e. None of the \u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e SNPs were associated with calcaneal estimated BMD measured by QUS.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eOur findings suggest that SNPs in \u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e involved in the NF-κB signalling pathway influence bone mineral density, geometry and turnover in a population-based cohort of middle aged and elderly men. This adds to the understanding of the role of genetic variation in this pathway in determining bone health.\u003c/p\u003e\u003c/sec\u003e",
-  "rights":
-  "Roshandel et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-8","eLocationId":"e28031",
-  "strkImgURI":"","date":"2011-11-21T08:00:00Z","volume":"6","issue":
-  "11","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
-  "publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0028031","collaborativeAuthors":[
-    "the EMAS Study Group"],"types":[
+{
+  "doi": "info:doi/10.1371/journal.pone.0028031",
+  "title": "Polymorphisms in Genes Involved in the NF-\u03baB Signalling Pathway Are Associated with Bone Mineral Density, Geometry and Turnover in Men",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0028031.zip",
+  "description": "<sec><title>Introduction</title><p>In this study, we aimed to investigate the association between single nucleotide polymorphisms (SNPs) within two genes involved in the NF-\u03baB cascade (<italic>GPR177</italic> and <italic>MAP3K14</italic>) and bone mineral density (BMD) assessed at different skeletal sites, radial geometric parameters and bone turnover.</p></sec><sec><title>Methods</title><p>Ten <italic>GPR177</italic> SNPs previously associated with BMD with genome-wide significance and twelve tag SNPs (r<sup>2</sup>\u22650.8) within <italic>MAP3K14</italic> (\u00b110 kb) were genotyped in 2359 men aged 40\u201379 years recruited from 8 centres for participation in the European Male Aging Study (EMAS). Measurement of bone turnover markers (PINP and CTX-I) in the serum and quantitative ultrasound (QUS) at the calcaneus were performed in all centres. Dual energy X-ray absorptiometry (DXA), at the lumbar spine and hip, and peripheral quantitative computed tomography (pQCT), at the distal and midshaft radius, were performed in a subsample (2 centres). Linear regression was used to test for association between the SNPs and bone measures under an additive genetic model adjusting for study centre.</p></sec><sec><title>Results</title><p>We validated the associations between SNPs in <italic>GPR177</italic> and BMD<sub>a</sub> previously reported and also observed evidence of pleiotrophic effects on density and geometry. Rs2772300 in <italic>GPR177</italic> was associated with increased total hip and LS BMD<sub>a</sub>, increased total and cortical vBMD at the radius and increased cortical area, thickness and stress strain index. We also found evidence of association with BMD<sub>a</sub>, vBMD, geometric parameters and CTX-I for SNPs in <italic>MAP3K14</italic>. None of the <italic>GPR177</italic> and <italic>MAP3K14</italic> SNPs were associated with calcaneal estimated BMD measured by QUS.</p></sec><sec><title>Conclusion</title><p>Our findings suggest that SNPs in <italic>GPR177</italic> and <italic>MAP3K14</italic> involved in the NF-\u03baB signalling pathway influence bone mineral density, geometry and turnover in a population-based cohort of middle aged and elderly men. This adds to the understanding of the role of genetic variation in this pathway in determining bone health.</p></sec>",
+  "rights": "Roshandel et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-8",
+  "eLocationId": "e28031",
+  "strkImgURI": "",
+  "date": "2011-11-21T08:00:00Z",
+  "volume": "6",
+  "issue": "11",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0028031",
+  "collaborativeAuthors": [
+    "the EMAS Study Group"
+  ],
+  "types": [
     "http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0028031","extension":
-      "XML","contentType":"text/xml","title":
-      "Polymorphisms in Genes Involved in the NF-κB Signalling Pathway Are Associated with Bone Mineral Density, Geometry and Turnover in Men",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eIntroduction\u003c/title\u003e\u003cp\u003eIn this study, we aimed to investigate the association between single nucleotide polymorphisms (SNPs) within two genes involved in the NF-κB cascade (\u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e) and bone mineral density (BMD) assessed at different skeletal sites, radial geometric parameters and bone turnover.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods\u003c/title\u003e\u003cp\u003eTen \u003citalic\u003eGPR177\u003c/italic\u003e SNPs previously associated with BMD with genome-wide significance and twelve tag SNPs (r\u003csup\u003e2\u003c/sup\u003e≥0.8) within \u003citalic\u003eMAP3K14\u003c/italic\u003e (±10 kb) were genotyped in 2359 men aged 40–79 years recruited from 8 centres for participation in the European Male Aging Study (EMAS). Measurement of bone turnover markers (PINP and CTX-I) in the serum and quantitative ultrasound (QUS) at the calcaneus were performed in all centres. Dual energy X-ray absorptiometry (DXA), at the lumbar spine and hip, and peripheral quantitative computed tomography (pQCT), at the distal and midshaft radius, were performed in a subsample (2 centres). Linear regression was used to test for association between the SNPs and bone measures under an additive genetic model adjusting for study centre.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eResults\u003c/title\u003e\u003cp\u003eWe validated the associations between SNPs in \u003citalic\u003eGPR177\u003c/italic\u003e and BMD\u003csub\u003ea\u003c/sub\u003e previously reported and also observed evidence of pleiotrophic effects on density and geometry. Rs2772300 in \u003citalic\u003eGPR177\u003c/italic\u003e was associated with increased total hip and LS BMD\u003csub\u003ea\u003c/sub\u003e, increased total and cortical vBMD at the radius and increased cortical area, thickness and stress strain index. We also found evidence of association with BMD\u003csub\u003ea\u003c/sub\u003e, vBMD, geometric parameters and CTX-I for SNPs in \u003citalic\u003eMAP3K14\u003c/italic\u003e. None of the \u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e SNPs were associated with calcaneal estimated BMD measured by QUS.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eOur findings suggest that SNPs in \u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e involved in the NF-κB signalling pathway influence bone mineral density, geometry and turnover in a population-based cohort of middle aged and elderly men. This adds to the understanding of the role of genetic variation in this pathway in determining bone health.\u003c/p\u003e\u003c/sec\u003e",
-      "size":127256},{"doi":"info:doi/10.1371/journal.pone.0028031",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Polymorphisms in Genes Involved in the NF-κB Signalling Pathway Are Associated with Bone Mineral Density, Geometry and Turnover in Men",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eIntroduction\u003c/title\u003e\u003cp\u003eIn this study, we aimed to investigate the association between single nucleotide polymorphisms (SNPs) within two genes involved in the NF-κB cascade (\u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e) and bone mineral density (BMD) assessed at different skeletal sites, radial geometric parameters and bone turnover.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods\u003c/title\u003e\u003cp\u003eTen \u003citalic\u003eGPR177\u003c/italic\u003e SNPs previously associated with BMD with genome-wide significance and twelve tag SNPs (r\u003csup\u003e2\u003c/sup\u003e≥0.8) within \u003citalic\u003eMAP3K14\u003c/italic\u003e (±10 kb) were genotyped in 2359 men aged 40–79 years recruited from 8 centres for participation in the European Male Aging Study (EMAS). Measurement of bone turnover markers (PINP and CTX-I) in the serum and quantitative ultrasound (QUS) at the calcaneus were performed in all centres. Dual energy X-ray absorptiometry (DXA), at the lumbar spine and hip, and peripheral quantitative computed tomography (pQCT), at the distal and midshaft radius, were performed in a subsample (2 centres). Linear regression was used to test for association between the SNPs and bone measures under an additive genetic model adjusting for study centre.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eResults\u003c/title\u003e\u003cp\u003eWe validated the associations between SNPs in \u003citalic\u003eGPR177\u003c/italic\u003e and BMD\u003csub\u003ea\u003c/sub\u003e previously reported and also observed evidence of pleiotrophic effects on density and geometry. Rs2772300 in \u003citalic\u003eGPR177\u003c/italic\u003e was associated with increased total hip and LS BMD\u003csub\u003ea\u003c/sub\u003e, increased total and cortical vBMD at the radius and increased cortical area, thickness and stress strain index. We also found evidence of association with BMD\u003csub\u003ea\u003c/sub\u003e, vBMD, geometric parameters and CTX-I for SNPs in \u003citalic\u003eMAP3K14\u003c/italic\u003e. None of the \u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e SNPs were associated with calcaneal estimated BMD measured by QUS.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eOur findings suggest that SNPs in \u003citalic\u003eGPR177\u003c/italic\u003e and \u003citalic\u003eMAP3K14\u003c/italic\u003e involved in the NF-κB signalling pathway influence bone mineral density, geometry and turnover in a population-based cohort of middle aged and elderly men. This adds to the understanding of the role of genetic variation in this pathway in determining bone health.\u003c/p\u003e\u003c/sec\u003e",
-      "size":166247},{"doi":"info:doi/10.1371/journal.pone.0028031.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003eMean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.\u003c/title\u003e",
-      "size":199294},{"doi":"info:doi/10.1371/journal.pone.0028031.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eMean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.\u003c/title\u003e",
-      "size":4309},{"doi":"info:doi/10.1371/journal.pone.0028031.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eMean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.\u003c/title\u003e",
-      "size":52048},{"doi":"info:doi/10.1371/journal.pone.0028031.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eMean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.\u003c/title\u003e",
-      "size":71075},{"doi":"info:doi/10.1371/journal.pone.0028031.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe pair-wise LD between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs associated with bone health parameters.\u003c/title\u003e\u003cp\u003e(black r\u003csup\u003e2\u003c/sup\u003e \u003d 1, white r\u003csup\u003e2\u003c/sup\u003e \u003d 0).\u003c/p\u003e",
-      "size":336288},{"doi":"info:doi/10.1371/journal.pone.0028031.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe pair-wise LD between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs associated with bone health parameters.\u003c/title\u003e\u003cp\u003e(black r\u003csup\u003e2\u003c/sup\u003e \u003d 1, white r\u003csup\u003e2\u003c/sup\u003e \u003d 0).\u003c/p\u003e",
-      "size":14852},{"doi":"info:doi/10.1371/journal.pone.0028031.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe pair-wise LD between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs associated with bone health parameters.\u003c/title\u003e\u003cp\u003e(black r\u003csup\u003e2\u003c/sup\u003e \u003d 1, white r\u003csup\u003e2\u003c/sup\u003e \u003d 0).\u003c/p\u003e",
-      "size":130335},{"doi":"info:doi/10.1371/journal.pone.0028031.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe pair-wise LD between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs associated with bone health parameters.\u003c/title\u003e\u003cp\u003e(black r\u003csup\u003e2\u003c/sup\u003e \u003d 1, white r\u003csup\u003e2\u003c/sup\u003e \u003d 0).\u003c/p\u003e",
-      "size":323352},{"doi":"info:doi/10.1371/journal.pone.0028031.t002",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 2","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ea\u003c/sub\u003e.\u003c/title\u003e",
-      "size":302368},{"doi":"info:doi/10.1371/journal.pone.0028031.t002",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ea\u003c/sub\u003e.\u003c/title\u003e",
-      "size":1765},{"doi":"info:doi/10.1371/journal.pone.0028031.t002",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ea\u003c/sub\u003e.\u003c/title\u003e",
-      "size":43845},{"doi":"info:doi/10.1371/journal.pone.0028031.t002",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ea\u003c/sub\u003e.\u003c/title\u003e",
-      "size":80508},{"doi":"info:doi/10.1371/journal.pone.0028031.t003",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 3","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ev\u003c/sub\u003e.\u003c/title\u003e",
-      "size":304078},{"doi":"info:doi/10.1371/journal.pone.0028031.t003",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ev\u003c/sub\u003e.\u003c/title\u003e",
-      "size":1772},{"doi":"info:doi/10.1371/journal.pone.0028031.t003",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ev\u003c/sub\u003e.\u003c/title\u003e",
-      "size":44607},{"doi":"info:doi/10.1371/journal.pone.0028031.t003",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eGenetic association between \u003citalic\u003eGPR177\u003c/italic\u003e SNPs and BMD\u003csub\u003ev\u003c/sub\u003e.\u003c/title\u003e",
-      "size":81318},{"doi":"info:doi/10.1371/journal.pone.0028031.t004",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 4","description":
-      "\u003ctitle\u003e\u003citalic\u003eGPR177\u003c/italic\u003e SNP associations with radius geometric parameters.\u003c/title\u003e",
-      "size":223382},{"doi":"info:doi/10.1371/journal.pone.0028031.t004",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003e\u003citalic\u003eGPR177\u003c/italic\u003e SNP associations with radius geometric parameters.\u003c/title\u003e",
-      "size":1334},{"doi":"info:doi/10.1371/journal.pone.0028031.t004",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003e\u003citalic\u003eGPR177\u003c/italic\u003e SNP associations with radius geometric parameters.\u003c/title\u003e",
-      "size":26745},{"doi":"info:doi/10.1371/journal.pone.0028031.t004",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003e\u003citalic\u003eGPR177\u003c/italic\u003e SNP associations with radius geometric parameters.\u003c/title\u003e",
-      "size":55132},{"doi":"info:doi/10.1371/journal.pone.0028031.t005",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 5","description":
-      "\u003ctitle\u003e\u003citalic\u003eMAP3K14\u003c/italic\u003e SNP associations with bone mineral density and radius geometric parameters.\u003c/title\u003e",
-      "size":268544},{"doi":"info:doi/10.1371/journal.pone.0028031.t005",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003e\u003citalic\u003eMAP3K14\u003c/italic\u003e SNP associations with bone mineral density and radius geometric parameters.\u003c/title\u003e",
-      "size":1603},{"doi":"info:doi/10.1371/journal.pone.0028031.t005",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003e\u003citalic\u003eMAP3K14\u003c/italic\u003e SNP associations with bone mineral density and radius geometric parameters.\u003c/title\u003e",
-      "size":34901},{"doi":"info:doi/10.1371/journal.pone.0028031.t005",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003e\u003citalic\u003eMAP3K14\u003c/italic\u003e SNP associations with bone mineral density and radius geometric parameters.\u003c/title\u003e",
-      "size":73075},{"doi":"info:doi/10.1371/journal.pone.0028031.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eThe decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (\u003citalic\u003eRANKL\u003c/italic\u003e) and rs8065345 (\u003citalic\u003eMAP3K14\u003c/italic\u003e).\u003c/title\u003e",
-      "size":259184},{"doi":"info:doi/10.1371/journal.pone.0028031.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eThe decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (\u003citalic\u003eRANKL\u003c/italic\u003e) and rs8065345 (\u003citalic\u003eMAP3K14\u003c/italic\u003e).\u003c/title\u003e",
-      "size":11164},{"doi":"info:doi/10.1371/journal.pone.0028031.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eThe decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (\u003citalic\u003eRANKL\u003c/italic\u003e) and rs8065345 (\u003citalic\u003eMAP3K14\u003c/italic\u003e).\u003c/title\u003e",
-      "size":25846},{"doi":"info:doi/10.1371/journal.pone.0028031.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eThe decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (\u003citalic\u003eRANKL\u003c/italic\u003e) and rs8065345 (\u003citalic\u003eMAP3K14\u003c/italic\u003e).\u003c/title\u003e",
-      "size":121192},{"doi":"info:doi/10.1371/journal.pone.0028031.s001",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S1","description":
-      "\u003cp\u003e\n            \u003cbold\u003eGenetic association between \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eMAP3K14\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e SNPs and BMD\u003csub\u003ea\u003c/sub\u003e.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":40960},{"doi":"info:doi/10.1371/journal.pone.0028031.s002",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S2","description":
-      "\u003cp\u003e\n            \u003cbold\u003eGenetic association between \u003c/bold\u003e\n            \u003cbold\u003e\n              \u003citalic\u003eMAP3K14\u003c/italic\u003e\n            \u003c/bold\u003e\n            \u003cbold\u003e SNPs and BMD\u003csub\u003ev\u003c/sub\u003e.\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":41472}],"citedArticles":[{"key":"1","year":1993,"displayYear":
-      "1993","volumeNumber":94,"volume":"94","title":
-      "Consensus development conference: diagnosis, prophylaxis, and treatment of osteoporosis.",
-      "pages":"646-650","eLocationID":"646","journal":"Am J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"2","year":2001,"displayYear":"2001","volumeNumber":29,"volume":
-      "29","title":"Epidemiology of fractures in England and Wales.","pages":
-      "517-522","eLocationID":"517","journal":"Bone","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"TP van Staa","givenNames":"TP","surnames":
-          "van Staa","suffix":""},{"fullName":"EM Dennison","givenNames":
-          "EM","surnames":"Dennison","suffix":""},{"fullName":
-          "HG Leufkens","givenNames":"HG","surnames":"Leufkens","suffix":
-          ""},{"fullName":"C Cooper","givenNames":"C","surnames":"Cooper",
-          "suffix":""}],"editors":[]},{"key":"3","year":2006,"displayYear":
-      "2006","volumeNumber":21,"volume":"21","title":
-      "BMD and risk of hip and nonvertebral fractures in older men: a prospective study and comparison with older women.",
-      "pages":"1550-1556","eLocationID":"1550","journal":
-      "J Bone Miner Res","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SR Cummings","givenNames":"SR","surnames":"Cummings","suffix":
-          ""},{"fullName":"PM Cawthon","givenNames":"PM","surnames":
-          "Cawthon","suffix":""},{"fullName":"KE Ensrud","givenNames":"KE",
-          "surnames":"Ensrud","suffix":""},{"fullName":"JA Cauley",
-          "givenNames":"JA","surnames":"Cauley","suffix":""},{"fullName":
-          "HA Fink","givenNames":"HA","surnames":"Fink","suffix":""}],
-      "editors":[]},{"key":"4","year":2003,"displayYear":"2003",
-      "volumeNumber":18,"volume":"18","title":
-      "BMD at multiple sites and risk of fracture of multiple types: long-term results from the Study of Osteoporotic Fractures.",
-      "pages":"1947-1954","eLocationID":"1947","journal":
-      "J Bone Miner Res","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KL Stone","givenNames":"KL","surnames":"Stone","suffix":""},{
-          "fullName":"DG Seeley","givenNames":"DG","surnames":"Seeley",
-          "suffix":""},{"fullName":"LY Lui","givenNames":"LY","surnames":
-          "Lui","suffix":""},{"fullName":"JA Cauley","givenNames":"JA",
-          "surnames":"Cauley","suffix":""},{"fullName":"K Ensrud",
-          "givenNames":"K","surnames":"Ensrud","suffix":""}],"editors":[]},{
-      "key":"5","year":1999,"displayYear":"1999","volumeNumber":9,"volume":
-      "9","title":
-      "Separate and combined value of bone mass and gait speed measurements in screening for hip fracture risk: results from the EPIDOS study. Epidemiologie de l\u0027Osteoporose.",
-      "pages":"188-192","eLocationID":"188","journal":"Osteoporos Int",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "P Dargent-Molina","givenNames":"P","surnames":"Dargent-Molina",
-          "suffix":""},{"fullName":"AM Schott","givenNames":"AM","surnames":
-          "Schott","suffix":""},{"fullName":"D Hans","givenNames":"D",
-          "surnames":"Hans","suffix":""},{"fullName":"F Favier","givenNames":
-          "F","surnames":"Favier","suffix":""},{"fullName":"H Grandjean",
-          "givenNames":"H","surnames":"Grandjean","suffix":""}],"editors":[]},
-    {"key":"6","year":2007,"displayYear":"2007","volumeNumber":22,"volume":
-      "22","title":
-      "Heritability of BMD of femoral neck and lumbar spine: a multivariate twin study of Finnish men.",
-      "pages":"1455-1462","eLocationID":"1455","journal":
-      "J Bone Miner Res","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "T Videman","givenNames":"T","surnames":"Videman","suffix":""},{
-          "fullName":"E Levalahti","givenNames":"E","surnames":"Levalahti",
-          "suffix":""},{"fullName":"MC Battie","givenNames":"MC","surnames":
-          "Battie","suffix":""},{"fullName":"R Simonen","givenNames":"R",
-          "surnames":"Simonen","suffix":""},{"fullName":"E Vanninen",
-          "givenNames":"E","surnames":"Vanninen","suffix":""}],"editors":[]},
-    {"key":"7","year":1993,"displayYear":"1993","volumeNumber":8,"volume":
-      "8","title":
-      "Heritable and life-style determinants of bone mineral density.",
-      "pages":"1-9","eLocationID":"1","journal":"J Bone Miner Res",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "EA Krall","givenNames":"EA","surnames":"Krall","suffix":""},{
-          "fullName":"B wson-Hughes","givenNames":"B","surnames":
-          "wson-Hughes","suffix":""}],"editors":[]},{"key":"8","year":1995,
-      "displayYear":"1995","volumeNumber":10,"volume":"10","title":
-      "Bone density determinants in elderly women: a twin study.","pages":
-      "1607-1613","eLocationID":"1607","journal":"J Bone Miner Res",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Flicker","givenNames":"L","surnames":"Flicker","suffix":""},{
-          "fullName":"JL Hopper","givenNames":"JL","surnames":"Hopper",
-          "suffix":""},{"fullName":"L Rodgers","givenNames":"L","surnames":
-          "Rodgers","suffix":""},{"fullName":"B Kaymakci","givenNames":"B",
-          "surnames":"Kaymakci","suffix":""},{"fullName":"RM Green",
-          "givenNames":"RM","surnames":"Green","suffix":""}],"editors":[]},{
-      "key":"9","year":2008,"displayYear":"2008","volumeNumber":371,"volume":
-      "371","title":
-      "Bone mineral density, osteoporosis, and osteoporotic fractures: a genome-wide association study.",
-      "pages":"1505-1512","eLocationID":"1505","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JB Richards","givenNames":"JB","surnames":"Richards","suffix":
-          ""},{"fullName":"F Rivadeneira","givenNames":"F","surnames":
-          "Rivadeneira","suffix":""},{"fullName":"M Inouye","givenNames":
-          "M","surnames":"Inouye","suffix":""},{"fullName":"TM Pastinen",
-          "givenNames":"TM","surnames":"Pastinen","suffix":""},{"fullName":
-          "N Soranzo","givenNames":"N","surnames":"Soranzo","suffix":""}],
-      "editors":[]},{"key":"10","year":2009,"displayYear":"2009",
-      "volumeNumber":41,"volume":"41","title":
-      "Twenty bone-mineral-density loci identified by large-scale meta-analysis of genome-wide association studies.",
-      "pages":"1199-1206","eLocationID":"1199","journal":"Nat Genet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "F Rivadeneira","givenNames":"F","surnames":"Rivadeneira","suffix":
-          ""},{"fullName":"U Styrkarsdottir","givenNames":"U","surnames":
-          "Styrkarsdottir","suffix":""},{"fullName":"K Estrada","givenNames":
-          "K","surnames":"Estrada","suffix":""},{"fullName":
-          "BV Halldorsson","givenNames":"BV","surnames":"Halldorsson",
-          "suffix":""},{"fullName":"YH Hsu","givenNames":"YH","surnames":
-          "Hsu","suffix":""}],"editors":[]},{"key":"11","year":2008,
-      "displayYear":"2008","volumeNumber":358,"volume":"358","title":
-      "Multiple genetic loci for bone mineral density and fractures.",
-      "pages":"2355-2365","eLocationID":"2355","journal":"N Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "U Styrkarsdottir","givenNames":"U","surnames":"Styrkarsdottir",
-          "suffix":""},{"fullName":"BV Halldorsson","givenNames":"BV",
-          "surnames":"Halldorsson","suffix":""},{"fullName":
-          "S Gretarsdottir","givenNames":"S","surnames":"Gretarsdottir",
-          "suffix":""},{"fullName":"DF Gudbjartsson","givenNames":"DF",
-          "surnames":"Gudbjartsson","suffix":""},{"fullName":"GB Walters",
-          "givenNames":"GB","surnames":"Walters","suffix":""}],"editors":[]},
-    {"key":"12","year":2009,"displayYear":"2009","volumeNumber":41,"volume":
-      "41","title":
-      "New sequence variants associated with bone mineral density.","pages":
-      "15-17","eLocationID":"15","journal":"Nat Genet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "U Styrkarsdottir","givenNames":"U","surnames":"Styrkarsdottir",
-          "suffix":""},{"fullName":"BV Halldorsson","givenNames":"BV",
-          "surnames":"Halldorsson","suffix":""},{"fullName":
-          "S Gretarsdottir","givenNames":"S","surnames":"Gretarsdottir",
-          "suffix":""},{"fullName":"DF Gudbjartsson","givenNames":"DF",
-          "surnames":"Gudbjartsson","suffix":""},{"fullName":"GB Walters",
-          "givenNames":"GB","surnames":"Walters","suffix":""}],"editors":[]},
-    {"key":"13","year":2010,"displayYear":"2010","volumeNumber":25,"volume":
-      "25","title":
-      "Genetic variation in the RANKL/RANK/OPG signaling pathway is associated with bone turnover and bone mineral density in men.",
-      "pages":"1830-1838","eLocationID":"1830","journal":
-      "J Bone Miner Res","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "D Roshandel","givenNames":"D","surnames":"Roshandel","suffix":
-          ""},{"fullName":"KL Holliday","givenNames":"KL","surnames":
-          "Holliday","suffix":""},{"fullName":"SR Pye","givenNames":"SR",
-          "surnames":"Pye","suffix":""},{"fullName":"S Boonen","givenNames":
-          "S","surnames":"Boonen","suffix":""},{"fullName":"H Borghs",
-          "givenNames":"H","surnames":"Borghs","suffix":""}],"editors":[]},{
-      "key":"14","year":2006,"displayYear":"2006","volumeNumber":1092,
-      "volume":"1092","title":"Bone remodeling.","pages":"385-396",
-      "eLocationID":"385","journal":"Ann N Y Acad Sci",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DJ Hadjidakis","givenNames":"DJ","surnames":"Hadjidakis","suffix":
-          ""},{"fullName":"II Androulakis","givenNames":"II","surnames":
-          "Androulakis","suffix":""}],"editors":[]},{"key":"15","year":
-      2009,"displayYear":"2009","volumeNumber":378,"volume":"378","title":
-      "NF-kappaB functions in osteoclasts.","pages":"1-5","eLocationID":
-      "1","journal":"Biochem Biophys Res Commun","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"NS Soysa","givenNames":"NS","surnames":
-          "Soysa","suffix":""},{"fullName":"N Alles","givenNames":"N",
-          "surnames":"Alles","suffix":""}],"editors":[]},{"key":"16","year":
-      2003,"displayYear":"2003","volumeNumber":22,"volume":"22","title":
-      "Large-scale identification and characterization of human genes that activate NF-kappaB and MAPK signaling pathways.",
-      "pages":"3307-3318","eLocationID":"3307","journal":"Oncogene",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Matsuda","givenNames":"A","surnames":"Matsuda","suffix":""},{
-          "fullName":"Y Suzuki","givenNames":"Y","surnames":"Suzuki",
-          "suffix":""},{"fullName":"G Honda","givenNames":"G","surnames":
-          "Honda","suffix":""},{"fullName":"S Muramatsu","givenNames":"S",
-          "surnames":"Muramatsu","suffix":""},{"fullName":"O Matsuzaki",
-          "givenNames":"O","surnames":"Matsuzaki","suffix":""}],"editors":[]},
-    {"key":"17","year":2006,"displayYear":"2006","volumeNumber":125,"volume":
-      "125","title":
-      "Wntless, a conserved membrane protein dedicated to the secretion of Wnt proteins from signaling cells.",
-      "pages":"509-522","eLocationID":"509","journal":"Cell",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Banziger","givenNames":"C","surnames":"Banziger","suffix":""},{
-          "fullName":"D Soldini","givenNames":"D","surnames":"Soldini",
-          "suffix":""},{"fullName":"C Schutt","givenNames":"C","surnames":
-          "Schutt","suffix":""},{"fullName":"P Zipperlen","givenNames":"P",
-          "surnames":"Zipperlen","suffix":""},{"fullName":"G Hausmann",
-          "givenNames":"G","surnames":"Hausmann","suffix":""}],"editors":[]},
-    {"key":"18","year":2009,"displayYear":"2009","volumeNumber":32,"volume":
-      "32","title":
-      "The European Male Ageing Study (EMAS): design, methods and recruitment.",
-      "pages":"11-24","eLocationID":"11","journal":"Int J Androl",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "D Lee","givenNames":"D","surnames":"Lee","suffix":""},{"fullName":
-          "T O\u0027Neill","givenNames":"T","surnames":"O\u0027Neill",
-          "suffix":""},{"fullName":"S Pye","givenNames":"S","surnames":
-          "Pye","suffix":""},{"fullName":"A Silman","givenNames":"A",
-          "surnames":"Silman","suffix":""},{"fullName":"J Finn","givenNames":
-          "J","surnames":"Finn","suffix":""}],"editors":[]},{"key":"19",
-      "year":2009,"displayYear":"2009","volumeNumber":32,"volume":"32",
-      "title":
-      "The European Male Ageing Study (EMAS): design, methods and recruitment.",
-      "pages":"11-24","eLocationID":"11","journal":"Int J Androl",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DM Lee","givenNames":"DM","surnames":"Lee","suffix":""},{
-          "fullName":"TW O\u0027Neill","givenNames":"TW","surnames":
-          "O\u0027Neill","suffix":""},{"fullName":"SR Pye","givenNames":
-          "SR","surnames":"Pye","suffix":""},{"fullName":"AJ Silman",
-          "givenNames":"AJ","surnames":"Silman","suffix":""},{"fullName":
-          "JD Finn","givenNames":"JD","surnames":"Finn","suffix":""}],
-      "editors":[]},{"key":"20","year":2006,"displayYear":"2006",
-      "volumeNumber":17,"volume":"17","title":
-      "Cross-calibration of dual-energy X-ray densitometers for a large, multi-center genetic study of osteoporosis.",
-      "pages":"125-132","eLocationID":"125","journal":"Osteoporos Int",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DM Reid","givenNames":"DM","surnames":"Reid","suffix":""},{
-          "fullName":"I Mackay","givenNames":"I","surnames":"Mackay",
-          "suffix":""},{"fullName":"S Wilkinson","givenNames":"S","surnames":
-          "Wilkinson","suffix":""},{"fullName":"C Miller","givenNames":"C",
-          "surnames":"Miller","suffix":""},{"fullName":"DG Schuette",
-          "givenNames":"DG","surnames":"Schuette","suffix":""}],"editors":[]},
-    {"key":"21","year":2005,"displayYear":"2005","volumeNumber":36,"volume":
-      "36","title":
-      "Bone geometry and density in the skeleton of pre-pubertal gymnasts and school children.",
-      "pages":"1012-1018","eLocationID":"1012","journal":"Bone",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KA Ward","givenNames":"KA","surnames":"Ward","suffix":""},{
-          "fullName":"SA Roberts","givenNames":"SA","surnames":"Roberts",
-          "suffix":""},{"fullName":"JE Adams","givenNames":"JE","surnames":
-          "Adams","suffix":""},{"fullName":"MZ Mughal","givenNames":"MZ",
-          "surnames":"Mughal","suffix":""}],"editors":[]},{"key":"22","year":
-      2005,"displayYear":"2005","volumeNumber":21,"volume":"21","title":
-      "Haploview: analysis and visualization of LD and haplotype maps.",
-      "pages":"263-265","eLocationID":"263","journal":"Bioinformatics",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JC Barrett","givenNames":"JC","surnames":"Barrett","suffix":""},{
-          "fullName":"B Fry","givenNames":"B","surnames":"Fry","suffix":""},{
-          "fullName":"J Maller","givenNames":"J","surnames":"Maller",
-          "suffix":""},{"fullName":"MJ Daly","givenNames":"MJ","surnames":
-          "Daly","suffix":""}],"editors":[]},{"key":"23","year":2007,
-      "displayYear":"2007","volumeNumber":81,"volume":"81","title":
-      "PLINK: a tool set for whole-genome association and population-based linkage analyses.",
-      "pages":"559-575","eLocationID":"559","journal":"Am J Hum Genet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Purcell","givenNames":"S","surnames":"Purcell","suffix":""},{
-          "fullName":"B Neale","givenNames":"B","surnames":"Neale","suffix":
-          ""},{"fullName":"K Todd-Brown","givenNames":"K","surnames":
-          "Todd-Brown","suffix":""},{"fullName":"L Thomas","givenNames":
-          "L","surnames":"Thomas","suffix":""},{"fullName":"MA Ferreira",
-          "givenNames":"MA","surnames":"Ferreira","suffix":""}],"editors":[]},
-    {"key":"24","year":2007,"displayYear":"2007","volumeNumber":63,"volume":
-      "63","title":
-      "Exploiting gene-environment interaction to detect genetic associations.",
-      "pages":"111-119","eLocationID":"111","journal":"Hum Hered",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "P Kraft","givenNames":"P","surnames":"Kraft","suffix":""},{
-          "fullName":"YC Yen","givenNames":"YC","surnames":"Yen","suffix":
-          ""},{"fullName":"DO Stram","givenNames":"DO","surnames":"Stram",
-          "suffix":""},{"fullName":"J Morrison","givenNames":"J","surnames":
-          "Morrison","suffix":""},{"fullName":"WJ Gauderman","givenNames":
-          "WJ","surnames":"Gauderman","suffix":""}],"editors":[]},{"key":
-      "25","year":2005,"displayYear":"2005","volumeNumber":95,"volume":
-      "95","title":
-      "Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix.",
-      "pages":"221-227","eLocationID":"221","journal":"Heredity",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Li","givenNames":"J","surnames":"Li","suffix":""},{"fullName":
-          "L Ji","givenNames":"L","surnames":"Ji","suffix":""}],"editors":[]},
-    {"key":"26","year":2005,"displayYear":"2005","volumeNumber":77,"volume":
-      "77","title":
-      "Recommendations for thresholds for cortical bone geometry and density measurement by peripheral quantitative computed tomography.",
-      "pages":"275-280","eLocationID":"275","journal":"Calcif Tissue Int",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KA Ward","givenNames":"KA","surnames":"Ward","suffix":""},{
-          "fullName":"JE Adams","givenNames":"JE","surnames":"Adams",
-          "suffix":""},{"fullName":"TN Hangartner","givenNames":"TN",
-          "surnames":"Hangartner","suffix":""}],"editors":[]}],
-  "relatedArticles":[],"authors":[{"fullName":"Delnaz Roshandel",
-      "givenNames":"Delnaz","surnames":"Roshandel","suffix":""},{"fullName":
-      "Wendy Thomson","givenNames":"Wendy","surnames":"Thomson","suffix":
-      ""},{"fullName":"Stephen R. Pye","givenNames":"Stephen R.","surnames":
-      "Pye","suffix":""},{"fullName":"Steven Boonen","givenNames":"Steven",
-      "surnames":"Boonen","suffix":""},{"fullName":"Herman Borghs",
-      "givenNames":"Herman","surnames":"Borghs","suffix":""},{"fullName":
-      "Dirk Vanderschueren","givenNames":"Dirk","surnames":
-      "Vanderschueren","suffix":""},{"fullName":"Ilpo T. Huhtaniemi",
-      "givenNames":"Ilpo T.","surnames":"Huhtaniemi","suffix":""},{
-      "fullName":"Judith E. Adams","givenNames":"Judith E.","surnames":
-      "Adams","suffix":""},{"fullName":"Kate A. Ward","givenNames":
-      "Kate A.","surnames":"Ward","suffix":""},{"fullName":
-      "Gyorgy Bartfai","givenNames":"Gyorgy","surnames":"Bartfai","suffix":
-      ""},{"fullName":"Felipe F. Casanueva","givenNames":"Felipe F.",
-      "surnames":"Casanueva","suffix":""},{"fullName":"Joseph D. Finn",
-      "givenNames":"Joseph D.","surnames":"Finn","suffix":""},{"fullName":
-      "Gianni Forti","givenNames":"Gianni","surnames":"Forti","suffix":""},{
-      "fullName":"Aleksander Giwercman","givenNames":"Aleksander","surnames":
-      "Giwercman","suffix":""},{"fullName":"Thang S. Han","givenNames":
-      "Thang S.","surnames":"Han","suffix":""},{"fullName":
-      "Krzysztof Kula","givenNames":"Krzysztof","surnames":"Kula","suffix":
-      ""},{"fullName":"Michael E. Lean","givenNames":"Michael E.","surnames":
-      "Lean","suffix":""},{"fullName":"Neil Pendleton","givenNames":"Neil",
-      "surnames":"Pendleton","suffix":""},{"fullName":"Margus Punab",
-      "givenNames":"Margus","surnames":"Punab","suffix":""},{"fullName":
-      "Frederick C. Wu","givenNames":"Frederick C.","surnames":"Wu","suffix":
-      ""},{"fullName":"Kate L. Holliday","givenNames":"Kate L.","surnames":
-      "Holliday","suffix":""},{"fullName":"Terence W. O\u0027Neill",
-      "givenNames":"Terence W.","surnames":"O\u0027Neill","suffix":""}],
-  "editors":[{"fullName":"Sudha Agarwal","givenNames":"Sudha","surnames":
-      "Agarwal","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
-
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Polymorphisms in Genes Involved in the NF-\u03baB Signalling Pathway Are Associated with Bone Mineral Density, Geometry and Turnover in Men",
+      "description": "<sec><title>Introduction</title><p>In this study, we aimed to investigate the association between single nucleotide polymorphisms (SNPs) within two genes involved in the NF-\u03baB cascade (<italic>GPR177</italic> and <italic>MAP3K14</italic>) and bone mineral density (BMD) assessed at different skeletal sites, radial geometric parameters and bone turnover.</p></sec><sec><title>Methods</title><p>Ten <italic>GPR177</italic> SNPs previously associated with BMD with genome-wide significance and twelve tag SNPs (r<sup>2</sup>\u22650.8) within <italic>MAP3K14</italic> (\u00b110 kb) were genotyped in 2359 men aged 40\u201379 years recruited from 8 centres for participation in the European Male Aging Study (EMAS). Measurement of bone turnover markers (PINP and CTX-I) in the serum and quantitative ultrasound (QUS) at the calcaneus were performed in all centres. Dual energy X-ray absorptiometry (DXA), at the lumbar spine and hip, and peripheral quantitative computed tomography (pQCT), at the distal and midshaft radius, were performed in a subsample (2 centres). Linear regression was used to test for association between the SNPs and bone measures under an additive genetic model adjusting for study centre.</p></sec><sec><title>Results</title><p>We validated the associations between SNPs in <italic>GPR177</italic> and BMD<sub>a</sub> previously reported and also observed evidence of pleiotrophic effects on density and geometry. Rs2772300 in <italic>GPR177</italic> was associated with increased total hip and LS BMD<sub>a</sub>, increased total and cortical vBMD at the radius and increased cortical area, thickness and stress strain index. We also found evidence of association with BMD<sub>a</sub>, vBMD, geometric parameters and CTX-I for SNPs in <italic>MAP3K14</italic>. None of the <italic>GPR177</italic> and <italic>MAP3K14</italic> SNPs were associated with calcaneal estimated BMD measured by QUS.</p></sec><sec><title>Conclusion</title><p>Our findings suggest that SNPs in <italic>GPR177</italic> and <italic>MAP3K14</italic> involved in the NF-\u03baB signalling pathway influence bone mineral density, geometry and turnover in a population-based cohort of middle aged and elderly men. This adds to the understanding of the role of genetic variation in this pathway in determining bone health.</p></sec>",
+      "size": 127256
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Polymorphisms in Genes Involved in the NF-\u03baB Signalling Pathway Are Associated with Bone Mineral Density, Geometry and Turnover in Men",
+      "description": "<sec><title>Introduction</title><p>In this study, we aimed to investigate the association between single nucleotide polymorphisms (SNPs) within two genes involved in the NF-\u03baB cascade (<italic>GPR177</italic> and <italic>MAP3K14</italic>) and bone mineral density (BMD) assessed at different skeletal sites, radial geometric parameters and bone turnover.</p></sec><sec><title>Methods</title><p>Ten <italic>GPR177</italic> SNPs previously associated with BMD with genome-wide significance and twelve tag SNPs (r<sup>2</sup>\u22650.8) within <italic>MAP3K14</italic> (\u00b110 kb) were genotyped in 2359 men aged 40\u201379 years recruited from 8 centres for participation in the European Male Aging Study (EMAS). Measurement of bone turnover markers (PINP and CTX-I) in the serum and quantitative ultrasound (QUS) at the calcaneus were performed in all centres. Dual energy X-ray absorptiometry (DXA), at the lumbar spine and hip, and peripheral quantitative computed tomography (pQCT), at the distal and midshaft radius, were performed in a subsample (2 centres). Linear regression was used to test for association between the SNPs and bone measures under an additive genetic model adjusting for study centre.</p></sec><sec><title>Results</title><p>We validated the associations between SNPs in <italic>GPR177</italic> and BMD<sub>a</sub> previously reported and also observed evidence of pleiotrophic effects on density and geometry. Rs2772300 in <italic>GPR177</italic> was associated with increased total hip and LS BMD<sub>a</sub>, increased total and cortical vBMD at the radius and increased cortical area, thickness and stress strain index. We also found evidence of association with BMD<sub>a</sub>, vBMD, geometric parameters and CTX-I for SNPs in <italic>MAP3K14</italic>. None of the <italic>GPR177</italic> and <italic>MAP3K14</italic> SNPs were associated with calcaneal estimated BMD measured by QUS.</p></sec><sec><title>Conclusion</title><p>Our findings suggest that SNPs in <italic>GPR177</italic> and <italic>MAP3K14</italic> involved in the NF-\u03baB signalling pathway influence bone mineral density, geometry and turnover in a population-based cohort of middle aged and elderly men. This adds to the understanding of the role of genetic variation in this pathway in determining bone health.</p></sec>",
+      "size": 166247
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Mean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.</title>",
+      "size": 199294
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Mean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.</title>",
+      "size": 4309
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Mean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.</title>",
+      "size": 52048
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Mean (SD) of bone turnover markers, DXA, pQCT and QUS parameters.</title>",
+      "size": 71075
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>The pair-wise LD between <italic>GPR177</italic> SNPs associated with bone health parameters.</title><p>(black r<sup>2</sup>\u200a=\u200a1, white r<sup>2</sup>\u200a=\u200a0).</p>",
+      "size": 336288
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>The pair-wise LD between <italic>GPR177</italic> SNPs associated with bone health parameters.</title><p>(black r<sup>2</sup>\u200a=\u200a1, white r<sup>2</sup>\u200a=\u200a0).</p>",
+      "size": 14852
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>The pair-wise LD between <italic>GPR177</italic> SNPs associated with bone health parameters.</title><p>(black r<sup>2</sup>\u200a=\u200a1, white r<sup>2</sup>\u200a=\u200a0).</p>",
+      "size": 130335
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>The pair-wise LD between <italic>GPR177</italic> SNPs associated with bone health parameters.</title><p>(black r<sup>2</sup>\u200a=\u200a1, white r<sup>2</sup>\u200a=\u200a0).</p>",
+      "size": 323352
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t002",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 2",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>a</sub>.</title>",
+      "size": 302368
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>a</sub>.</title>",
+      "size": 1765
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>a</sub>.</title>",
+      "size": 43845
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>a</sub>.</title>",
+      "size": 80508
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t003",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 3",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>v</sub>.</title>",
+      "size": 304078
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>v</sub>.</title>",
+      "size": 1772
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>v</sub>.</title>",
+      "size": 44607
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Genetic association between <italic>GPR177</italic> SNPs and BMD<sub>v</sub>.</title>",
+      "size": 81318
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t004",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 4",
+      "description": "<title><italic>GPR177</italic> SNP associations with radius geometric parameters.</title>",
+      "size": 223382
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title><italic>GPR177</italic> SNP associations with radius geometric parameters.</title>",
+      "size": 1334
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title><italic>GPR177</italic> SNP associations with radius geometric parameters.</title>",
+      "size": 26745
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title><italic>GPR177</italic> SNP associations with radius geometric parameters.</title>",
+      "size": 55132
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t005",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 5",
+      "description": "<title><italic>MAP3K14</italic> SNP associations with bone mineral density and radius geometric parameters.</title>",
+      "size": 268544
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title><italic>MAP3K14</italic> SNP associations with bone mineral density and radius geometric parameters.</title>",
+      "size": 1603
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title><italic>MAP3K14</italic> SNP associations with bone mineral density and radius geometric parameters.</title>",
+      "size": 34901
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title><italic>MAP3K14</italic> SNP associations with bone mineral density and radius geometric parameters.</title>",
+      "size": 73075
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>The decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (<italic>RANKL</italic>) and rs8065345 (<italic>MAP3K14</italic>).</title>",
+      "size": 259184
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>The decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (<italic>RANKL</italic>) and rs8065345 (<italic>MAP3K14</italic>).</title>",
+      "size": 11164
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>The decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (<italic>RANKL</italic>) and rs8065345 (<italic>MAP3K14</italic>).</title>",
+      "size": 25846
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>The decline in lumbar spine areal BMD by increasing number of carried risk alleles of rs9594738 (<italic>RANKL</italic>) and rs8065345 (<italic>MAP3K14</italic>).</title>",
+      "size": 121192
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.s001",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S1",
+      "description": "<p>\n            <bold>Genetic association between </bold>\n            <bold>\n              <italic>MAP3K14</italic>\n            </bold>\n            <bold> SNPs and BMD<sub>a</sub>.</bold>\n          </p><p>(DOC)</p>",
+      "size": 40960
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0028031.s002",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S2",
+      "description": "<p>\n            <bold>Genetic association between </bold>\n            <bold>\n              <italic>MAP3K14</italic>\n            </bold>\n            <bold> SNPs and BMD<sub>v</sub>.</bold>\n          </p><p>(DOC)</p>",
+      "size": 41472
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 94,
+      "volume": "94",
+      "title": "Consensus development conference: diagnosis, prophylaxis, and treatment of osteoporosis.",
+      "pages": "646-650",
+      "eLocationID": "646",
+      "journal": "Am J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 29,
+      "volume": "29",
+      "title": "Epidemiology of fractures in England and Wales.",
+      "pages": "517-522",
+      "eLocationID": "517",
+      "journal": "Bone",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TP van Staa",
+          "givenNames": "TP",
+          "surnames": "van Staa",
+          "suffix": ""
+        },
+        {
+          "fullName": "EM Dennison",
+          "givenNames": "EM",
+          "surnames": "Dennison",
+          "suffix": ""
+        },
+        {
+          "fullName": "HG Leufkens",
+          "givenNames": "HG",
+          "surnames": "Leufkens",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Cooper",
+          "givenNames": "C",
+          "surnames": "Cooper",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "BMD and risk of hip and nonvertebral fractures in older men: a prospective study and comparison with older women.",
+      "pages": "1550-1556",
+      "eLocationID": "1550",
+      "journal": "J Bone Miner Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SR Cummings",
+          "givenNames": "SR",
+          "surnames": "Cummings",
+          "suffix": ""
+        },
+        {
+          "fullName": "PM Cawthon",
+          "givenNames": "PM",
+          "surnames": "Cawthon",
+          "suffix": ""
+        },
+        {
+          "fullName": "KE Ensrud",
+          "givenNames": "KE",
+          "surnames": "Ensrud",
+          "suffix": ""
+        },
+        {
+          "fullName": "JA Cauley",
+          "givenNames": "JA",
+          "surnames": "Cauley",
+          "suffix": ""
+        },
+        {
+          "fullName": "HA Fink",
+          "givenNames": "HA",
+          "surnames": "Fink",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "BMD at multiple sites and risk of fracture of multiple types: long-term results from the Study of Osteoporotic Fractures.",
+      "pages": "1947-1954",
+      "eLocationID": "1947",
+      "journal": "J Bone Miner Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KL Stone",
+          "givenNames": "KL",
+          "surnames": "Stone",
+          "suffix": ""
+        },
+        {
+          "fullName": "DG Seeley",
+          "givenNames": "DG",
+          "surnames": "Seeley",
+          "suffix": ""
+        },
+        {
+          "fullName": "LY Lui",
+          "givenNames": "LY",
+          "surnames": "Lui",
+          "suffix": ""
+        },
+        {
+          "fullName": "JA Cauley",
+          "givenNames": "JA",
+          "surnames": "Cauley",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Ensrud",
+          "givenNames": "K",
+          "surnames": "Ensrud",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 9,
+      "volume": "9",
+      "title": "Separate and combined value of bone mass and gait speed measurements in screening for hip fracture risk: results from the EPIDOS study. Epidemiologie de l'Osteoporose.",
+      "pages": "188-192",
+      "eLocationID": "188",
+      "journal": "Osteoporos Int",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P Dargent-Molina",
+          "givenNames": "P",
+          "surnames": "Dargent-Molina",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Schott",
+          "givenNames": "AM",
+          "surnames": "Schott",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Hans",
+          "givenNames": "D",
+          "surnames": "Hans",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Favier",
+          "givenNames": "F",
+          "surnames": "Favier",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Grandjean",
+          "givenNames": "H",
+          "surnames": "Grandjean",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 22,
+      "volume": "22",
+      "title": "Heritability of BMD of femoral neck and lumbar spine: a multivariate twin study of Finnish men.",
+      "pages": "1455-1462",
+      "eLocationID": "1455",
+      "journal": "J Bone Miner Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "T Videman",
+          "givenNames": "T",
+          "surnames": "Videman",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Levalahti",
+          "givenNames": "E",
+          "surnames": "Levalahti",
+          "suffix": ""
+        },
+        {
+          "fullName": "MC Battie",
+          "givenNames": "MC",
+          "surnames": "Battie",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Simonen",
+          "givenNames": "R",
+          "surnames": "Simonen",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Vanninen",
+          "givenNames": "E",
+          "surnames": "Vanninen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Heritable and life-style determinants of bone mineral density.",
+      "pages": "1-9",
+      "eLocationID": "1",
+      "journal": "J Bone Miner Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "EA Krall",
+          "givenNames": "EA",
+          "surnames": "Krall",
+          "suffix": ""
+        },
+        {
+          "fullName": "B wson-Hughes",
+          "givenNames": "B",
+          "surnames": "wson-Hughes",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Bone density determinants in elderly women: a twin study.",
+      "pages": "1607-1613",
+      "eLocationID": "1607",
+      "journal": "J Bone Miner Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Flicker",
+          "givenNames": "L",
+          "surnames": "Flicker",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Hopper",
+          "givenNames": "JL",
+          "surnames": "Hopper",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Rodgers",
+          "givenNames": "L",
+          "surnames": "Rodgers",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Kaymakci",
+          "givenNames": "B",
+          "surnames": "Kaymakci",
+          "suffix": ""
+        },
+        {
+          "fullName": "RM Green",
+          "givenNames": "RM",
+          "surnames": "Green",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 371,
+      "volume": "371",
+      "title": "Bone mineral density, osteoporosis, and osteoporotic fractures: a genome-wide association study.",
+      "pages": "1505-1512",
+      "eLocationID": "1505",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JB Richards",
+          "givenNames": "JB",
+          "surnames": "Richards",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Rivadeneira",
+          "givenNames": "F",
+          "surnames": "Rivadeneira",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Inouye",
+          "givenNames": "M",
+          "surnames": "Inouye",
+          "suffix": ""
+        },
+        {
+          "fullName": "TM Pastinen",
+          "givenNames": "TM",
+          "surnames": "Pastinen",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Soranzo",
+          "givenNames": "N",
+          "surnames": "Soranzo",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 41,
+      "volume": "41",
+      "title": "Twenty bone-mineral-density loci identified by large-scale meta-analysis of genome-wide association studies.",
+      "pages": "1199-1206",
+      "eLocationID": "1199",
+      "journal": "Nat Genet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "F Rivadeneira",
+          "givenNames": "F",
+          "surnames": "Rivadeneira",
+          "suffix": ""
+        },
+        {
+          "fullName": "U Styrkarsdottir",
+          "givenNames": "U",
+          "surnames": "Styrkarsdottir",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Estrada",
+          "givenNames": "K",
+          "surnames": "Estrada",
+          "suffix": ""
+        },
+        {
+          "fullName": "BV Halldorsson",
+          "givenNames": "BV",
+          "surnames": "Halldorsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "YH Hsu",
+          "givenNames": "YH",
+          "surnames": "Hsu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 358,
+      "volume": "358",
+      "title": "Multiple genetic loci for bone mineral density and fractures.",
+      "pages": "2355-2365",
+      "eLocationID": "2355",
+      "journal": "N Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "U Styrkarsdottir",
+          "givenNames": "U",
+          "surnames": "Styrkarsdottir",
+          "suffix": ""
+        },
+        {
+          "fullName": "BV Halldorsson",
+          "givenNames": "BV",
+          "surnames": "Halldorsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Gretarsdottir",
+          "givenNames": "S",
+          "surnames": "Gretarsdottir",
+          "suffix": ""
+        },
+        {
+          "fullName": "DF Gudbjartsson",
+          "givenNames": "DF",
+          "surnames": "Gudbjartsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "GB Walters",
+          "givenNames": "GB",
+          "surnames": "Walters",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 41,
+      "volume": "41",
+      "title": "New sequence variants associated with bone mineral density.",
+      "pages": "15-17",
+      "eLocationID": "15",
+      "journal": "Nat Genet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "U Styrkarsdottir",
+          "givenNames": "U",
+          "surnames": "Styrkarsdottir",
+          "suffix": ""
+        },
+        {
+          "fullName": "BV Halldorsson",
+          "givenNames": "BV",
+          "surnames": "Halldorsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Gretarsdottir",
+          "givenNames": "S",
+          "surnames": "Gretarsdottir",
+          "suffix": ""
+        },
+        {
+          "fullName": "DF Gudbjartsson",
+          "givenNames": "DF",
+          "surnames": "Gudbjartsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "GB Walters",
+          "givenNames": "GB",
+          "surnames": "Walters",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 25,
+      "volume": "25",
+      "title": "Genetic variation in the RANKL/RANK/OPG signaling pathway is associated with bone turnover and bone mineral density in men.",
+      "pages": "1830-1838",
+      "eLocationID": "1830",
+      "journal": "J Bone Miner Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Roshandel",
+          "givenNames": "D",
+          "surnames": "Roshandel",
+          "suffix": ""
+        },
+        {
+          "fullName": "KL Holliday",
+          "givenNames": "KL",
+          "surnames": "Holliday",
+          "suffix": ""
+        },
+        {
+          "fullName": "SR Pye",
+          "givenNames": "SR",
+          "surnames": "Pye",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Boonen",
+          "givenNames": "S",
+          "surnames": "Boonen",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Borghs",
+          "givenNames": "H",
+          "surnames": "Borghs",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 1092,
+      "volume": "1092",
+      "title": "Bone remodeling.",
+      "pages": "385-396",
+      "eLocationID": "385",
+      "journal": "Ann N Y Acad Sci",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DJ Hadjidakis",
+          "givenNames": "DJ",
+          "surnames": "Hadjidakis",
+          "suffix": ""
+        },
+        {
+          "fullName": "II Androulakis",
+          "givenNames": "II",
+          "surnames": "Androulakis",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 378,
+      "volume": "378",
+      "title": "NF-kappaB functions in osteoclasts.",
+      "pages": "1-5",
+      "eLocationID": "1",
+      "journal": "Biochem Biophys Res Commun",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "NS Soysa",
+          "givenNames": "NS",
+          "surnames": "Soysa",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Alles",
+          "givenNames": "N",
+          "surnames": "Alles",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 22,
+      "volume": "22",
+      "title": "Large-scale identification and characterization of human genes that activate NF-kappaB and MAPK signaling pathways.",
+      "pages": "3307-3318",
+      "eLocationID": "3307",
+      "journal": "Oncogene",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Matsuda",
+          "givenNames": "A",
+          "surnames": "Matsuda",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Suzuki",
+          "givenNames": "Y",
+          "surnames": "Suzuki",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Honda",
+          "givenNames": "G",
+          "surnames": "Honda",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Muramatsu",
+          "givenNames": "S",
+          "surnames": "Muramatsu",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Matsuzaki",
+          "givenNames": "O",
+          "surnames": "Matsuzaki",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 125,
+      "volume": "125",
+      "title": "Wntless, a conserved membrane protein dedicated to the secretion of Wnt proteins from signaling cells.",
+      "pages": "509-522",
+      "eLocationID": "509",
+      "journal": "Cell",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Banziger",
+          "givenNames": "C",
+          "surnames": "Banziger",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Soldini",
+          "givenNames": "D",
+          "surnames": "Soldini",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Schutt",
+          "givenNames": "C",
+          "surnames": "Schutt",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Zipperlen",
+          "givenNames": "P",
+          "surnames": "Zipperlen",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Hausmann",
+          "givenNames": "G",
+          "surnames": "Hausmann",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 32,
+      "volume": "32",
+      "title": "The European Male Ageing Study (EMAS): design, methods and recruitment.",
+      "pages": "11-24",
+      "eLocationID": "11",
+      "journal": "Int J Androl",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Lee",
+          "givenNames": "D",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "T O'Neill",
+          "givenNames": "T",
+          "surnames": "O'Neill",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Pye",
+          "givenNames": "S",
+          "surnames": "Pye",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Silman",
+          "givenNames": "A",
+          "surnames": "Silman",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Finn",
+          "givenNames": "J",
+          "surnames": "Finn",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 32,
+      "volume": "32",
+      "title": "The European Male Ageing Study (EMAS): design, methods and recruitment.",
+      "pages": "11-24",
+      "eLocationID": "11",
+      "journal": "Int J Androl",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DM Lee",
+          "givenNames": "DM",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "TW O'Neill",
+          "givenNames": "TW",
+          "surnames": "O'Neill",
+          "suffix": ""
+        },
+        {
+          "fullName": "SR Pye",
+          "givenNames": "SR",
+          "surnames": "Pye",
+          "suffix": ""
+        },
+        {
+          "fullName": "AJ Silman",
+          "givenNames": "AJ",
+          "surnames": "Silman",
+          "suffix": ""
+        },
+        {
+          "fullName": "JD Finn",
+          "givenNames": "JD",
+          "surnames": "Finn",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 17,
+      "volume": "17",
+      "title": "Cross-calibration of dual-energy X-ray densitometers for a large, multi-center genetic study of osteoporosis.",
+      "pages": "125-132",
+      "eLocationID": "125",
+      "journal": "Osteoporos Int",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DM Reid",
+          "givenNames": "DM",
+          "surnames": "Reid",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Mackay",
+          "givenNames": "I",
+          "surnames": "Mackay",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wilkinson",
+          "givenNames": "S",
+          "surnames": "Wilkinson",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Miller",
+          "givenNames": "C",
+          "surnames": "Miller",
+          "suffix": ""
+        },
+        {
+          "fullName": "DG Schuette",
+          "givenNames": "DG",
+          "surnames": "Schuette",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 36,
+      "volume": "36",
+      "title": "Bone geometry and density in the skeleton of pre-pubertal gymnasts and school children.",
+      "pages": "1012-1018",
+      "eLocationID": "1012",
+      "journal": "Bone",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KA Ward",
+          "givenNames": "KA",
+          "surnames": "Ward",
+          "suffix": ""
+        },
+        {
+          "fullName": "SA Roberts",
+          "givenNames": "SA",
+          "surnames": "Roberts",
+          "suffix": ""
+        },
+        {
+          "fullName": "JE Adams",
+          "givenNames": "JE",
+          "surnames": "Adams",
+          "suffix": ""
+        },
+        {
+          "fullName": "MZ Mughal",
+          "givenNames": "MZ",
+          "surnames": "Mughal",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Haploview: analysis and visualization of LD and haplotype maps.",
+      "pages": "263-265",
+      "eLocationID": "263",
+      "journal": "Bioinformatics",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JC Barrett",
+          "givenNames": "JC",
+          "surnames": "Barrett",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Fry",
+          "givenNames": "B",
+          "surnames": "Fry",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Maller",
+          "givenNames": "J",
+          "surnames": "Maller",
+          "suffix": ""
+        },
+        {
+          "fullName": "MJ Daly",
+          "givenNames": "MJ",
+          "surnames": "Daly",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 81,
+      "volume": "81",
+      "title": "PLINK: a tool set for whole-genome association and population-based linkage analyses.",
+      "pages": "559-575",
+      "eLocationID": "559",
+      "journal": "Am J Hum Genet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Purcell",
+          "givenNames": "S",
+          "surnames": "Purcell",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Neale",
+          "givenNames": "B",
+          "surnames": "Neale",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Todd-Brown",
+          "givenNames": "K",
+          "surnames": "Todd-Brown",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Thomas",
+          "givenNames": "L",
+          "surnames": "Thomas",
+          "suffix": ""
+        },
+        {
+          "fullName": "MA Ferreira",
+          "givenNames": "MA",
+          "surnames": "Ferreira",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 63,
+      "volume": "63",
+      "title": "Exploiting gene-environment interaction to detect genetic associations.",
+      "pages": "111-119",
+      "eLocationID": "111",
+      "journal": "Hum Hered",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P Kraft",
+          "givenNames": "P",
+          "surnames": "Kraft",
+          "suffix": ""
+        },
+        {
+          "fullName": "YC Yen",
+          "givenNames": "YC",
+          "surnames": "Yen",
+          "suffix": ""
+        },
+        {
+          "fullName": "DO Stram",
+          "givenNames": "DO",
+          "surnames": "Stram",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Morrison",
+          "givenNames": "J",
+          "surnames": "Morrison",
+          "suffix": ""
+        },
+        {
+          "fullName": "WJ Gauderman",
+          "givenNames": "WJ",
+          "surnames": "Gauderman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 95,
+      "volume": "95",
+      "title": "Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix.",
+      "pages": "221-227",
+      "eLocationID": "221",
+      "journal": "Heredity",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Li",
+          "givenNames": "J",
+          "surnames": "Li",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Ji",
+          "givenNames": "L",
+          "surnames": "Ji",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 77,
+      "volume": "77",
+      "title": "Recommendations for thresholds for cortical bone geometry and density measurement by peripheral quantitative computed tomography.",
+      "pages": "275-280",
+      "eLocationID": "275",
+      "journal": "Calcif Tissue Int",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KA Ward",
+          "givenNames": "KA",
+          "surnames": "Ward",
+          "suffix": ""
+        },
+        {
+          "fullName": "JE Adams",
+          "givenNames": "JE",
+          "surnames": "Adams",
+          "suffix": ""
+        },
+        {
+          "fullName": "TN Hangartner",
+          "givenNames": "TN",
+          "surnames": "Hangartner",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Delnaz Roshandel",
+      "givenNames": "Delnaz",
+      "surnames": "Roshandel",
+      "suffix": ""
+    },
+    {
+      "fullName": "Wendy Thomson",
+      "givenNames": "Wendy",
+      "surnames": "Thomson",
+      "suffix": ""
+    },
+    {
+      "fullName": "Stephen R. Pye",
+      "givenNames": "Stephen R.",
+      "surnames": "Pye",
+      "suffix": ""
+    },
+    {
+      "fullName": "Steven Boonen",
+      "givenNames": "Steven",
+      "surnames": "Boonen",
+      "suffix": ""
+    },
+    {
+      "fullName": "Herman Borghs",
+      "givenNames": "Herman",
+      "surnames": "Borghs",
+      "suffix": ""
+    },
+    {
+      "fullName": "Dirk Vanderschueren",
+      "givenNames": "Dirk",
+      "surnames": "Vanderschueren",
+      "suffix": ""
+    },
+    {
+      "fullName": "Ilpo T. Huhtaniemi",
+      "givenNames": "Ilpo T.",
+      "surnames": "Huhtaniemi",
+      "suffix": ""
+    },
+    {
+      "fullName": "Judith E. Adams",
+      "givenNames": "Judith E.",
+      "surnames": "Adams",
+      "suffix": ""
+    },
+    {
+      "fullName": "Kate A. Ward",
+      "givenNames": "Kate A.",
+      "surnames": "Ward",
+      "suffix": ""
+    },
+    {
+      "fullName": "Gyorgy Bartfai",
+      "givenNames": "Gyorgy",
+      "surnames": "Bartfai",
+      "suffix": ""
+    },
+    {
+      "fullName": "Felipe F. Casanueva",
+      "givenNames": "Felipe F.",
+      "surnames": "Casanueva",
+      "suffix": ""
+    },
+    {
+      "fullName": "Joseph D. Finn",
+      "givenNames": "Joseph D.",
+      "surnames": "Finn",
+      "suffix": ""
+    },
+    {
+      "fullName": "Gianni Forti",
+      "givenNames": "Gianni",
+      "surnames": "Forti",
+      "suffix": ""
+    },
+    {
+      "fullName": "Aleksander Giwercman",
+      "givenNames": "Aleksander",
+      "surnames": "Giwercman",
+      "suffix": ""
+    },
+    {
+      "fullName": "Thang S. Han",
+      "givenNames": "Thang S.",
+      "surnames": "Han",
+      "suffix": ""
+    },
+    {
+      "fullName": "Krzysztof Kula",
+      "givenNames": "Krzysztof",
+      "surnames": "Kula",
+      "suffix": ""
+    },
+    {
+      "fullName": "Michael E. Lean",
+      "givenNames": "Michael E.",
+      "surnames": "Lean",
+      "suffix": ""
+    },
+    {
+      "fullName": "Neil Pendleton",
+      "givenNames": "Neil",
+      "surnames": "Pendleton",
+      "suffix": ""
+    },
+    {
+      "fullName": "Margus Punab",
+      "givenNames": "Margus",
+      "surnames": "Punab",
+      "suffix": ""
+    },
+    {
+      "fullName": "Frederick C. Wu",
+      "givenNames": "Frederick C.",
+      "surnames": "Wu",
+      "suffix": ""
+    },
+    {
+      "fullName": "Kate L. Holliday",
+      "givenNames": "Kate L.",
+      "surnames": "Holliday",
+      "suffix": ""
+    },
+    {
+      "fullName": "Terence W. O'Neill",
+      "givenNames": "Terence W.",
+      "surnames": "O'Neill",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Sudha Agarwal",
+      "givenNames": "Sudha",
+      "surnames": "Agarwal",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}

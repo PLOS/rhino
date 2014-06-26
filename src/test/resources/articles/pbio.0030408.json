@@ -1,38 +1,91 @@
-{"doi":"info:doi/10.1371/journal.pbio.0030408","title":
-  "Stimulating the Brain Makes the Fingers More Sensitive","eIssn":
-  "1545-7885","state":1,"archiveName":"pbio.0030408.zip","rights":
-  "Public Library of Science. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","eLocationId":"e408","strkImgURI":"",
-  "date":"2005-10-18T07:00:00Z","volume":"3","issue":"11","journal":
-  "PLoS Biol","publisherLocation":"San Francisco, USA","publisherName":
-  "Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pbio.0030408","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Synopsis",
-    "http://rdf.plos.org/RDF/articleType/article-commentary"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pbio.0030408","extension":
-      "XML","contentType":"text/xml","title":
-      "Stimulating the Brain Makes the Fingers More Sensitive","size":6808},{
-      "doi":"info:doi/10.1371/journal.pbio.0030408","extension":"PDF",
-      "contentType":"application/pdf","title":
-      "Stimulating the Brain Makes the Fingers More Sensitive","size":
-      648062},{"doi":"info:doi/10.1371/journal.pbio.0030408.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"","description":
-      "\u003ctitle\u003eTranscranial magnetic stimulation alters sensory perception and activity in sensory cortical areas\u003c/title\u003e",
-      "size":481430},{"doi":"info:doi/10.1371/journal.pbio.0030408.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"","description":
-      "\u003ctitle\u003eTranscranial magnetic stimulation alters sensory perception and activity in sensory cortical areas\u003c/title\u003e",
-      "size":13360},{"doi":"info:doi/10.1371/journal.pbio.0030408.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"","description":
-      "\u003ctitle\u003eTranscranial magnetic stimulation alters sensory perception and activity in sensory cortical areas\u003c/title\u003e",
-      "size":196148},{"doi":"info:doi/10.1371/journal.pbio.0030408.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"","description":
-      "\u003ctitle\u003eTranscranial magnetic stimulation alters sensory perception and activity in sensory cortical areas\u003c/title\u003e",
-      "size":365166}],"citedArticles":[],"relatedArticles":[{
-      "otherArticleDoi":"info:doi/10.1371/journal.pbio.0030362","type":
-      "companion"}],"authors":[],"editors":[],"journals":[{"eIssn":
-      "1545-7885"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pbio.0030408",
+  "title": "Stimulating the Brain Makes the Fingers More Sensitive",
+  "eIssn": "1545-7885",
+  "state": 1,
+  "archiveName": "pbio.0030408.zip",
+  "rights": "Public Library of Science. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "eLocationId": "e408",
+  "strkImgURI": "",
+  "date": "2005-10-18T07:00:00Z",
+  "volume": "3",
+  "issue": "11",
+  "journal": "PLoS Biol",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pbio.0030408",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Synopsis",
+    "http://rdf.plos.org/RDF/articleType/article-commentary"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pbio.0030408",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Stimulating the Brain Makes the Fingers More Sensitive",
+      "size": 6808
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.0030408",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Stimulating the Brain Makes the Fingers More Sensitive",
+      "size": 648062
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.0030408.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "",
+      "description": "<title>Transcranial magnetic stimulation alters sensory perception and activity in sensory cortical areas</title>",
+      "size": 481430
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.0030408.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "",
+      "description": "<title>Transcranial magnetic stimulation alters sensory perception and activity in sensory cortical areas</title>",
+      "size": 13360
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.0030408.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "",
+      "description": "<title>Transcranial magnetic stimulation alters sensory perception and activity in sensory cortical areas</title>",
+      "size": 196148
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.0030408.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "",
+      "description": "<title>Transcranial magnetic stimulation alters sensory perception and activity in sensory cortical areas</title>",
+      "size": 365166
+    }
+  ],
+  "citedArticles": [],
+  "relatedArticles": [
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pbio.0030362",
+      "type": "companion"
+    }
+  ],
+  "authors": [],
+  "editors": [],
+  "journals": [
+    {
+      "eIssn": "1545-7885"
+    }
+  ]
+}

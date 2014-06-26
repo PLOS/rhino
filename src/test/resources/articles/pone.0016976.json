@@ -1,535 +1,1741 @@
-{"doi":"info:doi/10.1371/journal.pone.0016976","title":
-  "A Systematic Review and Meta-Analysis of the Efficacy and Safety of Intermittent Preventive Treatment of Malaria in Children (IPTc)",
-  "eIssn":"1932-6203","state":1,"archiveName":"pone.0016976.zip",
-  "description":
-  "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eIntermittent preventive treatment of malaria in children less than five years of age (IPTc) has been investigated as a measure to control the burden of malaria in the Sahel and sub-Sahelian areas of Africa where malaria transmission is markedly seasonal.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eIPTc studies were identified using a systematic literature search. Meta-analysis was used to assess the protective efficacy of IPTc against clinical episodes of falciparum malaria. The impact of IPTc on all-cause mortality, hospital admissions, severe malaria and the prevalence of parasitaemia and anaemia was investigated. Three aspects of safety were also assessed: adverse reactions to study drugs, development of drug resistance and loss of immunity to malaria. Twelve IPTc studies were identified: seven controlled and five non-controlled trials. Controlled studies demonstrated protective efficacies against clinical malaria of between 31% and 93% and meta-analysis gave an overall protective efficacy of monthly administered IPTc of 82% (95%CI 75%–87%) during the malaria transmission season. Pooling results from twelve studies demonstrated a protective effect of IPTc against all-cause mortality of 57% (95%CI 24%–76%) during the malaria transmission season. No serious adverse events attributable to the drugs used for IPTc were observed in any of the studies. Data from three studies that followed children during the malaria transmission season in the year following IPTc administration showed evidence of a slight increase in the incidence of clinical malaria compared to children who had not received IPTc.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eIPTc is a safe method of malaria control that has the potential to avert a significant proportion of clinical malaria episodes in areas with markedly seasonal malaria transmission and also appears to have a substantial protective effect against all-cause mortality. These findings indicate that IPTc is a potentially valuable tool that can contribute to the control of malaria in areas with markedly seasonal transmission.\u003c/p\u003e\u003c/sec\u003e",
-  "rights":
-  "Wilson, IPTc Taskforce. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-12","eLocationId":
-  "e16976","strkImgURI":"","date":"2011-02-14T08:00:00Z","volume":"6",
-  "issue":"2","journal":"PLoS ONE","publisherLocation":
-  "San Francisco, USA","publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0016976","collaborativeAuthors":[
-    "on behalf of the IPTc Taskforce"],"types":[
+{
+  "doi": "info:doi/10.1371/journal.pone.0016976",
+  "title": "A Systematic Review and Meta-Analysis of the Efficacy and Safety of Intermittent Preventive Treatment of Malaria in Children (IPTc)",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0016976.zip",
+  "description": "<sec><title>Background</title><p>Intermittent preventive treatment of malaria in children less than five years of age (IPTc) has been investigated as a measure to control the burden of malaria in the Sahel and sub-Sahelian areas of Africa where malaria transmission is markedly seasonal.</p></sec><sec><title>Methods and Findings</title><p>IPTc studies were identified using a systematic literature search. Meta-analysis was used to assess the protective efficacy of IPTc against clinical episodes of falciparum malaria. The impact of IPTc on all-cause mortality, hospital admissions, severe malaria and the prevalence of parasitaemia and anaemia was investigated. Three aspects of safety were also assessed: adverse reactions to study drugs, development of drug resistance and loss of immunity to malaria. Twelve IPTc studies were identified: seven controlled and five non-controlled trials. Controlled studies demonstrated protective efficacies against clinical malaria of between 31% and 93% and meta-analysis gave an overall protective efficacy of monthly administered IPTc of 82% (95%CI 75%\u201387%) during the malaria transmission season. Pooling results from twelve studies demonstrated a protective effect of IPTc against all-cause mortality of 57% (95%CI 24%\u201376%) during the malaria transmission season. No serious adverse events attributable to the drugs used for IPTc were observed in any of the studies. Data from three studies that followed children during the malaria transmission season in the year following IPTc administration showed evidence of a slight increase in the incidence of clinical malaria compared to children who had not received IPTc.</p></sec><sec><title>Conclusions</title><p>IPTc is a safe method of malaria control that has the potential to avert a significant proportion of clinical malaria episodes in areas with markedly seasonal malaria transmission and also appears to have a substantial protective effect against all-cause mortality. These findings indicate that IPTc is a potentially valuable tool that can contribute to the control of malaria in areas with markedly seasonal transmission.</p></sec>",
+  "rights": "Wilson, IPTc Taskforce. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-12",
+  "eLocationId": "e16976",
+  "strkImgURI": "",
+  "date": "2011-02-14T08:00:00Z",
+  "volume": "6",
+  "issue": "2",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0016976",
+  "collaborativeAuthors": [
+    "on behalf of the IPTc Taskforce"
+  ],
+  "types": [
     "http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0016976","extension":
-      "XML","contentType":"text/xml","title":
-      "A Systematic Review and Meta-Analysis of the Efficacy and Safety of Intermittent Preventive Treatment of Malaria in Children (IPTc)",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eIntermittent preventive treatment of malaria in children less than five years of age (IPTc) has been investigated as a measure to control the burden of malaria in the Sahel and sub-Sahelian areas of Africa where malaria transmission is markedly seasonal.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eIPTc studies were identified using a systematic literature search. Meta-analysis was used to assess the protective efficacy of IPTc against clinical episodes of falciparum malaria. The impact of IPTc on all-cause mortality, hospital admissions, severe malaria and the prevalence of parasitaemia and anaemia was investigated. Three aspects of safety were also assessed: adverse reactions to study drugs, development of drug resistance and loss of immunity to malaria. Twelve IPTc studies were identified: seven controlled and five non-controlled trials. Controlled studies demonstrated protective efficacies against clinical malaria of between 31% and 93% and meta-analysis gave an overall protective efficacy of monthly administered IPTc of 82% (95%CI 75%–87%) during the malaria transmission season. Pooling results from twelve studies demonstrated a protective effect of IPTc against all-cause mortality of 57% (95%CI 24%–76%) during the malaria transmission season. No serious adverse events attributable to the drugs used for IPTc were observed in any of the studies. Data from three studies that followed children during the malaria transmission season in the year following IPTc administration showed evidence of a slight increase in the incidence of clinical malaria compared to children who had not received IPTc.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eIPTc is a safe method of malaria control that has the potential to avert a significant proportion of clinical malaria episodes in areas with markedly seasonal malaria transmission and also appears to have a substantial protective effect against all-cause mortality. These findings indicate that IPTc is a potentially valuable tool that can contribute to the control of malaria in areas with markedly seasonal transmission.\u003c/p\u003e\u003c/sec\u003e",
-      "size":154793},{"doi":"info:doi/10.1371/journal.pone.0016976",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "A Systematic Review and Meta-Analysis of the Efficacy and Safety of Intermittent Preventive Treatment of Malaria in Children (IPTc)",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eIntermittent preventive treatment of malaria in children less than five years of age (IPTc) has been investigated as a measure to control the burden of malaria in the Sahel and sub-Sahelian areas of Africa where malaria transmission is markedly seasonal.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eIPTc studies were identified using a systematic literature search. Meta-analysis was used to assess the protective efficacy of IPTc against clinical episodes of falciparum malaria. The impact of IPTc on all-cause mortality, hospital admissions, severe malaria and the prevalence of parasitaemia and anaemia was investigated. Three aspects of safety were also assessed: adverse reactions to study drugs, development of drug resistance and loss of immunity to malaria. Twelve IPTc studies were identified: seven controlled and five non-controlled trials. Controlled studies demonstrated protective efficacies against clinical malaria of between 31% and 93% and meta-analysis gave an overall protective efficacy of monthly administered IPTc of 82% (95%CI 75%–87%) during the malaria transmission season. Pooling results from twelve studies demonstrated a protective effect of IPTc against all-cause mortality of 57% (95%CI 24%–76%) during the malaria transmission season. No serious adverse events attributable to the drugs used for IPTc were observed in any of the studies. Data from three studies that followed children during the malaria transmission season in the year following IPTc administration showed evidence of a slight increase in the incidence of clinical malaria compared to children who had not received IPTc.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eIPTc is a safe method of malaria control that has the potential to avert a significant proportion of clinical malaria episodes in areas with markedly seasonal malaria transmission and also appears to have a substantial protective effect against all-cause mortality. These findings indicate that IPTc is a potentially valuable tool that can contribute to the control of malaria in areas with markedly seasonal transmission.\u003c/p\u003e\u003c/sec\u003e",
-      "size":425479},{"doi":"info:doi/10.1371/journal.pone.0016976.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eFlow Diagram of Study Selection Process.\u003c/title\u003e",
-      "size":208072},{"doi":"info:doi/10.1371/journal.pone.0016976.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eFlow Diagram of Study Selection Process.\u003c/title\u003e",
-      "size":11906},{"doi":"info:doi/10.1371/journal.pone.0016976.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eFlow Diagram of Study Selection Process.\u003c/title\u003e",
-      "size":123535},{"doi":"info:doi/10.1371/journal.pone.0016976.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eFlow Diagram of Study Selection Process.\u003c/title\u003e",
-      "size":100532},{"doi":"info:doi/10.1371/journal.pone.0016976.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003eCharacteristics of Controlled Studies.\u003c/title\u003e",
-      "size":276754},{"doi":"info:doi/10.1371/journal.pone.0016976.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eCharacteristics of Controlled Studies.\u003c/title\u003e",
-      "size":3784},{"doi":"info:doi/10.1371/journal.pone.0016976.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eCharacteristics of Controlled Studies.\u003c/title\u003e",
-      "size":72075},{"doi":"info:doi/10.1371/journal.pone.0016976.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eCharacteristics of Controlled Studies.\u003c/title\u003e",
-      "size":61408},{"doi":"info:doi/10.1371/journal.pone.0016976.t002",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 2","description":
-      "\u003ctitle\u003eCharacteristics of Non-controlled Studies.\u003c/title\u003e",
-      "size":310432},{"doi":"info:doi/10.1371/journal.pone.0016976.t002",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eCharacteristics of Non-controlled Studies.\u003c/title\u003e",
-      "size":3973},{"doi":"info:doi/10.1371/journal.pone.0016976.t002",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eCharacteristics of Non-controlled Studies.\u003c/title\u003e",
-      "size":83789},{"doi":"info:doi/10.1371/journal.pone.0016976.t002",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eCharacteristics of Non-controlled Studies.\u003c/title\u003e",
-      "size":72901},{"doi":"info:doi/10.1371/journal.pone.0016976.t003",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 3","description":
-      "\u003ctitle\u003eAssessment of risk of bias in studies.\u003c/title\u003e",
-      "size":418996},{"doi":"info:doi/10.1371/journal.pone.0016976.t003",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssessment of risk of bias in studies.\u003c/title\u003e",
-      "size":5068},{"doi":"info:doi/10.1371/journal.pone.0016976.t003",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssessment of risk of bias in studies.\u003c/title\u003e",
-      "size":96616},{"doi":"info:doi/10.1371/journal.pone.0016976.t003",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssessment of risk of bias in studies.\u003c/title\u003e",
-      "size":97189},{"doi":"info:doi/10.1371/journal.pone.0016976.t004",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria during the intervention period.\u003c/title\u003e",
-      "size":418372},{"doi":"info:doi/10.1371/journal.pone.0016976.t004",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria during the intervention period.\u003c/title\u003e",
-      "size":5831},{"doi":"info:doi/10.1371/journal.pone.0016976.t004",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria during the intervention period.\u003c/title\u003e",
-      "size":90464},{"doi":"info:doi/10.1371/journal.pone.0016976.t004",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria during the intervention period.\u003c/title\u003e",
-      "size":96475},{"doi":"info:doi/10.1371/journal.pone.0016976.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":172840},{"doi":"info:doi/10.1371/journal.pone.0016976.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":8554},{"doi":"info:doi/10.1371/journal.pone.0016976.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":108721},{"doi":"info:doi/10.1371/journal.pone.0016976.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":131219},{"doi":"info:doi/10.1371/journal.pone.0016976.t005",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 5","description":
-      "\u003ctitle\u003eEffect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.\u003c/title\u003e",
-      "size":288858},{"doi":"info:doi/10.1371/journal.pone.0016976.t005",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eEffect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.\u003c/title\u003e",
-      "size":3686},{"doi":"info:doi/10.1371/journal.pone.0016976.t005",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eEffect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.\u003c/title\u003e",
-      "size":64085},{"doi":"info:doi/10.1371/journal.pone.0016976.t005",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eEffect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.\u003c/title\u003e",
-      "size":65721},{"doi":"info:doi/10.1371/journal.pone.0016976.t006",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 6","description":
-      "\u003ctitle\u003eEffect of IPTc on prevalence of parasitaemia, \u003citalic\u003edhps\u003c/italic\u003e and \u003citalic\u003edhfr\u003c/italic\u003e resistance markers measured at cross sectional surveys during the intervention year.\u003c/title\u003e",
-      "size":590664},{"doi":"info:doi/10.1371/journal.pone.0016976.t006",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 6","description":
-      "\u003ctitle\u003eEffect of IPTc on prevalence of parasitaemia, \u003citalic\u003edhps\u003c/italic\u003e and \u003citalic\u003edhfr\u003c/italic\u003e resistance markers measured at cross sectional surveys during the intervention year.\u003c/title\u003e",
-      "size":8708},{"doi":"info:doi/10.1371/journal.pone.0016976.t006",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 6","description":
-      "\u003ctitle\u003eEffect of IPTc on prevalence of parasitaemia, \u003citalic\u003edhps\u003c/italic\u003e and \u003citalic\u003edhfr\u003c/italic\u003e resistance markers measured at cross sectional surveys during the intervention year.\u003c/title\u003e",
-      "size":130230},{"doi":"info:doi/10.1371/journal.pone.0016976.t006",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 6","description":
-      "\u003ctitle\u003eEffect of IPTc on prevalence of parasitaemia, \u003citalic\u003edhps\u003c/italic\u003e and \u003citalic\u003edhfr\u003c/italic\u003e resistance markers measured at cross sectional surveys during the intervention year.\u003c/title\u003e",
-      "size":132269},{"doi":"info:doi/10.1371/journal.pone.0016976.g003",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":124716},{"doi":"info:doi/10.1371/journal.pone.0016976.g003",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":6061},{"doi":"info:doi/10.1371/journal.pone.0016976.g003",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":59748},{"doi":"info:doi/10.1371/journal.pone.0016976.g003",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eEffect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).\u003c/title\u003e\u003cp\u003eNOTE: D+L Overall \u003d Random effect meta-analysis, I–V Overall \u003d Fixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.\u003c/p\u003e",
-      "size":82709},{"doi":"info:doi/10.1371/journal.pone.0016976.s001",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S1","description":
-      "\u003cp\u003e\n            \u003cbold\u003eSearch Strategy for Pubmed and Web of Science Databases\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":35328},{"doi":"info:doi/10.1371/journal.pone.0016976.s002",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S2","description":
-      "\u003cp\u003e\n            \u003cbold\u003ePRISMA Checklist\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":62464},{"doi":"info:doi/10.1371/journal.pone.0016976.s003",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S3","description":
-      "\u003cp\u003e\n            \u003cbold\u003eIPT Studies Excluded From Review\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":59904},{"doi":"info:doi/10.1371/journal.pone.0016976.s004",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S4","description":
-      "\u003cp\u003e\n            \u003cbold\u003eIncidence of Most Common Adverse Events During the Intervention Period\u003c/bold\u003e\n          \u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":92672}],"citedArticles":[{"key":"1","year":2006,"displayYear":
-      "2006","volumeNumber":11,"volume":"11","title":
-      "Intermittent preventive treatment - a new approach to the prevention of malaria in children in areas with seasonal malaria transmission.",
-      "pages":"983-991","eLocationID":"983","journal":
-      "Trop Med Int Health","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "B Greenwood","givenNames":"B","surnames":"Greenwood","suffix":
-          ""}],"editors":[]},{"key":"2","year":2010,"displayYear":"2010",
-      "title":
-      "WHO Policy recommendation on Intermittent Preventive Treatment during infancy with sulphadoxine-pyrimethamine (SP-IPTi) for Plasmodium falciparum malaria control in Africa",
-      "collaborativeAuthors":["World Health Organisation"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"3","year":2009,"displayYear":"2009","volumeNumber":374,"volume":
-      "374","title":
-      "Efficacy and safety of intermittent preventive treatment with sulfadoxine-pyrimethamine for malaria in African infants: a pooled analysis of six randomised, placebo-controlled trials.",
-      "pages":"1533-1542","eLocationID":"1533","journal":"The Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JJ Aponte","givenNames":"JJ","surnames":"Aponte","suffix":""},{
-          "fullName":"D Schellenberg","givenNames":"D","surnames":
-          "Schellenberg","suffix":""},{"fullName":"A Egan","givenNames":
-          "A","surnames":"Egan","suffix":""},{"fullName":"A Breckenridge",
-          "givenNames":"A","surnames":"Breckenridge","suffix":""},{
-          "fullName":"I Carneiro","givenNames":"I","surnames":"Carneiro",
-          "suffix":""}],"editors":[]},{"key":"4","year":2004,"displayYear":
-      "2004","volumeNumber":33,"volume":"33","title":
-      "Childhood mortality and probable causes of death using verbal autopsy in Niakhar, Senegal, 1989–2000.",
-      "pages":"1286-1292","eLocationID":"1286","journal":"Int J Epidemiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JF Etard","givenNames":"JF","surnames":"Etard","suffix":""},{
-          "fullName":"JY Le Hesran","givenNames":"JY","surnames":
-          "Le Hesran","suffix":""},{"fullName":"A Diallo","givenNames":"A",
-          "surnames":"Diallo","suffix":""},{"fullName":"JP Diallo",
-          "givenNames":"JP","surnames":"Diallo","suffix":""},{"fullName":
-          "JL Ndiaye","givenNames":"JL","surnames":"Ndiaye","suffix":""}],
-      "editors":[]},{"key":"5","year":1997,"displayYear":"1997",
-      "volumeNumber":2,"volume":"2","title":
-      "Changes in the pattern of infant and childhood mortality in upper river division, The Gambia, from 1989 to 1993.",
-      "pages":"28-37","eLocationID":"28","journal":"Trop Med Int Health",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Jaffar","givenNames":"S","surnames":"Jaffar","suffix":""},{
-          "fullName":"A Leach","givenNames":"A","surnames":"Leach","suffix":
-          ""},{"fullName":"AM Greenwood","givenNames":"AM","surnames":
-          "Greenwood","suffix":""},{"fullName":"A Jepson","givenNames":"A",
-          "surnames":"Jepson","suffix":""},{"fullName":"O Muller",
-          "givenNames":"O","surnames":"Muller","suffix":""}],"editors":[]},{
-      "key":"6","year":2008,"displayYear":"2008","volumeNumber":2,"volume":
-      "2","title":
-      "Chemoprophylaxis and intermittent treatment for preventing malaria in children.",
-      "journal":"Cochrane Database Syst Rev","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"MM Meremikwu","givenNames":"MM","surnames":
-          "Meremikwu","suffix":""},{"fullName":"S Donegan","givenNames":
-          "S","surnames":"Donegan","suffix":""},{"fullName":"E Esu",
-          "givenNames":"E","surnames":"Esu","suffix":""}],"editors":[]},{
-      "key":"7","note":"National Institutes of Health ClinicalTrials.gov",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"8","note":
-      "World Health Organisation International Clinical Trials Registry Platform",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"9","year":2000,"displayYear":"2000","volumeNumber":94,"volume":
-      "94","title":"Severe Falciparum Malaria.","pages":"S1-90",
-      "eLocationID":"S1","journal":"Trans R Soc Trop Med Hyg",
-      "collaborativeAuthors":["World Health Organisation"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"10","year":2004,"displayYear":"2004","title":
-      "ICH Harmonised Tripartite Guideline, Clinical Safety Data Management, Definitions and Standards for Expedited Reporting, E2A, Step 4 Version",
-      "collaborativeAuthors":["International Conference on Harmonisation"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"11","year":2008,"displayYear":"2008","title":
-      "Cochrane Handbook for Systematic Reviews of Interventions.","note":
-      "Version 5.0.0; Higgins JPT, Green S, editors","collaborativeAuthors":[
-        "The Cochrane Collaboration"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"12","year":2011,"displayYear":"2011","title":
-      "A randomised, placebo-controlled trial of intermittent preventive treatment of malaria with sulphadoxine -pyrimethamine plus amodiaquine in children protected by a long lasting insecticide treated net in Mali.",
-      "journal":"PLoS Med","note":"(in press)","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"A Dicko","givenNames":"A","surnames":"Dicko",
-          "suffix":""},{"fullName":"AI Diallo","givenNames":"AI","surnames":
-          "Diallo","suffix":""},{"fullName":"I Tembine","givenNames":"I",
-          "surnames":"Tembine","suffix":""},{"fullName":"Y Dicko",
-          "givenNames":"Y","surnames":"Dicko","suffix":""},{"fullName":
-          "N Dara","givenNames":"N","surnames":"Dara","suffix":""}],
-      "editors":[]},{"key":"13","year":2011,"displayYear":"2011","title":
-      "Intermittent preventive treatment of malaria provides substantial protection against malaria in children already protected by an insecticide treated bednet in Burkina Faso.",
-      "journal":"PLoS Med","note":"(in press)","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"AT Konaté","givenNames":"AT","surnames":
-          "Konaté","suffix":""},{"fullName":"JB Yaro","givenNames":"JB",
-          "surnames":"Yaro","suffix":""},{"fullName":"AZ Ouédraogo",
-          "givenNames":"AZ","surnames":"Ouédraogo","suffix":""},{"fullName":
-          "A Diarra","givenNames":"A","surnames":"Diarra","suffix":""},{
-          "fullName":"A Gansané","givenNames":"A","surnames":"Gansané",
-          "suffix":""}],"editors":[]},{"key":"14","year":2003,"displayYear":
-      "2003","title":"Essential Medical Statistics","publisherLocation":
-      "Oxford, UK","publisherName":"Blackwell Science Ltd",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "B Kirkwood","givenNames":"B","surnames":"Kirkwood","suffix":""},{
-          "fullName":"J Sterne","givenNames":"J","surnames":"Sterne",
-          "suffix":""}],"editors":[]},{"key":"15","year":1997,"displayYear":
-      "1997","volumeNumber":315,"volume":"315","title":
-      "Meta-analysis: principles and procedures.","pages":"1533-1537",
-      "eLocationID":"1533","journal":"BMJ","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"M Egger","givenNames":"M","surnames":"Egger",
-          "suffix":""},{"fullName":"GD Smith","givenNames":"GD","surnames":
-          "Smith","suffix":""},{"fullName":"AN Phillips","givenNames":"AN",
-          "surnames":"Phillips","suffix":""}],"editors":[]},{"key":"16",
-      "year":2003,"displayYear":"2003","volumeNumber":327,"volume":"327",
-      "title":"Measuring inconsistency in meta-analyses.","pages":
-      "557-560","eLocationID":"557","journal":"BMJ","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"JP Higgins","givenNames":"JP","surnames":
-          "Higgins","suffix":""},{"fullName":"SG Thompson","givenNames":
-          "SG","surnames":"Thompson","suffix":""},{"fullName":"JJ Deeks",
-          "givenNames":"JJ","surnames":"Deeks","suffix":""},{"fullName":
-          "DG Altman","givenNames":"DG","surnames":"Altman","suffix":""}],
-      "editors":[]},{"key":"17","year":2009,"displayYear":"2009",
-      "volumeNumber":6,"volume":"6","title":
-      "Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement.",
-      "pages":"e1000097","eLocationID":"e1000097","journal":"PLoS Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "D Moher","givenNames":"D","surnames":"Moher","suffix":""},{
-          "fullName":"A Liberati","givenNames":"A","surnames":"Liberati",
-          "suffix":""},{"fullName":"J Tetzlaff","givenNames":"J","surnames":
-          "Tetzlaff","suffix":""},{"fullName":"DG Altman","givenNames":
-          "DG","surnames":"Altman","suffix":""},{"fullName":"P Group",
-          "givenNames":"P","surnames":"Group","suffix":""}],"editors":[]},{
-      "key":"18","year":2009,"displayYear":"2009","volumeNumber":6,"volume":
-      "6","title":
-      "The PRISMA statement for reporting systematic reviews and meta-analyses of studies that evaluate health care interventions: explanation and elaboration.",
-      "pages":"e1000100","eLocationID":"e1000100","journal":"PLoS Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Liberati","givenNames":"A","surnames":"Liberati","suffix":""},{
-          "fullName":"DG Altman","givenNames":"DG","surnames":"Altman",
-          "suffix":""},{"fullName":"J Tetzlaff","givenNames":"J","surnames":
-          "Tetzlaff","suffix":""},{"fullName":"C Mulrow","givenNames":"C",
-          "surnames":"Mulrow","suffix":""},{"fullName":"PC Gøtzsche",
-          "givenNames":"PC","surnames":"Gøtzsche","suffix":""}],"editors":[]},
-    {"key":"19","year":2010,"displayYear":"2010","volumeNumber":5,"volume":
-      "5","title":
-      "A randomised trial to compare the safety, tolerability and efficacy of three drug combinations for intermittent preventive treatment in children.",
-      "pages":"e11225","eLocationID":"e11225","journal":"PLoS One",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K Bojang","givenNames":"K","surnames":"Bojang","suffix":""},{
-          "fullName":"F Akor","givenNames":"F","surnames":"Akor","suffix":
-          ""},{"fullName":"O Bittaye","givenNames":"O","surnames":
-          "Bittaye","suffix":""},{"fullName":"D Conway","givenNames":"D",
-          "surnames":"Conway","suffix":""},{"fullName":"C Bottomley",
-          "givenNames":"C","surnames":"Bottomley","suffix":""}],"editors":[]},
-    {"key":"20","year":2006,"displayYear":"2006","volumeNumber":367,"volume":
-      "367","title":
-      "Seasonal intermittent preventive treatment with artesunate and sulfadoxine-pyrimethamine for prevention of malaria in Senegalese children: a randomised, placebo-controlled, double-blind trial.",
-      "pages":"659-667","eLocationID":"659","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "B Cisse","givenNames":"B","surnames":"Cisse","suffix":""},{
-          "fullName":"C Sokhna","givenNames":"C","surnames":"Sokhna",
-          "suffix":""},{"fullName":"D Boulanger","givenNames":"D","surnames":
-          "Boulanger","suffix":""},{"fullName":"J Milet","givenNames":"J",
-          "surnames":"Milet","suffix":""},{"fullName":"eH Bâ","givenNames":
-          "eH","surnames":"Bâ","suffix":""}],"editors":[]},{"key":"21",
-      "year":2008,"displayYear":"2008","volumeNumber":7,"volume":"7","title":
-      
-      "Impact of intermittent preventive treatment with sulphadoxine-pyrimethamine targeting the transmission season on the incidence of clinical malaria in children in Mali.",
-      "pages":"123","eLocationID":"123","journal":"Malar J",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Dicko","givenNames":"A","surnames":"Dicko","suffix":""},{
-          "fullName":"I Sagara","givenNames":"I","surnames":"Sagara",
-          "suffix":""},{"fullName":"MS Sissoko","givenNames":"MS","surnames":
-          "Sissoko","suffix":""},{"fullName":"O Guindo","givenNames":"O",
-          "surnames":"Guindo","suffix":""},{"fullName":"AI Diallo",
-          "givenNames":"AI","surnames":"Diallo","suffix":""}],"editors":[]},{
-      "key":"22","year":2008,"displayYear":"2008","volumeNumber":3,"volume":
-      "3","title":
-      "Seasonal intermittent preventive treatment for the prevention of anaemia and malaria in ghanaian children: a randomized, placebo controlled trial.",
-      "pages":"e4000","eLocationID":"e4000","journal":"PLoS ONE",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Kweku","givenNames":"M","surnames":"Kweku","suffix":""},{
-          "fullName":"D Liu","givenNames":"D","surnames":"Liu","suffix":""},{
-          "fullName":"M Adjuik","givenNames":"M","surnames":"Adjuik",
-          "suffix":""},{"fullName":"F Binka","givenNames":"F","surnames":
-          "Binka","suffix":""},{"fullName":"M Seidu","givenNames":"M",
-          "surnames":"Seidu","suffix":""}],"editors":[]},{"key":"23","year":
-      2011,"displayYear":"2011","volumeNumber":10,"volume":"10","title":
-      "A trial of intermittent preventive treatment and home based management of malaria in a rural area of The Gambia.",
-      "journal":"Malar J","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Sesay","givenNames":"S","surnames":"Sesay","suffix":""},{
-          "fullName":"P Milligan","givenNames":"P","surnames":"Milligan",
-          "suffix":""},{"fullName":"E Touray","givenNames":"E","surnames":
-          "Touray","suffix":""},{"fullName":"M Sowe","givenNames":"M",
-          "surnames":"Sowe","suffix":""},{"fullName":"D Conway","givenNames":
-          "D","surnames":"Conway","suffix":""}],"editors":[]},{"key":"24",
-      "year":2008,"displayYear":"2008","volumeNumber":3,"volume":"3","title":
-      
-      "A trial of the efficacy, safety and impact on drug resistance of four drug regimens for seasonal intermittent preventive treatment for malaria in Senegalese children.",
-      "pages":"e1471","eLocationID":"e1471","journal":"PLoS ONE",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Sokhna","givenNames":"C","surnames":"Sokhna","suffix":""},{
-          "fullName":"B Cisse","givenNames":"B","surnames":"Cisse","suffix":
-          ""},{"fullName":"e-H Ba","givenNames":"e-H","surnames":"Ba",
-          "suffix":""},{"fullName":"P Milligan","givenNames":"P","surnames":
-          "Milligan","suffix":""},{"fullName":"R Hallett","givenNames":"R",
-          "surnames":"Hallett","suffix":""}],"editors":[]},{"key":"25",
-      "year":2009,"displayYear":"2009","volumeNumber":4,"volume":"4","title":
-      
-      "Randomized trial of piperaquine with sulfadoxine-pyrimethamine or dihydroartemisinin for intermittent preventive treatment of malaria in children.",
-      "pages":"e7164","eLocationID":"e7164","journal":"PLoS ONE",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "B Cisse","givenNames":"B","surnames":"Cisse","suffix":""},{
-          "fullName":"M Cairns","givenNames":"M","surnames":"Cairns",
-          "suffix":""},{"fullName":"E Faye","givenNames":"E","surnames":
-          "Faye","suffix":""},{"fullName":"O N\u0027Diaye","givenNames":
-          "O","surnames":"N\u0027Diaye","suffix":""},{"fullName":"B Faye",
-          "givenNames":"B","surnames":"Faye","suffix":""}],"editors":[]},{
-      "key":"26","year":2011,"displayYear":"2011","title":
-      "Comparison of two strategies for the delivery of IPTc in an area of seasonal malaria transmission.",
-      "journal":"PLoS Med","note":"(in press)","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"KA Bojang","givenNames":"KA","surnames":
-          "Bojang","suffix":""},{"fullName":"F Akor","givenNames":"F",
-          "surnames":"Akor","suffix":""},{"fullName":"L Conteh","givenNames":
-          "L","surnames":"Conteh","suffix":""},{"fullName":"EL Webb",
-          "givenNames":"EL","surnames":"Webb","suffix":""},{"fullName":
-          "O Bittaye","givenNames":"O","surnames":"Bittaye","suffix":""}],
-      "editors":[]},{"key":"27","year":2009,"displayYear":"2009",
-      "volumeNumber":4,"volume":"4","title":
-      "Options for the delivery of intermittent preventive treatment for malaria to children: a community randomised trial.",
-      "pages":"e7256","eLocationID":"e7256","journal":"PLoS ONE",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Kweku","givenNames":"M","surnames":"Kweku","suffix":""},{
-          "fullName":"D Liu","givenNames":"D","surnames":"Liu","suffix":""},{
-          "fullName":"M Adjuik","givenNames":"M","surnames":"Adjuik",
-          "suffix":""},{"fullName":"F Binka","givenNames":"F","surnames":
-          "Binka","suffix":""},{"fullName":"M Seidu","givenNames":"M",
-          "surnames":"Seidu","suffix":""}],"editors":[]},{"key":"28","year":
-      2008,"displayYear":"2008","note":
-      "Pilot study of routine delivery of intermittent preventive treatment of malaria ot children by community health workers in Tivaouane District, Senegal (unpublished)",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "B Cisse","givenNames":"B","surnames":"Cisse","suffix":""}],
-      "editors":[]},{"key":"29","year":2008,"displayYear":"2008",
-      "volumeNumber":3,"volume":"3","title":
-      "Duration of protection against malaria provided by three different regimens of intermittent preventive treatment in Tanzanian infants.",
-      "pages":"e2227","eLocationID":"e2227","journal":"PLoS ONE",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Cairns","givenNames":"M","surnames":"Cairns","suffix":""},{
-          "fullName":"R Gosling","givenNames":"R","surnames":"Gosling",
-          "suffix":""},{"fullName":"I Carneiro","givenNames":"I","surnames":
-          "Carneiro","suffix":""},{"fullName":"S Gesase","givenNames":"S",
-          "surnames":"Gesase","suffix":""},{"fullName":"JF Mosha",
-          "givenNames":"JF","surnames":"Mosha","suffix":""}],"editors":[]},{
-      "key":"30","year":1988,"displayYear":"1988","volumeNumber":1,"volume":
-      "1","title":
-      "Comparison of two strategies for control of malaria within a primary health care programme in the Gambia.",
-      "pages":"1121-1127","eLocationID":"1121","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "BM Greenwood","givenNames":"BM","surnames":"Greenwood","suffix":
-          ""},{"fullName":"AM Greenwood","givenNames":"AM","surnames":
-          "Greenwood","suffix":""},{"fullName":"AK Bradley","givenNames":
-          "AK","surnames":"Bradley","suffix":""},{"fullName":"RW Snow",
-          "givenNames":"RW","surnames":"Snow","suffix":""},{"fullName":
-          "P Byass","givenNames":"P","surnames":"Byass","suffix":""}],
-      "editors":[]},{"key":"31","year":2009,"displayYear":"2009","title":
-      "Decreasing childhood mortality and increasing proportion of malaria deaths in rural Burkina Faso.",
-      "journal":"Glob Health Action","note":"doi:10.3402/gha.v2i0.1909",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "H Ramroth","givenNames":"H","surnames":"Ramroth","suffix":""},{
-          "fullName":"RP Ndugwa","givenNames":"RP","surnames":"Ndugwa",
-          "suffix":""},{"fullName":"O Müller","givenNames":"O","surnames":
-          "Müller","suffix":""},{"fullName":"Y Yé","givenNames":"Y",
-          "surnames":"Yé","suffix":""},{"fullName":"A Sié","givenNames":
-          "A","surnames":"Sié","suffix":""}],"editors":[]},{"key":"32",
-      "year":2008,"displayYear":"2008","volumeNumber":78,"volume":"78",
-      "title":
-      "Patterns of malaria: cause-specific and all-cause mortality in a malaria-endemic area of west Africa.",
-      "pages":"106-113","eLocationID":"106","journal":"Am J Trop Med Hyg",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "H Becher","givenNames":"H","surnames":"Becher","suffix":""},{
-          "fullName":"G Kynast-Wolf","givenNames":"G","surnames":
-          "Kynast-Wolf","suffix":""},{"fullName":"A Sié","givenNames":"A",
-          "surnames":"Sié","suffix":""},{"fullName":"R Ndugwa","givenNames":
-          "R","surnames":"Ndugwa","suffix":""},{"fullName":"H Ramroth",
-          "givenNames":"H","surnames":"Ramroth","suffix":""}],"editors":[]},{
-      "key":"33","year":2003,"displayYear":"2003","volumeNumber":2,"volume":
-      "2","title":"Amodiaquine for treating malaria.","journal":
-      "Cochrane Database Syst Rev","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "P Olliaro","givenNames":"P","surnames":"Olliaro","suffix":""},{
-          "fullName":"P Mussano","givenNames":"P","surnames":"Mussano",
-          "suffix":""}],"editors":[]},{"key":"34","year":2010,"displayYear":
-      "2010","volumeNumber":54,"volume":"54","title":
-      "Amodiaquine dosage and tolerability for intermittent preventive treatment to prevent malaria in children.",
-      "pages":"1265-1274","eLocationID":"1265","journal":
-      "Antimicrob Agents Chemother","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Cairns","givenNames":"M","surnames":"Cairns","suffix":""},{
-          "fullName":"B Cisse","givenNames":"B","surnames":"Cisse","suffix":
-          ""},{"fullName":"C Sokhna","givenNames":"C","surnames":"Sokhna",
-          "suffix":""},{"fullName":"C Cames","givenNames":"C","surnames":
-          "Cames","suffix":""},{"fullName":"K Simondon","givenNames":"K",
-          "surnames":"Simondon","suffix":""}],"editors":[]},{"key":"35",
-      "year":1995,"displayYear":"1995","volumeNumber":89,"volume":"89",
-      "title":
-      "Mortality and morbidity from malaria after stopping malaria chemoprophylaxis.",
-      "pages":"629-633","eLocationID":"629","journal":
-      "Trans R Soc Trop Med Hyg","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "BM Greenwood","givenNames":"BM","surnames":"Greenwood","suffix":
-          ""},{"fullName":"PH David","givenNames":"PH","surnames":"David",
-          "suffix":""},{"fullName":"LN Otoo-Forbes","givenNames":"LN",
-          "surnames":"Otoo-Forbes","suffix":""},{"fullName":"SJ Allen",
-          "givenNames":"SJ","surnames":"Allen","suffix":""},{"fullName":
-          "PL Alonso","givenNames":"PL","surnames":"Alonso","suffix":""}],
-      "editors":[]},{"key":"36","year":2010,"displayYear":"2010",
-      "volumeNumber":5,"volume":"5","title":
-      "Cost Effectiveness of Seasonal Intermittent Preventive Treatment in Children (IPTc) using Amodiaquine and Artesunate or Sulphadoxine-Pyrimethamine in Ghanaian children.",
-      "pages":"e12223","eLocationID":"e12223","journal":"PLoS One",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Conteh","givenNames":"L","surnames":"Conteh","suffix":""},{
-          "fullName":"E Patouillard","givenNames":"E","surnames":
-          "Patouillard","suffix":""},{"fullName":"M Kweku","givenNames":
-          "M","surnames":"Kweku","suffix":""},{"fullName":"R Legood",
-          "givenNames":"R","surnames":"Legood","suffix":""},{"fullName":
-          "BM Greenwood","givenNames":"BM","surnames":"Greenwood","suffix":
-          ""}],"editors":[]}],"relatedArticles":[],"authors":[{"fullName":
-      "Anne L. Wilson","givenNames":"Anne L.","surnames":"Wilson","suffix":
-      ""}],"editors":[{"fullName":"David Diemert","givenNames":"David",
-      "surnames":"Diemert","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
-
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "A Systematic Review and Meta-Analysis of the Efficacy and Safety of Intermittent Preventive Treatment of Malaria in Children (IPTc)",
+      "description": "<sec><title>Background</title><p>Intermittent preventive treatment of malaria in children less than five years of age (IPTc) has been investigated as a measure to control the burden of malaria in the Sahel and sub-Sahelian areas of Africa where malaria transmission is markedly seasonal.</p></sec><sec><title>Methods and Findings</title><p>IPTc studies were identified using a systematic literature search. Meta-analysis was used to assess the protective efficacy of IPTc against clinical episodes of falciparum malaria. The impact of IPTc on all-cause mortality, hospital admissions, severe malaria and the prevalence of parasitaemia and anaemia was investigated. Three aspects of safety were also assessed: adverse reactions to study drugs, development of drug resistance and loss of immunity to malaria. Twelve IPTc studies were identified: seven controlled and five non-controlled trials. Controlled studies demonstrated protective efficacies against clinical malaria of between 31% and 93% and meta-analysis gave an overall protective efficacy of monthly administered IPTc of 82% (95%CI 75%\u201387%) during the malaria transmission season. Pooling results from twelve studies demonstrated a protective effect of IPTc against all-cause mortality of 57% (95%CI 24%\u201376%) during the malaria transmission season. No serious adverse events attributable to the drugs used for IPTc were observed in any of the studies. Data from three studies that followed children during the malaria transmission season in the year following IPTc administration showed evidence of a slight increase in the incidence of clinical malaria compared to children who had not received IPTc.</p></sec><sec><title>Conclusions</title><p>IPTc is a safe method of malaria control that has the potential to avert a significant proportion of clinical malaria episodes in areas with markedly seasonal malaria transmission and also appears to have a substantial protective effect against all-cause mortality. These findings indicate that IPTc is a potentially valuable tool that can contribute to the control of malaria in areas with markedly seasonal transmission.</p></sec>",
+      "size": 154793
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "A Systematic Review and Meta-Analysis of the Efficacy and Safety of Intermittent Preventive Treatment of Malaria in Children (IPTc)",
+      "description": "<sec><title>Background</title><p>Intermittent preventive treatment of malaria in children less than five years of age (IPTc) has been investigated as a measure to control the burden of malaria in the Sahel and sub-Sahelian areas of Africa where malaria transmission is markedly seasonal.</p></sec><sec><title>Methods and Findings</title><p>IPTc studies were identified using a systematic literature search. Meta-analysis was used to assess the protective efficacy of IPTc against clinical episodes of falciparum malaria. The impact of IPTc on all-cause mortality, hospital admissions, severe malaria and the prevalence of parasitaemia and anaemia was investigated. Three aspects of safety were also assessed: adverse reactions to study drugs, development of drug resistance and loss of immunity to malaria. Twelve IPTc studies were identified: seven controlled and five non-controlled trials. Controlled studies demonstrated protective efficacies against clinical malaria of between 31% and 93% and meta-analysis gave an overall protective efficacy of monthly administered IPTc of 82% (95%CI 75%\u201387%) during the malaria transmission season. Pooling results from twelve studies demonstrated a protective effect of IPTc against all-cause mortality of 57% (95%CI 24%\u201376%) during the malaria transmission season. No serious adverse events attributable to the drugs used for IPTc were observed in any of the studies. Data from three studies that followed children during the malaria transmission season in the year following IPTc administration showed evidence of a slight increase in the incidence of clinical malaria compared to children who had not received IPTc.</p></sec><sec><title>Conclusions</title><p>IPTc is a safe method of malaria control that has the potential to avert a significant proportion of clinical malaria episodes in areas with markedly seasonal malaria transmission and also appears to have a substantial protective effect against all-cause mortality. These findings indicate that IPTc is a potentially valuable tool that can contribute to the control of malaria in areas with markedly seasonal transmission.</p></sec>",
+      "size": 425479
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>Flow Diagram of Study Selection Process.</title>",
+      "size": 208072
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Flow Diagram of Study Selection Process.</title>",
+      "size": 11906
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Flow Diagram of Study Selection Process.</title>",
+      "size": 123535
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Flow Diagram of Study Selection Process.</title>",
+      "size": 100532
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Characteristics of Controlled Studies.</title>",
+      "size": 276754
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Characteristics of Controlled Studies.</title>",
+      "size": 3784
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Characteristics of Controlled Studies.</title>",
+      "size": 72075
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Characteristics of Controlled Studies.</title>",
+      "size": 61408
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t002",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 2",
+      "description": "<title>Characteristics of Non-controlled Studies.</title>",
+      "size": 310432
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Characteristics of Non-controlled Studies.</title>",
+      "size": 3973
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Characteristics of Non-controlled Studies.</title>",
+      "size": 83789
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Characteristics of Non-controlled Studies.</title>",
+      "size": 72901
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t003",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 3",
+      "description": "<title>Assessment of risk of bias in studies.</title>",
+      "size": 418996
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Assessment of risk of bias in studies.</title>",
+      "size": 5068
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Assessment of risk of bias in studies.</title>",
+      "size": 96616
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Assessment of risk of bias in studies.</title>",
+      "size": 97189
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t004",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 4",
+      "description": "<title>Effect of IPTc on clinical malaria during the intervention period.</title>",
+      "size": 418372
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of IPTc on clinical malaria during the intervention period.</title>",
+      "size": 5831
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of IPTc on clinical malaria during the intervention period.</title>",
+      "size": 90464
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of IPTc on clinical malaria during the intervention period.</title>",
+      "size": 96475
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 172840
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 8554
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 108721
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the intervention period.</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, DHA: dihydroartemisinin, PQ: piperaquine, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 131219
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t005",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 5",
+      "description": "<title>Effect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.</title>",
+      "size": 288858
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Effect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.</title>",
+      "size": 3686
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Effect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.</title>",
+      "size": 64085
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Effect of IPTc on mean haemoglobin/haematocrit concentrations in intervention and control arms at the end of the intervention period.</title>",
+      "size": 65721
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t006",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 6",
+      "description": "<title>Effect of IPTc on prevalence of parasitaemia, <italic>dhps</italic> and <italic>dhfr</italic> resistance markers measured at cross sectional surveys during the intervention year.</title>",
+      "size": 590664
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t006",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 6",
+      "description": "<title>Effect of IPTc on prevalence of parasitaemia, <italic>dhps</italic> and <italic>dhfr</italic> resistance markers measured at cross sectional surveys during the intervention year.</title>",
+      "size": 8708
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t006",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 6",
+      "description": "<title>Effect of IPTc on prevalence of parasitaemia, <italic>dhps</italic> and <italic>dhfr</italic> resistance markers measured at cross sectional surveys during the intervention year.</title>",
+      "size": 130230
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.t006",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 6",
+      "description": "<title>Effect of IPTc on prevalence of parasitaemia, <italic>dhps</italic> and <italic>dhfr</italic> resistance markers measured at cross sectional surveys during the intervention year.</title>",
+      "size": 132269
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g003",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 3",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 124716
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g003",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 6061
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g003",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 59748
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.g003",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Effect of IPTc on clinical malaria (any level of parasitaemia) during the subsequent transmission season (following IPTc administration).</title><p>NOTE: D+L Overall\u200a=\u200aRandom effect meta-analysis, I\u2013V Overall\u200a=\u200aFixed effect meta-analysis. AQ: amodiaquine, AS: artesunate, bi: bimonthly administration, CI: confidence interval, SP: sulphadoxine pyrimethamine.</p>",
+      "size": 82709
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.s001",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S1",
+      "description": "<p>\n            <bold>Search Strategy for Pubmed and Web of Science Databases</bold>\n          </p><p>(DOC)</p>",
+      "size": 35328
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.s002",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S2",
+      "description": "<p>\n            <bold>PRISMA Checklist</bold>\n          </p><p>(DOC)</p>",
+      "size": 62464
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.s003",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S3",
+      "description": "<p>\n            <bold>IPT Studies Excluded From Review</bold>\n          </p><p>(DOC)</p>",
+      "size": 59904
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0016976.s004",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S4",
+      "description": "<p>\n            <bold>Incidence of Most Common Adverse Events During the Intervention Period</bold>\n          </p><p>(DOC)</p>",
+      "size": 92672
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Intermittent preventive treatment - a new approach to the prevention of malaria in children in areas with seasonal malaria transmission.",
+      "pages": "983-991",
+      "eLocationID": "983",
+      "journal": "Trop Med Int Health",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Greenwood",
+          "givenNames": "B",
+          "surnames": "Greenwood",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2010,
+      "displayYear": "2010",
+      "title": "WHO Policy recommendation on Intermittent Preventive Treatment during infancy with sulphadoxine-pyrimethamine (SP-IPTi) for Plasmodium falciparum malaria control in Africa",
+      "collaborativeAuthors": [
+        "World Health Organisation"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 374,
+      "volume": "374",
+      "title": "Efficacy and safety of intermittent preventive treatment with sulfadoxine-pyrimethamine for malaria in African infants: a pooled analysis of six randomised, placebo-controlled trials.",
+      "pages": "1533-1542",
+      "eLocationID": "1533",
+      "journal": "The Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JJ Aponte",
+          "givenNames": "JJ",
+          "surnames": "Aponte",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Schellenberg",
+          "givenNames": "D",
+          "surnames": "Schellenberg",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Egan",
+          "givenNames": "A",
+          "surnames": "Egan",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Breckenridge",
+          "givenNames": "A",
+          "surnames": "Breckenridge",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Carneiro",
+          "givenNames": "I",
+          "surnames": "Carneiro",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 33,
+      "volume": "33",
+      "title": "Childhood mortality and probable causes of death using verbal autopsy in Niakhar, Senegal, 1989\u20132000.",
+      "pages": "1286-1292",
+      "eLocationID": "1286",
+      "journal": "Int J Epidemiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JF Etard",
+          "givenNames": "JF",
+          "surnames": "Etard",
+          "suffix": ""
+        },
+        {
+          "fullName": "JY Le Hesran",
+          "givenNames": "JY",
+          "surnames": "Le Hesran",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Diallo",
+          "givenNames": "A",
+          "surnames": "Diallo",
+          "suffix": ""
+        },
+        {
+          "fullName": "JP Diallo",
+          "givenNames": "JP",
+          "surnames": "Diallo",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Ndiaye",
+          "givenNames": "JL",
+          "surnames": "Ndiaye",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Changes in the pattern of infant and childhood mortality in upper river division, The Gambia, from 1989 to 1993.",
+      "pages": "28-37",
+      "eLocationID": "28",
+      "journal": "Trop Med Int Health",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Jaffar",
+          "givenNames": "S",
+          "surnames": "Jaffar",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Leach",
+          "givenNames": "A",
+          "surnames": "Leach",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Greenwood",
+          "givenNames": "AM",
+          "surnames": "Greenwood",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Jepson",
+          "givenNames": "A",
+          "surnames": "Jepson",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Muller",
+          "givenNames": "O",
+          "surnames": "Muller",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Chemoprophylaxis and intermittent treatment for preventing malaria in children.",
+      "journal": "Cochrane Database Syst Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MM Meremikwu",
+          "givenNames": "MM",
+          "surnames": "Meremikwu",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Donegan",
+          "givenNames": "S",
+          "surnames": "Donegan",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Esu",
+          "givenNames": "E",
+          "surnames": "Esu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "note": "National Institutes of Health ClinicalTrials.gov",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "note": "World Health Organisation International Clinical Trials Registry Platform",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 94,
+      "volume": "94",
+      "title": "Severe Falciparum Malaria.",
+      "pages": "S1-90",
+      "eLocationID": "S1",
+      "journal": "Trans R Soc Trop Med Hyg",
+      "collaborativeAuthors": [
+        "World Health Organisation"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2004,
+      "displayYear": "2004",
+      "title": "ICH Harmonised Tripartite Guideline, Clinical Safety Data Management, Definitions and Standards for Expedited Reporting, E2A, Step 4 Version",
+      "collaborativeAuthors": [
+        "International Conference on Harmonisation"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2008,
+      "displayYear": "2008",
+      "title": "Cochrane Handbook for Systematic Reviews of Interventions.",
+      "note": "Version 5.0.0; Higgins JPT, Green S, editors",
+      "collaborativeAuthors": [
+        "The Cochrane Collaboration"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2011,
+      "displayYear": "2011",
+      "title": "A randomised, placebo-controlled trial of intermittent preventive treatment of malaria with sulphadoxine -pyrimethamine plus amodiaquine in children protected by a long lasting insecticide treated net in Mali.",
+      "journal": "PLoS Med",
+      "note": "(in press)",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Dicko",
+          "givenNames": "A",
+          "surnames": "Dicko",
+          "suffix": ""
+        },
+        {
+          "fullName": "AI Diallo",
+          "givenNames": "AI",
+          "surnames": "Diallo",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Tembine",
+          "givenNames": "I",
+          "surnames": "Tembine",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Dicko",
+          "givenNames": "Y",
+          "surnames": "Dicko",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Dara",
+          "givenNames": "N",
+          "surnames": "Dara",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2011,
+      "displayYear": "2011",
+      "title": "Intermittent preventive treatment of malaria provides substantial protection against malaria in children already protected by an insecticide treated bednet in Burkina Faso.",
+      "journal": "PLoS Med",
+      "note": "(in press)",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AT Konat\u00e9",
+          "givenNames": "AT",
+          "surnames": "Konat\u00e9",
+          "suffix": ""
+        },
+        {
+          "fullName": "JB Yaro",
+          "givenNames": "JB",
+          "surnames": "Yaro",
+          "suffix": ""
+        },
+        {
+          "fullName": "AZ Ou\u00e9draogo",
+          "givenNames": "AZ",
+          "surnames": "Ou\u00e9draogo",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Diarra",
+          "givenNames": "A",
+          "surnames": "Diarra",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Gansan\u00e9",
+          "givenNames": "A",
+          "surnames": "Gansan\u00e9",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2003,
+      "displayYear": "2003",
+      "title": "Essential Medical Statistics",
+      "publisherLocation": "Oxford, UK",
+      "publisherName": "Blackwell Science Ltd",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "B Kirkwood",
+          "givenNames": "B",
+          "surnames": "Kirkwood",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Sterne",
+          "givenNames": "J",
+          "surnames": "Sterne",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 315,
+      "volume": "315",
+      "title": "Meta-analysis: principles and procedures.",
+      "pages": "1533-1537",
+      "eLocationID": "1533",
+      "journal": "BMJ",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Egger",
+          "givenNames": "M",
+          "surnames": "Egger",
+          "suffix": ""
+        },
+        {
+          "fullName": "GD Smith",
+          "givenNames": "GD",
+          "surnames": "Smith",
+          "suffix": ""
+        },
+        {
+          "fullName": "AN Phillips",
+          "givenNames": "AN",
+          "surnames": "Phillips",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 327,
+      "volume": "327",
+      "title": "Measuring inconsistency in meta-analyses.",
+      "pages": "557-560",
+      "eLocationID": "557",
+      "journal": "BMJ",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JP Higgins",
+          "givenNames": "JP",
+          "surnames": "Higgins",
+          "suffix": ""
+        },
+        {
+          "fullName": "SG Thompson",
+          "givenNames": "SG",
+          "surnames": "Thompson",
+          "suffix": ""
+        },
+        {
+          "fullName": "JJ Deeks",
+          "givenNames": "JJ",
+          "surnames": "Deeks",
+          "suffix": ""
+        },
+        {
+          "fullName": "DG Altman",
+          "givenNames": "DG",
+          "surnames": "Altman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Preferred reporting items for systematic reviews and meta-analyses: the PRISMA statement.",
+      "pages": "e1000097",
+      "eLocationID": "e1000097",
+      "journal": "PLoS Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Moher",
+          "givenNames": "D",
+          "surnames": "Moher",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Liberati",
+          "givenNames": "A",
+          "surnames": "Liberati",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Tetzlaff",
+          "givenNames": "J",
+          "surnames": "Tetzlaff",
+          "suffix": ""
+        },
+        {
+          "fullName": "DG Altman",
+          "givenNames": "DG",
+          "surnames": "Altman",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Group",
+          "givenNames": "P",
+          "surnames": "Group",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "The PRISMA statement for reporting systematic reviews and meta-analyses of studies that evaluate health care interventions: explanation and elaboration.",
+      "pages": "e1000100",
+      "eLocationID": "e1000100",
+      "journal": "PLoS Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Liberati",
+          "givenNames": "A",
+          "surnames": "Liberati",
+          "suffix": ""
+        },
+        {
+          "fullName": "DG Altman",
+          "givenNames": "DG",
+          "surnames": "Altman",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Tetzlaff",
+          "givenNames": "J",
+          "surnames": "Tetzlaff",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Mulrow",
+          "givenNames": "C",
+          "surnames": "Mulrow",
+          "suffix": ""
+        },
+        {
+          "fullName": "PC G\u00f8tzsche",
+          "givenNames": "PC",
+          "surnames": "G\u00f8tzsche",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "A randomised trial to compare the safety, tolerability and efficacy of three drug combinations for intermittent preventive treatment in children.",
+      "pages": "e11225",
+      "eLocationID": "e11225",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Bojang",
+          "givenNames": "K",
+          "surnames": "Bojang",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Akor",
+          "givenNames": "F",
+          "surnames": "Akor",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Bittaye",
+          "givenNames": "O",
+          "surnames": "Bittaye",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Conway",
+          "givenNames": "D",
+          "surnames": "Conway",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Bottomley",
+          "givenNames": "C",
+          "surnames": "Bottomley",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 367,
+      "volume": "367",
+      "title": "Seasonal intermittent preventive treatment with artesunate and sulfadoxine-pyrimethamine for prevention of malaria in Senegalese children: a randomised, placebo-controlled, double-blind trial.",
+      "pages": "659-667",
+      "eLocationID": "659",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Cisse",
+          "givenNames": "B",
+          "surnames": "Cisse",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Sokhna",
+          "givenNames": "C",
+          "surnames": "Sokhna",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Boulanger",
+          "givenNames": "D",
+          "surnames": "Boulanger",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Milet",
+          "givenNames": "J",
+          "surnames": "Milet",
+          "suffix": ""
+        },
+        {
+          "fullName": "eH B\u00e2",
+          "givenNames": "eH",
+          "surnames": "B\u00e2",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Impact of intermittent preventive treatment with sulphadoxine-pyrimethamine targeting the transmission season on the incidence of clinical malaria in children in Mali.",
+      "pages": "123",
+      "eLocationID": "123",
+      "journal": "Malar J",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Dicko",
+          "givenNames": "A",
+          "surnames": "Dicko",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Sagara",
+          "givenNames": "I",
+          "surnames": "Sagara",
+          "suffix": ""
+        },
+        {
+          "fullName": "MS Sissoko",
+          "givenNames": "MS",
+          "surnames": "Sissoko",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Guindo",
+          "givenNames": "O",
+          "surnames": "Guindo",
+          "suffix": ""
+        },
+        {
+          "fullName": "AI Diallo",
+          "givenNames": "AI",
+          "surnames": "Diallo",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Seasonal intermittent preventive treatment for the prevention of anaemia and malaria in ghanaian children: a randomized, placebo controlled trial.",
+      "pages": "e4000",
+      "eLocationID": "e4000",
+      "journal": "PLoS ONE",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Kweku",
+          "givenNames": "M",
+          "surnames": "Kweku",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Liu",
+          "givenNames": "D",
+          "surnames": "Liu",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Adjuik",
+          "givenNames": "M",
+          "surnames": "Adjuik",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Binka",
+          "givenNames": "F",
+          "surnames": "Binka",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Seidu",
+          "givenNames": "M",
+          "surnames": "Seidu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "A trial of intermittent preventive treatment and home based management of malaria in a rural area of The Gambia.",
+      "journal": "Malar J",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Sesay",
+          "givenNames": "S",
+          "surnames": "Sesay",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Milligan",
+          "givenNames": "P",
+          "surnames": "Milligan",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Touray",
+          "givenNames": "E",
+          "surnames": "Touray",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Sowe",
+          "givenNames": "M",
+          "surnames": "Sowe",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Conway",
+          "givenNames": "D",
+          "surnames": "Conway",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "A trial of the efficacy, safety and impact on drug resistance of four drug regimens for seasonal intermittent preventive treatment for malaria in Senegalese children.",
+      "pages": "e1471",
+      "eLocationID": "e1471",
+      "journal": "PLoS ONE",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Sokhna",
+          "givenNames": "C",
+          "surnames": "Sokhna",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Cisse",
+          "givenNames": "B",
+          "surnames": "Cisse",
+          "suffix": ""
+        },
+        {
+          "fullName": "e-H Ba",
+          "givenNames": "e-H",
+          "surnames": "Ba",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Milligan",
+          "givenNames": "P",
+          "surnames": "Milligan",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Hallett",
+          "givenNames": "R",
+          "surnames": "Hallett",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Randomized trial of piperaquine with sulfadoxine-pyrimethamine or dihydroartemisinin for intermittent preventive treatment of malaria in children.",
+      "pages": "e7164",
+      "eLocationID": "e7164",
+      "journal": "PLoS ONE",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Cisse",
+          "givenNames": "B",
+          "surnames": "Cisse",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Cairns",
+          "givenNames": "M",
+          "surnames": "Cairns",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Faye",
+          "givenNames": "E",
+          "surnames": "Faye",
+          "suffix": ""
+        },
+        {
+          "fullName": "O N'Diaye",
+          "givenNames": "O",
+          "surnames": "N'Diaye",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Faye",
+          "givenNames": "B",
+          "surnames": "Faye",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2011,
+      "displayYear": "2011",
+      "title": "Comparison of two strategies for the delivery of IPTc in an area of seasonal malaria transmission.",
+      "journal": "PLoS Med",
+      "note": "(in press)",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KA Bojang",
+          "givenNames": "KA",
+          "surnames": "Bojang",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Akor",
+          "givenNames": "F",
+          "surnames": "Akor",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Conteh",
+          "givenNames": "L",
+          "surnames": "Conteh",
+          "suffix": ""
+        },
+        {
+          "fullName": "EL Webb",
+          "givenNames": "EL",
+          "surnames": "Webb",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Bittaye",
+          "givenNames": "O",
+          "surnames": "Bittaye",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Options for the delivery of intermittent preventive treatment for malaria to children: a community randomised trial.",
+      "pages": "e7256",
+      "eLocationID": "e7256",
+      "journal": "PLoS ONE",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Kweku",
+          "givenNames": "M",
+          "surnames": "Kweku",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Liu",
+          "givenNames": "D",
+          "surnames": "Liu",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Adjuik",
+          "givenNames": "M",
+          "surnames": "Adjuik",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Binka",
+          "givenNames": "F",
+          "surnames": "Binka",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Seidu",
+          "givenNames": "M",
+          "surnames": "Seidu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 2008,
+      "displayYear": "2008",
+      "note": "Pilot study of routine delivery of intermittent preventive treatment of malaria ot children by community health workers in Tivaouane District, Senegal (unpublished)",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "B Cisse",
+          "givenNames": "B",
+          "surnames": "Cisse",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Duration of protection against malaria provided by three different regimens of intermittent preventive treatment in Tanzanian infants.",
+      "pages": "e2227",
+      "eLocationID": "e2227",
+      "journal": "PLoS ONE",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Cairns",
+          "givenNames": "M",
+          "surnames": "Cairns",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Gosling",
+          "givenNames": "R",
+          "surnames": "Gosling",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Carneiro",
+          "givenNames": "I",
+          "surnames": "Carneiro",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Gesase",
+          "givenNames": "S",
+          "surnames": "Gesase",
+          "suffix": ""
+        },
+        {
+          "fullName": "JF Mosha",
+          "givenNames": "JF",
+          "surnames": "Mosha",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 1988,
+      "displayYear": "1988",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "Comparison of two strategies for control of malaria within a primary health care programme in the Gambia.",
+      "pages": "1121-1127",
+      "eLocationID": "1121",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "BM Greenwood",
+          "givenNames": "BM",
+          "surnames": "Greenwood",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Greenwood",
+          "givenNames": "AM",
+          "surnames": "Greenwood",
+          "suffix": ""
+        },
+        {
+          "fullName": "AK Bradley",
+          "givenNames": "AK",
+          "surnames": "Bradley",
+          "suffix": ""
+        },
+        {
+          "fullName": "RW Snow",
+          "givenNames": "RW",
+          "surnames": "Snow",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Byass",
+          "givenNames": "P",
+          "surnames": "Byass",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 2009,
+      "displayYear": "2009",
+      "title": "Decreasing childhood mortality and increasing proportion of malaria deaths in rural Burkina Faso.",
+      "journal": "Glob Health Action",
+      "note": "doi:10.3402/gha.v2i0.1909",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "H Ramroth",
+          "givenNames": "H",
+          "surnames": "Ramroth",
+          "suffix": ""
+        },
+        {
+          "fullName": "RP Ndugwa",
+          "givenNames": "RP",
+          "surnames": "Ndugwa",
+          "suffix": ""
+        },
+        {
+          "fullName": "O M\u00fcller",
+          "givenNames": "O",
+          "surnames": "M\u00fcller",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Y\u00e9",
+          "givenNames": "Y",
+          "surnames": "Y\u00e9",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Si\u00e9",
+          "givenNames": "A",
+          "surnames": "Si\u00e9",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 78,
+      "volume": "78",
+      "title": "Patterns of malaria: cause-specific and all-cause mortality in a malaria-endemic area of west Africa.",
+      "pages": "106-113",
+      "eLocationID": "106",
+      "journal": "Am J Trop Med Hyg",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "H Becher",
+          "givenNames": "H",
+          "surnames": "Becher",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Kynast-Wolf",
+          "givenNames": "G",
+          "surnames": "Kynast-Wolf",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Si\u00e9",
+          "givenNames": "A",
+          "surnames": "Si\u00e9",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Ndugwa",
+          "givenNames": "R",
+          "surnames": "Ndugwa",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Ramroth",
+          "givenNames": "H",
+          "surnames": "Ramroth",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Amodiaquine for treating malaria.",
+      "journal": "Cochrane Database Syst Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P Olliaro",
+          "givenNames": "P",
+          "surnames": "Olliaro",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Mussano",
+          "givenNames": "P",
+          "surnames": "Mussano",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 54,
+      "volume": "54",
+      "title": "Amodiaquine dosage and tolerability for intermittent preventive treatment to prevent malaria in children.",
+      "pages": "1265-1274",
+      "eLocationID": "1265",
+      "journal": "Antimicrob Agents Chemother",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Cairns",
+          "givenNames": "M",
+          "surnames": "Cairns",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Cisse",
+          "givenNames": "B",
+          "surnames": "Cisse",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Sokhna",
+          "givenNames": "C",
+          "surnames": "Sokhna",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Cames",
+          "givenNames": "C",
+          "surnames": "Cames",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Simondon",
+          "givenNames": "K",
+          "surnames": "Simondon",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 89,
+      "volume": "89",
+      "title": "Mortality and morbidity from malaria after stopping malaria chemoprophylaxis.",
+      "pages": "629-633",
+      "eLocationID": "629",
+      "journal": "Trans R Soc Trop Med Hyg",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "BM Greenwood",
+          "givenNames": "BM",
+          "surnames": "Greenwood",
+          "suffix": ""
+        },
+        {
+          "fullName": "PH David",
+          "givenNames": "PH",
+          "surnames": "David",
+          "suffix": ""
+        },
+        {
+          "fullName": "LN Otoo-Forbes",
+          "givenNames": "LN",
+          "surnames": "Otoo-Forbes",
+          "suffix": ""
+        },
+        {
+          "fullName": "SJ Allen",
+          "givenNames": "SJ",
+          "surnames": "Allen",
+          "suffix": ""
+        },
+        {
+          "fullName": "PL Alonso",
+          "givenNames": "PL",
+          "surnames": "Alonso",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Cost Effectiveness of Seasonal Intermittent Preventive Treatment in Children (IPTc) using Amodiaquine and Artesunate or Sulphadoxine-Pyrimethamine in Ghanaian children.",
+      "pages": "e12223",
+      "eLocationID": "e12223",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Conteh",
+          "givenNames": "L",
+          "surnames": "Conteh",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Patouillard",
+          "givenNames": "E",
+          "surnames": "Patouillard",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Kweku",
+          "givenNames": "M",
+          "surnames": "Kweku",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Legood",
+          "givenNames": "R",
+          "surnames": "Legood",
+          "suffix": ""
+        },
+        {
+          "fullName": "BM Greenwood",
+          "givenNames": "BM",
+          "surnames": "Greenwood",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Anne L. Wilson",
+      "givenNames": "Anne L.",
+      "surnames": "Wilson",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "David Diemert",
+      "givenNames": "David",
+      "surnames": "Diemert",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}

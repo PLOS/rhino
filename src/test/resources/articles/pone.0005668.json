@@ -1,552 +1,1931 @@
-{"doi":"info:doi/10.1371/journal.pone.0005668","title":
-  "Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients",
-  "eIssn":"1932-6203","state":1,"archiveName":"pone.0005668.zip",
-  "description":
-  "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eDespite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology/Principal Findings\u003c/title\u003e\u003cp\u003eTwenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/β TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p\u0026lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r \u003d 0.61, p\u0026lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/β TREC ratio (p\u0026lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/β TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eIn patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eTrial Registration\u003c/title\u003e\u003cp\u003eClinicalTrials.gov \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://clinicaltrials.gov/ct2/show/NCT00601419?term\u003d00601419\u0026amp;rank\u003d1\" xlink:type\u003d\"simple\"\u003eNTC00601419\u003c/ext-link\u003e\u003c/p\u003e\u003c/sec\u003e",
-  "rights":
-  "Morrhaye et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-7","eLocationId":"e5668",
-  "strkImgURI":"","date":"2009-05-22T07:00:00Z","volume":"4","issue":
-  "5","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
-  "publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0005668","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0005668","extension":
-      "XML","contentType":"text/xml","title":
-      "Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eDespite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology/Principal Findings\u003c/title\u003e\u003cp\u003eTwenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/β TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p\u0026lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r \u003d 0.61, p\u0026lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/β TREC ratio (p\u0026lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/β TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eIn patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eTrial Registration\u003c/title\u003e\u003cp\u003eClinicalTrials.gov \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://clinicaltrials.gov/ct2/show/NCT00601419?term\u003d00601419\u0026amp;rank\u003d1\" xlink:type\u003d\"simple\"\u003eNTC00601419\u003c/ext-link\u003e\u003c/p\u003e\u003c/sec\u003e",
-      "size":82250},{"doi":"info:doi/10.1371/journal.pone.0005668",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eDespite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology/Principal Findings\u003c/title\u003e\u003cp\u003eTwenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/β TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p\u0026lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r \u003d 0.61, p\u0026lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/β TREC ratio (p\u0026lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/β TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eIn patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eTrial Registration\u003c/title\u003e\u003cp\u003eClinicalTrials.gov \u003cext-link xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" ext-link-type\u003d\"uri\" xlink:href\u003d\"http://clinicaltrials.gov/ct2/show/NCT00601419?term\u003d00601419\u0026amp;rank\u003d1\" xlink:type\u003d\"simple\"\u003eNTC00601419\u003c/ext-link\u003e\u003c/p\u003e\u003c/sec\u003e",
-      "size":225018},{"doi":"info:doi/10.1371/journal.pone.0005668.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003eClinical and baseline characteristics of patients with AGHD before GH withdrawal.\u003c/title\u003e",
-      "size":501568},{"doi":"info:doi/10.1371/journal.pone.0005668.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical and baseline characteristics of patients with AGHD before GH withdrawal.\u003c/title\u003e",
-      "size":25257},{"doi":"info:doi/10.1371/journal.pone.0005668.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical and baseline characteristics of patients with AGHD before GH withdrawal.\u003c/title\u003e",
-      "size":212452},{"doi":"info:doi/10.1371/journal.pone.0005668.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical and baseline characteristics of patients with AGHD before GH withdrawal.\u003c/title\u003e",
-      "size":292845},{"doi":"info:doi/10.1371/journal.pone.0005668.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePlasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.\u003c/title\u003e\u003cp\u003eThe interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P\u0026lt;0.001 (by Wilcoxon\u0027s signed rank test, N \u003d 22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R \u003d 0.61, P\u0026lt;0.01 by Spearman\u0027s analysis).\u003c/p\u003e",
-      "size":470152},{"doi":"info:doi/10.1371/journal.pone.0005668.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePlasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.\u003c/title\u003e\u003cp\u003eThe interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P\u0026lt;0.001 (by Wilcoxon\u0027s signed rank test, N \u003d 22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R \u003d 0.61, P\u0026lt;0.01 by Spearman\u0027s analysis).\u003c/p\u003e",
-      "size":22605},{"doi":"info:doi/10.1371/journal.pone.0005668.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePlasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.\u003c/title\u003e\u003cp\u003eThe interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P\u0026lt;0.001 (by Wilcoxon\u0027s signed rank test, N \u003d 22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R \u003d 0.61, P\u0026lt;0.01 by Spearman\u0027s analysis).\u003c/p\u003e",
-      "size":98971},{"doi":"info:doi/10.1371/journal.pone.0005668.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePlasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.\u003c/title\u003e\u003cp\u003eThe interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P\u0026lt;0.001 (by Wilcoxon\u0027s signed rank test, N \u003d 22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R \u003d 0.61, P\u0026lt;0.01 by Spearman\u0027s analysis).\u003c/p\u003e",
-      "size":331176},{"doi":"info:doi/10.1371/journal.pone.0005668.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between age and sjTREC frequency in PBMCs from patients with AGHD.\u003c/title\u003e\u003cp\u003eA. Under GH treatment (R \u003d −0.35, P \u003d 0.11). B. One month after GH withdrawal (R \u003d −0.5, P \u003d 0.02). C. One month after GH resumption (R \u003d −0.55, P\u0026lt;0.01).\u003c/p\u003e",
-      "size":926312},{"doi":"info:doi/10.1371/journal.pone.0005668.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between age and sjTREC frequency in PBMCs from patients with AGHD.\u003c/title\u003e\u003cp\u003eA. Under GH treatment (R \u003d −0.35, P \u003d 0.11). B. One month after GH withdrawal (R \u003d −0.5, P \u003d 0.02). C. One month after GH resumption (R \u003d −0.55, P\u0026lt;0.01).\u003c/p\u003e",
-      "size":14131},{"doi":"info:doi/10.1371/journal.pone.0005668.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between age and sjTREC frequency in PBMCs from patients with AGHD.\u003c/title\u003e\u003cp\u003eA. Under GH treatment (R \u003d −0.35, P \u003d 0.11). B. One month after GH withdrawal (R \u003d −0.5, P \u003d 0.02). C. One month after GH resumption (R \u003d −0.55, P\u0026lt;0.01).\u003c/p\u003e",
-      "size":50311},{"doi":"info:doi/10.1371/journal.pone.0005668.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between age and sjTREC frequency in PBMCs from patients with AGHD.\u003c/title\u003e\u003cp\u003eA. Under GH treatment (R \u003d −0.35, P \u003d 0.11). B. One month after GH withdrawal (R \u003d −0.5, P \u003d 0.02). C. One month after GH resumption (R \u003d −0.55, P\u0026lt;0.01).\u003c/p\u003e",
-      "size":337580},{"doi":"info:doi/10.1371/journal.pone.0005668.g003",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eBlood DβTREC frequency and sj/β TREC ratio.\u003c/title\u003e\u003cp\u003eNo significant modification was detected in blood DβTREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/β TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P\u0026lt;0.01 (by Wilcoxon\u0027s signed rank test, N \u003d 19).\u003c/p\u003e",
-      "size":407908},{"doi":"info:doi/10.1371/journal.pone.0005668.g003",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eBlood DβTREC frequency and sj/β TREC ratio.\u003c/title\u003e\u003cp\u003eNo significant modification was detected in blood DβTREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/β TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P\u0026lt;0.01 (by Wilcoxon\u0027s signed rank test, N \u003d 19).\u003c/p\u003e",
-      "size":13154},{"doi":"info:doi/10.1371/journal.pone.0005668.g003",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eBlood DβTREC frequency and sj/β TREC ratio.\u003c/title\u003e\u003cp\u003eNo significant modification was detected in blood DβTREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/β TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P\u0026lt;0.01 (by Wilcoxon\u0027s signed rank test, N \u003d 19).\u003c/p\u003e",
-      "size":93388},{"doi":"info:doi/10.1371/journal.pone.0005668.g003",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eBlood DβTREC frequency and sj/β TREC ratio.\u003c/title\u003e\u003cp\u003eNo significant modification was detected in blood DβTREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/β TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P\u0026lt;0.01 (by Wilcoxon\u0027s signed rank test, N \u003d 19).\u003c/p\u003e",
-      "size":179827},{"doi":"info:doi/10.1371/journal.pone.0005668.s001",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Checklist S1",
-      "description":
-      "\u003cp\u003eCONSORT checklist\u003c/p\u003e\u003cp\u003e(0.05 MB DOC)\u003c/p\u003e",
-      "size":46592},{"doi":"info:doi/10.1371/journal.pone.0005668.s002",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Protocol S1","description":
-      
-      "\u003cp\u003eTrial Protocol\u003c/p\u003e\u003cp\u003e(0.03 MB DOC)\u003c/p\u003e",
-      "size":30720}],"citedArticles":[{"key":"1","year":1998,"displayYear":
-      "1998","volumeNumber":396,"volume":"396","title":
-      "Changes in thymic function with age and during the treatment of HIV infection.",
-      "pages":"690-695","eLocationID":"690","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DC Douek","givenNames":"DC","surnames":"Douek","suffix":""},{
-          "fullName":"RD McFarland","givenNames":"RD","surnames":
-          "McFarland","suffix":""},{"fullName":"PH Keiser","givenNames":
-          "PH","surnames":"Keiser","suffix":""},{"fullName":"EA Gage",
-          "givenNames":"EA","surnames":"Gage","suffix":""},{"fullName":
-          "JM Massey","givenNames":"JM","surnames":"Massey","suffix":""}],
-      "editors":[]},{"key":"2","year":1998,"displayYear":"1998",
-      "volumeNumber":8,"volume":"8","title":
-      "Thymic function can be accurately monitored by the level of recent T cell emigrants in the circulation.",
-      "pages":"97-104","eLocationID":"97","journal":"Immunity",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "F Kong","givenNames":"F","surnames":"Kong","suffix":""},{
-          "fullName":"CH Chen","givenNames":"CH","surnames":"Chen","suffix":
-          ""},{"fullName":"MD Cooper","givenNames":"MD","surnames":
-          "Cooper","suffix":""}],"editors":[]},{"key":"3","year":2002,
-      "displayYear":"2002","volumeNumber":168,"volume":"168","title":
-      "Reversible disruption of thymic function by steroid treatment.",
-      "pages":"6500-6505","eLocationID":"6500","journal":"J Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "FK Kong","givenNames":"FK","surnames":"Kong","suffix":""},{
-          "fullName":"CL Chen","givenNames":"CL","surnames":"Chen","suffix":
-          ""},{"fullName":"MD Cooper","givenNames":"MD","surnames":
-          "Cooper","suffix":""}],"editors":[]},{"key":"4","year":1999,
-      "displayYear":"1999","volumeNumber":190,"volume":"190","title":
-      "Direct evidence for thymic function in adult humans.","pages":
-      "479-486","eLocationID":"479","journal":"J Exp Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JF Poulin","givenNames":"JF","surnames":"Poulin","suffix":""},{
-          "fullName":"MN Viswanathan","givenNames":"MN","surnames":
-          "Viswanathan","suffix":""},{"fullName":"JM Harris","givenNames":
-          "JM","surnames":"Harris","suffix":""},{"fullName":"KV Komanduri",
-          "givenNames":"KV","surnames":"Komanduri","suffix":""},{"fullName":
-          "E Wieder","givenNames":"E","surnames":"Wieder","suffix":""}],
-      "editors":[]},{"key":"5","year":2004,"displayYear":"2004","title":
-      "The central role of the thymus in the development of self-tolerance and autoimmunity in the neuroendocrine system.",
-      "publisherLocation":"New York","publisherName":"Marcel Dekker","pages":
-      "337-356","eLocationID":"337","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "V Geenen","givenNames":"V","surnames":"Geenen","suffix":""},{
-          "fullName":"F Brilot","givenNames":"F","surnames":"Brilot",
-          "suffix":""},{"fullName":"I Hansenne","givenNames":"I","surnames":
-          "Hansenne","suffix":""},{"fullName":"C Louis","givenNames":"C",
-          "surnames":"Louis","suffix":""},{"fullName":"C Charlet-Renard",
-          "givenNames":"C","surnames":"Charlet-Renard","suffix":""}],
-      "editors":[{"fullName":"V Geenen","givenNames":"V","surnames":
-          "Geenen","suffix":""},{"fullName":"G Chrousos","givenNames":"G",
-          "surnames":"Chrousos","suffix":""}]},{"key":"6","year":2003,
-      "displayYear":"2003","volumeNumber":176,"volume":"176","title":
-      "Quantification of T cell receptor rearrangement excision circles to estimate thymic function: an important new tool for endocrine-immune physiology.",
-      "pages":"305-311","eLocationID":"305","journal":"J Endocrinol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V Geenen","givenNames":"V","surnames":"Geenen","suffix":""},{
-          "fullName":"JF Poulin","givenNames":"JF","surnames":"Poulin",
-          "suffix":""},{"fullName":"ML Dion","givenNames":"ML","surnames":
-          "Dion","suffix":""},{"fullName":"H Martens","givenNames":"H",
-          "surnames":"Martens","suffix":""},{"fullName":"E Castermans",
-          "givenNames":"E","surnames":"Castermans","suffix":""}],"editors":[]},
-    {"key":"7","year":2004,"displayYear":"2004","volumeNumber":21,"volume":
-      "21","title":
-      "HIV infection rapidly induces and maintains a substantial suppression of thymocyte proliferation.",
-      "pages":"757-768","eLocationID":"757","journal":"Immunity",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ML Dion","givenNames":"ML","surnames":"Dion","suffix":""},{
-          "fullName":"JF Poulin","givenNames":"JF","surnames":"Poulin",
-          "suffix":""},{"fullName":"R Bordi","givenNames":"R","surnames":
-          "Bordi","suffix":""},{"fullName":"M Sylvestre","givenNames":"M",
-          "surnames":"Sylvestre","suffix":""},{"fullName":"R Corsini",
-          "givenNames":"R","surnames":"Corsini","suffix":""}],"editors":[]},{
-      "key":"8","year":2008,"displayYear":"2008","volumeNumber":181,"volume":
-      "181","title":
-      "The magnitude of thymic output is genetically determined through controlled intrathymic precursor T cell proliferation.",
-      "pages":"7818-7824","eLocationID":"7818","journal":"J Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "G Dulude","givenNames":"G","surnames":"Dulude","suffix":""},{
-          "fullName":"R Cheynier","givenNames":"R","surnames":"Cheynier",
-          "suffix":""},{"fullName":"D Gauchat","givenNames":"D","surnames":
-          "Gauchat","suffix":""},{"fullName":"A Abdallah","givenNames":"A",
-          "surnames":"Abdallah","suffix":""},{"fullName":"N Kettaf",
-          "givenNames":"N","surnames":"Kettaf","suffix":""}],"editors":[]},{
-      "key":"9","year":2006,"displayYear":"2006","volumeNumber":177,"volume":
-      "177","title":
-      "The effects of age, thymectomy, and HIV Infection on alpha and beta TCR excision circles in naive T cells.",
-      "pages":"4391-4401","eLocationID":"4391","journal":"J Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C van den Dool","givenNames":"C","surnames":"van den Dool",
-          "suffix":""},{"fullName":"RJ de Boer","givenNames":"RJ","surnames":
-          "de Boer","suffix":""}],"editors":[]},{"key":"10","year":2008,
-      "displayYear":"2008","volumeNumber":93,"volume":"93","title":
-      "Evidence for neo-generation of T cells by the thymus after non-myeloablative conditioning.",
-      "pages":"240-247","eLocationID":"240","journal":"Haematologica",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E Castermans","givenNames":"E","surnames":"Castermans","suffix":
-          ""},{"fullName":"F Baron","givenNames":"F","surnames":"Baron",
-          "suffix":""},{"fullName":"E Willems","givenNames":"E","surnames":
-          "Willems","suffix":""},{"fullName":"N Schaaf-Lafontaine",
-          "givenNames":"N","surnames":"Schaaf-Lafontaine","suffix":""},{
-          "fullName":"N Meuris","givenNames":"N","surnames":"Meuris",
-          "suffix":""}],"editors":[]},{"key":"11","year":2003,"displayYear":
-      "2003","title":
-      "Type I cytokines and interferons and their receptors.",
-      "publisherLocation":"Philadelphia","publisherName":
-      "Lippincott Williams \u0026 Wilkins","pages":"701-747","eLocationID":
-      "701","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "W Leonard","givenNames":"W","surnames":"Leonard","suffix":""}],
-      "editors":[{"fullName":"W Paul","givenNames":"W","surnames":"Paul",
-          "suffix":""}]},{"key":"12","year":2008,"displayYear":"2008",
-      "volumeNumber":252,"volume":"252","title":
-      "Neuroendocrine hormones such as growth hormone and prolactin are integral members of the immunological cytokine network.",
-      "pages":"111-121","eLocationID":"111","journal":"Cell Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "D Redelman","givenNames":"D","surnames":"Redelman","suffix":""},{
-          "fullName":"LA Welniak","givenNames":"LA","surnames":"Welniak",
-          "suffix":""},{"fullName":"D Taub","givenNames":"D","surnames":
-          "Taub","suffix":""},{"fullName":"WJ Murphy","givenNames":"WJ",
-          "surnames":"Murphy","suffix":""}],"editors":[]},{"key":"13","year":
-      1930,"displayYear":"1930","volumeNumber":47,"volume":"47","title":
-      "Effects of hypophysectomy upon involution of the thymus in the rat.",
-      "pages":"119-129","eLocationID":"119","journal":"Anatomy Record",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "P Smith","givenNames":"P","surnames":"Smith","suffix":""}],
-      "editors":[]},{"key":"14","year":1968,"displayYear":"1968",
-      "volumeNumber":101,"volume":"101","title":
-      "Hormones and immunologic capacity. I. Effect of heterologous anti-growth hormone (ASTH) antiserum on thymus and peripheral lymphatic tissue in mice. Induction of a wasting syndrome.",
-      "pages":"1036-1043","eLocationID":"1036","journal":"J Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "W Pierpaoli","givenNames":"W","surnames":"Pierpaoli","suffix":
-          ""},{"fullName":"E Sorkin","givenNames":"E","surnames":"Sorkin",
-          "suffix":""}],"editors":[]},{"key":"15","year":1986,"displayYear":
-      "1986","volumeNumber":83,"volume":"83","title":
-      "GH3 pituitary adenoma cells can reverse thymic aging in rats.",
-      "pages":"5663-5667","eLocationID":"5663","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KW Kelley","givenNames":"KW","surnames":"Kelley","suffix":""},{
-          "fullName":"S Brief","givenNames":"S","surnames":"Brief","suffix":
-          ""},{"fullName":"HJ Westly","givenNames":"HJ","surnames":
-          "Westly","suffix":""},{"fullName":"J Novakofski","givenNames":
-          "J","surnames":"Novakofski","suffix":""},{"fullName":
-          "PJ Bechtel","givenNames":"PJ","surnames":"Bechtel","suffix":""}],
-      "editors":[]},{"key":"16","year":1993,"displayYear":"1993",
-      "volumeNumber":178,"volume":"178","title":
-      "Differential effects of growth hormone and prolactin on murine T cell development and function.",
-      "pages":"231-236","eLocationID":"231","journal":"J Exp Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WJ Murphy","givenNames":"WJ","surnames":"Murphy","suffix":""},{
-          "fullName":"SK Durum","givenNames":"SK","surnames":"Durum",
-          "suffix":""},{"fullName":"DL Longo","givenNames":"DL","surnames":
-          "Longo","suffix":""}],"editors":[]},{"key":"17","year":2000,
-      "displayYear":"2000","volumeNumber":21,"volume":"21","title":
-      "The roles of prolactin, growth hormone, insulin-like growth factor-I, and thyroid hormones in lymphocyte development and function: insights from genetic models of hormone and hormone receptor deficiency.",
-      "pages":"292-312","eLocationID":"292","journal":"Endocr Rev",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K Dorshkind","givenNames":"K","surnames":"Dorshkind","suffix":
-          ""},{"fullName":"ND Horseman","givenNames":"ND","surnames":
-          "Horseman","suffix":""}],"editors":[]},{"key":"18","year":2001,
-      "displayYear":"2001","volumeNumber":23,"volume":"23","title":
-      "Anterior pituitary hormones, stress, and immune system homeostasis.",
-      "pages":"288-294","eLocationID":"288","journal":"Bioessays",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K Dorshkind","givenNames":"K","surnames":"Dorshkind","suffix":
-          ""},{"fullName":"ND Horseman","givenNames":"ND","surnames":
-          "Horseman","suffix":""}],"editors":[]},{"key":"19","year":2000,
-      "displayYear":"2000","volumeNumber":96,"volume":"96","title":
-      "Humoral and cell-mediated immunity in mice with genetic deficiencies of prolactin, growth hormone, insulin-like growth factor-I, and thyroid hormone.",
-      "pages":"140-149","eLocationID":"140","journal":"Clin Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MP Foster","givenNames":"MP","surnames":"Foster","suffix":""},{
-          "fullName":"ER Jensen","givenNames":"ER","surnames":"Jensen",
-          "suffix":""},{"fullName":"E Montecino-Rodriguez","givenNames":
-          "E","surnames":"Montecino-Rodriguez","suffix":""},{"fullName":
-          "H Leathers","givenNames":"H","surnames":"Leathers","suffix":""},{
-          "fullName":"N Horseman","givenNames":"N","surnames":"Horseman",
-          "suffix":""}],"editors":[]},{"key":"20","year":2000,"displayYear":
-      "2000","volumeNumber":19,"volume":"19","title":
-      "The role of STAT proteins in growth hormone signaling.","pages":
-      "2585-2597","eLocationID":"2585","journal":"Oncogene",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Herrington","givenNames":"J","surnames":"Herrington","suffix":
-          ""},{"fullName":"LS Smit","givenNames":"LS","surnames":"Smit",
-          "suffix":""},{"fullName":"J Schwartz","givenNames":"J","surnames":
-          "Schwartz","suffix":""},{"fullName":"C Carter-Su","givenNames":
-          "C","surnames":"Carter-Su","suffix":""}],"editors":[]},{"key":
-      "21","year":1996,"displayYear":"1996","volumeNumber":383,"volume":
-      "383","title":
-      "Functional interactions between Stat5 and the glucocorticoid receptor.",
-      "pages":"726-728","eLocationID":"726","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E Stocklin","givenNames":"E","surnames":"Stocklin","suffix":""},{
-          "fullName":"M Wissler","givenNames":"M","surnames":"Wissler",
-          "suffix":""},{"fullName":"F Gouilleux","givenNames":"F","surnames":
-          "Gouilleux","suffix":""},{"fullName":"B Groner","givenNames":"B",
-          "surnames":"Groner","suffix":""}],"editors":[]},{"key":"22","year":
-      1994,"displayYear":"1994","volumeNumber":94,"volume":"94","title":
-      "Growth hormone promotes human T cell adhesion and migration to both human and murine matrix proteins in vitro and directly promotes xenogeneic engraftment.",
-      "pages":"293-300","eLocationID":"293","journal":"J Clin Invest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DD Taub","givenNames":"DD","surnames":"Taub","suffix":""},{
-          "fullName":"G Tsarfaty","givenNames":"G","surnames":"Tsarfaty",
-          "suffix":""},{"fullName":"AR Lloyd","givenNames":"AR","surnames":
-          "Lloyd","suffix":""},{"fullName":"SK Durum","givenNames":"SK",
-          "surnames":"Durum","suffix":""},{"fullName":"DL Longo",
-          "givenNames":"DL","surnames":"Longo","suffix":""}],"editors":[]},{
-      "key":"23","year":1997,"displayYear":"1997","volumeNumber":18,"volume":
-      "18","title":
-      "The somatogenic hormones and insulin-like growth factor-1: stimulators of lymphopoiesis and immune function.",
-      "pages":"157-179","eLocationID":"157","journal":"Endocr Rev",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "R Clark","givenNames":"R","surnames":"Clark","suffix":""}],
-      "editors":[]},{"key":"24","year":1998,"displayYear":"1998",
-      "volumeNumber":139,"volume":"139","title":
-      "Effects of insulin-like growth factor administration and bone marrow transplantation on thymopoiesis in aged mice.",
-      "pages":"4120-4126","eLocationID":"4120","journal":"Endocrinology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E Montecino-Rodriguez","givenNames":"E","surnames":
-          "Montecino-Rodriguez","suffix":""},{"fullName":"R Clark",
-          "givenNames":"R","surnames":"Clark","suffix":""},{"fullName":
-          "K Dorshkind","givenNames":"K","surnames":"Dorshkind","suffix":
-          ""}],"editors":[]},{"key":"25","year":2000,"displayYear":"2000",
-      "volumeNumber":21,"volume":"21","title":
-      "Neuroendocrine control of thymus physiology.","pages":"412-443",
-      "eLocationID":"412","journal":"Endocr Rev","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"W Savino","givenNames":"W","surnames":
-          "Savino","suffix":""},{"fullName":"M Dardenne","givenNames":"M",
-          "surnames":"Dardenne","suffix":""}],"editors":[]},{"key":"26",
-      "year":2002,"displayYear":"2002","volumeNumber":55,"volume":"55",
-      "title":"The thymus gland: a target organ for growth hormone.","pages":
-      "442-452","eLocationID":"442","journal":"Scand J Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "W Savino","givenNames":"W","surnames":"Savino","suffix":""},{
-          "fullName":"MC Postel-Vinay","givenNames":"MC","surnames":
-          "Postel-Vinay","suffix":""},{"fullName":"S Smaniotto","givenNames":
-          "S","surnames":"Smaniotto","suffix":""},{"fullName":"M Dardenne",
-          "givenNames":"M","surnames":"Dardenne","suffix":""}],"editors":[]},
-    {"key":"27","year":2007,"displayYear":"2007","volumeNumber":117,"volume":
-      "117","title":"Ghrelin promotes thymopoiesis during aging.","pages":
-      "2778-2790","eLocationID":"2778","journal":"J Clin Invest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "VD Dixit","givenNames":"VD","surnames":"Dixit","suffix":""},{
-          "fullName":"H Yang","givenNames":"H","surnames":"Yang","suffix":
-          ""},{"fullName":"Y Sun","givenNames":"Y","surnames":"Sun","suffix":
-          ""},{"fullName":"AT Weeraratna","givenNames":"AT","surnames":
-          "Weeraratna","suffix":""},{"fullName":"YH Youm","givenNames":
-          "YH","surnames":"Youm","suffix":""}],"editors":[]},{"key":"28",
-      "year":2002,"displayYear":"2002","volumeNumber":16,"volume":"16",
-      "title":
-      "Increased thymic mass and circulating naive CD4 T cells in HIV-1-infected adults treated with growth hormone.",
-      "pages":"1103-1111","eLocationID":"1103","journal":"Aids",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "LA Napolitano","givenNames":"LA","surnames":"Napolitano","suffix":
-          ""},{"fullName":"JC Lo","givenNames":"JC","surnames":"Lo","suffix":
-          ""},{"fullName":"MB Gotway","givenNames":"MB","surnames":
-          "Gotway","suffix":""},{"fullName":"K Mulligan","givenNames":"K",
-          "surnames":"Mulligan","suffix":""},{"fullName":"JD Barbour",
-          "givenNames":"JD","surnames":"Barbour","suffix":""}],"editors":[]},
-    {"key":"29","year":2008,"displayYear":"2008","volumeNumber":118,"volume":
-      "118","title":
-      "Growth hormone enhances thymic function in HIV-1-infected adults.",
-      "pages":"1085-1098","eLocationID":"1085","journal":"J Clin Invest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "LA Napolitano","givenNames":"LA","surnames":"Napolitano","suffix":
-          ""},{"fullName":"D Schmidt","givenNames":"D","surnames":
-          "Schmidt","suffix":""},{"fullName":"MB Gotway","givenNames":"MB",
-          "surnames":"Gotway","suffix":""},{"fullName":"N Ameli",
-          "givenNames":"N","surnames":"Ameli","suffix":""},{"fullName":
-          "EL Filbert","givenNames":"EL","surnames":"Filbert","suffix":""}],
-      "editors":[]},{"key":"30","year":2006,"displayYear":"2006",
-      "volumeNumber":91,"volume":"91","title":
-      "Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society Clinical Practice Guideline.",
-      "pages":"1621-1634","eLocationID":"1621","journal":
-      "J Clin Endocrinol Metab","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ME Molitch","givenNames":"ME","surnames":"Molitch","suffix":""},{
-          "fullName":"DR Clemmons","givenNames":"DR","surnames":"Clemmons",
-          "suffix":""},{"fullName":"S Malozowski","givenNames":"S",
-          "surnames":"Malozowski","suffix":""},{"fullName":"GR Merriam",
-          "givenNames":"GR","surnames":"Merriam","suffix":""},{"fullName":
-          "SM Shalet","givenNames":"SM","surnames":"Shalet","suffix":""}],
-      "editors":[]},{"key":"31","year":2002,"displayYear":"2002",
-      "volumeNumber":57,"volume":"57","title":
-      "Immune function during GH treatment in GH-deficient adults: an 18-month randomized, placebo-controlled, double-blinded trial.",
-      "pages":"787-792","eLocationID":"787","journal":
-      "Clin Endocrinol (Oxf)","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SB Sneppen","givenNames":"SB","surnames":"Sneppen","suffix":""},{
-          "fullName":"H Mersebach","givenNames":"H","surnames":"Mersebach",
-          "suffix":""},{"fullName":"H Ullum","givenNames":"H","surnames":
-          "Ullum","suffix":""},{"fullName":"U Feldt-Rasmussen","givenNames":
-          "U","surnames":"Feldt-Rasmussen","suffix":""}],"editors":[]},{
-      "key":"32","year":1993,"displayYear":"1993","volumeNumber":21,"volume":
-      "21","title":
-      "Evidence that insulin-like growth factor 2 (IGF2) is the dominant thymic peptide of the insulin superfamily.",
-      "pages":"115-127","eLocationID":"115","journal":"Thymus",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V Geenen","givenNames":"V","surnames":"Geenen","suffix":""},{
-          "fullName":"I Achour","givenNames":"I","surnames":"Achour",
-          "suffix":""},{"fullName":"F Robert","givenNames":"F","surnames":
-          "Robert","suffix":""},{"fullName":"E Vandersmissen","givenNames":
-          "E","surnames":"Vandersmissen","suffix":""},{"fullName":
-          "JC Sodoyez","givenNames":"JC","surnames":"Sodoyez","suffix":""}],
-      "editors":[]},{"key":"33","year":1999,"displayYear":"1999",
-      "volumeNumber":11,"volume":"11","title":
-      "Characterization of the insulin-like growth factor axis in the human thymus.",
-      "pages":"435-440","eLocationID":"435","journal":"J Neuroendocrinol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "O Kecha","givenNames":"O","surnames":"Kecha","suffix":""},{
-          "fullName":"H Martens","givenNames":"H","surnames":"Martens",
-          "suffix":""},{"fullName":"N Franchimont","givenNames":"N",
-          "surnames":"Franchimont","suffix":""},{"fullName":"I Achour",
-          "givenNames":"I","surnames":"Achour","suffix":""},{"fullName":
-          "MT Hazee-Hagelstein","givenNames":"MT","surnames":
-          "Hazee-Hagelstein","suffix":""}],"editors":[]},{"key":"34","year":
-      1993,"displayYear":"1993","volumeNumber":133,"volume":"133","title":
-      "Murine macrophages express abundant insulin-like growth factor-I class I Ea and Eb transcripts.",
-      "pages":"2334-2343","eLocationID":"2334","journal":"Endocrinology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Arkins","givenNames":"S","surnames":"Arkins","suffix":""},{
-          "fullName":"N Rebeiz","givenNames":"N","surnames":"Rebeiz",
-          "suffix":""},{"fullName":"A Biragyn","givenNames":"A","surnames":
-          "Biragyn","suffix":""},{"fullName":"DL Reese","givenNames":"DL",
-          "surnames":"Reese","suffix":""},{"fullName":"KW Kelley",
-          "givenNames":"KW","surnames":"Kelley","suffix":""}],"editors":[]},{
-      "key":"35","year":2002,"displayYear":"2002","volumeNumber":75,"volume":
-      "75","title":
-      "Functional insulin-like growth factor-1/insulin-like growth factor-1 receptor-mediated circuit in human and murine thymic epithelial cells.",
-      "pages":"139-150","eLocationID":"139","journal":"Neuroendocrinology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V de Mello Coelho","givenNames":"V","surnames":
-          "de Mello Coelho","suffix":""},{"fullName":"DM Villa-Verde",
-          "givenNames":"DM","surnames":"Villa-Verde","suffix":""},{
-          "fullName":"DA Farias-de-Oliveira","givenNames":"DA","surnames":
-          "Farias-de-Oliveira","suffix":""},{"fullName":"JM de Brito",
-          "givenNames":"JM","surnames":"de Brito","suffix":""},{"fullName":
-          "M Dardenne","givenNames":"M","surnames":"Dardenne","suffix":""}],
-      "editors":[]},{"key":"36","year":1995,"displayYear":"1995",
-      "volumeNumber":147,"volume":"147","title":
-      "Type I insulin-like growth factor receptor expression in different developmental stages of human thymocytes.",
-      "pages":"203-209","eLocationID":"203","journal":"J Endocrinol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "R Kooijman","givenNames":"R","surnames":"Kooijman","suffix":""},{
-          "fullName":"LE Scholtens","givenNames":"LE","surnames":
-          "Scholtens","suffix":""},{"fullName":"GT Rijkers","givenNames":
-          "GT","surnames":"Rijkers","suffix":""},{"fullName":"BJ Zegers",
-          "givenNames":"BJ","surnames":"Zegers","suffix":""}],"editors":[]},{
-      "key":"37","year":1990,"displayYear":"1990","volumeNumber":87,"volume":
-      "87","title":
-      "Repopulation of the atrophied thymus in diabetic rats by insulin-like growth factor I.",
-      "pages":"3690-3694","eLocationID":"3690","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K Binz","givenNames":"K","surnames":"Binz","suffix":""},{
-          "fullName":"P Joller","givenNames":"P","surnames":"Joller",
-          "suffix":""},{"fullName":"P Froesch","givenNames":"P","surnames":
-          "Froesch","suffix":""},{"fullName":"H Binz","givenNames":"H",
-          "surnames":"Binz","suffix":""},{"fullName":"J Zapf","givenNames":
-          "J","surnames":"Zapf","suffix":""}],"editors":[]},{"key":"38",
-      "year":1998,"displayYear":"1998","volumeNumber":274,"volume":"274",
-      "title":
-      "IGF-I alters lymphocyte survival and regeneration in thymus and spleen after dexamethasone treatment.",
-      "pages":"R912-920","eLocationID":"R912","journal":"Am J Physiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PS Hinton","givenNames":"PS","surnames":"Hinton","suffix":""},{
-          "fullName":"CA Peterson","givenNames":"CA","surnames":"Peterson",
-          "suffix":""},{"fullName":"EM Dahly","givenNames":"EM","surnames":
-          "Dahly","suffix":""},{"fullName":"DM Ney","givenNames":"DM",
-          "surnames":"Ney","suffix":""}],"editors":[]},{"key":"39","year":
-      2000,"displayYear":"2000","volumeNumber":141,"volume":"141","title":
-      "Involvement of insulin-like growth factors in early T cell development: a study using fetal thymic organ cultures.",
-      "pages":"1209-1217","eLocationID":"1209","journal":"Endocrinology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "O Kecha","givenNames":"O","surnames":"Kecha","suffix":""},{
-          "fullName":"F Brilot","givenNames":"F","surnames":"Brilot",
-          "suffix":""},{"fullName":"H Martens","givenNames":"H","surnames":
-          "Martens","suffix":""},{"fullName":"N Franchimont","givenNames":
-          "N","surnames":"Franchimont","suffix":""},{"fullName":"C Renard",
-          "givenNames":"C","surnames":"Renard","suffix":""}],"editors":[]},{
-      "key":"40","year":2008,"displayYear":"2008","volumeNumber":112,
-      "volume":"112","title":
-      "Exogenous insulin-like growth factor 1 enhances thymopoiesis predominantly through thymic epithelial cell expansion.",
-      "pages":"2836-2846","eLocationID":"2836","journal":"Blood",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "YW Chu","givenNames":"YW","surnames":"Chu","suffix":""},{
-          "fullName":"S Schmitz","givenNames":"S","surnames":"Schmitz",
-          "suffix":""},{"fullName":"B Choudhury","givenNames":"B","surnames":
-          "Choudhury","suffix":""},{"fullName":"W Telford","givenNames":
-          "W","surnames":"Telford","suffix":""},{"fullName":"V Kapoor",
-          "givenNames":"V","surnames":"Kapoor","suffix":""}],"editors":[]},{
-      "key":"41","year":2008,"displayYear":"2008","volumeNumber":205,
-      "volume":"205","title":
-      "Administration of rhIL-7 in humans increases in vivo TCR repertoire diversity by preferential expansion of naive T cell subsets.",
-      "pages":"1701-1714","eLocationID":"1701","journal":"J Exp Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Sportes","givenNames":"C","surnames":"Sportes","suffix":""},{
-          "fullName":"FT Hakim","givenNames":"FT","surnames":"Hakim",
-          "suffix":""},{"fullName":"SA Memon","givenNames":"SA","surnames":
-          "Memon","suffix":""},{"fullName":"H Zhang","givenNames":"H",
-          "surnames":"Zhang","suffix":""},{"fullName":"KS Chua","givenNames":
-          "KS","surnames":"Chua","suffix":""}],"editors":[]}],
-  "relatedArticles":[],"authors":[{"fullName":"Gabriel Morrhaye",
-      "givenNames":"Gabriel","surnames":"Morrhaye","suffix":""},{"fullName":
-      "Hamid Kermani","givenNames":"Hamid","surnames":"Kermani","suffix":
-      ""},{"fullName":"Jean-Jacques Legros","givenNames":"Jean-Jacques",
-      "surnames":"Legros","suffix":""},{"fullName":"Frederic Baron",
-      "givenNames":"Frederic","surnames":"Baron","suffix":""},{"fullName":
-      "Yves Beguin","givenNames":"Yves","surnames":"Beguin","suffix":""},{
-      "fullName":"Michel Moutschen","givenNames":"Michel","surnames":
-      "Moutschen","suffix":""},{"fullName":"Remi Cheynier","givenNames":
-      "Remi","surnames":"Cheynier","suffix":""},{"fullName":
-      "Henri J. Martens","givenNames":"Henri J.","surnames":"Martens",
-      "suffix":""},{"fullName":"Vincent Geenen","givenNames":"Vincent",
-      "surnames":"Geenen","suffix":""}],"editors":[{"fullName":
-      "Derya Unutmaz","givenNames":"Derya","surnames":"Unutmaz","suffix":
-      ""}],"journals":[{"eIssn":"1932-6203"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pone.0005668",
+  "title": "Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0005668.zip",
+  "description": "<sec><title>Background</title><p>Despite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.</p></sec><sec><title>Methodology/Principal Findings</title><p>Twenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/\u03b2 TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p&lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r\u200a=\u200a0.61, p&lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/\u03b2 TREC ratio (p&lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/\u03b2 TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.</p></sec><sec><title>Conclusions</title><p>In patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.</p></sec><sec><title>Trial Registration</title><p>ClinicalTrials.gov <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://clinicaltrials.gov/ct2/show/NCT00601419?term=00601419&amp;rank=1\" xlink:type=\"simple\">NTC00601419</ext-link></p></sec>",
+  "rights": "Morrhaye et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-7",
+  "eLocationId": "e5668",
+  "strkImgURI": "",
+  "date": "2009-05-22T07:00:00Z",
+  "volume": "4",
+  "issue": "5",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0005668",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients",
+      "description": "<sec><title>Background</title><p>Despite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.</p></sec><sec><title>Methodology/Principal Findings</title><p>Twenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/\u03b2 TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p&lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r\u200a=\u200a0.61, p&lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/\u03b2 TREC ratio (p&lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/\u03b2 TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.</p></sec><sec><title>Conclusions</title><p>In patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.</p></sec><sec><title>Trial Registration</title><p>ClinicalTrials.gov <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://clinicaltrials.gov/ct2/show/NCT00601419?term=00601419&amp;rank=1\" xlink:type=\"simple\">NTC00601419</ext-link></p></sec>",
+      "size": 82250
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Impact of Growth Hormone (GH) Deficiency and GH Replacement upon Thymus Function in Adult Patients",
+      "description": "<sec><title>Background</title><p>Despite age-related adipose involution, T cell generation in the thymus (thymopoiesis) is maintained beyond puberty in adults. In rodents, growth hormone (GH), insulin-like growth factor-1 (IGF-1), and GH secretagogues reverse age-related changes in thymus cytoarchitecture and increase thymopoiesis. GH administration also enhances thymic mass and function in HIV-infected patients. Until now, thymic function has not been investigated in adult GH deficiency (AGHD). The objective of this clinical study was to evaluate thymic function in AGHD, as well as the repercussion upon thymopoiesis of GH treatment for restoration of GH/IGF-1 physiological levels.</p></sec><sec><title>Methodology/Principal Findings</title><p>Twenty-two patients with documented AGHD were enrolled in this study. The following parameters were measured: plasma IGF-1 concentrations, signal-joint T-cell receptor excision circle (sjTREC) frequency, and sj/\u03b2 TREC ratio. Analyses were performed at three time points: firstly on GH treatment at maintenance dose, secondly one month after GH withdrawal, and thirdly one month after GH resumption. After 1-month interruption of GH treatment, both plasma IGF-1 concentrations and sjTREC frequency were decreased (p&lt;0.001). Decreases in IGF-1 and sjTREC levels were correlated (r\u200a=\u200a0.61, p&lt;0.01). There was also a decrease in intrathymic T cell proliferation as indicated by the reduced sj/\u03b2 TREC ratio (p&lt;0.01). One month after reintroduction of GH treatment, IGF-1 concentration and sjTREC frequency regained a level equivalent to the one before GH withdrawal. The sj/\u03b2 TREC ratio also increased with GH resumption, but did not return to the level measured before GH withdrawal.</p></sec><sec><title>Conclusions</title><p>In patients with AGHD under GH treatment, GH withdrawal decreases thymic T cell output, as well as intrathymic T cell proliferation. These parameters of thymus function are completely or partially restored one month after GH resumption. These data indicate that the functional integrity of the somatotrope GH/IGF-1 axis is important for the maintenance of a normal thymus function in human adults.</p></sec><sec><title>Trial Registration</title><p>ClinicalTrials.gov <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://clinicaltrials.gov/ct2/show/NCT00601419?term=00601419&amp;rank=1\" xlink:type=\"simple\">NTC00601419</ext-link></p></sec>",
+      "size": 225018
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Clinical and baseline characteristics of patients with AGHD before GH withdrawal.</title>",
+      "size": 501568
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical and baseline characteristics of patients with AGHD before GH withdrawal.</title>",
+      "size": 25257
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical and baseline characteristics of patients with AGHD before GH withdrawal.</title>",
+      "size": 212452
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical and baseline characteristics of patients with AGHD before GH withdrawal.</title>",
+      "size": 292845
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>Plasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.</title><p>The interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P&lt;0.001 (by Wilcoxon's signed rank test, N\u200a=\u200a22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R\u200a=\u200a0.61, P&lt;0.01 by Spearman's analysis).</p>",
+      "size": 470152
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Plasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.</title><p>The interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P&lt;0.001 (by Wilcoxon's signed rank test, N\u200a=\u200a22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R\u200a=\u200a0.61, P&lt;0.01 by Spearman's analysis).</p>",
+      "size": 22605
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Plasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.</title><p>The interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P&lt;0.001 (by Wilcoxon's signed rank test, N\u200a=\u200a22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R\u200a=\u200a0.61, P&lt;0.01 by Spearman's analysis).</p>",
+      "size": 98971
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Plasma IGF-1 concentrations and sjTREC frequency in PBMCs from patients with GH deficiency and on GH treatment.</title><p>The interruption of GH-treatment for 1 month induced a very significant decrease in blood IGF-1 and sjTREC levels (A). Both parameters were restored at initial levels one month after GH resumption (B). ***P&lt;0.001 (by Wilcoxon's signed rank test, N\u200a=\u200a22). As shown in C, there is a significant positive correlation between blood IGF-1 levels and sjTREC frequencies (R\u200a=\u200a0.61, P&lt;0.01 by Spearman's analysis).</p>",
+      "size": 331176
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Relationship between age and sjTREC frequency in PBMCs from patients with AGHD.</title><p>A. Under GH treatment (R\u200a=\u200a\u22120.35, P\u200a=\u200a0.11). B. One month after GH withdrawal (R\u200a=\u200a\u22120.5, P\u200a=\u200a0.02). C. One month after GH resumption (R\u200a=\u200a\u22120.55, P&lt;0.01).</p>",
+      "size": 926312
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between age and sjTREC frequency in PBMCs from patients with AGHD.</title><p>A. Under GH treatment (R\u200a=\u200a\u22120.35, P\u200a=\u200a0.11). B. One month after GH withdrawal (R\u200a=\u200a\u22120.5, P\u200a=\u200a0.02). C. One month after GH resumption (R\u200a=\u200a\u22120.55, P&lt;0.01).</p>",
+      "size": 14131
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between age and sjTREC frequency in PBMCs from patients with AGHD.</title><p>A. Under GH treatment (R\u200a=\u200a\u22120.35, P\u200a=\u200a0.11). B. One month after GH withdrawal (R\u200a=\u200a\u22120.5, P\u200a=\u200a0.02). C. One month after GH resumption (R\u200a=\u200a\u22120.55, P&lt;0.01).</p>",
+      "size": 50311
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between age and sjTREC frequency in PBMCs from patients with AGHD.</title><p>A. Under GH treatment (R\u200a=\u200a\u22120.35, P\u200a=\u200a0.11). B. One month after GH withdrawal (R\u200a=\u200a\u22120.5, P\u200a=\u200a0.02). C. One month after GH resumption (R\u200a=\u200a\u22120.55, P&lt;0.01).</p>",
+      "size": 337580
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g003",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 3",
+      "description": "<title>Blood D\u03b2TREC frequency and sj/\u03b2 TREC ratio.</title><p>No significant modification was detected in blood D\u03b2TREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/\u03b2 TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P&lt;0.01 (by Wilcoxon's signed rank test, N\u200a=\u200a19).</p>",
+      "size": 407908
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g003",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Blood D\u03b2TREC frequency and sj/\u03b2 TREC ratio.</title><p>No significant modification was detected in blood D\u03b2TREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/\u03b2 TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P&lt;0.01 (by Wilcoxon's signed rank test, N\u200a=\u200a19).</p>",
+      "size": 13154
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g003",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Blood D\u03b2TREC frequency and sj/\u03b2 TREC ratio.</title><p>No significant modification was detected in blood D\u03b2TREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/\u03b2 TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P&lt;0.01 (by Wilcoxon's signed rank test, N\u200a=\u200a19).</p>",
+      "size": 93388
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.g003",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Blood D\u03b2TREC frequency and sj/\u03b2 TREC ratio.</title><p>No significant modification was detected in blood D\u03b2TREC frequency after 1-month interruption of GH treatment, nor 1 month after GH resumption (A). The sj/\u03b2 TREC ratio significantly declined after 1-month interruption of GH treatment. It was increased 1 month after GH-resumption but did not reach the level measured before the arrest of GH treatment. Results are shown as median with interquartiles. ** P&lt;0.01 (by Wilcoxon's signed rank test, N\u200a=\u200a19).</p>",
+      "size": 179827
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.s001",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Checklist S1",
+      "description": "<p>CONSORT checklist</p><p>(0.05 MB DOC)</p>",
+      "size": 46592
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0005668.s002",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Protocol S1",
+      "description": "<p>Trial Protocol</p><p>(0.03 MB DOC)</p>",
+      "size": 30720
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 396,
+      "volume": "396",
+      "title": "Changes in thymic function with age and during the treatment of HIV infection.",
+      "pages": "690-695",
+      "eLocationID": "690",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DC Douek",
+          "givenNames": "DC",
+          "surnames": "Douek",
+          "suffix": ""
+        },
+        {
+          "fullName": "RD McFarland",
+          "givenNames": "RD",
+          "surnames": "McFarland",
+          "suffix": ""
+        },
+        {
+          "fullName": "PH Keiser",
+          "givenNames": "PH",
+          "surnames": "Keiser",
+          "suffix": ""
+        },
+        {
+          "fullName": "EA Gage",
+          "givenNames": "EA",
+          "surnames": "Gage",
+          "suffix": ""
+        },
+        {
+          "fullName": "JM Massey",
+          "givenNames": "JM",
+          "surnames": "Massey",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Thymic function can be accurately monitored by the level of recent T cell emigrants in the circulation.",
+      "pages": "97-104",
+      "eLocationID": "97",
+      "journal": "Immunity",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "F Kong",
+          "givenNames": "F",
+          "surnames": "Kong",
+          "suffix": ""
+        },
+        {
+          "fullName": "CH Chen",
+          "givenNames": "CH",
+          "surnames": "Chen",
+          "suffix": ""
+        },
+        {
+          "fullName": "MD Cooper",
+          "givenNames": "MD",
+          "surnames": "Cooper",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 168,
+      "volume": "168",
+      "title": "Reversible disruption of thymic function by steroid treatment.",
+      "pages": "6500-6505",
+      "eLocationID": "6500",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "FK Kong",
+          "givenNames": "FK",
+          "surnames": "Kong",
+          "suffix": ""
+        },
+        {
+          "fullName": "CL Chen",
+          "givenNames": "CL",
+          "surnames": "Chen",
+          "suffix": ""
+        },
+        {
+          "fullName": "MD Cooper",
+          "givenNames": "MD",
+          "surnames": "Cooper",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 190,
+      "volume": "190",
+      "title": "Direct evidence for thymic function in adult humans.",
+      "pages": "479-486",
+      "eLocationID": "479",
+      "journal": "J Exp Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JF Poulin",
+          "givenNames": "JF",
+          "surnames": "Poulin",
+          "suffix": ""
+        },
+        {
+          "fullName": "MN Viswanathan",
+          "givenNames": "MN",
+          "surnames": "Viswanathan",
+          "suffix": ""
+        },
+        {
+          "fullName": "JM Harris",
+          "givenNames": "JM",
+          "surnames": "Harris",
+          "suffix": ""
+        },
+        {
+          "fullName": "KV Komanduri",
+          "givenNames": "KV",
+          "surnames": "Komanduri",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Wieder",
+          "givenNames": "E",
+          "surnames": "Wieder",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2004,
+      "displayYear": "2004",
+      "title": "The central role of the thymus in the development of self-tolerance and autoimmunity in the neuroendocrine system.",
+      "publisherLocation": "New York",
+      "publisherName": "Marcel Dekker",
+      "pages": "337-356",
+      "eLocationID": "337",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "V Geenen",
+          "givenNames": "V",
+          "surnames": "Geenen",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Brilot",
+          "givenNames": "F",
+          "surnames": "Brilot",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Hansenne",
+          "givenNames": "I",
+          "surnames": "Hansenne",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Louis",
+          "givenNames": "C",
+          "surnames": "Louis",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Charlet-Renard",
+          "givenNames": "C",
+          "surnames": "Charlet-Renard",
+          "suffix": ""
+        }
+      ],
+      "editors": [
+        {
+          "fullName": "V Geenen",
+          "givenNames": "V",
+          "surnames": "Geenen",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Chrousos",
+          "givenNames": "G",
+          "surnames": "Chrousos",
+          "suffix": ""
+        }
+      ]
+    },
+    {
+      "key": "6",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 176,
+      "volume": "176",
+      "title": "Quantification of T cell receptor rearrangement excision circles to estimate thymic function: an important new tool for endocrine-immune physiology.",
+      "pages": "305-311",
+      "eLocationID": "305",
+      "journal": "J Endocrinol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V Geenen",
+          "givenNames": "V",
+          "surnames": "Geenen",
+          "suffix": ""
+        },
+        {
+          "fullName": "JF Poulin",
+          "givenNames": "JF",
+          "surnames": "Poulin",
+          "suffix": ""
+        },
+        {
+          "fullName": "ML Dion",
+          "givenNames": "ML",
+          "surnames": "Dion",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Martens",
+          "givenNames": "H",
+          "surnames": "Martens",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Castermans",
+          "givenNames": "E",
+          "surnames": "Castermans",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "HIV infection rapidly induces and maintains a substantial suppression of thymocyte proliferation.",
+      "pages": "757-768",
+      "eLocationID": "757",
+      "journal": "Immunity",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ML Dion",
+          "givenNames": "ML",
+          "surnames": "Dion",
+          "suffix": ""
+        },
+        {
+          "fullName": "JF Poulin",
+          "givenNames": "JF",
+          "surnames": "Poulin",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Bordi",
+          "givenNames": "R",
+          "surnames": "Bordi",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Sylvestre",
+          "givenNames": "M",
+          "surnames": "Sylvestre",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Corsini",
+          "givenNames": "R",
+          "surnames": "Corsini",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 181,
+      "volume": "181",
+      "title": "The magnitude of thymic output is genetically determined through controlled intrathymic precursor T cell proliferation.",
+      "pages": "7818-7824",
+      "eLocationID": "7818",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "G Dulude",
+          "givenNames": "G",
+          "surnames": "Dulude",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Cheynier",
+          "givenNames": "R",
+          "surnames": "Cheynier",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Gauchat",
+          "givenNames": "D",
+          "surnames": "Gauchat",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Abdallah",
+          "givenNames": "A",
+          "surnames": "Abdallah",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Kettaf",
+          "givenNames": "N",
+          "surnames": "Kettaf",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 177,
+      "volume": "177",
+      "title": "The effects of age, thymectomy, and HIV Infection on alpha and beta TCR excision circles in naive T cells.",
+      "pages": "4391-4401",
+      "eLocationID": "4391",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C van den Dool",
+          "givenNames": "C",
+          "surnames": "van den Dool",
+          "suffix": ""
+        },
+        {
+          "fullName": "RJ de Boer",
+          "givenNames": "RJ",
+          "surnames": "de Boer",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 93,
+      "volume": "93",
+      "title": "Evidence for neo-generation of T cells by the thymus after non-myeloablative conditioning.",
+      "pages": "240-247",
+      "eLocationID": "240",
+      "journal": "Haematologica",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Castermans",
+          "givenNames": "E",
+          "surnames": "Castermans",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Baron",
+          "givenNames": "F",
+          "surnames": "Baron",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Willems",
+          "givenNames": "E",
+          "surnames": "Willems",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Schaaf-Lafontaine",
+          "givenNames": "N",
+          "surnames": "Schaaf-Lafontaine",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Meuris",
+          "givenNames": "N",
+          "surnames": "Meuris",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2003,
+      "displayYear": "2003",
+      "title": "Type I cytokines and interferons and their receptors.",
+      "publisherLocation": "Philadelphia",
+      "publisherName": "Lippincott Williams & Wilkins",
+      "pages": "701-747",
+      "eLocationID": "701",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "W Leonard",
+          "givenNames": "W",
+          "surnames": "Leonard",
+          "suffix": ""
+        }
+      ],
+      "editors": [
+        {
+          "fullName": "W Paul",
+          "givenNames": "W",
+          "surnames": "Paul",
+          "suffix": ""
+        }
+      ]
+    },
+    {
+      "key": "12",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 252,
+      "volume": "252",
+      "title": "Neuroendocrine hormones such as growth hormone and prolactin are integral members of the immunological cytokine network.",
+      "pages": "111-121",
+      "eLocationID": "111",
+      "journal": "Cell Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Redelman",
+          "givenNames": "D",
+          "surnames": "Redelman",
+          "suffix": ""
+        },
+        {
+          "fullName": "LA Welniak",
+          "givenNames": "LA",
+          "surnames": "Welniak",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Taub",
+          "givenNames": "D",
+          "surnames": "Taub",
+          "suffix": ""
+        },
+        {
+          "fullName": "WJ Murphy",
+          "givenNames": "WJ",
+          "surnames": "Murphy",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 1930,
+      "displayYear": "1930",
+      "volumeNumber": 47,
+      "volume": "47",
+      "title": "Effects of hypophysectomy upon involution of the thymus in the rat.",
+      "pages": "119-129",
+      "eLocationID": "119",
+      "journal": "Anatomy Record",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P Smith",
+          "givenNames": "P",
+          "surnames": "Smith",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 1968,
+      "displayYear": "1968",
+      "volumeNumber": 101,
+      "volume": "101",
+      "title": "Hormones and immunologic capacity. I. Effect of heterologous anti-growth hormone (ASTH) antiserum on thymus and peripheral lymphatic tissue in mice. Induction of a wasting syndrome.",
+      "pages": "1036-1043",
+      "eLocationID": "1036",
+      "journal": "J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "W Pierpaoli",
+          "givenNames": "W",
+          "surnames": "Pierpaoli",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Sorkin",
+          "givenNames": "E",
+          "surnames": "Sorkin",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 1986,
+      "displayYear": "1986",
+      "volumeNumber": 83,
+      "volume": "83",
+      "title": "GH3 pituitary adenoma cells can reverse thymic aging in rats.",
+      "pages": "5663-5667",
+      "eLocationID": "5663",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KW Kelley",
+          "givenNames": "KW",
+          "surnames": "Kelley",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Brief",
+          "givenNames": "S",
+          "surnames": "Brief",
+          "suffix": ""
+        },
+        {
+          "fullName": "HJ Westly",
+          "givenNames": "HJ",
+          "surnames": "Westly",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Novakofski",
+          "givenNames": "J",
+          "surnames": "Novakofski",
+          "suffix": ""
+        },
+        {
+          "fullName": "PJ Bechtel",
+          "givenNames": "PJ",
+          "surnames": "Bechtel",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 178,
+      "volume": "178",
+      "title": "Differential effects of growth hormone and prolactin on murine T cell development and function.",
+      "pages": "231-236",
+      "eLocationID": "231",
+      "journal": "J Exp Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WJ Murphy",
+          "givenNames": "WJ",
+          "surnames": "Murphy",
+          "suffix": ""
+        },
+        {
+          "fullName": "SK Durum",
+          "givenNames": "SK",
+          "surnames": "Durum",
+          "suffix": ""
+        },
+        {
+          "fullName": "DL Longo",
+          "givenNames": "DL",
+          "surnames": "Longo",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "The roles of prolactin, growth hormone, insulin-like growth factor-I, and thyroid hormones in lymphocyte development and function: insights from genetic models of hormone and hormone receptor deficiency.",
+      "pages": "292-312",
+      "eLocationID": "292",
+      "journal": "Endocr Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Dorshkind",
+          "givenNames": "K",
+          "surnames": "Dorshkind",
+          "suffix": ""
+        },
+        {
+          "fullName": "ND Horseman",
+          "givenNames": "ND",
+          "surnames": "Horseman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 23,
+      "volume": "23",
+      "title": "Anterior pituitary hormones, stress, and immune system homeostasis.",
+      "pages": "288-294",
+      "eLocationID": "288",
+      "journal": "Bioessays",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Dorshkind",
+          "givenNames": "K",
+          "surnames": "Dorshkind",
+          "suffix": ""
+        },
+        {
+          "fullName": "ND Horseman",
+          "givenNames": "ND",
+          "surnames": "Horseman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 96,
+      "volume": "96",
+      "title": "Humoral and cell-mediated immunity in mice with genetic deficiencies of prolactin, growth hormone, insulin-like growth factor-I, and thyroid hormone.",
+      "pages": "140-149",
+      "eLocationID": "140",
+      "journal": "Clin Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MP Foster",
+          "givenNames": "MP",
+          "surnames": "Foster",
+          "suffix": ""
+        },
+        {
+          "fullName": "ER Jensen",
+          "givenNames": "ER",
+          "surnames": "Jensen",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Montecino-Rodriguez",
+          "givenNames": "E",
+          "surnames": "Montecino-Rodriguez",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Leathers",
+          "givenNames": "H",
+          "surnames": "Leathers",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Horseman",
+          "givenNames": "N",
+          "surnames": "Horseman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 19,
+      "volume": "19",
+      "title": "The role of STAT proteins in growth hormone signaling.",
+      "pages": "2585-2597",
+      "eLocationID": "2585",
+      "journal": "Oncogene",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Herrington",
+          "givenNames": "J",
+          "surnames": "Herrington",
+          "suffix": ""
+        },
+        {
+          "fullName": "LS Smit",
+          "givenNames": "LS",
+          "surnames": "Smit",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Schwartz",
+          "givenNames": "J",
+          "surnames": "Schwartz",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Carter-Su",
+          "givenNames": "C",
+          "surnames": "Carter-Su",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 383,
+      "volume": "383",
+      "title": "Functional interactions between Stat5 and the glucocorticoid receptor.",
+      "pages": "726-728",
+      "eLocationID": "726",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Stocklin",
+          "givenNames": "E",
+          "surnames": "Stocklin",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Wissler",
+          "givenNames": "M",
+          "surnames": "Wissler",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Gouilleux",
+          "givenNames": "F",
+          "surnames": "Gouilleux",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Groner",
+          "givenNames": "B",
+          "surnames": "Groner",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 94,
+      "volume": "94",
+      "title": "Growth hormone promotes human T cell adhesion and migration to both human and murine matrix proteins in vitro and directly promotes xenogeneic engraftment.",
+      "pages": "293-300",
+      "eLocationID": "293",
+      "journal": "J Clin Invest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DD Taub",
+          "givenNames": "DD",
+          "surnames": "Taub",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Tsarfaty",
+          "givenNames": "G",
+          "surnames": "Tsarfaty",
+          "suffix": ""
+        },
+        {
+          "fullName": "AR Lloyd",
+          "givenNames": "AR",
+          "surnames": "Lloyd",
+          "suffix": ""
+        },
+        {
+          "fullName": "SK Durum",
+          "givenNames": "SK",
+          "surnames": "Durum",
+          "suffix": ""
+        },
+        {
+          "fullName": "DL Longo",
+          "givenNames": "DL",
+          "surnames": "Longo",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "The somatogenic hormones and insulin-like growth factor-1: stimulators of lymphopoiesis and immune function.",
+      "pages": "157-179",
+      "eLocationID": "157",
+      "journal": "Endocr Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Clark",
+          "givenNames": "R",
+          "surnames": "Clark",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 139,
+      "volume": "139",
+      "title": "Effects of insulin-like growth factor administration and bone marrow transplantation on thymopoiesis in aged mice.",
+      "pages": "4120-4126",
+      "eLocationID": "4120",
+      "journal": "Endocrinology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Montecino-Rodriguez",
+          "givenNames": "E",
+          "surnames": "Montecino-Rodriguez",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Clark",
+          "givenNames": "R",
+          "surnames": "Clark",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Dorshkind",
+          "givenNames": "K",
+          "surnames": "Dorshkind",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Neuroendocrine control of thymus physiology.",
+      "pages": "412-443",
+      "eLocationID": "412",
+      "journal": "Endocr Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "W Savino",
+          "givenNames": "W",
+          "surnames": "Savino",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Dardenne",
+          "givenNames": "M",
+          "surnames": "Dardenne",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 55,
+      "volume": "55",
+      "title": "The thymus gland: a target organ for growth hormone.",
+      "pages": "442-452",
+      "eLocationID": "442",
+      "journal": "Scand J Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "W Savino",
+          "givenNames": "W",
+          "surnames": "Savino",
+          "suffix": ""
+        },
+        {
+          "fullName": "MC Postel-Vinay",
+          "givenNames": "MC",
+          "surnames": "Postel-Vinay",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Smaniotto",
+          "givenNames": "S",
+          "surnames": "Smaniotto",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Dardenne",
+          "givenNames": "M",
+          "surnames": "Dardenne",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 117,
+      "volume": "117",
+      "title": "Ghrelin promotes thymopoiesis during aging.",
+      "pages": "2778-2790",
+      "eLocationID": "2778",
+      "journal": "J Clin Invest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "VD Dixit",
+          "givenNames": "VD",
+          "surnames": "Dixit",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Yang",
+          "givenNames": "H",
+          "surnames": "Yang",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Sun",
+          "givenNames": "Y",
+          "surnames": "Sun",
+          "suffix": ""
+        },
+        {
+          "fullName": "AT Weeraratna",
+          "givenNames": "AT",
+          "surnames": "Weeraratna",
+          "suffix": ""
+        },
+        {
+          "fullName": "YH Youm",
+          "givenNames": "YH",
+          "surnames": "Youm",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 16,
+      "volume": "16",
+      "title": "Increased thymic mass and circulating naive CD4 T cells in HIV-1-infected adults treated with growth hormone.",
+      "pages": "1103-1111",
+      "eLocationID": "1103",
+      "journal": "Aids",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LA Napolitano",
+          "givenNames": "LA",
+          "surnames": "Napolitano",
+          "suffix": ""
+        },
+        {
+          "fullName": "JC Lo",
+          "givenNames": "JC",
+          "surnames": "Lo",
+          "suffix": ""
+        },
+        {
+          "fullName": "MB Gotway",
+          "givenNames": "MB",
+          "surnames": "Gotway",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Mulligan",
+          "givenNames": "K",
+          "surnames": "Mulligan",
+          "suffix": ""
+        },
+        {
+          "fullName": "JD Barbour",
+          "givenNames": "JD",
+          "surnames": "Barbour",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 118,
+      "volume": "118",
+      "title": "Growth hormone enhances thymic function in HIV-1-infected adults.",
+      "pages": "1085-1098",
+      "eLocationID": "1085",
+      "journal": "J Clin Invest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LA Napolitano",
+          "givenNames": "LA",
+          "surnames": "Napolitano",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Schmidt",
+          "givenNames": "D",
+          "surnames": "Schmidt",
+          "suffix": ""
+        },
+        {
+          "fullName": "MB Gotway",
+          "givenNames": "MB",
+          "surnames": "Gotway",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Ameli",
+          "givenNames": "N",
+          "surnames": "Ameli",
+          "suffix": ""
+        },
+        {
+          "fullName": "EL Filbert",
+          "givenNames": "EL",
+          "surnames": "Filbert",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 91,
+      "volume": "91",
+      "title": "Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society Clinical Practice Guideline.",
+      "pages": "1621-1634",
+      "eLocationID": "1621",
+      "journal": "J Clin Endocrinol Metab",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ME Molitch",
+          "givenNames": "ME",
+          "surnames": "Molitch",
+          "suffix": ""
+        },
+        {
+          "fullName": "DR Clemmons",
+          "givenNames": "DR",
+          "surnames": "Clemmons",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Malozowski",
+          "givenNames": "S",
+          "surnames": "Malozowski",
+          "suffix": ""
+        },
+        {
+          "fullName": "GR Merriam",
+          "givenNames": "GR",
+          "surnames": "Merriam",
+          "suffix": ""
+        },
+        {
+          "fullName": "SM Shalet",
+          "givenNames": "SM",
+          "surnames": "Shalet",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 57,
+      "volume": "57",
+      "title": "Immune function during GH treatment in GH-deficient adults: an 18-month randomized, placebo-controlled, double-blinded trial.",
+      "pages": "787-792",
+      "eLocationID": "787",
+      "journal": "Clin Endocrinol (Oxf)",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SB Sneppen",
+          "givenNames": "SB",
+          "surnames": "Sneppen",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Mersebach",
+          "givenNames": "H",
+          "surnames": "Mersebach",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Ullum",
+          "givenNames": "H",
+          "surnames": "Ullum",
+          "suffix": ""
+        },
+        {
+          "fullName": "U Feldt-Rasmussen",
+          "givenNames": "U",
+          "surnames": "Feldt-Rasmussen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Evidence that insulin-like growth factor 2 (IGF2) is the dominant thymic peptide of the insulin superfamily.",
+      "pages": "115-127",
+      "eLocationID": "115",
+      "journal": "Thymus",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V Geenen",
+          "givenNames": "V",
+          "surnames": "Geenen",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Achour",
+          "givenNames": "I",
+          "surnames": "Achour",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Robert",
+          "givenNames": "F",
+          "surnames": "Robert",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Vandersmissen",
+          "givenNames": "E",
+          "surnames": "Vandersmissen",
+          "suffix": ""
+        },
+        {
+          "fullName": "JC Sodoyez",
+          "givenNames": "JC",
+          "surnames": "Sodoyez",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Characterization of the insulin-like growth factor axis in the human thymus.",
+      "pages": "435-440",
+      "eLocationID": "435",
+      "journal": "J Neuroendocrinol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "O Kecha",
+          "givenNames": "O",
+          "surnames": "Kecha",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Martens",
+          "givenNames": "H",
+          "surnames": "Martens",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Franchimont",
+          "givenNames": "N",
+          "surnames": "Franchimont",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Achour",
+          "givenNames": "I",
+          "surnames": "Achour",
+          "suffix": ""
+        },
+        {
+          "fullName": "MT Hazee-Hagelstein",
+          "givenNames": "MT",
+          "surnames": "Hazee-Hagelstein",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 133,
+      "volume": "133",
+      "title": "Murine macrophages express abundant insulin-like growth factor-I class I Ea and Eb transcripts.",
+      "pages": "2334-2343",
+      "eLocationID": "2334",
+      "journal": "Endocrinology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Arkins",
+          "givenNames": "S",
+          "surnames": "Arkins",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Rebeiz",
+          "givenNames": "N",
+          "surnames": "Rebeiz",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Biragyn",
+          "givenNames": "A",
+          "surnames": "Biragyn",
+          "suffix": ""
+        },
+        {
+          "fullName": "DL Reese",
+          "givenNames": "DL",
+          "surnames": "Reese",
+          "suffix": ""
+        },
+        {
+          "fullName": "KW Kelley",
+          "givenNames": "KW",
+          "surnames": "Kelley",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 75,
+      "volume": "75",
+      "title": "Functional insulin-like growth factor-1/insulin-like growth factor-1 receptor-mediated circuit in human and murine thymic epithelial cells.",
+      "pages": "139-150",
+      "eLocationID": "139",
+      "journal": "Neuroendocrinology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V de Mello Coelho",
+          "givenNames": "V",
+          "surnames": "de Mello Coelho",
+          "suffix": ""
+        },
+        {
+          "fullName": "DM Villa-Verde",
+          "givenNames": "DM",
+          "surnames": "Villa-Verde",
+          "suffix": ""
+        },
+        {
+          "fullName": "DA Farias-de-Oliveira",
+          "givenNames": "DA",
+          "surnames": "Farias-de-Oliveira",
+          "suffix": ""
+        },
+        {
+          "fullName": "JM de Brito",
+          "givenNames": "JM",
+          "surnames": "de Brito",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Dardenne",
+          "givenNames": "M",
+          "surnames": "Dardenne",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 147,
+      "volume": "147",
+      "title": "Type I insulin-like growth factor receptor expression in different developmental stages of human thymocytes.",
+      "pages": "203-209",
+      "eLocationID": "203",
+      "journal": "J Endocrinol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Kooijman",
+          "givenNames": "R",
+          "surnames": "Kooijman",
+          "suffix": ""
+        },
+        {
+          "fullName": "LE Scholtens",
+          "givenNames": "LE",
+          "surnames": "Scholtens",
+          "suffix": ""
+        },
+        {
+          "fullName": "GT Rijkers",
+          "givenNames": "GT",
+          "surnames": "Rijkers",
+          "suffix": ""
+        },
+        {
+          "fullName": "BJ Zegers",
+          "givenNames": "BJ",
+          "surnames": "Zegers",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "37",
+      "year": 1990,
+      "displayYear": "1990",
+      "volumeNumber": 87,
+      "volume": "87",
+      "title": "Repopulation of the atrophied thymus in diabetic rats by insulin-like growth factor I.",
+      "pages": "3690-3694",
+      "eLocationID": "3690",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Binz",
+          "givenNames": "K",
+          "surnames": "Binz",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Joller",
+          "givenNames": "P",
+          "surnames": "Joller",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Froesch",
+          "givenNames": "P",
+          "surnames": "Froesch",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Binz",
+          "givenNames": "H",
+          "surnames": "Binz",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Zapf",
+          "givenNames": "J",
+          "surnames": "Zapf",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "38",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 274,
+      "volume": "274",
+      "title": "IGF-I alters lymphocyte survival and regeneration in thymus and spleen after dexamethasone treatment.",
+      "pages": "R912-920",
+      "eLocationID": "R912",
+      "journal": "Am J Physiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "PS Hinton",
+          "givenNames": "PS",
+          "surnames": "Hinton",
+          "suffix": ""
+        },
+        {
+          "fullName": "CA Peterson",
+          "givenNames": "CA",
+          "surnames": "Peterson",
+          "suffix": ""
+        },
+        {
+          "fullName": "EM Dahly",
+          "givenNames": "EM",
+          "surnames": "Dahly",
+          "suffix": ""
+        },
+        {
+          "fullName": "DM Ney",
+          "givenNames": "DM",
+          "surnames": "Ney",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "39",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 141,
+      "volume": "141",
+      "title": "Involvement of insulin-like growth factors in early T cell development: a study using fetal thymic organ cultures.",
+      "pages": "1209-1217",
+      "eLocationID": "1209",
+      "journal": "Endocrinology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "O Kecha",
+          "givenNames": "O",
+          "surnames": "Kecha",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Brilot",
+          "givenNames": "F",
+          "surnames": "Brilot",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Martens",
+          "givenNames": "H",
+          "surnames": "Martens",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Franchimont",
+          "givenNames": "N",
+          "surnames": "Franchimont",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Renard",
+          "givenNames": "C",
+          "surnames": "Renard",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "40",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 112,
+      "volume": "112",
+      "title": "Exogenous insulin-like growth factor 1 enhances thymopoiesis predominantly through thymic epithelial cell expansion.",
+      "pages": "2836-2846",
+      "eLocationID": "2836",
+      "journal": "Blood",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "YW Chu",
+          "givenNames": "YW",
+          "surnames": "Chu",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Schmitz",
+          "givenNames": "S",
+          "surnames": "Schmitz",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Choudhury",
+          "givenNames": "B",
+          "surnames": "Choudhury",
+          "suffix": ""
+        },
+        {
+          "fullName": "W Telford",
+          "givenNames": "W",
+          "surnames": "Telford",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Kapoor",
+          "givenNames": "V",
+          "surnames": "Kapoor",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "41",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 205,
+      "volume": "205",
+      "title": "Administration of rhIL-7 in humans increases in vivo TCR repertoire diversity by preferential expansion of naive T cell subsets.",
+      "pages": "1701-1714",
+      "eLocationID": "1701",
+      "journal": "J Exp Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Sportes",
+          "givenNames": "C",
+          "surnames": "Sportes",
+          "suffix": ""
+        },
+        {
+          "fullName": "FT Hakim",
+          "givenNames": "FT",
+          "surnames": "Hakim",
+          "suffix": ""
+        },
+        {
+          "fullName": "SA Memon",
+          "givenNames": "SA",
+          "surnames": "Memon",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Zhang",
+          "givenNames": "H",
+          "surnames": "Zhang",
+          "suffix": ""
+        },
+        {
+          "fullName": "KS Chua",
+          "givenNames": "KS",
+          "surnames": "Chua",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Gabriel Morrhaye",
+      "givenNames": "Gabriel",
+      "surnames": "Morrhaye",
+      "suffix": ""
+    },
+    {
+      "fullName": "Hamid Kermani",
+      "givenNames": "Hamid",
+      "surnames": "Kermani",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jean-Jacques Legros",
+      "givenNames": "Jean-Jacques",
+      "surnames": "Legros",
+      "suffix": ""
+    },
+    {
+      "fullName": "Frederic Baron",
+      "givenNames": "Frederic",
+      "surnames": "Baron",
+      "suffix": ""
+    },
+    {
+      "fullName": "Yves Beguin",
+      "givenNames": "Yves",
+      "surnames": "Beguin",
+      "suffix": ""
+    },
+    {
+      "fullName": "Michel Moutschen",
+      "givenNames": "Michel",
+      "surnames": "Moutschen",
+      "suffix": ""
+    },
+    {
+      "fullName": "Remi Cheynier",
+      "givenNames": "Remi",
+      "surnames": "Cheynier",
+      "suffix": ""
+    },
+    {
+      "fullName": "Henri J. Martens",
+      "givenNames": "Henri J.",
+      "surnames": "Martens",
+      "suffix": ""
+    },
+    {
+      "fullName": "Vincent Geenen",
+      "givenNames": "Vincent",
+      "surnames": "Geenen",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Derya Unutmaz",
+      "givenNames": "Derya",
+      "surnames": "Unutmaz",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}

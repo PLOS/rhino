@@ -1,109 +1,378 @@
-{"doi":"info:doi/10.1371/journal.pcbi.0020083","title":
-  "Authors\u0027 Reply","eIssn":"1553-7358","state":1,"archiveName":
-  "pcbi.0020083.zip","rights":
-  "Nguyen et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-2","eLocationId":"e83",
-  "strkImgURI":"","date":"2006-07-28T07:00:00Z","volume":"2","issue":
-  "7","journal":"PLoS Comput Biol","publisherLocation":
-  "San Francisco, USA","publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pcbi.0020083","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Correspondence",
-    "http://rdf.plos.org/RDF/articleType/letter"],"categories":[],"assets":[{
-      "doi":"info:doi/10.1371/journal.pcbi.0020083","extension":"XML",
-      "contentType":"text/xml","title":"Authors\u0027 Reply","size":27659},{
-      "doi":"info:doi/10.1371/journal.pcbi.0020083","extension":"PDF",
-      "contentType":"application/pdf","title":"Authors\u0027 Reply","size":
-      58953},{"doi":"info:doi/10.1371/journal.pcbi.0020083.e001",
-      "contextElement":"disp-formula","extension":"GIF","contentType":
-      "image/gif","title":"","description":"","size":2273},{"doi":
-      "info:doi/10.1371/journal.pcbi.0020083.e002","contextElement":
-      "disp-formula","extension":"GIF","contentType":"image/gif","title":
-      "","description":"","size":1173},{"doi":
-      "info:doi/10.1371/journal.pcbi.0020083.e003","contextElement":
-      "disp-formula","extension":"GIF","contentType":"image/gif","title":
-      "","description":"","size":3017},{"doi":
-      "info:doi/10.1371/journal.pcbi.0020083.ex001","contextElement":
-      "inline-formula","extension":"GIF","contentType":"image/gif","title":
-      "","description":"","size":260},{"doi":
-      "info:doi/10.1371/journal.pcbi.0020083.ex002","contextElement":
-      "inline-formula","extension":"GIF","contentType":"image/gif","title":
-      "","description":"","size":232},{"doi":
-      "info:doi/10.1371/journal.pcbi.0020083.ex003","contextElement":
-      "inline-formula","extension":"GIF","contentType":"image/gif","title":
-      "","description":"","size":236},{"doi":
-      "info:doi/10.1371/journal.pcbi.0020083.ex004","contextElement":
-      "inline-formula","extension":"GIF","contentType":"image/gif","title":
-      "","description":"","size":442}],"citedArticles":[{"key":"1","year":
-      2006,"displayYear":"2006","volumeNumber":2,"volume":"2","title":
-      "On the estimation of intron evolution.","eLocationID":"e84.",
-      "journal":"PLoS Comput Biol","note":
-      "DOI: 10.1371/journal.pcbi.0020084","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"M Csűrös","givenNames":"M","surnames":
-          "Csűrös","suffix":""}],"editors":[]},{"key":"2","year":2005,
-      "displayYear":"2005","volumeNumber":1,"volume":"1","title":
-      "New maximum likelihood estimators for eukaryotic intron evolution.",
-      "eLocationID":"e79.","journal":"PLoS Comput Biol","note":
-      "DOI: 10.1371/journal.pcbi.0010079","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"HD Nguyen","givenNames":"HD","surnames":
-          "Nguyen","suffix":""},{"fullName":"M Yoshihama","givenNames":"M",
-          "surnames":"Yoshihama","suffix":""},{"fullName":"N Kenmochi",
-          "givenNames":"N","surnames":"Kenmochi","suffix":""}],"editors":[]},
-    {"key":"3","year":2005,"displayYear":"2005","title":
-      "Likely scenarios of intron evolution.","publisherLocation":"Berlin",
-      "publisherName":"Springer-Verlag","pages":"47-60","eLocationID":"47",
-      "note":"In:","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "M Csűrös","givenNames":"M","surnames":"Csűrös","suffix":""}],
-      "editors":[{"fullName":"A McLysaght","givenNames":"A","surnames":
-          "McLysaght","suffix":""},{"fullName":"D Huson","givenNames":"D",
-          "surnames":"Huson","suffix":""}]},{"key":"4","year":2003,
-      "displayYear":"2003","volumeNumber":13,"volume":"13","title":
-      "Remarkable interkingdom conservation of intron positions and massive, lineage-specific intron loss and gain in eukaryotic evolution.",
-      "pages":"1512-1517","eLocationID":"1512","journal":"Curr Biol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "IB Rogozin","givenNames":"IB","surnames":"Rogozin","suffix":""},{
-          "fullName":"YI Wolf","givenNames":"YI","surnames":"Wolf","suffix":
-          ""},{"fullName":"AV Sorokin","givenNames":"AV","surnames":
-          "Sorokin","suffix":""},{"fullName":"BG Mirkin","givenNames":"BG",
-          "surnames":"Mirkin","suffix":""},{"fullName":"EV Koonin",
-          "givenNames":"EV","surnames":"Koonin","suffix":""}],"editors":[]},{
-      "key":"5","year":2005,"displayYear":"2005","volumeNumber":310,"volume":
-      "310","title":
-      "Vertebrate-type intron-rich genes in the marine annelid \u003cnamed-content xmlns:xlink\u003d\"http://www.w3.org/1999/xlink\" content-type\u003d\"genus-species\" xlink:type\u003d\"simple\"\u003ePlatyneeis dumerilii\u003c/named-content\u003e.",
-      "pages":"1325-1326","eLocationID":"1325","journal":"Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "F Raible","givenNames":"F","surnames":"Raible","suffix":""},{
-          "fullName":"K Tessmar-Raible","givenNames":"K","surnames":
-          "Tessmar-Raible","suffix":""},{"fullName":"K Osoegawa",
-          "givenNames":"K","surnames":"Osoegawa","suffix":""},{"fullName":
-          "P Wincker","givenNames":"P","surnames":"Wincker","suffix":""},{
-          "fullName":"C Jubin","givenNames":"C","surnames":"Jubin","suffix":
-          ""}],"editors":[]},{"key":"6","year":1981,"displayYear":"1981",
-      "volumeNumber":17,"volume":"17","title":
-      "Evolutionary trees from DNA sequences: A maximum likelihood approach.",
-      "pages":"368-376","eLocationID":"368","journal":"J Mol Evol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Felsenstein","givenNames":"J","surnames":"Felsenstein","suffix":
-          ""}],"editors":[]},{"key":"7","year":2004,"displayYear":"2004",
-      "volumeNumber":21,"volume":"21","title":
-      "The evolutionary gain of spliceosomal introns: Sequence and phase preferences.",
-      "pages":"1252-1263","eLocationID":"1252","journal":"Mol Biol Evol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WG Qiu","givenNames":"WG","surnames":"Qiu","suffix":""},{
-          "fullName":"N Schisler","givenNames":"N","surnames":"Schisler",
-          "suffix":""},{"fullName":"A Stoltzfus","givenNames":"A","surnames":
-          "Stoltzfus","suffix":""}],"editors":[]}],"relatedArticles":[{
-      "otherArticleDoi":"info:doi/10.1371/journal.pcbi.0010079","type":
-      "companion"}],"authors":[{"fullName":"Hung D Nguyen","givenNames":
-      "Hung D","surnames":"Nguyen","suffix":""},{"fullName":
-      "Maki Yoshihama","givenNames":"Maki","surnames":"Yoshihama","suffix":
-      ""},{"fullName":"Naoya Kenmochi","givenNames":"Naoya","surnames":
-      "Kenmochi","suffix":""}],"editors":[],"journals":[{"eIssn":
-      "1553-7358"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pcbi.0020083",
+  "title": "Authors' Reply",
+  "eIssn": "1553-7358",
+  "state": 1,
+  "archiveName": "pcbi.0020083.zip",
+  "rights": "Nguyen et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-2",
+  "eLocationId": "e83",
+  "strkImgURI": "",
+  "date": "2006-07-28T07:00:00Z",
+  "volume": "2",
+  "issue": "7",
+  "journal": "PLoS Comput Biol",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pcbi.0020083",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Correspondence",
+    "http://rdf.plos.org/RDF/articleType/letter"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Authors' Reply",
+      "size": 27659
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Authors' Reply",
+      "size": 58953
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.e001",
+      "contextElement": "disp-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 2273
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.e002",
+      "contextElement": "disp-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 1173
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.e003",
+      "contextElement": "disp-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 3017
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.ex001",
+      "contextElement": "inline-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 260
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.ex002",
+      "contextElement": "inline-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 232
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.ex003",
+      "contextElement": "inline-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 236
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pcbi.0020083.ex004",
+      "contextElement": "inline-formula",
+      "extension": "GIF",
+      "contentType": "image/gif",
+      "title": "",
+      "description": "",
+      "size": 442
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "On the estimation of intron evolution.",
+      "eLocationID": "e84.",
+      "journal": "PLoS Comput Biol",
+      "note": "DOI: 10.1371/journal.pcbi.0020084",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Cs\u0171r\u00f6s",
+          "givenNames": "M",
+          "surnames": "Cs\u0171r\u00f6s",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "New maximum likelihood estimators for eukaryotic intron evolution.",
+      "eLocationID": "e79.",
+      "journal": "PLoS Comput Biol",
+      "note": "DOI: 10.1371/journal.pcbi.0010079",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "HD Nguyen",
+          "givenNames": "HD",
+          "surnames": "Nguyen",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Yoshihama",
+          "givenNames": "M",
+          "surnames": "Yoshihama",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Kenmochi",
+          "givenNames": "N",
+          "surnames": "Kenmochi",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2005,
+      "displayYear": "2005",
+      "title": "Likely scenarios of intron evolution.",
+      "publisherLocation": "Berlin",
+      "publisherName": "Springer-Verlag",
+      "pages": "47-60",
+      "eLocationID": "47",
+      "note": "In:",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "M Cs\u0171r\u00f6s",
+          "givenNames": "M",
+          "surnames": "Cs\u0171r\u00f6s",
+          "suffix": ""
+        }
+      ],
+      "editors": [
+        {
+          "fullName": "A McLysaght",
+          "givenNames": "A",
+          "surnames": "McLysaght",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Huson",
+          "givenNames": "D",
+          "surnames": "Huson",
+          "suffix": ""
+        }
+      ]
+    },
+    {
+      "key": "4",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 13,
+      "volume": "13",
+      "title": "Remarkable interkingdom conservation of intron positions and massive, lineage-specific intron loss and gain in eukaryotic evolution.",
+      "pages": "1512-1517",
+      "eLocationID": "1512",
+      "journal": "Curr Biol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "IB Rogozin",
+          "givenNames": "IB",
+          "surnames": "Rogozin",
+          "suffix": ""
+        },
+        {
+          "fullName": "YI Wolf",
+          "givenNames": "YI",
+          "surnames": "Wolf",
+          "suffix": ""
+        },
+        {
+          "fullName": "AV Sorokin",
+          "givenNames": "AV",
+          "surnames": "Sorokin",
+          "suffix": ""
+        },
+        {
+          "fullName": "BG Mirkin",
+          "givenNames": "BG",
+          "surnames": "Mirkin",
+          "suffix": ""
+        },
+        {
+          "fullName": "EV Koonin",
+          "givenNames": "EV",
+          "surnames": "Koonin",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 310,
+      "volume": "310",
+      "title": "Vertebrate-type intron-rich genes in the marine annelid <named-content xmlns:xlink=\"http://www.w3.org/1999/xlink\" content-type=\"genus-species\" xlink:type=\"simple\">Platyneeis dumerilii</named-content>.",
+      "pages": "1325-1326",
+      "eLocationID": "1325",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "F Raible",
+          "givenNames": "F",
+          "surnames": "Raible",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Tessmar-Raible",
+          "givenNames": "K",
+          "surnames": "Tessmar-Raible",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Osoegawa",
+          "givenNames": "K",
+          "surnames": "Osoegawa",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Wincker",
+          "givenNames": "P",
+          "surnames": "Wincker",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Jubin",
+          "givenNames": "C",
+          "surnames": "Jubin",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 1981,
+      "displayYear": "1981",
+      "volumeNumber": 17,
+      "volume": "17",
+      "title": "Evolutionary trees from DNA sequences: A maximum likelihood approach.",
+      "pages": "368-376",
+      "eLocationID": "368",
+      "journal": "J Mol Evol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Felsenstein",
+          "givenNames": "J",
+          "surnames": "Felsenstein",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "The evolutionary gain of spliceosomal introns: Sequence and phase preferences.",
+      "pages": "1252-1263",
+      "eLocationID": "1252",
+      "journal": "Mol Biol Evol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WG Qiu",
+          "givenNames": "WG",
+          "surnames": "Qiu",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Schisler",
+          "givenNames": "N",
+          "surnames": "Schisler",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Stoltzfus",
+          "givenNames": "A",
+          "surnames": "Stoltzfus",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pcbi.0010079",
+      "type": "companion"
+    }
+  ],
+  "authors": [
+    {
+      "fullName": "Hung D Nguyen",
+      "givenNames": "Hung D",
+      "surnames": "Nguyen",
+      "suffix": ""
+    },
+    {
+      "fullName": "Maki Yoshihama",
+      "givenNames": "Maki",
+      "surnames": "Yoshihama",
+      "suffix": ""
+    },
+    {
+      "fullName": "Naoya Kenmochi",
+      "givenNames": "Naoya",
+      "surnames": "Kenmochi",
+      "suffix": ""
+    }
+  ],
+  "editors": [],
+  "journals": [
+    {
+      "eIssn": "1553-7358"
+    }
+  ]
+}

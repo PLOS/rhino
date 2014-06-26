@@ -1,278 +1,845 @@
-{"doi":"info:doi/10.1371/journal.pone.0006513","title":
-  "An Exploration of the Relations between External Representations and Working Memory",
-  "eIssn":"1932-6203","state":1,"archiveName":"pone.0006513.zip",
-  "description":
-  "\u003cp\u003eIt is commonly hypothesized that external representations serve as memory aids and improve task performance by means of expanding the limited capacity of working memory. However, very few studies have directly examined this memory aid hypothesis. By systematically manipulating how information is available externally versus internally in a sequential number comparison task, three experiments were designed to investigate the relation between external representations and working memory. The experimental results show that when the task requires information from both external representations and working memory, it is the interaction of information from the two sources that determines task performance. In particular, when information from the two sources does not match well, external representations hinder instead of enhance task performance. The study highlights the important role the coordination among different representations plays in distributed cognition. The general relations between external representations and working memory are discussed.\u003c/p\u003e",
-  "rights":
-  "Zhang, Wang. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-10","eLocationId":"e6513",
-  "strkImgURI":"","date":"2009-08-04T07:00:00Z","volume":"4","issue":
-  "8","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
-  "publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0006513","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0006513","extension":
-      "XML","contentType":"text/xml","title":
-      "An Exploration of the Relations between External Representations and Working Memory",
-      "description":
-      "\u003cp\u003eIt is commonly hypothesized that external representations serve as memory aids and improve task performance by means of expanding the limited capacity of working memory. However, very few studies have directly examined this memory aid hypothesis. By systematically manipulating how information is available externally versus internally in a sequential number comparison task, three experiments were designed to investigate the relation between external representations and working memory. The experimental results show that when the task requires information from both external representations and working memory, it is the interaction of information from the two sources that determines task performance. In particular, when information from the two sources does not match well, external representations hinder instead of enhance task performance. The study highlights the important role the coordination among different representations plays in distributed cognition. The general relations between external representations and working memory are discussed.\u003c/p\u003e",
-      "size":74712},{"doi":"info:doi/10.1371/journal.pone.0006513",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "An Exploration of the Relations between External Representations and Working Memory",
-      "description":
-      "\u003cp\u003eIt is commonly hypothesized that external representations serve as memory aids and improve task performance by means of expanding the limited capacity of working memory. However, very few studies have directly examined this memory aid hypothesis. By systematically manipulating how information is available externally versus internally in a sequential number comparison task, three experiments were designed to investigate the relation between external representations and working memory. The experimental results show that when the task requires information from both external representations and working memory, it is the interaction of information from the two sources that determines task performance. In particular, when information from the two sources does not match well, external representations hinder instead of enhance task performance. The study highlights the important role the coordination among different representations plays in distributed cognition. The general relations between external representations and working memory are discussed.\u003c/p\u003e",
-      "size":294643},{"doi":"info:doi/10.1371/journal.pone.0006513.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eExamples of experimental trials.\u003c/title\u003e\u003cp\u003eParticipants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).\u003c/p\u003e",
-      "size":1222988},{"doi":"info:doi/10.1371/journal.pone.0006513.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eExamples of experimental trials.\u003c/title\u003e\u003cp\u003eParticipants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).\u003c/p\u003e",
-      "size":9444},{"doi":"info:doi/10.1371/journal.pone.0006513.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eExamples of experimental trials.\u003c/title\u003e\u003cp\u003eParticipants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).\u003c/p\u003e",
-      "size":348135},{"doi":"info:doi/10.1371/journal.pone.0006513.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eExamples of experimental trials.\u003c/title\u003e\u003cp\u003eParticipants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).\u003c/p\u003e",
-      "size":885043},{"doi":"info:doi/10.1371/journal.pone.0006513.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":3875644},{"doi":"info:doi/10.1371/journal.pone.0006513.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":17080},{"doi":"info:doi/10.1371/journal.pone.0006513.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":423679},{"doi":"info:doi/10.1371/journal.pone.0006513.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":3286462},{"doi":"info:doi/10.1371/journal.pone.0006513.g003",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":4055608},{"doi":"info:doi/10.1371/journal.pone.0006513.g003",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":16903},{"doi":"info:doi/10.1371/journal.pone.0006513.g003",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":413790},{"doi":"info:doi/10.1371/journal.pone.0006513.g003",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":3460689},{"doi":"info:doi/10.1371/journal.pone.0006513.g004",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":3928332},{"doi":"info:doi/10.1371/journal.pone.0006513.g004",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":15741},{"doi":"info:doi/10.1371/journal.pone.0006513.g004",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":425988},{"doi":"info:doi/10.1371/journal.pone.0006513.g004",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eReaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.\u003c/title\u003e\u003cp\u003e1st, 2nd, and 3rd indicate the order of individual comparisons.\u003c/p\u003e",
-      "size":3285635}],"citedArticles":[{"key":"1","year":1980,"displayYear":
-      "1980","volumeNumber":8,"volume":"8","title":
-      "Further explorations with a process model for water jug problems.",
-      "pages":"182-192","eLocationID":"182","journal":
-      "Memory \u0026 Cognition","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ME Atwood","givenNames":"ME","surnames":"Atwood","suffix":""},{
-          "fullName":"ME Masson","givenNames":"ME","surnames":"Masson",
-          "suffix":""},{"fullName":"PG Polson","givenNames":"PG","surnames":
-          "Polson","suffix":""}],"editors":[]},{"key":"2","year":1989,
-      "displayYear":"1989","title":"Display-based problem solving.",
-      "publisherLocation":"Hillsdale, NJ","publisherName":"Erlbaum",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JH Larkin","givenNames":"JH","surnames":"Larkin","suffix":""}],
-      "editors":[{"fullName":"D Klahr","givenNames":"D","surnames":"Klahr",
-          "suffix":""},{"fullName":"K Kotovsky","givenNames":"K","surnames":
-          "Kotovsky","suffix":""}]},{"key":"3","year":1972,"displayYear":
-      "1972","title":"Human problem solving.","publisherLocation":
-      "Englewood Cliffs, NJ","publisherName":"Prentice-Hall",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "A Newell","givenNames":"A","surnames":"Newell","suffix":""},{
-          "fullName":"HA Simon","givenNames":"HA","surnames":"Simon",
-          "suffix":""}],"editors":[]},{"key":"4","year":1976,"displayYear":
-      "1976","volumeNumber":16,"volume":"16","title":
-      "Task complexity and contingent processing in decision making: An informational search and protocol analysis.",
-      "pages":"366-387","eLocationID":"366","journal":
-      "Organizational Behavior and Human Performance","collaborativeAuthors":
-      [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"JW Payne","givenNames":"JW","surnames":
-          "Payne","suffix":""}],"editors":[]},{"key":"5","year":1987,
-      "displayYear":"1987","volumeNumber":11,"volume":"11","title":
-      "Why a diagram is (sometimes) worth ten thousand words.","pages":
-      "65-100","eLocationID":"65","journal":"Cognitive science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JH Larkin","givenNames":"JH","surnames":"Larkin","suffix":""},{
-          "fullName":"HA Simon","givenNames":"HA","surnames":"Simon",
-          "suffix":""}],"editors":[]},{"key":"6","year":1997,"displayYear":
-      "1997","volumeNumber":21,"volume":"21","title":
-      "The nature of external representations in problem solving.","pages":
-      "179-217","eLocationID":"179","journal":"Cognitive Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Zhang","givenNames":"J","surnames":"Zhang","suffix":""}],
-      "editors":[]},{"key":"7","year":1994,"displayYear":"1994",
-      "volumeNumber":18,"volume":"18","title":
-      "Representations in distributed cognitive tasks.","pages":"87-122",
-      "eLocationID":"87","journal":"Cognitive Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Zhang","givenNames":"J","surnames":"Zhang","suffix":""},{
-          "fullName":"DA Norman","givenNames":"DA","surnames":"Norman",
-          "suffix":""}],"editors":[]},{"key":"8","year":2005,"displayYear":
-      "2005","volumeNumber":58,"volume":"58A","title":
-      "The effect of external representations on numeric tasks.","pages":
-      "817-838","eLocationID":"817","journal":
-      "Quarterly Journal of Experimental Psychology","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"J Zhang","givenNames":"J","surnames":"Zhang",
-          "suffix":""},{"fullName":"H Wang","givenNames":"H","surnames":
-          "Wang","suffix":""}],"editors":[]},{"key":"9","year":1996,
-      "displayYear":"1996","volumeNumber":45,"volume":"45","title":
-      "A representational analysis of relational information displays.",
-      "pages":"59-74","eLocationID":"59","journal":
-      "International Journal of Human-Computer Studies",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Zhang","givenNames":"J","surnames":"Zhang","suffix":""}],
-      "editors":[]},{"key":"10","year":1997,"displayYear":"1997",
-      "volumeNumber":7,"volume":"7","title":
-      "Distributed representation as a principle for the analysis of cockpit information displays.",
-      "pages":"105-121","eLocationID":"105","journal":
-      "International Journal of Aviation Psychology","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"J Zhang","givenNames":"J","surnames":"Zhang",
-          "suffix":""}],"editors":[]},{"key":"11","year":1995,"displayYear":
-      "1995","volumeNumber":57,"volume":"57","title":
-      "A representational analysis of numeration systems.","pages":
-      "271-295","eLocationID":"271","journal":"Cognition",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Zhang","givenNames":"J","surnames":"Zhang","suffix":""},{
-          "fullName":"DA Norman","givenNames":"DA","surnames":"Norman",
-          "suffix":""}],"editors":[]},{"key":"12","year":1986,"displayYear":
-      "1986","volumeNumber":14,"volume":"14","title":
-      "Attention switching between perception and memory.","pages":
-      "238-245","eLocationID":"238","journal":"Memory \u0026 Cognition",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RJ Weber","givenNames":"RJ","surnames":"Weber","suffix":""},{
-          "fullName":"DB Burt","givenNames":"DB","surnames":"Burt","suffix":
-          ""},{"fullName":"NC Noll","givenNames":"NC","surnames":"Noll",
-          "suffix":""}],"editors":[]},{"key":"13","year":1990,"displayYear":
-      "1990","volumeNumber":18,"volume":"18","title":
-      "Switching between memory and perception: Moving attention or memory retrieval?",
-      "pages":"119-127","eLocationID":"119","journal":
-      "Memory \u0026 Cognition","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "VJ Dark","givenNames":"VJ","surnames":"Dark","suffix":""}],
-      "editors":[]},{"key":"14","year":1993,"displayYear":"1993",
-      "volumeNumber":19,"volume":"19","title":
-      "Coordinating information from perception and working memory.","pages":
-      "531-548","eLocationID":"531","journal":
-      "Journal of Experimental Psychology: Human Perception and Performance",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RA Carlson","givenNames":"RA","surnames":"Carlson","suffix":""},{
-          "fullName":"JL Wenger","givenNames":"JL","surnames":"Wenger",
-          "suffix":""},{"fullName":"MA Sullivan","givenNames":"MA",
-          "surnames":"Sullivan","suffix":""}],"editors":[]},{"key":"15",
-      "year":1995,"displayYear":"1995","volumeNumber":21,"volume":"21",
-      "title":"Learning and the coordination of sequential information.",
-      "pages":"170-182","eLocationID":"170","journal":
-      "Journal of Experimental Psychology: Human Perception \u0026 Performance",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JL Wenger","givenNames":"JL","surnames":"Wenger","suffix":""},{
-          "fullName":"RA Carlson","givenNames":"RA","surnames":"Carlson",
-          "suffix":""}],"editors":[]},{"key":"16","year":1997,"displayYear":
-      "1997","title":"The number sense.","publisherLocation":"New York",
-      "publisherName":"Oxford University Press","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"S Dehaene","givenNames":"S","surnames":"Dehaene",
-          "suffix":""}],"editors":[]},{"key":"17","year":2004,"displayYear":
-      "2004","volumeNumber":8,"volume":"8","title":
-      "Core systems of number.","pages":"307-314","eLocationID":"307",
-      "journal":"Trends in Cognitive Sciences","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"L Feigenson","givenNames":"L","surnames":
-          "Feigenson","suffix":""},{"fullName":"S Dehaene","givenNames":
-          "S","surnames":"Dehaene","suffix":""},{"fullName":"E Spelke",
-          "givenNames":"E","surnames":"Spelke","suffix":""}],"editors":[]},{
-      "key":"18","year":1983,"displayYear":"1983","title":
-      "Situations and attitudes.","publisherLocation":"Cambridge, MA",
-      "publisherName":"The MIT Press","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"J Barwise","givenNames":"J","surnames":"Barwise",
-          "suffix":""},{"fullName":"J Perry","givenNames":"J","surnames":
-          "Perry","suffix":""}],"editors":[]},{"key":"19","year":1993,
-      "displayYear":"1993","volumeNumber":17,"volume":"17","title":
-      "Situated action: A neuropsychological interpretation (Response to Vera and Simon).",
-      "pages":"87-116","eLocationID":"87","journal":"Cognitive Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WJ Clancey","givenNames":"WJ","surnames":"Clancey","suffix":""}],
-      "editors":[]},{"key":"20","year":1993,"displayYear":"1993",
-      "volumeNumber":17,"volume":"17","title":
-      "Situativity and symbols (Response to Vera and Simon).","pages":
-      "49-59","eLocationID":"49","journal":"Cognitive Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JG Greeno","givenNames":"JG","surnames":"Greeno","suffix":""},{
-          "fullName":"JL Moore","givenNames":"JL","surnames":"Moore",
-          "suffix":""}],"editors":[]},{"key":"21","year":1988,"displayYear":
-      "1988","title":
-      "Cognition in practice: Mind, mathematics, and culture in everyday life.",
-      "publisherLocation":"New York","publisherName":
-      "Cambridge University Press","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JH Lave","givenNames":"JH","surnames":"Lave","suffix":""}],
-      "editors":[]},{"key":"22","year":1991,"displayYear":"1991","title":
-      "Representational aiding.","publisherLocation":"Pittsburgh, PA",
-      "publisherName":
-      "University of Pittsburgh, Department of Information Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "CM Lewis","givenNames":"CM","surnames":"Lewis","suffix":""}],
-      "editors":[]},{"key":"23","year":1987,"displayYear":"1987","title":
-      "Plans and situated action: The problem of human-machine communication.",
-      "publisherLocation":"New York","publisherName":
-      "Cambridge University Press","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "LA Suchman","givenNames":"LA","surnames":"Suchman","suffix":""}],
-      "editors":[]},{"key":"24","year":1989,"displayYear":"1989","title":
-      "Situations, mental models, and generative knowledge.",
-      "publisherLocation":"Hillsdale, NJ","publisherName":"Erlbaum",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "JG Greeno","givenNames":"JG","surnames":"Greeno","suffix":""}],
-      "editors":[{"fullName":"D  Klahr","givenNames":"D","surnames":
-          "Klahr","suffix":""},{"fullName":"K Kotovsky","givenNames":"K",
-          "surnames":"Kotovsky","suffix":""}]}],"relatedArticles":[],
-  "authors":[{"fullName":"Jiajie Zhang","givenNames":"Jiajie","surnames":
-      "Zhang","suffix":""},{"fullName":"Hongbin Wang","givenNames":
-      "Hongbin","surnames":"Wang","suffix":""}],"editors":[{"fullName":
-      "Naomi Rogers","givenNames":"Naomi","surnames":"Rogers","suffix":""}],
-  "journals":[{"eIssn":"1932-6203"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pone.0006513",
+  "title": "An Exploration of the Relations between External Representations and Working Memory",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0006513.zip",
+  "description": "<p>It is commonly hypothesized that external representations serve as memory aids and improve task performance by means of expanding the limited capacity of working memory. However, very few studies have directly examined this memory aid hypothesis. By systematically manipulating how information is available externally versus internally in a sequential number comparison task, three experiments were designed to investigate the relation between external representations and working memory. The experimental results show that when the task requires information from both external representations and working memory, it is the interaction of information from the two sources that determines task performance. In particular, when information from the two sources does not match well, external representations hinder instead of enhance task performance. The study highlights the important role the coordination among different representations plays in distributed cognition. The general relations between external representations and working memory are discussed.</p>",
+  "rights": "Zhang, Wang. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-10",
+  "eLocationId": "e6513",
+  "strkImgURI": "",
+  "date": "2009-08-04T07:00:00Z",
+  "volume": "4",
+  "issue": "8",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0006513",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "An Exploration of the Relations between External Representations and Working Memory",
+      "description": "<p>It is commonly hypothesized that external representations serve as memory aids and improve task performance by means of expanding the limited capacity of working memory. However, very few studies have directly examined this memory aid hypothesis. By systematically manipulating how information is available externally versus internally in a sequential number comparison task, three experiments were designed to investigate the relation between external representations and working memory. The experimental results show that when the task requires information from both external representations and working memory, it is the interaction of information from the two sources that determines task performance. In particular, when information from the two sources does not match well, external representations hinder instead of enhance task performance. The study highlights the important role the coordination among different representations plays in distributed cognition. The general relations between external representations and working memory are discussed.</p>",
+      "size": 74712
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "An Exploration of the Relations between External Representations and Working Memory",
+      "description": "<p>It is commonly hypothesized that external representations serve as memory aids and improve task performance by means of expanding the limited capacity of working memory. However, very few studies have directly examined this memory aid hypothesis. By systematically manipulating how information is available externally versus internally in a sequential number comparison task, three experiments were designed to investigate the relation between external representations and working memory. The experimental results show that when the task requires information from both external representations and working memory, it is the interaction of information from the two sources that determines task performance. In particular, when information from the two sources does not match well, external representations hinder instead of enhance task performance. The study highlights the important role the coordination among different representations plays in distributed cognition. The general relations between external representations and working memory are discussed.</p>",
+      "size": 294643
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>Examples of experimental trials.</title><p>Participants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).</p>",
+      "size": 1222988
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Examples of experimental trials.</title><p>Participants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).</p>",
+      "size": 9444
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Examples of experimental trials.</title><p>Participants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).</p>",
+      "size": 348135
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Examples of experimental trials.</title><p>Participants are required to memorize the digits in Display 1 and, when seeing Display 2, respond by comparing the magnitude of digits row-by-row. Depending on the conditions, the to-be-compared columns may come from Display 2 (A), Display 1 and 2 (B), and Display 1 (C).</p>",
+      "size": 885043
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Reaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 3875644
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Reaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 17080
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Reaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 423679
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Reaction times (in ms) of Experiment 1, in which participants were asked to remember digits in Display 1 column by column, from top to bottom.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 3286462
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g003",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 3",
+      "description": "<title>Reaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 4055608
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g003",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Reaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 16903
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g003",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Reaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 413790
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g003",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Reaction times (in ms) of Experiment 2, in which participants were asked to remember digits in Display 1 column by column, from bottom to top.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 3460689
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g004",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 4",
+      "description": "<title>Reaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 3928332
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g004",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Reaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 15741
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g004",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Reaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 425988
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0006513.g004",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Reaction times (in ms) of Experiment 3, in which participants were asked to remember digits in Display 1 row by row.</title><p>1st, 2nd, and 3rd indicate the order of individual comparisons.</p>",
+      "size": 3285635
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 1980,
+      "displayYear": "1980",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Further explorations with a process model for water jug problems.",
+      "pages": "182-192",
+      "eLocationID": "182",
+      "journal": "Memory & Cognition",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ME Atwood",
+          "givenNames": "ME",
+          "surnames": "Atwood",
+          "suffix": ""
+        },
+        {
+          "fullName": "ME Masson",
+          "givenNames": "ME",
+          "surnames": "Masson",
+          "suffix": ""
+        },
+        {
+          "fullName": "PG Polson",
+          "givenNames": "PG",
+          "surnames": "Polson",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 1989,
+      "displayYear": "1989",
+      "title": "Display-based problem solving.",
+      "publisherLocation": "Hillsdale, NJ",
+      "publisherName": "Erlbaum",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "JH Larkin",
+          "givenNames": "JH",
+          "surnames": "Larkin",
+          "suffix": ""
+        }
+      ],
+      "editors": [
+        {
+          "fullName": "D Klahr",
+          "givenNames": "D",
+          "surnames": "Klahr",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Kotovsky",
+          "givenNames": "K",
+          "surnames": "Kotovsky",
+          "suffix": ""
+        }
+      ]
+    },
+    {
+      "key": "3",
+      "year": 1972,
+      "displayYear": "1972",
+      "title": "Human problem solving.",
+      "publisherLocation": "Englewood Cliffs, NJ",
+      "publisherName": "Prentice-Hall",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "A Newell",
+          "givenNames": "A",
+          "surnames": "Newell",
+          "suffix": ""
+        },
+        {
+          "fullName": "HA Simon",
+          "givenNames": "HA",
+          "surnames": "Simon",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 1976,
+      "displayYear": "1976",
+      "volumeNumber": 16,
+      "volume": "16",
+      "title": "Task complexity and contingent processing in decision making: An informational search and protocol analysis.",
+      "pages": "366-387",
+      "eLocationID": "366",
+      "journal": "Organizational Behavior and Human Performance",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JW Payne",
+          "givenNames": "JW",
+          "surnames": "Payne",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 1987,
+      "displayYear": "1987",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Why a diagram is (sometimes) worth ten thousand words.",
+      "pages": "65-100",
+      "eLocationID": "65",
+      "journal": "Cognitive science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JH Larkin",
+          "givenNames": "JH",
+          "surnames": "Larkin",
+          "suffix": ""
+        },
+        {
+          "fullName": "HA Simon",
+          "givenNames": "HA",
+          "surnames": "Simon",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "The nature of external representations in problem solving.",
+      "pages": "179-217",
+      "eLocationID": "179",
+      "journal": "Cognitive Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "Representations in distributed cognitive tasks.",
+      "pages": "87-122",
+      "eLocationID": "87",
+      "journal": "Cognitive Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        },
+        {
+          "fullName": "DA Norman",
+          "givenNames": "DA",
+          "surnames": "Norman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 58,
+      "volume": "58A",
+      "title": "The effect of external representations on numeric tasks.",
+      "pages": "817-838",
+      "eLocationID": "817",
+      "journal": "Quarterly Journal of Experimental Psychology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Wang",
+          "givenNames": "H",
+          "surnames": "Wang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 45,
+      "volume": "45",
+      "title": "A representational analysis of relational information displays.",
+      "pages": "59-74",
+      "eLocationID": "59",
+      "journal": "International Journal of Human-Computer Studies",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Distributed representation as a principle for the analysis of cockpit information displays.",
+      "pages": "105-121",
+      "eLocationID": "105",
+      "journal": "International Journal of Aviation Psychology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 57,
+      "volume": "57",
+      "title": "A representational analysis of numeration systems.",
+      "pages": "271-295",
+      "eLocationID": "271",
+      "journal": "Cognition",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        },
+        {
+          "fullName": "DA Norman",
+          "givenNames": "DA",
+          "surnames": "Norman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 1986,
+      "displayYear": "1986",
+      "volumeNumber": 14,
+      "volume": "14",
+      "title": "Attention switching between perception and memory.",
+      "pages": "238-245",
+      "eLocationID": "238",
+      "journal": "Memory & Cognition",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RJ Weber",
+          "givenNames": "RJ",
+          "surnames": "Weber",
+          "suffix": ""
+        },
+        {
+          "fullName": "DB Burt",
+          "givenNames": "DB",
+          "surnames": "Burt",
+          "suffix": ""
+        },
+        {
+          "fullName": "NC Noll",
+          "givenNames": "NC",
+          "surnames": "Noll",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 1990,
+      "displayYear": "1990",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "Switching between memory and perception: Moving attention or memory retrieval?",
+      "pages": "119-127",
+      "eLocationID": "119",
+      "journal": "Memory & Cognition",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "VJ Dark",
+          "givenNames": "VJ",
+          "surnames": "Dark",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 19,
+      "volume": "19",
+      "title": "Coordinating information from perception and working memory.",
+      "pages": "531-548",
+      "eLocationID": "531",
+      "journal": "Journal of Experimental Psychology: Human Perception and Performance",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RA Carlson",
+          "givenNames": "RA",
+          "surnames": "Carlson",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Wenger",
+          "givenNames": "JL",
+          "surnames": "Wenger",
+          "suffix": ""
+        },
+        {
+          "fullName": "MA Sullivan",
+          "givenNames": "MA",
+          "surnames": "Sullivan",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Learning and the coordination of sequential information.",
+      "pages": "170-182",
+      "eLocationID": "170",
+      "journal": "Journal of Experimental Psychology: Human Perception & Performance",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JL Wenger",
+          "givenNames": "JL",
+          "surnames": "Wenger",
+          "suffix": ""
+        },
+        {
+          "fullName": "RA Carlson",
+          "givenNames": "RA",
+          "surnames": "Carlson",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 1997,
+      "displayYear": "1997",
+      "title": "The number sense.",
+      "publisherLocation": "New York",
+      "publisherName": "Oxford University Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "S Dehaene",
+          "givenNames": "S",
+          "surnames": "Dehaene",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Core systems of number.",
+      "pages": "307-314",
+      "eLocationID": "307",
+      "journal": "Trends in Cognitive Sciences",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Feigenson",
+          "givenNames": "L",
+          "surnames": "Feigenson",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Dehaene",
+          "givenNames": "S",
+          "surnames": "Dehaene",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Spelke",
+          "givenNames": "E",
+          "surnames": "Spelke",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 1983,
+      "displayYear": "1983",
+      "title": "Situations and attitudes.",
+      "publisherLocation": "Cambridge, MA",
+      "publisherName": "The MIT Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "J Barwise",
+          "givenNames": "J",
+          "surnames": "Barwise",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Perry",
+          "givenNames": "J",
+          "surnames": "Perry",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 17,
+      "volume": "17",
+      "title": "Situated action: A neuropsychological interpretation (Response to Vera and Simon).",
+      "pages": "87-116",
+      "eLocationID": "87",
+      "journal": "Cognitive Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WJ Clancey",
+          "givenNames": "WJ",
+          "surnames": "Clancey",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 17,
+      "volume": "17",
+      "title": "Situativity and symbols (Response to Vera and Simon).",
+      "pages": "49-59",
+      "eLocationID": "49",
+      "journal": "Cognitive Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JG Greeno",
+          "givenNames": "JG",
+          "surnames": "Greeno",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Moore",
+          "givenNames": "JL",
+          "surnames": "Moore",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 1988,
+      "displayYear": "1988",
+      "title": "Cognition in practice: Mind, mathematics, and culture in everyday life.",
+      "publisherLocation": "New York",
+      "publisherName": "Cambridge University Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "JH Lave",
+          "givenNames": "JH",
+          "surnames": "Lave",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 1991,
+      "displayYear": "1991",
+      "title": "Representational aiding.",
+      "publisherLocation": "Pittsburgh, PA",
+      "publisherName": "University of Pittsburgh, Department of Information Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "CM Lewis",
+          "givenNames": "CM",
+          "surnames": "Lewis",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 1987,
+      "displayYear": "1987",
+      "title": "Plans and situated action: The problem of human-machine communication.",
+      "publisherLocation": "New York",
+      "publisherName": "Cambridge University Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "LA Suchman",
+          "givenNames": "LA",
+          "surnames": "Suchman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 1989,
+      "displayYear": "1989",
+      "title": "Situations, mental models, and generative knowledge.",
+      "publisherLocation": "Hillsdale, NJ",
+      "publisherName": "Erlbaum",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "JG Greeno",
+          "givenNames": "JG",
+          "surnames": "Greeno",
+          "suffix": ""
+        }
+      ],
+      "editors": [
+        {
+          "fullName": "D  Klahr",
+          "givenNames": "D",
+          "surnames": "Klahr",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Kotovsky",
+          "givenNames": "K",
+          "surnames": "Kotovsky",
+          "suffix": ""
+        }
+      ]
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Jiajie Zhang",
+      "givenNames": "Jiajie",
+      "surnames": "Zhang",
+      "suffix": ""
+    },
+    {
+      "fullName": "Hongbin Wang",
+      "givenNames": "Hongbin",
+      "surnames": "Wang",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Naomi Rogers",
+      "givenNames": "Naomi",
+      "surnames": "Rogers",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}

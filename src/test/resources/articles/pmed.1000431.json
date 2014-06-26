@@ -1,449 +1,1252 @@
-{"doi":"info:doi/10.1371/journal.pmed.1000431","title":
-  "Strategies and Practices in Off-Label Marketing of Pharmaceuticals: A Retrospective Analysis of Whistleblower Complaints",
-  "eIssn":"1549-1676","state":1,"archiveName":"pmed.1000431.zip",
-  "description":
-  "\u003cp\u003eAaron Kesselheim and colleagues analyzed unsealed whistleblower complaints                    against pharmaceutical companies filed in US federal fraud cases that contained                    allegations of off-label marketing, and develop a taxonomy of the various                    off-label practices.\u003c/p\u003e",
-  "rights":
-  "Kesselheim et al. This is an open-access article distributed under\n                the terms of the Creative Commons Attribution License, which permits unrestricted\n                use, distribution, and reproduction in any medium, provided the original author and\n                source are credited.",
-  "language":"en","format":"text/xml","pages":"1-9","eLocationId":
-  "e1000431","strkImgURI":"","date":"2011-04-05T07:00:00Z","volume":"8",
-  "issue":"4","journal":"PLoS Med","publisherLocation":
-  "San Francisco, USA","publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pmed.1000431","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pmed.1000431","extension":
-      "XML","contentType":"text/xml","title":
-      "Strategies and Practices in Off-Label Marketing of Pharmaceuticals: A Retrospective Analysis of Whistleblower Complaints",
-      "description":
-      "\u003cp\u003eAaron Kesselheim and colleagues analyzed unsealed whistleblower complaints                    against pharmaceutical companies filed in US federal fraud cases that contained                    allegations of off-label marketing, and develop a taxonomy of the various                    off-label practices.\u003c/p\u003e",
-      "size":142256},{"doi":"info:doi/10.1371/journal.pmed.1000431",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Strategies and Practices in Off-Label Marketing of Pharmaceuticals: A Retrospective Analysis of Whistleblower Complaints",
-      "description":
-      "\u003cp\u003eAaron Kesselheim and colleagues analyzed unsealed whistleblower complaints                    against pharmaceutical companies filed in US federal fraud cases that contained                    allegations of off-label marketing, and develop a taxonomy of the various                    off-label practices.\u003c/p\u003e",
-      "size":127903},{"doi":"info:doi/10.1371/journal.pmed.1000431.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003ePharmaceutical fraud cases related to off-label marketing, January\n                        1996–October 2010.\u003c/title\u003e",
-      "size":640104},{"doi":"info:doi/10.1371/journal.pmed.1000431.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003ePharmaceutical fraud cases related to off-label marketing, January\n                        1996–October 2010.\u003c/title\u003e",
-      "size":7997},{"doi":"info:doi/10.1371/journal.pmed.1000431.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003ePharmaceutical fraud cases related to off-label marketing, January\n                        1996–October 2010.\u003c/title\u003e",
-      "size":155848},{"doi":"info:doi/10.1371/journal.pmed.1000431.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003ePharmaceutical fraud cases related to off-label marketing, January\n                        1996–October 2010.\u003c/title\u003e",
-      "size":155411},{"doi":"info:doi/10.1371/journal.pmed.1000431.t002",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 2","description":
-      "\u003ctitle\u003eFrequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.\u003c/title\u003e",
-      "size":549518},{"doi":"info:doi/10.1371/journal.pmed.1000431.t002",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eFrequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.\u003c/title\u003e",
-      "size":5242},{"doi":"info:doi/10.1371/journal.pmed.1000431.t002",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eFrequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.\u003c/title\u003e",
-      "size":116409},{"doi":"info:doi/10.1371/journal.pmed.1000431.t002",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eFrequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.\u003c/title\u003e",
-      "size":117046}],"citedArticles":[{"key":"1","year":1962,"displayYear":
-      "1962","note":
-      "Public Law 87-781 (codified as amended at 21 U.S.C. § 352                        (n))",
-      "collaborativeAuthors":["Kefauver-Harris Drug Amendments"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"2","year":2008,"displayYear":"2008",
-      "volumeNumber":5,"volume":"5","title":
-      "Off-label promotion, on-target sales.","pages":"e210","eLocationID":
-      "e210","journal":"PLoS Med","note":
-      "doi:10.1371/journal.pmed.0050210","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"A Fugh-Berman","givenNames":"A","surnames":
-          "Fugh-Berman","suffix":""},{"fullName":"D Melnick","givenNames":
-          "D","surnames":"Melnick","suffix":""}],"editors":[]},{"key":"3",
-      "year":2008,"displayYear":"2008","volumeNumber":299,"volume":"299",
-      "title":
-      "FDA guidance on off-label promotion and the state of the                        literature from sponsors.",
-      "pages":"1949-1951","eLocationID":"1949","journal":"J Amer Med Assn",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "BM Psaty","givenNames":"BM","surnames":"Psaty","suffix":""},{
-          "fullName":"W Ray","givenNames":"W","surnames":"Ray","suffix":""}],
-      "editors":[]},{"key":"4","year":2006,"displayYear":"2006",
-      "volumeNumber":145,"volume":"145","title":
-      "Safeguarding patient welfare: who\u0027s in                        charge?",
-      "pages":"305-307","eLocationID":"305","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JE Henney","givenNames":"JE","surnames":"Henney","suffix":""}],
-      "editors":[]},{"key":"5","year":2008,"displayYear":"2008",
-      "volumeNumber":358,"volume":"358","title":
-      "Pharmaceutical promotion to physicians and First Amendment                        rights.",
-      "pages":"1727-1732","eLocationID":"1727","journal":"New Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AS Kesselheim","givenNames":"AS","surnames":"Kesselheim","suffix":
-          ""},{"fullName":"J Avorn","givenNames":"J","surnames":"Avorn",
-          "suffix":""}],"editors":[]},{"key":"6","year":2008,"displayYear":
-      "2008","volumeNumber":149,"volume":"149","title":
-      "Whistleblower-initiated enforcement actions against health care                        fraud and abuse in the United States, 1996 to 2005.",
-      "pages":"342-349","eLocationID":"342","journal":"Ann Int Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AS Kesselheim","givenNames":"AS","surnames":"Kesselheim","suffix":
-          ""},{"fullName":"DM Studdert","givenNames":"DM","surnames":
-          "Studdert","suffix":""}],"editors":[]},{"key":"7","year":2010,
-      "displayYear":"2010","month":"December","day":"16","title":
-      "Rapidly increasing criminal and civil monetary penalties against                        the pharmaceutical industry: 1991 to 2010.",
-      "note":
-      "Available: http://www.citizen.org/hrg1924. Accessed 10 February                        2011",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "S Almashat","givenNames":"S","surnames":"Almashat","suffix":""},{
-          "fullName":"C Preston","givenNames":"C","surnames":"Preston",
-          "suffix":""},{"fullName":"T Waterman","givenNames":"T","surnames":
-          "Waterman","suffix":""},{"fullName":"S Wolfe","givenNames":"S",
-          "surnames":"Wolfe","suffix":""}],"editors":[]},{"key":"8","year":
-      2009,"displayYear":"2009","month":"September","day":"2","title":
-      "Pfizer pays $2.3 billion to settle marketing                        case.",
-      "note":"NY Times B4","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "G Harris","givenNames":"G","surnames":"Harris","suffix":""}],
-      "editors":[]},{"key":"9","year":2010,"displayYear":"2010","month":
-      "April","day":"29","title":
-      "Two Johnson \u0026amp; Johnson subsidiaries to pay over $81                        million to resolve allegations of off-label promotion of                        Topamax.",
-      "note":
-      "Available: http://www.justice.gov/opa/pr/2010/April/10-civ-500.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["Department of Justice"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"10","year":2010,"displayYear":"2010","month":"April","day":
-      "27","title":
-      "Pharmaceutical giant AstraZeneca to pay $520 million for                        off-label drug marketing.",
-      "note":
-      "Available: http://www.justice.gov/opa/pr/2010/April/10-civ-487.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["Department of Justice"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"11","year":2010,"displayYear":"2010","month":"May","day":"4",
-      "title":
-      "Novartis vaccines \u0026amp; diagnostics to pay more than $72                        million to resolve False Claims Act allegations concerning                        TOBI.",
-      "note":
-      "Available: http://www.justice.gov/opa/pr/2010/May/10-civ-522.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["Department of Justice"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"12","year":2010,"displayYear":"2010","month":"September","day":
-      "15","title":
-      "Drug maker Forest pleads guilty; to pay more than $313                        million to resolve criminal charges and False Claims Act                        allegations.",
-      "note":
-      "Available: http://www.justice.gov/opa/pr/2010/September/10-civ-1028.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["Department of Justice"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"13","year":2010,"displayYear":"2010","month":"September","day":
-      "30","title":
-      "Novartis Pharmaceuticals Corp. to pay more than $420                        million to resolve off-label promotion and kickback allegations. 30 Sept                        2010.",
-      "note":
-      "Available: http://www.justice.gov/opa/pr/2010/September/10-civ-1102.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["Department of Justice"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"14","year":2010,"displayYear":"2010","month":"September","day":
-      "1","title":
-      "Allergan agrees to plead guilty and pay $600 million to                        resolve allegations of off-label promotion of Botox®.",
-      "note":
-      "Available: http://www.justice.gov/opa/pr/2010/September/10-civ-988.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["Department of Justice"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"15","year":2009,"displayYear":"2009","volumeNumber":71,"volume":
-      "71","title":
-      "Health care fraud investigations bedevil Pharma industry: if                        you\u0027re not under investigation, it\u0027s only because you\u0027ve                        recently settled.",
-      "pages":"21-24","eLocationID":"21","journal":"Pink Sheet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "B Sandburg","givenNames":"B","surnames":"Sandburg","suffix":""}],
-      "editors":[]},{"key":"16","year":2008,"displayYear":"2008",
-      "volumeNumber":149,"volume":"149","title":
-      "The ADVANTAGE seeding trial: a review of internal                        documents.",
-      "pages":"251-258","eLocationID":"251","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KP Hill","givenNames":"KP","surnames":"Hill","suffix":""},{
-          "fullName":"JS Ross","givenNames":"JS","surnames":"Ross","suffix":
-          ""},{"fullName":"DS Egilman","givenNames":"DS","surnames":
-          "Egilman","suffix":""},{"fullName":"HM Krumholz","givenNames":
-          "HM","surnames":"Krumholz","suffix":""}],"editors":[]},{"key":
-      "17","year":2008,"displayYear":"2008","volumeNumber":299,"volume":
-      "299","title":
-      "Guest authorship and ghostwriting in publications related to                        rofecoxib: a case study of industry documents from rofecoxib                        litigation.",
-      "pages":"1800-1812","eLocationID":"1800","journal":"J Amer Med Assn",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JS Ross","givenNames":"JS","surnames":"Ross","suffix":""},{
-          "fullName":"KP Hill","givenNames":"KP","surnames":"Hill","suffix":
-          ""},{"fullName":"DS Egilman","givenNames":"DS","surnames":
-          "Egilman","suffix":""},{"fullName":"HM Krumholz","givenNames":
-          "HM","surnames":"Krumholz","suffix":""}],"editors":[]},{"key":
-      "18","year":2009,"displayYear":"2009","volumeNumber":69,"volume":
-      "69","title":
-      "The promotion of olanzapine in primary care: an examination of                        internal industry documents.",
-      "pages":"14-20","eLocationID":"14","journal":"Soc Sci Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GI Spielmans","givenNames":"GI","surnames":"Spielmans","suffix":
-          ""}],"editors":[]},{"key":"19","year":2007,"displayYear":"2007",
-      "volumeNumber":4,"volume":"4","title":
-      "Characteristics and impact of drug detailing for                        gabapentin.",
-      "pages":"e134","eLocationID":"e134","journal":"PLoS Med","note":
-      "doi:10.1371/journal.pmed.0040134","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"MA Steinman","givenNames":"MA","surnames":
-          "Steinman","suffix":""},{"fullName":"GM Harper","givenNames":
-          "GM","surnames":"Harper","suffix":""},{"fullName":"MM Chren",
-          "givenNames":"MM","surnames":"Chren","suffix":""},{"fullName":
-          "CS Landefeld","givenNames":"CS","surnames":"Landefeld","suffix":
-          ""},{"fullName":"LA Bero","givenNames":"LA","surnames":"Bero",
-          "suffix":""}],"editors":[]},{"key":"20","year":2006,"displayYear":
-      "2006","volumeNumber":145,"volume":"145","title":
-      "Narrative review: the promotion of gabapentin: an analysis of                        internal industry documents.",
-      "pages":"284-293","eLocationID":"284","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MA Steinman","givenNames":"MA","surnames":"Steinman","suffix":
-          ""},{"fullName":"LA Bero","givenNames":"LA","surnames":"Bero",
-          "suffix":""},{"fullName":"MM Chren","givenNames":"MM","surnames":
-          "Chren","suffix":""},{"fullName":"CS Landefeld","givenNames":
-          "CS","surnames":"Landefeld","suffix":""}],"editors":[]},{"key":
-      "21","year":2007,"displayYear":"2007","volumeNumber":4,"volume":"4",
-      "title":
-      "Following the script: how drug reps make friends and influence                        doctors.",
-      "pages":"e150","eLocationID":"e150","journal":"PLoS Med","note":
-      "doi:10.1371/journal.pmed.0040150","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"A Fugh-Berman","givenNames":"A","surnames":
-          "Fugh-Berman","suffix":""},{"fullName":"S Ahari","givenNames":
-          "S","surnames":"Ahari","suffix":""}],"editors":[]},{"key":"22",
-      "year":2005,"displayYear":"2005","month":"May","day":"5","title":
-      "Memorandum re: marketing of Vioxx to physicians.","note":
-      "Available: http://oversight.house.gov/documents/20050505114932-41272.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "HA Waxman","givenNames":"HA","surnames":"Waxman","suffix":""}],
-      "editors":[]},{"key":"23","year":2010,"displayYear":"2010",
-      "volumeNumber":362,"volume":"362","title":
-      "Experiences of whistle-blowers in major fraud litigation against                        pharmaceutical companies.",
-      "pages":"1832-1839","eLocationID":"1832","journal":"New Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AS Kesselheim","givenNames":"AS","surnames":"Kesselheim","suffix":
-          ""},{"fullName":"DM Studdert","givenNames":"DM","surnames":
-          "Studdert","suffix":""},{"fullName":"MM Mello","givenNames":"MM",
-          "surnames":"Mello","suffix":""}],"editors":[]},{"key":"24","year":
-      2009,"displayYear":"2009","volumeNumber":360,"volume":"360","title":
-      "Shifting terrain in the regulation of off-label promotion of                        pharmaceuticals.",
-      "pages":"1557-1566","eLocationID":"1557","journal":"New Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MM Mello","givenNames":"MM","surnames":"Mello","suffix":""},{
-          "fullName":"DM Studdert","givenNames":"DM","surnames":"Studdert",
-          "suffix":""},{"fullName":"TA Brennan","givenNames":"TA","surnames":
-          "Brennan","suffix":""}],"editors":[]},{"key":"25","year":2011,
-      "displayYear":"2011","title":
-      "Office of Public Affairs Press Releases.","note":
-      "Available: http://www.usdoj.gov/03press/03_1_1.html. Accessed 10                        February 2011",
-      "collaborativeAuthors":["United States Department of Justice"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"26","year":2011,"displayYear":"2011","title":
-      "Public Access to Court Electronic Records.","note":
-      "Available: http://pacer.psc.uscourts.gov/. Accessed 10 February                        2011",
-      "collaborativeAuthors":["United States Judiciary"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"27","year":1967,"displayYear":"1967","title":
-      "The discovery of grounded theory: strategies for qualitative                        research",
-      "publisherLocation":"New York","publisherName":
-      "Aldine De Gruyter Press","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "BG Glaser","givenNames":"BG","surnames":"Glaser","suffix":""},{
-          "fullName":"AL Strauss","givenNames":"AL","surnames":"Strauss",
-          "suffix":""}],"editors":[]},{"key":"28","year":1992,"displayYear":
-      "1992","volumeNumber":29,"volume":"29","title":
-      "Qualitative data analysis as a public event: the documentation of                        category development procedures.",
-      "pages":"253-266","eLocationID":"253","journal":
-      "American Educational Research Journal","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"MA Constas","givenNames":"MA","surnames":
-          "Constas","suffix":""}],"editors":[]},{"key":"29","year":1996,
-      "displayYear":"1996 August 13","title":
-      "Civil Action 1:96-CV-11651-PBS.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/WarnerLambert_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US ex rel. Franklin v. Parke-Davis, Division of Warner-Lambert\n                        Company"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"30","year":2007,"displayYear":"2007 August 13",
-      "title":"Civil Action 1:04-CV-11780-DPW.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint8.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["US ex rel. Collins, et al. v. Pfizer, Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"31","year":2006,"displayYear":
-      "2006 February 17","title":"Civil Action 05-CV-0387-SJF-KAM.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/OrphanMedical_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Lauterbach v. Orphan Medical Inc., Jazz\n                        Pharmaceuticals Inc., and Dr. Peter Gleason"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"32","year":2008,"displayYear":"2008 January 3",
-      "title":"Civil Action 2:04-CV-04401-TON.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Cephalon_Complaint4.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["US, et al. ex rel. Boise v. Cephalon, Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"33","year":2005,"displayYear":
-      "2005 October 24","title":"Civil Action 1:05-CV-12115-DPW.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint7.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US ex rel. Kopchinski v. Pfizer, Inc. and Pharmacia Corp"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"34","year":2005,"displayYear":"2005 July 22",
-      "title":"Civil Action 3:05-CV-03004-CRB.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Scios_Complaint2.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Stromv. Scios, Inc. and Johnson \u0026 Johnson,\n                        Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"35","year":2007,"displayYear":"2007 April 5",
-      "title":"Civil Action 2:04-CV-02389-KHV-GLR.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Medicis_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Mulqueen, et al. v. Medicis Pharmaceutical\n                        Corp"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"36","year":2010,"displayYear":"2010 January 8",
-      "title":"Civil Action 03-10395-NMG.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Forest_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Gobble v. Forest Laboratories Inc., Forest\n                        Pharmaceuticals, Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"37","year":2010,"displayYear":"2010 August 26",
-      "title":"Civil Action 2:06-CV-01630-LDD.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/NovartisCase2_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Copeland v. Novartis Pharmaceuticals Corp"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"38","year":2010,"displayYear":"2010 May 24",
-      "title":"Civil Action 2:05-CV-06609-JP.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Wyeth_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Sandler and Paris v. Wyeth Pharmaceuticals, Inc. and\n                        Pfizer Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"39","year":2007,"displayYear":"2007 August 24",
-      "title":"Civil Action 2:06-CV-00168-MJP.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/CellTherapeutics_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US ex rel. Marchese v. Cell Therapeutics, Inc., et al"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"40","year":2009,"displayYear":"2009 August 21",
-      "title":"Civil Action 2:07-CV-04106-JCJ.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint5.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Kruszewski v. Pfizer, Inc"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"41","year":2008,"displayYear":"2008 August 1","title":
-      "Civil Action 2:04-CV-03479-BMS.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/AstraZeneca_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Wetta v. AstraZeneca Corporation"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"42","year":2004,"displayYear":"2004 July 9",
-      "title":"Civil Action 04:CV-4323.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Intermune_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["US ex rel. Gallagher v. Intermune, Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"43","year":2008,"displayYear":"2008 August 1",
-      "title":"Civil Action 1:08-CV-11318-DPW.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint2.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["US ex rel. Westlock v. Pfizer, Inc., et al"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"44","year":2007,"displayYear":
-      "2007 November 21","title":"Civil Action 2:06-CV-00176-WOB.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["US ex rel. Liter v. Pfizer, Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"45","year":2007,"displayYear":"2007 June 12",
-      "title":"Civil Action 1:07-CV-10304-DPW.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint6.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US ex rel. Farber and Schildhauer v. Pfizer, Inc"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"46","year":2005,"displayYear":"2005 October 7","title":
-      "Civil Action 3:05-CV-04055-CRB.","note":
-      "http://www.drugepi.org/downloads/downloads/Scios_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["US ex rel. Smith v. Scios, Inc., et al"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"47","year":2007,"displayYear":"2007 June 5",
-      "title":"Civil Action 1:07-CV-01288-WSD.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Allergan_Complaint2.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US ex rel. Lang and Rushin v. Allergan, Inc"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"48","year":2003,"displayYear":"2003 October 6","title":
-      "Civil Action 03-CV-11892-GAO.","note":
-      "Available: http://www.drugepi.org/downloads/downloads/Serono_Complaint1.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[
-        "US, et al. ex rel. Garcia and Driscoll v. Serono, Inc"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"49","year":2010,"displayYear":"2010",
-      "volumeNumber":363,"volume":"363","title":
-      "Toward more uniform conflict disclosures—the updated ICMJE                        conflict of interest reporting form.",
-      "pages":"188-189","eLocationID":"188","journal":"New Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JM Drazen","givenNames":"JM","surnames":"Drazen","suffix":""},{
-          "fullName":"PW de Leeuw","givenNames":"PW","surnames":"de Leeuw",
-          "suffix":""},{"fullName":"C Laine","givenNames":"C","surnames":
-          "Laine","suffix":""},{"fullName":"C Mulrow","givenNames":"C",
-          "surnames":"Mulrow","suffix":""},{"fullName":"CD DeAngelis",
-          "givenNames":"CD","surnames":"DeAngelis","suffix":""}],"editors":[]},
-    {"key":"50","year":2009,"displayYear":"2009","note":"H.R. 3590 § 6002",
-      "collaborativeAuthors":["Physician Payments Sunshine Act"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"51","year":2008,"displayYear":"2008","title":
-      "Code on interactions with health care                        professionals.",
-      "note":
-      "Available: http://www.phrma.org/files/attachments/PhRMA%20Marketing%20Code%202008.pdf.                        Accessed 10 February 2011",
-      "collaborativeAuthors":["PhRMA"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"52","year":2006,"displayYear":"2006 September 12","title":
-      "Stanford to ban drug makers\u0027 gifts to doctors, even                        pens.",
-      "note":"NY Times C2","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "A Pollack","givenNames":"A","surnames":"Pollack","suffix":""}],
-      "editors":[]},{"key":"53","year":2010,"displayYear":
-      "2010 October 15","title":
-      "Drugmaker CEOs may be targets for U.S. FDA in off-label cases,                        lawyer says.",
-      "note":
-      "Bloomberg News. Available: http://www.bloomberg.com/news/2010-10-14/drugmaker-executives-may-become-targets-of-fda-for-off-label-promotions.html.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "A Edney","givenNames":"A","surnames":"Edney","suffix":""}],
-      "editors":[]},{"key":"54","year":2010,"displayYear":
-      "2010 November 9","title":
-      "Ex-Glaxo executive is charged in drug fraud.","note":"NY Times B2",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "D Wilson","givenNames":"D","surnames":"Wilson","suffix":""}],
-      "editors":[]},{"key":"55","year":2010,"displayYear":"2010 March 17",
-      "title":
-      "Business must change to earn back the public\u0027s                        trust.",
-      "note":
-      "Reuters. Available: http://blogs.reuters.com/great-debate/2010/03/17/business-must-change-to-earn-back-the-publics-trust/.                        Accessed 10 February 2011",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "J Kindler","givenNames":"J","surnames":"Kindler","suffix":""}],
-      "editors":[]}],"relatedArticles":[],"authors":[{"fullName":
-      "Aaron S. Kesselheim","givenNames":"Aaron S.","surnames":
-      "Kesselheim","suffix":""},{"fullName":"Michelle M. Mello","givenNames":
-      "Michelle M.","surnames":"Mello","suffix":""},{"fullName":
-      "David M. Studdert","givenNames":"David M.","surnames":"Studdert",
-      "suffix":""}],"editors":[{"fullName":"Joseph S. Ross","givenNames":
-      "Joseph S.","surnames":"Ross","suffix":""}],"journals":[{"eIssn":
-      "1549-1676"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pmed.1000431",
+  "title": "Strategies and Practices in Off-Label Marketing of Pharmaceuticals: A Retrospective Analysis of Whistleblower Complaints",
+  "eIssn": "1549-1676",
+  "state": 1,
+  "archiveName": "pmed.1000431.zip",
+  "description": "<p>Aaron Kesselheim and colleagues analyzed unsealed whistleblower complaints                    against pharmaceutical companies filed in US federal fraud cases that contained                    allegations of off-label marketing, and develop a taxonomy of the various                    off-label practices.</p>",
+  "rights": "Kesselheim et al. This is an open-access article distributed under\n                the terms of the Creative Commons Attribution License, which permits unrestricted\n                use, distribution, and reproduction in any medium, provided the original author and\n                source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-9",
+  "eLocationId": "e1000431",
+  "strkImgURI": "",
+  "date": "2011-04-05T07:00:00Z",
+  "volume": "8",
+  "issue": "4",
+  "journal": "PLoS Med",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pmed.1000431",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": [],
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Strategies and Practices in Off-Label Marketing of Pharmaceuticals: A Retrospective Analysis of Whistleblower Complaints",
+      "description": "<p>Aaron Kesselheim and colleagues analyzed unsealed whistleblower complaints                    against pharmaceutical companies filed in US federal fraud cases that contained                    allegations of off-label marketing, and develop a taxonomy of the various                    off-label practices.</p>",
+      "size": 142256
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Strategies and Practices in Off-Label Marketing of Pharmaceuticals: A Retrospective Analysis of Whistleblower Complaints",
+      "description": "<p>Aaron Kesselheim and colleagues analyzed unsealed whistleblower complaints                    against pharmaceutical companies filed in US federal fraud cases that contained                    allegations of off-label marketing, and develop a taxonomy of the various                    off-label practices.</p>",
+      "size": 127903
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Pharmaceutical fraud cases related to off-label marketing, January\n                        1996\u2013October 2010.</title>",
+      "size": 640104
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Pharmaceutical fraud cases related to off-label marketing, January\n                        1996\u2013October 2010.</title>",
+      "size": 7997
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Pharmaceutical fraud cases related to off-label marketing, January\n                        1996\u2013October 2010.</title>",
+      "size": 155848
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Pharmaceutical fraud cases related to off-label marketing, January\n                        1996\u2013October 2010.</title>",
+      "size": 155411
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t002",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 2",
+      "description": "<title>Frequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.</title>",
+      "size": 549518
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Frequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.</title>",
+      "size": 5242
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Frequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.</title>",
+      "size": 116409
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1000431.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Frequency of off-label marketing strategies and practices reported in\n                            whistleblower complaints.</title>",
+      "size": 117046
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 1962,
+      "displayYear": "1962",
+      "note": "Public Law 87-781 (codified as amended at 21 U.S.C. \u00a7 352                        (n))",
+      "collaborativeAuthors": [
+        "Kefauver-Harris Drug Amendments"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Off-label promotion, on-target sales.",
+      "pages": "e210",
+      "eLocationID": "e210",
+      "journal": "PLoS Med",
+      "note": "doi:10.1371/journal.pmed.0050210",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Fugh-Berman",
+          "givenNames": "A",
+          "surnames": "Fugh-Berman",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Melnick",
+          "givenNames": "D",
+          "surnames": "Melnick",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 299,
+      "volume": "299",
+      "title": "FDA guidance on off-label promotion and the state of the                        literature from sponsors.",
+      "pages": "1949-1951",
+      "eLocationID": "1949",
+      "journal": "J Amer Med Assn",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "BM Psaty",
+          "givenNames": "BM",
+          "surnames": "Psaty",
+          "suffix": ""
+        },
+        {
+          "fullName": "W Ray",
+          "givenNames": "W",
+          "surnames": "Ray",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 145,
+      "volume": "145",
+      "title": "Safeguarding patient welfare: who's in                        charge?",
+      "pages": "305-307",
+      "eLocationID": "305",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JE Henney",
+          "givenNames": "JE",
+          "surnames": "Henney",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 358,
+      "volume": "358",
+      "title": "Pharmaceutical promotion to physicians and First Amendment                        rights.",
+      "pages": "1727-1732",
+      "eLocationID": "1727",
+      "journal": "New Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AS Kesselheim",
+          "givenNames": "AS",
+          "surnames": "Kesselheim",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Avorn",
+          "givenNames": "J",
+          "surnames": "Avorn",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 149,
+      "volume": "149",
+      "title": "Whistleblower-initiated enforcement actions against health care                        fraud and abuse in the United States, 1996 to 2005.",
+      "pages": "342-349",
+      "eLocationID": "342",
+      "journal": "Ann Int Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AS Kesselheim",
+          "givenNames": "AS",
+          "surnames": "Kesselheim",
+          "suffix": ""
+        },
+        {
+          "fullName": "DM Studdert",
+          "givenNames": "DM",
+          "surnames": "Studdert",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "December",
+      "day": "16",
+      "title": "Rapidly increasing criminal and civil monetary penalties against                        the pharmaceutical industry: 1991 to 2010.",
+      "note": "Available: http://www.citizen.org/hrg1924. Accessed 10 February                        2011",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "S Almashat",
+          "givenNames": "S",
+          "surnames": "Almashat",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Preston",
+          "givenNames": "C",
+          "surnames": "Preston",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Waterman",
+          "givenNames": "T",
+          "surnames": "Waterman",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wolfe",
+          "givenNames": "S",
+          "surnames": "Wolfe",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2009,
+      "displayYear": "2009",
+      "month": "September",
+      "day": "2",
+      "title": "Pfizer pays $2.3 billion to settle marketing                        case.",
+      "note": "NY Times B4",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "G Harris",
+          "givenNames": "G",
+          "surnames": "Harris",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "April",
+      "day": "29",
+      "title": "Two Johnson &amp; Johnson subsidiaries to pay over $81                        million to resolve allegations of off-label promotion of                        Topamax.",
+      "note": "Available: http://www.justice.gov/opa/pr/2010/April/10-civ-500.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "April",
+      "day": "27",
+      "title": "Pharmaceutical giant AstraZeneca to pay $520 million for                        off-label drug marketing.",
+      "note": "Available: http://www.justice.gov/opa/pr/2010/April/10-civ-487.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "May",
+      "day": "4",
+      "title": "Novartis vaccines &amp; diagnostics to pay more than $72                        million to resolve False Claims Act allegations concerning                        TOBI.",
+      "note": "Available: http://www.justice.gov/opa/pr/2010/May/10-civ-522.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "September",
+      "day": "15",
+      "title": "Drug maker Forest pleads guilty; to pay more than $313                        million to resolve criminal charges and False Claims Act                        allegations.",
+      "note": "Available: http://www.justice.gov/opa/pr/2010/September/10-civ-1028.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "September",
+      "day": "30",
+      "title": "Novartis Pharmaceuticals Corp. to pay more than $420                        million to resolve off-label promotion and kickback allegations. 30 Sept                        2010.",
+      "note": "Available: http://www.justice.gov/opa/pr/2010/September/10-civ-1102.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2010,
+      "displayYear": "2010",
+      "month": "September",
+      "day": "1",
+      "title": "Allergan agrees to plead guilty and pay $600 million to                        resolve allegations of off-label promotion of Botox\u00ae.",
+      "note": "Available: http://www.justice.gov/opa/pr/2010/September/10-civ-988.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 71,
+      "volume": "71",
+      "title": "Health care fraud investigations bedevil Pharma industry: if                        you're not under investigation, it's only because you've                        recently settled.",
+      "pages": "21-24",
+      "eLocationID": "21",
+      "journal": "Pink Sheet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Sandburg",
+          "givenNames": "B",
+          "surnames": "Sandburg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 149,
+      "volume": "149",
+      "title": "The ADVANTAGE seeding trial: a review of internal                        documents.",
+      "pages": "251-258",
+      "eLocationID": "251",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KP Hill",
+          "givenNames": "KP",
+          "surnames": "Hill",
+          "suffix": ""
+        },
+        {
+          "fullName": "JS Ross",
+          "givenNames": "JS",
+          "surnames": "Ross",
+          "suffix": ""
+        },
+        {
+          "fullName": "DS Egilman",
+          "givenNames": "DS",
+          "surnames": "Egilman",
+          "suffix": ""
+        },
+        {
+          "fullName": "HM Krumholz",
+          "givenNames": "HM",
+          "surnames": "Krumholz",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 299,
+      "volume": "299",
+      "title": "Guest authorship and ghostwriting in publications related to                        rofecoxib: a case study of industry documents from rofecoxib                        litigation.",
+      "pages": "1800-1812",
+      "eLocationID": "1800",
+      "journal": "J Amer Med Assn",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JS Ross",
+          "givenNames": "JS",
+          "surnames": "Ross",
+          "suffix": ""
+        },
+        {
+          "fullName": "KP Hill",
+          "givenNames": "KP",
+          "surnames": "Hill",
+          "suffix": ""
+        },
+        {
+          "fullName": "DS Egilman",
+          "givenNames": "DS",
+          "surnames": "Egilman",
+          "suffix": ""
+        },
+        {
+          "fullName": "HM Krumholz",
+          "givenNames": "HM",
+          "surnames": "Krumholz",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 69,
+      "volume": "69",
+      "title": "The promotion of olanzapine in primary care: an examination of                        internal industry documents.",
+      "pages": "14-20",
+      "eLocationID": "14",
+      "journal": "Soc Sci Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GI Spielmans",
+          "givenNames": "GI",
+          "surnames": "Spielmans",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Characteristics and impact of drug detailing for                        gabapentin.",
+      "pages": "e134",
+      "eLocationID": "e134",
+      "journal": "PLoS Med",
+      "note": "doi:10.1371/journal.pmed.0040134",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MA Steinman",
+          "givenNames": "MA",
+          "surnames": "Steinman",
+          "suffix": ""
+        },
+        {
+          "fullName": "GM Harper",
+          "givenNames": "GM",
+          "surnames": "Harper",
+          "suffix": ""
+        },
+        {
+          "fullName": "MM Chren",
+          "givenNames": "MM",
+          "surnames": "Chren",
+          "suffix": ""
+        },
+        {
+          "fullName": "CS Landefeld",
+          "givenNames": "CS",
+          "surnames": "Landefeld",
+          "suffix": ""
+        },
+        {
+          "fullName": "LA Bero",
+          "givenNames": "LA",
+          "surnames": "Bero",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 145,
+      "volume": "145",
+      "title": "Narrative review: the promotion of gabapentin: an analysis of                        internal industry documents.",
+      "pages": "284-293",
+      "eLocationID": "284",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MA Steinman",
+          "givenNames": "MA",
+          "surnames": "Steinman",
+          "suffix": ""
+        },
+        {
+          "fullName": "LA Bero",
+          "givenNames": "LA",
+          "surnames": "Bero",
+          "suffix": ""
+        },
+        {
+          "fullName": "MM Chren",
+          "givenNames": "MM",
+          "surnames": "Chren",
+          "suffix": ""
+        },
+        {
+          "fullName": "CS Landefeld",
+          "givenNames": "CS",
+          "surnames": "Landefeld",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Following the script: how drug reps make friends and influence                        doctors.",
+      "pages": "e150",
+      "eLocationID": "e150",
+      "journal": "PLoS Med",
+      "note": "doi:10.1371/journal.pmed.0040150",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Fugh-Berman",
+          "givenNames": "A",
+          "surnames": "Fugh-Berman",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Ahari",
+          "givenNames": "S",
+          "surnames": "Ahari",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2005,
+      "displayYear": "2005",
+      "month": "May",
+      "day": "5",
+      "title": "Memorandum re: marketing of Vioxx to physicians.",
+      "note": "Available: http://oversight.house.gov/documents/20050505114932-41272.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "HA Waxman",
+          "givenNames": "HA",
+          "surnames": "Waxman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 362,
+      "volume": "362",
+      "title": "Experiences of whistle-blowers in major fraud litigation against                        pharmaceutical companies.",
+      "pages": "1832-1839",
+      "eLocationID": "1832",
+      "journal": "New Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AS Kesselheim",
+          "givenNames": "AS",
+          "surnames": "Kesselheim",
+          "suffix": ""
+        },
+        {
+          "fullName": "DM Studdert",
+          "givenNames": "DM",
+          "surnames": "Studdert",
+          "suffix": ""
+        },
+        {
+          "fullName": "MM Mello",
+          "givenNames": "MM",
+          "surnames": "Mello",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 360,
+      "volume": "360",
+      "title": "Shifting terrain in the regulation of off-label promotion of                        pharmaceuticals.",
+      "pages": "1557-1566",
+      "eLocationID": "1557",
+      "journal": "New Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MM Mello",
+          "givenNames": "MM",
+          "surnames": "Mello",
+          "suffix": ""
+        },
+        {
+          "fullName": "DM Studdert",
+          "givenNames": "DM",
+          "surnames": "Studdert",
+          "suffix": ""
+        },
+        {
+          "fullName": "TA Brennan",
+          "givenNames": "TA",
+          "surnames": "Brennan",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2011,
+      "displayYear": "2011",
+      "title": "Office of Public Affairs Press Releases.",
+      "note": "Available: http://www.usdoj.gov/03press/03_1_1.html. Accessed 10                        February 2011",
+      "collaborativeAuthors": [
+        "United States Department of Justice"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2011,
+      "displayYear": "2011",
+      "title": "Public Access to Court Electronic Records.",
+      "note": "Available: http://pacer.psc.uscourts.gov/. Accessed 10 February                        2011",
+      "collaborativeAuthors": [
+        "United States Judiciary"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 1967,
+      "displayYear": "1967",
+      "title": "The discovery of grounded theory: strategies for qualitative                        research",
+      "publisherLocation": "New York",
+      "publisherName": "Aldine De Gruyter Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "BG Glaser",
+          "givenNames": "BG",
+          "surnames": "Glaser",
+          "suffix": ""
+        },
+        {
+          "fullName": "AL Strauss",
+          "givenNames": "AL",
+          "surnames": "Strauss",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 1992,
+      "displayYear": "1992",
+      "volumeNumber": 29,
+      "volume": "29",
+      "title": "Qualitative data analysis as a public event: the documentation of                        category development procedures.",
+      "pages": "253-266",
+      "eLocationID": "253",
+      "journal": "American Educational Research Journal",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MA Constas",
+          "givenNames": "MA",
+          "surnames": "Constas",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 1996,
+      "displayYear": "1996 August 13",
+      "title": "Civil Action 1:96-CV-11651-PBS.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/WarnerLambert_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Franklin v. Parke-Davis, Division of Warner-Lambert\n                        Company"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2007,
+      "displayYear": "2007 August 13",
+      "title": "Civil Action 1:04-CV-11780-DPW.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint8.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Collins, et al. v. Pfizer, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 2006,
+      "displayYear": "2006 February 17",
+      "title": "Civil Action 05-CV-0387-SJF-KAM.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/OrphanMedical_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Lauterbach v. Orphan Medical Inc., Jazz\n                        Pharmaceuticals Inc., and Dr. Peter Gleason"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 2008,
+      "displayYear": "2008 January 3",
+      "title": "Civil Action 2:04-CV-04401-TON.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Cephalon_Complaint4.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Boise v. Cephalon, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 2005,
+      "displayYear": "2005 October 24",
+      "title": "Civil Action 1:05-CV-12115-DPW.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint7.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Kopchinski v. Pfizer, Inc. and Pharmacia Corp"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 2005,
+      "displayYear": "2005 July 22",
+      "title": "Civil Action 3:05-CV-03004-CRB.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Scios_Complaint2.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Stromv. Scios, Inc. and Johnson & Johnson,\n                        Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 2007,
+      "displayYear": "2007 April 5",
+      "title": "Civil Action 2:04-CV-02389-KHV-GLR.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Medicis_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Mulqueen, et al. v. Medicis Pharmaceutical\n                        Corp"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 2010,
+      "displayYear": "2010 January 8",
+      "title": "Civil Action 03-10395-NMG.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Forest_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Gobble v. Forest Laboratories Inc., Forest\n                        Pharmaceuticals, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "37",
+      "year": 2010,
+      "displayYear": "2010 August 26",
+      "title": "Civil Action 2:06-CV-01630-LDD.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/NovartisCase2_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Copeland v. Novartis Pharmaceuticals Corp"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "38",
+      "year": 2010,
+      "displayYear": "2010 May 24",
+      "title": "Civil Action 2:05-CV-06609-JP.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Wyeth_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Sandler and Paris v. Wyeth Pharmaceuticals, Inc. and\n                        Pfizer Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "39",
+      "year": 2007,
+      "displayYear": "2007 August 24",
+      "title": "Civil Action 2:06-CV-00168-MJP.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/CellTherapeutics_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Marchese v. Cell Therapeutics, Inc., et al"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "40",
+      "year": 2009,
+      "displayYear": "2009 August 21",
+      "title": "Civil Action 2:07-CV-04106-JCJ.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint5.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Kruszewski v. Pfizer, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "41",
+      "year": 2008,
+      "displayYear": "2008 August 1",
+      "title": "Civil Action 2:04-CV-03479-BMS.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/AstraZeneca_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Wetta v. AstraZeneca Corporation"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "42",
+      "year": 2004,
+      "displayYear": "2004 July 9",
+      "title": "Civil Action 04:CV-4323.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Intermune_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Gallagher v. Intermune, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "43",
+      "year": 2008,
+      "displayYear": "2008 August 1",
+      "title": "Civil Action 1:08-CV-11318-DPW.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint2.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Westlock v. Pfizer, Inc., et al"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "44",
+      "year": 2007,
+      "displayYear": "2007 November 21",
+      "title": "Civil Action 2:06-CV-00176-WOB.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Liter v. Pfizer, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "45",
+      "year": 2007,
+      "displayYear": "2007 June 12",
+      "title": "Civil Action 1:07-CV-10304-DPW.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Pfizer_Complaint6.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Farber and Schildhauer v. Pfizer, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "46",
+      "year": 2005,
+      "displayYear": "2005 October 7",
+      "title": "Civil Action 3:05-CV-04055-CRB.",
+      "note": "http://www.drugepi.org/downloads/downloads/Scios_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Smith v. Scios, Inc., et al"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "47",
+      "year": 2007,
+      "displayYear": "2007 June 5",
+      "title": "Civil Action 1:07-CV-01288-WSD.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Allergan_Complaint2.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US ex rel. Lang and Rushin v. Allergan, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "48",
+      "year": 2003,
+      "displayYear": "2003 October 6",
+      "title": "Civil Action 03-CV-11892-GAO.",
+      "note": "Available: http://www.drugepi.org/downloads/downloads/Serono_Complaint1.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "US, et al. ex rel. Garcia and Driscoll v. Serono, Inc"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "49",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 363,
+      "volume": "363",
+      "title": "Toward more uniform conflict disclosures\u2014the updated ICMJE                        conflict of interest reporting form.",
+      "pages": "188-189",
+      "eLocationID": "188",
+      "journal": "New Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JM Drazen",
+          "givenNames": "JM",
+          "surnames": "Drazen",
+          "suffix": ""
+        },
+        {
+          "fullName": "PW de Leeuw",
+          "givenNames": "PW",
+          "surnames": "de Leeuw",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Laine",
+          "givenNames": "C",
+          "surnames": "Laine",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Mulrow",
+          "givenNames": "C",
+          "surnames": "Mulrow",
+          "suffix": ""
+        },
+        {
+          "fullName": "CD DeAngelis",
+          "givenNames": "CD",
+          "surnames": "DeAngelis",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "50",
+      "year": 2009,
+      "displayYear": "2009",
+      "note": "H.R. 3590 \u00a7 6002",
+      "collaborativeAuthors": [
+        "Physician Payments Sunshine Act"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "51",
+      "year": 2008,
+      "displayYear": "2008",
+      "title": "Code on interactions with health care                        professionals.",
+      "note": "Available: http://www.phrma.org/files/attachments/PhRMA%20Marketing%20Code%202008.pdf.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [
+        "PhRMA"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "52",
+      "year": 2006,
+      "displayYear": "2006 September 12",
+      "title": "Stanford to ban drug makers' gifts to doctors, even                        pens.",
+      "note": "NY Times C2",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "A Pollack",
+          "givenNames": "A",
+          "surnames": "Pollack",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "53",
+      "year": 2010,
+      "displayYear": "2010 October 15",
+      "title": "Drugmaker CEOs may be targets for U.S. FDA in off-label cases,                        lawyer says.",
+      "note": "Bloomberg News. Available: http://www.bloomberg.com/news/2010-10-14/drugmaker-executives-may-become-targets-of-fda-for-off-label-promotions.html.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "A Edney",
+          "givenNames": "A",
+          "surnames": "Edney",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "54",
+      "year": 2010,
+      "displayYear": "2010 November 9",
+      "title": "Ex-Glaxo executive is charged in drug fraud.",
+      "note": "NY Times B2",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "D Wilson",
+          "givenNames": "D",
+          "surnames": "Wilson",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "55",
+      "year": 2010,
+      "displayYear": "2010 March 17",
+      "title": "Business must change to earn back the public's                        trust.",
+      "note": "Reuters. Available: http://blogs.reuters.com/great-debate/2010/03/17/business-must-change-to-earn-back-the-publics-trust/.                        Accessed 10 February 2011",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "J Kindler",
+          "givenNames": "J",
+          "surnames": "Kindler",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Aaron S. Kesselheim",
+      "givenNames": "Aaron S.",
+      "surnames": "Kesselheim",
+      "suffix": ""
+    },
+    {
+      "fullName": "Michelle M. Mello",
+      "givenNames": "Michelle M.",
+      "surnames": "Mello",
+      "suffix": ""
+    },
+    {
+      "fullName": "David M. Studdert",
+      "givenNames": "David M.",
+      "surnames": "Studdert",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Joseph S. Ross",
+      "givenNames": "Joseph S.",
+      "surnames": "Ross",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1549-1676"
+    }
+  ]
+}
