@@ -53,6 +53,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -60,8 +61,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertEqualsNoOrder;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -153,14 +154,18 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
       assertTrue(authorNames.add(fullName), "Redundant author name");
     }
 
-    Set<Category> expectedCategories = new HashSet<Category>();
+    Set<Category> expectedCategories = new HashSet<>();
     Category cat1 = new Category();
     cat1.setPath("/TopLevel1/term1");
     expectedCategories.add(cat1);
     Category cat2 = new Category();
     cat2.setPath("/TopLevel2/term2");
     expectedCategories.add(cat2);
-    assertEqualsNoOrder(stored.getCategories().keySet().toArray(), expectedCategories.toArray());
+    Set<Category> actualCategories = stored.getCategories().keySet();
+    // org.hibernate.collection.AbstractPersistentCollection.SetProxy does not respect the Set.equals contract,
+    // so copy actualCategories out to a well-behaved Set before comparing.
+    actualCategories = new HashSet<>(actualCategories);
+    assertEquals(actualCategories, expectedCategories);
 
     byte[] readData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(readData, sampleData);
