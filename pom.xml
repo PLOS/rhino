@@ -40,6 +40,12 @@
     </license>
   </licenses>
 
+  <scm>
+    <connection>scm:git:git@github.com:PLOS/rhino.git</connection>
+    <developerConnection>scm:git:git@github.com:PLOS/rhino.git</developerConnection>
+    <url>https://github.com/PLOS/rhino</url>
+  </scm>
+
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
@@ -523,7 +529,46 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <!-- Deploy the web site -->
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.9</version>
+        <executions>
+           <execution>
+             <goals>
+               <goal>site</goal>
+             </goals>
+             <!-- select the Maven phase in which the plugin will be executed -->
+             <phase>site</phase>
+             <configuration>
+               <server>github</server>
+               <!-- The commit message -->
+               <message>Building javadocs rhino</message>
+               <!-- Use merge or override the content -->
+               <merge>true</merge>
+
+               <outputDirectory>target/site/apidocs</outputDirectory>
+             </configuration>
+           </execution>
+        </executions>
+      </plugin>
+
     </plugins>
 
   </build>
+
+  <reporting>
+     <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <configuration>
+               <show>package</show>
+            </configuration>
+        </plugin>
+     </plugins>
+  </reporting>
+
 </project>
