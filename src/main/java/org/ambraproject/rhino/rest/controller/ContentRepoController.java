@@ -33,19 +33,35 @@ public class ContentRepoController extends RestController {
     return new ResponseEntity<>(contentRepoAddress.toString(), HttpStatus.OK);
   }
 
-  @RequestMapping("repo/{bucket}/{key}/{version}")
-  public ResponseEntity<?> serve(@PathVariable("bucket") String bucket,
-                                 @PathVariable("key") String key,
+  @RequestMapping("repoBucket/")
+  public ResponseEntity<String> getRepoBucketName() {
+    String repoBucketName = runtimeConfiguration.getRepoBucketName();
+    if (repoBucketName == null) {
+      throw new RestClientException("repoBucketName is not configured", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<>(repoBucketName, HttpStatus.OK);
+  }
+
+  @RequestMapping("repo/{key}/{version}")
+  public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)
       throws IOException {
     URI contentRepoAddress = runtimeConfiguration.getContentRepoAddress();
-    if (contentRepoAddress != null) {
-      return "file".equals(contentRepoAddress.getScheme())
-          ? serveInDevMode(contentRepoAddress, bucket, key, version)
-          : serveFromRemoteRepo(contentRepoAddress, bucket, key, version);
-    } else {
-      throw new RuntimeException("contentRepoAddress required in configuration");
+    if (contentRepoAddress == null) {
+      throw new RuntimeException("contentRepoAddress is not configured");
     }
+    if ("file".equals(contentRepoAddress.getScheme())) {
+      return serveInDevMode(contentRepoAddress, key, version);
+    }
+
+    String repoBucketName = runtimeConfiguration.getRepoBucketName();
+    if (repoBucketName == null) {
+      throw new RuntimeException("repoBucketName is not configured");
+    }
+
+    return serveFromRemoteRepo(contentRepoAddress, repoBucketName, key, version);
+
+
   }
 
   private static ResponseEntity<?> serveFromRemoteRepo(URI contentRepoAddress,
@@ -57,9 +73,9 @@ public class ContentRepoController extends RestController {
     return new ResponseEntity<Object>(headers, HttpStatus.FOUND);
   }
 
-  private static ResponseEntity<String> serveInDevMode(URI devModeRepo, String bucket, String key, String version)
+  private static ResponseEntity<String> serveInDevMode(URI devModeRepo, String key, String version)
       throws IOException {
-    File path = new File(devModeRepo.getPath(), bucket + '/' + key);
+    File path = new File(devModeRepo.getPath(), key);
     if (!path.exists()) {
       return respondWithStatus(HttpStatus.NOT_FOUND);
     }

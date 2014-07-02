@@ -53,6 +53,8 @@ Commit: ${buildProperties.gitCommitIdAbbrev}
   <li><a href="ingestibles">/ingestibles</a></li>
   <li><a href="journals">/journals</a></li>
   <li><a href="config">/config</a></li>
+  <li><a href="repo/">/repo</a></li>
+  <li><a href="repoBucket/">/repoBucket</a></li>
 </ul>
 
 <hr/>

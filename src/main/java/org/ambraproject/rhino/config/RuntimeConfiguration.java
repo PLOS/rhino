@@ -41,4 +41,12 @@ public interface RuntimeConfiguration {
    */
   URI getContentRepoAddress();
 
+  /**
+   * Return the name of the active bucket for the content repository.
+   *
+   * @return the content repository bucket name
+   */
+  String getRepoBucketName();
+
+
 }
