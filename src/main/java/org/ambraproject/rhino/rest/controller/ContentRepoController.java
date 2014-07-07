@@ -24,24 +24,6 @@ public class ContentRepoController extends RestController {
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
 
-  @RequestMapping("repo/")
-  public ResponseEntity<String> getRepoAddress() {
-    URI contentRepoAddress = runtimeConfiguration.getContentRepoAddress();
-    if (contentRepoAddress == null) {
-      throw new RestClientException("contentRepoAddress is not configured", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return new ResponseEntity<>(contentRepoAddress.toString(), HttpStatus.OK);
-  }
-
-  @RequestMapping("repoBucket/")
-  public ResponseEntity<String> getRepoBucketName() {
-    String repoBucketName = runtimeConfiguration.getRepoBucketName();
-    if (repoBucketName == null) {
-      throw new RestClientException("repoBucketName is not configured", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return new ResponseEntity<>(repoBucketName, HttpStatus.OK);
-  }
-
   @RequestMapping("repo/{key}/{version}")
   public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)

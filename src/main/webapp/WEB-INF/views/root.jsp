@@ -52,9 +52,15 @@ Commit: ${buildProperties.gitCommitIdAbbrev}
   </li>
   <li><a href="ingestibles">/ingestibles</a></li>
   <li><a href="journals">/journals</a></li>
-  <li><a href="config">/config</a></li>
-  <li><a href="repo/">/repo</a></li>
-  <li><a href="repoBucket/">/repoBucket</a></li>
+  <li><a href="config">/config</a>
+  <ul>
+      <li>
+          ?type=
+          <c:forEach items="${configTypes}" var="configType">
+              <a href="config?type=${configType}">${configType}</a>
+          </c:forEach>
+      </li>
+  </ul></li>
 </ul>
 
 <hr/>

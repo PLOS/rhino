@@ -38,7 +38,7 @@ public class RootController {
     model.addObject("stateParams", ArticleJsonConstants.PUBLICATION_STATE_NAMES);
     model.addObject("syndStatuses", SYNDICATION_STATUSES_LOWERCASE);
     model.addObject("buildProperties", configurationReadService.getBuildProperties());
-
+    model.addObject("configTypes", ConfigurationReadService.CONFIG_TYPES);
     model.setViewName("root");
     return model;
   }
