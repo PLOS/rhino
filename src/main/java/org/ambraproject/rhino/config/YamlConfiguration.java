@@ -47,6 +47,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
     private boolean prettyPrintJson = true; // the default value should be true
     private URI contentRepoAddress = null;
+    private String repoBucketName = null;
 
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
@@ -55,6 +56,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
     public void setcontentRepoAddress(URI contentRepoAddress) {
       this.contentRepoAddress = contentRepoAddress;
     }
+
+    public void setRepoBucketName(String repoBucketName) { this.repoBucketName = repoBucketName; }
   }
 
   /**
@@ -68,6 +71,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
   @Override
   public URI getContentRepoAddress() {
     return uf.contentRepoAddress;
+  }
+
+  @Override
+  public String getRepoBucketName() {
+    return uf.repoBucketName;
   }
 
 }

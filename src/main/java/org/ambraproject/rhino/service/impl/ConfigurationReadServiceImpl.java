@@ -2,6 +2,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class ConfigurationReadServiceImpl extends AmbraService implements ConfigurationReadService {
@@ -21,10 +23,13 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   private Configuration ambraConfiguration;
 
   @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
+
+  @Autowired
   private GitInfo gitInfo;
 
   @Override
-  public Transceiver read() throws IOException {
+  public Transceiver readAmbraConfig() throws IOException {
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
@@ -39,11 +44,29 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
   }
 
   @Override
-  public Transceiver readBuildProperties() throws IOException {
+  public Transceiver readBuildConfig() throws IOException {
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
         return getBuildProperties();
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
+  @Override
+  public Transceiver readRepoConfig() throws IOException {
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        Map<String, Object> cfgMap = new HashMap<>();
+        cfgMap.put("contentRepoAddress",runtimeConfiguration.getContentRepoAddress());
+        cfgMap.put("repoBucketName",runtimeConfiguration.getRepoBucketName());
+        return cfgMap;
       }
 
       @Override
