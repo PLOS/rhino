@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.Properties;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertNotNull;
+
 
 public class ConfigurationReadServiceTest extends BaseRhinoTest {
   @Autowired
