@@ -1,1 +1,3 @@
 prettyPrintJson: true
+contentRepoAddress: http://path/to/content/repo
+repoBucketName: bucket_name
