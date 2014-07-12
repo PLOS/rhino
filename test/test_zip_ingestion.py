@@ -34,18 +34,45 @@ class ZipIngestionTest(IngestibleZipBaseTest):
   '''
 
   def test_zip_ingestion_happy_path(self):
-    self.zipUpload('data/pone.0097823.zip')
+    self.zipUpload('data/pone.0097823.zip', 'forced')
     self.verify_HTTP_code_is(201)
     self.verify_state_is('ingested')
     self.verify_doi_is_correct()
     self.verify_article_xml_section()
     self.verify_article_pdf_section()
     self.verify_graphics_section()
-    #self.verify_figures_section()
+    self.verify_figures_section()
 
     # Right now I can't access MySQL database at iad-leo-devstack01.int.plos.org from my box.
     print 'Here we have a nice SQL query returned meanwhile: %s ' % \
     Database().query('SELECT Version()')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
 Actual test against db should validate:

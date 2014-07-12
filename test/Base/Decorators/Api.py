@@ -9,9 +9,11 @@ __author__ = 'jkrzemien@plos.org'
 from functools import wraps
 from unittest import TestCase
 import time
+from datetime import datetime
+import re
 
 
-def ensure_api_called(func):
+def ensure_api_called(method):
 
   '''
   Function decorator.
@@ -22,15 +24,40 @@ def ensure_api_called(func):
   If response is present, will forward call to decorated function.
   '''
 
-  @wraps(func)
-  def _exec(value, *args, **kw):
+  @wraps(method)
+  def wrapper(value, *args, **kw):
     if value.get_response() is None:
       TestCase.fail(value, 'You MUST invoke an API first, BEFORE performing any validations!')
     else:
-      #print 'Executing "%s" validation...' % func.__name__
-      return func(value, *args, **kw)
+      return method(value, *args, **kw)
 
-  return _exec
+  return wrapper
+
+
+
+def deduce_doi(method):
+  '''
+  Function decorator.
+  Attemps to deduce the DOI of the Article upon API calls and store it as self._doi.
+  Failure to do so will render self._doi = None.
+  '''
+  pattern = re.compile('fsdfsdfs')
+
+  @wraps(method)
+  def wrapper(*args, **kw):
+    guessedDOI = None
+    if len(args) > 1:
+      instance = args[0]
+      for arg in args[1:]:
+        if type(arg) == str:
+          match = pattern.search(arg)
+          if match is not None:
+            guessedDOI = match.group(0)
+
+    instance._doi = guessedDOI
+    return method(*args, **kw)
+
+  return wrapper
 
 
 def timeit(method):
@@ -42,12 +69,14 @@ def timeit(method):
   @timeit decorator in in front of the method call.
   '''
 
-  def timed(*args, **kw):
+  def wrapper(*args, **kw):
+    args[0]._testStartTime = datetime.now()
     ts = time.time()
     result = method(*args, **kw)
     te = time.time()
+    args[0]._apiTime = (datetime.now() - args[0]._testStartTime).total_seconds()
 
     print 'Method %r %r call took %2.2f sec...' % (method.__name__, args[1:], te-ts)
     return result
 
-  return timed
+  return wrapper

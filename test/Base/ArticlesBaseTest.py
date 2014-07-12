@@ -6,36 +6,27 @@ Base class for Rhino's Articles related service tests.
 
 __author__ = 'jkrzemien@plos.org'
 
-import requests
-from Base.BaseServiceTest import BaseServiceTest
+from Base.JSONBasedServiceTest import JSONBasedServiceTest
 from Base.Config import RHINO_URL
-from datetime import datetime
-import json
-from Base.Decorators import ensure_api_called, timeit
+from Base.Decorators.Api import deduce_doi
 
 
-class ArticlesBaseTest(BaseServiceTest):
+class ArticlesBaseTest(JSONBasedServiceTest):
 
   def __init__(self, module):
     super(ArticlesBaseTest, self).__init__(module)
 
-    self.API_UNDER_TEST = RHINO_URL + '/articles/10.1371/journal.'
+    self.API_UNDER_TEST = RHINO_URL + '/articles/'
 
-  @timeit
+  @deduce_doi
   def updateArticle(self, article, state, syndications=None):
-    assert article is not None
-    assert state is not None
+    self.assertIsNotNone(article)
+    self.assertIsNotNone(state)
 
-    daData = {'state': state }
+    data = {'state': state }
 
     if syndications is not None:
-      daData['syndications'] = syndications
+      data['syndications'] = syndications
 
-    self._testStartTime = datetime.now()
-    self._response = requests.patch(self.API_UNDER_TEST + article, data=json.dumps(daData), verify=False)
-    self._apiTime = (datetime.now() - self._testStartTime).total_seconds()
+    self.doPatch(self.API_UNDER_TEST + article, data)
 
-    print self._response
-    #self._jsonResponse = self.get_response_as_json()
-    self._textResponse = self.get_response_as_text()
-    print self._textResponse

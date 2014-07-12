@@ -8,23 +8,47 @@ __author__ = 'jkrzemien@plos.org'
 
 import unittest
 import random
-from os import path
-from Base.Decorators import ensure_api_called
+from Base.Decorators.Api import ensure_api_called, timeit
+import requests
+import json
 
 
 class BaseServiceTest(unittest.TestCase):
 
-  DOI_PREFFIX = 'info:doi/10.1371/journal.'
-
   def __init__(self, module):
     super(BaseServiceTest, self).__init__(module)
     self._response = None
+    self._testStartTime = None
+    self._apiTime = None
 
   def setUp(self):
     self._response = None
+    self._testStartTime = None
+    self._apiTime = None
 
   def tearDown(self):
     self._response = None
+    self._testStartTime = None
+    self._apiTime = None
+
+  def doGet(self, url, params=None):
+    pass
+
+  @timeit
+  def doPost(self, url, data=None, files=None):
+    self._response = requests.post(url, data=data, files=files, verify=False)
+    print self._response.text
+
+  @timeit
+  def doPatch(self, url, data=None):
+    self._response = requests.patch(url, data=json.dumps(data), verify=False)
+    print self._response.text
+
+  def doDelete(self, url, data=None):
+    pass
+
+  def doUpdate(self, url, data=None):
+    pass
 
   def get_response(self):
     return self._response
@@ -34,14 +58,8 @@ class BaseServiceTest(unittest.TestCase):
     return self.get_response().text
 
   @ensure_api_called
-  def get_response_as_json(self):
-    return self.get_response().json()
-
-  def _verify_file_exists(self, filePath):
-    if not path.isfile(filePath):
-      self.fail('File "%s" does not exist!. Failing test...' % filePath)
-    self._archiveName = path.basename(filePath)
-    self._doi = self.DOI_PREFFIX + self._archiveName[:-4]
+  def get_response_as_binary(self):
+    return self.get_response().content
 
   @ensure_api_called
   def verify_HTTP_code_is(self, httpCode):
