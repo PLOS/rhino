@@ -9,7 +9,7 @@ __author__ = 'jkrzemien@plos.org'
 import unittest
 import random
 from Base.Decorators.Api import ensure_api_called, timeit
-import Config
+from Config import TIMEOUT, PRINT_DEBUG
 import requests
 import json
 
@@ -32,19 +32,25 @@ class BaseServiceTest(unittest.TestCase):
     self._testStartTime = None
     self._apiTime = None
 
+  @timeit
   def doGet(self, url, params=None):
-    pass
+    self._response = requests.get(url, params=params, verify=False, timeout=TIMEOUT,
+      allow_redirects=True)
+    if PRINT_DEBUG:
+      print self._response.text
 
   @timeit
   def doPost(self, url, data=None, files=None):
-    self._response = requests.post(url, data=data, files=files, verify=False)
-    if Config.PRINT_DEBUG:
+    self._response = requests.post(url, data=data, files=files, verify=False, timeout=TIMEOUT,
+      allow_redirects=True)
+    if PRINT_DEBUG:
       print self._response.text
 
   @timeit
   def doPatch(self, url, data=None):
-    self._response = requests.patch(url, data=json.dumps(data), verify=False)
-    if Config.PRINT_DEBUG:
+    self._response = requests.patch(url, data=json.dumps(data), verify=False, timeout=TIMEOUT,
+      allow_redirects=True)
+    if PRINT_DEBUG:
       print self._response.text
 
   def doDelete(self, url, data=None):

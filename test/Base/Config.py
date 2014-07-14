@@ -11,6 +11,8 @@ RHINO_URL = os.getenv('RHINO_URL', 'http://one-dpro2.plosjournals.org/api')
 
 PRINT_DEBUG = False
 
+TIMEOUT = 30         # API call timeout, in seconds
+
 dbconfig = {
   'user': 'root',
   'password': '',
