@@ -38,6 +38,9 @@ class JSONBasedServiceTest(BaseServiceTest):
   def _get_figures_section(self):
     return self._jpath('$..figures')[0]
 
+  def _get_syndications_section(self):
+    return self._jpath('$..syndications')[0]
+
   def verify_state_is(self, state):
     print 'Validating state in response to be "%s"...' % state,
     stateNodes = self._jpath('$.[?(@.state)]')

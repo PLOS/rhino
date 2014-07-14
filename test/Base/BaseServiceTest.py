@@ -9,6 +9,7 @@ __author__ = 'jkrzemien@plos.org'
 import unittest
 import random
 from Base.Decorators.Api import ensure_api_called, timeit
+import Config
 import requests
 import json
 
@@ -37,12 +38,14 @@ class BaseServiceTest(unittest.TestCase):
   @timeit
   def doPost(self, url, data=None, files=None):
     self._response = requests.post(url, data=data, files=files, verify=False)
-    print self._response.text
+    if Config.PRINT_DEBUG:
+      print self._response.text
 
   @timeit
   def doPatch(self, url, data=None):
     self._response = requests.patch(url, data=json.dumps(data), verify=False)
-    print self._response.text
+    if Config.PRINT_DEBUG:
+      print self._response.text
 
   def doDelete(self, url, data=None):
     pass

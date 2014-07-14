@@ -9,6 +9,8 @@ import os
 # Set RHINO_URL environment variable to desired URL in order to run suite against it
 RHINO_URL = os.getenv('RHINO_URL', 'http://one-dpro2.plosjournals.org/api')
 
+PRINT_DEBUG = False
+
 dbconfig = {
   'user': 'root',
   'password': '',

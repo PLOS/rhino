@@ -9,8 +9,6 @@ API's responses.
 
 from Asserter import Asserter
 from datetime import datetime
-#import Image
-#import io
 
 
 class TIFValidator(Asserter):

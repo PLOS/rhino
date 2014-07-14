@@ -34,6 +34,26 @@ def ensure_api_called(method):
   return wrapper
 
 
+def ensure_zip_provided(method):
+
+  '''
+  Function decorator.
+  Used to verify the existance of a ZIP file loaded (via define_zip_file_for_validations() method invocation)
+  in the instance that holds the wrapped method.
+  Will fail test case being run if no ZIP file is present, since can't validate anything over a
+  None instance.
+  If ZIP file is present, will forward call to decorated function.
+  '''
+
+  @wraps(method)
+  def wrapper(value, *args, **kw):
+    if not hasattr(value, '_zip') or value._zip is None:
+      TestCase.fail(value, 'You MUST define_zip_file_for_validations() first, BEFORE performing any validations!')
+    else:
+      return method(value, *args, **kw)
+
+  return wrapper
+
 
 def deduce_doi(method):
   '''
@@ -41,7 +61,7 @@ def deduce_doi(method):
   Attemps to deduce the DOI of the Article upon API calls and store it as self._doi.
   Failure to do so will render self._doi = None.
   '''
-  pattern = re.compile('fsdfsdfs')
+  pattern = re.compile('(info:doi/10.1371/)?journal\.p[a-z]+?\.\d+')
 
   @wraps(method)
   def wrapper(*args, **kw):
@@ -54,7 +74,11 @@ def deduce_doi(method):
           if match is not None:
             guessedDOI = match.group(0)
 
-    instance._doi = guessedDOI
+    if guessedDOI and not guessedDOI.startswith('info:doi'):
+      instance._doi = 'info:doi/10.1371/' + guessedDOI
+    else:
+      instance._doi = guessedDOI
+
     return method(*args, **kw)
 
   return wrapper

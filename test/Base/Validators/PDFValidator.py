@@ -7,11 +7,11 @@ This class loads up a PDF file in order to be used later on for validations agai
 API's responses.
 '''
 
-import xml.etree.ElementTree as ET
 from datetime import datetime
+from Asserter import Asserter
 
 
-class PDFValidator(object):
+class PDFValidator(Asserter):
 
   def __init__(self, data):
     self._size = len(data)
@@ -25,7 +25,7 @@ class PDFValidator(object):
     deltaTime = sectionDate - testStartTime
     assert deltaTime.total_seconds() > 0
     # Next validation is not working properly because there seems to be a difference of
-    # around 7 hours between my box and one-leo.plosjournals.org environment (?)
+    # around 7 hours between my box and system under test environment (?) (one-leo.plosjournals.org)
     #assert deltaTime.total_seconds() < apiTime
 
 

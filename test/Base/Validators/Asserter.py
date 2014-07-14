@@ -3,8 +3,7 @@
 __author__ = 'jkrzemien@plos.org'
 
 '''
-This class loads up an XML file in order to be used later on for validations against
-API's responses.
+This class holds some assert methods for easy use in any class that does not inherits from TestCase
 '''
 
 
