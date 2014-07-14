@@ -1,3 +1,17 @@
+#!/usr/bin/env python2
+
+'''
+Class for accessing MySQL databases and be able to run queries against it, retrieving results
+and/or performing modifications.
+
+Python's MySQL connector can be installed via the following command:
+
+  sudo pip install mysql-connector-python
+
+'''
+
+__author__ = 'jkrzemien@plos.org'
+
 from mysql.connector.pooling import MySQLConnectionPool
 from contextlib import closing
 import Config

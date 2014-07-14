@@ -2,6 +2,11 @@
 
 '''
 Base class for Rhino's JSON based service tests.
+
+Python's JSONPath can be installed via the following command:
+
+  sudo pip install --allow-external jsonpath --allow-unverified jsonpath jsonpath
+
 '''
 
 __author__ = 'jkrzemien@plos.org'
