@@ -100,6 +100,7 @@ def timeit(method):
     te = time.time()
     args[0]._apiTime = (datetime.now() - args[0]._testStartTime).total_seconds()
 
+    print ''
     print 'Method %r %r call took %2.2f sec...' % (method.__name__, args[1:], te-ts)
     return result
 

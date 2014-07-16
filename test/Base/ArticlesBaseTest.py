@@ -6,40 +6,38 @@ Base class for Rhino's Articles related service tests.
 
 __author__ = 'jkrzemien@plos.org'
 
-from Base.JSONBasedServiceTest import JSONBasedServiceTest
+from JSONBasedServiceTest import JSONBasedServiceTest
 from Validators.ZIPProcessor import ZIPProcessor
-from Base.Config import RHINO_URL
-from Base.Decorators.Api import deduce_doi, ensure_zip_provided
+from Config import RHINO_URL
+from Decorators.Api import deduce_doi, ensure_zip_provided
+from Validators.Assert import Assert
 
 
 class ArticlesBaseTest(JSONBasedServiceTest):
 
-  def __init__(self, module):
-    super(ArticlesBaseTest, self).__init__(module)
-
-    self.API_UNDER_TEST = RHINO_URL + '/articles/'
+  ARTICLES_API = RHINO_URL + '/articles/'
 
   def define_zip_file_for_validations(self, archive):
     self._zip = ZIPProcessor(archive)
 
   @deduce_doi
   def updateArticle(self, article, state, syndications=None):
-    self.assertIsNotNone(article)
-    self.assertIsNotNone(state)
+    Assert.isNotNone(article)
+    Assert.isNotNone(state)
 
     data = {'state': state }
 
     if syndications is not None:
       data['syndications'] = syndications
 
-    self.doPatch(self.API_UNDER_TEST + article, data)
+    self.doPatch(self.ARTICLES_API + article, data)
 
   def verify_doi_is_correct(self):
     print 'Validating DOI in response to be valid...',
     doiNodes = self._get_doi_from_response()
     for node in doiNodes:
-      self.assertTrue(len(node['doi']) > 0)
-      self.assertTrue(node['doi'].startswith(self._doi))
+      Assert.isTrue(len(node['doi']) > 0)
+      Assert.isTrue(node['doi'].startswith(self._doi))
     print 'OK'
 
   @ensure_zip_provided

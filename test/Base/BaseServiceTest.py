@@ -8,19 +8,14 @@ __author__ = 'jkrzemien@plos.org'
 
 import unittest
 import random
-from Base.Decorators.Api import ensure_api_called, timeit
-from Config import TIMEOUT, PRINT_DEBUG
 import requests
 import json
+from Decorators.Api import ensure_api_called, timeit
+from Config import TIMEOUT, PRINT_DEBUG
+from Validators.Assert import Assert
 
 
 class BaseServiceTest(unittest.TestCase):
-
-  def __init__(self, module):
-    super(BaseServiceTest, self).__init__(module)
-    self._response = None
-    self._testStartTime = None
-    self._apiTime = None
 
   def setUp(self):
     self._response = None
@@ -37,21 +32,21 @@ class BaseServiceTest(unittest.TestCase):
     self._response = requests.get(url, params=params, verify=False, timeout=TIMEOUT,
       allow_redirects=True)
     if PRINT_DEBUG:
-      print self._response.text
+      print 'API response = %s' % self._response.text
 
   @timeit
   def doPost(self, url, data=None, files=None):
     self._response = requests.post(url, data=data, files=files, verify=False, timeout=TIMEOUT,
       allow_redirects=True)
     if PRINT_DEBUG:
-      print self._response.text
+      print 'API response = %s' % self._response.text
 
   @timeit
   def doPatch(self, url, data=None):
     self._response = requests.patch(url, data=json.dumps(data), verify=False, timeout=TIMEOUT,
       allow_redirects=True)
     if PRINT_DEBUG:
-      print self._response.text
+      print 'API response = %s' % self._response.text
 
   def doDelete(self, url, data=None):
     pass
@@ -73,7 +68,7 @@ class BaseServiceTest(unittest.TestCase):
   @ensure_api_called
   def verify_HTTP_code_is(self, httpCode):
     print 'Validating HTTP response code to be %s...' % httpCode,
-    self.assertEqual(self._response.status_code, httpCode)
+    Assert.equals(self._response.status_code, httpCode)
     print 'OK'
 
   @staticmethod

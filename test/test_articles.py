@@ -12,6 +12,9 @@ from Base.ArticlesBaseTest import ArticlesBaseTest
 class ArticlesTest(ArticlesBaseTest):
 
   def test_article_syndication_happy_path(self):
+    '''
+    Validate Rhino's Update Article API with publish and syndication.
+    '''
 
     desiredState = 'published'
 
@@ -43,6 +46,5 @@ class ArticlesTest(ArticlesBaseTest):
     # Same here! :'(
     #self.verify_figures_section()
 
-
 if __name__ == '__main__':
-  ArticlesBaseTest._run_tests_randomly()
+    ArticlesBaseTest._run_tests_randomly()

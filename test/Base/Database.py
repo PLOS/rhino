@@ -6,7 +6,7 @@ and/or performing modifications.
 
 Python's MySQL connector can be installed via the following command:
 
-  sudo pip install mysql-connector-python
+  sudo pip install --allow-external mysql-connector-python mysql-connector-python
 
 '''
 

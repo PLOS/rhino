@@ -7,11 +7,11 @@ This class loads up an XML file in order to be used later on for validations aga
 API's responses.
 '''
 
-from Asserter import Asserter
+from Assert import Assert
 from datetime import datetime
 
 
-class TIFValidator(Asserter):
+class TIFValidator(object):
 
   def __init__(self, name, data, xml):
     self._name = name
@@ -28,29 +28,29 @@ class TIFValidator(Asserter):
   def metadata(self, section, doi, testStartTime, apiTime):
     print 'Validating Graphics metadata section in response...',
 
-    self.assertIsNotNone(section)
-    self.assertEquals(section['doi'], doi)
+    Assert.isNotNone(section)
+    Assert.equals(section['doi'], doi)
 
     matchedXmlFile = self._xml.find(".//fig/label[contains(text(),'%s')]" % section['title'])
-    self.assertIsNotNone(matchedXmlFile)
+    Assert.isNotNone(matchedXmlFile)
 
     matchedXmlFile = self._xml.find(".//fig/caption/p[contains(text(),'%s')]" % section['description'])
-    self.assertIsNotNone(matchedXmlFile)
+    Assert.isNotNone(matchedXmlFile)
 
     xpath = ".//%s/*[@xlink:href='%s']" % \
      (section['contextElement'], section['original']['metadata']['doi'])
     matchedXmlFile = self._xml.find(xpath)
 
-    self.assertIsNotNone(matchedXmlFile)
+    Assert.isNotNone(matchedXmlFile)
 
     fileName = self.DOI_PREFFIX + self._name
 
-    self.assertEquals(section['original']['file'].lower(), fileName.lower())
-    self.assertEquals(section['original']['metadata']['doi'], doi)
-    self.assertEquals(section['original']['metadata']['contentType'], self.MIME)
-    self.assertEquals(section['original']['metadata']['extension'], self.EXT)
-    self.assertEquals(section['original']['metadata']['created'], section['original']['metadata']['lastModified'])
-    self.assertEquals(section['original']['metadata']['size'], self.get_size())
+    Assert.equals(section['original']['file'].lower(), fileName.lower())
+    Assert.equals(section['original']['metadata']['doi'], doi)
+    Assert.equals(section['original']['metadata']['contentType'], self.MIME)
+    Assert.equals(section['original']['metadata']['extension'], self.EXT)
+    Assert.equals(section['original']['metadata']['created'], section['original']['metadata']['lastModified'])
+    Assert.equals(section['original']['metadata']['size'], self.get_size())
     self._verify_created_date(section['original']['metadata'], testStartTime, apiTime)
     print 'OK'
 
@@ -59,7 +59,7 @@ class TIFValidator(Asserter):
     # Some dates (PDF section) seem to include millis too, double check for possible bug?
     sectionDate = datetime.strptime(section['created'], '%Y-%m-%dT%H:%M:%S.%fZ')
     deltaTime = sectionDate - testStartTime
-    assert deltaTime.total_seconds() > 0
+    Assert.isTrue(deltaTime.total_seconds() > 0)
     # Next validation is not working properly because there seems to be a difference of
     # around 7 hours between my box and one-leo.plosjournals.org environment (?)
-    #assert deltaTime.total_seconds() < apiTime
+    #Assert.isTrue(deltaTime.total_seconds() < apiTime)

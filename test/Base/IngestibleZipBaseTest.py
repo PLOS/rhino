@@ -9,14 +9,12 @@ __author__ = 'jkrzemien@plos.org'
 from JSONBasedServiceTest import JSONBasedServiceTest
 from Config import RHINO_URL
 from Validators.ZIPProcessor import ZIPProcessor
+from Validators.Assert import Assert
 
 
 class IngestibleZipBaseTest(JSONBasedServiceTest):
 
-  def __init__(self, module):
-    super(IngestibleZipBaseTest, self).__init__(module)
-
-    self.API_UNDER_TEST = RHINO_URL + '/zips'
+  INGESTION_API = RHINO_URL + '/zips'
 
   def zipUpload(self, archive, force_reingest=''):
     self._zip = ZIPProcessor(archive)
@@ -24,14 +22,14 @@ class IngestibleZipBaseTest(JSONBasedServiceTest):
     daData = {"force_reingest": force_reingest}
     daFile = {'archive': open(archive, 'rb')}
 
-    self.doPost(self.API_UNDER_TEST, daData, daFile)
+    self.doPost(self.INGESTION_API, daData, daFile)
 
   def verify_doi_is_correct(self):
     print 'Validating DOI in response to be valid...',
     doiNodes = self._get_doi_from_response()
     for node in doiNodes:
-      self.assertTrue(len(node['doi']) > 0)
-      self.assertTrue(node['doi'].startswith(self._zip.get_full_doi()))
+      Assert.isTrue(len(node['doi']) > 0)
+      Assert.isTrue(node['doi'].startswith(self._zip.get_full_doi()))
     print 'OK'
 
   def verify_article_xml_section(self):

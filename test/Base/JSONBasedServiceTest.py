@@ -14,12 +14,10 @@ __author__ = 'jkrzemien@plos.org'
 from jsonpath import jsonpath
 from BaseServiceTest import BaseServiceTest
 from Decorators.Api import ensure_api_called
+from Validators.Assert import Assert
 
 
 class JSONBasedServiceTest(BaseServiceTest):
-
-  def __init__(self, module):
-    super(JSONBasedServiceTest, self).__init__(module)
 
   @ensure_api_called
   def get_response_as_json(self):
@@ -50,5 +48,5 @@ class JSONBasedServiceTest(BaseServiceTest):
     print 'Validating state in response to be "%s"...' % state,
     stateNodes = self._jpath('$.[?(@.state)]')
     for node in stateNodes:
-      self.assertEqual(node['state'], state)
+      Assert.equals(node['state'], state)
     print 'OK'

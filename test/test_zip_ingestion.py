@@ -17,7 +17,6 @@ with subclasses.
 
 * Still need to take a look @ https://code.google.com/p/mogilefs/wiki/Clients
 for MogileFS's Python client implementations.
-
 '''
 
 from Base.IngestibleZipBaseTest import IngestibleZipBaseTest
@@ -27,13 +26,17 @@ from Base.Database import Database
 class ZipIngestionTest(IngestibleZipBaseTest):
 
   '''
-  Attempting to test as much values as possible without hard coding
+  Attempting to test as much values as possible without hard coding them
   Ideally, test should:
     * Test data inserted in DB
     * Test files properly stored on MongilFS
   '''
 
   def test_zip_ingestion_happy_path(self):
+    '''
+    Validate Rhino's ZIP Upload (Ingestion) API, forced.
+    '''
+
     self.zipUpload('data/pone.0097823.zip', 'forced')
     self.verify_HTTP_code_is(201)
     self.verify_state_is('ingested')
@@ -47,23 +50,8 @@ class ZipIngestionTest(IngestibleZipBaseTest):
     print 'Here we have a nice SQL query returned meanwhile: %s ' % \
     Database().query('SELECT Version()')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    IngestibleZipBaseTest._run_tests_randomly()
 
 
 
@@ -171,6 +159,3 @@ Actual test against db should validate:
 </hibernate-mapping>
 '''
 
-
-if __name__ == '__main__':
-  IngestibleZipBaseTest._run_tests_randomly()

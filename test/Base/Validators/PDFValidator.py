@@ -8,10 +8,10 @@ API's responses.
 '''
 
 from datetime import datetime
-from Asserter import Asserter
+from Assert import Assert
 
 
-class PDFValidator(Asserter):
+class PDFValidator(object):
 
   def __init__(self, data):
     self._size = len(data)
@@ -23,20 +23,20 @@ class PDFValidator(Asserter):
     # Some dates (PDF section) seem to include millis too, double check for possible bug?
     sectionDate = datetime.strptime(section['created'], '%Y-%m-%dT%H:%M:%S.%fZ')
     deltaTime = sectionDate - testStartTime
-    assert deltaTime.total_seconds() > 0
+    Assert.isTrue(deltaTime.total_seconds() > 0)
     # Next validation is not working properly because there seems to be a difference of
     # around 7 hours between my box and system under test environment (?) (one-leo.plosjournals.org)
-    #assert deltaTime.total_seconds() < apiTime
+    #Assert.isTrue(deltaTime.total_seconds() < apiTime)
 
 
   def metadata(self, section, doi, testStartTime, apiTime):
     print 'Validating PDF metadata section in response...',
-    assert section is not None
-    assert section['file'] == doi + '.PDF'
-    assert section['metadata']['doi'] == 'info:doi/' + doi
-    assert section['metadata']['contentType'] == 'application/pdf'
-    assert section['metadata']['extension'] == 'PDF'
-    assert section['metadata']['created'] == section['metadata']['lastModified']
-    assert section['metadata']['size'] == self.get_size()
+    Assert.isNotNone(section)
+    Assert.equals(section['file'], doi + '.PDF')
+    Assert.equals(section['metadata']['doi'], 'info:doi/' + doi)
+    Assert.equals(section['metadata']['contentType'], 'application/pdf')
+    Assert.equals(section['metadata']['extension'], 'PDF')
+    Assert.equals(section['metadata']['created'], section['metadata']['lastModified'])
+    Assert.equals(section['metadata']['size'], self.get_size())
     self._verify_created_date(section['metadata'], testStartTime, apiTime)
     print 'OK'
