@@ -164,6 +164,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
         // !checkIfModifiedSince
         response.setStatus(HttpStatus.NOT_MODIFIED.value());
+        return;
       }
     }
 
