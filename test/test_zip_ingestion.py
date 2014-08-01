@@ -2,8 +2,9 @@
 
 __author__ = 'jkrzemien@plos.org'
 
-'''
-This test case validates Rhino's convenience zipUpload API for ZIP ingestion.
+
+"""
+This test case validates Rhino's convenience zipUpload Tests for ZIP ingestion.
 
 Notes:
 
@@ -17,28 +18,30 @@ with subclasses.
 
 * Still need to take a look @ https://code.google.com/p/mogilefs/wiki/Clients
 for MogileFS's Python client implementations.
-'''
+"""
 
-from Base.IngestibleZipBaseTest import IngestibleZipBaseTest
+from Base.Decorators.Injection import JSON
+from Base.Api.Ingestion import ZIPIngestion
 from Base.Database import Database
 
 
-class ZipIngestionTest(IngestibleZipBaseTest):
+@JSON
+class ZipIngestionTest(ZIPIngestion):
 
-  '''
+  """
   Attempting to test as much values as possible without hard coding them
   Ideally, test should:
-    * Test data inserted in DB
-    * Test files properly stored on MongilFS
-  '''
+    * Tests data inserted in DB
+    * Tests files properly stored on MongilFS
+  """
 
   def test_zip_ingestion_happy_path(self):
-    '''
-    Validate Rhino's ZIP Upload (Ingestion) API, forced.
-    '''
+    """
+    Validate Rhino's ZIP Upload (Ingestion) Tests, forced.
+    """
 
-    self.zipUpload('data/pone.0097823.zip', 'forced')
-    self.verify_HTTP_code_is(201)
+    self.zipUpload('pone.0097823.zip', 'forced')
+    self.verify_http_code_is(201)
     self.verify_state_is('ingested')
     self.verify_doi_is_correct()
     self.verify_article_xml_section()
@@ -50,8 +53,9 @@ class ZipIngestionTest(IngestibleZipBaseTest):
     print 'Here we have a nice SQL query returned meanwhile: %s ' % \
     Database().query('SELECT Version()')
 
+
 if __name__ == '__main__':
-    IngestibleZipBaseTest._run_tests_randomly()
+    ZIPIngestion._run_tests_randomly()
 
 
 
@@ -60,9 +64,7 @@ if __name__ == '__main__':
 
 
 
-
-
-'''
+"""
 Actual test against db should validate:
 
 <hibernate-mapping package="org.ambraproject.models" default-lazy="false">
@@ -157,5 +159,5 @@ Actual test against db should validate:
   </class>
 
 </hibernate-mapping>
-'''
+"""
 

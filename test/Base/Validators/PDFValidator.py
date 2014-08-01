@@ -4,20 +4,15 @@ __author__ = 'jkrzemien@plos.org'
 
 '''
 This class loads up a PDF file in order to be used later on for validations against
-API's responses.
+Tests's responses.
 '''
 
 from datetime import datetime
 from Assert import Assert
+from AbstractValidator import AbstractValidator
 
 
-class PDFValidator(object):
-
-  def __init__(self, data):
-    self._size = len(data)
-
-  def get_size(self):
-    return self._size
+class PDFValidator(AbstractValidator):
 
   def _verify_created_date(self, section, testStartTime, apiTime):
     # Some dates (PDF section) seem to include millis too, double check for possible bug?
@@ -30,7 +25,7 @@ class PDFValidator(object):
 
 
   def metadata(self, section, doi, testStartTime, apiTime):
-    print 'Validating PDF metadata section in response...',
+    print 'Validating PDF metadata section in Response...',
     Assert.isNotNone(section)
     Assert.equals(section['file'], doi + '.PDF')
     Assert.equals(section['metadata']['doi'], 'info:doi/' + doi)

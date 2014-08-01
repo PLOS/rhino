@@ -2,13 +2,13 @@
 
 __author__ = 'jkrzemien@plos.org'
 
-'''
+"""
 This class loads up a ZIP file and attempts to gather as much information as possible from it
-in order to be used later on for validations against API's responses.
-'''
+in order to be used later on for validations against Tests's responses.
+"""
 
+from os.path import basename, isfile
 from zipfile import ZipFile
-from os import path
 from XMLValidator import XMLValidator
 from PDFValidator import PDFValidator
 from TIFValidator import TIFValidator
@@ -28,9 +28,9 @@ class ZIPProcessor(object):
     self._parse_images()
 
   def _verify_file_exists(self, filePath):
-    if not path.isfile(filePath):
+    if not isfile(filePath):
       raise IOError('File "%s" does not exist!. Failing test...' % filePath)
-    self._archiveName = path.basename(filePath)[:-4]
+    self._archiveName = basename(filePath)[:-4]
 
   def _parse_xml(self):
     data = self._zip.read(self._archiveName + '.xml')

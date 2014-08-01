@@ -4,7 +4,7 @@ __author__ = 'jkrzemien@plos.org'
 
 '''
 This class loads up an XML file in order to be used later on for validations against
-API's responses.
+Tests's responses.
 '''
 
 from TIFValidator import TIFValidator

@@ -2,17 +2,18 @@
 
 __author__ = 'jkrzemien@plos.org'
 
-'''
+"""
 This class loads up an XML file in order to be used later on for validations against
-API's responses.
-'''
+Tests's responses.
+"""
 
 import libxml2
 from datetime import datetime
 from Assert import Assert
+from AbstractValidator import AbstractValidator
 
 
-class XMLValidator(object):
+class XMLValidator(AbstractValidator):
 
   def __init__(self, data):
     self._size = len(data)
@@ -36,7 +37,7 @@ class XMLValidator(object):
     #Assert.isTrue(deltaTime.total_seconds() < apiTime)
 
   def metadata(self, section, doi, testStartTime, apiTime):
-    print 'Validating XML metadata section in response...',
+    print 'Validating XML metadata section in Response...',
     Assert.isNotNone(section)
     Assert.equals(section['file'], doi + '.XML')
     Assert.equals(section['metadata']['doi'], 'info:doi/' + doi)

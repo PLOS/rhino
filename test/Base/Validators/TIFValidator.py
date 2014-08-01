@@ -3,30 +3,29 @@
 __author__ = 'jkrzemien@plos.org'
 
 '''
-This class loads up an XML file in order to be used later on for validations against
-API's responses.
+This class loads up the name and data for a TIF file from the ingestion ZIP file, along with the XML file
+in order to be used for comparison between data in ZIP and API's responses.
 '''
 
-from Assert import Assert
 from datetime import datetime
 
+from Assert import Assert
+from AbstractValidator import AbstractValidator
 
-class TIFValidator(object):
+
+class TIFValidator(AbstractValidator):
 
   def __init__(self, name, data, xml):
+    super(TIFValidator, self).__init__(data)
     self._name = name
-    self._size = len(data)
     self._xml = xml
     self.DOI_HEADER = 'info:doi/'
     self.DOI_PREFFIX = '10.1371/journal.'
     self.MIME = 'image/tiff'
     self.EXT = 'TIF'
 
-  def get_size(self):
-    return self._size
-
   def metadata(self, section, doi, testStartTime, apiTime):
-    print 'Validating Graphics metadata section in response...',
+    print 'Validating Graphics metadata section in Response...',
 
     Assert.isNotNone(section)
     Assert.equals(section['doi'], doi)
@@ -37,8 +36,7 @@ class TIFValidator(object):
     matchedXmlFile = self._xml.find(".//fig/caption/p[contains(text(),'%s')]" % section['description'])
     Assert.isNotNone(matchedXmlFile)
 
-    xpath = ".//%s/*[@xlink:href='%s']" % \
-     (section['contextElement'], section['original']['metadata']['doi'])
+    xpath = ".//%s/*[@xlink:href='%s']" % (section['contextElement'], section['original']['metadata']['doi'])
     matchedXmlFile = self._xml.find(xpath)
 
     Assert.isNotNone(matchedXmlFile)
