@@ -1,16 +1,14 @@
 /*
- * $HeadURL$
- * $Id$
+ * Copyright (c) 2006-2014 by Public Library of Science
  *
- * Copyright (c) 2006-2011 by Public Library of Science
- *     http://plos.org
- *     http://ambraproject.org
+ * http://plos.org
+ * http://ambraproject.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,7 +27,9 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -88,12 +88,26 @@ public final class NoCitationsArticleAdapter {
     url = article.getUrl();
     collaborativeAuthors = article.getCollaborativeAuthors();
     types = article.getTypes();
-    categories = article.getCategories();
     assets = article.getAssets();
     relatedArticles = article.getRelatedArticles();
     authors = article.getAuthors();
     editors = article.getEditors();
     journals = article.getJournals();
+
+    /**
+     * Hibernate just returns a shallow map with proxy objects.  Make
+     * Sure here everything is loaded.  In the future we'll probably want to change the
+     * the categories property of this class to be a map
+     */
+    Set<Category> copy = new HashSet<>(article.getCategories().size());
+    for(Map.Entry<Category, Integer> entry : article.getCategories().entrySet()) {
+      Category c = new Category();
+      c.setPath(entry.getKey().getPath());
+      c.setCreated(entry.getKey().getCreated());
+      c.setLastModified(entry.getKey().getLastModified());
+      copy.add(c);
+    }
+    categories = copy;
   }
 
   @Override

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ $HeadURL$
-  ~ $Id$
+  ~ Copyright (c) 2006-2014 by Public Library of Science
   ~
-  ~ Copyright (c) 2006-2012 by Public Library of Science
   ~ http://plos.org
   ~ http://ambraproject.org
   ~
@@ -11,7 +9,7 @@
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +17,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -53,7 +50,7 @@
     <org.springframework-version>3.2.2.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
-    <ambra.version>2.9.22</ambra.version>
+    <ambra.version>2.9.22-BAU-208</ambra.version>
     <rhombat.version>1.0.1</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <filestore.version>1.2.0</filestore.version>

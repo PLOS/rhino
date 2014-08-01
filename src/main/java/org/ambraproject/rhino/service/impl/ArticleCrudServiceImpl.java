@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2012 by Public Library of Science
+ * Copyright (c) 2006-2014 by Public Library of Science
+ *
  * http://plos.org
  * http://ambraproject.org
  *
@@ -7,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -73,7 +73,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,6 +82,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -561,7 +561,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // Attempt to assign categories to the non-amendment article based on the taxonomy server.  However,
     // we still want to ingest the article even if this process fails.
-    List<String> terms;
+    Map<String, Integer> terms;
 
     try {
       if (!articleService.isAmendment(article)) {
@@ -569,10 +569,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         if (terms != null && terms.size() > 0) {
           articleService.setArticleCategories(article, terms);
         } else {
-          article.setCategories(new HashSet<Category>());
+          article.setCategories(new HashMap<Category, Integer>());
         }
       } else {
-        article.setCategories(new HashSet<Category>());
+        article.setCategories(new HashMap<Category, Integer>());
       }
     } catch (Exception e) {
       log.warn("Taxonomy server not responding, but ingesting article anyway", e);
@@ -867,6 +867,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
             hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
                     .add(Restrictions.eq("doi", id.getKey()))
+                    .setFetchMode("categories", FetchMode.JOIN)
                     .setFetchMode("assets", FetchMode.JOIN)
                     .setFetchMode("articleType", FetchMode.JOIN)
                     .setFetchMode("journals", FetchMode.JOIN)
@@ -878,6 +879,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         if (article == null) {
           throw reportNotFound(id);
         }
+
+        /**
+         * Hibernate just returns a shallow map with proxy objects.  Make
+         * Sure here everything is loaded.  In the future we'll probably want to change the
+         * the categories property of this class to be a map
+         */
+        Map<Category, Integer> copy = new HashMap<>(article.getCategories().size());
+        for(Map.Entry<Category, Integer> entry : article.getCategories().entrySet()) {
+          Category c = new Category();
+          c.setPath(entry.getKey().getPath());
+          c.setCreated(entry.getKey().getCreated());
+          c.setLastModified(entry.getKey().getLastModified());
+          copy.put(c, entry.getValue());
+        }
+
+        article.setCategories(copy);
+
         return article;
       }
 
