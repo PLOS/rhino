@@ -8,7 +8,7 @@ Tests's responses.
 '''
 
 from datetime import datetime
-from Assert import Assert
+
 from AbstractValidator import AbstractValidator
 
 
@@ -18,20 +18,20 @@ class PDFValidator(AbstractValidator):
     # Some dates (PDF section) seem to include millis too, double check for possible bug?
     sectionDate = datetime.strptime(section['created'], '%Y-%m-%dT%H:%M:%S.%fZ')
     deltaTime = sectionDate - testStartTime
-    Assert.isTrue(deltaTime.total_seconds() > 0)
+    assert deltaTime.total_seconds() > 0, "Created field in metadata section should be greater than test start time!"
     # Next validation is not working properly because there seems to be a difference of
     # around 7 hours between my box and system under test environment (?) (one-leo.plosjournals.org)
-    #Assert.isTrue(deltaTime.total_seconds() < apiTime)
+    #assert apiTime > deltaTime.total_seconds(), "API invocation time should be greater than diff between Created field in metadata section & test start time!"
 
 
   def metadata(self, section, doi, testStartTime, apiTime):
     print 'Validating PDF metadata section in Response...',
-    Assert.isNotNone(section)
-    Assert.equals(section['file'], doi + '.PDF')
-    Assert.equals(section['metadata']['doi'], 'info:doi/' + doi)
-    Assert.equals(section['metadata']['contentType'], 'application/pdf')
-    Assert.equals(section['metadata']['extension'], 'PDF')
-    Assert.equals(section['metadata']['created'], section['metadata']['lastModified'])
-    Assert.equals(section['metadata']['size'], self.get_size())
+    assert section is not None
+    assert section['file'] == doi + '.PDF', "File field in metadata section did not match!"
+    assert section['metadata']['doi'] == 'info:doi/' + doi, "DOI field in metadata section did not match!"
+    assert section['metadata']['contentType'] == 'application/pdf', "ContentType field in metadata section did not match!"
+    assert section['metadata']['extension'] == 'PDF', "Extension field in metadata section did not match!"
+    assert section['metadata']['created'] == section['metadata']['lastModified'], "Created & LastModified fields in metadata section did not match!"
+    assert section['metadata']['size'] == self.get_size(), "Size field in metadata section did not match!"
     self._verify_created_date(section['metadata'], testStartTime, apiTime)
     print 'OK'

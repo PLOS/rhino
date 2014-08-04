@@ -20,27 +20,26 @@ with subclasses.
 for MogileFS's Python client implementations.
 """
 
-from Base.Decorators.Injection import JSON
-from Base.Api.Ingestion import ZIPIngestion
+from Base.Api.Rhino.Ingestion import ZIPIngestion
 from Base.Database import Database
 
 
-@JSON
 class ZipIngestionTest(ZIPIngestion):
 
   """
   Attempting to test as much values as possible without hard coding them
   Ideally, test should:
     * Tests data inserted in DB
-    * Tests files properly stored on MongilFS
+    * Tests files properly stored on MogileFS
   """
 
   def test_zip_ingestion_happy_path(self):
     """
-    Validate Rhino's ZIP Upload (Ingestion) Tests, forced.
+    POST zips: Forced ingestion of ZIP archive
     """
 
     self.zipUpload('pone.0097823.zip', 'forced')
+    self.parse_response_as_json()
     self.verify_http_code_is(201)
     self.verify_state_is('ingested')
     self.verify_doi_is_correct()
@@ -56,9 +55,6 @@ class ZipIngestionTest(ZIPIngestion):
 
 if __name__ == '__main__':
     ZIPIngestion._run_tests_randomly()
-
-
-
 
 
 

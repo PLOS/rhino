@@ -7,6 +7,7 @@ __author__ = 'jkrzemien@plos.org'
 
 from abc import ABCMeta, abstractmethod
 
+
 class AbstractValidator(object):
 
   __metaclass__ = ABCMeta

@@ -7,15 +7,13 @@ __author__ = 'jkrzemien@plos.org'
 
 from abc import ABCMeta, abstractmethod
 
-from ..Validators.Assert import Assert
-
 
 class AbstractResponse(object):
 
   __metaclass__ = ABCMeta
 
   @abstractmethod
-  def get_doi_from_response(self):
+  def get_doi(self):
     pass
 
   @abstractmethod

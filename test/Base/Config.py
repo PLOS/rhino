@@ -6,8 +6,8 @@ import os
   General resources
 '''
 
-# Set RHINO_URL environment variable to desired URL in order to run suite against it
-RHINO_URL = os.getenv('RHINO_URL', 'http://one-fluffy.plosjournals.org/api')
+# Set API_BASE_URL environment variable to desired URL in order to run suite against it
+API_BASE_URL = os.getenv('API_BASE_URL', 'http://one-fluffy.plosjournals.org/api')
 
 PRINT_DEBUG = False
 

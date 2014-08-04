@@ -9,7 +9,6 @@ in order to be used for comparison between data in ZIP and API's responses.
 
 from datetime import datetime
 
-from Assert import Assert
 from AbstractValidator import AbstractValidator
 
 
@@ -27,28 +26,27 @@ class TIFValidator(AbstractValidator):
   def metadata(self, section, doi, testStartTime, apiTime):
     print 'Validating Graphics metadata section in Response...',
 
-    Assert.isNotNone(section)
-    Assert.equals(section['doi'], doi)
+    assert section is not None, "Graphics section in response is NULL!"
+    assert section['doi'] == doi, "DOI field in Graphics section did not match!"
 
     matchedXmlFile = self._xml.find(".//fig/label[contains(text(),'%s')]" % section['title'])
-    Assert.isNotNone(matchedXmlFile)
+    assert matchedXmlFile is not None, "Title field in Graphics section did not match!"
 
     matchedXmlFile = self._xml.find(".//fig/caption/p[contains(text(),'%s')]" % section['description'])
-    Assert.isNotNone(matchedXmlFile)
+    assert matchedXmlFile is not None, "Description field in Graphics section did not match!"
 
     xpath = ".//%s/*[@xlink:href='%s']" % (section['contextElement'], section['original']['metadata']['doi'])
     matchedXmlFile = self._xml.find(xpath)
-
-    Assert.isNotNone(matchedXmlFile)
+    assert matchedXmlFile is not None, "%s field in Graphics section did not match!" % xpath
 
     fileName = self.DOI_PREFFIX + self._name
 
-    Assert.equals(section['original']['file'].lower(), fileName.lower())
-    Assert.equals(section['original']['metadata']['doi'], doi)
-    Assert.equals(section['original']['metadata']['contentType'], self.MIME)
-    Assert.equals(section['original']['metadata']['extension'], self.EXT)
-    Assert.equals(section['original']['metadata']['created'], section['original']['metadata']['lastModified'])
-    Assert.equals(section['original']['metadata']['size'], self.get_size())
+    assert section['original']['file'].lower() == fileName.lower(), "File field in Graphics section did not match!"
+    assert section['original']['metadata']['doi'] == doi, "DOI field in Graphics section did not match!"
+    assert section['original']['metadata']['contentType'] == self.MIME, "ContentType field in Graphics section did not match!"
+    assert section['original']['metadata']['extension'] == self.EXT, "Extension field in Graphics section did not match!"
+    assert section['original']['metadata']['created'] == section['original']['metadata']['lastModified'], "Created field in Graphics section did not match!"
+    assert section['original']['metadata']['size'] == self.get_size(), "Size field in Graphics section did not match!"
     self._verify_created_date(section['original']['metadata'], testStartTime, apiTime)
     print 'OK'
 
@@ -57,7 +55,7 @@ class TIFValidator(AbstractValidator):
     # Some dates (PDF section) seem to include millis too, double check for possible bug?
     sectionDate = datetime.strptime(section['created'], '%Y-%m-%dT%H:%M:%S.%fZ')
     deltaTime = sectionDate - testStartTime
-    Assert.isTrue(deltaTime.total_seconds() > 0)
+    assert deltaTime.total_seconds() > 0, "Created field in metadata section should be greater than test start time!"
     # Next validation is not working properly because there seems to be a difference of
     # around 7 hours between my box and one-leo.plosjournals.org environment (?)
-    #Assert.isTrue(deltaTime.total_seconds() < apiTime)
+    #assert apiTime > deltaTime.total_seconds(), "API invocation time should be greater than diff between Created field in metadata section & test start time!"

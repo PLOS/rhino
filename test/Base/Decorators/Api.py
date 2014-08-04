@@ -12,48 +12,29 @@ from datetime import datetime
 import time
 import re
 
-from ..Response.JSONResponse import JSONResponse
-from ..Response.XMLResponse import XMLResponse
 
+class needs(object):
 
-def ensure_api_called(method):
   """
-  Function decorator.
-  Used to verify the existance of a Response (via get_response() method invocation)
-  in the instance that holds the wrapped method.
-  Will fail test case being run if no Response is present, since can't validate anything over a
-  None instance.
-  If Response is present, will forward call to decorated function.
+  Decorator to guarantee a given attribute is **present** in an instance.
+  If the attribute is not present, test fails with a message containing instructions of which method was not called
+  from test to create the required attribute.
+  If the attribute is present this decorator does nothing.
   """
 
-  @wraps(method)
-  def wrapper(value, *args, **kw):
-    if value.get_response() is None:
-      TestCase.fail(value, 'You MUST invoke an API first, BEFORE performing any validations!')
-    else:
-      return method(value, *args, **kw)
+  def __init__(self, attribute, needsMethod):
+    self.attributeNeeded = attribute
+    self.methodToInvoke = needsMethod
 
-  return wrapper
+  def __call__(self, method):
+    @wraps(method)
+    def wrapper(value, *args, **kw):
+      if not hasattr(value, self.attributeNeeded):
+        TestCase.fail(value, 'You MUST invoke %s first, BEFORE performing any validations!' % self.methodToInvoke)
+      else:
+        return method(value, *args, **kw)
 
-
-def ensure_zip_provided(method):
-  """
-  Function decorator.
-  Used to verify the existance of a ZIP file loaded (via define_zip_file_for_validations() method invocation)
-  in the instance that holds the wrapped method.
-  Will fail test case being run if no ZIP file is present, since can't validate anything over a
-  None instance.
-  If ZIP file is present, will forward call to decorated function.
-  """
-
-  @wraps(method)
-  def wrapper(value, *args, **kw):
-    if not hasattr(value, '_zip') or value._zip is None:
-      TestCase.fail(value, 'You MUST define_zip_file_for_validations() first, BEFORE performing any validations!')
-    else:
-      return method(value, *args, **kw)
-
-  return wrapper
+    return wrapper
 
 
 def deduce_doi(method):
