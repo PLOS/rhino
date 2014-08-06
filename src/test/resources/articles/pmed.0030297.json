@@ -1,315 +1,801 @@
-{"doi":"info:doi/10.1371/journal.pmed.0030297","title":
-  "A Proposed Classification of the Immunological Diseases","eIssn":
-  "1549-1676","state":1,"archiveName":"pmed.0030297.zip","description":
-  "\u003cp\u003eThe formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.\u003c/p\u003e",
-  "rights":
-  "McGonagle and McDermott. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-7","eLocationId":"e297",
-  "strkImgURI":"","date":"2006-08-29T07:00:00Z","volume":"3","issue":
-  "8","journal":"PLoS Med","publisherLocation":"San Francisco, USA",
-  "publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pmed.0030297","collaborativeAuthors":[],
-  "types":[
+{
+  "doi": "info:doi/10.1371/journal.pmed.0030297",
+  "title": "A Proposed Classification of the Immunological Diseases",
+  "eIssn": "1549-1676",
+  "state": 1,
+  "archiveName": "pmed.0030297.zip",
+  "description": "<p>The formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.</p>",
+  "rights": "McGonagle and McDermott. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-7",
+  "eLocationId": "e297",
+  "strkImgURI": "",
+  "date": "2006-08-29T07:00:00Z",
+  "volume": "3",
+  "issue": "8",
+  "journal": "PLoS Med",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pmed.0030297",
+  "collaborativeAuthors": [],
+  "types": [
     "http://rdf.plos.org/RDF/articleType/Research%20in%20Translation",
-    "http://rdf.plos.org/RDF/articleType/discussion"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pmed.0030297","extension":
-      "XML","contentType":"text/xml","title":
-      "A Proposed Classification of the Immunological Diseases",
-      "description":
-      "\u003cp\u003eThe formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.\u003c/p\u003e",
-      "size":81114},{"doi":"info:doi/10.1371/journal.pmed.0030297",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "A Proposed Classification of the Immunological Diseases",
-      "description":
-      "\u003cp\u003eThe formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.\u003c/p\u003e",
-      "size":174866},{"doi":"info:doi/10.1371/journal.pmed.0030297.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic and Cellular Basis for Autoimmunity and Autoinflammation\u003c/title\u003e",
-      "size":9814967},{"doi":"info:doi/10.1371/journal.pmed.0030297.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic and Cellular Basis for Autoimmunity and Autoinflammation\u003c/title\u003e",
-      "size":17109},{"doi":"info:doi/10.1371/journal.pmed.0030297.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic and Cellular Basis for Autoimmunity and Autoinflammation\u003c/title\u003e",
-      "size":557755},{"doi":"info:doi/10.1371/journal.pmed.0030297.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic and Cellular Basis for Autoimmunity and Autoinflammation\u003c/title\u003e",
-      "size":197770},{"doi":"info:doi/10.1371/journal.pmed.0030297.t002",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 2","description":
-      "\u003ctitle\u003eImmunological Aspects of Pure Autoinflammation versus Pure Autoimmunity\u003c/title\u003e",
-      "size":5100891},{"doi":"info:doi/10.1371/journal.pmed.0030297.t002",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eImmunological Aspects of Pure Autoinflammation versus Pure Autoimmunity\u003c/title\u003e",
-      "size":9904},{"doi":"info:doi/10.1371/journal.pmed.0030297.t002",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eImmunological Aspects of Pure Autoinflammation versus Pure Autoimmunity\u003c/title\u003e",
-      "size":290943},{"doi":"info:doi/10.1371/journal.pmed.0030297.t002",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eImmunological Aspects of Pure Autoinflammation versus Pure Autoimmunity\u003c/title\u003e",
-      "size":88559},{"doi":"info:doi/10.1371/journal.pmed.0030297.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe Immunological Disease Continuum, with Examples\u003c/title\u003e\u003cp\u003eThe monogenic “autoinflammatory” diseases may be exclusively determined by local tissue-specific factors. For rare monogenic “autoimmune” conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1–associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.\u003c/p\u003e",
-      "size":1463532},{"doi":"info:doi/10.1371/journal.pmed.0030297.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe Immunological Disease Continuum, with Examples\u003c/title\u003e\u003cp\u003eThe monogenic “autoinflammatory” diseases may be exclusively determined by local tissue-specific factors. For rare monogenic “autoimmune” conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1–associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.\u003c/p\u003e",
-      "size":17386},{"doi":"info:doi/10.1371/journal.pmed.0030297.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe Immunological Disease Continuum, with Examples\u003c/title\u003e\u003cp\u003eThe monogenic “autoinflammatory” diseases may be exclusively determined by local tissue-specific factors. For rare monogenic “autoimmune” conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1–associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.\u003c/p\u003e",
-      "size":374207},{"doi":"info:doi/10.1371/journal.pmed.0030297.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eThe Immunological Disease Continuum, with Examples\u003c/title\u003e\u003cp\u003eThe monogenic “autoinflammatory” diseases may be exclusively determined by local tissue-specific factors. For rare monogenic “autoimmune” conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1–associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.\u003c/p\u003e",
-      "size":450831},{"doi":"info:doi/10.1371/journal.pmed.0030297.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRecognition of Autoinflammation: Psoriatic Arthritis as an Example\u003c/title\u003e\u003cp\u003eIn early RA, joint disease localisation is to the synovium—in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 ×100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.\u003c/p\u003e",
-      "size":260976},{"doi":"info:doi/10.1371/journal.pmed.0030297.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRecognition of Autoinflammation: Psoriatic Arthritis as an Example\u003c/title\u003e\u003cp\u003eIn early RA, joint disease localisation is to the synovium—in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 ×100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.\u003c/p\u003e",
-      "size":14145},{"doi":"info:doi/10.1371/journal.pmed.0030297.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRecognition of Autoinflammation: Psoriatic Arthritis as an Example\u003c/title\u003e\u003cp\u003eIn early RA, joint disease localisation is to the synovium—in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 ×100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.\u003c/p\u003e",
-      "size":507042},{"doi":"info:doi/10.1371/journal.pmed.0030297.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRecognition of Autoinflammation: Psoriatic Arthritis as an Example\u003c/title\u003e\u003cp\u003eIn early RA, joint disease localisation is to the synovium—in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 ×100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.\u003c/p\u003e",
-      "size":256361},{"doi":"info:doi/10.1371/journal.pmed.0030297.st001",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S1","description":
-      "\u003ctitle\u003eClinical Aspects of Pure Autoinflammation versus Pure Autoimmunity\u003c/title\u003e\u003cp\u003eThis table represents key features that allow differentiation of a “pure autoinflammatory disease” from a “pure autoimmune disease” in the clinical setting. As outlined in the text, there is increasing evidence for an interaction between autoimmune and autoinflammatory mechanisms in the phenotypic expression of common polygenic diseases, where overlapping features may be evident.\u003c/p\u003e\u003cp\u003e(34 KB DOC).\u003c/p\u003e",
-      "size":34816},{"doi":"info:doi/10.1371/journal.pmed.0030297.sd001",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Box S1","description":
-      "\u003ctitle\u003eRecognised Tissue-Specific Factors in Immune Disease Localisation\u003c/title\u003e\u003cp\u003e(20 KB DOC).\u003c/p\u003e",
-      "size":20480}],"citedArticles":[{"key":"1","year":1957,"displayYear":
-      "1957","volumeNumber":20,"volume":"20","title":
-      "A modification of Jerne\u0027s theory of antibody production using the concept of clonal selection.",
-      "pages":"67-69","eLocationID":"67","journal":"Aust J Sci",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"2","year":2001,"displayYear":"2001","volumeNumber":345,"volume":
-      "345","title":"Autoimmune diseases.","pages":"340-350","eLocationID":
-      "340","journal":"N Engl J Med","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"3","year":2005,"displayYear":
-      "2005","volumeNumber":435,"volume":"435","title":
-      "Paths to understanding the genetic basis of autoimmune disease.",
-      "pages":"584-589","eLocationID":"584","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"4","year":1993,"displayYear":"1993","volumeNumber":14,"volume":
-      "14","title":
-      "Defining criteria for autoimmune diseases (Witebsky\u0027s postulates revisited).",
-      "pages":"426-430","eLocationID":"426","journal":"Immunol Today",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"5","year":1994,"displayYear":"1994","volumeNumber":12,"volume":
-      "12","title":"Tolerance, danger, and the extended family.","pages":
-      "991-1045","eLocationID":"991","journal":"Annu Rev Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"6","year":1949,"displayYear":"1949","volumeNumber":141,"volume":
-      "141","title":
-      "Periodic disease. Periodic fever, periodic abdominalgia, cyclic neutropenia, intermittent arthralgia, angioneurotic edema, anaphylactoid purpura and periodic paralysis.",
-      "pages":"175-182","eLocationID":"175","journal":"JAMA",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"7","year":1999,"displayYear":"1999","volumeNumber":97,"volume":
-      "97","title":
-      "Germline mutations in the extracellular domains of the 55 kDa TNF receptor, TNFR1, define a family of dominantly inherited autoinflammatory syndromes.",
-      "pages":"133-144","eLocationID":"133","journal":"Cell","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"8","year":2004,"displayYear":"2004","volumeNumber":430,"volume":
-      "430","title":
-      "Differential activation of the inflammasome by caspase-1 adaptors ASC and Ipaf.",
-      "pages":"213-218","eLocationID":"213","journal":"Nature","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"9","year":2005,"displayYear":"2005","volumeNumber":17,"volume":
-      "17","title":
-      "Familial autoinflammatory diseases: Genetics, pathogenesis and treatment.",
-      "pages":"586-599","eLocationID":"586","journal":
-      "Curr Opin Rheumatol","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"10","year":2000,"displayYear":"2000","volumeNumber":12,"volume":
-      "12","title":"TNFRSF1A mutations and autoinflammatory syndromes.",
-      "pages":"479-486","eLocationID":"479","journal":"Curr Opin Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"11","year":2003,"displayYear":"2003","volumeNumber":15,"volume":
-      "15","title":
-      "The expanding spectrum of systemic autoinflammatory disorders and their rheumatic manifestations.",
-      "pages":"61-69","eLocationID":"61","journal":"Curr Opin Rheumatol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"12","year":2004,"displayYear":"2004","volumeNumber":113,"volume":
-      "113","title":
-      "Bacterial flagellin is a dominant antigen in Crohn disease.","pages":
-      "1296-1306","eLocationID":"1296","journal":"J Clin Invest","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"13","year":2001,"displayYear":"2001","volumeNumber":411,"volume":
-      "411","title":
-      "Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn\u0027s disease.",
-      "pages":"599-603","eLocationID":"599","journal":"Nature","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"14","year":2001,"displayYear":"2001","volumeNumber":411,"volume":
-      "411","title":
-      "A frameshift mutation in NOD2 associated with susceptibility to Crohn\u0027s disease.",
-      "pages":"603-606","eLocationID":"603","journal":"Nature","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"15","year":2006,"displayYear":"2006","volumeNumber":6,"volume":
-      "6","title":
-      "Signalling pathways and molecular interactions of NOD1 and NOD2.",
-      "pages":"9-20","eLocationID":"9","journal":"Nat Rev Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"16","year":2002,"displayYear":"2002","volumeNumber":70,"volume":
-      "70","title":
-      "CARD15/NOD2 mutational analysis and genotype-phenotype correlation in 612 patients with inflammatory bowel disease.",
-      "pages":"845-857","eLocationID":"845","journal":"Am J Hum Genet",
-      "note":"et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"17","year":1999,"displayYear":"1999","volumeNumber":131,"volume":
-      "131","title":
-      "Synovial fluid analysis for diagnosis of intercritical gout.","pages":
-      "756-759","eLocationID":"756","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"18","year":2006,"displayYear":"2006","volumeNumber":11,"volume":
-      "11","title":
-      "Gout-associated uric acid crystals activate the NALP3 inflammasome.",
-      "pages":"11","eLocationID":"11","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"19","year":2004,"displayYear":"2004","volumeNumber":25,"volume":
-      "25","title":"A common pathway in periodic fever syndromes.","pages":
-      "457-460","eLocationID":"457","journal":"Trends Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"20","year":2001,"displayYear":"2001","volumeNumber":108,"volume":
-      "108","title":
-      "Mechanisms for the induction of autoimmunity by infectious agents.",
-      "pages":"1097-1104","eLocationID":"1097","journal":"J Clin Invest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"21","year":1998,"displayYear":"1998","volumeNumber":41,"volume":
-      "41","title":
-      "Characteristic magnetic resonance imaging entheseal changes of knee synovitis in spondylarthropathy.",
-      "pages":"694-700","eLocationID":"694","journal":"Arthritis Rheum",
-      "note":"et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"22","year":2006,"displayYear":"2006","volumeNumber":54,"volume":
-      "54","title":
-      "A high-resolution magnetic resonance imaging study of distal interphalangeal joint arthropathy in psoriatic arthritis and osteoarthritis: Are they the same?",
-      "pages":"1328-1333","eLocationID":"1328","journal":"Arthritis Rheum",
-      "note":"et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"23","year":2001,"displayYear":"2001","volumeNumber":28,"volume":
-      "28","title":
-      "An enthesitis based model for the pathogenesis of spondyloarthropathy. Additive effects of microbial adjuvant and biomechanical factors at disease sites.",
-      "pages":"2155-2159","eLocationID":"2155","journal":"J Rheumatol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"24","year":2005,"displayYear":"2005","volumeNumber":42,"volume":
-      "42","title":
-      "Homozygous mutations in LPIN2 are responsible for the syndrome of chronic recurrent multifocal osteomyelitis and congenital dyserythropoietic anaemia (Majeed syndrome).",
-      "pages":"551-557","eLocationID":"551","journal":"J Med Genet","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"25","year":2006,"displayYear":"2006","volumeNumber":38,"volume":
-      "38","title":
-      "A missense mutation in pstpip2 is associated with the murine autoinflammatory disorder chronic multifocal osteomyelitis.",
-      "pages":"41-47","eLocationID":"41","journal":"Bone","note":"et al",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"26","year":2005,"displayYear":"2005","volumeNumber":4,"volume":
-      "4","title":"Behcet\u0027s disease as an autoinflammatory disorder.",
-      "pages":"81-83","eLocationID":"81","journal":
-      "Curr Drug Targets Inflamm Allergy","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"27","year":2003,"displayYear":
-      "2003","volumeNumber":48,"volume":"48","title":
-      "Role of metacarpophalangeal joint anatomic factors in the distribution of synovitis and bone erosion in early rheumatoid arthritis.",
-      "pages":"1214-1222","eLocationID":"1214","journal":"Arthritis Rheum",
-      "note":"et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"28","year":2004,"displayYear":"2004","volumeNumber":50,"volume":
-      "50","title":
-      "Regional variation and differential response to therapy for knee synovitis adjacent to the cartilage-pannus junction and suprapatellar pouch in inflammatory arthritis: Implications for pathogenesis and treatment.",
-      "pages":"2428-2432","eLocationID":"2428","journal":"Arthritis Rheum",
-      "note":"et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"29","year":1998,"displayYear":"1998","volumeNumber":352,"volume":
-      "352","title":
-      "Classification of inflammatory arthritis by enthesitis.","pages":
-      "1137-1140","eLocationID":"1137","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"30","year":2003,"displayYear":"2003","volumeNumber":16,"volume":
-      "16","title":"Altruistic living renal transplantation.","pages":
-      "S6-S9","eLocationID":"S6","journal":"J Nephrol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"31","year":1999,"displayYear":"1999","volumeNumber":353,"volume":
-      "353","title":
-      "An anatomical explanation for good-prognosis rheumatoid arthritis.",
-      "pages":"123-124","eLocationID":"123","journal":"Lancet","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"32","year":2004,"displayYear":"2004","volumeNumber":50,"volume":
-      "50","title":
-      "Spectrum of clinical features in Muckle-Wells syndrome and response to anakinra.",
-      "pages":"607-612","eLocationID":"607","journal":"Arthritis Rheum",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"33","year":2003,"displayYear":"2003","volumeNumber":425,"volume":
-      "425","title":
-      "Molecular identification of a danger signal that alerts the immune system to dying cells.",
-      "pages":"516-521","eLocationID":"516","journal":"Nature","note":
-      "E-pub 7 September 2003","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"34","year":2002,"displayYear":"2002","volumeNumber":296,"volume":
-      "296","title":"The danger model: a renewed sense of self.","pages":
-      "301-305","eLocationID":"301","journal":"Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"35","year":2001,"displayYear":"2001","volumeNumber":7,"volume":
-      "7","title":"Autoimmune disease: Why and where it occurs.","pages":
-      "899-905","eLocationID":"899","journal":"Nat Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"36","year":1997,"displayYear":"1997","volumeNumber":3,"volume":
-      "3","title":
-      "Identification of tissue transglutaminase as the autoantigen of celiac disease.",
-      "pages":"797-801","eLocationID":"797","journal":"Nat Med","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"37","year":2005,"displayYear":"2005","volumeNumber":54,"volume":
-      "54","title":
-      "Anti-\u003citalic\u003eSaccharomyces cerevisiae\u003c/italic\u003e and antineutrophil cytoplasmic antibodies as predictors of inflammatory bowel disease.",
-      "pages":"1232-1236","eLocationID":"1232","journal":"Gut","note":
-      "et al","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]}],
-  "relatedArticles":[],"authors":[{"fullName":"Dennis McGonagle",
-      "givenNames":"Dennis","surnames":"McGonagle","suffix":""},{"fullName":
-      "Michael F McDermott","givenNames":"Michael F","surnames":
-      "McDermott","suffix":""}],"editors":[],"journals":[{"eIssn":
-      "1549-1676"}]}
-
+    "http://rdf.plos.org/RDF/articleType/discussion"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "A Proposed Classification of the Immunological Diseases",
+      "description": "<p>The formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.</p>",
+      "size": 81114
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "A Proposed Classification of the Immunological Diseases",
+      "description": "<p>The formal recognition and genetic understanding of the autoinflammatory diseases has defined mechanisms of self-directed inflammation that are independent of adaptive immunity.</p>",
+      "size": 174866
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Genetic and Cellular Basis for Autoimmunity and Autoinflammation</title>",
+      "size": 9814967
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic and Cellular Basis for Autoimmunity and Autoinflammation</title>",
+      "size": 17109
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic and Cellular Basis for Autoimmunity and Autoinflammation</title>",
+      "size": 557755
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic and Cellular Basis for Autoimmunity and Autoinflammation</title>",
+      "size": 197770
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t002",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 2",
+      "description": "<title>Immunological Aspects of Pure Autoinflammation versus Pure Autoimmunity</title>",
+      "size": 5100891
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Immunological Aspects of Pure Autoinflammation versus Pure Autoimmunity</title>",
+      "size": 9904
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Immunological Aspects of Pure Autoinflammation versus Pure Autoimmunity</title>",
+      "size": 290943
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Immunological Aspects of Pure Autoinflammation versus Pure Autoimmunity</title>",
+      "size": 88559
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>The Immunological Disease Continuum, with Examples</title><p>The monogenic \u201cautoinflammatory\u201d diseases may be exclusively determined by local tissue-specific factors. For rare monogenic \u201cautoimmune\u201d conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1\u2013associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.</p>",
+      "size": 1463532
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>The Immunological Disease Continuum, with Examples</title><p>The monogenic \u201cautoinflammatory\u201d diseases may be exclusively determined by local tissue-specific factors. For rare monogenic \u201cautoimmune\u201d conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1\u2013associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.</p>",
+      "size": 17386
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>The Immunological Disease Continuum, with Examples</title><p>The monogenic \u201cautoinflammatory\u201d diseases may be exclusively determined by local tissue-specific factors. For rare monogenic \u201cautoimmune\u201d conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1\u2013associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.</p>",
+      "size": 374207
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>The Immunological Disease Continuum, with Examples</title><p>The monogenic \u201cautoinflammatory\u201d diseases may be exclusively determined by local tissue-specific factors. For rare monogenic \u201cautoimmune\u201d conditions, the disease localisation appears to be determined predominantly by the adaptive immune response. The clinical heterogeneity within the immunological diseases, both among patients and between populations, may reflect the variable expression of autoinflammatory and autoimmune factors in disease causation. For example, in humans, there is considerable genetic and molecular evidence for uveitis falling into all of the disease categories, with the exception of the rare monogenic autoimmune diseases. There is also considerable overlap between polygenic autoinflammatory diseases and MHC class 1\u2013associated diseases, but to simplify classification, these are split up into different categories. This figure does not include all immunologically recognised diseases because of their large number.</p>",
+      "size": 450831
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Recognition of Autoinflammation: Psoriatic Arthritis as an Example</title><p>In early RA, joint disease localisation is to the synovium\u2014in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 \u00d7100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.</p>",
+      "size": 260976
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Recognition of Autoinflammation: Psoriatic Arthritis as an Example</title><p>In early RA, joint disease localisation is to the synovium\u2014in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 \u00d7100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.</p>",
+      "size": 14145
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Recognition of Autoinflammation: Psoriatic Arthritis as an Example</title><p>In early RA, joint disease localisation is to the synovium\u2014in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 \u00d7100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.</p>",
+      "size": 507042
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Recognition of Autoinflammation: Psoriatic Arthritis as an Example</title><p>In early RA, joint disease localisation is to the synovium\u2014in keeping with the concept of the synovium being the primary target organ. However, in early psoriatic arthritis, the inflammatory changes have a widespread distribution and appear to relate to patterns of joint stressing around ligaments, adjacent bone, and soft tissues, rather than a specific antigen territory. The figure shows a contrast-enhanced high-resolution magnetic resonance image of a distal interphalangeal joint optimised for showing sites of inflammation (pixel size, 100 \u00d7100 microns). There are extensive inflammatory changes in all tissues. Asterisk, site of diffuse osteitis; arrowhead, synovial enhancement; solid arrows, joint ligaments that show florid inflammatory changes at insertions and within ligaments; open arrow, extracapsular soft-tissue enhancement.</p>",
+      "size": 256361
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.st001",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S1",
+      "description": "<title>Clinical Aspects of Pure Autoinflammation versus Pure Autoimmunity</title><p>This table represents key features that allow differentiation of a \u201cpure autoinflammatory disease\u201d from a \u201cpure autoimmune disease\u201d in the clinical setting. As outlined in the text, there is increasing evidence for an interaction between autoimmune and autoinflammatory mechanisms in the phenotypic expression of common polygenic diseases, where overlapping features may be evident.</p><p>(34 KB DOC).</p>",
+      "size": 34816
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030297.sd001",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Box S1",
+      "description": "<title>Recognised Tissue-Specific Factors in Immune Disease Localisation</title><p>(20 KB DOC).</p>",
+      "size": 20480
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 1957,
+      "displayYear": "1957",
+      "volumeNumber": 20,
+      "volume": "20",
+      "title": "A modification of Jerne's theory of antibody production using the concept of clonal selection.",
+      "pages": "67-69",
+      "eLocationID": "67",
+      "journal": "Aust J Sci",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 345,
+      "volume": "345",
+      "title": "Autoimmune diseases.",
+      "pages": "340-350",
+      "eLocationID": "340",
+      "journal": "N Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 435,
+      "volume": "435",
+      "title": "Paths to understanding the genetic basis of autoimmune disease.",
+      "pages": "584-589",
+      "eLocationID": "584",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 14,
+      "volume": "14",
+      "title": "Defining criteria for autoimmune diseases (Witebsky's postulates revisited).",
+      "pages": "426-430",
+      "eLocationID": "426",
+      "journal": "Immunol Today",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 12,
+      "volume": "12",
+      "title": "Tolerance, danger, and the extended family.",
+      "pages": "991-1045",
+      "eLocationID": "991",
+      "journal": "Annu Rev Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 1949,
+      "displayYear": "1949",
+      "volumeNumber": 141,
+      "volume": "141",
+      "title": "Periodic disease. Periodic fever, periodic abdominalgia, cyclic neutropenia, intermittent arthralgia, angioneurotic edema, anaphylactoid purpura and periodic paralysis.",
+      "pages": "175-182",
+      "eLocationID": "175",
+      "journal": "JAMA",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 97,
+      "volume": "97",
+      "title": "Germline mutations in the extracellular domains of the 55 kDa TNF receptor, TNFR1, define a family of dominantly inherited autoinflammatory syndromes.",
+      "pages": "133-144",
+      "eLocationID": "133",
+      "journal": "Cell",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 430,
+      "volume": "430",
+      "title": "Differential activation of the inflammasome by caspase-1 adaptors ASC and Ipaf.",
+      "pages": "213-218",
+      "eLocationID": "213",
+      "journal": "Nature",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 17,
+      "volume": "17",
+      "title": "Familial autoinflammatory diseases: Genetics, pathogenesis and treatment.",
+      "pages": "586-599",
+      "eLocationID": "586",
+      "journal": "Curr Opin Rheumatol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 12,
+      "volume": "12",
+      "title": "TNFRSF1A mutations and autoinflammatory syndromes.",
+      "pages": "479-486",
+      "eLocationID": "479",
+      "journal": "Curr Opin Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 15,
+      "volume": "15",
+      "title": "The expanding spectrum of systemic autoinflammatory disorders and their rheumatic manifestations.",
+      "pages": "61-69",
+      "eLocationID": "61",
+      "journal": "Curr Opin Rheumatol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 113,
+      "volume": "113",
+      "title": "Bacterial flagellin is a dominant antigen in Crohn disease.",
+      "pages": "1296-1306",
+      "eLocationID": "1296",
+      "journal": "J Clin Invest",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 411,
+      "volume": "411",
+      "title": "Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn's disease.",
+      "pages": "599-603",
+      "eLocationID": "599",
+      "journal": "Nature",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 411,
+      "volume": "411",
+      "title": "A frameshift mutation in NOD2 associated with susceptibility to Crohn's disease.",
+      "pages": "603-606",
+      "eLocationID": "603",
+      "journal": "Nature",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Signalling pathways and molecular interactions of NOD1 and NOD2.",
+      "pages": "9-20",
+      "eLocationID": "9",
+      "journal": "Nat Rev Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 70,
+      "volume": "70",
+      "title": "CARD15/NOD2 mutational analysis and genotype-phenotype correlation in 612 patients with inflammatory bowel disease.",
+      "pages": "845-857",
+      "eLocationID": "845",
+      "journal": "Am J Hum Genet",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 131,
+      "volume": "131",
+      "title": "Synovial fluid analysis for diagnosis of intercritical gout.",
+      "pages": "756-759",
+      "eLocationID": "756",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Gout-associated uric acid crystals activate the NALP3 inflammasome.",
+      "pages": "11",
+      "eLocationID": "11",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 25,
+      "volume": "25",
+      "title": "A common pathway in periodic fever syndromes.",
+      "pages": "457-460",
+      "eLocationID": "457",
+      "journal": "Trends Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 108,
+      "volume": "108",
+      "title": "Mechanisms for the induction of autoimmunity by infectious agents.",
+      "pages": "1097-1104",
+      "eLocationID": "1097",
+      "journal": "J Clin Invest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 41,
+      "volume": "41",
+      "title": "Characteristic magnetic resonance imaging entheseal changes of knee synovitis in spondylarthropathy.",
+      "pages": "694-700",
+      "eLocationID": "694",
+      "journal": "Arthritis Rheum",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 54,
+      "volume": "54",
+      "title": "A high-resolution magnetic resonance imaging study of distal interphalangeal joint arthropathy in psoriatic arthritis and osteoarthritis: Are they the same?",
+      "pages": "1328-1333",
+      "eLocationID": "1328",
+      "journal": "Arthritis Rheum",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 28,
+      "volume": "28",
+      "title": "An enthesitis based model for the pathogenesis of spondyloarthropathy. Additive effects of microbial adjuvant and biomechanical factors at disease sites.",
+      "pages": "2155-2159",
+      "eLocationID": "2155",
+      "journal": "J Rheumatol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 42,
+      "volume": "42",
+      "title": "Homozygous mutations in LPIN2 are responsible for the syndrome of chronic recurrent multifocal osteomyelitis and congenital dyserythropoietic anaemia (Majeed syndrome).",
+      "pages": "551-557",
+      "eLocationID": "551",
+      "journal": "J Med Genet",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 38,
+      "volume": "38",
+      "title": "A missense mutation in pstpip2 is associated with the murine autoinflammatory disorder chronic multifocal osteomyelitis.",
+      "pages": "41-47",
+      "eLocationID": "41",
+      "journal": "Bone",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Behcet's disease as an autoinflammatory disorder.",
+      "pages": "81-83",
+      "eLocationID": "81",
+      "journal": "Curr Drug Targets Inflamm Allergy",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 48,
+      "volume": "48",
+      "title": "Role of metacarpophalangeal joint anatomic factors in the distribution of synovitis and bone erosion in early rheumatoid arthritis.",
+      "pages": "1214-1222",
+      "eLocationID": "1214",
+      "journal": "Arthritis Rheum",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 50,
+      "volume": "50",
+      "title": "Regional variation and differential response to therapy for knee synovitis adjacent to the cartilage-pannus junction and suprapatellar pouch in inflammatory arthritis: Implications for pathogenesis and treatment.",
+      "pages": "2428-2432",
+      "eLocationID": "2428",
+      "journal": "Arthritis Rheum",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 352,
+      "volume": "352",
+      "title": "Classification of inflammatory arthritis by enthesitis.",
+      "pages": "1137-1140",
+      "eLocationID": "1137",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 16,
+      "volume": "16",
+      "title": "Altruistic living renal transplantation.",
+      "pages": "S6-S9",
+      "eLocationID": "S6",
+      "journal": "J Nephrol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 353,
+      "volume": "353",
+      "title": "An anatomical explanation for good-prognosis rheumatoid arthritis.",
+      "pages": "123-124",
+      "eLocationID": "123",
+      "journal": "Lancet",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 50,
+      "volume": "50",
+      "title": "Spectrum of clinical features in Muckle-Wells syndrome and response to anakinra.",
+      "pages": "607-612",
+      "eLocationID": "607",
+      "journal": "Arthritis Rheum",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 425,
+      "volume": "425",
+      "title": "Molecular identification of a danger signal that alerts the immune system to dying cells.",
+      "pages": "516-521",
+      "eLocationID": "516",
+      "journal": "Nature",
+      "note": "E-pub 7 September 2003",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 296,
+      "volume": "296",
+      "title": "The danger model: a renewed sense of self.",
+      "pages": "301-305",
+      "eLocationID": "301",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Autoimmune disease: Why and where it occurs.",
+      "pages": "899-905",
+      "eLocationID": "899",
+      "journal": "Nat Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Identification of tissue transglutaminase as the autoantigen of celiac disease.",
+      "pages": "797-801",
+      "eLocationID": "797",
+      "journal": "Nat Med",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "37",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 54,
+      "volume": "54",
+      "title": "Anti-<italic>Saccharomyces cerevisiae</italic> and antineutrophil cytoplasmic antibodies as predictors of inflammatory bowel disease.",
+      "pages": "1232-1236",
+      "eLocationID": "1232",
+      "journal": "Gut",
+      "note": "et al",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Dennis McGonagle",
+      "givenNames": "Dennis",
+      "surnames": "McGonagle",
+      "suffix": ""
+    },
+    {
+      "fullName": "Michael F McDermott",
+      "givenNames": "Michael F",
+      "surnames": "McDermott",
+      "suffix": ""
+    }
+  ],
+  "editors": [],
+  "journals": [
+    {
+      "eIssn": "1549-1676"
+    }
+  ]
+}

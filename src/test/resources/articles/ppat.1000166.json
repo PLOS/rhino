@@ -1,596 +1,1940 @@
-{"doi":"info:doi/10.1371/journal.ppat.1000166","title":
-  "The Pseudomonas Quinolone Signal (PQS) Balances Life and Death in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e Populations",
-  "eIssn":"1553-7374","state":1,"archiveName":"ppat.1000166.zip",
-  "description":
-  "\u003ctitle\u003eAuthor Summary\u003c/title\u003e\u003cp\u003eA little poison may be generically beneficial to bacterial populations. By eliminating damaged members and by promoting survival of the fittest, selective poisoning may significantly contribute to multi-cellular bacterial behavior. Here, we report that the pseudomonas quinolone signal (PQS) exhibits both beneficial and deleterious activities and propose that pro- and anti-oxidant effects fragment the population into less and more stress tolerant members. We suggest our findings point to PQS as a cellular “trainer” whose role is to mediate selection of the fittest through a “make or break” mechanism. PQS thereby issues decisions on life and death in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e populations, and may be essential in shaping the population structure, contributing to multi-cellular development processes in bacterial biofilms, and helping to maintain discrete, ordered spatial structures.\u003c/p\u003e",
-  "rights":
-  "Häussler, Becker. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-8","eLocationId":
-  "e1000166","strkImgURI":"","date":"2008-09-26T07:00:00Z","volume":
-  "4","issue":"9","journal":"PLoS Pathog","publisherLocation":
-  "San Francisco, USA","publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.ppat.1000166","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.ppat.1000166","extension":
-      "XML","contentType":"text/xml","title":
-      "The Pseudomonas Quinolone Signal (PQS) Balances Life and Death in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e Populations",
-      "description":
-      "\u003ctitle\u003eAuthor Summary\u003c/title\u003e\u003cp\u003eA little poison may be generically beneficial to bacterial populations. By eliminating damaged members and by promoting survival of the fittest, selective poisoning may significantly contribute to multi-cellular bacterial behavior. Here, we report that the pseudomonas quinolone signal (PQS) exhibits both beneficial and deleterious activities and propose that pro- and anti-oxidant effects fragment the population into less and more stress tolerant members. We suggest our findings point to PQS as a cellular “trainer” whose role is to mediate selection of the fittest through a “make or break” mechanism. PQS thereby issues decisions on life and death in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e populations, and may be essential in shaping the population structure, contributing to multi-cellular development processes in bacterial biofilms, and helping to maintain discrete, ordered spatial structures.\u003c/p\u003e",
-      "size":78113},{"doi":"info:doi/10.1371/journal.ppat.1000166",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "The Pseudomonas Quinolone Signal (PQS) Balances Life and Death in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e Populations",
-      "description":
-      "\u003ctitle\u003eAuthor Summary\u003c/title\u003e\u003cp\u003eA little poison may be generically beneficial to bacterial populations. By eliminating damaged members and by promoting survival of the fittest, selective poisoning may significantly contribute to multi-cellular bacterial behavior. Here, we report that the pseudomonas quinolone signal (PQS) exhibits both beneficial and deleterious activities and propose that pro- and anti-oxidant effects fragment the population into less and more stress tolerant members. We suggest our findings point to PQS as a cellular “trainer” whose role is to mediate selection of the fittest through a “make or break” mechanism. PQS thereby issues decisions on life and death in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e populations, and may be essential in shaping the population structure, contributing to multi-cellular development processes in bacterial biofilms, and helping to maintain discrete, ordered spatial structures.\u003c/p\u003e",
-      "size":403309},{"doi":"info:doi/10.1371/journal.ppat.1000166.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eAntibiotic tolerance in the absence of PQS production.\u003c/title\u003e\u003cp\u003eKilling curves of log phase grown \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 cultures treated with 5 µg/ml ciprofloxacin were recorded. Killing was significantly delayed in the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant compared to the wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant as determined by OD\u003csub\u003e600\u003c/sub\u003e determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were significantly different (p\u0026lt;0.05, as determined by t-test) as compared to the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants.\u003c/p\u003e",
-      "size":377284},{"doi":"info:doi/10.1371/journal.ppat.1000166.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eAntibiotic tolerance in the absence of PQS production.\u003c/title\u003e\u003cp\u003eKilling curves of log phase grown \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 cultures treated with 5 µg/ml ciprofloxacin were recorded. Killing was significantly delayed in the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant compared to the wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant as determined by OD\u003csub\u003e600\u003c/sub\u003e determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were significantly different (p\u0026lt;0.05, as determined by t-test) as compared to the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants.\u003c/p\u003e",
-      "size":4492},{"doi":"info:doi/10.1371/journal.ppat.1000166.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eAntibiotic tolerance in the absence of PQS production.\u003c/title\u003e\u003cp\u003eKilling curves of log phase grown \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 cultures treated with 5 µg/ml ciprofloxacin were recorded. Killing was significantly delayed in the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant compared to the wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant as determined by OD\u003csub\u003e600\u003c/sub\u003e determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were significantly different (p\u0026lt;0.05, as determined by t-test) as compared to the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants.\u003c/p\u003e",
-      "size":39632},{"doi":"info:doi/10.1371/journal.ppat.1000166.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eAntibiotic tolerance in the absence of PQS production.\u003c/title\u003e\u003cp\u003eKilling curves of log phase grown \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 cultures treated with 5 µg/ml ciprofloxacin were recorded. Killing was significantly delayed in the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant compared to the wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant as determined by OD\u003csub\u003e600\u003c/sub\u003e determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were significantly different (p\u0026lt;0.05, as determined by t-test) as compared to the \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants.\u003c/p\u003e",
-      "size":186089},{"doi":"info:doi/10.1371/journal.ppat.1000166.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eGrowth inhibition by H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as determined by agar diffusion assays.\u003c/title\u003e\u003cp\u003ePQS non-producing strains (\u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant) exhibited an increased resistance towards H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as compared to the wild-type (paired t-test; p-value \u0026lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.\u003c/p\u003e",
-      "size":213724},{"doi":"info:doi/10.1371/journal.ppat.1000166.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eGrowth inhibition by H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as determined by agar diffusion assays.\u003c/title\u003e\u003cp\u003ePQS non-producing strains (\u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant) exhibited an increased resistance towards H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as compared to the wild-type (paired t-test; p-value \u0026lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.\u003c/p\u003e",
-      "size":8258},{"doi":"info:doi/10.1371/journal.ppat.1000166.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eGrowth inhibition by H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as determined by agar diffusion assays.\u003c/title\u003e\u003cp\u003ePQS non-producing strains (\u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant) exhibited an increased resistance towards H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as compared to the wild-type (paired t-test; p-value \u0026lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.\u003c/p\u003e",
-      "size":58315},{"doi":"info:doi/10.1371/journal.ppat.1000166.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eGrowth inhibition by H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as determined by agar diffusion assays.\u003c/title\u003e\u003cp\u003ePQS non-producing strains (\u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutant) exhibited an increased resistance towards H\u003csub\u003e2\u003c/sub\u003eO\u003csub\u003e2\u003c/sub\u003e as compared to the wild-type (paired t-test; p-value \u0026lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.\u003c/p\u003e",
-      "size":85566},{"doi":"info:doi/10.1371/journal.ppat.1000166.g003",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eLoss of bioluminescence of \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 wild-type after exposure to the antibiotic ciprofloxacin.\u003c/title\u003e\u003cp\u003eKilling of the bacteria by 5 µg/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value \u0026lt;0.05).\u003c/p\u003e",
-      "size":164088},{"doi":"info:doi/10.1371/journal.ppat.1000166.g003",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eLoss of bioluminescence of \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 wild-type after exposure to the antibiotic ciprofloxacin.\u003c/title\u003e\u003cp\u003eKilling of the bacteria by 5 µg/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value \u0026lt;0.05).\u003c/p\u003e",
-      "size":7802},{"doi":"info:doi/10.1371/journal.ppat.1000166.g003",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eLoss of bioluminescence of \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 wild-type after exposure to the antibiotic ciprofloxacin.\u003c/title\u003e\u003cp\u003eKilling of the bacteria by 5 µg/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value \u0026lt;0.05).\u003c/p\u003e",
-      "size":64998},{"doi":"info:doi/10.1371/journal.ppat.1000166.g003",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eLoss of bioluminescence of \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 wild-type after exposure to the antibiotic ciprofloxacin.\u003c/title\u003e\u003cp\u003eKilling of the bacteria by 5 µg/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value \u0026lt;0.05).\u003c/p\u003e",
-      "size":85006},{"doi":"info:doi/10.1371/journal.ppat.1000166.g004",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003ePQS induces bacteriostasis in a concentration dependent manner.\u003c/title\u003e\u003cp\u003eThe addition of PQS to bacterial cultures of a \u003citalic\u003epqsA\u003c/italic\u003e mutant is characterized by a slope reduction in log phase of growth and lower maximum OD\u003csub\u003e600\u003c/sub\u003e values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.\u003c/p\u003e",
-      "size":234516},{"doi":"info:doi/10.1371/journal.ppat.1000166.g004",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003ePQS induces bacteriostasis in a concentration dependent manner.\u003c/title\u003e\u003cp\u003eThe addition of PQS to bacterial cultures of a \u003citalic\u003epqsA\u003c/italic\u003e mutant is characterized by a slope reduction in log phase of growth and lower maximum OD\u003csub\u003e600\u003c/sub\u003e values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.\u003c/p\u003e",
-      "size":7393},{"doi":"info:doi/10.1371/journal.ppat.1000166.g004",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003ePQS induces bacteriostasis in a concentration dependent manner.\u003c/title\u003e\u003cp\u003eThe addition of PQS to bacterial cultures of a \u003citalic\u003epqsA\u003c/italic\u003e mutant is characterized by a slope reduction in log phase of growth and lower maximum OD\u003csub\u003e600\u003c/sub\u003e values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.\u003c/p\u003e",
-      "size":53067},{"doi":"info:doi/10.1371/journal.ppat.1000166.g004",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003ePQS induces bacteriostasis in a concentration dependent manner.\u003c/title\u003e\u003cp\u003eThe addition of PQS to bacterial cultures of a \u003citalic\u003epqsA\u003c/italic\u003e mutant is characterized by a slope reduction in log phase of growth and lower maximum OD\u003csub\u003e600\u003c/sub\u003e values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.\u003c/p\u003e",
-      "size":114588},{"doi":"info:doi/10.1371/journal.ppat.1000166.g005",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 5","description":
-      "\u003ctitle\u003ePQS reduces the intracellular ROI levels.\u003c/title\u003e\u003cp\u003eThe median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 µM H\u003csub\u003e2\u003c/sub\u003eDCFDA is given. PQS was added to log phase grown PAO1 wild-type and \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures at concentrations of 0, 50 and 100 µM PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p\u0026lt;0.05).\u003c/p\u003e",
-      "size":295372},{"doi":"info:doi/10.1371/journal.ppat.1000166.g005",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 5","description":
-      "\u003ctitle\u003ePQS reduces the intracellular ROI levels.\u003c/title\u003e\u003cp\u003eThe median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 µM H\u003csub\u003e2\u003c/sub\u003eDCFDA is given. PQS was added to log phase grown PAO1 wild-type and \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures at concentrations of 0, 50 and 100 µM PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p\u0026lt;0.05).\u003c/p\u003e",
-      "size":5883},{"doi":"info:doi/10.1371/journal.ppat.1000166.g005",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 5","description":
-      "\u003ctitle\u003ePQS reduces the intracellular ROI levels.\u003c/title\u003e\u003cp\u003eThe median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 µM H\u003csub\u003e2\u003c/sub\u003eDCFDA is given. PQS was added to log phase grown PAO1 wild-type and \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures at concentrations of 0, 50 and 100 µM PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p\u0026lt;0.05).\u003c/p\u003e",
-      "size":40231},{"doi":"info:doi/10.1371/journal.ppat.1000166.g005",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 5","description":
-      "\u003ctitle\u003ePQS reduces the intracellular ROI levels.\u003c/title\u003e\u003cp\u003eThe median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 µM H\u003csub\u003e2\u003c/sub\u003eDCFDA is given. PQS was added to log phase grown PAO1 wild-type and \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures at concentrations of 0, 50 and 100 µM PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p\u0026lt;0.05).\u003c/p\u003e",
-      "size":112409},{"doi":"info:doi/10.1371/journal.ppat.1000166.g006",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 6","description":
-      "\u003ctitle\u003ePQS is a primary anti-oxidant.\u003c/title\u003e\u003cp\u003eThe absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.\u003c/p\u003e",
-      "size":545096},{"doi":"info:doi/10.1371/journal.ppat.1000166.g006",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 6","description":
-      "\u003ctitle\u003ePQS is a primary anti-oxidant.\u003c/title\u003e\u003cp\u003eThe absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.\u003c/p\u003e",
-      "size":6412},{"doi":"info:doi/10.1371/journal.ppat.1000166.g006",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 6","description":
-      "\u003ctitle\u003ePQS is a primary anti-oxidant.\u003c/title\u003e\u003cp\u003eThe absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.\u003c/p\u003e",
-      "size":48210},{"doi":"info:doi/10.1371/journal.ppat.1000166.g006",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 6","description":
-      "\u003ctitle\u003ePQS is a primary anti-oxidant.\u003c/title\u003e\u003cp\u003eThe absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.\u003c/p\u003e",
-      "size":204473},{"doi":"info:doi/10.1371/journal.ppat.1000166.g007",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 7","description":
-      "\u003ctitle\u003eProposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.\u003c/title\u003e",
-      "size":320372},{"doi":"info:doi/10.1371/journal.ppat.1000166.g007",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 7","description":
-      "\u003ctitle\u003eProposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.\u003c/title\u003e",
-      "size":6662},{"doi":"info:doi/10.1371/journal.ppat.1000166.g007",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 7","description":
-      "\u003ctitle\u003eProposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.\u003c/title\u003e",
-      "size":67491},{"doi":"info:doi/10.1371/journal.ppat.1000166.g007",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 7","description":
-      "\u003ctitle\u003eProposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.\u003c/title\u003e",
-      "size":171050},{"doi":"info:doi/10.1371/journal.ppat.1000166.g008",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 8","description":
-      "\u003ctitle\u003ePQS exhibits pro-oxidants activities.\u003c/title\u003e\u003cp\u003eThe Fe2\u003csup\u003e+\u003c/sup\u003e mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal \u003citalic\u003eP. aeruginosa\u003c/italic\u003e DNA under the addition of vitamin C and Fe2\u003csup\u003e+\u003c/sup\u003e, lane 2: DNA+vitamin C, lane 3: DNA , Fe2\u003csup\u003e+\u003c/sup\u003e and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2\u003csup\u003e+\u003c/sup\u003e and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2\u003csup\u003e+\u003c/sup\u003e for 15 min and separation on an agarose gel.\u003c/p\u003e",
-      "size":238132},{"doi":"info:doi/10.1371/journal.ppat.1000166.g008",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 8","description":
-      "\u003ctitle\u003ePQS exhibits pro-oxidants activities.\u003c/title\u003e\u003cp\u003eThe Fe2\u003csup\u003e+\u003c/sup\u003e mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal \u003citalic\u003eP. aeruginosa\u003c/italic\u003e DNA under the addition of vitamin C and Fe2\u003csup\u003e+\u003c/sup\u003e, lane 2: DNA+vitamin C, lane 3: DNA , Fe2\u003csup\u003e+\u003c/sup\u003e and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2\u003csup\u003e+\u003c/sup\u003e and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2\u003csup\u003e+\u003c/sup\u003e for 15 min and separation on an agarose gel.\u003c/p\u003e",
-      "size":6966},{"doi":"info:doi/10.1371/journal.ppat.1000166.g008",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 8","description":
-      "\u003ctitle\u003ePQS exhibits pro-oxidants activities.\u003c/title\u003e\u003cp\u003eThe Fe2\u003csup\u003e+\u003c/sup\u003e mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal \u003citalic\u003eP. aeruginosa\u003c/italic\u003e DNA under the addition of vitamin C and Fe2\u003csup\u003e+\u003c/sup\u003e, lane 2: DNA+vitamin C, lane 3: DNA , Fe2\u003csup\u003e+\u003c/sup\u003e and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2\u003csup\u003e+\u003c/sup\u003e and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2\u003csup\u003e+\u003c/sup\u003e for 15 min and separation on an agarose gel.\u003c/p\u003e",
-      "size":156568},{"doi":"info:doi/10.1371/journal.ppat.1000166.g008",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 8","description":
-      "\u003ctitle\u003ePQS exhibits pro-oxidants activities.\u003c/title\u003e\u003cp\u003eThe Fe2\u003csup\u003e+\u003c/sup\u003e mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal \u003citalic\u003eP. aeruginosa\u003c/italic\u003e DNA under the addition of vitamin C and Fe2\u003csup\u003e+\u003c/sup\u003e, lane 2: DNA+vitamin C, lane 3: DNA , Fe2\u003csup\u003e+\u003c/sup\u003e and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2\u003csup\u003e+\u003c/sup\u003e and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2\u003csup\u003e+\u003c/sup\u003e for 15 min and separation on an agarose gel.\u003c/p\u003e",
-      "size":202779},{"doi":"info:doi/10.1371/journal.ppat.1000166.g009",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 9","description":
-      "\u003ctitle\u003ePQS dependent release of extracellular DNA.\u003c/title\u003e\u003cp\u003ePAO1 wild-type, the \u003citalic\u003epqsA\u003c/italic\u003e, the \u003citalic\u003epqsH\u003c/italic\u003e and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the \u003citalic\u003epqsL\u003c/italic\u003e mutant (lanes 5, 6) and the complemented \u003citalic\u003epqsA\u003c/italic\u003e mutant (\u003citalic\u003epqsA-E\u003c/italic\u003e operon on plasmid pLG10) (lanes 9, 10).\u003c/p\u003e",
-      "size":455012},{"doi":"info:doi/10.1371/journal.ppat.1000166.g009",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 9","description":
-      "\u003ctitle\u003ePQS dependent release of extracellular DNA.\u003c/title\u003e\u003cp\u003ePAO1 wild-type, the \u003citalic\u003epqsA\u003c/italic\u003e, the \u003citalic\u003epqsH\u003c/italic\u003e and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the \u003citalic\u003epqsL\u003c/italic\u003e mutant (lanes 5, 6) and the complemented \u003citalic\u003epqsA\u003c/italic\u003e mutant (\u003citalic\u003epqsA-E\u003c/italic\u003e operon on plasmid pLG10) (lanes 9, 10).\u003c/p\u003e",
-      "size":9297},{"doi":"info:doi/10.1371/journal.ppat.1000166.g009",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 9","description":
-      "\u003ctitle\u003ePQS dependent release of extracellular DNA.\u003c/title\u003e\u003cp\u003ePAO1 wild-type, the \u003citalic\u003epqsA\u003c/italic\u003e, the \u003citalic\u003epqsH\u003c/italic\u003e and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the \u003citalic\u003epqsL\u003c/italic\u003e mutant (lanes 5, 6) and the complemented \u003citalic\u003epqsA\u003c/italic\u003e mutant (\u003citalic\u003epqsA-E\u003c/italic\u003e operon on plasmid pLG10) (lanes 9, 10).\u003c/p\u003e",
-      "size":125589},{"doi":"info:doi/10.1371/journal.ppat.1000166.g009",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 9","description":
-      "\u003ctitle\u003ePQS dependent release of extracellular DNA.\u003c/title\u003e\u003cp\u003ePAO1 wild-type, the \u003citalic\u003epqsA\u003c/italic\u003e, the \u003citalic\u003epqsH\u003c/italic\u003e and the \u003citalic\u003epqsL\u003c/italic\u003e mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 \u003citalic\u003epqsA\u003c/italic\u003e and \u003citalic\u003epqsH\u003c/italic\u003e mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the \u003citalic\u003epqsL\u003c/italic\u003e mutant (lanes 5, 6) and the complemented \u003citalic\u003epqsA\u003c/italic\u003e mutant (\u003citalic\u003epqsA-E\u003c/italic\u003e operon on plasmid pLG10) (lanes 9, 10).\u003c/p\u003e",
-      "size":392826},{"doi":"info:doi/10.1371/journal.ppat.1000166.g010",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 10","description":
-      "\u003ctitle\u003eKilling curves upon exposure to UV irradiation.\u003c/title\u003e\u003cp\u003eWild-type PAO1, the \u003citalic\u003epqsA\u003c/italic\u003e mutant, the \u003citalic\u003epqsH\u003c/italic\u003e mutant and the \u003citalic\u003epqsA\u003c/italic\u003e mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium \u003cxref ref-type\u003d\"bibr\" rid\u003d\"ppat.1000166-Frank1\"\u003e[40]\u003c/xref\u003e. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 µM PQS to the \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.\u003c/p\u003e",
-      "size":227456},{"doi":"info:doi/10.1371/journal.ppat.1000166.g010",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 10","description":
-      "\u003ctitle\u003eKilling curves upon exposure to UV irradiation.\u003c/title\u003e\u003cp\u003eWild-type PAO1, the \u003citalic\u003epqsA\u003c/italic\u003e mutant, the \u003citalic\u003epqsH\u003c/italic\u003e mutant and the \u003citalic\u003epqsA\u003c/italic\u003e mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium \u003cxref ref-type\u003d\"bibr\" rid\u003d\"ppat.1000166-Frank1\"\u003e[40]\u003c/xref\u003e. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 µM PQS to the \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.\u003c/p\u003e",
-      "size":7943},{"doi":"info:doi/10.1371/journal.ppat.1000166.g010",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 10","description":
-      "\u003ctitle\u003eKilling curves upon exposure to UV irradiation.\u003c/title\u003e\u003cp\u003eWild-type PAO1, the \u003citalic\u003epqsA\u003c/italic\u003e mutant, the \u003citalic\u003epqsH\u003c/italic\u003e mutant and the \u003citalic\u003epqsA\u003c/italic\u003e mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium \u003cxref ref-type\u003d\"bibr\" rid\u003d\"ppat.1000166-Frank1\"\u003e[40]\u003c/xref\u003e. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 µM PQS to the \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.\u003c/p\u003e",
-      "size":77933},{"doi":"info:doi/10.1371/journal.ppat.1000166.g010",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 10","description":
-      "\u003ctitle\u003eKilling curves upon exposure to UV irradiation.\u003c/title\u003e\u003cp\u003eWild-type PAO1, the \u003citalic\u003epqsA\u003c/italic\u003e mutant, the \u003citalic\u003epqsH\u003c/italic\u003e mutant and the \u003citalic\u003epqsA\u003c/italic\u003e mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium \u003cxref ref-type\u003d\"bibr\" rid\u003d\"ppat.1000166-Frank1\"\u003e[40]\u003c/xref\u003e. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 µM PQS to the \u003citalic\u003epqsA\u003c/italic\u003e mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.\u003c/p\u003e",
-      "size":134283},{"doi":"info:doi/10.1371/journal.ppat.1000166.s001",
-      "contextElement":"supplementary-material","extension":"TIF",
-      "contentType":"image/tiff","title":"Figure S1","description":
-      "\u003cp\u003eGrowth behavior of PAO1 wild-type and mutant strains. Growth of the PAO1 wild-type, the \u003citalic\u003epqsA\u003c/italic\u003e, \u003citalic\u003epqsH\u003c/italic\u003e, \u003citalic\u003epqsL\u003c/italic\u003e mutants and the complemented \u003citalic\u003epqsA\u003c/italic\u003e mutant were comparable.\u003c/p\u003e\u003cp\u003e(0.08 MB TIF)\u003c/p\u003e",
-      "size":82808},{"doi":"info:doi/10.1371/journal.ppat.1000166.s002",
-      "contextElement":"supplementary-material","extension":"TIF",
-      "contentType":"image/tiff","title":"Figure S2","description":
-      "\u003cp\u003eAntibiotic tolerance in the absence of PQS production. Killing curves of log phase grown \u003citalic\u003eP. aeruginosa\u003c/italic\u003e PAO1 cultures treated with 5 µg/ml ciprofloxacin (A). Killing was significantly delayed in the \u003citalic\u003epqsA\u003c/italic\u003e mutant compared to the wild-type as determined by OD\u003csub\u003e600\u003c/sub\u003e determinations and CFU counts after 3 h of exposure and could be reversed by the introduction of the \u003citalic\u003epqsA-E\u003c/italic\u003e operon \u003citalic\u003ein trans\u003c/italic\u003e. Killing curves of bacterial cultures treated with 7.5 µg/ml gentamicin (B), and 7.5 µg/ml imipenem (C) were also recorded. Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the \u003citalic\u003epqsA\u003c/italic\u003e mutant were significantly different (p\u0026lt;0.05, as determined by t-test).\u003c/p\u003e\u003cp\u003e(0.24 MB TIF)\u003c/p\u003e",
-      "size":243912}],"citedArticles":[{"key":"1","year":2003,"displayYear":
-      "2003","volumeNumber":57,"volume":"57","title":
-      "Bacterial biofilms: an emerging link to disease pathogenesis.",
-      "pages":"677-701","eLocationID":"677","journal":"Annu Rev Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MR Parsek","givenNames":"MR","surnames":"Parsek","suffix":""},{
-          "fullName":"PK Singh","givenNames":"PK","surnames":"Singh",
-          "suffix":""}],"editors":[]},{"key":"2","year":2002,"displayYear":
-      "2002","volumeNumber":46,"volume":"46","title":
-      "The physiology and collective recalcitrance of microbial biofilm communities.",
-      "pages":"202-56","eLocationID":"202","journal":"Adv Microb Physiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "P Gilbert","givenNames":"P","surnames":"Gilbert","suffix":""},{
-          "fullName":"T Maira-Litran","givenNames":"T","surnames":
-          "Maira-Litran","suffix":""},{"fullName":"AJ McBain","givenNames":
-          "AJ","surnames":"McBain","suffix":""},{"fullName":"AH Rickard",
-          "givenNames":"AH","surnames":"Rickard","suffix":""},{"fullName":
-          "FW Whyte","givenNames":"FW","surnames":"Whyte","suffix":""}],
-      "editors":[]},{"key":"3","year":2003,"displayYear":"2003",
-      "volumeNumber":301,"volume":"301","title":
-      "Cannibalism by sporulating bacteria.","pages":"510-3","eLocationID":
-      "510","journal":"Science","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JE Gonzalez-Pastor","givenNames":"JE","surnames":
-          "Gonzalez-Pastor","suffix":""},{"fullName":"EC Hobbs","givenNames":
-          "EC","surnames":"Hobbs","suffix":""},{"fullName":"R Losick",
-          "givenNames":"R","surnames":"Losick","suffix":""}],"editors":[]},{
-      "key":"4","year":2000,"displayYear":"2000","volumeNumber":3,"volume":
-      "3","title":
-      "Pattern formation: fruiting body morphogenesis in \u003citalic\u003eMyxococcus xanthus\u003c/italic\u003e.",
-      "pages":"637-42","eLocationID":"637","journal":"Curr Opin Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Jelsbak","givenNames":"L","surnames":"Jelsbak","suffix":""},{
-          "fullName":"L Sogaard-Andersen","givenNames":"L","surnames":
-          "Sogaard-Andersen","suffix":""}],"editors":[]},{"key":"5","year":
-      2003,"displayYear":"2003","volumeNumber":425,"volume":"425","title":
-      "Evolution of cooperation and conflict in experimental bacterial populations.",
-      "pages":"72-4","eLocationID":"72","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PB Rainey","givenNames":"PB","surnames":"Rainey","suffix":""},{
-          "fullName":"K Rainey","givenNames":"K","surnames":"Rainey",
-          "suffix":""}],"editors":[]},{"key":"6","year":2002,"displayYear":
-      "2002","volumeNumber":81,"volume":"81","title":
-      "Experimental social evolution with \u003citalic\u003eMyxococcus xanthus\u003c/italic\u003e.",
-      "pages":"155-64","eLocationID":"155","journal":
-      "Antonie Van Leeuwenhoek","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GJ Velicer","givenNames":"GJ","surnames":"Velicer","suffix":""},{
-          "fullName":"KL Stredwick","givenNames":"KL","surnames":
-          "Stredwick","suffix":""}],"editors":[]},{"key":"7","year":2005,
-      "displayYear":"2005","volumeNumber":13,"volume":"13","title":
-      "Sociomicrobiology: the connections between quorum sensing and biofilms.",
-      "pages":"27-33","eLocationID":"27","journal":"Trends Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MR Parsek","givenNames":"MR","surnames":"Parsek","suffix":""},{
-          "fullName":"EP Greenberg","givenNames":"EP","surnames":
-          "Greenberg","suffix":""}],"editors":[]},{"key":"8","year":2007,
-      "displayYear":"2007","volumeNumber":5,"volume":"5","title":
-      "Looking for chinks in the armor of bacterial biofilms.","pages":
-      "e307","eLocationID":"e307","journal":"PLoS Biol","note":
-      "doi:10.1371/journal.pbio.0050307","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"D Monroe","givenNames":"D","surnames":
-          "Monroe","suffix":""}],"editors":[]},{"key":"9","year":1994,
-      "displayYear":"1994","volumeNumber":176,"volume":"176","title":
-      "Quorum sensing in bacteria: the LuxR-LuxI family of cell density-responsive transcriptional regulators.",
-      "pages":"269-75","eLocationID":"269","journal":"J Bacteriol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WC Fuqua","givenNames":"WC","surnames":"Fuqua","suffix":""},{
-          "fullName":"SC Winans","givenNames":"SC","surnames":"Winans",
-          "suffix":""},{"fullName":"EP Greenberg","givenNames":"EP",
-          "surnames":"Greenberg","suffix":""}],"editors":[]},{"key":"10",
-      "year":2001,"displayYear":"2001","volumeNumber":98,"volume":"98",
-      "title":
-      "A quorum sensing-associated virulence gene of \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e encodes a LysR-like transcription regulator with a unique self-regulatory mechanism.",
-      "pages":"14613-8","eLocationID":"14613","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "H Cao","givenNames":"H","surnames":"Cao","suffix":""},{"fullName":
-          "G Krishnan","givenNames":"G","surnames":"Krishnan","suffix":""},{
-          "fullName":"B Goumnerov","givenNames":"B","surnames":"Goumnerov",
-          "suffix":""},{"fullName":"J Tsongalis","givenNames":"J","surnames":
-          "Tsongalis","suffix":""},{"fullName":"R Tompkins","givenNames":
-          "R","surnames":"Tompkins","suffix":""},{"fullName":"LG Rahme",
-          "givenNames":"LG","surnames":"Rahme","suffix":""}],"editors":[]},{
-      "key":"11","year":2003,"displayYear":"2003","volumeNumber":50,"volume":
-      "50","title":
-      "The \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e quinolone signal molecule overcomes the cell density-dependency of the quorum sensing hierarchy, regulates \u003citalic\u003erhl\u003c/italic\u003e-dependent genes at the onset of stationary phase and can be produced in the absence of LasR.",
-      "pages":"29-43","eLocationID":"29","journal":"Mol Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SP Diggle","givenNames":"SP","surnames":"Diggle","suffix":""},{
-          "fullName":"K Winzer","givenNames":"K","surnames":"Winzer",
-          "suffix":""},{"fullName":"SR Chhabra","givenNames":"SR","surnames":
-          "Chhabra","suffix":""},{"fullName":"KE Worrall","givenNames":
-          "KE","surnames":"Worrall","suffix":""},{"fullName":"M Camara",
-          "givenNames":"M","surnames":"Camara","suffix":""},{"fullName":
-          "P Williams","givenNames":"P","surnames":"Williams","suffix":""}],
-      "editors":[]},{"key":"12","year":2006,"displayYear":"2006",
-      "volumeNumber":296,"volume":"296","title":
-      "4-Quinolone signalling in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e: Old molecules, new perspectives.",
-      "pages":"83-91","eLocationID":"83","journal":"Int J Med Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SP Diggle","givenNames":"SP","surnames":"Diggle","suffix":""},{
-          "fullName":"P Cornelis","givenNames":"P","surnames":"Cornelis",
-          "suffix":""},{"fullName":"P Williams","givenNames":"P","surnames":
-          "Williams","suffix":""},{"fullName":"M Camara","givenNames":"M",
-          "surnames":"Camara","suffix":""}],"editors":[]},{"key":"13","year":
-      2000,"displayYear":"2000","volumeNumber":182,"volume":"182","title":
-      "The \u003citalic\u003ePseudomonas\u003c/italic\u003e quinolone signal regulates \u003citalic\u003erhl\u003c/italic\u003e quorum sensing in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e.",
-      "pages":"2702-8","eLocationID":"2702","journal":"J Bacteriol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SL McKnight","givenNames":"SL","surnames":"McKnight","suffix":
-          ""},{"fullName":"BH Iglewski","givenNames":"BH","surnames":
-          "Iglewski","suffix":""},{"fullName":"EC Pesci","givenNames":"EC",
-          "surnames":"Pesci","suffix":""}],"editors":[]},{"key":"14","year":
-      1999,"displayYear":"1999","volumeNumber":96,"volume":"96","title":
-      "Quinolone signaling in the cell-to-cell communication system of \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e.",
-      "pages":"11229-34","eLocationID":"11229","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "EC Pesci","givenNames":"EC","surnames":"Pesci","suffix":""},{
-          "fullName":"JB Milbank","givenNames":"JB","surnames":"Milbank",
-          "suffix":""},{"fullName":"JP Pearson","givenNames":"JP","surnames":
-          "Pearson","suffix":""},{"fullName":"S McKnight","givenNames":"S",
-          "surnames":"McKnight","suffix":""},{"fullName":"AS Kende",
-          "givenNames":"AS","surnames":"Kende","suffix":""},{"fullName":
-          "EP Greenberg","givenNames":"EP","surnames":"Greenberg","suffix":
-          ""}],"editors":[]},{"key":"15","year":2004,"displayYear":"2004",
-      "volumeNumber":101,"volume":"101","title":
-      "Analysis of \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e 4-hydroxy-2-alkylquinolines (HAQs) reveals a role for 4-hydroxy-2-heptylquinoline in cell-to-cell communication.",
-      "pages":"1339-44","eLocationID":"1339","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E Deziel","givenNames":"E","surnames":"Deziel","suffix":""},{
-          "fullName":"F Lepine","givenNames":"F","surnames":"Lepine",
-          "suffix":""},{"fullName":"S Milot","givenNames":"S","surnames":
-          "Milot","suffix":""},{"fullName":"J He","givenNames":"J",
-          "surnames":"He","suffix":""},{"fullName":"MN Mindrinos",
-          "givenNames":"MN","surnames":"Mindrinos","suffix":""},{"fullName":
-          "RG Tompkins","givenNames":"RG","surnames":"Tompkins","suffix":
-          ""}],"editors":[]},{"key":"16","year":2005,"displayYear":"2005",
-      "volumeNumber":187,"volume":"187","title":
-      "Regulation of \u003citalic\u003ePseudomonas\u003c/italic\u003e quinolone signal synthesis in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e.",
-      "pages":"4372-80","eLocationID":"4372","journal":"J Bacteriol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DS Wade","givenNames":"DS","surnames":"Wade","suffix":""},{
-          "fullName":"MW Calfee","givenNames":"MW","surnames":"Calfee",
-          "suffix":""},{"fullName":"ER Rocha","givenNames":"ER","surnames":
-          "Rocha","suffix":""},{"fullName":"EA Ling","givenNames":"EA",
-          "surnames":"Ling","suffix":""},{"fullName":"E Engstrom",
-          "givenNames":"E","surnames":"Engstrom","suffix":""},{"fullName":
-          "JP Coleman","givenNames":"JP","surnames":"Coleman","suffix":""}],
-      "editors":[]},{"key":"17","year":2005,"displayYear":"2005",
-      "volumeNumber":437,"volume":"437","title":
-      "Membrane vesicles traffic signals and facilitate group activities in a prokaryote.",
-      "pages":"422-5","eLocationID":"422","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "LM Mashburn","givenNames":"LM","surnames":"Mashburn","suffix":
-          ""},{"fullName":"M Whiteley","givenNames":"M","surnames":
-          "Whiteley","suffix":""}],"editors":[]},{"key":"18","year":2007,
-      "displayYear":"2007","volumeNumber":63,"volume":"63","title":
-      "Release of outer mebrane vesicles by Gram-negative bacteria is a novel envelope stress response.",
-      "pages":"545-58","eLocationID":"545","journal":"Mol Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AJ McBroom","givenNames":"AJ","surnames":"McBroom","suffix":""},{
-          "fullName":"MJ Kuehn","givenNames":"MJ","surnames":"Kuehn",
-          "suffix":""}],"editors":[]},{"key":"19","year":2002,"displayYear":
-      "2002","volumeNumber":184,"volume":"184","title":
-      "Autolysis and autoaggregation in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e colony morphology mutants.",
-      "pages":"6481-9","eLocationID":"6481","journal":"J Bacteriol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DA D\u0027Argenio","givenNames":"DA","surnames":
-          "D\u0027Argenio","suffix":""},{"fullName":"MW Calfee","givenNames":
-          "MW","surnames":"Calfee","suffix":""},{"fullName":"PB Rainey",
-          "givenNames":"PB","surnames":"Rainey","suffix":""},{"fullName":
-          "EC Pesci","givenNames":"EC","surnames":"Pesci","suffix":""}],
-      "editors":[]},{"key":"20","year":2002,"displayYear":"2002",
-      "volumeNumber":184,"volume":"184","title":
-      "Functions required for extracellular quinolone signaling by \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e.",
-      "pages":"6472-80","eLocationID":"6472","journal":"J Bacteriol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "LA Gallagher","givenNames":"LA","surnames":"Gallagher","suffix":
-          ""},{"fullName":"SL McKnight","givenNames":"SL","surnames":
-          "McKnight","suffix":""},{"fullName":"MS Kuznetsova","givenNames":
-          "MS","surnames":"Kuznetsova","suffix":""},{"fullName":"EC Pesci",
-          "givenNames":"EC","surnames":"Pesci","suffix":""},{"fullName":
-          "C Manoil","givenNames":"C","surnames":"Manoil","suffix":""}],
-      "editors":[]},{"key":"21","year":2006,"displayYear":"2006",
-      "volumeNumber":8,"volume":"8","title":
-      "The \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e quinolone signal (PQS) has an iron-chelating activity.",
-      "pages":"1318-29","eLocationID":"1318","journal":"Environ Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "F Bredenbruch","givenNames":"F","surnames":"Bredenbruch","suffix":
-          ""},{"fullName":"R Geffers","givenNames":"R","surnames":
-          "Geffers","suffix":""},{"fullName":"M Nimtz","givenNames":"M",
-          "surnames":"Nimtz","suffix":""},{"fullName":"J Buer","givenNames":
-          "J","surnames":"Buer","suffix":""},{"fullName":"S Haussler",
-          "givenNames":"S","surnames":"Haussler","suffix":""}],"editors":[]},
-    {"key":"22","year":2007,"displayYear":"2007","volumeNumber":14,"volume":
-      "14","title":
-      "The \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e 4-quinolone signal molecules HHQ and PQS play multifunctional roles in quorum sensing and iron entrapment.",
-      "pages":"87-96","eLocationID":"87","journal":"Chem Biol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SP Diggle","givenNames":"SP","surnames":"Diggle","suffix":""},{
-          "fullName":"S Matthijs","givenNames":"S","surnames":"Matthijs",
-          "suffix":""},{"fullName":"VJ Wright","givenNames":"VJ","surnames":
-          "Wright","suffix":""},{"fullName":"MP Fletcher","givenNames":
-          "MP","surnames":"Fletcher","suffix":""},{"fullName":"SR Chhabra",
-          "givenNames":"SR","surnames":"Chhabra","suffix":""},{"fullName":
-          "IL Lamont","givenNames":"IL","surnames":"Lamont","suffix":""}],
-      "editors":[]},{"key":"23","year":2000,"displayYear":"2000",
-      "volumeNumber":2,"volume":"2","title":
-      "Mechanisms of antibiotic resistance and tolerance in \u003citalic\u003eStreptococcus pneumoniae\u003c/italic\u003e.",
-      "pages":"1855-64","eLocationID":"1855","journal":"Microbes Infect",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E Charpentier","givenNames":"E","surnames":"Charpentier","suffix":
-          ""},{"fullName":"E Tuomanen","givenNames":"E","surnames":
-          "Tuomanen","suffix":""}],"editors":[]},{"key":"24","year":2000,
-      "displayYear":"2000","volumeNumber":5,"volume":"5","title":
-      "Signal transduction by a death signal peptide: uncovering the mechanism of bacterial killing by penicillin.",
-      "pages":"49-57","eLocationID":"49","journal":"Mol Cell",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "R Novak","givenNames":"R","surnames":"Novak","suffix":""},{
-          "fullName":"E Charpentier","givenNames":"E","surnames":
-          "Charpentier","suffix":""},{"fullName":"JS Braun","givenNames":
-          "JS","surnames":"Braun","suffix":""},{"fullName":"E Tuomanen",
-          "givenNames":"E","surnames":"Tuomanen","suffix":""}],"editors":[]},
-    {"key":"25","year":1986,"displayYear":"1986","volumeNumber":158,"volume":
-      "158","title":
-      "Searching for autolysin functions. Characterization of a pneumococcal mutant deleted in the \u003citalic\u003elytA\u003c/italic\u003e gene.",
-      "pages":"289-93","eLocationID":"289","journal":"Eur J Biochem",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JM Sanchez-Puelles","givenNames":"JM","surnames":
-          "Sanchez-Puelles","suffix":""},{"fullName":"C Ronda","givenNames":
-          "C","surnames":"Ronda","suffix":""},{"fullName":"JL Garcia",
-          "givenNames":"JL","surnames":"Garcia","suffix":""},{"fullName":
-          "P Garcia","givenNames":"P","surnames":"Garcia","suffix":""},{
-          "fullName":"R Lopez","givenNames":"R","surnames":"Lopez","suffix":
-          ""},{"fullName":"E Garcia","givenNames":"E","surnames":"Garcia",
-          "suffix":""}],"editors":[]},{"key":"26","year":1970,"displayYear":
-      "1970","volumeNumber":227,"volume":"227","title":
-      "Multiple antibiotic resistance in a bacterium with suppressed autolytic system.",
-      "pages":"138-40","eLocationID":"138","journal":"Nature",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Tomasz","givenNames":"A","surnames":"Tomasz","suffix":""},{
-          "fullName":"A Albino","givenNames":"A","surnames":"Albino",
-          "suffix":""},{"fullName":"E Zanati","givenNames":"E","surnames":
-          "Zanati","suffix":""}],"editors":[]},{"key":"27","year":2005,
-      "displayYear":"2005","volumeNumber":71,"volume":"71","title":
-      "Induction of oxidative stress by high hydrostatic pressure in \u003citalic\u003eEscherichia coli\u003c/italic\u003e.",
-      "pages":"2226-31","eLocationID":"2226","journal":
-      "Appl Environ Microbiol","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Aertsen","givenNames":"A","surnames":"Aertsen","suffix":""},{
-          "fullName":"P De Spiegeleer","givenNames":"P","surnames":
-          "De Spiegeleer","suffix":""},{"fullName":"K Vanoirbeek",
-          "givenNames":"K","surnames":"Vanoirbeek","suffix":""},{"fullName":
-          "M Lavilla","givenNames":"M","surnames":"Lavilla","suffix":""},{
-          "fullName":"CW Michiels","givenNames":"CW","surnames":"Michiels",
-          "suffix":""}],"editors":[]},{"key":"28","year":1999,"displayYear":
-      "1999","volumeNumber":56,"volume":"56","title":
-      "Bacterial suicide through stress.","pages":"378-83","eLocationID":
-      "378","journal":"Cell Mol Life Sci","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"TG Aldsworth","givenNames":"TG","surnames":
-          "Aldsworth","suffix":""},{"fullName":"RL Sharman","givenNames":
-          "RL","surnames":"Sharman","suffix":""},{"fullName":"CE Dodd",
-          "givenNames":"CE","surnames":"Dodd","suffix":""}],"editors":[]},{
-      "key":"29","year":2000,"displayYear":"2000","volumeNumber":64,"volume":
-      "64","title":"Programmed death in bacteria.","pages":"503-14",
-      "eLocationID":"503","journal":"Microbiol Mol Biol Rev",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K Lewis","givenNames":"K","surnames":"Lewis","suffix":""}],
-      "editors":[]},{"key":"30","year":2003,"displayYear":"2003",
-      "volumeNumber":50,"volume":"50","title":
-      "Death\u0027s toolbox: examining the molecular components of bacterial programmed cell death.",
-      "pages":"729-38","eLocationID":"729","journal":"Mol Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KC Rice","givenNames":"KC","surnames":"Rice","suffix":""},{
-          "fullName":"KW Bayles","givenNames":"KW","surnames":"Bayles",
-          "suffix":""}],"editors":[]},{"key":"31","year":1996,"displayYear":
-      "1996","volumeNumber":145,"volume":"145","title":
-      "Catalytic metals, ascorbate and free radicals: combinations to avoid.",
-      "pages":"532-41","eLocationID":"532","journal":"Radiat Res",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GR Buettner","givenNames":"GR","surnames":"Buettner","suffix":
-          ""},{"fullName":"BA Jurkiewicz","givenNames":"BA","surnames":
-          "Jurkiewicz","suffix":""}],"editors":[]},{"key":"32","year":1996,
-      "displayYear":"1996","volumeNumber":25,"volume":"25","title":
-      "Vitamin C: antioxidant or pro-oxidant in vivo?","pages":"439-54",
-      "eLocationID":"439","journal":"Free Radic Res","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"B Halliwell","givenNames":"B","surnames":
-          "Halliwell","suffix":""}],"editors":[]},{"key":"33","year":1999,
-      "displayYear":"1999","volumeNumber":13,"volume":"13","title":
-      "Does vitamin C act as a pro-oxidant under physiological conditions?",
-      "pages":"1007-24","eLocationID":"1007","journal":"FASEB J",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Carr","givenNames":"A","surnames":"Carr","suffix":""},{
-          "fullName":"B Frei","givenNames":"B","surnames":"Frei","suffix":
-          ""}],"editors":[]},{"key":"34","year":1996,"displayYear":"1996",
-      "volumeNumber":21,"volume":"21","title":
-      "Cupric ion/ascorbate/hydrogen peroxide-induced DNA damage: DNA-bound copper ion primarily induces base modifications.",
-      "pages":"261-73","eLocationID":"261","journal":"Free Radic Biol Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "R Drouin","givenNames":"R","surnames":"Drouin","suffix":""},{
-          "fullName":"H Rodriguez","givenNames":"H","surnames":"Rodriguez",
-          "suffix":""},{"fullName":"SW Gao","givenNames":"SW","surnames":
-          "Gao","suffix":""},{"fullName":"Z Gebreyes","givenNames":"Z",
-          "surnames":"Gebreyes","suffix":""},{"fullName":
-          "TR O\u0027Connor","givenNames":"TR","surnames":"O\u0027Connor",
-          "suffix":""},{"fullName":"GP Holmquist","givenNames":"GP",
-          "surnames":"Holmquist","suffix":""}],"editors":[]},{"key":"35",
-      "year":1992,"displayYear":"1992","volumeNumber":13,"volume":"13",
-      "title":
-      "8-Hydroxydeoxyguanosine in vitro: effects of glutathione, ascorbate, and 5-aminosalicylic acid.",
-      "pages":"121-6","eLocationID":"121","journal":"Free Radic Biol Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Fischer-Nielsen","givenNames":"A","surnames":
-          "Fischer-Nielsen","suffix":""},{"fullName":"HE Poulsen",
-          "givenNames":"HE","surnames":"Poulsen","suffix":""},{"fullName":
-          "S Loft","givenNames":"S","surnames":"Loft","suffix":""}],
-      "editors":[]},{"key":"36","year":1997,"displayYear":"1997",
-      "volumeNumber":26,"volume":"26","title":
-      "Ascorbic acid inhibits lipid peroxidation but enhances DNA damage in rat liver nuclei incubated with iron ions.",
-      "pages":"585-92","eLocationID":"585","journal":"Free Radic Res",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ML Hu","givenNames":"ML","surnames":"Hu","suffix":""},{"fullName":
-          "MK Shih","givenNames":"MK","surnames":"Shih","suffix":""}],
-      "editors":[]},{"key":"37","year":1996,"displayYear":"1996",
-      "volumeNumber":52,"volume":"52","title":
-      "(-)-Epigallocatechin gallate, a polyphenolic tea antioxidant, inhibits peroxynitrite-mediated formation of 8-oxodeoxyguanosine and 3-nitrotyrosine.",
-      "pages":"922-6","eLocationID":"922","journal":"Experientia",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ES Fiala","givenNames":"ES","surnames":"Fiala","suffix":""},{
-          "fullName":"RS Sodum","givenNames":"RS","surnames":"Sodum",
-          "suffix":""},{"fullName":"M Bhattacharya","givenNames":"M",
-          "surnames":"Bhattacharya","suffix":""},{"fullName":"H Li",
-          "givenNames":"H","surnames":"Li","suffix":""}],"editors":[]},{
-      "key":"38","year":1998,"displayYear":"1998","volumeNumber":19,"volume":
-      "19","title":
-      "Tamoxifen reduces endogenous and UV light-induced oxidative damage to DNA, lipid and protein in vitro and in vivo.",
-      "pages":"1013-8","eLocationID":"1013","journal":"Carcinogenesis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "H Wei","givenNames":"H","surnames":"Wei","suffix":""},{"fullName":
-          "Q Cai","givenNames":"Q","surnames":"Cai","suffix":""},{"fullName":
-          "L Tian","givenNames":"L","surnames":"Tian","suffix":""},{
-          "fullName":"M Lebwohl","givenNames":"M","surnames":"Lebwohl",
-          "suffix":""}],"editors":[]},{"key":"39","year":1999,"displayYear":
-      "1999","volumeNumber":34,"volume":"34","title":
-      "Quorum sensing in \u003citalic\u003ePseudomonas aeruginosa\u003c/italic\u003e controls expression of catalase and superoxide dismutase genes and mediates biofilm susceptibility to hydrogen peroxide.",
-      "pages":"1082-93","eLocationID":"1082","journal":"Mol Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DJ Hassett","givenNames":"DJ","surnames":"Hassett","suffix":""},{
-          "fullName":"JF Ma","givenNames":"JF","surnames":"Ma","suffix":""},{
-          "fullName":"JG Elkins","givenNames":"JG","surnames":"Elkins",
-          "suffix":""},{"fullName":"TR McDermott","givenNames":"TR",
-          "surnames":"McDermott","suffix":""},{"fullName":"UA Ochsner",
-          "givenNames":"UA","surnames":"Ochsner","suffix":""},{"fullName":
-          "SE West","givenNames":"SE","surnames":"West","suffix":""}],
-      "editors":[]},{"key":"40","year":1959,"displayYear":"1959",
-      "volumeNumber":77,"volume":"77","title":
-      "On the biosynthesis of pyocyanine.","pages":"776-82","eLocationID":
-      "776","journal":"J Bacteriol","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "LH Frank","givenNames":"LH","surnames":"Frank","suffix":""},{
-          "fullName":"RD DeMoss","givenNames":"RD","surnames":"DeMoss",
-          "suffix":""}],"editors":[]}],"relatedArticles":[],"authors":[{
-      "fullName":"Susanne Häussler","givenNames":"Susanne","surnames":
-      "Häussler","suffix":""},{"fullName":"Tanja Becker","givenNames":
-      "Tanja","surnames":"Becker","suffix":""}],"editors":[{"fullName":
-      "Frederick M. Ausubel","givenNames":"Frederick M.","surnames":
-      "Ausubel","suffix":""}],"journals":[{"eIssn":"1553-7374"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.ppat.1000166",
+  "title": "The Pseudomonas Quinolone Signal (PQS) Balances Life and Death in <italic>Pseudomonas aeruginosa</italic> Populations",
+  "eIssn": "1553-7374",
+  "state": 1,
+  "archiveName": "ppat.1000166.zip",
+  "description": "<title>Author Summary</title><p>A little poison may be generically beneficial to bacterial populations. By eliminating damaged members and by promoting survival of the fittest, selective poisoning may significantly contribute to multi-cellular bacterial behavior. Here, we report that the pseudomonas quinolone signal (PQS) exhibits both beneficial and deleterious activities and propose that pro- and anti-oxidant effects fragment the population into less and more stress tolerant members. We suggest our findings point to PQS as a cellular \u201ctrainer\u201d whose role is to mediate selection of the fittest through a \u201cmake or break\u201d mechanism. PQS thereby issues decisions on life and death in <italic>Pseudomonas aeruginosa</italic> populations, and may be essential in shaping the population structure, contributing to multi-cellular development processes in bacterial biofilms, and helping to maintain discrete, ordered spatial structures.</p>",
+  "rights": "H\u00e4ussler, Becker. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-8",
+  "eLocationId": "e1000166",
+  "strkImgURI": "",
+  "date": "2008-09-26T07:00:00Z",
+  "volume": "4",
+  "issue": "9",
+  "journal": "PLoS Pathog",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.ppat.1000166",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "The Pseudomonas Quinolone Signal (PQS) Balances Life and Death in <italic>Pseudomonas aeruginosa</italic> Populations",
+      "description": "<title>Author Summary</title><p>A little poison may be generically beneficial to bacterial populations. By eliminating damaged members and by promoting survival of the fittest, selective poisoning may significantly contribute to multi-cellular bacterial behavior. Here, we report that the pseudomonas quinolone signal (PQS) exhibits both beneficial and deleterious activities and propose that pro- and anti-oxidant effects fragment the population into less and more stress tolerant members. We suggest our findings point to PQS as a cellular \u201ctrainer\u201d whose role is to mediate selection of the fittest through a \u201cmake or break\u201d mechanism. PQS thereby issues decisions on life and death in <italic>Pseudomonas aeruginosa</italic> populations, and may be essential in shaping the population structure, contributing to multi-cellular development processes in bacterial biofilms, and helping to maintain discrete, ordered spatial structures.</p>",
+      "size": 78113
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "The Pseudomonas Quinolone Signal (PQS) Balances Life and Death in <italic>Pseudomonas aeruginosa</italic> Populations",
+      "description": "<title>Author Summary</title><p>A little poison may be generically beneficial to bacterial populations. By eliminating damaged members and by promoting survival of the fittest, selective poisoning may significantly contribute to multi-cellular bacterial behavior. Here, we report that the pseudomonas quinolone signal (PQS) exhibits both beneficial and deleterious activities and propose that pro- and anti-oxidant effects fragment the population into less and more stress tolerant members. We suggest our findings point to PQS as a cellular \u201ctrainer\u201d whose role is to mediate selection of the fittest through a \u201cmake or break\u201d mechanism. PQS thereby issues decisions on life and death in <italic>Pseudomonas aeruginosa</italic> populations, and may be essential in shaping the population structure, contributing to multi-cellular development processes in bacterial biofilms, and helping to maintain discrete, ordered spatial structures.</p>",
+      "size": 403309
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>Antibiotic tolerance in the absence of PQS production.</title><p>Killing curves of log phase grown <italic>P. aeruginosa</italic> PAO1 cultures treated with 5 \u00b5g/ml ciprofloxacin were recorded. Killing was significantly delayed in the <italic>pqsA</italic> and <italic>pqsH</italic> mutant compared to the wild-type and the <italic>pqsL</italic> mutant as determined by OD<sub>600</sub> determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the <italic>pqsL</italic> mutant were significantly different (p&lt;0.05, as determined by t-test) as compared to the <italic>pqsA</italic> and <italic>pqsH</italic> mutants.</p>",
+      "size": 377284
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Antibiotic tolerance in the absence of PQS production.</title><p>Killing curves of log phase grown <italic>P. aeruginosa</italic> PAO1 cultures treated with 5 \u00b5g/ml ciprofloxacin were recorded. Killing was significantly delayed in the <italic>pqsA</italic> and <italic>pqsH</italic> mutant compared to the wild-type and the <italic>pqsL</italic> mutant as determined by OD<sub>600</sub> determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the <italic>pqsL</italic> mutant were significantly different (p&lt;0.05, as determined by t-test) as compared to the <italic>pqsA</italic> and <italic>pqsH</italic> mutants.</p>",
+      "size": 4492
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Antibiotic tolerance in the absence of PQS production.</title><p>Killing curves of log phase grown <italic>P. aeruginosa</italic> PAO1 cultures treated with 5 \u00b5g/ml ciprofloxacin were recorded. Killing was significantly delayed in the <italic>pqsA</italic> and <italic>pqsH</italic> mutant compared to the wild-type and the <italic>pqsL</italic> mutant as determined by OD<sub>600</sub> determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the <italic>pqsL</italic> mutant were significantly different (p&lt;0.05, as determined by t-test) as compared to the <italic>pqsA</italic> and <italic>pqsH</italic> mutants.</p>",
+      "size": 39632
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Antibiotic tolerance in the absence of PQS production.</title><p>Killing curves of log phase grown <italic>P. aeruginosa</italic> PAO1 cultures treated with 5 \u00b5g/ml ciprofloxacin were recorded. Killing was significantly delayed in the <italic>pqsA</italic> and <italic>pqsH</italic> mutant compared to the wild-type and the <italic>pqsL</italic> mutant as determined by OD<sub>600</sub> determinations (A) and CFU counts after 3 h of exposure (B). Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the <italic>pqsL</italic> mutant were significantly different (p&lt;0.05, as determined by t-test) as compared to the <italic>pqsA</italic> and <italic>pqsH</italic> mutants.</p>",
+      "size": 186089
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Growth inhibition by H<sub>2</sub>O<sub>2</sub> as determined by agar diffusion assays.</title><p>PQS non-producing strains (<italic>pqsA</italic> and <italic>pqsH</italic> mutant) exhibited an increased resistance towards H<sub>2</sub>O<sub>2</sub> as compared to the wild-type (paired t-test; p-value &lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.</p>",
+      "size": 213724
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Growth inhibition by H<sub>2</sub>O<sub>2</sub> as determined by agar diffusion assays.</title><p>PQS non-producing strains (<italic>pqsA</italic> and <italic>pqsH</italic> mutant) exhibited an increased resistance towards H<sub>2</sub>O<sub>2</sub> as compared to the wild-type (paired t-test; p-value &lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.</p>",
+      "size": 8258
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Growth inhibition by H<sub>2</sub>O<sub>2</sub> as determined by agar diffusion assays.</title><p>PQS non-producing strains (<italic>pqsA</italic> and <italic>pqsH</italic> mutant) exhibited an increased resistance towards H<sub>2</sub>O<sub>2</sub> as compared to the wild-type (paired t-test; p-value &lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.</p>",
+      "size": 58315
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Growth inhibition by H<sub>2</sub>O<sub>2</sub> as determined by agar diffusion assays.</title><p>PQS non-producing strains (<italic>pqsA</italic> and <italic>pqsH</italic> mutant) exhibited an increased resistance towards H<sub>2</sub>O<sub>2</sub> as compared to the wild-type (paired t-test; p-value &lt;0.005). The diameter of the inhibition zone is given as the mean+SD of a triplicate.</p>",
+      "size": 85566
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g003",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 3",
+      "description": "<title>Loss of bioluminescence of <italic>P. aeruginosa</italic> PAO1 wild-type after exposure to the antibiotic ciprofloxacin.</title><p>Killing of the bacteria by 5 \u00b5g/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value &lt;0.05).</p>",
+      "size": 164088
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g003",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Loss of bioluminescence of <italic>P. aeruginosa</italic> PAO1 wild-type after exposure to the antibiotic ciprofloxacin.</title><p>Killing of the bacteria by 5 \u00b5g/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value &lt;0.05).</p>",
+      "size": 7802
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g003",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Loss of bioluminescence of <italic>P. aeruginosa</italic> PAO1 wild-type after exposure to the antibiotic ciprofloxacin.</title><p>Killing of the bacteria by 5 \u00b5g/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value &lt;0.05).</p>",
+      "size": 64998
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g003",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Loss of bioluminescence of <italic>P. aeruginosa</italic> PAO1 wild-type after exposure to the antibiotic ciprofloxacin.</title><p>Killing of the bacteria by 5 \u00b5g/ml ciprofloxacin was significantly enhanced under the addition of PQS as opposed to HHQ (paired t-test; p value &lt;0.05).</p>",
+      "size": 85006
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g004",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 4",
+      "description": "<title>PQS induces bacteriostasis in a concentration dependent manner.</title><p>The addition of PQS to bacterial cultures of a <italic>pqsA</italic> mutant is characterized by a slope reduction in log phase of growth and lower maximum OD<sub>600</sub> values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.</p>",
+      "size": 234516
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g004",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>PQS induces bacteriostasis in a concentration dependent manner.</title><p>The addition of PQS to bacterial cultures of a <italic>pqsA</italic> mutant is characterized by a slope reduction in log phase of growth and lower maximum OD<sub>600</sub> values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.</p>",
+      "size": 7393
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g004",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>PQS induces bacteriostasis in a concentration dependent manner.</title><p>The addition of PQS to bacterial cultures of a <italic>pqsA</italic> mutant is characterized by a slope reduction in log phase of growth and lower maximum OD<sub>600</sub> values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.</p>",
+      "size": 53067
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g004",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>PQS induces bacteriostasis in a concentration dependent manner.</title><p>The addition of PQS to bacterial cultures of a <italic>pqsA</italic> mutant is characterized by a slope reduction in log phase of growth and lower maximum OD<sub>600</sub> values as compared to the cultures grown without added PQS. Bacteriostasis seems to be a PQS-specific effect because both the addition of equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not have the same effect. This is a representative experiment for at least three independent measurements.</p>",
+      "size": 114588
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g005",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 5",
+      "description": "<title>PQS reduces the intracellular ROI levels.</title><p>The median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 \u00b5M H<sub>2</sub>DCFDA is given. PQS was added to log phase grown PAO1 wild-type and <italic>pqsA</italic> mutant cultures at concentrations of 0, 50 and 100 \u00b5M PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p&lt;0.05).</p>",
+      "size": 295372
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g005",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 5",
+      "description": "<title>PQS reduces the intracellular ROI levels.</title><p>The median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 \u00b5M H<sub>2</sub>DCFDA is given. PQS was added to log phase grown PAO1 wild-type and <italic>pqsA</italic> mutant cultures at concentrations of 0, 50 and 100 \u00b5M PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p&lt;0.05).</p>",
+      "size": 5883
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g005",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 5",
+      "description": "<title>PQS reduces the intracellular ROI levels.</title><p>The median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 \u00b5M H<sub>2</sub>DCFDA is given. PQS was added to log phase grown PAO1 wild-type and <italic>pqsA</italic> mutant cultures at concentrations of 0, 50 and 100 \u00b5M PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p&lt;0.05).</p>",
+      "size": 40231
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g005",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 5",
+      "description": "<title>PQS reduces the intracellular ROI levels.</title><p>The median of fluorescence intensity (MFI) of 50,000 log phase grown cells treated with 20 \u00b5M H<sub>2</sub>DCFDA is given. PQS was added to log phase grown PAO1 wild-type and <italic>pqsA</italic> mutant cultures at concentrations of 0, 50 and 100 \u00b5M PQS, respectively followed by an 1 h incubation period prior to FACS analysis. In contrast to PQS addition, the addition of at least equimolar concentrations of the biologically less active PQS precursor heptyl-4-hydroxy-quinoline (HHQ) or the iron chelator dipyridyl did not show a clear reduction of the ROI levels (data not shown). The assays were performed three times with independent cultures, the addition of PQS reduced the MFI significantly as determined by t-test (p&lt;0.05).</p>",
+      "size": 112409
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g006",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 6",
+      "description": "<title>PQS is a primary anti-oxidant.</title><p>The absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.</p>",
+      "size": 545096
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g006",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 6",
+      "description": "<title>PQS is a primary anti-oxidant.</title><p>The absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.</p>",
+      "size": 6412
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g006",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 6",
+      "description": "<title>PQS is a primary anti-oxidant.</title><p>The absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.</p>",
+      "size": 48210
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g006",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 6",
+      "description": "<title>PQS is a primary anti-oxidant.</title><p>The absorbance changes of the stable 2,2-diphenyl-2-picrylhydrazyl (DPPH) radical was measured in three independent experiments at the OD of 517 nm in the presence of PQS, HHQ and ascorbate. Error bars mark the standard deviation of three independent experiments. The decolorization is stoichiometric with respect to the number of electrons captured.</p>",
+      "size": 204473
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g007",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 7",
+      "description": "<title>Proposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.</title>",
+      "size": 320372
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g007",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 7",
+      "description": "<title>Proposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.</title>",
+      "size": 6662
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g007",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 7",
+      "description": "<title>Proposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.</title>",
+      "size": 67491
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g007",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 7",
+      "description": "<title>Proposed mechanism of the primary anti-oxidant effect and the secondary pro-oxidant effect of PQS.</title>",
+      "size": 171050
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g008",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 8",
+      "description": "<title>PQS exhibits pro-oxidants activities.</title><p>The Fe2<sup>+</sup> mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal <italic>P. aeruginosa</italic> DNA under the addition of vitamin C and Fe2<sup>+</sup>, lane 2: DNA+vitamin C, lane 3: DNA , Fe2<sup>+</sup> and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2<sup>+</sup> and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2<sup>+</sup> for 15 min and separation on an agarose gel.</p>",
+      "size": 238132
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g008",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 8",
+      "description": "<title>PQS exhibits pro-oxidants activities.</title><p>The Fe2<sup>+</sup> mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal <italic>P. aeruginosa</italic> DNA under the addition of vitamin C and Fe2<sup>+</sup>, lane 2: DNA+vitamin C, lane 3: DNA , Fe2<sup>+</sup> and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2<sup>+</sup> and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2<sup>+</sup> for 15 min and separation on an agarose gel.</p>",
+      "size": 6966
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g008",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 8",
+      "description": "<title>PQS exhibits pro-oxidants activities.</title><p>The Fe2<sup>+</sup> mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal <italic>P. aeruginosa</italic> DNA under the addition of vitamin C and Fe2<sup>+</sup>, lane 2: DNA+vitamin C, lane 3: DNA , Fe2<sup>+</sup> and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2<sup>+</sup> and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2<sup>+</sup> for 15 min and separation on an agarose gel.</p>",
+      "size": 156568
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g008",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 8",
+      "description": "<title>PQS exhibits pro-oxidants activities.</title><p>The Fe2<sup>+</sup> mediated DNA fragmentation process is strongly enhanced by the addition of PQS or vitamin C but not by the addition of the biological inactive precursor substance HHQ. Lane 1: chromosomal <italic>P. aeruginosa</italic> DNA under the addition of vitamin C and Fe2<sup>+</sup>, lane 2: DNA+vitamin C, lane 3: DNA , Fe2<sup>+</sup> and PQS, lane 4: DNA and PQS, lane 5: DNA, Fe2<sup>+</sup> and HHQ, lane 6: DNA and HHQ. The DNA was pre-incubated with PQS, HHQ or vitamin C, respectively, at room temperature for 45 min before exposure of the probes to 2.5 mM Fe2<sup>+</sup> for 15 min and separation on an agarose gel.</p>",
+      "size": 202779
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g009",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 9",
+      "description": "<title>PQS dependent release of extracellular DNA.</title><p>PAO1 wild-type, the <italic>pqsA</italic>, the <italic>pqsH</italic> and the <italic>pqsL</italic> mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 <italic>pqsA</italic> and <italic>pqsH</italic> mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the <italic>pqsL</italic> mutant (lanes 5, 6) and the complemented <italic>pqsA</italic> mutant (<italic>pqsA-E</italic> operon on plasmid pLG10) (lanes 9, 10).</p>",
+      "size": 455012
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g009",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 9",
+      "description": "<title>PQS dependent release of extracellular DNA.</title><p>PAO1 wild-type, the <italic>pqsA</italic>, the <italic>pqsH</italic> and the <italic>pqsL</italic> mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 <italic>pqsA</italic> and <italic>pqsH</italic> mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the <italic>pqsL</italic> mutant (lanes 5, 6) and the complemented <italic>pqsA</italic> mutant (<italic>pqsA-E</italic> operon on plasmid pLG10) (lanes 9, 10).</p>",
+      "size": 9297
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g009",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 9",
+      "description": "<title>PQS dependent release of extracellular DNA.</title><p>PAO1 wild-type, the <italic>pqsA</italic>, the <italic>pqsH</italic> and the <italic>pqsL</italic> mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 <italic>pqsA</italic> and <italic>pqsH</italic> mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the <italic>pqsL</italic> mutant (lanes 5, 6) and the complemented <italic>pqsA</italic> mutant (<italic>pqsA-E</italic> operon on plasmid pLG10) (lanes 9, 10).</p>",
+      "size": 125589
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g009",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 9",
+      "description": "<title>PQS dependent release of extracellular DNA.</title><p>PAO1 wild-type, the <italic>pqsA</italic>, the <italic>pqsH</italic> and the <italic>pqsL</italic> mutant were grown in LB medium. Supernatant samples were collected after 8 h (lane 1, 3, 5, 7, 9) and 36 h (lane 2, 4, 6, 8, 10), respectively. Increasing amounts of fragmented DNA were found in the supernatant of the PAO1 wild-type cultures under prolonged incubation (lanes 1, 2). DNA release and fragmentation was delayed in the PAO1 <italic>pqsA</italic> and <italic>pqsH</italic> mutants (lane 3, 4 and lane 7, 8). The DNA release and fragmentation pattern was most pronounced in the <italic>pqsL</italic> mutant (lanes 5, 6) and the complemented <italic>pqsA</italic> mutant (<italic>pqsA-E</italic> operon on plasmid pLG10) (lanes 9, 10).</p>",
+      "size": 392826
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g010",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 10",
+      "description": "<title>Killing curves upon exposure to UV irradiation.</title><p>Wild-type PAO1, the <italic>pqsA</italic> mutant, the <italic>pqsH</italic> mutant and the <italic>pqsA</italic> mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium <xref ref-type=\"bibr\" rid=\"ppat.1000166-Frank1\">[40]</xref>. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 \u00b5M PQS to the <italic>pqsA</italic> mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.</p>",
+      "size": 227456
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g010",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 10",
+      "description": "<title>Killing curves upon exposure to UV irradiation.</title><p>Wild-type PAO1, the <italic>pqsA</italic> mutant, the <italic>pqsH</italic> mutant and the <italic>pqsA</italic> mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium <xref ref-type=\"bibr\" rid=\"ppat.1000166-Frank1\">[40]</xref>. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 \u00b5M PQS to the <italic>pqsA</italic> mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.</p>",
+      "size": 7943
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g010",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 10",
+      "description": "<title>Killing curves upon exposure to UV irradiation.</title><p>Wild-type PAO1, the <italic>pqsA</italic> mutant, the <italic>pqsH</italic> mutant and the <italic>pqsA</italic> mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium <xref ref-type=\"bibr\" rid=\"ppat.1000166-Frank1\">[40]</xref>. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 \u00b5M PQS to the <italic>pqsA</italic> mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.</p>",
+      "size": 77933
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.g010",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 10",
+      "description": "<title>Killing curves upon exposure to UV irradiation.</title><p>Wild-type PAO1, the <italic>pqsA</italic> mutant, the <italic>pqsH</italic> mutant and the <italic>pqsA</italic> mutant complemented with pLG10 were grown overnight in LB, and diluted in DeMoss medium <xref ref-type=\"bibr\" rid=\"ppat.1000166-Frank1\">[40]</xref>. The cells were UV irradiated while shaking, and aliquots were removed at 10s intervals. The exogenous addition of 100 \u00b5M PQS to the <italic>pqsA</italic> mutant cultures 4 h before exposure to UV radiation restored UV tolerance, whereas PQS addition immediately before the UV stress did not show any effect. Serial dilutions were plated on LB agar to determine the viable cell count. The UV killing assays were performed three times with independent cultures, and the outcome of one representative experiment is shown.</p>",
+      "size": 134283
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.s001",
+      "contextElement": "supplementary-material",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure S1",
+      "description": "<p>Growth behavior of PAO1 wild-type and mutant strains. Growth of the PAO1 wild-type, the <italic>pqsA</italic>, <italic>pqsH</italic>, <italic>pqsL</italic> mutants and the complemented <italic>pqsA</italic> mutant were comparable.</p><p>(0.08 MB TIF)</p>",
+      "size": 82808
+    },
+    {
+      "doi": "info:doi/10.1371/journal.ppat.1000166.s002",
+      "contextElement": "supplementary-material",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure S2",
+      "description": "<p>Antibiotic tolerance in the absence of PQS production. Killing curves of log phase grown <italic>P. aeruginosa</italic> PAO1 cultures treated with 5 \u00b5g/ml ciprofloxacin (A). Killing was significantly delayed in the <italic>pqsA</italic> mutant compared to the wild-type as determined by OD<sub>600</sub> determinations and CFU counts after 3 h of exposure and could be reversed by the introduction of the <italic>pqsA-E</italic> operon <italic>in trans</italic>. Killing curves of bacterial cultures treated with 7.5 \u00b5g/ml gentamicin (B), and 7.5 \u00b5g/ml imipenem (C) were also recorded. Error bars mark the standard deviation of three independent experiments. CFU counts of the PAO1 wild-type and the <italic>pqsA</italic> mutant were significantly different (p&lt;0.05, as determined by t-test).</p><p>(0.24 MB TIF)</p>",
+      "size": 243912
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 57,
+      "volume": "57",
+      "title": "Bacterial biofilms: an emerging link to disease pathogenesis.",
+      "pages": "677-701",
+      "eLocationID": "677",
+      "journal": "Annu Rev Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MR Parsek",
+          "givenNames": "MR",
+          "surnames": "Parsek",
+          "suffix": ""
+        },
+        {
+          "fullName": "PK Singh",
+          "givenNames": "PK",
+          "surnames": "Singh",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 46,
+      "volume": "46",
+      "title": "The physiology and collective recalcitrance of microbial biofilm communities.",
+      "pages": "202-56",
+      "eLocationID": "202",
+      "journal": "Adv Microb Physiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P Gilbert",
+          "givenNames": "P",
+          "surnames": "Gilbert",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Maira-Litran",
+          "givenNames": "T",
+          "surnames": "Maira-Litran",
+          "suffix": ""
+        },
+        {
+          "fullName": "AJ McBain",
+          "givenNames": "AJ",
+          "surnames": "McBain",
+          "suffix": ""
+        },
+        {
+          "fullName": "AH Rickard",
+          "givenNames": "AH",
+          "surnames": "Rickard",
+          "suffix": ""
+        },
+        {
+          "fullName": "FW Whyte",
+          "givenNames": "FW",
+          "surnames": "Whyte",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 301,
+      "volume": "301",
+      "title": "Cannibalism by sporulating bacteria.",
+      "pages": "510-3",
+      "eLocationID": "510",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JE Gonzalez-Pastor",
+          "givenNames": "JE",
+          "surnames": "Gonzalez-Pastor",
+          "suffix": ""
+        },
+        {
+          "fullName": "EC Hobbs",
+          "givenNames": "EC",
+          "surnames": "Hobbs",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Losick",
+          "givenNames": "R",
+          "surnames": "Losick",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Pattern formation: fruiting body morphogenesis in <italic>Myxococcus xanthus</italic>.",
+      "pages": "637-42",
+      "eLocationID": "637",
+      "journal": "Curr Opin Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Jelsbak",
+          "givenNames": "L",
+          "surnames": "Jelsbak",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Sogaard-Andersen",
+          "givenNames": "L",
+          "surnames": "Sogaard-Andersen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 425,
+      "volume": "425",
+      "title": "Evolution of cooperation and conflict in experimental bacterial populations.",
+      "pages": "72-4",
+      "eLocationID": "72",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "PB Rainey",
+          "givenNames": "PB",
+          "surnames": "Rainey",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Rainey",
+          "givenNames": "K",
+          "surnames": "Rainey",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 81,
+      "volume": "81",
+      "title": "Experimental social evolution with <italic>Myxococcus xanthus</italic>.",
+      "pages": "155-64",
+      "eLocationID": "155",
+      "journal": "Antonie Van Leeuwenhoek",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GJ Velicer",
+          "givenNames": "GJ",
+          "surnames": "Velicer",
+          "suffix": ""
+        },
+        {
+          "fullName": "KL Stredwick",
+          "givenNames": "KL",
+          "surnames": "Stredwick",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 13,
+      "volume": "13",
+      "title": "Sociomicrobiology: the connections between quorum sensing and biofilms.",
+      "pages": "27-33",
+      "eLocationID": "27",
+      "journal": "Trends Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MR Parsek",
+          "givenNames": "MR",
+          "surnames": "Parsek",
+          "suffix": ""
+        },
+        {
+          "fullName": "EP Greenberg",
+          "givenNames": "EP",
+          "surnames": "Greenberg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Looking for chinks in the armor of bacterial biofilms.",
+      "pages": "e307",
+      "eLocationID": "e307",
+      "journal": "PLoS Biol",
+      "note": "doi:10.1371/journal.pbio.0050307",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Monroe",
+          "givenNames": "D",
+          "surnames": "Monroe",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 176,
+      "volume": "176",
+      "title": "Quorum sensing in bacteria: the LuxR-LuxI family of cell density-responsive transcriptional regulators.",
+      "pages": "269-75",
+      "eLocationID": "269",
+      "journal": "J Bacteriol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WC Fuqua",
+          "givenNames": "WC",
+          "surnames": "Fuqua",
+          "suffix": ""
+        },
+        {
+          "fullName": "SC Winans",
+          "givenNames": "SC",
+          "surnames": "Winans",
+          "suffix": ""
+        },
+        {
+          "fullName": "EP Greenberg",
+          "givenNames": "EP",
+          "surnames": "Greenberg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 98,
+      "volume": "98",
+      "title": "A quorum sensing-associated virulence gene of <italic>Pseudomonas aeruginosa</italic> encodes a LysR-like transcription regulator with a unique self-regulatory mechanism.",
+      "pages": "14613-8",
+      "eLocationID": "14613",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "H Cao",
+          "givenNames": "H",
+          "surnames": "Cao",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Krishnan",
+          "givenNames": "G",
+          "surnames": "Krishnan",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Goumnerov",
+          "givenNames": "B",
+          "surnames": "Goumnerov",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Tsongalis",
+          "givenNames": "J",
+          "surnames": "Tsongalis",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Tompkins",
+          "givenNames": "R",
+          "surnames": "Tompkins",
+          "suffix": ""
+        },
+        {
+          "fullName": "LG Rahme",
+          "givenNames": "LG",
+          "surnames": "Rahme",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 50,
+      "volume": "50",
+      "title": "The <italic>Pseudomonas aeruginosa</italic> quinolone signal molecule overcomes the cell density-dependency of the quorum sensing hierarchy, regulates <italic>rhl</italic>-dependent genes at the onset of stationary phase and can be produced in the absence of LasR.",
+      "pages": "29-43",
+      "eLocationID": "29",
+      "journal": "Mol Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SP Diggle",
+          "givenNames": "SP",
+          "surnames": "Diggle",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Winzer",
+          "givenNames": "K",
+          "surnames": "Winzer",
+          "suffix": ""
+        },
+        {
+          "fullName": "SR Chhabra",
+          "givenNames": "SR",
+          "surnames": "Chhabra",
+          "suffix": ""
+        },
+        {
+          "fullName": "KE Worrall",
+          "givenNames": "KE",
+          "surnames": "Worrall",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Camara",
+          "givenNames": "M",
+          "surnames": "Camara",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Williams",
+          "givenNames": "P",
+          "surnames": "Williams",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 296,
+      "volume": "296",
+      "title": "4-Quinolone signalling in <italic>Pseudomonas aeruginosa</italic>: Old molecules, new perspectives.",
+      "pages": "83-91",
+      "eLocationID": "83",
+      "journal": "Int J Med Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SP Diggle",
+          "givenNames": "SP",
+          "surnames": "Diggle",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Cornelis",
+          "givenNames": "P",
+          "surnames": "Cornelis",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Williams",
+          "givenNames": "P",
+          "surnames": "Williams",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Camara",
+          "givenNames": "M",
+          "surnames": "Camara",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 182,
+      "volume": "182",
+      "title": "The <italic>Pseudomonas</italic> quinolone signal regulates <italic>rhl</italic> quorum sensing in <italic>Pseudomonas aeruginosa</italic>.",
+      "pages": "2702-8",
+      "eLocationID": "2702",
+      "journal": "J Bacteriol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SL McKnight",
+          "givenNames": "SL",
+          "surnames": "McKnight",
+          "suffix": ""
+        },
+        {
+          "fullName": "BH Iglewski",
+          "givenNames": "BH",
+          "surnames": "Iglewski",
+          "suffix": ""
+        },
+        {
+          "fullName": "EC Pesci",
+          "givenNames": "EC",
+          "surnames": "Pesci",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 96,
+      "volume": "96",
+      "title": "Quinolone signaling in the cell-to-cell communication system of <italic>Pseudomonas aeruginosa</italic>.",
+      "pages": "11229-34",
+      "eLocationID": "11229",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "EC Pesci",
+          "givenNames": "EC",
+          "surnames": "Pesci",
+          "suffix": ""
+        },
+        {
+          "fullName": "JB Milbank",
+          "givenNames": "JB",
+          "surnames": "Milbank",
+          "suffix": ""
+        },
+        {
+          "fullName": "JP Pearson",
+          "givenNames": "JP",
+          "surnames": "Pearson",
+          "suffix": ""
+        },
+        {
+          "fullName": "S McKnight",
+          "givenNames": "S",
+          "surnames": "McKnight",
+          "suffix": ""
+        },
+        {
+          "fullName": "AS Kende",
+          "givenNames": "AS",
+          "surnames": "Kende",
+          "suffix": ""
+        },
+        {
+          "fullName": "EP Greenberg",
+          "givenNames": "EP",
+          "surnames": "Greenberg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 101,
+      "volume": "101",
+      "title": "Analysis of <italic>Pseudomonas aeruginosa</italic> 4-hydroxy-2-alkylquinolines (HAQs) reveals a role for 4-hydroxy-2-heptylquinoline in cell-to-cell communication.",
+      "pages": "1339-44",
+      "eLocationID": "1339",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Deziel",
+          "givenNames": "E",
+          "surnames": "Deziel",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Lepine",
+          "givenNames": "F",
+          "surnames": "Lepine",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Milot",
+          "givenNames": "S",
+          "surnames": "Milot",
+          "suffix": ""
+        },
+        {
+          "fullName": "J He",
+          "givenNames": "J",
+          "surnames": "He",
+          "suffix": ""
+        },
+        {
+          "fullName": "MN Mindrinos",
+          "givenNames": "MN",
+          "surnames": "Mindrinos",
+          "suffix": ""
+        },
+        {
+          "fullName": "RG Tompkins",
+          "givenNames": "RG",
+          "surnames": "Tompkins",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 187,
+      "volume": "187",
+      "title": "Regulation of <italic>Pseudomonas</italic> quinolone signal synthesis in <italic>Pseudomonas aeruginosa</italic>.",
+      "pages": "4372-80",
+      "eLocationID": "4372",
+      "journal": "J Bacteriol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DS Wade",
+          "givenNames": "DS",
+          "surnames": "Wade",
+          "suffix": ""
+        },
+        {
+          "fullName": "MW Calfee",
+          "givenNames": "MW",
+          "surnames": "Calfee",
+          "suffix": ""
+        },
+        {
+          "fullName": "ER Rocha",
+          "givenNames": "ER",
+          "surnames": "Rocha",
+          "suffix": ""
+        },
+        {
+          "fullName": "EA Ling",
+          "givenNames": "EA",
+          "surnames": "Ling",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Engstrom",
+          "givenNames": "E",
+          "surnames": "Engstrom",
+          "suffix": ""
+        },
+        {
+          "fullName": "JP Coleman",
+          "givenNames": "JP",
+          "surnames": "Coleman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 437,
+      "volume": "437",
+      "title": "Membrane vesicles traffic signals and facilitate group activities in a prokaryote.",
+      "pages": "422-5",
+      "eLocationID": "422",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LM Mashburn",
+          "givenNames": "LM",
+          "surnames": "Mashburn",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Whiteley",
+          "givenNames": "M",
+          "surnames": "Whiteley",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 63,
+      "volume": "63",
+      "title": "Release of outer mebrane vesicles by Gram-negative bacteria is a novel envelope stress response.",
+      "pages": "545-58",
+      "eLocationID": "545",
+      "journal": "Mol Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AJ McBroom",
+          "givenNames": "AJ",
+          "surnames": "McBroom",
+          "suffix": ""
+        },
+        {
+          "fullName": "MJ Kuehn",
+          "givenNames": "MJ",
+          "surnames": "Kuehn",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 184,
+      "volume": "184",
+      "title": "Autolysis and autoaggregation in <italic>Pseudomonas aeruginosa</italic> colony morphology mutants.",
+      "pages": "6481-9",
+      "eLocationID": "6481",
+      "journal": "J Bacteriol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DA D'Argenio",
+          "givenNames": "DA",
+          "surnames": "D'Argenio",
+          "suffix": ""
+        },
+        {
+          "fullName": "MW Calfee",
+          "givenNames": "MW",
+          "surnames": "Calfee",
+          "suffix": ""
+        },
+        {
+          "fullName": "PB Rainey",
+          "givenNames": "PB",
+          "surnames": "Rainey",
+          "suffix": ""
+        },
+        {
+          "fullName": "EC Pesci",
+          "givenNames": "EC",
+          "surnames": "Pesci",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 184,
+      "volume": "184",
+      "title": "Functions required for extracellular quinolone signaling by <italic>Pseudomonas aeruginosa</italic>.",
+      "pages": "6472-80",
+      "eLocationID": "6472",
+      "journal": "J Bacteriol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LA Gallagher",
+          "givenNames": "LA",
+          "surnames": "Gallagher",
+          "suffix": ""
+        },
+        {
+          "fullName": "SL McKnight",
+          "givenNames": "SL",
+          "surnames": "McKnight",
+          "suffix": ""
+        },
+        {
+          "fullName": "MS Kuznetsova",
+          "givenNames": "MS",
+          "surnames": "Kuznetsova",
+          "suffix": ""
+        },
+        {
+          "fullName": "EC Pesci",
+          "givenNames": "EC",
+          "surnames": "Pesci",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Manoil",
+          "givenNames": "C",
+          "surnames": "Manoil",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "The <italic>Pseudomonas aeruginosa</italic> quinolone signal (PQS) has an iron-chelating activity.",
+      "pages": "1318-29",
+      "eLocationID": "1318",
+      "journal": "Environ Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "F Bredenbruch",
+          "givenNames": "F",
+          "surnames": "Bredenbruch",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Geffers",
+          "givenNames": "R",
+          "surnames": "Geffers",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Nimtz",
+          "givenNames": "M",
+          "surnames": "Nimtz",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Buer",
+          "givenNames": "J",
+          "surnames": "Buer",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Haussler",
+          "givenNames": "S",
+          "surnames": "Haussler",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 14,
+      "volume": "14",
+      "title": "The <italic>Pseudomonas aeruginosa</italic> 4-quinolone signal molecules HHQ and PQS play multifunctional roles in quorum sensing and iron entrapment.",
+      "pages": "87-96",
+      "eLocationID": "87",
+      "journal": "Chem Biol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SP Diggle",
+          "givenNames": "SP",
+          "surnames": "Diggle",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Matthijs",
+          "givenNames": "S",
+          "surnames": "Matthijs",
+          "suffix": ""
+        },
+        {
+          "fullName": "VJ Wright",
+          "givenNames": "VJ",
+          "surnames": "Wright",
+          "suffix": ""
+        },
+        {
+          "fullName": "MP Fletcher",
+          "givenNames": "MP",
+          "surnames": "Fletcher",
+          "suffix": ""
+        },
+        {
+          "fullName": "SR Chhabra",
+          "givenNames": "SR",
+          "surnames": "Chhabra",
+          "suffix": ""
+        },
+        {
+          "fullName": "IL Lamont",
+          "givenNames": "IL",
+          "surnames": "Lamont",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Mechanisms of antibiotic resistance and tolerance in <italic>Streptococcus pneumoniae</italic>.",
+      "pages": "1855-64",
+      "eLocationID": "1855",
+      "journal": "Microbes Infect",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Charpentier",
+          "givenNames": "E",
+          "surnames": "Charpentier",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Tuomanen",
+          "givenNames": "E",
+          "surnames": "Tuomanen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Signal transduction by a death signal peptide: uncovering the mechanism of bacterial killing by penicillin.",
+      "pages": "49-57",
+      "eLocationID": "49",
+      "journal": "Mol Cell",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Novak",
+          "givenNames": "R",
+          "surnames": "Novak",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Charpentier",
+          "givenNames": "E",
+          "surnames": "Charpentier",
+          "suffix": ""
+        },
+        {
+          "fullName": "JS Braun",
+          "givenNames": "JS",
+          "surnames": "Braun",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Tuomanen",
+          "givenNames": "E",
+          "surnames": "Tuomanen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 1986,
+      "displayYear": "1986",
+      "volumeNumber": 158,
+      "volume": "158",
+      "title": "Searching for autolysin functions. Characterization of a pneumococcal mutant deleted in the <italic>lytA</italic> gene.",
+      "pages": "289-93",
+      "eLocationID": "289",
+      "journal": "Eur J Biochem",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JM Sanchez-Puelles",
+          "givenNames": "JM",
+          "surnames": "Sanchez-Puelles",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Ronda",
+          "givenNames": "C",
+          "surnames": "Ronda",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Garcia",
+          "givenNames": "JL",
+          "surnames": "Garcia",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Garcia",
+          "givenNames": "P",
+          "surnames": "Garcia",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Lopez",
+          "givenNames": "R",
+          "surnames": "Lopez",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Garcia",
+          "givenNames": "E",
+          "surnames": "Garcia",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 1970,
+      "displayYear": "1970",
+      "volumeNumber": 227,
+      "volume": "227",
+      "title": "Multiple antibiotic resistance in a bacterium with suppressed autolytic system.",
+      "pages": "138-40",
+      "eLocationID": "138",
+      "journal": "Nature",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Tomasz",
+          "givenNames": "A",
+          "surnames": "Tomasz",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Albino",
+          "givenNames": "A",
+          "surnames": "Albino",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Zanati",
+          "givenNames": "E",
+          "surnames": "Zanati",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 71,
+      "volume": "71",
+      "title": "Induction of oxidative stress by high hydrostatic pressure in <italic>Escherichia coli</italic>.",
+      "pages": "2226-31",
+      "eLocationID": "2226",
+      "journal": "Appl Environ Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Aertsen",
+          "givenNames": "A",
+          "surnames": "Aertsen",
+          "suffix": ""
+        },
+        {
+          "fullName": "P De Spiegeleer",
+          "givenNames": "P",
+          "surnames": "De Spiegeleer",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Vanoirbeek",
+          "givenNames": "K",
+          "surnames": "Vanoirbeek",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Lavilla",
+          "givenNames": "M",
+          "surnames": "Lavilla",
+          "suffix": ""
+        },
+        {
+          "fullName": "CW Michiels",
+          "givenNames": "CW",
+          "surnames": "Michiels",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 56,
+      "volume": "56",
+      "title": "Bacterial suicide through stress.",
+      "pages": "378-83",
+      "eLocationID": "378",
+      "journal": "Cell Mol Life Sci",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TG Aldsworth",
+          "givenNames": "TG",
+          "surnames": "Aldsworth",
+          "suffix": ""
+        },
+        {
+          "fullName": "RL Sharman",
+          "givenNames": "RL",
+          "surnames": "Sharman",
+          "suffix": ""
+        },
+        {
+          "fullName": "CE Dodd",
+          "givenNames": "CE",
+          "surnames": "Dodd",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 64,
+      "volume": "64",
+      "title": "Programmed death in bacteria.",
+      "pages": "503-14",
+      "eLocationID": "503",
+      "journal": "Microbiol Mol Biol Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Lewis",
+          "givenNames": "K",
+          "surnames": "Lewis",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 50,
+      "volume": "50",
+      "title": "Death's toolbox: examining the molecular components of bacterial programmed cell death.",
+      "pages": "729-38",
+      "eLocationID": "729",
+      "journal": "Mol Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KC Rice",
+          "givenNames": "KC",
+          "surnames": "Rice",
+          "suffix": ""
+        },
+        {
+          "fullName": "KW Bayles",
+          "givenNames": "KW",
+          "surnames": "Bayles",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 145,
+      "volume": "145",
+      "title": "Catalytic metals, ascorbate and free radicals: combinations to avoid.",
+      "pages": "532-41",
+      "eLocationID": "532",
+      "journal": "Radiat Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GR Buettner",
+          "givenNames": "GR",
+          "surnames": "Buettner",
+          "suffix": ""
+        },
+        {
+          "fullName": "BA Jurkiewicz",
+          "givenNames": "BA",
+          "surnames": "Jurkiewicz",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 25,
+      "volume": "25",
+      "title": "Vitamin C: antioxidant or pro-oxidant in vivo?",
+      "pages": "439-54",
+      "eLocationID": "439",
+      "journal": "Free Radic Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Halliwell",
+          "givenNames": "B",
+          "surnames": "Halliwell",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 13,
+      "volume": "13",
+      "title": "Does vitamin C act as a pro-oxidant under physiological conditions?",
+      "pages": "1007-24",
+      "eLocationID": "1007",
+      "journal": "FASEB J",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Carr",
+          "givenNames": "A",
+          "surnames": "Carr",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Frei",
+          "givenNames": "B",
+          "surnames": "Frei",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Cupric ion/ascorbate/hydrogen peroxide-induced DNA damage: DNA-bound copper ion primarily induces base modifications.",
+      "pages": "261-73",
+      "eLocationID": "261",
+      "journal": "Free Radic Biol Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Drouin",
+          "givenNames": "R",
+          "surnames": "Drouin",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Rodriguez",
+          "givenNames": "H",
+          "surnames": "Rodriguez",
+          "suffix": ""
+        },
+        {
+          "fullName": "SW Gao",
+          "givenNames": "SW",
+          "surnames": "Gao",
+          "suffix": ""
+        },
+        {
+          "fullName": "Z Gebreyes",
+          "givenNames": "Z",
+          "surnames": "Gebreyes",
+          "suffix": ""
+        },
+        {
+          "fullName": "TR O'Connor",
+          "givenNames": "TR",
+          "surnames": "O'Connor",
+          "suffix": ""
+        },
+        {
+          "fullName": "GP Holmquist",
+          "givenNames": "GP",
+          "surnames": "Holmquist",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 1992,
+      "displayYear": "1992",
+      "volumeNumber": 13,
+      "volume": "13",
+      "title": "8-Hydroxydeoxyguanosine in vitro: effects of glutathione, ascorbate, and 5-aminosalicylic acid.",
+      "pages": "121-6",
+      "eLocationID": "121",
+      "journal": "Free Radic Biol Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Fischer-Nielsen",
+          "givenNames": "A",
+          "surnames": "Fischer-Nielsen",
+          "suffix": ""
+        },
+        {
+          "fullName": "HE Poulsen",
+          "givenNames": "HE",
+          "surnames": "Poulsen",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Loft",
+          "givenNames": "S",
+          "surnames": "Loft",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 26,
+      "volume": "26",
+      "title": "Ascorbic acid inhibits lipid peroxidation but enhances DNA damage in rat liver nuclei incubated with iron ions.",
+      "pages": "585-92",
+      "eLocationID": "585",
+      "journal": "Free Radic Res",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ML Hu",
+          "givenNames": "ML",
+          "surnames": "Hu",
+          "suffix": ""
+        },
+        {
+          "fullName": "MK Shih",
+          "givenNames": "MK",
+          "surnames": "Shih",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "37",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 52,
+      "volume": "52",
+      "title": "(-)-Epigallocatechin gallate, a polyphenolic tea antioxidant, inhibits peroxynitrite-mediated formation of 8-oxodeoxyguanosine and 3-nitrotyrosine.",
+      "pages": "922-6",
+      "eLocationID": "922",
+      "journal": "Experientia",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ES Fiala",
+          "givenNames": "ES",
+          "surnames": "Fiala",
+          "suffix": ""
+        },
+        {
+          "fullName": "RS Sodum",
+          "givenNames": "RS",
+          "surnames": "Sodum",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Bhattacharya",
+          "givenNames": "M",
+          "surnames": "Bhattacharya",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Li",
+          "givenNames": "H",
+          "surnames": "Li",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "38",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 19,
+      "volume": "19",
+      "title": "Tamoxifen reduces endogenous and UV light-induced oxidative damage to DNA, lipid and protein in vitro and in vivo.",
+      "pages": "1013-8",
+      "eLocationID": "1013",
+      "journal": "Carcinogenesis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "H Wei",
+          "givenNames": "H",
+          "surnames": "Wei",
+          "suffix": ""
+        },
+        {
+          "fullName": "Q Cai",
+          "givenNames": "Q",
+          "surnames": "Cai",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Tian",
+          "givenNames": "L",
+          "surnames": "Tian",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Lebwohl",
+          "givenNames": "M",
+          "surnames": "Lebwohl",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "39",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 34,
+      "volume": "34",
+      "title": "Quorum sensing in <italic>Pseudomonas aeruginosa</italic> controls expression of catalase and superoxide dismutase genes and mediates biofilm susceptibility to hydrogen peroxide.",
+      "pages": "1082-93",
+      "eLocationID": "1082",
+      "journal": "Mol Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DJ Hassett",
+          "givenNames": "DJ",
+          "surnames": "Hassett",
+          "suffix": ""
+        },
+        {
+          "fullName": "JF Ma",
+          "givenNames": "JF",
+          "surnames": "Ma",
+          "suffix": ""
+        },
+        {
+          "fullName": "JG Elkins",
+          "givenNames": "JG",
+          "surnames": "Elkins",
+          "suffix": ""
+        },
+        {
+          "fullName": "TR McDermott",
+          "givenNames": "TR",
+          "surnames": "McDermott",
+          "suffix": ""
+        },
+        {
+          "fullName": "UA Ochsner",
+          "givenNames": "UA",
+          "surnames": "Ochsner",
+          "suffix": ""
+        },
+        {
+          "fullName": "SE West",
+          "givenNames": "SE",
+          "surnames": "West",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "40",
+      "year": 1959,
+      "displayYear": "1959",
+      "volumeNumber": 77,
+      "volume": "77",
+      "title": "On the biosynthesis of pyocyanine.",
+      "pages": "776-82",
+      "eLocationID": "776",
+      "journal": "J Bacteriol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LH Frank",
+          "givenNames": "LH",
+          "surnames": "Frank",
+          "suffix": ""
+        },
+        {
+          "fullName": "RD DeMoss",
+          "givenNames": "RD",
+          "surnames": "DeMoss",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Susanne H\u00e4ussler",
+      "givenNames": "Susanne",
+      "surnames": "H\u00e4ussler",
+      "suffix": ""
+    },
+    {
+      "fullName": "Tanja Becker",
+      "givenNames": "Tanja",
+      "surnames": "Becker",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Frederick M. Ausubel",
+      "givenNames": "Frederick M.",
+      "surnames": "Ausubel",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1553-7374"
+    }
+  ]
+}

@@ -1,453 +1,1641 @@
-{"doi":"info:doi/10.1371/journal.pone.0077317","title":
-  "Effect of Statin Use on Outcomes of Adults with Candidemia","eIssn":
-  "1932-6203","state":1,"archiveName":"pone.0077317.zip","description":
-  "\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eStatins have immunomodulatory properties and hinder \u003citalic\u003eCandida\u003c/italic\u003e growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.\u003c/p\u003e\u003c/sec\u003e\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eMulticenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p\u003d.36). \u003citalic\u003eCandida albicans\u003c/italic\u003e was the most commonly isolated species, followed by \u003citalic\u003eC. parapsilosis\u003c/italic\u003e, \u003citalic\u003eC. tropicalis\u003c/italic\u003e, \u003citalic\u003eC. glabrata\u003c/italic\u003e, and \u003citalic\u003eC. krusei\u003c/italic\u003e. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p\u003d.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03–1.14; p\u003d.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04–0.26; p\u003d\u0026lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03–0.93; p\u003d.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p\u003d0.77 and 40% vs. 44%; p\u003d.66).\u003c/p\u003e\u003c/sec\u003e\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eThe use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.\u003c/p\u003e\u003c/sec\u003e",
-  "rights":
-  "Cuervo et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","eLocationId":"e77317","strkImgURI":
-  "","date":"2013-10-14T07:00:00Z","volume":"8","issue":"10","journal":
-  "PLoS ONE","publisherLocation":"San Francisco, USA","publisherName":
-  "Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0077317","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0077317","extension":
-      "XML","contentType":"text/xml","title":
-      "Effect of Statin Use on Outcomes of Adults with Candidemia",
-      "description":
-      "\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eStatins have immunomodulatory properties and hinder \u003citalic\u003eCandida\u003c/italic\u003e growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.\u003c/p\u003e\u003c/sec\u003e\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eMulticenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p\u003d.36). \u003citalic\u003eCandida albicans\u003c/italic\u003e was the most commonly isolated species, followed by \u003citalic\u003eC. parapsilosis\u003c/italic\u003e, \u003citalic\u003eC. tropicalis\u003c/italic\u003e, \u003citalic\u003eC. glabrata\u003c/italic\u003e, and \u003citalic\u003eC. krusei\u003c/italic\u003e. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p\u003d.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03–1.14; p\u003d.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04–0.26; p\u003d\u0026lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03–0.93; p\u003d.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p\u003d0.77 and 40% vs. 44%; p\u003d.66).\u003c/p\u003e\u003c/sec\u003e\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eThe use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.\u003c/p\u003e\u003c/sec\u003e",
-      "size":90857},{"doi":"info:doi/10.1371/journal.pone.0077317",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Effect of Statin Use on Outcomes of Adults with Candidemia",
-      "description":
-      "\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eStatins have immunomodulatory properties and hinder \u003citalic\u003eCandida\u003c/italic\u003e growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.\u003c/p\u003e\u003c/sec\u003e\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eMethods and Findings\u003c/title\u003e\u003cp\u003eMulticenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p\u003d.36). \u003citalic\u003eCandida albicans\u003c/italic\u003e was the most commonly isolated species, followed by \u003citalic\u003eC. parapsilosis\u003c/italic\u003e, \u003citalic\u003eC. tropicalis\u003c/italic\u003e, \u003citalic\u003eC. glabrata\u003c/italic\u003e, and \u003citalic\u003eC. krusei\u003c/italic\u003e. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p\u003d.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03–1.14; p\u003d.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04–0.26; p\u003d\u0026lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03–0.93; p\u003d.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p\u003d0.77 and 40% vs. 44%; p\u003d.66).\u003c/p\u003e\u003c/sec\u003e\u003csec sec-type\u003d\"headed\"\u003e\u003ctitle\u003eConclusions\u003c/title\u003e\u003cp\u003eThe use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.\u003c/p\u003e\u003c/sec\u003e",
-      "size":194540}],"citedArticles":[{"key":"1","year":2009,"displayYear":
-      "2009","volumeNumber":48,"volume":"48","title":
-      "Guidelines for the management of candidiasis: 2009 update by the Infectious Diseases Society of America",
-      "pages":"503-535","eLocationID":"503","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1086/596757","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PG Pappas","givenNames":"PG","surnames":"Pappas","suffix":""},{
-          "fullName":"CA Kauffman","givenNames":"CA","surnames":"Kauffman",
-          "suffix":""},{"fullName":"D Andes","givenNames":"D","surnames":
-          "Andes","suffix":""},{"fullName":"DK Jr Benjamin","givenNames":
-          "DK Jr","surnames":"Benjamin","suffix":""},{"fullName":
-          "TF Calandra","givenNames":"TF","surnames":"Calandra","suffix":
-          ""}],"editors":[]},{"key":"2","year":2006,"displayYear":"2006",
-      "volumeNumber":136,"volume":"136","title":
-      "Treatment options of invasive fungal infections in adults","pages":
-      "447-463","eLocationID":"447","journal":"Swiss Med Wkly",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "U Flückiger","givenNames":"U","surnames":"Flückiger","suffix":
-          ""},{"fullName":"O Marchetti","givenNames":"O","surnames":
-          "Marchetti","suffix":""},{"fullName":"J Bille","givenNames":"J",
-          "surnames":"Bille","suffix":""},{"fullName":"P Eggimann",
-          "givenNames":"P","surnames":"Eggimann","suffix":""},{"fullName":
-          "S Zimmerli","givenNames":"S","surnames":"Zimmerli","suffix":""}],
-      "editors":[]},{"key":"3","year":2009,"displayYear":"2009",
-      "volumeNumber":48,"volume":"48","title":
-      "Epidemiology and Outcomes of Candidemia in 2019 Patients: Data from the Prospective Antifungal Therapy Alliance Registry",
-      "pages":"1695-1703","eLocationID":"1695","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1086/599039","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DL Horn","givenNames":"DL","surnames":"Horn","suffix":""},{
-          "fullName":"D Neofytos","givenNames":"D","surnames":"Neofytos",
-          "suffix":""},{"fullName":"EJ Anaissie","givenNames":"EJ",
-          "surnames":"Anaissie","suffix":""},{"fullName":"JA Fishman",
-          "givenNames":"JA","surnames":"Fishman","suffix":""},{"fullName":
-          "WJ Steinbach","givenNames":"WJ","surnames":"Steinbach","suffix":
-          ""}],"editors":[]},{"key":"4","year":2005,"displayYear":"2005",
-      "volumeNumber":26,"volume":"26","title":
-      "Excess mortality, hospital stay, and cost due to candidemia: a case-control study using data from population-based candidemia surveillance",
-      "pages":"540-547","eLocationID":"540","journal":
-      "Infect Control Hosp Epidemiol","collaborativeAuthors":[],"doi":
-      "10.1086/502581","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Morgan","givenNames":"J","surnames":"Morgan","suffix":""},{
-          "fullName":"MI Meltzer","givenNames":"MI","surnames":"Meltzer",
-          "suffix":""},{"fullName":"BD Plikaytis","givenNames":"BD",
-          "surnames":"Plikaytis","suffix":""},{"fullName":"AN Sofair",
-          "givenNames":"AN","surnames":"Sofair","suffix":""},{"fullName":
-          "S Huie-White","givenNames":"S","surnames":"Huie-White","suffix":
-          ""}],"editors":[]},{"key":"5","year":2009,"displayYear":"2009",
-      "volumeNumber":338,"volume":"338","title":
-      "The benefits of statins in people without established cardiovascular disease but with cardiovascular risk factors: meta-analysis of randomised controlled trials",
-      "pages":"b2376","eLocationID":"b2376","journal":"BMJ",
-      "collaborativeAuthors":[],"doi":"10.1136/bmj.b2376","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JJ Brugts","givenNames":"JJ","surnames":"Brugts","suffix":""},{
-          "fullName":"T Yetgin","givenNames":"T","surnames":"Yetgin",
-          "suffix":""},{"fullName":"SE Hoeks","givenNames":"SE","surnames":
-          "Hoeks","suffix":""},{"fullName":"AM Gotto","givenNames":"AM",
-          "surnames":"Gotto","suffix":""},{"fullName":"J Shepherd",
-          "givenNames":"J","surnames":"Shepherd","suffix":""}],"editors":[]},
-    {"key":"6","year":2005,"displayYear":"2005","volumeNumber":45,"volume":
-      "45","title":"Pleiotropic effects of statins","pages":"89-118",
-      "eLocationID":"89","journal":"Annu Rev Pharmacol Toxicol",
-      "collaborativeAuthors":[],"doi":
-      "10.1146/annurev.pharmtox.45.120403.095748","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JK Liao","givenNames":"JK","surnames":"Liao","suffix":""},{
-          "fullName":"U Laufs","givenNames":"U","surnames":"Laufs","suffix":
-          ""}],"editors":[]},{"key":"7","year":2010,"displayYear":"2010",
-      "volumeNumber":29,"volume":"29","title":
-      "Statins for community-acquired pneumonia: current state of the science",
-      "pages":"143-152","eLocationID":"143","journal":
-      "Eur J Clin Microbiol Infect Dis","collaborativeAuthors":[],"doi":
-      "10.1007/s10096-009-0835-0","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "D Viasus","givenNames":"D","surnames":"Viasus","suffix":""},{
-          "fullName":"C Garcia-Vidal","givenNames":"C","surnames":
-          "Garcia-Vidal","suffix":""},{"fullName":"F Gudiol","givenNames":
-          "F","surnames":"Gudiol","suffix":""},{"fullName":"J Carratalà",
-          "givenNames":"J","surnames":"Carratalà","suffix":""}],"editors":[]},
-    {"key":"8","year":2008,"displayYear":"2008","volumeNumber":100,"volume":
-      "100","title":"Statins and sepsis","pages":"288-298","eLocationID":
-      "288","journal":"Br J Anaesth","collaborativeAuthors":[],"doi":
-      "10.1093/bja/aem406","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "F Gao","givenNames":"F","surnames":"Gao","suffix":""},{"fullName":
-          "L Linhartova","givenNames":"L","surnames":"Linhartova","suffix":
-          ""},{"fullName":"AM Johnston","givenNames":"AM","surnames":
-          "Johnston","suffix":""},{"fullName":"DR Thickett","givenNames":
-          "DR","surnames":"Thickett","suffix":""}],"editors":[]},{"key":
-      "9","year":2009,"displayYear":"2009","volumeNumber":35,"volume":"35",
-      "title":
-      "The effects of statin therapy on inflammatory cytokines in patients with bacterial infections: a randomized doubleblind placebo controlled clinical trial",
-      "pages":"1255-1260","eLocationID":"1255","journal":
-      "Intensive Care Med","collaborativeAuthors":[],"doi":
-      "10.1007/s00134-009-1429-0","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V Novack","givenNames":"V","surnames":"Novack","suffix":""},{
-          "fullName":"M Eisinger","givenNames":"M","surnames":"Eisinger",
-          "suffix":""},{"fullName":"A Frenkel","givenNames":"A","surnames":
-          "Frenkel","suffix":""},{"fullName":"M Terblanche","givenNames":
-          "M","surnames":"Terblanche","suffix":""},{"fullName":
-          "NK Adhikari","givenNames":"NK","surnames":"Adhikari","suffix":
-          ""}],"editors":[]},{"key":"10","year":2004,"displayYear":"2004",
-      "volumeNumber":110,"volume":"110","title":
-      "Prior statin therapy is associated with a decreased rate of severe sepsis",
-      "pages":"880-885","eLocationID":"880","journal":"Circulation",
-      "collaborativeAuthors":[],"doi":"10.1161/01.CIR.0000138932.17956.F1",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"Y Almog","givenNames":"Y","surnames":"Almog",
-          "suffix":""},{"fullName":"A Shefer","givenNames":"A","surnames":
-          "Shefer","suffix":""},{"fullName":"V Novack","givenNames":"V",
-          "surnames":"Novack","suffix":""},{"fullName":"N Maimon",
-          "givenNames":"N","surnames":"Maimon","suffix":""},{"fullName":
-          "L Barski","givenNames":"L","surnames":"Barski","suffix":""}],
-      "editors":[]},{"key":"11","year":2012,"displayYear":"2012",
-      "volumeNumber":7,"volume":"7","title":
-      "Systematic Review and Meta-Analysis on the Association between Outpatient Statins Use and Infectious Disease-Related Mortality",
-      "pages":"e51548","eLocationID":"e51548","journal":"PLOS ONE",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pone.0051548",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"Y Ma","givenNames":"Y","surnames":"Ma",
-          "suffix":""},{"fullName":"X Wen","givenNames":"X","surnames":
-          "Wen","suffix":""},{"fullName":"J Peng","givenNames":"J",
-          "surnames":"Peng","suffix":""},{"fullName":"Y Lu","givenNames":
-          "Y","surnames":"Lu","suffix":""},{"fullName":"Z Guo","givenNames":
-          "Z","surnames":"Guo","suffix":""}],"editors":[]},{"key":"12",
-      "year":2001,"displayYear":"2001","volumeNumber":33,"volume":"33",
-      "title":
-      "The effect of statins on mortality in patients with bacteremia",
-      "pages":"1352-1357","eLocationID":"1352","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1086/323334","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AP Liappis","givenNames":"AP","surnames":"Liappis","suffix":""},{
-          "fullName":"VL Kan","givenNames":"VL","surnames":"Kan","suffix":
-          ""},{"fullName":"CG Rochester","givenNames":"CG","surnames":
-          "Rochester","suffix":""},{"fullName":"GL Simon","givenNames":
-          "GL","surnames":"Simon","suffix":""}],"editors":[]},{"key":"13",
-      "year":2008,"displayYear":"2008","volumeNumber":168,"volume":"168",
-      "title":
-      "Preadmission use of statins and outcomes after hospitalization with pneumonia: population-based cohort study of 29,900 patients",
-      "pages":"2081-2087","eLocationID":"2081","journal":"Arch Intern Med",
-      "collaborativeAuthors":[],"doi":"10.1001/archinte.168.19.2081",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"RW Thomsen","givenNames":"RW","surnames":
-          "Thomsen","suffix":""},{"fullName":"A Riis","givenNames":"A",
-          "surnames":"Riis","suffix":""},{"fullName":"JB Kornum",
-          "givenNames":"JB","surnames":"Kornum","suffix":""},{"fullName":
-          "S Christensen","givenNames":"S","surnames":"Christensen","suffix":
-          ""},{"fullName":"SP Johnsen","givenNames":"SP","surnames":
-          "Johnsen","suffix":""}],"editors":[]},{"key":"14","year":2013,
-      "displayYear":"2013","volumeNumber":8,"volume":"8","title":
-      "The role of statins in prevention and treatment of community acquired pneumonia: a systematic review and meta-analysis",
-      "pages":"e52929","eLocationID":"e52929","journal":"PLOS ONE",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pone.0052929",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"AR Khan","givenNames":"AR","surnames":"Khan",
-          "suffix":""},{"fullName":"M Riaz","givenNames":"M","surnames":
-          "Riaz","suffix":""},{"fullName":"AA Bin Abdulhak","givenNames":
-          "AA","surnames":"Bin Abdulhak","suffix":""},{"fullName":
-          "MA Al-Tannir","givenNames":"MA","surnames":"Al-Tannir","suffix":
-          ""},{"fullName":"MA Garbati","givenNames":"MA","surnames":
-          "Garbati","suffix":""}],"editors":[]},{"key":"15","year":2010,
-      "displayYear":"2010","volumeNumber":5,"volume":"5","title":
-      "Treatment of Severe Cases of Pandemic (H1N1) 2009 Influenza: Review of Antivirals and Adjuvant Therapy",
-      "pages":"152-156","eLocationID":"152","journal":
-      "Recent Pat Antiinfect Drugs Discov","collaborativeAuthors":[],"doi":
-      "10.2174/157489110791233513","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GM Bearman","givenNames":"GM","surnames":"Bearman","suffix":""},{
-          "fullName":"S Shankaran","givenNames":"S","surnames":"Shankaran",
-          "suffix":""},{"fullName":"K Elam","givenNames":"K","surnames":
-          "Elam","suffix":""}],"editors":[]},{"key":"16","year":2009,
-      "displayYear":"2009","volumeNumber":4,"volume":"4","title":
-      "Influenza morbidity and mortality in elderly patients receiving statins: a cohort study",
-      "pages":"e8087","eLocationID":"e8087","journal":"PLOS ONE",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pone.0008087",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"JC Kwong","givenNames":"JC","surnames":
-          "Kwong","suffix":""},{"fullName":"P Li","givenNames":"P",
-          "surnames":"Li","suffix":""},{"fullName":"DA Redelmeier",
-          "givenNames":"DA","surnames":"Redelmeier","suffix":""}],"editors":[]},
-    {"key":"17","year":2007,"displayYear":"2007","volumeNumber":7,"volume":
-      "7","title":
-      "Simvastatin reduces ergosterol levels, inhibits growth and causes loss of mtDNA in Candida \u003citalic\u003eglabrata\u003c/italic\u003e",
-      "pages":"436-441","eLocationID":"436","journal":"FEMS Yeast Res",
-      "collaborativeAuthors":[],"doi":"10.1111/j.1567-1364.2006.00194.x",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"C Westermeyer","givenNames":"C","surnames":
-          "Westermeyer","suffix":""},{"fullName":"IG Macreadie","givenNames":
-          "IG","surnames":"Macreadie","suffix":""}],"editors":[]},{"key":
-      "18","year":1995,"displayYear":"1995","volumeNumber":155,"volume":
-      "155","title":
-      "Nosocomial bloodstream infections. Secular trends in rates, mortality, and contribution to total hospital deaths",
-      "pages":"1177-1184","eLocationID":"1177","journal":"Arch Intern Med",
-      "collaborativeAuthors":[],"doi":
-      "10.1001/archinte.1995.00430110089009","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "D Pittet","givenNames":"D","surnames":"Pittet","suffix":""},{
-          "fullName":"RP Wenzel","givenNames":"RP","surnames":"Wenzel",
-          "suffix":""}],"editors":[]},{"key":"19","year":2002,"displayYear":
-      "2002","volumeNumber":137,"volume":"137","title":
-      "Health care associated bloodstream infections in adults: a reason to change the accepted definition of community-acquired infections",
-      "pages":"791-797","eLocationID":"791","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"doi":
-      "10.7326/0003-4819-137-10-200211190-00007","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ND Friedman","givenNames":"ND","surnames":"Friedman","suffix":
-          ""},{"fullName":"KS Kaye","givenNames":"KS","surnames":"Kaye",
-          "suffix":""},{"fullName":"JE Stout","givenNames":"JE","surnames":
-          "Stout","suffix":""},{"fullName":"SA McGarry","givenNames":"SA",
-          "surnames":"McGarry","suffix":""},{"fullName":"SL Trivette",
-          "givenNames":"SL","surnames":"Trivette","suffix":""}],"editors":[]},
-    {"key":"20","year":2010,"displayYear":"2010","volumeNumber":65,"volume":
-      "65","title":
-      "Pneumococcal pneumonia presenting with septic shock: host- and pathogen-related factors and outcomes",
-      "pages":"77-81","eLocationID":"77","journal":"Thorax",
-      "collaborativeAuthors":[],"doi":"10.1136/thx.2010.150961.1",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"C Garcia-Vidal","givenNames":"C","surnames":
-          "Garcia-Vidal","suffix":""},{"fullName":"C Ardanuy","givenNames":
-          "C","surnames":"Ardanuy","suffix":""},{"fullName":"F Tubau",
-          "givenNames":"F","surnames":"Tubau","suffix":""},{"fullName":
-          "D Viasus","givenNames":"D","surnames":"Viasus","suffix":""},{
-          "fullName":"J Dorca","givenNames":"J","surnames":"Dorca","suffix":
-          ""}],"editors":[]},{"key":"21","year":2008,"displayYear":"2008",
-      "title":
-      "Reference method for broth dilution antifungal susceptibility testing of yeasts, approved standard",
-      "publisherLocation":"Wayne, PA","publisherName":
-      "Clinical and Laboratory Standards Institute","note":
-      "CLSI Document M27","collaborativeAuthors":[
-        "Clinical and Laboratory Standards Institute"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
-    {"key":"22","year":2005,"displayYear":"2005","volumeNumber":43,"volume":
-      "43","title":
-      "Epidemiology and Predictors of Mortality in Cases of Candida Bloodstream Infection: Results from Population-Based Surveillance, Barcelona, Spain, from 2002 to 2003",
-      "pages":"1829-1835","eLocationID":"1829","journal":
-      "J Clin Microbiol","collaborativeAuthors":[],"doi":
-      "10.1128/JCM.43.4.1829-1835.2005","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "B Almirante","givenNames":"B","surnames":"Almirante","suffix":
-          ""},{"fullName":"D Rodríguez","givenNames":"D","surnames":
-          "Rodríguez","suffix":""},{"fullName":"BJ Park","givenNames":"BJ",
-          "surnames":"Park","suffix":""},{"fullName":"M Cuenca-Estrella",
-          "givenNames":"M","surnames":"Cuenca-Estrella","suffix":""},{
-          "fullName":"AM Planes","givenNames":"AM","surnames":"Planes",
-          "suffix":""}],"editors":[]},{"key":"23","year":2005,"displayYear":
-      "2005","volumeNumber":24,"volume":"24","title":
-      "Epidemiology and antifungal susceptibility of Candida species isolated from blood: results of a 2-year multicentre study in Spain",
-      "pages":"23-30","eLocationID":"23","journal":
-      "Eur J Clin Microbiol Infect Dis","collaborativeAuthors":[],"doi":
-      "10.1007/s10096-004-1267-5","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Pemán","givenNames":"J","surnames":"Pemán","suffix":""},{
-          "fullName":"E Cantón","givenNames":"E","surnames":"Cantón",
-          "suffix":""},{"fullName":"M Gobernado","givenNames":"M","surnames":
-          "Gobernado","suffix":""}],"editors":[]},{"key":"24","year":2009,
-      "displayYear":"2009","volumeNumber":64,"volume":"64","title":
-      "Epidemiology and outcome of multiple-species candidemia at a tertiary care center between 2004 and 2007",
-      "pages":"289-294","eLocationID":"289","journal":
-      "Diagn Microbiol Infect Dis","collaborativeAuthors":[],"doi":
-      "10.1016/j.diagmicrobio.2009.03.010","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "HL Nace","givenNames":"HL","surnames":"Nace","suffix":""},{
-          "fullName":"D Horn","givenNames":"D","surnames":"Horn","suffix":
-          ""},{"fullName":"D Neofytos","givenNames":"D","surnames":
-          "Neofytos","suffix":""}],"editors":[]},{"key":"25","year":2003,
-      "displayYear":"2003","volumeNumber":37,"volume":"37","title":
-      "A Prospective Observational Study of candidemia: epidemiology, therapy, and inﬂuences on mortality in hospitalized adult and pediatric patients",
-      "pages":"634-643","eLocationID":"634","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1086/376906","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PG Pappas","givenNames":"PG","surnames":"Pappas","suffix":""},{
-          "fullName":"JH Rex","givenNames":"JH","surnames":"Rex","suffix":
-          ""},{"fullName":"J Lee","givenNames":"J","surnames":"Lee","suffix":
-          ""},{"fullName":"RJ Hamill","givenNames":"RJ","surnames":
-          "Hamill","suffix":""},{"fullName":"RA Larsen","givenNames":"RA",
-          "surnames":"Larsen","suffix":""}],"editors":[]},{"key":"26","year":
-      2003,"displayYear":"2003","volumeNumber":37,"volume":"37","title":
-      "Attributable mortality of nosocomial candidemia, revisited","pages":
-      "1172-1177","eLocationID":"1172","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1086/378745","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "O Gudlaugsson","givenNames":"O","surnames":"Gudlaugsson","suffix":
-          ""},{"fullName":"S Gillespie","givenNames":"S","surnames":
-          "Gillespie","suffix":""},{"fullName":"K Lee","givenNames":"K",
-          "surnames":"Lee","suffix":""},{"fullName":"J Vande Berg",
-          "givenNames":"J","surnames":"Vande Berg","suffix":""},{"fullName":
-          "J Hu","givenNames":"J","surnames":"Hu","suffix":""}],"editors":[]},
-    {"key":"27","year":2010,"displayYear":"2010","volumeNumber":10,"volume":
-      "10","title":
-      "Statins in candidemia: clinical outcomes from a matched cohort study",
-      "pages":"152-159","eLocationID":"152","journal":"BMC Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1186/1471-2334-10-152",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"GN Forrest","givenNames":"GN","surnames":
-          "Forrest","suffix":""},{"fullName":"AM Kopack","givenNames":"AM",
-          "surnames":"Kopack","suffix":""},{"fullName":"EN Perencevich",
-          "givenNames":"EN","surnames":"Perencevich","suffix":""}],"editors":
-      []},{"key":"28","year":2013,"displayYear":"2013","volumeNumber":51,
-      "volume":"51","title":
-      "Candidemia outcomes not improved with statin use","pages":"219-222",
-      "eLocationID":"219","journal":"Med Mycol","collaborativeAuthors":[],
-      "doi":"10.3109/13693786.2012.692490","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ML Welch","givenNames":"ML","surnames":"Welch","suffix":""},{
-          "fullName":"AP Liappis","givenNames":"AP","surnames":"Liappis",
-          "suffix":""},{"fullName":"VL Kan","givenNames":"VL","surnames":
-          "Kan","suffix":""}],"editors":[]},{"key":"29","year":2007,
-      "displayYear":"2007","volumeNumber":7,"volume":"7","title":
-      "Statins and sepsis: multiple modifications at multiple levels",
-      "pages":"358-368","eLocationID":"358","journal":"Lancet Infect Dis",
-      "collaborativeAuthors":[],"doi":"10.1016/S1473-3099(07)70111-1",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"M Terblanche","givenNames":"M","surnames":
-          "Terblanche","suffix":""},{"fullName":"Y Almog","givenNames":"Y",
-          "surnames":"Almog","suffix":""},{"fullName":"RS Rosenson",
-          "givenNames":"RS","surnames":"Rosenson","suffix":""},{"fullName":
-          "TS Smith","givenNames":"TS","surnames":"Smith","suffix":""},{
-          "fullName":"DG Hackam","givenNames":"DG","surnames":"Hackam",
-          "suffix":""}],"editors":[]},{"key":"30","year":2009,"displayYear":
-      "2009","volumeNumber":54,"volume":"54","title":
-      "Atorvastatin restores the impaired vascular endothelium-dependent relaxations mediated by nitric oxide and endothelium-derived hyperpolarizing factors but not hypotension in sepsis",
-      "pages":"526-534","eLocationID":"526","journal":
-      "J Cardiovasc Pharmacol","collaborativeAuthors":[],"doi":
-      "10.1097/FJC.0b013e3181bfafd6","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Subramani","givenNames":"J","surnames":"Subramani","suffix":
-          ""},{"fullName":"K Kathirvel","givenNames":"K","surnames":
-          "Kathirvel","suffix":""},{"fullName":"MD Leo","givenNames":"MD",
-          "surnames":"Leo","suffix":""},{"fullName":"G Kuntamallappanavar",
-          "givenNames":"G","surnames":"Kuntamallappanavar","suffix":""},{
-          "fullName":"T Uttam Singh","givenNames":"T","surnames":
-          "Uttam Singh","suffix":""}],"editors":[]},{"key":"31","year":
-      2008,"displayYear":"2008","volumeNumber":82,"volume":"82","title":
-      "Effects of HMG-CoA reductase inhibition by simvastatin on vascular dysfunction induced by lipopolysaccharide in rats",
-      "pages":"89-96","eLocationID":"89","journal":"Pharmacologist",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Alvarez de Sotomayor","givenNames":"M","surnames":
-          "Alvarez de Sotomayor","suffix":""},{"fullName":"S Vega",
-          "givenNames":"S","surnames":"Vega","suffix":""},{"fullName":
-          "C Mingorance","givenNames":"C","surnames":"Mingorance","suffix":
-          ""},{"fullName":"E Marhuenda","givenNames":"E","surnames":
-          "Marhuenda","suffix":""},{"fullName":"MD Herrera","givenNames":
-          "MD","surnames":"Herrera","suffix":""}],"editors":[]},{"key":
-      "32","year":2007,"displayYear":"2007","volumeNumber":98,"volume":
-      "98","title":
-      "Beneficial effects of statins on the microcirculation during sepsis: the role of nitric oxide",
-      "pages":"163-175","eLocationID":"163","journal":"Br J Anaesth",
-      "collaborativeAuthors":[],"doi":"10.1093/bja/ael358","citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "CC McGown","givenNames":"CC","surnames":"McGown","suffix":""},{
-          "fullName":"ZLS Brookes","givenNames":"ZLS","surnames":"Brookes",
-          "suffix":""}],"editors":[]},{"key":"33","year":2002,"displayYear":
-      "2002","volumeNumber":51,"volume":"51","title":
-      "Effect of fluvastatin and pravastatin, HMG-CoA reductase inhibitors, on fluconazole activity against \u003citalic\u003eCandida\u003c/italic\u003e \u003citalic\u003ealbicans\u003c/italic\u003e",
-      "pages":"105-109","eLocationID":"105","journal":"J Med Microbiol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JD Nash","givenNames":"JD","surnames":"Nash","suffix":""},{
-          "fullName":"DS Burgess","givenNames":"DS","surnames":"Burgess",
-          "suffix":""},{"fullName":"RL Talbert","givenNames":"RL","surnames":
-          "Talbert","suffix":""}],"editors":[]},{"key":"34","year":1964,
-      "displayYear":"1964","volumeNumber":60,"volume":"60","title":
-      "Pneumococcal bacteremia with especial reference to bacteremic pneumococcal pneumonia",
-      "pages":"759-770","eLocationID":"759","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"doi":"10.7326/0003-4819-60-5-759",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"35","year":2008,"displayYear":
-      "2008","volumeNumber":32,"volume":"32","title":
-      "Early mortality in patients with community acquired pneumonia: causes and risk factors",
-      "pages":"733-739","eLocationID":"733","journal":"Eur Respir J",
-      "collaborativeAuthors":[],"doi":"10.1183/09031936.00128107",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"C Garcia-Vidal","givenNames":"C","surnames":
-          "Garcia-Vidal","suffix":""},{"fullName":"N Fernández-Sabé",
-          "givenNames":"N","surnames":"Fernández-Sabé","suffix":""},{
-          "fullName":"J Carratalà","givenNames":"J","surnames":"Carratalà",
-          "suffix":""}],"editors":[]},{"key":"36","year":2011,"displayYear":
-      "2011","volumeNumber":5,"volume":"5","title":
-      "Current insights in sepsis: from pathogenesis to new treatment targets",
-      "pages":"480-486","eLocationID":"480","journal":
-      "Curr Opin Crit Care","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WJ Wiersinga","givenNames":"WJ","surnames":"Wiersinga","suffix":
-          ""}],"editors":[]},{"key":"37","year":2012,"displayYear":"2012",
-      "volumeNumber":18,"volume":"18","title":
-      "ESCMID guideline for the diagnosis and management of Candida diseases 2012: adults with  haematological malignancies and after haematopoietic stem cell transplantation (HCT)",
-      "pages":"53-67","eLocationID":"53","journal":"Clin Microbiol Infect",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AJ Ullmann","givenNames":"AJ","surnames":"Ullmann","suffix":""},{
-          "fullName":"M Akova","givenNames":"M","surnames":"Akova","suffix":
-          ""},{"fullName":"R Herbrecht","givenNames":"R","surnames":
-          "Herbrecht","suffix":""},{"fullName":"C Viscoli","givenNames":
-          "C","surnames":"Viscoli","suffix":""},{"fullName":"MC Arendrup",
-          "givenNames":"MC","surnames":"Arendrup","suffix":""}],"editors":[]},
-    {"key":"38","year":2012,"displayYear":"2012","volumeNumber":18,"volume":
-      "18","title":
-      "ESCMID guideline for the diagnosis and management of Candida diseases 2012: non-neutropenic adult patients",
-      "pages":"19-37","eLocationID":"19","journal":"Clin Microbiol Infect",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "OA Cornely","givenNames":"OA","surnames":"Cornely","suffix":""},{
-          "fullName":"M Bassetti","givenNames":"M","surnames":"Bassetti",
-          "suffix":""},{"fullName":"T Calandra","givenNames":"T","surnames":
-          "Calandra","suffix":""},{"fullName":"J Garbino","givenNames":"J",
-          "surnames":"Garbino","suffix":""},{"fullName":"BJ Kullberg",
-          "givenNames":"BJ","surnames":"Kullberg","suffix":""}],"editors":[]}],
-  "relatedArticles":[],"authors":[{"fullName":"Guillermo Cuervo",
-      "givenNames":"Guillermo","surnames":"Cuervo","suffix":""},{"fullName":
-      "Carolina Garcia-Vidal","givenNames":"Carolina","surnames":
-      "Garcia-Vidal","suffix":""},{"fullName":"Marcio Nucci","givenNames":
-      "Marcio","surnames":"Nucci","suffix":""},{"fullName":
-      "Francesc Puchades","givenNames":"Francesc","surnames":"Puchades",
-      "suffix":""},{"fullName":"Mario Fernández-Ruiz","givenNames":"Mario",
-      "surnames":"Fernández-Ruiz","suffix":""},{"fullName":
-      "Analía Mykietiuk","givenNames":"Analía","surnames":"Mykietiuk",
-      "suffix":""},{"fullName":"Adriana Manzur","givenNames":"Adriana",
-      "surnames":"Manzur","suffix":""},{"fullName":"Carlota Gudiol",
-      "givenNames":"Carlota","surnames":"Gudiol","suffix":""},{"fullName":
-      "Javier Pemán","givenNames":"Javier","surnames":"Pemán","suffix":""},{
-      "fullName":"Diego Viasus","givenNames":"Diego","surnames":"Viasus",
-      "suffix":""},{"fullName":"Josefina Ayats","givenNames":"Josefina",
-      "surnames":"Ayats","suffix":""},{"fullName":"Jordi Carratalà",
-      "givenNames":"Jordi","surnames":"Carratalà","suffix":""}],"editors":[{
-      "fullName":"David R. Andes","givenNames":"David R.","surnames":
-      "Andes","suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
+{
+  "doi": "info:doi/10.1371/journal.pone.0077317",
+  "title": "Effect of Statin Use on Outcomes of Adults with Candidemia",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0077317.zip",
+  "description": "<sec sec-type=\"headed\"><title>Background</title><p>Statins have immunomodulatory properties and hinder <italic>Candida</italic> growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.</p></sec><sec sec-type=\"headed\"><title>Methods and Findings</title><p>Multicenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p=.36). <italic>Candida albicans</italic> was the most commonly isolated species, followed by <italic>C. parapsilosis</italic>, <italic>C. tropicalis</italic>, <italic>C. glabrata</italic>, and <italic>C. krusei</italic>. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p=.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03\u20131.14; p=.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04\u20130.26; p=&lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03\u20130.93; p=.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p=0.77 and 40% vs. 44%; p=.66).</p></sec><sec sec-type=\"headed\"><title>Conclusions</title><p>The use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.</p></sec>",
+  "rights": "Cuervo et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "eLocationId": "e77317",
+  "strkImgURI": "",
+  "date": "2013-10-14T07:00:00Z",
+  "volume": "8",
+  "issue": "10",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0077317",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0077317",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Effect of Statin Use on Outcomes of Adults with Candidemia",
+      "description": "<sec sec-type=\"headed\"><title>Background</title><p>Statins have immunomodulatory properties and hinder <italic>Candida</italic> growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.</p></sec><sec sec-type=\"headed\"><title>Methods and Findings</title><p>Multicenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p=.36). <italic>Candida albicans</italic> was the most commonly isolated species, followed by <italic>C. parapsilosis</italic>, <italic>C. tropicalis</italic>, <italic>C. glabrata</italic>, and <italic>C. krusei</italic>. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p=.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03\u20131.14; p=.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04\u20130.26; p=&lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03\u20130.93; p=.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p=0.77 and 40% vs. 44%; p=.66).</p></sec><sec sec-type=\"headed\"><title>Conclusions</title><p>The use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.</p></sec>",
+      "size": 90857
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0077317",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Effect of Statin Use on Outcomes of Adults with Candidemia",
+      "description": "<sec sec-type=\"headed\"><title>Background</title><p>Statins have immunomodulatory properties and hinder <italic>Candida</italic> growth. However, it is unknown whether they may improve prognosis in patients with candidemia. We sought to determine the effect of prior statin use on the clinical outcomes of patients suffering candidemia.</p></sec><sec sec-type=\"headed\"><title>Methods and Findings</title><p>Multicenter cohort study of hospitalized adults with candidemia between 2005 and 2011 in six hospitals in Spain, Brazil and Argentina. Of 326 candidemias, 44 (13.5%) occurred in statin users and 282 (86.5%) in statin non-users. The median value of APACHE II at candidemia diagnosis was similar between groups (18 vs. 16; p=.36). <italic>Candida albicans</italic> was the most commonly isolated species, followed by <italic>C. parapsilosis</italic>, <italic>C. tropicalis</italic>, <italic>C. glabrata</italic>, and <italic>C. krusei</italic>. There were no differences regarding appropriate empirical antifungal treatment. Statin users had a lower early (5 d) case-fatality rate than non-users (4.5 vs. 17%; p=.031). This effect was not observed with other cardiovascular drugs (aspirin, beta blockers and ACE inhibitors). Independent factor related to early case-fatality rate was APACHE II score (AOR, 1.08; 95% CI, 1.03\u20131.14; p=.002). An appropriate empirical antifungal therapy (AOR, 0.11; 95% CI, 0.04\u20130.26; p=&lt;.001) and prior statin use were independently associated with lower early case-fatality (AOR, 0.17; 95% CI, 0.03\u20130.93; p=.041). Fourteen days (14d) and overall (30d) case-fatality rates were similar between groups (27% vs. 29%; p=0.77 and 40% vs. 44%; p=.66).</p></sec><sec sec-type=\"headed\"><title>Conclusions</title><p>The use of statins might have a beneficial effect on outcomes of patients with candidemia. This hypothesis deserves further evaluation in randomized trials.</p></sec>",
+      "size": 194540
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 48,
+      "volume": "48",
+      "title": "Guidelines for the management of candidiasis: 2009 update by the Infectious Diseases Society of America",
+      "pages": "503-535",
+      "eLocationID": "503",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1086/596757",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "PG Pappas",
+          "givenNames": "PG",
+          "surnames": "Pappas",
+          "suffix": ""
+        },
+        {
+          "fullName": "CA Kauffman",
+          "givenNames": "CA",
+          "surnames": "Kauffman",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Andes",
+          "givenNames": "D",
+          "surnames": "Andes",
+          "suffix": ""
+        },
+        {
+          "fullName": "DK Jr Benjamin",
+          "givenNames": "DK Jr",
+          "surnames": "Benjamin",
+          "suffix": ""
+        },
+        {
+          "fullName": "TF Calandra",
+          "givenNames": "TF",
+          "surnames": "Calandra",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 136,
+      "volume": "136",
+      "title": "Treatment options of invasive fungal infections in adults",
+      "pages": "447-463",
+      "eLocationID": "447",
+      "journal": "Swiss Med Wkly",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "U Fl\u00fcckiger",
+          "givenNames": "U",
+          "surnames": "Fl\u00fcckiger",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Marchetti",
+          "givenNames": "O",
+          "surnames": "Marchetti",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Bille",
+          "givenNames": "J",
+          "surnames": "Bille",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Eggimann",
+          "givenNames": "P",
+          "surnames": "Eggimann",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Zimmerli",
+          "givenNames": "S",
+          "surnames": "Zimmerli",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 48,
+      "volume": "48",
+      "title": "Epidemiology and Outcomes of Candidemia in 2019 Patients: Data from the Prospective Antifungal Therapy Alliance Registry",
+      "pages": "1695-1703",
+      "eLocationID": "1695",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1086/599039",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DL Horn",
+          "givenNames": "DL",
+          "surnames": "Horn",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Neofytos",
+          "givenNames": "D",
+          "surnames": "Neofytos",
+          "suffix": ""
+        },
+        {
+          "fullName": "EJ Anaissie",
+          "givenNames": "EJ",
+          "surnames": "Anaissie",
+          "suffix": ""
+        },
+        {
+          "fullName": "JA Fishman",
+          "givenNames": "JA",
+          "surnames": "Fishman",
+          "suffix": ""
+        },
+        {
+          "fullName": "WJ Steinbach",
+          "givenNames": "WJ",
+          "surnames": "Steinbach",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 26,
+      "volume": "26",
+      "title": "Excess mortality, hospital stay, and cost due to candidemia: a case-control study using data from population-based candidemia surveillance",
+      "pages": "540-547",
+      "eLocationID": "540",
+      "journal": "Infect Control Hosp Epidemiol",
+      "collaborativeAuthors": [],
+      "doi": "10.1086/502581",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Morgan",
+          "givenNames": "J",
+          "surnames": "Morgan",
+          "suffix": ""
+        },
+        {
+          "fullName": "MI Meltzer",
+          "givenNames": "MI",
+          "surnames": "Meltzer",
+          "suffix": ""
+        },
+        {
+          "fullName": "BD Plikaytis",
+          "givenNames": "BD",
+          "surnames": "Plikaytis",
+          "suffix": ""
+        },
+        {
+          "fullName": "AN Sofair",
+          "givenNames": "AN",
+          "surnames": "Sofair",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Huie-White",
+          "givenNames": "S",
+          "surnames": "Huie-White",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 338,
+      "volume": "338",
+      "title": "The benefits of statins in people without established cardiovascular disease but with cardiovascular risk factors: meta-analysis of randomised controlled trials",
+      "pages": "b2376",
+      "eLocationID": "b2376",
+      "journal": "BMJ",
+      "collaborativeAuthors": [],
+      "doi": "10.1136/bmj.b2376",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JJ Brugts",
+          "givenNames": "JJ",
+          "surnames": "Brugts",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Yetgin",
+          "givenNames": "T",
+          "surnames": "Yetgin",
+          "suffix": ""
+        },
+        {
+          "fullName": "SE Hoeks",
+          "givenNames": "SE",
+          "surnames": "Hoeks",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Gotto",
+          "givenNames": "AM",
+          "surnames": "Gotto",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Shepherd",
+          "givenNames": "J",
+          "surnames": "Shepherd",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 45,
+      "volume": "45",
+      "title": "Pleiotropic effects of statins",
+      "pages": "89-118",
+      "eLocationID": "89",
+      "journal": "Annu Rev Pharmacol Toxicol",
+      "collaborativeAuthors": [],
+      "doi": "10.1146/annurev.pharmtox.45.120403.095748",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JK Liao",
+          "givenNames": "JK",
+          "surnames": "Liao",
+          "suffix": ""
+        },
+        {
+          "fullName": "U Laufs",
+          "givenNames": "U",
+          "surnames": "Laufs",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 29,
+      "volume": "29",
+      "title": "Statins for community-acquired pneumonia: current state of the science",
+      "pages": "143-152",
+      "eLocationID": "143",
+      "journal": "Eur J Clin Microbiol Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1007/s10096-009-0835-0",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Viasus",
+          "givenNames": "D",
+          "surnames": "Viasus",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Garcia-Vidal",
+          "givenNames": "C",
+          "surnames": "Garcia-Vidal",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Gudiol",
+          "givenNames": "F",
+          "surnames": "Gudiol",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Carratal\u00e0",
+          "givenNames": "J",
+          "surnames": "Carratal\u00e0",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 100,
+      "volume": "100",
+      "title": "Statins and sepsis",
+      "pages": "288-298",
+      "eLocationID": "288",
+      "journal": "Br J Anaesth",
+      "collaborativeAuthors": [],
+      "doi": "10.1093/bja/aem406",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "F Gao",
+          "givenNames": "F",
+          "surnames": "Gao",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Linhartova",
+          "givenNames": "L",
+          "surnames": "Linhartova",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Johnston",
+          "givenNames": "AM",
+          "surnames": "Johnston",
+          "suffix": ""
+        },
+        {
+          "fullName": "DR Thickett",
+          "givenNames": "DR",
+          "surnames": "Thickett",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 35,
+      "volume": "35",
+      "title": "The effects of statin therapy on inflammatory cytokines in patients with bacterial infections: a randomized doubleblind placebo controlled clinical trial",
+      "pages": "1255-1260",
+      "eLocationID": "1255",
+      "journal": "Intensive Care Med",
+      "collaborativeAuthors": [],
+      "doi": "10.1007/s00134-009-1429-0",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V Novack",
+          "givenNames": "V",
+          "surnames": "Novack",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Eisinger",
+          "givenNames": "M",
+          "surnames": "Eisinger",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Frenkel",
+          "givenNames": "A",
+          "surnames": "Frenkel",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Terblanche",
+          "givenNames": "M",
+          "surnames": "Terblanche",
+          "suffix": ""
+        },
+        {
+          "fullName": "NK Adhikari",
+          "givenNames": "NK",
+          "surnames": "Adhikari",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 110,
+      "volume": "110",
+      "title": "Prior statin therapy is associated with a decreased rate of severe sepsis",
+      "pages": "880-885",
+      "eLocationID": "880",
+      "journal": "Circulation",
+      "collaborativeAuthors": [],
+      "doi": "10.1161/01.CIR.0000138932.17956.F1",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "Y Almog",
+          "givenNames": "Y",
+          "surnames": "Almog",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Shefer",
+          "givenNames": "A",
+          "surnames": "Shefer",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Novack",
+          "givenNames": "V",
+          "surnames": "Novack",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Maimon",
+          "givenNames": "N",
+          "surnames": "Maimon",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Barski",
+          "givenNames": "L",
+          "surnames": "Barski",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Systematic Review and Meta-Analysis on the Association between Outpatient Statins Use and Infectious Disease-Related Mortality",
+      "pages": "e51548",
+      "eLocationID": "e51548",
+      "journal": "PLOS ONE",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pone.0051548",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "Y Ma",
+          "givenNames": "Y",
+          "surnames": "Ma",
+          "suffix": ""
+        },
+        {
+          "fullName": "X Wen",
+          "givenNames": "X",
+          "surnames": "Wen",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Peng",
+          "givenNames": "J",
+          "surnames": "Peng",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Lu",
+          "givenNames": "Y",
+          "surnames": "Lu",
+          "suffix": ""
+        },
+        {
+          "fullName": "Z Guo",
+          "givenNames": "Z",
+          "surnames": "Guo",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 33,
+      "volume": "33",
+      "title": "The effect of statins on mortality in patients with bacteremia",
+      "pages": "1352-1357",
+      "eLocationID": "1352",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1086/323334",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AP Liappis",
+          "givenNames": "AP",
+          "surnames": "Liappis",
+          "suffix": ""
+        },
+        {
+          "fullName": "VL Kan",
+          "givenNames": "VL",
+          "surnames": "Kan",
+          "suffix": ""
+        },
+        {
+          "fullName": "CG Rochester",
+          "givenNames": "CG",
+          "surnames": "Rochester",
+          "suffix": ""
+        },
+        {
+          "fullName": "GL Simon",
+          "givenNames": "GL",
+          "surnames": "Simon",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 168,
+      "volume": "168",
+      "title": "Preadmission use of statins and outcomes after hospitalization with pneumonia: population-based cohort study of 29,900 patients",
+      "pages": "2081-2087",
+      "eLocationID": "2081",
+      "journal": "Arch Intern Med",
+      "collaborativeAuthors": [],
+      "doi": "10.1001/archinte.168.19.2081",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RW Thomsen",
+          "givenNames": "RW",
+          "surnames": "Thomsen",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Riis",
+          "givenNames": "A",
+          "surnames": "Riis",
+          "suffix": ""
+        },
+        {
+          "fullName": "JB Kornum",
+          "givenNames": "JB",
+          "surnames": "Kornum",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Christensen",
+          "givenNames": "S",
+          "surnames": "Christensen",
+          "suffix": ""
+        },
+        {
+          "fullName": "SP Johnsen",
+          "givenNames": "SP",
+          "surnames": "Johnsen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2013,
+      "displayYear": "2013",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "The role of statins in prevention and treatment of community acquired pneumonia: a systematic review and meta-analysis",
+      "pages": "e52929",
+      "eLocationID": "e52929",
+      "journal": "PLOS ONE",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pone.0052929",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AR Khan",
+          "givenNames": "AR",
+          "surnames": "Khan",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Riaz",
+          "givenNames": "M",
+          "surnames": "Riaz",
+          "suffix": ""
+        },
+        {
+          "fullName": "AA Bin Abdulhak",
+          "givenNames": "AA",
+          "surnames": "Bin Abdulhak",
+          "suffix": ""
+        },
+        {
+          "fullName": "MA Al-Tannir",
+          "givenNames": "MA",
+          "surnames": "Al-Tannir",
+          "suffix": ""
+        },
+        {
+          "fullName": "MA Garbati",
+          "givenNames": "MA",
+          "surnames": "Garbati",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Treatment of Severe Cases of Pandemic (H1N1) 2009 Influenza: Review of Antivirals and Adjuvant Therapy",
+      "pages": "152-156",
+      "eLocationID": "152",
+      "journal": "Recent Pat Antiinfect Drugs Discov",
+      "collaborativeAuthors": [],
+      "doi": "10.2174/157489110791233513",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GM Bearman",
+          "givenNames": "GM",
+          "surnames": "Bearman",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Shankaran",
+          "givenNames": "S",
+          "surnames": "Shankaran",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Elam",
+          "givenNames": "K",
+          "surnames": "Elam",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Influenza morbidity and mortality in elderly patients receiving statins: a cohort study",
+      "pages": "e8087",
+      "eLocationID": "e8087",
+      "journal": "PLOS ONE",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pone.0008087",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JC Kwong",
+          "givenNames": "JC",
+          "surnames": "Kwong",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Li",
+          "givenNames": "P",
+          "surnames": "Li",
+          "suffix": ""
+        },
+        {
+          "fullName": "DA Redelmeier",
+          "givenNames": "DA",
+          "surnames": "Redelmeier",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Simvastatin reduces ergosterol levels, inhibits growth and causes loss of mtDNA in Candida <italic>glabrata</italic>",
+      "pages": "436-441",
+      "eLocationID": "436",
+      "journal": "FEMS Yeast Res",
+      "collaborativeAuthors": [],
+      "doi": "10.1111/j.1567-1364.2006.00194.x",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Westermeyer",
+          "givenNames": "C",
+          "surnames": "Westermeyer",
+          "suffix": ""
+        },
+        {
+          "fullName": "IG Macreadie",
+          "givenNames": "IG",
+          "surnames": "Macreadie",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 155,
+      "volume": "155",
+      "title": "Nosocomial bloodstream infections. Secular trends in rates, mortality, and contribution to total hospital deaths",
+      "pages": "1177-1184",
+      "eLocationID": "1177",
+      "journal": "Arch Intern Med",
+      "collaborativeAuthors": [],
+      "doi": "10.1001/archinte.1995.00430110089009",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "D Pittet",
+          "givenNames": "D",
+          "surnames": "Pittet",
+          "suffix": ""
+        },
+        {
+          "fullName": "RP Wenzel",
+          "givenNames": "RP",
+          "surnames": "Wenzel",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 137,
+      "volume": "137",
+      "title": "Health care associated bloodstream infections in adults: a reason to change the accepted definition of community-acquired infections",
+      "pages": "791-797",
+      "eLocationID": "791",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "doi": "10.7326/0003-4819-137-10-200211190-00007",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ND Friedman",
+          "givenNames": "ND",
+          "surnames": "Friedman",
+          "suffix": ""
+        },
+        {
+          "fullName": "KS Kaye",
+          "givenNames": "KS",
+          "surnames": "Kaye",
+          "suffix": ""
+        },
+        {
+          "fullName": "JE Stout",
+          "givenNames": "JE",
+          "surnames": "Stout",
+          "suffix": ""
+        },
+        {
+          "fullName": "SA McGarry",
+          "givenNames": "SA",
+          "surnames": "McGarry",
+          "suffix": ""
+        },
+        {
+          "fullName": "SL Trivette",
+          "givenNames": "SL",
+          "surnames": "Trivette",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 65,
+      "volume": "65",
+      "title": "Pneumococcal pneumonia presenting with septic shock: host- and pathogen-related factors and outcomes",
+      "pages": "77-81",
+      "eLocationID": "77",
+      "journal": "Thorax",
+      "collaborativeAuthors": [],
+      "doi": "10.1136/thx.2010.150961.1",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Garcia-Vidal",
+          "givenNames": "C",
+          "surnames": "Garcia-Vidal",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Ardanuy",
+          "givenNames": "C",
+          "surnames": "Ardanuy",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Tubau",
+          "givenNames": "F",
+          "surnames": "Tubau",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Viasus",
+          "givenNames": "D",
+          "surnames": "Viasus",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Dorca",
+          "givenNames": "J",
+          "surnames": "Dorca",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2008,
+      "displayYear": "2008",
+      "title": "Reference method for broth dilution antifungal susceptibility testing of yeasts, approved standard",
+      "publisherLocation": "Wayne, PA",
+      "publisherName": "Clinical and Laboratory Standards Institute",
+      "note": "CLSI Document M27",
+      "collaborativeAuthors": [
+        "Clinical and Laboratory Standards Institute"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Book",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 43,
+      "volume": "43",
+      "title": "Epidemiology and Predictors of Mortality in Cases of Candida Bloodstream Infection: Results from Population-Based Surveillance, Barcelona, Spain, from 2002 to 2003",
+      "pages": "1829-1835",
+      "eLocationID": "1829",
+      "journal": "J Clin Microbiol",
+      "collaborativeAuthors": [],
+      "doi": "10.1128/JCM.43.4.1829-1835.2005",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Almirante",
+          "givenNames": "B",
+          "surnames": "Almirante",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Rodr\u00edguez",
+          "givenNames": "D",
+          "surnames": "Rodr\u00edguez",
+          "suffix": ""
+        },
+        {
+          "fullName": "BJ Park",
+          "givenNames": "BJ",
+          "surnames": "Park",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Cuenca-Estrella",
+          "givenNames": "M",
+          "surnames": "Cuenca-Estrella",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Planes",
+          "givenNames": "AM",
+          "surnames": "Planes",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 24,
+      "volume": "24",
+      "title": "Epidemiology and antifungal susceptibility of Candida species isolated from blood: results of a 2-year multicentre study in Spain",
+      "pages": "23-30",
+      "eLocationID": "23",
+      "journal": "Eur J Clin Microbiol Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1007/s10096-004-1267-5",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Pem\u00e1n",
+          "givenNames": "J",
+          "surnames": "Pem\u00e1n",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Cant\u00f3n",
+          "givenNames": "E",
+          "surnames": "Cant\u00f3n",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Gobernado",
+          "givenNames": "M",
+          "surnames": "Gobernado",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 64,
+      "volume": "64",
+      "title": "Epidemiology and outcome of multiple-species candidemia at a tertiary care center between 2004 and 2007",
+      "pages": "289-294",
+      "eLocationID": "289",
+      "journal": "Diagn Microbiol Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1016/j.diagmicrobio.2009.03.010",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "HL Nace",
+          "givenNames": "HL",
+          "surnames": "Nace",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Horn",
+          "givenNames": "D",
+          "surnames": "Horn",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Neofytos",
+          "givenNames": "D",
+          "surnames": "Neofytos",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 37,
+      "volume": "37",
+      "title": "A Prospective Observational Study of candidemia: epidemiology, therapy, and in\ufb02uences on mortality in hospitalized adult and pediatric patients",
+      "pages": "634-643",
+      "eLocationID": "634",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1086/376906",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "PG Pappas",
+          "givenNames": "PG",
+          "surnames": "Pappas",
+          "suffix": ""
+        },
+        {
+          "fullName": "JH Rex",
+          "givenNames": "JH",
+          "surnames": "Rex",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Lee",
+          "givenNames": "J",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "RJ Hamill",
+          "givenNames": "RJ",
+          "surnames": "Hamill",
+          "suffix": ""
+        },
+        {
+          "fullName": "RA Larsen",
+          "givenNames": "RA",
+          "surnames": "Larsen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 37,
+      "volume": "37",
+      "title": "Attributable mortality of nosocomial candidemia, revisited",
+      "pages": "1172-1177",
+      "eLocationID": "1172",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1086/378745",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "O Gudlaugsson",
+          "givenNames": "O",
+          "surnames": "Gudlaugsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Gillespie",
+          "givenNames": "S",
+          "surnames": "Gillespie",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Lee",
+          "givenNames": "K",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Vande Berg",
+          "givenNames": "J",
+          "surnames": "Vande Berg",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Hu",
+          "givenNames": "J",
+          "surnames": "Hu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Statins in candidemia: clinical outcomes from a matched cohort study",
+      "pages": "152-159",
+      "eLocationID": "152",
+      "journal": "BMC Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1186/1471-2334-10-152",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GN Forrest",
+          "givenNames": "GN",
+          "surnames": "Forrest",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Kopack",
+          "givenNames": "AM",
+          "surnames": "Kopack",
+          "suffix": ""
+        },
+        {
+          "fullName": "EN Perencevich",
+          "givenNames": "EN",
+          "surnames": "Perencevich",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 2013,
+      "displayYear": "2013",
+      "volumeNumber": 51,
+      "volume": "51",
+      "title": "Candidemia outcomes not improved with statin use",
+      "pages": "219-222",
+      "eLocationID": "219",
+      "journal": "Med Mycol",
+      "collaborativeAuthors": [],
+      "doi": "10.3109/13693786.2012.692490",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ML Welch",
+          "givenNames": "ML",
+          "surnames": "Welch",
+          "suffix": ""
+        },
+        {
+          "fullName": "AP Liappis",
+          "givenNames": "AP",
+          "surnames": "Liappis",
+          "suffix": ""
+        },
+        {
+          "fullName": "VL Kan",
+          "givenNames": "VL",
+          "surnames": "Kan",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Statins and sepsis: multiple modifications at multiple levels",
+      "pages": "358-368",
+      "eLocationID": "358",
+      "journal": "Lancet Infect Dis",
+      "collaborativeAuthors": [],
+      "doi": "10.1016/S1473-3099(07)70111-1",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Terblanche",
+          "givenNames": "M",
+          "surnames": "Terblanche",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Almog",
+          "givenNames": "Y",
+          "surnames": "Almog",
+          "suffix": ""
+        },
+        {
+          "fullName": "RS Rosenson",
+          "givenNames": "RS",
+          "surnames": "Rosenson",
+          "suffix": ""
+        },
+        {
+          "fullName": "TS Smith",
+          "givenNames": "TS",
+          "surnames": "Smith",
+          "suffix": ""
+        },
+        {
+          "fullName": "DG Hackam",
+          "givenNames": "DG",
+          "surnames": "Hackam",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 54,
+      "volume": "54",
+      "title": "Atorvastatin restores the impaired vascular endothelium-dependent relaxations mediated by nitric oxide and endothelium-derived hyperpolarizing factors but not hypotension in sepsis",
+      "pages": "526-534",
+      "eLocationID": "526",
+      "journal": "J Cardiovasc Pharmacol",
+      "collaborativeAuthors": [],
+      "doi": "10.1097/FJC.0b013e3181bfafd6",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Subramani",
+          "givenNames": "J",
+          "surnames": "Subramani",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Kathirvel",
+          "givenNames": "K",
+          "surnames": "Kathirvel",
+          "suffix": ""
+        },
+        {
+          "fullName": "MD Leo",
+          "givenNames": "MD",
+          "surnames": "Leo",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Kuntamallappanavar",
+          "givenNames": "G",
+          "surnames": "Kuntamallappanavar",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Uttam Singh",
+          "givenNames": "T",
+          "surnames": "Uttam Singh",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 82,
+      "volume": "82",
+      "title": "Effects of HMG-CoA reductase inhibition by simvastatin on vascular dysfunction induced by lipopolysaccharide in rats",
+      "pages": "89-96",
+      "eLocationID": "89",
+      "journal": "Pharmacologist",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Alvarez de Sotomayor",
+          "givenNames": "M",
+          "surnames": "Alvarez de Sotomayor",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Vega",
+          "givenNames": "S",
+          "surnames": "Vega",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Mingorance",
+          "givenNames": "C",
+          "surnames": "Mingorance",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Marhuenda",
+          "givenNames": "E",
+          "surnames": "Marhuenda",
+          "suffix": ""
+        },
+        {
+          "fullName": "MD Herrera",
+          "givenNames": "MD",
+          "surnames": "Herrera",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 98,
+      "volume": "98",
+      "title": "Beneficial effects of statins on the microcirculation during sepsis: the role of nitric oxide",
+      "pages": "163-175",
+      "eLocationID": "163",
+      "journal": "Br J Anaesth",
+      "collaborativeAuthors": [],
+      "doi": "10.1093/bja/ael358",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "CC McGown",
+          "givenNames": "CC",
+          "surnames": "McGown",
+          "suffix": ""
+        },
+        {
+          "fullName": "ZLS Brookes",
+          "givenNames": "ZLS",
+          "surnames": "Brookes",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 51,
+      "volume": "51",
+      "title": "Effect of fluvastatin and pravastatin, HMG-CoA reductase inhibitors, on fluconazole activity against <italic>Candida</italic> <italic>albicans</italic>",
+      "pages": "105-109",
+      "eLocationID": "105",
+      "journal": "J Med Microbiol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JD Nash",
+          "givenNames": "JD",
+          "surnames": "Nash",
+          "suffix": ""
+        },
+        {
+          "fullName": "DS Burgess",
+          "givenNames": "DS",
+          "surnames": "Burgess",
+          "suffix": ""
+        },
+        {
+          "fullName": "RL Talbert",
+          "givenNames": "RL",
+          "surnames": "Talbert",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 1964,
+      "displayYear": "1964",
+      "volumeNumber": 60,
+      "volume": "60",
+      "title": "Pneumococcal bacteremia with especial reference to bacteremic pneumococcal pneumonia",
+      "pages": "759-770",
+      "eLocationID": "759",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "doi": "10.7326/0003-4819-60-5-759",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 32,
+      "volume": "32",
+      "title": "Early mortality in patients with community acquired pneumonia: causes and risk factors",
+      "pages": "733-739",
+      "eLocationID": "733",
+      "journal": "Eur Respir J",
+      "collaborativeAuthors": [],
+      "doi": "10.1183/09031936.00128107",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Garcia-Vidal",
+          "givenNames": "C",
+          "surnames": "Garcia-Vidal",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Fern\u00e1ndez-Sab\u00e9",
+          "givenNames": "N",
+          "surnames": "Fern\u00e1ndez-Sab\u00e9",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Carratal\u00e0",
+          "givenNames": "J",
+          "surnames": "Carratal\u00e0",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 5,
+      "volume": "5",
+      "title": "Current insights in sepsis: from pathogenesis to new treatment targets",
+      "pages": "480-486",
+      "eLocationID": "480",
+      "journal": "Curr Opin Crit Care",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WJ Wiersinga",
+          "givenNames": "WJ",
+          "surnames": "Wiersinga",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "37",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "ESCMID guideline for the diagnosis and management of Candida diseases 2012: adults with  haematological malignancies and after haematopoietic stem cell transplantation (HCT)",
+      "pages": "53-67",
+      "eLocationID": "53",
+      "journal": "Clin Microbiol Infect",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AJ Ullmann",
+          "givenNames": "AJ",
+          "surnames": "Ullmann",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Akova",
+          "givenNames": "M",
+          "surnames": "Akova",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Herbrecht",
+          "givenNames": "R",
+          "surnames": "Herbrecht",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Viscoli",
+          "givenNames": "C",
+          "surnames": "Viscoli",
+          "suffix": ""
+        },
+        {
+          "fullName": "MC Arendrup",
+          "givenNames": "MC",
+          "surnames": "Arendrup",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "38",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "ESCMID guideline for the diagnosis and management of Candida diseases 2012: non-neutropenic adult patients",
+      "pages": "19-37",
+      "eLocationID": "19",
+      "journal": "Clin Microbiol Infect",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "OA Cornely",
+          "givenNames": "OA",
+          "surnames": "Cornely",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Bassetti",
+          "givenNames": "M",
+          "surnames": "Bassetti",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Calandra",
+          "givenNames": "T",
+          "surnames": "Calandra",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Garbino",
+          "givenNames": "J",
+          "surnames": "Garbino",
+          "suffix": ""
+        },
+        {
+          "fullName": "BJ Kullberg",
+          "givenNames": "BJ",
+          "surnames": "Kullberg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Guillermo Cuervo",
+      "givenNames": "Guillermo",
+      "surnames": "Cuervo",
+      "suffix": ""
+    },
+    {
+      "fullName": "Carolina Garcia-Vidal",
+      "givenNames": "Carolina",
+      "surnames": "Garcia-Vidal",
+      "suffix": ""
+    },
+    {
+      "fullName": "Marcio Nucci",
+      "givenNames": "Marcio",
+      "surnames": "Nucci",
+      "suffix": ""
+    },
+    {
+      "fullName": "Francesc Puchades",
+      "givenNames": "Francesc",
+      "surnames": "Puchades",
+      "suffix": ""
+    },
+    {
+      "fullName": "Mario Fern\u00e1ndez-Ruiz",
+      "givenNames": "Mario",
+      "surnames": "Fern\u00e1ndez-Ruiz",
+      "suffix": ""
+    },
+    {
+      "fullName": "Anal\u00eda Mykietiuk",
+      "givenNames": "Anal\u00eda",
+      "surnames": "Mykietiuk",
+      "suffix": ""
+    },
+    {
+      "fullName": "Adriana Manzur",
+      "givenNames": "Adriana",
+      "surnames": "Manzur",
+      "suffix": ""
+    },
+    {
+      "fullName": "Carlota Gudiol",
+      "givenNames": "Carlota",
+      "surnames": "Gudiol",
+      "suffix": ""
+    },
+    {
+      "fullName": "Javier Pem\u00e1n",
+      "givenNames": "Javier",
+      "surnames": "Pem\u00e1n",
+      "suffix": ""
+    },
+    {
+      "fullName": "Diego Viasus",
+      "givenNames": "Diego",
+      "surnames": "Viasus",
+      "suffix": ""
+    },
+    {
+      "fullName": "Josefina Ayats",
+      "givenNames": "Josefina",
+      "surnames": "Ayats",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jordi Carratal\u00e0",
+      "givenNames": "Jordi",
+      "surnames": "Carratal\u00e0",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "David\u00a0R. Andes",
+      "givenNames": "David\u00a0R.",
+      "surnames": "Andes",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}

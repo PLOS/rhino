@@ -1,177 +1,459 @@
-{"doi":"info:doi/10.1371/journal.pmed.0030445","title":
-  "Social Medicine in the Twenty-First Century","eIssn":"1549-1676","state":
-  1,"archiveName":"pmed.0030445.zip","description":
-  "\u003cp\u003eThe\u003citalic\u003ePLoS Medicine\u003c/italic\u003e editors, and Guest Editors Scott Stonington and Seth Holmes, introduce a special collection of articles examining the social structures that contribute to illness and health.\u003c/p\u003e",
-  "rights":
-  "The PLoS Medicine Editors et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-2","eLocationId":"e445",
-  "strkImgURI":"","date":"2006-10-24T07:00:00Z","volume":"3","issue":
-  "10","journal":"PLoS Med","publisherLocation":"San Francisco, USA",
-  "publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pmed.0030445","collaborativeAuthors":[
-    "The PLoS Medicine Editors"],"types":[
+{
+  "doi": "info:doi/10.1371/journal.pmed.0030445",
+  "title": "Social Medicine in the Twenty-First Century",
+  "eIssn": "1549-1676",
+  "state": 1,
+  "archiveName": "pmed.0030445.zip",
+  "description": "<p>The<italic>PLoS Medicine</italic> editors, and Guest Editors Scott Stonington and Seth Holmes, introduce a special collection of articles examining the social structures that contribute to illness and health.</p>",
+  "rights": "The PLoS Medicine Editors et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-2",
+  "eLocationId": "e445",
+  "strkImgURI": "",
+  "date": "2006-10-24T07:00:00Z",
+  "volume": "3",
+  "issue": "10",
+  "journal": "PLoS Med",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pmed.0030445",
+  "collaborativeAuthors": [
+    "The PLoS Medicine Editors"
+  ],
+  "types": [
     "http://rdf.plos.org/RDF/articleType/Editorial",
-    "http://rdf.plos.org/RDF/articleType/editorial"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pmed.0030445","extension":
-      "XML","contentType":"text/xml","title":
-      "Social Medicine in the Twenty-First Century","description":
-      "\u003cp\u003eThe\u003citalic\u003ePLoS Medicine\u003c/italic\u003e editors, and Guest Editors Scott Stonington and Seth Holmes, introduce a special collection of articles examining the social structures that contribute to illness and health.\u003c/p\u003e",
-      "size":34621},{"doi":"info:doi/10.1371/journal.pmed.0030445",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Social Medicine in the Twenty-First Century","description":
-      "\u003cp\u003eThe\u003citalic\u003ePLoS Medicine\u003c/italic\u003e editors, and Guest Editors Scott Stonington and Seth Holmes, introduce a special collection of articles examining the social structures that contribute to illness and health.\u003c/p\u003e",
-      "size":84238},{"doi":
-      "info:doi/10.1371/journal.pmed.0030445.social_logo","contextElement":
-      "p","extension":"PNG","contentType":"image/png","title":"",
-      "description":"","size":27486},{"doi":
-      "info:doi/10.1371/journal.pmed.0030445.t001","contextElement":
-      "table-wrap","extension":"TIF","contentType":"image/tiff","title":
-      "Table 1","description":
-      "\u003ctitle\u003eThe Four Domains of Social Medicine in the Special Collection\u003c/title\u003e",
-      "size":129444},{"doi":"info:doi/10.1371/journal.pmed.0030445.t001",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eThe Four Domains of Social Medicine in the Special Collection\u003c/title\u003e",
-      "size":57471},{"doi":"info:doi/10.1371/journal.pmed.0030445.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eThe Four Domains of Social Medicine in the Special Collection\u003c/title\u003e",
-      "size":15283},{"doi":"info:doi/10.1371/journal.pmed.0030445.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eThe Four Domains of Social Medicine in the Special Collection\u003c/title\u003e",
-      "size":87142},{"doi":"info:doi/10.1371/journal.pmed.0030445.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eThe Four Domains of Social Medicine in the Special Collection\u003c/title\u003e",
-      "size":56509}],"citedArticles":[{"key":"1","year":2004,"displayYear":
-      "2004","volumeNumber":1,"volume":"1","title":
-      "How should the health community respond to violent political conflict?",
-      "pages":"e14","eLocationID":"e14","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0010014","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"2","year":2004,"displayYear":
-      "2004","volumeNumber":1,"volume":"1","title":
-      "Should health professionals screen all women for domestic violence?",
-      "pages":"e4","eLocationID":"e4","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0010004","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"3","year":2004,"displayYear":
-      "2004","volumeNumber":1,"volume":"1","title":
-      "Distribution of major health risks: Findings from the Global Burden of Disease study.",
-      "pages":"e27","eLocationID":"e27","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0010027","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"4","year":2006,"displayYear":
-      "2006","volumeNumber":3,"volume":"3","title":
-      "The Commission on Social Determinants of Health: Tackling the social roots of health inequities.",
-      "pages":"e106","eLocationID":"e106","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0030106","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"5","year":1999,"displayYear":
-      "1999","volumeNumber":76,"volume":"76","title":
-      "Does social medicine still matter in an era of molecular medicine?",
-      "pages":"164-175","eLocationID":"164","journal":"J Urban Health",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"6","year":2004,"displayYear":"2004","title":
-      "Ethical, legal and social aspects of genetic testing: Research, development and clinical applications.",
-      "publisherLocation":"Luxembourg","publisherName":
-      "Office for Official Publications of the European Communities","note":
-      "Available: http://ec.europa.eu/research/conferences/2004/genetic/pdf/report_en.pdf. Accessed 22 September 2006.",
-      "collaborativeAuthors":["European Commission"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"7","year":2005,"displayYear":"2005","volumeNumber":2,"volume":
-      "2","title":
-      "KRAS mutations and primary resistance of lung adenocarcinomas to gefitinib or erlotinib.",
-      "pages":"e17","eLocationID":"e17","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0020017","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"8","year":2005,"displayYear":
-      "2005","volumeNumber":2,"volume":"2","title":
-      "Acquired resistance of lung adenocarcinomas to gefitinib or erlotinib is associated with a second mutation in the EGFR kinase domain.",
-      "pages":"e73","eLocationID":"e73","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0020073","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"9","year":2005,"displayYear":
-      "2005","volumeNumber":2,"volume":"2","title":
-      "Differentiation of insulin-producing cells from human neural progenitor cells.",
-      "pages":"e103","eLocationID":"e103","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0020103","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]},{"key":"10","year":18791985,"displayYear":
-      "1879 [1985]","title":
-      "Report on the typhus epidemic in Upper Silesia (1848).",
-      "publisherLocation":"Canton (MA)","publisherName":"Science History",
-      "pages":"205-319","eLocationID":"205","note":"In:",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[{
-          "fullName":"LJ Rather","givenNames":"LJ","surnames":"Rather",
-          "suffix":""}]},{"key":"11","year":1981,"displayYear":"1981",
-      "title":"Patients and healers in the context of culture.",
-      "publisherLocation":"Berkeley","publisherName":
-      "University of California Press","pages":"427","eLocationID":"427",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"12","year":1998,"displayYear":"1998","title":
-      "The spirit catches you and you fall down: A Hmong child, her American doctors, and the collision of two cultures.",
-      "publisherLocation":"New York","publisherName":"Noonday Press","pages":
-      "341","eLocationID":"341","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "A Fadiman","givenNames":"A","surnames":"Fadiman","suffix":""}],
-      "editors":[]},{"key":"13","year":1988,"displayYear":"1988","title":
-      "The illness narratives: Suffering, healing, and the human condition.",
-      "publisherLocation":"New York","publisherName":"Basic Books","pages":
-      "284","eLocationID":"284","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"14","year":2002,"displayYear":"2002","volumeNumber":32,"volume":
-      "32","title":
-      "Randomized controlled crime: Post-colonial sciences in alternative medicine research.",
-      "pages":"659-690","eLocationID":"659","journal":"Soc Stud Sci",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"15","year":1997,"displayYear":"1997","volumeNumber":44,"volume":
-      "44","title":
-      "Disclosure practices and cultural narratives: Understanding concealment and silence around cancer in Tuscany, Italy.",
-      "pages":"1433-1452","eLocationID":"1433","journal":"Soc Sci Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"16","year":2001,"displayYear":"2001","volumeNumber":16,"volume":
-      "16","title":
-      "Languages of sex and AIDS in Nepal: Notes on the social production of commensurability.",
-      "pages":"481-541","eLocationID":"481","journal":"Cult Anthropol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"17","year":2006,"displayYear":"2006","volumeNumber":3,"volume":
-      "3","title":"Structural violence and clinical medicine.","pages":
-      "e449","eLocationID":"e449","journal":"PLoS Med","note":
-      "DOI: 10.1371/journal.pmed.0030449","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[],"editors":[]}],"relatedArticles":[{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030294","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030439","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030421","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030419","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030399","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030405","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030199","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030449","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030349","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030423","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030383","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030342","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030452","type":"companion"},{
-      "otherArticleDoi":"info:doi/10.1371/journal.pmed.0030448","type":
-      "companion"},{"otherArticleDoi":
-      "info:doi/10.1371/journal.pmed.0030394","type":"companion"}],"authors":
-  [{"fullName":"Scott Stonington","givenNames":"Scott","surnames":
-      "Stonington","suffix":""},{"fullName":"Seth M Holmes","givenNames":
-      "Seth M","surnames":"Holmes","suffix":""}],"editors":[],"journals":[{
-      "eIssn":"1549-1676"}]}
-
+    "http://rdf.plos.org/RDF/articleType/editorial"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Social Medicine in the Twenty-First Century",
+      "description": "<p>The<italic>PLoS Medicine</italic> editors, and Guest Editors Scott Stonington and Seth Holmes, introduce a special collection of articles examining the social structures that contribute to illness and health.</p>",
+      "size": 34621
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Social Medicine in the Twenty-First Century",
+      "description": "<p>The<italic>PLoS Medicine</italic> editors, and Guest Editors Scott Stonington and Seth Holmes, introduce a special collection of articles examining the social structures that contribute to illness and health.</p>",
+      "size": 84238
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445.social_logo",
+      "contextElement": "p",
+      "extension": "PNG",
+      "contentType": "image/png",
+      "title": "",
+      "description": "",
+      "size": 27486
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>The Four Domains of Social Medicine in the Special Collection</title>",
+      "size": 129444
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>The Four Domains of Social Medicine in the Special Collection</title>",
+      "size": 57471
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>The Four Domains of Social Medicine in the Special Collection</title>",
+      "size": 15283
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>The Four Domains of Social Medicine in the Special Collection</title>",
+      "size": 87142
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.0030445.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>The Four Domains of Social Medicine in the Special Collection</title>",
+      "size": 56509
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "How should the health community respond to violent political conflict?",
+      "pages": "e14",
+      "eLocationID": "e14",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0010014",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "Should health professionals screen all women for domestic violence?",
+      "pages": "e4",
+      "eLocationID": "e4",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0010004",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "Distribution of major health risks: Findings from the Global Burden of Disease study.",
+      "pages": "e27",
+      "eLocationID": "e27",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0010027",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "The Commission on Social Determinants of Health: Tackling the social roots of health inequities.",
+      "pages": "e106",
+      "eLocationID": "e106",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0030106",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 1999,
+      "displayYear": "1999",
+      "volumeNumber": 76,
+      "volume": "76",
+      "title": "Does social medicine still matter in an era of molecular medicine?",
+      "pages": "164-175",
+      "eLocationID": "164",
+      "journal": "J Urban Health",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2004,
+      "displayYear": "2004",
+      "title": "Ethical, legal and social aspects of genetic testing: Research, development and clinical applications.",
+      "publisherLocation": "Luxembourg",
+      "publisherName": "Office for Official Publications of the European Communities",
+      "note": "Available: http://ec.europa.eu/research/conferences/2004/genetic/pdf/report_en.pdf. Accessed 22 September 2006.",
+      "collaborativeAuthors": [
+        "European Commission"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "KRAS mutations and primary resistance of lung adenocarcinomas to gefitinib or erlotinib.",
+      "pages": "e17",
+      "eLocationID": "e17",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0020017",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Acquired resistance of lung adenocarcinomas to gefitinib or erlotinib is associated with a second mutation in the EGFR kinase domain.",
+      "pages": "e73",
+      "eLocationID": "e73",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0020073",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Differentiation of insulin-producing cells from human neural progenitor cells.",
+      "pages": "e103",
+      "eLocationID": "e103",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0020103",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 18791985,
+      "displayYear": "1879 [1985]",
+      "title": "Report on the typhus epidemic in Upper Silesia (1848).",
+      "publisherLocation": "Canton (MA)",
+      "publisherName": "Science History",
+      "pages": "205-319",
+      "eLocationID": "205",
+      "note": "In:",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": [
+        {
+          "fullName": "LJ Rather",
+          "givenNames": "LJ",
+          "surnames": "Rather",
+          "suffix": ""
+        }
+      ]
+    },
+    {
+      "key": "11",
+      "year": 1981,
+      "displayYear": "1981",
+      "title": "Patients and healers in the context of culture.",
+      "publisherLocation": "Berkeley",
+      "publisherName": "University of California Press",
+      "pages": "427",
+      "eLocationID": "427",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 1998,
+      "displayYear": "1998",
+      "title": "The spirit catches you and you fall down: A Hmong child, her American doctors, and the collision of two cultures.",
+      "publisherLocation": "New York",
+      "publisherName": "Noonday Press",
+      "pages": "341",
+      "eLocationID": "341",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "A Fadiman",
+          "givenNames": "A",
+          "surnames": "Fadiman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 1988,
+      "displayYear": "1988",
+      "title": "The illness narratives: Suffering, healing, and the human condition.",
+      "publisherLocation": "New York",
+      "publisherName": "Basic Books",
+      "pages": "284",
+      "eLocationID": "284",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 32,
+      "volume": "32",
+      "title": "Randomized controlled crime: Post-colonial sciences in alternative medicine research.",
+      "pages": "659-690",
+      "eLocationID": "659",
+      "journal": "Soc Stud Sci",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 44,
+      "volume": "44",
+      "title": "Disclosure practices and cultural narratives: Understanding concealment and silence around cancer in Tuscany, Italy.",
+      "pages": "1433-1452",
+      "eLocationID": "1433",
+      "journal": "Soc Sci Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 16,
+      "volume": "16",
+      "title": "Languages of sex and AIDS in Nepal: Notes on the social production of commensurability.",
+      "pages": "481-541",
+      "eLocationID": "481",
+      "journal": "Cult Anthropol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Structural violence and clinical medicine.",
+      "pages": "e449",
+      "eLocationID": "e449",
+      "journal": "PLoS Med",
+      "note": "DOI: 10.1371/journal.pmed.0030449",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030294",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030439",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030421",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030419",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030399",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030405",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030199",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030449",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030349",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030423",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030383",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030342",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030452",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030448",
+      "type": "companion"
+    },
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pmed.0030394",
+      "type": "companion"
+    }
+  ],
+  "authors": [
+    {
+      "fullName": "Scott Stonington",
+      "givenNames": "Scott",
+      "surnames": "Stonington",
+      "suffix": ""
+    },
+    {
+      "fullName": "Seth M Holmes",
+      "givenNames": "Seth M",
+      "surnames": "Holmes",
+      "suffix": ""
+    }
+  ],
+  "editors": [],
+  "journals": [
+    {
+      "eIssn": "1549-1676"
+    }
+  ]
+}

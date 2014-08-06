@@ -1,379 +1,1329 @@
-{"doi":"info:doi/10.1371/journal.pone.0008519","title":
-  "Failure to Detect the Novel Retrovirus XMRV in Chronic Fatigue Syndrome",
-  "eIssn":"1932-6203","state":1,"archiveName":"pone.0008519.zip",
-  "description":
-  "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eIn October 2009 it was reported that 68 of 101 patients with chronic fatigue syndrome (CFS) in the US were infected with a novel gamma retrovirus, xenotropic murine leukaemia virus-related virus (XMRV), a virus previously linked to prostate cancer. This finding, if confirmed, would have a profound effect on the understanding and treatment of an incapacitating disease affecting millions worldwide. We have investigated CFS sufferers in the UK to determine if they are carriers of XMRV.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology\u003c/title\u003e\u003cp\u003ePatients in our CFS cohort had undergone medical screening to exclude detectable organic illness and met the CDC criteria for CFS. DNA extracted from blood samples of 186 CFS patients were screened for XMRV provirus and for the closely related murine leukaemia virus by nested PCR using specific oligonucleotide primers. To control for the integrity of the DNA, the cellular beta-globin gene was amplified. Negative controls (water) and a positive control (XMRV infectious molecular clone DNA) were included. While the beta-globin gene was amplified in all 186 samples, neither XMRV nor MLV sequences were detected.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eXMRV or MLV sequences were not amplified from DNA originating from CFS patients in the UK. Although we found no evidence that XMRV is associated with CFS in the UK, this may be a result of population differences between North America and Europe regarding the general prevalence of XMRV infection, and might also explain the fact that two US groups found XMRV in prostate cancer tissue, while two European studies did not.\u003c/p\u003e\u003c/sec\u003e",
-  "rights":
-  "Erlwein et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-4","eLocationId":"e8519",
-  "strkImgURI":"","date":"2010-01-06T08:00:00Z","volume":"5","issue":
-  "1","journal":"PLoS ONE","publisherLocation":"San Francisco, USA",
-  "publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0008519","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0008519","extension":
-      "XML","contentType":"text/xml","title":
-      "Failure to Detect the Novel Retrovirus XMRV in Chronic Fatigue Syndrome",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eIn October 2009 it was reported that 68 of 101 patients with chronic fatigue syndrome (CFS) in the US were infected with a novel gamma retrovirus, xenotropic murine leukaemia virus-related virus (XMRV), a virus previously linked to prostate cancer. This finding, if confirmed, would have a profound effect on the understanding and treatment of an incapacitating disease affecting millions worldwide. We have investigated CFS sufferers in the UK to determine if they are carriers of XMRV.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology\u003c/title\u003e\u003cp\u003ePatients in our CFS cohort had undergone medical screening to exclude detectable organic illness and met the CDC criteria for CFS. DNA extracted from blood samples of 186 CFS patients were screened for XMRV provirus and for the closely related murine leukaemia virus by nested PCR using specific oligonucleotide primers. To control for the integrity of the DNA, the cellular beta-globin gene was amplified. Negative controls (water) and a positive control (XMRV infectious molecular clone DNA) were included. While the beta-globin gene was amplified in all 186 samples, neither XMRV nor MLV sequences were detected.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eXMRV or MLV sequences were not amplified from DNA originating from CFS patients in the UK. Although we found no evidence that XMRV is associated with CFS in the UK, this may be a result of population differences between North America and Europe regarding the general prevalence of XMRV infection, and might also explain the fact that two US groups found XMRV in prostate cancer tissue, while two European studies did not.\u003c/p\u003e\u003c/sec\u003e",
-      "size":52414},{"doi":"info:doi/10.1371/journal.pone.0008519",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Failure to Detect the Novel Retrovirus XMRV in Chronic Fatigue Syndrome",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eBackground\u003c/title\u003e\u003cp\u003eIn October 2009 it was reported that 68 of 101 patients with chronic fatigue syndrome (CFS) in the US were infected with a novel gamma retrovirus, xenotropic murine leukaemia virus-related virus (XMRV), a virus previously linked to prostate cancer. This finding, if confirmed, would have a profound effect on the understanding and treatment of an incapacitating disease affecting millions worldwide. We have investigated CFS sufferers in the UK to determine if they are carriers of XMRV.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethodology\u003c/title\u003e\u003cp\u003ePatients in our CFS cohort had undergone medical screening to exclude detectable organic illness and met the CDC criteria for CFS. DNA extracted from blood samples of 186 CFS patients were screened for XMRV provirus and for the closely related murine leukaemia virus by nested PCR using specific oligonucleotide primers. To control for the integrity of the DNA, the cellular beta-globin gene was amplified. Negative controls (water) and a positive control (XMRV infectious molecular clone DNA) were included. While the beta-globin gene was amplified in all 186 samples, neither XMRV nor MLV sequences were detected.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eConclusion\u003c/title\u003e\u003cp\u003eXMRV or MLV sequences were not amplified from DNA originating from CFS patients in the UK. Although we found no evidence that XMRV is associated with CFS in the UK, this may be a result of population differences between North America and Europe regarding the general prevalence of XMRV infection, and might also explain the fact that two US groups found XMRV in prostate cancer tissue, while two European studies did not.\u003c/p\u003e\u003c/sec\u003e",
-      "size":103137},{"doi":"info:doi/10.1371/journal.pone.0008519.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003eOligonucleotide Primers.\u003c/title\u003e","size":
-      307488},{"doi":"info:doi/10.1371/journal.pone.0008519.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eOligonucleotide Primers.\u003c/title\u003e","size":
-      36020},{"doi":"info:doi/10.1371/journal.pone.0008519.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eOligonucleotide Primers.\u003c/title\u003e","size":
-      372663},{"doi":"info:doi/10.1371/journal.pone.0008519.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eOligonucleotide Primers.\u003c/title\u003e","size":
-      173085},{"doi":"info:doi/10.1371/journal.pone.0008519.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePCR products of the XMRV VP62 clone.\u003c/title\u003e\u003cp\u003ePrimers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3–200 bp molecular size ladder.\u003c/p\u003e",
-      "size":84436},{"doi":"info:doi/10.1371/journal.pone.0008519.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePCR products of the XMRV VP62 clone.\u003c/title\u003e\u003cp\u003ePrimers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3–200 bp molecular size ladder.\u003c/p\u003e",
-      "size":9377},{"doi":"info:doi/10.1371/journal.pone.0008519.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePCR products of the XMRV VP62 clone.\u003c/title\u003e\u003cp\u003ePrimers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3–200 bp molecular size ladder.\u003c/p\u003e",
-      "size":56806},{"doi":"info:doi/10.1371/journal.pone.0008519.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003ePCR products of the XMRV VP62 clone.\u003c/title\u003e\u003cp\u003ePrimers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3–200 bp molecular size ladder.\u003c/p\u003e",
-      "size":56806},{"doi":"info:doi/10.1371/journal.pone.0008519.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eNested PCR from the DNA of 8 CFS patients.\u003c/title\u003e\u003cp\u003eProducts of generic MLV primers (including XMRV) are shown. Lanes 1–8, CFS patient DNA (2\u003csup\u003end\u003c/sup\u003e round); lanes 9 and 10, XMRV 2\u003csup\u003end\u003c/sup\u003e round and 1\u003csup\u003est\u003c/sup\u003e round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13–18, water controls.\u003c/p\u003e",
-      "size":256452},{"doi":"info:doi/10.1371/journal.pone.0008519.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eNested PCR from the DNA of 8 CFS patients.\u003c/title\u003e\u003cp\u003eProducts of generic MLV primers (including XMRV) are shown. Lanes 1–8, CFS patient DNA (2\u003csup\u003end\u003c/sup\u003e round); lanes 9 and 10, XMRV 2\u003csup\u003end\u003c/sup\u003e round and 1\u003csup\u003est\u003c/sup\u003e round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13–18, water controls.\u003c/p\u003e",
-      "size":10367},{"doi":"info:doi/10.1371/journal.pone.0008519.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eNested PCR from the DNA of 8 CFS patients.\u003c/title\u003e\u003cp\u003eProducts of generic MLV primers (including XMRV) are shown. Lanes 1–8, CFS patient DNA (2\u003csup\u003end\u003c/sup\u003e round); lanes 9 and 10, XMRV 2\u003csup\u003end\u003c/sup\u003e round and 1\u003csup\u003est\u003c/sup\u003e round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13–18, water controls.\u003c/p\u003e",
-      "size":361176},{"doi":"info:doi/10.1371/journal.pone.0008519.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eNested PCR from the DNA of 8 CFS patients.\u003c/title\u003e\u003cp\u003eProducts of generic MLV primers (including XMRV) are shown. Lanes 1–8, CFS patient DNA (2\u003csup\u003end\u003c/sup\u003e round); lanes 9 and 10, XMRV 2\u003csup\u003end\u003c/sup\u003e round and 1\u003csup\u003est\u003c/sup\u003e round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13–18, water controls.\u003c/p\u003e",
-      "size":221077}],"citedArticles":[{"key":"1","year":2009,"displayYear":
-      "2009","volumeNumber":326,"volume":"326","title":
-      "Detection of an infectious retrovirus, XMRV, in blood cells of patients with chronic fatigue syndrome.",
-      "pages":"585-589","eLocationID":"585","journal":"Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V Lombardi","givenNames":"V","surnames":"Lombardi","suffix":""},{
-          "fullName":"FW Ruscetti","givenNames":"FW","surnames":"Ruscetti",
-          "suffix":""},{"fullName":"JD Gupta","givenNames":"JD","surnames":
-          "Gupta","suffix":""},{"fullName":"MA Pfost","givenNames":"MA",
-          "surnames":"Pfost","suffix":""},{"fullName":"KS Hagen",
-          "givenNames":"KS","surnames":"Hagen","suffix":""}],"editors":[]},{
-      "key":"2","year":2009,"displayYear":"2009","title":
-      "The Prevalence of Xenotropic Murine Leukemia Virus-related Virus in Healthy Blood Donors in Japan.",
-      "journal":"Cold Spring Harbor Retrovirus Symposium",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RA Furuta","givenNames":"RA","surnames":"Furuta","suffix":""},{
-          "fullName":"T Miyazawa","givenNames":"T","surnames":"Miyazawa",
-          "suffix":""},{"fullName":"T Sugiyama","givenNames":"T","surnames":
-          "Sugiyama","suffix":""},{"fullName":"T Kimura","givenNames":"T",
-          "surnames":"Kimura","suffix":""},{"fullName":"F Hirayama",
-          "givenNames":"F","surnames":"Hirayama","suffix":""}],"editors":[]},
-    {"key":"3","year":2006,"displayYear":"2006","volumeNumber":2,"volume":
-      "2","title":
-      "Identification of a novel gammaretrovirus in prostate tumors of patients homozygous for R462Q RNaseL variant.",
-      "pages":"211-225","eLocationID":"211","journal":"PLoS Pathog",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Urisman","givenNames":"A","surnames":"Urisman","suffix":""},{
-          "fullName":"RJ Molinaro","givenNames":"RJ","surnames":"Molinaro",
-          "suffix":""},{"fullName":"SJ Fischer N Plummer","givenNames":
-          "SJ","surnames":"Fischer N Plummer","suffix":""},{"fullName":
-          "G Casey","givenNames":"G","surnames":"Casey","suffix":""}],
-      "editors":[]},{"key":"4","year":2009,"displayYear":"2009",
-      "volumeNumber":106,"volume":"106","title":
-      "XMRV is present in malignant prostatic epithelium and is associated with prostate cancer, especially high-grade tumours.",
-      "pages":"16351-6","eLocationID":"16351","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "R Schlaberg","givenNames":"R","surnames":"Schlaberg","suffix":
-          ""},{"fullName":"DJ Choe","givenNames":"DJ","surnames":"Choe",
-          "suffix":""},{"fullName":"KR Brown","givenNames":"KR","surnames":
-          "Brown","suffix":""},{"fullName":"HM Thaker","givenNames":"HM",
-          "surnames":"Thaker","suffix":""},{"fullName":"IR Singh",
-          "givenNames":"IR","surnames":"Singh","suffix":""}],"editors":[]},{
-      "key":"5","year":2009,"displayYear":"2009","volumeNumber":6,"volume":
-      "6","title":
-      "Lack of evidence for xenotropic murine leukemia virus-related virus (XMRV) in German prostate cancer patients.",
-      "pages":"92","eLocationID":"92","journal":"Retrovirology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "O Hohn","givenNames":"O","surnames":"Hohn","suffix":""},{
-          "fullName":"H Krause","givenNames":"H","surnames":"Krause",
-          "suffix":""},{"fullName":"P Barbarotto","givenNames":"P",
-          "surnames":"Barbarotto","suffix":""},{"fullName":"L Niederstadt",
-          "givenNames":"L","surnames":"Niederstadt","suffix":""},{"fullName":
-          "N Beimforde","givenNames":"N","surnames":"Beimforde","suffix":
-          ""}],"editors":[]},{"key":"6","year":2008,"displayYear":"2008",
-      "volumeNumber":7,"volume":"7","title":
-      "No evidence of XMRV in Irish prostate cancer patients with the R462Q mutations.",
-      "pages":"271","eLocationID":"271","journal":"European Urology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "FR D\u0027Arcy","givenNames":"FR","surnames":"D\u0027Arcy",
-          "suffix":""},{"fullName":"A Foley","givenNames":"A","surnames":
-          "Foley","suffix":""},{"fullName":"L Perry","givenNames":"L",
-          "surnames":"Perry","suffix":""},{"fullName":"L Marignol",
-          "givenNames":"L","surnames":"Marignol","suffix":""},{"fullName":
-          "M Lawler","givenNames":"M","surnames":"Lawler","suffix":""}],
-      "editors":[]},{"key":"7","year":2008,"displayYear":"2008",
-      "volumeNumber":43,"volume":"43","title":
-      "Prevalence of human gamma retrovirus XMRV in sporadic prostate cancer.",
-      "pages":"277-283","eLocationID":"277","journal":"J Clin Virol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "N Fischer","givenNames":"N","surnames":"Fischer","suffix":""},{
-          "fullName":"O Hellwinkel","givenNames":"O","surnames":
-          "Hellwinkel","suffix":""},{"fullName":"C Schulz","givenNames":
-          "C","surnames":"Schulz","suffix":""},{"fullName":"FK Chun",
-          "givenNames":"FK","surnames":"Chun","suffix":""},{"fullName":
-          "H Huland","givenNames":"H","surnames":"Huland","suffix":""}],
-      "editors":[]},{"key":"8","year":2007,"displayYear":"2007",
-      "volumeNumber":18,"volume":"18","title":
-      "A scientific journey through the 2-5A/RNaseL system.","pages":
-      "381-388","eLocationID":"381","journal":"Cytokine Growth Factor Rev",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RH Silverman","givenNames":"RH","surnames":"Silverman","suffix":
-          ""}],"editors":[]},{"key":"9","year":1997,"displayYear":"1997",
-      "volumeNumber":19,"volume":"19","title":
-      "Chronic fatigue syndrome. A practical guide to assessment and management.",
-      "pages":"185-99","eLocationID":"185","journal":
-      "General Hospital Psychiatry","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Sharpe","givenNames":"M","surnames":"Sharpe","suffix":""},{
-          "fullName":"T Chalder","givenNames":"T","surnames":"Chalder",
-          "suffix":""},{"fullName":"I Palmer","givenNames":"I","surnames":
-          "Palmer","suffix":""},{"fullName":"S Wessely","givenNames":"S",
-          "surnames":"Wessely","suffix":""}],"editors":[]},{"key":"10",
-      "year":1994,"displayYear":"1994","volumeNumber":121,"volume":"121",
-      "title":
-      "The chronic fatigue syndrome: a comprehensive approach to its definition and study.",
-      "pages":"953-959","eLocationID":"953","journal":
-      "Annals of Internal Medicine","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K Fukuda","givenNames":"K","surnames":"Fukuda","suffix":""},{
-          "fullName":"S Straus","givenNames":"S","surnames":"Straus",
-          "suffix":""},{"fullName":"I Hickie","givenNames":"I","surnames":
-          "Hickie","suffix":""},{"fullName":"MC Sharpe","givenNames":"MC",
-          "surnames":"Sharpe","suffix":""},{"fullName":"JG Dobbins",
-          "givenNames":"JG","surnames":"Dobbins","suffix":""}],"editors":[]},
-    {"key":"11","year":2009,"displayYear":"2009","title":
-      "Does hypocortisolism predict a poor response to cognitive behavioural therapy in chronic fatigue syndrome?",
-      "journal":"Psychological Medicine. In press","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"AD Roberts","givenNames":"AD","surnames":
-          "Roberts","suffix":""},{"fullName":"M Charler","givenNames":"M",
-          "surnames":"Charler","suffix":""},{"fullName":"AS Papadopoulos",
-          "givenNames":"AS","surnames":"Papadopoulos","suffix":""},{
-          "fullName":"S Wessely","givenNames":"S","surnames":"Wessely",
-          "suffix":""},{"fullName":"T Chalder","givenNames":"T","surnames":
-          "Chalder","suffix":""}],"editors":[]},{"key":"12","year":2007,
-      "displayYear":"2007","volumeNumber":45,"volume":"45","title":
-      "Cognitive-behaviour therapy for chronic fatigue syndrome: comparison of outcomes within and outside the confines of a randomised controlled trial.",
-      "pages":"1085-94","eLocationID":"1085","journal":
-      "Behaviour Research \u0026 Therapy","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"L Quarmby","givenNames":"L","surnames":
-          "Quarmby","suffix":""},{"fullName":"KA Rimes","givenNames":"KA",
-          "surnames":"Rimes","suffix":""},{"fullName":"A Deale","givenNames":
-          "A","surnames":"Deale","suffix":""},{"fullName":"S Wessely",
-          "givenNames":"S","surnames":"Wessely","suffix":""},{"fullName":
-          "T Chalder","givenNames":"T","surnames":"Chalder","suffix":""}],
-      "editors":[]},{"key":"13","year":1996,"displayYear":"1996",
-      "volumeNumber":168,"volume":"168","title":
-      "A comparison of the characteristics of chronic fatigue syndrome in primary and tertiary care.",
-      "pages":"121-6","eLocationID":"121","journal":
-      "British Journal of Psychiatry","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"R Euba","givenNames":"R","surnames":"Euba",
-          "suffix":""},{"fullName":"T Chalder","givenNames":"T","surnames":
-          "Chalder","suffix":""},{"fullName":"A Deale","givenNames":"A",
-          "surnames":"Deale","suffix":""},{"fullName":"S Wessely",
-          "givenNames":"S","surnames":"Wessely","suffix":""}],"editors":[]},{
-      "key":"14","year":1997,"displayYear":"1997","volumeNumber":154,
-      "volume":"154","title":
-      "A randomised controlled trial of cognitive behaviour versus relaxation therapy for chronic fatigue syndrome.",
-      "pages":"408-14","eLocationID":"408","journal":
-      "American Journal of Psychiatry","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"A Deale","givenNames":"A","surnames":"Deale",
-          "suffix":""},{"fullName":"T Chalder","givenNames":"T","surnames":
-          "Chalder","suffix":""},{"fullName":"I Marks","givenNames":"I",
-          "surnames":"Marks","suffix":""},{"fullName":"S Wessely",
-          "givenNames":"S","surnames":"Wessely","suffix":""}],"editors":[]},{
-      "key":"15","year":1993,"displayYear":"1993","volumeNumber":37,"volume":
-      "37","title":"Development of a fatigue scale.","pages":"147-153",
-      "eLocationID":"147","journal":"Journal of Psychosomatic Research",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "T Chalder","givenNames":"T","surnames":"Chalder","suffix":""},{
-          "fullName":"G Berelowitz","givenNames":"G","surnames":
-          "Berelowitz","suffix":""},{"fullName":"T Pawlikowska","givenNames":
-          "T","surnames":"Pawlikowska","suffix":""},{"fullName":"L Watts",
-          "givenNames":"L","surnames":"Watts","suffix":""},{"fullName":
-          "S Wessely","givenNames":"S","surnames":"Wessely","suffix":""}],
-      "editors":[]},{"key":"16","year":2002,"displayYear":"2002",
-      "volumeNumber":180,"volume":"180","title":
-      "The work and social adjustment scale: a simple measure of impairment in functioning.",
-      "pages":"461-464","eLocationID":"461","journal":
-      "British Journal of Psychiatry","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"JC Mundt","givenNames":"JC","surnames":
-          "Mundt","suffix":""},{"fullName":"IM Marks","givenNames":"IM",
-          "surnames":"Marks","suffix":""},{"fullName":"K Shear","givenNames":
-          "K","surnames":"Shear","suffix":""},{"fullName":"JH Griest",
-          "givenNames":"JH","surnames":"Griest","suffix":""}],"editors":[]},{
-      "key":"17","year":1970,"displayYear":"1970","volumeNumber":1,"volume":
-      "1","title":
-      "Psychiatric illness in general practice. A detailed study using a new method of case identification.",
-      "pages":"439-443","eLocationID":"439","journal":
-      "British Medical Journal","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DP Goldberg","givenNames":"DP","surnames":"Goldberg","suffix":
-          ""},{"fullName":"B Blackwell","givenNames":"B","surnames":
-          "Blackwell","suffix":""}],"editors":[]},{"key":"18","year":2001,
-      "displayYear":"2001","volumeNumber":35,"volume":"35","title":
-      "What is chronic fatigue syndrome? Heterogeneity within an international multicentre study.",
-      "pages":"520-527","eLocationID":"520","journal":
-      "Australian and New Zealand Journal of Psychiatry",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AHI Wilson","givenNames":"AHI","surnames":"Wilson","suffix":""},{
-          "fullName":"D Hadzi-Pavlovic","givenNames":"D","surnames":
-          "Hadzi-Pavlovic","suffix":""},{"fullName":"D Wakefield",
-          "givenNames":"D","surnames":"Wakefield","suffix":""},{"fullName":
-          "G Parker","givenNames":"G","surnames":"Parker","suffix":""}],
-      "editors":[]},{"key":"19","year":2003,"displayYear":"2003",
-      "volumeNumber":33,"volume":"33","title":
-      "DNA from buccal swabs recruited by mail: evaluation of storage effects on long-term stability and suitability for multiplex polymerase chain reaction genotyping.",
-      "pages":"67-72","eLocationID":"67","journal":"Behav Genet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "B Freeman","givenNames":"B","surnames":"Freeman","suffix":""},{
-          "fullName":"N Smith","givenNames":"N","surnames":"Smith","suffix":
-          ""},{"fullName":"C Curtis","givenNames":"C","surnames":"Curtis",
-          "suffix":""},{"fullName":"L Huckett","givenNames":"L","surnames":
-          "Huckett","suffix":""},{"fullName":"J Mill","givenNames":"J",
-          "surnames":"Mill","suffix":""}],"editors":[]},{"key":"20","year":
-      2001,"displayYear":"2001","volumeNumber":358,"volume":"358","title":
-      "Predictions and associations of fatigue syndromes and mood disorders that occur after infectious mononucleosis.",
-      "pages":"1946-1954","eLocationID":"1946","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "P White","givenNames":"P","surnames":"White","suffix":""},{
-          "fullName":"J Thomas","givenNames":"J","surnames":"Thomas",
-          "suffix":""},{"fullName":"HO Kangro","givenNames":"HO","surnames":
-          "Kangro","suffix":""},{"fullName":"WD Bruce-Jones","givenNames":
-          "WD","surnames":"Bruce-Jones","suffix":""},{"fullName":"J Amess",
-          "givenNames":"J","surnames":"Amess","suffix":""}],"editors":[]},{
-      "key":"21","year":1991,"displayYear":"1991","volumeNumber":88,"volume":
-      "88","title":
-      "Retroviral sequences related to human T-lymphotropic virus type II in patients with chronic fatigue immune dysfunction syndrome.",
-      "pages":"2922-2926","eLocationID":"2922","journal":
-      "Proc Natl Acad Sci USA","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E De Freitas","givenNames":"E","surnames":"De Freitas","suffix":
-          ""},{"fullName":"B Hilliard","givenNames":"B","surnames":
-          "Hilliard","suffix":""},{"fullName":"PR Cheney","givenNames":
-          "PR","surnames":"Cheney","suffix":""},{"fullName":"DS Bell",
-          "givenNames":"DS","surnames":"Bell","suffix":""},{"fullName":
-          "E Kiggundu","givenNames":"E","surnames":"Kiggundu","suffix":""}],
-      "editors":[]},{"key":"22","year":1992,"displayYear":"1992",
-      "volumeNumber":45,"volume":"45","title":
-      "Search for retrovirus in the chronic fatigue syndrome.","pages":
-      "1058-1061","eLocationID":"1058","journal":"J Clin pathol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Gow","givenNames":"J","surnames":"Gow","suffix":""},{"fullName":
-          "K Simpson","givenNames":"K","surnames":"Simpson","suffix":""},{
-          "fullName":"A Schliephake","givenNames":"A","surnames":
-          "Schliephake","suffix":""},{"fullName":"WM Behan","givenNames":
-          "WM","surnames":"Behan","suffix":""},{"fullName":"LJ Morrison",
-          "givenNames":"LJ","surnames":"Morrison","suffix":""}],"editors":[]},
-    {"key":"23","year":1993,"displayYear":"1993","volumeNumber":37,"volume":
-      "37","title":
-      "Japanese patients with chronic fatigue syndrome are negative for known retrovirus infections.",
-      "pages":"779-784","eLocationID":"779","journal":"Microbiol. Immunol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Honda","givenNames":"M","surnames":"Honda","suffix":""},{
-          "fullName":"K Kitamura","givenNames":"K","surnames":"Kitamura",
-          "suffix":""},{"fullName":"T Nakasone","givenNames":"T","surnames":
-          "Nakasone","suffix":""},{"fullName":"Y Fukushima","givenNames":
-          "Y","surnames":"Fukushima","suffix":""},{"fullName":"S Matsuda",
-          "givenNames":"S","surnames":"Matsuda","suffix":""}],"editors":[]},{
-      "key":"24","year":1993,"displayYear":"1993","volumeNumber":173,
-      "volume":"173","title":
-      "Investigation of retroviral involvement in chronic fatigue syndrome.",
-      "pages":"160-166","eLocationID":"160","journal":"Ciba Found Symp",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "TM Folks","givenNames":"TM","surnames":"Folks","suffix":""},{
-          "fullName":"W Heneine","givenNames":"W","surnames":"Heneine",
-          "suffix":""},{"fullName":"A Khan","givenNames":"A","surnames":
-          "Khan","suffix":""},{"fullName":"T Woods","givenNames":"T",
-          "surnames":"Woods","suffix":""},{"fullName":"L Chapman",
-          "givenNames":"L","surnames":"Chapman","suffix":""}],"editors":[]},{
-      "key":"25","year":1993,"displayYear":"1993","volumeNumber":118,
-      "volume":"118","title":
-      "Assessment of retrovirus sequence and other possible risk factors for the chronic fatigue syndrome in adults.",
-      "pages":"241-245","eLocationID":"241","journal":
-      "Annals of Internal Med","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "AS Khan","givenNames":"AS","surnames":"Khan","suffix":""},{
-          "fullName":"WM Heneine","givenNames":"WM","surnames":"Heneine",
-          "suffix":""},{"fullName":"LE Chapman","givenNames":"LE","surnames":
-          "Chapman","suffix":""},{"fullName":"HE Gary Jr","givenNames":
-          "HE","surnames":"Gary","suffix":"Jr"},{"fullName":"TC Woods",
-          "givenNames":"TC","surnames":"Woods","suffix":""}],"editors":[]},{
-      "key":"26","year":1994,"displayYear":"1994","volumeNumber":1,"volume":
-      "suppl 1","title":
-      "Lack of evidence for infection with known human and animal retroviruses in patients with chronic fatigue syndrome.",
-      "pages":"s121-125","eLocationID":"s121","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "W Heneine","givenNames":"W","surnames":"Heneine","suffix":""},{
-          "fullName":"TC Woods","givenNames":"TC","surnames":"Woods",
-          "suffix":""},{"fullName":"SD Sinha","givenNames":"SD","surnames":
-          "Sinha","suffix":""},{"fullName":"AS Khan","givenNames":"AS",
-          "surnames":"Khan","suffix":""},{"fullName":"LE Chapman",
-          "givenNames":"LE","surnames":"Chapman","suffix":""}],"editors":[]}],
-  "relatedArticles":[],"authors":[{"fullName":"Otto Erlwein","givenNames":
-      "Otto","surnames":"Erlwein","suffix":""},{"fullName":"Steve Kaye",
-      "givenNames":"Steve","surnames":"Kaye","suffix":""},{"fullName":
-      "Myra O. McClure","givenNames":"Myra O.","surnames":"McClure","suffix":
-      ""},{"fullName":"Jonathan Weber","givenNames":"Jonathan","surnames":
-      "Weber","suffix":""},{"fullName":"Gillian Wills","givenNames":
-      "Gillian","surnames":"Wills","suffix":""},{"fullName":
-      "David Collier","givenNames":"David","surnames":"Collier","suffix":
-      ""},{"fullName":"Simon Wessely","givenNames":"Simon","surnames":
-      "Wessely","suffix":""},{"fullName":"Anthony Cleare","givenNames":
-      "Anthony","surnames":"Cleare","suffix":""}],"editors":[{"fullName":
-      "Douglas F. Nixon","givenNames":"Douglas F.","surnames":"Nixon",
-      "suffix":""}],"journals":[{"eIssn":"1932-6203"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pone.0008519",
+  "title": "Failure to Detect the Novel Retrovirus XMRV in Chronic Fatigue Syndrome",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0008519.zip",
+  "description": "<sec><title>Background</title><p>In October 2009 it was reported that 68 of 101 patients with chronic fatigue syndrome (CFS) in the US were infected with a novel gamma retrovirus, xenotropic murine leukaemia virus-related virus (XMRV), a virus previously linked to prostate cancer. This finding, if confirmed, would have a profound effect on the understanding and treatment of an incapacitating disease affecting millions worldwide. We have investigated CFS sufferers in the UK to determine if they are carriers of XMRV.</p></sec><sec><title>Methodology</title><p>Patients in our CFS cohort had undergone medical screening to exclude detectable organic illness and met the CDC criteria for CFS. DNA extracted from blood samples of 186 CFS patients were screened for XMRV provirus and for the closely related murine leukaemia virus by nested PCR using specific oligonucleotide primers. To control for the integrity of the DNA, the cellular beta-globin gene was amplified. Negative controls (water) and a positive control (XMRV infectious molecular clone DNA) were included. While the beta-globin gene was amplified in all 186 samples, neither XMRV nor MLV sequences were detected.</p></sec><sec><title>Conclusion</title><p>XMRV or MLV sequences were not amplified from DNA originating from CFS patients in the UK. Although we found no evidence that XMRV is associated with CFS in the UK, this may be a result of population differences between North America and Europe regarding the general prevalence of XMRV infection, and might also explain the fact that two US groups found XMRV in prostate cancer tissue, while two European studies did not.</p></sec>",
+  "rights": "Erlwein et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-4",
+  "eLocationId": "e8519",
+  "strkImgURI": "",
+  "date": "2010-01-06T08:00:00Z",
+  "volume": "5",
+  "issue": "1",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0008519",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Failure to Detect the Novel Retrovirus XMRV in Chronic Fatigue Syndrome",
+      "description": "<sec><title>Background</title><p>In October 2009 it was reported that 68 of 101 patients with chronic fatigue syndrome (CFS) in the US were infected with a novel gamma retrovirus, xenotropic murine leukaemia virus-related virus (XMRV), a virus previously linked to prostate cancer. This finding, if confirmed, would have a profound effect on the understanding and treatment of an incapacitating disease affecting millions worldwide. We have investigated CFS sufferers in the UK to determine if they are carriers of XMRV.</p></sec><sec><title>Methodology</title><p>Patients in our CFS cohort had undergone medical screening to exclude detectable organic illness and met the CDC criteria for CFS. DNA extracted from blood samples of 186 CFS patients were screened for XMRV provirus and for the closely related murine leukaemia virus by nested PCR using specific oligonucleotide primers. To control for the integrity of the DNA, the cellular beta-globin gene was amplified. Negative controls (water) and a positive control (XMRV infectious molecular clone DNA) were included. While the beta-globin gene was amplified in all 186 samples, neither XMRV nor MLV sequences were detected.</p></sec><sec><title>Conclusion</title><p>XMRV or MLV sequences were not amplified from DNA originating from CFS patients in the UK. Although we found no evidence that XMRV is associated with CFS in the UK, this may be a result of population differences between North America and Europe regarding the general prevalence of XMRV infection, and might also explain the fact that two US groups found XMRV in prostate cancer tissue, while two European studies did not.</p></sec>",
+      "size": 52414
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Failure to Detect the Novel Retrovirus XMRV in Chronic Fatigue Syndrome",
+      "description": "<sec><title>Background</title><p>In October 2009 it was reported that 68 of 101 patients with chronic fatigue syndrome (CFS) in the US were infected with a novel gamma retrovirus, xenotropic murine leukaemia virus-related virus (XMRV), a virus previously linked to prostate cancer. This finding, if confirmed, would have a profound effect on the understanding and treatment of an incapacitating disease affecting millions worldwide. We have investigated CFS sufferers in the UK to determine if they are carriers of XMRV.</p></sec><sec><title>Methodology</title><p>Patients in our CFS cohort had undergone medical screening to exclude detectable organic illness and met the CDC criteria for CFS. DNA extracted from blood samples of 186 CFS patients were screened for XMRV provirus and for the closely related murine leukaemia virus by nested PCR using specific oligonucleotide primers. To control for the integrity of the DNA, the cellular beta-globin gene was amplified. Negative controls (water) and a positive control (XMRV infectious molecular clone DNA) were included. While the beta-globin gene was amplified in all 186 samples, neither XMRV nor MLV sequences were detected.</p></sec><sec><title>Conclusion</title><p>XMRV or MLV sequences were not amplified from DNA originating from CFS patients in the UK. Although we found no evidence that XMRV is associated with CFS in the UK, this may be a result of population differences between North America and Europe regarding the general prevalence of XMRV infection, and might also explain the fact that two US groups found XMRV in prostate cancer tissue, while two European studies did not.</p></sec>",
+      "size": 103137
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Oligonucleotide Primers.</title>",
+      "size": 307488
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Oligonucleotide Primers.</title>",
+      "size": 36020
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Oligonucleotide Primers.</title>",
+      "size": 372663
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Oligonucleotide Primers.</title>",
+      "size": 173085
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>PCR products of the XMRV VP62 clone.</title><p>Primers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3\u2013200 bp molecular size ladder.</p>",
+      "size": 84436
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>PCR products of the XMRV VP62 clone.</title><p>Primers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3\u2013200 bp molecular size ladder.</p>",
+      "size": 9377
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>PCR products of the XMRV VP62 clone.</title><p>Primers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3\u2013200 bp molecular size ladder.</p>",
+      "size": 56806
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>PCR products of the XMRV VP62 clone.</title><p>Primers are generic to MLV (lanes 1 and 2) or specific to XMRV (lanes 4 and 5). The sizes of the respective fragments are shown. Lane 3\u2013200 bp molecular size ladder.</p>",
+      "size": 56806
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Nested PCR from the DNA of 8 CFS patients.</title><p>Products of generic MLV primers (including XMRV) are shown. Lanes 1\u20138, CFS patient DNA (2<sup>nd</sup> round); lanes 9 and 10, XMRV 2<sup>nd</sup> round and 1<sup>st</sup> round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13\u201318, water controls.</p>",
+      "size": 256452
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Nested PCR from the DNA of 8 CFS patients.</title><p>Products of generic MLV primers (including XMRV) are shown. Lanes 1\u20138, CFS patient DNA (2<sup>nd</sup> round); lanes 9 and 10, XMRV 2<sup>nd</sup> round and 1<sup>st</sup> round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13\u201318, water controls.</p>",
+      "size": 10367
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Nested PCR from the DNA of 8 CFS patients.</title><p>Products of generic MLV primers (including XMRV) are shown. Lanes 1\u20138, CFS patient DNA (2<sup>nd</sup> round); lanes 9 and 10, XMRV 2<sup>nd</sup> round and 1<sup>st</sup> round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13\u201318, water controls.</p>",
+      "size": 361176
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0008519.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Nested PCR from the DNA of 8 CFS patients.</title><p>Products of generic MLV primers (including XMRV) are shown. Lanes 1\u20138, CFS patient DNA (2<sup>nd</sup> round); lanes 9 and 10, XMRV 2<sup>nd</sup> round and 1<sup>st</sup> round positive controls; lanes 11 and 12, DNA of uninfected cell line LNCaP; lanes 13\u201318, water controls.</p>",
+      "size": 221077
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 326,
+      "volume": "326",
+      "title": "Detection of an infectious retrovirus, XMRV, in blood cells of patients with chronic fatigue syndrome.",
+      "pages": "585-589",
+      "eLocationID": "585",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V Lombardi",
+          "givenNames": "V",
+          "surnames": "Lombardi",
+          "suffix": ""
+        },
+        {
+          "fullName": "FW Ruscetti",
+          "givenNames": "FW",
+          "surnames": "Ruscetti",
+          "suffix": ""
+        },
+        {
+          "fullName": "JD Gupta",
+          "givenNames": "JD",
+          "surnames": "Gupta",
+          "suffix": ""
+        },
+        {
+          "fullName": "MA Pfost",
+          "givenNames": "MA",
+          "surnames": "Pfost",
+          "suffix": ""
+        },
+        {
+          "fullName": "KS Hagen",
+          "givenNames": "KS",
+          "surnames": "Hagen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2009,
+      "displayYear": "2009",
+      "title": "The Prevalence of Xenotropic Murine Leukemia Virus-related Virus in Healthy Blood Donors in Japan.",
+      "journal": "Cold Spring Harbor Retrovirus Symposium",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RA Furuta",
+          "givenNames": "RA",
+          "surnames": "Furuta",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Miyazawa",
+          "givenNames": "T",
+          "surnames": "Miyazawa",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Sugiyama",
+          "givenNames": "T",
+          "surnames": "Sugiyama",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Kimura",
+          "givenNames": "T",
+          "surnames": "Kimura",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Hirayama",
+          "givenNames": "F",
+          "surnames": "Hirayama",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Identification of a novel gammaretrovirus in prostate tumors of patients homozygous for R462Q RNaseL variant.",
+      "pages": "211-225",
+      "eLocationID": "211",
+      "journal": "PLoS Pathog",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Urisman",
+          "givenNames": "A",
+          "surnames": "Urisman",
+          "suffix": ""
+        },
+        {
+          "fullName": "RJ Molinaro",
+          "givenNames": "RJ",
+          "surnames": "Molinaro",
+          "suffix": ""
+        },
+        {
+          "fullName": "SJ Fischer N Plummer",
+          "givenNames": "SJ",
+          "surnames": "Fischer N Plummer",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Casey",
+          "givenNames": "G",
+          "surnames": "Casey",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 106,
+      "volume": "106",
+      "title": "XMRV is present in malignant prostatic epithelium and is associated with prostate cancer, especially high-grade tumours.",
+      "pages": "16351-6",
+      "eLocationID": "16351",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Schlaberg",
+          "givenNames": "R",
+          "surnames": "Schlaberg",
+          "suffix": ""
+        },
+        {
+          "fullName": "DJ Choe",
+          "givenNames": "DJ",
+          "surnames": "Choe",
+          "suffix": ""
+        },
+        {
+          "fullName": "KR Brown",
+          "givenNames": "KR",
+          "surnames": "Brown",
+          "suffix": ""
+        },
+        {
+          "fullName": "HM Thaker",
+          "givenNames": "HM",
+          "surnames": "Thaker",
+          "suffix": ""
+        },
+        {
+          "fullName": "IR Singh",
+          "givenNames": "IR",
+          "surnames": "Singh",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Lack of evidence for xenotropic murine leukemia virus-related virus (XMRV) in German prostate cancer patients.",
+      "pages": "92",
+      "eLocationID": "92",
+      "journal": "Retrovirology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "O Hohn",
+          "givenNames": "O",
+          "surnames": "Hohn",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Krause",
+          "givenNames": "H",
+          "surnames": "Krause",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Barbarotto",
+          "givenNames": "P",
+          "surnames": "Barbarotto",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Niederstadt",
+          "givenNames": "L",
+          "surnames": "Niederstadt",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Beimforde",
+          "givenNames": "N",
+          "surnames": "Beimforde",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "No evidence of XMRV in Irish prostate cancer patients with the R462Q mutations.",
+      "pages": "271",
+      "eLocationID": "271",
+      "journal": "European Urology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "FR D'Arcy",
+          "givenNames": "FR",
+          "surnames": "D'Arcy",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Foley",
+          "givenNames": "A",
+          "surnames": "Foley",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Perry",
+          "givenNames": "L",
+          "surnames": "Perry",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Marignol",
+          "givenNames": "L",
+          "surnames": "Marignol",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Lawler",
+          "givenNames": "M",
+          "surnames": "Lawler",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 43,
+      "volume": "43",
+      "title": "Prevalence of human gamma retrovirus XMRV in sporadic prostate cancer.",
+      "pages": "277-283",
+      "eLocationID": "277",
+      "journal": "J Clin Virol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "N Fischer",
+          "givenNames": "N",
+          "surnames": "Fischer",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Hellwinkel",
+          "givenNames": "O",
+          "surnames": "Hellwinkel",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Schulz",
+          "givenNames": "C",
+          "surnames": "Schulz",
+          "suffix": ""
+        },
+        {
+          "fullName": "FK Chun",
+          "givenNames": "FK",
+          "surnames": "Chun",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Huland",
+          "givenNames": "H",
+          "surnames": "Huland",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "A scientific journey through the 2-5A/RNaseL system.",
+      "pages": "381-388",
+      "eLocationID": "381",
+      "journal": "Cytokine Growth Factor Rev",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RH Silverman",
+          "givenNames": "RH",
+          "surnames": "Silverman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 19,
+      "volume": "19",
+      "title": "Chronic fatigue syndrome. A practical guide to assessment and management.",
+      "pages": "185-99",
+      "eLocationID": "185",
+      "journal": "General Hospital Psychiatry",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Sharpe",
+          "givenNames": "M",
+          "surnames": "Sharpe",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Chalder",
+          "givenNames": "T",
+          "surnames": "Chalder",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Palmer",
+          "givenNames": "I",
+          "surnames": "Palmer",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wessely",
+          "givenNames": "S",
+          "surnames": "Wessely",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 121,
+      "volume": "121",
+      "title": "The chronic fatigue syndrome: a comprehensive approach to its definition and study.",
+      "pages": "953-959",
+      "eLocationID": "953",
+      "journal": "Annals of Internal Medicine",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K Fukuda",
+          "givenNames": "K",
+          "surnames": "Fukuda",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Straus",
+          "givenNames": "S",
+          "surnames": "Straus",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Hickie",
+          "givenNames": "I",
+          "surnames": "Hickie",
+          "suffix": ""
+        },
+        {
+          "fullName": "MC Sharpe",
+          "givenNames": "MC",
+          "surnames": "Sharpe",
+          "suffix": ""
+        },
+        {
+          "fullName": "JG Dobbins",
+          "givenNames": "JG",
+          "surnames": "Dobbins",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2009,
+      "displayYear": "2009",
+      "title": "Does hypocortisolism predict a poor response to cognitive behavioural therapy in chronic fatigue syndrome?",
+      "journal": "Psychological Medicine. In press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AD Roberts",
+          "givenNames": "AD",
+          "surnames": "Roberts",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Charler",
+          "givenNames": "M",
+          "surnames": "Charler",
+          "suffix": ""
+        },
+        {
+          "fullName": "AS Papadopoulos",
+          "givenNames": "AS",
+          "surnames": "Papadopoulos",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wessely",
+          "givenNames": "S",
+          "surnames": "Wessely",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Chalder",
+          "givenNames": "T",
+          "surnames": "Chalder",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 45,
+      "volume": "45",
+      "title": "Cognitive-behaviour therapy for chronic fatigue syndrome: comparison of outcomes within and outside the confines of a randomised controlled trial.",
+      "pages": "1085-94",
+      "eLocationID": "1085",
+      "journal": "Behaviour Research & Therapy",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Quarmby",
+          "givenNames": "L",
+          "surnames": "Quarmby",
+          "suffix": ""
+        },
+        {
+          "fullName": "KA Rimes",
+          "givenNames": "KA",
+          "surnames": "Rimes",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Deale",
+          "givenNames": "A",
+          "surnames": "Deale",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wessely",
+          "givenNames": "S",
+          "surnames": "Wessely",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Chalder",
+          "givenNames": "T",
+          "surnames": "Chalder",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 1996,
+      "displayYear": "1996",
+      "volumeNumber": 168,
+      "volume": "168",
+      "title": "A comparison of the characteristics of chronic fatigue syndrome in primary and tertiary care.",
+      "pages": "121-6",
+      "eLocationID": "121",
+      "journal": "British Journal of Psychiatry",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Euba",
+          "givenNames": "R",
+          "surnames": "Euba",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Chalder",
+          "givenNames": "T",
+          "surnames": "Chalder",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Deale",
+          "givenNames": "A",
+          "surnames": "Deale",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wessely",
+          "givenNames": "S",
+          "surnames": "Wessely",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 1997,
+      "displayYear": "1997",
+      "volumeNumber": 154,
+      "volume": "154",
+      "title": "A randomised controlled trial of cognitive behaviour versus relaxation therapy for chronic fatigue syndrome.",
+      "pages": "408-14",
+      "eLocationID": "408",
+      "journal": "American Journal of Psychiatry",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Deale",
+          "givenNames": "A",
+          "surnames": "Deale",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Chalder",
+          "givenNames": "T",
+          "surnames": "Chalder",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Marks",
+          "givenNames": "I",
+          "surnames": "Marks",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wessely",
+          "givenNames": "S",
+          "surnames": "Wessely",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 37,
+      "volume": "37",
+      "title": "Development of a fatigue scale.",
+      "pages": "147-153",
+      "eLocationID": "147",
+      "journal": "Journal of Psychosomatic Research",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "T Chalder",
+          "givenNames": "T",
+          "surnames": "Chalder",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Berelowitz",
+          "givenNames": "G",
+          "surnames": "Berelowitz",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Pawlikowska",
+          "givenNames": "T",
+          "surnames": "Pawlikowska",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Watts",
+          "givenNames": "L",
+          "surnames": "Watts",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Wessely",
+          "givenNames": "S",
+          "surnames": "Wessely",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 180,
+      "volume": "180",
+      "title": "The work and social adjustment scale: a simple measure of impairment in functioning.",
+      "pages": "461-464",
+      "eLocationID": "461",
+      "journal": "British Journal of Psychiatry",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JC Mundt",
+          "givenNames": "JC",
+          "surnames": "Mundt",
+          "suffix": ""
+        },
+        {
+          "fullName": "IM Marks",
+          "givenNames": "IM",
+          "surnames": "Marks",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Shear",
+          "givenNames": "K",
+          "surnames": "Shear",
+          "suffix": ""
+        },
+        {
+          "fullName": "JH Griest",
+          "givenNames": "JH",
+          "surnames": "Griest",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 1970,
+      "displayYear": "1970",
+      "volumeNumber": 1,
+      "volume": "1",
+      "title": "Psychiatric illness in general practice. A detailed study using a new method of case identification.",
+      "pages": "439-443",
+      "eLocationID": "439",
+      "journal": "British Medical Journal",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DP Goldberg",
+          "givenNames": "DP",
+          "surnames": "Goldberg",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Blackwell",
+          "givenNames": "B",
+          "surnames": "Blackwell",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 35,
+      "volume": "35",
+      "title": "What is chronic fatigue syndrome? Heterogeneity within an international multicentre study.",
+      "pages": "520-527",
+      "eLocationID": "520",
+      "journal": "Australian and New Zealand Journal of Psychiatry",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AHI Wilson",
+          "givenNames": "AHI",
+          "surnames": "Wilson",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Hadzi-Pavlovic",
+          "givenNames": "D",
+          "surnames": "Hadzi-Pavlovic",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Wakefield",
+          "givenNames": "D",
+          "surnames": "Wakefield",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Parker",
+          "givenNames": "G",
+          "surnames": "Parker",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 33,
+      "volume": "33",
+      "title": "DNA from buccal swabs recruited by mail: evaluation of storage effects on long-term stability and suitability for multiplex polymerase chain reaction genotyping.",
+      "pages": "67-72",
+      "eLocationID": "67",
+      "journal": "Behav Genet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "B Freeman",
+          "givenNames": "B",
+          "surnames": "Freeman",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Smith",
+          "givenNames": "N",
+          "surnames": "Smith",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Curtis",
+          "givenNames": "C",
+          "surnames": "Curtis",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Huckett",
+          "givenNames": "L",
+          "surnames": "Huckett",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Mill",
+          "givenNames": "J",
+          "surnames": "Mill",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 358,
+      "volume": "358",
+      "title": "Predictions and associations of fatigue syndromes and mood disorders that occur after infectious mononucleosis.",
+      "pages": "1946-1954",
+      "eLocationID": "1946",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P White",
+          "givenNames": "P",
+          "surnames": "White",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Thomas",
+          "givenNames": "J",
+          "surnames": "Thomas",
+          "suffix": ""
+        },
+        {
+          "fullName": "HO Kangro",
+          "givenNames": "HO",
+          "surnames": "Kangro",
+          "suffix": ""
+        },
+        {
+          "fullName": "WD Bruce-Jones",
+          "givenNames": "WD",
+          "surnames": "Bruce-Jones",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Amess",
+          "givenNames": "J",
+          "surnames": "Amess",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 1991,
+      "displayYear": "1991",
+      "volumeNumber": 88,
+      "volume": "88",
+      "title": "Retroviral sequences related to human T-lymphotropic virus type II in patients with chronic fatigue immune dysfunction syndrome.",
+      "pages": "2922-2926",
+      "eLocationID": "2922",
+      "journal": "Proc Natl Acad Sci USA",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E De Freitas",
+          "givenNames": "E",
+          "surnames": "De Freitas",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Hilliard",
+          "givenNames": "B",
+          "surnames": "Hilliard",
+          "suffix": ""
+        },
+        {
+          "fullName": "PR Cheney",
+          "givenNames": "PR",
+          "surnames": "Cheney",
+          "suffix": ""
+        },
+        {
+          "fullName": "DS Bell",
+          "givenNames": "DS",
+          "surnames": "Bell",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Kiggundu",
+          "givenNames": "E",
+          "surnames": "Kiggundu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 1992,
+      "displayYear": "1992",
+      "volumeNumber": 45,
+      "volume": "45",
+      "title": "Search for retrovirus in the chronic fatigue syndrome.",
+      "pages": "1058-1061",
+      "eLocationID": "1058",
+      "journal": "J Clin pathol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Gow",
+          "givenNames": "J",
+          "surnames": "Gow",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Simpson",
+          "givenNames": "K",
+          "surnames": "Simpson",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Schliephake",
+          "givenNames": "A",
+          "surnames": "Schliephake",
+          "suffix": ""
+        },
+        {
+          "fullName": "WM Behan",
+          "givenNames": "WM",
+          "surnames": "Behan",
+          "suffix": ""
+        },
+        {
+          "fullName": "LJ Morrison",
+          "givenNames": "LJ",
+          "surnames": "Morrison",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 37,
+      "volume": "37",
+      "title": "Japanese patients with chronic fatigue syndrome are negative for known retrovirus infections.",
+      "pages": "779-784",
+      "eLocationID": "779",
+      "journal": "Microbiol. Immunol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Honda",
+          "givenNames": "M",
+          "surnames": "Honda",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Kitamura",
+          "givenNames": "K",
+          "surnames": "Kitamura",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Nakasone",
+          "givenNames": "T",
+          "surnames": "Nakasone",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Fukushima",
+          "givenNames": "Y",
+          "surnames": "Fukushima",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Matsuda",
+          "givenNames": "S",
+          "surnames": "Matsuda",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 173,
+      "volume": "173",
+      "title": "Investigation of retroviral involvement in chronic fatigue syndrome.",
+      "pages": "160-166",
+      "eLocationID": "160",
+      "journal": "Ciba Found Symp",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TM Folks",
+          "givenNames": "TM",
+          "surnames": "Folks",
+          "suffix": ""
+        },
+        {
+          "fullName": "W Heneine",
+          "givenNames": "W",
+          "surnames": "Heneine",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Khan",
+          "givenNames": "A",
+          "surnames": "Khan",
+          "suffix": ""
+        },
+        {
+          "fullName": "T Woods",
+          "givenNames": "T",
+          "surnames": "Woods",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Chapman",
+          "givenNames": "L",
+          "surnames": "Chapman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 1993,
+      "displayYear": "1993",
+      "volumeNumber": 118,
+      "volume": "118",
+      "title": "Assessment of retrovirus sequence and other possible risk factors for the chronic fatigue syndrome in adults.",
+      "pages": "241-245",
+      "eLocationID": "241",
+      "journal": "Annals of Internal Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "AS Khan",
+          "givenNames": "AS",
+          "surnames": "Khan",
+          "suffix": ""
+        },
+        {
+          "fullName": "WM Heneine",
+          "givenNames": "WM",
+          "surnames": "Heneine",
+          "suffix": ""
+        },
+        {
+          "fullName": "LE Chapman",
+          "givenNames": "LE",
+          "surnames": "Chapman",
+          "suffix": ""
+        },
+        {
+          "fullName": "HE Gary Jr",
+          "givenNames": "HE",
+          "surnames": "Gary",
+          "suffix": "Jr"
+        },
+        {
+          "fullName": "TC Woods",
+          "givenNames": "TC",
+          "surnames": "Woods",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 1,
+      "volume": "suppl 1",
+      "title": "Lack of evidence for infection with known human and animal retroviruses in patients with chronic fatigue syndrome.",
+      "pages": "s121-125",
+      "eLocationID": "s121",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "W Heneine",
+          "givenNames": "W",
+          "surnames": "Heneine",
+          "suffix": ""
+        },
+        {
+          "fullName": "TC Woods",
+          "givenNames": "TC",
+          "surnames": "Woods",
+          "suffix": ""
+        },
+        {
+          "fullName": "SD Sinha",
+          "givenNames": "SD",
+          "surnames": "Sinha",
+          "suffix": ""
+        },
+        {
+          "fullName": "AS Khan",
+          "givenNames": "AS",
+          "surnames": "Khan",
+          "suffix": ""
+        },
+        {
+          "fullName": "LE Chapman",
+          "givenNames": "LE",
+          "surnames": "Chapman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Otto Erlwein",
+      "givenNames": "Otto",
+      "surnames": "Erlwein",
+      "suffix": ""
+    },
+    {
+      "fullName": "Steve Kaye",
+      "givenNames": "Steve",
+      "surnames": "Kaye",
+      "suffix": ""
+    },
+    {
+      "fullName": "Myra O. McClure",
+      "givenNames": "Myra O.",
+      "surnames": "McClure",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jonathan Weber",
+      "givenNames": "Jonathan",
+      "surnames": "Weber",
+      "suffix": ""
+    },
+    {
+      "fullName": "Gillian Wills",
+      "givenNames": "Gillian",
+      "surnames": "Wills",
+      "suffix": ""
+    },
+    {
+      "fullName": "David Collier",
+      "givenNames": "David",
+      "surnames": "Collier",
+      "suffix": ""
+    },
+    {
+      "fullName": "Simon Wessely",
+      "givenNames": "Simon",
+      "surnames": "Wessely",
+      "suffix": ""
+    },
+    {
+      "fullName": "Anthony Cleare",
+      "givenNames": "Anthony",
+      "surnames": "Cleare",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Douglas F. Nixon",
+      "givenNames": "Douglas F.",
+      "surnames": "Nixon",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}

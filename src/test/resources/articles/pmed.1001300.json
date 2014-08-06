@@ -1,1038 +1,3493 @@
-{"doi":"info:doi/10.1371/journal.pmed.1001300","title":
-  "Multidrug Resistant Pulmonary Tuberculosis Treatment Regimens and Patient Outcomes: An Individual Patient Data Meta-analysis of 9,153 Patients",
-  "eIssn":"1549-1676","state":1,"archiveName":"pmed.1001300.zip",
-  "description":
-  "\u003cp\u003eDick Menzies and colleagues report findings from a collaborative, individual patient-level meta-analysis of treatment outcomes among patients with multidrug-resistant tuberculosis.\u003c/p\u003e",
-  "rights":
-  "Ahuja et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-16","eLocationId":
-  "e1001300","strkImgURI":"","date":"2012-08-28T07:00:00Z","volume":
-  "9","issue":"8","journal":"PLoS Med","publisherLocation":
-  "San Francisco, USA","publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pmed.1001300","collaborativeAuthors":[
-    "Collaborative Group for Meta-Analysis of Individual Patient Data in MDR-TB"],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pmed.1001300","extension":
-      "XML","contentType":"text/xml","title":
-      "Multidrug Resistant Pulmonary Tuberculosis Treatment Regimens and Patient Outcomes: An Individual Patient Data Meta-analysis of 9,153 Patients",
-      "description":
-      "\u003cp\u003eDick Menzies and colleagues report findings from a collaborative, individual patient-level meta-analysis of treatment outcomes among patients with multidrug-resistant tuberculosis.\u003c/p\u003e",
-      "size":209996},{"doi":"info:doi/10.1371/journal.pmed.1001300",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Multidrug Resistant Pulmonary Tuberculosis Treatment Regimens and Patient Outcomes: An Individual Patient Data Meta-analysis of 9,153 Patients",
-      "description":
-      "\u003cp\u003eDick Menzies and colleagues report findings from a collaborative, individual patient-level meta-analysis of treatment outcomes among patients with multidrug-resistant tuberculosis.\u003c/p\u003e",
-      "size":678490},{"doi":"info:doi/10.1371/journal.pmed.1001300.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eStudy selection.\u003c/title\u003e","size":536224},{
-      "doi":"info:doi/10.1371/journal.pmed.1001300.g001","contextElement":
-      "fig","extension":"PNG_I","contentType":"image/png","title":
-      "Figure 1","description":
-      "\u003ctitle\u003eStudy selection.\u003c/title\u003e","size":19762},{
-      "doi":"info:doi/10.1371/journal.pmed.1001300.g001","contextElement":
-      "fig","extension":"PNG_S","contentType":"image/png","title":
-      "Figure 1","description":
-      "\u003ctitle\u003eStudy selection.\u003c/title\u003e","size":2785},{
-      "doi":"info:doi/10.1371/journal.pmed.1001300.g001","contextElement":
-      "fig","extension":"PNG_M","contentType":"image/png","title":
-      "Figure 1","description":
-      "\u003ctitle\u003eStudy selection.\u003c/title\u003e","size":36892},{
-      "doi":"info:doi/10.1371/journal.pmed.1001300.g001","contextElement":
-      "fig","extension":"PNG_L","contentType":"image/png","title":
-      "Figure 1","description":
-      "\u003ctitle\u003eStudy selection.\u003c/title\u003e","size":89092},{
-      "doi":"info:doi/10.1371/journal.pmed.1001300.t001","contextElement":
-      "table-wrap","extension":"TIF","contentType":"image/tiff","title":
-      "Table 1","description":
-      "\u003ctitle\u003eClinical characteristics and treatment received of patients included in the analysis.\u003c/title\u003e",
-      "size":386328},{"doi":"info:doi/10.1371/journal.pmed.1001300.t001",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical characteristics and treatment received of patients included in the analysis.\u003c/title\u003e",
-      "size":84408},{"doi":"info:doi/10.1371/journal.pmed.1001300.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical characteristics and treatment received of patients included in the analysis.\u003c/title\u003e",
-      "size":8825},{"doi":"info:doi/10.1371/journal.pmed.1001300.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical characteristics and treatment received of patients included in the analysis.\u003c/title\u003e",
-      "size":53715},{"doi":"info:doi/10.1371/journal.pmed.1001300.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eClinical characteristics and treatment received of patients included in the analysis.\u003c/title\u003e",
-      "size":152424},{"doi":"info:doi/10.1371/journal.pmed.1001300.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eCrude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":828310},{"doi":"info:doi/10.1371/journal.pmed.1001300.g002",
-      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eCrude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":52135},{"doi":"info:doi/10.1371/journal.pmed.1001300.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eCrude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":5760},{"doi":"info:doi/10.1371/journal.pmed.1001300.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eCrude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":76415},{"doi":"info:doi/10.1371/journal.pmed.1001300.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eCrude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":452617},{"doi":"info:doi/10.1371/journal.pmed.1001300.g003",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eFixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":980106},{"doi":"info:doi/10.1371/journal.pmed.1001300.g003",
-      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eFixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":59444},{"doi":"info:doi/10.1371/journal.pmed.1001300.g003",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eFixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":6494},{"doi":"info:doi/10.1371/journal.pmed.1001300.g003",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eFixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":67911},{"doi":"info:doi/10.1371/journal.pmed.1001300.g003",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eTreatment success versus failure and relapse and death.\u003c/title\u003e\u003cp\u003eFixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.\u003c/p\u003e",
-      "size":522785},{"doi":"info:doi/10.1371/journal.pmed.1001300.t002",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 2","description":
-      "\u003ctitle\u003eSummary of association of use of individual drugs with treatment success.\u003c/title\u003e",
-      "size":1325130},{"doi":"info:doi/10.1371/journal.pmed.1001300.t002",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSummary of association of use of individual drugs with treatment success.\u003c/title\u003e",
-      "size":26874},{"doi":"info:doi/10.1371/journal.pmed.1001300.t002",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSummary of association of use of individual drugs with treatment success.\u003c/title\u003e",
-      "size":3276},{"doi":"info:doi/10.1371/journal.pmed.1001300.t002",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSummary of association of use of individual drugs with treatment success.\u003c/title\u003e",
-      "size":66763},{"doi":"info:doi/10.1371/journal.pmed.1001300.t002",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSummary of association of use of individual drugs with treatment success.\u003c/title\u003e",
-      "size":471108},{"doi":"info:doi/10.1371/journal.pmed.1001300.t003",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 3","description":
-      "\u003ctitle\u003eAssociation of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":436464},{"doi":"info:doi/10.1371/journal.pmed.1001300.t003",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssociation of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":23121},{"doi":"info:doi/10.1371/journal.pmed.1001300.t003",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssociation of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":2431},{"doi":"info:doi/10.1371/journal.pmed.1001300.t003",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssociation of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":60709},{"doi":"info:doi/10.1371/journal.pmed.1001300.t003",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eAssociation of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":122380},{"doi":"info:doi/10.1371/journal.pmed.1001300.t004",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of previous treatment on association of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":544406},{"doi":"info:doi/10.1371/journal.pmed.1001300.t004",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of previous treatment on association of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":12352},{"doi":"info:doi/10.1371/journal.pmed.1001300.t004",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of previous treatment on association of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":1971},{"doi":"info:doi/10.1371/journal.pmed.1001300.t004",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of previous treatment on association of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":30136},{"doi":"info:doi/10.1371/journal.pmed.1001300.t004",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 4","description":
-      "\u003ctitle\u003eEffect of previous treatment on association of number of likely effective drugs with treatment success—during different phases of treatment.\u003c/title\u003e",
-      "size":188083},{"doi":"info:doi/10.1371/journal.pmed.1001300.g004",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eAssociation of treatment success with duration (adjusted odds and upper bound of CI shown).\u003c/title\u003e\u003cp\u003e(A) Duration of initial intensive phase in all patients (reference group 1.0–2.5 mo). (B) Duration of initial intensive phase—restricted to patients not previously treated with second-line drugs (reference group 1.0–2.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0–12.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6–27.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy—analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0–12.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6–27.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.\u003c/p\u003e",
-      "size":319526},{"doi":"info:doi/10.1371/journal.pmed.1001300.g004",
-      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eAssociation of treatment success with duration (adjusted odds and upper bound of CI shown).\u003c/title\u003e\u003cp\u003e(A) Duration of initial intensive phase in all patients (reference group 1.0–2.5 mo). (B) Duration of initial intensive phase—restricted to patients not previously treated with second-line drugs (reference group 1.0–2.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0–12.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6–27.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy—analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0–12.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6–27.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.\u003c/p\u003e",
-      "size":22828},{"doi":"info:doi/10.1371/journal.pmed.1001300.g004",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eAssociation of treatment success with duration (adjusted odds and upper bound of CI shown).\u003c/title\u003e\u003cp\u003e(A) Duration of initial intensive phase in all patients (reference group 1.0–2.5 mo). (B) Duration of initial intensive phase—restricted to patients not previously treated with second-line drugs (reference group 1.0–2.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0–12.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6–27.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy—analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0–12.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6–27.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.\u003c/p\u003e",
-      "size":4120},{"doi":"info:doi/10.1371/journal.pmed.1001300.g004",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eAssociation of treatment success with duration (adjusted odds and upper bound of CI shown).\u003c/title\u003e\u003cp\u003e(A) Duration of initial intensive phase in all patients (reference group 1.0–2.5 mo). (B) Duration of initial intensive phase—restricted to patients not previously treated with second-line drugs (reference group 1.0–2.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0–12.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6–27.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy—analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0–12.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6–27.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.\u003c/p\u003e",
-      "size":45943},{"doi":"info:doi/10.1371/journal.pmed.1001300.g004",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 4","description":
-      "\u003ctitle\u003eAssociation of treatment success with duration (adjusted odds and upper bound of CI shown).\u003c/title\u003e\u003cp\u003e(A) Duration of initial intensive phase in all patients (reference group 1.0–2.5 mo). (B) Duration of initial intensive phase—restricted to patients not previously treated with second-line drugs (reference group 1.0–2.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0–12.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6–27.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy—analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0–12.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6–27.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.\u003c/p\u003e",
-      "size":14707},{"doi":"info:doi/10.1371/journal.pmed.1001300.t005",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 5","description":
-      "\u003ctitle\u003eAssociation of duration of treatment with success versus failure/relapse—patients grouped by treatment history.\u003c/title\u003e",
-      "size":460910},{"doi":"info:doi/10.1371/journal.pmed.1001300.t005",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eAssociation of duration of treatment with success versus failure/relapse—patients grouped by treatment history.\u003c/title\u003e",
-      "size":23490},{"doi":"info:doi/10.1371/journal.pmed.1001300.t005",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eAssociation of duration of treatment with success versus failure/relapse—patients grouped by treatment history.\u003c/title\u003e",
-      "size":2741},{"doi":"info:doi/10.1371/journal.pmed.1001300.t005",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eAssociation of duration of treatment with success versus failure/relapse—patients grouped by treatment history.\u003c/title\u003e",
-      "size":56781},{"doi":"info:doi/10.1371/journal.pmed.1001300.t005",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 5","description":
-      "\u003ctitle\u003eAssociation of duration of treatment with success versus failure/relapse—patients grouped by treatment history.\u003c/title\u003e",
-      "size":124745},{"doi":"info:doi/10.1371/journal.pmed.1001300.s001",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S1","description":
-      "\u003cp\u003e\u003cbold\u003eChinese translation of the abstract by C-YC and Yuhong Liu.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":17565},{"doi":"info:doi/10.1371/journal.pmed.1001300.s002",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S2","description":
-      "\u003cp\u003e\u003cbold\u003eFrench translation of the abstract by JR.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":17029},{"doi":"info:doi/10.1371/journal.pmed.1001300.s003",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S3","description":
-      "\u003cp\u003e\u003cbold\u003eGerman translation of the abstract by CL.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":18804},{"doi":"info:doi/10.1371/journal.pmed.1001300.s004",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S4","description":
-      "\u003cp\u003e\u003cbold\u003eItalian translation of the abstract by GS and GBM.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":16629},{"doi":"info:doi/10.1371/journal.pmed.1001300.s005",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S5","description":
-      "\u003cp\u003e\u003cbold\u003eKorean translation of the abstract by T-SS, W-JK, and J-JY.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":18886},{"doi":"info:doi/10.1371/journal.pmed.1001300.s006",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S6","description":
-      "\u003cp\u003e\u003cbold\u003eSpanish translation of the abstract by DP, MLGG, JS-O, AP-d-L, MHV, and CP-G.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":17343},{"doi":"info:doi/10.1371/journal.pmed.1001300.s007",
-      "contextElement":"supplementary-material","extension":"DOCX",
-      "contentType":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "title":"Alternative Language Abstract S7","description":
-      "\u003cp\u003e\u003cbold\u003eJapanese translation of the abstract by MN and YS.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOCX)\u003c/p\u003e",
-      "size":17383},{"doi":"info:doi/10.1371/journal.pmed.1001300.s008",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":
-      "Alternative Language Abstract S8","description":
-      "\u003cp\u003e\u003cbold\u003eRussian translation of the abstract by DM.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":39936},{"doi":"info:doi/10.1371/journal.pmed.1001300.s009",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S1","description":
-      "\u003cp\u003e(a) Overview of settings of 32 studies included in individual patient data meta-analysis of MDR-TB supplemental tables (for on-line supplement—references for included studies are found in main text. (b) Overview of 35 studies excluded from individual patient data meta-analysis of MDR-TB.\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":215552},{"doi":"info:doi/10.1371/journal.pmed.1001300.s010",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S2","description":
-      "\u003cp\u003e\u003cbold\u003eDosages of drugs used for MDR-TB treatment at sites of studies included in individual patient data meta-analysis on MDR-TB supplemental tables (for on-line supplement—references for included studies are found in main text.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":166912},{"doi":"info:doi/10.1371/journal.pmed.1001300.s011",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S3","description":
-      "\u003cp\u003e\u003cbold\u003eSummary of treatment outcome definitions used in studies included in individual patient data meta-analysis.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":128000},{"doi":"info:doi/10.1371/journal.pmed.1001300.s012",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S4","description":
-      "\u003cp\u003e\u003cbold\u003eCharacteristics of patients associated with history of prior TB therapy.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":51712},{"doi":"info:doi/10.1371/journal.pmed.1001300.s013",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S5","description":
-      "\u003cp\u003e\u003cbold\u003eAssociation of Individual drugs with treatment success (compared to failure/relapse)—stratified by history of previous treatment.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":75264},{"doi":"info:doi/10.1371/journal.pmed.1001300.s014",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S6","description":
-      "\u003cp\u003e\u003cbold\u003eSecondary analyses to assess impact of covariates on duration of therapy.\u003c/bold\u003e (A) Duration analysis also adjusted for use of four drugs. (B) Analysis restricted: excluded patients who received two or more injectables, and/or had a serious adverse event to an injectable (204 patients in two studies treated with first-line drugs also excluded). (C) Restricted analyses: use of second-line drugs only. (D) Stratified analysis: by use of later generation quinolones: 204 patients receiving first-line drugs only excluded.\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":156672},{"doi":"info:doi/10.1371/journal.pmed.1001300.s015",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S7","description":
-      "\u003cp\u003e\u003cbold\u003ePooled outcomes—studies stratified by study level factors (event rates pooled across studies—study level random effects meta-analysis).\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":47616},{"doi":"info:doi/10.1371/journal.pmed.1001300.s016",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S8","description":
-      "\u003cp\u003e(a) Assessment of potential confounding of clinical characteristics and drug resistance with initial duration (only patients analyzed for success versus fail/relapse). (B) Assessment of potential confounding of clinical characteristics with total duration of therapy (only patients analyzed for success versus fail/relapse).\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":61440},{"doi":"info:doi/10.1371/journal.pmed.1001300.s017",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S9","description":
-      "\u003cp\u003e\u003cbold\u003eSummary of variance of estimates—individual drugs with treatment success.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":75776},{"doi":"info:doi/10.1371/journal.pmed.1001300.s018",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S10","description":
-      "\u003cp\u003e\u003cbold\u003eSummary of variance of estimates—likely effective drugs with treatment success—during different phases of treatment.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":48128},{"doi":"info:doi/10.1371/journal.pmed.1001300.s019",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S11","description":
-      "\u003cp\u003e\u003cbold\u003eAssociation of number of drugs used and treatment success compared to default only.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":38400},{"doi":"info:doi/10.1371/journal.pmed.1001300.s020",
-      "contextElement":"supplementary-material","extension":"DOC",
-      "contentType":"application/msword","title":"Table S12","description":
-      "\u003cp\u003e\u003cbold\u003eSummary of variance of estimates—duration of treatment with success versus failure/relapse—patients grouped by treatment history.\u003c/bold\u003e\u003c/p\u003e\u003cp\u003e(DOC)\u003c/p\u003e",
-      "size":55296}],"citedArticles":[{"key":"1","year":2008,"displayYear":
-      "2008","title":
-      "Guidelines for the programmatic management of drug resistant tuberculosis - emergency update",
-      "pages":"247 p","eLocationID":"247 p","journal":
-      "World Health Organization","collaborativeAuthors":[
-        "World Health Organization"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"2","year":2010,"displayYear":"2010","volumeNumber":10,"volume":
-      "10","title":
-      "Best drug treatment for multidrug-resistant and extensively drug-resistant tuberculosis",
-      "pages":"621-629","eLocationID":"621","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JA Caminero","givenNames":"JA","surnames":"Caminero","suffix":
-          ""},{"fullName":"G Sotgiu","givenNames":"G","surnames":"Sotgiu",
-          "suffix":""},{"fullName":"A Zumla","givenNames":"A","surnames":
-          "Zumla","suffix":""},{"fullName":"GB Migliori","givenNames":"GB",
-          "surnames":"Migliori","suffix":""}],"editors":[]},{"key":"3",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"4","year":2009,"displayYear":"2009","volumeNumber":9,"volume":
-      "9","title":
-      "Treatment outcomes among patients with multidrug-resistant tuberculosis:systematic review and meta-analysis",
-      "pages":"153-161","eLocationID":"153","journal":"Lancet Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "EW Orenstein","givenNames":"EW","surnames":"Orenstein","suffix":
-          ""},{"fullName":"S Basu","givenNames":"S","surnames":"Basu",
-          "suffix":""},{"fullName":"NS Shah","givenNames":"NS","surnames":
-          "Shah","suffix":""},{"fullName":"JR Andrews","givenNames":"JR",
-          "surnames":"Andrews","suffix":""},{"fullName":"GH Friedland",
-          "givenNames":"GH","surnames":"Friedland","suffix":""}],"editors":[]},
-    {"key":"5","year":2009,"displayYear":"2009","volumeNumber":4,"volume":
-      "4","title":
-      "Treatment outcomes of multidrug-resistant tuberculosis: a systematic review and meta-analysis",
-      "pages":"e6914","eLocationID":"e6914","journal":"PLoS One",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pone.0006914",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"JC Johnston","givenNames":"JC","surnames":
-          "Johnston","suffix":""},{"fullName":"NC Shahidi","givenNames":
-          "NC","surnames":"Shahidi","suffix":""},{"fullName":
-          "M Sadatsafavi","givenNames":"M","surnames":"Sadatsafavi","suffix":
-          ""},{"fullName":"JM FitzGerald","givenNames":"JM","surnames":
-          "FitzGerald","suffix":""}],"editors":[]},{"key":"6","year":2008,
-      "displayYear":"2008","title":
-      "Reviews of individual patient data. Higgins JPT, Green S, editors. Cochrane Handbook for Systematic reviews of Intervention",
-      "pages":"548-558","eLocationID":"548","journal":"Wiley-Blackwell",
-      "collaborativeAuthors":[
-        "Clarke M on behalf of the Cochrane Individual Patient Data Meta-analysis Methods Group"],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"LA Stewart","givenNames":"LA","surnames":
-          "Stewart","suffix":""},{"fullName":"JF Tierney","givenNames":
-          "JF","surnames":"Tierney","suffix":""}],"editors":[]},{"key":"7",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"8","year":2006,"displayYear":"2006","volumeNumber":81,"volume":
-      "81","title":
-      "Extensively drug-resistant tuberculosis (XDR-TB): recommendations for prevention and control",
-      "pages":"430-432","eLocationID":"430","journal":"Wkly Epidemiol Rec",
-      "collaborativeAuthors":["World Health Organization"],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[],"editors":[]},
-    {"key":"9","year":2005,"displayYear":"2005","volumeNumber":9,"volume":
-      "9","title":
-      "Speaking the same language: treatment outcome definitions for multidrug-resistant tuberculosis",
-      "pages":"640-645","eLocationID":"640","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "KF Laserson","givenNames":"KF","surnames":"Laserson","suffix":
-          ""},{"fullName":"LE Thorpe","givenNames":"LE","surnames":
-          "Thorpe","suffix":""},{"fullName":"V Leimane","givenNames":"V",
-          "surnames":"Leimane","suffix":""},{"fullName":"K Weyer",
-          "givenNames":"K","surnames":"Weyer","suffix":""},{"fullName":
-          "CD Mitnick","givenNames":"CD","surnames":"Mitnick","suffix":""}],
-      "editors":[]},{"key":"10","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"11","year":2001,"displayYear":"2001","volumeNumber":10,"volume":
-      "10","title":
-      "Multilevel models for meta-analysis, and their application to absolute risk difference",
-      "pages":"375-392","eLocationID":"375","journal":"Stat Methods",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SG Thompson","givenNames":"SG","surnames":"Thompson","suffix":
-          ""},{"fullName":"RM Turner","givenNames":"RM","surnames":
-          "Turner","suffix":""},{"fullName":"DE Warn","givenNames":"DE",
-          "surnames":"Warn","suffix":""}],"editors":[]},{"key":"12","year":
-      2000,"displayYear":"2000","volumeNumber":19,"volume":"19","title":
-      "A Multilevel model framework for meta-analysis of clinical trials with binary outcomes",
-      "pages":"3417-3432","eLocationID":"3417","journal":"Stat Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RM Turner","givenNames":"RM","surnames":"Turner","suffix":""},{
-          "fullName":"RZ Omar","givenNames":"RZ","surnames":"Omar","suffix":
-          ""},{"fullName":"M Yang","givenNames":"M","surnames":"Yang",
-          "suffix":""},{"fullName":"H Goldstein","givenNames":"H","surnames":
-          "Goldstein","suffix":""},{"fullName":"SG Thompson","givenNames":
-          "SG","surnames":"Thompson","suffix":""}],"editors":[]},{"key":
-      "13","year":2002,"displayYear":"2002","volumeNumber":21,"volume":
-      "21","title":"Quantifying heterogeneity in meta-analysis","pages":
-      "1539-1558","eLocationID":"1539","journal":"Stat Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "JP Higgins","givenNames":"JP","surnames":"Higgins","suffix":""},{
-          "fullName":"SG Thompson","givenNames":"SG","surnames":"Thompson",
-          "suffix":""}],"editors":[]},{"key":"14","year":1995,"displayYear":
-      "1995","volumeNumber":4,"volume":"4","title":
-      "Approximations to the log-likelihood function in the nonlinear mixed-effects model",
-      "pages":"12-35","eLocationID":"12","journal":
-      "J Computational Graphical Satistics","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"J Pinheiro","givenNames":"J","surnames":
-          "Pinheiro","suffix":""},{"fullName":"DM Bates","givenNames":"DM",
-          "surnames":"Bates","suffix":""}],"editors":[]},{"key":"15",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"16","year":2000,"displayYear":"2000","volumeNumber":7,"volume":
-      "7","title":
-      "Multidrug-resistant tuberculosis: long term follow-up of 40 non-HIV-infected patients",
-      "pages":"383-389","eLocationID":"383","journal":"Can Respir J",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Avendano","givenNames":"M","surnames":"Avendano","suffix":""},{
-          "fullName":"RS Goldstein","givenNames":"RS","surnames":
-          "Goldstein","suffix":""}],"editors":[]},{"key":"17","year":2005,
-      "displayYear":"2005","volumeNumber":40,"volume":"40","title":
-      "Treatment of multidrug-resistant tuberculosis in San Francisco: an outpatient-based approach",
-      "pages":"968-975","eLocationID":"968","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Burgos","givenNames":"M","surnames":"Burgos","suffix":""},{
-          "fullName":"LC Gonzalez","givenNames":"LC","surnames":"Gonzalez",
-          "suffix":""},{"fullName":"EA Paz","givenNames":"EA","surnames":
-          "Paz","suffix":""},{"fullName":"E Gournis","givenNames":"E",
-          "surnames":"Gournis","suffix":""},{"fullName":"A Paz","givenNames":
-          "A","surnames":"Paz","suffix":""}],"editors":[]},{"key":"18",
-      "year":1990,"displayYear":"1990","volumeNumber":141,"volume":"141",
-      "title":
-      "Surgical intervention in the treatment of pulmonary disease caused by drug-resistant mycobacterium tuberculosis",
-      "pages":"623-625","eLocationID":"623","journal":"Am Rev Respir Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MD Iseman","givenNames":"MD","surnames":"Iseman","suffix":""},{
-          "fullName":"L Madsen","givenNames":"L","surnames":"Madsen",
-          "suffix":""},{"fullName":"M Goble","givenNames":"M","surnames":
-          "Goble","suffix":""},{"fullName":"M Pomerantz","givenNames":"M",
-          "surnames":"Pomerantz","suffix":""}],"editors":[]},{"key":"19",
-      "year":2004,"displayYear":"2004","volumeNumber":169,"volume":"169",
-      "title":
-      "Treatment and outcome analysis of 205 patients with multidrug-resistant tuberculosis",
-      "pages":"1103-1109","eLocationID":"1103","journal":
-      "Am J Respir Crit Care Med","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ED Chan","givenNames":"ED","surnames":"Chan","suffix":""},{
-          "fullName":"V Laurel","givenNames":"V","surnames":"Laurel",
-          "suffix":""},{"fullName":"MJ Strand","givenNames":"MJ","surnames":
-          "Strand","suffix":""},{"fullName":"JF Chan","givenNames":"JF",
-          "surnames":"Chan","suffix":""},{"fullName":"MLN Huynh",
-          "givenNames":"MLN","surnames":"Huynh","suffix":""}],"editors":[]},{
-      "key":"20","year":2006,"displayYear":"2006","volumeNumber":28,"volume":
-      "28","title":
-      "Outcome of pulmonary multidrug-resistant tuberculosis: a 6-yr follow-up study",
-      "pages":"980-985","eLocationID":"980","journal":"Eur Respir J",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "CY Chiang","givenNames":"CY","surnames":"Chiang","suffix":""},{
-          "fullName":"DA Enarson","givenNames":"DA","surnames":"Enarson",
-          "suffix":""},{"fullName":"MC Yu","givenNames":"MC","surnames":
-          "Yu","suffix":""},{"fullName":"KJ Bai","givenNames":"KJ",
-          "surnames":"Bai","suffix":""},{"fullName":"RM Huang","givenNames":
-          "RM","surnames":"Huang","suffix":""}],"editors":[]},{"key":"21",
-      "year":2007,"displayYear":"2007","volumeNumber":2,"volume":"2","title":
-      
-      "Multidrug-resistant tuberculosis treatment outcomes in Karakalpakstan, Uzbekistan: treatment complexity and XDR-TB among treatment failures",
-      "pages":"e1126","eLocationID":"e1126","journal":"PLoS One",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pone.0001126",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"HS Cox","givenNames":"HS","surnames":"Cox",
-          "suffix":""},{"fullName":"K Stobdan","givenNames":"K","surnames":
-          "Stobdan","suffix":""},{"fullName":"S Allamuratova","givenNames":
-          "S","surnames":"Allamuratova","suffix":""},{"fullName":
-          "V Sizaire","givenNames":"V","surnames":"Sizaire","suffix":""},{
-          "fullName":"ZN Tigay","givenNames":"ZN","surnames":"Tigay",
-          "suffix":""}],"editors":[]},{"key":"22","year":2005,"displayYear":
-      "2005","volumeNumber":365,"volume":"365","title":
-      "Does DOTS work in populations with drug-resistant tuberculosis?",
-      "pages":"1239-1345","eLocationID":"1239","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "K DeRiemer","givenNames":"K","surnames":"DeRiemer","suffix":""},{
-          "fullName":"L Garcia-Garcia","givenNames":"L","surnames":
-          "Garcia-Garcia","suffix":""},{"fullName":"M Bodadilla-del-Valle",
-          "givenNames":"M","surnames":"Bodadilla-del-Valle","suffix":""},{
-          "fullName":"M Palacinos-Martinez","givenNames":"M","surnames":
-          "Palacinos-Martinez","suffix":""},{"fullName":
-          "A Martinez-Gamboa","givenNames":"A","surnames":
-          "Martinez-Gamboa","suffix":""}],"editors":[]},{"key":"23","year":
-      2006,"displayYear":"2006","volumeNumber":10,"volume":"10","title":
-      "Multidrug-resistant tuberculosis without HIV infection: success with individualised therapy",
-      "pages":"409-414","eLocationID":"409","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "E Escudero","givenNames":"E","surnames":"Escudero","suffix":""},{
-          "fullName":"JM Pena","givenNames":"JM","surnames":"Pena","suffix":
-          ""},{"fullName":"R Alvarez-Sala","givenNames":"R","surnames":
-          "Alvarez-Sala","suffix":""},{"fullName":"JJ Vazquez","givenNames":
-          "JJ","surnames":"Vazquez","suffix":""},{"fullName":"A Ortega",
-          "givenNames":"A","surnames":"Ortega","suffix":""}],"editors":[]},{
-      "key":"24","year":2000,"displayYear":"2000","volumeNumber":4,"volume":
-      "4","title":
-      "Multidrug-resistant tuberculosis: long-term treatment outcome in the Netherlands",
-      "pages":"758-764","eLocationID":"758","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WA Geerligs","givenNames":"WA","surnames":"Geerligs","suffix":
-          ""},{"fullName":"R van Altena","givenNames":"R","surnames":
-          "van Altena","suffix":""},{"fullName":"WCM delange","givenNames":
-          "WCM","surnames":"delange","suffix":""},{"fullName":
-          "D van Soolingen","givenNames":"D","surnames":"van Soolingen",
-          "suffix":""},{"fullName":"TS van der Werf","givenNames":"TS",
-          "surnames":"van der Werf","suffix":""}],"editors":[]},{"key":
-      "25","year":2005,"displayYear":"2005","volumeNumber":293,"volume":
-      "293","title":
-      "Multidrug resistance among persons with tuberculosis in California, 1994–2003",
-      "pages":"2732-2739","eLocationID":"2732","journal":"JAMA",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "RM Granich","givenNames":"RM","surnames":"Granich","suffix":""},{
-          "fullName":"P Oh","givenNames":"P","surnames":"Oh","suffix":""},{
-          "fullName":"B Lewis","givenNames":"B","surnames":"Lewis","suffix":
-          ""},{"fullName":"TC Porco","givenNames":"TC","surnames":"Porco",
-          "suffix":""},{"fullName":"J Flood","givenNames":"J","surnames":
-          "Flood","suffix":""}],"editors":[]},{"key":"26","year":2008,
-      "displayYear":"2008","volumeNumber":47,"volume":"47","title":
-      "Extensively drug-resistant tuberculosis in California, 1993–2006",
-      "pages":"450-457","eLocationID":"450","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "R Banerjee","givenNames":"R","surnames":"Banerjee","suffix":""},{
-          "fullName":"J Allen","givenNames":"J","surnames":"Allen","suffix":
-          ""},{"fullName":"J Westenhouse","givenNames":"J","surnames":
-          "Westenhouse","suffix":""},{"fullName":"P Oh","givenNames":"P",
-          "surnames":"Oh","suffix":""},{"fullName":"W Elms","givenNames":
-          "W","surnames":"Elms","suffix":""}],"editors":[]},{"key":"27",
-      "year":2006,"displayYear":"2006","volumeNumber":10,"volume":"10",
-      "title":
-      "Risk factors associated with default from multidrug-resistant tuberculosis treatment, South Africa, 1999–2001",
-      "pages":"649-655","eLocationID":"649","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "TH Holtz","givenNames":"TH","surnames":"Holtz","suffix":""},{
-          "fullName":"J Lancaster","givenNames":"J","surnames":"Lancaster",
-          "suffix":""},{"fullName":"KF Laserson","givenNames":"KF",
-          "surnames":"Laserson","suffix":""},{"fullName":"CD Wells",
-          "givenNames":"CD","surnames":"Wells","suffix":""},{"fullName":
-          "L Thorpe","givenNames":"L","surnames":"Thorpe","suffix":""}],
-      "editors":[]},{"key":"28","year":2008,"displayYear":"2008",
-      "volumeNumber":178,"volume":"178","title":
-      "Treatment outcomes and long-term survival in patients with extensively drug-resistant tuberculosis",
-      "pages":"1075-1082","eLocationID":"1075","journal":
-      "Am J Respir Crit Care Med","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DH Kim","givenNames":"DH","surnames":"Kim","suffix":""},{
-          "fullName":"HJ Kim","givenNames":"HJ","surnames":"Kim","suffix":
-          ""},{"fullName":"SK Park","givenNames":"SK","surnames":"Park",
-          "suffix":""},{"fullName":"S Kong","givenNames":"S","surnames":
-          "Kong","suffix":""},{"fullName":"YS Kim","givenNames":"YS",
-          "surnames":"Kim","suffix":""}],"editors":[]},{"key":"29","year":
-      2007,"displayYear":"2007","volumeNumber":45,"volume":"45","title":
-      "Impact of extensive drug resistance on treatment outcomes in non-HIV-infected patients with multidrug-resistant tuberculosis",
-      "pages":"1290-1295","eLocationID":"1290","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "HR Kim","givenNames":"HR","surnames":"Kim","suffix":""},{
-          "fullName":"SS Hwang","givenNames":"SS","surnames":"Hwang",
-          "suffix":""},{"fullName":"HJ Kim","givenNames":"HJ","surnames":
-          "Kim","suffix":""},{"fullName":"SM Lee","givenNames":"SM",
-          "surnames":"Lee","suffix":""},{"fullName":"CG Yoo","givenNames":
-          "CG","surnames":"Yoo","suffix":""}],"editors":[]},{"key":"30",
-      "year":2008,"displayYear":"2008","volumeNumber":47,"volume":"47",
-      "title":
-      "Treatment outcomes for HIV-uninfected patients with multidrug-resistant and extensively drug-resistant tuberculosis",
-      "pages":"496-502","eLocationID":"496","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "YS Kwon","givenNames":"YS","surnames":"Kwon","suffix":""},{
-          "fullName":"YH Kim","givenNames":"YH","surnames":"Kim","suffix":
-          ""},{"fullName":"GY Suh","givenNames":"GY","surnames":"Suh",
-          "suffix":""},{"fullName":"M Chung","givenNames":"M","surnames":
-          "Chung","suffix":""},{"fullName":"H Kim","givenNames":"H",
-          "surnames":"Kim","suffix":""}],"editors":[]},{"key":"31","year":
-      2007,"displayYear":"2007","volumeNumber":11,"volume":"11","title":
-      "Treatment outcome cohort analysis in an integrated DOTS and DOTS-Plus TB program in Latvia",
-      "pages":"585-587","eLocationID":"585","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V Riekstina","givenNames":"V","surnames":"Riekstina","suffix":
-          ""},{"fullName":"V Leimane","givenNames":"V","surnames":
-          "Leimane","suffix":""},{"fullName":"TH Holtz","givenNames":"TH",
-          "surnames":"Holtz","suffix":""},{"fullName":"J Leimans",
-          "givenNames":"J","surnames":"Leimans","suffix":""},{"fullName":
-          "CD Wells","givenNames":"CD","surnames":"Wells","suffix":""}],
-      "editors":[]},{"key":"32","year":2005,"displayYear":"2005",
-      "volumeNumber":386,"volume":"386","title":
-      "Clinical outcome of individualised treatment of multi-drugresistant tuberculosis in Latvia: a retrospective cohort study",
-      "pages":"318-326","eLocationID":"318","journal":"Lancet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "V Leimane","givenNames":"V","surnames":"Leimane","suffix":""},{
-          "fullName":"V Riekstina","givenNames":"V","surnames":"Riekstina",
-          "suffix":""},{"fullName":"TH Holtz","givenNames":"TH","surnames":
-          "Holtz","suffix":""},{"fullName":"E Zarovska","givenNames":"E",
-          "surnames":"Zarovska","suffix":""},{"fullName":"V Skripconoka",
-          "givenNames":"V","surnames":"Skripconoka","suffix":""}],"editors":[]},
-    {"key":"33","year":2006,"displayYear":"2006","volumeNumber":144,"volume":
-      "144","title":
-      "Time to sputum culture conversion in multidrug-resistant tuberculosis: predictors and relationship to treatment outcome",
-      "pages":"650-659","eLocationID":"650","journal":"Ann Intern Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "TH Holtz","givenNames":"TH","surnames":"Holtz","suffix":""},{
-          "fullName":"M Stenberg","givenNames":"M","surnames":"Stenberg",
-          "suffix":""},{"fullName":"S Kammerer","givenNames":"S","surnames":
-          "Kammerer","suffix":""},{"fullName":"KF Laserson","givenNames":
-          "KF","surnames":"Laserson","suffix":""},{"fullName":
-          "V Riekstina","givenNames":"V","surnames":"Riekstina","suffix":
-          ""}],"editors":[]},{"key":"34","year":2001,"displayYear":"2001",
-      "volumeNumber":32,"volume":"32","title":
-      "Clinical outcomes of Estonian patients with primary multidrug-resistant versus drug-susceptible tuberculosis",
-      "pages":"373-80","eLocationID":"373","journal":"Clin Infect Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Lockman","givenNames":"S","surnames":"Lockman","suffix":""},{
-          "fullName":"A Kruuner","givenNames":"A","surnames":"Kruuner",
-          "suffix":""},{"fullName":"N Binkin","givenNames":"N","surnames":
-          "Binkin","suffix":""},{"fullName":"K Levina","givenNames":"K",
-          "surnames":"Levina","suffix":""},{"fullName":"YC Wang",
-          "givenNames":"YC","surnames":"Wang","suffix":""}],"editors":[]},{
-      "key":"35","year":2008,"displayYear":"2008","volumeNumber":12,"volume":
-      "12","title":
-      "Outcome of treatment of MDR-TB patients with standardised regimens, Iran, 2002–2006",
-      "pages":"750-755","eLocationID":"750","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MR Masjedi","givenNames":"MR","surnames":"Masjedi","suffix":""},{
-          "fullName":"P Tabarsi","givenNames":"P","surnames":"Tabarsi",
-          "suffix":""},{"fullName":"P Chitsaz","givenNames":"P","surnames":
-          "Chitsaz","suffix":""},{"fullName":"P Baghaei","givenNames":"P",
-          "surnames":"Baghaei","suffix":""},{"fullName":"M Miraeidi",
-          "givenNames":"M","surnames":"Miraeidi","suffix":""}],"editors":[]},
-    {"key":"36","year":2002,"displayYear":"2002","volumeNumber":6,"volume":
-      "6","title":
-      "Frequency of recurrence among MDR-TB cases ‘successfully’ treated with standardised short-course chemotherapy",
-      "pages":"858-864","eLocationID":"858","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GB Migliori","givenNames":"GB","surnames":"Migliori","suffix":
-          ""},{"fullName":"M Espinal","givenNames":"M","surnames":
-          "Espinal","suffix":""},{"fullName":"ID Danilova","givenNames":
-          "ID","surnames":"Danilova","suffix":""},{"fullName":"VV Punga",
-          "givenNames":"VV","surnames":"Punga","suffix":""},{"fullName":
-          "M Grzemska","givenNames":"M","surnames":"Grzemska","suffix":""}],
-      "editors":[]},{"key":"37","year":2007,"displayYear":"2007",
-      "volumeNumber":30,"volume":"30","title":
-      "Clinical and operational value of the extensively drug-resistant tuberculosis definition",
-      "pages":"623-626","eLocationID":"623","journal":"Eur Respir J",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "GB Migliori","givenNames":"GB","surnames":"Migliori","suffix":
-          ""},{"fullName":"G Besozzi","givenNames":"G","surnames":
-          "Besozzi","suffix":""},{"fullName":"E Girardi","givenNames":"E",
-          "surnames":"Girardi","suffix":""},{"fullName":"K Kliiman",
-          "givenNames":"K","surnames":"Kliiman","suffix":""},{"fullName":
-          "C Lange","givenNames":"C","surnames":"Lange","suffix":""}],
-      "editors":[]},{"key":"38","year":2003,"displayYear":"2003",
-      "volumeNumber":348,"volume":"348","title":
-      "Community-based therapy for multidrug-resistant tuberculosis in Lima, Peru",
-      "pages":"119-128","eLocationID":"119","journal":"N Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Mitnick","givenNames":"C","surnames":"Mitnick","suffix":""},{
-          "fullName":"J Bayona","givenNames":"J","surnames":"Bayona",
-          "suffix":""},{"fullName":"E Palacios","givenNames":"E","surnames":
-          "Palacios","suffix":""},{"fullName":"SS Shin","givenNames":"SS",
-          "surnames":"Shin","suffix":""},{"fullName":"J Furin","givenNames":
-          "J","surnames":"Furin","suffix":""}],"editors":[]},{"key":"39",
-      "year":2010,"displayYear":"2010","volumeNumber":359,"volume":"359",
-      "title":
-      "Comprehensive treatment of extensively drug-resistant tuberculosis",
-      "pages":"563-574","eLocationID":"563","journal":"N Engl J Med",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Mitnick","givenNames":"C","surnames":"Mitnick","suffix":""},{
-          "fullName":"SS Shin","givenNames":"SS","surnames":"Shin","suffix":
-          ""},{"fullName":"KJ Seung","givenNames":"KJ","surnames":"Seung",
-          "suffix":""},{"fullName":"ML Rich","givenNames":"ML","surnames":
-          "Rich","suffix":""},{"fullName":"SS Atwood","givenNames":"SS",
-          "surnames":"Atwood","suffix":""}],"editors":[]},{"key":"40","year":
-      2006,"displayYear":"2006","volumeNumber":10,"volume":"10","title":
-      "Public-private collaboration for multidrug-resistant tuberculosis control in New York city",
-      "pages":"639-648","eLocationID":"639","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SS Munsiff","givenNames":"SS","surnames":"Munsiff","suffix":""},{
-          "fullName":"SD Ahuja","givenNames":"SD","surnames":"Ahuja",
-          "suffix":""},{"fullName":"J Li","givenNames":"J","surnames":"Li",
-          "suffix":""},{"fullName":"CR Driver","givenNames":"CR","surnames":
-          "Driver","suffix":""}],"editors":[]},{"key":"41","year":2004,
-      "displayYear":"2004","volumeNumber":126,"volume":"126","title":
-      "Use of therapeutic drug monitoring for multidrug-resistant tuberculosis patients",
-      "pages":"1770-1776","eLocationID":"1770","journal":"Chest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Li","givenNames":"J","surnames":"Li","suffix":""},{"fullName":
-          "JN Burzynski","givenNames":"JN","surnames":"Burzynski","suffix":
-          ""},{"fullName":"YA Lee","givenNames":"YA","surnames":"Lee",
-          "suffix":""},{"fullName":"D Berg","givenNames":"D","surnames":
-          "Berg","suffix":""},{"fullName":"CR Driver","givenNames":"CR",
-          "surnames":"Driver","suffix":""}],"editors":[]},{"key":"42","year":
-      2001,"displayYear":"2001","volumeNumber":120,"volume":"120","title":
-      "Treatment experience of multidrug-resistant tuberculosis in Florida, 1994–1997",
-      "pages":"343-348","eLocationID":"343","journal":"Chest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Narita","givenNames":"M","surnames":"Narita","suffix":""},{
-          "fullName":"P Alonso","givenNames":"P","surnames":"Alonso",
-          "suffix":""},{"fullName":"M Lazardo","givenNames":"M","surnames":
-          "Lazardo","suffix":""},{"fullName":"E Hollender","givenNames":
-          "E","surnames":"Hollender","suffix":""},{"fullName":
-          "A Pitchenik","givenNames":"A","surnames":"Pitchenik","suffix":
-          ""}],"editors":[]},{"key":"43","year":2008,"displayYear":"2008",
-      "volumeNumber":3,"volume":"3","title":
-      "Rapid molecular detection of rifampicin resistance facilitates early diagnosis and treatment of multidrug-resistant tuberculosis: case control study",
-      "pages":"e3173","eLocationID":"e3173","journal":"PLoS One",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pone.0003173",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"P O\u0027Riordan","givenNames":"P","surnames":
-          "O\u0027Riordan","suffix":""},{"fullName":"U Schwab","givenNames":
-          "U","surnames":"Schwab","suffix":""},{"fullName":"S Logan",
-          "givenNames":"S","surnames":"Logan","suffix":""},{"fullName":
-          "G Cooke","givenNames":"G","surnames":"Cooke","suffix":""},{
-          "fullName":"RJ Wilkinson","givenNames":"RJ","surnames":
-          "Wilkinson","suffix":""}],"editors":[]},{"key":"44","year":2004,
-      "displayYear":"2004","volumeNumber":8,"volume":"8","title":
-      "Treatment and follow-up of HIV-negative multidrug-resistant tuberculosis patients in an infectious diseases reference hospital, Buenos Aires, Argentina",
-      "pages":"778-784","eLocationID":"778","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DJ Palmero","givenNames":"DJ","surnames":"Palmero","suffix":""},{
-          "fullName":"M Ambroggi","givenNames":"M","surnames":"Ambroggi",
-          "suffix":""},{"fullName":"A Brea","givenNames":"A","surnames":
-          "Brea","suffix":""},{"fullName":"M De Lucas","givenNames":"M",
-          "surnames":"De Lucas","suffix":""},{"fullName":"A Fulgenzi",
-          "givenNames":"A","surnames":"Fulgenzi","suffix":""}],"editors":[]},
-    {"key":"45","year":2004,"displayYear":"2004","volumeNumber":8,"volume":
-      "8","title":
-      "Self-administered, standardized regimens for multidrug-resistant tuberculosis in South Korea",
-      "pages":"361-368","eLocationID":"361","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SK Park","givenNames":"SK","surnames":"Park","suffix":""},{
-          "fullName":"WC Lee","givenNames":"WC","surnames":"Lee","suffix":
-          ""},{"fullName":"DH Lee","givenNames":"DH","surnames":"Lee",
-          "suffix":""},{"fullName":"CD Mitnick","givenNames":"CD","surnames":
-          "Mitnick","suffix":""},{"fullName":"L Han","givenNames":"L",
-          "surnames":"Han","suffix":""}],"editors":[]},{"key":"46","year":
-      2002,"displayYear":"2002","volumeNumber":6,"volume":"6","title":
-      "Results of a 12-month regimen for drug-resistant pulmonary tuberculosis",
-      "pages":"1102-1109","eLocationID":"1102","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Pérez-Guzmán","givenNames":"C","surnames":"Pérez-Guzmán",
-          "suffix":""},{"fullName":"MH Vargas","givenNames":"MH","surnames":
-          "Vargas","suffix":""},{"fullName":"LA Martinez-Rossier",
-          "givenNames":"LA","surnames":"Martinez-Rossier","suffix":""},{
-          "fullName":"A Torres-Cruz","givenNames":"A","surnames":
-          "Torres-Cruz","suffix":""},{"fullName":"H Villarreal-Velarde",
-          "givenNames":"H","surnames":"Villarreal-Velarde","suffix":""}],
-      "editors":[]},{"key":"47","year":2006,"displayYear":"2006",
-      "volumeNumber":10,"volume":"10","title":
-      "Treatment outcomes by drug resistance and HIV status among tuberculosis patients in Ho Chi Minh City, Vietnam",
-      "pages":"45-51","eLocationID":"45","journal":"Int J Tuberc Lung Dis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "HT Quy","givenNames":"HT","surnames":"Quy","suffix":""},{
-          "fullName":"FGJ Cobelens","givenNames":"FGJ","surnames":
-          "Cobelens","suffix":""},{"fullName":"NTN Lan","givenNames":"NTN",
-          "surnames":"Lan","suffix":""},{"fullName":"TN Buu","givenNames":
-          "TN","surnames":"Buu","suffix":""},{"fullName":"CSB Lambregts",
-          "givenNames":"CSB","surnames":"Lambregts","suffix":""}],"editors":[]},
-    {"key":"48","year":2003,"displayYear":"2003","volumeNumber":88,"volume":
-      "88","title":
-      "Culture confirmed multidrug resistant tuberculosis: diagnostic delay, clinical features, and outcome",
-      "pages":"1106-1111","eLocationID":"1106","journal":"Arch Dis Child",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "HS Schaaf","givenNames":"HS","surnames":"Schaaf","suffix":""},{
-          "fullName":"K Shean","givenNames":"K","surnames":"Shean","suffix":
-          ""},{"fullName":"PR Donald","givenNames":"PR","surnames":
-          "Donald","suffix":""}],"editors":[]},{"key":"49","year":2006,
-      "displayYear":"2006","volumeNumber":10,"volume":"10","title":
-      "Treatment outcomes in an integrated civilian and prison MDR-TB treatment program in Russia",
-      "pages":"402-408","eLocationID":"402","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "SS Shin","givenNames":"SS","surnames":"Shin","suffix":""},{
-          "fullName":"AD Pasechnikov","givenNames":"AD","surnames":
-          "Pasechnikov","suffix":""},{"fullName":"IY Gelmanova","givenNames":
-          "IY","surnames":"Gelmanova","suffix":""},{"fullName":
-          "GG Peremitin","givenNames":"GG","surnames":"Peremitin","suffix":
-          ""},{"fullName":"AK Strelis","givenNames":"AK","surnames":
-          "Strelis","suffix":""}],"editors":[]},{"key":"50","year":2004,
-      "displayYear":"2004","volumeNumber":128,"volume":"128","title":
-      "Resectional surgery combined with chemotherapy remains the treatment of choice for multidrug-resistant tuberculosis",
-      "pages":"523-528","eLocationID":"523","journal":
-      "J Thorac Cardiovasc Surg","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "Y Shiraishi","givenNames":"Y","surnames":"Shiraishi","suffix":
-          ""},{"fullName":"Y Nakalima","givenNames":"Y","surnames":
-          "Nakalima","suffix":""},{"fullName":"N Katsuragi","givenNames":
-          "N","surnames":"Katsuragi","suffix":""},{"fullName":"M Kurai",
-          "givenNames":"M","surnames":"Kurai","suffix":""},{"fullName":
-          "N Takahashi","givenNames":"N","surnames":"Takahashi","suffix":
-          ""}],"editors":[]},{"key":"51","year":2003,"displayYear":"2003",
-      "volumeNumber":83,"volume":"83","title":
-      "DOTS-Plus for multidrug-resistant tuberculosis in the Philippines: global assistance urgently needed",
-      "pages":"52-58","eLocationID":"52","journal":"Tuberculosis",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "TE Tupasi","givenNames":"TE","surnames":"Tupasi","suffix":""},{
-          "fullName":"MID Quelapio","givenNames":"MID","surnames":
-          "Quelapio","suffix":""},{"fullName":"RB Orillaza","givenNames":
-          "RB","surnames":"Orillaza","suffix":""},{"fullName":
-          "C Alcantara","givenNames":"C","surnames":"Alcantara","suffix":
-          ""},{"fullName":"NRC Mira","givenNames":"NRC","surnames":"Mira",
-          "suffix":""}],"editors":[]},{"key":"52","year":2006,"displayYear":
-      "2006","volumeNumber":3,"volume":"3","title":
-      "Feasibility and cost-effectiveness of treating multidrug resistant tuberculosis: a cohort study in the Philippines",
-      "pages":"e352","eLocationID":"e352","journal":"PLoS Med",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pmed.0030352",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"TE Tupasi","givenNames":"TE","surnames":
-          "Tupasi","suffix":""},{"fullName":"R Gupta","givenNames":"R",
-          "surnames":"Gupta","suffix":""},{"fullName":"MID Quelapio",
-          "givenNames":"MID","surnames":"Quelapio","suffix":""},{"fullName":
-          "RB Orillaza","givenNames":"RB","surnames":"Orillaza","suffix":
-          ""},{"fullName":"NR Mira","givenNames":"NR","surnames":"Mira",
-          "suffix":""}],"editors":[]},{"key":"53","year":2007,"displayYear":
-      "2007","volumeNumber":29,"volume":"29","title":
-      "An intervention programme for the management of multidrug-resistant tuberculosis in France",
-      "pages":"434-439","eLocationID":"434","journal":
-      "Intl J Antimicrob Agents","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ML Uffredi","givenNames":"ML","surnames":"Uffredi","suffix":""},{
-          "fullName":"C Truffot-Pernot","givenNames":"C","surnames":
-          "Truffot-Pernot","suffix":""},{"fullName":"B Dautzenberg",
-          "givenNames":"B","surnames":"Dautzenberg","suffix":""},{"fullName":
-          "M Renard","givenNames":"M","surnames":"Renard","suffix":""},{
-          "fullName":"V Jarlier","givenNames":"V","surnames":"Jarlier",
-          "suffix":""}],"editors":[]},{"key":"54","year":2004,"displayYear":
-      "2004","volumeNumber":8,"volume":"8","title":
-      "Results of a standardised regimen for multidrug-resistant tuberculosis in Bangladesh",
-      "pages":"560-567","eLocationID":"560","journal":
-      "Int J Tuberc Lung Dis","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Van Deun","givenNames":"A","surnames":"Van Deun","suffix":""},{
-          "fullName":"MAH Salim","givenNames":"MAH","surnames":"Salim",
-          "suffix":""},{"fullName":"APK Das","givenNames":"APK","surnames":
-          "Das","suffix":""},{"fullName":"I Bastian","givenNames":"I",
-          "surnames":"Bastian","suffix":""},{"fullName":"F Portaels",
-          "givenNames":"F","surnames":"Portaels","suffix":""}],"editors":[]},
-    {"key":"55","year":2010,"displayYear":"2010","volumeNumber":182,"volume":
-      "182","title":
-      "Short, highly effective and inexpensive standardized treatment of multidrug-resistant tuberculosis",
-      "pages":"684-692","eLocationID":"684","journal":
-      "Am J Respir Crit Care Med","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Van Deun","givenNames":"A","surnames":"Van Deun","suffix":""},{
-          "fullName":"AKJ Maug","givenNames":"AKJ","surnames":"Maug",
-          "suffix":""},{"fullName":"MAH Salim","givenNames":"MAH","surnames":
-          "Salim","suffix":""},{"fullName":"PK Das","givenNames":"PK",
-          "surnames":"Das","suffix":""},{"fullName":"MR Sarker","givenNames":
-          "MR","surnames":"Sarker","suffix":""}],"editors":[]},{"key":"56",
-      "year":2003,"displayYear":"2003","volumeNumber":124,"volume":"124",
-      "title":
-      "Comparative roles of levofloxacin and ofloxacin in the treatment of multidrug-resistant tuberculosis",
-      "pages":"1476-1481","eLocationID":"1476","journal":"Chest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WW Yew","givenNames":"WW","surnames":"Yew","suffix":""},{
-          "fullName":"CK Chan","givenNames":"CK","surnames":"Chan","suffix":
-          ""},{"fullName":"CC Leung","givenNames":"CC","surnames":"Leung",
-          "suffix":""},{"fullName":"CH Chau","givenNames":"CH","surnames":
-          "Chau","suffix":""},{"fullName":"CM Tam","givenNames":"CM",
-          "surnames":"Tam","suffix":""}],"editors":[]},{"key":"57","year":
-      2000,"displayYear":"2000","volumeNumber":117,"volume":"117","title":
-      "Outcomes of patients with multidrug-resistant pulmonary tuberculosis treated with ofloxacin/levofloxacin-containing regimens",
-      "pages":"744-751","eLocationID":"744","journal":"Chest",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "WW Yew","givenNames":"WW","surnames":"Yew","suffix":""},{
-          "fullName":"CK Chan","givenNames":"CK","surnames":"Chan","suffix":
-          ""},{"fullName":"CH Chau","givenNames":"CH","surnames":"Chau",
-          "suffix":""},{"fullName":"CM Tam","givenNames":"CM","surnames":
-          "Tam","suffix":""},{"fullName":"CC Leung","givenNames":"CC",
-          "surnames":"Leung","suffix":""}],"editors":[]},{"key":"58","year":
-      2000,"displayYear":"2000","volumeNumber":283,"volume":"283","title":
-      "Standard short-course chemotherapy for drug-resistance tuberculosis- treatment outcomes in 6 countries",
-      "pages":"2537-2545","eLocationID":"2537","journal":"JAMA",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MA Espinal","givenNames":"MA","surnames":"Espinal","suffix":""},{
-          "fullName":"SJ Kim","givenNames":"SJ","surnames":"Kim","suffix":
-          ""},{"fullName":"PG Suarez","givenNames":"PG","surnames":
-          "Suarez","suffix":""},{"fullName":"KM Kam","givenNames":"KM",
-          "surnames":"Kam","suffix":""},{"fullName":"AG Khomenko",
-          "givenNames":"AG","surnames":"Khomenko","suffix":""}],"editors":[]},
-    {"key":"59","year":2010,"displayYear":"2010","volumeNumber":304,"volume":
-      "304","title":
-      "Minimizing bias due to confounding by indication in comparative effectiveness research the importance of restriction",
-      "pages":"897-898","eLocationID":"897","journal":"JAMA",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "BM Psaty","givenNames":"BM","surnames":"Psaty","suffix":""},{
-          "fullName":"DS Siscovick","givenNames":"DS","surnames":
-          "Siscovick","suffix":""}],"editors":[]},{"key":"60","year":2007,
-      "displayYear":"2007","volumeNumber":4,"volume":"4","title":
-      "Randomized trials to optimize treatment of multidrug-resistant tuberculosis",
-      "pages":"e292","eLocationID":"e292","journal":"PLoS Med",
-      "collaborativeAuthors":[],"doi":"10.1371/journal.pmed.0040292",
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"CD Mitnick","givenNames":"CD","surnames":
-          "Mitnick","suffix":""},{"fullName":"KG Castro","givenNames":"KG",
-          "surnames":"Castro","suffix":""},{"fullName":"M Harrington",
-          "givenNames":"M","surnames":"Harrington","suffix":""},{"fullName":
-          "LV Sacks","givenNames":"LV","surnames":"Sacks","suffix":""},{
-          "fullName":"W Burman","givenNames":"W","surnames":"Burman",
-          "suffix":""}],"editors":[]}],"relatedArticles":[],"authors":[{
-      "fullName":"Shama D. Ahuja","givenNames":"Shama D.","surnames":
-      "Ahuja","suffix":""},{"fullName":"David Ashkin","givenNames":"David",
-      "surnames":"Ashkin","suffix":""},{"fullName":"Monika Avendano",
-      "givenNames":"Monika","surnames":"Avendano","suffix":""},{"fullName":
-      "Rita Banerjee","givenNames":"Rita","surnames":"Banerjee","suffix":
-      ""},{"fullName":"Melissa Bauer","givenNames":"Melissa","surnames":
-      "Bauer","suffix":""},{"fullName":"Jamie N. Bayona","givenNames":
-      "Jamie N.","surnames":"Bayona","suffix":""},{"fullName":
-      "Mercedes C. Becerra","givenNames":"Mercedes C.","surnames":
-      "Becerra","suffix":""},{"fullName":"Andrea Benedetti","givenNames":
-      "Andrea","surnames":"Benedetti","suffix":""},{"fullName":
-      "Marcos Burgos","givenNames":"Marcos","surnames":"Burgos","suffix":
-      ""},{"fullName":"Rosella Centis","givenNames":"Rosella","surnames":
-      "Centis","suffix":""},{"fullName":"Eward D. Chan","givenNames":
-      "Eward D.","surnames":"Chan","suffix":""},{"fullName":
-      "Chen-Yuan Chiang","givenNames":"Chen-Yuan","surnames":"Chiang",
-      "suffix":""},{"fullName":"Helen Cox","givenNames":"Helen","surnames":
-      "Cox","suffix":""},{"fullName":"Lia D\u0027Ambrosio","givenNames":
-      "Lia","surnames":"D\u0027Ambrosio","suffix":""},{"fullName":
-      "Kathy DeRiemer","givenNames":"Kathy","surnames":"DeRiemer","suffix":
-      ""},{"fullName":"Nguyen Huy Dung","givenNames":"Nguyen Huy","surnames":
-      "Dung","suffix":""},{"fullName":"Donald Enarson","givenNames":
-      "Donald","surnames":"Enarson","suffix":""},{"fullName":
-      "Dennis Falzon","givenNames":"Dennis","surnames":"Falzon","suffix":
-      ""},{"fullName":"Katherine Flanagan","givenNames":"Katherine",
-      "surnames":"Flanagan","suffix":""},{"fullName":"Jennifer Flood",
-      "givenNames":"Jennifer","surnames":"Flood","suffix":""},{"fullName":
-      "Maria L. Garcia-Garcia","givenNames":"Maria L.","surnames":
-      "Garcia-Garcia","suffix":""},{"fullName":"Neel Gandhi","givenNames":
-      "Neel","surnames":"Gandhi","suffix":""},{"fullName":
-      "Reuben M. Granich","givenNames":"Reuben M.","surnames":"Granich",
-      "suffix":""},{"fullName":"Maria G. Hollm-Delgado","givenNames":
-      "Maria G.","surnames":"Hollm-Delgado","suffix":""},{"fullName":
-      "Timothy H. Holtz","givenNames":"Timothy H.","surnames":"Holtz",
-      "suffix":""},{"fullName":"Michael D. Iseman","givenNames":
-      "Michael D.","surnames":"Iseman","suffix":""},{"fullName":
-      "Leah G. Jarlsberg","givenNames":"Leah G.","surnames":"Jarlsberg",
-      "suffix":""},{"fullName":"Salmaan Keshavjee","givenNames":"Salmaan",
-      "surnames":"Keshavjee","suffix":""},{"fullName":"Hye-Ryoun Kim",
-      "givenNames":"Hye-Ryoun","surnames":"Kim","suffix":""},{"fullName":
-      "Won-Jung Koh","givenNames":"Won-Jung","surnames":"Koh","suffix":""},{
-      "fullName":"Joey Lancaster","givenNames":"Joey","surnames":
-      "Lancaster","suffix":""},{"fullName":"Christophe Lange","givenNames":
-      "Christophe","surnames":"Lange","suffix":""},{"fullName":
-      "Wiel C. M. de Lange","givenNames":"Wiel C. M.","surnames":
-      "de Lange","suffix":""},{"fullName":"Vaira Leimane","givenNames":
-      "Vaira","surnames":"Leimane","suffix":""},{"fullName":
-      "Chi Chiu Leung","givenNames":"Chi Chiu","surnames":"Leung","suffix":
-      ""},{"fullName":"Jiehui Li","givenNames":"Jiehui","surnames":"Li",
-      "suffix":""},{"fullName":"Dick Menzies","givenNames":"Dick","surnames":
-      "Menzies","suffix":""},{"fullName":"Giovanni B. Migliori","givenNames":
-      "Giovanni B.","surnames":"Migliori","suffix":""},{"fullName":
-      "Sergey P. Mishustin","givenNames":"Sergey P.","surnames":
-      "Mishustin","suffix":""},{"fullName":"Carole D. Mitnick","givenNames":
-      "Carole D.","surnames":"Mitnick","suffix":""},{"fullName":
-      "Masa Narita","givenNames":"Masa","surnames":"Narita","suffix":""},{
-      "fullName":"Philly O\u0027Riordan","givenNames":"Philly","surnames":
-      "O\u0027Riordan","suffix":""},{"fullName":"Madhukar Pai","givenNames":
-      "Madhukar","surnames":"Pai","suffix":""},{"fullName":
-      "Domingo Palmero","givenNames":"Domingo","surnames":"Palmero","suffix":
-      ""},{"fullName":"Seung-kyu Park","givenNames":"Seung-kyu","surnames":
-      "Park","suffix":""},{"fullName":"Geoffrey Pasvol","givenNames":
-      "Geoffrey","surnames":"Pasvol","suffix":""},{"fullName":"Jose Peña",
-      "givenNames":"Jose","surnames":"Peña","suffix":""},{"fullName":
-      "Carlos Pérez-Guzmán","givenNames":"Carlos","surnames":
-      "Pérez-Guzmán","suffix":""},{"fullName":"Maria I. D. Quelapio",
-      "givenNames":"Maria I. D.","surnames":"Quelapio","suffix":""},{
-      "fullName":"Alfredo Ponce-de-Leon","givenNames":"Alfredo","surnames":
-      "Ponce-de-Leon","suffix":""},{"fullName":"Vija Riekstina","givenNames":
-      "Vija","surnames":"Riekstina","suffix":""},{"fullName":
-      "Jerome Robert","givenNames":"Jerome","surnames":"Robert","suffix":
-      ""},{"fullName":"Sarah Royce","givenNames":"Sarah","surnames":
-      "Royce","suffix":""},{"fullName":"H. Simon Schaaf","givenNames":
-      "H. Simon","surnames":"Schaaf","suffix":""},{"fullName":
-      "Kwonjune J. Seung","givenNames":"Kwonjune J.","surnames":"Seung",
-      "suffix":""},{"fullName":"Lena Shah","givenNames":"Lena","surnames":
-      "Shah","suffix":""},{"fullName":"Tae Sun Shim","givenNames":
-      "Tae Sun","surnames":"Shim","suffix":""},{"fullName":"Sonya S. Shin",
-      "givenNames":"Sonya S.","surnames":"Shin","suffix":""},{"fullName":
-      "Yuji Shiraishi","givenNames":"Yuji","surnames":"Shiraishi","suffix":
-      ""},{"fullName":"José Sifuentes-Osornio","givenNames":"José",
-      "surnames":"Sifuentes-Osornio","suffix":""},{"fullName":
-      "Giovanni Sotgiu","givenNames":"Giovanni","surnames":"Sotgiu","suffix":
-      ""},{"fullName":"Matthew J. Strand","givenNames":"Matthew J.",
-      "surnames":"Strand","suffix":""},{"fullName":"Payam Tabarsi",
-      "givenNames":"Payam","surnames":"Tabarsi","suffix":""},{"fullName":
-      "Thelma E. Tupasi","givenNames":"Thelma E.","surnames":"Tupasi",
-      "suffix":""},{"fullName":"Robert van Altena","givenNames":"Robert",
-      "surnames":"van Altena","suffix":""},{"fullName":
-      "Martie Van der Walt","givenNames":"Martie","surnames":
-      "Van der Walt","suffix":""},{"fullName":"Tjip S. Van der Werf",
-      "givenNames":"Tjip S.","surnames":"Van der Werf","suffix":""},{
-      "fullName":"Mario H. Vargas","givenNames":"Mario H.","surnames":
-      "Vargas","suffix":""},{"fullName":"Pirett Viiklepp","givenNames":
-      "Pirett","surnames":"Viiklepp","suffix":""},{"fullName":
-      "Janice Westenhouse","givenNames":"Janice","surnames":"Westenhouse",
-      "suffix":""},{"fullName":"Wing Wai Yew","givenNames":"Wing Wai",
-      "surnames":"Yew","suffix":""},{"fullName":"Jae-Joon Yim","givenNames":
-      "Jae-Joon","surnames":"Yim","suffix":""}],"editors":[{"fullName":
-      "Carlton Evans","givenNames":"Carlton","surnames":"Evans","suffix":
-      ""}],"journals":[{"eIssn":"1549-1676"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pmed.1001300",
+  "title": "Multidrug Resistant Pulmonary Tuberculosis Treatment Regimens and Patient Outcomes: An Individual Patient Data Meta-analysis of 9,153 Patients",
+  "eIssn": "1549-1676",
+  "state": 1,
+  "archiveName": "pmed.1001300.zip",
+  "description": "<p>Dick Menzies and colleagues report findings from a collaborative, individual patient-level meta-analysis of treatment outcomes among patients with multidrug-resistant tuberculosis.</p>",
+  "rights": "Ahuja et al. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-16",
+  "eLocationId": "e1001300",
+  "strkImgURI": "",
+  "date": "2012-08-28T07:00:00Z",
+  "volume": "9",
+  "issue": "8",
+  "journal": "PLoS Med",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pmed.1001300",
+  "collaborativeAuthors": [
+    "Collaborative Group for Meta-Analysis of Individual Patient Data in MDR-TB"
+  ],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Multidrug Resistant Pulmonary Tuberculosis Treatment Regimens and Patient Outcomes: An Individual Patient Data Meta-analysis of 9,153 Patients",
+      "description": "<p>Dick Menzies and colleagues report findings from a collaborative, individual patient-level meta-analysis of treatment outcomes among patients with multidrug-resistant tuberculosis.</p>",
+      "size": 209996
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Multidrug Resistant Pulmonary Tuberculosis Treatment Regimens and Patient Outcomes: An Individual Patient Data Meta-analysis of 9,153 Patients",
+      "description": "<p>Dick Menzies and colleagues report findings from a collaborative, individual patient-level meta-analysis of treatment outcomes among patients with multidrug-resistant tuberculosis.</p>",
+      "size": 678490
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>Study selection.</title>",
+      "size": 536224
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g001",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Study selection.</title>",
+      "size": 19762
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Study selection.</title>",
+      "size": 2785
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Study selection.</title>",
+      "size": 36892
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Study selection.</title>",
+      "size": 89092
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Clinical characteristics and treatment received of patients included in the analysis.</title>",
+      "size": 386328
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical characteristics and treatment received of patients included in the analysis.</title>",
+      "size": 84408
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical characteristics and treatment received of patients included in the analysis.</title>",
+      "size": 8825
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical characteristics and treatment received of patients included in the analysis.</title>",
+      "size": 53715
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Clinical characteristics and treatment received of patients included in the analysis.</title>",
+      "size": 152424
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Crude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 828310
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g002",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Crude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 52135
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Crude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 5760
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Crude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 76415
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Crude treatment success versus failure or relapse or death by study with exact 95% CI, as well as number of subjects with success and number of subjects treated. Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 452617
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g003",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 3",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 980106
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g003",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 59444
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g003",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 6494
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g003",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 67911
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g003",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Treatment success versus failure and relapse and death.</title><p>Fixed and der Simonian and Laird random effects pooled estimates are given (purple dots). Two studies that used only first-line TB drugs are indicated by a red square.</p>",
+      "size": 522785
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t002",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 2",
+      "description": "<title>Summary of association of use of individual drugs with treatment success.</title>",
+      "size": 1325130
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Summary of association of use of individual drugs with treatment success.</title>",
+      "size": 26874
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Summary of association of use of individual drugs with treatment success.</title>",
+      "size": 3276
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Summary of association of use of individual drugs with treatment success.</title>",
+      "size": 66763
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Summary of association of use of individual drugs with treatment success.</title>",
+      "size": 471108
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t003",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 3",
+      "description": "<title>Association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 436464
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 23121
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 2431
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 60709
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 122380
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t004",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 4",
+      "description": "<title>Effect of previous treatment on association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 544406
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of previous treatment on association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 12352
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of previous treatment on association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 1971
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of previous treatment on association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 30136
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t004",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 4",
+      "description": "<title>Effect of previous treatment on association of number of likely effective drugs with treatment success\u2014during different phases of treatment.</title>",
+      "size": 188083
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g004",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 4",
+      "description": "<title>Association of treatment success with duration (adjusted odds and upper bound of CI shown).</title><p>(A) Duration of initial intensive phase in all patients (reference group 1.0\u20132.5 mo). (B) Duration of initial intensive phase\u2014restricted to patients not previously treated with second-line drugs (reference group 1.0\u20132.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0\u201312.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6\u201327.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy\u2014analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0\u201312.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6\u201327.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.</p>",
+      "size": 319526
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g004",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Association of treatment success with duration (adjusted odds and upper bound of CI shown).</title><p>(A) Duration of initial intensive phase in all patients (reference group 1.0\u20132.5 mo). (B) Duration of initial intensive phase\u2014restricted to patients not previously treated with second-line drugs (reference group 1.0\u20132.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0\u201312.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6\u201327.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy\u2014analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0\u201312.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6\u201327.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.</p>",
+      "size": 22828
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g004",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Association of treatment success with duration (adjusted odds and upper bound of CI shown).</title><p>(A) Duration of initial intensive phase in all patients (reference group 1.0\u20132.5 mo). (B) Duration of initial intensive phase\u2014restricted to patients not previously treated with second-line drugs (reference group 1.0\u20132.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0\u201312.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6\u201327.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy\u2014analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0\u201312.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6\u201327.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.</p>",
+      "size": 4120
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g004",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Association of treatment success with duration (adjusted odds and upper bound of CI shown).</title><p>(A) Duration of initial intensive phase in all patients (reference group 1.0\u20132.5 mo). (B) Duration of initial intensive phase\u2014restricted to patients not previously treated with second-line drugs (reference group 1.0\u20132.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0\u201312.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6\u201327.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy\u2014analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0\u201312.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6\u201327.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.</p>",
+      "size": 45943
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.g004",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 4",
+      "description": "<title>Association of treatment success with duration (adjusted odds and upper bound of CI shown).</title><p>(A) Duration of initial intensive phase in all patients (reference group 1.0\u20132.5 mo). (B) Duration of initial intensive phase\u2014restricted to patients not previously treated with second-line drugs (reference group 1.0\u20132.5 mo). (C) Total duration of therapy in all patients (reference group is 6.0\u201312.5 mo). Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis. Note: For duration of 24.6\u201327.5 mo the upper limit of the CI was 30.2. This is truncated at 21. (D) Total duration of therapy\u2014analysis restricted to patients not previously treated with second-line drugs (reference group is 6.0\u201312.5 mo. Patients receiving therapy for less than 6 or more than 36 mo excluded from analysis). Note: For duration of 24.6\u201327.5 mo, the upper limit of the CI was 56.5. This is truncated at 21.</p>",
+      "size": 14707
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t005",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 5",
+      "description": "<title>Association of duration of treatment with success versus failure/relapse\u2014patients grouped by treatment history.</title>",
+      "size": 460910
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Association of duration of treatment with success versus failure/relapse\u2014patients grouped by treatment history.</title>",
+      "size": 23490
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Association of duration of treatment with success versus failure/relapse\u2014patients grouped by treatment history.</title>",
+      "size": 2741
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Association of duration of treatment with success versus failure/relapse\u2014patients grouped by treatment history.</title>",
+      "size": 56781
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.t005",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 5",
+      "description": "<title>Association of duration of treatment with success versus failure/relapse\u2014patients grouped by treatment history.</title>",
+      "size": 124745
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s001",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S1",
+      "description": "<p><bold>Chinese translation of the abstract by C-YC and Yuhong Liu.</bold></p><p>(DOCX)</p>",
+      "size": 17565
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s002",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S2",
+      "description": "<p><bold>French translation of the abstract by JR.</bold></p><p>(DOCX)</p>",
+      "size": 17029
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s003",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S3",
+      "description": "<p><bold>German translation of the abstract by CL.</bold></p><p>(DOCX)</p>",
+      "size": 18804
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s004",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S4",
+      "description": "<p><bold>Italian translation of the abstract by GS and GBM.</bold></p><p>(DOCX)</p>",
+      "size": 16629
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s005",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S5",
+      "description": "<p><bold>Korean translation of the abstract by T-SS, W-JK, and J-JY.</bold></p><p>(DOCX)</p>",
+      "size": 18886
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s006",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S6",
+      "description": "<p><bold>Spanish translation of the abstract by DP, MLGG, JS-O, AP-d-L, MHV, and CP-G.</bold></p><p>(DOCX)</p>",
+      "size": 17343
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s007",
+      "contextElement": "supplementary-material",
+      "extension": "DOCX",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "title": "Alternative Language Abstract S7",
+      "description": "<p><bold>Japanese translation of the abstract by MN and YS.</bold></p><p>(DOCX)</p>",
+      "size": 17383
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s008",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Alternative Language Abstract S8",
+      "description": "<p><bold>Russian translation of the abstract by DM.</bold></p><p>(DOC)</p>",
+      "size": 39936
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s009",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S1",
+      "description": "<p>(a) Overview of settings of 32 studies included in individual patient data meta-analysis of MDR-TB supplemental tables (for on-line supplement\u2014references for included studies are found in main text. (b) Overview of 35 studies excluded from individual patient data meta-analysis of MDR-TB.</p><p>(DOC)</p>",
+      "size": 215552
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s010",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S2",
+      "description": "<p><bold>Dosages of drugs used for MDR-TB treatment at sites of studies included in individual patient data meta-analysis on MDR-TB supplemental tables (for on-line supplement\u2014references for included studies are found in main text.</bold></p><p>(DOC)</p>",
+      "size": 166912
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s011",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S3",
+      "description": "<p><bold>Summary of treatment outcome definitions used in studies included in individual patient data meta-analysis.</bold></p><p>(DOC)</p>",
+      "size": 128000
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s012",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S4",
+      "description": "<p><bold>Characteristics of patients associated with history of prior TB therapy.</bold></p><p>(DOC)</p>",
+      "size": 51712
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s013",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S5",
+      "description": "<p><bold>Association of Individual drugs with treatment success (compared to failure/relapse)\u2014stratified by history of previous treatment.</bold></p><p>(DOC)</p>",
+      "size": 75264
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s014",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S6",
+      "description": "<p><bold>Secondary analyses to assess impact of covariates on duration of therapy.</bold> (A) Duration analysis also adjusted for use of four drugs. (B) Analysis restricted: excluded patients who received two or more injectables, and/or had a serious adverse event to an injectable (204 patients in two studies treated with first-line drugs also excluded). (C) Restricted analyses: use of second-line drugs only. (D) Stratified analysis: by use of later generation quinolones: 204 patients receiving first-line drugs only excluded.</p><p>(DOC)</p>",
+      "size": 156672
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s015",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S7",
+      "description": "<p><bold>Pooled outcomes\u2014studies stratified by study level factors (event rates pooled across studies\u2014study level random effects meta-analysis).</bold></p><p>(DOC)</p>",
+      "size": 47616
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s016",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S8",
+      "description": "<p>(a) Assessment of potential confounding of clinical characteristics and drug resistance with initial duration (only patients analyzed for success versus fail/relapse). (B) Assessment of potential confounding of clinical characteristics with total duration of therapy (only patients analyzed for success versus fail/relapse).</p><p>(DOC)</p>",
+      "size": 61440
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s017",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S9",
+      "description": "<p><bold>Summary of variance of estimates\u2014individual drugs with treatment success.</bold></p><p>(DOC)</p>",
+      "size": 75776
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s018",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S10",
+      "description": "<p><bold>Summary of variance of estimates\u2014likely effective drugs with treatment success\u2014during different phases of treatment.</bold></p><p>(DOC)</p>",
+      "size": 48128
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s019",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S11",
+      "description": "<p><bold>Association of number of drugs used and treatment success compared to default only.</bold></p><p>(DOC)</p>",
+      "size": 38400
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pmed.1001300.s020",
+      "contextElement": "supplementary-material",
+      "extension": "DOC",
+      "contentType": "application/msword",
+      "title": "Table S12",
+      "description": "<p><bold>Summary of variance of estimates\u2014duration of treatment with success versus failure/relapse\u2014patients grouped by treatment history.</bold></p><p>(DOC)</p>",
+      "size": 55296
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2008,
+      "displayYear": "2008",
+      "title": "Guidelines for the programmatic management of drug resistant tuberculosis - emergency update",
+      "pages": "247 p",
+      "eLocationID": "247 p",
+      "journal": "World Health Organization",
+      "collaborativeAuthors": [
+        "World Health Organization"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Best drug treatment for multidrug-resistant and extensively drug-resistant tuberculosis",
+      "pages": "621-629",
+      "eLocationID": "621",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JA Caminero",
+          "givenNames": "JA",
+          "surnames": "Caminero",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Sotgiu",
+          "givenNames": "G",
+          "surnames": "Sotgiu",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Zumla",
+          "givenNames": "A",
+          "surnames": "Zumla",
+          "suffix": ""
+        },
+        {
+          "fullName": "GB Migliori",
+          "givenNames": "GB",
+          "surnames": "Migliori",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 9,
+      "volume": "9",
+      "title": "Treatment outcomes among patients with multidrug-resistant tuberculosis:systematic review and meta-analysis",
+      "pages": "153-161",
+      "eLocationID": "153",
+      "journal": "Lancet Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "EW Orenstein",
+          "givenNames": "EW",
+          "surnames": "Orenstein",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Basu",
+          "givenNames": "S",
+          "surnames": "Basu",
+          "suffix": ""
+        },
+        {
+          "fullName": "NS Shah",
+          "givenNames": "NS",
+          "surnames": "Shah",
+          "suffix": ""
+        },
+        {
+          "fullName": "JR Andrews",
+          "givenNames": "JR",
+          "surnames": "Andrews",
+          "suffix": ""
+        },
+        {
+          "fullName": "GH Friedland",
+          "givenNames": "GH",
+          "surnames": "Friedland",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Treatment outcomes of multidrug-resistant tuberculosis: a systematic review and meta-analysis",
+      "pages": "e6914",
+      "eLocationID": "e6914",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pone.0006914",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JC Johnston",
+          "givenNames": "JC",
+          "surnames": "Johnston",
+          "suffix": ""
+        },
+        {
+          "fullName": "NC Shahidi",
+          "givenNames": "NC",
+          "surnames": "Shahidi",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Sadatsafavi",
+          "givenNames": "M",
+          "surnames": "Sadatsafavi",
+          "suffix": ""
+        },
+        {
+          "fullName": "JM FitzGerald",
+          "givenNames": "JM",
+          "surnames": "FitzGerald",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2008,
+      "displayYear": "2008",
+      "title": "Reviews of individual patient data. Higgins JPT, Green S, editors. Cochrane Handbook for Systematic reviews of Intervention",
+      "pages": "548-558",
+      "eLocationID": "548",
+      "journal": "Wiley-Blackwell",
+      "collaborativeAuthors": [
+        "Clarke M on behalf of the Cochrane Individual Patient Data Meta-analysis Methods Group"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LA Stewart",
+          "givenNames": "LA",
+          "surnames": "Stewart",
+          "suffix": ""
+        },
+        {
+          "fullName": "JF Tierney",
+          "givenNames": "JF",
+          "surnames": "Tierney",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 81,
+      "volume": "81",
+      "title": "Extensively drug-resistant tuberculosis (XDR-TB): recommendations for prevention and control",
+      "pages": "430-432",
+      "eLocationID": "430",
+      "journal": "Wkly Epidemiol Rec",
+      "collaborativeAuthors": [
+        "World Health Organization"
+      ],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 9,
+      "volume": "9",
+      "title": "Speaking the same language: treatment outcome definitions for multidrug-resistant tuberculosis",
+      "pages": "640-645",
+      "eLocationID": "640",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "KF Laserson",
+          "givenNames": "KF",
+          "surnames": "Laserson",
+          "suffix": ""
+        },
+        {
+          "fullName": "LE Thorpe",
+          "givenNames": "LE",
+          "surnames": "Thorpe",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Leimane",
+          "givenNames": "V",
+          "surnames": "Leimane",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Weyer",
+          "givenNames": "K",
+          "surnames": "Weyer",
+          "suffix": ""
+        },
+        {
+          "fullName": "CD Mitnick",
+          "givenNames": "CD",
+          "surnames": "Mitnick",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Multilevel models for meta-analysis, and their application to absolute risk difference",
+      "pages": "375-392",
+      "eLocationID": "375",
+      "journal": "Stat Methods",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SG Thompson",
+          "givenNames": "SG",
+          "surnames": "Thompson",
+          "suffix": ""
+        },
+        {
+          "fullName": "RM Turner",
+          "givenNames": "RM",
+          "surnames": "Turner",
+          "suffix": ""
+        },
+        {
+          "fullName": "DE Warn",
+          "givenNames": "DE",
+          "surnames": "Warn",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 19,
+      "volume": "19",
+      "title": "A Multilevel model framework for meta-analysis of clinical trials with binary outcomes",
+      "pages": "3417-3432",
+      "eLocationID": "3417",
+      "journal": "Stat Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RM Turner",
+          "givenNames": "RM",
+          "surnames": "Turner",
+          "suffix": ""
+        },
+        {
+          "fullName": "RZ Omar",
+          "givenNames": "RZ",
+          "surnames": "Omar",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Yang",
+          "givenNames": "M",
+          "surnames": "Yang",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Goldstein",
+          "givenNames": "H",
+          "surnames": "Goldstein",
+          "suffix": ""
+        },
+        {
+          "fullName": "SG Thompson",
+          "givenNames": "SG",
+          "surnames": "Thompson",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Quantifying heterogeneity in meta-analysis",
+      "pages": "1539-1558",
+      "eLocationID": "1539",
+      "journal": "Stat Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JP Higgins",
+          "givenNames": "JP",
+          "surnames": "Higgins",
+          "suffix": ""
+        },
+        {
+          "fullName": "SG Thompson",
+          "givenNames": "SG",
+          "surnames": "Thompson",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Approximations to the log-likelihood function in the nonlinear mixed-effects model",
+      "pages": "12-35",
+      "eLocationID": "12",
+      "journal": "J Computational Graphical Satistics",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Pinheiro",
+          "givenNames": "J",
+          "surnames": "Pinheiro",
+          "suffix": ""
+        },
+        {
+          "fullName": "DM Bates",
+          "givenNames": "DM",
+          "surnames": "Bates",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Multidrug-resistant tuberculosis: long term follow-up of 40 non-HIV-infected patients",
+      "pages": "383-389",
+      "eLocationID": "383",
+      "journal": "Can Respir J",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Avendano",
+          "givenNames": "M",
+          "surnames": "Avendano",
+          "suffix": ""
+        },
+        {
+          "fullName": "RS Goldstein",
+          "givenNames": "RS",
+          "surnames": "Goldstein",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 40,
+      "volume": "40",
+      "title": "Treatment of multidrug-resistant tuberculosis in San Francisco: an outpatient-based approach",
+      "pages": "968-975",
+      "eLocationID": "968",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Burgos",
+          "givenNames": "M",
+          "surnames": "Burgos",
+          "suffix": ""
+        },
+        {
+          "fullName": "LC Gonzalez",
+          "givenNames": "LC",
+          "surnames": "Gonzalez",
+          "suffix": ""
+        },
+        {
+          "fullName": "EA Paz",
+          "givenNames": "EA",
+          "surnames": "Paz",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Gournis",
+          "givenNames": "E",
+          "surnames": "Gournis",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Paz",
+          "givenNames": "A",
+          "surnames": "Paz",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 1990,
+      "displayYear": "1990",
+      "volumeNumber": 141,
+      "volume": "141",
+      "title": "Surgical intervention in the treatment of pulmonary disease caused by drug-resistant mycobacterium tuberculosis",
+      "pages": "623-625",
+      "eLocationID": "623",
+      "journal": "Am Rev Respir Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MD Iseman",
+          "givenNames": "MD",
+          "surnames": "Iseman",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Madsen",
+          "givenNames": "L",
+          "surnames": "Madsen",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Goble",
+          "givenNames": "M",
+          "surnames": "Goble",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Pomerantz",
+          "givenNames": "M",
+          "surnames": "Pomerantz",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 169,
+      "volume": "169",
+      "title": "Treatment and outcome analysis of 205 patients with multidrug-resistant tuberculosis",
+      "pages": "1103-1109",
+      "eLocationID": "1103",
+      "journal": "Am J Respir Crit Care Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ED Chan",
+          "givenNames": "ED",
+          "surnames": "Chan",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Laurel",
+          "givenNames": "V",
+          "surnames": "Laurel",
+          "suffix": ""
+        },
+        {
+          "fullName": "MJ Strand",
+          "givenNames": "MJ",
+          "surnames": "Strand",
+          "suffix": ""
+        },
+        {
+          "fullName": "JF Chan",
+          "givenNames": "JF",
+          "surnames": "Chan",
+          "suffix": ""
+        },
+        {
+          "fullName": "MLN Huynh",
+          "givenNames": "MLN",
+          "surnames": "Huynh",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 28,
+      "volume": "28",
+      "title": "Outcome of pulmonary multidrug-resistant tuberculosis: a 6-yr follow-up study",
+      "pages": "980-985",
+      "eLocationID": "980",
+      "journal": "Eur Respir J",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "CY Chiang",
+          "givenNames": "CY",
+          "surnames": "Chiang",
+          "suffix": ""
+        },
+        {
+          "fullName": "DA Enarson",
+          "givenNames": "DA",
+          "surnames": "Enarson",
+          "suffix": ""
+        },
+        {
+          "fullName": "MC Yu",
+          "givenNames": "MC",
+          "surnames": "Yu",
+          "suffix": ""
+        },
+        {
+          "fullName": "KJ Bai",
+          "givenNames": "KJ",
+          "surnames": "Bai",
+          "suffix": ""
+        },
+        {
+          "fullName": "RM Huang",
+          "givenNames": "RM",
+          "surnames": "Huang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Multidrug-resistant tuberculosis treatment outcomes in Karakalpakstan, Uzbekistan: treatment complexity and XDR-TB among treatment failures",
+      "pages": "e1126",
+      "eLocationID": "e1126",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pone.0001126",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "HS Cox",
+          "givenNames": "HS",
+          "surnames": "Cox",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Stobdan",
+          "givenNames": "K",
+          "surnames": "Stobdan",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Allamuratova",
+          "givenNames": "S",
+          "surnames": "Allamuratova",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Sizaire",
+          "givenNames": "V",
+          "surnames": "Sizaire",
+          "suffix": ""
+        },
+        {
+          "fullName": "ZN Tigay",
+          "givenNames": "ZN",
+          "surnames": "Tigay",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 365,
+      "volume": "365",
+      "title": "Does DOTS work in populations with drug-resistant tuberculosis?",
+      "pages": "1239-1345",
+      "eLocationID": "1239",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "K DeRiemer",
+          "givenNames": "K",
+          "surnames": "DeRiemer",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Garcia-Garcia",
+          "givenNames": "L",
+          "surnames": "Garcia-Garcia",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Bodadilla-del-Valle",
+          "givenNames": "M",
+          "surnames": "Bodadilla-del-Valle",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Palacinos-Martinez",
+          "givenNames": "M",
+          "surnames": "Palacinos-Martinez",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Martinez-Gamboa",
+          "givenNames": "A",
+          "surnames": "Martinez-Gamboa",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Multidrug-resistant tuberculosis without HIV infection: success with individualised therapy",
+      "pages": "409-414",
+      "eLocationID": "409",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "E Escudero",
+          "givenNames": "E",
+          "surnames": "Escudero",
+          "suffix": ""
+        },
+        {
+          "fullName": "JM Pena",
+          "givenNames": "JM",
+          "surnames": "Pena",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Alvarez-Sala",
+          "givenNames": "R",
+          "surnames": "Alvarez-Sala",
+          "suffix": ""
+        },
+        {
+          "fullName": "JJ Vazquez",
+          "givenNames": "JJ",
+          "surnames": "Vazquez",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Ortega",
+          "givenNames": "A",
+          "surnames": "Ortega",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Multidrug-resistant tuberculosis: long-term treatment outcome in the Netherlands",
+      "pages": "758-764",
+      "eLocationID": "758",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WA Geerligs",
+          "givenNames": "WA",
+          "surnames": "Geerligs",
+          "suffix": ""
+        },
+        {
+          "fullName": "R van Altena",
+          "givenNames": "R",
+          "surnames": "van Altena",
+          "suffix": ""
+        },
+        {
+          "fullName": "WCM delange",
+          "givenNames": "WCM",
+          "surnames": "delange",
+          "suffix": ""
+        },
+        {
+          "fullName": "D van Soolingen",
+          "givenNames": "D",
+          "surnames": "van Soolingen",
+          "suffix": ""
+        },
+        {
+          "fullName": "TS van der Werf",
+          "givenNames": "TS",
+          "surnames": "van der Werf",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 293,
+      "volume": "293",
+      "title": "Multidrug resistance among persons with tuberculosis in California, 1994\u20132003",
+      "pages": "2732-2739",
+      "eLocationID": "2732",
+      "journal": "JAMA",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "RM Granich",
+          "givenNames": "RM",
+          "surnames": "Granich",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Oh",
+          "givenNames": "P",
+          "surnames": "Oh",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Lewis",
+          "givenNames": "B",
+          "surnames": "Lewis",
+          "suffix": ""
+        },
+        {
+          "fullName": "TC Porco",
+          "givenNames": "TC",
+          "surnames": "Porco",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Flood",
+          "givenNames": "J",
+          "surnames": "Flood",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 47,
+      "volume": "47",
+      "title": "Extensively drug-resistant tuberculosis in California, 1993\u20132006",
+      "pages": "450-457",
+      "eLocationID": "450",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "R Banerjee",
+          "givenNames": "R",
+          "surnames": "Banerjee",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Allen",
+          "givenNames": "J",
+          "surnames": "Allen",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Westenhouse",
+          "givenNames": "J",
+          "surnames": "Westenhouse",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Oh",
+          "givenNames": "P",
+          "surnames": "Oh",
+          "suffix": ""
+        },
+        {
+          "fullName": "W Elms",
+          "givenNames": "W",
+          "surnames": "Elms",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Risk factors associated with default from multidrug-resistant tuberculosis treatment, South Africa, 1999\u20132001",
+      "pages": "649-655",
+      "eLocationID": "649",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TH Holtz",
+          "givenNames": "TH",
+          "surnames": "Holtz",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Lancaster",
+          "givenNames": "J",
+          "surnames": "Lancaster",
+          "suffix": ""
+        },
+        {
+          "fullName": "KF Laserson",
+          "givenNames": "KF",
+          "surnames": "Laserson",
+          "suffix": ""
+        },
+        {
+          "fullName": "CD Wells",
+          "givenNames": "CD",
+          "surnames": "Wells",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Thorpe",
+          "givenNames": "L",
+          "surnames": "Thorpe",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 178,
+      "volume": "178",
+      "title": "Treatment outcomes and long-term survival in patients with extensively drug-resistant tuberculosis",
+      "pages": "1075-1082",
+      "eLocationID": "1075",
+      "journal": "Am J Respir Crit Care Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DH Kim",
+          "givenNames": "DH",
+          "surnames": "Kim",
+          "suffix": ""
+        },
+        {
+          "fullName": "HJ Kim",
+          "givenNames": "HJ",
+          "surnames": "Kim",
+          "suffix": ""
+        },
+        {
+          "fullName": "SK Park",
+          "givenNames": "SK",
+          "surnames": "Park",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Kong",
+          "givenNames": "S",
+          "surnames": "Kong",
+          "suffix": ""
+        },
+        {
+          "fullName": "YS Kim",
+          "givenNames": "YS",
+          "surnames": "Kim",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 45,
+      "volume": "45",
+      "title": "Impact of extensive drug resistance on treatment outcomes in non-HIV-infected patients with multidrug-resistant tuberculosis",
+      "pages": "1290-1295",
+      "eLocationID": "1290",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "HR Kim",
+          "givenNames": "HR",
+          "surnames": "Kim",
+          "suffix": ""
+        },
+        {
+          "fullName": "SS Hwang",
+          "givenNames": "SS",
+          "surnames": "Hwang",
+          "suffix": ""
+        },
+        {
+          "fullName": "HJ Kim",
+          "givenNames": "HJ",
+          "surnames": "Kim",
+          "suffix": ""
+        },
+        {
+          "fullName": "SM Lee",
+          "givenNames": "SM",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "CG Yoo",
+          "givenNames": "CG",
+          "surnames": "Yoo",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 47,
+      "volume": "47",
+      "title": "Treatment outcomes for HIV-uninfected patients with multidrug-resistant and extensively drug-resistant tuberculosis",
+      "pages": "496-502",
+      "eLocationID": "496",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "YS Kwon",
+          "givenNames": "YS",
+          "surnames": "Kwon",
+          "suffix": ""
+        },
+        {
+          "fullName": "YH Kim",
+          "givenNames": "YH",
+          "surnames": "Kim",
+          "suffix": ""
+        },
+        {
+          "fullName": "GY Suh",
+          "givenNames": "GY",
+          "surnames": "Suh",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Chung",
+          "givenNames": "M",
+          "surnames": "Chung",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Kim",
+          "givenNames": "H",
+          "surnames": "Kim",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Treatment outcome cohort analysis in an integrated DOTS and DOTS-Plus TB program in Latvia",
+      "pages": "585-587",
+      "eLocationID": "585",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V Riekstina",
+          "givenNames": "V",
+          "surnames": "Riekstina",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Leimane",
+          "givenNames": "V",
+          "surnames": "Leimane",
+          "suffix": ""
+        },
+        {
+          "fullName": "TH Holtz",
+          "givenNames": "TH",
+          "surnames": "Holtz",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Leimans",
+          "givenNames": "J",
+          "surnames": "Leimans",
+          "suffix": ""
+        },
+        {
+          "fullName": "CD Wells",
+          "givenNames": "CD",
+          "surnames": "Wells",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 386,
+      "volume": "386",
+      "title": "Clinical outcome of individualised treatment of multi-drugresistant tuberculosis in Latvia: a retrospective cohort study",
+      "pages": "318-326",
+      "eLocationID": "318",
+      "journal": "Lancet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "V Leimane",
+          "givenNames": "V",
+          "surnames": "Leimane",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Riekstina",
+          "givenNames": "V",
+          "surnames": "Riekstina",
+          "suffix": ""
+        },
+        {
+          "fullName": "TH Holtz",
+          "givenNames": "TH",
+          "surnames": "Holtz",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Zarovska",
+          "givenNames": "E",
+          "surnames": "Zarovska",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Skripconoka",
+          "givenNames": "V",
+          "surnames": "Skripconoka",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 144,
+      "volume": "144",
+      "title": "Time to sputum culture conversion in multidrug-resistant tuberculosis: predictors and relationship to treatment outcome",
+      "pages": "650-659",
+      "eLocationID": "650",
+      "journal": "Ann Intern Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TH Holtz",
+          "givenNames": "TH",
+          "surnames": "Holtz",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Stenberg",
+          "givenNames": "M",
+          "surnames": "Stenberg",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Kammerer",
+          "givenNames": "S",
+          "surnames": "Kammerer",
+          "suffix": ""
+        },
+        {
+          "fullName": "KF Laserson",
+          "givenNames": "KF",
+          "surnames": "Laserson",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Riekstina",
+          "givenNames": "V",
+          "surnames": "Riekstina",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 32,
+      "volume": "32",
+      "title": "Clinical outcomes of Estonian patients with primary multidrug-resistant versus drug-susceptible tuberculosis",
+      "pages": "373-80",
+      "eLocationID": "373",
+      "journal": "Clin Infect Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Lockman",
+          "givenNames": "S",
+          "surnames": "Lockman",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Kruuner",
+          "givenNames": "A",
+          "surnames": "Kruuner",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Binkin",
+          "givenNames": "N",
+          "surnames": "Binkin",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Levina",
+          "givenNames": "K",
+          "surnames": "Levina",
+          "suffix": ""
+        },
+        {
+          "fullName": "YC Wang",
+          "givenNames": "YC",
+          "surnames": "Wang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "35",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 12,
+      "volume": "12",
+      "title": "Outcome of treatment of MDR-TB patients with standardised regimens, Iran, 2002\u20132006",
+      "pages": "750-755",
+      "eLocationID": "750",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MR Masjedi",
+          "givenNames": "MR",
+          "surnames": "Masjedi",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Tabarsi",
+          "givenNames": "P",
+          "surnames": "Tabarsi",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Chitsaz",
+          "givenNames": "P",
+          "surnames": "Chitsaz",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Baghaei",
+          "givenNames": "P",
+          "surnames": "Baghaei",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Miraeidi",
+          "givenNames": "M",
+          "surnames": "Miraeidi",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "36",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Frequency of recurrence among MDR-TB cases \u2018successfully\u2019 treated with standardised short-course chemotherapy",
+      "pages": "858-864",
+      "eLocationID": "858",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GB Migliori",
+          "givenNames": "GB",
+          "surnames": "Migliori",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Espinal",
+          "givenNames": "M",
+          "surnames": "Espinal",
+          "suffix": ""
+        },
+        {
+          "fullName": "ID Danilova",
+          "givenNames": "ID",
+          "surnames": "Danilova",
+          "suffix": ""
+        },
+        {
+          "fullName": "VV Punga",
+          "givenNames": "VV",
+          "surnames": "Punga",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Grzemska",
+          "givenNames": "M",
+          "surnames": "Grzemska",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "37",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 30,
+      "volume": "30",
+      "title": "Clinical and operational value of the extensively drug-resistant tuberculosis definition",
+      "pages": "623-626",
+      "eLocationID": "623",
+      "journal": "Eur Respir J",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "GB Migliori",
+          "givenNames": "GB",
+          "surnames": "Migliori",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Besozzi",
+          "givenNames": "G",
+          "surnames": "Besozzi",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Girardi",
+          "givenNames": "E",
+          "surnames": "Girardi",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Kliiman",
+          "givenNames": "K",
+          "surnames": "Kliiman",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Lange",
+          "givenNames": "C",
+          "surnames": "Lange",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "38",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 348,
+      "volume": "348",
+      "title": "Community-based therapy for multidrug-resistant tuberculosis in Lima, Peru",
+      "pages": "119-128",
+      "eLocationID": "119",
+      "journal": "N Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Mitnick",
+          "givenNames": "C",
+          "surnames": "Mitnick",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Bayona",
+          "givenNames": "J",
+          "surnames": "Bayona",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Palacios",
+          "givenNames": "E",
+          "surnames": "Palacios",
+          "suffix": ""
+        },
+        {
+          "fullName": "SS Shin",
+          "givenNames": "SS",
+          "surnames": "Shin",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Furin",
+          "givenNames": "J",
+          "surnames": "Furin",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "39",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 359,
+      "volume": "359",
+      "title": "Comprehensive treatment of extensively drug-resistant tuberculosis",
+      "pages": "563-574",
+      "eLocationID": "563",
+      "journal": "N Engl J Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Mitnick",
+          "givenNames": "C",
+          "surnames": "Mitnick",
+          "suffix": ""
+        },
+        {
+          "fullName": "SS Shin",
+          "givenNames": "SS",
+          "surnames": "Shin",
+          "suffix": ""
+        },
+        {
+          "fullName": "KJ Seung",
+          "givenNames": "KJ",
+          "surnames": "Seung",
+          "suffix": ""
+        },
+        {
+          "fullName": "ML Rich",
+          "givenNames": "ML",
+          "surnames": "Rich",
+          "suffix": ""
+        },
+        {
+          "fullName": "SS Atwood",
+          "givenNames": "SS",
+          "surnames": "Atwood",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "40",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Public-private collaboration for multidrug-resistant tuberculosis control in New York city",
+      "pages": "639-648",
+      "eLocationID": "639",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SS Munsiff",
+          "givenNames": "SS",
+          "surnames": "Munsiff",
+          "suffix": ""
+        },
+        {
+          "fullName": "SD Ahuja",
+          "givenNames": "SD",
+          "surnames": "Ahuja",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Li",
+          "givenNames": "J",
+          "surnames": "Li",
+          "suffix": ""
+        },
+        {
+          "fullName": "CR Driver",
+          "givenNames": "CR",
+          "surnames": "Driver",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "41",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 126,
+      "volume": "126",
+      "title": "Use of therapeutic drug monitoring for multidrug-resistant tuberculosis patients",
+      "pages": "1770-1776",
+      "eLocationID": "1770",
+      "journal": "Chest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Li",
+          "givenNames": "J",
+          "surnames": "Li",
+          "suffix": ""
+        },
+        {
+          "fullName": "JN Burzynski",
+          "givenNames": "JN",
+          "surnames": "Burzynski",
+          "suffix": ""
+        },
+        {
+          "fullName": "YA Lee",
+          "givenNames": "YA",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Berg",
+          "givenNames": "D",
+          "surnames": "Berg",
+          "suffix": ""
+        },
+        {
+          "fullName": "CR Driver",
+          "givenNames": "CR",
+          "surnames": "Driver",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "42",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 120,
+      "volume": "120",
+      "title": "Treatment experience of multidrug-resistant tuberculosis in Florida, 1994\u20131997",
+      "pages": "343-348",
+      "eLocationID": "343",
+      "journal": "Chest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Narita",
+          "givenNames": "M",
+          "surnames": "Narita",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Alonso",
+          "givenNames": "P",
+          "surnames": "Alonso",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Lazardo",
+          "givenNames": "M",
+          "surnames": "Lazardo",
+          "suffix": ""
+        },
+        {
+          "fullName": "E Hollender",
+          "givenNames": "E",
+          "surnames": "Hollender",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Pitchenik",
+          "givenNames": "A",
+          "surnames": "Pitchenik",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "43",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Rapid molecular detection of rifampicin resistance facilitates early diagnosis and treatment of multidrug-resistant tuberculosis: case control study",
+      "pages": "e3173",
+      "eLocationID": "e3173",
+      "journal": "PLoS One",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pone.0003173",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "P O'Riordan",
+          "givenNames": "P",
+          "surnames": "O'Riordan",
+          "suffix": ""
+        },
+        {
+          "fullName": "U Schwab",
+          "givenNames": "U",
+          "surnames": "Schwab",
+          "suffix": ""
+        },
+        {
+          "fullName": "S Logan",
+          "givenNames": "S",
+          "surnames": "Logan",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Cooke",
+          "givenNames": "G",
+          "surnames": "Cooke",
+          "suffix": ""
+        },
+        {
+          "fullName": "RJ Wilkinson",
+          "givenNames": "RJ",
+          "surnames": "Wilkinson",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "44",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Treatment and follow-up of HIV-negative multidrug-resistant tuberculosis patients in an infectious diseases reference hospital, Buenos Aires, Argentina",
+      "pages": "778-784",
+      "eLocationID": "778",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DJ Palmero",
+          "givenNames": "DJ",
+          "surnames": "Palmero",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Ambroggi",
+          "givenNames": "M",
+          "surnames": "Ambroggi",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Brea",
+          "givenNames": "A",
+          "surnames": "Brea",
+          "suffix": ""
+        },
+        {
+          "fullName": "M De Lucas",
+          "givenNames": "M",
+          "surnames": "De Lucas",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Fulgenzi",
+          "givenNames": "A",
+          "surnames": "Fulgenzi",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "45",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Self-administered, standardized regimens for multidrug-resistant tuberculosis in South Korea",
+      "pages": "361-368",
+      "eLocationID": "361",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SK Park",
+          "givenNames": "SK",
+          "surnames": "Park",
+          "suffix": ""
+        },
+        {
+          "fullName": "WC Lee",
+          "givenNames": "WC",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "DH Lee",
+          "givenNames": "DH",
+          "surnames": "Lee",
+          "suffix": ""
+        },
+        {
+          "fullName": "CD Mitnick",
+          "givenNames": "CD",
+          "surnames": "Mitnick",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Han",
+          "givenNames": "L",
+          "surnames": "Han",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "46",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "Results of a 12-month regimen for drug-resistant pulmonary tuberculosis",
+      "pages": "1102-1109",
+      "eLocationID": "1102",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C P\u00e9rez-Guzm\u00e1n",
+          "givenNames": "C",
+          "surnames": "P\u00e9rez-Guzm\u00e1n",
+          "suffix": ""
+        },
+        {
+          "fullName": "MH Vargas",
+          "givenNames": "MH",
+          "surnames": "Vargas",
+          "suffix": ""
+        },
+        {
+          "fullName": "LA Martinez-Rossier",
+          "givenNames": "LA",
+          "surnames": "Martinez-Rossier",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Torres-Cruz",
+          "givenNames": "A",
+          "surnames": "Torres-Cruz",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Villarreal-Velarde",
+          "givenNames": "H",
+          "surnames": "Villarreal-Velarde",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "47",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Treatment outcomes by drug resistance and HIV status among tuberculosis patients in Ho Chi Minh City, Vietnam",
+      "pages": "45-51",
+      "eLocationID": "45",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "HT Quy",
+          "givenNames": "HT",
+          "surnames": "Quy",
+          "suffix": ""
+        },
+        {
+          "fullName": "FGJ Cobelens",
+          "givenNames": "FGJ",
+          "surnames": "Cobelens",
+          "suffix": ""
+        },
+        {
+          "fullName": "NTN Lan",
+          "givenNames": "NTN",
+          "surnames": "Lan",
+          "suffix": ""
+        },
+        {
+          "fullName": "TN Buu",
+          "givenNames": "TN",
+          "surnames": "Buu",
+          "suffix": ""
+        },
+        {
+          "fullName": "CSB Lambregts",
+          "givenNames": "CSB",
+          "surnames": "Lambregts",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "48",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 88,
+      "volume": "88",
+      "title": "Culture confirmed multidrug resistant tuberculosis: diagnostic delay, clinical features, and outcome",
+      "pages": "1106-1111",
+      "eLocationID": "1106",
+      "journal": "Arch Dis Child",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "HS Schaaf",
+          "givenNames": "HS",
+          "surnames": "Schaaf",
+          "suffix": ""
+        },
+        {
+          "fullName": "K Shean",
+          "givenNames": "K",
+          "surnames": "Shean",
+          "suffix": ""
+        },
+        {
+          "fullName": "PR Donald",
+          "givenNames": "PR",
+          "surnames": "Donald",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "49",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Treatment outcomes in an integrated civilian and prison MDR-TB treatment program in Russia",
+      "pages": "402-408",
+      "eLocationID": "402",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "SS Shin",
+          "givenNames": "SS",
+          "surnames": "Shin",
+          "suffix": ""
+        },
+        {
+          "fullName": "AD Pasechnikov",
+          "givenNames": "AD",
+          "surnames": "Pasechnikov",
+          "suffix": ""
+        },
+        {
+          "fullName": "IY Gelmanova",
+          "givenNames": "IY",
+          "surnames": "Gelmanova",
+          "suffix": ""
+        },
+        {
+          "fullName": "GG Peremitin",
+          "givenNames": "GG",
+          "surnames": "Peremitin",
+          "suffix": ""
+        },
+        {
+          "fullName": "AK Strelis",
+          "givenNames": "AK",
+          "surnames": "Strelis",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "50",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 128,
+      "volume": "128",
+      "title": "Resectional surgery combined with chemotherapy remains the treatment of choice for multidrug-resistant tuberculosis",
+      "pages": "523-528",
+      "eLocationID": "523",
+      "journal": "J Thorac Cardiovasc Surg",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "Y Shiraishi",
+          "givenNames": "Y",
+          "surnames": "Shiraishi",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Nakalima",
+          "givenNames": "Y",
+          "surnames": "Nakalima",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Katsuragi",
+          "givenNames": "N",
+          "surnames": "Katsuragi",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Kurai",
+          "givenNames": "M",
+          "surnames": "Kurai",
+          "suffix": ""
+        },
+        {
+          "fullName": "N Takahashi",
+          "givenNames": "N",
+          "surnames": "Takahashi",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "51",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 83,
+      "volume": "83",
+      "title": "DOTS-Plus for multidrug-resistant tuberculosis in the Philippines: global assistance urgently needed",
+      "pages": "52-58",
+      "eLocationID": "52",
+      "journal": "Tuberculosis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TE Tupasi",
+          "givenNames": "TE",
+          "surnames": "Tupasi",
+          "suffix": ""
+        },
+        {
+          "fullName": "MID Quelapio",
+          "givenNames": "MID",
+          "surnames": "Quelapio",
+          "suffix": ""
+        },
+        {
+          "fullName": "RB Orillaza",
+          "givenNames": "RB",
+          "surnames": "Orillaza",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Alcantara",
+          "givenNames": "C",
+          "surnames": "Alcantara",
+          "suffix": ""
+        },
+        {
+          "fullName": "NRC Mira",
+          "givenNames": "NRC",
+          "surnames": "Mira",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "52",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 3,
+      "volume": "3",
+      "title": "Feasibility and cost-effectiveness of treating multidrug resistant tuberculosis: a cohort study in the Philippines",
+      "pages": "e352",
+      "eLocationID": "e352",
+      "journal": "PLoS Med",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pmed.0030352",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "TE Tupasi",
+          "givenNames": "TE",
+          "surnames": "Tupasi",
+          "suffix": ""
+        },
+        {
+          "fullName": "R Gupta",
+          "givenNames": "R",
+          "surnames": "Gupta",
+          "suffix": ""
+        },
+        {
+          "fullName": "MID Quelapio",
+          "givenNames": "MID",
+          "surnames": "Quelapio",
+          "suffix": ""
+        },
+        {
+          "fullName": "RB Orillaza",
+          "givenNames": "RB",
+          "surnames": "Orillaza",
+          "suffix": ""
+        },
+        {
+          "fullName": "NR Mira",
+          "givenNames": "NR",
+          "surnames": "Mira",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "53",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 29,
+      "volume": "29",
+      "title": "An intervention programme for the management of multidrug-resistant tuberculosis in France",
+      "pages": "434-439",
+      "eLocationID": "434",
+      "journal": "Intl J Antimicrob Agents",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ML Uffredi",
+          "givenNames": "ML",
+          "surnames": "Uffredi",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Truffot-Pernot",
+          "givenNames": "C",
+          "surnames": "Truffot-Pernot",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Dautzenberg",
+          "givenNames": "B",
+          "surnames": "Dautzenberg",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Renard",
+          "givenNames": "M",
+          "surnames": "Renard",
+          "suffix": ""
+        },
+        {
+          "fullName": "V Jarlier",
+          "givenNames": "V",
+          "surnames": "Jarlier",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "54",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Results of a standardised regimen for multidrug-resistant tuberculosis in Bangladesh",
+      "pages": "560-567",
+      "eLocationID": "560",
+      "journal": "Int J Tuberc Lung Dis",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Van Deun",
+          "givenNames": "A",
+          "surnames": "Van Deun",
+          "suffix": ""
+        },
+        {
+          "fullName": "MAH Salim",
+          "givenNames": "MAH",
+          "surnames": "Salim",
+          "suffix": ""
+        },
+        {
+          "fullName": "APK Das",
+          "givenNames": "APK",
+          "surnames": "Das",
+          "suffix": ""
+        },
+        {
+          "fullName": "I Bastian",
+          "givenNames": "I",
+          "surnames": "Bastian",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Portaels",
+          "givenNames": "F",
+          "surnames": "Portaels",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "55",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 182,
+      "volume": "182",
+      "title": "Short, highly effective and inexpensive standardized treatment of multidrug-resistant tuberculosis",
+      "pages": "684-692",
+      "eLocationID": "684",
+      "journal": "Am J Respir Crit Care Med",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Van Deun",
+          "givenNames": "A",
+          "surnames": "Van Deun",
+          "suffix": ""
+        },
+        {
+          "fullName": "AKJ Maug",
+          "givenNames": "AKJ",
+          "surnames": "Maug",
+          "suffix": ""
+        },
+        {
+          "fullName": "MAH Salim",
+          "givenNames": "MAH",
+          "surnames": "Salim",
+          "suffix": ""
+        },
+        {
+          "fullName": "PK Das",
+          "givenNames": "PK",
+          "surnames": "Das",
+          "suffix": ""
+        },
+        {
+          "fullName": "MR Sarker",
+          "givenNames": "MR",
+          "surnames": "Sarker",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "56",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 124,
+      "volume": "124",
+      "title": "Comparative roles of levofloxacin and ofloxacin in the treatment of multidrug-resistant tuberculosis",
+      "pages": "1476-1481",
+      "eLocationID": "1476",
+      "journal": "Chest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WW Yew",
+          "givenNames": "WW",
+          "surnames": "Yew",
+          "suffix": ""
+        },
+        {
+          "fullName": "CK Chan",
+          "givenNames": "CK",
+          "surnames": "Chan",
+          "suffix": ""
+        },
+        {
+          "fullName": "CC Leung",
+          "givenNames": "CC",
+          "surnames": "Leung",
+          "suffix": ""
+        },
+        {
+          "fullName": "CH Chau",
+          "givenNames": "CH",
+          "surnames": "Chau",
+          "suffix": ""
+        },
+        {
+          "fullName": "CM Tam",
+          "givenNames": "CM",
+          "surnames": "Tam",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "57",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 117,
+      "volume": "117",
+      "title": "Outcomes of patients with multidrug-resistant pulmonary tuberculosis treated with ofloxacin/levofloxacin-containing regimens",
+      "pages": "744-751",
+      "eLocationID": "744",
+      "journal": "Chest",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "WW Yew",
+          "givenNames": "WW",
+          "surnames": "Yew",
+          "suffix": ""
+        },
+        {
+          "fullName": "CK Chan",
+          "givenNames": "CK",
+          "surnames": "Chan",
+          "suffix": ""
+        },
+        {
+          "fullName": "CH Chau",
+          "givenNames": "CH",
+          "surnames": "Chau",
+          "suffix": ""
+        },
+        {
+          "fullName": "CM Tam",
+          "givenNames": "CM",
+          "surnames": "Tam",
+          "suffix": ""
+        },
+        {
+          "fullName": "CC Leung",
+          "givenNames": "CC",
+          "surnames": "Leung",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "58",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 283,
+      "volume": "283",
+      "title": "Standard short-course chemotherapy for drug-resistance tuberculosis- treatment outcomes in 6 countries",
+      "pages": "2537-2545",
+      "eLocationID": "2537",
+      "journal": "JAMA",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MA Espinal",
+          "givenNames": "MA",
+          "surnames": "Espinal",
+          "suffix": ""
+        },
+        {
+          "fullName": "SJ Kim",
+          "givenNames": "SJ",
+          "surnames": "Kim",
+          "suffix": ""
+        },
+        {
+          "fullName": "PG Suarez",
+          "givenNames": "PG",
+          "surnames": "Suarez",
+          "suffix": ""
+        },
+        {
+          "fullName": "KM Kam",
+          "givenNames": "KM",
+          "surnames": "Kam",
+          "suffix": ""
+        },
+        {
+          "fullName": "AG Khomenko",
+          "givenNames": "AG",
+          "surnames": "Khomenko",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "59",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 304,
+      "volume": "304",
+      "title": "Minimizing bias due to confounding by indication in comparative effectiveness research the importance of restriction",
+      "pages": "897-898",
+      "eLocationID": "897",
+      "journal": "JAMA",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "BM Psaty",
+          "givenNames": "BM",
+          "surnames": "Psaty",
+          "suffix": ""
+        },
+        {
+          "fullName": "DS Siscovick",
+          "givenNames": "DS",
+          "surnames": "Siscovick",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "60",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 4,
+      "volume": "4",
+      "title": "Randomized trials to optimize treatment of multidrug-resistant tuberculosis",
+      "pages": "e292",
+      "eLocationID": "e292",
+      "journal": "PLoS Med",
+      "collaborativeAuthors": [],
+      "doi": "10.1371/journal.pmed.0040292",
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "CD Mitnick",
+          "givenNames": "CD",
+          "surnames": "Mitnick",
+          "suffix": ""
+        },
+        {
+          "fullName": "KG Castro",
+          "givenNames": "KG",
+          "surnames": "Castro",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Harrington",
+          "givenNames": "M",
+          "surnames": "Harrington",
+          "suffix": ""
+        },
+        {
+          "fullName": "LV Sacks",
+          "givenNames": "LV",
+          "surnames": "Sacks",
+          "suffix": ""
+        },
+        {
+          "fullName": "W Burman",
+          "givenNames": "W",
+          "surnames": "Burman",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Shama D. Ahuja",
+      "givenNames": "Shama D.",
+      "surnames": "Ahuja",
+      "suffix": ""
+    },
+    {
+      "fullName": "David Ashkin",
+      "givenNames": "David",
+      "surnames": "Ashkin",
+      "suffix": ""
+    },
+    {
+      "fullName": "Monika Avendano",
+      "givenNames": "Monika",
+      "surnames": "Avendano",
+      "suffix": ""
+    },
+    {
+      "fullName": "Rita Banerjee",
+      "givenNames": "Rita",
+      "surnames": "Banerjee",
+      "suffix": ""
+    },
+    {
+      "fullName": "Melissa Bauer",
+      "givenNames": "Melissa",
+      "surnames": "Bauer",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jamie N. Bayona",
+      "givenNames": "Jamie N.",
+      "surnames": "Bayona",
+      "suffix": ""
+    },
+    {
+      "fullName": "Mercedes C. Becerra",
+      "givenNames": "Mercedes C.",
+      "surnames": "Becerra",
+      "suffix": ""
+    },
+    {
+      "fullName": "Andrea Benedetti",
+      "givenNames": "Andrea",
+      "surnames": "Benedetti",
+      "suffix": ""
+    },
+    {
+      "fullName": "Marcos Burgos",
+      "givenNames": "Marcos",
+      "surnames": "Burgos",
+      "suffix": ""
+    },
+    {
+      "fullName": "Rosella Centis",
+      "givenNames": "Rosella",
+      "surnames": "Centis",
+      "suffix": ""
+    },
+    {
+      "fullName": "Eward D. Chan",
+      "givenNames": "Eward D.",
+      "surnames": "Chan",
+      "suffix": ""
+    },
+    {
+      "fullName": "Chen-Yuan Chiang",
+      "givenNames": "Chen-Yuan",
+      "surnames": "Chiang",
+      "suffix": ""
+    },
+    {
+      "fullName": "Helen Cox",
+      "givenNames": "Helen",
+      "surnames": "Cox",
+      "suffix": ""
+    },
+    {
+      "fullName": "Lia D'Ambrosio",
+      "givenNames": "Lia",
+      "surnames": "D'Ambrosio",
+      "suffix": ""
+    },
+    {
+      "fullName": "Kathy DeRiemer",
+      "givenNames": "Kathy",
+      "surnames": "DeRiemer",
+      "suffix": ""
+    },
+    {
+      "fullName": "Nguyen Huy Dung",
+      "givenNames": "Nguyen Huy",
+      "surnames": "Dung",
+      "suffix": ""
+    },
+    {
+      "fullName": "Donald Enarson",
+      "givenNames": "Donald",
+      "surnames": "Enarson",
+      "suffix": ""
+    },
+    {
+      "fullName": "Dennis Falzon",
+      "givenNames": "Dennis",
+      "surnames": "Falzon",
+      "suffix": ""
+    },
+    {
+      "fullName": "Katherine Flanagan",
+      "givenNames": "Katherine",
+      "surnames": "Flanagan",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jennifer Flood",
+      "givenNames": "Jennifer",
+      "surnames": "Flood",
+      "suffix": ""
+    },
+    {
+      "fullName": "Maria L. Garcia-Garcia",
+      "givenNames": "Maria L.",
+      "surnames": "Garcia-Garcia",
+      "suffix": ""
+    },
+    {
+      "fullName": "Neel Gandhi",
+      "givenNames": "Neel",
+      "surnames": "Gandhi",
+      "suffix": ""
+    },
+    {
+      "fullName": "Reuben M. Granich",
+      "givenNames": "Reuben M.",
+      "surnames": "Granich",
+      "suffix": ""
+    },
+    {
+      "fullName": "Maria G. Hollm-Delgado",
+      "givenNames": "Maria G.",
+      "surnames": "Hollm-Delgado",
+      "suffix": ""
+    },
+    {
+      "fullName": "Timothy H. Holtz",
+      "givenNames": "Timothy H.",
+      "surnames": "Holtz",
+      "suffix": ""
+    },
+    {
+      "fullName": "Michael D. Iseman",
+      "givenNames": "Michael D.",
+      "surnames": "Iseman",
+      "suffix": ""
+    },
+    {
+      "fullName": "Leah G. Jarlsberg",
+      "givenNames": "Leah G.",
+      "surnames": "Jarlsberg",
+      "suffix": ""
+    },
+    {
+      "fullName": "Salmaan Keshavjee",
+      "givenNames": "Salmaan",
+      "surnames": "Keshavjee",
+      "suffix": ""
+    },
+    {
+      "fullName": "Hye-Ryoun Kim",
+      "givenNames": "Hye-Ryoun",
+      "surnames": "Kim",
+      "suffix": ""
+    },
+    {
+      "fullName": "Won-Jung Koh",
+      "givenNames": "Won-Jung",
+      "surnames": "Koh",
+      "suffix": ""
+    },
+    {
+      "fullName": "Joey Lancaster",
+      "givenNames": "Joey",
+      "surnames": "Lancaster",
+      "suffix": ""
+    },
+    {
+      "fullName": "Christophe Lange",
+      "givenNames": "Christophe",
+      "surnames": "Lange",
+      "suffix": ""
+    },
+    {
+      "fullName": "Wiel C. M. de Lange",
+      "givenNames": "Wiel C. M.",
+      "surnames": "de Lange",
+      "suffix": ""
+    },
+    {
+      "fullName": "Vaira Leimane",
+      "givenNames": "Vaira",
+      "surnames": "Leimane",
+      "suffix": ""
+    },
+    {
+      "fullName": "Chi Chiu Leung",
+      "givenNames": "Chi Chiu",
+      "surnames": "Leung",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jiehui Li",
+      "givenNames": "Jiehui",
+      "surnames": "Li",
+      "suffix": ""
+    },
+    {
+      "fullName": "Dick Menzies",
+      "givenNames": "Dick",
+      "surnames": "Menzies",
+      "suffix": ""
+    },
+    {
+      "fullName": "Giovanni B. Migliori",
+      "givenNames": "Giovanni B.",
+      "surnames": "Migliori",
+      "suffix": ""
+    },
+    {
+      "fullName": "Sergey P. Mishustin",
+      "givenNames": "Sergey P.",
+      "surnames": "Mishustin",
+      "suffix": ""
+    },
+    {
+      "fullName": "Carole D. Mitnick",
+      "givenNames": "Carole D.",
+      "surnames": "Mitnick",
+      "suffix": ""
+    },
+    {
+      "fullName": "Masa Narita",
+      "givenNames": "Masa",
+      "surnames": "Narita",
+      "suffix": ""
+    },
+    {
+      "fullName": "Philly O'Riordan",
+      "givenNames": "Philly",
+      "surnames": "O'Riordan",
+      "suffix": ""
+    },
+    {
+      "fullName": "Madhukar Pai",
+      "givenNames": "Madhukar",
+      "surnames": "Pai",
+      "suffix": ""
+    },
+    {
+      "fullName": "Domingo Palmero",
+      "givenNames": "Domingo",
+      "surnames": "Palmero",
+      "suffix": ""
+    },
+    {
+      "fullName": "Seung-kyu Park",
+      "givenNames": "Seung-kyu",
+      "surnames": "Park",
+      "suffix": ""
+    },
+    {
+      "fullName": "Geoffrey Pasvol",
+      "givenNames": "Geoffrey",
+      "surnames": "Pasvol",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jose Pe\u00f1a",
+      "givenNames": "Jose",
+      "surnames": "Pe\u00f1a",
+      "suffix": ""
+    },
+    {
+      "fullName": "Carlos P\u00e9rez-Guzm\u00e1n",
+      "givenNames": "Carlos",
+      "surnames": "P\u00e9rez-Guzm\u00e1n",
+      "suffix": ""
+    },
+    {
+      "fullName": "Maria I. D. Quelapio",
+      "givenNames": "Maria I. D.",
+      "surnames": "Quelapio",
+      "suffix": ""
+    },
+    {
+      "fullName": "Alfredo Ponce-de-Leon",
+      "givenNames": "Alfredo",
+      "surnames": "Ponce-de-Leon",
+      "suffix": ""
+    },
+    {
+      "fullName": "Vija Riekstina",
+      "givenNames": "Vija",
+      "surnames": "Riekstina",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jerome Robert",
+      "givenNames": "Jerome",
+      "surnames": "Robert",
+      "suffix": ""
+    },
+    {
+      "fullName": "Sarah Royce",
+      "givenNames": "Sarah",
+      "surnames": "Royce",
+      "suffix": ""
+    },
+    {
+      "fullName": "H. Simon Schaaf",
+      "givenNames": "H. Simon",
+      "surnames": "Schaaf",
+      "suffix": ""
+    },
+    {
+      "fullName": "Kwonjune J. Seung",
+      "givenNames": "Kwonjune J.",
+      "surnames": "Seung",
+      "suffix": ""
+    },
+    {
+      "fullName": "Lena Shah",
+      "givenNames": "Lena",
+      "surnames": "Shah",
+      "suffix": ""
+    },
+    {
+      "fullName": "Tae Sun Shim",
+      "givenNames": "Tae Sun",
+      "surnames": "Shim",
+      "suffix": ""
+    },
+    {
+      "fullName": "Sonya S. Shin",
+      "givenNames": "Sonya S.",
+      "surnames": "Shin",
+      "suffix": ""
+    },
+    {
+      "fullName": "Yuji Shiraishi",
+      "givenNames": "Yuji",
+      "surnames": "Shiraishi",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jos\u00e9 Sifuentes-Osornio",
+      "givenNames": "Jos\u00e9",
+      "surnames": "Sifuentes-Osornio",
+      "suffix": ""
+    },
+    {
+      "fullName": "Giovanni Sotgiu",
+      "givenNames": "Giovanni",
+      "surnames": "Sotgiu",
+      "suffix": ""
+    },
+    {
+      "fullName": "Matthew J. Strand",
+      "givenNames": "Matthew J.",
+      "surnames": "Strand",
+      "suffix": ""
+    },
+    {
+      "fullName": "Payam Tabarsi",
+      "givenNames": "Payam",
+      "surnames": "Tabarsi",
+      "suffix": ""
+    },
+    {
+      "fullName": "Thelma E. Tupasi",
+      "givenNames": "Thelma E.",
+      "surnames": "Tupasi",
+      "suffix": ""
+    },
+    {
+      "fullName": "Robert van Altena",
+      "givenNames": "Robert",
+      "surnames": "van Altena",
+      "suffix": ""
+    },
+    {
+      "fullName": "Martie Van der Walt",
+      "givenNames": "Martie",
+      "surnames": "Van der Walt",
+      "suffix": ""
+    },
+    {
+      "fullName": "Tjip S. Van der Werf",
+      "givenNames": "Tjip S.",
+      "surnames": "Van der Werf",
+      "suffix": ""
+    },
+    {
+      "fullName": "Mario H. Vargas",
+      "givenNames": "Mario H.",
+      "surnames": "Vargas",
+      "suffix": ""
+    },
+    {
+      "fullName": "Pirett Viiklepp",
+      "givenNames": "Pirett",
+      "surnames": "Viiklepp",
+      "suffix": ""
+    },
+    {
+      "fullName": "Janice Westenhouse",
+      "givenNames": "Janice",
+      "surnames": "Westenhouse",
+      "suffix": ""
+    },
+    {
+      "fullName": "Wing Wai Yew",
+      "givenNames": "Wing Wai",
+      "surnames": "Yew",
+      "suffix": ""
+    },
+    {
+      "fullName": "Jae-Joon Yim",
+      "givenNames": "Jae-Joon",
+      "surnames": "Yim",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Carlton Evans",
+      "givenNames": "Carlton",
+      "surnames": "Evans",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1549-1676"
+    }
+  ]
+}

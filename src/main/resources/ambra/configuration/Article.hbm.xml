@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ $HeadURL:
-  ~ $Id:
-  ~
-  ~ Copyright (c) 2006-2011 by Public Library of Science
+  ~ Copyright (c) 2006-2014 by Public Library of Science
   ~
   ~ http://plos.org
   ~ http://ambraproject.org
@@ -75,10 +72,11 @@
     </list>
 
     <!--Don't want to delete orphan on these-->
-    <set name="categories" cascade="save-update" table="articleCategoryJoinTable">
+    <map name="categories" cascade="save-update" table="articleCategoryJoinTable" order-by="weight" lazy="false">
       <key column="articleID"/>
-      <many-to-many class="org.ambraproject.models.Category" column="categoryID"/>
-    </set>
+      <map-key-many-to-many class="org.ambraproject.models.Category" column="categoryID" />
+      <element column="weight" type="integer" not-null="true" />
+    </map>
 
     <list name="citedArticles" cascade="all-delete-orphan" lazy="true">
       <key column="articleID"/>

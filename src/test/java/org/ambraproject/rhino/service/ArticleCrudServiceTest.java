@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2012 by Public Library of Science
+ * Copyright (c) 2006-2014 by Public Library of Science
+ *
  * http://plos.org
  * http://ambraproject.org
  *
@@ -7,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
@@ -154,14 +154,18 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
       assertTrue(authorNames.add(fullName), "Redundant author name");
     }
 
-    Set<Category> expectedCategories = new HashSet<Category>();
+    Set<Category> expectedCategories = new HashSet<>();
     Category cat1 = new Category();
     cat1.setPath("/TopLevel1/term1");
     expectedCategories.add(cat1);
     Category cat2 = new Category();
     cat2.setPath("/TopLevel2/term2");
     expectedCategories.add(cat2);
-    assertEquals(stored.getCategories(), expectedCategories);
+    Set<Category> actualCategories = stored.getCategories().keySet();
+    // org.hibernate.collection.AbstractPersistentCollection.SetProxy does not respect the Set.equals contract,
+    // so copy actualCategories out to a well-behaved Set before comparing.
+    actualCategories = new HashSet<>(actualCategories);
+    assertEquals(actualCategories, expectedCategories);
 
     byte[] readData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(readData, sampleData);

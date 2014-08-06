@@ -1,80 +1,238 @@
-{"doi":"info:doi/10.1371/journal.pbio.1001166","title":
-  "Rethinking Feyerabend: The “Worst Enemy of Science”?","eIssn":
-  "1545-7885","state":1,"archiveName":"pbio.1001166.zip","description":
-  "\u003cp\u003ePhilosopher Ian James Kidd reviews Feyerabend\u0027s \u003citalic\u003eThe Tyranny of Science\u003c/italic\u003e.\u003c/p\u003e",
-  "rights":
-  "Ian James Kidd. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-3","eLocationId":
-  "e1001166","strkImgURI":"","date":"2011-10-04T07:00:00Z","volume":"9",
-  "issue":"10","journal":"PLoS Biol","publisherLocation":
-  "San Francisco, USA","publisherName":"Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pbio.1001166","collaborativeAuthors":[],
-  "types":[
+{
+  "doi": "info:doi/10.1371/journal.pbio.1001166",
+  "title": "Rethinking Feyerabend: The \u201cWorst Enemy of Science\u201d?",
+  "eIssn": "1545-7885",
+  "state": 1,
+  "archiveName": "pbio.1001166.zip",
+  "description": "<p>Philosopher Ian James Kidd reviews Feyerabend's <italic>The Tyranny of Science</italic>.</p>",
+  "rights": "Ian James Kidd. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-3",
+  "eLocationId": "e1001166",
+  "strkImgURI": "",
+  "date": "2011-10-04T07:00:00Z",
+  "volume": "9",
+  "issue": "10",
+  "journal": "PLoS Biol",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pbio.1001166",
+  "collaborativeAuthors": [],
+  "types": [
     "http://rdf.plos.org/RDF/articleType/Book%20Review%2FScience%20in%20the%20Media",
-    "http://rdf.plos.org/RDF/articleType/book-review"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pbio.1001166","extension":
-      "XML","contentType":"text/xml","title":
-      "Rethinking Feyerabend: The “Worst Enemy of Science”?","description":
-      "\u003cp\u003ePhilosopher Ian James Kidd reviews Feyerabend\u0027s \u003citalic\u003eThe Tyranny of Science\u003c/italic\u003e.\u003c/p\u003e",
-      "size":20902},{"doi":"info:doi/10.1371/journal.pbio.1001166",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Rethinking Feyerabend: The “Worst Enemy of Science”?","description":
-      "\u003cp\u003ePhilosopher Ian James Kidd reviews Feyerabend\u0027s \u003citalic\u003eThe Tyranny of Science\u003c/italic\u003e.\u003c/p\u003e",
-      "size":95852},{"doi":"info:doi/10.1371/journal.pbio.1001166.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"","description":
-      "\u003ctitle\u003eFeyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95\u003c/title\u003e",
-      "size":514336},{"doi":"info:doi/10.1371/journal.pbio.1001166.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"","description":
-      "\u003ctitle\u003eFeyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95\u003c/title\u003e",
-      "size":20151},{"doi":"info:doi/10.1371/journal.pbio.1001166.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"","description":
-      "\u003ctitle\u003eFeyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95\u003c/title\u003e",
-      "size":156106},{"doi":"info:doi/10.1371/journal.pbio.1001166.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"","description":
-      "\u003ctitle\u003eFeyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95\u003c/title\u003e",
-      "size":489615}],"citedArticles":[{"key":"1","year":2000,"displayYear":
-      "2000","volumeNumber":287,"volume":"287","title":
-      "Deconstructing the “science wars” by reconstructing an old mold.",
-      "pages":"253-261","eLocationID":"253","journal":"Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S. J Gould","givenNames":"S. J","surnames":"Gould","suffix":""}],
-      "editors":[]},{"key":"2","year":2000,"displayYear":"2000","title":
-      "The worst enemy of science: essays in memory of Paul Feyerabend.",
-      "publisherLocation":"Oxford","publisherName":
-      "Oxford University Press","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "J Preston","givenNames":"J","surnames":"Preston","suffix":""},{
-          "fullName":"G Munévar","givenNames":"G","surnames":"Munévar",
-          "suffix":""},{"fullName":"D Lamb","givenNames":"D","surnames":
-          "Lamb","suffix":""}],"editors":[]},{"key":"3","year":1987,
-      "displayYear":"1987","title":"Farewell to reason.","publisherLocation":
-      "London","publisherName":"Verso","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"P Feyerabend","givenNames":"P","surnames":
-          "Feyerabend","suffix":""}],"editors":[]},{"key":"4","year":1993,
-      "displayYear":"1993","title":"Against method.","publisherLocation":
-      "Third edition. London","publisherName":"Verso","collaborativeAuthors":
-      [],"citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc",
-      "authors":[{"fullName":"P Feyerabend","givenNames":"P","surnames":
-          "Feyerabend","suffix":""}],"editors":[]},{"key":"5","year":2001,
-      "displayYear":"2001","title":"Science and poetry.","publisherLocation":
-      "London","publisherName":"Routledge","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{
-          "fullName":"M Midgley","givenNames":"M","surnames":"Midgley",
-          "suffix":""}],"editors":[]},{"key":"6","year":2008,"displayYear":
-      "2008","title":"Genomes and what to make of them.","publisherLocation":
-      "Chicago","publisherName":"University of Chicago Press",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[{"fullName":
-          "B Barnes","givenNames":"B","surnames":"Barnes","suffix":""},{
-          "fullName":"J Dupré","givenNames":"J","surnames":"Dupré","suffix":
-          ""}],"editors":[]}],"relatedArticles":[{"otherArticleDoi":
-      "info:doi/10.1371/journal.pbio.1001165","type":"companion"}],"authors":
-  [{"fullName":"Ian James Kidd","givenNames":"Ian James","surnames":"Kidd",
-      "suffix":""}],"editors":[],"journals":[{"eIssn":"1545-7885"}]}
-
+    "http://rdf.plos.org/RDF/articleType/book-review"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pbio.1001166",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Rethinking Feyerabend: The \u201cWorst Enemy of Science\u201d?",
+      "description": "<p>Philosopher Ian James Kidd reviews Feyerabend's <italic>The Tyranny of Science</italic>.</p>",
+      "size": 20902
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.1001166",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Rethinking Feyerabend: The \u201cWorst Enemy of Science\u201d?",
+      "description": "<p>Philosopher Ian James Kidd reviews Feyerabend's <italic>The Tyranny of Science</italic>.</p>",
+      "size": 95852
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.1001166.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "",
+      "description": "<title>Feyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95</title>",
+      "size": 514336
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.1001166.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "",
+      "description": "<title>Feyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95</title>",
+      "size": 20151
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.1001166.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "",
+      "description": "<title>Feyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95</title>",
+      "size": 156106
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pbio.1001166.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "",
+      "description": "<title>Feyerabend P (2011) The Tyranny of Science. Oberheim E, editor. Cambridge: Polity Press. 180 p. ISBN-13: 978-0745651897 (hardcover). US$54.95</title>",
+      "size": 489615
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 287,
+      "volume": "287",
+      "title": "Deconstructing the \u201cscience wars\u201d by reconstructing an old mold.",
+      "pages": "253-261",
+      "eLocationID": "253",
+      "journal": "Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S. J Gould",
+          "givenNames": "S. J",
+          "surnames": "Gould",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2000,
+      "displayYear": "2000",
+      "title": "The worst enemy of science: essays in memory of Paul Feyerabend.",
+      "publisherLocation": "Oxford",
+      "publisherName": "Oxford University Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "J Preston",
+          "givenNames": "J",
+          "surnames": "Preston",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Mun\u00e9var",
+          "givenNames": "G",
+          "surnames": "Mun\u00e9var",
+          "suffix": ""
+        },
+        {
+          "fullName": "D Lamb",
+          "givenNames": "D",
+          "surnames": "Lamb",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 1987,
+      "displayYear": "1987",
+      "title": "Farewell to reason.",
+      "publisherLocation": "London",
+      "publisherName": "Verso",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "P Feyerabend",
+          "givenNames": "P",
+          "surnames": "Feyerabend",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 1993,
+      "displayYear": "1993",
+      "title": "Against method.",
+      "publisherLocation": "Third edition. London",
+      "publisherName": "Verso",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "P Feyerabend",
+          "givenNames": "P",
+          "surnames": "Feyerabend",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2001,
+      "displayYear": "2001",
+      "title": "Science and poetry.",
+      "publisherLocation": "London",
+      "publisherName": "Routledge",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "M Midgley",
+          "givenNames": "M",
+          "surnames": "Midgley",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2008,
+      "displayYear": "2008",
+      "title": "Genomes and what to make of them.",
+      "publisherLocation": "Chicago",
+      "publisherName": "University of Chicago Press",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [
+        {
+          "fullName": "B Barnes",
+          "givenNames": "B",
+          "surnames": "Barnes",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Dupr\u00e9",
+          "givenNames": "J",
+          "surnames": "Dupr\u00e9",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [
+    {
+      "otherArticleDoi": "info:doi/10.1371/journal.pbio.1001165",
+      "type": "companion"
+    }
+  ],
+  "authors": [
+    {
+      "fullName": "Ian James Kidd",
+      "givenNames": "Ian James",
+      "surnames": "Kidd",
+      "suffix": ""
+    }
+  ],
+  "editors": [],
+  "journals": [
+    {
+      "eIssn": "1545-7885"
+    }
+  ]
+}

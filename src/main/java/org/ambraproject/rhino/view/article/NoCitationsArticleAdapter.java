@@ -1,16 +1,14 @@
 /*
- * $HeadURL$
- * $Id$
+ * Copyright (c) 2006-2014 by Public Library of Science
  *
- * Copyright (c) 2006-2011 by Public Library of Science
- *     http://plos.org
- *     http://ambraproject.org
+ * http://plos.org
+ * http://ambraproject.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,7 +23,6 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.ArticleEditor;
 import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 
 import java.util.Date;
@@ -59,12 +56,12 @@ public final class NoCitationsArticleAdapter {
   private String url;
   private List<String> collaborativeAuthors;
   private Set<String> types;
-  private Set<Category> categories;
   private List<ArticleAsset> assets;
   private List<ArticleRelationship> relatedArticles;
   private List<ArticleAuthor> authors;
   private List<ArticleEditor> editors;
   private Set<Journal> journals;
+  // Omit Map<Category, Integer> categories: it's handled in ArticleOutputView.serialize() via CategoryView
 
   public NoCitationsArticleAdapter(Article article) {
     doi = article.getDoi();
@@ -88,7 +85,6 @@ public final class NoCitationsArticleAdapter {
     url = article.getUrl();
     collaborativeAuthors = article.getCollaborativeAuthors();
     types = article.getTypes();
-    categories = article.getCategories();
     assets = article.getAssets();
     relatedArticles = article.getRelatedArticles();
     authors = article.getAuthors();

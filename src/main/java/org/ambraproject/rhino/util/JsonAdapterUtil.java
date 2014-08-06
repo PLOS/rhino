@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.ambraproject.rhombat.gson.Iso8601CalendarAdapter;
 import org.ambraproject.rhombat.gson.Iso8601DateAdapter;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +50,27 @@ public final class JsonAdapterUtil {
     builder.registerTypeAdapter(GregorianCalendar.class, calendarAdapter);
 
     return builder;
+  }
+
+  /**
+   * If the object is a lazy-loaded HibernateProxy, force it to be replaced with its actual write-replacement. This can
+   * be used to work around Hibernate optimizations that disrupt Gson's automatic serialization.
+   * <p/>
+   * This may incur extra performance costs if the full object would not have otherwise been read.
+   *
+   * @param object     a Hibernate model entity, which may be lazy-loaded
+   * @param classToken the model type
+   * @param <T>        the model type
+   * @return a non-lazy-loading instance of the entity
+   * @see org.hibernate.proxy.HibernateProxy#writeReplace()
+   */
+  public static <T> T forceHibernateLazyLoad(T object, Class<T> classToken) {
+    Preconditions.checkNotNull(classToken);
+    if (object instanceof HibernateProxy) {
+      HibernateProxy hibernateProxy = (HibernateProxy) object;
+      return classToken.cast(hibernateProxy.writeReplace());
+    }
+    return object;
   }
 
 }

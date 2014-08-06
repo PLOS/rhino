@@ -1,422 +1,1320 @@
-{"doi":"info:doi/10.1371/journal.pone.0056489","title":
-  "Old-Growth \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e as a Resource for Reproductive Capacity and Genetic Diversity",
-  "eIssn":"1932-6203","state":1,"archiveName":"pone.0056489.zip",
-  "description":
-  "\u003csec\u003e\u003ctitle\u003eAims\u003c/title\u003e\u003cp\u003e\u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of \u003citalic\u003eP. orientalis\u003c/italic\u003e to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods\u003c/title\u003e\u003cp\u003eSamples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eImportant Findings\u003c/title\u003e\u003cp\u003eThe old-growth artificial populations of \u003citalic\u003eP. orientalis\u003c/italic\u003e have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.\u003c/p\u003e\u003c/sec\u003e",
-  "rights":
-  "Zhu, Lou. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
-  "language":"en","format":"text/xml","pages":"1-7","eLocationId":"e56489",
-  "strkImgURI":"info:doi/10.1371/journal.pone.0056489.g003","date":
-  "2013-02-08T08:00:00Z","volume":"8","issue":"2","journal":"PLoS ONE",
-  "publisherLocation":"San Francisco, USA","publisherName":
-  "Public Library of Science","url":
-  "http://dx.doi.org/10.1371%2Fjournal.pone.0056489","collaborativeAuthors":[],
-  "types":["http://rdf.plos.org/RDF/articleType/Research%20Article",
-    "http://rdf.plos.org/RDF/articleType/research-article"],"categories":[],
-  "assets":[{"doi":"info:doi/10.1371/journal.pone.0056489","extension":
-      "XML","contentType":"text/xml","title":
-      "Old-Growth \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e as a Resource for Reproductive Capacity and Genetic Diversity",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eAims\u003c/title\u003e\u003cp\u003e\u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of \u003citalic\u003eP. orientalis\u003c/italic\u003e to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods\u003c/title\u003e\u003cp\u003eSamples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eImportant Findings\u003c/title\u003e\u003cp\u003eThe old-growth artificial populations of \u003citalic\u003eP. orientalis\u003c/italic\u003e have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.\u003c/p\u003e\u003c/sec\u003e",
-      "size":96351},{"doi":"info:doi/10.1371/journal.pone.0056489",
-      "extension":"PDF","contentType":"application/pdf","title":
-      "Old-Growth \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e as a Resource for Reproductive Capacity and Genetic Diversity",
-      "description":
-      "\u003csec\u003e\u003ctitle\u003eAims\u003c/title\u003e\u003cp\u003e\u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of \u003citalic\u003eP. orientalis\u003c/italic\u003e to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eMethods\u003c/title\u003e\u003cp\u003eSamples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.\u003c/p\u003e\u003c/sec\u003e\u003csec\u003e\u003ctitle\u003eImportant Findings\u003c/title\u003e\u003cp\u003eThe old-growth artificial populations of \u003citalic\u003eP. orientalis\u003c/italic\u003e have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.\u003c/p\u003e\u003c/sec\u003e",
-      "size":322665},{"doi":"info:doi/10.1371/journal.pone.0056489.g001",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eRelationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":377224},{"doi":"info:doi/10.1371/journal.pone.0056489.g001",
-      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eRelationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":23575},{"doi":"info:doi/10.1371/journal.pone.0056489.g001",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eRelationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":7858},{"doi":"info:doi/10.1371/journal.pone.0056489.g001",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eRelationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":50139},{"doi":"info:doi/10.1371/journal.pone.0056489.g001",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 1","description":
-      "\u003ctitle\u003eRelationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":266989},{"doi":"info:doi/10.1371/journal.pone.0056489.t001",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic diversity parameters of the sampled populations of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/title\u003e",
-      "size":672242},{"doi":"info:doi/10.1371/journal.pone.0056489.t001",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic diversity parameters of the sampled populations of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/title\u003e",
-      "size":30249},{"doi":"info:doi/10.1371/journal.pone.0056489.t001",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic diversity parameters of the sampled populations of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/title\u003e",
-      "size":4450},{"doi":"info:doi/10.1371/journal.pone.0056489.t001",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic diversity parameters of the sampled populations of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/title\u003e",
-      "size":71902},{"doi":"info:doi/10.1371/journal.pone.0056489.t001",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 1","description":
-      "\u003ctitle\u003eGenetic diversity parameters of the sampled populations of \u003citalic\u003ePlatycladus orientalis.\u003c/italic\u003e\u003c/title\u003e",
-      "size":156375},{"doi":"info:doi/10.1371/journal.pone.0056489.g002",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon’s information index (B), allele richness (C) and allele range (D) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":1019280},{"doi":"info:doi/10.1371/journal.pone.0056489.g002",
-      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon’s information index (B), allele richness (C) and allele range (D) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":49091},{"doi":"info:doi/10.1371/journal.pone.0056489.g002",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon’s information index (B), allele richness (C) and allele range (D) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":14507},{"doi":"info:doi/10.1371/journal.pone.0056489.g002",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon’s information index (B), allele richness (C) and allele range (D) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":124343},{"doi":"info:doi/10.1371/journal.pone.0056489.g002",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 2","description":
-      "\u003ctitle\u003eRelationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon’s information index (B), allele richness (C) and allele range (D) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(mean ± S.E.).\u003c/title\u003e",
-      "size":714113},{"doi":"info:doi/10.1371/journal.pone.0056489.g003",
-      "contextElement":"fig","extension":"TIF","contentType":"image/tiff",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eRelationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(Mean ± S.E.).\u003c/title\u003e",
-      "size":131372},{"doi":"info:doi/10.1371/journal.pone.0056489.g003",
-      "contextElement":"fig","extension":"PNG_I","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eRelationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(Mean ± S.E.).\u003c/title\u003e",
-      "size":16919},{"doi":"info:doi/10.1371/journal.pone.0056489.g003",
-      "contextElement":"fig","extension":"PNG_S","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eRelationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(Mean ± S.E.).\u003c/title\u003e",
-      "size":8434},{"doi":"info:doi/10.1371/journal.pone.0056489.g003",
-      "contextElement":"fig","extension":"PNG_M","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eRelationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(Mean ± S.E.).\u003c/title\u003e",
-      "size":31029},{"doi":"info:doi/10.1371/journal.pone.0056489.g003",
-      "contextElement":"fig","extension":"PNG_L","contentType":"image/png",
-      "title":"Figure 3","description":
-      "\u003ctitle\u003eRelationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e(Mean ± S.E.).\u003c/title\u003e",
-      "size":93169},{"doi":"info:doi/10.1371/journal.pone.0056489.t002",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 2","description":
-      "\u003ctitle\u003eSampling sites, age groups and number of individuals of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e populations in Beijing.\u003c/title\u003e",
-      "size":443834},{"doi":"info:doi/10.1371/journal.pone.0056489.t002",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSampling sites, age groups and number of individuals of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e populations in Beijing.\u003c/title\u003e",
-      "size":18771},{"doi":"info:doi/10.1371/journal.pone.0056489.t002",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSampling sites, age groups and number of individuals of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e populations in Beijing.\u003c/title\u003e",
-      "size":2972},{"doi":"info:doi/10.1371/journal.pone.0056489.t002",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSampling sites, age groups and number of individuals of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e populations in Beijing.\u003c/title\u003e",
-      "size":45268},{"doi":"info:doi/10.1371/journal.pone.0056489.t002",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 2","description":
-      "\u003ctitle\u003eSampling sites, age groups and number of individuals of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e populations in Beijing.\u003c/title\u003e",
-      "size":105527},{"doi":"info:doi/10.1371/journal.pone.0056489.t003",
-      "contextElement":"table-wrap","extension":"TIF","contentType":
-      "image/tiff","title":"Table 3","description":
-      "\u003ctitle\u003eNumber and location of the trees used for cone collection in the artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e.\u003c/title\u003e",
-      "size":127094},{"doi":"info:doi/10.1371/journal.pone.0056489.t003",
-      "contextElement":"table-wrap","extension":"PNG_I","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eNumber and location of the trees used for cone collection in the artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e.\u003c/title\u003e",
-      "size":4526},{"doi":"info:doi/10.1371/journal.pone.0056489.t003",
-      "contextElement":"table-wrap","extension":"PNG_S","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eNumber and location of the trees used for cone collection in the artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e.\u003c/title\u003e",
-      "size":1854},{"doi":"info:doi/10.1371/journal.pone.0056489.t003",
-      "contextElement":"table-wrap","extension":"PNG_M","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eNumber and location of the trees used for cone collection in the artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e.\u003c/title\u003e",
-      "size":8509},{"doi":"info:doi/10.1371/journal.pone.0056489.t003",
-      "contextElement":"table-wrap","extension":"PNG_L","contentType":
-      "image/png","title":"Table 3","description":
-      "\u003ctitle\u003eNumber and location of the trees used for cone collection in the artificial populations of \u003citalic\u003ePlatycladus orientalis\u003c/italic\u003e.\u003c/title\u003e",
-      "size":19635}],"citedArticles":[{"key":"1","year":2003,"displayYear":
-      "2003","volumeNumber":106,"volume":"106","title":
-      "Old-growth red spruce forests as reservoirs of genetic diversity and reproductive fitness",
-      "pages":"931-937","eLocationID":"931","journal":"Theor Appl Genet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "A Mosseler","givenNames":"A","surnames":"Mosseler","suffix":""},{
-          "fullName":"JE Major","givenNames":"JE","surnames":"Major",
-          "suffix":""},{"fullName":"OP Rajora","givenNames":"OP","surnames":
-          "Rajora","suffix":""}],"editors":[]},{"key":"2","year":2007,
-      "displayYear":"2007","volumeNumber":25,"volume":"25","title":
-      "Forest history affects genetic diversity – molecular variation of Dryopteris dilatata(Dryopteridaceae) in ancient and recent forests",
-      "pages":"366-371","eLocationID":"366","journal":
-      "Nordic Journal of Botany","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "C Reisch","givenNames":"C","surnames":"Reisch","suffix":""},{
-          "fullName":"F Mayer","givenNames":"F","surnames":"Mayer","suffix":
-          ""},{"fullName":"C Rüther","givenNames":"C","surnames":"Rüther",
-          "suffix":""},{"fullName":"O Nelle","givenNames":"O","surnames":
-          "Nelle","suffix":""}],"editors":[]},{"key":"3","year":1991,
-      "displayYear":"1991","volumeNumber":40,"volume":"40","title":
-      "Comparison of the genetic structure of different generations of naturally regenerated spruce stands in the Black Forest",
-      "pages":"60-65","eLocationID":"60","journal":"Silvae Genetica",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "M Konnert","givenNames":"M","surnames":"Konnert","suffix":""}],
-      "editors":[]},{"key":"4","year":1989,"displayYear":"1989",
-      "volumeNumber":11,"volume":"11","title":
-      "Value of Ancient Tree sources and the Protection Issues in Shanxi",
-      "pages":"11","eLocationID":"11","journal":
-      "Journal of Beijing Forestry University","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"Y Dong","givenNames":"Y","surnames":"Dong",
-          "suffix":""}],"editors":[]},{"key":"5","year":2010,"displayYear":
-      "2010","volumeNumber":10,"volume":"10","title":
-      "Diversity of Ancient tree in Beijing","pages":"5","eLocationID":"5",
-      "journal":"Science Technology and Engineering","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"X Chen","givenNames":"X","surnames":"Chen",
-          "suffix":""}],"editors":[]},{"key":"6","year":2005,"displayYear":
-      "2005","volumeNumber":27,"volume":"27","title":
-      "Relationship between soil conditions and declining grouth rate of aged Pinus tabulaeformis at Jietai Temple of Beijing",
-      "pages":"5","eLocationID":"5","journal":
-      "Journal of Beijing Forestry University","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"LS Nie","givenNames":"LS","surnames":"Nie",
-          "suffix":""},{"fullName":"DZ Wang","givenNames":"DZ","surnames":
-          "Wang","suffix":""},{"fullName":"BG Wang","givenNames":"BG",
-          "surnames":"Wang","suffix":""}],"editors":[]},{"key":"7","year":
-      2011,"displayYear":"2011","volumeNumber":18,"volume":"18","title":
-      "Analysis on Soil Physical Properties of the Old Trees in Beijing",
-      "pages":"4","eLocationID":"4","journal":
-      "Research of Soil and Water Conservation","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"W Lu","givenNames":"W","surnames":"Lu",
-          "suffix":""},{"fullName":"JL Liu","givenNames":"JL","surnames":
-          "Liu","suffix":""},{"fullName":"Y Xi","givenNames":"Y","surnames":
-          "Xi","suffix":""},{"fullName":"ZM Zhang","givenNames":"ZM",
-          "surnames":"Zhang","suffix":""},{"fullName":"XP Wang","givenNames":
-          "XP","surnames":"Wang","suffix":""}],"editors":[]},{"key":"8",
-      "year":2011,"displayYear":"2011","volumeNumber":34,"volume":"34",
-      "title":
-      "Effects of Tree Species and Age Levels on the Soil Physical Properties of Ancient Trees in Beijing",
-      "pages":"5","eLocationID":"5","journal":
-      "Environmental Science \u0026 Technology","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"W Lu","givenNames":"W","surnames":"Lu",
-          "suffix":""},{"fullName":"JL Liu","givenNames":"JL","surnames":
-          "Liu","suffix":""},{"fullName":"Y Xi","givenNames":"Y","surnames":
-          "Xi","suffix":""},{"fullName":"ZM Zhang","givenNames":"ZM",
-          "surnames":"Zhang","suffix":""}],"editors":[]},{"key":"9","year":
-      2008,"displayYear":"2008","volumeNumber":2,"volume":"2","title":
-      "Technologies on Rejuvenation of Old and Famous Trees in Tianshui",
-      "pages":"4","eLocationID":"4","journal":
-      "Shaanxi Forest Science and Technology","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"M Liang","givenNames":"M","surnames":"Liang",
-          "suffix":""},{"fullName":"JY Ma","givenNames":"JY","surnames":
-          "Ma","suffix":""},{"fullName":"ZX Xin","givenNames":"ZX",
-          "surnames":"Xin","suffix":""}],"editors":[]},{"key":"10","year":
-      2009,"displayYear":"2009","volumeNumber":8,"volume":"8","title":
-      "Cultivation and Conservation of Ancient and Famous Trees in the Royal Garden in Beijing",
-      "pages":"5","eLocationID":"5","journal":
-      "Journal of Sanmenxia Polytechnic","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"J Zhang","givenNames":"J","surnames":"Zhang",
-          "suffix":""}],"editors":[]},{"key":"11","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"12","year":2011,"displayYear":"2011",
-      "volumeNumber":12,"volume":"12","title":
-      "Forest tree genomics: growing resources and applications","pages":
-      "111-122","eLocationID":"111","journal":"Nat Rev Genet",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DB Neale","givenNames":"DB","surnames":"Neale","suffix":""},{
-          "fullName":"A Kremer","givenNames":"A","surnames":"Kremer",
-          "suffix":""}],"editors":[]},{"key":"13","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],
-      "editors":[]},{"key":"14","year":2004,"displayYear":"2004",
-      "volumeNumber":67,"volume":"67","title":
-      "Labdanes and Isopimaranes from Platycladus orientalis and Their Effects on Erythrocyte Membrane and on Plasmodium falciparum Growth in the Erythrocyte Host Cells",
-      "pages":"631-637","eLocationID":"631","journal":
-      "Journal of Natural Products","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Asili","givenNames":"J","surnames":"Asili","suffix":""},{
-          "fullName":"M Lambert","givenNames":"M","surnames":"Lambert",
-          "suffix":""},{"fullName":"HL Ziegler","givenNames":"HL","surnames":
-          "Ziegler","suffix":""},{"fullName":"M Sairafianpour","givenNames":
-          "M","surnames":"Sairafianpour","suffix":""},{"fullName":"M Witt",
-          "givenNames":"M","surnames":"Witt","suffix":""}],"editors":[]},{
-      "key":"15","year":1989,"displayYear":"1989","volumeNumber":11,"volume":
-      "11","title":
-      "An Application of PV Technique to Study Drought Resistance of Pinus tabulaeformis and Platycladus orientalis Seedlings",
-      "pages":"9","eLocationID":"9","journal":
-      "Journal of Beijing Forestry University","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"JY Li","givenNames":"JY","surnames":"Li",
-          "suffix":""}],"editors":[]},{"key":"16","year":2002,"displayYear":
-      "2002","volumeNumber":7,"volume":"7","title":
-      "Trees on the Border between Nature and Culture: Culturally Modified Trees in Boreal Sweden",
-      "pages":"21","eLocationID":"21","journal":"Environmental History",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Östlund","givenNames":"L","surnames":"Östlund","suffix":""},{
-          "fullName":"O Zackrisson","givenNames":"O","surnames":
-          "Zackrisson","suffix":""},{"fullName":"G Hörnberg","givenNames":
-          "G","surnames":"Hörnberg","suffix":""}],"editors":[]},{"key":
-      "17","year":1981,"displayYear":"1981","volumeNumber":132,"volume":
-      "132","title":
-      "Soil and Water Conservation for Productivity and Environmental Protection",
-      "pages":"189","eLocationID":"189","journal":"Soil Science",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "FR Troeh","givenNames":"FR","surnames":"Troeh","suffix":""},{
-          "fullName":"JA Hobbs","givenNames":"JA","surnames":"Hobbs",
-          "suffix":""},{"fullName":"RL Donahue","givenNames":"RL","surnames":
-          "Donahue","suffix":""}],"editors":[]},{"key":"18","year":1994,
-      "displayYear":"1994","volumeNumber":65,"volume":"65","title":
-      "Seed Variation in Wild Radish: Effect of Seed Size on Components of Seedling and Adult Fitness",
-      "pages":"8","eLocationID":"8","journal":"Ecology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ML Stanton","givenNames":"ML","surnames":"Stanton","suffix":""}],
-      "editors":[]},{"key":"19","year":1992,"displayYear":"1992",
-      "volumeNumber":11,"volume":"11","title":
-      "Cone setting situation of Larix gmelinii in Daxinganling Tuqiang Forestry Bureau in 1989",
-      "pages":"5","eLocationID":"5","journal":"Chinese Journal of Ecology",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "Z Xu","givenNames":"Z","surnames":"Xu","suffix":""},{"fullName":
-          "H Dai","givenNames":"H","surnames":"Dai","suffix":""},{"fullName":
-          "H Chen","givenNames":"H","surnames":"Chen","suffix":""},{
-          "fullName":"J Shan","givenNames":"J","surnames":"Shan","suffix":
-          ""},{"fullName":"L Dai","givenNames":"L","surnames":"Dai","suffix":
-          ""}],"editors":[]},{"key":"20","year":1995,"displayYear":"1995",
-      "volumeNumber":76,"volume":"76","title":
-      "Seed Mass and Germination Behaviour in Populations of the Dune-building Grass Leymus arenarius",
-      "pages":"493-501","eLocationID":"493","journal":"Annals of Botany",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "S Greipsson","givenNames":"S","surnames":"Greipsson","suffix":
-          ""},{"fullName":"AJ Davy","givenNames":"AJ","surnames":"Davy",
-          "suffix":""}],"editors":[]},{"key":"21","year":2005,"displayYear":
-      "2005","volumeNumber":83,"volume":"83","title":
-      "Pollination and reproductive success in the gynodioecious endemic Thymus loscosii(Lamiaceae)",
-      "pages":"183-193","eLocationID":"183","journal":
-      "Canadian Journal of Botany","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "MR Orellana","givenNames":"MR","surnames":"Orellana","suffix":
-          ""},{"fullName":"AM Rovira","givenNames":"AM","surnames":
-          "Rovira","suffix":""},{"fullName":"C Blanché","givenNames":"C",
-          "surnames":"Blanché","suffix":""},{"fullName":"M Bosch",
-          "givenNames":"M","surnames":"Bosch","suffix":""}],"editors":[]},{
-      "key":"22","year":2009,"displayYear":"2009","volumeNumber":30,"volume":
-      "30","title":
-      "RAPD Analysis of Genetic Diversity of Ancient Litchi Trees","pages":
-      "6","eLocationID":"6","journal":"Chinese Journal of Tropical Crops",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "H Li","givenNames":"H","surnames":"Li","suffix":""},{"fullName":
-          "Z Lai","givenNames":"Z","surnames":"Lai","suffix":""},{"fullName":
-          "Y Chen","givenNames":"Y","surnames":"Chen","suffix":""},{
-          "fullName":"X Lin","givenNames":"X","surnames":"Lin","suffix":""},{
-          "fullName":"W Xu","givenNames":"W","surnames":"Xu","suffix":""}],
-      "editors":[]},{"key":"23","year":2000,"displayYear":"2000",
-      "volumeNumber":48,"volume":"48","title":
-      "Biodiversity concepts and urban ecosystems","pages":"131-142",
-      "eLocationID":"131","journal":"Landscape and Urban Planning",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J-PL Savard","givenNames":"J-PL","surnames":"Savard","suffix":
-          ""},{"fullName":"P Clergeau","givenNames":"P","surnames":
-          "Clergeau","suffix":""},{"fullName":"G Mennechez","givenNames":
-          "G","surnames":"Mennechez","suffix":""}],"editors":[]},{"key":
-      "24","volumeNumber":22,"volume":"22","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],
-      "editors":[]},{"key":"25","year":2007,"displayYear":"2007",
-      "volumeNumber":21,"volume":"21","title":
-      "Urban plants as genetic reservoirs or threats to the integrity of bushland plant populations",
-      "pages":"842-852","eLocationID":"842","journal":"Conserv Biol",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "DG Roberts","givenNames":"DG","surnames":"Roberts","suffix":""},{
-          "fullName":"DJ Ayre","givenNames":"DJ","surnames":"Ayre","suffix":
-          ""},{"fullName":"RJ Whelan","givenNames":"RJ","surnames":
-          "Whelan","suffix":""}],"editors":[]},{"key":"26",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Misc","authors":[],"editors":[]},
-    {"key":"27","year":1989,"displayYear":"1989","volumeNumber":86,"volume":
-      "86","title":
-      "Gene flow by pollen into small populations: Data from experimental and natural stands of wild radish",
-      "pages":"9044-9047","eLocationID":"9044","journal":
-      "Proc Natl Acad Sci U S A","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "NC Ellstrand","givenNames":"NC","surnames":"Ellstrand","suffix":
-          ""},{"fullName":"B Devlin","givenNames":"B","surnames":"Devlin",
-          "suffix":""},{"fullName":"DL Marshall","givenNames":"DL",
-          "surnames":"Marshall","suffix":""}],"editors":[]},{"key":"28",
-      "year":2001,"displayYear":"2001","volumeNumber":16,"volume":"16",
-      "title":"The problems with hybrids: setting conservation guidelines",
-      "pages":"613-622","eLocationID":"613","journal":
-      "Trends in Ecology \u0026 Evolution","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"FW Allendorf","givenNames":"FW","surnames":
-          "Allendorf","suffix":""},{"fullName":"RF Leary","givenNames":
-          "RF","surnames":"Leary","suffix":""},{"fullName":"P Spruell",
-          "givenNames":"P","surnames":"Spruell","suffix":""},{"fullName":
-          "JK Wenburg","givenNames":"JK","surnames":"Wenburg","suffix":""}],
-      "editors":[]},{"key":"29","year":1998,"displayYear":"1998",
-      "volumeNumber":23,"volume":"23","title":
-      "Soil seed bank dynamics in the rare obligate seeding shrub, Grevillea barklyana(Proteaceae)",
-      "pages":"10","eLocationID":"10","journal":
-      "Australian Journal of Ecology","collaborativeAuthors":[],
-      "citationType":"http://purl.org/net/nknouf/ns/bibtex#Article",
-      "authors":[{"fullName":"G Vaughton","givenNames":"G","surnames":
-          "Vaughton","suffix":""}],"editors":[]},{"key":"30","year":2003,
-      "displayYear":"2003","volumeNumber":91,"volume":"91","title":
-      "Effects of seed bank disturbance on the fine-scale genetic structure of populations of the rare shrub Grevillea macleayana",
-      "pages":"475-480","eLocationID":"475","journal":"Heredity (Edinb)",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "PR England","givenNames":"PR","surnames":"England","suffix":""},{
-          "fullName":"RJ Whelan","givenNames":"RJ","surnames":"Whelan",
-          "suffix":""},{"fullName":"DJ Ayre","givenNames":"DJ","surnames":
-          "Ayre","suffix":""}],"editors":[]},{"key":"31",
-      "collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Book","authors":[],"editors":[]},
-    {"key":"32","year":2012,"displayYear":"2012","volumeNumber":99,"volume":
-      "99","title":
-      "Development and characterization of nine highly polymorphic microsatellite primers for Platycladus orientalis (Cupressaceae)",
-      "pages":"e280-e282","eLocationID":"e280","journal":
-      "American Journal of Botany","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "L Zhu","givenNames":"L","surnames":"Zhu","suffix":""},{"fullName":
-          "AR Lou","givenNames":"AR","surnames":"Lou","suffix":""}],
-      "editors":[]},{"key":"33","year":1995,"displayYear":"1995",
-      "volumeNumber":86,"volume":"86","title":
-      "FSTAT (Version 1.2): A Computer Program to Calculate F-Statistics",
-      "pages":"485-486","eLocationID":"485","journal":
-      "Journal of Heredity","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "J Goudet","givenNames":"J","surnames":"Goudet","suffix":""}],
-      "editors":[]},{"key":"34","year":2006,"displayYear":"2006",
-      "volumeNumber":6,"volume":"6","title":
-      "genalex 6: genetic analysis in Excel. Population genetic software for teaching and research",
-      "pages":"288-295","eLocationID":"288","journal":
-      "Molecular Ecology Notes","collaborativeAuthors":[],"citationType":
-      "http://purl.org/net/nknouf/ns/bibtex#Article","authors":[{"fullName":
-          "ROD Peakall","givenNames":"ROD","surnames":"Peakall","suffix":
-          ""},{"fullName":"PE Smouse","givenNames":"PE","surnames":
-          "Smouse","suffix":""}],"editors":[]}],"relatedArticles":[],
-  "authors":[{"fullName":"Lin Zhu","givenNames":"Lin","surnames":"Zhu",
-      "suffix":""},{"fullName":"Anru Lou","givenNames":"Anru","surnames":
-      "Lou","suffix":""}],"editors":[{"fullName":"Giovanni G. Vendramin",
-      "givenNames":"Giovanni G.","surnames":"Vendramin","suffix":""}],
-  "journals":[{"eIssn":"1932-6203"}]}
-
+{
+  "doi": "info:doi/10.1371/journal.pone.0056489",
+  "title": "Old-Growth <italic>Platycladus orientalis</italic> as a Resource for Reproductive Capacity and Genetic Diversity",
+  "eIssn": "1932-6203",
+  "state": 1,
+  "archiveName": "pone.0056489.zip",
+  "description": "<sec><title>Aims</title><p><italic>Platycladus orientalis</italic> (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of <italic>P. orientalis</italic> to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of <italic>Platycladus orientalis.</italic></p></sec><sec><title>Methods</title><p>Samples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.</p></sec><sec><title>Important Findings</title><p>The old-growth artificial populations of <italic>P. orientalis</italic> have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.</p></sec>",
+  "rights": "Zhu, Lou. This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "language": "en",
+  "format": "text/xml",
+  "pages": "1-7",
+  "eLocationId": "e56489",
+  "strkImgURI": "info:doi/10.1371/journal.pone.0056489.g003",
+  "date": "2013-02-08T08:00:00Z",
+  "volume": "8",
+  "issue": "2",
+  "journal": "PLoS ONE",
+  "publisherLocation": "San Francisco, USA",
+  "publisherName": "Public Library of Science",
+  "url": "http://dx.doi.org/10.1371%2Fjournal.pone.0056489",
+  "collaborativeAuthors": [],
+  "types": [
+    "http://rdf.plos.org/RDF/articleType/Research%20Article",
+    "http://rdf.plos.org/RDF/articleType/research-article"
+  ],
+  "categories": {},
+  "assets": [
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489",
+      "extension": "XML",
+      "contentType": "text/xml",
+      "title": "Old-Growth <italic>Platycladus orientalis</italic> as a Resource for Reproductive Capacity and Genetic Diversity",
+      "description": "<sec><title>Aims</title><p><italic>Platycladus orientalis</italic> (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of <italic>P. orientalis</italic> to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of <italic>Platycladus orientalis.</italic></p></sec><sec><title>Methods</title><p>Samples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.</p></sec><sec><title>Important Findings</title><p>The old-growth artificial populations of <italic>P. orientalis</italic> have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.</p></sec>",
+      "size": 96351
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489",
+      "extension": "PDF",
+      "contentType": "application/pdf",
+      "title": "Old-Growth <italic>Platycladus orientalis</italic> as a Resource for Reproductive Capacity and Genetic Diversity",
+      "description": "<sec><title>Aims</title><p><italic>Platycladus orientalis</italic> (Cupressaceae) is an old-growth tree species which distributed in the imperial parks and ancient temples in Beijing, China. We aim to (1) examine the genetic diversity and reproductive traits of old-growth and young populations of <italic>P. orientalis</italic> to ascertain whether the older populations contain a higher genetic diversity, more private alleles and a higher reproductive output compared with younger populations; (2) determine the relationships between the age of the population and the genetic diversity and reproductive traits; and (3) determine whether the imperial parks and ancient temples played an important role in maintaining the reproductive capacity and genetic diversity of <italic>Platycladus orientalis.</italic></p></sec><sec><title>Methods</title><p>Samples from seven young (younger than 100 yrs.) and nine old-growth (older than 300 yrs.) artificial populations were collected. For comparison, three young and two old-growth natural populations were also sampled. Nine microsatellite loci were used to analyze genetic diversity parameters. These parameters were calculated using FSTAT version 2.9.3 and GenAlex v 6.41.</p></sec><sec><title>Important Findings</title><p>The old-growth artificial populations of <italic>P. orientalis</italic> have significantly higher genetic diversity than younger artificial populations and similar levels to those in extant natural populations. The imperial parks and ancient temples, which have protected these old-growth trees for centuries, have played an important role in maintaining the genetic diversity and reproductive capacity of this tree species.</p></sec>",
+      "size": 322665
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g001",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 1",
+      "description": "<title>Relationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 377224
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g001",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Relationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 23575
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g001",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Relationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 7858
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g001",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Relationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 50139
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g001",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 1",
+      "description": "<title>Relationships between the mean diameter at breast height (DBH) and (A) seed length and (B) seed weight of the eight sampled populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 266989
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t001",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 1",
+      "description": "<title>Genetic diversity parameters of the sampled populations of <italic>Platycladus orientalis.</italic></title>",
+      "size": 672242
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic diversity parameters of the sampled populations of <italic>Platycladus orientalis.</italic></title>",
+      "size": 30249
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic diversity parameters of the sampled populations of <italic>Platycladus orientalis.</italic></title>",
+      "size": 4450
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic diversity parameters of the sampled populations of <italic>Platycladus orientalis.</italic></title>",
+      "size": 71902
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t001",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 1",
+      "description": "<title>Genetic diversity parameters of the sampled populations of <italic>Platycladus orientalis.</italic></title>",
+      "size": 156375
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g002",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 2",
+      "description": "<title>Relationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon\u2019s information index (B), allele richness (C) and allele range (D) in artificial populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 1019280
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g002",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon\u2019s information index (B), allele richness (C) and allele range (D) in artificial populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 49091
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g002",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon\u2019s information index (B), allele richness (C) and allele range (D) in artificial populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 14507
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g002",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon\u2019s information index (B), allele richness (C) and allele range (D) in artificial populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 124343
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g002",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 2",
+      "description": "<title>Relationship between the values of the mean diameter at breast height (DBH) and number of effective alleles (A), Shannon\u2019s information index (B), allele richness (C) and allele range (D) in artificial populations of <italic>Platycladus orientalis</italic>(mean \u00b1 S.E.).</title>",
+      "size": 714113
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g003",
+      "contextElement": "fig",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Figure 3",
+      "description": "<title>Relationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of <italic>Platycladus orientalis</italic>(Mean \u00b1 S.E.).</title>",
+      "size": 131372
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g003",
+      "contextElement": "fig",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Relationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of <italic>Platycladus orientalis</italic>(Mean \u00b1 S.E.).</title>",
+      "size": 16919
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g003",
+      "contextElement": "fig",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Relationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of <italic>Platycladus orientalis</italic>(Mean \u00b1 S.E.).</title>",
+      "size": 8434
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g003",
+      "contextElement": "fig",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Relationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of <italic>Platycladus orientalis</italic>(Mean \u00b1 S.E.).</title>",
+      "size": 31029
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.g003",
+      "contextElement": "fig",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Figure 3",
+      "description": "<title>Relationship between the mean values of the diameter at breast height (DBH) and observed heterozygosity (Ho) in artificial populations of <italic>Platycladus orientalis</italic>(Mean \u00b1 S.E.).</title>",
+      "size": 93169
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t002",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 2",
+      "description": "<title>Sampling sites, age groups and number of individuals of <italic>Platycladus orientalis</italic> populations in Beijing.</title>",
+      "size": 443834
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Sampling sites, age groups and number of individuals of <italic>Platycladus orientalis</italic> populations in Beijing.</title>",
+      "size": 18771
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Sampling sites, age groups and number of individuals of <italic>Platycladus orientalis</italic> populations in Beijing.</title>",
+      "size": 2972
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Sampling sites, age groups and number of individuals of <italic>Platycladus orientalis</italic> populations in Beijing.</title>",
+      "size": 45268
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t002",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 2",
+      "description": "<title>Sampling sites, age groups and number of individuals of <italic>Platycladus orientalis</italic> populations in Beijing.</title>",
+      "size": 105527
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t003",
+      "contextElement": "table-wrap",
+      "extension": "TIF",
+      "contentType": "image/tiff",
+      "title": "Table 3",
+      "description": "<title>Number and location of the trees used for cone collection in the artificial populations of <italic>Platycladus orientalis</italic>.</title>",
+      "size": 127094
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_I",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Number and location of the trees used for cone collection in the artificial populations of <italic>Platycladus orientalis</italic>.</title>",
+      "size": 4526
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_S",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Number and location of the trees used for cone collection in the artificial populations of <italic>Platycladus orientalis</italic>.</title>",
+      "size": 1854
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_M",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Number and location of the trees used for cone collection in the artificial populations of <italic>Platycladus orientalis</italic>.</title>",
+      "size": 8509
+    },
+    {
+      "doi": "info:doi/10.1371/journal.pone.0056489.t003",
+      "contextElement": "table-wrap",
+      "extension": "PNG_L",
+      "contentType": "image/png",
+      "title": "Table 3",
+      "description": "<title>Number and location of the trees used for cone collection in the artificial populations of <italic>Platycladus orientalis</italic>.</title>",
+      "size": 19635
+    }
+  ],
+  "citedArticles": [
+    {
+      "key": "1",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 106,
+      "volume": "106",
+      "title": "Old-growth red spruce forests as reservoirs of genetic diversity and reproductive fitness",
+      "pages": "931-937",
+      "eLocationID": "931",
+      "journal": "Theor Appl Genet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "A Mosseler",
+          "givenNames": "A",
+          "surnames": "Mosseler",
+          "suffix": ""
+        },
+        {
+          "fullName": "JE Major",
+          "givenNames": "JE",
+          "surnames": "Major",
+          "suffix": ""
+        },
+        {
+          "fullName": "OP Rajora",
+          "givenNames": "OP",
+          "surnames": "Rajora",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "2",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 25,
+      "volume": "25",
+      "title": "Forest history affects genetic diversity \u2013 molecular variation of Dryopteris dilatata(Dryopteridaceae) in ancient and recent forests",
+      "pages": "366-371",
+      "eLocationID": "366",
+      "journal": "Nordic Journal of Botany",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "C Reisch",
+          "givenNames": "C",
+          "surnames": "Reisch",
+          "suffix": ""
+        },
+        {
+          "fullName": "F Mayer",
+          "givenNames": "F",
+          "surnames": "Mayer",
+          "suffix": ""
+        },
+        {
+          "fullName": "C R\u00fcther",
+          "givenNames": "C",
+          "surnames": "R\u00fcther",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Nelle",
+          "givenNames": "O",
+          "surnames": "Nelle",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "3",
+      "year": 1991,
+      "displayYear": "1991",
+      "volumeNumber": 40,
+      "volume": "40",
+      "title": "Comparison of the genetic structure of different generations of naturally regenerated spruce stands in the Black Forest",
+      "pages": "60-65",
+      "eLocationID": "60",
+      "journal": "Silvae Genetica",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Konnert",
+          "givenNames": "M",
+          "surnames": "Konnert",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "4",
+      "year": 1989,
+      "displayYear": "1989",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Value of Ancient Tree sources and the Protection Issues in Shanxi",
+      "pages": "11",
+      "eLocationID": "11",
+      "journal": "Journal of Beijing Forestry University",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "Y Dong",
+          "givenNames": "Y",
+          "surnames": "Dong",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "5",
+      "year": 2010,
+      "displayYear": "2010",
+      "volumeNumber": 10,
+      "volume": "10",
+      "title": "Diversity of Ancient tree in Beijing",
+      "pages": "5",
+      "eLocationID": "5",
+      "journal": "Science Technology and Engineering",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "X Chen",
+          "givenNames": "X",
+          "surnames": "Chen",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "6",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 27,
+      "volume": "27",
+      "title": "Relationship between soil conditions and declining grouth rate of aged Pinus tabulaeformis at Jietai Temple of Beijing",
+      "pages": "5",
+      "eLocationID": "5",
+      "journal": "Journal of Beijing Forestry University",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "LS Nie",
+          "givenNames": "LS",
+          "surnames": "Nie",
+          "suffix": ""
+        },
+        {
+          "fullName": "DZ Wang",
+          "givenNames": "DZ",
+          "surnames": "Wang",
+          "suffix": ""
+        },
+        {
+          "fullName": "BG Wang",
+          "givenNames": "BG",
+          "surnames": "Wang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "7",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 18,
+      "volume": "18",
+      "title": "Analysis on Soil Physical Properties of the Old Trees in Beijing",
+      "pages": "4",
+      "eLocationID": "4",
+      "journal": "Research of Soil and Water Conservation",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "W Lu",
+          "givenNames": "W",
+          "surnames": "Lu",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Liu",
+          "givenNames": "JL",
+          "surnames": "Liu",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Xi",
+          "givenNames": "Y",
+          "surnames": "Xi",
+          "suffix": ""
+        },
+        {
+          "fullName": "ZM Zhang",
+          "givenNames": "ZM",
+          "surnames": "Zhang",
+          "suffix": ""
+        },
+        {
+          "fullName": "XP Wang",
+          "givenNames": "XP",
+          "surnames": "Wang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "8",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 34,
+      "volume": "34",
+      "title": "Effects of Tree Species and Age Levels on the Soil Physical Properties of Ancient Trees in Beijing",
+      "pages": "5",
+      "eLocationID": "5",
+      "journal": "Environmental Science & Technology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "W Lu",
+          "givenNames": "W",
+          "surnames": "Lu",
+          "suffix": ""
+        },
+        {
+          "fullName": "JL Liu",
+          "givenNames": "JL",
+          "surnames": "Liu",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Xi",
+          "givenNames": "Y",
+          "surnames": "Xi",
+          "suffix": ""
+        },
+        {
+          "fullName": "ZM Zhang",
+          "givenNames": "ZM",
+          "surnames": "Zhang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "9",
+      "year": 2008,
+      "displayYear": "2008",
+      "volumeNumber": 2,
+      "volume": "2",
+      "title": "Technologies on Rejuvenation of Old and Famous Trees in Tianshui",
+      "pages": "4",
+      "eLocationID": "4",
+      "journal": "Shaanxi Forest Science and Technology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "M Liang",
+          "givenNames": "M",
+          "surnames": "Liang",
+          "suffix": ""
+        },
+        {
+          "fullName": "JY Ma",
+          "givenNames": "JY",
+          "surnames": "Ma",
+          "suffix": ""
+        },
+        {
+          "fullName": "ZX Xin",
+          "givenNames": "ZX",
+          "surnames": "Xin",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "10",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 8,
+      "volume": "8",
+      "title": "Cultivation and Conservation of Ancient and Famous Trees in the Royal Garden in Beijing",
+      "pages": "5",
+      "eLocationID": "5",
+      "journal": "Journal of Sanmenxia Polytechnic",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Zhang",
+          "givenNames": "J",
+          "surnames": "Zhang",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "11",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "12",
+      "year": 2011,
+      "displayYear": "2011",
+      "volumeNumber": 12,
+      "volume": "12",
+      "title": "Forest tree genomics: growing resources and applications",
+      "pages": "111-122",
+      "eLocationID": "111",
+      "journal": "Nat Rev Genet",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DB Neale",
+          "givenNames": "DB",
+          "surnames": "Neale",
+          "suffix": ""
+        },
+        {
+          "fullName": "A Kremer",
+          "givenNames": "A",
+          "surnames": "Kremer",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "13",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Book",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "14",
+      "year": 2004,
+      "displayYear": "2004",
+      "volumeNumber": 67,
+      "volume": "67",
+      "title": "Labdanes and Isopimaranes from Platycladus orientalis and Their Effects on Erythrocyte Membrane and on Plasmodium falciparum Growth in the Erythrocyte Host Cells",
+      "pages": "631-637",
+      "eLocationID": "631",
+      "journal": "Journal of Natural Products",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Asili",
+          "givenNames": "J",
+          "surnames": "Asili",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Lambert",
+          "givenNames": "M",
+          "surnames": "Lambert",
+          "suffix": ""
+        },
+        {
+          "fullName": "HL Ziegler",
+          "givenNames": "HL",
+          "surnames": "Ziegler",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Sairafianpour",
+          "givenNames": "M",
+          "surnames": "Sairafianpour",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Witt",
+          "givenNames": "M",
+          "surnames": "Witt",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "15",
+      "year": 1989,
+      "displayYear": "1989",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "An Application of PV Technique to Study Drought Resistance of Pinus tabulaeformis and Platycladus orientalis Seedlings",
+      "pages": "9",
+      "eLocationID": "9",
+      "journal": "Journal of Beijing Forestry University",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "JY Li",
+          "givenNames": "JY",
+          "surnames": "Li",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "16",
+      "year": 2002,
+      "displayYear": "2002",
+      "volumeNumber": 7,
+      "volume": "7",
+      "title": "Trees on the Border between Nature and Culture: Culturally Modified Trees in Boreal Sweden",
+      "pages": "21",
+      "eLocationID": "21",
+      "journal": "Environmental History",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L \u00d6stlund",
+          "givenNames": "L",
+          "surnames": "\u00d6stlund",
+          "suffix": ""
+        },
+        {
+          "fullName": "O Zackrisson",
+          "givenNames": "O",
+          "surnames": "Zackrisson",
+          "suffix": ""
+        },
+        {
+          "fullName": "G H\u00f6rnberg",
+          "givenNames": "G",
+          "surnames": "H\u00f6rnberg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "17",
+      "year": 1981,
+      "displayYear": "1981",
+      "volumeNumber": 132,
+      "volume": "132",
+      "title": "Soil and Water Conservation for Productivity and Environmental Protection",
+      "pages": "189",
+      "eLocationID": "189",
+      "journal": "Soil Science",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "FR Troeh",
+          "givenNames": "FR",
+          "surnames": "Troeh",
+          "suffix": ""
+        },
+        {
+          "fullName": "JA Hobbs",
+          "givenNames": "JA",
+          "surnames": "Hobbs",
+          "suffix": ""
+        },
+        {
+          "fullName": "RL Donahue",
+          "givenNames": "RL",
+          "surnames": "Donahue",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "18",
+      "year": 1994,
+      "displayYear": "1994",
+      "volumeNumber": 65,
+      "volume": "65",
+      "title": "Seed Variation in Wild Radish: Effect of Seed Size on Components of Seedling and Adult Fitness",
+      "pages": "8",
+      "eLocationID": "8",
+      "journal": "Ecology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ML Stanton",
+          "givenNames": "ML",
+          "surnames": "Stanton",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "19",
+      "year": 1992,
+      "displayYear": "1992",
+      "volumeNumber": 11,
+      "volume": "11",
+      "title": "Cone setting situation of Larix gmelinii in Daxinganling Tuqiang Forestry Bureau in 1989",
+      "pages": "5",
+      "eLocationID": "5",
+      "journal": "Chinese Journal of Ecology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "Z Xu",
+          "givenNames": "Z",
+          "surnames": "Xu",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Dai",
+          "givenNames": "H",
+          "surnames": "Dai",
+          "suffix": ""
+        },
+        {
+          "fullName": "H Chen",
+          "givenNames": "H",
+          "surnames": "Chen",
+          "suffix": ""
+        },
+        {
+          "fullName": "J Shan",
+          "givenNames": "J",
+          "surnames": "Shan",
+          "suffix": ""
+        },
+        {
+          "fullName": "L Dai",
+          "givenNames": "L",
+          "surnames": "Dai",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "20",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 76,
+      "volume": "76",
+      "title": "Seed Mass and Germination Behaviour in Populations of the Dune-building Grass Leymus arenarius",
+      "pages": "493-501",
+      "eLocationID": "493",
+      "journal": "Annals of Botany",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "S Greipsson",
+          "givenNames": "S",
+          "surnames": "Greipsson",
+          "suffix": ""
+        },
+        {
+          "fullName": "AJ Davy",
+          "givenNames": "AJ",
+          "surnames": "Davy",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "21",
+      "year": 2005,
+      "displayYear": "2005",
+      "volumeNumber": 83,
+      "volume": "83",
+      "title": "Pollination and reproductive success in the gynodioecious endemic Thymus loscosii(Lamiaceae)",
+      "pages": "183-193",
+      "eLocationID": "183",
+      "journal": "Canadian Journal of Botany",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "MR Orellana",
+          "givenNames": "MR",
+          "surnames": "Orellana",
+          "suffix": ""
+        },
+        {
+          "fullName": "AM Rovira",
+          "givenNames": "AM",
+          "surnames": "Rovira",
+          "suffix": ""
+        },
+        {
+          "fullName": "C Blanch\u00e9",
+          "givenNames": "C",
+          "surnames": "Blanch\u00e9",
+          "suffix": ""
+        },
+        {
+          "fullName": "M Bosch",
+          "givenNames": "M",
+          "surnames": "Bosch",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "22",
+      "year": 2009,
+      "displayYear": "2009",
+      "volumeNumber": 30,
+      "volume": "30",
+      "title": "RAPD Analysis of Genetic Diversity of Ancient Litchi Trees",
+      "pages": "6",
+      "eLocationID": "6",
+      "journal": "Chinese Journal of Tropical Crops",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "H Li",
+          "givenNames": "H",
+          "surnames": "Li",
+          "suffix": ""
+        },
+        {
+          "fullName": "Z Lai",
+          "givenNames": "Z",
+          "surnames": "Lai",
+          "suffix": ""
+        },
+        {
+          "fullName": "Y Chen",
+          "givenNames": "Y",
+          "surnames": "Chen",
+          "suffix": ""
+        },
+        {
+          "fullName": "X Lin",
+          "givenNames": "X",
+          "surnames": "Lin",
+          "suffix": ""
+        },
+        {
+          "fullName": "W Xu",
+          "givenNames": "W",
+          "surnames": "Xu",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "23",
+      "year": 2000,
+      "displayYear": "2000",
+      "volumeNumber": 48,
+      "volume": "48",
+      "title": "Biodiversity concepts and urban ecosystems",
+      "pages": "131-142",
+      "eLocationID": "131",
+      "journal": "Landscape and Urban Planning",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J-PL Savard",
+          "givenNames": "J-PL",
+          "surnames": "Savard",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Clergeau",
+          "givenNames": "P",
+          "surnames": "Clergeau",
+          "suffix": ""
+        },
+        {
+          "fullName": "G Mennechez",
+          "givenNames": "G",
+          "surnames": "Mennechez",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "24",
+      "volumeNumber": 22,
+      "volume": "22",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "25",
+      "year": 2007,
+      "displayYear": "2007",
+      "volumeNumber": 21,
+      "volume": "21",
+      "title": "Urban plants as genetic reservoirs or threats to the integrity of bushland plant populations",
+      "pages": "842-852",
+      "eLocationID": "842",
+      "journal": "Conserv Biol",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "DG Roberts",
+          "givenNames": "DG",
+          "surnames": "Roberts",
+          "suffix": ""
+        },
+        {
+          "fullName": "DJ Ayre",
+          "givenNames": "DJ",
+          "surnames": "Ayre",
+          "suffix": ""
+        },
+        {
+          "fullName": "RJ Whelan",
+          "givenNames": "RJ",
+          "surnames": "Whelan",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "26",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Misc",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "27",
+      "year": 1989,
+      "displayYear": "1989",
+      "volumeNumber": 86,
+      "volume": "86",
+      "title": "Gene flow by pollen into small populations: Data from experimental and natural stands of wild radish",
+      "pages": "9044-9047",
+      "eLocationID": "9044",
+      "journal": "Proc Natl Acad Sci U S A",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "NC Ellstrand",
+          "givenNames": "NC",
+          "surnames": "Ellstrand",
+          "suffix": ""
+        },
+        {
+          "fullName": "B Devlin",
+          "givenNames": "B",
+          "surnames": "Devlin",
+          "suffix": ""
+        },
+        {
+          "fullName": "DL Marshall",
+          "givenNames": "DL",
+          "surnames": "Marshall",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "28",
+      "year": 2001,
+      "displayYear": "2001",
+      "volumeNumber": 16,
+      "volume": "16",
+      "title": "The problems with hybrids: setting conservation guidelines",
+      "pages": "613-622",
+      "eLocationID": "613",
+      "journal": "Trends in Ecology & Evolution",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "FW Allendorf",
+          "givenNames": "FW",
+          "surnames": "Allendorf",
+          "suffix": ""
+        },
+        {
+          "fullName": "RF Leary",
+          "givenNames": "RF",
+          "surnames": "Leary",
+          "suffix": ""
+        },
+        {
+          "fullName": "P Spruell",
+          "givenNames": "P",
+          "surnames": "Spruell",
+          "suffix": ""
+        },
+        {
+          "fullName": "JK Wenburg",
+          "givenNames": "JK",
+          "surnames": "Wenburg",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "29",
+      "year": 1998,
+      "displayYear": "1998",
+      "volumeNumber": 23,
+      "volume": "23",
+      "title": "Soil seed bank dynamics in the rare obligate seeding shrub, Grevillea barklyana(Proteaceae)",
+      "pages": "10",
+      "eLocationID": "10",
+      "journal": "Australian Journal of Ecology",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "G Vaughton",
+          "givenNames": "G",
+          "surnames": "Vaughton",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "30",
+      "year": 2003,
+      "displayYear": "2003",
+      "volumeNumber": 91,
+      "volume": "91",
+      "title": "Effects of seed bank disturbance on the fine-scale genetic structure of populations of the rare shrub Grevillea macleayana",
+      "pages": "475-480",
+      "eLocationID": "475",
+      "journal": "Heredity (Edinb)",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "PR England",
+          "givenNames": "PR",
+          "surnames": "England",
+          "suffix": ""
+        },
+        {
+          "fullName": "RJ Whelan",
+          "givenNames": "RJ",
+          "surnames": "Whelan",
+          "suffix": ""
+        },
+        {
+          "fullName": "DJ Ayre",
+          "givenNames": "DJ",
+          "surnames": "Ayre",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "31",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Book",
+      "authors": [],
+      "editors": []
+    },
+    {
+      "key": "32",
+      "year": 2012,
+      "displayYear": "2012",
+      "volumeNumber": 99,
+      "volume": "99",
+      "title": "Development and characterization of nine highly polymorphic microsatellite primers for Platycladus orientalis (Cupressaceae)",
+      "pages": "e280-e282",
+      "eLocationID": "e280",
+      "journal": "American Journal of Botany",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "L Zhu",
+          "givenNames": "L",
+          "surnames": "Zhu",
+          "suffix": ""
+        },
+        {
+          "fullName": "AR Lou",
+          "givenNames": "AR",
+          "surnames": "Lou",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "33",
+      "year": 1995,
+      "displayYear": "1995",
+      "volumeNumber": 86,
+      "volume": "86",
+      "title": "FSTAT (Version 1.2): A Computer Program to Calculate F-Statistics",
+      "pages": "485-486",
+      "eLocationID": "485",
+      "journal": "Journal of Heredity",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "J Goudet",
+          "givenNames": "J",
+          "surnames": "Goudet",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    },
+    {
+      "key": "34",
+      "year": 2006,
+      "displayYear": "2006",
+      "volumeNumber": 6,
+      "volume": "6",
+      "title": "genalex 6: genetic analysis in Excel. Population genetic software for teaching and research",
+      "pages": "288-295",
+      "eLocationID": "288",
+      "journal": "Molecular Ecology Notes",
+      "collaborativeAuthors": [],
+      "citationType": "http://purl.org/net/nknouf/ns/bibtex#Article",
+      "authors": [
+        {
+          "fullName": "ROD Peakall",
+          "givenNames": "ROD",
+          "surnames": "Peakall",
+          "suffix": ""
+        },
+        {
+          "fullName": "PE Smouse",
+          "givenNames": "PE",
+          "surnames": "Smouse",
+          "suffix": ""
+        }
+      ],
+      "editors": []
+    }
+  ],
+  "relatedArticles": [],
+  "authors": [
+    {
+      "fullName": "Lin Zhu",
+      "givenNames": "Lin",
+      "surnames": "Zhu",
+      "suffix": ""
+    },
+    {
+      "fullName": "Anru Lou",
+      "givenNames": "Anru",
+      "surnames": "Lou",
+      "suffix": ""
+    }
+  ],
+  "editors": [
+    {
+      "fullName": "Giovanni G. Vendramin",
+      "givenNames": "Giovanni G.",
+      "surnames": "Vendramin",
+      "suffix": ""
+    }
+  ],
+  "journals": [
+    {
+      "eIssn": "1932-6203"
+    }
+  ]
+}
