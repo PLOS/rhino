@@ -139,4 +139,23 @@ public class TransceiverTest {
     assertEquals(response.getContentAsByteArray().length, 0);
   }
 
+  @Test
+  public void testJsonpResponse() throws Exception {
+    Calendar modified = HttpDateUtil.parse("Sat, 22 Jan 2011 08:01:00 GMT");
+    Object testData = ImmutableMap.of();
+    TestTransceiver transceiver = new TestTransceiver(modified, testData);
+
+    MockHttpServletRequest request = new MockHttpServletRequest();
+    String callbackParam = "myTestingCallback";
+    request.addParameter("callback", callbackParam);
+    MockHttpServletResponse response = new MockHttpServletResponse();
+
+    Gson gson = new Gson();
+    transceiver.respond(request, response, gson);
+
+    String actualContent = response.getContentAsString();
+    String expectedContent = String.format("%s(%s)", callbackParam, gson.toJson(testData));
+    assertEquals(actualContent.trim(), expectedContent.trim());
+  }
+
 }
