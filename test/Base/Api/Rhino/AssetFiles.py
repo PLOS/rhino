@@ -1,14 +1,12 @@
 #!/usr/bin/env python2
 
 """
-Base class for Rhino's Articles related service tests.
+Base class for Rhino's Articles API service tests.
 """
 
 __author__ = 'jkrzemien@plos.org'
 
 from ...Tests.BaseServiceTest import BaseServiceTest
-from ...Validators.ZIPProcessor import ZIPProcessor
-from ...Decorators.Api import deduce_doi, needs
 from ...Config import API_BASE_URL
 
 ASSETFILES_API = API_BASE_URL + '/assetfiles/%s/%s.%s'

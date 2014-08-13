@@ -21,7 +21,11 @@ for MogileFS's Python client implementations.
 """
 
 from Base.Api.Rhino.Ingestion import ZIPIngestion
-from Base.Database import Database
+from Base.MySQL import MySQL
+
+DB_ARTICLE_STATE_ACTIVE = 0
+DB_ARTICLE_STATE_UNPUBLISHED = 1
+DB_ARTICLE_STATE_DISABLED = 2
 
 
 class ZipIngestionTest(ZIPIngestion):
@@ -37,20 +41,43 @@ class ZipIngestionTest(ZIPIngestion):
     """
     POST zips: Forced ingestion of ZIP archive
     """
-
+    # Invoke ZIP API
     self.zipUpload('pone.0097823.zip', 'forced')
+    # Parse response as a JSON object
     self.parse_response_as_json()
+    # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(201)
+    # Validate that *state* node in the response is **ingested**
     self.verify_state_is('ingested')
+    # Validate that *all* nodes in response dealing with DOI text match the provided one
     self.verify_doi_is_correct()
+    # Validate that *articleXml* node in response contains all and correct information
     self.verify_article_xml_section()
+    # Validate that *articlePdf* node in response contains all and correct information
     self.verify_article_pdf_section()
+    # Validate that **each** *graphics* node in response are complete and have correct information
     self.verify_graphics_section()
+    # Validate that **each** *figures* node in response are complete and have correct information
     self.verify_figures_section()
 
-    # Right now I can't access MySQL database at iad-leo-devstack01.int.plos.org from my box.
-    print 'Here we have a nice SQL query returned meanwhile: %s ' % \
-    Database().query('SELECT Version()')
+    """
+    Database validations from here
+    """
+    articlesInDB = MySQL().query("select doi, format, state from ARTICLE where ARCHIVENAME = 'pone.0097823.zip'")
+
+    # We should have only one row in the database matching the SELECT criteria
+    assert len(articlesInDB) is 1
+
+    article = articlesInDB[0]
+
+    # Verify uploaded DOI against the one stored in DB
+    assert article[0] == self._zip.get_full_doi()
+
+    # Verify uploaded FORMAT against the one stored in DB
+    assert article[1] == 'text/xml', 'Article format did not match text/xml'
+
+    # Verify STATE stored in DB is STATE_UNPUBLISHED
+    assert article[2] == DB_ARTICLE_STATE_UNPUBLISHED, 'Article state did not match %s' % DB_ARTICLE_STATE_UNPUBLISHED
 
 
 if __name__ == '__main__':

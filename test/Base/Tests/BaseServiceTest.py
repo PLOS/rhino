@@ -17,7 +17,6 @@ from inspect import getfile
 from requests import get, post, patch, put, delete
 
 from ..Decorators.Api import timeit
-
 from ..Config import TIMEOUT, PRINT_DEBUG
 from ..Response.JSONResponse import JSONResponse
 from ..Response.XMLResponse import XMLResponse
@@ -27,6 +26,10 @@ IMAGE_FILE_PATTERN = re.compile('\w+\.\d+\.(e|g)\d{3}.(png|tif)$')
 
 
 class BaseServiceTest(unittest.TestCase):
+
+  # This defines any *BaseServiceTest* derived class as able to be run by Nose in a parallel way.
+  # Requires Nose's *MultiProcess* plugin to be *enabled*
+  _multiprocess_can_split_ = True
 
   __response = None
 
@@ -49,33 +52,38 @@ class BaseServiceTest(unittest.TestCase):
       print 'API Response = %s' % self.__response.text
 
   @timeit
-  def doGet(self, url, params=None):
-    self.__response = get(url, params=params, verify=False, timeout=TIMEOUT, allow_redirects=True)
+  def doGet(self, url, params=None, headers=None, allow_redirects=True):
+    self.__response = get(url, params=params, verify=False, timeout=TIMEOUT, allow_redirects=allow_redirects,
+                          headers=headers)
     self._debug()
 
   @timeit
-  def doPost(self, url, data=None, files=None):
-    self.__response = post(url, data=data, files=files, verify=False, timeout=TIMEOUT, allow_redirects=True)
+  def doPost(self, url, data=None, files=None, headers=None, allow_redirects=True):
+    self.__response = post(url, data=data, files=files, verify=False, timeout=TIMEOUT, allow_redirects=allow_redirects,
+                          headers=headers)
     self._debug()
 
   @timeit
-  def doPatch(self, url, data=None):
-    self.__response = patch(url, data=json.dumps(data), verify=False, timeout=TIMEOUT, allow_redirects=True)
+  def doPatch(self, url, data=None, headers=None, allow_redirects=True):
+    self.__response = patch(url, data=json.dumps(data), verify=False, timeout=TIMEOUT, allow_redirects=allow_redirects,
+                          headers=headers)
     self._debug()
 
   @timeit
-  def doDelete(self, url, data=None):
-    self.__response = delete(url, data=data, verify=False, timeout=TIMEOUT, allow_redirects=True)
+  def doDelete(self, url, data=None, headers=None, allow_redirects=True):
+    self.__response = delete(url, data=data, verify=False, timeout=TIMEOUT, allow_redirects=allow_redirects,
+                          headers=headers)
     self._debug()
 
   @timeit
-  def doPut(self, url, data=None):
-    self.__response = put(url, data=data, verify=False, timeout=TIMEOUT, allow_redirects=True)
+  def doPut(self, url, data=None, headers=None, allow_redirects=True):
+    self.__response = put(url, data=data, verify=False, timeout=TIMEOUT, allow_redirects=allow_redirects,
+                          headers=headers)
     self._debug()
 
   @timeit
-  def doUpdate(self, url, data=None):
-    self.doPut(url, data)
+  def doUpdate(self, url, data=None, headers=None, allow_redirects=True):
+    self.doPut(url, data=data, allow_redirects=allow_redirects, headers=headers)
 
   def get_http_response(self):
     return self.__response
@@ -103,5 +111,7 @@ class BaseServiceTest(unittest.TestCase):
 
   @staticmethod
   def _run_tests_randomly():
+    import doctest
+    doctest.testmod()
     unittest.TestLoader.sortTestMethodsUsing = lambda _, x, y: random.choice([-1, 1])
     unittest.main()

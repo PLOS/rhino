@@ -38,7 +38,7 @@ class CombinedAPITests(ZIPIngestion, Articles):
 
     # Validate it worked
     self.verify_http_code_is(201)
-    self.verify_state_is('ingested')
+    self.verify_state_is('published')
 
 if __name__ == '__main__':
     ZIPIngestion._run_tests_randomly()

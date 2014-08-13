@@ -16,7 +16,9 @@ TIMEOUT = 30         # API call timeout, in seconds
 dbconfig = {
   'user': 'root',
   'password': '',
-  'host': '127.0.0.1', # 'iad-leo-devstack01.int.plos.org', Can't access it from my box. No ICMP nor 3306 port
+  'host': '127.0.0.1`', # Can't access any PLoS's MySQL from my box. No ICMP nor 3306/3307 ports
+  'port': 3306,
   'database': 'ambra',
+  'connection_timeout': 10,
   #'raise_on_warnings': True,
 }

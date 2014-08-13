@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 """
-Base class for Rhino's Articles related service tests.
+Base class for Rhino's Articles API service tests.
 """
 
 __author__ = 'jkrzemien@plos.org'

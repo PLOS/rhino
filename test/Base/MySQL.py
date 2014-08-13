@@ -17,7 +17,7 @@ from contextlib import closing
 import Config
 
 
-class Database(object):
+class MySQL(object):
 
   def __init__(self):
     self._cnxpool = MySQLConnectionPool(pool_name="daPool", pool_size=3, **Config.dbconfig)

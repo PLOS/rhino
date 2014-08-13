@@ -17,7 +17,7 @@ class IngestiblesTest(AssetFiles, ZIPIngestion):
   Test suite for AssetFiles namespace in Rhino's API
   """
 
-  def test_retrieve_ingested_file_happy_path(self):
+  def test_retrieve_ingested_xml_file_happy_path(self):
     """
     GET assetfiles: Retrieve XML article file from a ZIP ingestion
     """

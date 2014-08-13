@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 """
-Base class for Rhino's Ingest related service tests.
+Base class for Rhino's Ingest API service tests.
 """
 
 __author__ = 'jkrzemien@plos.org'
@@ -18,7 +18,7 @@ INGESTIBLES_API = API_BASE_URL + '/ingestibles'
 
 class IngestionCommon(BaseServiceTest):
 
-  @needs('parsed', 'API')
+  @needs('parsed', 'parse_response_as_json()')
   def verify_state_is(self, state):
     print 'Validating state in Response to be "%s"...' % state,
     stateNodes = self.parsed.get_state()
@@ -26,7 +26,7 @@ class IngestionCommon(BaseServiceTest):
       assert node['state'] == state, 'State field was expected to be "%s", but is: "%s"' % (state, node['state'])
     print 'OK'
 
-  @needs('parsed', 'API')
+  @needs('parsed', 'parse_response_as_json()')
   @needs('_zip', 'API')
   def verify_doi_is_correct(self):
     print 'Validating DOI in Response to be valid...',
@@ -37,21 +37,21 @@ class IngestionCommon(BaseServiceTest):
       assert node['doi'].startswith(self._zip.get_full_doi()) == True, "DOI field did not start with %s" % self._zip.get_full_doi()
     print 'OK'
 
-  @needs('parsed', 'API')
+  @needs('parsed', 'parse_response_as_json()')
   @needs('_zip', 'API')
   def verify_article_xml_section(self):
     xml_section = self.parsed.get_article_xml_section()
     validator = self._zip.get_xml_validator()
     validator.metadata(xml_section, self._zip.get_doi(), self._testStartTime, self._apiTime)
 
-  @needs('parsed', 'API')
+  @needs('parsed', 'parse_response_as_json()')
   @needs('_zip', 'API')
   def verify_article_pdf_section(self):
     pdf_section = self.parsed.get_article_pdf_section()
     validator = self._zip.get_pdf_validator()
     validator.metadata(pdf_section, self._zip.get_doi(), self._testStartTime, self._apiTime)
 
-  @needs('parsed', 'API')
+  @needs('parsed', 'parse_response_as_json()')
   @needs('_zip', 'API')
   def verify_graphics_section(self):
     graphics_section = self.parsed.get_graphics_section()
@@ -63,7 +63,7 @@ class IngestionCommon(BaseServiceTest):
       validator.metadata(section, graphicDOI, self._testStartTime, self._apiTime)
       i += 1
 
-  @needs('parsed', 'API')
+  @needs('parsed', 'parse_response_as_json()')
   @needs('_zip', 'API')
   def verify_figures_section(self):
     figures_section = self.parsed.get_figures_section()
