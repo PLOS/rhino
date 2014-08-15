@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
@@ -49,6 +50,7 @@ public class TestCrossrefController extends RestController {
   @Autowired
   private Configuration ambraConfiguration;
 
+  @ApiIgnore
   @RequestMapping(value = CROSSREF_ROOT, method = RequestMethod.POST)
   public void foo(HttpServletResponse response, @RequestParam("fname") MultipartFile requestFile)
       throws Exception {
