@@ -39,14 +39,16 @@
   <!-- Allow us to use "${foo}" notation to pull values from ambra configuration in this file.  -->
   <beans:bean id="propertyConfigurer" class="org.ambraproject.configuration.SpringPlaceholderConfigurer" />
 
-  <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+  <!-- Resolves views selected for rendering by @Controllers to resources in the /WEB-INF/views directory -->
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <beans:property name="prefix" value="/WEB-INF/views/"/>
-    <beans:property name="suffix" value=".jsp"/>
+    <beans:property name="suffix" value=".html"/>
   </beans:bean>
 
   <context:component-scan base-package="org.ambraproject.rhino"/>
   <context:annotation-config/>
+
+  <beans:bean class="org.ambraproject.rhino.config.SwaggerConfiguration" />
 
   <context:property-placeholder location="classpath:git.properties" ignore-unresolvable="true" />
 
@@ -161,5 +163,8 @@
   <mvc:interceptors>
     <beans:bean class="org.ambraproject.rhino.rest.LoggingInterceptor"/>
   </mvc:interceptors>
+
+  <!-- Serve static content-->
+  <mvc:default-servlet-handler/>
 
 </beans:beans>
