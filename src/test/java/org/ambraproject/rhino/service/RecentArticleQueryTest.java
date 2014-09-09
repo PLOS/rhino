@@ -57,6 +57,14 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     return entityGson.fromJson(articleCrudService.listRecent(query.build()).readJson(entityGson), List.class);
   }
 
+  private static void assertDois(List<?> jsonObjects, String... expectedDois) {
+    assertEquals(jsonObjects.size(), expectedDois.length);
+    for (int i = 0; i < expectedDois.length; i++) {
+      Map<?, ?> jsonObject = (Map<?, ?>) jsonObjects.get(i);
+      assertEquals(jsonObject.get("doi"), expectedDois[i]);
+    }
+  }
+
   @Test
   public void testListRecent() throws Exception {
     hibernateTemplate.save(dummyJournal);
@@ -70,46 +78,31 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
 
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("t1")));
-    assertEquals(results.size(), 2);
     // Expect "t1" type only, in chronological order from most recent to oldest.
-    assertEquals(((Map) results.get(0)).get("doi"), "veryRecent");
-    assertEquals(((Map) results.get(1)).get("doi"), "recent");
+    assertDois(results, "veryRecent", "recent");
 
     results = executeTest(RecentArticleQuery.builder()
         .setMinimum(3)
         .setArticleTypes(ImmutableList.of("t1")));
     // Expect the stale one to be included in order to satisfy the minimum of 3.
-    assertEquals(results.size(), 3);
-    assertEquals(((Map) results.get(0)).get("doi"), "veryRecent");
-    assertEquals(((Map) results.get(1)).get("doi"), "recent");
-    assertEquals(((Map) results.get(2)).get("doi"), "stale");
+    assertDois(results, "veryRecent", "recent", "stale");
 
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("t1", "*")));
-    assertEquals(results.size(), 3);
     // "otherType" should be last, because "t1" comes first in type preference, even though "otherType" is more recent.
-    assertEquals(((Map) results.get(0)).get("doi"), "veryRecent");
-    assertEquals(((Map) results.get(1)).get("doi"), "recent");
-    assertEquals(((Map) results.get(2)).get("doi"), "otherType");
+    assertDois(results, "veryRecent", "recent", "otherType");
 
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("*")));
-    assertEquals(results.size(), 3);
     // With no type preference order, "otherType" should come first because it is most recent.
-    assertEquals(((Map) results.get(0)).get("doi"), "otherType");
-    assertEquals(((Map) results.get(1)).get("doi"), "veryRecent");
-    assertEquals(((Map) results.get(2)).get("doi"), "recent");
+    assertDois(results, "otherType", "veryRecent", "recent");
 
     results = executeTest(RecentArticleQuery.builder()
         .setMinimum(4)
         .setArticleTypes(ImmutableList.of("t1", "*")));
-    assertEquals(results.size(), 4);
     // Because it had to exceed the timestamp to get up to the minimum of 4,
     // it ignores article type order and sorts in chronological order.
-    assertEquals(((Map) results.get(0)).get("doi"), "otherType");
-    assertEquals(((Map) results.get(1)).get("doi"), "veryRecent");
-    assertEquals(((Map) results.get(2)).get("doi"), "recent");
-    assertEquals(((Map) results.get(3)).get("doi"), "stale");
+    assertDois(results, "otherType", "veryRecent", "recent", "stale");
   }
 
 }
