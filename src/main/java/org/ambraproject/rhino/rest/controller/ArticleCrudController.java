@@ -25,6 +25,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
@@ -102,7 +103,9 @@ public class ArticleCrudController extends ArticleSpaceController {
     Calendar threshold = HttpDateUtil.parse(since);
     Optional<Integer> minArg = (minimum != null && minimum > 0) ? Optional.of(minimum) : Optional.<Integer>absent();
     List<String> typesArg = asList(types);
-    articleCrudService.listRecent(journalKey, threshold, minArg, typesArg).respond(request, response, entityGson);
+    RecentArticleQuery query = new RecentArticleQuery(journalKey, threshold, minArg, typesArg);
+
+    articleCrudService.listRecent(query).respond(request, response, entityGson);
   }
 
 

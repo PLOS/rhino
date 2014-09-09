@@ -41,6 +41,7 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.apache.commons.io.IOUtils;
@@ -345,16 +346,16 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     List<?> results;
 
-    results = entityGson.fromJson(articleCrudService.listRecent(dummyJournal.getJournalKey(), timestamp(0),
-        Optional.<Integer>absent(), ImmutableList.of("t1"))
+    results = entityGson.fromJson(articleCrudService.listRecent(new RecentArticleQuery(
+        dummyJournal.getJournalKey(), timestamp(0), Optional.<Integer>absent(), ImmutableList.of("t1")))
         .readJson(entityGson), List.class);
     assertEquals(results.size(), 2);
     // Expect "t1" type only, in chronological order from most recent to oldest.
     assertEquals(((Map) results.get(0)).get("doi"), "veryRecent");
     assertEquals(((Map) results.get(1)).get("doi"), "recent");
 
-    results = entityGson.fromJson(articleCrudService.listRecent(dummyJournal.getJournalKey(), timestamp(0),
-        Optional.of(3), ImmutableList.of("t1"))
+    results = entityGson.fromJson(articleCrudService.listRecent(new RecentArticleQuery(
+        dummyJournal.getJournalKey(), timestamp(0), Optional.of(3), ImmutableList.of("t1")))
         .readJson(entityGson), List.class);
     // Expect the stale one to be included in order to satisfy the minimum of 3.
     assertEquals(results.size(), 3);
@@ -362,8 +363,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertEquals(((Map) results.get(1)).get("doi"), "recent");
     assertEquals(((Map) results.get(2)).get("doi"), "stale");
 
-    results = entityGson.fromJson(articleCrudService.listRecent(dummyJournal.getJournalKey(), timestamp(0),
-        Optional.<Integer>absent(), ImmutableList.of("t1", "*"))
+    results = entityGson.fromJson(articleCrudService.listRecent(new RecentArticleQuery(
+        dummyJournal.getJournalKey(), timestamp(0), Optional.<Integer>absent(), ImmutableList.of("t1", "*")))
         .readJson(entityGson), List.class);
     assertEquals(results.size(), 3);
     // "otherType" should be last, because "t1" comes first in type preference, even though "otherType" is more recent.
@@ -371,8 +372,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertEquals(((Map) results.get(1)).get("doi"), "recent");
     assertEquals(((Map) results.get(2)).get("doi"), "otherType");
 
-    results = entityGson.fromJson(articleCrudService.listRecent(dummyJournal.getJournalKey(), timestamp(0),
-        Optional.<Integer>absent(), ImmutableList.of("*"))
+    results = entityGson.fromJson(articleCrudService.listRecent(new RecentArticleQuery(
+        dummyJournal.getJournalKey(), timestamp(0), Optional.<Integer>absent(), ImmutableList.of("*")))
         .readJson(entityGson), List.class);
     assertEquals(results.size(), 3);
     // With no type preference order, "otherType" should come first because it is most recent.
@@ -380,8 +381,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertEquals(((Map) results.get(1)).get("doi"), "veryRecent");
     assertEquals(((Map) results.get(2)).get("doi"), "recent");
 
-    results = entityGson.fromJson(articleCrudService.listRecent(dummyJournal.getJournalKey(), timestamp(0),
-        Optional.of(4), ImmutableList.of("t1", "*"))
+    results = entityGson.fromJson(articleCrudService.listRecent(new RecentArticleQuery(
+        dummyJournal.getJournalKey(), timestamp(0), Optional.of(4), ImmutableList.of("t1", "*")))
         .readJson(entityGson), List.class);
     assertEquals(results.size(), 4);
     // Because it had to exceed the timestamp to get up to the minimum of 4,
