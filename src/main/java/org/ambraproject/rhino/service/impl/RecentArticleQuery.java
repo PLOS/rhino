@@ -48,18 +48,65 @@ public class RecentArticleQuery {
   private final Optional<Integer> minimum;
   private final ImmutableList<String> articleTypes;
 
-  /**
-   * @param journalKey   journal to search
-   * @param threshold    return all articles published after this date
-   * @param minimum      minimum result count
-   * @param articleTypes the list of article types to filter, in order of preference; may be {@code null}
-   */
-  public RecentArticleQuery(String journalKey, Calendar threshold, Optional<Integer> minimum, List<String> articleTypes) {
-    this.journalKey = Preconditions.checkNotNull(journalKey);
-    this.threshold = Preconditions.checkNotNull(threshold);
-    this.minimum = Preconditions.checkNotNull(minimum);
-    this.articleTypes = ImmutableList.copyOf(articleTypes);
+  private RecentArticleQuery(Builder builder) {
+    this.journalKey = Preconditions.checkNotNull(builder.journalKey);
+    this.threshold = Preconditions.checkNotNull(builder.threshold);
+    this.minimum = Optional.fromNullable(builder.minimum);
+    this.articleTypes = (builder.articleTypes == null) ? ImmutableList.<String>of()
+        : ImmutableList.copyOf(builder.articleTypes);
   }
+
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder {
+    private Builder() {
+    }
+
+    private String journalKey;
+    private Calendar threshold;
+    private Integer minimum;
+    private List<String> articleTypes;
+
+    /**
+     * @param journalKey key of the journal to search
+     */
+    public Builder setJournalKey(String journalKey) {
+      this.journalKey = journalKey;
+      return this;
+    }
+
+    /**
+     * @param threshold return all articles published after this date
+     */
+    public Builder setThreshold(Calendar threshold) {
+      this.threshold = threshold;
+      return this;
+    }
+
+    /**
+     * @param minimum minimum result count
+     */
+    public Builder setMinimum(Integer minimum) {
+      this.minimum = minimum;
+      return this;
+    }
+
+    /**
+     * @param articleTypes the list of article types to filter, in order of preference; may be {@code null}
+     */
+    public Builder setArticleTypes(List<String> articleTypes) {
+      this.articleTypes = articleTypes;
+      return this;
+    }
+
+    public RecentArticleQuery build() {
+      return new RecentArticleQuery(this);
+    }
+  }
+
 
   private static final String ARTICLE_TYPE_WILDCARD = "*";
 

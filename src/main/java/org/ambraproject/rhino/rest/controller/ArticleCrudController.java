@@ -45,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -100,11 +99,12 @@ public class ArticleCrudController extends ArticleSpaceController {
                          @RequestParam(value = MINIMUM_PARAM, required = false) Integer minimum,
                          @RequestParam(value = TYPE_PARAM, required = false) String[] types)
       throws IOException {
-    Calendar threshold = HttpDateUtil.parse(since);
-    Optional<Integer> minArg = (minimum != null && minimum > 0) ? Optional.of(minimum) : Optional.<Integer>absent();
-    List<String> typesArg = asList(types);
-    RecentArticleQuery query = new RecentArticleQuery(journalKey, threshold, minArg, typesArg);
-
+    RecentArticleQuery query = RecentArticleQuery.builder()
+        .setJournalKey(journalKey)
+        .setThreshold(HttpDateUtil.parse(since))
+        .setArticleTypes(asList(types))
+        .setMinimum(minimum == null || minimum == 0 ? null : minimum)
+        .build();
     articleCrudService.listRecent(query).respond(request, response, entityGson);
   }
 
