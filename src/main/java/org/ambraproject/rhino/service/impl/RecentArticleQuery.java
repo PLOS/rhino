@@ -47,6 +47,7 @@ public class RecentArticleQuery {
   private final Calendar threshold;
   private final Optional<Integer> minimum;
   private final ImmutableList<String> articleTypes;
+  private final ImmutableList<String> excludedArticleTypes;
 
   private RecentArticleQuery(Builder builder) {
     this.journalKey = Preconditions.checkNotNull(builder.journalKey);
@@ -54,6 +55,8 @@ public class RecentArticleQuery {
     this.minimum = Optional.fromNullable(builder.minimum);
     this.articleTypes = (builder.articleTypes == null) ? ImmutableList.<String>of()
         : ImmutableList.copyOf(builder.articleTypes);
+    this.excludedArticleTypes = (builder.excludedArticleTypes == null) ? ImmutableList.<String>of()
+        : ImmutableList.copyOf(builder.excludedArticleTypes);
   }
 
 
@@ -69,6 +72,7 @@ public class RecentArticleQuery {
     private Calendar threshold;
     private Integer minimum;
     private List<String> articleTypes;
+    private List<String> excludedArticleTypes;
 
     /**
      * @param journalKey key of the journal to search
@@ -99,6 +103,14 @@ public class RecentArticleQuery {
      */
     public Builder setArticleTypes(List<String> articleTypes) {
       this.articleTypes = articleTypes;
+      return this;
+    }
+
+    /**
+     * @param excludedArticleTypes the list of article types to exclude from a wildcard type ({@code "*"})
+     */
+    public Builder setExcludedArticleTypes(List<String> excludedArticleTypes) {
+      this.excludedArticleTypes = excludedArticleTypes;
       return this;
     }
 
@@ -163,6 +175,8 @@ public class RecentArticleQuery {
 
     @Override
     protected List<RecentArticleView> getData() throws IOException {
+      // TODO: Apply excludedArticleTypes
+
       List<Object[]> results;
 
       // Get all articles more recent than the threshold

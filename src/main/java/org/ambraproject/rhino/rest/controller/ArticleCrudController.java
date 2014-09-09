@@ -68,6 +68,7 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String JOURNAL_PARAM = "journal";
   private static final String MINIMUM_PARAM = "min";
   private static final String TYPE_PARAM = "type";
+  private static final String EXCLUDE_PARAM = "exclude";
 
   @Autowired
   private AnnotationCrudService annotationCrudService;
@@ -97,12 +98,14 @@ public class ArticleCrudController extends ArticleSpaceController {
                          @RequestParam(value = RECENT_PARAM, required = true) String since,
                          @RequestParam(value = JOURNAL_PARAM, required = true) String journalKey,
                          @RequestParam(value = MINIMUM_PARAM, required = false) Integer minimum,
-                         @RequestParam(value = TYPE_PARAM, required = false) String[] types)
+                         @RequestParam(value = TYPE_PARAM, required = false) String[] articleTypes,
+                         @RequestParam(value = EXCLUDE_PARAM, required = false) String[] typesToExclude)
       throws IOException {
     RecentArticleQuery query = RecentArticleQuery.builder()
         .setJournalKey(journalKey)
         .setThreshold(HttpDateUtil.parse(since))
-        .setArticleTypes(asList(types))
+        .setArticleTypes(asList(articleTypes))
+        .setExcludedArticleTypes(asList(typesToExclude))
         .setMinimum(minimum == null || minimum == 0 ? null : minimum)
         .build();
     articleCrudService.listRecent(query).respond(request, response, entityGson);
