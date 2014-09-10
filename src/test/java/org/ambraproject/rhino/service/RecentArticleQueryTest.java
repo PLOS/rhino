@@ -103,6 +103,19 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     // Because it had to exceed the timestamp to get up to the minimum of 4,
     // it ignores article type order and sorts in chronological order.
     assertDois(results, "otherType", "veryRecent", "recent", "stale");
+
+    results = executeTest(RecentArticleQuery.builder()
+        .setArticleTypes(ImmutableList.of("t1"))
+        .setExcludedArticleTypes(ImmutableList.of("t2")));
+    // Get all non-t2 articles within the time window
+    assertDois(results, "veryRecent");
+
+    results = executeTest(RecentArticleQuery.builder()
+        .setArticleTypes(ImmutableList.of("t1"))
+        .setMinimum(2)
+        .setExcludedArticleTypes(ImmutableList.of("t2")));
+    // Go beyond the time window to get 2 articles, excluding all t2 articles even within the time window
+    assertDois(results, "veryRecent", "stale");
   }
 
 }

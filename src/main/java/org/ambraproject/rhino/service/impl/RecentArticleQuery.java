@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 /**
@@ -155,6 +156,12 @@ public class RecentArticleQuery {
           if (articleType.isPresent()) {
             hql.append(" and :articleType in elements(a.types)");
           }
+          for (int i = 0; i < excludedArticleTypes.size(); i++) {
+            // No type in excludedArticleTypes should be in a.types. Until we can figure out a better way to express
+            // this in HQL, just kludge in a variable number of clauses. TODO: Improve?
+            hql.append(" and not (:exclude").append(i) // variable names are exclude0, exclude1, etc.
+                .append(" in elements(a.types))");
+          }
           hql.append(" order by a.date desc");
 
           Query query = session.createQuery(hql.toString());
@@ -167,6 +174,10 @@ public class RecentArticleQuery {
           if (articleType.isPresent()) {
             query.setString("articleType", articleType.get());
           }
+          for (ListIterator<String> iter = excludedArticleTypes.listIterator(); iter.hasNext(); ) {
+            String paramName = "exclude" + iter.nextIndex();
+            query.setParameter(paramName, iter.next());
+          }
 
           return query.list();
         }
@@ -175,8 +186,6 @@ public class RecentArticleQuery {
 
     @Override
     protected List<RecentArticleView> getData() throws IOException {
-      // TODO: Apply excludedArticleTypes
-
       List<Object[]> results;
 
       // Get all articles more recent than the threshold
