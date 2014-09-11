@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -231,22 +230,30 @@ public class RecentArticleQuery {
       }
 
       // Transform into results view.
-      return Lists.transform(results, new Function<Object[], RecentArticleView>() {
-        @Override
-        public RecentArticleView apply(Object[] result) {
-          String doi = (String) result[0];
-          String title = (String) result[1];
-          Date date = (Date) result[2];
-          ArticleIdentity article = ArticleIdentity.create(doi);
-          return new RecentArticleView(article, title, date);
-        }
-      });
+      return transformResults(results);
     }
 
     @Override
     protected Calendar getLastModifiedDate() throws IOException {
       return null;
     }
+  }
+
+  /**
+   * Represent raw query results from {@link org.ambraproject.rhino.service.impl.RecentArticleQuery.Result#getData()} as
+   * {@code RecentArticleView} objects.
+   */
+  private static List<RecentArticleView> transformResults(List<Object[]> results) {
+    List<RecentArticleView> views = Lists.newArrayListWithCapacity(results.size());
+    for (Object[] result : results) {
+      Preconditions.checkArgument(result.length == 3);
+      String doi = (String) result[0];
+      String title = (String) result[1];
+      Date date = (Date) result[2];
+      ArticleIdentity article = ArticleIdentity.create(doi);
+      views.add(new RecentArticleView(article, title, date));
+    }
+    return views;
   }
 
 }
