@@ -188,7 +188,7 @@ public class RecentArticleQuery {
       List<Object[]> results;
 
       // Get all articles more recent than the threshold
-      if (articleTypes == null) {
+      if (articleTypes.isEmpty()) {
         results = query(false, Optional.<String>absent());
       } else {
         results = new ArrayList<>();
@@ -213,7 +213,7 @@ public class RecentArticleQuery {
       if (minimum.isPresent() && results.size() < minimum.get()) {
         // Not enough results. Get enough past the threshold to meet the minimum.
         // Ignore order of articleTypes and get the union of all.
-        if (articleTypes == null || articleTypes.contains(ARTICLE_TYPE_WILDCARD)) {
+        if (articleTypes.isEmpty() || articleTypes.contains(ARTICLE_TYPE_WILDCARD)) {
           results = query(true, Optional.<String>absent());
         } else if (articleTypes.size() == 1) {
           results = query(true, Optional.of(articleTypes.get(0)));
