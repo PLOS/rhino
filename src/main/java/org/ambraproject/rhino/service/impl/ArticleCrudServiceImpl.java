@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
@@ -53,14 +52,12 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
-import org.ambraproject.rhino.view.article.RecentArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -78,13 +75,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -977,118 +972,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     };
   }
 
-  private static final String ARTICLE_TYPE_WILDCARD = "*";
-
   @Override
-  public Transceiver listRecent(final String journalKey,
-                                final Calendar threshold,
-                                final Optional<Integer> minimum,
-                                final List<String> articleTypes)
+  public Transceiver listRecent(RecentArticleQuery query)
       throws IOException {
-    return new Transceiver() {
-
-      /**
-       * Execute a query.
-       * @param forceMinimum if false, use {@code threshold}; if true, use {@code minimum} ({@code minimum}
-       *                     <em>must</em> be present if {@code forceMinimum} is true)
-       * @param articleType  if absent, return results of all article types; if present, filter results for that type
-       */
-      private List<Object[]> query(final boolean forceMinimum, final Optional<String> articleType) {
-        return hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
-          @Override
-          public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-            StringBuilder hql = new StringBuilder(211)
-                .append("select distinct a.doi, a.title, a.date ")
-                .append("from Article a, Journal j ")
-                .append("where j in elements(a.journals) and j.journalKey = :journalKey");
-            if (!forceMinimum) {
-              hql.append(" and a.date >= :threshold");
-            }
-            if (articleType.isPresent()) {
-              hql.append(" and :articleType in elements(a.types)");
-            }
-            hql.append(" order by a.date desc");
-
-            Query query = session.createQuery(hql.toString());
-            query.setString("journalKey", journalKey);
-            if (forceMinimum) {
-              query.setMaxResults(minimum.get());
-            } else {
-              query.setDate("threshold", threshold.getTime());
-            }
-            if (articleType.isPresent()) {
-              query.setString("articleType", articleType.get());
-            }
-
-            return query.list();
-          }
-        });
-      }
-
-      @Override
-      protected List<RecentArticleView> getData() throws IOException {
-        List<Object[]> results;
-
-        // Get all articles more recent than the threshold
-        if (articleTypes == null) {
-          results = query(false, Optional.<String>absent());
-        } else {
-          results = new ArrayList<>();
-          Set<String> uniqueDois = new HashSet<>();
-
-          // Query for each article type separately and concatenate the results,
-          // in order to preserve the "preference order" in the articleTypes list.
-          for (String articleType : articleTypes) {
-            Optional<String> articleTypeArg = articleType.equals(ARTICLE_TYPE_WILDCARD)
-                ? Optional.<String>absent() : Optional.of(articleType);
-            List<Object[]> queryResults = query(false, articleTypeArg);
-
-            // Add each query result to 'results' only if the DOI is not already in 'uniqueDois'
-            for (Object[] queryResult : queryResults) {
-              if (uniqueDois.add((String) queryResult[0])) {
-                results.add(queryResult);
-              }
-            }
-          }
-        }
-
-        if (minimum.isPresent() && results.size() < minimum.get()) {
-          // Not enough results. Get enough past the threshold to meet the minimum.
-          // Ignore order of articleTypes and get the union of all.
-          if (articleTypes == null || articleTypes.contains(ARTICLE_TYPE_WILDCARD)) {
-            results = query(true, Optional.<String>absent());
-          } else if (articleTypes.size() == 1) {
-            results = query(true, Optional.of(articleTypes.get(0)));
-          } else {
-            String message = "" +
-                "Service does not support queries for a minimum number of recent articles " +
-                "filtered by multiple article types. " +
-                "To make a valid query, client must either " +
-                "(1) omit the 'min' parameter, " +
-                "(2) use no more than one 'type' parameter, or " +
-                "(3) include the wildcard type parameter ('type=*').";
-            throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-          }
-        }
-
-        // Transform into results view.
-        return Lists.transform(results, new Function<Object[], RecentArticleView>() {
-          @Override
-          public RecentArticleView apply(Object[] result) {
-            String doi = (String) result[0];
-            String title = (String) result[1];
-            Date date = (Date) result[2];
-            ArticleIdentity article = ArticleIdentity.create(doi);
-            return new RecentArticleView(article, title, date);
-          }
-        });
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+    return query.execute(hibernateTemplate);
   }
 
   @Required

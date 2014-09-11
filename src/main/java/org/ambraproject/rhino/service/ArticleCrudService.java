@@ -23,13 +23,12 @@ import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
-import java.util.List;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -133,27 +132,11 @@ public interface ArticleCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
-   * List the DOIs, titles, and publication dates of all articles published after a certain threshold. If a minimum
-   * result count is provided, go past the threshold to return that many if necessary.
-   * <p/>
-   * If a list of article types is provided, return all articles of those types published after the threshold, ordered
-   * by that type. (That is, type order takes precedence over chronological order.) If a minimum result count is
-   * provided and the date-threshold results are below it, instead provide all articles of those type(s) up to the
-   * minimum, in chronological order.
-   * <p/>
-   * The string {@code "*"} may be used as a stand-in that matches all article types. For example, place it at the end
-   * of the list to get all articles past the threshold if there aren't enough of the preceding types. If {@code
-   * minimum} is present and {@code articleTypes} contains more than 1 element, then {@code articleTypes} <em>must</em>
-   * contain {@code "*"}.
+   * Carry out a query for recent articles.
    *
-   * @param journalKey   journal to search
-   * @param threshold    return all articles published after this date
-   * @param minimum      minimum result count
-   * @param articleTypes the list of article types to filter, in order of preference; may be {@code null}
+   * @see org.ambraproject.rhino.service.impl.RecentArticleQuery
    */
-  public abstract Transceiver listRecent(String journalKey, Calendar threshold,
-                                         Optional<Integer> minimum,
-                                         List<String> articleTypes)
+  public abstract Transceiver listRecent(RecentArticleQuery query)
       throws IOException;
 
 }
