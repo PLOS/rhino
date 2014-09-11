@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,10 +31,8 @@ import java.util.Set;
  * Encapsulates a query that will list the DOIs, titles, and publication dates of all articles published after a certain
  * threshold. If a minimum result count is provided, go past the threshold to return that many if necessary.
  * <p/>
- * If a list of article types is provided, return all articles of those types published after the threshold, ordered by
- * that type. (That is, type order takes precedence over chronological order.) If a minimum result count is provided and
- * the date-threshold results are below it, instead provide all articles of those type(s) up to the minimum, in
- * chronological order.
+ * If a list of article types is provided, return all articles of those types published after the threshold. Articles
+ * with the same publication date are ordered by type, in the same order as the list.
  * <p/>
  * The string {@code "*"} may be used as a stand-in that matches all article types. For example, place it at the end of
  * the list to get all articles past the threshold if there aren't enough of the preceding types. If {@code minimum} is
@@ -230,7 +230,12 @@ public class RecentArticleQuery {
       }
 
       // Transform into results view.
-      return transformResults(results);
+      List<RecentArticleView> views = transformResults(results);
+
+      // Sort them by date, relying on stable sort to keep articles with the same date ordered by type
+      Collections.sort(views, BY_DATE_DESCENDING);
+
+      return views;
     }
 
     @Override
@@ -241,7 +246,7 @@ public class RecentArticleQuery {
 
   /**
    * Represent raw query results from {@link org.ambraproject.rhino.service.impl.RecentArticleQuery.Result#getData()} as
-   * {@code RecentArticleView} objects.
+   * {@code RecentArticleView} objects. The returned list is mutable.
    */
   private static List<RecentArticleView> transformResults(List<Object[]> results) {
     List<RecentArticleView> views = Lists.newArrayListWithCapacity(results.size());
@@ -255,5 +260,16 @@ public class RecentArticleQuery {
     }
     return views;
   }
+
+  /**
+   * Order by date. Maintain stable order for objects with the same date. Not consistent with {@link
+   * RecentArticleView#equals}.
+   */
+  private static final Comparator<RecentArticleView> BY_DATE_DESCENDING = new Comparator<RecentArticleView>() {
+    @Override
+    public int compare(RecentArticleView o1, RecentArticleView o2) {
+      return -o1.getDate().compareTo(o2.getDate());
+    }
+  };
 
 }
