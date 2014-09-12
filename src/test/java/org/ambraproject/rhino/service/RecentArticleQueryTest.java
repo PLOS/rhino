@@ -72,7 +72,7 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     createRecentArticle("veryRecent", dummyJournal, timestamp(2), "t1");
     createRecentArticle("recent", dummyJournal, timestamp(1), "t1", "t2");
     createRecentArticle("stale", dummyJournal, timestamp(-1), "t1", "t3");
-    createRecentArticle("otherType", dummyJournal, timestamp(3), "t2", "t3");
+    createRecentArticle("otherType", dummyJournal, timestamp(2), "t2", "t3");
 
     List<?> results;
 
@@ -89,12 +89,12 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
 
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("t1", "*")));
-    // "otherType" should be last, because "t1" comes first in type preference, even though "otherType" is more recent.
-    assertDois(results, "veryRecent", "recent", "otherType");
+    // "otherType" should be after "veryRecent": it has the same date, but "t1" comes first in type preference
+    assertDois(results, "veryRecent", "otherType", "recent");
 
     results = executeTest(RecentArticleQuery.builder()
         .setArticleTypes(ImmutableList.of("*")));
-    // With no type preference order, "otherType" should come first because it is most recent.
+    // With no type preference order, "otherType" should come before "recent" because it is more recent.
     assertDois(results, "otherType", "veryRecent", "recent");
 
     results = executeTest(RecentArticleQuery.builder()
