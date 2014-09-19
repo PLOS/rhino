@@ -21,6 +21,7 @@ package org.ambraproject.rhino.view.article;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -52,6 +53,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.MemberNames;
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATION_STATE_CONSTANTS;
@@ -152,14 +155,8 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
 
-    Map<Category, Integer> categoryMap = article.getCategories();
-    Collection<CategoryView> categoryViews = Lists.newArrayListWithCapacity(categoryMap.size());
-    for (Map.Entry<Category, Integer> entry : categoryMap.entrySet()) {
-      Category category = JsonAdapterUtil.forceHibernateLazyLoad(entry.getKey(), Category.class);
-      int weight = entry.getValue();
-      categoryViews.add(new CategoryView(category, weight));
-    }
-    serialized.add("categories", context.serialize(categoryViews));
+    serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
+    serialized.addProperty("pageCount", parsePageCount(article.getPages()));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
@@ -188,6 +185,34 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.add("assets", context.serialize(new RawAssetCollectionView(article)));
 
     return serialized;
+  }
+
+  private static Collection<CategoryView> buildCategoryViews(Map<Category, Integer> categoryMap) {
+    Collection<CategoryView> categoryViews = Lists.newArrayListWithCapacity(categoryMap.size());
+    for (Map.Entry<Category, Integer> entry : categoryMap.entrySet()) {
+      Category category = JsonAdapterUtil.forceHibernateLazyLoad(entry.getKey(), Category.class);
+      int weight = entry.getValue();
+      categoryViews.add(new CategoryView(category, weight));
+    }
+    return categoryViews;
+  }
+
+  private static final Pattern PAGE_PATTERN = Pattern.compile("(\\d+)-(\\d+)");
+
+  private static int parsePageCount(String pages) {
+    if (Strings.isNullOrEmpty(pages)) return 0;
+    Matcher matcher = PAGE_PATTERN.matcher(pages);
+    if (matcher.matches()) {
+      try {
+        int start = Integer.parseInt(matcher.group(1));
+        int end = Integer.parseInt(matcher.group(2));
+        return end - start + 1;
+      } catch (NumberFormatException e) {
+        // In case of integer overflow. Fall through.
+      }
+    }
+    log.error("Article page range could not be parsed: {}", pages);
+    return 0;
   }
 
   /**
