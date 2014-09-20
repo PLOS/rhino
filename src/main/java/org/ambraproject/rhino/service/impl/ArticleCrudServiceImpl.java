@@ -52,6 +52,7 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang.StringUtils;
@@ -901,7 +902,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private ArticleOutputView createArticleView(Article article, boolean excludeCitations) {
-    return ArticleOutputView.create(article, excludeCitations, syndicationService, pingbackReadService);
+    return ArticleOutputView.create(article, excludeCitations, this, syndicationService, pingbackReadService);
   }
 
   /**
@@ -976,6 +977,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Transceiver listRecent(RecentArticleQuery query)
       throws IOException {
     return query.execute(hibernateTemplate);
+  }
+
+  @Override
+  public Collection<RelatedArticleView> getRelatedArticles(Article article) {
+    List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
+    List<RelatedArticleView> relatedArticleViews = Lists.newArrayListWithCapacity(rawRelationships.size());
+    for (ArticleRelationship rawRelationship : rawRelationships) {
+      String otherArticleDoi = rawRelationship.getOtherArticleDoi();
+
+      // Simple and inefficient implementation. Same solution as legacy Ambra. TODO: Optimize
+      Article relatedArticle = (Article) DataAccessUtils.uniqueResult((List<?>)
+          hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
+              .add(Restrictions.eq("doi", otherArticleDoi))));
+
+      RelatedArticleView relatedArticleView = (relatedArticle == null) ? new RelatedArticleView(rawRelationship, null, null)
+          : new RelatedArticleView(rawRelationship, relatedArticle.getTitle(), relatedArticle.getAuthors());
+      relatedArticleViews.add(relatedArticleView);
+    }
+    return relatedArticleViews;
   }
 
   @Required

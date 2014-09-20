@@ -34,6 +34,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.Rhino;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
@@ -69,13 +70,18 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
+  private final ImmutableList<RelatedArticleView> relatedArticles;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
-  private ArticleOutputView(Article article, Collection<Syndication> syndications,
-                            Collection<Pingback> pingbacks, boolean excludeCitations) {
+  private ArticleOutputView(Article article,
+                            Collection<RelatedArticleView> relatedArticles,
+                            Collection<Syndication> syndications,
+                            Collection<Pingback> pingbacks,
+                            boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
+    this.relatedArticles = ImmutableList.copyOf(relatedArticles);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
     this.excludeCitations = excludeCitations;
@@ -93,13 +99,18 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    *
    * @param article             primary entity
    * @param excludeCitations    if true, don't serialize citation information
+   * @param articleCrudService
    * @param syndicationService
-   * @param pingbackReadService @return view of the article and associated data
+   * @param pingbackReadService
+   * @return view of the article and associated data
    */
   public static ArticleOutputView create(Article article,
                                          boolean excludeCitations,
+                                         ArticleCrudService articleCrudService,
                                          SyndicationService syndicationService,
                                          PingbackReadService pingbackReadService) {
+    Collection<RelatedArticleView> relatedArticles = articleCrudService.getRelatedArticles(article);
+
     Collection<Syndication> syndications;
     try {
       syndications = syndicationService.getSyndications(article.getDoi());
@@ -110,8 +121,10 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
+
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, syndications, pingbacks, excludeCitations);
+
+    return new ArticleOutputView(article, relatedArticles, syndications, pingbacks, excludeCitations);
   }
 
   @Override
@@ -155,8 +168,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
 
-    serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
+    serialized.add("relatedArticles", context.serialize(relatedArticles));
+    serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
