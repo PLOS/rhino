@@ -24,8 +24,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.UnmodifiableIterator;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -34,8 +36,9 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.service.ArticleType;
+import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.shared.Rhino;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
@@ -44,7 +47,6 @@ import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
-import org.ambraproject.views.article.ArticleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,13 +71,18 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
+  private final ImmutableSet<ArticleType> articleTypes;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
-  private ArticleOutputView(Article article, Collection<Syndication> syndications,
-                            Collection<Pingback> pingbacks, boolean excludeCitations) {
+  private ArticleOutputView(Article article,
+                            Collection<ArticleType> articleTypes,
+                            Collection<Syndication> syndications,
+                            Collection<Pingback> pingbacks,
+                            boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
+    this.articleTypes = ImmutableSet.copyOf(articleTypes);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
     this.excludeCitations = excludeCitations;
@@ -94,12 +101,16 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    * @param article             primary entity
    * @param excludeCitations    if true, don't serialize citation information
    * @param syndicationService
-   * @param pingbackReadService @return view of the article and associated data
+   * @param pingbackReadService
+   * @param articleTypeService
+   * @return view of the article and associated data
    */
+  // TODO: Refactor out all of this manual injection of Spring beans. Replace with actual Spring bean with proper wiring.
   public static ArticleOutputView create(Article article,
                                          boolean excludeCitations,
                                          SyndicationService syndicationService,
-                                         PingbackReadService pingbackReadService) {
+                                         PingbackReadService pingbackReadService,
+                                         ArticleTypeService articleTypeService) {
     Collection<Syndication> syndications;
     try {
       syndications = syndicationService.getSyndications(article.getDoi());
@@ -110,8 +121,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
+    ImmutableSet<ArticleType> articleTypes = articleTypeService.getMetadataForUriStrings(article.getTypes());
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, syndications, pingbacks, excludeCitations);
+    return new ArticleOutputView(article, articleTypes, syndications, pingbacks, excludeCitations);
   }
 
   @Override
@@ -133,8 +145,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
-    ArticleType articleType = Rhino.getKnownArticleType(article.getTypes());
-    serialized.addProperty(MemberNames.ARTICLE_TYPE, articleType.getHeading());
+
+    serialized.addProperty("articleType", getMainArticleTypeHeading());
+    serialized.add("types", context.serialize(articleTypes));
 
     int articleState = article.getState();
     String pubState = getPublicationStateName(articleState);
@@ -185,6 +198,38 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.add("assets", context.serialize(new RawAssetCollectionView(article)));
 
     return serialized;
+  }
+
+  /**
+   * Get the human-readable article type heading to return as a root-level field. The legacy model assumes that this
+   * will be a {@code heading} value shared by all elements of {@code articleTypes}.
+   *
+   * @return the human-readable article type heading
+   */
+  private String getMainArticleTypeHeading() {
+    UnmodifiableIterator<ArticleType> iterator = articleTypes.iterator();
+    if (!iterator.hasNext()) {
+      return null;
+    }
+    final ArticleType type = iterator.next();
+    final String heading = type.getHeading();
+
+    // If the article types don't actually share a heading, the legacy behavior is to return the first one.
+    // Verify they do share a heading, and log a warning if not.
+    if (log.isWarnEnabled()) {
+      while (iterator.hasNext()) {
+        ArticleType nextType = iterator.next();
+        String nextHeading = nextType.getHeading();
+        if (!heading.equals(nextHeading)) {
+          String message = String.format(
+              "Article with DOI=\"%s\" has two types with mismatched headings (\"%s\": \"%s\"; \"%s\": \"%s\")",
+              article.getDoi(), type.getUri(), heading, nextType.getUri(), nextHeading);
+          log.warn(message);
+        }
+      }
+    }
+
+    return heading;
   }
 
   private static Collection<CategoryView> buildCategoryViews(Map<Category, Integer> categoryMap) {
