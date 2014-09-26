@@ -20,6 +20,7 @@ package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -71,18 +72,18 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
-  private final ImmutableSet<ArticleType> articleTypes;
+  private final Optional<ArticleType> articleType;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
   private ArticleOutputView(Article article,
-                            Collection<ArticleType> articleTypes,
+                            ArticleType articleType,
                             Collection<Syndication> syndications,
                             Collection<Pingback> pingbacks,
                             boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
-    this.articleTypes = ImmutableSet.copyOf(articleTypes);
+    this.articleType = Optional.fromNullable(articleType);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
     this.excludeCitations = excludeCitations;
@@ -121,9 +122,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
-    ImmutableSet<ArticleType> articleTypes = articleTypeService.getMetadataForUriStrings(article.getTypes());
+    ArticleType articleType = articleTypeService.getFor(article);
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, articleTypes, syndications, pingbacks, excludeCitations);
+    return new ArticleOutputView(article, articleType, syndications, pingbacks, excludeCitations);
   }
 
   @Override
@@ -146,8 +147,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     JsonObject serialized = new JsonObject();
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
-    serialized.addProperty("articleType", getMainArticleTypeHeading());
-    serialized.add("types", context.serialize(articleTypes));
+    if (articleType.isPresent()) {
+      serialized.add("articleType", context.serialize(articleType.get()));
+    }
 
     int articleState = article.getState();
     String pubState = getPublicationStateName(articleState);
@@ -198,38 +200,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.add("assets", context.serialize(new RawAssetCollectionView(article)));
 
     return serialized;
-  }
-
-  /**
-   * Get the human-readable article type heading to return as a root-level field. The legacy model assumes that this
-   * will be a {@code heading} value shared by all elements of {@code articleTypes}.
-   *
-   * @return the human-readable article type heading
-   */
-  private String getMainArticleTypeHeading() {
-    UnmodifiableIterator<ArticleType> iterator = articleTypes.iterator();
-    if (!iterator.hasNext()) {
-      return null;
-    }
-    final ArticleType type = iterator.next();
-    final String heading = type.getHeading();
-
-    // If the article types don't actually share a heading, the legacy behavior is to return the first one.
-    // Verify they do share a heading, and log a warning if not.
-    if (log.isWarnEnabled()) {
-      while (iterator.hasNext()) {
-        ArticleType nextType = iterator.next();
-        String nextHeading = nextType.getHeading();
-        if (!heading.equals(nextHeading)) {
-          String message = String.format(
-              "Article with DOI=\"%s\" has two types with mismatched headings (\"%s\": \"%s\"; \"%s\": \"%s\")",
-              article.getDoi(), type.getUri(), heading, nextType.getUri(), nextHeading);
-          log.warn(message);
-        }
-      }
-    }
-
-    return heading;
   }
 
   private static Collection<CategoryView> buildCategoryViews(Map<Category, Integer> categoryMap) {

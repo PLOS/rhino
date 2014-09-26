@@ -1,9 +1,8 @@
 package org.ambraproject.rhino.service;
 
-import com.google.common.collect.ImmutableSet;
+import org.ambraproject.models.Article;
 
 import java.net.URI;
-import java.util.Collection;
 
 /**
  * Access data about article types.
@@ -19,12 +18,14 @@ public interface ArticleTypeService {
   public abstract ArticleType getMetadataForUri(URI uri);
 
   /**
-   * Convenience method for parsing a collection of strings as URIs and looking up article type metadata for all of
-   * them.
+   * Get metadata for the type associated with an article, or {@code null} if it has no type.
+   * <p/>
+   * This is distinct from {@link Article#getTypes()}, which returns a set of URIs. This method encapsulates logic for
+   * producing a <em>single</em> type object that represents the article.
    *
-   * @param uriStrings article type URIs
-   * @return metadata for the identified article types
+   * @param article an article
+   * @return the article's type, or {@code null} if it has none
    */
-  public abstract ImmutableSet<ArticleType> getMetadataForUriStrings(Collection<String> uriStrings);
+  public abstract ArticleType getFor(Article article);
 
 }
