@@ -2,10 +2,14 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import org.ambraproject.rhino.view.JsonOutputView;
 
 import java.net.URI;
 
-public class ArticleType {
+public class ArticleType implements JsonOutputView {
 
   private final URI uri;
   private final String heading;
@@ -34,6 +38,18 @@ public class ArticleType {
   public Optional<String> getCode() {
     return Optional.fromNullable(code);
   }
+
+
+  @Override
+  public JsonElement serialize(JsonSerializationContext context) {
+    JsonObject serialized = new JsonObject();
+    // Suppress url
+    serialized.addProperty("heading", heading);
+    serialized.addProperty("pluralHeading", pluralHeading);
+    serialized.addProperty("code", code);
+    return serialized;
+  }
+
 
   @Override
   public boolean equals(Object o) {
