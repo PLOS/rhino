@@ -25,10 +25,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.UnmodifiableIterator;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -72,17 +70,20 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
+  private final Optional<String> nlmArticleType;
   private final Optional<ArticleType> articleType;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
   private ArticleOutputView(Article article,
+                            String nlmArticleType,
                             ArticleType articleType,
                             Collection<Syndication> syndications,
                             Collection<Pingback> pingbacks,
                             boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
+    this.nlmArticleType = Optional.fromNullable(nlmArticleType);
     this.articleType = Optional.fromNullable(articleType);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
@@ -122,9 +123,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
-    ArticleType articleType = articleTypeService.getFor(article);
+
+    String nlmArticleType = articleTypeService.getNlmArticleType(article);
+    ArticleType articleType = articleTypeService.getArticleType(article);
+
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, articleType, syndications, pingbacks, excludeCitations);
+    return new ArticleOutputView(article, nlmArticleType, articleType, syndications, pingbacks, excludeCitations);
   }
 
   @Override
@@ -147,6 +151,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     JsonObject serialized = new JsonObject();
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
 
+    if (nlmArticleType.isPresent()) {
+      serialized.addProperty("nlmArticleType", nlmArticleType.get());
+    }
     if (articleType.isPresent()) {
       serialized.add("articleType", context.serialize(articleType.get()));
     }

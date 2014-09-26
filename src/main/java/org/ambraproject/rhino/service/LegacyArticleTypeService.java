@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.Article;
+import org.ambraproject.rhino.util.NlmArticleTypes;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,13 +16,28 @@ import java.util.Set;
  */
 public class LegacyArticleTypeService implements ArticleTypeService {
 
-  /**
-   * {@inheritDoc}
-   * <p/>
-   * This implementation the legacy table of "known" article types.
-   */
   @Override
-  public ArticleType getMetadataForUri(URI uri) {
+  public String getNlmArticleType(Article article) {
+    String matchedType = null;
+    for (String typeString : article.getTypes()) {
+      int slashIndex = typeString.lastIndexOf('/');
+      if (slashIndex < 0) throw new ArticleTypeException("Article type URI has no slash");
+      String nlmTypeCandidate = typeString.substring(slashIndex + 1);
+      if (NlmArticleTypes.TYPES.contains(nlmTypeCandidate)) {
+        if (matchedType == null) {
+          matchedType = nlmTypeCandidate;
+        } else {
+          String message = String.format(
+              "Multiple article type URIs belonging to the same article (DOI=%s) were NLM article-type attributes: %s, %s",
+              article.getDoi(), matchedType, nlmTypeCandidate);
+          throw new ArticleTypeException(message);
+        }
+      }
+    }
+    return matchedType;
+  }
+
+  private static ArticleType getMetadataForUri(URI uri) {
     return convertFromLegacy(org.ambraproject.views.article.ArticleType.getKnownArticleTypeForURI(uri));
   }
 
@@ -33,8 +49,14 @@ public class LegacyArticleTypeService implements ArticleTypeService {
         legacyArticleType.getCode());
   }
 
+  /**
+   * {@inheritDoc}
+   * <p/>
+   * Returns an article type that is defined in the system's {@code ambra.xml} file, which is assumed to be unique for
+   * each article.
+   */
   @Override
-  public ArticleType getFor(Article article) {
+  public ArticleType getArticleType(Article article) {
     Set<String> typeUriStrings = article.getTypes();
 
     /*
@@ -47,7 +69,8 @@ public class LegacyArticleTypeService implements ArticleTypeService {
       try {
         typeUri = new URI(typeUriString);
       } catch (URISyntaxException e) {
-        throw new ArticleTypeException("An article type URI had invalid syntax", e);
+        String message = "An article type URI had invalid syntax (DOI=" + article.getDoi() + ")";
+        throw new ArticleTypeException(message, e);
       }
 
       ArticleType typeForUri = getMetadataForUri(typeUri);
@@ -55,8 +78,8 @@ public class LegacyArticleTypeService implements ArticleTypeService {
         if (matchedType == null) {
           matchedType = typeForUri; // first hit
         } else {
-          String message = String.format("Multiple article type URIs belonging to the same article were 'known': <%s>, <%s>",
-              matchedType.getUri(), typeUri);
+          String message = String.format("Multiple article type URIs belonging to the same article (DOI=%s) were 'known': <%s>, <%s>",
+              article.getDoi(), matchedType.getUri(), typeUri);
           throw new ArticleTypeException(message);
         }
       }
