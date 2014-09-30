@@ -20,6 +20,7 @@ package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -34,8 +35,9 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.service.ArticleType;
+import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.shared.Rhino;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
@@ -44,7 +46,6 @@ import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
-import org.ambraproject.views.article.ArticleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,13 +70,21 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
   private final Article article;
+  private final Optional<String> nlmArticleType;
+  private final Optional<ArticleType> articleType;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
-  private ArticleOutputView(Article article, Collection<Syndication> syndications,
-                            Collection<Pingback> pingbacks, boolean excludeCitations) {
+  private ArticleOutputView(Article article,
+                            String nlmArticleType,
+                            ArticleType articleType,
+                            Collection<Syndication> syndications,
+                            Collection<Pingback> pingbacks,
+                            boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
+    this.nlmArticleType = Optional.fromNullable(nlmArticleType);
+    this.articleType = Optional.fromNullable(articleType);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
     this.excludeCitations = excludeCitations;
@@ -94,12 +103,16 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
    * @param article             primary entity
    * @param excludeCitations    if true, don't serialize citation information
    * @param syndicationService
-   * @param pingbackReadService @return view of the article and associated data
+   * @param pingbackReadService
+   * @param articleTypeService
+   * @return view of the article and associated data
    */
+  // TODO: Refactor out all of this manual injection of Spring beans. Replace with actual Spring bean with proper wiring.
   public static ArticleOutputView create(Article article,
                                          boolean excludeCitations,
                                          SyndicationService syndicationService,
-                                         PingbackReadService pingbackReadService) {
+                                         PingbackReadService pingbackReadService,
+                                         ArticleTypeService articleTypeService) {
     Collection<Syndication> syndications;
     try {
       syndications = syndicationService.getSyndications(article.getDoi());
@@ -110,8 +123,12 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
       syndications = ImmutableList.of();
     }
+
+    String nlmArticleType = articleTypeService.getNlmArticleType(article);
+    ArticleType articleType = articleTypeService.getArticleType(article);
+
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, syndications, pingbacks, excludeCitations);
+    return new ArticleOutputView(article, nlmArticleType, articleType, syndications, pingbacks, excludeCitations);
   }
 
   @Override
@@ -133,8 +150,13 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
-    ArticleType articleType = Rhino.getKnownArticleType(article.getTypes());
-    serialized.addProperty(MemberNames.ARTICLE_TYPE, articleType.getHeading());
+
+    if (nlmArticleType.isPresent()) {
+      serialized.addProperty("nlmArticleType", nlmArticleType.get());
+    }
+    if (articleType.isPresent()) {
+      serialized.add("articleType", context.serialize(articleType.get()));
+    }
 
     int articleState = article.getState();
     String pubState = getPublicationStateName(articleState);

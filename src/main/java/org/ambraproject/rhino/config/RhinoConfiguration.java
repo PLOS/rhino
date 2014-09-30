@@ -28,12 +28,14 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
+import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
+import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
@@ -62,7 +64,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
@@ -236,6 +237,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ClassificationService classificationService(TaxonomyService taxonomyService) {
     return new ClassificationServiceImpl(taxonomyService);
+  }
+
+  @Bean
+  public ArticleTypeService articleTypeService() {
+    return new LegacyArticleTypeService();
   }
 
   @Bean
