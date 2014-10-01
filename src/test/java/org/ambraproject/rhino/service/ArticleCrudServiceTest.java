@@ -264,8 +264,9 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertEquals(articleMap.get("doi"), articleId.getKey());
     assertEquals(articleMap.get("title"), article.getTitle());
 
+    assertEquals(articleMap.get("nlmArticleType"), "research-article");
+
     Map<?, ?> articleType = (Map<?, ?>) articleMap.get("articleType");
-    assertEquals(articleType.get("uri"), "http://rdf.plos.org/RDF/articleType/Research%20Article");
     assertEquals(articleType.get("heading"), "Research Article");
     assertEquals(articleType.get("pluralHeading"), "Research Articles");
     assertEquals(articleType.get("code"), "research_article");
