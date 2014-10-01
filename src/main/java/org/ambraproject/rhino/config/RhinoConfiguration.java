@@ -54,6 +54,7 @@ import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.service.crossref.CrossRefLookupService;
 import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
 import org.ambraproject.service.taxonomy.TaxonomyService;
@@ -242,6 +243,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public ArticleTypeService articleTypeService() {
     return new LegacyArticleTypeService();
+  }
+
+  @Bean
+  public ArticleOutputViewFactory articleOutputViewFactory() {
+    return new ArticleOutputViewFactory();
   }
 
   @Bean

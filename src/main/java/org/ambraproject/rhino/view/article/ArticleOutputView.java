@@ -35,24 +35,18 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
-import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
-import org.ambraproject.rhino.service.ArticleTypeService;
-import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
-import org.ambraproject.service.article.NoSuchArticleIdException;
-import org.ambraproject.service.syndication.SyndicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -78,13 +72,14 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
-  private ArticleOutputView(Article article,
-                            String nlmArticleType,
-                            ArticleType articleType,
-                            Collection<RelatedArticleView> relatedArticles,
-                            Collection<Syndication> syndications,
-                            Collection<Pingback> pingbacks,
-                            boolean excludeCitations) {
+  // Package-private; should be called only by ArticleOutputViewFactory
+  ArticleOutputView(Article article,
+                    String nlmArticleType,
+                    ArticleType articleType,
+                    Collection<RelatedArticleView> relatedArticles,
+                    Collection<Syndication> syndications,
+                    Collection<Pingback> pingbacks,
+                    boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);
     this.articleType = Optional.fromNullable(articleType);
@@ -101,42 +96,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     }
   };
 
-  /**
-   * Creates a new view of the given article and associated data.
-   *
-   * @param article             primary entity
-   * @param excludeCitations    if true, don't serialize citation information
-   * @param articleCrudService
-   * @param syndicationService
-   * @param pingbackReadService
-   * @param articleTypeService
-   * @return view of the article and associated data
-   */
-  // TODO: Refactor out all of this manual injection of Spring beans. Replace with actual Spring bean with proper wiring.
-  public static ArticleOutputView create(Article article,
-                                         boolean excludeCitations,
-                                         ArticleCrudService articleCrudService,
-                                         SyndicationService syndicationService,
-                                         PingbackReadService pingbackReadService,
-                                         ArticleTypeService articleTypeService) {
-    Collection<RelatedArticleView> relatedArticles = articleCrudService.getRelatedArticles(article);
-    Collection<Syndication> syndications;
-    try {
-      syndications = syndicationService.getSyndications(article.getDoi());
-    } catch (NoSuchArticleIdException e) {
-      throw new RuntimeException(e); // should be impossible
-    }
-    if (syndications == null) {
-      log.warn("SyndicationService.getSyndications returned null; assuming no syndications");
-      syndications = ImmutableList.of();
-    }
-
-    String nlmArticleType = articleTypeService.getNlmArticleType(article);
-    ArticleType articleType = articleTypeService.getArticleType(article);
-
-    List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, nlmArticleType, articleType, relatedArticles, syndications, pingbacks, excludeCitations);
-  }
 
   @Override
   public String getDoi() {

@@ -44,7 +44,6 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
@@ -53,6 +52,7 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
@@ -101,7 +101,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   protected PingbackReadService pingbackReadService;
   @Autowired
-  private ArticleTypeService articleTypeService;
+  private ArticleOutputViewFactory articleOutputViewFactory;
   @Autowired
   private XpathReader xpathReader;
 
@@ -904,8 +904,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private ArticleOutputView createArticleView(Article article, boolean excludeCitations) {
-    return ArticleOutputView.create(article, excludeCitations,
-        this, syndicationService, pingbackReadService, articleTypeService);
+    return articleOutputViewFactory.create(article, excludeCitations);
   }
 
   /**
