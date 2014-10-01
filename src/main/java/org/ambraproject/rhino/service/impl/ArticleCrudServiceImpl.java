@@ -44,6 +44,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
@@ -99,7 +100,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Autowired
   protected PingbackReadService pingbackReadService;
-
+  @Autowired
+  private ArticleTypeService articleTypeService;
   @Autowired
   private XpathReader xpathReader;
 
@@ -902,7 +904,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private ArticleOutputView createArticleView(Article article, boolean excludeCitations) {
-    return ArticleOutputView.create(article, excludeCitations, this, syndicationService, pingbackReadService);
+    return ArticleOutputView.create(article, excludeCitations,
+        this, syndicationService, pingbackReadService, articleTypeService);
   }
 
   /**
