@@ -49,6 +49,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
       .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
       .add(org.ambraproject.rhino.view.article.CategoryView.class)
+      .add(org.ambraproject.rhino.view.article.RelatedArticleView.class)
 
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedImageView.class)

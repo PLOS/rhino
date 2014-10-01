@@ -26,9 +26,11 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
+import org.ambraproject.rhino.view.article.RelatedArticleView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
 
@@ -138,5 +140,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract Transceiver listRecent(RecentArticleQuery query)
       throws IOException;
+
+  /**
+   * Produce views of an article's related articles. Wraps the objects returned by {@link Article#getRelatedArticles()}
+   * and adds those articles' titles and author lists.
+   *
+   * @param article an article with a populated {@code relatedArticles} field
+   * @return a set of views of the related articles
+   */
+  public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
 
 }

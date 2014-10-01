@@ -30,8 +30,8 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.view.article.ArticleInputView;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
+import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.routes.CrossRefLookupRoutes;
-import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
@@ -67,16 +67,10 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   private ArticleCrudService articleCrudService;
 
   @Autowired
-  private SyndicationService syndicationService;
-
-  @Autowired
-  private PingbackReadService pingbackReadService;
-
-  @Autowired
   private FileStoreService fileStoreService;
 
   @Autowired
-  private ArticleTypeService articleTypeService;
+  private ArticleOutputViewFactory articleOutputViewFactory;
 
   @Autowired
   private Gson entityGson;
@@ -123,8 +117,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
       checkFileExistence(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()), true);
     }
 
-    ArticleOutputView outputView = ArticleOutputView.create(article, false,
-        syndicationService, pingbackReadService, articleTypeService);
+    ArticleOutputView outputView = articleOutputViewFactory.create(article, false);
     assertEquals(outputView.getArticle().getState(), Article.STATE_UNPUBLISHED);
     assertEquals(outputView.getSyndication(crossref).getStatus(), Syndication.STATUS_PENDING);
     assertEquals(outputView.getSyndication(pmc).getStatus(), Syndication.STATUS_PENDING);
@@ -152,8 +145,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(inputView.getSyndicationUpdate(pubmed).getStatus(), Syndication.STATUS_IN_PROGRESS);
     article = articleStateService.update(articleId, inputView);
 
-    ArticleOutputView result = ArticleOutputView.create(article, false,
-        syndicationService, pingbackReadService, articleTypeService);
+    ArticleOutputView result = articleOutputViewFactory.create(article, false);
     assertEquals(result.getArticle().getState(), Article.STATE_ACTIVE);
     assertEquals(result.getSyndication(crossref).getStatus(), Syndication.STATUS_IN_PROGRESS);
     assertEquals(result.getSyndication(pmc).getStatus(), Syndication.STATUS_IN_PROGRESS);
