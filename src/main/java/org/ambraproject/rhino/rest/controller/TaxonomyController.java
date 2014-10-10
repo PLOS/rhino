@@ -14,18 +14,24 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Strings;
+import org.ambraproject.models.Article;
+import org.ambraproject.models.Category;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller class for the taxonomy namespace.
@@ -40,6 +46,9 @@ public class TaxonomyController extends RestController {
   @Autowired
   private ClassificationService classificationService;
 
+  @Autowired
+  protected ArticleCrudService articleCrudService;
+
   @Transactional(readOnly = true)
   @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
   public void readRoot(HttpServletRequest request, HttpServletResponse response,
@@ -50,5 +59,46 @@ public class TaxonomyController extends RestController {
       parent = URLDecoder.decode(parent, "UTF-8");
     }
     classificationService.read(journal, parent).respond(request, response, entityGson);
+  }
+
+
+  @RequestMapping(value = TAXONOMY_NAMESPACE + "flag/{action:add|remove}", method = RequestMethod.POST)
+  public @ResponseBody Map<String,String> flagArticleCategory(HttpServletRequest request, HttpServletResponse response,
+                       @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
+                       @RequestParam(value = "articleDoi", required = true) String articleDoi,
+                       @RequestParam(value = "authId", required = true) String authId,
+                       @PathVariable("action") String action)
+          throws Exception {
+    // TODO: we might want to optimize this by directly retrieving an article category collection in place of article instantiation
+    Article article = articleCrudService.findArticleById(ArticleIdentity.create(articleDoi));
+    for (Category category : article.getCategories().keySet()) {
+      // if category matches the provided term, insert or delete an article category flag according to action provided in url
+      // NOTE: a given category term (i.e. the final term in a full category path) may be present for more than one article category
+      String[] terms = category.getPath().split("/");
+      String articleCategoryTerm = terms[terms.length - 1];
+      if (categoryTerm.contentEquals(articleCategoryTerm)) {
+        if (action.contentEquals("remove")) {
+          classificationService.deflagArticleCategory(article.getID(), category.getID(), authId);
+        } else if (action.contentEquals("add")) {
+          classificationService.flagArticleCategory(article.getID(), category.getID(), authId);
+        }
+      }
+    }
+
+    Map testMap = new HashMap<String,String>();
+    return testMap;
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = TAXONOMY_NAMESPACE + "flag", method = RequestMethod.DELETE)
+  public @ResponseBody void deflagArticleCategory(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestParam(value = "categoryId", required = false) Long categoryId,
+                                  @RequestParam(value = "articleId", required = false) Long articleId,
+                                  @RequestParam(value = "authId", required = false) String authId)
+          throws Exception {
+    //classificationService.deflagArticleCategory(articleId, categoryId, authId);
+    response.setStatus(HttpStatus.CREATED.value());
+    Map testMap = new HashMap<String,String>();
+    return;
   }
 }
