@@ -63,7 +63,7 @@ public class TaxonomyController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = TAXONOMY_NAMESPACE + "flag/{action:add|remove}", method = RequestMethod.POST)
-  public @ResponseBody Map<String,String> flagArticleCategory(HttpServletRequest request, HttpServletResponse response,
+  public @ResponseBody Map<String,String> flagArticleCategory(
                        @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
                        @RequestParam(value = "articleDoi", required = true) String articleDoi,
                        @RequestParam(value = "authId", required = true) String authId,
