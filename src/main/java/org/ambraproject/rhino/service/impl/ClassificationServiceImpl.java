@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Preconditions;
 import org.ambraproject.ApplicationException;
 import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.util.response.Transceiver;
