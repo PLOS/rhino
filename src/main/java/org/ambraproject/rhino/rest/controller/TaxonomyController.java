@@ -61,7 +61,7 @@ public class TaxonomyController extends RestController {
     classificationService.read(journal, parent).respond(request, response, entityGson);
   }
 
-
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = TAXONOMY_NAMESPACE + "flag/{action:add|remove}", method = RequestMethod.POST)
   public @ResponseBody Map<String,String> flagArticleCategory(HttpServletRequest request, HttpServletResponse response,
                        @RequestParam(value = "categoryTerm", required = true) String categoryTerm,
@@ -84,21 +84,7 @@ public class TaxonomyController extends RestController {
         }
       }
     }
-
-    Map testMap = new HashMap<String,String>();
-    return testMap;
+    return new HashMap<>(); // ajax call expects returned data so provide an empty map for the body
   }
 
-  @Transactional(readOnly = false)
-  @RequestMapping(value = TAXONOMY_NAMESPACE + "flag", method = RequestMethod.DELETE)
-  public @ResponseBody void deflagArticleCategory(HttpServletRequest request, HttpServletResponse response,
-                                  @RequestParam(value = "categoryId", required = false) Long categoryId,
-                                  @RequestParam(value = "articleId", required = false) Long articleId,
-                                  @RequestParam(value = "authId", required = false) String authId)
-          throws Exception {
-    //classificationService.deflagArticleCategory(articleId, categoryId, authId);
-    response.setStatus(HttpStatus.CREATED.value());
-    Map testMap = new HashMap<String,String>();
-    return;
-  }
 }
