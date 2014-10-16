@@ -16,6 +16,7 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Service class that deals with the hierarchy of taxonomic terms as they relate to the articles in a given journal.
@@ -35,4 +36,9 @@ public interface ClassificationService {
    * @throws IOException
    */
   Transceiver read(String journal, String parent) throws IOException;
+
+  void flagArticleCategory(Long articleId, Long categoryId, String authId) throws IOException;
+
+  void deflagArticleCategory(Long articleId, Long categoryId, String authId) throws IOException;
+
 }
