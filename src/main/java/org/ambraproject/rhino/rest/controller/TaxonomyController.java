@@ -13,7 +13,10 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Category;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -23,12 +26,14 @@ import org.ambraproject.rhino.service.ClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,6 +45,7 @@ public class TaxonomyController extends RestController {
   private static final String TAXONOMY_ROOT = "/taxonomy";
   private static final String TAXONOMY_NAMESPACE = TAXONOMY_ROOT + '/';
   private static final String TAXONOMY_TEMPLATE = TAXONOMY_NAMESPACE + "**";
+  private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
 
   @Autowired
   private ClassificationService classificationService;
@@ -72,8 +78,7 @@ public class TaxonomyController extends RestController {
     for (Category category : article.getCategories().keySet()) {
       // if category matches the provided term, insert or delete an article category flag according to action provided in url
       // NOTE: a given category term (i.e. the final term in a full category path) may be present for more than one article category
-      String[] terms = category.getPath().split("/");
-      String articleCategoryTerm = terms[terms.length - 1];
+      String articleCategoryTerm = Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(category.getPath()));
       if (categoryTerm.contentEquals(articleCategoryTerm)) {
         if (action.contentEquals("remove")) {
           classificationService.deflagArticleCategory(article.getID(), category.getID(), authId);
@@ -82,7 +87,7 @@ public class TaxonomyController extends RestController {
         }
       }
     }
-    return new HashMap<>(); // ajax call expects returned data so provide an empty map for the body
+    return ImmutableMap.of(); // ajax call expects returned data so provide an empty map for the body
   }
 
 }

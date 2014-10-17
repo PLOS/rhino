@@ -627,17 +627,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       // JDBC, involving flushing and clearing the session in various orders.  However
       // they all lead to either unique constraint violations or optimistic locking
       // exceptions.
-      hibernateTemplate.execute(new HibernateCallback() {
+      hibernateTemplate.execute(new HibernateCallback<Integer>() {
         @Override
-        public Object doInHibernate(Session session) throws HibernateException, SQLException {
-          session.createSQLQuery(
+        public Integer doInHibernate(Session session) throws HibernateException, SQLException {
+          return session.createSQLQuery(
               "update articleAsset " +
                   "set doi = concat('old-', doi), " +
                   "extension = concat('old-', extension) " +
                   "where articleID = :articleID"
           ).setParameter("articleID", article.getID())
               .executeUpdate();
-          return null;
         }
       });
       assets.clear();

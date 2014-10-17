@@ -116,9 +116,9 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
 
     if(authId != null && authId.length() > 0) {
       //This query will update on a duplicate
-      hibernateTemplate.execute(new HibernateCallback() {
-        public Object doInHibernate(Session session) throws HibernateException, SQLException {
-          session.createSQLQuery(
+      hibernateTemplate.execute(new HibernateCallback<Integer>() {
+        public Integer doInHibernate(Session session) throws HibernateException, SQLException {
+          return session.createSQLQuery(
                   "insert into articleCategoryFlagged(articleId, categoryId, userProfileID, created, lastModified) select " +
                           ":articleId, :categoryId, up.userProfileID, :created, :lastModified " +
                           "from userProfile up where up.authId = :authId on duplicate key update lastModified = :lastModified")
@@ -128,15 +128,13 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
                   .setCalendar("created", Calendar.getInstance())
                   .setCalendar("lastModified", Calendar.getInstance())
                   .executeUpdate();
-
-          return null;
         }
       });
     } else {
       //Insert userProfileID as a null value
-      hibernateTemplate.execute(new HibernateCallback() {
-        public Object doInHibernate(Session session) throws HibernateException, SQLException {
-          session.createSQLQuery(
+      hibernateTemplate.execute(new HibernateCallback<Integer>() {
+        public Integer doInHibernate(Session session) throws HibernateException, SQLException {
+          return session.createSQLQuery(
                   "insert into articleCategoryFlagged(articleId, categoryId, userProfileID, created, lastModified) values(" +
                           ":articleId, :categoryId, null, :created, :lastModified)")
                   .setLong("articleId", articleId)
@@ -144,8 +142,6 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
                   .setCalendar("created", Calendar.getInstance())
                   .setCalendar("lastModified", Calendar.getInstance())
                   .executeUpdate();
-
-          return null;
         }
       });
     }
@@ -154,9 +150,9 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
   @Override
   public void deflagArticleCategory(final Long articleId, final Long categoryId, final String authId) throws IOException {
     if(authId != null && authId.length() > 0) {
-      hibernateTemplate.execute(new HibernateCallback() {
-        public Object doInHibernate(Session session) throws HibernateException, SQLException {
-          session.createSQLQuery(
+      hibernateTemplate.execute(new HibernateCallback<Integer>() {
+        public Integer doInHibernate(Session session) throws HibernateException, SQLException {
+          return session.createSQLQuery(
                   "delete acf.* from articleCategoryFlagged acf " +
                           "join userProfile up on up.userProfileID = acf.userProfileID " +
                           "where acf.articleId = :articleId and acf.categoryId = :categoryId and " +
@@ -165,22 +161,18 @@ public class ClassificationServiceImpl extends AmbraService implements Classific
                   .setLong("articleId", articleId)
                   .setLong("categoryId", categoryId)
                   .executeUpdate();
-
-          return null;
         }
       });
     } else {
-      hibernateTemplate.execute(new HibernateCallback() {
-        public Object doInHibernate(Session session) throws HibernateException, SQLException {
+      hibernateTemplate.execute(new HibernateCallback<Integer>() {
+        public Integer doInHibernate(Session session) throws HibernateException, SQLException {
           //Remove one record from the database at random
-          session.createSQLQuery(
+          return session.createSQLQuery(
                   "delete from articleCategoryFlagged where articleId = :articleId and categoryId = :categoryId " +
                           "and userProfileID is null limit 1")
                   .setLong("articleId", articleId)
                   .setLong("categoryId", categoryId)
                   .executeUpdate();
-
-          return null;
         }
       });
     }
