@@ -24,7 +24,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>1.0.12</version>
+  <version>1.0.13</version>
 
   <description>Service-oriented back end for Ambra.</description>
 
