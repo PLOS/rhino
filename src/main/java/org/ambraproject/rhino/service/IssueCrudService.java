@@ -20,9 +20,11 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface IssueCrudService {
 
@@ -32,4 +34,5 @@ public interface IssueCrudService {
 
   public abstract void update(DoiBasedIdentity issueId, IssueInputView input);
 
+  public abstract List<ArticleIssue> getArticleIssues(final String articleDoi);
 }

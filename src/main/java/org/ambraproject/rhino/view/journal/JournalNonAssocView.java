@@ -20,7 +20,7 @@ public class JournalNonAssocView implements JsonOutputView {
 
   private final Journal journal;
 
-  private JournalNonAssocView(Journal journal) {
+  public JournalNonAssocView(Journal journal) {
     this.journal = Preconditions.checkNotNull(journal);
   }
 
