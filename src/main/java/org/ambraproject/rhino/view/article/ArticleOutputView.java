@@ -41,6 +41,7 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
+import org.ambraproject.rhino.view.article.ArticleIssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final Optional<String> nlmArticleType;
   private final Optional<ArticleType> articleType;
   private final ImmutableList<RelatedArticleView> relatedArticles;
+  private final ImmutableList<ArticleIssue> articleIssues;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
@@ -77,6 +79,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                     String nlmArticleType,
                     ArticleType articleType,
                     Collection<RelatedArticleView> relatedArticles,
+                    Collection<ArticleIssue> articleIssues,
                     Collection<Syndication> syndications,
                     Collection<Pingback> pingbacks,
                     boolean excludeCitations) {
@@ -84,6 +87,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);
     this.articleType = Optional.fromNullable(articleType);
     this.relatedArticles = ImmutableList.copyOf(relatedArticles);
+    this.articleIssues = ImmutableList.copyOf(articleIssues);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
     this.excludeCitations = excludeCitations;
@@ -142,6 +146,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     Set<Journal> journals = article.getJournals();
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
+
+    KeyedListView<ArticleIssue> articleIssuesView = ArticleIssueOutputView.wrapList(articleIssues);
+    serialized.add("issues", context.serialize(articleIssuesView));
 
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
     serialized.add("relatedArticles", context.serialize(relatedArticles));

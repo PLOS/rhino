@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.view.journal;
 
 import com.google.common.base.Preconditions;
+import org.ambraproject.models.Volume;
 
 /**
  * Simple view for {@link org.ambraproject.models.Volume}'s non-associative fields.
@@ -23,6 +24,14 @@ public class VolumeNonAssocView {
     this.imageUri = imageUri;
     this.title = title;
     this.description = description;
+  }
+
+  public VolumeNonAssocView(Volume volume){
+    this(volume.getVolumeUri(),
+         volume.getDisplayName(),
+         volume.getImageUri(),
+         volume.getTitle(),
+         volume.getDescription());
   }
 
   /**

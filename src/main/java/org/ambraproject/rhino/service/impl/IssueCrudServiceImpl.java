@@ -21,6 +21,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Issue;
+import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -28,17 +29,23 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,6 +150,45 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
                 .add(Restrictions.eq("issueUri", issueId.getKey()))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
+  }
+
+
+  /**
+   * Get a list of issues for a given article with associated journal and volume objects
+   *
+   * @param articleDoi Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
+   * @return a list of ArticleIssue objects that wrap each issue with its associated journal and volume objects
+   */
+  @Transactional(readOnly = true)
+  @Override
+  public List<ArticleIssue> getArticleIssues(final String articleDoi) {
+    return (List<ArticleIssue>) hibernateTemplate.execute(new HibernateCallback() {
+      public Object doInHibernate(Session session) throws HibernateException, SQLException {
+        List<Object[]> queryResults = session.createSQLQuery(
+                "select {j.*}, {v.*}, {i.*} " +
+                        "from issueArticleList ial " +
+                        "join issue i on ial.issueID = i.issueID " +
+                        "join volume v on i.volumeID = v.volumeID " +
+                        "join journal j on v.journalID = j.journalID " +
+                        "where ial.doi = :articleURI " +
+                        "order by i.created desc ")
+                .addEntity("j", Journal.class)
+                .addEntity("v", Volume.class)
+                .addEntity("i", Issue.class)
+                .setString("articleURI", articleDoi)
+                .list();
+
+        List<ArticleIssue> articleIssues = new ArrayList<>(queryResults.size());
+        for (Object[] row : queryResults) {
+          Journal journal = (Journal) row[0];
+          Volume volume = (Volume) row[1];
+          Issue issue = (Issue) row[2];
+          articleIssues.add(new ArticleIssue(issue, volume, journal));
+        }
+
+        return articleIssues;
+      }
+    });
   }
 
   @Override

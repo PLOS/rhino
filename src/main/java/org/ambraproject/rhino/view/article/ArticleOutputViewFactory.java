@@ -7,6 +7,7 @@ import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
+import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -29,6 +30,8 @@ public class ArticleOutputViewFactory {
   private PingbackReadService pingbackReadService;
   @Autowired
   private ArticleTypeService articleTypeService;
+  @Autowired
+  private IssueCrudService issueCrudService;
 
   /**
    * Creates a new view of the given article and associated data.
@@ -54,7 +57,10 @@ public class ArticleOutputViewFactory {
     ArticleType articleType = articleTypeService.getArticleType(article);
 
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
-    return new ArticleOutputView(article, nlmArticleType, articleType, relatedArticles, syndications, pingbacks, excludeCitations);
+
+    List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(article.getDoi());
+
+    return new ArticleOutputView(article, nlmArticleType, articleType, relatedArticles, articleIssues, syndications, pingbacks, excludeCitations);
   }
 
 }
