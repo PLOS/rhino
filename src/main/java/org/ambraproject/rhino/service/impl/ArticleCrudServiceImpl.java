@@ -985,6 +985,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
     List<RelatedArticleView> relatedArticleViews = Lists.newArrayListWithCapacity(rawRelationships.size());
     for (ArticleRelationship rawRelationship : rawRelationships) {
+      if (rawRelationship.getOtherArticleID() == null) { continue; } // ignore any unpublished articles
       String otherArticleDoi = rawRelationship.getOtherArticleDoi();
 
       // Simple and inefficient implementation. Same solution as legacy Ambra. TODO: Optimize
