@@ -10,9 +10,9 @@ import org.ambraproject.models.Volume;
  */
 public class ArticleIssue {
 
-  private Issue issue;
-  private Volume parentVolume;
-  private Journal parentJournal;
+  private final Issue issue;
+  private final Volume parentVolume;
+  private final Journal parentJournal;
 
   public ArticleIssue(Issue issue, Volume parentVolume, Journal parentJournal){
     this.issue = Preconditions.checkNotNull(issue);
@@ -24,24 +24,12 @@ public class ArticleIssue {
     return issue;
   }
 
-  public void setIssue(Issue issue) {
-    this.issue = issue;
-  }
-
   public Volume getParentVolume() {
     return parentVolume;
   }
 
-  public void setParentVolume(Volume parentVolume) {
-    this.parentVolume = parentVolume;
-  }
-
   public Journal getParentJournal() {
     return parentJournal;
-  }
-
-  public void setParentJournal(Journal parentJournal) {
-    this.parentJournal = parentJournal;
   }
 
   @Override
