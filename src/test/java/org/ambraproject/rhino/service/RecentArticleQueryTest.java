@@ -73,6 +73,8 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     createRecentArticle("recent", dummyJournal, timestamp(1), "t1", "t2");
     createRecentArticle("stale", dummyJournal, timestamp(-1), "t1", "t3");
     createRecentArticle("otherType", dummyJournal, timestamp(2), "t2", "t3");
+    createRecentArticle("issueImageType", dummyJournal, timestamp(2),
+            "http://rdf.plos.org/RDF/articleType/Issue%20Image"); // should always be filtered out
 
     List<?> results;
 
