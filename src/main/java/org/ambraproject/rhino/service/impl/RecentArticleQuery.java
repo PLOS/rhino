@@ -74,6 +74,8 @@ public class RecentArticleQuery {
     private Integer minimum;
     private List<String> articleTypes;
     private List<String> excludedArticleTypes;
+
+    // TODO: Move this to external config
     private ImmutableList<String> alwaysExcludedArticleTypes = ImmutableList.of(
             "http://rdf.plos.org/RDF/articleType/Issue%20Image"
             );
