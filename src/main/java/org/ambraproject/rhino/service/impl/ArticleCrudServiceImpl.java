@@ -993,8 +993,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
               .add(Restrictions.eq("doi", otherArticleDoi))));
 
-      RelatedArticleView relatedArticleView = (relatedArticle == null) ? new RelatedArticleView(rawRelationship, null, null)
-          : new RelatedArticleView(rawRelationship, relatedArticle.getTitle(), relatedArticle.getAuthors());
+      RelatedArticleView relatedArticleView = new RelatedArticleView(rawRelationship, relatedArticle.getTitle(),
+              relatedArticle.getAuthors());
       relatedArticleViews.add(relatedArticleView);
     }
     return relatedArticleViews;
