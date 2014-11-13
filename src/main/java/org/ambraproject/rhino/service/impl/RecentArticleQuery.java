@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -55,8 +56,8 @@ public class RecentArticleQuery {
     this.minimum = Optional.fromNullable(builder.minimum);
     this.articleTypes = (builder.articleTypes == null) ? ImmutableList.<String>of()
         : ImmutableList.copyOf(builder.articleTypes);
-    this.excludedArticleTypes = (builder.excludedArticleTypes == null) ? ImmutableList.<String>of()
-        : ImmutableList.copyOf(builder.excludedArticleTypes);
+    this.excludedArticleTypes = (builder.excludedArticleTypes == null) ? builder.alwaysExcludedArticleTypes
+        : ImmutableList.copyOf(Iterables.concat(builder.alwaysExcludedArticleTypes, builder.excludedArticleTypes));
   }
 
 
@@ -73,6 +74,9 @@ public class RecentArticleQuery {
     private Integer minimum;
     private List<String> articleTypes;
     private List<String> excludedArticleTypes;
+    private ImmutableList<String> alwaysExcludedArticleTypes = ImmutableList.of(
+            "http://rdf.plos.org/RDF/articleType/Issue%20Image"
+            );
 
     /**
      * @param journalKey key of the journal to search
