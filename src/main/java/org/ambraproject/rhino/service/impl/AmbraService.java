@@ -134,7 +134,9 @@ public abstract class AmbraService {
    */
   protected void write(byte[] fileData, AssetFileIdentity identity) throws FileStoreException, IOException {
     RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.toString())
-        .byteContent(fileData).build();
+        .byteContent(fileData)
+        .contentType(identity.getContentType().toString())
+        .build();
     contentRepoService.createRepoObject(repoObject);
   }
 
