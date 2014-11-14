@@ -190,8 +190,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    String fsid = doi.forXmlAsset().getFsid(fileStoreService.objectIDMapper()); // do this first, to fail fast if the DOI is invalid
-
     Article article = findArticleById(doi);
     final boolean creating = (article == null);
     if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
@@ -226,7 +224,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @throws IOException
    * @throws FileStoreException
    */
-  private String persistArticle(Article article, byte[] xmlData)
+  private void persistArticle(Article article, byte[] xmlData)
       throws IOException, FileStoreException {
     if (article.getID() == null) {
       hibernateTemplate.save(article);
@@ -248,9 +246,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());
-    String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid(fileStoreService.objectIDMapper());
-    write(xmlData, fsid);
-    return fsid;
+    AssetFileIdentity xmlIdentity = ArticleIdentity.create(doi).forXmlAsset();
+    write(xmlData, xmlIdentity);
   }
 
   /**
@@ -842,9 +839,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (!articleExistsAt(id)) {
       throw reportNotFound(id);
     }
-
-    // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileInStream(id.forXmlAsset().getFsid(fileStoreService.objectIDMapper()));
+    return contentRepoService.getLatestRepoObjStream(id.forXmlAsset().toString());
   }
 
   @Override
@@ -951,8 +946,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     for (ArticleAsset asset : article.getAssets()) {
       if (AssetIdentity.hasFile(asset)) {
-        String assetFsid = AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper());
-        fileStoreService.deleteFile(assetFsid);
+        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
+        deleteAssetFile(assetFileIdentity);
       }
     }
     hibernateTemplate.delete(article);

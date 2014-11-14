@@ -44,6 +44,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.exceptions.ContentRepoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
@@ -89,9 +90,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
      * to know the final size before we can open a stream to the file store. Also, we need to measure the size anyway
      * to record as an asset field.
      */
-    String assetFsid = assetFileId.getFsid(fileStoreService.objectIDMapper());
     byte[] assetData = readClientInput(file);
-    write(assetData, assetFsid);
+    write(assetData, assetFileId);
 
     // Set the asset entity's file-specific fields
     assetToPersist.setExtension(assetFileId.getFileExtension());
@@ -261,9 +261,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException("Asset not found at: " + id, HttpStatus.NOT_FOUND);
     }
 
-    String fsid = id.getFsid(fileStoreService.objectIDMapper());
     byte[] assetData = readClientInput(fileContent);
-    write(assetData, fsid);
+    write(assetData, id);
   }
 
   /**
@@ -275,8 +274,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw reportNotFound(assetId);
     }
     try {
-      return fileStoreService.getFileInStream(assetId.getFsid(fileStoreService.objectIDMapper()));
-    } catch (FileStoreException e) {
+      return contentRepoService.getLatestRepoObjStream(assetId.toString());
+    } catch (ContentRepoException e) {
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());
       throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
@@ -289,9 +288,10 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw reportNotFound(assetId);
     }
     try {
-      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid(fileStoreService.objectIDMapper()));
+//      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid(fileStoreService.objectIDMapper()));
+      URL[] urls = null; // TODO: Handle reproxying
       return ImmutableList.copyOf(urls);
-    } catch (FileStoreException e) {
+    } catch (ContentRepoException e) {
       throw new IOException(e);
     }
   }
@@ -404,10 +404,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (asset == null) {
       throw reportNotFound(assetId);
     }
-    String fsid = assetId.getFsid(fileStoreService.objectIDMapper()); // make sure we get a valid FSID, as an additional check before deleting anything
 
     hibernateTemplate.delete(asset);
-    fileStoreService.deleteFile(fsid);
+    delete(assetId);
   }
 
   private ArticleVisibility findArticleFor(AssetIdentity id) {
