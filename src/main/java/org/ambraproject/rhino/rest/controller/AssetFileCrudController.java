@@ -21,7 +21,6 @@ package org.ambraproject.rhino.rest.controller;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -31,6 +30,7 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
+import org.plos.crepo.service.contentRepo.impl.ContentRepoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +60,9 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
+
   @Autowired
-  protected FileStoreService fileStoreService;
+  protected ContentRepoServiceImpl contentRepoService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -168,7 +169,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
-    if (clientSupportsReproxy(request) && fileStoreService.hasXReproxy()) {
+    if (clientSupportsReproxy(request) && contentRepoService.hasXReproxy()) {
       List<URL> reproxyUrls = assetCrudService.reproxy(id);
       String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
 

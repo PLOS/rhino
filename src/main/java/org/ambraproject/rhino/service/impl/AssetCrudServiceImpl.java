@@ -288,8 +288,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw reportNotFound(assetId);
     }
     try {
-//      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid(fileStoreService.objectIDMapper()));
-      URL[] urls = null; // TODO: Handle reproxying
+      URL[] urls = contentRepoService.getRepoObjRedirectURL(assetId.toString());
       return ImmutableList.copyOf(urls);
     } catch (ContentRepoException e) {
       throw new IOException(e);
