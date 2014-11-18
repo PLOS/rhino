@@ -42,11 +42,19 @@ public interface RuntimeConfiguration {
   URI getContentRepoAddress();
 
   /**
-   * Return the name of the active bucket for the content repository.
+   * Return the name of the content repository bucket for the corpus of articles. The application will write to this
+   * bucket when ingesting articles and read from it when serving article assets.
    *
-   * @return the content repository bucket name
+   * @return the corpus bucket name
    */
-  String getRepoBucketName();
+  String getCorpusBucketName();
 
+  /**
+   * Return the name of the content repository bucket from which the system should pick up editorial (non-article)
+   * content.
+   *
+   * @return the homepage bucket name
+   */
+  String getEditorialBucketName();
 
 }

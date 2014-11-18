@@ -190,7 +190,7 @@ public class RhinoConfiguration extends BaseConfiguration {
   public ContentRepoServiceImpl contentRepoService(RuntimeConfiguration runtimeConfiguration) {
     ContentRepoAccessConfig accessConfig = BasicContentRepoAccessConfig.builder()
         .setRepoServer(runtimeConfiguration.getContentRepoAddress().toString())
-        .setBucketName(runtimeConfiguration.getRepoBucketName())
+        .setBucketName(runtimeConfiguration.getCorpusBucketName())
         .build();
     return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
   }

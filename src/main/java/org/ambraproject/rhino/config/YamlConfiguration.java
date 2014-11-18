@@ -47,17 +47,32 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
     private boolean prettyPrintJson = true; // the default value should be true
     private URI contentRepoAddress = null;
-    private String repoBucketName = null;
+    private ContentRepoBuckets contentRepoBuckets;
 
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
     }
 
-    public void setcontentRepoAddress(URI contentRepoAddress) {
+    public void setContentRepoAddress(URI contentRepoAddress) {
       this.contentRepoAddress = contentRepoAddress;
     }
 
-    public void setRepoBucketName(String repoBucketName) { this.repoBucketName = repoBucketName; }
+    public void setContentRepoBuckets(ContentRepoBuckets contentRepoBuckets) {
+      this.contentRepoBuckets = contentRepoBuckets;
+    }
+
+    public static class ContentRepoBuckets {
+      private String editorial; // upstairs
+      private String corpus;  // downstairs
+
+      public void setEditorial(String editorial) {
+        this.editorial = editorial;
+      }
+
+      public void setCorpus(String corpus) {
+        this.corpus = corpus;
+      }
+    }
   }
 
   /**
@@ -74,8 +89,12 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   @Override
-  public String getRepoBucketName() {
-    return uf.repoBucketName;
+  public String getCorpusBucketName() {
+    return (uf.contentRepoBuckets == null) ? null : uf.contentRepoBuckets.corpus;
   }
 
+  @Override
+  public String getEditorialBucketName() {
+    return (uf.contentRepoBuckets == null) ? null : uf.contentRepoBuckets.editorial;
+  }
 }
