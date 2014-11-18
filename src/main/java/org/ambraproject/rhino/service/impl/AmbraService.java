@@ -37,7 +37,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.service.contentRepo.impl.ContentRepoServiceImpl;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -59,7 +59,7 @@ public abstract class AmbraService {
   protected HibernateTemplate hibernateTemplate;
 
   @Autowired
-  protected ContentRepoServiceImpl contentRepoService;
+  protected ContentRepoService contentRepoService;
 
   @Autowired
   protected Gson entityGson;

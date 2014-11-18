@@ -43,6 +43,7 @@ import org.ambraproject.testutils.AmbraTestConfigurationFactory;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -125,6 +126,12 @@ public class TestConfiguration extends BaseConfiguration {
     FileStoreService service = new FileSystemImpl(topDir, domain);
     return service;
   }
+
+  @Bean
+  public ContentRepoService contentRepoService() {
+    return new StubContentRepoService();
+  }
+
 
   @Bean
   public ArticleClassifier articleClassifier() {
