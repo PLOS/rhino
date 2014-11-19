@@ -19,8 +19,6 @@
 package org.ambraproject.rhino.config;
 
 import com.google.common.io.Closeables;
-import org.ambraproject.filestore.FileStoreService;
-import org.ambraproject.filestore.impl.FileSystemImpl;
 import org.ambraproject.queue.MessageSender;
 import org.ambraproject.queue.MessageServiceImpl;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -52,7 +50,6 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.sql.DataSource;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -106,25 +103,6 @@ public class TestConfiguration extends BaseConfiguration {
   @Bean
   public org.apache.commons.configuration.Configuration ambraConfiguration() throws Exception {
     return AmbraTestConfigurationFactory.getConfiguration("ambra-test-config.xml");
-  }
-
-  /**
-   * Produce the file store service bean.
-   * <p/>
-   * This bean-getter has a side effect of creating the mock file store directory if it does not already exist. This
-   * should be fixed if possible. There is no side effect to calling it more than once.
-   *
-   * @return the file store service bean
-   * @throws IOException
-   */
-  @Bean
-  public FileStoreService fileStoreService() throws IOException {
-    final File topDir = new File("target/test-classes/filestore/");
-    topDir.mkdirs(); // TODO Obviate this with Maven?
-
-    final String domain = ""; // Blank for the test environment
-    FileStoreService service = new FileSystemImpl(topDir, domain);
-    return service;
   }
 
   @Bean
