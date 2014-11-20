@@ -64,7 +64,7 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.config.BasicContentRepoAccessConfig;
 import org.plos.crepo.config.ContentRepoAccessConfig;
-import org.plos.crepo.service.contentRepo.impl.ContentRepoServiceImpl;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.plos.crepo.service.contentRepo.impl.factory.ContentRepoServiceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -186,8 +186,7 @@ public class RhinoConfiguration extends BaseConfiguration {
     return service;
   }
 
-  @Bean
-  public ContentRepoServiceImpl contentRepoService(RuntimeConfiguration runtimeConfiguration) {
+  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration) {
     ContentRepoAccessConfig accessConfig = BasicContentRepoAccessConfig.builder()
         .setRepoServer(runtimeConfiguration.getContentRepoAddress().toString())
         .setBucketName(runtimeConfiguration.getRepoBucketName())

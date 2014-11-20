@@ -30,7 +30,7 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
-import org.plos.crepo.service.contentRepo.impl.ContentRepoServiceImpl;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +62,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private AssetCrudService assetCrudService;
 
   @Autowired
-  protected ContentRepoServiceImpl contentRepoService;
+  protected ContentRepoService contentRepoService;
 
   @Override
   protected String getNamespacePrefix() {
