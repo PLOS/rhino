@@ -167,6 +167,18 @@ public class RhinoConfiguration extends BaseConfiguration {
     return ConfigurationStore.getInstance().getConfiguration();
   }
 
+  /*
+   * The crossRefLookupService bean requires this HttpClient type from the deprecated Apache Commons HttpClient 3.*
+   * library. It has an HTTP connection manager (org.apache.commons.httpclient.HttpConnectionManager) behind it. The
+   * contentRepoService bean depends on the more recent Apache HttpClient 4.* library, and has separate HTTP connection
+   * manager (org.apache.http.conn.HttpClientConnectionManager) from that version behind it. Because the two libraries
+   * require incompatible versions, we have two connection managers on the heap at the same time, presumably with their
+   * own connection pools. This is a potential performance problem.
+   *
+   * When possible, it would be best to absorb the CrossRefLookupService implementation from legacy Ambra, modify it to
+   * accept a connection manager from HttpClient 4.*, and have the crossRefLookupService and contentRepoService beans
+   * share access to that connection manager.
+   */
   @Bean
   public HttpClient httpClient() {
     HttpConnectionManagerParams params = new HttpConnectionManagerParams();
@@ -188,10 +200,19 @@ public class RhinoConfiguration extends BaseConfiguration {
 
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration) {
+    /*
+     * This BasicContentRepoAccessConfig object will have its own HttpClientConnectionManager object behind it. This is
+     * redundant to the org.apache.commons.httpclient.HttpConnectionManager behind the httpClient bean, which (as
+     * explained there) is a deprecated version as required by crossRefLookupService. When that dependency is broken,
+     * there should be a shared HttpClientConnectionManager (probably as its own bean), and this
+     * BasicContentRepoAccessConfig should be replaced with a custom ContentRepoAccessConfig that uses the shared
+     * connection manager for its 'open' method.
+     */
     ContentRepoAccessConfig accessConfig = BasicContentRepoAccessConfig.builder()
         .setRepoServer(runtimeConfiguration.getContentRepoAddress().toString())
         .setBucketName(runtimeConfiguration.getCorpusBucketName())
         .build();
+
     return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
   }
 
