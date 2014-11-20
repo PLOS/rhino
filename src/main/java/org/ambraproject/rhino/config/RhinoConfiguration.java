@@ -186,6 +186,7 @@ public class RhinoConfiguration extends BaseConfiguration {
     return service;
   }
 
+  @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration) {
     ContentRepoAccessConfig accessConfig = BasicContentRepoAccessConfig.builder()
         .setRepoServer(runtimeConfiguration.getContentRepoAddress().toString())
