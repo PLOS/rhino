@@ -136,6 +136,7 @@ public abstract class AmbraService {
     RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.toString())
         .byteContent(fileData)
         .contentType(identity.getContentType().toString())
+        .downloadName(identity.getFileName())
         .build();
     contentRepoService.createRepoObject(repoObject);
   }
