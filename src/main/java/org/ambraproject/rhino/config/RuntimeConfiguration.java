@@ -34,27 +34,35 @@ public interface RuntimeConfiguration {
   boolean prettyPrintJson();
 
   /**
-   * Return a URI at which to connect to a content repository API. If the URI has the {@code file} scheme (e.g., {@code
-   * file:///home/me/myDummyRepo/}), will simulate a "dev mode" content repository using files in that directory.
-   *
-   * @return the content repository URI
+   * Identifies a content repo bucket on a particular server.
    */
-  URI getContentRepoAddress();
+  interface ContentRepoEndpoint {
+    /**
+     * @return the URI of the server
+     */
+    URI getAddress();
+
+    /**
+     * @return the name of the bucket on that server to use
+     */
+    String getBucket();
+  }
 
   /**
-   * Return the name of the content repository bucket for the corpus of articles. The application will write to this
-   * bucket when ingesting articles and read from it when serving article assets.
+   * Return the content repository bucket for the corpus of articles. The application will write to this bucket when
+   * ingesting articles and read from it when serving article assets. Returns {@code null} if no corpus bucket is
+   * configured.
    *
    * @return the corpus bucket name
    */
-  String getCorpusBucketName();
+  ContentRepoEndpoint getCorpusBucket();
 
   /**
-   * Return the name of the content repository bucket from which the system should pick up editorial (non-article)
-   * content.
+   * Return the content repository bucket from which the system should pick up editorial (non-article) content. Returns
+   * {@code null} if no editorial bucket is configured.
    *
    * @return the homepage bucket name
    */
-  String getEditorialBucketName();
+  ContentRepoEndpoint getEditorialBucket();
 
 }
