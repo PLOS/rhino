@@ -270,9 +270,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public InputStream read(AssetFileIdentity assetId) {
-    if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId);
-    }
     try {
       return contentRepoService.getLatestRepoObjStream(assetId.toString());
     } catch (ContentRepoException e) {
