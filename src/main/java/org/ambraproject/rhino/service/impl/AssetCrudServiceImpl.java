@@ -279,19 +279,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     }
   }
 
-  @Override
-  public List<URL> reproxy(AssetFileIdentity assetId) throws IOException {
-    if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId);
-    }
-    try {
-      URL[] urls = contentRepoService.getRepoObjRedirectURL(assetId.toString());
-      return ImmutableList.copyOf(urls);
-    } catch (ContentRepoException e) {
-      throw new IOException(e);
-    }
-  }
-
   /**
    * Find article asset objects.
    *

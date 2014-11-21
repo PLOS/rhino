@@ -53,15 +53,6 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public abstract InputStream read(AssetFileIdentity id);
 
   /**
-   * Return the data needed to build reproxying headers for an asset.
-   *
-   * @param assetId the identifier of the asset being proxied
-   * @return a list of reproxy URLs
-   * @throws IOException
-   */
-  public abstract List<URL> reproxy(AssetFileIdentity assetId) throws IOException;
-
-  /**
    * Delete an asset and its associated file.
    *
    * @param id the identifier of the asset to delete
