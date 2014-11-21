@@ -30,6 +30,8 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
+import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,9 +47,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.Map;
+
+import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
 @Controller
 public class AssetFileCrudController extends DoiBasedCrudController {
@@ -169,18 +172,30 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
-    if (clientSupportsReproxy(request) && contentRepoService.hasXReproxy()) {
-      List<URL> reproxyUrls = assetCrudService.reproxy(id);
-      String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
-
-      response.setStatus(HttpStatus.OK.value());
-      setContentHeaders(response, id);
-      response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
-      response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
-    } else {
-      try (InputStream fileStream = assetCrudService.read(id)) {
-        respondWithStream(fileStream, response, id);
+    if (clientSupportsReproxy(request)) {
+      // Return a reproxy URL if possible. Get metadata and see if a reproxy URL is provided.
+      Map<String, Object> objMeta;
+      try {
+        objMeta = contentRepoService.getRepoObjMetaLatestVersion(id.toString());
+      } catch (ContentRepoException e) {
+        if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
+          throw reportNotFound(id);
+        } else {
+          throw e;
+        }
       }
+      String reproxyUrl = (String) objMeta.get("reproxyURL");
+      if (reproxyUrl != null) {
+        response.setStatus(HttpStatus.OK.value());
+        setContentHeaders(response, id);
+        response.setHeader("X-Reproxy-URL", reproxyUrl);
+        response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
+
+        return;
+      } // else, fall through and stream the actual content
+    }
+    try (InputStream fileStream = assetCrudService.read(id)) {
+      respondWithStream(fileStream, response, id);
     }
   }
 

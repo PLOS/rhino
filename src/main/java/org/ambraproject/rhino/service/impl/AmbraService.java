@@ -97,7 +97,7 @@ public abstract class AmbraService {
         .addOrder(Order.asc("journalKey"));
   }
 
-  protected RestClientException reportNotFound(DoiBasedIdentity id) {
+  public static RestClientException reportNotFound(DoiBasedIdentity id) {
     String message = "Item not found at the provided ID: " + id;
     return new RestClientException(message, HttpStatus.NOT_FOUND);
   }
