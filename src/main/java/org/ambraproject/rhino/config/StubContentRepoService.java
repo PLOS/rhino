@@ -26,6 +26,13 @@ public class StubContentRepoService implements ContentRepoService {
 
   @Override
   public Map<String, Object> createRepoObject(RepoObject repoObject) {
+    RepoObject previous = defaultBucket.objects.put(repoObject.getKey(), repoObject);
+    if (previous != null) throw new RuntimeException("Overwrote object");
+    return null;
+  }
+
+  @Override
+  public Map<String, Object> autoCreateRepoObject(RepoObject repoObject) {
     defaultBucket.objects.put(repoObject.getKey(), repoObject);
     return null;
   }

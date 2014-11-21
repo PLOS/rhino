@@ -138,7 +138,7 @@ public abstract class AmbraService {
         .contentType(identity.getContentType().toString())
         .downloadName(identity.getFileName())
         .build();
-    contentRepoService.createRepoObject(repoObject);
+    contentRepoService.autoCreateRepoObject(repoObject);
   }
 
   protected void deleteAssetFile(AssetFileIdentity identity) {
