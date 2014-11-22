@@ -19,17 +19,15 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
+import org.ambraproject.rhombat.HttpDateUtil;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.service.contentRepo.ContentRepoService;
@@ -47,6 +45,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -138,61 +138,30 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
   private void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
       throws IOException, FileStoreException {
-
-    Optional<ArticleIdentity> articleId = id.forArticle();
-    Article article = articleId.isPresent()
-        ? articleCrudService.findArticleById(articleId.get()) // null if the file is XML, but not the article XML
-        : null; // if the file type is not XML
-    if (article != null) {
-
-      // We want to set the Last-Modified header appropriately, so that clients can cache article
-      // XML if they choose to.  Unfortunately, the filestore interface doesn't have a way to
-      // retrieve a file's mtime, so we have to get this info from the ambra DB instead.
-      setLastModifiedHeader(response, article.getLastModified());
-      if (checkIfModifiedSince(request, article.getLastModified())) {
-        try {
-          provideXmlFor(response, articleId.get());
-          return;
-        } catch (RestClientException e) {
-          /*
-           * If there was no such article, it might still be a regular asset whose type happens to be XML.
-           * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
-           * the same "not found" response anyway.)
-           */
-
-          if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
-            throw e; // Anything other than "not found" is unexpected
-          }
-        }
+    Map<String, Object> objMeta;
+    try {
+      objMeta = contentRepoService.getRepoObjMetaLatestVersion(id.toString());
+    } catch (ContentRepoException e) {
+      if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
+        throw reportNotFound(id);
       } else {
-
-        // !checkIfModifiedSince
-        response.setStatus(HttpStatus.NOT_MODIFIED.value());
-        return;
+        throw e;
       }
     }
 
-    if (clientSupportsReproxy(request)) {
-      // Return a reproxy URL if possible. Get metadata and see if a reproxy URL is provided.
-      Map<String, Object> objMeta;
-      try {
-        objMeta = contentRepoService.getRepoObjMetaLatestVersion(id.toString());
-      } catch (ContentRepoException e) {
-        if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-          throw reportNotFound(id);
-        } else {
-          throw e;
-        }
-      }
-      String reproxyUrl = (String) objMeta.get("reproxyURL");
-      if (reproxyUrl != null) {
-        response.setStatus(HttpStatus.OK.value());
-        setContentHeaders(response, id);
-        response.setHeader("X-Reproxy-URL", reproxyUrl);
-        response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
+    Timestamp timestamp = Timestamp.valueOf((String) objMeta.get("timestamp"));
+    setLastModifiedHeader(response, timestamp);
+    if (!checkIfModifiedSince(request, timestamp)) {
+      response.setStatus(HttpStatus.NOT_MODIFIED.value());
+      return;
+    }
 
-        return;
-      } // else, fall through and stream the actual content
+    String reproxyUrl = (String) objMeta.get("reproxyURL");
+    if (clientSupportsReproxy(request) && reproxyUrl != null) {
+      response.setStatus(HttpStatus.OK.value());
+      setContentHeaders(response, id);
+      response.setHeader("X-Reproxy-URL", reproxyUrl);
+      response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     }
     try (InputStream fileStream = assetCrudService.read(id)) {
       respondWithStream(fileStream, response, id);
