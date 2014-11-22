@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.service.ConfigurationReadService;
@@ -16,7 +15,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Properties;
 
 public class ConfigurationReadServiceImpl extends AmbraService implements ConfigurationReadService {
@@ -60,19 +58,22 @@ public class ConfigurationReadServiceImpl extends AmbraService implements Config
     };
   }
 
+  private static Map<String, Object> showEndpointAsMap(RuntimeConfiguration.ContentRepoEndpoint endpoint) {
+    if (endpoint == null) return null;
+    Map<String, Object> map = new LinkedHashMap<>(4);
+    map.put("address", endpoint.getAddress());
+    map.put("bucket", endpoint.getBucket());
+    return map;
+  }
+
   @Override
   public Transceiver readRepoConfig() throws IOException {
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
-        Map<String, Object> cfgMap = new LinkedHashMap<>();
-        cfgMap.put("contentRepoAddress",runtimeConfiguration.getContentRepoAddress());
-
-        Map<String, Object> bucketMap = new LinkedHashMap<>();
-        bucketMap.put("editorial", runtimeConfiguration.getEditorialBucketName());
-        bucketMap.put("corpus", runtimeConfiguration.getCorpusBucketName());
-        cfgMap.put("contentRepoBuckets", bucketMap);
-
+        Map<String, Object> cfgMap = new LinkedHashMap<>(4);
+        cfgMap.put("editorial", showEndpointAsMap(runtimeConfiguration.getEditorialBucket()));
+        cfgMap.put("corpus", showEndpointAsMap(runtimeConfiguration.getCorpusBucket()));
         return cfgMap;
       }
 

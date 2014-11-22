@@ -27,20 +27,19 @@ public class ContentRepoController extends RestController {
   public ResponseEntity<?> serve(@PathVariable("key") String key,
                                  @PathVariable("version") String version)
       throws IOException {
-    URI contentRepoAddress = runtimeConfiguration.getContentRepoAddress();
-    if (contentRepoAddress == null) {
-      throw new RuntimeException("contentRepoAddress is not configured");
+    RuntimeConfiguration.ContentRepoEndpoint editorialBucket = runtimeConfiguration.getEditorialBucket();
+    URI address;
+    String bucketName;
+    if (editorialBucket == null
+        || (address = editorialBucket.getAddress()) == null
+        || (bucketName = editorialBucket.getBucket()) == null) {
+      throw new RuntimeException("contentRepo.editorial is not configured");
     }
-    if ("file".equals(contentRepoAddress.getScheme())) {
-      return serveInDevMode(contentRepoAddress, key, version);
+    if ("file".equals(address.getScheme())) {
+      return serveInDevMode(address, key, version);
     }
 
-    String repoBucketName = runtimeConfiguration.getEditorialBucketName();
-    if (repoBucketName == null) {
-      throw new RuntimeException("contentRepoBuckets.homepage is not configured");
-    }
-
-    return serveFromRemoteRepo(contentRepoAddress, repoBucketName, key, version);
+    return serveFromRemoteRepo(address, bucketName, key, version);
 
 
   }

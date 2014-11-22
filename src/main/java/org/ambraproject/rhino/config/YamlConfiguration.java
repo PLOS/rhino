@@ -46,32 +46,56 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class UserFields {
 
     private boolean prettyPrintJson = true; // the default value should be true
-    private URI contentRepoAddress = null;
-    private ContentRepoBuckets contentRepoBuckets;
+    private ContentRepoEndpoints contentRepo;
 
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
     }
 
-    public void setContentRepoAddress(URI contentRepoAddress) {
-      this.contentRepoAddress = contentRepoAddress;
+    public void setContentRepo(ContentRepoEndpoints contentRepo) {
+      this.contentRepo = contentRepo;
     }
 
-    public void setContentRepoBuckets(ContentRepoBuckets contentRepoBuckets) {
-      this.contentRepoBuckets = contentRepoBuckets;
-    }
+    public static class ContentRepoEndpoints {
+      private ContentRepoEndpointImpl editorial; // upstairs
+      private ContentRepoEndpointImpl corpus;  // downstairs
 
-    public static class ContentRepoBuckets {
-      private String editorial; // upstairs
-      private String corpus;  // downstairs
-
-      public void setEditorial(String editorial) {
+      public void setEditorial(ContentRepoEndpointImpl editorial) {
         this.editorial = editorial;
       }
 
-      public void setCorpus(String corpus) {
+      public void setCorpus(ContentRepoEndpointImpl corpus) {
         this.corpus = corpus;
       }
+    }
+
+    public static class ContentRepoEndpointImpl {
+      private URI address;
+      private String bucket;
+
+      public void setAddress(URI address) {
+        this.address = address;
+      }
+
+      public void setBucket(String bucket) {
+        this.bucket = bucket;
+      }
+
+      /**
+       * Avoid returning the ContentRepoEndpointImpl object, because it has public setters for compatibility with
+       * org.yaml.snakeyaml.Yaml.loadAs that we don't want to be reachable from elsewhere.
+       */
+      private final ContentRepoEndpoint immutableView = new ContentRepoEndpoint() {
+        @Override
+        public URI getAddress() {
+          return address;
+        }
+
+        @Override
+        public String getBucket() {
+          return bucket;
+        }
+      };
     }
   }
 
@@ -84,17 +108,16 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   @Override
-  public URI getContentRepoAddress() {
-    return uf.contentRepoAddress;
+  public ContentRepoEndpoint getCorpusBucket() {
+    return (uf.contentRepo == null) ? null
+        : (uf.contentRepo.corpus == null) ? null
+        : uf.contentRepo.corpus.immutableView;
   }
 
   @Override
-  public String getCorpusBucketName() {
-    return (uf.contentRepoBuckets == null) ? null : uf.contentRepoBuckets.corpus;
-  }
-
-  @Override
-  public String getEditorialBucketName() {
-    return (uf.contentRepoBuckets == null) ? null : uf.contentRepoBuckets.editorial;
+  public ContentRepoEndpoint getEditorialBucket() {
+    return (uf.contentRepo == null) ? null
+        : (uf.contentRepo.editorial == null) ? null
+        : uf.contentRepo.editorial.immutableView;
   }
 }

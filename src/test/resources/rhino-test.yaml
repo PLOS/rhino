@@ -1,4 +1,8 @@
 prettyPrintJson: true
-contentRepoAddress: http://path/to/content/repo
-contentRepoBuckets:
-  editorial: bucket_name
+contentRepo:
+  editorial:
+    address: http://path/to/content/repo
+    bucket:  bucket_name
+  corpus:
+    address: http://path/to/content/repo
+    bucket:  bucket_name

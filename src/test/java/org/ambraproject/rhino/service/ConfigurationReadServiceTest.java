@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 
@@ -55,12 +54,12 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
     String repoConfigJson = configurationReadService.readRepoConfig().readJson(entityGson);
     assertTrue(repoConfigJson.length() > 0, "ConfigurationReadService did not return content repo configuration");
     Map<String, Object> repoConfigMap = entityGson.fromJson(repoConfigJson, HashMap.class);
-    String repoAddress = repoConfigMap.get("contentRepoAddress").toString();
-    assertEquals(repoAddress, "http://path/to/content/repo", "Invalid/missing content repo URL");
+    Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
 
-    Map<String, Object> repoBucketMap = (Map<String, Object>) repoConfigMap.get("contentRepoBuckets");
-    assertNotNull(repoBucketMap);
-    assertEquals(repoBucketMap.get("editorial"), "bucket_name", "Invalid/missing content repo bucket name");
+    String repoAddress = editorialConfigMap.get("address").toString();
+    assertEquals(repoAddress, "http://path/to/content/repo", "Invalid/missing content repo URL");
+    String repoBucket = editorialConfigMap.get("bucket").toString();
+    assertEquals(repoBucket, "bucket_name", "Invalid/missing content repo bucket name");
   }
 
 }

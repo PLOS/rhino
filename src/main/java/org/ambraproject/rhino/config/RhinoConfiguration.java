@@ -200,6 +200,8 @@ public class RhinoConfiguration extends BaseConfiguration {
 
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration) {
+    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
+
     /*
      * This BasicContentRepoAccessConfig object will have its own HttpClientConnectionManager object behind it. This is
      * redundant to the org.apache.commons.httpclient.HttpConnectionManager behind the httpClient bean, which (as
@@ -209,8 +211,8 @@ public class RhinoConfiguration extends BaseConfiguration {
      * connection manager for its 'open' method.
      */
     ContentRepoAccessConfig accessConfig = BasicContentRepoAccessConfig.builder()
-        .setRepoServer(runtimeConfiguration.getContentRepoAddress().toString())
-        .setBucketName(runtimeConfiguration.getCorpusBucketName())
+        .setRepoServer(corpus.getAddress().toString())
+        .setBucketName(corpus.getBucket())
         .build();
 
     return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
