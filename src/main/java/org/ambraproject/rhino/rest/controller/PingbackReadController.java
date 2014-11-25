@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.PingbackReadService;
@@ -51,7 +50,7 @@ public class PingbackReadController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {PINGBACK_PARAM})
   public void readPingbacks(HttpServletRequest request, HttpServletResponse response)
-      throws FileStoreException, IOException {
+      throws IOException {
     ArticleIdentity id = parse(request);
     pingbackReadService.read(id).respond(request, response, entityGson);
   }

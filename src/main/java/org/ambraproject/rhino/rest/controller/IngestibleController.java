@@ -14,7 +14,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -83,14 +82,13 @@ public class IngestibleController extends DoiBasedCrudController {
    * @param name          the name of an ingestible archive present in the ingest source directory
    * @param forceReingest if present, we will reingest the article if it already exists
    * @throws IOException
-   * @throws FileStoreException
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST)
   public void ingest(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(value = "name") String name,
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
-      throws IOException, FileStoreException {
+      throws IOException {
 
     File archive;
     try {

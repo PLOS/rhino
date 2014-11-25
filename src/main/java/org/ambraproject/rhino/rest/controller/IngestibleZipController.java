@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
@@ -40,14 +39,13 @@ public class IngestibleZipController extends RestController {
    * @param forceReingest if present, re-ingestion of an existing article is allowed; otherwise, if the article already
    *                      exists, it is an error
    * @throws java.io.IOException
-   * @throws org.ambraproject.filestore.FileStoreException
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ZIP_ROOT, method = RequestMethod.POST)
   public void zipUpload(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("archive") MultipartFile requestFile,
                         @RequestParam(value = "force_reingest", required = false) String forceReingest)
-      throws IOException, FileStoreException {
+      throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
     String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;

@@ -22,7 +22,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
@@ -129,10 +128,9 @@ public abstract class AmbraService {
    *
    * @param fileData the data to write, as raw bytes
    * @param identity the asset identity
-   * @throws org.ambraproject.filestore.FileStoreException
    * @throws IOException
    */
-  protected void write(byte[] fileData, AssetFileIdentity identity) throws FileStoreException, IOException {
+  protected void write(byte[] fileData, AssetFileIdentity identity) throws IOException {
     RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.toString())
         .byteContent(fileData)
         .contentType(identity.getContentType().toString())

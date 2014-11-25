@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
@@ -118,13 +117,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @param response
    * @param requestFile
    * @throws IOException
-   * @throws FileStoreException
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,
                      @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
-      throws IOException, FileStoreException {
+      throws IOException {
     Article result;
     try (InputStream requestBody = requestFile.getInputStream()) {
       result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
@@ -147,7 +145,6 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @param authors  if present, the response will be a list of objects representing the authors of the article.  While
    *                 the article metadata contains author names, this list will contain more author information than the
    *                 article metadata, such as author affiliations, corresponding author, etc.
-   * @throws FileStoreException
    * @throws IOException
    */
   @Transactional(readOnly = true)
@@ -156,7 +153,7 @@ public class ArticleCrudController extends ArticleSpaceController {
                    @RequestParam(value = "comments", required = false) String comments,
                    @RequestParam(value = "authors", required = false) String authors,
                    @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
-      throws FileStoreException, IOException {
+      throws IOException {
     ArticleIdentity id = parse(request);
     if (booleanParameter(comments)) {
       annotationCrudService.readComments(id).respond(request, response, entityGson);
@@ -169,7 +166,7 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
+  public ResponseEntity<?> delete(HttpServletRequest request) {
     ArticleIdentity id = parse(request);
     articleCrudService.delete(id);
     return reportOk();

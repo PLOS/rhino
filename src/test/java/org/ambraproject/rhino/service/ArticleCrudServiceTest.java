@@ -26,7 +26,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import com.google.gson.Gson;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
@@ -100,7 +99,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     ((StubContentRepoService) contentRepoService).clear();
   }
 
-  private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) throws FileStoreException {
+  private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) {
     boolean received404 = false;
     try {
       articleCrudService.readXml(id);
@@ -124,7 +123,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   }
 
   @Test(dataProvider = "sampleArticles")
-  public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
+  public void testCrud(String doi, File fileLocation) throws IOException {
     final ArticleIdentity articleId = ArticleIdentity.create(doi);
     final String key = articleId.getKey();
 
@@ -192,7 +191,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(dataProvider = "sampleAssets")
   public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
-      throws IOException, FileStoreException {
+      throws IOException {
     String testAssetDoi = assetDoi.replace(articleDoi, articleDoi);
 
     String assetFilePath = assetFile.getPath();

@@ -20,8 +20,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -54,7 +52,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
@@ -76,7 +73,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
-      throws FileStoreException, IOException {
+      throws IOException {
     List<ArticleAsset> assets = (List<ArticleAsset>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", assetFileId.getKey()))
@@ -251,7 +248,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException {
+  public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
                 .add(Restrictions.eq("doi", id.getKey()))
@@ -377,7 +374,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void delete(AssetFileIdentity assetId) throws FileStoreException {
+  public void delete(AssetFileIdentity assetId) {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
                 .forClass(ArticleAsset.class)

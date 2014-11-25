@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -92,7 +91,6 @@ public class AssetFileCrudController extends DoiBasedCrudController {
    * @param assetFile the blob of data to associate with the asset
    * @return
    * @throws IOException
-   * @throws FileStoreException
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
@@ -100,7 +98,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
                      @RequestParam(value = DOI_PARAM) String assetDoi,
                      @RequestParam(value = EXTENSION_PARAM) String extension,
                      @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
-      throws IOException, FileStoreException {
+      throws IOException {
     AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
     WriteResult<ArticleAsset> result;
     try (InputStream fileContent = assetFile.getInputStream()) {
@@ -113,7 +111,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException, FileStoreException {
+  public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException {
     AssetFileIdentity id = parse(request);
     try (InputStream fileContent = request.getInputStream()) {
       assetCrudService.overwrite(fileContent, id);
@@ -132,12 +130,12 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, FileStoreException {
+      throws IOException {
     read(request, response, parse(request));
   }
 
   private void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
-      throws IOException, FileStoreException {
+      throws IOException {
     Map<String, Object> objMeta;
     try {
       objMeta = contentRepoService.getRepoObjMetaLatestVersion(id.toString());
@@ -186,11 +184,10 @@ public class AssetFileCrudController extends DoiBasedCrudController {
    *
    * @param response the response object to modify
    * @param article  the parent article of the XML file to send
-   * @throws FileStoreException
    * @throws IOException
    */
   private void provideXmlFor(HttpServletResponse response, ArticleIdentity article)
-      throws FileStoreException, IOException {
+      throws IOException {
     try (InputStream fileStream = articleCrudService.readXml(article)) {
       respondWithStream(fileStream, response, article.forXmlAsset());
     }
@@ -205,7 +202,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
+  public ResponseEntity<?> delete(HttpServletRequest request) {
     AssetFileIdentity id = parse(request);
     assetCrudService.delete(id);
     return reportOk();
