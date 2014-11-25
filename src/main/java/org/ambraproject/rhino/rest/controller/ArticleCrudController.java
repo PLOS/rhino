@@ -139,35 +139,55 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
-   * Retrieves either metadata about an article (default), or entities associated with an article depending on the
-   * parameters.
+   * Retrieves metadata about an article.
    *
-   * @param request  HttpServletRequest
-   * @param response HttpServletResponse
-   * @param comments if present, the response will be a list of objects representing comments associated with the
-   *                 article, instead of the article metadata. Each comment has a "replies" list that contains any
-   *                 replies (recursively).
-   * @param authors  if present, the response will be a list of objects representing the authors of the article.  While
-   *                 the article metadata contains author names, this list will contain more author information than the
-   *                 article metadata, such as author affiliations, corresponding author, etc.
+   * @param request          HttpServletRequest
+   * @param response         HttpServletResponse
+   * @param excludeCitations
    * @throws FileStoreException
    * @throws IOException
    */
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = "comments", required = false) String comments,
-                   @RequestParam(value = "authors", required = false) String authors,
                    @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
       throws FileStoreException, IOException {
     ArticleIdentity id = parse(request);
-    if (booleanParameter(comments)) {
-      annotationCrudService.readComments(id).respond(request, response, entityGson);
-    } else if (booleanParameter(authors)) {
-      articleCrudService.readAuthors(id).respond(request, response, entityGson);
-    } else {
-      articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
-    }
+    articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves a list of objects representing comments associated with the article. Each comment has a "replies" list
+   * that contains any replies (recursively).
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "comments")
+  public void readComments(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    annotationCrudService.readComments(id).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves a list of objects representing the authors of the article. While the article metadata contains author
+   * names, this list will contain more author information than the article metadata, such as author affiliations,
+   * corresponding author, etc.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "authors")
+  public void readAuthors(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, FileStoreException {
+    ArticleIdentity id = parse(request);
+    articleCrudService.readAuthors(id).respond(request, response, entityGson);
   }
 
   /**
