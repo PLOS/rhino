@@ -1,5 +1,7 @@
 package org.ambraproject.rhino.config;
 
+import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.service.contentRepo.ContentRepoService;
@@ -23,6 +25,14 @@ public class StubContentRepoService implements ContentRepoService {
   private final Map<String, Bucket> buckets = new HashMap<>();
   private final Bucket defaultBucket = new Bucket();
 
+  /**
+   * Empty the default bucket and delete all other buckets.
+   */
+  public void clear() {
+    buckets.clear();
+    defaultBucket.objects.clear();
+  }
+
 
   @Override
   public Map<String, Object> createRepoObject(RepoObject repoObject) {
@@ -40,7 +50,11 @@ public class StubContentRepoService implements ContentRepoService {
   @Override
   public InputStream getLatestRepoObjStream(String key) {
     RepoObject repoObject = defaultBucket.objects.get(key);
-    return repoObject == null ? null : new ByteArrayInputStream(repoObject.getByteContent());
+    if (repoObject == null) {
+      throw new ContentRepoException(ErrorType.ErrorFetchingObject,
+          "StubContentRepoService's default bucket does not contain: " + key);
+    }
+    return new ByteArrayInputStream(repoObject.getByteContent());
   }
 
   @Override
