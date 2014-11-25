@@ -153,6 +153,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
     serialized.add("relatedArticles", context.serialize(relatedArticles));
     serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
+    serialized.add("citedArticles", context.serialize((article.getCitedArticles())));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
