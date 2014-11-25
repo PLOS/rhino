@@ -73,6 +73,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Autowired
   private AnnotationCrudService annotationCrudService;
 
+  @Autowired
+  private AssetFileCrudController assetFileCrudController;
+
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
   public void listDois(HttpServletRequest request, HttpServletResponse response,
@@ -165,6 +168,22 @@ public class ArticleCrudController extends ArticleSpaceController {
     } else {
       articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
     }
+  }
+
+  /**
+   * Retrieves the XML file containing the text of an article.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   * @throws FileStoreException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
+  public void readXml(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, FileStoreException {
+    ArticleIdentity id = parse(request);
+    assetFileCrudController.read(request, response, id.forXmlAsset());
   }
 
   @Transactional(rollbackFor = {Throwable.class})
