@@ -979,6 +979,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
     List<RelatedArticleView> relatedArticleViews = Lists.newArrayListWithCapacity(rawRelationships.size());
     for (ArticleRelationship rawRelationship : rawRelationships) {
+      if (rawRelationship.getOtherArticleID() == null) { continue; } // ignore when doi not present in article table
       String otherArticleDoi = rawRelationship.getOtherArticleDoi();
 
       // Simple and inefficient implementation. Same solution as legacy Ambra. TODO: Optimize
@@ -986,8 +987,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
               .add(Restrictions.eq("doi", otherArticleDoi))));
 
-      RelatedArticleView relatedArticleView = (relatedArticle == null) ? new RelatedArticleView(rawRelationship, null, null)
-          : new RelatedArticleView(rawRelationship, relatedArticle.getTitle(), relatedArticle.getAuthors());
+      RelatedArticleView relatedArticleView = new RelatedArticleView(rawRelationship, relatedArticle.getTitle(),
+              relatedArticle.getAuthors());
       relatedArticleViews.add(relatedArticleView);
     }
     return relatedArticleViews;

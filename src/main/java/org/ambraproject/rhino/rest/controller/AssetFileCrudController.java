@@ -134,7 +134,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     read(request, response, parse(request));
   }
 
-  private void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
+  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
       throws IOException {
     Map<String, Object> objMeta;
     try {
