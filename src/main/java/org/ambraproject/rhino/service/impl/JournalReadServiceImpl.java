@@ -95,6 +95,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
             Query query = session.createQuery(hql);
             query.setParameter("journalKey", journalKey);
             Object[] results = (Object[]) query.uniqueResult();
+            if (results == null) return null;
 
             Date mostRecent = (Date) Collections.max(Arrays.asList(results));
             return copyToCalendar(mostRecent);
