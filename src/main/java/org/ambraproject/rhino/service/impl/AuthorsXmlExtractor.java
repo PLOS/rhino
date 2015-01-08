@@ -13,6 +13,8 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.shared.XPathExtractor;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.util.TextUtils;
@@ -66,7 +68,21 @@ public final class AuthorsXmlExtractor {
       .replaceRegex("</body>", "")
       .build();
 
-  private AuthorsXmlExtractor() {
+
+  private final Document doc;
+  private final XPathExtractor xpath;
+
+  private final ImmutableMap<String, String> affiliateMap;
+  private final ImmutableMap<String, String> addressMap;
+  private final ImmutableMap<String, String> otherFootnotesMap;
+
+  private AuthorsXmlExtractor(Document doc, XPathExtractor xpath) throws XPathException {
+    this.doc = Preconditions.checkNotNull(doc);
+    this.xpath = Preconditions.checkNotNull(xpath);
+
+    affiliateMap = ImmutableMap.copyOf(getAffiliateMap(doc, xpath));
+    addressMap = ImmutableMap.copyOf(getAddressMap(doc, xpath));
+    otherFootnotesMap = ImmutableMap.copyOf(getOtherFootnotesMap(doc, xpath));
   }
 
   /**
@@ -77,15 +93,15 @@ public final class AuthorsXmlExtractor {
    * @return list of AuthorView objects
    */
   public static List<AuthorView> getAuthors(Document doc, XPathExtractor xpath) throws XPathException {
-    List<AuthorView> list = new ArrayList<>();
-
     if (doc == null) {
-      return list;
+      return new ArrayList<>();
     }
 
-    Map<String, String> affiliateMap = getAffiliateMap(doc, xpath);
-    Map<String, String> addressMap = getAddressMap(doc, xpath);
-    Map<String, String> otherFootnotesMap = getOtherFootnotesMap(doc, xpath);
+    return new AuthorsXmlExtractor(doc, xpath).buildAuthors();
+  }
+
+  private List<AuthorView> buildAuthors() throws XPathException {
+    List<AuthorView> list = new ArrayList<>();
 
     //Get all the authors
     NodeList authorList = xpath.selectNodes(doc, "//contrib-group/contrib[@contrib-type='author']");
@@ -160,23 +176,18 @@ public final class AuthorsXmlExtractor {
         continue;
       }
 
-      AuthorView author = getAuthorView(doc, xpath, affiliateMap, addressMap, otherFootnotesMap, authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList);
+      AuthorView author = getAuthorView(authorDoc, surNameNode, givenNameNode, behalfOfNode, otherFootnotesNodeList);
       list.add(author);
     }
 
     return list;
   }
 
-  private static AuthorView getAuthorView(Document doc,
-                                          XPathExtractor xpath,
-                                          Map<String, String> affiliateMap,
-                                          Map<String, String> addressMap,
-                                          Map<String, String> otherFootnotesMap,
-                                          DocumentFragment authorDoc,
-                                          Node surNameNode,
-                                          Node givenNameNode,
-                                          Node behalfOfNode,
-                                          NodeList otherFootnotesNodeList)
+  private AuthorView getAuthorView(DocumentFragment authorDoc,
+                                   Node surNameNode,
+                                   Node givenNameNode,
+                                   Node behalfOfNode,
+                                   NodeList otherFootnotesNodeList)
       throws XPathException {
     Node suffixNode = xpath.selectNode(authorDoc, "//name/suffix");
     Node equalContribNode = xpath.selectNode(authorDoc, "//@equal-contrib");
