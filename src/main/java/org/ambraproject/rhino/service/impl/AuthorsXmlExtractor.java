@@ -93,10 +93,6 @@ public final class AuthorsXmlExtractor {
    * @return list of AuthorView objects
    */
   public static List<AuthorView> getAuthors(Document doc, XPathExtractor xpath) throws XPathException {
-    if (doc == null) {
-      return new ArrayList<>();
-    }
-
     return new AuthorsXmlExtractor(doc, xpath).buildAuthors();
   }
 
