@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.rhino.shared.XPathExtractor;
+import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.util.TextUtils;
 import org.ambraproject.views.AuthorView;
 import org.slf4j.Logger;
@@ -30,7 +31,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Contains logic for extracting author information from article XML.
@@ -41,57 +41,30 @@ public final class AuthorsXmlExtractor {
 
   private static final Logger log = LoggerFactory.getLogger(AuthorsXmlExtractor.class);
 
-  /**
-   * Patterns for <corresp></corresp>  | <email></email> | <sec></sec> etc., tags and other content
-   */
-  public static final Pattern[] PATTERNS = {
-      Pattern.compile("<corresp(.*?)>"),
-      Pattern.compile("</corresp>"),
-      Pattern.compile("<email(?:" +
-          "(?:\\s+xmlns:xlink\\s*=\\s*\"http://www.w3.org/1999/xlink\"\\s*)|" +
-          "(?:\\s+xlink:type\\s*=\\s*\"simple\"\\s*)" +
-          ")*>(.*?)</email>"),
-      Pattern.compile("^E-mail:"),
-      Pattern.compile("^\\* E-mail:"),
-      Pattern.compile("\\*To whom"),
-      Pattern.compile("\\* To whom"),
-      Pattern.compile("<sec(?:.*)*>"),
-      Pattern.compile("</sec>"),
-      Pattern.compile("<list-item>"),
-      Pattern.compile("</list-item>"),
-      Pattern.compile("</list>"),
-      Pattern.compile("<list(\\s+list-type=\"bullet\")?>"),
-      Pattern.compile("<list\\s+list-type=\"(.*)\">"),
-      Pattern.compile("<list(?:.*)*>"),
-      Pattern.compile("<title(?:.*)*>"),
-      Pattern.compile("<body[^>]*>"),
-      Pattern.compile("</body>")
-  };
-
-
-  /**
-   * Pattern replacements for <corresp></corresp>  | <email></email> | <sec></sec> etc., tags and other content
-   */
-  public static final String[] REPLACEMENTS = {
-      "",
-      "",
-      "<a href=\"mailto:$1\">$1</a>",
-      "<span class=\"email\">* E-mail:</span>",
-      "<span class=\"email\">* E-mail:</span>",
-      "<span class=\"email\">*</span>To whom",
-      "<span class=\"email\">*</span>To whom",
-      "",
-      "",
-      "\n<li>",
-      "</li>",
-      "</ul>",
-      "<ul class=\"bulletlist\">",
-      "<ol class=\"$1\">",
-      "<ul class=\"bulletlist\">",
-      "",
-      "",
-      ""
-  };
+  private static final StringReplacer MARKUP_REPLACER = StringReplacer.builder()
+      .replaceRegex("<corresp(.*?)>", "")
+      .replaceRegex("</corresp>", "")
+      .replaceRegex("<email(?:" +
+              "(?:\\s+xmlns:xlink\\s*=\\s*\"http://www.w3.org/1999/xlink\"\\s*)|" +
+              "(?:\\s+xlink:type\\s*=\\s*\"simple\"\\s*)" +
+              ")*>(.*?)</email>",
+          "<a href=\"mailto:$1\">$1</a>")
+      .replaceRegex("^E-mail:", "<span class=\"email\">* E-mail:</span>")
+      .replaceRegex("^\\* E-mail:", "<span class=\"email\">* E-mail:</span>")
+      .replaceRegex("\\*To whom", "<span class=\"email\">*</span>To whom")
+      .replaceRegex("\\* To whom", "<span class=\"email\">*</span>To whom")
+      .replaceRegex("<sec(?:.*)*>", "")
+      .replaceRegex("</sec>", "")
+      .replaceRegex("<list-item>", "\n<li>")
+      .replaceRegex("</list-item>", "</li>")
+      .replaceRegex("</list>", "</ul>")
+      .replaceRegex("<list(\\s+list-type=\"bullet\")?>", "<ul class=\"bulletlist\">")
+      .replaceRegex("<list\\s+list-type=\"(.*)\">", "<ol class=\"$1\">")
+      .replaceRegex("<list(?:.*)*>", "<ul class=\"bulletlist\">")
+      .replaceRegex("<title(?:.*)*>", "")
+      .replaceRegex("<body[^>]*>", "")
+      .replaceRegex("</body>", "")
+      .build();
 
   private AuthorsXmlExtractor() {
   }
@@ -495,10 +468,6 @@ public final class AuthorsXmlExtractor {
    * @return html fragment
    */
   public static String transFormCorresponding(String source) {
-    for (int index = 0; index < PATTERNS.length; index++) {
-      source = PATTERNS[index].matcher(source).replaceAll(REPLACEMENTS[index]);
-    }
-
-    return source;
+    return MARKUP_REPLACER.replace(source);
   }
 }
