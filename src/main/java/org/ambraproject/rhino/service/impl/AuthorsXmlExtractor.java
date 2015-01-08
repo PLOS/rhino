@@ -113,8 +113,8 @@ public final class AuthorsXmlExtractor {
       //re: http://docs.oracle.com/javase/1.4.2/docs/api/org/w3c/dom/Node.html#appendChild%28org.w3c.dom.Node%29
       authorDoc.appendChild(authorNode.cloneNode(true));
 
-      Node surNameNode = xpath.selectNode(authorDoc, "//name/surname");
-      Node givenNameNode = xpath.selectNode(authorDoc, "//name/given-names");
+      Node surNameNode = xpath.selectNode(authorDoc, "./contrib/name/surname");
+      Node givenNameNode = xpath.selectNode(authorDoc, "./contrib/name/given-names");
       Node collabNameNode = xpath.selectNode(authorDoc, "//collab");
       Node behalfOfNode = xpath.selectNode(authorDoc, "//on-behalf-of");
       NodeList otherFootnotesNodeList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']");
