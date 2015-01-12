@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-05104</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0099781</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine and health sciences</subject><subj-group><subject>Hematology</subject><subj-group><subject>Anemia</subject><subj-group><subject>Iron deficiency anemia</subject></subj-group></subj-group><subj-group><subject>Hematopoiesis</subject></subj-group></subj-group><subj-group><subject>Nephrology</subject><subj-group><subject>Chronic kidney disease</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>The Relation of Hepcidin to Iron Disorders, Inflammation and Hemoglobin in Chronic Kidney Disease</article-title>
+<alt-title alt-title-type="running-head">Hepcidin in Chronic Kidney Disease</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mercadel</surname><given-names>Lucile</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Metzger</surname><given-names>Marie</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Haymann</surname><given-names>Jean Philippe</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Thervet</surname><given-names>Eric</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Boffa</surname><given-names>Jean-Jacques</given-names></name><xref ref-type="aff" rid="aff6"><sup>6</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Flamant</surname><given-names>Martin</given-names></name><xref ref-type="aff" rid="aff7"><sup>7</sup></xref><xref ref-type="aff" rid="aff8"><sup>8</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Vrtovsnik</surname><given-names>François</given-names></name><xref ref-type="aff" rid="aff8"><sup>8</sup></xref><xref ref-type="aff" rid="aff9"><sup>9</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Houillier</surname><given-names>Pascal</given-names></name><xref ref-type="aff" rid="aff10"><sup>10</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Froissart</surname><given-names>Marc</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Stengel</surname><given-names>Bénédicte</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><on-behalf-of>on behalf of the NephroTest Study Group</on-behalf-of></contrib>
+<contrib contrib-type="author" xlink:type="simple"><collab xlink:type="simple">the NephroTest Study Group<contrib-group>
+<contrib xlink:type="simple"><name name-style="western"><surname>Vrtovsnik</surname><given-names>François</given-names></name><degrees>Nephrology</degrees><aff>Bichat Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Daugas</surname><given-names>Eric</given-names></name><degrees>Nephrology</degrees><aff>Bichat Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Flamant</surname><given-names>Martin</given-names></name><degrees>Physiology</degrees><aff>Bichat Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Vidal-Petiot</surname><given-names>Emmanuelle</given-names></name><degrees>Physiology</degrees><aff>Bichat Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Jacquot</surname><given-names>Christian</given-names></name><degrees>Nephrology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Karras</surname><given-names>Alexandre</given-names></name><degrees>Nephrology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Thervet</surname><given-names>Eric</given-names></name><degrees>Nephrology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>d’Auzac</surname><given-names>Christian</given-names></name><degrees>Nephrology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Houillier</surname><given-names>P.</given-names></name><degrees>Physiology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Courbebaisse</surname><given-names>M.</given-names></name><degrees>Physiology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Maruani</surname><given-names>D. Eladari et G.</given-names></name><degrees>Physiology</degrees><aff>European Georges Pompidou Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Boffa</surname><given-names>Jean-Jacques</given-names></name><degrees>Nephrology</degrees><aff>Tenon Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Ronco</surname><given-names>Pierre</given-names></name><degrees>Nephrology</degrees><aff>Tenon Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Fessi</surname><given-names>H.</given-names></name><degrees>Nephrology</degrees><aff>Tenon Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Rondeau</surname><given-names>Eric</given-names></name><degrees>Nephrology</degrees><aff>Tenon Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Letavernier,</surname><given-names>Emmanuel</given-names></name><degrees>Physiology</degrees><aff>Tenon Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Haymann</surname><given-names>Jean Philippe</given-names></name><degrees>Physiology</degrees><aff>Tenon Hospital</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Urena-Torres</surname><given-names>P.</given-names></name><aff>clinique du Landy, Saint-Ouen</aff>
+</contrib>
+</contrib-group></collab><xref ref-type="fn" rid="fn1"><sup>¶</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Inserm, Centre for research in Epidemiology and Population Health, U1018, Epidemiology of Diabetes, Obesity, and Kidney Diseases Team, Villejuif, France</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Department of Nephrology, Hôpital Pitié-Salpêtrière, Assistance Publique-Hôpitaux de Paris, Paris, France</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Université Paris Sud 11, U1018, Villejuif, France</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Department of Physiology and Nephrology, Hôpital Tenon, Assistance Publique-Hôpitaux de Paris, Université Pierre et Marie Curie, Inserm U702, Paris, France</addr-line></aff>
+<aff id="aff5"><label>5</label><addr-line>Department of Nephrology, Hôpital Européen G Pompidou, Assistance Publique-hôpitaux de Paris, Paris, France</addr-line></aff>
+<aff id="aff6"><label>6</label><addr-line>Department of Nephrology, Hôpital Tenon, Assistance Publique-hôpitaux de Paris, université Pierre et Marie Curie, Paris, France</addr-line></aff>
+<aff id="aff7"><label>7</label><addr-line>Department of Physiology, Hôpital Bichat, Assistance Publique-hôpitaux de Paris, Paris, France</addr-line></aff>
+<aff id="aff8"><label>8</label><addr-line>Inserm U699, Paris, France</addr-line></aff>
+<aff id="aff9"><label>9</label><addr-line>Department of Nephrology, Hôpital Bichat, Assistance Publique-hôpitaux de Paris, Université Pierre et Marie Curie, Paris, France</addr-line></aff>
+<aff id="aff10"><label>10</label><addr-line>Department of Physiology, Hôpital Européen G Pompidou, Assistance Publique-hôpitaux de Paris, Université Paris Descartes, Paris, France</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Joles</surname><given-names>Jaap A.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University Medical Center Utrecht, Netherlands</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">lucile.mercadal@psl.aphp.fr</email></corresp>
+<fn fn-type="conflict"><p>This study was partly funded by La Roche Ltd. M. Froissart has received consulting or lecture fees or research funds from Affymax, Genzyme, Hoffmann-La Roche, Novartis, Sandoz, Shire, Takeda, and Vifor International. M. Froissart has been employed by Amgen since January 1, 2011, but was a full-time academic associate professor during the time of study conception and data collection. B.S. has received research funds from Amgen, Baxter, Genzyme (Sanofi), Fresenius, MSD, and GSK. Dr Barbara Sasu and Vimal Patel provided advised and performed hepcidin measurements at Amgen laboratories (Amgen Inc., Thousand Oaks, CA). In order to enable hepcidin measurements, this study was labelled as an Investigator Sponsored Study (BS) by Amgen. There are no patents, products in development or marketed products to declare. This does not alter the authors’ adherence to all the PLOS ONE policies on sharing data and materials.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: M. Froissart BS LM MM. Analyzed the data: MM LM. Wrote the paper: LM MM BS. Carried out the laboratory reference measurements: M. Flamant JPH PH M. Froissart. Managed the biobank: M. Froissart BS. Managed the data collection: MM BS M. Froissart. Discussed analyses, interpretation and presentation: ET JJB M. Flamant FV PH.</p></fn>
+<fn id="fn1" fn-type="other"><p>¶ Membership of the NephroTest Study Group is provided in the Acknowledgments..</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>30</day><month>6</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>6</issue>
+<elocation-id>e99781</elocation-id>
+<history>
+<date date-type="received"><day>5</day><month>2</month><year>2014</year></date>
+<date date-type="accepted"><day>16</day><month>5</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Mercadal et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>The metabolism of hepcidin is profoundly modified in chronic kidney disease (CKD). We investigated its relation to iron disorders, inflammation and hemoglobin (Hb) level in 199 non-dialyzed, non-transplanted patients with CKD stages 1–5. All had their glomerular filtration rate measured by <sup>51</sup>Cr-EDTA renal clearance (mGFR), as well as measurements of iron markers including hepcidin and of erythropoietin (EPO). Hepcidin varied from 0.2 to 193 ng/mL. The median increased from 23.3 ng/mL [8.8–28.7] to 36.1 ng/mL [14.1–92.3] when mGFR decreased from ≥60 to &lt;15 mL/min/1.73 m<sup>2</sup> (p = 0.02). Patients with absolute iron deficiency (transferrin saturation (TSAT) &lt;20% and ferritin &lt;40 ng/mL) had the lowest hepcidin levels (5.0 ng/mL [0.7–11.7]), and those with a normal iron profile (TSAT ≥20% and ferritin ≥40), the highest (34.5 ng/mL [23.7–51.6]). In multivariate analysis, absolute iron deficiency was associated with lower hepcidin values, and inflammation combined with a normal or functional iron profile with higher values, independent of other determinants of hepcidin concentration, including EPO, mGFR, and albuminemia. The hepcidin level, although it rose overall when mGFR declined, collapsed in patients with absolute iron deficiency. There was a significant interaction with iron status in the association between Hb and hepcidin. Except in absolute iron deficiency, hepcidin’s negative association with Hb level indicates that it is not down-regulated in CKD anemia.</p>
+</abstract>
+<funding-group><funding-statement>The NephroTest CKD cohort study is supported by grants from: Inserm GIS-IReSP AO 8113LS TGIR (BS); French Ministry of Health AOM 09114 (MFr); Inserm AO 8022LS (BS); Agence de la Biomédecine R0 8156LL (BS), AURA (MFr), and Roche 2009-152-447G (MFr). The Nephrotest initiative was also sponsored by unrestricted grants from F. Hoffman-La Roche Ltd. (LM). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="7"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Hepcidin is a new iron marker, discovered in 2001 and studied especially in hemochromatosis. The first investigations concerned prohepcidin, an inactive precursor. Prohepcidin has no impact on iron metabolism in either healthy individuals <xref ref-type="bibr" rid="pone.0099781-Ulukol1">[1]</xref> or patients with chronic kidney disease (CKD) <xref ref-type="bibr" rid="pone.0099781-Kato1">[2]</xref>, <xref ref-type="bibr" rid="pone.0099781-Malyszko1">[3]</xref>. The involvement of hepcidin in iron disorders was clarified with the development of methods to quantify hepcidin-25 <xref ref-type="bibr" rid="pone.0099781-Kato1">[2]</xref>, <xref ref-type="bibr" rid="pone.0099781-Tomosugi1">[4]</xref>. Hepcidin has been evaluated in absolute iron deficiency, where its concentration is low, and in patients with chronic disease-related anemia <xref ref-type="bibr" rid="pone.0099781-Theurl1">[5]</xref>. The subsequent development of more specific assays for hepcidin-25 has led to a redefinition of normal values from around 50 ng/mL for the first assays to less than 10 ng/mL for those recently validated by the FDA <xref ref-type="bibr" rid="pone.0099781-Grebenchtchikov1">[6]</xref>. Except in hemochromatosis, however, hepcidin has not yet proved its usefulness in clinical practice.</p>
+<p>Hepcidin involvement in CKD anemia has been explored in both dialysis and non-dialysis CKD patients: both CKD-related inflammation and lower hepcidin clearance tend to increase hepcidin concentration in these patients <xref ref-type="bibr" rid="pone.0099781-Li1">[7]</xref>, <xref ref-type="bibr" rid="pone.0099781-Ashby1">[8]</xref>, <xref ref-type="bibr" rid="pone.0099781-Zaritsky1">[9]</xref>. The specificity of hepcidin for the diagnosis of absolute iron deficiency may thus be limited in this group. The hepcidin level does not seem to improve the prediction of erythropoietin response <xref ref-type="bibr" rid="pone.0099781-Malyszko2">[10]</xref>, <xref ref-type="bibr" rid="pone.0099781-Costa1">[11]</xref>. Furthermore, its close relation with ferritin raises questions about its performance in the diagnosis of iron disturbances <xref ref-type="bibr" rid="pone.0099781-Ford1">[12]</xref>. In hemodialysis patients, its performance is no better than that of traditional iron markers <xref ref-type="bibr" rid="pone.0099781-Kato1">[2]</xref>, <xref ref-type="bibr" rid="pone.0099781-Ford1">[12]</xref>. Nonetheless, a better understanding of the determinants of hepcidin levels is essential to assess its usefulness in CKD anemia. We therefore studied the determinants of hepcidin in non-dialysis CKD patients, particularly its relation to iron disorders, inflammation, and glomerular filtration rate measured (mGFR) by a reference method. We also tested the hypothesis that hepcidin and hemoglobin (Hb) levels are related, independently of other Hb determinants.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Population</title>
+<p>The NephroTest study is a prospective hospital-based cohort that has enrolled patients with any diagnosis of CKD stages 1 through 5, recruited from three nephrology departments. Patients younger than 18 years, dialysis patient or with a kidney transplant, and pregnant women were excluded. Between January 2000 and January 2012, NephroTest included 1095 patients after they had provided written informed consent. The NephroTest study design was approved by the relevant ethics committee (Direction Générale pour la Recherche et l’Information, Comité Consultatif sur le Traitement de l’Information en matière de Recherche dans le domaine de la Santé MG/CP09.503) and adheres to the Declaration of Helsinki. Patients not receiving EPO and intravenous iron were included in this analysis if a plasma sample was available for them. More precisely, 114 men were drawn from the NEPHROTEST cohort samples from 2000 to 2004 and all women of the same period were included (n = 48). Additionally, 37 women with plasma samples available from the 2006 to 2008 period were added to obtain a study population that was balanced with respect to sex. Hepcidin was measured for these 199 patients. They were similar to the overall study population with respect to age and mGFR distribution (Appendix 1). Biopsy-proven nephropathy was identified in 21% of all patients, but fewer than 10% of those with diabetes. Clinical criteria based on a history of urinary albumin &gt;300 mg/g creatinine and of other microangiopathy damage (retinopathy or neuropathy) were used to classify diabetes patients who had not had renal biopsies with diabetic glomerular nephropathy. Other diabetes patients were classified with another nephropathy type, most probably vascular.</p>
+</sec><sec id="s2b">
+<title>Laboratory measurements</title>
+<p>Patients undergo an extensive annual check-up, including a measurement of their GFR (mGFR) by *Cr-EDTA, in the hospitals’ physiology departments <xref ref-type="bibr" rid="pone.0099781-Moranne1">[13]</xref>. Serum iron (DxC800 Beckman-Coulter, ferrozine, emitted light 560 nm), ferritin (BN-Siemens, N-latex ferritin immunonephelometry), and transferrin (BN-Siemens, N Antiserum antitransferrin immunonephelometry) were measured. TIBC (total iron binding capacity, µmol/L) was calculated as 25×transferrin (g/L) and TSAT (%) as serum iron×100/TIBC. Firstly, we used Lipschitz’s iron index <xref ref-type="bibr" rid="pone.0099781-Moranne1">[13]</xref> to define iron status based on TSAT and ferritin together as follows: normal, TSAT ≥20%; absolute iron deficiency, TSAT &lt;20% and ferritin &lt;40 ng/mL; functional iron deficiency, TSAT &lt;20% and ferritin ≥40 ng/mL. The 40 ng/mL threshold value was chosen for ferritin because this threshold is usually recommended to diagnose absolute iron deficiency, in contrast with the KDIGO threshold of 100 ng/mL used to define the need for iron supply in patients with non-dialysis chronic kidney disease. Secondarily, we used a combined iron marker containing 4 classes, built like the Lipschitz iron index but separating TSAT ≥20% and ferritin ≥40 ng/mL from TSAT ≥20% and ferritin &lt;40 ng/mL. Endogenous EPO levels were determined in serum (100 µL) with the Quantitine IVD Epo double-antibody sandwich ELISA method from R&amp;D Systems (Minneapolis, MN), as reported elsewhere <xref ref-type="bibr" rid="pone.0099781-Mercadal1">[14]</xref>. EPO measurements were missing for 38 patients (37 women and 1 men).</p>
+<p>The assay for the quantification of hepcidin in human serum was developed at Amgen, Thousand Oaks, CA, and is described in appendix 2. Briefly, this immunoassay is based on hepcidin capture by an anti-human hepcidin monoclonal antibody, followed by electrochemiluminescent detection of the complex. The normal reference level of hepcidin in healthy volunteers was &lt;10 ng/mL. The lower limit of detection was 0.1 ng/mL.</p>
+</sec><sec id="s2c">
+<title>Statistical analyses</title>
+<p>We studied crude and mGFR-adjusted relations of hepcidin with age, gender, ethnicity, diabetes and diabetic nephropathy, body mass index (BMI), mGFR, the urinary protein to creatinine ratio (PCR), albuminemia, C-reactive protein (CRP), oral iron treatment, erythropoietin, ferritin, TSAT, TIBC, and the combined iron marker; we used ANOVA to compare categorial variables and Pearson’s correlations for quantitative variables. The hepcidin determinants were then analysed by multivariate regression analysis that included age, gender, center, albumin, BMI, CRP, mGFR, EPO, oral iron therapy, and the combined iron marker. Finally, we tested the association of Hb levels with the hepcidin concentration treated continuously after adjustment for other Hb determinants. These included the combined iron marker (or ferritin), gender, diabetes, BMI, mGFR, oral iron treatment, albuminemia, CRP, and angiotensin converting enzyme inhibitors/angiotensin receptor blockers. Potential interactions between hepcidin and the combined iron marker (or ferritin) in the relation with Hb were also tested. In all analyses, hepcidin was transformed by its square root to meet the criterion of a normal parameter.</p>
+<p>For covariates with less than 3% missing observations (albumin and CRP), the median value was imputed in the multivariate analysis. A missing data category was created for the combined iron marker and EPO. Statistical analyses were performed with SAS 9.2 (SAS Institute Inc., Cary, NC, USA) and R 2.15 (R Foundation for Statistical Computing, Vienna, Austria, 2012).</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Patients’ characteristics</title>
+<p>Patients’ characteristics are shown in <xref ref-type="table" rid="pone-0099781-t001">Table 1</xref>. Hepcidin ranged from 0.2 to 193 ng/mL with a median value of 27.9 ng/mL [IQR 16.5–45.4]. According to Lipschitz’s iron index <xref ref-type="bibr" rid="pone.0099781-Lipschitz1">[15]</xref>, 72.4% had normal iron profiles, 6.3% absolute iron deficiency and 21.4% functional iron deficiency. This distribution was similar to that observed in the entire cohort (71.3%, 6.2%, and 18.6%). The median mGFR for each class of the combined iron marker was 34.7 mL/min/1.73 m<sup>2</sup> [IQR 24.0–48.3], 37.2 mL/min/1.73 m<sup>2</sup> [24.8–56.0], and 36.0 mL/min/1.73 m<sup>2</sup> [26.3–49.5].</p>
+<table-wrap id="pone-0099781-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0099781.t001</object-id><label>Table 1</label><caption>
+<title>Patient characteristics.</title>
+</caption><alternatives><graphic id="pone-0099781-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0099781.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Mean ± SD, median (IQR) or %(N)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Men</td>
+<td align="left" rowspan="1" colspan="1">57.3 (114)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Age, years</td>
+<td align="left" rowspan="1" colspan="1">58.4±14.8</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">African origin</td>
+<td align="left" rowspan="1" colspan="1">5.8 (11)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Body mass index, kg/m<sup>2</sup></td>
+<td align="left" rowspan="1" colspan="1">25.5±5.0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Systolic/Diastolic Blood Pressure, mmHg</td>
+<td align="left" rowspan="1" colspan="1">138±20/76±11</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Diabetes</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">No</td>
+<td align="left" rowspan="1" colspan="1">76.4 (152)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Yes, with diabetic nephropathy</td>
+<td align="left" rowspan="1" colspan="1">15.1 (30)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Yes, with other nephropathy type</td>
+<td align="left" rowspan="1" colspan="1">8.5 (17)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">History of cardiovascular disease</td>
+<td align="left" rowspan="1" colspan="1">12.6 (25)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">mGFR, ml/min/1.73 m<sup>2</sup></td>
+<td align="left" rowspan="1" colspan="1">35.3 (24.2–49.3)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">&lt;15</td>
+<td align="left" rowspan="1" colspan="1">7.0 (14)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">15–30</td>
+<td align="left" rowspan="1" colspan="1">28.1 (56)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">30–45</td>
+<td align="left" rowspan="1" colspan="1">33.7 (67)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">45–60</td>
+<td align="left" rowspan="1" colspan="1">18.1 (36)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">&gt;60</td>
+<td align="left" rowspan="1" colspan="1">13.1 (26)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">eGFR MDRD, ml/min/1.73 m<sup>2</sup></td>
+<td align="left" rowspan="1" colspan="1">33.3 (22.6–45.9)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">eGFR CKD-EPI, ml/min/1.73 m<sup>2</sup></td>
+<td align="left" rowspan="1" colspan="1">34.2 (23.2–48.4)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">PCR, mg/mmol</td>
+<td align="left" rowspan="1" colspan="1">28.9 (15.3–115.1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Serum albumin, g/L</td>
+<td align="left" rowspan="1" colspan="1">39.53±5.18</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C-reactive protein &gt;8 mg/L</td>
+<td align="left" rowspan="1" colspan="1">11.0 (21)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Hb, g/dL</td>
+<td align="left" rowspan="1" colspan="1">12.32±1.47</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">WHO Anemia</td>
+<td align="left" rowspan="1" colspan="1">54.8 (109)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Serum Iron, µmol/L</td>
+<td align="left" rowspan="1" colspan="1">14.06±5.16</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Total iron binding capacity (TIBC), µmol/L</td>
+<td align="left" rowspan="1" colspan="1">56.5±10.9</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Transferrin saturation (TSAT), %</td>
+<td align="left" rowspan="1" colspan="1">25.47±9.83</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Ferritin, ug/L</td>
+<td align="left" rowspan="1" colspan="1">110 (63–201)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Folates, ng/L</td>
+<td align="left" rowspan="1" colspan="1">6.8 (5.0–9.5)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Vitamin B12, pg/mL</td>
+<td align="left" rowspan="1" colspan="1">418 (291–558)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ACEi or ARB %</td>
+<td align="left" rowspan="1" colspan="1">68.3 (136)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Oral iron therapy</td>
+<td align="left" rowspan="1" colspan="1">11.1 (22)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Lipschitz’s iron index</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic> TSAT ≥20%</italic></td>
+<td align="left" rowspan="1" colspan="1">72.4 (139)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic> TSAT &lt;20% and ferritin &lt;40</italic></td>
+<td align="left" rowspan="1" colspan="1">6.3 (12)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic> TSAT &lt;20% and ferritin ≥40</italic></td>
+<td align="left" rowspan="1" colspan="1">21.4 (41)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>PCR: urinary protein to creatinine ratio; ACEi/ARBs: angiotensin converting enzyme inhibitors/angiotensin receptor blockers. WHO anemia: Hb &lt;13 g/dL for men and &lt;12 g/dL for women.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3b">
+<title>Factors associated with hepcidin levels</title>
+<p>Women younger than 55 years had lower hepcidin values than either men or older women (<xref ref-type="table" rid="pone-0099781-t002">Table 2</xref>). Hepcidin levels increased from 23.3 ng/mL IQR [8.8–28.7] to 36.1 ng/mL IQR [14.1–92.3] when mGFR declined from &gt;60 mL/min/1.73 m<sup>2</sup> to &lt;15 mL/min/1.73 m<sup>2</sup>. Independent of mGFR, higher levels of body mass index, albuminemia, C-reactive protein (CRP), oral iron therapy and lower levels of proteinuria and EPO were significantly associated with higher hepcidin concentrations (<xref ref-type="table" rid="pone-0099781-t002">Tables 2</xref> and <xref ref-type="table" rid="pone-0099781-t003">3</xref>). Hepcidin levels were strongly related to all iron markers and particularly to ferritin (<xref ref-type="table" rid="pone-0099781-t003">Table 3</xref> and <xref ref-type="fig" rid="pone-0099781-g001">Figure 1</xref>). The hepcidin level varied in the different combined classes of TSAT and ferritin (<xref ref-type="table" rid="pone-0099781-t004">Table 4</xref>). It was six times lower in patients with absolute iron deficiency and three times in those with low ferritin alone than in those with normal iron status. The multivariate analysis showed that oral iron therapy, albuminemia, EPO levels, BMI ≥ 30 kg/m<sup>2</sup> and mGFR all remained significantly associated with hepcidin levels. The four-class iron index produced the model with the best fit (<xref ref-type="table" rid="pone-0099781-t005">Table 5</xref>). There was an interaction between iron status profile and CRP in their relation with hepcidin (p = 0.01). Patients with inflammation and either a functional or normal iron profile had higher hepcidin levels than their counterparts without inflammation (<xref ref-type="table" rid="pone-0099781-t005">Table 5</xref>). Patients with ferritin &lt;40 ng/mL had an hepcidin collapse.</p>
+<fig id="pone-0099781-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0099781.g001</object-id><label>Figure 1</label><caption>
+<title>Hepcidin concentration according to quintiles of ferritin (A), transferrin saturation (B) and total iron-binding capacity (C).</title>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0099781.g001" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0099781-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0099781.t002</object-id><label>Table 2</label><caption>
+<title>Hepcidin level according to categorial factors.</title>
+</caption><alternatives><graphic id="pone-0099781-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0099781.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">N</td>
+<td align="left" rowspan="1" colspan="1">Hepcidin (ng/mL)Median (IQR)</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+<td align="left" rowspan="1" colspan="1">mGFR adjustedp-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Age×Gender</td>
+<td align="left" rowspan="1" colspan="1">Men</td>
+<td align="left" rowspan="1" colspan="1">114</td>
+<td align="left" rowspan="1" colspan="1">27.7 (19.0–43.1)</td>
+<td align="left" rowspan="1" colspan="1">0.009</td>
+<td align="left" rowspan="1" colspan="1">0.003</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Women &lt;55 yrs</td>
+<td align="left" rowspan="1" colspan="1">35</td>
+<td align="left" rowspan="1" colspan="1">15.6 (8.8–40.2)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Women ≥55 yrs</td>
+<td align="left" rowspan="1" colspan="1">50</td>
+<td align="left" rowspan="1" colspan="1">34.6 (21.3–57.4)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Origin</td>
+<td align="left" rowspan="1" colspan="1">African</td>
+<td align="left" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1">34.5 (8.0–63.9)</td>
+<td align="left" rowspan="1" colspan="1">0.6</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Caucasian or other</td>
+<td align="left" rowspan="1" colspan="1">180</td>
+<td align="left" rowspan="1" colspan="1">27.7 (16.6–43.6)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">missing</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">47.6 (16.2–66.0)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Diabetes</td>
+<td align="left" rowspan="1" colspan="1">No</td>
+<td align="left" rowspan="1" colspan="1">152</td>
+<td align="left" rowspan="1" colspan="1">28.8 (17.7–46.1)</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Yes with diabetic nephropathy</td>
+<td align="left" rowspan="1" colspan="1">30</td>
+<td align="left" rowspan="1" colspan="1">26.2 (12.5–45.2)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Yes with othernephropathy type</td>
+<td align="left" rowspan="1" colspan="1">17</td>
+<td align="left" rowspan="1" colspan="1">21.4 (16.3–42.4)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Oral Iron Therapy</td>
+<td align="left" rowspan="1" colspan="1">No</td>
+<td align="left" rowspan="1" colspan="1">177</td>
+<td align="left" rowspan="1" colspan="1">27.1 (16.0–42.3)</td>
+<td align="left" rowspan="1" colspan="1">0.005</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">22</td>
+<td align="left" rowspan="1" colspan="1">46.5 (19.0–75.9)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ACEI/ARBs</td>
+<td align="left" rowspan="1" colspan="1">No</td>
+<td align="left" rowspan="1" colspan="1">63</td>
+<td align="left" rowspan="1" colspan="1">26.5 (16.0–48.3)</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">136</td>
+<td align="left" rowspan="1" colspan="1">29.3 (17.2–44.7)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">CRP</td>
+<td align="left" rowspan="1" colspan="1">≤8 mg/L</td>
+<td align="left" rowspan="1" colspan="1">170</td>
+<td align="left" rowspan="1" colspan="1">26.7 (16.4–40.4)</td>
+<td align="left" rowspan="1" colspan="1">0.0002</td>
+<td align="left" rowspan="1" colspan="1">0.0005</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">&gt;8</td>
+<td align="left" rowspan="1" colspan="1">21</td>
+<td align="left" rowspan="1" colspan="1">56.4 (26.1–73.2)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">missing</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1">23.8 (7.7–87.7)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>CRP: C reactive protein; ACE/ARBs: angiotensin converting enzyme inhibitors/angiotensin receptor blockers.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0099781-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0099781.t003</object-id><label>Table 3</label><caption>
+<title>Crude and mGFR-adjusted Pearson’s correlations of square root-transformed hepcidin with quantitative factors.</title>
+</caption><alternatives><graphic id="pone-0099781-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0099781.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="2" align="left" rowspan="1">Crude correlation</td>
+<td colspan="2" align="left" rowspan="1">mGFR-adjusted partial correlation</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">r</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+<td align="left" rowspan="1" colspan="1">r</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">mGFR</td>
+<td align="left" rowspan="1" colspan="1">−0.31</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">BMI</td>
+<td align="left" rowspan="1" colspan="1">0.21</td>
+<td align="left" rowspan="1" colspan="1">0.003</td>
+<td align="left" rowspan="1" colspan="1">0.16</td>
+<td align="left" rowspan="1" colspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">LOG PCR</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+<td align="left" rowspan="1" colspan="1">−0.18</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Albuminemia</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+<td align="left" rowspan="1" colspan="1">0.6</td>
+<td align="left" rowspan="1" colspan="1">0.17</td>
+<td align="left" rowspan="1" colspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Free iron</td>
+<td align="left" rowspan="1" colspan="1">0.05</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">0.18</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TIBC</td>
+<td align="left" rowspan="1" colspan="1">−0.32</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+<td align="left" rowspan="1" colspan="1">−0.22</td>
+<td align="left" rowspan="1" colspan="1">0.002</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT</td>
+<td align="left" rowspan="1" colspan="1">0.15</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+<td align="left" rowspan="1" colspan="1">0.24</td>
+<td align="left" rowspan="1" colspan="1">0.0008</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">LOG Ferritin</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+<td align="left" rowspan="1" colspan="1">0.71</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">LOG EPO</td>
+<td align="left" rowspan="1" colspan="1">−0.20</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">−0.18</td>
+<td align="left" rowspan="1" colspan="1">0.03</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>mGFR: measured glomerular filtration rate; BMI: body mass index; PCR: urinary protein to creatinine ratio; CRP: C-reactive protein; EPO: erythropoietin; TIBC: total iron binding capacity; TSAT: transferrin saturation.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0099781-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0099781.t004</object-id><label>Table 4</label><caption>
+<title>Hepcidin levels (ng/mL) and percentage of patients with low hepcidin values according to ferritin and transferrin saturation (TSAT) levels.</title>
+</caption><alternatives><graphic id="pone-0099781-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0099781.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="2" align="left" rowspan="1">Ferritin</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">≥40 ng/mL</td>
+<td align="left" rowspan="1" colspan="1">&lt;40 ng/mL</td>
+<td align="left" rowspan="1" colspan="1">Total</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>TSAT</bold></td>
+<td align="left" rowspan="1" colspan="1">≥20%</td>
+<td align="left" rowspan="1" colspan="1">34.5 (23.7–51.6)<xref ref-type="table-fn" rid="nt107">2</xref>10% (12) N = 123</td>
+<td align="left" rowspan="1" colspan="1">10.3 (6.9–14.1)<xref ref-type="table-fn" rid="nt107">2</xref>80% (12) N = 15</td>
+<td align="left" rowspan="1" colspan="1">31.2 (20.9–45.7)<xref ref-type="table-fn" rid="nt106">1</xref>17% (24) N = 138</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">&lt;20%</td>
+<td align="left" rowspan="1" colspan="1">22.6 (16.3–43.1)<xref ref-type="table-fn" rid="nt106">1</xref><sup>,</sup><xref ref-type="table-fn" rid="nt107">2</xref>29% (12) N = 41</td>
+<td align="left" rowspan="1" colspan="1">5.0 (0.7–11.7)<xref ref-type="table-fn" rid="nt106">1</xref><sup>,</sup><xref ref-type="table-fn" rid="nt107">2</xref>92% (11) N = 12</td>
+<td align="left" rowspan="1" colspan="1">19.2 (12.2–40.3)43% (23) N = 53</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Total</td>
+<td align="left" rowspan="1" colspan="1">32.1 (21.35–51.3)15% (24) N = 164</td>
+<td align="left" rowspan="1" colspan="1">9.6 (3.8–12.7)85%(23) N = 27</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label/><p>Median (Interquartile range).</p></fn><fn id="nt105"><label/><p>% (N) of patients with hepcidin values below a threshold value of hepcidin defined as the 10<sup>th</sup> percentile of patients with normal iron profile (16.7 ng/mL).</p></fn><fn id="nt106"><label>1</label><p>Three classes of Lipschitz’s iron index.</p></fn><fn id="nt107"><label>2</label><p>Four classes iron index.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0099781-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0099781.t005</object-id><label>Table 5</label><caption>
+<title>Multivariate analyses of hepcidin levels according to different definitions of iron status.</title>
+</caption><alternatives><graphic id="pone-0099781-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0099781.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">N</td>
+<td align="left" rowspan="1" colspan="1">BIC/AIC</td>
+<td align="left" rowspan="1" colspan="1">√hepcidinβ±sd</td>
+<td align="left" rowspan="1" colspan="1">p-value</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Lipschitz’s iron index</bold><xref ref-type="table-fn" rid="nt110">1</xref><bold><sup>,</sup></bold><xref ref-type="table-fn" rid="nt111">2</xref></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">877/821</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT ≥20%</td>
+<td align="left" rowspan="1" colspan="1">139</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">ref</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT &lt;20% and Ferritin &lt;40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−2.71±0.55</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT &lt;20% and Ferritin ≥40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">41</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−0.32±0.32</td>
+<td align="left" rowspan="1" colspan="1">0.3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Missing</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−0.04±0.71</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Four classes iron index</bold><xref ref-type="table-fn" rid="nt110">1</xref><bold><sup>,</sup></bold><xref ref-type="table-fn" rid="nt111">2</xref></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">848/788</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT ≥20% and Ferritin ≥40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">123</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">ref</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT ≥20% and Ferritin &lt;40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−2.84±0.46</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT &lt;20% and Ferritin &lt;40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−3.25±0.51</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT &lt;20% and Ferritin ≥40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">41</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−0.65±0.30</td>
+<td align="left" rowspan="1" colspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Missing</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−0.16±0.61</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Four classes iron index according to CRP levels</bold><xref ref-type="table-fn" rid="nt110">1</xref></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">848/785</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT ≥20%, Ferritin ≥40 µg/L</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">CRP ≤8 ng/mL</td>
+<td align="left" rowspan="1" colspan="1">115</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">ref</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">CRP &gt;8 ng/mL</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.87±0.61</td>
+<td align="left" rowspan="1" colspan="1">0.002</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT ≥20% and Ferritin &lt;40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">15</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−2.54±0.46</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT &lt;20% and Ferritin &lt;40 µg/L</td>
+<td align="left" rowspan="1" colspan="1">12</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−3.09±0.51</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TSAT &lt;20%, Ferritin ≥40 µg/L</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">CRP ≤8 ng/mL</td>
+<td align="left" rowspan="1" colspan="1">32</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">−0.90±0.32</td>
+<td align="left" rowspan="1" colspan="1">0.005</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">CRP &gt;8 ng/mL</td>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2.33±0.57</td>
+<td align="left" rowspan="1" colspan="1">&lt;.0001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Missing</td>
+<td align="left" rowspan="1" colspan="1">8</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.06±0.60</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt108"><label/><p><italic>Abbreviations: TSAT, Transferrin saturation; CRP, C-reactive protein; BIC, Bayesian Information Criterion; AIC, Akaike information Criterion; Ref, reference class.</italic></p></fn><fn id="nt109"><label/><p><bold>β±sd</bold> Regression coefficients for the different iron indexes in the linear regression models of hepcidin values (square-root transformed).</p></fn><fn id="nt110"><label>1</label><p>Models were adjusted for measured glomerular filtration rate, gender, age, body mass index, albuminemia, erythropoietin, oral iron and centre.</p></fn><fn id="nt111"><label>2</label><p>Models for Lipschitz’s iron index and the four-class iron index were also adjusted for C-reactive protein (CRP) in two classes (≤8 vs &gt;8 ng/mL).</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c">
+<title>Relation between Hb and hepcidin levels</title>
+<p>There was a significant interaction with the four-class iron index in the relation between hepcidin and Hb (p = 0.003). Hb levels tended to decrease as hepcidin levels increased when TSAT &lt;20% and ferritin &gt;40 µg/L (Hb = −0.14±0.08, p = 0.06), but the relation was reversed in patients with absolute iron deficiency, defined by TSAT &lt;20% and ferritin &lt;40 µg/L (Hb = 0.30±0.14, p = 0.04). These relations were not modified when the four-class iron index was combined with inflammation (data not shown). Using ferritin instead of the combined iron marker produced similar results for the relation between hepcidin and Hb, with significant interaction between tertiles of ferritin and hepcidin (p&lt;0.001). Hb levels decreased significantly with increasing hepcidin at intermediate (74–167 ng/mL, Hb = −0.22±0.09, p = 0.02) and high ferritin values (&gt;167 ng/mL, Hb = −0.20±0.08, p = 0.01), and increased with hepcidin at low ferritin values (&lt;74 ng/mL, Hb = 0.15±0.07, p = 0.04). Further adjustment for the EPO level did not change the association of Hb and hepcidin (data not shown).</p>
+</sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>This study identified several factors other than mGFR that may determine hepcidin levels in CKD patients. The most original finding is our showing that even though hepcidin levels generally increase as mGFR declines, CKD patients with absolute iron deficiency still experienced a profound hepcidin collapse, in contrast to those with other iron profiles. We also confirmed the observation of an interaction between iron status and hepcidin in their relation to Hb levels. These findings are especially noteworthy because they are based on a patient population carefully phenotyped for mGFR and a specific and accurate hepcidin-25 assay with a low limit of detection.</p>
+<p>Hepcidin is influenced by four regulation processes: hypoxia <xref ref-type="bibr" rid="pone.0099781-Hintze1">[16]</xref>, erythropoiesis, inflammation, and iron status. We confirmed the main determinant factors of hepcidin seen in the general population <xref ref-type="bibr" rid="pone.0099781-Galesloot1">[17]</xref> and in the hemodialysis population <xref ref-type="bibr" rid="pone.0099781-vanderWeerd1">[18]</xref>, <xref ref-type="bibr" rid="pone.0099781-Valenti1">[19]</xref>, <xref ref-type="bibr" rid="pone.0099781-Pelusi1">[20]</xref>. EPO deficiency and the chronic inflammation observed in CKD patients play a role in the hepcidin increase. BMI was a determinant of hepcidin, independently of inflammation. Some hepcidin secretion is located in and directly related to the adipose tissue <xref ref-type="bibr" rid="pone.0099781-Bekri1">[21]</xref>. Finally, iron status influences hepcidin levels. A low iron store down-regulates hepcidin, in a relation modulated by transferrin <xref ref-type="bibr" rid="pone.0099781-Bartnikas1">[22]</xref>, <xref ref-type="bibr" rid="pone.0099781-Gkouvatsos1">[23]</xref>. Our 3-marker iron index with five classes produced similar results in this analysis (data not shown) <xref ref-type="bibr" rid="pone.0099781-Mercadal2">[24]</xref>. In our cohort, the combined iron marker we used to classify the different iron profiles sheds light on the persistent process of hepcidin down-regulation in absolute iron deficiency at the same time that the patients with all other iron profiles had increasing hepcidin levels associated with mGFR decline. This persistent down-regulation has also been shown in animal models of chronic disease anemia <xref ref-type="bibr" rid="pone.0099781-Theurl1">[5]</xref>. The down-regulation process remains effective in and specific to absolute iron deficiency in CKD patients. The possibility of defining a hepcidin threshold value for this diagnosis requires further validation in CKD cohorts.</p>
+<p>The influence of mGFR on hepcidin has been interpreted in different ways in recent articles reporting the role of the hepcidin assay. Hepcidin measurement is based on either mass spectrometry or antibody-based hepcidin detection. Competitive radioimmunoassays and ELISA tests have been developed for the antibody-based methods. Several studies have reported that hepcidin increases as mGFR declines <xref ref-type="bibr" rid="pone.0099781-Tomosugi1">[4]</xref>, <xref ref-type="bibr" rid="pone.0099781-Galesloot1">[17]</xref>, <xref ref-type="bibr" rid="pone.0099781-Zaritsky2">[25]</xref>. The hepcidin measurements in these articles, however, were performed with a radioimmunoassay that might have cross-reacted with the isoform hepcidin-20 for about 10% of the total measured value of hepcidin-25. Further contestation of the relation between mGFR and hepcidin has been based on suspicion that this relation is restricted to hepcidin-20, which is inactive <xref ref-type="bibr" rid="pone.0099781-Peters1">[26]</xref>. A large cohort study of 505 CKD patients that used a highly specific liquid chromatography tandem mass-spectrometry method found that estimated GFR was associated with hepcidin levels in the univariate but not the multivariate analysis <xref ref-type="bibr" rid="pone.0099781-Uehata1">[27]</xref>. Finally, from a physiological point of view, the isoform hepcidin-25, the active form, is a small peptide, freely filtered by the glomerulus and highly reabsorbed by the proximal tubules with an excretion fraction around 8%; it shares the renal clearance characteristics of β2 microglobulin <xref ref-type="bibr" rid="pone.0099781-Canavesi1">[28]</xref>, <xref ref-type="bibr" rid="pone.0099781-Peters2">[29]</xref>. A major strength of our study is the use of <sup>51</sup>Cr-EDTA renal clearance to determine GFR, which reduced measurement errors and improved our ability to understand the relation between renal function and hepcidin level. It is likely that levels of the serum isoform hepcidin-25 increase with declining renal function, but the relation between mGFR and hepcidin may have been disrupted by patients with absolute iron deficiency because of their down-regulated hepcidin level. Besides the difference in methods, differences in study populations could have influenced the relation between hepcidin and mGFR in some studies.</p>
+<p>Anemia in CKD cohorts has been associated with elevated hepcidin levels. This association reflects the ratios of the prevalence rates of the different iron disturbances: absolute ID, which depresses hepcidin, is relatively rare in CKD cohorts such as ours (6.3%). Functional iron deficiency is more frequent and is associated with an elevated hepcidin level. Our functional iron profile group had elevated hepcidin levels, similar to those of the normal iron profile group. Combining a functional iron deficiency and overt inflammation further increased hepcidin in our study. The short half-life of hepcidin (22 hours), its high intra-patient variability, and the cross-sectional design of our study might have weakened the link between functional iron deficiency and a hepcidin increase. Recently in a mouse model, the hepcidin increase has been proved to be limited to the early phase of the inflammation process <xref ref-type="bibr" rid="pone.0099781-Kim1">[30]</xref>.</p>
+<p>We confirmed that the relation between Hb and hepcidin varies according to iron status. In the study by Uehata et al <xref ref-type="bibr" rid="pone.0099781-Uehata1">[27]</xref>, hepcidin was not related to Hb in the low ferritin group (&lt;91 ng/mL) and was negatively related to it in the high ferritin group. The low ferritin group probably had absolute iron deficiency, with a very low hepcidin level of 7 ng/mL (IQR 2.3–17.3 ng/mL, with liquid chromatography mass spectrometry). We showed that in the absolute iron deficiency group, Hb decreased with hepcidin. On the contrary, in patients with functional iron deficiency, anemia was related to an increased hepcidin level. The hepcidin level thus provides information about Hb above and beyond that contained in the iron profiles. Elevated hepcidin can predict poor gut absorption of iron and ineffective oral iron treatment. In vitro studies suggest that hepcidin has a direct effect on erythropoiesis by inhibiting erythroid colony formation when erythropoietin is low and by impairing red blood cell survival. To date, however, no study has found that hepcidin has any predictive value for response to either IV iron or ESA.</p>
+<p>The limitations of our study are linked mainly to its cross-sectional design, its sample size, and the measurement method. The cross-sectional design makes it difficult to infer causality between the hepcidin level and the risk of anemia. In terms of sample size among non-dialysis CKD cohorts, our study is the second largest examining hepcidin levels, after that of Uehata et al <xref ref-type="bibr" rid="pone.0099781-Uehata1">[27]</xref>. The immunochemical method that we used measured hepcidin levels in patients with absolute iron deficiency similar to those in the study of Uehata et al, which used mass spectrometry. The antibody-based hepcidin assays may diagnose and discriminate absolute iron deficiency quite well. On the contrary, when hepcidin values are elevated, the lower specificity for hepcidin-25 of the immunochemical test we used might have impaired its power to discriminate patients with normal iron profile from those with functional iron deficiency profile.</p>
+<p>In conclusion, this study primarily shows the importance of considering iron profiles in improving our understanding of the changes of the hepcidin concentration as renal function declines as well as its association with CKD anemia. While absolute iron deficiency is associated with a profound hepcidin collapse independently of the GFR decline, hepcidin is elevated in all other CKD patients and thus impairs the oral iron absorption in these patients. These findings have prompted research on drug development focusing on a hepcidin antagonist in CKD and possibly other chronic disease anemia with functional iron deficiency, although the possible side effects of these drugs may limit their potential.</p>
+</sec></body>
+<back>
+<ack>
+<p>We are grateful to and would like to thank Pr Nicole Casadevall for her advice and the EPO measurements performed in her laboratory (Laboratoire d’Hématologie, Hopital Saint-Antoine, Paris, France).</p>
+<p>We are indebted and thankful to Dr Barbara Sasu and Vimal Patel who advised us and performed hepcidin measurements at Amgen laboratories (Amgen Inc., Thousand Oaks, CA). In order to enable hepcidin measurements, this study was labelled as an Investigator Sponsored Study (BS) by Amgen.</p>
+<p><bold>NephroTest Steering Committee</bold></p>
+<p>Martin Flamant, P. Houillier, Jean Philippe Haymann, Jean-Jacques Boffa, Eric Thervet, François Vrtovsnik, Bénédicte Stengel (<email xlink:type="simple">benedicte.stengel@inserm.fr</email>).</p>
+<p><bold>NephroTest Study Group</bold></p>
+<p>Bichat Hospital: François Vrtovsnik, Eric Daugas (Nephrology) and Martin Flamant, Emmanuelle Vidal-Petiot (Physiology); European Georges Pompidou Hospital: Christian Jacquot, Alexandre Karras, Eric Thervet, Christian d’Auzac (Nephrology) and P. Houillier, M. Courbebaisse, D. Eladari et G. Maruani (Physiology); Tenon Hospital: Jean-Jacques Boffa, Pierre Ronco, H. Fessi, Eric Rondeau (Nephrology) and Emmanuel Letavernier, Jean Philippe Haymann (Physiology); clinique du Landy, Saint-Ouen: P. Urena-Torres.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0099781-Ulukol1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ulukol</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Orhon</surname><given-names>FS</given-names></name>, <name name-style="western"><surname>Hanoluk</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Akar</surname><given-names>N</given-names></name> (<year>2007</year>) <article-title>Serum pro-hepcidin levels and relationship with ferritin in healthy individuals non-anaemic infants</article-title>. <source>Acta Haematol</source> <volume>118(2)</volume>: <fpage>70</fpage>–<lpage>2</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Kato1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kato</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Tsuji</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Luo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sakao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Yasuda</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Association of prohepcidin and hepcidin-25 with erythropoietin response and ferritin in hemodialysis patients</article-title>. <source>Am J Nephrol</source> <volume>28(1)</volume>: <fpage>115</fpage>–<lpage>121</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Malyszko1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Malyszko</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Malyszko</surname><given-names>JS</given-names></name>, <name name-style="western"><surname>Mysliwiec</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>A possible role of hepcidin in the pathogenesis of anemia among kidney allograft recipients</article-title>. <source>Transplant Proc</source> <volume>41(8)</volume>: <fpage>3056</fpage>–<lpage>9</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Tomosugi1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tomosugi</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Kawabata</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Wakatabe</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Higuchi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Yamaya</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Detection of serum hepcidin in renal failure and inflammation by using ProteinChip System</article-title>. <source>Blood</source> <volume>108(4)</volume>: <fpage>1381</fpage>–<lpage>7</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Theurl1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Theurl</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Aigner</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Theurl</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Nairz</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Seifert</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Regulation of iron homeostasis in anemia of chronic disease and iron deficiency anemia: diagnostic and therapeutic implications</article-title>. <source>Blood</source> <volume>113(21)</volume>: <fpage>5277</fpage>–<lpage>86</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Grebenchtchikov1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Grebenchtchikov</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Geurts-Moespot</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Kroot</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>den Heijer</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Tjalsma</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>High-sensitive radioimmunoassay for human serum hepcidin</article-title>. <source>Br J Haematol</source> <volume>146(3)</volume>: <fpage>317</fpage>–<lpage>25</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Li1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Rose</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Tran</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Miranda</surname><given-names>LP</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Development of a method for the sensitive and quantitative determination of hepcidin in human serum using LC-MS/MS</article-title>. <source>J Pharmacol Toxicol Methods</source> <volume>59(3)</volume>: <fpage>171</fpage>–<lpage>80</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Ashby1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ashby</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Gale</surname><given-names>DP</given-names></name>, <name name-style="western"><surname>Busbridge</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Murphy</surname><given-names>KG</given-names></name>, <name name-style="western"><surname>Duncan</surname><given-names>ND</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Plasma hepcidin levels are elevated but responsive to erythropoietin therapy in renal disease</article-title>. <source>Kidney Int</source> <volume>75(9)</volume>: <fpage>976</fpage>–<lpage>81</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Zaritsky1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zaritsky</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Young</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Gales</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Rastogi</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Reduction of serum hepcidin by hemodialysis in pediatric and adult patients</article-title>. <source>Clin J Am Soc Nephrol</source> <volume>5(6)</volume>: <fpage>1010</fpage>–<lpage>4</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Malyszko2"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Malyszko</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Malyszko</surname><given-names>JS</given-names></name>, <name name-style="western"><surname>Mysliwiec</surname><given-names>M</given-names></name> (<year>2009</year>) <article-title>Hyporesponsiveness to erythropoietin therapy in hemodialyzed patients: potential role of prohepcidin, hepcidin, and inflammation</article-title>. <source>Ren Fail</source> <volume>31(7)</volume>: <fpage>544</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Costa1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Costa</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Swinkels</surname><given-names>DW</given-names></name>, <name name-style="western"><surname>Laarakkers</surname><given-names>CM</given-names></name>, <name name-style="western"><surname>Rocha-Pereira</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Rocha</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Hepcidin serum levels and resistance to recombinant human erythropoietin therapy in haemodialysis patients</article-title>. <source>Acta Haematol</source> <volume>122(4)</volume>: <fpage>226</fpage>–<lpage>9</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Ford1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ford</surname><given-names>BA</given-names></name>, <name name-style="western"><surname>Eby</surname><given-names>CS</given-names></name>, <name name-style="western"><surname>Scott</surname><given-names>MG</given-names></name>, <name name-style="western"><surname>Coyne</surname><given-names>DW</given-names></name> (<year>2010</year>) <article-title>Intra-individual variability in serum hepcidin precludes its use as a marker of iron status in hemodialysis patients</article-title>. <source>Kidney Int</source> <volume>78(8)</volume>: <fpage>769</fpage>–<lpage>73</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Moranne1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moranne</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Froissart</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Rossert</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gauci</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Boffa</surname><given-names>JJ</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Timing of onset of CKD related metabolic complications</article-title>. <source>J Am Soc Nephrol</source> <volume>20(1)</volume>: <fpage>164</fpage>–<lpage>71</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Mercadal1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mercadal</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Metzger</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Casadevall</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Haymann</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Karras</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Timing and determinants of erythropoietin deficiency in chronic kidney disease</article-title>. <source>Clin J Am Soc Nephrol</source> <volume>7(1)</volume>: <fpage>35</fpage>–<lpage>42</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Lipschitz1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lipschitz</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Cook</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Finch</surname><given-names>CA</given-names></name> (<year>1992</year>) <article-title>A clinical evaluation of serum ferritin as an index of iron stores</article-title>. <source>Nutrition</source> <volume>8(6)</volume>: <fpage>443</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Hintze1"><label>16</label>
+<mixed-citation publication-type="other" xlink:type="simple">Hintze KJ, McClung JP (2011) Hepcidin A Critical Regulator of Iron Metabolism during Hypoxia. Adv Hematol 2011; 510304.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Galesloot1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Galesloot</surname><given-names>TE</given-names></name>, <name name-style="western"><surname>Vermeulen</surname><given-names>SH</given-names></name>, <name name-style="western"><surname>Geurts-Moespot</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Klaver</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Kroot</surname><given-names>JJ</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Serum hepcidin: reference ranges and biochemical correlates in the general population</article-title>. <source>Blood</source> <volume>117(25)</volume>: <fpage>e218</fpage>–<lpage>25</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-vanderWeerd1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van der Weerd</surname><given-names>NC</given-names></name>, <name name-style="western"><surname>Grooteman</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Bots</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>van den Dorpel</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>den Hoedt</surname><given-names>CH</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Hepcidin-25 in chronic hemodialysis patients is related to residual kidney function and not to treatment with erythropoiesis stimulating agents</article-title>. CONTRAST Investigators. <source>PLoS One</source> <volume>7(7)</volume>: <fpage>e39783</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Valenti1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Valenti</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Messa</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Pelusi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Campostrini</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Girelli</surname><given-names>D</given-names></name> (<year>2013</year>) <article-title>Hepcidin levels in chronic hemodialysis patients: a critical evaluation</article-title>. <source>Clin Chem Lab Med</source> <volume>14</volume>: <fpage>1</fpage>–<lpage>7</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Pelusi1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pelusi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Girelli</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Rametta</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Campostrini</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Alfieri</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>The A736V TMPRSS6 polymorphism influences hepcidin and iron metabolism in chronic hemodialysis patients: TMPRSS6 and hepcidin in hemodialysis</article-title>. <source>BMC Nephrol</source> <volume>14</volume>: <fpage>4</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Bekri1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bekri</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Gual</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Anty</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Luciani</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Dahman</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Increased adipose tissue expression of hepcidin in severe obesity is independent from diabetes and NASH</article-title>. <source>Gastroenterology</source> <volume>131(3)</volume>: <fpage>788</fpage>–<lpage>96</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Bartnikas1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bartnikas</surname><given-names>TB</given-names></name>, <name name-style="western"><surname>Andrews</surname><given-names>NC</given-names></name>, <name name-style="western"><surname>Fleming</surname><given-names>MD</given-names></name> (<year>2011</year>) <article-title>Transferrin is a major determinant of hepcidin expression in hypotransferrinemic mice</article-title>. <source>Blood</source> <volume>117(2)</volume>: <fpage>630</fpage>–<lpage>7</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Gkouvatsos1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gkouvatsos</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Papanikolaou</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Pantopoulos</surname><given-names>K</given-names></name> (<year>2012</year>) <article-title>Regulation of iron transport and the role of transferrin</article-title>. <source>Biochim Biophys Acta</source> <volume>1820(3)</volume>: <fpage>188</fpage>–<lpage>202</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Mercadal2"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mercadal</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Metzger</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Haymann</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Thervet</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Boffa</surname><given-names>JJ</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>NephroTest Study Group. A 3-Marker Index Improves the Identification of Iron Disorders in CKD Anaemia</article-title>. <source>PLoS One 19</source> <volume>9(2)</volume>: <fpage>e84144</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Zaritsky2"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zaritsky</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Young</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Westerman</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Olbina</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Hepcidin–a potential novel biomarker for iron status in chronic kidney disease</article-title>. <source>Clin J Am Soc Nephrol</source> <volume>4(6)</volume>: <fpage>1051</fpage>–<lpage>6</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Peters1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peters</surname><given-names>HP</given-names></name>, <name name-style="western"><surname>Laarakkers</surname><given-names>CM</given-names></name>, <name name-style="western"><surname>Swinkels</surname><given-names>DW</given-names></name>, <name name-style="western"><surname>Wetzels</surname><given-names>JF</given-names></name> (<year>2010</year>) <article-title>Serum hepcidin-25 levels in patients with chronic kidney disease are independent of glomerular filtration rate</article-title>. <source>Nephrol Dial Transplant</source> <volume>25(3)</volume>: <fpage>848</fpage>–<lpage>53</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Uehata1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Uehata</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tomosugi</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Shoji</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sakaguchi</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Suzuki</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Serum hepcidin-25 levels and anemia in non-dialysis chronic kidney disease patients: a cross-sectional study</article-title>. <source>Nephrol Dial Transplant</source> <volume>27(3)</volume>: <fpage>1076</fpage>–<lpage>83</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Canavesi1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Canavesi</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Alfieri</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Pelusi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Valenti</surname><given-names>L</given-names></name> (<year>2012</year>) <article-title>Hepcidin and HFE protein: Iron metabolism as a target for the anemia of chronic kidney disease</article-title>. <source>World J Nephrol</source> <volume>1(6)</volume>: <fpage>166</fpage>–<lpage>176</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Peters2"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peters</surname><given-names>HP</given-names></name>, <name name-style="western"><surname>Laarakkers</surname><given-names>CM</given-names></name>, <name name-style="western"><surname>Pickkers</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Masereeuw</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Boerman</surname><given-names>OC</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Tubular reabsorption and local production of urine hepcidin-25</article-title>. <source>BMC Nephrol</source> <volume>14</volume>: <fpage>70</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0099781-Kim1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fung</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Parikh</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Valore</surname><given-names>EV</given-names></name>, <name name-style="western"><surname>Gabayan</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>A mouse model of anemia of inflammation: complex pathogenesis with partial dependence on hepcidin</article-title>. <source>Blood</source> <volume>123(8)</volume>: <fpage>1129</fpage>–<lpage>36</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

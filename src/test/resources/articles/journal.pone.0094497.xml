@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-14-06253</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0094497</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Immunology</subject><subj-group><subject>Clinical immunology</subject><subj-group><subject>Autoimmune diseases</subject><subj-group><subject>Multiple sclerosis</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine and health sciences</subject><subj-group><subject>Infectious diseases</subject><subj-group><subject>Infectious diseases of the nervous system</subject></subj-group></subj-group><subj-group><subject>Neurology</subject><subj-group><subject>Demyelinating disorders</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Quantitative Detection of Epstein-Barr Virus DNA in Cerebrospinal Fluid and Blood Samples of Patients with Relapsing-Remitting Multiple Sclerosis</article-title>
+<alt-title alt-title-type="running-head">Epstein-Barr Virus and Multiple Sclerosis</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Cocuzza</surname><given-names>Clementina E.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Piazza</surname><given-names>Fabrizio</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Musumeci</surname><given-names>Rosario</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Oggioni</surname><given-names>Davide</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Andreoni</surname><given-names>Simona</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Gardinetti</surname><given-names>Margherita</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Fusco</surname><given-names>Letizia</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Frigo</surname><given-names>Maura</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Banfi</surname><given-names>Paola</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rottoli</surname><given-names>Maria R.</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Confalonieri</surname><given-names>Paolo</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rezzonico</surname><given-names>Monica</given-names></name><xref ref-type="aff" rid="aff6"><sup>6</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Ferrò</surname><given-names>Maria T.</given-names></name><xref ref-type="aff" rid="aff7"><sup>7</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Cavaletti</surname><given-names>Guido</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref><on-behalf-of>on behalf of the EBV-MS Italian Study Group</on-behalf-of></contrib>
+<contrib contrib-type="author" xlink:type="simple"><collab xlink:type="simple">The EBV-MS Italian Study Group is formed, in addition to the cited, by the following persons:<contrib-group>
+<contrib xlink:type="simple"><name name-style="western"><surname>Frigeni</surname><given-names>Barbara</given-names></name></contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Mascoli</surname><given-names>Nerina</given-names></name></contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Conti</surname><given-names>Marta</given-names></name></contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Antozzi</surname><given-names>Carlo</given-names></name></contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Andreetta</surname><given-names>Francesca</given-names></name></contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Ambrosoni</surname><given-names>Elena</given-names></name></contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Mainardi</surname><given-names>Elsa</given-names></name></contrib>
+</contrib-group></collab><xref ref-type="fn" rid="fn1"><sup>¶</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Dipartimento di Chirurgia e Medicina Traslazionale, Università di Milano-Bicocca, Monza, Italy</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Clinica Neurologica, A.O. S. Gerardo, Monza, Italy</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Dipartimento di Neurologia, Ospedale di Circolo e Fondazione Macchi, Varese, Italy</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Centro Sclerosi Multipla, A.O. Ospedale Papa Giovanni XXIII, Bergamo, Italy</addr-line></aff>
+<aff id="aff5"><label>5</label><addr-line>U.O. Neurologia IV, Centro Sclerosi Multipla, Fondazione Istituto Neurologico “Carlo Besta”, Milano, Italy</addr-line></aff>
+<aff id="aff6"><label>6</label><addr-line>Dipartimento di Neurologia, A.O Sant'Anna, Como, Italy</addr-line></aff>
+<aff id="aff7"><label>7</label><addr-line>Centro Sclerosi Multipla, Dipartimento di Neurologia, A.O. Ospedale Maggiore, Crema, Italy</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Reindl</surname><given-names>Markus</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Innsbruck Medical University, Austria</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">guido.cavaletti@unimibit</email> (RM); <email xlink:type="simple">guido.cavaletti@unimibit</email> (GC)</corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: GC MF MG LF PB MRR PC MR MTR. Performed the experiments: FP CC RM DO SA. Analyzed the data: GC FP CC RM DO. Contributed reagents/materials/analysis tools: DO FP. Wrote the paper: GC FP CC RM. Screened, assessed and evaluated the patients, including CSF examination and performing the diagnostic workout: MG LF MF PB MRR PC MR MTR.</p></fn>
+<fn id="fn1" fn-type="other"><p>¶ Membership of the EBV-MS Italian Study Group is provided in the Acknowledgments.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>10</day><month>4</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>4</issue>
+<elocation-id>e94497</elocation-id>
+<history>
+<date date-type="received"><day>10</day><month>2</month><year>2014</year></date>
+<date date-type="accepted"><day>16</day><month>3</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Cocuzza et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>The presence of Epstein-Barr Virus (EBV) DNA in cerebrospinal fluid (CSF) and peripheral blood (PB) samples collected from 55 patients with clinical and radiologically-active relapsing-remitting MS (RRMS) and 51 subjects with other neurological diseases was determined using standardized commercially available kits for viral nucleic acid extraction and quantitative EBV DNA detection. Both cell-free and cell-associated CSF and PB fractions were analyzed, to distinguish latent from lytic EBV infection. EBV DNA was detected in 5.5% and 18.2% of cell-free and cell-associated CSF fractions of patients with RRMS as compared to 7.8% and 7.8% of controls; plasma and peripheral blood mononuclear cells (PBMC) positivity rates were 7.3% and 47.3% versus 5.8% and 31.4%, respectively. No significant difference in median EBV viral loads of positive samples was found between RRMS and control patients in all tested samples. Absence of statistically significant differences in EBV positivity rates between RRMS and control patients, despite the use of highly sensitive standardized methods, points to the lack of association between EBV and MS disease activity.</p>
+</abstract>
+<funding-group><funding-statement>The study has been supported by Institutional research funds of the Univesrioty of Milano Bicocca. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="6"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Multiple sclerosis (MS) is the most frequent chronic inflammatory disease of the central nervous system (CNS). Although the pathological features of this chronic demyelinating disease are well established <xref ref-type="bibr" rid="pone.0094497-Lassman1">[1]</xref>, <xref ref-type="bibr" rid="pone.0094497-Frischer1">[2]</xref>, little is currently known about the complex mechanisms that lead to the inflammatory process associated with MS.</p>
+<p>Chronic persistence of Epstein-Barr Virus (EBV) infected cells in the peripheral circulation and/or in the CNS, possibly associated with lytic viral reactivation, has received increasing attention during recent years as a potential cause of MS onset and progression <xref ref-type="bibr" rid="pone.0094497-Owens1">[3]</xref>, <xref ref-type="bibr" rid="pone.0094497-Jaquiry1">[4]</xref>, <xref ref-type="bibr" rid="pone.0094497-Lnemann1">[5]</xref>, <xref ref-type="bibr" rid="pone.0094497-Salvetti1">[6]</xref>, <xref ref-type="bibr" rid="pone.0094497-Ascherio1">[7]</xref>, <xref ref-type="bibr" rid="pone.0094497-Lnemann2">[8]</xref>, <xref ref-type="bibr" rid="pone.0094497-Lucas1">[9]</xref>.</p>
+<p>Previous investigations focused mainly on determining the presence of EBV latently infected B lymphocytes within the brain tissue <xref ref-type="bibr" rid="pone.0094497-Serafini1">[10]</xref>, <xref ref-type="bibr" rid="pone.0094497-Sargsyan1">[11]</xref>, <xref ref-type="bibr" rid="pone.0094497-Peferoen1">[12]</xref>, <xref ref-type="bibr" rid="pone.0094497-Tzartos1">[13]</xref> and/or direct viral presence in the CSF <xref ref-type="bibr" rid="pone.0094497-Denne1">[14]</xref>, <xref ref-type="bibr" rid="pone.0094497-AlvarezLafuente1">[15]</xref>, <xref ref-type="bibr" rid="pone.0094497-Mancuso1">[16]</xref>, <xref ref-type="bibr" rid="pone.0094497-Santiago1">[17]</xref>. However, results have been highly discordant, with some authors reporting the presence of EBV-infected cells in the vast majority of MS cases <xref ref-type="bibr" rid="pone.0094497-Serafini1">[10]</xref>, <xref ref-type="bibr" rid="pone.0094497-Tzartos1">[13]</xref>, whilst others have failed to demonstrate the presence of EBV or showed positivity in only a minority of MS brain tissues or CSFs <xref ref-type="bibr" rid="pone.0094497-Sargsyan1">[11]</xref>, <xref ref-type="bibr" rid="pone.0094497-Peferoen1">[12]</xref>, <xref ref-type="bibr" rid="pone.0094497-Mancuso1">[16]</xref>, <xref ref-type="bibr" rid="pone.0094497-Willis1">[18]</xref>. A recent focused experts workshop on the detection of EBV in MS brain <xref ref-type="bibr" rid="pone.0094497-Lassmann1">[19]</xref> highlighted the possibility that divergent results may be due, at least in part, to technical issues, including methodological approaches and differences in the sensitivity and specificity of the various, mostly “<italic>in house</italic>”, detection assays used. These conclusions are likely to apply also to CSF studies.</p>
+<p>This study addressed the possibility that the presence of EBV could have been missed in some of the previous studies, due to the pre-analytical and analytical methodologies applied to sample processing and analysis <xref ref-type="bibr" rid="pone.0094497-Germi1">[20]</xref>. Standardized commercial methods were used in this study to obtain both high-yield automated recovery of microbial nucleic acids from different clinical matrices <xref ref-type="bibr" rid="pone.0094497-Loens1">[21]</xref>, <xref ref-type="bibr" rid="pone.0094497-Perandin1">[22]</xref>, <xref ref-type="bibr" rid="pone.0094497-Dundas1">[23]</xref> and accurate quantification of EBV <italic>EBNA-1</italic> gene, using a previously described Real-Time PCR assay <xref ref-type="bibr" rid="pone.0094497-Polman1">[24]</xref>. Moreover, a larger sample volume of CSF (1 ml), as compared to most previous studies, was analyzed in order to increase the sensitivity of detection.</p>
+<p>Furthermore, in order to establish whether the presence of the virus was associated to latently infected cells or to viral lytic reactivation, EBV DNA detection was performed on both cell-free and cell-associated CSF fractions obtained from relapsing-remitting MS (RRMS) patients at the onset of a clinical relapse and compared to controls, affected by non-inflammatory or other inflammatory neurological diseases. The presence of EBV DNA was also determined in both peripheral blood mononuclear cells (PBMC) and plasma, collected at the same time of CSF sampling, in order to investigate the possible role of EBV systemic infection in the pathogenesis of MS, associated to either lympho-monocytes acting as carriers of virus particles from the periphery to the CSF, or to the release of free virus following lytic infection.</p>
+</sec><sec id="s2" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s2a">
+<title>Ethics Statement</title>
+<p>The study protocol was reviewed and approved by the Ethics Committee of the A.O. Ospedale S. Gerardo, Monza (PI investigator site) and by the Ethics Committees of the Ospedale di Circolo e Fondazione Macchi, Varese, A.O. Ospedale Papa Giovanni XXIII, Bergamo, Fondazione Istituto Neurologico “Carlo Besta”, Milano, A.O Sant'Anna, Como, A.O. Ospedale Maggiore, Crema, all in Italy. Written informed consent was obtained from the patients before study enrollment. Only adult patients aged 18 or more were included in the study.</p>
+</sec><sec id="s2b">
+<title>Patients</title>
+<p>A total of 106 subjects, 55 affected by relapsing-remitting MS (RRMS) naïve to treatment and 51 controls (40 with non-inflammatory neurological diseases or resulted at the end of the diagnostic workout not to be affected by any neurological disease (NIND] and 11 with other inflammatory neurological diseases [OIND]), were included in this study. Patients' recruitment was carried out by seven clinical centers with specific expertise in MS management. MS diagnosis was made for all 55 patients during the acute relapse occurring at the time of recruitment, according to the revised McDonalds criteria <xref ref-type="bibr" rid="pone.0094497-Polman1">[24]</xref> based on clinical and anamnestic findings and supported by the routine diagnostic workout. Investigations included at least brain MRI and CSF examination (routine cell count, IgG index: [IgG CSF/IgG serum]×[serum albumin/CSF albumin] with qualitative oligoclonal bands (OCB) analysis of intrathecal Ig-synthesis). All the RRMS patients had CSF examination within 2 weeks from the clinical relapse and they had active brain and/or spinal MRI with gadolinium enhancement in T1-weighed images. CSF samples were also obtained for diagnostic purposes from a group of control patients who underwent clinical and instrumental testing for symptoms suggesting acute or chronic neurological disorders of possible inflammatory or non-inflammatory origin; the final diagnosis in these subjects was supported by the appropriate diagnostic investigations.</p>
+</sec><sec id="s2c">
+<title>Specimen Collection and Processing</title>
+<p>CSF and peripheral blood samples were collected from all patients at the same time point. Lymphocyte count was determined for all CSF samples. CSF samples were checked for microscopical blood contamination and samples with red blood cells observed at the standard counting chamber examination were excluded from the analysis. All remaining specimens were further processed as follows.</p>
+<p>A volume of 1.5 ml of CSF was centrifuged at 180 g × 10 min at room temperature (RT), to separate cell-free CSF (supernatant) from the cell-containing CSF pellet, within 1 h following lumbar puncture.</p>
+<p>Four ml of peripheral blood were centrifuged at 1000 g × 20 min at RT to obtain 3 aliquots of plasma. PBMC were obtained from 10 ml of peripheral blood by adding 10 ml of sterile saline, aliquoting in two 15 ml Ficoll gradients and centrifuging at 490 g × 30 min at 18°C. PBMC rings were then collected and further centrifuged at 700 g × 10 min at 18°C to obtain two separate PBMC pellets. All samples were stored at −80°C until analyzed.</p>
+</sec><sec id="s2d">
+<title>DNA Extraction</title>
+<p>DNA extraction was carried out using the automated platform NucliSENS easyMAG (BioMérieux, Firenze, Italy) validated with a universal extraction kit based on magnetic beads (NucliSENS Nucleic Acid Extraction Reagents for easyMAG, BioMérieux, Firenze, Italy). This automated system has been specifically developed and validated for microbial nucleic acid extraction from different clinical matrices <xref ref-type="bibr" rid="pone.0094497-Loens1">[21]</xref>, <xref ref-type="bibr" rid="pone.0094497-Dundas1">[23]</xref>, <xref ref-type="bibr" rid="pone.0094497-Yang1">[25]</xref>, <xref ref-type="bibr" rid="pone.0094497-Kim1">[26]</xref> and has been proven to have a higher efficiency in viral nucleic acid recovery and a reduced risk of sample contamination than other available methods <xref ref-type="bibr" rid="pone.0094497-Loens1">[21]</xref>, <xref ref-type="bibr" rid="pone.0094497-Dundas1">[23]</xref>, <xref ref-type="bibr" rid="pone.0094497-Yang1">[25]</xref>, <xref ref-type="bibr" rid="pone.0094497-Kim1">[26]</xref>. To further improve viral DNA recovery, the “<italic>specific</italic>” nucleic acid extraction protocol was used, in accordance to the recommendations of the automated system's manufacturer, characterized by both a higher final elution temperature (70°C) and the use of a higher concentration of silica beads.</p>
+<p>The efficiency of the automated system “<italic>specific</italic>” protocol in EBV DNA recovery was preliminary evaluated in this study by adding 4 different dilutions of commercially available EBV plasmids (EBV Q-PCR Alert Standard kit, ELITech Group, Puteaux, France) to aliquots of a known EBV negative cell-free CSF sample as well as including PCR-grade bi-distilled water as negative control to determine the potential risk of sample contamination during the nucleic acid extraction process. Nucleic acid extraction was carried out on three separate occasions to determine the intra-run and inter-run variability.</p>
+<p>An initial starting volume of 1 ml of cell-free CSF was used for nucleic acid isolation and the nucleic acid extract was eluted in a final volume of 60 microl of Extraction Buffer 3 (NucliSENS Nucleic Acid Extraction Reagents for easyMAG, BioMérieux, Firenze, Italy).</p>
+<p>CSF pellets (cells obtained following centrifugation of 1.5 ml of CSF sample) and PBMC (cells present in one of the two aliquots obtained following Ficoll gradient separation of 10 ml of peripheral blood) were first resuspended in 500 microl of Lysis Buffer (NucliSENS Nucleic Acid Extraction Reagents for easyMAG, BioMérieux, Firenze, Italy) × 10 min at RT and subsequently extracted and eluted in 100 microl of Extraction Buffer 3. Finally, 300 microl of plasma samples were processed for nucleic acid extraction and eluted in 100 microl of Extraction Buffer 3.</p>
+<p>A positive internal control was added to clinical samples prior to DNA extraction (CPE – DNA – Internal control, Elitech Group, Puteaux, France) in order to evaluate the absence of PCR inhibitors, as recommended by the manufacturer's protocol. All samples were processed according to strict laboratory procedures to prevent sample contamination.</p>
+</sec><sec id="s2e">
+<title>Real-Time PCR for the Quantitative Detection of EBNA-1 Gene</title>
+<p>Quantitative amplification of EBV <italic>EBNA</italic>-1 gene was carried out by means of a validated and certified (CE marked) standardized commercial kit, EBV Q-PCR Alert (ELITech Group, Puteaux, France), based on <italic>EBNA</italic>-1 gene detection, common to both EBV-1 and EBV-2 viral population, and on the use of Real-Time PCR, with previously described primers and probe (MGB) <xref ref-type="bibr" rid="pone.0094497-Dundas1">[23]</xref>. This highly specific and sensitive detection method was used to test and quantify separately CSF and blood samples divided into their cell-free and cell-associated fractions from 55 RRMS patients and 51 controls for EBV DNA.</p>
+<p>Each run included a negative control (5 microl of sterile bidistilled water). Standard commercial EBV calibrators, 10<sup>5</sup>, 10<sup>4</sup>, 10<sup>3</sup>, 10<sup>2</sup> copies/microl (EBV Q-PCR Alert Standard kit, ELITech Group, Puteaux, France) were also included in each run to obtain the standard calibration curve and as positive controls, as recommended by the protocol of the commercial kit. A further dilution of known DNA standards, corresponding to 10<sup>1</sup> copies/microl, was also included to determine the lower limit of sensitivity of the assay for the accurate quantitative detection of low titer of EBV DNA samples.</p>
+<p>Real-Time PCR assays were performed using the ABI PRISM 7900HT Sequence Detection System (Life Technologies, Monza, Italy). All samples were tested in duplicate. Multiple negative controls were included in each run. Five microl of extracted DNA was added to the Master mix (Q-PCR Alert AmpliMASTER, ELITech Group, Puteaux, France) to obtain a final volume of 25 microl. The PCR cycle protocol consisted of 2 min at 50°C, 10 min at 95°C, and 45 two-step cycles of 15 s at 95°C and of 1 min at 60°C.</p>
+<p>The limit of EBV detection was 1 copy/reaction, corresponding to a threshold of 12 copies/ml in CSF. In parallel, the host cellular component was quantified in CSF pellet and PBMC samples, using a previously described <italic>in house</italic> assay for <italic>CCR5</italic> gene determination <xref ref-type="bibr" rid="pone.0094497-Broccolo1">[27]</xref>. The EBV viral load present in these cellular samples was normalized on the basis of <italic>CCR5</italic> gene quantification, reflecting the number of cells present in the sample, and expressed as copies/10<sup>2</sup> cells and copies/10<sup>6</sup> cells in the CSF cell-associated pellet and PBMC, respectively.</p>
+</sec><sec id="s2f">
+<title>Statistical Analysis</title>
+<p>The statistics program SPSS 20 (IBM SPSS Italia, Bologna, Italy) was used to perform all statistical analyses. For asymmetrical data Mann Whitney U test was used to compare distributions between cases and control subjects. The Chi-square (A/D) test was used to compare categorical variables. A p-value&lt;0.05 was taken as statistically significant.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<p>Results of routine CSF examination were consistent with the final diagnosis of RRMS in each patient and all the samples were available for analysis. With specific reference to RRMS patients, the lymphocyte count range was &lt;1–14/microl (median = 7), the IgG Link index range was 0.50–1.58 and all but 3 subjects showed positivity for OCB. OIND and NIND subjects CSF examination revealed a lymphocyte count range &lt;1–33/microl (median = 19) and &lt;1–28/microl (median = 16), a IgG Link index range 0.17–0.27 and 0.36–0.85, respectively, and 1 subject showed positivity for OCB in each group.</p>
+<p>The efficiency and reproducibility of the pre-analytical and analytical stages of the study were demonstrated prior to sample processing. In particular, NucliSENS easyMAG automated system with the use of the “specific” protocol for microbial nucleic acid extraction showed a very high efficiency in viral DNA recovery when spiking negative cell-free CSF samples with EBV DNA concentrations ranging from 10<sup>5</sup> to 10<sup>2</sup> copies/μl (<xref ref-type="table" rid="pone-0094497-t001">Table 1</xref>). The correlation coefficient (<italic>R</italic><sup>2</sup>) for the standard curves based on different extraction runs of these dilutions was 0.999. All negative samples were demonstrated to be negative for all 3 runs confirming the very low risk of contamination by the use of the automated system, as indicated by previous studies <xref ref-type="bibr" rid="pone.0094497-Perandin1">[22]</xref>.</p>
+<table-wrap id="pone-0094497-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094497.t001</object-id><label>Table 1</label><caption>
+<title>Correlation between expected results and automated extraction method performed as quality control for EBV DNA load measurement.</title>
+</caption><alternatives><graphic id="pone-0094497-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094497.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Expected results</td>
+<td colspan="2" align="left" rowspan="1">EBV DNA load</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Log copies</td>
+<td align="left" rowspan="1" colspan="1">Log copies</td>
+<td align="left" rowspan="1" colspan="1">Ct mean</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1">1.94</td>
+<td align="left" rowspan="1" colspan="1">30.63</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1">2.90</td>
+<td align="left" rowspan="1" colspan="1">27.48</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">3.96</td>
+<td align="left" rowspan="1" colspan="1">24.00</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">5</td>
+<td align="left" rowspan="1" colspan="1">4.97</td>
+<td align="left" rowspan="1" colspan="1">20.69</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>The table lists Ct value and log copies/reaction using standard commercial EBV calibrators (EBV Q-PCR Alert Standard kit, ELITech Group, Puteaux, France). Negative cell-free CSF samples were spiked with EBV DNA concentrations ranging from 10<sup>5</sup> to 10<sup>2</sup> copies/microl.</p></fn></table-wrap-foot></table-wrap>
+<p>Results of EBV viral loads, obtained from clinical samples found to be positive for the presence of EBV <italic>EBNA-1</italic> gene, are shown in <xref ref-type="table" rid="pone-0094497-t002">Table 2</xref>.</p>
+<table-wrap id="pone-0094497-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0094497.t002</object-id><label>Table 2</label><caption>
+<title>EBV <italic>EBNA-1</italic> gene prevalence and viral loads in CSF and blood samples of 55 RRMS and 51 controls (OIND + NIND) patients.</title>
+</caption><alternatives><graphic id="pone-0094497-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0094497.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td colspan="2" align="left" rowspan="1">EBV</td>
+<td align="left" rowspan="1" colspan="1">RRMS</td>
+<td align="left" rowspan="1" colspan="1">OIND</td>
+<td align="left" rowspan="1" colspan="1">NIND</td>
+<td colspan="2" align="left" rowspan="1">RRMS versus OIND</td>
+<td colspan="2" align="left" rowspan="1">RRMS versus NIND</td>
+</tr>
+<tr>
+<td colspan="2" align="left" rowspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">P value</td>
+<td align="left" rowspan="1" colspan="1">OR</td>
+<td align="left" rowspan="1" colspan="1">P value</td>
+<td align="left" rowspan="1" colspan="1">OR</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Plasma</bold></td>
+<td align="left" rowspan="1" colspan="1">Prevalence (%)</td>
+<td align="left" rowspan="1" colspan="1">4/55 (7.3%)</td>
+<td align="left" rowspan="1" colspan="1">0/11 (0%)</td>
+<td align="left" rowspan="1" colspan="1">3/40 (7.5%)</td>
+<td align="left" rowspan="1" colspan="1">0.356</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">0.967</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Median <xref ref-type="table-fn" rid="nt103">*</xref> V.L (range) <italic>(copies/ml)</italic></td>
+<td align="left" rowspan="1" colspan="1">126.5 (98–163)</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">189 (163–288)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>PBMC</bold></td>
+<td align="left" rowspan="1" colspan="1">Prevalence (%)</td>
+<td align="left" rowspan="1" colspan="1">26/55 (47.3%)</td>
+<td align="left" rowspan="1" colspan="1">7/11 (63.6)</td>
+<td align="left" rowspan="1" colspan="1">9/40 (22.5%)</td>
+<td align="left" rowspan="1" colspan="1">0.322</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+<td align="left" rowspan="1" colspan="1">0.013</td>
+<td align="left" rowspan="1" colspan="1">3.1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Median V.L (range) <italic>(copies/10<sup>6</sup> cells)</italic></td>
+<td align="left" rowspan="1" colspan="1">1328 (386–17131)</td>
+<td align="left" rowspan="1" colspan="1">1005 (115–4045)</td>
+<td align="left" rowspan="1" colspan="1">1412 (40–88506)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CSF cell free</bold></td>
+<td align="left" rowspan="1" colspan="1">Prevalence (%)</td>
+<td align="left" rowspan="1" colspan="1">3/55 (5.5%)</td>
+<td align="left" rowspan="1" colspan="1">0/11 (0%)</td>
+<td align="left" rowspan="1" colspan="1">4/40 (10%)</td>
+<td align="left" rowspan="1" colspan="1">0.428</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">0.402</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Median V.L (range) <italic>(copies/ml)</italic></td>
+<td align="left" rowspan="1" colspan="1">216 (36–264)</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">56.5 (14–86)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CSF cell ass</bold></td>
+<td align="left" rowspan="1" colspan="1">Prevalence (%)</td>
+<td align="left" rowspan="1" colspan="1">10/55 (18.2%)</td>
+<td align="left" rowspan="1" colspan="1">0/11 (0%)</td>
+<td align="left" rowspan="1" colspan="1">4/40 (10%)</td>
+<td align="left" rowspan="1" colspan="1">0.125</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">0.267</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Median V.L (range) <italic>(copies/10<sup>2</sup> cells)</italic></td>
+<td align="left" rowspan="1" colspan="1">3 (0.2–25)</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">3 (1–9)</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>PBMC  =  peripheral blood mononuclear cells; CSF  =  cerebrospinal fluid; V.L.  =  viral load; RRMS relapsing-remitting multiple sclerosis; OIND  =  other inflammatory neurological diseases; NIND  =  non-inflammatory neurological diseases or normal findings; OR  =  odd ratio.</p></fn><fn id="nt103"><label/><p>*Median refers to positive samples.</p></fn></table-wrap-foot></table-wrap>
+<p>Among 55 patients with active RRMS, 13 (23.6%) CSF samples had quantifiable <italic>EBNA-1</italic> DNA (3 in cell-free and 10 in cell-associated specimens – <xref ref-type="table" rid="pone-0094497-t002">Table 2</xref> and <xref ref-type="supplementary-material" rid="pone.0094497.s001">Table S1</xref>) and 30 (54.5%) blood samples were positive for <italic>EBNA-1</italic> DNA (4 from plasma and 26 from PBMC) as shown in <xref ref-type="table" rid="pone-0094497-t002">Table 2</xref> and <xref ref-type="supplementary-material" rid="pone.0094497.s001">S1</xref>.</p>
+<p>In the overall control population composed by OIND + NIND, 8 samples obtained from 7 out of 51 (13.7%) subjects had quantifiable <italic>EBNA-1</italic> DNA in CSF (4 in cell-free CSF and 4 in CSF pellet, with two positive samples coming from the same NIND patient) and 19 (37.3%) had positive blood samples (3 plasma and 16 PBMC samples from 17 patients), as shown in <xref ref-type="table" rid="pone-0094497-t002">Table 2</xref> and <xref ref-type="supplementary-material" rid="pone.0094497.s001">S1</xref>.</p>
+<p>Among the OIND cohort positivity for EBV DNA was never detected in the CSF, while 7 blood samples were positive. Among NIND patients the prevalence of <italic>EBNA-1</italic> DNA positive samples was 8/40 (20.0 2%) in CSF (1 both in cell-free CSF and pellet, 3 in cell-free CSF, 3 in CSF pellet) and 9/40 (22.5%) in blood samples (2 both in plasma and PBMC, 7 in PBMC only). Two of them were simultaneously positive in CSF and blood samples. Differences in EBV DNA positivities among the three groups were not statistically significant except for those demonstrated in PBMC samples of RRMS and NIND (p value = 0.013, O.R. = 3.1, <xref ref-type="table" rid="pone-0094497-t002">Table 2</xref>).</p>
+<p>Higher viral loads were found in both cell-free and CSF pellets samples from active RRMS patients as compared to control subjects, with the highest number of viral copies being observed in cell-free CSF samples (<xref ref-type="table" rid="pone-0094497-t002">Table 2</xref>). The quantifiable viral loads embraced a wide range of values among considered groups based on cell-free and cell-associated samples. Among RRMS patients the median viral load in cell-free CSF positive samples was 216 copies/ml and in plasma was 126.5 copies/ml in positive samples , while in the cell-associated CSF a median value in positive samples of only 3 copies of EBV DNA/10<sup>2</sup> cells was detected.</p>
+<p>The median number of viral copies found in both positive CSF samples (cell-free and cell-associated CSF) from patients with MS (216 copies/ml, range 36–264 copies/ml and 3 copies/10<sup>2</sup> cells, range 0.2–25 copies/10<sup>2</sup> cells, respectively) and in CSF samples from patients without neurological diseases (56.5 copies/ml, range 14–86 copies/ml and 3 copies/10<sup>2</sup> cells, range 1–9 copies/10<sup>2</sup> cells, respectively) was comparable. As regards to OIND group, in the same samples no EBV DNA was found to be present.</p>
+<p>On the other hand, the median number of viral loads found in positive blood samples (plasma and PBMC) from patients with MS (126.5 copies/ml, range 98–163 copies/ml and 1328 copies/10<sup>6</sup> cells, range 386–17131 copies/10<sup>6</sup> cells, respectively) and from patients without neurological diseases (189 copies/ml, range 163–288 copies/ml and 1412 copies/10<sup>6</sup> cells, range 40–88506 copies/10<sup>6</sup> cells, respectively) was comparable. As regards to OIND group, in plasma sample, no presence of EBV DNA was reported, while in PBMC sample a median viral load in positive samples of 1005 copies/10<sup>6</sup> cells (range 115–4045 copies/10<sup>6</sup> cells) was detected.</p>
+</sec><sec id="s4">
+<title>Discussion</title>
+<p>Technical issues related to the sensitivity and specificity of the detection methods were partly held responsible for the lack of unequivocal proof on the role of EBV infection in MS <xref ref-type="bibr" rid="pone.0094497-Lassmann1">[19]</xref>. Although the presence of EBV PCR DNA in CSF is an indirect measure of the events occurring in brain tissue, its detection is somewhat relevant to the controversy.</p>
+<p>This study aimed at providing evidence for the presence of EBV DNA in CSF and peripheral blood samples of RRMS patients, as compared to those of patients with other neurological diseases, by means of a validated, highly standardized and reproducible methods for viral nucleic acid extraction and molecular quantitative detection. All samples were processed rapidly after collection and stored under appropriate conditions prior to sample analysis. In order to improve recovery of hypothetical small numbers of viral particles present in the CSF a larger volume of sample was analyzed as compared to most previous studies. CSF and peripheral blood samples were also further separated in cell-free and cell-associated components prior to EBV DNA detection, in order to distinguish between possible latent and lytic EBV infections.</p>
+<p>Our results showed similar EBV DNA positivities in cell-free and cell-associated CSF from RRMS and NIND subjects, while OIND subjects were all negative. Generally, slightly higher positivity rates were obtained when compared to previous investigations carried out on CSF samples from MS cases and controls <xref ref-type="bibr" rid="pone.0094497-Mancuso1">[16]</xref>, <xref ref-type="bibr" rid="pone.0094497-Aberle1">[28]</xref>. These differences could be explained by the larger volume of CSF sample analyzed, the improved efficiency in viral nucleic acid recovery, as a result of the DNA extraction method used, and the higher sensitivity of the standardized EBV molecular detection assay used in our study, allowing detection down to 10 copies/reaction or 120 copies/ml. However, in spite of the improved viral detection and quantification methods, this study did not provide evidence for an association between EBV and RRMS.</p>
+<p>PBMC and plasma EBV viral load were also determined in this study as a measure of viral lytic infection and in order to evaluate if peripheral viral activity corresponded to disease activity. As observed in the CSF, in the peripheral blood samples positive for <italic>EBNA-1</italic> gene, EBV viral load was not significantly different in RRMS patients as compared to OIND and NIND subjects. These results are in keeping to those obtained in previous studies <xref ref-type="bibr" rid="pone.0094497-Alvarez1">[29]</xref>, <xref ref-type="bibr" rid="pone.0094497-AlvarezLafuente2">[30]</xref>, <xref ref-type="bibr" rid="pone.0094497-Sotelo1">[31]</xref>, although higher EBV positivities in PBMC were observed by Lindsey <italic>et al</italic> <xref ref-type="bibr" rid="pone.0094497-Lindsey1">[32]</xref> (81% in MS subjects as compared to 89% in healthy controls) based on the presence of BamHIW repeat sequence (about 10 copies per EBV genome). However, when the authors analyzed the same samples for the presence of the single copy <italic>LMP2a</italic> gene, EBV was quantifiable only in 11% and 10.8% of MS and healthy control subjects, respectively. Higher, but not statistically significant, PBMC EBV DNA loads in patients with RRMS or with clinically isolated syndrome compared to healthy controls were also reported <xref ref-type="bibr" rid="pone.0094497-Lindsey1">[32]</xref>.</p>
+<p>Differences in technical issues, such as the choice of the nucleic acid extraction method, the viral sequences to be detected, some present in single or multiple copies within the viral genome, differences in the methodologies and/or sensitivities of the detection assays used as well as the way of expressing viral load (such as EBV copies/10<sup>6</sup> cells or copies/μg of DNA), make it somewhat difficult to appropriately compare results obtained in previously published studies <xref ref-type="bibr" rid="pone.0094497-Lucas2">[33]</xref>.</p>
+<p>In conclusion, this study used appropriately validated methods for both the pre-analytical and analytical detection of EBV DNA in order to provide improved standardized viral detection from different clinical samples. In spite of this improved methodological aspects and considering the relatively low sample size, our study confirms previous results showing lack of any significant difference in CSF and peripheral blood EBV DNA positivities and viral load between RRMS patients and the control groups.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pone.0094497.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pone.0094497.s001" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Viral loads of EBV in CSF and blood samples of 55 RRMS and 51 controls (OIND + NIND) patients.</bold> The table showed patient positivity for EBV by means of <italic>EBNA-1</italic> gene quantification in at least one sample. Each experiment was repeated twice and values reported in table are representative of the average of the two experiments. Patients numbers did not correspond to the original patient code. For the two control groups (OIND and NIND), final diagnosis was reported.</p>
+<p>(DOCX)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack><sec>
+<title>Contributors</title>
+<p>The EBV-MS Italian Study Group is formed, in addition to the cited, by the following persons: Barbara Frigeni, Nerina Mascoli, Marta Conti, Carlo Antozzi, Francesca Andreetta, Elena Ambrosoni, Elsa Mainardi.</p>
+</sec></ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0094497-Lassman1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lassman</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Brück</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Lucchinetti</surname><given-names>CF</given-names></name> (<year>2007</year>) <article-title>The immunopathology of multiple sclerosis: an overview</article-title>. <source>Brain Pathol</source> <volume>17</volume>: <fpage>210</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Frischer1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frischer</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Bramow</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Dal-Bianco</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lucchinetti</surname><given-names>CF</given-names></name>, <name name-style="western"><surname>Rauschka</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The relation between inflammation and neurodegeneration in multiple sclerosis brains</article-title>. <source>Brain</source> <volume>132</volume>: <fpage>1175</fpage>–<lpage>89</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Owens1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Owens</surname><given-names>GP</given-names></name>, <name name-style="western"><surname>Bennett</surname><given-names>JL</given-names></name> (<year>2012</year>) <article-title>Trigger, Pathogen, or Bystander: The Complex Nexus Linking Epstein- Barr Virus</article-title>. <source>Mult Scler</source> <volume>18</volume>: <fpage>1204</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Jaquiry1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jaquiéry</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Jilek</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Schluep</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Meylan</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Lysandropoulos</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Intrathecal immune response to EBV in early MS</article-title>. <source>Eur J Immunol</source> <volume>40</volume>: <fpage>878</fpage>–<lpage>87</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Lnemann1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lünemann</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Münz</surname><given-names>C</given-names></name> (<year>2009</year>) <article-title>EBV in MS: guilty by association</article-title>? <source>Trends Immunol</source> <volume>30</volume>: <fpage>243</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Salvetti1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salvetti</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Giovannoni</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Aloisi</surname><given-names>F</given-names></name> (<year>2009</year>) <article-title>Epstein-Barr Virus and Multiple Sclerosis</article-title>. <source>Curr Opin Neurol</source> <volume>22</volume>: <fpage>201</fpage>–<lpage>6</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Ascherio1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ascherio</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Munger</surname><given-names>KL</given-names></name> (<year>2010</year>) <article-title>Epstein-Barr Virus Infection and Multiple Sclerosis: A Review</article-title>. <source>J Neuroimmune Pharmacol</source> <volume>5</volume>: <fpage>271</fpage>–<lpage>7</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Lnemann2"><label>8</label>
+<mixed-citation publication-type="other" xlink:type="simple">Lünemann JD, Kamradt T, Martin R, Munz C (2007) Epstein-Barr virus: enviromental trigger of multiple sclerosis? J Virol 78; 11–12.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Lucas1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lucas</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Hughes</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Lay</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Ponsonby</surname><given-names>Al</given-names></name>, <name name-style="western"><surname>Dwyer</surname><given-names>DE</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Epstein-Barr Virus and Multiple Sclerosis</article-title>. <source>J Neurol Neurosurg Psychiatry</source> <volume>82</volume>: <fpage>1142</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Serafini1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Serafini</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Severa</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Columba-Cabezas</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Rosicarelli</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Veroni</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Epstein-Barr virus latent infection and BAFF expression in B cells in the multiple sclerosis brain: implications for viral persistence and intrathecal B-cell activation</article-title>. <source>J Neuropathol Exp Neurol</source> <volume>69</volume>: <fpage>677</fpage>–<lpage>93</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Sargsyan1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sargsyan</surname><given-names>SA</given-names></name>, <name name-style="western"><surname>Shearer</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Ritchie</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Burgoon</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Anderson</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Absence of Epstein-Barr Virus in the Brain and CSF of Patients with Multiple Sclerosis</article-title>. <source>Neurology</source> <volume>74</volume>: <fpage>1127</fpage>–<lpage>35</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Peferoen1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peferoen</surname><given-names>LA</given-names></name>, <name name-style="western"><surname>Lamers</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Lodder</surname><given-names>LN</given-names></name>, <name name-style="western"><surname>Gerritsen</surname><given-names>WH</given-names></name>, <name name-style="western"><surname>Huitinga</surname><given-names>I</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Epstein-Barr virus is not a characteristic feature in the central nervous system in established multiple sclerosis</article-title>. <source>Brain</source> <volume>133</volume>: <fpage>e137</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Tzartos1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tzartos</surname><given-names>JS</given-names></name>, <name name-style="western"><surname>Khan</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Vossenkamper</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Cruz-Sadaba</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Lonardi</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Association of innate immune activation with latent Epstein-Barr virus in active MS lesions</article-title>. <source>Neurology</source> <volume>78</volume>: <fpage>15</fpage>–<lpage>23</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Denne1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Denne</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Kleines</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Dieckhöfer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Ritter</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Scheithauer</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Intrathecal Synthesis of Anti-Viral Antibodies in Pediatric Patients</article-title>. <source>Eur J Paediatr Neurol</source> <volume>11</volume>: <fpage>29</fpage>–<lpage>34</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-AlvarezLafuente1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alvarez-Lafuente</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Garcia-Montojo</surname><given-names>M</given-names></name>, <name name-style="western"><surname>De Las Heras</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Domìnguez-Mozo</surname><given-names>MI</given-names></name>, <name name-style="western"><surname>Bartolome</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Herpesviruses and human endogenous retroviral sequences in the cerebrospinal fluid of multiple sclerosis patients</article-title>. <source>Mult Scler</source> <volume>14</volume>: <fpage>595</fpage>–<lpage>601</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Mancuso1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mancuso</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Hernis</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Cavarretta</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Caputo</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Calabrese</surname><given-names>E</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Detection of viral DNA sequences in the cerebrospinal fluid of patients with multiple sclerosis</article-title>. <source>J Med Virol</source> <volume>82</volume>: <fpage>1051</fpage>–<lpage>7</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Santiago1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Santiago</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Gutierrez</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sorlozano</surname><given-names>A</given-names></name>, <name name-style="western"><surname>de Dios Luna</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Villegas</surname><given-names>E</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Relation between Epstein-Barr virus and multiple sclerosis: analytical study of scientific production</article-title>. <source>Eur J Clin Microbiol Infect Dis</source> <volume>29</volume>: <fpage>857</fpage>–<lpage>866</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Willis1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Willis</surname><given-names>SN</given-names></name>, <name name-style="western"><surname>Stadelmann</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Rodig</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Caron</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Gattenloehner</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Epstein-Barr virus infection is not a characteristic feature of multiple sclerosis brain</article-title>. <source>Brain</source> <volume>132</volume>: <fpage>3318</fpage>–<lpage>3328</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Lassmann1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lassmann</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Niedobitek</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Aloisi</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Middeldorp</surname><given-names>JM</given-names></name> (<year>2011</year>) <collab xlink:type="simple">NeuroproMiSe EBV Working Group</collab> (<year>2011</year>) <article-title>Epstein-Barr Virus in the Multiple Sclerosis Brain: A Controversial Issue–Report</article-title>. <source>Brain</source> <volume>134</volume>: <fpage>2772</fpage>–<lpage>86</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Germi1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Germi</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Lupo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Semenova</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Larrat</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Magnat</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Comparison of Commercial Extraction Systems and PCR Assays for Quantification of Epstein-Barr Virus DNA Load in Whole Blood</article-title>. <source>J Clin Microbiol</source> <volume>50</volume>: <fpage>1384</fpage>–<lpage>1389</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Loens1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Loens</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Bergs</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Ursi</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Goossens</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Ieven</surname><given-names>M</given-names></name> (<year>2007</year>) <article-title>Evaluation of NucliSens easyMAG for automated nucleic acid extraction from various clinical specimens</article-title>. <source>J Clin Microbiol</source> <volume>45</volume>: <fpage>421</fpage>–<lpage>5</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Perandin1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Perandin</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Pollara</surname><given-names>CP</given-names></name>, <name name-style="western"><surname>Gargiulo</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Bonfanti</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Manca</surname><given-names>N</given-names></name> (<year>2009</year>) <article-title>Performance evaluation of the automated NucliSens easy MAG nucleic acid extraction platform in comparison with QIAamp Mini kit from clinical specimens</article-title>. <source>Diagnostic Microbiology and Infectious Disease</source> <volume>64</volume>: <fpage>158</fpage>–<lpage>65</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Dundas1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dundas</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Leos</surname><given-names>NK</given-names></name>, <name name-style="western"><surname>Mitui</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Revell</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Rogers</surname><given-names>BB</given-names></name> (<year>2008</year>) <article-title>Comparison of automated nucleic acid extraction methods with manual extraction</article-title>. <source>J Mol Diagn</source> <volume>10</volume>: <fpage>311</fpage>–<lpage>6</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Polman1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Polman</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Reingold</surname><given-names>SC</given-names></name>, <name name-style="western"><surname>Banwell</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Clanet</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Cohen</surname><given-names>JA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Diagnostic criteria for multiple sclerosis: 2010 revisions to the McDonald criteria</article-title>. <source>Ann Neurol</source> <volume>69</volume>: <fpage>292</fpage>–<lpage>302</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Yang1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yang</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Erdman</surname><given-names>DE</given-names></name>, <name name-style="western"><surname>Kodani</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kools</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Bowen</surname><given-names>MD</given-names></name> (<year>2011</year>) <article-title>Comparison of commercial systems for extraction of nucleic acids from DNA/RNA respiratory pathogens. J Virol Methods</article-title>. <volume>171(1)</volume>: <fpage>195</fpage>–<lpage>9</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Kim1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Park</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Namgoong</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sung</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>MN</given-names></name> (<year>2009</year>) <article-title>Comparative evaluation of two automated systems for nucleic acid extraction of BK virus: NucliSens easyMAG versus BioRobot MDx. J Virol Methods</article-title>. <volume>162(1–2)</volume>: <fpage>208</fpage>–<lpage>12</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Broccolo1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Broccolo</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Cocuzza</surname><given-names>CE</given-names></name> (<year>2008</year>) <article-title>Automated extraction and quantification of oncogenic HPV genotypes from cervical samples by a Real-time PCR-Based System</article-title>. <source>J Virol Methods</source> <volume>148</volume>: <fpage>48</fpage>–<lpage>57</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Aberle1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aberle</surname><given-names>SW</given-names></name>, <name name-style="western"><surname>Puchhammer-Stöckl</surname><given-names>E</given-names></name> (<year>2002</year>) <article-title>Diagnosis of herpesvirus infections of the central nervous system</article-title>. <source>J Clin Virol</source> <volume>25</volume>: <fpage>S79</fpage>–<lpage>85</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Alvarez1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alvarez</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Cour</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Kanaan</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Benedicto</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Martin-Estefania</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>Detection of viral genomes of the Herpesviridae family in multiple sclerosis patients by means of the polymerase chain reaction (PCR)</article-title>. <source>Enferm infect Microbiol Clin</source> <volume>18</volume>: <fpage>223</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-AlvarezLafuente2"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alvarez-Lafuente</surname><given-names>R</given-names></name>, <name name-style="western"><surname>De Las Heras</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Bartolomé</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Garcìa-Montojo</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Arroyo</surname><given-names>R</given-names></name> (<year>2006</year>) <article-title>Human Herpesvirus 6 and multiple sclerosis: a one-year follow up study</article-title>. <source>Brain Pathol</source> <volume>16</volume>: <fpage>20</fpage>–<lpage>27</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Sotelo1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sotelo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Ordoñez</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Pineda</surname><given-names>B</given-names></name> (<year>2007</year>) <article-title>Varicella-zoster virus at relapses of multiple sclerosis</article-title>. <source>J Neurol</source> <volume>254</volume>: <fpage>493</fpage>–<lpage>500</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Lindsey1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lindsey</surname><given-names>JW</given-names></name>, <name name-style="western"><surname>Hatfield</surname><given-names>LM</given-names></name>, <name name-style="western"><surname>Crawford</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Patel</surname><given-names>S</given-names></name> (<year>2009</year>) <article-title>Quantitative PCR for Epstein-Barr virus DNA and RNA in Multiple Sclerosis</article-title>. <source>Mult Scler</source> <volume>15</volume>: <fpage>153</fpage>–<lpage>8</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0094497-Lucas2"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lucas</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Ponsonby</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Dear</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Valery</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Pender</surname><given-names>MP</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Current and past Epstein-Barr virus infection in risk of initial CNS demyelination</article-title>. <source>Neurology</source> <volume>77</volume>: <fpage>371</fpage>–<lpage>379</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>
