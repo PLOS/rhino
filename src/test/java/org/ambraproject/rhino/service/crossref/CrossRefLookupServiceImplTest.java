@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service.crossref;
 
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
-import org.ambraproject.views.CrossRefSearch;
 import org.apache.commons.httpclient.HttpClientMock;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -100,7 +99,7 @@ public class CrossRefLookupServiceImplTest {
   @Test(dataProvider = "expectedCrossRefSeaches")
   public void testCrossRefQueryBuilder(String[] searches) throws Exception {
     Document article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pone.0047851.xml").toURI()));
+        .newDocumentBuilder().parse(new File("src/test/resources/articles/pone.0047851.xml"));
 
     CrossRefLookupServiceImpl service = new CrossRefLookupServiceImpl();
     CrossRefSearch crossRefSearches[] = service.getCrossRefSearchTerms(article);

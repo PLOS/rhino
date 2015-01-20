@@ -27,7 +27,6 @@ import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.service.hibernate.HibernateServiceImpl;
 import org.ambraproject.service.xml.XMLServiceImpl;
 import org.ambraproject.util.XPathUtil;
-import org.ambraproject.views.CrossRefSearch;
 import org.ambraproject.xml.transform.cache.CachedSource;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
