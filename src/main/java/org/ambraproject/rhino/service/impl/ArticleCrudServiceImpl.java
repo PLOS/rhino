@@ -45,7 +45,6 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.shared.AuthorsXmlExtractor;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
@@ -74,6 +73,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.xml.xpath.XPathException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -927,7 +927,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Object getData() throws IOException {
         Document doc = parseXml(readXml(id));
-        List<AuthorView> authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+        List<AuthorView> authors;
+        try {
+          authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+        } catch (XPathException e) {
+          throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
+        }
         return ArticleAuthorView.createList(authors);
       }
     };

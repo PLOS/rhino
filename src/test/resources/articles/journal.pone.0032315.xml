@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-11-18340</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0032315</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Genetics</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Microbiology</subject>
+            <subj-group>
+              <subject>Bacterial pathogens</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Epidemiology</subject>
+          </subj-group>
+          <subj-group>
+            <subject>Infectious diseases</subject>
+            <subj-group>
+              <subject>Bacterial diseases</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Genetics and Genomics</subject>
+          <subject>Public Health and Epidemiology</subject>
+          <subject>Infectious Diseases</subject>
+          <subject>Microbiology</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Genetic Variability in Beta-Defensins Is Not Associated with Susceptibility to <italic>Staphylococcus aureus</italic> Bacteremia</article-title><alt-title alt-title-type="running-head">Defensin Gene Variations in <italic>S. aureus</italic> Bacteremia</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Fode</surname>
+            <given-names>Peder</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Larsen</surname>
+            <given-names>Anders Rhod</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Feenstra</surname>
+            <given-names>Bjarke</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Jespersgaard</surname>
+            <given-names>Cathrine</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Skov</surname>
+            <given-names>Robert Leo</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Stegger</surname>
+            <given-names>Marc</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Fowler</surname>
+            <given-names>Vance G.</given-names>
+            <suffix>Jr</suffix>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <collab xlink:type="simple">the Danish SAB Study Group Consortium</collab>
+          <xref ref-type="fn" rid="fn1">
+            <sup>¶</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Andersen</surname>
+            <given-names>Paal Skytt</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Department for Microbiological Surveillance and Research, Statens Serum Institut, Copenhagen, Denmark</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Epidemiological Research, Statens Serum Institut, Copenhagen, Denmark</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Department of Clinical Biochemistry and Immunology, Statens Serum Institut, Copenhagen, Denmark</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Department of Infectious Diseases, Duke Medical Center, Durham, North Carolina, United States of America</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Otto</surname>
+            <given-names>Michael</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">National Institutes of Health, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">psa@ssi.dk</email></corresp>
+        <fn fn-type="other" id="fn1">
+          <p>¶ Membership of the Danish SAB Study Group Consortium is provided in the Acknowledgments.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: PF ARL RLS MS VGF PSA. Performed the experiments: PF ARL MS CEJ PSA. Analyzed the data: PF BF VF RLS ARL MS PSA. Contributed reagents/materials/analysis tools: PF CEJ PSA. Wrote the paper: PF VF RLS ARL PSA. Contributed with sample collection and data analysis of bacteremia cases: CEJ Danish SAB Study Group Consortium.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>22</day>
+        <month>2</month>
+        <year>2012</year>
+      </pub-date><volume>7</volume><issue>2</issue><elocation-id>e32315</elocation-id><history>
+        <date date-type="received">
+          <day>8</day>
+          <month>9</month>
+          <year>2011</year>
+        </date>
+        <date date-type="accepted">
+          <day>26</day>
+          <month>1</month>
+          <year>2012</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2012</copyright-year><copyright-holder>Fode et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <sec>
+          <title>Introduction</title>
+          <p>Human beta-defensins are key components of human innate immunity to a variety of pathogens, including <italic>Staphylococcus aureus</italic>. The aim of the present study was to investigate a potential association between gene variations in <italic>DEFB1</italic> and <italic>DEFB103/DEFB4</italic> and the development of <italic>S. aureus</italic> bacteremia (SAB) employing a case-control design.</p>
+        </sec>
+        <sec>
+          <title>Methods</title>
+          <p>Cases were unique patients with documented SAB, identified with the National <italic>S. aureus</italic> Bacteremia Register, a comprehensive dataset of all episodes of community associated-SABs (CA-SAB) occurring in children (≤20 yrs) in Denmark from 1990 to 2006. Controls were age-matched healthy individuals with no history of SAB. DNA obtained from cases and controls using the Danish Newborn Screening Biobank were genotyped for functional polymorphisms of <italic>DEFB1</italic> by Sanger sequencing and copy number variation of the <italic>DEFB103</italic> and <italic>DEFB4</italic> genes using Pyrosequencing-based Paralogue Ratio Test (P-PRT).</p>
+        </sec>
+        <sec>
+          <title>Results</title>
+          <p>193 ethnic Danish SAB cases with 382 age-matched controls were used for this study. <italic>S. aureus</italic> isolates represented a variety of bacterial (i.e., different <italic>spa</italic> types) types similar to SAB isolates in general. <italic>DEFB1</italic> minor allele frequencies of rs11362 (cases vs. controls 0.47/0.44), rs1800972 (0.21/0.24), and rs1799946 (0.32/0.33) were not significantly different in cases compared with controls. Also, <italic>DEFB4/DEFB103</italic> gene copy numbers (means 4.83/4.92) were not significantly different in cases compared with controls.</p>
+        </sec>
+        <sec>
+          <title>Conclusions</title>
+          <p>Using a large, unique cohort of pediatric CA-SAB, we found no significant association between <italic>DEFB1</italic> genetic variation or <italic>DEFB4/DEFB103</italic> gene copy number and susceptibility for SAB.</p>
+        </sec>
+      </abstract><funding-group><funding-statement>The work was supported by Danish Medical Research Council; Idella Foundation; and The Lundbeck Foundation. Dr. Fowler was supported by NIH grant R01-AI068804. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+        <page-count count="5"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p><italic>Staphylococcus aureus</italic> is a leading cause of bacteremia and endocarditis in the industrialized world. In 2008, the incidence of <italic>S. aureus</italic> bacteremia (SAB) in Denmark was 25.6 cases per 100,000 inhabitants <xref ref-type="bibr" rid="pone.0032315-Skov1">[1]</xref>. Approximately 20% of these cases had a fatal outcome <xref ref-type="bibr" rid="pone.0032315-Skov1">[1]</xref>.</p>
+      <p>A growing body of evidence indicates that host genetic factors are involved in susceptibility to a variety of bacterial pathogens, including meningococci <xref ref-type="bibr" rid="pone.0032315-Davila1">[2]</xref>, <italic>Mycobacterium tuberculosis</italic> <xref ref-type="bibr" rid="pone.0032315-Thye1">[3]</xref>, and leprosy <xref ref-type="bibr" rid="pone.0032315-Zhang1">[4]</xref>, <xref ref-type="bibr" rid="pone.0032315-Zhang2">[5]</xref>. Similar evidence also exists for genetic susceptibility to <italic>S. aureus</italic>. For example, higher rates of invasive <italic>S. aureus</italic> infection have been described in ethnically distinct populations, including Australian Aborigines, New Zealand Maori, and Canadian Native Americans <xref ref-type="bibr" rid="pone.0032315-Hill1">[6]</xref>. Using a murine <italic>S. aureus</italic> sepsis model, Ahn <italic>et al.</italic> recently demonstrated that inbred A/J mice were highly susceptible to <italic>S. aureus</italic> infection as compared to C57BL6, and that this susceptibility was associated with regions on A/J chromosomes 8, 11, and 18, chromosomes that included defensin genes and several other innate immune genes <xref ref-type="bibr" rid="pone.0032315-Ahn1">[7]</xref>. Additionally, investigators at Erasmus University recently suggested that variability within key innate immunity genes were associated with persistent <italic>S. aureus</italic> carriage <xref ref-type="bibr" rid="pone.0032315-Ruimy1">[8]</xref>. Despite these findings, however, the precise genetic determinants for susceptibility to <italic>S. aureus</italic> infection in humans are unknown.</p>
+      <p>Defensins are small cationic peptides with antimicrobial activity <xref ref-type="bibr" rid="pone.0032315-Singh1">[9]</xref>–<xref ref-type="bibr" rid="pone.0032315-Morrison1">[12]</xref> and shown to be important players in the innate immune system. The majority of the defensin genes including <italic>DEFB1</italic>, <italic>DEFB4</italic> and <italic>DEFB103</italic> encoding human beta-defensins 1, 2 and −3, respectively <xref ref-type="bibr" rid="pone.0032315-Hollox1">[13]</xref>, are located on chromosome 8p23.1, a region of great complexity with both functional SNPs (<italic>DEFB1</italic>) and copy number variation (CNV) of a wide range of beta-defensin genes including <italic>DEFB4</italic> and <italic>DEFB103</italic>. <italic>DEFB1</italic> is apparently constitutively expressed <xref ref-type="bibr" rid="pone.0032315-Harder1">[14]</xref>, but functional single nucleotide polymorphisms (SNPs) in <italic>DEFB1</italic> have been associated with susceptibility to severe sepsis <xref ref-type="bibr" rid="pone.0032315-Chen1">[15]</xref>. Furthermore, human beta-defensin 3 (HBD3) has a strong activity against <italic>S. aureus</italic> <xref ref-type="bibr" rid="pone.0032315-Harder2">[16]</xref>. The genomic copy number (GCN) for <italic>DEFB4/DEFB103</italic> varies from 2 to 12 copies per diploid genome <xref ref-type="bibr" rid="pone.0032315-Hollox1">[13]</xref>. Interestingly, an increased GCN of <italic>DEFB4/DEFB103</italic> is associated with exacerbations of psoriasis, an inflammatory skin disease characterized by a notable absence of <italic>S. aureus</italic> colonization <xref ref-type="bibr" rid="pone.0032315-Christophers1">[17]</xref>.</p>
+      <p>The combination of strong activity against <italic>S. aureus</italic>, functional <italic>DEFB1</italic> SNPs and high variability in <italic>DEFB4/DEFB103</italic> GCN makes these genes promising candidates for human susceptibility to <italic>S. aureus</italic> infections. In the present study we used a unique cohort of all pediatric patients with SAB in Denmark over a 16-year period to evaluate potential associations between either functional SNPs of <italic>DEFB1</italic> or low GCN of <italic>DEFB4/DEFB103</italic> and pediatric SAB.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s2a">
+        <title>Ethics Statement</title>
+        <p>The present study was approved by the Regional Science Ethics Committee of Copenhagen (2007-0104), the Danish Data Protection Agency (2008-54-0458), and The Danish Newborn Screening Biobank's review board a similar, but more independent review board than an Institutional Review Board. The parents are informed verbally and by homepage (<ext-link ext-link-type="uri" xlink:href="http://www.ssi.dk/nyfoedte" xlink:type="simple">www.ssi.dk/nyfoedte</ext-link>) about the use of The Danish Newborn Screening Biobank and can opt out at any time <xref ref-type="bibr" rid="pone.0032315-NrgaardPedersen1">[18]</xref>.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Identification of cases and controls</title>
+        <p>The present study included all Danish SAB pediatric patients in the period 1990–2006. For the purposes of this study, pediatric patients were defined as ≤20 years of age at the time of their SAB episode. SAB acquisition was classified as Hospital associated (HA)-SAB, Community associated (CA)-SAB or unknown, based on the time of positive SAB sampling after hospital admission. A SAB episode was registered as CA-SAB if diagnosed in less than 48 h after hospital admission based on information retrieved prospectively from discharge summaries. These data were retrieved from The Danish <italic>S. aureus</italic> Bacteremia Database at SSI, containing all Danish SAB isolates and corresponding bacteriological and patient data since 1958. Patients were included if they were born after 1982, were of Danish origin, and had CA-SAB. Danish origin was defined as individuals where both of the individual's parents were born in Denmark.</p>
+        <p>For each case two Danish individuals (same definition as for cases) from The Danish Newborn Screening Biobank who according to the Danish National Patient Registry had not been diagnosed with SAB or other severe bacterial infections served as controls. Samples for these control samples were adjacent to the case samples in the biobank regardless of gender. Two controls suffered from diabetes and two had died from cancer.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Bacteriological data</title>
+        <p>All <italic>S. aureus</italic> isolates were retrieved from The Danish <italic>S. aureus</italic> Bacteremia Repository and were <italic>spa</italic>-typed according to standard practise and assigned to clonal complexes (CC) <xref ref-type="bibr" rid="pone.0032315-Shopsin1">[19]</xref>.</p>
+      </sec>
+      <sec id="s2d">
+        <title>DNA extraction</title>
+        <p>DNA was extracted from 3 mm filter paper blood samples using Generation DNA Elution solution and DNA purification solution (Qiagen, Valencia, CA) as described by Baker <italic>et al.</italic> <xref ref-type="bibr" rid="pone.0032315-Baker1">[20]</xref>. Extraction was performed in 96-well format with each well containing a dried blood sample. Washing buffer (PBS, 0.5% Tween20) was added to each well and the samples were shaken at 1000 rpm for 45 min at room temperature before the supernatant was removed. The washing procedure was repeated. Purification solution was added and the supernatant was removed. The procedure was repeated. An elution solution was then added and after 5 min the supernatant was removed. Sterile water was added, and the plate was placed at −20°C for 15 min before being heated to 99°C for 15 min.</p>
+      </sec>
+      <sec id="s2e">
+        <title><italic>DEFB1</italic> SNP analysis</title>
+        <p>Genotyping of three <italic>DEFB1</italic> 5′UTR SNPs (rs11362 [−20G/A]; rs1800972 [−44 C/G] and rs1799946 [−52 G/A]) was performed using Sanger DNA sequencing after obtaining a 318 bp fragment (Forward primer: <named-content content-type="gene" xlink:type="simple">5′-CTC CCT TCA GTT CCG T-3′</named-content> and reverse primer <named-content content-type="gene" xlink:type="simple">5′-CTT GTT CCT CGT CCC TT-3′</named-content>). Hardy-Weinberg equilibrium was seen in cases and controls separately and combined for all three SNPs.</p>
+      </sec>
+      <sec id="s2f">
+        <title><italic>DEFB4/DEFB103</italic> Copy number determination</title>
+        <p>Gene copy number was determined using the Pyrosequencing-based Paralogue Ratio Test (P-PRT). The method is based on the Paralogue Ratio Test (PRT) described previously <xref ref-type="bibr" rid="pone.0032315-Armour1">[21]</xref>, <xref ref-type="bibr" rid="pone.0032315-Aldhous1">[22]</xref>. In brief, the <italic>DEFB103</italic> region on chromosome 8 and an identified paralogue gene (<italic>HSPD21</italic> on chromosome 21) with only two copies per genome were PCR amplified using one set of primers. The resulting PCR amplicons differed at 10 positions. One of the positions where the amplicons differed was used to quantify the two chromosome regions against each other by pyrosequencing across it. The P-PRT method used has recently been described <xref ref-type="bibr" rid="pone.0032315-Fode1">[23]</xref>.</p>
+        <p>Primers for the pyrosequencing assay were designed using the PSQ assay design software version 1.0.6 (Qiagen, Hilden, Germany). The following sequence was analysed with the position that varied between chromosomes 8 and 21 marked in bold with underline: KATGC<bold><underline>Y</underline></bold>AT. For the PCR, 20 ng of template DNA in a total volume of 50 µl using a forward primer (<named-content content-type="gene" xlink:type="simple">5′-GAGGTCACTGTGATCAAAGAT-3′</named-content>) and a reverse primer (5′-Biotin- <named-content content-type="gene" xlink:type="simple">AACCTTCAGCACAGCTACTC-3′</named-content>) was used. Pyrosequencing was carried out using 40 µL of the PCR product and a sequencing primer (<named-content content-type="gene" xlink:type="simple">5′-AGGTCACTGTGATCAAAGAT-3′</named-content>) on the PSQ 96 MA Pyrosequencer according to manufacturer's recommendations (Qiagen).</p>
+        <p>The relative percentages of the two variants were calculated by the Pyrosequencing software (Qiagen) and used for the gene copy number determination. Positive controls from Coriell Cell Repositories with known copy number were included in each run (NA07048: 4 copies; NA10846: 5 copies; NA10847: 7 copies and NA10861 3 copies) and used to generate a correction curve by linear regression. Corrected copy number estimates were calculated for each sample using this run-specific regression equation. A “No template control” was included in each run.</p>
+      </sec>
+      <sec id="s2g">
+        <title>Statistical analysis</title>
+        <p>In the <italic>DEFB1</italic> SNP analyses, we tested for association between SNP genotype and case-control status using an additive genetic model. We also tested for possible non-additive effects using dominant, recessive, and full genotype models. Association tests were performed using PLINK <xref ref-type="bibr" rid="pone.0032315-Purcell1">[24]</xref>. Mean gene copy numbers of cases and controls were compared using unpaired t-test with the Welch correction. If one of the groups did not have a Gaussian distribution, a Mann–Whitney test was performed. Copy number analyses were performed using R (<ext-link ext-link-type="uri" xlink:href="http://www.r-project.org" xlink:type="simple">http://www.r-project.org</ext-link>).</p>
+      </sec>
+      <sec id="s2h">
+        <title>Power calculations</title>
+        <p>In the design phase of the study, we used published association results between higher copy number for β–defensin genes and risk of psoriasis <xref ref-type="bibr" rid="pone.0032315-Hollox2">[25]</xref> to estimate power for various sample sizes. The effect sizes seen in the study by Hollox et al <xref ref-type="bibr" rid="pone.0032315-Hollox2">[25]</xref> ranged from 0.25 to 0.4 in mean copy number difference between cases and controls, and the standard deviations of copy numbers in cases and controls ranged between 1.1 and 1.3. Using an unpaired t-test with an significance level of α = 0.05 and assuming equal variances in cases and controls, the power estimates based on these effect sizes ranged from 0.58 (true difference 0.25, standard deviation 1.3) to 0.98 (true difference 0.4, standard deviation 1.1) for 193 cases and 382 controls (see <xref ref-type="fig" rid="pone-0032315-g001">Figure 1</xref> for power curves). Using the largest observed standard deviations in our study (1.17 in cases), the power was 0.67 for a true effect size of 0.25, and for an effect size of 0.40 the power was 0.97. Power calculations were performed using R.</p>
+        <fig id="pone-0032315-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0032315.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Power curves for an unpaired t-test with 193 cases and 382 controls, assuming equal variance in cases and controls and a significance level of 0.05.</title>
+            <p>True difference in mean copy number is shown on the x-axis, and the power to detect such differences is shown on the y-axis. Curves are shown for three different copy number standard deviations: 1.1 (solid), 1.2 (dashed), and 1.3 (dotted).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0032315.g001" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <p>A total of 1,674 patients ≤20 years were diagnosed with SAB in Denmark from 1990 to 2006. Of these patients, 464 had CA-SAB, 882 had HA-SAB, and for 328 patients the origin of infection remained unknown. Among the CA-SAB pediatric cases, 193 patients met inclusion criteria being born after 1982 and had an available blood sample in The Danish Newborn Screening Biobank for DNA extraction. These 193 patients constitute the cases for the present study.</p>
+      <p>Next, we identified control subjects. A total of two controls per sample were selected for the study, but four had to be excluded due to lack of DNA in the samples resulting in 382 controls. The cases included 130 males (67%) and 63 females (33%). Among the controls 229 (60%) were males and 153 (40%) were females. There was no significant difference in gender distribution between cases and controls (χ<sup>2</sup> = 2.69, <italic>P</italic> = 0.10). The gender distribution among the included cases and controls was also similar to HA-SAB in patients ≤20 years of age and to SAB patients in general.</p>
+      <sec id="s3a">
+        <title>Distribution of <italic>spa</italic> types and antibiogram</title>
+        <p>All isolates were susceptible to methicilin. The diversity of the <italic>S. aureus</italic> isolates was determined by <italic>spa</italic> typing to elucidate if the distribution was biased, e.g. whether specific types of <italic>S. aureus</italic> were overrepresented in CA-SAB. We did, however, not find any such bias as the distribution of phage groups were similar in both the selected cases and other SAB patient cases both within the same period and age group as well as among the total number of cases retrieved from the SAB register (<xref ref-type="table" rid="pone-0032315-t001">Table 1</xref>). A total of 113 different <italic>spa</italic> types were found among 192 isolates that were assigned to 18 known CC groups. The remaining 31 isolates were either missing (n = 7) or had atypical <italic>spa</italic> repeats that could not be assigned. The most prevalent CC groups were: CC45 (26.3%), CC30 (20.4%), CC15 (12.9%), CC509 (6.5%), CC121 (6.5%), and CC8 (4.8%).</p>
+        <table-wrap id="pone-0032315-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0032315.t001</object-id><label>Table 1</label><caption>
+            <title>Phage distribution among SAB cases 1990–2006.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0032315-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0032315.t001" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Phage pattern</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Phage type</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>CA-SAB pts.≤20 yrs.</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>Other SAB≤20 yrs.</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>All SAB</italic>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>No. (%)</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>No. (%)</italic>
+                </td>
+                <td align="left" colspan="1" rowspan="1">
+                  <italic>No. (%)</italic>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">80 Complex</td>
+                <td align="left" colspan="1" rowspan="1">80, 81+combination of 52 and/or 52A with 80 and/or 81</td>
+                <td align="left" colspan="1" rowspan="1">3 (1.6)</td>
+                <td align="left" colspan="1" rowspan="1">27 (1.6)</td>
+                <td align="left" colspan="1" rowspan="1">1547 (6.4)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Rest of phage group I</td>
+                <td align="left" colspan="1" rowspan="1">29, 52, 52A, 79, 80</td>
+                <td align="left" colspan="1" rowspan="1">30 (15.5)</td>
+                <td align="left" colspan="1" rowspan="1">248 (14.8)</td>
+                <td align="left" colspan="1" rowspan="1">4396 (18.1)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Phage group II</td>
+                <td align="left" colspan="1" rowspan="1">3A, 3C, 55, 71</td>
+                <td align="left" colspan="1" rowspan="1">39 (20.2)</td>
+                <td align="left" colspan="1" rowspan="1">357 (21.4)</td>
+                <td align="left" colspan="1" rowspan="1">4256 (17.6)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Phage group III</td>
+                <td align="left" colspan="1" rowspan="1">6, 42E, 47, 53, 54, 75, 77, (81), 83A, 84, 85, 89, 93</td>
+                <td align="left" colspan="1" rowspan="1">23 (11.9)</td>
+                <td align="left" colspan="1" rowspan="1">201 (12.0)</td>
+                <td align="left" colspan="1" rowspan="1">3561 (14.7)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">83A Complex</td>
+                <td align="left" colspan="1" rowspan="1">Combination of one or more of only 83A, 84, 85, 89, 93</td>
+                <td align="left" colspan="1" rowspan="1">9 (4.7)</td>
+                <td align="left" colspan="1" rowspan="1">74 (4.4)</td>
+                <td align="left" colspan="1" rowspan="1">966 (4.0)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">94,96 Complex</td>
+                <td align="left" colspan="1" rowspan="1">94, 96</td>
+                <td align="left" colspan="1" rowspan="1">3 (1.6)</td>
+                <td align="left" colspan="1" rowspan="1">73 (4.4)</td>
+                <td align="left" colspan="1" rowspan="1">1596 (6.6)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Type 95</td>
+                <td align="left" colspan="1" rowspan="1">95</td>
+                <td align="left" colspan="1" rowspan="1">25 (13.0)</td>
+                <td align="left" colspan="1" rowspan="1">317 (18.9)</td>
+                <td align="left" colspan="1" rowspan="1">3864 (16.0)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">NI (mixed phage group)</td>
+                <td align="left" colspan="1" rowspan="1">Mixture of the reactions in the phage type pattern above</td>
+                <td align="left" colspan="1" rowspan="1">28 (14.5)</td>
+                <td align="left" colspan="1" rowspan="1">155 (9.3)</td>
+                <td align="left" colspan="1" rowspan="1">1695 (7.0)</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">NT(non typable</td>
+                <td align="left" colspan="1" rowspan="1">Non typable at phage concentration 1000× Routine Test Dilution (RTD)</td>
+                <td align="left" colspan="1" rowspan="1">33 (17.1)</td>
+                <td align="left" colspan="1" rowspan="1">222 (13.3)</td>
+                <td align="left" colspan="1" rowspan="1">2347 (9.7)</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+      </sec>
+      <sec id="s3b">
+        <title><italic>DEFB1</italic> SNP analysis</title>
+        <p>Patients and controls were genotyped for three <italic>DEFB1</italic> promoter SNPs, rs11362 [−20G/A]; rs1800972 [−44 C/G] and rs1799946 [−52 G/A]. <xref ref-type="sec" rid="s3">Results</xref> of the genotyping are given in <xref ref-type="table" rid="pone-0032315-t002">Table 2</xref>. The minor allele frequencies of the three SNPs did not differ between SAB cases and controls (<italic>P</italic>&gt;0.05 for all three SNPs). Analyses with dominant, recessive and full genotype models as well as haplotype analyses also did not show any differences between cases and controls (data not shown).</p>
+        <table-wrap id="pone-0032315-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0032315.t002</object-id><label>Table 2</label><caption>
+            <title><italic>DEFB1</italic> Genotype and minor allele frequencies in CA-SAB cases and controls.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pone-0032315-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0032315.t002" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1">CA-SAB</td>
+                <td align="left" colspan="1" rowspan="1">Controls</td>
+                <td align="left" colspan="1" rowspan="1"><italic>P</italic> value</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"><italic>n</italic> (%)</td>
+                <td align="left" colspan="1" rowspan="1"><italic>n</italic> (%)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">[−20G/A] (rs11362)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">GG</td>
+                <td align="left" colspan="1" rowspan="1">60 (31)</td>
+                <td align="left" colspan="1" rowspan="1">123 (32)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">GA</td>
+                <td align="left" colspan="1" rowspan="1">85 (44)</td>
+                <td align="left" colspan="1" rowspan="1">182 (48)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA</td>
+                <td align="left" colspan="1" rowspan="1">48 (25)</td>
+                <td align="left" colspan="1" rowspan="1">76 (20)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Minor allele (A)</td>
+                <td align="left" colspan="1" rowspan="1">181(47)</td>
+                <td align="left" colspan="1" rowspan="1">334 (44)</td>
+                <td align="left" colspan="1" rowspan="1"><italic>P</italic> = 0.32</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">[−44 C/G] (rs1800972)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">CC</td>
+                <td align="left" colspan="1" rowspan="1">119 (62)</td>
+                <td align="left" colspan="1" rowspan="1">224 (59)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">CG</td>
+                <td align="left" colspan="1" rowspan="1">68 (35)</td>
+                <td align="left" colspan="1" rowspan="1">133 (35)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">GG</td>
+                <td align="left" colspan="1" rowspan="1">7 (4)</td>
+                <td align="left" colspan="1" rowspan="1">23 (6)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Minor allele (G)</td>
+                <td align="left" colspan="1" rowspan="1">82 (21)</td>
+                <td align="left" colspan="1" rowspan="1">179 (24)</td>
+                <td align="left" colspan="1" rowspan="1"><italic>P</italic> = 0.36</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">[−52 G/A] (rs1799946)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">GG</td>
+                <td align="left" colspan="1" rowspan="1">93 (48)</td>
+                <td align="left" colspan="1" rowspan="1">170 (45)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">GA</td>
+                <td align="left" colspan="1" rowspan="1">78 (40)</td>
+                <td align="left" colspan="1" rowspan="1">171 (45)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">AA</td>
+                <td align="left" colspan="1" rowspan="1">23 (12)</td>
+                <td align="left" colspan="1" rowspan="1">39 (10)</td>
+                <td align="left" colspan="1" rowspan="1"/>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Minor allele (A)</td>
+                <td align="left" colspan="1" rowspan="1">124 (32)</td>
+                <td align="left" colspan="1" rowspan="1">249 (33)</td>
+                <td align="left" colspan="1" rowspan="1"><italic>P</italic> = 0.78</td>
+              </tr>
+            </tbody>
+          </table></alternatives></table-wrap>
+      </sec>
+      <sec id="s3c">
+        <title><italic>DEFB4/DEFB103</italic> Copy number determination</title>
+        <p>Gene copy number for <italic>DEFB4/DEFB103</italic> varied from 2 to 9 in both CA-SAB cases and controls with comparable frequency distributions for the two groups (<xref ref-type="fig" rid="pone-0032315-g002">Figure 2</xref>). Mean copy numbers (and standard deviations) for cases and controls were 4.83 (1.17) and 4.92 (1.12). There was no significant difference in copy number between cases and controls (<italic>P</italic> = 0.33, t-test). However, a Shapiro-Wilks test showed deviation from normality in the copy number distribution for the controls (<italic>P</italic> = 0.002). We therefore also applied a Mann-Whitney test, but again we found no significant difference in copy number between cases and controls (<italic>P = 0.37</italic>).</p>
+        <fig id="pone-0032315-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0032315.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Frequency distribution of <italic>DEFB4/DEFB103</italic> GCN for SAB cases and controls.</title>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0032315.g002" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>Using a large, Caucasian Danish, and clinically well-described bacteremia registry of children with CA-SAB, we found no association between the <italic>DEFB1</italic> SNPs (rs11362 [−20G/A]; rs1800972 [−44 C/G] and rs1799946 [−52 G/A]) or the <italic>DEFB4/DEFB103</italic> GCN and susceptibility to CA-SAB <xref ref-type="bibr" rid="pone.0032315-Fode1">[23]</xref>. The CA-SAB isolates in our registry were of diverse types indicating that no specific type was dominant among CA-SABs.</p>
+      <p>We have established a large well-characterized nested CA-SAB case-control study (193 cases and 382 controls), which has allowed us to study genetic association in an ethnic homogenous population. This is among the largest CA-SAB cohorts for genetic association studies, and our study had good statistical power to detect case-control differences in mean copy number larger than 0.25. It is, however, possible that weaker genetic associations exist that will not be detected with a cohort of this size. The GCN was determined by P-PRT, which we previously have shown to be a reliable method <xref ref-type="bibr" rid="pone.0032315-Fode1">[23]</xref>, but like other GCN assays is associated with errors. However, in the present study the relative differences between cases and controls rather than exact GCN are the principal aim where we assume similar error rates in cases and controls.</p>
+      <p>Defensin genes have been the focus of the present susceptibility study as the functional consequences of such mutations appear to be associated with reduced expression and presumably reduced activity of the resulting peptides. A promoter polymorphism (rs11362) of <italic>DEFB1</italic> has previously been shown to be associated with sepsis <xref ref-type="bibr" rid="pone.0032315-Chen1">[15]</xref>. However, we did not see any association between either the <italic>DEFB1</italic> polymorphism or other closely positioned polymorphisms and SAB in a study population comparable in size (193 vs. 211) to that of Chen and co-workers <xref ref-type="bibr" rid="pone.0032315-Chen1">[15]</xref>. The genetic association previously found could thus be the result of infection by other types of bacteria than SAB or the difference could be due to ethnic differences between the two studies or the fact that our study is focused only on <italic>S. aureus</italic> bacteremia cases in contrast to the broader study of Chen and co-workers who did not distinguish between different bacterial infections.</p>
+      <p>It is intriguing that we now have the possibility to address the issue of genetic association to a specific type of bacterial infection. Addressing other candidate genes based on information from murine studies and <italic>in silico</italic> mapping <xref ref-type="bibr" rid="pone.0032315-Ahn1">[7]</xref> may give further insight in the genetic susceptibility to <italic>S. aureus</italic> bacteremia.</p>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We would like to thank John Armour (University of Nottingham, UK) for providing us with controls for <italic>DEFB103</italic> copy number determination. We also appreciate the expert technical assistance of Britta Hansen and Elvira Chapka. We would also like to thank Lis Vestergaard, Bent Nørgaard-Pedersen and David Hougaard from the Danish Newborn Screening Biobank for providing the filter paper blood samples.</p>
+      <p>Danish SAB Study Group Consortium: Andreas Petersen<sup>1</sup>, Allan Garlik Jensen<sup>3</sup>, Henrik Westh<sup>4</sup>, Henrik Carl Schønheyder<sup>5§</sup>, Niels Frimodt-Møller<sup>6</sup>, Peter Skinhøj<sup>7</sup>, Thomas Benfield<sup>8</sup></p>
+      <p><sup>§</sup> <bold>Lead author for Danish SAB Study Group Consortium</bold></p>
+      <p><sup>1</sup> Department of Microbiological Surveillance and Research, Statens Serum Institut, Denmark</p>
+      <p><sup>2</sup> Pfizer, Ballerup, Denmark</p>
+      <p><sup>3</sup> Department of Clinical Microbiology, Hvidovre University Hospital, Denmark</p>
+      <p><sup>4</sup> Departments of Clinical Microbiology, Aalborg Hospital, Aarhus University Hospital, Denmark</p>
+      <p><sup>5</sup> Department of Microbiology, Hvidovre University Hospital</p>
+      <p><sup>6</sup>Department of Orthopaedics and Internal Medicine, Copenhagen University Hospital, Rigshospitalet, Denmark</p>
+      <p><sup>7</sup>Department of Infectious Diseases, Hvidovre University Hospital, Denmark</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0032315-Skov1">
+        <label>1</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Skov</surname><given-names>R</given-names></name><name name-style="western"><surname>Larsen</surname><given-names>A</given-names></name><name name-style="western"><surname>Benfield</surname><given-names>T</given-names></name><name name-style="western"><surname>Schønheyder</surname><given-names>H</given-names></name><name name-style="western"><surname>Westh</surname><given-names>H</given-names></name></person-group>             <year>2008</year>             <article-title>Annual <italic>Staphylococcus aureus</italic> bacteremia report 2008: 1–12 Statens Serum Institut Website.</article-title>             <comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.ssi.dk/Forskning/Infektioner/Systemiske%20infektioner/~/media/Indhold/DK%20-%20dansk/Forskning/Infektioner/SAB%202008.ashx" xlink:type="simple">http://www.ssi.dk/Forskning/Infektioner/Systemiske%20infektioner/~/media/Indhold/DK%20-%20dansk/Forskning/Infektioner/SAB%202008.ashx</ext-link> Accessed 2012 Jan 25</comment>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Davila1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Davila</surname><given-names>S</given-names></name><name name-style="western"><surname>Wright</surname><given-names>VJ</given-names></name><name name-style="western"><surname>Khor</surname><given-names>CC</given-names></name><name name-style="western"><surname>Sim</surname><given-names>KS</given-names></name><name name-style="western"><surname>Binder</surname><given-names>A</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Genome-wide association study identifies variants in the CFH region associated with host susceptibility to meningococcal disease.</article-title>             <source>Nat Genet</source>             <volume>42</volume>             <fpage>772</fpage>             <lpage>776</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Thye1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Thye</surname><given-names>T</given-names></name><name name-style="western"><surname>Vannberg</surname><given-names>FO</given-names></name><name name-style="western"><surname>Wong</surname><given-names>SH</given-names></name><name name-style="western"><surname>Owusu-Dabo</surname><given-names>E</given-names></name><name name-style="western"><surname>Osei</surname><given-names>I</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Genome-wide association analyses identifies a susceptibility locus for tuberculosis on chromosome 18q11.2.</article-title>             <source>Nat Genet</source>             <volume>42</volume>             <fpage>739</fpage>             <lpage>741</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Zhang1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zhang</surname><given-names>F-R</given-names></name><name name-style="western"><surname>Huang</surname><given-names>W</given-names></name><name name-style="western"><surname>Chen</surname><given-names>S-M</given-names></name><name name-style="western"><surname>Sun</surname><given-names>L-D</given-names></name><name name-style="western"><surname>Liu</surname><given-names>H</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Genomewide association study of leprosy.</article-title>             <source>medicine N Engl J Med</source>             <volume>361</volume>             <fpage>2609</fpage>             <lpage>2618</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Zhang2">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zhang</surname><given-names>F</given-names></name><name name-style="western"><surname>Liu</surname><given-names>H</given-names></name><name name-style="western"><surname>Chen</surname><given-names>S</given-names></name><name name-style="western"><surname>Low</surname><given-names>H</given-names></name><name name-style="western"><surname>Sun</surname><given-names>L</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>Identification of two new loci at IL23R and RAB32 that influence susceptibility to leprosy.</article-title>             <source>Nat Genet</source>             <volume>43</volume>             <fpage>1247</fpage>             <lpage>1251</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Hill1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hill</surname><given-names>PC</given-names></name><name name-style="western"><surname>Birch</surname><given-names>M</given-names></name><name name-style="western"><surname>Chambers</surname><given-names>S</given-names></name><name name-style="western"><surname>Drinkovic</surname><given-names>D</given-names></name><name name-style="western"><surname>Ellis-Pegler</surname><given-names>RB</given-names></name><etal/></person-group>             <year>2001</year>             <article-title>Prospective study of 424 cases of <italic>Staphylococcus aureus</italic> bacteraemia: determination of factors affecting incidence and mortality.</article-title>             <source>Int Med J</source>             <volume>31</volume>             <fpage>97</fpage>             <lpage>103</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Ahn1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ahn</surname><given-names>S-H</given-names></name><name name-style="western"><surname>Deshmukh</surname><given-names>H</given-names></name><name name-style="western"><surname>Johnson</surname><given-names>N</given-names></name><name name-style="western"><surname>Cowell</surname><given-names>LG</given-names></name><name name-style="western"><surname>Rude</surname><given-names>TH</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Two genes on A/J chromosome 18 are associated with susceptibility to Staphylococcus aureus infection by combined microarray and QTL analyses.</article-title>             <source>PLoS Pathog</source>             <volume>6</volume>             <fpage>e1001088</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Ruimy1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ruimy</surname><given-names>R</given-names></name><name name-style="western"><surname>Angebault</surname><given-names>C</given-names></name><name name-style="western"><surname>Djossou</surname><given-names>F</given-names></name><name name-style="western"><surname>Dupont</surname><given-names>C</given-names></name><name name-style="western"><surname>Epelboin</surname><given-names>L</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Are host genetics the predominant determinant of persistent nasal Staphylococcus aureus carriage in humans?</article-title>             <source>J Infect Dis</source>             <volume>202</volume>             <fpage>924</fpage>             <lpage>934</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Singh1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Singh</surname></name><name name-style="western"><surname>Jia</surname><given-names>H</given-names></name><name name-style="western"><surname>Wiles</surname><given-names>K</given-names></name><name name-style="western"><surname>Hesselberth</surname><given-names>J</given-names></name><name name-style="western"><surname>Liu</surname><given-names>L</given-names></name><etal/></person-group>             <year>1998</year>             <article-title>Production of beta-defensins by human airway epithelia.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>95</volume>             <fpage>14961</fpage>             <lpage>14966</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Zhao1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zhao</surname><given-names>C</given-names></name><name name-style="western"><surname>Wang</surname><given-names>I</given-names></name><name name-style="western"><surname>Lehrer</surname><given-names>RI</given-names></name></person-group>             <year>1996</year>             <article-title>Widespread expression of beta-defensin hBD-1 in human secretory glands and epithelial cells.</article-title>             <source>FEBS Lett</source>             <volume>396</volume>             <fpage>319</fpage>             <lpage>322</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Valore1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Valore</surname><given-names>EV</given-names></name><name name-style="western"><surname>Park</surname><given-names>CH</given-names></name><name name-style="western"><surname>Quayle</surname><given-names>AJ</given-names></name><name name-style="western"><surname>Wiles</surname><given-names>KR</given-names></name><name name-style="western"><surname>Mccray</surname><given-names>PB</given-names></name><etal/></person-group>             <year>1998</year>             <article-title>Human beta-Defensin-1: An Antimicrobial Peptide of Urogenital Tissues.</article-title>             <source>J Clin Invest</source>             <volume>101</volume>             <fpage>1633</fpage>             <lpage>1642</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Morrison1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Morrison</surname><given-names>G</given-names></name><name name-style="western"><surname>Kilanowski</surname><given-names>F</given-names></name><name name-style="western"><surname>Davidson</surname><given-names>D</given-names></name><name name-style="western"><surname>Dorin</surname><given-names>J</given-names></name></person-group>             <year>2002</year>             <article-title>Characterization of the Mouse Beta Defensin 1, Defb1, Mutant Mouse Model.</article-title>             <source>J Bacteriol</source>             <volume>70</volume>             <fpage>3053</fpage>             <lpage>3060. 13</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Hollox1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hollox</surname><given-names>EJ</given-names></name><name name-style="western"><surname>Armour</surname><given-names>JaL</given-names></name><name name-style="western"><surname>Barber</surname><given-names>JCK</given-names></name></person-group>             <year>2003</year>             <article-title>Extensive normal copy number variation of a beta-defensin antimicrobial-gene cluster.</article-title>             <source>Am J Hum Genet</source>             <volume>73</volume>             <fpage>591</fpage>             <lpage>600</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Harder1">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Harder</surname><given-names>J</given-names></name><name name-style="western"><surname>Meyer-Hoffert</surname><given-names>U</given-names></name><name name-style="western"><surname>Wehkamp</surname><given-names>K</given-names></name><name name-style="western"><surname>Schwichtenberg</surname><given-names>L</given-names></name><name name-style="western"><surname>Schröder</surname><given-names>J-M</given-names></name></person-group>             <year>2004</year>             <article-title>Differential Gene Induction of Human b-Defensins (hBD-1, −2, −3, and −4) in Keratinocytes Is Inhibited by Retinoic Acid.</article-title>             <source>J Invest Dermatol</source>             <volume>123</volume>             <fpage>522</fpage>             <lpage>529</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Chen1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chen</surname><given-names>Q-X</given-names></name><name name-style="western"><surname>Lv</surname><given-names>C</given-names></name><name name-style="western"><surname>Huang</surname><given-names>L-X</given-names></name><name name-style="western"><surname>Cheng</surname><given-names>B-L</given-names></name><name name-style="western"><surname>Xie</surname><given-names>G-H</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Genomic variations within DEFB1 are associated with the susceptibility to and the fatal outcome of severe sepsis in Chinese Han population.</article-title>             <source>Genes Immun</source>             <volume>8</volume>             <fpage>439</fpage>             <lpage>443</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Harder2">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Harder</surname><given-names>J</given-names></name><name name-style="western"><surname>Bartels</surname><given-names>J</given-names></name><name name-style="western"><surname>Christophers</surname><given-names>E</given-names></name><name name-style="western"><surname>Schroder</surname><given-names>JM</given-names></name></person-group>             <year>2001</year>             <article-title>Isolation and characterization of human beta -defensin-3, a novel human inducible peptide antibiotic.</article-title>             <source>J Biol Chem</source>             <volume>276</volume>             <fpage>5707</fpage>             <lpage>5713</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Christophers1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Christophers</surname><given-names>E</given-names></name><name name-style="western"><surname>Henseler</surname><given-names>T</given-names></name></person-group>             <year>1987</year>             <article-title>Contrasting disease patterns in psoriasis and atopic dermatitis.</article-title>             <source>Arch Dermatol Res</source>             <volume>279:</volume>             <supplement>Suppl</supplement>             <fpage>S48</fpage>             <lpage>S51</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-NrgaardPedersen1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Nørgaard-Pedersen</surname><given-names>B</given-names></name><name name-style="western"><surname>Hougaard</surname><given-names>DM</given-names></name></person-group>             <year>2007</year>             <article-title>Storage policies and use of the Danish Newborn Screening Biobank.</article-title>             <source>Inherit Metabol Dis</source>             <volume>30</volume>             <fpage>530</fpage>             <lpage>536</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Shopsin1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Shopsin</surname><given-names>B</given-names></name><name name-style="western"><surname>Gomez</surname><given-names>M</given-names></name><name name-style="western"><surname>Montgomery</surname><given-names>SO</given-names></name><name name-style="western"><surname>Smith</surname><given-names>DH</given-names></name><name name-style="western"><surname>Waddington</surname><given-names>M</given-names></name><etal/></person-group>             <year>1999</year>             <article-title>Evaluation of protein A gene polymorphic region DNA sequencing for typing of <italic>Staphylococcus aureus</italic> strains.</article-title>             <source>J Clin Microbiol</source>             <volume>37</volume>             <fpage>3556</fpage>             <lpage>3563</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Baker1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Baker</surname><given-names>MW</given-names></name><name name-style="western"><surname>Grossman</surname><given-names>WJ</given-names></name><name name-style="western"><surname>Laessig</surname><given-names>RH</given-names></name><name name-style="western"><surname>Hoffman</surname><given-names>GL</given-names></name><name name-style="western"><surname>Brokopp</surname><given-names>CD</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Development of a routine newborn screening protocol for severe combined immunodeficiency.</article-title>             <source>J Allergy Clin Immun</source>             <volume>124</volume>             <fpage>522</fpage>             <lpage>527</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Armour1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Armour</surname><given-names>JaL</given-names></name><name name-style="western"><surname>Palla</surname><given-names>R</given-names></name><name name-style="western"><surname>Zeeuwen</surname><given-names>PLJM</given-names></name><name name-style="western"><surname>den Heijer</surname><given-names>M</given-names></name><name name-style="western"><surname>Schalkwijk</surname><given-names>J</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Accurate, high-throughput typing of copy number variation using paralogue ratios from dispersed repeats.</article-title>             <source>Nucleic Acids Res</source>             <volume>35</volume>             <fpage>e19</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Aldhous1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Aldhous</surname><given-names>MC</given-names></name><name name-style="western"><surname>Abu Bakar</surname><given-names>S</given-names></name><name name-style="western"><surname>Prescott</surname><given-names>NJ</given-names></name><name name-style="western"><surname>Palla</surname><given-names>R</given-names></name><name name-style="western"><surname>Soo</surname><given-names>K</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Measurement methods and accuracy in copy number variation: failure to replicate associations of beta-defensin copy number with Crohn's disease.</article-title>             <source>Hum Mol Genet</source>             <volume>19</volume>             <fpage>4930</fpage>             <lpage>4938</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Fode1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Fode</surname><given-names>P</given-names></name><name name-style="western"><surname>Jespersgaard</surname><given-names>C</given-names></name><name name-style="western"><surname>Hardwick</surname><given-names>RJ</given-names></name><name name-style="western"><surname>Bogle</surname><given-names>H</given-names></name><name name-style="western"><surname>Theisen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>Determination of beta-defensin genomic copy number in different populations: a comparison of three methods.</article-title>             <source>PLOS one</source>             <volume>6</volume>             <fpage>e16768</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Purcell1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Purcell</surname><given-names>S</given-names></name><name name-style="western"><surname>Neale</surname><given-names>B</given-names></name><name name-style="western"><surname>Todd-Brown</surname><given-names>K</given-names></name><name name-style="western"><surname>Thomas</surname><given-names>L</given-names></name><name name-style="western"><surname>Ferreira</surname><given-names>MaR</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>PLINK: a tool set for whole-genome association and population-based linkage analyses.</article-title>             <source>Am J Hum Genet</source>             <volume>81</volume>             <fpage>559</fpage>             <lpage>575</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0032315-Hollox2">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hollox</surname><given-names>EJ</given-names></name><name name-style="western"><surname>Huffmeier</surname><given-names>U</given-names></name><name name-style="western"><surname>Zeeuwen</surname><given-names>PLJM</given-names></name><name name-style="western"><surname>Palla</surname><given-names>R</given-names></name><name name-style="western"><surname>Rodijk-olthuis</surname><given-names>D</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Psoriasis is associated with increased beta-defensin genomic copy number.</article-title>             <source>Nat Genet</source>             <volume>40</volume>             <fpage>23</fpage>             <lpage>25</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

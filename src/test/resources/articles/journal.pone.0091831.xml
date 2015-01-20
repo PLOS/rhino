@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">plosone</journal-id><journal-title-group>
+<journal-title>PLoS ONE</journal-title></journal-title-group>
+<issn pub-type="epub">1932-6203</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PONE-D-13-40541</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pone.0091831</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine and health sciences</subject><subj-group><subject>Epidemiology</subject><subj-group><subject>Disease informatics</subject><subject>Environmental epidemiology</subject><subject>Lifecourse epidemiology</subject></subj-group></subj-group><subj-group><subject>Health care</subject><subj-group><subject>Environmental health</subject></subj-group></subj-group><subj-group><subject>Public and occupational health</subject><subj-group><subject>Disease ecology</subject><subject>Global health</subject><subject>Health screening</subject><subject>Preventive medicine</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Research and analysis methods</subject><subj-group><subject>Research design</subject><subj-group><subject>Clinical research design</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Heat-Related Mortality in India: Excess All-Cause Mortality Associated with the 2010 Ahmedabad Heat Wave</article-title>
+<alt-title alt-title-type="running-head">Excess Mortality from the 2010 Ahmedabad Heat Wave</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Azhar</surname><given-names>Gulrez Shah</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mavalankar</surname><given-names>Dileep</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Nori-Sarma</surname><given-names>Amruta</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rajiva</surname><given-names>Ajit</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Dutta</surname><given-names>Priya</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Jaiswal</surname><given-names>Anjali</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sheffield</surname><given-names>Perry</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Knowlton</surname><given-names>Kim</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Hess</surname><given-names>Jeremy J.</given-names></name><xref ref-type="aff" rid="aff6"><sup>6</sup></xref><xref ref-type="aff" rid="aff7"><sup>7</sup></xref><on-behalf-of>on behalf of the Ahmedabad HeatClimate Study Group</on-behalf-of></contrib>
+<contrib contrib-type="author" xlink:type="simple"><collab xlink:type="simple">on behalf of the Ahmedabad HeatClimate Study Group<contrib-group>
+<contrib xlink:type="simple"><name name-style="western"><surname>Azhar</surname><given-names>Gulrez Shah</given-names></name><aff>IIPH-G</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Deol</surname><given-names>Bhaskar</given-names></name><aff>Bhaskar</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Bhaskar</surname><given-names>Priya Shekhar</given-names></name><aff>IIPH-G</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Hess</surname><given-names>Jeremy</given-names></name><aff>Emory University</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Jaiswal</surname><given-names>Anjali</given-names></name><aff>NRDC</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Khosla</surname><given-names>Radhika</given-names></name><aff>NRDC</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Knowlton</surname><given-names>Kim</given-names></name><aff>NRDC and Mailman SPH, Columbia University</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Mavalankar</surname><given-names>Mavalankar</given-names></name><aff>IIPH-G</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Rajiva</surname><given-names>Ajit</given-names></name><aff>IIPH-G</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Sarma</surname><given-names>Amruta</given-names></name><aff>Fulbright Student Research Scholar</aff>
+</contrib>
+<contrib xlink:type="simple"><name name-style="western"><surname>Sheffield</surname><given-names>Perry</given-names></name><aff>Icahn SOM at Mount Sinai</aff>
+</contrib>
+</contrib-group></collab><xref ref-type="fn" rid="fn1"><sup>¶</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Indian Institute of Public Health, Ahmedabad, Gujarat, India</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Public Health Foundation of India, New Delhi, India</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Columbia Mailman School of Public Health, New York, New York, United States of America</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Natural Resources Defense Council, New York, New York, United States of America</addr-line></aff>
+<aff id="aff5"><label>5</label><addr-line>Icahn School of Medicine at Mount Sinai, New York, New York, United States of America</addr-line></aff>
+<aff id="aff6"><label>6</label><addr-line>Department of Emergency Medicine, Emory University School of Medicine, Atlanta, Georgia, United States of America</addr-line></aff>
+<aff id="aff7"><label>7</label><addr-line>Department of Environmental Health, Emory University School of Public Health, Atlanta, Georgia, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Akiba</surname><given-names>Suminori</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Kagoshima University Graduate School of Medical and Dental Sciences, Japan</addr-line></aff>
+<author-notes>
+<fn id="fn1" fn-type="other"><p>¶ Membership of the Ahmedabad Heat and Climate Study Group is provided in the Acknowledgments</p></fn>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">gsazhar@iiphg.org</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: GSA DM AS AJ KK JH PS. Performed the experiments: GSA AR AS PD DM. Analyzed the data: GSA AR PD AS DM. Contributed reagents/materials/analysis tools: AS AR PD GSA KK JH PS AJ. Wrote the paper: GSA KK JH PS DM AJ AR AS. Obtained the data and permissions to use the data: DM GSA AJ AS.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>14</day><month>3</month><year>2014</year></pub-date>
+<volume>9</volume>
+<issue>3</issue>
+<elocation-id>e91831</elocation-id>
+<history>
+<date date-type="received"><day>3</day><month>10</month><year>2013</year></date>
+<date date-type="accepted"><day>15</day><month>2</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Azhar et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract><sec>
+<title>Introduction</title>
+<p>In the recent past, spells of extreme heat associated with appreciable mortality have been documented in developed countries, including North America and Europe. However, far fewer research reports are available from developing countries or specific cities in South Asia. In May 2010, Ahmedabad, India, faced a heat wave where the temperatures reached a high of 46.8°C with an apparent increase in mortality. The purpose of this study is to characterize the heat wave impact and assess the associated excess mortality.</p>
+</sec><sec>
+<title>Methods</title>
+<p>We conducted an analysis of all-cause mortality associated with a May 2010 heat wave in Ahmedabad, Gujarat, India, to determine whether extreme heat leads to excess mortality. Counts of all-cause deaths from May 1–31, 2010 were compared with the mean of counts from temporally matched periods in May 2009 and 2011 to calculate excess mortality. Other analyses included a 7-day moving average, mortality rate ratio analysis, and relationship between daily maximum temperature and daily all-cause death counts over the entire year of 2010, using month-wise correlations.</p>
+</sec><sec>
+<title>Results</title>
+<p>The May 2010 heat wave was associated with significant excess all-cause mortality. 4,462 all-cause deaths occurred, comprising an excess of 1,344 all-cause deaths, an estimated 43.1% increase when compared to the reference period (3,118 deaths). In monthly pair-wise comparisons for 2010, we found high correlations between mortality and daily maximum temperature during the locally hottest “summer” months of April (r = 0.69, p&lt;0.001), May (r = 0.77, p&lt;0.001), and June (r = 0.39, p&lt;0.05). During a period of more intense heat (May 19–25, 2010), mortality rate ratios were 1.76 [95% CI 1.67–1.83, p&lt;0.001] and 2.12 [95% CI 2.03–2.21] applying reference periods (May 12–18, 2010) from various years.</p>
+</sec><sec>
+<title>Conclusion</title>
+<p>The May 2010 heat wave in Ahmedabad, Gujarat, India had a substantial effect on all-cause excess mortality, even in this city where hot temperatures prevail through much of April-June.</p>
+</sec></abstract>
+<funding-group><funding-statement>This work is funded by a grant from the Climate Knowledge Development Network. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="8"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Weather extremes can have significant public health impacts <xref ref-type="bibr" rid="pone.0091831-Meehl1">[1]</xref>, <xref ref-type="bibr" rid="pone.0091831-IPCC1">[2]</xref>, <xref ref-type="bibr" rid="pone.0091831-Bush1">[3]</xref>. The global frequency of extreme weather events, including extreme precipitation, drought and resulting crop failure, tropical cyclones, and flooding has been increasing in recent years, consistent with anthropogenic climate change <xref ref-type="bibr" rid="pone.0091831-Hansen1">[4]</xref>, <xref ref-type="bibr" rid="pone.0091831-Min1">[5]</xref>. These trends, which exhibit significant regional variability, are expected to continue in future as climate change becomes more pronounced <xref ref-type="bibr" rid="pone.0091831-IPCC2">[6]</xref>. A national assessment conducted by the Indian government on climate change projects increasing temperatures for India through the 21<sup>st</sup> century, including increasing extreme heat events <xref ref-type="bibr" rid="pone.0091831-Ministry1">[7]</xref>.</p>
+<p>Temperature extremes are a major underlying weather-related cause of mortality in much of the world and the leading cause of directly-mediated weather-related mortality <xref ref-type="bibr" rid="pone.0091831-Centers1">[8]</xref>, <xref ref-type="bibr" rid="pone.0091831-De1">[9]</xref>, <xref ref-type="bibr" rid="pone.0091831-Basu1">[10]</xref>, <xref ref-type="bibr" rid="pone.0091831-Bell1">[11]</xref>, <xref ref-type="bibr" rid="pone.0091831-Fowler1">[12]</xref>, <xref ref-type="bibr" rid="pone.0091831-MatthiesF1">[13]</xref>. Heat related morbidity and mortality can be due to either direct or indirect effects <xref ref-type="bibr" rid="pone.0091831-Kovats1">[14]</xref>. Direct effects include a spectrum of heat illness ranging from heat exhaustion to heat stroke; the indirect effects occur when heat exposure stresses underlying physiological systems and results in other specific manifestations such as renal insufficiency, acute cerebrovascular disease, and exacerbations of pulmonary disease <xref ref-type="bibr" rid="pone.0091831-Ellis1">[15]</xref>.</p>
+<p>A heat wave is a prolonged period of unusually and excessively hot weather, which may also be accompanied by high humidity. Definitions vary, in part because a heat wave is measured relative to the usual weather in the area and relative to normal temperatures for the season, and in part because there is no single best indicator from a public health perspective <xref ref-type="bibr" rid="pone.0091831-Fowler1">[12]</xref>, <xref ref-type="bibr" rid="pone.0091831-MatthiesF1">[13]</xref><xref ref-type="bibr" rid="pone.0091831-Meehl2">[16]</xref>, <xref ref-type="bibr" rid="pone.0091831-Robinson1">[17]</xref>. The US National Oceanic &amp; Atmospheric Administration (NOAA) defines a heat wave as a period of abnormally and uncomfortably hot and unusually humid weather lasting two or more days, and advisories are issued when these conditions are forecast.<xref ref-type="bibr" rid="pone.0091831-National1">[18]</xref>. On a population basis, the impacts of high temperatures on mortality vary by location <xref ref-type="bibr" rid="pone.0091831-McMichael1">[19]</xref>. Heat wave conditions are known to amplify the effect of temperature on mortality <xref ref-type="bibr" rid="pone.0091831-Hajat1">[20]</xref> and several other effect modifiers have been identified <xref ref-type="bibr" rid="pone.0091831-Basu1">[10]</xref>, <xref ref-type="bibr" rid="pone.0091831-Anderson1">[21]</xref>, <xref ref-type="bibr" rid="pone.0091831-MedinaRamn1">[22]</xref>. According to the Indian Meteorology Department (IMD), a heat wave in India is declared when either there is an excess of 5°C over a normal daily historical maximum temperature (30 year average) of less than 40°C; or an excess of 4°C over a normal historical maximum temperature of more than 40°C. If the actual maximum temperature is above 45°C, is a heat wave is declared irrespective of the normal historical maximum temperature <xref ref-type="bibr" rid="pone.0091831-National1">[18]</xref>,<xref ref-type="bibr" rid="pone.0091831-KamaljitRay1">[23]</xref>.</p>
+<p>Cities and urban areas experience higher levels of heat exposure than surrounding rural areas, due to the urban heat island effect whereby temperatures in urban areas are on average 3.5–12°C higher than those found outside city limits <xref ref-type="bibr" rid="pone.0091831-Wong1">[24]</xref>. Similarly, urban microclimates have a role in creating higher urban temperatures in some parts of cities <xref ref-type="bibr" rid="pone.0091831-Khosla1">[25]</xref>. Urbanization can exacerbate heat exposures for residents of urban core areas, especially for developing countries where in-migration of rural poor and unplanned development of urban service systems may not be able to keep pace with demand. However, this on-going development also provides opportunities for municipalities to implement specific and targeted actions to mitigate the impacts of rising temperatures.</p>
+<p>Among historic heat waves, some have been associated with large numbers of all-cause and cause-specific deaths, notably in France, Europe more broadly, Chicago and California <xref ref-type="bibr" rid="pone.0091831-Vandentorren1">[26]</xref>, <xref ref-type="bibr" rid="pone.0091831-Baccini1">[27]</xref>, <xref ref-type="bibr" rid="pone.0091831-Knowlton1">[28]</xref>, <xref ref-type="bibr" rid="pone.0091831-Anderson2">[29]</xref>. During the 2003 heat wave in France, excess mortality in 13 French cities varied from 4% to 142%, with a majority of cities experiencing excess mortality in the 20–50% range <xref ref-type="bibr" rid="pone.0091831-Vandentorren1">[26]</xref>. During the 2006 heat wave in California, there were an estimated 16,166 excess emergency department visits and 1,182 excess hospitalizations state-wide.<xref ref-type="bibr" rid="pone.0091831-Knowlton1">[28]</xref>. In 2010, Moscow and Western Russia experienced a heat wave with ambient temperatures exceeding 39°C, and a high number of deaths, though specific estimates of excess morbidity and mortality have not been done <xref ref-type="bibr" rid="pone.0091831-Dole1">[30]</xref>.</p>
+<p>India has had several historic heat waves. Most notably, in May 1998, India experienced a severe heat wave over a 2-week period, which was considered to be the worst in the previous 50 years <xref ref-type="bibr" rid="pone.0091831-Sidhu1">[31]</xref>. The following year, a similar record-breaking event occurred in 1999 in north-west and central India. According to Kalsi et al (2001), during the summer of 1999, India experienced unprecedented heat in April, with maximum temperatures of 40°C or above for more than 14 days <xref ref-type="bibr" rid="pone.0091831-Kalsi1">[32]</xref>. Another heat wave in 2003 caused more than 3,000 deaths in Andhra Pradesh <xref ref-type="bibr" rid="pone.0091831-Parry1">[33]</xref>.</p>
+<p>In light of mounting epidemiologic evidence and the perception of a worsening threat to public health, several developed and even some developing countries have instituted prevention strategies and preparedness plans to minimize the human costs of increasing heat <xref ref-type="bibr" rid="pone.0091831-Kovats2">[34]</xref>. These include best practices for reducing municipal heat vulnerability and workplace heat-health promotion strategies, in cities from New York City to Abu Dhabi <xref ref-type="bibr" rid="pone.0091831-Frumkin1">[35]</xref>, <xref ref-type="bibr" rid="pone.0091831-Joubert1">[36]</xref>, <xref ref-type="bibr" rid="pone.0091831-Hajat2">[37]</xref>.</p>
+<p>While the health impacts of heat waves, particularly impacts on mortality, have been explored for many regions of the world, there is relatively little information on specific impacts and characteristics of the relationship between excess heat exposure and health impacts in South Asia. We pursued the present analysis in an effort to begin filling this gap. Perhaps because extreme heat has not been recognized as a significant public health risk in India, or perhaps because the risk is now perceived to be increasing with climate change, heat health promotion strategies in India have only recently been made a matter of policy at the city government level. This study was done as part of a collaboration working to research and develop strategies for climate change adaptation in India. One of the first steps towards adaptation was to conduct the current analysis and risk assessment.</p>
+<p>When considered with projected population densities, significant increases in premature heat-related mortality pose a threat to public health in India <xref ref-type="bibr" rid="pone.0091831-Takahashi1">[38]</xref>. However, a discussion of the health effects of extreme heat is currently absent from India's national action plan for climate change <xref ref-type="bibr" rid="pone.0091831-Ghosh1">[39]</xref>.</p>
+<p>In May 2010, Ahmedabad, India, a rapidly-growing city in the western state of Gujarat, experienced a heat wave. According to the India Meteorological Department criteria, the days of April 17–18 and May 13– 15, 17, and 20–25 in 2010, qualified as a “heat wave” with daily maximum temperatures varying between 44.5 – 46.8°C. There was an apparent increase in May 2010 all-cause mortality, though the true increase in mortality counts may have been under-reported <xref ref-type="bibr" rid="pone.0091831-AdhyaruMajithia1">[40]</xref>, <xref ref-type="bibr" rid="pone.0091831-Dave1">[41]</xref>. The objective of this ecological study is to characterize the heat wave's impacts on all-cause mortality and assess excess mortality associated with extreme heat exposure.</p>
+</sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<p>To explore the relationship between the 2010 heat wave and mortality in Ahmedabad, we conducted an ecological analysis to evaluate potential relationships between daily all-cause mortality and maximum daily temperatures. We chose the May 2010 study period because of Ahmedabad's unprecedented heat wave, with maximum daily temperatures peaking at 46.8°C, a record high. The study was reviewed and approved by the Emory University Institutional Review Board and the Ethics committee at the Indian Institute of Public Health Gandhinagar.</p>
+<p>Ahmedabad is the largest city in the state of Gujarat and the sixth largest city in the country, with an urbanized population of 5.571 million (2011) and with a metropolitan regional population of 6.35 million <xref ref-type="bibr" rid="pone.0091831-GovernmentofIndia1">[42]</xref>. Extended population includes persons living outside of the Ahmedabad city limits but still within the municipal district of Ahmedabad. People living outside of the city limits are likely to have similar heat-related mortality risks as those in the urban core as these areas are also urbanized but not part of the municipality. The city's weather is usually dry and is hottest starting in March, with a seasonal monsoon rain period in July. The post-monsoon season is hot and wet and lasts until the end of October.</p>
+<p>The Ahmedabad Municipal Corporation (AMC) is responsible for registering births and deaths in the city. We acquired anonymized and de-identified daily mortality data (day-wise death counts) from the AMC Office of the Registrar of Births and Deaths for the years 2009 to 2011. These deaths are inclusive of only those that occurred within city limits and not those in the extended city. The records for the daily mortality dataset were given to the authors under the necessary provision that the data is not distributed to the public and only the results obtained from the dataset may be used for publication purposes. Temperature data was obtained from the Indian Meteorology Department's Meteorological Aerodrome Report (METAR - a syntax used by the World Meteorological Organization or WMO), station at Ahmedabad airport (Station ID - VAAH, WMO ID 42647), located on the outskirts of the city, 8 Kilometres from the railway station.</p>
+<sec id="s2a">
+<title>Estimating Excess All-Cause Mortality during the 2010 Heat Wave</title>
+<p>Adapting the methodology of Anderson et al. <xref ref-type="bibr" rid="pone.0091831-Anderson3">[43]</xref>, we applied 7-day moving averages for each day in May 2010 and compared them to averages from 2009 and 2011. For each day in May 2010, we compared the counts of all-cause deaths against a reference period comprised of the mean of all-cause death counts from corresponding days in May 2009 and May 2011. These years were chosen to control for population changes at the ecological level, since the population would be most similar in size and other demographic characteristics in the years immediately preceding and following the heat wave year. The daily number of excess all-cause deaths during May 2010 was calculated as the difference between the total monthly deaths in May 2010 minus the total reference period death counts for May from 2009 and 2011, again using an averaging method and a 7-day moving average method as described above. Percentage increases in May 2010 monthly excess mortality were also estimated, relative to the 2009 and 2011 reference period.</p>
+<p>To estimate increases in mortality rate ratios (RR), applying the methodology of Lan et al. <xref ref-type="bibr" rid="pone.0091831-Lan1">[44]</xref> and Rothman et al. <xref ref-type="bibr" rid="pone.0091831-Rothman1">[45]</xref>, we considered the week of May 19–25, 2010, which included an acute 4-day extreme heat period from May 20–23, 2010 (as per the IMD's heat wave definition of daily maximum temperatures above 45 degrees Celsius) as the extreme heat wave period (H). The immediately preceding period, May 12–18, 2010 was considered as the reference period R1 and an alternative reference period R2 of May 19–25 from 2009 and 2011. RR were calculated for both reference periods R1 and R2. We assumed that the population size changed little over this period, cancelling the person-time units from the numerator and denominator. Thus, the simplified rate ratio “RR” was calculated using the formula RR  =  H/R. The 95% confidence intervals (CI) for RR were calculated as exp (ln (RR) ± 1.96(H<sup>−1</sup>+R<sup>−1</sup>)∧0.5). To minimize the heat's potential effects on all-cause mortality in the reference period, we also used an alternative reference period to calculate RRs, applying averaged all-cause mortality from May 19–25, 2009 and 2011 to re-estimate RRs.</p>
+<p>Monthly correlations in 2010 for monthly maximum temperature and total monthly counts of premature all-cause mortality were also estimated.</p>
+<p>Statistical analysis software SPSS 20 and Microsoft Excel (2013) was used for all analyses including generation of descriptive statistics, moving averages, and mortality rate ratios. Statistical significance of differences in mean values (temperatures and mortality) were calculated using two-tailed paired students T-tests.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<p>The average daily mortality during the extreme heat wave period (as shown in <xref ref-type="table" rid="pone-0091831-t001">Table 1</xref>) was estimated at 143.9 ±48.13, significantly higher than the average of 100.6 ±10.34 for the reference period (p&lt;0.001 for the difference). This yields an estimated excess mortality in May 2010 of 1,344 deaths from May 1–31, 2010 an increase of 43.1% above the reference period. Other analytical approaches yielded similar results: comparison of daily counts for the extreme heat wave period compared with daily averages from the reference period yielded an excess of 1,353.5 deaths (a 42.88% increase), while a comparison using the 7-day moving average method yielded 1,334.9 deaths (a 42.81% increase). All results are consistent and suggest slightly over 43% excess deaths during May 2010. <xref ref-type="fig" rid="pone-0091831-g001">Figure 1</xref> illustrates the daily mortality counts in May 2010 heat wave, versus corresponding days in 2009 and 2011.</p>
+<fig id="pone-0091831-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0091831.g001</object-id><label>Figure 1</label><caption>
+<title>Daily mortality counts in May 2010 heat wave, versus corresponding days in 2009 and 2011.</title>
+<p>Daily mortality counts during the Ahmedabad, India May 2010 heat wave study period (in red), compared with average May all-cause mortality rates. Shown for comparison as a reference period are the mean (blue line) and interquartile range (hatched area) of a 7-day moving average of mortality in May of the preceding (2009) and following (2011) years.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0091831.g001" position="float" xlink:type="simple"/></fig><table-wrap id="pone-0091831-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0091831.t001</object-id><label>Table 1</label><caption>
+<title>Daily temperatures and all-cause deaths for the month of May in Ahmedabad, Gujarat, India.</title>
+</caption><alternatives><graphic id="pone-0091831-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0091831.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="3" align="left" rowspan="1">Standard analysis</td>
+<td colspan="2" align="left" rowspan="1">7-day moving average analysis</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2010</td>
+<td align="left" rowspan="1" colspan="1">Average for 2009 and 2011</td>
+<td align="left" rowspan="1" colspan="1">Excess in 2010 (%)</td>
+<td align="left" rowspan="1" colspan="1">Average for 2009 and 2011</td>
+<td align="left" rowspan="1" colspan="1">Excess in 2010 (%)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Total Deaths</td>
+<td align="left" rowspan="1" colspan="1">4462</td>
+<td align="left" rowspan="1" colspan="1">3118</td>
+<td align="left" rowspan="1" colspan="1">1344 (43.10)</td>
+<td align="left" rowspan="1" colspan="1">3120.07</td>
+<td align="left" rowspan="1" colspan="1">1334.93 (42.81)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Average daily Mortalities (deaths / day)</td>
+<td align="left" rowspan="1" colspan="1">143.94±48.13</td>
+<td align="left" rowspan="1" colspan="1">100.58±10.34</td>
+<td align="left" rowspan="1" colspan="1">43.36 (43.11)</td>
+<td align="left" rowspan="1" colspan="1">100.65±2.66</td>
+<td align="left" rowspan="1" colspan="1">43.29 (43.01)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum Temperature (°C)</td>
+<td align="left" rowspan="1" colspan="1">42.81±1.25</td>
+<td align="left" rowspan="1" colspan="1">41.05±1.27</td>
+<td align="left" rowspan="1" colspan="1">1.76 (4.28)</td>
+<td colspan="2" align="left" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Minimum Temperature (°C)</td>
+<td align="left" rowspan="1" colspan="1">28.45±1.50</td>
+<td align="left" rowspan="1" colspan="1">28.25±1.41</td>
+<td align="left" rowspan="1" colspan="1">0.19 (0.68)</td>
+<td colspan="2" align="left" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Mean Temperature (°C)</td>
+<td align="left" rowspan="1" colspan="1">35.65±1.33</td>
+<td align="left" rowspan="1" colspan="1">34.39±1.21</td>
+<td align="left" rowspan="1" colspan="1">1.26 (3.66)</td>
+<td colspan="2" align="left" rowspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>Using mortality RR calculations, the RR is 1.76 [95% CI 1.67–1.83] (p&lt;0.05) compared to a reference period (R1) in the preceding week (May 12–18, 2010). Applying the alternative reference period of May 19–25 from 2009 and 2011 (R2), the RR was significantly higher at 2.12 [95% CI 2.03–2.21] (p&lt;0.001).</p>
+<p><xref ref-type="table" rid="pone-0091831-t002">Table 2</xref> shows correlations to quantify the strength of observed relationships between temperature and mortality. We found moderate to high correlations between monthly total all-cause deaths and monthly maximum temperature in the summer months while the same were negative for winter months. For May 2010, when the heat wave was recorded in Ahmedabad, the correlation was the highest (r = 0.775; p&lt;0.001). The gender distribution as shown in <xref ref-type="table" rid="pone-0091831-t003">Table 3</xref> highlights significantly more female deaths in the summer months and the heat wave period.</p>
+<table-wrap id="pone-0091831-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0091831.t002</object-id><label>Table 2</label><caption>
+<title>Month-wise correlations between monthly maximum temperature (°C) and total monthly all-cause mortality counts, 2010.</title>
+</caption><alternatives><graphic id="pone-0091831-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0091831.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">January</td>
+<td align="left" rowspan="1" colspan="1">February</td>
+<td align="left" rowspan="1" colspan="1">March</td>
+<td align="left" rowspan="1" colspan="1">April</td>
+<td align="left" rowspan="1" colspan="1">May</td>
+<td align="left" rowspan="1" colspan="1">June</td>
+<td align="left" rowspan="1" colspan="1">July</td>
+<td align="left" rowspan="1" colspan="1">August</td>
+<td align="left" rowspan="1" colspan="1">September</td>
+<td align="left" rowspan="1" colspan="1">October</td>
+<td align="left" rowspan="1" colspan="1">November</td>
+<td align="left" rowspan="1" colspan="1">December</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pearson Correlation Coefficient</td>
+<td align="left" rowspan="1" colspan="1">−0.028<sup>#</sup></td>
+<td align="left" rowspan="1" colspan="1">−0.160<sup>#</sup></td>
+<td align="left" rowspan="1" colspan="1">0.360<sup>*</sup></td>
+<td align="left" rowspan="1" colspan="1">0.701<sup>**</sup></td>
+<td align="left" rowspan="1" colspan="1">0.775<sup>**</sup></td>
+<td align="left" rowspan="1" colspan="1">0.393<sup>*</sup></td>
+<td align="left" rowspan="1" colspan="1">0.503<sup>**</sup></td>
+<td align="left" rowspan="1" colspan="1">0.414<sup>*</sup></td>
+<td align="left" rowspan="1" colspan="1">0.083<sup>#</sup></td>
+<td align="left" rowspan="1" colspan="1">0.477<sup>**</sup></td>
+<td align="left" rowspan="1" colspan="1">−0.371<sup>*</sup></td>
+<td align="left" rowspan="1" colspan="1">0.290<sup>#</sup></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Note: *p&lt;0.05, **p&lt;0.01, <sup>#</sup>non-significant.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pone-0091831-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0091831.t003</object-id><label>Table 3</label><caption>
+<title>Gender distribution of decedents during the Heat Wave and the reference periods.</title>
+</caption><alternatives><graphic id="pone-0091831-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0091831.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Men</td>
+<td align="left" rowspan="1" colspan="1">Women</td>
+<td align="left" rowspan="1" colspan="1">Total</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Total (2009–2011)</td>
+<td align="left" rowspan="1" colspan="1">68977</td>
+<td align="left" rowspan="1" colspan="1">47021</td>
+<td align="left" rowspan="1" colspan="1">115998</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Average deaths/day (2009 &amp; 2011)</td>
+<td align="left" rowspan="1" colspan="1">62.73</td>
+<td align="left" rowspan="1" colspan="1">42.14</td>
+<td align="left" rowspan="1" colspan="1">104.87</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">2010</td>
+<td align="left" rowspan="1" colspan="1">Average deaths per day</td>
+<td align="left" rowspan="1" colspan="1">63.52</td>
+<td align="left" rowspan="1" colspan="1">44.55</td>
+<td align="left" rowspan="1" colspan="1">108.07</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Excess deaths</td>
+<td align="left" rowspan="1" colspan="1">287.50</td>
+<td align="left" rowspan="1" colspan="1">881.00</td>
+<td align="left" rowspan="1" colspan="1">1168.50</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Average excess deaths per day</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+<td align="left" rowspan="1" colspan="1">2.41</td>
+<td align="left" rowspan="1" colspan="1">3.20</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">May 2010</td>
+<td align="left" rowspan="1" colspan="1">Deaths</td>
+<td align="left" rowspan="1" colspan="1">2462</td>
+<td align="left" rowspan="1" colspan="1">2000</td>
+<td align="left" rowspan="1" colspan="1">4462</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Excess deaths</td>
+<td align="left" rowspan="1" colspan="1">639</td>
+<td align="left" rowspan="1" colspan="1">705</td>
+<td align="left" rowspan="1" colspan="1">1344</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Average Excess deaths per day</td>
+<td align="left" rowspan="1" colspan="1">20.61</td>
+<td align="left" rowspan="1" colspan="1">22.74</td>
+<td align="left" rowspan="1" colspan="1">43.35</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Average deaths excluding May 2010</td>
+<td align="left" rowspan="1" colspan="1">62.04</td>
+<td align="left" rowspan="1" colspan="1">42.69</td>
+<td align="left" rowspan="1" colspan="1">104.74</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Heat Wave Period (19–25th May2010)</td>
+<td align="left" rowspan="1" colspan="1">Deaths</td>
+<td align="left" rowspan="1" colspan="1">791</td>
+<td align="left" rowspan="1" colspan="1">724</td>
+<td align="left" rowspan="1" colspan="1">1515</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Excess deaths</td>
+<td align="left" rowspan="1" colspan="1">373.50</td>
+<td align="left" rowspan="1" colspan="1">427</td>
+<td align="left" rowspan="1" colspan="1">800.50</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Average excess deaths per day</td>
+<td align="left" rowspan="1" colspan="1">53.36</td>
+<td align="left" rowspan="1" colspan="1">61</td>
+<td align="left" rowspan="1" colspan="1">114.36</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Ratio (19–25<sup>th</sup> May 2010)</td>
+<td align="left" rowspan="1" colspan="1">1.89</td>
+<td align="left" rowspan="1" colspan="1">2.44</td>
+<td align="left" rowspan="1" colspan="1">2.12</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">P value Compared with 2009 &amp; 2011</td>
+<td align="left" rowspan="1" colspan="1">p for 19–25th May 2010</td>
+<td align="left" rowspan="1" colspan="1">0.002521923</td>
+<td align="left" rowspan="1" colspan="1">0.000647</td>
+<td align="left" rowspan="1" colspan="1">0.000887</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">p for May 2010</td>
+<td align="left" rowspan="1" colspan="1">6.35662E-05</td>
+<td align="left" rowspan="1" colspan="1">3.11E-05</td>
+<td align="left" rowspan="1" colspan="1">2.4E-05</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">p for entire year</td>
+<td align="left" rowspan="1" colspan="1">0.332967427</td>
+<td align="left" rowspan="1" colspan="1">0.000688</td>
+<td align="left" rowspan="1" colspan="1">0.018211</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap>
+<p>For 2010, yearly mean maximum temperature was 33.9±5.0°C. This is significantly lower than the yearly average maximum temperature for 2009 and 2011, which was 35±4.8°C (p&lt;0.001). For May 2010, the mean maximum temperature was 42.8±1.3°C. This is significantly higher than the May average maximum temperature for 2009 and 2011 which was 41.0±0.7°C (p&lt;0.001) (<xref ref-type="table" rid="pone-0091831-t001">Table 1</xref>). Similarly, the 2010 yearly mean and median daily mortality were 108±23 and 106 [IQR = 24] respectively and the May mean and median mortality were 143±48 and 125 respectively.</p>
+<p>As illustrated in <xref ref-type="fig" rid="pone-0091831-g001">Figure 1</xref>, in May 2010 the number of daily deaths (though higher than average) increased greatly on May 18, 2010, reached the highest level on May 21, 2010, and returned to a more typical range on May 28, 2010. This pattern corresponds to increases in daily maximum temperature that occur during the May 2010 heat wave period, with an apparent increased association when the temperature crosses a threshold (43 °C for maximum or 36°C for mean temperature). There may be some mortality displacement on May 31, 2010 at which time daily mean mortality fell below the average, perhaps in short-term response to the large numbers of heat-vulnerable who had perished in prior days. <xref ref-type="fig" rid="pone-0091831-g002">Figure 2</xref> shows the time course of both temperatures and death counts in both the 2010 study period and the reference period.</p>
+<fig id="pone-0091831-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pone.0091831.g002</object-id><label>Figure 2</label><caption>
+<title>Temperatures and daily all-cause mortality, 2010 study period vs. 2009–2011 reference period.</title>
+<p>Daily maximum temperature versus daily all-cause mortality for the study period (1–31 May 2010), and the reference period (mean of corresponding values from days in May 2009 and 2011.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0091831.g002" position="float" xlink:type="simple"/></fig></sec><sec id="s4">
+<title>Discussion</title>
+<p>Although similar heat-mortality studies have been conducted in several European, American and Chinese cities, this is the first time that this relationship has been documented for any city in India. The findings are consistent with prior work that shows heat wave periods associated with overall excess all-cause mortality. Using a smoothed 7-day average calculation as well as a rough average estimate to calculate baseline measures, we estimate that the mortalities occurring during the May 2010 heat wave represent a 43% increase in mortality when compared with the same time period of other years in Ahmedabad. This amounts to an additional 1,350 deaths in the city during the heat wave period.</p>
+<p>There was a similarly elevated mortality rate ratio of 1.76 [1.67–1.83 95% CI] during the shorter extreme heat wave period H from May 19–25, 2010. This estimate is considerably higher than one for China's 2010 heat wave <xref ref-type="bibr" rid="pone.0091831-Lan2">[46]</xref> of 1.41 [95% CI 1.22–1.63].</p>
+<p>One issue with our approach to the RR calculation is that it may underestimate the effects of extreme heat exposure as temperatures were already elevated in the May 12–18 reference period. To minimize the potential impact of the abnormally warm May 2010 temperatures on estimates of risk for all-cause mortality in the reference period, we applied an alternative non-2010 reference period to calculate RRs, and found a significant increase in the RR of 2.12 (95% CI 2.03–2.21; p&lt;0.001).</p>
+<p>Using historical exposure-response functions for temperature-heat relationships and various approaches to incorporating future adaptation activities, several projections of climate change impacts on heat mortality in various settings around the world have projected significantly increased risk in coming decades. These studies show an almost two-fold increase in the projected mortalities<xref ref-type="bibr" rid="pone.0091831-Huang1">[47]</xref>. Our findings suggest that there is likely to be concern for similarly increased risk in the Ahmedabad region.</p>
+<p>We observed (<xref ref-type="fig" rid="pone-0091831-g002">Figure 2</xref>) that the increase in temperatures and mortalities were concurrent, <italic>i.e.</italic>, there was no apparent lag time from the increase in temperatures to the increase in mortalities for the heat wave period in May 2010. Future time series analyses can investigate lag structures more fully, perhaps comparing mortality temperature lag times between tropical and temperate regions.</p>
+<p>The analysis has several limitations. First, while the outcome data are generally reliable, there are several potential issues with mortality data in India. Reporting conventions are not uniform across the country. Even in one location reporting conventions are not always adhered to uniformly across time. In some settings some causes of deaths, though not the deaths themselves, are not accurately reported if they are considered sensitive. This has the potential to bias our results, likely toward the null, as it could lead to an understatement of the mortality risk during a heat wave period if not all of the deaths during that period were accounted for in the data set at a differential rate compared with the baseline. Assuming that reporting conventions remained stable during the study period, however, these issues should not affect our results, but they may be important if our results are compared with those from other areas in India.</p>
+<p>A related concern is that not all deaths are reported. In the urban region of Ahmedabad, deaths taking place at home are likely to have been missed, and deaths among the homeless are unlikely to have been registered, potentially resulting in an underestimation of the effect if a greater proportion of deaths occurred at home or among the homeless during the heat wave period. This reporting bias may also have served as a confounder if there was increased likelihood of heat exposure and death and decreased likelihood of death reporting for a particular population, <italic>e.g</italic>., daily laborers, during the exposure period. Based on the data available, we were not able to control for these potential effects.</p>
+<p>Second, the outcome is all-cause mortality, and as such our estimate may be an overestimate of the true effect of the heat wave on mortality as we were not able to perform a cause-specific analysis and isolate heat-related deaths. As we compared all-cause mortality in 2010 with a running average derived from seasonally similar time periods, however, this bias is likely to be relatively small as using the Integrated Disease Surveillance Project (IDSP) data (the disease surveillance system in India) during April to June 2010 we ruled out any major disease outbreaks for that period. Moreover, risks for cause-specific mortality would have been interesting to compare if the causes of death were available. Evaluations of whether a lagged effect of extreme heat on mortality exists in Ahmedabad could be a part of future studies that involve time-series analysis.</p>
+<p>Third, because we are not able to stratify the deaths by demographics (apart from gender, where differences were insignificant) or socioeconomic status, our findings provide little specific insight into factors that may affect risk. Similarly, data disaggregated on socio-economic and socio-demographic variables would have provided useful insights on vulnerability. More detailed investigation and documentation of individual cases with cause of death and linkage of location and demographic and other factors will be needed to conduct a more nuanced evaluation of specific risk factors.</p>
+<p>Fourth, a further complication exists in the placement of the temperature gauge that has been used historically to collect data in Ahmedabad. The daily maximum temperatures recorded within the city where residents are exposed to extreme heat may be higher than daily reports, as the current local source of daily temperature data is from an IMD monitoring station on the outskirts of the city. The degree of Ahmedabad's urban heat island effect is starting to be evaluated and may offer opportunities to fine-tune local temperature reporting. Future work that considers possible alternatives to the definition of a heat wave, with more health-relevant measures included, are areas of on-going research for the Ahmedabad Heat and Climate Study Group.</p>
+<p>Fifth, for those persons who were indoors, these measures of ambient temperature are proxies of indoor conditions. Indoor residential temperatures would depend on a number of built environment factors including building materials, ventilation, nearby vegetation, and additional heat sources and sinks. A survey of relative measures of indoor versus outdoor temperatures across Ahmedabad was beyond the scope of this study. It is unknown whether ambient daily temperature measures are an under- or over-estimate of indoor room temperature for those individuals who died indoors, as neither specific information regarding the location of the decedents nor indoor exposure information is available</p>
+<p>Finally, correlation in an ecological analysis alone does not indicate causation. There might be some role of confounding variables, such as air pollution, and / or other sources of bias. Air pollution effects were not the focus of this descriptive study of the May 2010 heat wave's effect on excess mortality in Ahmedabad. There could be possible interactive effects of heat and particulate or ozone air pollution, which would be a promising area for future study. The authors do not have access to the archived 2010 daily ozone or particulate air pollution data for the study period, though this data might help establish typical concentrations for comparison with the heat wave period. For particulate concentrations, Guttikunda and Jawahar (2012)<xref ref-type="bibr" rid="pone.0091831-Guttikunda1">[48]</xref> show monthly average PM10 concentrations from Ahmedabad for 2009–2010. May 2010 showed the highest monthly values for PM10 concentrations, but not to an extent that is likely to account for the dramatic increase in mortality that Ahmedabad experienced in May 2010. Moreover, prior studies including Anderson and Bell (2009)<xref ref-type="bibr" rid="pone.0091831-Anderson4">[49]</xref> and Hajat et al. (2006)<xref ref-type="bibr" rid="pone.0091831-Hajat1">[20]</xref> support the case that heat has a substantial, independent effect on mortality, which is independent of air pollution. Other potential confounders that were considered include infectious disease outbreaks (none were reported for the state of Gujarat in the weeks 2010 around the May heat wave), holidays, and other administrative issues that might have affected reporting.</p>
+<p>Despite these potential concerns, the results of this study pose interesting questions and make findings regarding health protection against extreme heat in the region. This study is innovative and provides valuable data analysis since it is the first to examine the effects of extreme heat in a developing country setting. Such studies and findings are absent from the literature, hampering efforts to protect public health and to project the potential health impacts of climate change in developing countries.</p>
+<p>One key question relates to the optimal definitions of extreme heat from the public health perspective and for early warning systems. This study evaluated mortality rate ratios during time periods that fell both within and outside the currently operational definitions of a “heat wave” and “extreme heat days” according to the Indian Meteorology Department, as described in the Introduction. Our findings suggest that the IMD definitions may underestimate the impacts of extreme heat on health because under the current systems IMD threshold does not formally account for public health effects of extreme heat. For public health purposes the IMD definitions may not be as useful as a definition with lower thresholds that are observed to correlate with public health outcomes more directly. Short and medium-range temperature forecasts, along with appropriate thresholds based on observed population health effects, could be used to generate early warnings of extreme heat that might significantly reduce the number of heat-related deaths.</p>
+<p>To be most effective, as examined as part of this study, early warning systems also require measures to build preparedness and response capacity for medical and public health professionals and improved coordination and sensitization of staff working across city government and the medical facilities. Public awareness about the harmful impact of exposure to heat on human health is also critical to saving lives. Public awareness messages must be simple and easy to understand. They may include suggestions to check weather forecasts, stay in the shade, maintain hydration, wear appropriate clothing, avoid physical activity in the hottest part of the day, and check on neighbors and vulnerable members of the community.</p>
+<p>In addition to early warning systems and preparedness plans, partnerships and information-sharing between various government agencies and key stakeholders needs to be developed and nurtured to facilitate the interdisciplinary work and effective implementation. Interventions also must be coupled with evaluation plans to determine their efficacy in the local context. Information and data-sharing channels have to be kept open and working to facilitate operations and evaluation activities. Appropriate health system improvements have to be made to ensure adequate response to health emergencies. International partnerships can also provide a strong base for knowledge-sharing and technical support, as evidenced by this collaborative study.</p>
+</sec><sec id="s5">
+<title>Conclusions</title>
+<p>In May 2010, the city of Ahmedabad in the state of Gujarat, India, experienced a heat wave with record-breaking maximum temperatures. During this heat wave an estimated excess 1,344 deaths occurred relative to a combined May 2009 and May 2011 reference period. This finding is consistent across several methods used for gauging the extra deaths. The May 2010 heat wave period represent a 43% increase in mortality when compared with the same time period of 2009 and 2011. The RR of an “extreme heat period” from 19–25 May was 1.76 (95% CI 1.67–1.83, p&lt;0.001). Correlation coefficients between monthly maximum temperatures and monthly mortality show a significant relationship for the months of April (r = 0.701, p&lt;0.001), May (r = 0.775, p&lt;0.001). This paper aims to draw attention to extreme heat as a relatively under-appreciated public health risk in India, and provide some insight into the temperatures at which this risk appears to be marked on a population level. Given the trends associated with climate change, dangerous periods of extreme heat are likely to occur more frequently, suggesting the need for measures to reduce population vulnerability currently and in future. Heat wave-related mortality merits further analysis in order to reduce harmful health effects among India's most vulnerable and to help India adapt to the effects of climate change by increasing resilience to extreme heat.</p>
+</sec></body>
+<back>
+<ack>
+<p>We would like to acknowledge that this paper was developed in conjunction with the on-going research collaboration formalized under a memorandum of understanding among the Ahmedabad Municipal Corporation, the Gujarat Government, the Public Health Foundation of India, Indian Institute of Public Health-Gandhinagar, and the Natural Resources Defense Council (NRDC).</p>
+<p>The authors are grateful to the officials of the Ahmedabad Municipal Corporation and the India Meteorology Department who provided them with data. The authors would like to thank Peter Webster, Violeta Toma, and Georgia Institute of Technology for their temperature forecasts for the Ahmedabad heat-health early warning system.</p>
+<sec>
+<title>Contributors</title>
+<p>The Ahmedabad Heat and Climate Study Group, consists of (in alphabetical order): Gulrez Shah Azhar (IIPH-G), Bhaskar Deol (NRDC), Priya Shekhar Dutta (IIPH-G), Jeremy Hess (Emory University), Anjali Jaiswal (NRDC), Radhika Khosla (NRDC), Kim Knowlton (NRDC and Mailman SPH, Columbia University), Dileep Mavalankar (IIPH-G), Ajit Rajiva (IIPH-G), Amruta Sarma (Fulbright Student Research Scholar), and Perry Sheffield (Icahn SOM at Mount Sinai).</p>
+</sec></ack>
+<ref-list>
+<title>References</title>
+<ref id="pone.0091831-Meehl1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Meehl</surname><given-names>GA</given-names></name>, <name name-style="western"><surname>Karl</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Easterling</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Changnon</surname><given-names>SA</given-names></name>, <name name-style="western"><surname>Pielke</surname><given-names>RA</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>An introduction to trends in extreme weather and climate events: observations, socioeconomic impacts, terrestrial ecological impacts, and model projections</article-title>. <source>Bulletin-American Meteorological Society</source> <volume>81</volume>: <fpage>413</fpage>–<lpage>416</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-IPCC1"><label>2</label>
+<mixed-citation publication-type="other" xlink:type="simple">IPCC Working Group II (2011) Special Report on Managing the Risks of Extreme Events and Disasters to Advance Climate Change Adaptation (SREX). Geneva: Intergovernmental Panel on Climate Change.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Bush1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bush</surname><given-names>KF</given-names></name>, <name name-style="western"><surname>Luber</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Kotha</surname><given-names>SR</given-names></name>, <name name-style="western"><surname>Dhaliwal</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kapil</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Impacts of climate change on public health in India: future research directions</article-title>. <source>Environmental Health Perspectives</source> <volume>119</volume>: <fpage>765</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Hansen1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hansen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sato</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ruedy</surname><given-names>R</given-names></name> (<year>2012</year>) <article-title>Perception of climate change</article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>109</volume>: <fpage>E2415</fpage>–<lpage>E2423</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Min1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Min</surname><given-names>S-K</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Zwiers</surname><given-names>FW</given-names></name>, <name name-style="western"><surname>Hegerl</surname><given-names>GC</given-names></name> (<year>2011</year>) <article-title>Human contribution to more-intense precipitation extremes</article-title>. <source>Nature</source> <volume>470</volume>: <fpage>378</fpage>–<lpage>381</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-IPCC2"><label>6</label>
+<mixed-citation publication-type="other" xlink:type="simple">IPCC editor (2012) Managing the Risks of Extreme Events and Disasters to Advance Climate Change Adaptation. A Special Report of Working Groups I and II of the Intergovernmental Panel on Climate Change. Cambridge, UK: Cambridge University Press.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Ministry1"><label>7</label>
+<mixed-citation publication-type="other" xlink:type="simple">Ministry of Environment &amp; Forests, Government of India (2010) Climate Change and India: A 4×4 Assessment. A Sectoral and Regional Analysis for 2030s INCCA. New Delhi.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Centers1"><label>8</label>
+<mixed-citation publication-type="other" xlink:type="simple">Centers for Disease Control and Prevention (2004) Extreme heat: a prevention guide to promote your personal health and safety. Atlanta, GA: Centers for Disease Control and Prevention.</mixed-citation>
+</ref>
+<ref id="pone.0091831-De1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>De</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Dube</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Rao</surname><given-names>GP</given-names></name> (<year>2005</year>) <article-title>Extreme weather events over India in the last 100 years</article-title>. <source>Journal of the Indian Geophysical Union</source> <volume>9</volume>: <fpage>173</fpage>–<lpage>187</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Basu1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Basu</surname><given-names>R</given-names></name> (<year>2009</year>) <article-title>High ambient temperature and mortality: a review of epidemiologic studies from 2001 to 2008</article-title>. <source>Environ Health</source> <volume>8</volume>: <fpage>40</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Bell1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bell</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>O'Neill</surname><given-names>MS</given-names></name>, <name name-style="western"><surname>Ranjit</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Borja-Aburto</surname><given-names>VH</given-names></name>, <name name-style="western"><surname>Cifuentes</surname><given-names>LA</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Vulnerability to heat-related mortality in Latin America: a case-crossover study in Sao Paulo, Brazil, Santiago, Chile and Mexico City, Mexico</article-title>. <source>Int J Epidemiol</source> <volume>37</volume>: <fpage>796</fpage>–<lpage>804</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Fowler1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fowler</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Mitchell</surname><given-names>CS</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pollock</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Bratka</surname><given-names>LA</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Heat-Related Deaths After an Extreme Heat Event-Four States, 2012, and United States, 1999-2009</article-title>. <source>MMWR-Morb Mortal Wkly Rep</source> <volume>62</volume>: <fpage>433</fpage>–<lpage>436</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-MatthiesF1"><label>13</label>
+<mixed-citation publication-type="other" xlink:type="simple">Matthies F BG, Marin NC, Hales S (2008) Heat-Health Action Plans: Guidance. Geneva: World Health Organization.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Kovats1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kovats</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Hajat</surname><given-names>S</given-names></name> (<year>2008</year>) <article-title>Heat stress and public health: a critical review</article-title>. <source>Annual Review of Public Health</source> <volume>29</volume>: <fpage>41</fpage>–<lpage>55</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Ellis1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ellis</surname><given-names>FP</given-names></name> (<year>1977</year>) <article-title>Heat illness. II. Pathogenesis</article-title>. <source>Transactions of the Royal Society of Tropical Medicine &amp; Hygiene</source> <volume>70</volume>: <fpage>412</fpage>–<lpage>418</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Meehl2"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Meehl</surname><given-names>GA</given-names></name>, <name name-style="western"><surname>Tebaldi</surname><given-names>C</given-names></name> (<year>2004</year>) <article-title>More intense, more frequent, and longer lasting heat waves in the 21st century</article-title>. <source>Science</source> <volume>305</volume>: <fpage>994</fpage>–<lpage>997</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Robinson1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Robinson</surname><given-names>PJ</given-names></name> (<year>2001</year>) <article-title>On the definition of a heat wave</article-title>. <source>Journal of Applied Meteorology</source> <volume>40</volume>: <fpage>762</fpage>–<lpage>775</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-National1"><label>18</label>
+<mixed-citation publication-type="other" xlink:type="simple">National Oceanic and Atmospheric Administration (2013) National Weather Service Glossary. Silver Springs, Maryland.</mixed-citation>
+</ref>
+<ref id="pone.0091831-McMichael1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McMichael</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Wilkinson</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Kovats</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Pattenden</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Hajat</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>International study of temperature, heat and urban mortality: the ‘ISOTHURM’ project</article-title>. <source>International Journal of Epidemiology</source> <volume>37</volume>: <fpage>1121</fpage>–<lpage>1131</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Hajat1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hajat</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Armstrong</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Baccini</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Biggeri</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Bisanti</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Impact of high temperatures on mortality: is there an added heat wave effect?</article-title> <source>Epidemiology</source> <volume>17</volume>: <fpage>632</fpage>–<lpage>638</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Anderson1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anderson</surname><given-names>GB</given-names></name>, <name name-style="western"><surname>Bell</surname><given-names>ML</given-names></name> (<year>2011</year>) <article-title>Heat waves in the United States: mortality risk during heat waves and effect modification by heat wave characteristics in 43 US communities</article-title>. <source>Environmental Health Perspectives</source> <volume>119</volume>: <fpage>210</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-MedinaRamn1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Medina-Ramón</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Schwartz</surname><given-names>J</given-names></name> (<year>2007</year>) <article-title>Temperature, temperature extremes, and mortality: a study of acclimatisation and effect modification in 50 US cities</article-title>. <source>Occupational and environmental medicine</source> <volume>64</volume>: <fpage>827</fpage>–<lpage>833</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-KamaljitRay1"><label>23</label>
+<mixed-citation publication-type="other" xlink:type="simple">Kamaljit Ray AT, Apte NY, Chicholikar JR (2012) Climate of Ahmedabad. Ahmedabad: Meteriological Center Ahmedabad.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Wong1"><label>24</label>
+<mixed-citation publication-type="other" xlink:type="simple">Wong K, Paddon A, Jimenez A (2013) Review of World Urban Heat Islands: Many Linked to Increased Mortality. J Energy Resour Technol 135(2) 135.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Khosla1"><label>25</label>
+<mixed-citation publication-type="book" xlink:type="simple">Khosla R (2010) The relevance of rooftops: Analyzing the microscale surface energy balance in the Chicago region. Chicago: University of Chicago. 168 p.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Vandentorren1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vandentorren</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Suzan</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Medina</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Pascal</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Maulpoix</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Mortality in 13 French cities during the August 2003 heat wave</article-title>. <source>American Journal of Public Health</source> <volume>94</volume>: <fpage>1518</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Baccini1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baccini</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Biggeri</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Accetta</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Kosatsky</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Katsouyanni</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Heat effects on mortality in 15 European cities</article-title>. <source>Epidemiology</source> <volume>19</volume>: <fpage>711</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Knowlton1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Knowlton</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Rotkin-Ellman</surname><given-names>M</given-names></name>, <name name-style="western"><surname>King</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Margolis</surname><given-names>HG</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The 2006 California heat wave: impacts on hospitalizations and emergency department visits</article-title>. <source>Environmental Health Perspectives</source> <volume>117</volume>: <fpage>61</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Anderson2"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anderson</surname><given-names>GB</given-names></name>, <name name-style="western"><surname>Bell</surname><given-names>ML</given-names></name> (<year>2011</year>) <article-title>Heat waves in the United States: mortality risk during heat waves and effect modification by heat wave characteristics in 43 U.S. communities</article-title>. <source>Environ Health Perspect</source> <volume>119</volume>: <fpage>210</fpage>–<lpage>218</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Dole1"><label>30</label>
+<mixed-citation publication-type="other" xlink:type="simple">Dole R, Hoerling M, Perlwitz J, Eischeid J, Pegion P, <etal>et al</etal>.. (2011) Was there a basis for anticipating the 2010 Russian heat wave? Geophysical Research Letters <volume>38</volume>..</mixed-citation>
+</ref>
+<ref id="pone.0091831-Sidhu1"><label>31</label>
+<mixed-citation publication-type="other" xlink:type="simple">Sidhu RK (1998) Severe heat wave over the Indian subcontinent in 1998, in perspective of global climate. Current science <volume>75</volume>..</mixed-citation>
+</ref>
+<ref id="pone.0091831-Kalsi1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kalsi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Pareek</surname><given-names>R</given-names></name> (<year>2001</year>) <article-title>Hottest April of the 20th century over north-west and central India</article-title>. <source>Current science</source> <volume>80</volume>: <fpage>867</fpage>–<lpage>873</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Parry1"><label>33</label>
+<mixed-citation publication-type="other" xlink:type="simple">Parry ML (2007) 8.2.1.1 - Heatwaves. Cambridge University Press. 0521880106 0521880106.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Kovats2"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kovats</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Hajat</surname><given-names>S</given-names></name> (<year>2008</year>) <article-title>Heat stress and public health: a critical review</article-title>. <source>Annu Rev Public Health</source> <volume>29</volume>: <fpage>41</fpage>–<lpage>55</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Frumkin1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frumkin</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Hess</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Luber</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Malilay</surname><given-names>J</given-names></name>, <name name-style="western"><surname>McGeehin</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Climate change: the public health response</article-title>. <source>American Journal of Public Health</source> <volume>98</volume>: <fpage>435</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Joubert1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Joubert</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Thomsen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Harrison</surname><given-names>O</given-names></name> (<year>2011</year>) <article-title>Safety in the Heat: A Comprehensive Program for Prevention of Heat Illness Among Workers in Abu Dhabi, United Arab Emirates</article-title>. <source>American Journal of Public Health</source> <volume>101</volume>: <fpage>395</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Hajat2"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hajat</surname><given-names>S</given-names></name>, <name name-style="western"><surname>O'Connor</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kosatsky</surname><given-names>T</given-names></name> (<year>2010</year>) <article-title>Health effects of hot weather: from awareness of risk factors to effective health protection</article-title>. <source>Lancet</source> <volume>375</volume>: <fpage>856</fpage>–<lpage>863</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Takahashi1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Takahashi</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Honda</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Emori</surname><given-names>S</given-names></name> (<year>2007</year>) <article-title>Assessing mortality risk from heat stress due to global warming</article-title>. <source>Journal of Risk Research</source> <volume>10</volume>: <fpage>339</fpage>–<lpage>354</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Ghosh1"><label>39</label>
+<mixed-citation publication-type="other" xlink:type="simple">Ghosh P (2009) National Action Plan on Climate Change. Prime Minister's Council on Climate Change.</mixed-citation>
+</ref>
+<ref id="pone.0091831-AdhyaruMajithia1"><label>40</label>
+<mixed-citation publication-type="other" xlink:type="simple">Adhyaru-Majithia P (2010) 8 die as worst heat wave in 94 years scorches Ahmedabad. DNA. Ahmedabad.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Dave1"><label>41</label>
+<mixed-citation publication-type="other" xlink:type="simple">Dave J (2010) Dying heat wave kills 8 more in Ahmedabad. DNA. Ahmedabad.</mixed-citation>
+</ref>
+<ref id="pone.0091831-GovernmentofIndia1"><label>42</label>
+<mixed-citation publication-type="other" xlink:type="simple">Government of India  (2011) Census of India. New Delhi.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Anderson3"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anderson</surname><given-names>GB</given-names></name>, <name name-style="western"><surname>Bell</surname><given-names>ML</given-names></name> (<year>2012</year>) <article-title>Lights Out: Impact of the August 2003 Power Outage on Mortality in New York, NY</article-title>. <source>Epidemiology</source> <volume>23</volume>: <fpage>189</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Lan1"><label>44</label>
+<mixed-citation publication-type="other" xlink:type="simple">Lan L, Cui G, Yang C, Wang J, Sui C, <etal>et al</etal>.. (2012) Increased Mortality During the 2010 Heat Wave in Harbin, China. EcoHealth: 1–5.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Rothman1"><label>45</label>
+<mixed-citation publication-type="other" xlink:type="simple">Rothman KJ, Greenland S, Lash TL (2008) Modern Epidemiology. Philadelphia: Lippincott-Raven.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Lan2"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lan</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Cui</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Sui</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Increased Mortality During the 2010 Heat Wave in Harbin, China</article-title>. <source>EcoHealth</source> <volume>9</volume>: <fpage>310</fpage>–<lpage>314</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Huang1"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Barnett</surname><given-names>AG</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Vaneckova</surname><given-names>P</given-names></name>, <name name-style="western"><surname>FitzGerald</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Projecting future heat-related mortality under climate change scenarios: a systematic review</article-title>. <source>Environmental Health Perspectives</source> <volume>119</volume>: <fpage>1681</fpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Guttikunda1"><label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guttikunda</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Jawahar</surname><given-names>P</given-names></name> (<year>2012</year>) <article-title>Application of SIM-air modeling tools to assess air quality in Indian cities</article-title>. <source>Atmospheric Environment</source> <volume>62</volume>: <fpage>551</fpage>–<lpage>561</lpage>.</mixed-citation>
+</ref>
+<ref id="pone.0091831-Anderson4"><label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anderson</surname><given-names>BG</given-names></name>, <name name-style="western"><surname>Bell</surname><given-names>ML</given-names></name> (<year>2009</year>) <article-title>Weather-related mortality: how heat, cold, and heat waves affect mortality in the United States</article-title>. <source>Epidemiology (Cambridge, Mass)</source> <volume>20</volume>: <fpage>205</fpage>–<lpage>213</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>
