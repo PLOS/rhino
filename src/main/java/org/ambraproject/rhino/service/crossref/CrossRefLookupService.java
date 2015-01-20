@@ -29,9 +29,8 @@ public interface CrossRefLookupService {
    * Query crossref for the latest article citation dois and update the database
    *
    * @param doi the article DOI to update all citations will be updated
-   * @throws Exception
    */
-  public void refreshCitedArticles(String doi) throws Exception;
+  public void refreshCitedArticles(String doi);
 
   /**
    * Find a DOI for an article based on the passed in parameters.  If multiple articles are found that match, one is
@@ -39,7 +38,6 @@ public interface CrossRefLookupService {
    *
    * @param searchString the string to pass to crossref to search with
    * @return DOI of an article that matches, or null if no match is found
-   * @throws Exception
    */
-  public String findDoi(String searchString) throws Exception;
+  public String findDoi(String searchString);
 }

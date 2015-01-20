@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 
 import java.io.File;
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertEqualsNoOrder;
@@ -102,14 +103,14 @@ public class CrossRefLookupServiceImplTest {
         .newDocumentBuilder().parse(new File("src/test/resources/articles/pone.0047851.xml"));
 
     CrossRefLookupServiceImpl service = new CrossRefLookupServiceImpl();
-    CrossRefSearch crossRefSearches[] = service.getCrossRefSearchTerms(article);
+    List<CrossRefSearch> crossRefSearches = service.getCrossRefSearchTerms(article);
 
-    assertEquals(crossRefSearches.length, searches.length);
+    assertEquals(crossRefSearches.size(), searches.length);
 
-    String[] results = new String[crossRefSearches.length];
+    String[] results = new String[crossRefSearches.size()];
 
-    for (int a = 0; a < crossRefSearches.length; a++) {
-      results[a] = crossRefSearches[a].buildQuery();
+    for (int a = 0; a < crossRefSearches.size(); a++) {
+      results[a] = crossRefSearches.get(a).buildQuery();
     }
 
     assertEqualsNoOrder(results, searches);

@@ -18,19 +18,21 @@
  */
 package org.ambraproject.rhino.service.crossref;
 
+import com.google.common.collect.ImmutableList;
 import org.ambraproject.util.XPathUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.xpath.XPathException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Used for building up cross ref search terms and then storing the query results
  */
-public class CrossRefSearch {
-  private final List<CitedArticleName> names;
+class CrossRefSearch {
+  private final ImmutableList<CitedArticleName> names;
   private final String title;
   private final String source;
   private final String volume;
@@ -44,38 +46,44 @@ public class CrossRefSearch {
   private final String label;
   private final long originalOrder;
 
-  private class CitedArticleName {
-    public String surName;
-    public String givenName;
-    public String collab;
+  private final class CitedArticleName {
+    private final String surName;
+    private final String givenName;
+    private final String collab;
+
+    public CitedArticleName(String surName, String givenName, String collab) {
+      this.surName = surName;
+      this.givenName = givenName;
+      this.collab = collab;
+    }
   }
 
-  public CrossRefSearch(Node node, long originalOrder) throws Exception {
+  public CrossRefSearch(Node node, long originalOrder) throws XPathException {
     XPathUtil xPathUtil = new XPathUtil();
 
-    List<CrossRefSearch.CitedArticleName> names = new ArrayList<CitedArticleName>();
+    List<CrossRefSearch.CitedArticleName> names = new ArrayList<>();
 
     NodeList nameNodes = xPathUtil.selectNodes(node, ".//name");
 
     for (int a = 0; a < nameNodes.getLength(); a++) {
-      CitedArticleName citedArticleName = new CitedArticleName();
       Node nameNode = nameNodes.item(a);
-
-      citedArticleName.surName = xPathUtil.selectString(nameNode, "surname");
-      citedArticleName.givenName = xPathUtil.selectString(nameNode, "given-names");
+      CitedArticleName citedArticleName = new CitedArticleName(
+          xPathUtil.selectString(nameNode, "surname"),
+          xPathUtil.selectString(nameNode, "given-names"),
+          null);
 
       names.add(citedArticleName);
     }
 
     NodeList collabNodes = xPathUtil.selectNodes(node, ".//collab");
     for (int a = 0; a < collabNodes.getLength(); a++) {
-      CitedArticleName citedArticleName = new CitedArticleName();
-      citedArticleName.collab = xPathUtil.selectString(collabNodes.item(0), ".");
+      CitedArticleName citedArticleName = new CitedArticleName(null, null,
+          xPathUtil.selectString(collabNodes.item(0), "."));
 
       names.add(citedArticleName);
     }
 
-    this.names = names;
+    this.names = ImmutableList.copyOf(names);
 
     this.title = xPathUtil.selectString(node, ".//article-title");
     this.source = xPathUtil.selectString(node, ".//source");

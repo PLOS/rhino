@@ -18,6 +18,7 @@
  */
 package org.ambraproject.rhino.service.crossref;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -43,9 +44,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.EntityResolver;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -76,9 +80,9 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
    */
   @Transactional
   private void setCitationDoi(final String articleDOI, final long keyColumn, final String citationDOI) {
-    hibernateTemplate.execute(new HibernateCallback<Object>() {
+    hibernateTemplate.execute(new HibernateCallback<Integer>() {
       @Override
-      public Object doInHibernate(Session session) throws HibernateException, SQLException {
+      public Integer doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createSQLQuery("select articleID from article where doi = :doi")
             .setString("doi", articleDOI);
 
@@ -90,14 +94,15 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
             .setLong("articleID", articleID)
             .setLong("keyColumn", keyColumn);
 
-        if (query.executeUpdate() == 0) {
+        int result = query.executeUpdate();
+        if (result == 0) {
           log.error("Error setting articleID: {}, Key: {} to value: {}", new Object[]{articleID, keyColumn, citationDOI});
           //throw new HibernateException("No rows updated for articleID: " + articleID + " key: " + keyColumn);
         } else {
           log.debug("Set articleID: {}, Key: {} to value: {}", new Object[]{articleID, keyColumn, citationDOI});
         }
 
-        return null;
+        return result;
       }
     });
   }
@@ -106,9 +111,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
     String fsid = fileStoreService.objectIDMapper().doiTofsid(doi, "XML");
     Document doc;
 
-    InputStream is = fileStoreService.getFileInStream(fsid);
-
-    try {
+    try (InputStream is = fileStoreService.getFileInStream(fsid)) {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setNamespaceAware(true);
       factory.setValidating(false);
@@ -118,7 +121,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
       builder.setEntityResolver(resolver);
 
       doc = builder.parse(is);
-    } catch (Exception e) {
+    } catch (IOException | ParserConfigurationException | SAXException e) {
       log.error("Error parsing the article xml for article " + doi, e);
       return null;
     }
@@ -131,14 +134,23 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
    */
   @Override
   @Transactional
-  public void refreshCitedArticles(String articleDOI) throws Exception {
+  public void refreshCitedArticles(String articleDOI) {
     log.info("refreshArticleCitation for article DOI: {}", articleDOI);
 
-    Document article = getArticle(articleDOI);
-    CrossRefSearch crossRefSearches[] = getCrossRefSearchTerms(article);
+    Document article;
+    try {
+      article = getArticle(articleDOI);
+    } catch (FileStoreException e) {
+      throw new RuntimeException(e);
+    }
+    List<CrossRefSearch> crossRefSearches;
+    try {
+      crossRefSearches = getCrossRefSearchTerms(article);
+    } catch (XPathException e) {
+      throw new RuntimeException(e);
+    }
 
-    for (int a = 0; a < crossRefSearches.length; a++) {
-      CrossRefSearch crossRefSearch = crossRefSearches[a];
+    for (CrossRefSearch crossRefSearch : crossRefSearches) {
       String searchTerms = crossRefSearch.buildQuery();
 
       if (searchTerms.length() == 0) {
@@ -176,35 +188,31 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
    *
    * @param article the article DOM
    * @return a list of pojos parsed out of the article DOM
-   * @throws Exception
    */
-  protected CrossRefSearch[] getCrossRefSearchTerms(Document article) throws Exception {
-    if (article == null) {
-      throw new Exception("Article can not be null");
-    } else {
-      XPathUtil xPathUtil = new XPathUtil();
-      NodeList nodes = xPathUtil.selectNodes(article, ".//back/ref-list/ref");
-      List<CrossRefSearch> terms = new ArrayList<CrossRefSearch>(nodes.getLength());
+  @VisibleForTesting
+  List<CrossRefSearch> getCrossRefSearchTerms(Document article) throws XPathException {
+    XPathUtil xPathUtil = new XPathUtil();
+    NodeList nodes = xPathUtil.selectNodes(article, ".//back/ref-list/ref");
+    List<CrossRefSearch> terms = new ArrayList<>(nodes.getLength());
 
-      for (int a = 0; a < nodes.getLength(); a++) {
-        Node node = nodes.item(a);
+    for (int a = 0; a < nodes.getLength(); a++) {
+      Node node = nodes.item(a);
 
-        Node pubtypeNode = xPathUtil.selectNode(node, ".//*[@publication-type='journal']");
+      Node pubtypeNode = xPathUtil.selectNode(node, ".//*[@publication-type='journal']");
 
-        if (pubtypeNode != null) {
-          //Keep track of the order the elements are found in the XML (the 'a' value)
-          terms.add(new CrossRefSearch(node, a));
-        }
+      if (pubtypeNode != null) {
+        //Keep track of the order the elements are found in the XML (the 'a' value)
+        terms.add(new CrossRefSearch(node, a));
       }
-
-      return terms.toArray(new CrossRefSearch[terms.size()]);
     }
+
+    return terms;
   }
 
 
   @Override
   @Transactional(readOnly = true)
-  public String findDoi(String searchString) throws Exception {
+  public String findDoi(String searchString) {
     CrossRefResponse response = queryCrossRef(searchString);
 
     if (response != null && response.results.length > 0) {
@@ -233,7 +241,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
       } else {
         log.error("Received response code {} when executing query {}", response, crossRefUrl);
       }
-    } catch (Exception ex) {
+    } catch (IOException ex) {
       log.error(ex.getMessage(), ex);
     } finally {
       // be sure the connection is released back to the connection manager
@@ -255,7 +263,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
 
       queryOK = (responseObject.getAsJsonPrimitive("query_ok")).getAsBoolean();
 
-      List<CrossRefResult> resultTemp = new ArrayList<CrossRefResult>();
+      List<CrossRefResult> resultTemp = new ArrayList<>();
 
       for (final JsonElement resultElement : responseObject.getAsJsonArray("results")) {
         JsonObject resultObj = resultElement.getAsJsonObject();
@@ -288,8 +296,6 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
   }
 
   private PostMethod createCrossRefPost(String searchString) {
-    StringBuilder builder = new StringBuilder();
-
     //Example query to post:
     //["Young GC,Analytical methods in palaeobiogeography, and the role of early vertebrate studies;Palaeoworld;19;160-173"]
 
