@@ -29,7 +29,6 @@ public interface CrossRefLookupService {
    * Query crossref for the latest article citation dois and update the database
    *
    * @param doi the article DOI to update all citations will be updated
-   *
    * @throws Exception
    */
   public void refreshCitedArticles(String doi) throws Exception;

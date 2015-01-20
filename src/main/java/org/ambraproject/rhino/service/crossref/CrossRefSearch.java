@@ -22,6 +22,7 @@ import org.ambraproject.util.XPathUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class CrossRefSearch {
 
     NodeList nameNodes = xPathUtil.selectNodes(node, ".//name");
 
-    for(int a = 0; a < nameNodes.getLength(); a++) {
+    for (int a = 0; a < nameNodes.getLength(); a++) {
       CitedArticleName citedArticleName = new CitedArticleName();
       Node nameNode = nameNodes.item(a);
 
@@ -67,7 +68,7 @@ public class CrossRefSearch {
     }
 
     NodeList collabNodes = xPathUtil.selectNodes(node, ".//collab");
-    for(int a = 0; a < collabNodes.getLength(); a++) {
+    for (int a = 0; a < collabNodes.getLength(); a++) {
       CitedArticleName citedArticleName = new CitedArticleName();
       citedArticleName.collab = xPathUtil.selectString(collabNodes.item(0), ".");
 

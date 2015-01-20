@@ -44,6 +44,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.EntityResolver;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
@@ -80,21 +81,21 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
       @Override
       public Object doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createSQLQuery("select articleID from article where doi = :doi")
-          .setString("doi", articleDOI);
+            .setString("doi", articleDOI);
 
-        long articleID = ((BigInteger)query.uniqueResult()).longValue();
+        long articleID = ((BigInteger) query.uniqueResult()).longValue();
 
         query = session.createSQLQuery("update citedArticle set doi = :doi, lastModified = NOW()" +
-          " where articleID = :articleID and keyColumn = :keyColumn")
-          .setString("doi", citationDOI)
-          .setLong("articleID", articleID)
-          .setLong("keyColumn", keyColumn);
+            " where articleID = :articleID and keyColumn = :keyColumn")
+            .setString("doi", citationDOI)
+            .setLong("articleID", articleID)
+            .setLong("keyColumn", keyColumn);
 
-        if(query.executeUpdate() == 0) {
-          log.error("Error setting articleID: {}, Key: {} to value: {}", new Object[] { articleID, keyColumn, citationDOI });
+        if (query.executeUpdate() == 0) {
+          log.error("Error setting articleID: {}, Key: {} to value: {}", new Object[]{articleID, keyColumn, citationDOI});
           //throw new HibernateException("No rows updated for articleID: " + articleID + " key: " + keyColumn);
         } else {
-          log.debug("Set articleID: {}, Key: {} to value: {}", new Object[] { articleID, keyColumn, citationDOI });
+          log.debug("Set articleID: {}, Key: {} to value: {}", new Object[]{articleID, keyColumn, citationDOI});
         }
 
         return null;
@@ -137,23 +138,23 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
     Document article = getArticle(articleDOI);
     CrossRefSearch crossRefSearches[] = getCrossRefSearchTerms(article);
 
-    for(int a = 0; a < crossRefSearches.length; a++) {
+    for (int a = 0; a < crossRefSearches.length; a++) {
       CrossRefSearch crossRefSearch = crossRefSearches[a];
       String searchTerms = crossRefSearch.buildQuery();
 
-      if(searchTerms.length() == 0) {
+      if (searchTerms.length() == 0) {
         log.info("No data for citation, not searching for DOI");
       } else {
         String crossrefDoi = findDoi(searchTerms);
 
         if (crossrefDoi != null && !crossrefDoi.isEmpty()) {
           //A fix for FEND-1077. crossref seems to append a URL to the DOI
-          crossrefDoi = crossrefDoi.replace("http://dx.doi.org/","");
+          crossrefDoi = crossrefDoi.replace("http://dx.doi.org/", "");
 
           String label = crossRefSearch.getLabel();
           long keyColumn;
 
-          if(label != null) {
+          if (label != null) {
             keyColumn = Long.valueOf(label);
           } else {
             //Not able to determine value for key column, take a guess here
@@ -175,25 +176,23 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
    * Generate a list of CrossRefSearch pojos from the article DOM to be used for looking up DOIs for cited articles
    *
    * @param article the article DOM
-   *
    * @return a list of pojos parsed out of the article DOM
-   *
    * @throws Exception
    */
   protected CrossRefSearch[] getCrossRefSearchTerms(Document article) throws Exception {
-    if(article == null) {
+    if (article == null) {
       throw new Exception("Article can not be null");
     } else {
       XPathUtil xPathUtil = new XPathUtil();
       NodeList nodes = xPathUtil.selectNodes(article, ".//back/ref-list/ref");
       List<CrossRefSearch> terms = new ArrayList<CrossRefSearch>(nodes.getLength());
 
-      for(int a = 0; a < nodes.getLength(); a++) {
+      for (int a = 0; a < nodes.getLength(); a++) {
         Node node = nodes.item(a);
 
         Node pubtypeNode = xPathUtil.selectNode(node, ".//*[@publication-type='journal']");
 
-        if(pubtypeNode != null) {
+        if (pubtypeNode != null) {
           //Keep track of the order the elements are found in the XML (the 'a' value)
           terms.add(new CrossRefSearch(node, a));
         }
@@ -209,15 +208,14 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
   public String findDoi(String searchString) throws Exception {
     CrossRefResponse response = queryCrossRef(searchString);
 
-    if(response != null && response.results.length > 0) {
+    if (response != null && response.results.length > 0) {
       return response.results[0].doi;
     } else {
       return null;
     }
   }
 
-  private CrossRefResponse queryCrossRef(String searchString)
-  {
+  private CrossRefResponse queryCrossRef(String searchString) {
     PostMethod post = createCrossRefPost(searchString);
 
     try {
@@ -228,7 +226,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
 
       if (response == 200) {
         String result = post.getResponseBodyAsString();
-        if(result != null) {
+        if (result != null) {
           log.trace("JSON response received: {}", result);
           return parseJSON(result);
         }
@@ -249,7 +247,6 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
    * Parse the JSON into native types
    *
    * @param json the JSON string to convert to a java native type
-   *
    * @return a CrossRefResponse object
    */
   private CrossRefResponse parseJSON(final String json) {
@@ -261,28 +258,28 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
 
       List<CrossRefResult> resultTemp = new ArrayList<CrossRefResult>();
 
-      for(final JsonElement resultElement : responseObject.getAsJsonArray("results")) {
+      for (final JsonElement resultElement : responseObject.getAsJsonArray("results")) {
         JsonObject resultObj = resultElement.getAsJsonObject();
         CrossRefResult res = new CrossRefResult();
 
-        if(resultObj.getAsJsonPrimitive("text") != null) {
+        if (resultObj.getAsJsonPrimitive("text") != null) {
           res.text = resultObj.getAsJsonPrimitive("text").getAsString();
         }
 
-        if(resultObj.getAsJsonPrimitive("match") != null) {
+        if (resultObj.getAsJsonPrimitive("match") != null) {
           res.match = resultObj.getAsJsonPrimitive("match").getAsBoolean();
         }
 
-        if(resultObj.getAsJsonPrimitive("doi") != null) {
+        if (resultObj.getAsJsonPrimitive("doi") != null) {
           res.doi = resultObj.getAsJsonPrimitive("doi").getAsString();
         }
 
-        if(resultObj.getAsJsonPrimitive("score") != null) {
+        if (resultObj.getAsJsonPrimitive("score") != null) {
           res.score = resultObj.getAsJsonPrimitive("score").getAsString();
         }
 
         //Some results aren't actually valid
-        if(res.doi != null) {
+        if (res.doi != null) {
           resultTemp.add(res);
         }
       }
@@ -291,8 +288,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
     }};
   }
 
-  private PostMethod createCrossRefPost(String searchString)
-  {
+  private PostMethod createCrossRefPost(String searchString) {
     StringBuilder builder = new StringBuilder();
 
     //Example query to post:
@@ -301,12 +297,12 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
     //Use toJSON to encode strings with proper escaping
     final String json = "[" + (new Gson()).toJson(searchString) + "]";
 
-    if(this.crossRefUrl == null) {
+    if (this.crossRefUrl == null) {
       throw new RuntimeException("ambra.services.crossref.query.url value not found in configuration.");
     }
 
     return new PostMethod(this.crossRefUrl) {{
-      addRequestHeader("Content-Type","application/json");
+      addRequestHeader("Content-Type", "application/json");
       setRequestEntity(new RequestEntity() {
         @Override
         public boolean isRepeatable() {
