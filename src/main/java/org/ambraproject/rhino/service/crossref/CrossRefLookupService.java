@@ -18,6 +18,8 @@
  */
 package org.ambraproject.rhino.service.crossref;
 
+import org.ambraproject.rhino.identity.ArticleIdentity;
+
 /**
  * <a href="http://www.crossref.org/">CrossRef</a> lookup service.
  *
@@ -28,9 +30,9 @@ public interface CrossRefLookupService {
   /**
    * Query crossref for the latest article citation dois and update the database
    *
-   * @param doi the article DOI to update all citations will be updated
+   * @param identity the identity of the article
    */
-  public void refreshCitedArticles(String doi);
+  public void refreshCitedArticles(ArticleIdentity identity);
 
   /**
    * Find a DOI for an article based on the passed in parameters.  If multiple articles are found that match, one is

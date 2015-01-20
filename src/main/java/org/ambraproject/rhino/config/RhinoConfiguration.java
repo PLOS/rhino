@@ -191,10 +191,12 @@ public class RhinoConfiguration extends BaseConfiguration {
 
   @Bean
   public CrossRefLookupService crossRefLookupService(HttpClient httpClient,
-                                                     org.apache.commons.configuration.Configuration ambraConfiguration) {
+                                                     org.apache.commons.configuration.Configuration ambraConfiguration,
+                                                     ContentRepoService contentRepoService) {
     CrossRefLookupServiceImpl service = new CrossRefLookupServiceImpl();
     service.setHttpClient(httpClient);
     service.setCrossRefUrl((String) ambraConfiguration.getProperty("ambra.services.crossref.query.url"));
+    service.setContentRepoService(contentRepoService);
     return service;
   }
 

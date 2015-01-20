@@ -23,8 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.filestore.FileStoreService;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.service.hibernate.HibernateServiceImpl;
 import org.ambraproject.service.xml.XMLServiceImpl;
 import org.ambraproject.util.XPathUtil;
@@ -35,6 +34,7 @@ import org.apache.commons.httpclient.methods.RequestEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -69,22 +69,22 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
 
   private String crossRefUrl;
   private HttpClient httpClient;
-  private FileStoreService fileStoreService;
+  private ContentRepoService contentRepoService;
 
   /**
    * Store the harvested citation data
    *
-   * @param articleDOI
+   * @param identity
    * @param keyColumn
    * @param citationDOI
    */
   @Transactional
-  private void setCitationDoi(final String articleDOI, final long keyColumn, final String citationDOI) {
+  private void setCitationDoi(final ArticleIdentity identity, final long keyColumn, final String citationDOI) {
     hibernateTemplate.execute(new HibernateCallback<Integer>() {
       @Override
       public Integer doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createSQLQuery("select articleID from article where doi = :doi")
-            .setString("doi", articleDOI);
+            .setString("doi", identity.getKey());
 
         long articleID = ((BigInteger) query.uniqueResult()).longValue();
 
@@ -107,11 +107,9 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
     });
   }
 
-  private Document getArticle(String doi) throws FileStoreException {
-    String fsid = fileStoreService.objectIDMapper().doiTofsid(doi, "XML");
+  private Document getArticle(ArticleIdentity identity) {
     Document doc;
-
-    try (InputStream is = fileStoreService.getFileInStream(fsid)) {
+    try (InputStream is = contentRepoService.getLatestRepoObjStream(identity.forXmlAsset().toString())) {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setNamespaceAware(true);
       factory.setValidating(false);
@@ -122,7 +120,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
 
       doc = builder.parse(is);
     } catch (IOException | ParserConfigurationException | SAXException e) {
-      log.error("Error parsing the article xml for article " + doi, e);
+      log.error("Error parsing the article xml for article " + identity, e);
       return null;
     }
 
@@ -134,15 +132,10 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
    */
   @Override
   @Transactional
-  public void refreshCitedArticles(String articleDOI) {
-    log.info("refreshArticleCitation for article DOI: {}", articleDOI);
+  public void refreshCitedArticles(ArticleIdentity identity) {
+    log.info("refreshArticleCitation for article DOI: {}", identity);
 
-    Document article;
-    try {
-      article = getArticle(articleDOI);
-    } catch (FileStoreException e) {
-      throw new RuntimeException(e);
-    }
+    Document article = getArticle(identity);
     List<CrossRefSearch> crossRefSearches;
     try {
       crossRefSearches = getCrossRefSearchTerms(article);
@@ -175,7 +168,7 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
           }
 
           log.info("refreshArticleCitation doi found: {}", crossrefDoi);
-          setCitationDoi(articleDOI, keyColumn, crossrefDoi);
+          setCitationDoi(identity, keyColumn, crossrefDoi);
         } else {
           log.info("refreshArticleCitation nothing found");
         }
@@ -357,8 +350,8 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
   }
 
   @Required
-  public void setFileStoreService(FileStoreService fileStoreService) {
-    this.fileStoreService = fileStoreService;
+  public void setContentRepoService(ContentRepoService contentRepoService) {
+    this.contentRepoService = contentRepoService;
   }
 }
 
