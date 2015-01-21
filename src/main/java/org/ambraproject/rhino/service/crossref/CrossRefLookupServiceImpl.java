@@ -24,10 +24,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.service.hibernate.HibernateServiceImpl;
-import org.ambraproject.service.xml.XMLServiceImpl;
+import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.util.XPathUtil;
-import org.ambraproject.xml.transform.cache.CachedSource;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
@@ -43,12 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +56,7 @@ import java.util.List;
  *
  * @author Joe Osowski
  */
-public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements CrossRefLookupService {
+public class CrossRefLookupServiceImpl extends AmbraService implements CrossRefLookupService {
 
   private static final Logger log = LoggerFactory.getLogger(CrossRefLookupServiceImpl.class);
 
@@ -108,19 +101,9 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
   }
 
   private Document getArticle(ArticleIdentity identity) {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setNamespaceAware(true);
-    factory.setValidating(false);
-
-    try {
-      DocumentBuilder builder = factory.newDocumentBuilder();
-      EntityResolver resolver = CachedSource.getResolver(XMLServiceImpl.NLM_DTD_URL);
-      builder.setEntityResolver(resolver);
-
-      try (InputStream is = contentRepoService.getLatestRepoObjStream(identity.forXmlAsset().toString())) {
-        return builder.parse(is);
-      }
-    } catch (IOException | ParserConfigurationException | SAXException e) {
+    try (InputStream is = contentRepoService.getLatestRepoObjStream(identity.forXmlAsset().toString())) {
+      return parseXml(is);
+    } catch (IOException e) {
       throw new RuntimeException("Error parsing the article xml for article " + identity, e);
     }
   }
