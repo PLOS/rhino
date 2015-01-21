@@ -108,7 +108,6 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
   }
 
   private Document getArticle(ArticleIdentity identity) {
-    Document doc;
     try (InputStream is = contentRepoService.getLatestRepoObjStream(identity.forXmlAsset().toString())) {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setNamespaceAware(true);
@@ -118,13 +117,10 @@ public class CrossRefLookupServiceImpl extends HibernateServiceImpl implements C
       EntityResolver resolver = CachedSource.getResolver(XMLServiceImpl.NLM_DTD_URL);
       builder.setEntityResolver(resolver);
 
-      doc = builder.parse(is);
+      return builder.parse(is);
     } catch (IOException | ParserConfigurationException | SAXException e) {
-      log.error("Error parsing the article xml for article " + identity, e);
-      return null;
+      throw new RuntimeException("Error parsing the article xml for article " + identity, e);
     }
-
-    return doc;
   }
 
   /**
