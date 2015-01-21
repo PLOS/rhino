@@ -61,11 +61,6 @@
     <beans:property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>
   </beans:bean>
 
-  <!-- Bean config for file store -->
-  <beans:bean id="fileStoreService" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <beans:property name="jndiName" value="java:comp/env/ambra/FileStore"/>
-  </beans:bean>
-
   <beans:bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
     <beans:property name="cacheName" value="RolesCache"/>
   </beans:bean>
