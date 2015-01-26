@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Very narrow, quick-and-dirty stub implementation for ContentRepoService. Mocks
+ * Very narrow, quick-and-dirty stub implementation for ContentRepoService. Mocks minimal set of methods that Rhino
+ * uses.
  */
 public class StubContentRepoService implements ContentRepoService {
 

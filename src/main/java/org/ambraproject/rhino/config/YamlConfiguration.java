@@ -48,10 +48,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private boolean prettyPrintJson = true; // the default value should be true
     private ContentRepoEndpoints contentRepo;
 
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
     }
 
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
     public void setContentRepo(ContentRepoEndpoints contentRepo) {
       this.contentRepo = contentRepo;
     }
@@ -60,10 +68,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
       private ContentRepoEndpointImpl editorial; // upstairs
       private ContentRepoEndpointImpl corpus;  // downstairs
 
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
       public void setEditorial(ContentRepoEndpointImpl editorial) {
         this.editorial = editorial;
       }
 
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
       public void setCorpus(ContentRepoEndpointImpl corpus) {
         this.corpus = corpus;
       }
@@ -73,10 +89,18 @@ public class YamlConfiguration implements RuntimeConfiguration {
       private URI address;
       private String bucket;
 
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
       public void setAddress(URI address) {
         this.address = address;
       }
 
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
       public void setBucket(String bucket) {
         this.bucket = bucket;
       }
