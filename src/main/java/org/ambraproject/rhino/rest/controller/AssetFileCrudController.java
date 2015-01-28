@@ -26,7 +26,6 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
-import org.ambraproject.rhombat.HttpDateUtil;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.service.contentRepo.ContentRepoService;
@@ -45,8 +44,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
@@ -154,11 +153,13 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       return;
     }
 
-    String reproxyUrl = (String) objMeta.get("reproxyURL");
-    if (clientSupportsReproxy(request) && reproxyUrl != null) {
+    List<String> reproxyUrls = (List<String>) objMeta.get("reproxyURL");
+    if (clientSupportsReproxy(request) && reproxyUrls != null && !reproxyUrls.isEmpty()) {
+      String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
+
       response.setStatus(HttpStatus.OK.value());
       setContentHeaders(response, id);
-      response.setHeader("X-Reproxy-URL", reproxyUrl);
+      response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     }
     try (InputStream fileStream = assetCrudService.read(id)) {
