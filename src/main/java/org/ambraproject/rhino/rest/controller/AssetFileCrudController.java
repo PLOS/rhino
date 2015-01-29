@@ -60,12 +60,9 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
 
   @Autowired
-  private ArticleCrudService articleCrudService;
-  @Autowired
   private AssetCrudService assetCrudService;
-
   @Autowired
-  protected ContentRepoService contentRepoService;
+  private ContentRepoService contentRepoService;
 
   @Override
   protected String getNamespacePrefix() {
