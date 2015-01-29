@@ -134,7 +134,7 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    *
    * @return the content type
    */
-  public MediaType getContentType() {
+  public MediaType inferContentType() {
     if (PNG_THUMBNAIL.matcher(getFileExtension()).matches()) {
       return MediaType.IMAGE_PNG;
     }

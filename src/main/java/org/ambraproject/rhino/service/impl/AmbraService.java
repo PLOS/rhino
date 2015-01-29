@@ -133,7 +133,7 @@ public abstract class AmbraService {
   protected void write(byte[] fileData, AssetFileIdentity identity) throws IOException {
     RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.toString())
         .byteContent(fileData)
-        .contentType(identity.getContentType().toString())
+        .contentType(identity.inferContentType().toString())
         .downloadName(identity.getFileName())
         .build();
     contentRepoService.autoCreateRepoObject(repoObject);

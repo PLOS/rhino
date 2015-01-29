@@ -24,7 +24,6 @@ import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
-import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.plos.crepo.exceptions.ContentRepoException;
@@ -146,6 +145,9 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     }
 
     String contentType = (String) objMeta.get("contentType");
+    if (contentType == null) {
+      contentType = id.inferContentType().toString();
+    }
     response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
 
     String filename = (String) objMeta.get("downloadName");
