@@ -19,8 +19,9 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
+import com.google.common.io.ByteStreams;
+import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
@@ -43,6 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
@@ -146,6 +148,16 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
+    String contentType = (String) objMeta.get("contentType");
+    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+
+    String filename = (String) objMeta.get("downloadName");
+    if (filename == null) {
+      filename = id.getFileName();
+    }
+    String contentDisposition = "attachment; filename=" + filename; // TODO: 'attachment' is not always correct
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+
     Timestamp timestamp = Timestamp.valueOf((String) objMeta.get("timestamp"));
     setLastModifiedHeader(response, timestamp);
     if (!checkIfModifiedSince(request, timestamp)) {
@@ -158,12 +170,13 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
 
       response.setStatus(HttpStatus.OK.value());
-      setContentHeaders(response, id);
       response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
-    }
-    try (InputStream fileStream = assetCrudService.read(id)) {
-      respondWithStream(fileStream, response, id);
+    } else {
+      try (InputStream fileStream = assetCrudService.read(id);
+           OutputStream responseStream = response.getOutputStream()) {
+        ByteStreams.copy(fileStream, responseStream);
+      }
     }
   }
 
@@ -178,20 +191,6 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
     return false;
-  }
-
-  /**
-   * Write a response containing the XML file for an article.
-   *
-   * @param response the response object to modify
-   * @param article  the parent article of the XML file to send
-   * @throws IOException
-   */
-  private void provideXmlFor(HttpServletResponse response, ArticleIdentity article)
-      throws IOException {
-    try (InputStream fileStream = articleCrudService.readXml(article)) {
-      respondWithStream(fileStream, response, article.forXmlAsset());
-    }
   }
 
   @Transactional(readOnly = true)
