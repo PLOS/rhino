@@ -123,7 +123,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
 
     String fileExtension = getFileExtension();
     if (PNG_THUMBNAIL.matcher(fileExtension).matches()) {
-      fileExtension = fileExtension.substring(0, 3);
+      // Sanitize a "PNG_*" extension from our back end to a human-friendly "PNG"
+      fileExtension = fileExtension.substring(0, 3); // preserve case
     }
 
     return fileName + '.' + fileExtension;
