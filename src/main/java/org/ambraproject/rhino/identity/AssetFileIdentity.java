@@ -120,7 +120,13 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     String identifier = getIdentifier();
     int lastSlashIndex = identifier.lastIndexOf('/');
     String fileName = (lastSlashIndex < 0) ? identifier : identifier.substring(lastSlashIndex + 1);
-    return fileName + '.' + getFileExtension();
+
+    String fileExtension = getFileExtension();
+    if (PNG_THUMBNAIL.matcher(fileExtension).matches()) {
+      fileExtension = fileExtension.substring(0, 3);
+    }
+
+    return fileName + '.' + fileExtension;
   }
 
   /**
