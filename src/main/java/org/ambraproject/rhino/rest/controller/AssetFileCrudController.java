@@ -146,12 +146,14 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
     String contentType = (String) objMeta.get("contentType");
     if (contentType == null) {
+      // In case contentType field is empty, default to what we would have written at ingestion
       contentType = id.inferContentType().toString();
     }
     response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
 
     String filename = (String) objMeta.get("downloadName");
     if (filename == null) {
+      // In case downloadName field is empty, default to what we would have written at ingestion
       filename = id.getFileName();
     }
     String contentDisposition = "attachment; filename=" + filename; // TODO: 'attachment' is not always correct
