@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.ArticleStateService;
@@ -53,7 +52,7 @@ public class ArticleStateController extends ArticleSpaceController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH)
   public void write(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, FileStoreException {
+      throws IOException {
     ArticleIdentity id = parse(request);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(id, input);

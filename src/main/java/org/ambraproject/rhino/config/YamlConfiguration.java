@@ -46,18 +46,81 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class UserFields {
 
     private boolean prettyPrintJson = true; // the default value should be true
-    private URI contentRepoAddress = null;
-    private String repoBucketName = null;
+    private ContentRepoEndpoints contentRepo;
 
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
     public void setPrettyPrintJson(boolean prettyPrintJson) {
       this.prettyPrintJson = prettyPrintJson;
     }
 
-    public void setcontentRepoAddress(URI contentRepoAddress) {
-      this.contentRepoAddress = contentRepoAddress;
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setContentRepo(ContentRepoEndpoints contentRepo) {
+      this.contentRepo = contentRepo;
     }
 
-    public void setRepoBucketName(String repoBucketName) { this.repoBucketName = repoBucketName; }
+    public static class ContentRepoEndpoints {
+      private ContentRepoEndpointImpl editorial; // upstairs
+      private ContentRepoEndpointImpl corpus;  // downstairs
+
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
+      public void setEditorial(ContentRepoEndpointImpl editorial) {
+        this.editorial = editorial;
+      }
+
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
+      public void setCorpus(ContentRepoEndpointImpl corpus) {
+        this.corpus = corpus;
+      }
+    }
+
+    public static class ContentRepoEndpointImpl {
+      private URI address;
+      private String bucket;
+
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
+      public void setAddress(URI address) {
+        this.address = address;
+      }
+
+      /**
+       * @deprecated For reflective access by SnakeYAML only
+       */
+      @Deprecated
+      public void setBucket(String bucket) {
+        this.bucket = bucket;
+      }
+
+      /**
+       * Avoid returning the ContentRepoEndpointImpl object, because it has public setters for compatibility with
+       * org.yaml.snakeyaml.Yaml.loadAs that we don't want to be reachable from elsewhere.
+       */
+      private final ContentRepoEndpoint immutableView = new ContentRepoEndpoint() {
+        @Override
+        public URI getAddress() {
+          return address;
+        }
+
+        @Override
+        public String getBucket() {
+          return bucket;
+        }
+      };
+    }
   }
 
   /**
@@ -69,13 +132,16 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
   @Override
-  public URI getContentRepoAddress() {
-    return uf.contentRepoAddress;
+  public ContentRepoEndpoint getCorpusBucket() {
+    return (uf.contentRepo == null) ? null
+        : (uf.contentRepo.corpus == null) ? null
+        : uf.contentRepo.corpus.immutableView;
   }
 
   @Override
-  public String getRepoBucketName() {
-    return uf.repoBucketName;
+  public ContentRepoEndpoint getEditorialBucket() {
+    return (uf.contentRepo == null) ? null
+        : (uf.contentRepo.editorial == null) ? null
+        : uf.contentRepo.editorial.immutableView;
   }
-
 }

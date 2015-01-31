@@ -22,10 +22,12 @@ import com.google.gson.Gson;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
-import java.util.Map;
-import java.util.HashMap;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -51,10 +53,13 @@ public class ConfigurationReadServiceTest extends BaseRhinoTest {
   public void testReadRepoConfig() throws IOException {
     String repoConfigJson = configurationReadService.readRepoConfig().readJson(entityGson);
     assertTrue(repoConfigJson.length() > 0, "ConfigurationReadService did not return content repo configuration");
-    Map<String,Object> repoConfigMap = entityGson.fromJson(repoConfigJson, HashMap.class);
-    String repoAddress = repoConfigMap.get("contentRepoAddress").toString();
+    Map<String, Object> repoConfigMap = entityGson.fromJson(repoConfigJson, HashMap.class);
+    Map<String, Object> editorialConfigMap = (Map<String, Object>) repoConfigMap.get("editorial");
+
+    String repoAddress = editorialConfigMap.get("address").toString();
     assertEquals(repoAddress, "http://path/to/content/repo", "Invalid/missing content repo URL");
-    assertEquals(repoConfigMap.get("repoBucketName").toString(),"bucket_name","Invalid/missing content repo bucket name");
+    String repoBucket = editorialConfigMap.get("bucket").toString();
+    assertEquals(repoBucket, "bucket_name", "Invalid/missing content repo bucket name");
   }
 
 }

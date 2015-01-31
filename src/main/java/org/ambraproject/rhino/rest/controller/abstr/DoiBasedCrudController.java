@@ -50,19 +50,4 @@ public abstract class DoiBasedCrudController extends RestController {
     return DoiBasedIdentity.create(getIdentifier(request));
   }
 
-  protected static void setContentHeaders(HttpServletResponse response, AssetFileIdentity identity) {
-    response.setContentType(identity.getContentType().toString());
-    response.setHeader("Content-Disposition", "attachment; filename=" + identity.getFileName());
-  }
-
-  protected static void respondWithStream(InputStream readStream,
-                                          HttpServletResponse response,
-                                          AssetFileIdentity identity)
-      throws IOException {
-    setContentHeaders(response, identity);
-    try (OutputStream responseStream = response.getOutputStream()) {
-      IOUtils.copy(readStream, responseStream);
-    }
-  }
-
 }

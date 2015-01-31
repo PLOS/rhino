@@ -20,8 +20,6 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -44,6 +42,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.exceptions.ContentRepoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
@@ -53,7 +52,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
@@ -75,7 +73,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetFileId)
-      throws FileStoreException, IOException {
+      throws IOException {
     List<ArticleAsset> assets = (List<ArticleAsset>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(ArticleAsset.class)
             .add(Restrictions.eq("doi", assetFileId.getKey()))
@@ -89,13 +87,12 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
      * to know the final size before we can open a stream to the file store. Also, we need to measure the size anyway
      * to record as an asset field.
      */
-    String assetFsid = assetFileId.getFsid(fileStoreService.objectIDMapper());
     byte[] assetData = readClientInput(file);
-    write(assetData, assetFsid);
+    write(assetData, assetFileId);
 
     // Set the asset entity's file-specific fields
     assetToPersist.setExtension(assetFileId.getFileExtension());
-    assetToPersist.setContentType(assetFileId.getContentType().toString());
+    assetToPersist.setContentType(assetFileId.inferContentType().toString());
     assetToPersist.setSize(assetData.length);
 
     // Persist to the database
@@ -251,7 +248,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException {
+  public void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleAsset.class)
                 .add(Restrictions.eq("doi", id.getKey()))
@@ -261,9 +258,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException("Asset not found at: " + id, HttpStatus.NOT_FOUND);
     }
 
-    String fsid = id.getFsid(fileStoreService.objectIDMapper());
     byte[] assetData = readClientInput(fileContent);
-    write(assetData, fsid);
+    write(assetData, id);
   }
 
   /**
@@ -271,28 +267,12 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    */
   @Override
   public InputStream read(AssetFileIdentity assetId) {
-    if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId);
-    }
     try {
-      return fileStoreService.getFileInStream(assetId.getFsid(fileStoreService.objectIDMapper()));
-    } catch (FileStoreException e) {
+      return contentRepoService.getLatestRepoObjStream(assetId.toString());
+    } catch (ContentRepoException e) {
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());
       throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
-    }
-  }
-
-  @Override
-  public List<URL> reproxy(AssetFileIdentity assetId) throws IOException {
-    if (!assetExistsAt(assetId)) {
-      throw reportNotFound(assetId);
-    }
-    try {
-      URL[] urls = fileStoreService.getRedirectURL(assetId.getFsid(fileStoreService.objectIDMapper()));
-      return ImmutableList.copyOf(urls);
-    } catch (FileStoreException e) {
-      throw new IOException(e);
     }
   }
 
@@ -394,7 +374,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
    * {@inheritDoc}
    */
   @Override
-  public void delete(AssetFileIdentity assetId) throws FileStoreException {
+  public void delete(AssetFileIdentity assetId) {
     ArticleAsset asset = (ArticleAsset) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(DetachedCriteria
                 .forClass(ArticleAsset.class)
@@ -404,10 +384,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     if (asset == null) {
       throw reportNotFound(assetId);
     }
-    String fsid = assetId.getFsid(fileStoreService.objectIDMapper()); // make sure we get a valid FSID, as an additional check before deleting anything
 
     hibernateTemplate.delete(asset);
-    fileStoreService.deleteFile(fsid);
+    delete(assetId);
   }
 
   private ArticleVisibility findArticleFor(AssetIdentity id) {

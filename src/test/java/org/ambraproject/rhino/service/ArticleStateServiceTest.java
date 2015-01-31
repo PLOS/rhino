@@ -16,8 +16,6 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
-import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
@@ -36,6 +34,9 @@ import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
@@ -67,7 +68,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   private ArticleCrudService articleCrudService;
 
   @Autowired
-  private FileStoreService fileStoreService;
+  private ContentRepoService contentRepoService;
 
   @Autowired
   private ArticleOutputViewFactory articleOutputViewFactory;
@@ -95,11 +96,14 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     }
   }
 
-  private void checkFileExistence(String fsid, boolean expectedToExist) throws IOException {
-    try (InputStream stream = fileStoreService.getFileInStream(fsid)) {
+  private void checkFileExistence(AssetFileIdentity fileIdentity, boolean expectedToExist) throws IOException {
+    try (InputStream stream = contentRepoService.getLatestRepoObjStream(fileIdentity.toString())) {
+      assertNotNull(stream);
       assertTrue(expectedToExist);
-    } catch (FileStoreException e) {
-      assertFalse(expectedToExist);
+    } catch (ContentRepoException e) {
+      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
+        assertFalse(expectedToExist);
+      } else throw e;
     }
   }
 
@@ -114,7 +118,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
     for (ArticleAsset asset : article.getAssets()) {
-      checkFileExistence(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()), true);
+      checkFileExistence(AssetFileIdentity.from(asset), true);
     }
 
     ArticleOutputView outputView = articleOutputViewFactory.create(article, false);
@@ -182,7 +186,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     assertEquals(deletionMessages.size(), 1);
     assertEquals(deletionMessages.get(0), article.getDoi());
     for (ArticleAsset asset : article.getAssets()) {
-      checkFileExistence(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()), false);
+      checkFileExistence(AssetFileIdentity.from(asset), false);
     }
 
     // Attempting to publish the disabled article should fail.

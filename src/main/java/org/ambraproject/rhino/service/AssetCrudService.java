@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -26,8 +25,6 @@ import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.util.List;
 
 public interface AssetCrudService extends DoiBasedCrudService {
 
@@ -37,12 +34,10 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param file    the file data to associate with the new asset
    * @param assetId the identifier for the existing asset with the new file's extension
    * @return an indication of the result
-   * @throws FileStoreException
    * @throws IOException
    */
-  public abstract WriteResult<ArticleAsset> upload(InputStream file,
-                                                   AssetFileIdentity assetId)
-      throws FileStoreException, IOException;
+  public abstract WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetId)
+      throws IOException;
 
   /**
    * Read the file associated with an asset.
@@ -53,21 +48,11 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public abstract InputStream read(AssetFileIdentity id);
 
   /**
-   * Return the data needed to build reproxying headers for an asset.
-   *
-   * @param assetId the identifier of the asset being proxied
-   * @return a list of reproxy URLs
-   * @throws IOException
-   */
-  public abstract List<URL> reproxy(AssetFileIdentity assetId) throws IOException;
-
-  /**
    * Delete an asset and its associated file.
    *
    * @param id the identifier of the asset to delete
-   * @throws FileStoreException
    */
-  public abstract void delete(AssetFileIdentity id) throws FileStoreException;
+  public abstract void delete(AssetFileIdentity id);
 
   /**
    * Read the metadata of an asset. The output may contain multiple asset objects, one for each file associated with the
@@ -101,6 +86,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    * @param fileContent the file to write
    * @param id          the identity of the asset
    */
-  public abstract void overwrite(InputStream fileContent, AssetFileIdentity id) throws IOException, FileStoreException;
+  public abstract void overwrite(InputStream fileContent, AssetFileIdentity id)
+      throws IOException;
 
 }

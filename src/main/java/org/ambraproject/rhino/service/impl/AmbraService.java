@@ -22,9 +22,8 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.filestore.FileStoreService;
 import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.service.article.ArticleClassifier;
@@ -36,6 +35,8 @@ import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.plos.crepo.model.RepoObject;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 public abstract class AmbraService {
@@ -58,7 +58,7 @@ public abstract class AmbraService {
   protected HibernateTemplate hibernateTemplate;
 
   @Autowired
-  protected FileStoreService fileStoreService;
+  protected ContentRepoService contentRepoService;
 
   @Autowired
   protected Gson entityGson;
@@ -96,7 +96,7 @@ public abstract class AmbraService {
         .addOrder(Order.asc("journalKey"));
   }
 
-  protected RestClientException reportNotFound(DoiBasedIdentity id) {
+  public static RestClientException reportNotFound(DoiBasedIdentity id) {
     String message = "Item not found at the provided ID: " + id;
     return new RestClientException(message, HttpStatus.NOT_FOUND);
   }
@@ -123,18 +123,24 @@ public abstract class AmbraService {
   }
 
   /**
-   * Write the base article XML to the file store. If something is already stored at the same file store ID, it is
-   * overwritten; else, a new file is created.
+   * Write a raw asset to the file store. If something is already stored at the same ID, it is overwritten; else, a new
+   * file is created.
    *
    * @param fileData the data to write, as raw bytes
-   * @param fsid     the file store ID
-   * @throws org.ambraproject.filestore.FileStoreException
+   * @param identity the asset identity
    * @throws IOException
    */
-  protected void write(byte[] fileData, String fsid) throws FileStoreException, IOException {
-    try (OutputStream output = fileStoreService.getFileOutStream(fsid, fileData.length)) {
-      output.write(fileData);
-    }
+  protected void write(byte[] fileData, AssetFileIdentity identity) throws IOException {
+    RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.toString())
+        .byteContent(fileData)
+        .contentType(identity.inferContentType().toString())
+        .downloadName(identity.getFileName())
+        .build();
+    contentRepoService.autoCreateRepoObject(repoObject);
+  }
+
+  protected void deleteAssetFile(AssetFileIdentity identity) {
+    contentRepoService.deleteLatestRepoObj(identity.toString()); // TODO: Need to delete all versions?
   }
 
   protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
@@ -189,15 +195,6 @@ public abstract class AmbraService {
       throw new RuntimeException(e);
     }
   }
-
-
-  /**
-   * TODO: Extract as runtime configuration value
-   *
-   * @see #serializeMetadataSafely
-   * @see #serializeMetadataDirectly
-   */
-  private static final boolean BUFFER_JSON = true;
 
 
   /**

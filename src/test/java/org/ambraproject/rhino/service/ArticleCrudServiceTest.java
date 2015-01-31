@@ -26,13 +26,13 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
 import com.google.gson.Gson;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
 import org.ambraproject.rhino.RhinoTestHelper;
+import org.ambraproject.rhino.config.StubContentRepoService;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -45,6 +45,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -70,6 +71,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   private ArticleCrudService articleCrudService;
   @Autowired
   private AssetCrudService assetCrudService;
+  @Autowired
+  private ContentRepoService contentRepoService;
 
   /**
    * In addition to checking the existence of the service, this will throw an exception under certain error conditions
@@ -88,7 +91,15 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     addExpectedJournals();
   }
 
-  private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) throws FileStoreException {
+  /**
+   * Empty all data from the mock ContentRepoService.
+   */
+  @BeforeMethod
+  public void clearMockRepo() {
+    ((StubContentRepoService) contentRepoService).clear();
+  }
+
+  private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) {
     boolean received404 = false;
     try {
       articleCrudService.readXml(id);
@@ -112,7 +123,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   }
 
   @Test(dataProvider = "sampleArticles")
-  public void testCrud(String doi, File fileLocation) throws IOException, FileStoreException {
+  public void testCrud(String doi, File fileLocation) throws IOException {
     final ArticleIdentity articleId = ArticleIdentity.create(doi);
     final String key = articleId.getKey();
 
@@ -180,7 +191,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
   @Test(dataProvider = "sampleAssets")
   public void testCreateAsset(String articleDoi, File articleFile, String assetDoi, File assetFile)
-      throws IOException, FileStoreException {
+      throws IOException {
     String testAssetDoi = assetDoi.replace(articleDoi, articleDoi);
 
     String assetFilePath = assetFile.getPath();

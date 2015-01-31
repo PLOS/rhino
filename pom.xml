@@ -53,7 +53,6 @@
     <ambra.version>2.10.3</ambra.version>
     <rhombat.version>1.0.1</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
-    <filestore.version>1.2.0</filestore.version>
     <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
   </properties>
@@ -178,18 +177,6 @@
       <version>${ambra.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>file-store</artifactId>
-      <version>${filestore.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-context-support</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
     <!--This allows us to reuse test code from ambra-->
     <dependency>
       <groupId>org.ambraproject</groupId>
@@ -198,6 +185,12 @@
       <!--In a future version of maven, this classifier may need to change to test-jar-->
       <classifier>tests</classifier>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.plos</groupId>
+      <artifactId>content-repo-library</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->

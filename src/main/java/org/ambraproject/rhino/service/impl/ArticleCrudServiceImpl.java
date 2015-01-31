@@ -26,7 +26,6 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -62,6 +61,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.exceptions.ErrorType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,7 +133,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException, FileStoreException {
+  public Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
     if (mode == null) {
       mode = WriteMode.WRITE_ANY;
     }
@@ -190,8 +191,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    String fsid = doi.forXmlAsset().getFsid(fileStoreService.objectIDMapper()); // do this first, to fail fast if the DOI is invalid
-
     Article article = findArticleById(doi);
     final boolean creating = (article == null);
     if ((creating && mode == WriteMode.UPDATE_ONLY) || (!creating && mode == WriteMode.CREATE_ONLY)) {
@@ -218,16 +217,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * Saves both the hibernate entity and the filestore bytes representing an article.
+   * Saves both the hibernate entity and the bytes representing an article.
    *
    * @param article the new or updated Article instance to save
    * @param xmlData bytes of the article XML file to save
-   * @return FSID (filestore ID) that the xmlData was saved to
    * @throws IOException
-   * @throws FileStoreException
    */
-  private String persistArticle(Article article, byte[] xmlData)
-      throws IOException, FileStoreException {
+  private void persistArticle(Article article, byte[] xmlData)
+      throws IOException {
     if (article.getID() == null) {
       hibernateTemplate.save(article);
     } else {
@@ -248,9 +245,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     // ArticleIdentity doesn't like this part of the DOI.
     doi = doi.substring("info:doi/".length());
-    String fsid = ArticleIdentity.create(doi).forXmlAsset().getFsid(fileStoreService.objectIDMapper());
-    write(xmlData, fsid);
-    return fsid;
+    AssetFileIdentity xmlIdentity = ArticleIdentity.create(doi).forXmlAsset();
+    write(xmlData, xmlIdentity);
   }
 
   /**
@@ -392,8 +388,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId,
-                              WriteMode mode) throws IOException, FileStoreException {
+  public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+      throws IOException {
     ZipFile zip = new ZipFile(filename);
     Document manifestDoc = getManifest(zip);
     ManifestXml manifest = new ManifestXml(manifestDoc);
@@ -427,7 +423,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         // If there is an error processing the assets, delete the article we created
         // above, since it won't be valid.
         delete(ArticleIdentity.create(article));
-      } catch (RuntimeException | FileStoreException exceptionOnDeletion) {
+      } catch (RuntimeException exceptionOnDeletion) {
         exceptionOnDeletion.addSuppressed(rce);
         throw exceptionOnDeletion;
       }
@@ -451,7 +447,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   private void addAssetFiles(Article article, ZipFile zipFile, ManifestXml manifest)
-      throws IOException, FileStoreException {
+      throws IOException {
     String articleXmlFilename = manifest.getArticleXml().toLowerCase();
 
     // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
@@ -838,13 +834,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public InputStream readXml(ArticleIdentity id) throws FileStoreException {
-    if (!articleExistsAt(id)) {
-      throw reportNotFound(id);
+  public InputStream readXml(ArticleIdentity id) {
+    try {
+      return contentRepoService.getLatestRepoObjStream(id.forXmlAsset().toString());
+    } catch (ContentRepoException e) {
+      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
+        throw reportNotFound(id);
+      } else {
+        throw e;
+      }
     }
-
-    // TODO Can an invalid request cause this to throw FileStoreException? If so, wrap in RestClientException.
-    return fileStoreService.getFileInStream(id.forXmlAsset().getFsid(fileStoreService.objectIDMapper()));
   }
 
   @Override
@@ -911,7 +910,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    */
   @Override
   public Transceiver readAuthors(final ArticleIdentity id)
-      throws IOException, FileStoreException {
+      throws IOException {
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
@@ -927,12 +926,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        Document doc;
-        try {
-          doc = parseXml(readXml(id));
-        } catch (FileStoreException e) {
-          throw new IOException(e);
-        }
+        Document doc = parseXml(readXml(id));
         List<AuthorView> authors;
         try {
           authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
@@ -948,7 +942,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public void delete(ArticleIdentity id) throws FileStoreException {
+  public void delete(ArticleIdentity id) {
     Article article = findArticleById(id);
     if (article == null) {
       throw reportNotFound(id);
@@ -956,8 +950,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     for (ArticleAsset asset : article.getAssets()) {
       if (AssetIdentity.hasFile(asset)) {
-        String assetFsid = AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper());
-        fileStoreService.deleteFile(assetFsid);
+        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
+        deleteAssetFile(assetFileIdentity);
       }
     }
     hibernateTemplate.delete(article);

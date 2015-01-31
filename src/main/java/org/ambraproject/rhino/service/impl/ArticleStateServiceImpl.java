@@ -16,7 +16,6 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
@@ -146,11 +145,10 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    * @param articleId   wraps the DOI
    * @param article
    * @param isPublished indicates whether we are publishing or un-publishing
-   * @throws FileStoreException
    * @throws IOException
    */
   private void updateSolrIndex(ArticleIdentity articleId, Article article, boolean isPublished)
-      throws FileStoreException, IOException {
+      throws IOException {
     if (isPublished) {
       Document doc;
       try (InputStream xml = articleCrudService.readXml(articleId)) {
@@ -169,7 +167,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
         try {
           doc = documentBuilder.parse(xml);
         } catch (SAXException se) {
-          throw new RuntimeException("Bad XML retrieved from filestore for " + article.getDoi(), se);
+          throw new RuntimeException("Bad XML retrieved for " + article.getDoi(), se);
         }
       }
       doc = appendJournals(doc, articleId);
@@ -187,7 +185,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
    */
   @Override
   public Article update(ArticleIdentity articleId, ArticleInputView input)
-      throws FileStoreException, IOException {
+      throws IOException {
     Article article = loadArticle(articleId);
 
     Optional<Integer> updatedState = input.getPublicationState();
@@ -209,7 +207,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
 
       if (updatedState.get() == Article.STATE_DISABLED) {
         for (ArticleAsset asset : article.getAssets()) {
-          fileStoreService.deleteFile(AssetFileIdentity.from(asset).getFsid(fileStoreService.objectIDMapper()));
+          deleteAssetFile(AssetFileIdentity.from(asset));
         }
         ingestibleService.revertArchive(articleId);
       }

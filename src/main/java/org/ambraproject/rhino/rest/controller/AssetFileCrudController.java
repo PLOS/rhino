@@ -19,18 +19,16 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
-import org.ambraproject.filestore.FileStoreException;
-import org.ambraproject.filestore.FileStoreService;
-import org.ambraproject.models.Article;
+import com.google.common.io.ByteStreams;
+import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
-import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
+import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,9 +43,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.io.OutputStream;
+import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
+
+import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
 @Controller
 public class AssetFileCrudController extends DoiBasedCrudController {
@@ -57,11 +59,9 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   private static final String ASSET_TEMPLATE = ASSET_NAMESPACE + "**";
 
   @Autowired
-  private ArticleCrudService articleCrudService;
-  @Autowired
   private AssetCrudService assetCrudService;
   @Autowired
-  protected FileStoreService fileStoreService;
+  private ContentRepoService contentRepoService;
 
   @Override
   protected String getNamespacePrefix() {
@@ -88,7 +88,6 @@ public class AssetFileCrudController extends DoiBasedCrudController {
    * @param assetFile the blob of data to associate with the asset
    * @return
    * @throws IOException
-   * @throws FileStoreException
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
@@ -96,7 +95,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
                      @RequestParam(value = DOI_PARAM) String assetDoi,
                      @RequestParam(value = EXTENSION_PARAM) String extension,
                      @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
-      throws IOException, FileStoreException {
+      throws IOException {
     AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
     WriteResult<ArticleAsset> result;
     try (InputStream fileContent = assetFile.getInputStream()) {
@@ -109,7 +108,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.PUT)
-  public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException, FileStoreException {
+  public ResponseEntity<?> overwrite(HttpServletRequest request) throws IOException {
     AssetFileIdentity id = parse(request);
     try (InputStream fileContent = request.getInputStream()) {
       assetCrudService.overwrite(fileContent, id);
@@ -128,57 +127,56 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, FileStoreException {
+      throws IOException {
     read(request, response, parse(request));
   }
 
   void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
-      throws IOException, FileStoreException {
-
-    Optional<ArticleIdentity> articleId = id.forArticle();
-    Article article = articleId.isPresent()
-        ? articleCrudService.findArticleById(articleId.get()) // null if the file is XML, but not the article XML
-        : null; // if the file type is not XML
-    if (article != null) {
-
-      // We want to set the Last-Modified header appropriately, so that clients can cache article
-      // XML if they choose to.  Unfortunately, the filestore interface doesn't have a way to
-      // retrieve a file's mtime, so we have to get this info from the ambra DB instead.
-      setLastModifiedHeader(response, article.getLastModified());
-      if (checkIfModifiedSince(request, article.getLastModified())) {
-        try {
-          provideXmlFor(response, articleId.get());
-          return;
-        } catch (RestClientException e) {
-          /*
-           * If there was no such article, it might still be a regular asset whose type happens to be XML.
-           * Fall through and attempt to serve it as such. (If it isn't there either, the client will get
-           * the same "not found" response anyway.)
-           */
-
-          if (!HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
-            throw e; // Anything other than "not found" is unexpected
-          }
-        }
+      throws IOException {
+    Map<String, Object> objMeta;
+    try {
+      objMeta = contentRepoService.getRepoObjMetaLatestVersion(id.toString());
+    } catch (ContentRepoException e) {
+      if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
+        throw reportNotFound(id);
       } else {
-
-        // !checkIfModifiedSince
-        response.setStatus(HttpStatus.NOT_MODIFIED.value());
-        return;
+        throw e;
       }
     }
 
-    if (clientSupportsReproxy(request) && fileStoreService.hasXReproxy()) {
-      List<URL> reproxyUrls = assetCrudService.reproxy(id);
+    String contentType = (String) objMeta.get("contentType");
+    if (contentType == null) {
+      // In case contentType field is empty, default to what we would have written at ingestion
+      contentType = id.inferContentType().toString();
+    }
+    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+
+    String filename = (String) objMeta.get("downloadName");
+    if (filename == null) {
+      // In case downloadName field is empty, default to what we would have written at ingestion
+      filename = id.getFileName();
+    }
+    String contentDisposition = "attachment; filename=" + filename; // TODO: 'attachment' is not always correct
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+
+    Timestamp timestamp = Timestamp.valueOf((String) objMeta.get("timestamp"));
+    setLastModifiedHeader(response, timestamp);
+    if (!checkIfModifiedSince(request, timestamp)) {
+      response.setStatus(HttpStatus.NOT_MODIFIED.value());
+      return;
+    }
+
+    List<String> reproxyUrls = (List<String>) objMeta.get("reproxyURL");
+    if (clientSupportsReproxy(request) && reproxyUrls != null && !reproxyUrls.isEmpty()) {
       String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
 
       response.setStatus(HttpStatus.OK.value());
-      setContentHeaders(response, id);
       response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     } else {
-      try (InputStream fileStream = assetCrudService.read(id)) {
-        respondWithStream(fileStream, response, id);
+      try (InputStream fileStream = assetCrudService.read(id);
+           OutputStream responseStream = response.getOutputStream()) {
+        ByteStreams.copy(fileStream, responseStream);
       }
     }
   }
@@ -196,21 +194,6 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     return false;
   }
 
-  /**
-   * Write a response containing the XML file for an article.
-   *
-   * @param response the response object to modify
-   * @param article  the parent article of the XML file to send
-   * @throws FileStoreException
-   * @throws IOException
-   */
-  private void provideXmlFor(HttpServletResponse response, ArticleIdentity article)
-      throws FileStoreException, IOException {
-    try (InputStream fileStream = articleCrudService.readXml(article)) {
-      respondWithStream(fileStream, response, article.forXmlAsset());
-    }
-  }
-
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = {METADATA_PARAM})
   public void readMetadata(HttpServletRequest request, HttpServletResponse response)
@@ -220,7 +203,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
   }
 
   @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) throws FileStoreException {
+  public ResponseEntity<?> delete(HttpServletRequest request) {
     AssetFileIdentity id = parse(request);
     assetCrudService.delete(id);
     return reportOk();

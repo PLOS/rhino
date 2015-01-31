@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import org.ambraproject.filestore.FileStoreException;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.view.article.ArticleInputView;
@@ -33,5 +32,5 @@ public interface ArticleStateService {
    * @return the article after updates are applied
    */
   public abstract Article update(ArticleIdentity articleId, ArticleInputView input)
-      throws FileStoreException, IOException;
+      throws IOException;
 }
