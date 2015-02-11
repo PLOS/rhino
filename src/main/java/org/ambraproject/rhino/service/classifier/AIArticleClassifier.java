@@ -28,7 +28,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -77,7 +81,7 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @inheritDoc
    */
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml) throws Exception {
+  public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
     List<String> rawTerms = getRawTerms(articleXml);
     Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
 
@@ -104,16 +108,28 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param articleXml DOM of the article to categorize
    * @return List of results from the server.  This will consist of raw XML fragments, and include things like counts
    * that we don't currently store in mysql.
-   * @throws Exception
+   * @throws IOException
    */
-  private List<String> getRawTerms(Document articleXml) throws Exception {
+  private List<String> getRawTerms(Document articleXml) throws IOException {
     String toCategorize = getCategorizationContent(articleXml);
     String aiMessage = String.format(MESSAGE_BEGIN, thesaurus) + toCategorize + MESSAGE_END;
     PostMethod post = new PostMethod(serviceUrl);
     post.setRequestEntity(new StringRequestEntity(aiMessage, "application/xml", "UTF-8"));
     httpClient.executeMethod(post);
-    Document response = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(post.getResponseBodyAsStream());
+
+    DocumentBuilder documentBuilder;
+    try {
+      documentBuilder = DocumentBuilderFactoryCreator.createFactory().newDocumentBuilder();
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e); // parser configuration is default; expected never to happen
+    }
+
+    Document response;
+    try {
+      response = documentBuilder.parse(post.getResponseBodyAsStream());
+    } catch (SAXException e) {
+      throw new RuntimeException("Invalid XML returned from " + serviceUrl, e);
+    }
 
     //parse result
     NodeList vectorElements = response.getElementsByTagName("VectorElement");

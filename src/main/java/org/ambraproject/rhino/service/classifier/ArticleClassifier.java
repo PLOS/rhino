@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service.classifier;
 
 import org.w3c.dom.Document;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -35,6 +36,6 @@ public interface ArticleClassifier {
    * hierarchy.  Categories are returned in descending order of the strength of the match paired with the strength
    * value
    */
-  public Map<String, Integer> classifyArticle(Document articleXml) throws Exception;
+  public Map<String, Integer> classifyArticle(Document articleXml) throws IOException;
 
 }
