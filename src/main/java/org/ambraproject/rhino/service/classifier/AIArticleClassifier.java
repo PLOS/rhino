@@ -21,10 +21,8 @@ package org.ambraproject.rhino.service.classifier;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.ambraproject.util.XPathUtil;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +33,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathException;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -259,102 +250,4 @@ public class AIArticleClassifier implements ArticleClassifier {
     return StringEscapeUtils.escapeXml(sb.toString().trim());
   }
 
-  // Utility main method and associated code useful for grabbing categories for individual
-  // articles.
-  // TODO: consider moving this somewhere else.
-
-  private static final Pattern DOI_REGEX = Pattern.compile("(p[a-z]{3}\\.\\d{7})");
-
-  private static final String XML_URL = "http://www.plosone.org/article/fetchObjectAttachment.action"
-      + "?uri=info%%3Adoi%%2F10.1371%%2Fjournal.%s&representation=XML";
-
-  private static final String XML_URL_FULLDOI = "http://www.plosone.org/article/fetchObjectAttachment.action"
-      + "?uri=%s&representation=XML";
-
-  /**
-   * Returns the XML for an article.  Note that this fetches the article XML via a web request to the live site, not
-   * using a filestore.
-   *
-   * @param doi doi specifying the article
-   * @return String of the article XML, if found
-   * @throws Exception
-   */
-  private String fetchXml(String doi) throws Exception {
-    URL url = new URL(doi);
-    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-    conn.connect();
-    InputStream is = conn.getInputStream();
-    String result = IOUtils.toString(is);
-    is.close();
-    return result;
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public void testThesaurus(final OutputStream os, final String doi, final String thesaurus) throws Exception {
-    String full_doi = String.format(XML_URL_FULLDOI, doi);
-    String xml = fetchXml(full_doi);
-    PrintStream ps = new PrintStream(os);
-
-    Document dom = DocumentBuilderFactoryCreator.createFactory().newDocumentBuilder().parse(
-        new ByteArrayInputStream(xml.getBytes("utf-8")));
-
-    AIArticleClassifier classifier = new AIArticleClassifier();
-
-    ps.println("Content to send to taxonomy server:");
-    ps.println("\n\n" + classifier.getCategorizationContent(dom) + "\n\n");
-
-    classifier.setServiceUrl("http://tax.plos.org:9080/servlet/dh");
-    classifier.setThesaurus(thesaurus);
-    classifier.setHttpClient(new HttpClient(new MultiThreadedHttpConnectionManager()));
-
-    List<String> rawOutput = classifier.getRawTerms(dom);
-
-    ps.println("\n\nTerms returned by taxonomy server:");
-
-    for (String s : rawOutput) {
-
-      // Strip out XML wrapping
-      s = s.replace("<TERM>", "");
-      s = s.replace("</TERM>", "");
-
-      // Replicate the hack in classifyArticle() above, so that this main method only shows what
-      // we would actually store in mysql.
-      if (!s.startsWith("/Earth sciences/Geography/Locations/")) {
-        ps.println(s);
-      }
-    }
-    ps.println("\n\n");
-  }
-
-  /**
-   * Main method that categorizes a single article, based on its DOI as input on the command line.
-   *
-   * @param args
-   * @throws Exception
-   */
-  @Deprecated
-  public static void main(String... args) throws Exception {
-    //TODO: Delete me, not likely in use any longer
-    if (args.length != 2) {
-      System.err.println("You must specify the thesaurus as the first argument, and the PLOS "
-          + "article as the second.  You entered: " + Arrays.toString(args));
-      System.exit(1);
-    }
-
-    Matcher matcher = DOI_REGEX.matcher(args[1]);
-    matcher.find();
-
-    String doi = matcher.group(1);
-
-    if (doi != null) {
-      doi = String.format(XML_URL, doi);
-      AIArticleClassifier aiArticleClassifier = new AIArticleClassifier();
-      aiArticleClassifier.testThesaurus(System.out, doi, args[0].trim());
-    } else {
-      System.out.println(args[1] + " is not a valid DOI");
-      System.exit(1);
-    }
-  }
 }

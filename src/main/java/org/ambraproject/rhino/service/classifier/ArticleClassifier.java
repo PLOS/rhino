@@ -20,7 +20,6 @@ package org.ambraproject.rhino.service.classifier;
 
 import org.w3c.dom.Document;
 
-import java.io.OutputStream;
 import java.util.Map;
 
 /**
@@ -38,13 +37,4 @@ public interface ArticleClassifier {
    */
   public Map<String, Integer> classifyArticle(Document articleXml) throws Exception;
 
-  /**
-   * Classify an article from its xml and output a lot of debugging information to the passed in stream This does not
-   * actually store any information
-   *
-   * @param os        the stream to write to
-   * @param doi       the doi of the article
-   * @param thesaurus the thesaurus to use
-   */
-  public void testThesaurus(OutputStream os, String doi, String thesaurus) throws Exception;
 }
