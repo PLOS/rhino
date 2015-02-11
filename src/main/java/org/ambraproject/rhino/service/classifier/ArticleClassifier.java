@@ -19,12 +19,12 @@
 package org.ambraproject.rhino.service.classifier;
 
 import org.w3c.dom.Document;
+
 import java.io.OutputStream;
 import java.util.Map;
 
 /**
- * @author Alex Kudlick
- *         Date: 7/3/12
+ * @author Alex Kudlick Date: 7/3/12
  */
 public interface ArticleClassifier {
 
@@ -32,18 +32,18 @@ public interface ArticleClassifier {
    * Classify an article from its xml.
    *
    * @param articleXml the article xml
-   * @return a map of categories to which the article belongs. Each entry should use <code>/</code>s to
-   *         delimit subject hierarchy.  Categories are returned in descending order of the
-   *         strength of the match paired with the strength value
+   * @return a map of categories to which the article belongs. Each entry should use <code>/</code>s to delimit subject
+   * hierarchy.  Categories are returned in descending order of the strength of the match paired with the strength
+   * value
    */
   public Map<String, Integer> classifyArticle(Document articleXml) throws Exception;
 
   /**
-   * Classify an article from its xml and output a lot of debugging information to the passed in stream
-   * This does not actually store any information
+   * Classify an article from its xml and output a lot of debugging information to the passed in stream This does not
+   * actually store any information
    *
-   * @param os the stream to write to
-   * @param doi the doi of the article
+   * @param os        the stream to write to
+   * @param doi       the doi of the article
    * @param thesaurus the thesaurus to use
    */
   public void testThesaurus(OutputStream os, String doi, String thesaurus) throws Exception;

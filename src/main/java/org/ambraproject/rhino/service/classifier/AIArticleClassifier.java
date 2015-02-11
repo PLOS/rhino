@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Required;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathException;
 import java.io.ByteArrayInputStream;
@@ -50,8 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Alex Kudlick
- *         Date: 7/3/12
+ * @author Alex Kudlick Date: 7/3/12
  */
 public class AIArticleClassifier implements ArticleClassifier {
 
@@ -112,12 +112,11 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   /**
-   * Queries the MAI server for taxonomic terms for a given article, and returns a list
-   * of the raw results.
+   * Queries the MAI server for taxonomic terms for a given article, and returns a list of the raw results.
    *
    * @param articleXml DOM of the article to categorize
-   * @return List of results from the server.  This will consist of raw XML fragments, and
-   *     include things like counts that we don't currently store in mysql.
+   * @return List of results from the server.  This will consist of raw XML fragments, and include things like counts
+   * that we don't currently store in mysql.
    * @throws Exception
    */
   private List<String> getRawTerms(Document articleXml) throws Exception {
@@ -163,7 +162,7 @@ public class AIArticleClassifier implements ArticleClassifier {
   static Map.Entry<String, Integer> parseVectorElement(String vectorElement) {
     Matcher match = TERM_PATTERN.matcher(vectorElement);
 
-    if(match.find()) {
+    if (match.find()) {
       String text = match.group(1);
       Integer value = Integer.valueOf(match.group(2));
 
@@ -175,11 +174,11 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   /**
-   * Adds the text content of the given element to the StringBuilder, if it exists.
-   * If more than one element exists with the given name, only appends the first one.
+   * Adds the text content of the given element to the StringBuilder, if it exists. If more than one element exists with
+   * the given name, only appends the first one.
    *
-   * @param sb StringBuilder to be modified
-   * @param dom DOM tree of an article
+   * @param sb          StringBuilder to be modified
+   * @param dom         DOM tree of an article
    * @param elementName name of element to search for in the dom
    * @return true if the StringBuilder was modified
    */
@@ -197,15 +196,15 @@ public class AIArticleClassifier implements ArticleClassifier {
   /**
    * Adds the text content of all found elements to the StringBuilder, if they exist.
    *
-   * @param sb StringBuilder to be modified
-   * @param dom DOM tree of an article
+   * @param sb          StringBuilder to be modified
+   * @param dom         DOM tree of an article
    * @param elementName name of element to search for in the dom
    * @return true if the StringBuilder was modified
    */
   boolean appendAllElementsIfExists(StringBuilder sb, Document dom, String elementName) {
     NodeList list = dom.getElementsByTagName(elementName);
     if (list != null && list.getLength() > 0) {
-      for(int a = 0; a < list.getLength(); a++) {
+      for (int a = 0; a < list.getLength(); a++) {
         sb.append(list.item(a).getTextContent());
         sb.append("\n");
       }
@@ -216,14 +215,12 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   /**
-   * Appends a given section of the article, with one of the given titles, to the
-   * StringBuilder passed in.  (Examples include "Results", "Materials and Methods",
-   * "Discussion", etc.)
+   * Appends a given section of the article, with one of the given titles, to the StringBuilder passed in.  (Examples
+   * include "Results", "Materials and Methods", "Discussion", etc.)
    *
-   * @param sb StringBuilder to be modified
-   * @param dom DOM tree of an article
-   * @param sectionTitles list of titles to look for.  The first one found will be
-   *     appended.
+   * @param sb            StringBuilder to be modified
+   * @param dom           DOM tree of an article
+   * @param sectionTitles list of titles to look for.  The first one found will be appended.
    * @return true if the StringBuilder was modified
    * @throws XPathException
    */
@@ -243,13 +240,11 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   /**
-   * Returns a string containing only the parts of the article that should be examined
-   * by the taxonomy server.  For research articles, this is presently the title, the
-   * abstract, the Materials and Methods section, and the Results section.  (If any of
-   * these sections are not present, they are not sent, but this is not a fatal error.)
-   * If none of these sections (abstract, materials/methods, or results) are present,
-   * then this method will return the entire body text.  This is usually the case for
-   * non-research-articles, such as corrections, opinion pieces, etc.
+   * Returns a string containing only the parts of the article that should be examined by the taxonomy server.  For
+   * research articles, this is presently the title, the abstract, the Materials and Methods section, and the Results
+   * section.  (If any of these sections are not present, they are not sent, but this is not a fatal error.) If none of
+   * these sections (abstract, materials/methods, or results) are present, then this method will return the entire body
+   * text.  This is usually the case for non-research-articles, such as corrections, opinion pieces, etc.
    *
    * @param dom DOM tree of an article
    * @return raw text content, XML-escaped, of the relevant article sections
@@ -274,11 +269,11 @@ public class AIArticleClassifier implements ArticleClassifier {
       + "?uri=info%%3Adoi%%2F10.1371%%2Fjournal.%s&representation=XML";
 
   private static final String XML_URL_FULLDOI = "http://www.plosone.org/article/fetchObjectAttachment.action"
-    + "?uri=%s&representation=XML";
+      + "?uri=%s&representation=XML";
 
   /**
-   * Returns the XML for an article.  Note that this fetches the article XML via a
-   * web request to the live site, not using a filestore.
+   * Returns the XML for an article.  Note that this fetches the article XML via a web request to the live site, not
+   * using a filestore.
    *
    * @param doi doi specifying the article
    * @return String of the article XML, if found
@@ -303,7 +298,7 @@ public class AIArticleClassifier implements ArticleClassifier {
     PrintStream ps = new PrintStream(os);
 
     Document dom = DocumentBuilderFactoryCreator.createFactory().newDocumentBuilder().parse(
-      new ByteArrayInputStream(xml.getBytes("utf-8")));
+        new ByteArrayInputStream(xml.getBytes("utf-8")));
 
     AIArticleClassifier classifier = new AIArticleClassifier();
 
@@ -334,8 +329,7 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   /**
-   * Main method that categorizes a single article, based on its DOI as input on
-   * the command line.
+   * Main method that categorizes a single article, based on its DOI as input on the command line.
    *
    * @param args
    * @throws Exception
