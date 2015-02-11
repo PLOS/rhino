@@ -19,10 +19,14 @@
 package org.ambraproject.rhino.service.classifier;
 
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpClientConnectionManager;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -33,6 +37,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -60,7 +65,7 @@ public class AIArticleClassifier implements ArticleClassifier {
 
   private String serviceUrl;
   private String thesaurus;
-  private HttpClient httpClient;
+  private HttpClientConnectionManager connectionManager;
 
   @Required
   public void setServiceUrl(String serviceUrl) {
@@ -73,8 +78,8 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   @Required
-  public void setHttpClient(HttpClient httpClient) {
-    this.httpClient = httpClient;
+  public void setConnectionManager(HttpClientConnectionManager connectionManager) {
+    this.connectionManager = connectionManager;
   }
 
   /**
@@ -113,9 +118,9 @@ public class AIArticleClassifier implements ArticleClassifier {
   private List<String> getRawTerms(Document articleXml) throws IOException {
     String toCategorize = getCategorizationContent(articleXml);
     String aiMessage = String.format(MESSAGE_BEGIN, thesaurus) + toCategorize + MESSAGE_END;
-    PostMethod post = new PostMethod(serviceUrl);
-    post.setRequestEntity(new StringRequestEntity(aiMessage, "application/xml", "UTF-8"));
-    httpClient.executeMethod(post);
+    HttpPost post = new HttpPost(serviceUrl);
+    post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
+    CloseableHttpClient httpClient = HttpClientBuilder.create().setConnectionManager(connectionManager).build();
 
     DocumentBuilder documentBuilder;
     try {
@@ -125,8 +130,9 @@ public class AIArticleClassifier implements ArticleClassifier {
     }
 
     Document response;
-    try {
-      response = documentBuilder.parse(post.getResponseBodyAsStream());
+    try (CloseableHttpResponse httpResponse = httpClient.execute(post);
+         InputStream stream = httpResponse.getEntity().getContent()) {
+      response = documentBuilder.parse(stream);
     } catch (SAXException e) {
       throw new RuntimeException("Invalid XML returned from " + serviceUrl, e);
     }
