@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service.classifier;
 
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
-import org.ambraproject.util.XPathUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
@@ -28,10 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.xpath.XPathException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -202,31 +199,6 @@ public class AIArticleClassifier implements ArticleClassifier {
     } else {
       return false;
     }
-  }
-
-  /**
-   * Appends a given section of the article, with one of the given titles, to the StringBuilder passed in.  (Examples
-   * include "Results", "Materials and Methods", "Discussion", etc.)
-   *
-   * @param sb            StringBuilder to be modified
-   * @param dom           DOM tree of an article
-   * @param sectionTitles list of titles to look for.  The first one found will be appended.
-   * @return true if the StringBuilder was modified
-   * @throws XPathException
-   */
-  private static boolean appendSectionIfExists(StringBuilder sb, Document dom, String... sectionTitles)
-      throws XPathException {
-    XPathUtil xPathUtil = new XPathUtil();
-    for (String title : sectionTitles) {
-      Node node = xPathUtil.selectSingleNode(dom,
-          String.format("/article/body/sec[title='%s']", title));
-      if (node != null) {
-        sb.append(node.getTextContent());
-        sb.append("\n");
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
