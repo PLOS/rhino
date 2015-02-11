@@ -31,7 +31,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class AIArticleClassifier implements ArticleClassifier {
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws Exception {
     List<String> rawTerms = getRawTerms(articleXml);
-    Map<String, Integer> results = new LinkedHashMap<String, Integer>(rawTerms.size());
+    Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
       Map.Entry<String, Integer> entry = parseVectorElement(rawTerm);
@@ -121,7 +120,7 @@ public class AIArticleClassifier implements ArticleClassifier {
 
     //parse result
     NodeList vectorElements = response.getElementsByTagName("VectorElement");
-    List<String> results = new ArrayList<String>(vectorElements.getLength());
+    List<String> results = new ArrayList<>(vectorElements.getLength());
     //The first and last elements of the vector response are just MAITERMS
     for (int i = 1; i < vectorElements.getLength() - 1; i++) {
       results.add(vectorElements.item(i).getTextContent());
@@ -142,7 +141,7 @@ public class AIArticleClassifier implements ArticleClassifier {
   //Confirms the response is good
   //Finds the term and places in the result
   //Finds first number wrapped in parentheses after the pipe symbol and places it in the result
-  static Pattern TERM_PATTERN = Pattern.compile("<TERM>\\s*(/.*)\\|\\s*\\((\\d+)\\).*</TERM>");
+  private static final Pattern TERM_PATTERN = Pattern.compile("<TERM>\\s*(/.*)\\|\\s*\\((\\d+)\\).*</TERM>");
 
   /**
    * Parses a single line of the XML response from the taxonomy server.
@@ -150,14 +149,14 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param vectorElement The text body of a line of the response
    * @return the term and weight of the term or null if the line is not valid
    */
-  static Map.Entry<String, Integer> parseVectorElement(String vectorElement) {
+  private static Map.Entry<String, Integer> parseVectorElement(String vectorElement) {
     Matcher match = TERM_PATTERN.matcher(vectorElement);
 
     if (match.find()) {
       String text = match.group(1);
       Integer value = Integer.valueOf(match.group(2));
 
-      return new AbstractMap.SimpleImmutableEntry<String, Integer>(text, value);
+      return new AbstractMap.SimpleImmutableEntry<>(text, value);
     } else {
       //Bad term, return null
       return null;
@@ -173,7 +172,7 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param elementName name of element to search for in the dom
    * @return true if the StringBuilder was modified
    */
-  boolean appendElementIfExists(StringBuilder sb, Document dom, String elementName) {
+  private static boolean appendElementIfExists(StringBuilder sb, Document dom, String elementName) {
     NodeList list = dom.getElementsByTagName(elementName);
     if (list != null && list.getLength() > 0) {
       sb.append(list.item(0).getTextContent());
@@ -192,7 +191,7 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param elementName name of element to search for in the dom
    * @return true if the StringBuilder was modified
    */
-  boolean appendAllElementsIfExists(StringBuilder sb, Document dom, String elementName) {
+  private static boolean appendAllElementsIfExists(StringBuilder sb, Document dom, String elementName) {
     NodeList list = dom.getElementsByTagName(elementName);
     if (list != null && list.getLength() > 0) {
       for (int a = 0; a < list.getLength(); a++) {
@@ -215,7 +214,7 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @return true if the StringBuilder was modified
    * @throws XPathException
    */
-  boolean appendSectionIfExists(StringBuilder sb, Document dom, String... sectionTitles)
+  private static boolean appendSectionIfExists(StringBuilder sb, Document dom, String... sectionTitles)
       throws XPathException {
     XPathUtil xPathUtil = new XPathUtil();
     for (String title : sectionTitles) {
@@ -239,10 +238,8 @@ public class AIArticleClassifier implements ArticleClassifier {
    *
    * @param dom DOM tree of an article
    * @return raw text content, XML-escaped, of the relevant article sections
-   * @throws TransformerException
-   * @throws XPathException
    */
-  String getCategorizationContent(Document dom) throws TransformerException, XPathException {
+  private static String getCategorizationContent(Document dom) {
     StringBuilder sb = new StringBuilder();
     appendElementIfExists(sb, dom, "article-title");
     appendAllElementsIfExists(sb, dom, "abstract");
