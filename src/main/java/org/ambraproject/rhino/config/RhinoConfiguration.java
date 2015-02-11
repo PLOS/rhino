@@ -59,7 +59,7 @@ import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.service.taxonomy.TaxonomyService;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.HttpClientConnectionManager;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
@@ -168,21 +168,21 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public HttpClientConnectionManager connectionManager(RuntimeConfiguration runtimeConfiguration) {
+  public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
     manager.setMaxTotal(400); // TODO: Set from RuntimeConfiguration
     manager.setDefaultMaxPerRoute(20); // TODO: Set from RuntimeConfiguration
-    return manager;
 
+    return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
 
   @Bean
   public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
-                                               final HttpClientConnectionManager connectionManager) {
+                                               final CloseableHttpClient httpClient) {
     RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
     final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
     final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
-    Preconditions.checkNotNull(connectionManager);
+    Preconditions.checkNotNull(httpClient);
 
     ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
       @Override
@@ -197,7 +197,7 @@ public class RhinoConfiguration extends BaseConfiguration {
 
       @Override
       public CloseableHttpResponse open(HttpUriRequest request) throws IOException {
-        return HttpClientBuilder.create().setConnectionManager(connectionManager).build().execute(request);
+        return httpClient.execute(request);
       }
     };
 

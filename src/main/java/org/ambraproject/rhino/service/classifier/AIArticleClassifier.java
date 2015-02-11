@@ -22,11 +22,9 @@ import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -65,7 +63,7 @@ public class AIArticleClassifier implements ArticleClassifier {
 
   private String serviceUrl;
   private String thesaurus;
-  private HttpClientConnectionManager connectionManager;
+  private CloseableHttpClient httpClient;
 
   @Required
   public void setServiceUrl(String serviceUrl) {
@@ -78,8 +76,8 @@ public class AIArticleClassifier implements ArticleClassifier {
   }
 
   @Required
-  public void setConnectionManager(HttpClientConnectionManager connectionManager) {
-    this.connectionManager = connectionManager;
+  public void setHttpClient(CloseableHttpClient httpClient) {
+    this.httpClient = httpClient;
   }
 
   /**
@@ -120,7 +118,6 @@ public class AIArticleClassifier implements ArticleClassifier {
     String aiMessage = String.format(MESSAGE_BEGIN, thesaurus) + toCategorize + MESSAGE_END;
     HttpPost post = new HttpPost(serviceUrl);
     post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
-    CloseableHttpClient httpClient = HttpClientBuilder.create().setConnectionManager(connectionManager).build();
 
     DocumentBuilder documentBuilder;
     try {
