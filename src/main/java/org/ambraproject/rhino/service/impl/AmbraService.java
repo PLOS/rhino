@@ -26,7 +26,6 @@ import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.service.article.ArticleClassifier;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.apache.commons.io.IOUtils;
@@ -62,9 +61,6 @@ public abstract class AmbraService {
 
   @Autowired
   protected Gson entityGson;
-
-  @Autowired
-  protected ArticleClassifier articleClassifier;
 
   @Autowired
   protected ArticleService articleService;

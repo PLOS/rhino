@@ -79,10 +79,10 @@
     <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 
-  <beans:bean id="articleClassifier" class="org.ambraproject.service.article.AIArticleClassifier">
-    <beans:property name="httpClient" ref="httpClient"/>
+  <beans:bean id="articleClassifier" class="org.ambraproject.rhino.service.classifier.AIArticleClassifier">
     <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>
     <beans:property name="thesaurus" value="${ambra.services.ai.thesaurus}"/>
+    <beans:property name="connectionManager" ref="connectionManager"/>
   </beans:bean>
 
   <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"

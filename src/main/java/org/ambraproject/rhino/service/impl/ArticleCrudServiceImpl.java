@@ -45,6 +45,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.classifier.ArticleClassifier;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
@@ -105,6 +106,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleOutputViewFactory articleOutputViewFactory;
   @Autowired
   private XpathReader xpathReader;
+  @Autowired
+  private ArticleClassifier articleClassifier;
 
   private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
