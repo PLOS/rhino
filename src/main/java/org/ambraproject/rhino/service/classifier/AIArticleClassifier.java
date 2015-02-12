@@ -19,6 +19,8 @@
 package org.ambraproject.rhino.service.classifier;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableMap;
+import org.ambraproject.rhino.config.RuntimeConfiguration.ArticleClassifierConfiguration;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -62,23 +64,17 @@ public class AIArticleClassifier implements ArticleClassifier {
       "</TMMAI>";
 
 
-  private String serviceUrl;
-  private String thesaurus;
   private CloseableHttpClient httpClient;
-
-  @Required
-  public void setServiceUrl(String serviceUrl) {
-    this.serviceUrl = serviceUrl;
-  }
-
-  @Required
-  public void setThesaurus(String thesaurus) {
-    this.thesaurus = thesaurus;
-  }
+  private ArticleClassifierConfiguration configuration;
 
   @Required
   public void setHttpClient(CloseableHttpClient httpClient) {
     this.httpClient = httpClient;
+  }
+
+  @Required
+  public void setConfiguration(ArticleClassifierConfiguration configuration) {
+    this.configuration = configuration;
   }
 
   /**
@@ -86,21 +82,28 @@ public class AIArticleClassifier implements ArticleClassifier {
    */
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
+    if (configuration.getAddress() == null || configuration.getThesaurus() == null) {
+      log.info("AIArticleClassifier is not configured");
+      return ImmutableMap.of();
+    }
+
     List<String> rawTerms = getRawTerms(articleXml);
     Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
       Map.Entry<String, Integer> entry = parseVectorElement(rawTerm);
-
-      // When the new taxonomy launched, we had a problem where lots of PLOS ONE
-      // papers were being tagged with subcategories of
-      // "/Earth sciences/Geography/Locations" (see Jira TAX-30).  So we're just
-      // blacklisting this category for now.
-      //
-      // TODO: tweak the AI taxonomy server rulebase to make this unnecessary, and
-      // remove the hack.
-      if (entry.getKey() != null && !entry.getKey().startsWith("/Earth sciences/Geography/Locations/")) {
-        results.put(entry.getKey(), entry.getValue());
+      String key = entry.getKey();
+      if (key != null) {
+        boolean isBlacklisted = false;
+        for (String blacklistedCategory : configuration.getCategoryBlacklist()) {
+          if (key.startsWith(blacklistedCategory)) {
+            isBlacklisted = true;
+            break;
+          }
+        }
+        if (!isBlacklisted) {
+          results.put(key, entry.getValue());
+        }
       }
     }
     return results;
@@ -116,8 +119,8 @@ public class AIArticleClassifier implements ArticleClassifier {
    */
   private List<String> getRawTerms(Document articleXml) throws IOException {
     String toCategorize = getCategorizationContent(articleXml);
-    String aiMessage = String.format(MESSAGE_BEGIN, thesaurus) + toCategorize + MESSAGE_END;
-    HttpPost post = new HttpPost(serviceUrl);
+    String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus()) + toCategorize + MESSAGE_END;
+    HttpPost post = new HttpPost(configuration.getAddress().toString());
     post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
 
     DocumentBuilder documentBuilder;
@@ -132,7 +135,7 @@ public class AIArticleClassifier implements ArticleClassifier {
          InputStream stream = httpResponse.getEntity().getContent()) {
       response = documentBuilder.parse(stream);
     } catch (SAXException e) {
-      throw new RuntimeException("Invalid XML returned from " + serviceUrl, e);
+      throw new RuntimeException("Invalid XML returned from " + configuration.getAddress(), e);
     }
 
     //parse result

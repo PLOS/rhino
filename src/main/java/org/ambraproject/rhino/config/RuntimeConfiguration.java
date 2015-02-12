@@ -21,6 +21,8 @@ package org.ambraproject.rhino.config;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.
@@ -84,6 +86,8 @@ public interface RuntimeConfiguration {
     URL getAddress();
 
     String getThesaurus();
+
+    Set<String> getCategoryBlacklist();
   }
 
   ArticleClassifierConfiguration getArticleClassifierConfiguration();

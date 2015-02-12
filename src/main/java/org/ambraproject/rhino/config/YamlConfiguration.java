@@ -19,8 +19,12 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Configuration for the server.  This will slowly replace the configuration values in ambra.xml and contain values that
@@ -116,6 +120,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
 
 
   private final ArticleClassifierConfiguration articleClassifierConfiguration = new ArticleClassifierConfiguration() {
+    private ImmutableSet<String> categoryBlacklist;
+
     @Override
     public URL getAddress() {
       return (input.articleClassifier == null) ? null : input.articleClassifier.address;
@@ -124,6 +130,13 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Override
     public String getThesaurus() {
       return (input.articleClassifier == null) ? null : input.articleClassifier.thesaurus;
+    }
+
+    @Override
+    public Set<String> getCategoryBlacklist() {
+      if (categoryBlacklist != null) return categoryBlacklist;
+      if (input.articleClassifier.categoryBlacklist == null) return categoryBlacklist = ImmutableSet.of();
+      return categoryBlacklist = ImmutableSet.copyOf(input.articleClassifier.categoryBlacklist);
     }
   };
 
@@ -245,6 +258,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
   public static class ArticleClassifierConfigurationInput {
     private URL address;
     private String thesaurus;
+    private List<String> categoryBlacklist;
 
     @Deprecated
     public void setAddress(URL address) {
@@ -254,6 +268,11 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setThesaurus(String thesaurus) {
       this.thesaurus = thesaurus;
+    }
+
+    @Deprecated
+    public void setCategoryBlacklist(List<String> categoryBlacklist) {
+      this.categoryBlacklist = categoryBlacklist;
     }
   }
 

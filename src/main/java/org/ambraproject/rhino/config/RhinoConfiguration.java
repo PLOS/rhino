@@ -40,6 +40,8 @@ import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.service.classifier.AIArticleClassifier;
+import org.ambraproject.rhino.service.classifier.ArticleClassifier;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
@@ -82,6 +84,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.Map;
 import java.util.Properties;
 
@@ -170,8 +173,12 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
     PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
-    manager.setMaxTotal(400); // TODO: Set from RuntimeConfiguration
-    manager.setDefaultMaxPerRoute(20); // TODO: Set from RuntimeConfiguration
+
+    Integer maxTotal = runtimeConfiguration.getHttpConnectionPoolConfiguration().getMaxTotal();
+    manager.setMaxTotal(maxTotal == null ? 400 : maxTotal);
+
+    Integer defaultMaxPerRoute = runtimeConfiguration.getHttpConnectionPoolConfiguration().getDefaultMaxPerRoute();
+    manager.setDefaultMaxPerRoute(defaultMaxPerRoute == null ? 20 : defaultMaxPerRoute);
 
     return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
@@ -202,6 +209,13 @@ public class RhinoConfiguration extends BaseConfiguration {
     };
 
     return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
+  }
+
+  @Bean
+  public ArticleClassifier articleClassifier(RuntimeConfiguration runtimeConfiguration) {
+    AIArticleClassifier classifier = new AIArticleClassifier();
+    classifier.setConfiguration(runtimeConfiguration.getArticleClassifierConfiguration());
+    return classifier;
   }
 
 
