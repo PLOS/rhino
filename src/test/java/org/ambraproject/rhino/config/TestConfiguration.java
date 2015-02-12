@@ -25,14 +25,17 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.DummyMessageSender;
-import org.ambraproject.rhino.service.classifier.ArticleClassifier;
-import org.ambraproject.rhino.service.classifier.DummyArticleClassifier;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ClassificationServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyLookupServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -112,8 +115,8 @@ public class TestConfiguration extends BaseConfiguration {
 
 
   @Bean
-  public ArticleClassifier articleClassifier() {
-    return new DummyArticleClassifier();
+  public TaxonomyClassificationService taxonomyClassificationService() {
+    return new DummyTaxonomyClassificationService();
   }
 
   @Bean
@@ -158,8 +161,18 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ClassificationService classificationService() {
-    return new ClassificationServiceImpl(null);
+  public TaxonomyService taxonomyService() {
+    return new TaxonomyServiceImpl();
+  }
+
+  @Bean
+  public TaxonomyLookupService taxonomyLookupService() {
+    return new TaxonomyLookupService() {
+      @Override
+      public Transceiver read(String journal, String parent) throws IOException {
+        throw new UnsupportedOperationException("Dummy service");
+      }
+    };
   }
 
   @Bean

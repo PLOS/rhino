@@ -1,26 +1,9 @@
-/*
- * Copyright (c) 2006-2014 by Public Library of Science
- *
- * http://plos.org
- * http://ambraproject.org
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package org.ambraproject.rhino.service.classifier;
+package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
-import org.ambraproject.rhino.config.RuntimeConfiguration.ArticleClassifierConfiguration;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,7 +13,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -48,11 +31,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * This is a separate bean from {@link TaxonomyServiceImpl} because it has a special dependency on the remote taxonomy
+ * server, which is useful to inject separately.
+ *
  * @author Alex Kudlick Date: 7/3/12
  */
-public class AIArticleClassifier implements ArticleClassifier {
+public class TaxonomyClassificationServiceImpl implements TaxonomyClassificationService {
 
-  private static final Logger log = LoggerFactory.getLogger(AIArticleClassifier.class);
+  private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
 
   private static final String MESSAGE_BEGIN = "<TMMAI project='%s' location = '.'>\n" +
       "  <Method name='getSuggestedTermsFullPaths' returnType='java.util.Vector'/>\n" +
@@ -64,24 +50,17 @@ public class AIArticleClassifier implements ArticleClassifier {
       "</TMMAI>";
 
 
+  @Autowired
   private CloseableHttpClient httpClient;
-  private ArticleClassifierConfiguration configuration;
-
-  @Required
-  public void setHttpClient(CloseableHttpClient httpClient) {
-    this.httpClient = httpClient;
-  }
-
-  @Required
-  public void setConfiguration(ArticleClassifierConfiguration configuration) {
-    this.configuration = configuration;
-  }
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   /**
    * @inheritDoc
    */
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
+    RuntimeConfiguration.ArticleClassifierConfiguration configuration = runtimeConfiguration.getArticleClassifierConfiguration();
     if (configuration.getAddress() == null || configuration.getThesaurus() == null) {
       log.info("AIArticleClassifier is not configured");
       return ImmutableMap.of();
@@ -118,6 +97,7 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @throws IOException
    */
   private List<String> getRawTerms(Document articleXml) throws IOException {
+    RuntimeConfiguration.ArticleClassifierConfiguration configuration = runtimeConfiguration.getArticleClassifierConfiguration();
     String toCategorize = getCategorizationContent(articleXml);
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus()) + toCategorize + MESSAGE_END;
     HttpPost post = new HttpPost(configuration.getAddress().toString());

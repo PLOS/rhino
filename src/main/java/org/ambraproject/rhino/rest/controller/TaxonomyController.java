@@ -22,7 +22,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class TaxonomyController extends RestController {
   private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
 
   @Autowired
-  private ClassificationService classificationService;
+  private TaxonomyService taxonomyService;
 
   @Autowired
   protected ArticleCrudService articleCrudService;
@@ -62,7 +62,7 @@ public class TaxonomyController extends RestController {
     if (!Strings.isNullOrEmpty(parent)) {
       parent = URLDecoder.decode(parent, "UTF-8");
     }
-    classificationService.read(journal, parent).respond(request, response, entityGson);
+    taxonomyService.read(journal, parent).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -81,9 +81,9 @@ public class TaxonomyController extends RestController {
       String articleCategoryTerm = Iterables.getLast(TAXONOMY_PATH_SPLITTER.split(category.getPath()));
       if (categoryTerm.contentEquals(articleCategoryTerm)) {
         if (action.contentEquals("remove")) {
-          classificationService.deflagArticleCategory(article.getID(), category.getID(), authId);
+          taxonomyService.deflagArticleCategory(article.getID(), category.getID(), authId);
         } else if (action.contentEquals("add")) {
-          classificationService.flagArticleCategory(article.getID(), category.getID(), authId);
+          taxonomyService.flagArticleCategory(article.getID(), category.getID(), authId);
         }
       }
     }

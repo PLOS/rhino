@@ -142,7 +142,7 @@
 
   <beans:bean id="rhinoCache" factory-bean="cacheFactory" factory-method="getCache"/>
 
-  <beans:bean id="taxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
+  <beans:bean id="legacyTaxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
     <beans:property name="cache" ref="rhinoCache" />
     <beans:property name="searchService" ref="searchService" />
     <beans:property name="sessionFactory" ref="sessionFactory" />

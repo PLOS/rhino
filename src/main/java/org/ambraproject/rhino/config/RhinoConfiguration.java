@@ -31,7 +31,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -40,13 +39,10 @@ import org.ambraproject.rhino.service.LegacyArticleTypeService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
-import org.ambraproject.rhino.service.classifier.AIArticleClassifier;
-import org.ambraproject.rhino.service.classifier.ArticleClassifier;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ClassificationServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
@@ -54,11 +50,16 @@ import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.UserCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyClassificationServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyLookupServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.service.taxonomy.TaxonomyService;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -84,7 +85,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.Map;
 import java.util.Properties;
 
@@ -211,13 +211,6 @@ public class RhinoConfiguration extends BaseConfiguration {
     return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
   }
 
-  @Bean
-  public ArticleClassifier articleClassifier(RuntimeConfiguration runtimeConfiguration) {
-    AIArticleClassifier classifier = new AIArticleClassifier();
-    classifier.setConfiguration(runtimeConfiguration.getArticleClassifierConfiguration());
-    return classifier;
-  }
-
 
   @Bean
   public ArticleCrudService articleCrudService() {
@@ -272,8 +265,18 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ClassificationService classificationService(TaxonomyService taxonomyService) {
-    return new ClassificationServiceImpl(taxonomyService);
+  public TaxonomyService taxonomyService() {
+    return new TaxonomyServiceImpl();
+  }
+
+  @Bean
+  public TaxonomyClassificationService taxonomyClassificationService() {
+    return new TaxonomyClassificationServiceImpl();
+  }
+
+  @Bean
+  public TaxonomyLookupService taxonomyLookupService(org.ambraproject.service.taxonomy.TaxonomyService legacyTaxonomyService) {
+    return new TaxonomyLookupServiceImpl(legacyTaxonomyService);
   }
 
   @Bean

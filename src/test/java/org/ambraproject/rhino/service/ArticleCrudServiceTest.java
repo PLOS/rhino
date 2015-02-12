@@ -37,8 +37,8 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.classifier.DummyArticleClassifier;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.apache.commons.io.IOUtils;
@@ -163,7 +163,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     }
 
     Set<Category> expectedCategories = new HashSet<>();
-    for (String categoryPath : DummyArticleClassifier.DUMMY_DATA.keySet()) {
+    for (String categoryPath : DummyTaxonomyClassificationService.DUMMY_DATA.keySet()) {
       Category category = new Category();
       category.setPath(categoryPath);
       expectedCategories.add(category);

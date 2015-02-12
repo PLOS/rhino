@@ -16,8 +16,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ambraproject.rhino.service.classifier;
+package org.ambraproject.rhino.service.taxonomy.impl;
 
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
@@ -36,9 +37,9 @@ import static org.testng.Assert.assertTrue;
 /**
  * @author Alex Kudlick Date: 7/3/12
  */
-public class ArticleClassifierTest {
+public class TaxonomyClassificationServiceImplTest {
   @Autowired
-  protected AIArticleClassifier articleClassifier;
+  protected TaxonomyClassificationService taxonomyClassificationService;
 
   private DocumentBuilder documentBuilder;
 
@@ -64,15 +65,15 @@ public class ArticleClassifierTest {
   public void testAppendElementIfExists() throws Exception {
     Document article = getSampleArticle("pone.0048915.xml");
     StringBuilder sb = new StringBuilder();
-    assertFalse(AIArticleClassifier.appendElementIfExists(sb, article, "elementThatShouldntExist"));
+    assertFalse(TaxonomyClassificationServiceImpl.appendElementIfExists(sb, article, "elementThatShouldntExist"));
     assertTrue(sb.toString().isEmpty());
 
-    assertTrue(AIArticleClassifier.appendElementIfExists(sb, article, "article-title"));
+    assertTrue(TaxonomyClassificationServiceImpl.appendElementIfExists(sb, article, "article-title"));
     String s = sb.toString();
     assertTrue(s.startsWith("Maternal Deprivation Exacerbates the Response to a High Fat Diet"));
 
     sb = new StringBuilder();
-    assertTrue(AIArticleClassifier.appendElementIfExists(sb, article, "abstract"));
+    assertTrue(TaxonomyClassificationServiceImpl.appendElementIfExists(sb, article, "abstract"));
     s = sb.toString().trim();
     assertTrue(s.startsWith(
         "Maternal deprivation (MD) during neonatal life has diverse long-term effects"));
@@ -85,17 +86,17 @@ public class ArticleClassifierTest {
     // This should be longer than the article title.
     int threshold = 500;
     Document article = getSampleArticle("pone.0048915.xml");
-    String content = AIArticleClassifier.getCategorizationContent(article);
+    String content = TaxonomyClassificationServiceImpl.getCategorizationContent(article);
     assertTrue(content.length() > threshold);
 
     // Editorial without an abstract, materials/methods, or results section.
     article = getSampleArticle("pntd.0001008.xml");
-    content = AIArticleClassifier.getCategorizationContent(article);
+    content = TaxonomyClassificationServiceImpl.getCategorizationContent(article);
     assertTrue(content.length() > threshold);
 
     // Research article with non-standard section titles.
     article = getSampleArticle("pone.0040598.xml");
-    content = AIArticleClassifier.getCategorizationContent(article);
+    content = TaxonomyClassificationServiceImpl.getCategorizationContent(article);
 
     // Call it good if we have material that's at least twice as long as the abstract.
     assertTrue(content.length()
@@ -104,49 +105,49 @@ public class ArticleClassifierTest {
     // Article with a very short, one-sentence "TOC" abstract that we don't even
     // display in ambra.
     article = getSampleArticle("pbio.0020302.xml");
-    content = AIArticleClassifier.getCategorizationContent(article);
+    content = TaxonomyClassificationServiceImpl.getCategorizationContent(article);
     assertTrue(content.length() > threshold);
   }
 
   @Test
   public void testParseVectorElement() throws Exception {
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Biology and life sciences/Computational biology/Computational neuroscience/Single neuron function|(5) neuron*(5)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/Biology and life sciences/Computational biology/Computational neuroscience/Single neuron function"
             , 5));
 
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Medicine and health sciences/Anesthesiology/Anesthesia|(5) anesthesia(5)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Anesthesiology/Anesthesia"
             , 5));
 
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Medicine and health sciences/Geriatrics/Frailty|(19) frailty(18) frail*(1)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Geriatrics/Frailty"
             , 19));
 
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Biology and life sciences/Anatomy/Head/Face/Nose|(311) nose(311)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/Biology and life sciences/Anatomy/Head/Face/Nose"
             , 311));
 
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/People and places/Demography|(7) demographics(7)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/People and places/Demography"
             , 7));
 
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM>/Medicine and health sciences/Neurology/Cognitive neurology|(2) cognit*(2)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Neurology/Cognitive neurology"
             , 2));
 
-    assertEquals(AIArticleClassifier.parseVectorElement(
+    assertEquals(TaxonomyClassificationServiceImpl.parseVectorElement(
             "<TERM> /Medicine and health sciences/Neurology/Cognitive neurology| (67) cognit*(2)</TERM>"),
         new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Neurology/Cognitive neurology"
@@ -155,7 +156,7 @@ public class ArticleClassifierTest {
     // This appears to be a bug in the AI server--it sometimes does not return an
     // absolute path to a top-level category.  In these cases, the returned value
     // should be discarded.
-    assertNull(AIArticleClassifier.parseVectorElement(
+    assertNull(TaxonomyClassificationServiceImpl.parseVectorElement(
         "<TERM>Background noise (acoustics)|(1) background noise(1)</TERM>"));
   }
 }
