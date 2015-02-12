@@ -174,7 +174,7 @@ public class TestConfiguration extends BaseConfiguration {
     boolean threw = true;
     try {
       is = TestConfiguration.class.getClassLoader().getResourceAsStream("rhino-test.yaml");
-      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.UserFields.class));
+      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
       threw = false;
     } finally {
       Closeables.close(is, threw);

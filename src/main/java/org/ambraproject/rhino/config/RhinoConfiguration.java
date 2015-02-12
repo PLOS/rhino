@@ -291,7 +291,7 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     YamlConfiguration runtimeConfiguration;
     try (Reader reader = new BufferedReader(new FileReader(configPath))) {
-      YamlConfiguration.UserFields configValues = yaml.loadAs(reader, YamlConfiguration.UserFields.class);
+      YamlConfiguration.Input configValues = yaml.loadAs(reader, YamlConfiguration.Input.class);
       runtimeConfiguration = new YamlConfiguration(configValues);
     }
 

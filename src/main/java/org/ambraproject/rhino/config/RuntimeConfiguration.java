@@ -20,6 +20,7 @@
 package org.ambraproject.rhino.config;
 
 import java.net.URI;
+import java.net.URL;
 
 /**
  * Interface that represents configurable values that are only known at server startup time.
@@ -64,5 +65,27 @@ public interface RuntimeConfiguration {
    * @return the homepage bucket name
    */
   ContentRepoEndpoint getEditorialBucket();
+
+  interface HttpConnectionPoolConfiguration {
+    /**
+     * @see org.apache.http.pool.ConnPoolControl
+     */
+    Integer getMaxTotal();
+
+    /**
+     * @see org.apache.http.pool.ConnPoolControl
+     */
+    Integer getDefaultMaxPerRoute();
+  }
+
+  HttpConnectionPoolConfiguration getHttpConnectionPoolConfiguration();
+
+  interface ArticleClassifierConfiguration {
+    URL getAddress();
+
+    String getThesaurus();
+  }
+
+  ArticleClassifierConfiguration getArticleClassifierConfiguration();
 
 }
