@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="discussion" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="publisher">pbio</journal-id><journal-id journal-id-type="nlm-ta">PLoS Biol</journal-id><journal-id journal-id-type="pmc">plosbiol</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Biology</journal-title></journal-title-group><issn pub-type="epub">1545-7885</issn><issn pub-type="ppub">1544-9173</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="doi">10.1371/journal.pbio.0020302</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Unsolved Mystery</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology/Systems Biology</subject>
+        </subj-group>
+        <subj-group subj-group-type="System Taxonomy">
+          <subject>None</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>What Is Life—and How Do We Search for It in Other Worlds?</article-title><alt-title alt-title-type="running-head">Unsolved Mystery</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>McKay</surname>
+            <given-names>Chris P</given-names>
+          </name>
+        </contrib>
+      </contrib-group><author-notes>
+        <fn fn-type="current-aff" id="n1">
+          <p>Chris P. McKay is with the NASA Ames Research Center. E-mail: <email xlink:type="simple">cmckay@mail.arc.nasa.gov</email></p>
+        </fn>
+      </author-notes><pub-date pub-type="ppub">
+        <month>9</month>
+        <year>2004</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>14</day>
+        <month>9</month>
+        <year>2004</year>
+      </pub-date><volume>2</volume><issue>9</issue><elocation-id>e302</elocation-id><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2004</copyright-year><copyright-holder>Chris P. McKay</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions><abstract abstract-type="toc">
+        <p>If there is life on distant worlds, how would we go about finding it?</p>
+      </abstract></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title/>
+      <p>I need a “tricorder”—the convenient, hand-held device featured on <italic>Star Trek</italic> that can detect life forms even from orbit. Unfortunately, we don't have a clue how a tricorder might work, since life forms don't seem to have any observable property that distinguishes them from inanimate matter. Furthermore, we lack a definition of life that can guide a search for life outside Earth. How can we find what we can't define? An answer may lie in the observation that life uses a small, discrete set of organic molecules as basic building blocks. On the surface of Europa and in the subsurface of Mars, we can search for alien but analogous patterns in the organics.</p>
+    </sec>
+    <sec id="s2">
+      <title>Life As We Know It</title>
+      <p>The obvious diversity of life on Earth overlies a fundamental biochemical and genetic similarity. The three main polymers of biology—the nucleic acids, the proteins, and the polysaccarides—are built from 20 amino acids, five nucleotide bases, and a few sugars, respectively. Together with lipids and fatty acids, these are the main constituents of biomass: the hardware of life (<xref ref-type="bibr" rid="pbio-0020302-Lehninger1">Lehninger 1975</xref>, p 21). The DNA and RNA software of life is also common, indicating shared descent (<xref ref-type="bibr" rid="pbio-0020302-Woese1">Woese 1987</xref>). But with only one example of life—life on Earth—it is not all that surprising that we do not have a fundamental understanding of what life is. We don't know which features of Earth life are essential and which are just accidents of history.</p>
+      <p>Our lack of data is reflected in our attempts to define life. <xref ref-type="bibr" rid="pbio-0020302-Koshland1">Koshland (2002)</xref> lists seven features of life: (1) program (DNA), (2) improvisation (response to environment), (3) compartmentalization, (4) energy, (5) regeneration, (6) adaptability, and (7) seclusion (chemical control and selectivity). A simpler definition is that life is a material system that undergoes reproduction, mutation, and natural selection (<xref ref-type="bibr" rid="pbio-0020302-McKay1">McKay 1991</xref>). <xref ref-type="bibr" rid="pbio-0020302-Cleland1">Cleland and Chyba (2002)</xref> have suggested that life might be like water, hard to define phenomenologically, but easy to define at the fundamental level. But life is like fire, not water—it is a process, not a pure substance. Such definitions are grist for philosophical discussion, but they neither inform biological research nor provide a basis for the search for life on other worlds.</p>
+      <p>The simplest, but not the only, proof of life is to find something that is alive. There are only two properties that can determine if an object is alive: metabolism and motion. (Metabolism is used here to include an organism's life functions, biomass increase, and reproduction.) All living things require some level of metabolism to remain viable against entropy. Movement (either microscopic or macroscopic) in response to stimuli or in the presence of food can be a convincing indicator of a living thing. But both metabolism (fire) and motion (wind) occur in nature in the absence of biology.</p>
+      <p>The practical approach to the search for life is to determine what life needs. The simplest list is probably: energy, carbon, liquid water, and a few other elements such as nitrogen, sulfur, and phosphorus (<xref ref-type="bibr" rid="pbio-0020302-McKay1">McKay 1991</xref>). Life requires energy to maintain itself against entropy, as does any self-organizing open system. In the memorable words of Erwin <xref ref-type="bibr" rid="pbio-0020302-Schrodinger1">Schrödinger (1945)</xref>, “It feeds on negative entropy.” On Earth, the vast majority of life forms ultimately derive their energy from sunlight. The only other source of primary productivity known is chemical energy, and there are only two ecosystems known, both methanogen-based (<xref ref-type="bibr" rid="pbio-0020302-Stevens1">Stevens and McKinley 1995</xref>; <xref ref-type="bibr" rid="pbio-0020302-Chapelle1">Chapelle et al. 2002</xref>), that rely exclusively on chemical energy (that is, they do not use sunlight or its product, oxygen). Photosynthetic organisms can use sunlight at levels below the level of sunlight at the orbit of Pluto (<xref ref-type="bibr" rid="pbio-0020302-Raven1">Ravens et al. 2000</xref>); therefore, energy is not the limitation for life. Carbon, nitrogen, sulfur, and phosphorus are the elements of life, and they are abundant in the Solar System. Indeed, the Sun and the outer Solar System have more than 10,000 times the carbon content of the bulk of Earth (<xref ref-type="bibr" rid="pbio-0020302-McKay1">McKay 1991</xref>). When we scan the other worlds of our Solar System, the missing ecological ingredient for life is liquid water. It makes sense, then, that the search for liquid water is currently the first step in the search for life on other worlds. The presence of liquid water is a powerful indication that the ecological prerequisites for life are satisfied.</p>
+      <p>Orbital images, such as the canyon in <xref ref-type="fig" rid="pbio-0020302-g001">Figure 1</xref>, show clear evidence of the stable and repeated, if not persistent, flow of a low-viscosity fluid on Mars at certain times in its past history. The fluid was probably water, but the images could also suggest wind, ice, lava, even carbon dioxide or sulfur dioxide. Recently, results from the Mars Exploration Rover missions have shown that this liquid carried salts and precipitated hematite in concretions. The case for water, we could say, is tight.</p>
+      <fig id="pbio-0020302-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pbio.0020302.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Water on Another World</title>
+          <p>A Mars Global Surveyor image showing Nanedi Vallis in the Xanthe Terra region of Mars. The image covers an area 9.8 km ×18.5 km; the canyon is about 2.5 km wide. This image is the best evidence we have of liquid water anywhere outside the Earth. Photo credit: NASA/Malin Space Sciences.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.0020302.g001" xlink:type="simple"/>
+      </fig>
+      <p>On Jupiter's moon Europa, the cracks and icebergs on the surface of the ice indicate water beneath the ice, but not necessarily at the present time. Present water on Europa is indicated by the magnetic disturbance Europa makes as it moves through Jupiter's magnetic field, not unlike the way coins in the pocket of a passenger will set off an airport metal detector. Europa has a large conductor, and this is most likely a global, salty layer of water.</p>
+    </sec>
+    <sec id="s3">
+      <title>Viking on Mars: Been There, Tried That</title>
+      <p>The Viking missions to Mars in the late 1970s were the first (and as yet, the only) search for life outside Earth. Each Viking conducted three incubation experiments to detect the presence of metabolism in the Martian soil. Each lander also carried a sophisticated Gas Chromatograph Mass Spectrometer for characterizing organic molecules. The results were unexpected (<xref ref-type="bibr" rid="pbio-0020302-Klein1">Klein 1978</xref>, <xref ref-type="bibr" rid="pbio-0020302-Klein2">1999</xref>). There was a detectable reaction in two of the incubation experiments. In the “Gas Exchange” experiment, a burst of oxygen was released when the soil was exposed to water. The “Labeled Release” experiment showed that organic material was consumed, and that carbon dioxide was released concomitantly. In the Labeled Release experiment, this reaction ceased if the soil was first heated to sterilizing temperatures, but the reaction of the Gas Exchange Experiment persisted.</p>
+      <p>If considered alone, the Labeled Release results would be a plausible indication for life on Mars. However, the Gas Chromatograph Mass Spectrometer did not detect the presence of any organic molecules in the soil at level of one part per billion (<xref ref-type="bibr" rid="pbio-0020302-Biemann1">Biemann 1979</xref>). It is difficult to imagine life without associated organic material, and this is the main argument against a biological interpretation of the Viking results (<xref ref-type="bibr" rid="pbio-0020302-Klein2">Klein 1999</xref>; but cf. <xref ref-type="bibr" rid="pbio-0020302-Levin1">Levin and Straat 1981</xref>). It is also unlikely that the oxygen release in the Gas Exchange experiment had a biological explanation, because the reaction was so rapid and persisted after heating. It is generally thought that the reactivity observed by the Viking biology experiments was caused by one or more inorganic oxidants present in the soil, and was ultimately produced by ultraviolet light in the atmosphere. Consistent with the apparently negative results of the Viking biology experiments, the surface of Mars also appears to be too dry for life. Indeed, conditions are such that liquid water is rare and transient, if it occurs at all (e.g., <xref ref-type="bibr" rid="pbio-0020302-Hecht1">Hecht 2002</xref>).</p>
+    </sec>
+    <sec id="s4">
+      <title>It's Life, Jim, but Not As We Know It</title>
+      <p><xref ref-type="table" rid="pbio-0020302-t001">Table 1</xref> shows a categorization of life as we have observed it. Using this diagram, we can speculate about how life might be different on Mars or Europa. At the bottom of the table, life is composed of matter—a reasonable assumption for now. Carbon and liquid water are the next level; this makes Mars and Europa likely candidates, because they have carbon and have, or have had, liquid water. Other worlds may have a different chemical baseline for life. The usual speculation in this area is that the presence of ammonia and silicon, rather than water and carbon, might be preconditions for life on other planets. Such speculation has yet to lead to any specific suggestions for experiments, or to new ways to search for such life, but this may just reflect a failure of human imagination rather than a fundamental limitation on the nature of life.</p>
+      <table-wrap id="pbio-0020302-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pbio.0020302.t001</object-id><label>Table 1</label><caption>
+          <title>A Categorization of Structures That Comprise Terrestrial Life</title>
+        </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.0020302.t001" xlink:type="simple"/><!-- <table>
+					<thead>
+						<tr>
+							<td>Levels of Life</td>
+							<td>Examples</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Ecological (probably the same on Mars)</td>
+							<td>Sunlight based autotrophs, heterotrophs, predators.</td>
+						</tr>
+						<tr><td/>
+							<td>Life in liquid water, using carbon dioxide</td>
+						</tr>
+						<tr><td/>
+							<td>Multicellular organisms</td>
+						</tr>
+						<tr><td/>
+							<td>Compartmentalization by cell membranes and cell walls</td>
+						</tr>
+						<tr>
+							<td>Biochemical (possibly different on Mars)</td>
+							<td>Lipid bilayers</td>
+						</tr>
+						<tr><td/>
+							<td>Ribisco enzyme</td>
+						</tr>
+						<tr><td/>
+							<td>ATP as energy molecule</td>
+						</tr>
+						<tr><td/>
+							<td>Triplet code for transcription</td>
+						</tr>
+						<tr><td/>
+							<td>DNA and RNA and conserved sequences in genome</td>
+						</tr>
+						<tr><td/>
+							<td>Citric acid cycle</td>
+						</tr>
+						<tr><td/>
+							<td><sc>l</sc>-amino acids, A,T,C,G, and U nucleotide bases</td>
+						</tr>
+						<tr>
+							<td>Chemical (same on Mars)</td>
+							<td>Carbon and water</td>
+						</tr>
+						<tr><td/>
+							<td>Matter</td>
+						</tr>
+					</tbody>
+				</table> --></table-wrap>
+      <p>Life on Mars is also likely to be the same at the top of the table: at the ecological level. Primary production in a Martian ecosystem is likely to be phototrophic, using carbon dioxide and water. Heterotrophs are likely to be present to consume the phototrophs and in turn to be consumed by predators. Darwinian evolution would result in many of the same patterns we see in ecosystems on Earth. While it may be similar at the top (ecological) and bottom (chemical) levels, life on Mars could be quite alien in the middle, in the realm of biochemistry. <xref ref-type="bibr" rid="pbio-0020302-Pace1">Pace (2001)</xref> has argued that alien biochemistry will turn out to be the same as biochemistry on Earth, because there is one best way to do things and that natural selection will ensure that life everywhere discovers that way. Only observation will tell if there is one possible biochemistry, or many.</p>
+      <p>Future missions to Mars might find microfossils in sedimentary rocks such as those at Meridiani Planum. Microbes don't readily form convincing fossils; the one exception may be the strings of magnetite formed by magnetotactic bacteria (<xref ref-type="bibr" rid="pbio-0020302-Friedmann1">Friedmann et al. 2001</xref>). As interesting as fossils might be, we could not be sure that a fossil found on Mars was not merely another example of Earth life. We know that rocks have come to Earth from Mars, and it is possible that such rocks could have carried life between the planets (<xref ref-type="bibr" rid="pbio-0020302-Mileikowsky1">Mileikowsky et al. 2000</xref>; <xref ref-type="bibr" rid="pbio-0020302-Weiss1">Weiss et al. 2000</xref>). Finding fossil evidence for life on Mars does not demonstrate a second genesis in our Solar System.</p>
+    </sec>
+    <sec id="s5">
+      <title>Finding a Way to Search for Alien Life</title>
+      <p>If we were to find organic material in the subsurface of Mars or on the ice of Europa, how could we determine whether it was the product of a system of biology or merely abiotic, organic material from meteorites or photochemistry? If this life were in fact related to Earth life, this should be easy to determine. We now have very sensitive methods, such as PCR and fluorescent antibody markers, for detecting life like us. This case would be the simplest to determine, but it would also be the least interesting. If the life turned out to be truly alien, then the probes specific to our biology would be unlikely to work. What, then, could we do to determine a biological origin?</p>
+      <p>The question is open and possibly urgent. On space missions already being planned, we may have the opportunity to analyze the remains of alien organics on the surface of Europa or frozen below ground on Mars. The instruments that will make this analysis must be designed in the next couple of years.</p>
+      <p>One approach appears promising. I call it the “Lego Principle.” It is based on the patterns of the molecules of life. Biological processes, in contrast to abiotic mechanisms, do not make use of the range of possible organic molecules. Instead, biology is built from a selected set. Thus, organic molecules that are chemically very similar to each other may have widely different concentrations in a sample of biological organics. An example of this on Earth is the 20 amino acids used in proteins and the use of the left-handed version of these amino acids. The selectivity of biological processes is shown schematically in <xref ref-type="fig" rid="pbio-0020302-g002">Figure 2</xref> by the distribution of spikes in contrast to a smooth, nonbiological distribution. General arguments of thermodynamic efficiency and specificity of enzymatic reactions suggest that this selectivity is required for biological function and is a general result of natural selection. Different life forms are likely to have different patterns, and at the very least we might find the mirror symmetry of life on Earth, with <sc>d</sc>- instead of <sc>l</sc>-amino acids.</p>
+      <fig id="pbio-0020302-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pbio.0020302.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>Comparison of Biogenic with Nonbiogenic Distributions of Organic Material</title>
+          <p>Nonbiological processes produce smooth distributions of organic material, illustrated here by the curve. Biology, in contrast selects and uses only a few distinct molecules, shown here as spikes (e.g., the 20 l-amino acids on Earth). Analysis of a sample of organic material from Mars or Europa may indicate a biological origin if it shows such selectivity.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pbio.0020302.g002" xlink:type="simple"/>
+      </fig>
+      <p>This approach has immediate practical benefit in the search for biochemistry in the Solar System. Samples of organic material collected from Mars and Europa can be easily tested for the prevalence of one chirality of amino acid over the other. More generally, a complete analysis of the relative concentration of different types of organic molecules might reveal a pattern that is biological even if that pattern does not involve any of the familiar biomolecules. Interestingly, if a sample of organics from Mars or Europa shows a preponderance of D-amino acids, this would be evidence of life, and at the same time would show that this life was distinct from Earth life. This same conclusion would apply to any clearly biological pattern that was distinct from that of Earth life.</p>
+      <p>Organic material of biological origin will eventually lose its distinctive pattern when exposed to heat and other types of radiation, (examples of this include the thermal racemization of amino acids), but at the low temperatures in the Martian permafrost, calculations suggest that there has been no thermal alteration (<xref ref-type="bibr" rid="pbio-0020302-Kanavarioti1">Kanavarioti and Mancinelli 1990</xref>). An interesting question, as yet unanswered, is how long organic material frozen into the surface ice of Europa would retain a biological signature in the strong radiation environment.</p>
+      <p>On Europa, the organic material for our tests might be collected right from the dark regions on the surface. On Mars, there is ice-rich ground in the cratered southern polar regions (<xref ref-type="bibr" rid="pbio-0020302-Feldman1">Feldmann et al. 2002</xref>), which presumably overlies deeper, older ice. The surprise discovery of strong magnetic fields in the southern hemisphere of Mars (<xref ref-type="bibr" rid="pbio-0020302-Acuna1">Acuña et al. 1999</xref>; <xref ref-type="bibr" rid="pbio-0020302-Connerney1">Connerney et al. 1999</xref>) indicates that the area may be the oldest undisturbed permafrost on that planet. Like the mammoths extracted from the ice in Siberia, any Martian microbes found in this ice would be dead, but their biochemistry would be preserved. From these biological remains, it would then be possible to determine the biochemical composition of, and the phylogenetic relationship between, Earth life and Martian life. We may then have, for the first time, a second example of life.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="pbio-0020302-Acuna1">
+        <label>1</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Acuña</surname>
+              <given-names>MH</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Connerney</surname>
+              <given-names>JEP</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Ness</surname>
+              <given-names>NF</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Lin</surname>
+              <given-names>RP</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Mitchell</surname>
+              <given-names>D</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>Global distribution of crustal magnetism discovered by the Mars Global Surveyor MAG/ER experiment.</article-title>
+          <source>Science</source>
+          <year>1999</year>
+          <volume>284</volume>
+          <fpage>790</fpage>
+          <lpage>793</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Biemann1">
+        <label>2</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Biemann</surname>
+              <given-names>K</given-names>
+            </name>
+          </person-group>
+          <article-title>The implications and limitations of the findings of the Viking Organic Analysis Experiment.</article-title>
+          <source>J Mol Evol</source>
+          <year>1979</year>
+          <volume>14</volume>
+          <fpage>65</fpage>
+          <lpage>70</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Chapelle1">
+        <label>3</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Chapelle</surname>
+              <given-names>FH</given-names>
+            </name>
+            <name name-style="western">
+              <surname>O'Neil</surname>
+              <given-names>K</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Bradley</surname>
+              <given-names>PM</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Methé</surname>
+              <given-names>BA</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Ciufo</surname>
+              <given-names>SA</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>A hydrogen-based subsurface microbial community dominated by methanogens.</article-title>
+          <source>Nature</source>
+          <year>2002</year>
+          <volume>415</volume>
+          <fpage>312</fpage>
+          <lpage>315</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Cleland1">
+        <label>4</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Cleland</surname>
+              <given-names>CE</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Chyba</surname>
+              <given-names>CF</given-names>
+            </name>
+          </person-group>
+          <article-title>Defining life.</article-title>
+          <source>Orig Life Evol Biosph</source>
+          <year>2002</year>
+          <volume>32</volume>
+          <fpage>387</fpage>
+          <lpage>393</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Connerney1">
+        <label>5</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Connerney</surname>
+              <given-names>JEP</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Acuna</surname>
+              <given-names>MH</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Wasilewski</surname>
+              <given-names>P</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Ness</surname>
+              <given-names>NF</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Reme</surname>
+              <given-names>H</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>Magnetic lineations in the ancient crust of Mars.</article-title>
+          <source>Science</source>
+          <year>1999</year>
+          <volume>284</volume>
+          <fpage>794</fpage>
+          <lpage>798</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Feldman1">
+        <label>6</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Feldman</surname>
+              <given-names>WC</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Boynton</surname>
+              <given-names>WV</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Tokar</surname>
+              <given-names>RL</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Prettyman</surname>
+              <given-names>TH</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Gasnault</surname>
+              <given-names>O</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>Global distribution of neutrons from Mars: Results from Mars Odyssey.</article-title>
+          <source>Science</source>
+          <year>2002</year>
+          <volume>297</volume>
+          <fpage>75</fpage>
+          <lpage>78</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Friedmann1">
+        <label>7</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Friedmann</surname>
+              <given-names>EI</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Wierzchos</surname>
+              <given-names>J</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Ascaso</surname>
+              <given-names>C</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Winklhofer</surname>
+              <given-names>M</given-names>
+            </name>
+          </person-group>
+          <article-title>Chains of magnetite crystals in the meteorite ALH84001: Evidence of biological origin.</article-title>
+          <source>Proc Natl Acad Sci U S A</source>
+          <year>2001</year>
+          <volume>98</volume>
+          <fpage>2176</fpage>
+          <lpage>2181</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Hecht1">
+        <label>8</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Hecht</surname>
+              <given-names>MH</given-names>
+            </name>
+          </person-group>
+          <article-title>Metastability of liquid water on Mars.</article-title>
+          <source>Icarus</source>
+          <year>2002</year>
+          <volume>156</volume>
+          <fpage>373</fpage>
+          <lpage>386</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Kanavarioti1">
+        <label>9</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Kanavarioti</surname>
+              <given-names>A</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Mancinelli</surname>
+              <given-names>RL</given-names>
+            </name>
+          </person-group>
+          <article-title>Could organic matter have been preserved on Mars for 3.5 billion years?</article-title>
+          <source>Icarus</source>
+          <year>1990</year>
+          <volume>84</volume>
+          <fpage>196</fpage>
+          <lpage>202</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Klein1">
+        <label>10</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Klein</surname>
+              <given-names>HP</given-names>
+            </name>
+          </person-group>
+          <article-title>The Viking biological experiments on Mars.</article-title>
+          <source>Icarus</source>
+          <year>1978</year>
+          <volume>34</volume>
+          <fpage>666</fpage>
+          <lpage>674</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Klein2">
+        <label>11</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Klein</surname>
+              <given-names>HP</given-names>
+            </name>
+          </person-group>
+          <article-title>Did Viking discover life on Mars?</article-title>
+          <source>Orig Life Evol Biosph</source>
+          <year>1999</year>
+          <volume>29</volume>
+          <fpage>625</fpage>
+          <lpage>631</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Koshland1">
+        <label>12</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Koshland</surname>
+              <given-names>DE</given-names>
+            </name>
+          </person-group>
+          <article-title>The seven pillars of life.</article-title>
+          <source>Science</source>
+          <year>2002</year>
+          <volume>295</volume>
+          <fpage>2215</fpage>
+          <lpage>2216</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Lehninger1">
+        <label>13</label>
+        <nlm-citation publication-type="book" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Lehninger</surname>
+              <given-names>AL</given-names>
+            </name>
+          </person-group>
+          <article-title>Biochemistry.</article-title>
+          <year>1975</year>
+          <publisher-loc>&gt;New York</publisher-loc>
+          <publisher-name>Worth</publisher-name>
+          <page-count count="1104"/>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Levin1">
+        <label>14</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Levin</surname>
+              <given-names>GV</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Straat</surname>
+              <given-names>PA</given-names>
+            </name>
+          </person-group>
+          <article-title>A search for nonbiological explanation of the Viking labeled release life detection experiment.</article-title>
+          <source>Icarus</source>
+          <year>1981</year>
+          <volume>45</volume>
+          <fpage>494</fpage>
+          <lpage>516</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-McKay1">
+        <label>15</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>McKay</surname>
+              <given-names>CP</given-names>
+            </name>
+          </person-group>
+          <article-title>Urey Prize lecture: Planetary evolution and the origin of life.</article-title>
+          <source>Icarus</source>
+          <year>1991</year>
+          <volume>91</volume>
+          <fpage>92</fpage>
+          <lpage>100</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-McKay2">
+        <label>16</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>McKay</surname>
+              <given-names>CP</given-names>
+            </name>
+          </person-group>
+          <article-title>The search for life on Mars.</article-title>
+          <source>Orig Life Evol Biosph</source>
+          <year>1997</year>
+          <volume>27</volume>
+          <fpage>263</fpage>
+          <lpage>289</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Mileikowsky1">
+        <label>17</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Mileikowsky</surname>
+              <given-names>C</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Cucinotta</surname>
+              <given-names>FA</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Wilson</surname>
+              <given-names>JW</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Gladman</surname>
+              <given-names>B</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Horneck</surname>
+              <given-names>G</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>Natural transfer of viable microbes in space.</article-title>
+          <source>Icarus</source>
+          <year>2000</year>
+          <volume>145</volume>
+          <fpage>391</fpage>
+          <lpage>427</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Pace1">
+        <label>18</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Pace</surname>
+              <given-names>N</given-names>
+            </name>
+          </person-group>
+          <article-title>The universal nature of biochemistry.</article-title>
+          <source>Proc Natl Acad Sci U S A</source>
+          <year>2001</year>
+          <volume>98</volume>
+          <fpage>805</fpage>
+          <lpage>808</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Raven1">
+        <label>19</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Raven</surname>
+              <given-names>JA</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Kübler</surname>
+              <given-names>JE</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Beardall</surname>
+              <given-names>J</given-names>
+            </name>
+          </person-group>
+          <article-title>Put out the light, and then put out the light.</article-title>
+          <source>J Mar Biol Ass (UK)</source>
+          <year>2000</year>
+          <volume>80</volume>
+          <fpage>1</fpage>
+          <lpage>25</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Schrodinger1">
+        <label>20</label>
+        <nlm-citation publication-type="book" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Schrödinger</surname>
+              <given-names>E</given-names>
+            </name>
+          </person-group>
+          <article-title>What is life?</article-title>
+          <year>1945</year>
+          <publisher-loc>Cambridge</publisher-loc>
+          <publisher-name>Cambridge University Press</publisher-name>
+          <page-count count="91"/>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Stevens1">
+        <label>21</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Stevens</surname>
+              <given-names>TO</given-names>
+            </name>
+            <name name-style="western">
+              <surname>McKinley</surname>
+              <given-names>JP</given-names>
+            </name>
+          </person-group>
+          <article-title>Lithoautotrophic microbial ecosystems in deep basalt aquifers.</article-title>
+          <source>Science</source>
+          <year>1995</year>
+          <volume>270</volume>
+          <fpage>450</fpage>
+          <lpage>454</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Ultee1">
+        <label>22</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Ultee</surname>
+              <given-names>A</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Souvatzi</surname>
+              <given-names>N</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Maniadi</surname>
+              <given-names>K</given-names>
+            </name>
+            <name name-style="western">
+              <surname>König</surname>
+              <given-names>H</given-names>
+            </name>
+          </person-group>
+          <article-title>Identification of the culturable and nonculturable bacterial population in ground water of a municipal water supply in Germany.</article-title>
+          <source>J Appl Microbiol</source>
+          <year>2004</year>
+          <volume>96</volume>
+          <fpage>560</fpage>
+          <lpage>568</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Weiss1">
+        <label>23</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Weiss</surname>
+              <given-names>BP</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Kirschvink</surname>
+              <given-names>JL</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Baudenbacher</surname>
+              <given-names>FJ</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Vali</surname>
+              <given-names>H</given-names>
+            </name>
+            <name name-style="western">
+              <surname>Peters</surname>
+              <given-names>NT</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>A low temperature transfer of ALH84001 from Mars to Earth.</article-title>
+          <source>Science</source>
+          <year>2000</year>
+          <volume>290</volume>
+          <fpage>791</fpage>
+          <lpage>795</lpage>
+        </nlm-citation>
+      </ref>
+      <ref id="pbio-0020302-Woese1">
+        <label>24</label>
+        <nlm-citation publication-type="journal" xlink:type="simple">
+          <person-group person-group-type="author">
+            <name name-style="western">
+              <surname>Woese</surname>
+              <given-names>CR</given-names>
+            </name>
+          </person-group>
+          <article-title>Bacterial evolution.</article-title>
+          <source>Microbiol Rev</source>
+          <year>1987</year>
+          <volume>51</volume>
+          <fpage>221</fpage>
+          <lpage>271</lpage>
+        </nlm-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

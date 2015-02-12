@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="pmc">plosone</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS ONE</journal-title></journal-title-group><issn pub-type="epub">1932-6203</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PONE-D-12-10798</article-id><article-id pub-id-type="doi">10.1371/journal.pone.0040598</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Molecular genetics</subject>
+              <subj-group>
+                <subject>Gene expression</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Biological data management</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Genomics</subject>
+            <subj-group>
+              <subject>Genome analysis tools</subject>
+              <subj-group>
+                <subject>Transcriptomes</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Genome expression analysis</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Genetics and Genomics</subject>
+          <subject>Computational Biology</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>ROCS: Receiver Operating Characteristic Surface for Class-Skewed High-Throughput Data</article-title><alt-title alt-title-type="running-head">ROCS: Receiver Operating Characteristic Surface</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Yu</surname>
+            <given-names>Tianwei</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">          <addr-line>Department of Biostatistics and Bioinformatics, Rollins School of Public Health, Emory University, Atlanta, Georgia, United States of America</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Xing</surname>
+            <given-names>Yi</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">University of Iowa, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">tianwei.yu@emory.edu</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: TY. Analyzed the data: TY. Contributed reagents/materials/analysis tools: TY. Wrote the paper: TY.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The author has declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>6</day>
+        <month>7</month>
+        <year>2012</year>
+      </pub-date><volume>7</volume><issue>7</issue><elocation-id>e40598</elocation-id><history>
+        <date date-type="received">
+          <day>16</day>
+          <month>4</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>11</day>
+          <month>6</month>
+          <year>2012</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2012</copyright-year><copyright-holder>Tianwei Yu</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <p>The receiver operating characteristic (ROC) curve is an important tool to gauge the performance of classifiers. In certain situations of high-throughput data analysis, the data is heavily class-skewed, i.e. most features tested belong to the true negative class. In such cases, only a small portion of the ROC curve is relevant in practical terms, rendering the ROC curve and its area under the curve (AUC) insufficient for the purpose of judging classifier performance. Here we define an ROC surface (ROCS) using true positive rate (TPR), false positive rate (FPR), and true discovery rate (TDR). The ROC surface, together with the associated quantities, volume under the surface (VUS) and FDR-controlled area under the ROC curve (FCAUC), provide a useful approach for gauging classifier performance on class-skewed high-throughput data. The implementation as an R package is available at <ext-link ext-link-type="uri" xlink:href="http://userwww.service.emory.edu/~tyu8/ROCS/" xlink:type="simple">http://userwww.service.emory.edu/~tyu8/ROCS/</ext-link>.</p>
+      </abstract><funding-group><funding-statement>This research was partially supported by National Institutes of Health grants 5P01ES016731, 5U19AI057266 and 1U19AI090023. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript. No additional external funding received for this study.</funding-statement></funding-group><counts>
+        <page-count count="8"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Receiver Operating Characteristic (ROC) curve is widely used to assess the performance of classifiers in biomedical research <xref ref-type="bibr" rid="pone.0040598-Berrar1">[1]</xref>, <xref ref-type="bibr" rid="pone.0040598-Robin1">[2]</xref>, <xref ref-type="bibr" rid="pone.0040598-Soreide1">[3]</xref>. The curve is generated by plotting the true positive rate (TPR) against the false positive rate (FPR). Generally speaking, it depicts the level of separation between two distributions, one corresponding to the true negatives, and the other corresponding to the true positives, given the scores from a classifier <xref ref-type="bibr" rid="pone.0040598-Fawcett1">[4]</xref>. The area under the curve (AUC) summarizes the main characteristic of the ROC with a single number, greatly facilitating methods comparison <xref ref-type="bibr" rid="pone.0040598-Fawcett1">[4]</xref>.</p>
+      <p>In many applications on high-throughput data, the number of true positives is magnitudes smaller than the number of true negatives. Examples include analyzing high-throughput data with spike-in gold standards <xref ref-type="bibr" rid="pone.0040598-Choe1">[5]</xref>, detecting break points of copy numbers <xref ref-type="bibr" rid="pone.0040598-Yu1">[6]</xref>, and many other situations where only top-ranked features are of interest <xref ref-type="bibr" rid="pone.0040598-Swamidass1">[7]</xref>. In such situations, at a very low false positive level, the false discovery rate (FDR) <xref ref-type="bibr" rid="pone.0040598-Benjamini1">[8]</xref> could become unacceptably high. Thus only a small corner of the ROC curve is relevant in practical terms, and the AUC can no longer summarize the effectiveness of the separation. To address this issue, some methods were developed to focus on sub-regions of the ROC curve, either by computing partial area under the curve <xref ref-type="bibr" rid="pone.0040598-Walter1">[9]</xref>, or by magnifying portions of the ROC smoothly <xref ref-type="bibr" rid="pone.0040598-Swamidass1">[7]</xref>. Another heuristic approach was to use a variant of ROC – replacing the false positive rate (FPR) with the false discovery rate (FDR) in the ROC plot <xref ref-type="bibr" rid="pone.0040598-Choe1">[5]</xref>, <xref ref-type="bibr" rid="pone.0040598-Yu1">[6]</xref>, <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref>. Unlike the FPR and the TPR, the FDR may not be a monotone function of the model parameter(s) controlling sensitivity. When the data is class-skewed, two main factors influence the capability to detect positive features effectively – the level of separation between the two distributions, and the class ratio, i.e. the ratio between the number of true negatives and the number of true positives. None of the aforementioned methods convey both pieces of information together effectively.</p>
+      <p>Here we describe a method and the associated R package that depict the relationship using a three-dimensional surface based on TPR, FPR, and the true discovery rate (TDR), which is one minus FDR. Because the TPR-FPR-TDR data forms a curve instead of a surface in the three-dimensional space, defining an ROC surface is not straight-forward. In this manuscript we combine the ideas of the original ROC and its FDR-TPR variant. We show that such an ROC surface enjoys intuitive interpretation, as well as loyally reflects class separation in the class-skewed scenario. Two related quantities, the volume under the surface (VUS) of the ROC surface and the FDR-controlled area under the curve (FCAUC), as well as a testing procedure, are also defined to help simplify comparison of classifiers in the class-skewed scenarios.</p>
+    </sec>
+    <sec id="s2" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s2a">
+        <title>ROC Surface (ROCS) and its Volume Under the Surface (VUS)</title>
+        <p>Generally speaking, a high-throughput dataset contains multi-dimensional measurements for each feature under study, e.g. genes, metabolites etc. When a certain model is applied, it reduces the measurement on each feature to a scalar. Given that each feature belongs to either the true positive or the true negative group, changing the threshold value <italic>δ</italic> will generate a tradeoff between sensitivity and specificity, hence the ROC curve (<xref ref-type="fig" rid="pone-0040598-g001">Fig. 1</xref>). Here we use <italic>δ</italic> only conceptually. It may represent a threshold on the reduced data, or certain parameter(s) in the model that controls sensitivity. The <italic>TPR, FPR, TDR</italic> are all functions of <italic>δ</italic>: <italic>TPR = TPR(δ), FPR = FPR(δ),</italic> and <italic>TDR = TDR(δ).</italic> The traditional AUC of ROC (<xref ref-type="fig" rid="pone-0040598-g001">Fig. 1</xref>) is defined as<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e001" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+        <fig id="pone-0040598-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Illustration of the construction of the ROC curve and the ROC surface (ROCS).</title>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g001" xlink:type="simple"/>
+        </fig>
+        <p>We define the ROC surface by the surface formed between the FPR-TPR-TDR curve and its projection on the TPR-TDR plain (<xref ref-type="fig" rid="pone-0040598-g001">Fig. 1</xref>). The projection of the surface on the FPR-TPR plain is the area under the regular ROC curve. The volume between the ROC surface and its projection on the FPR-TPR plain is defined as the volume under the ROC surface (VUS), <disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e002" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+        <p>Compared to equation (1), we see this VUS can be viewed as a weighted version of the AUC of the regular ROC curve, with the weight at every TPR level being the corresponding TDR values. This definition makes intuitive sense because it gives higher weight to higher TDR regions. In real data analysis, the curves are approximated by step functions, and integrations are replaced by summations.</p>
+        <p>The maximum possible value of the VUS is one, which is achieved when the true positive and true negative samples can be perfectly separated, no matter what the class ratio is. The minimum value of the VUS approaches zero in the scenario that the two distributions are inseparable, and the class ratio (# true negatives/# true positives) approaches infinity.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Assessing the Significance of the Class Separation</title>
+        <p>The statistical significance of the between-class separation can be assessed by a permutation test in which the null distribution of the VUS value is generated by permuting class labels of the samples. We randomly permute the true positive/true negative labels <italic>K</italic> times and compute the VUS values <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0040598.e003" xlink:type="simple"/></inline-formula>. The proportion of the sampled permutations with VUS values larger than the observed value is taken as the p-value of the one-sided test,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e004" xlink:type="simple"/><label>(3)</label></disp-formula>where <italic>I(A)</italic> is the indicator function which is 1 if <italic>A</italic> is true and 0 otherwise.</p>
+        <fig id="pone-0040598-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Illustration of the ROCS under different scenarios.</title>
+            <p>Within each box, the ROCS plot (right) was generated from 10000 random samples drawn from the two Gaussian distributions (left). Upper panel: class ratio negative:positive = 1∶1; lower panel: class ratio negative:positive = 10∶1. (a) Two well-separated distributions; (b) two moderately separated distributions; (c) two severely overlapping distributions. Blue: true negative class; red: true positive class. Shaded area in the TPR-FPR plain: region under the ROC curve corresponding to FDR equal to or lower than 0.2.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g002" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0040598-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Simulation results – average VUS and FCAUC values as functions of the distance between the mean of the true negative and true positive distributions and the class ratio (#negative/#positive).</title>
+            <p>The two distributions are both normal with standard deviation one. Black curves: values corresponding to integer distances between means.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g003" xlink:type="simple"/>
+        </fig>
+        <sec id="s2b1">
+          <title>Testing for significant difference between two ROCS</title>
+          <p>The null hypothesis is the two studies are generated from the same class-specific distributions of ranks. It implies <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0040598.e005" xlink:type="simple"/></inline-formula> when the two studies have the same class ratios. For both studies, we ensure the median of the true positive class is to the right of the true negative class by multiplying the measurements with <italic>−1</italic> when necessary. Let the first ROCS be constructed from <italic>n<sub>1</sub></italic> true positive samples and <italic>n<sub>0</sub></italic> true negative samples. Let the second ROCS be constructed from <italic>m<sub>1</sub></italic> true positive samples and <italic>m<sub>0</sub></italic> true negative samples.<list list-type="order"><list-item><p>In order to establish the distribution under the null hypothesis, we remove the impact of difference in class ratios (true negatives v.s. true positives) between the two studies by re-sampling. From each study, we re-sample <italic>(n<sub>0</sub>+m<sub>0</sub>)/2</italic> true negatives and <italic>(n<sub>1</sub>+m<sub>1</sub>)/2</italic> true positives. When the two values are not integer, they are rounded to the closest integer.</p></list-item><list-item><p>Within each study, we transform the new samples into ranks. For tied measurements, we assign random ranks.</p></list-item><list-item><p>We merge the ranks of the true negative samples from both studies to estimate the true negative distribution under the null hypothesis, and merge the ranks of the true positive samples from both studies to estimate the true positive distribution under the null hypothesis.</p></list-item><list-item><p>We take <italic>B</italic> samples with replacement from the constructed distributions under the null. Each sample contains <italic>n<sub>1</sub></italic> true positives and <italic>n<sub>0</sub></italic> true negatives for study 1, and <italic>m<sub>1</sub></italic> true positives and <italic>m<sub>0</sub></italic> true negatives for study 2. We compute the VUS value of the ROCS, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0040598.e006" xlink:type="simple"/></inline-formula>. The p-value of the test is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e007" xlink:type="simple"/><label>(4)</label></disp-formula>where <italic>I(A)</italic> is the indicator function which is 1 if A is true and 0 otherwise</p></list-item></list>             </p>
+          <fig id="pone-0040598-g004" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g004</object-id>
+            <label>Figure 4</label>
+            <caption>
+              <title>Simulation results on the power and size of the test. <bold>In all simulations, the true negative class mean is set at zero for both studies, and the standard deviations of the true negative class and the true positive class are one for both studies.</bold></title>
+              <p> Miu.1 is the true positive class mean of study 1; miu.2 is the true positive class mean of study 2. All curves are based on 100 simulations. Horizontal line: the alpha level 0.05 for the purpose of examining the size of the test. (a) The simple scenario where both studies have the same sample size (4000) and class ratio. (b) The more complex case where study 1 has 2000 samples, study 2 has 4000 samples, and the class ratios are different.</p>
+            </caption>
+            <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g004" xlink:type="simple"/>
+          </fig>
+        </sec>
+      </sec>
+      <sec id="s2c">
+        <title>FDR-Controlled Area Under the Curve (FCAUC)</title>
+        <p>We define FCAUC as the area under the traditional ROC curve corresponding to a pre-determined FDR threshold. Let <italic>b</italic> be the cutoff of FDR. Assuming the distribution of the true positive class is to the right of the true negative class, we find the minimum cutoff that corresponds to the acceptable FDR level: <disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e008" xlink:type="simple"/></disp-formula></p>
+        <p>Then the FCAUC value is found by,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e009" xlink:type="simple"/><label>(5)</label></disp-formula></p>
+        <p>Similar to the VUS, the significance of the FCAUC can be assessed by permutation test. We randomly permute the true positive/true negative labels <italic>K</italic> times and compute the FCAUC values <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0040598.e010" xlink:type="simple"/></inline-formula>. The proportion of the sampled permutations with FCAUC values larger than the observed value is taken as the p-value of the one-sided test,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.e011" xlink:type="simple"/><label>(6)</label></disp-formula>where <italic>I(A)</italic> is the indicator function which is 1 if <italic>A</italic> is true and 0 otherwise.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results and Discussion</title>
+      <sec id="s3a">
+        <title>Demonstration of the ROCS Utility using Simulated Data</title>
+        <p>First we illustrate the behavior of the ROCS using a few examples. We vary the level of overlap between the true negative and true positive distributions, and the ratio between true negative and true positive sample counts (<xref ref-type="fig" rid="pone-0040598-g002">Fig. 2</xref>). When the distributions of the true negative class and true positive class are well separated (<xref ref-type="fig" rid="pone-0040598-g002">Fig. 2a</xref>), the VUS and the FCAUC values are close to one, both at the class ratio of 1∶1 and 10∶1. When the two distributions partially overlap (<xref ref-type="fig" rid="pone-0040598-g002">Fig. 2b</xref>), the VUS and FCAUC values decrease with the proportion of true positive samples. This is because the TDR levels become lower when the proportion of true positive samples decreases, even though the TPR-FPR curve doesn’t change. When the two distributions severely overlap (<xref ref-type="fig" rid="pone-0040598-g002">Fig. 2c</xref>), the VUS and FCAUC values are further decreased. When the class ratio is large, the VUS value becomes close to zero, and the FCAUC becomes zero because at no cutoff level does the FDR gets below 0.2. In all three scenarios, the traditional ROC curves are the same between the upper and lower plots because the true negative and true positive distributions do not change.</p>
+        <fig id="pone-0040598-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Illustration of the ROCS procedure using the results on the golden spike dataset <xref ref-type="bibr" rid="pone.0040598-Choe1">[<bold>5</bold>]</xref> by Turro et al <xref ref-type="bibr" rid="pone.0040598-Turro1">[<bold>10</bold>]</xref>.</title>
+            <p>(a) ROCS plots of the results. (b) Comparing the regular AUC under ROC of the nine single array pairs. (c) Comparing the VUS values of the nine single array pairs. (d) Comparing the FCAUC values of the nine single array pairs. Please note that the nine comparisons in Turro et al <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref> are not independent. Thus the distributions in (b), (c) and (d) only serve to illustrate the values. They do not have any implications of significant differences between methods.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g005" xlink:type="simple"/>
+        </fig>
+        <p>We then systematically examine the relationship between VUS value and the distance between the mean of the true negative and true positive distributions, as well as the class ratio (number of true negatives versus number of true positives). We generate data from normal distributions with standard deviation of one. Different distances between the two means and different class ratios were simulated. At each parameter setting, we repeated the simulation 50 times, each with 2000 samples, and took the mean VUS value. When the mean values of the two distributions are far apart, the VUS value approaches one, regardless of the class ratio (<xref ref-type="fig" rid="pone-0040598-g003">Fig. 3, left panel</xref>). When the overlap is moderate to high, the VUS values decrease with the increase of class ratio (<italic># true negatives/# true positives</italic>). The VUS value approaches zero when the two distributions are identical and the class ratio is large (<xref ref-type="fig" rid="pone-0040598-g003">Fig. 3, left panel</xref>). The same simulation procedure was applied to the FCAUC value. Its behavior was very close to that of the VUS, except when the two distributions are close to identical, the FCAUC value becomes zero at all class ratio settings (<xref ref-type="fig" rid="pone-0040598-g003">Fig. 3, right panel</xref>).</p>
+        <fig id="pone-0040598-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Testing the difference in VUS between different methods.</title>
+            <p>(a) Average p-values over the nine comparisons. (b) Fractions of the nine comparisons being significant (p-value &lt;0.05). Please note that the nine comparisons in Turro et al <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref> are not independent.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g006" xlink:type="simple"/>
+        </fig>
+        <fig id="pone-0040598-g007" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0040598.g007</object-id>
+          <label>Figure 7</label>
+          <caption>
+            <title>Comparing the ROC curves between the methods GCBGX and GCRMA.</title>
+            <p>The values were averaged over the nine comparisons. Colors in each curve represent FDR levels dichotomized at the cutoff value of 0.2.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pone.0040598.g007" xlink:type="simple"/>
+        </fig>
+        <p>A simulation study was conducted to assess the behavior of the testing procedure between ROC surfaces. In every simulation, we generated true-negative and true-positive samples for two fake studies. For both fake studies, the true-negative class follows the standard normal distribution, and the true-positive class follows normal distributions with standard deviation of one with varying mean values. In the first set of simulations, both studies have the same sample size and class ratio. In the situations where the two mean values of the true positive class are the same (the null hypothesis is true), the test has ∼5% error rate, which indicates correct size of the test (<xref ref-type="fig" rid="pone-0040598-g004">Fig. 4a</xref>). When the difference between the mean values deviates from zero, the power to detect the difference increases quickly. The statistical power to detect the differences is also negatively associated with the class ratio, with 1∶1 ratio yielding the highest power, and 16∶1 yielding the lowest (<xref ref-type="fig" rid="pone-0040598-g004">Fig. 4a</xref>). In the second set of simulations, we used different sample sizes (2000 and 4000) for the two studies, and allowed the class ratio to be different between the two studies. The tests maintained the correct size in such settings (<xref ref-type="fig" rid="pone-0040598-g004">Fig. 4b</xref>). Again the power rises quickly with the differences between the true positive class means (<xref ref-type="fig" rid="pone-0040598-g004">Fig. 4b</xref>).</p>
+      </sec>
+      <sec id="s3b">
+        <title>Demonstration of the ROCS Utility using Real Data</title>
+        <p>The purpose of the demonstration here is not comparing the methods. Rather, it is to show that the ROCS is useful in practice for visually assessing the differences between methods, and the VUS and FCAUC values are convenient and relevant measures for performance assessment.</p>
+        <p>We use the analytical results by Turro et al <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref>, in which the authors compared the performance of their microarray data analysis method BGX with some popular methods using the golden spike dataset <xref ref-type="bibr" rid="pone.0040598-Choe1">[5]</xref>. The golden spike dataset was generated using spike-in experiment. It contains 14010 genes, in which 1331 were differentially expressed by spiking in <xref ref-type="bibr" rid="pone.0040598-Choe1">[5]</xref>. Turro et al made nine single-array comparisons using five methods between the two experimental conditions (spiked and control), and presented the results with ROC curves averaged over the nine comparisons using the FDR-TPR variant of ROC <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref>. Although the curves visually showed some differences between methods, they did not offer a measure to quantify the difference, and did not convey the level of variation between the nine comparisons.</p>
+        <p>Using the analytical results provided on the website of the Turro paper <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref>, we carried out data presentation and analysis with ROCS. By generating ROC surface plots (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5a</xref>), ROCS analysis conveys the FPR dimension of the difference, which was not present in figure 8 of <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref>. One interesting new observation is that, although GCRMA clearly has a lower ROC surface than BGX, GCBGX and MAS5 (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5a</xref>), in the traditional ROC dimension, i.e. the FPR/TPR space, its ROC curve is similar to those of BGX, GCBGX and MAS5 (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5a</xref>). Indeed the AUC of ROC from GCRMA is on-par with the three methods BGX, GCBGX and MAS5 (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5b</xref>). However, because of its inferior performance in the FDR domain, its ROC surface is lower than BGX, GCBGX and MAS5 (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5a</xref>), which is reflected in lower VUS and FCAUC values (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5c, 5d</xref>).</p>
+        <p>In each of the nine comparisons, the relative rankings of genes were given by each of the methods. Using the rankings, we conducted testing between the five methods regarding their difference in ROCS. The testing was done nine times between each pair of methods. <xref ref-type="fig" rid="pone-0040598-g006">Figure 6</xref> shows the average p-values between each pair of methods (<xref ref-type="fig" rid="pone-0040598-g006">Fig. 6a</xref>), as well as the number of times the testing result was significant at the alpha level of 0.05 (<xref ref-type="fig" rid="pone-0040598-g006">Fig. 6b</xref>). It clearly showed that BGX, GCBGX and MAS5 results are similar, while GCRMA and RMA results are somewhat similar. There are substantial differences between the two groups (<xref ref-type="fig" rid="pone-0040598-g006">Fig. 6</xref>).</p>
+        <p>ROC and AUC alone do not show much difference between GCRMA versus the group of BGX, GCBGX and MAS5 (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5b</xref>), yet ROCS analysis and VUS/FCAUC show substantial differences (<xref ref-type="fig" rid="pone-0040598-g005">Fig. 5c &amp; 5d</xref>). To explore the reason, we compare GCRMA and GCBGX (<xref ref-type="fig" rid="pone-0040598-g007">Fig. 7</xref>). The two ROC curves have similar shape. In fact, the GCRMA curve has higher AUC overall. However, under heavy class skew, only the left-most portion of the two curves are meaningful in practical terms. The two curves differ a lot in that region. At the FDR cutoff of 0.2, GCBGX yields 15% more positive genes than GCRMA (1285 versus 1117). This is a substantial difference that traditional ROC cannot reveal. Overall, ROCS analysis reveals more information than traditional ROC analysis, and provides more quantifiable results than simply using the FDR-TPR variant of ROC plot as in <xref ref-type="bibr" rid="pone.0040598-Turro1">[10]</xref>.</p>
+      </sec>
+      <sec id="s3c">
+        <title>Implementation</title>
+        <p>The method is implemented as an R package available at <ext-link ext-link-type="uri" xlink:href="http://userwww.service.emory.edu/~tyu8/ROCS/" xlink:type="simple">http://userwww.service.emory.edu/~tyu8/ROCS/</ext-link>. The package includes functions of generating ROCS plots and VUS/FCAUC from raw data, or from user-provided FPR, TPR and FDR. The package produces rotatable three dimensional plots using the 3D real-time visualization device (package RGL) in R <xref ref-type="bibr" rid="pone.0040598-Adler1">[11]</xref>. It contains the testing procedures described in the Methods section. The package also incudes functions that generate traditional ROC plots in which the area corresponding to acceptable FDR level is colored, both from raw data and from user-provided FPR, TPR and FDR values. Unlike traditional ROC analysis, when using the ROCS analysis, true negative and true positive class labels are not exchangeable.</p>
+        <p>In summary, we developed a new approach to incorporate FDR information into the ROC analysis. This approach addresses the issue of severe class-skewness in ROC analysis by explicitly utilizing the inference of false discovery rate. The ROCS plot and the associated VUS and FCAUC values are useful tools for judging classifier performance when true negatives greatly out-number true positives in high-throughput data. We shall note that unlike the ROC curve, the ROC surface and its associated quantities are dependent upon the class ratio. The results are meaningful only when the class ratio of the training data is close to that of future data. In the case that the user foresees a discrepancy, the issue can be addressed by (repeated) resampling from the training data to achieve targeted class ratios and building ROCS.</p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>The author thanks two anonymous reviewers for their constructive comments that helped to improve this paper.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0040598-Berrar1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Berrar</surname><given-names>D</given-names></name><name name-style="western"><surname>Flach</surname><given-names>P</given-names></name></person-group>             <year>2012</year>             <article-title>Caveats and pitfalls of ROC analysis in clinical microarray research (and how to avoid them).</article-title>             <source>Brief Bioinform</source>             <volume>13</volume>             <fpage>83</fpage>             <lpage>97</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Robin1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Robin</surname><given-names>X</given-names></name><name name-style="western"><surname>Turck</surname><given-names>N</given-names></name><name name-style="western"><surname>Hainard</surname><given-names>A</given-names></name><name name-style="western"><surname>Tiberti</surname><given-names>N</given-names></name><name name-style="western"><surname>Lisacek</surname><given-names>F</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>pROC: an open-source package for R and S+ to analyze and compare ROC curves.</article-title>             <source>BMC bioinformatics</source>             <volume>12</volume>             <fpage>77</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Soreide1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Soreide</surname><given-names>K</given-names></name></person-group>             <year>2009</year>             <article-title>Receiver-operating characteristic curve analysis in diagnostic, prognostic and predictive biomarker research.</article-title>             <source>Journal of clinical pathology</source>             <volume>62</volume>             <fpage>1</fpage>             <lpage>5</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Fawcett1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Fawcett</surname><given-names>T</given-names></name></person-group>             <year>2006</year>             <article-title>An introduction to ROC analysis.</article-title>             <source>Pattern Recognition Letters</source>             <volume>27</volume>             <fpage>861</fpage>             <lpage>874</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Choe1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Choe</surname><given-names>SE</given-names></name><name name-style="western"><surname>Boutros</surname><given-names>M</given-names></name><name name-style="western"><surname>Michelson</surname><given-names>AM</given-names></name><name name-style="western"><surname>Church</surname><given-names>GM</given-names></name><name name-style="western"><surname>Halfon</surname><given-names>MS</given-names></name></person-group>             <year>2005</year>             <article-title>Preferred analysis methods for Affymetrix GeneChips revealed by a wholly defined control dataset.</article-title>             <source>Genome biology</source>             <volume>6</volume>             <fpage>R16</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Yu1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yu</surname><given-names>T</given-names></name><name name-style="western"><surname>Ye</surname><given-names>H</given-names></name><name name-style="western"><surname>Sun</surname><given-names>W</given-names></name><name name-style="western"><surname>Li</surname><given-names>KC</given-names></name><name name-style="western"><surname>Chen</surname><given-names>Z</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>A forward-backward fragment assembling algorithm for the identification of genomic amplification and deletion breakpoints using high-density single nucleotide polymorphism (SNP) array.</article-title>             <source>BMC bioinformatics</source>             <volume>8</volume>             <fpage>145</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Swamidass1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Swamidass</surname><given-names>SJ</given-names></name><name name-style="western"><surname>Azencott</surname><given-names>CA</given-names></name><name name-style="western"><surname>Daily</surname><given-names>K</given-names></name><name name-style="western"><surname>Baldi</surname><given-names>P</given-names></name></person-group>             <year>2010</year>             <article-title>A CROC stronger than ROC: measuring, visualizing and optimizing early retrieval.</article-title>             <source>Bioinformatics</source>             <volume>26</volume>             <fpage>1348</fpage>             <lpage>1356</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Benjamini1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Benjamini</surname><given-names>Y</given-names></name><name name-style="western"><surname>Hochberg</surname><given-names>Y</given-names></name></person-group>             <year>1995</year>             <article-title>Controlling the False Discovery Rate - a Practical and Powerful Approach to Multiple Testing.</article-title>             <source>Journal of the Royal Statistical Society Series B-Methodological</source>             <volume>57</volume>             <fpage>289</fpage>             <lpage>300</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Walter1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Walter</surname><given-names>SD</given-names></name></person-group>             <year>2005</year>             <article-title>The partial area under the summary ROC curve.</article-title>             <source>Statistics in medicine</source>             <volume>24</volume>             <fpage>2025</fpage>             <lpage>2040</lpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Turro1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Turro</surname><given-names>E</given-names></name><name name-style="western"><surname>Bochkina</surname><given-names>N</given-names></name><name name-style="western"><surname>Hein</surname><given-names>AM</given-names></name><name name-style="western"><surname>Richardson</surname><given-names>S</given-names></name></person-group>             <year>2007</year>             <article-title>BGX: a Bioconductor package for the Bayesian integrated analysis of Affymetrix GeneChips.</article-title>             <source>BMC bioinformatics</source>             <volume>8</volume>             <fpage>439</fpage>          </element-citation>
+      </ref>
+      <ref id="pone.0040598-Adler1">
+        <label>11</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Adler</surname><given-names>D</given-names></name><name name-style="western"><surname>Nenadic</surname><given-names>O</given-names></name></person-group>             <year>2003</year>             <article-title>A Framework for an R to OpenGL Interface for Interactive 3D graphics.</article-title>             <person-group person-group-type="editor"><name name-style="western"><surname>Hornik</surname><given-names>K</given-names></name><name name-style="western"><surname>Leisch</surname><given-names>F</given-names></name></person-group>             <comment>editors.</comment>             <comment>Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003).</comment>             <comment>Vienna, Austria.</comment>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

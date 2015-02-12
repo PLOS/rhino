@@ -18,12 +18,13 @@
  */
 package org.ambraproject.rhino.service.classifier;
 
-import org.ambraproject.action.BaseTest;
-import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.util.AbstractMap;
 
@@ -35,45 +36,46 @@ import static org.testng.Assert.assertTrue;
 /**
  * @author Alex Kudlick Date: 7/3/12
  */
-public class ArticleClassifierTest extends BaseTest {
+public class ArticleClassifierTest {
   @Autowired
   protected AIArticleClassifier articleClassifier;
 
+  private DocumentBuilder documentBuilder;
+
+  private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException {
+    if (documentBuilder != null) return documentBuilder;
+    DocumentBuilderFactory documentBuilderfactory = new org.apache.xerces.jaxp.DocumentBuilderFactoryImpl();
+    documentBuilderfactory.setNamespaceAware(true);
+    documentBuilderfactory.setValidating(false);
+    documentBuilderfactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+    return documentBuilder = documentBuilderfactory.newDocumentBuilder();
+  }
+
+  private Document getSampleArticle(String filename) {
+    File file = new File("src/test/resources/articles/", filename);
+    try {
+      return getDocumentBuilder().parse(file);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @Test
   public void testAppendElementIfExists() throws Exception {
-    Document article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pone.0048915.xml").toURI()));
+    Document article = getSampleArticle("pone.0048915.xml");
     StringBuilder sb = new StringBuilder();
-    assertFalse(articleClassifier.appendElementIfExists(sb, article, "elementThatShouldntExist"));
+    assertFalse(AIArticleClassifier.appendElementIfExists(sb, article, "elementThatShouldntExist"));
     assertTrue(sb.toString().isEmpty());
 
-    assertTrue(articleClassifier.appendElementIfExists(sb, article, "article-title"));
+    assertTrue(AIArticleClassifier.appendElementIfExists(sb, article, "article-title"));
     String s = sb.toString();
     assertTrue(s.startsWith("Maternal Deprivation Exacerbates the Response to a High Fat Diet"));
 
     sb = new StringBuilder();
-    assertTrue(articleClassifier.appendElementIfExists(sb, article, "abstract"));
+    assertTrue(AIArticleClassifier.appendElementIfExists(sb, article, "abstract"));
     s = sb.toString().trim();
     assertTrue(s.startsWith(
         "Maternal deprivation (MD) during neonatal life has diverse long-term effects"));
-  }
-
-  @Test
-  public void testAppendSectionIfExists() throws Exception {
-    Document article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pone.0048915.xml").toURI()));
-    StringBuilder sb = new StringBuilder();
-    assertFalse(articleClassifier.appendSectionIfExists(sb, article, "sectionThatShouldntExist"));
-    assertTrue(sb.toString().isEmpty());
-
-    assertTrue(articleClassifier.appendSectionIfExists(sb, article, "Materials and Methods"));
-    String s = sb.toString().trim();
-    assertTrue(s.startsWith("Materials and Methods"), s);
-
-    sb = new StringBuilder();
-    assertTrue(articleClassifier.appendSectionIfExists(sb, article, "Results"));
-    s = sb.toString().trim();
-    assertTrue(s.startsWith("Results"), s);
   }
 
   @Test
@@ -82,21 +84,18 @@ public class ArticleClassifierTest extends BaseTest {
     // Arbitrary minimum number of characters that we should be sending for categorization.
     // This should be longer than the article title.
     int threshold = 500;
-    Document article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pone.0048915.xml").toURI()));
-    String content = articleClassifier.getCategorizationContent(article);
+    Document article = getSampleArticle("pone.0048915.xml");
+    String content = AIArticleClassifier.getCategorizationContent(article);
     assertTrue(content.length() > threshold);
 
     // Editorial without an abstract, materials/methods, or results section.
-    article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pntd.0001008.xml").toURI()));
-    content = articleClassifier.getCategorizationContent(article);
+    article = getSampleArticle("pntd.0001008.xml");
+    content = AIArticleClassifier.getCategorizationContent(article);
     assertTrue(content.length() > threshold);
 
     // Research article with non-standard section titles.
-    article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pone.0040598.xml").toURI()));
-    content = articleClassifier.getCategorizationContent(article);
+    article = getSampleArticle("pone.0040598.xml");
+    content = AIArticleClassifier.getCategorizationContent(article);
 
     // Call it good if we have material that's at least twice as long as the abstract.
     assertTrue(content.length()
@@ -104,9 +103,8 @@ public class ArticleClassifierTest extends BaseTest {
 
     // Article with a very short, one-sentence "TOC" abstract that we don't even
     // display in ambra.
-    article = DocumentBuilderFactoryCreator.createFactory()
-        .newDocumentBuilder().parse(new File(ClassLoader.getSystemResource("articles/pbio.0020302.xml").toURI()));
-    content = articleClassifier.getCategorizationContent(article);
+    article = getSampleArticle("pbio.0020302.xml");
+    content = AIArticleClassifier.getCategorizationContent(article);
     assertTrue(content.length() > threshold);
   }
 
@@ -114,43 +112,43 @@ public class ArticleClassifierTest extends BaseTest {
   public void testParseVectorElement() throws Exception {
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM>/Biology and life sciences/Computational biology/Computational neuroscience/Single neuron function|(5) neuron*(5)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/Biology and life sciences/Computational biology/Computational neuroscience/Single neuron function"
             , 5));
 
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM>/Medicine and health sciences/Anesthesiology/Anesthesia|(5) anesthesia(5)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Anesthesiology/Anesthesia"
             , 5));
 
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM>/Medicine and health sciences/Geriatrics/Frailty|(19) frailty(18) frail*(1)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Geriatrics/Frailty"
             , 19));
 
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM>/Biology and life sciences/Anatomy/Head/Face/Nose|(311) nose(311)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/Biology and life sciences/Anatomy/Head/Face/Nose"
             , 311));
 
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM>/People and places/Demography|(7) demographics(7)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/People and places/Demography"
             , 7));
 
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM>/Medicine and health sciences/Neurology/Cognitive neurology|(2) cognit*(2)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Neurology/Cognitive neurology"
             , 2));
 
     assertEquals(AIArticleClassifier.parseVectorElement(
             "<TERM> /Medicine and health sciences/Neurology/Cognitive neurology| (67) cognit*(2)</TERM>"),
-        new AbstractMap.SimpleImmutableEntry<String, Integer>(
+        new AbstractMap.SimpleImmutableEntry<>(
             "/Medicine and health sciences/Neurology/Cognitive neurology"
             , 67));
 

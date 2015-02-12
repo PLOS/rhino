@@ -37,6 +37,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.classifier.DummyArticleClassifier;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
@@ -162,13 +163,13 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     }
 
     Set<Category> expectedCategories = new HashSet<>();
-    Category cat1 = new Category();
-    cat1.setPath("/TopLevel1/term1");
-    expectedCategories.add(cat1);
-    Category cat2 = new Category();
-    cat2.setPath("/TopLevel2/term2");
-    expectedCategories.add(cat2);
+    for (String categoryPath : DummyArticleClassifier.DUMMY_DATA.keySet()) {
+      Category category = new Category();
+      category.setPath(categoryPath);
+      expectedCategories.add(category);
+    }
     Set<Category> actualCategories = stored.getCategories().keySet();
+
     // org.hibernate.collection.AbstractPersistentCollection.SetProxy does not respect the Set.equals contract,
     // so copy actualCategories out to a well-behaved Set before comparing.
     actualCategories = new HashSet<>(actualCategories);

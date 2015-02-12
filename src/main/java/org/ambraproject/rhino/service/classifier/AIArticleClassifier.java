@@ -18,6 +18,7 @@
  */
 package org.ambraproject.rhino.service.classifier;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -165,7 +166,8 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param vectorElement The text body of a line of the response
    * @return the term and weight of the term or null if the line is not valid
    */
-  private static Map.Entry<String, Integer> parseVectorElement(String vectorElement) {
+  @VisibleForTesting
+  static Map.Entry<String, Integer> parseVectorElement(String vectorElement) {
     Matcher match = TERM_PATTERN.matcher(vectorElement);
 
     if (match.find()) {
@@ -188,7 +190,8 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param elementName name of element to search for in the dom
    * @return true if the StringBuilder was modified
    */
-  private static boolean appendElementIfExists(StringBuilder sb, Document dom, String elementName) {
+  @VisibleForTesting
+  static boolean appendElementIfExists(StringBuilder sb, Document dom, String elementName) {
     NodeList list = dom.getElementsByTagName(elementName);
     if (list != null && list.getLength() > 0) {
       sb.append(list.item(0).getTextContent());
@@ -230,7 +233,8 @@ public class AIArticleClassifier implements ArticleClassifier {
    * @param dom DOM tree of an article
    * @return raw text content, XML-escaped, of the relevant article sections
    */
-  private static String getCategorizationContent(Document dom) {
+  @VisibleForTesting
+  static String getCategorizationContent(Document dom) {
     StringBuilder sb = new StringBuilder();
     appendElementIfExists(sb, dom, "article-title");
     appendAllElementsIfExists(sb, dom, "abstract");
