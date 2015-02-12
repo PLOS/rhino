@@ -60,8 +60,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    */
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
-    RuntimeConfiguration.ArticleClassifierConfiguration configuration = runtimeConfiguration.getArticleClassifierConfiguration();
-    if (configuration.getAddress() == null || configuration.getThesaurus() == null) {
+    RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
+    if (configuration.getServer() == null || configuration.getThesaurus() == null) {
       log.info("AIArticleClassifier is not configured");
       return ImmutableMap.of();
     }
@@ -97,10 +97,10 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @throws IOException
    */
   private List<String> getRawTerms(Document articleXml) throws IOException {
-    RuntimeConfiguration.ArticleClassifierConfiguration configuration = runtimeConfiguration.getArticleClassifierConfiguration();
+    RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
     String toCategorize = getCategorizationContent(articleXml);
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus()) + toCategorize + MESSAGE_END;
-    HttpPost post = new HttpPost(configuration.getAddress().toString());
+    HttpPost post = new HttpPost(configuration.getServer().toString());
     post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
 
     DocumentBuilder documentBuilder;
@@ -115,7 +115,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
          InputStream stream = httpResponse.getEntity().getContent()) {
       response = documentBuilder.parse(stream);
     } catch (SAXException e) {
-      throw new RuntimeException("Invalid XML returned from " + configuration.getAddress(), e);
+      throw new RuntimeException("Invalid XML returned from " + configuration.getServer(), e);
     }
 
     //parse result

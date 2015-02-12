@@ -82,14 +82,14 @@ public interface RuntimeConfiguration {
 
   HttpConnectionPoolConfiguration getHttpConnectionPoolConfiguration();
 
-  interface ArticleClassifierConfiguration {
-    URL getAddress();
+  interface TaxonomyConfiguration {
+    URL getServer();
 
     String getThesaurus();
 
     Set<String> getCategoryBlacklist();
   }
 
-  ArticleClassifierConfiguration getArticleClassifierConfiguration();
+  TaxonomyConfiguration getTaxonomyConfiguration();
 
 }

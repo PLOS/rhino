@@ -119,30 +119,30 @@ public class YamlConfiguration implements RuntimeConfiguration {
   }
 
 
-  private final ArticleClassifierConfiguration articleClassifierConfiguration = new ArticleClassifierConfiguration() {
+  private final TaxonomyConfiguration taxonomyConfiguration = new TaxonomyConfiguration() {
     private ImmutableSet<String> categoryBlacklist;
 
     @Override
-    public URL getAddress() {
-      return (input.articleClassifier == null) ? null : input.articleClassifier.address;
+    public URL getServer() {
+      return (input.taxonomy == null) ? null : input.taxonomy.server;
     }
 
     @Override
     public String getThesaurus() {
-      return (input.articleClassifier == null) ? null : input.articleClassifier.thesaurus;
+      return (input.taxonomy == null) ? null : input.taxonomy.thesaurus;
     }
 
     @Override
     public Set<String> getCategoryBlacklist() {
       if (categoryBlacklist != null) return categoryBlacklist;
-      if (input.articleClassifier.categoryBlacklist == null) return categoryBlacklist = ImmutableSet.of();
-      return categoryBlacklist = ImmutableSet.copyOf(input.articleClassifier.categoryBlacklist);
+      if (input.taxonomy.categoryBlacklist == null) return categoryBlacklist = ImmutableSet.of();
+      return categoryBlacklist = ImmutableSet.copyOf(input.taxonomy.categoryBlacklist);
     }
   };
 
   @Override
-  public ArticleClassifierConfiguration getArticleClassifierConfiguration() {
-    return articleClassifierConfiguration;
+  public TaxonomyConfiguration getTaxonomyConfiguration() {
+    return taxonomyConfiguration;
   }
 
 
@@ -151,7 +151,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private boolean prettyPrintJson = true; // the default value should be true
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
-    private ArticleClassifierConfigurationInput articleClassifier;
+    private TaxonomyConfigurationInput taxonomy;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -181,8 +181,8 @@ public class YamlConfiguration implements RuntimeConfiguration {
      * @deprecated For reflective access by SnakeYAML only
      */
     @Deprecated
-    public void setArticleClassifier(ArticleClassifierConfigurationInput articleClassifier) {
-      this.articleClassifier = articleClassifier;
+    public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
+      this.taxonomy = taxonomy;
     }
   }
 
@@ -255,14 +255,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     }
   }
 
-  public static class ArticleClassifierConfigurationInput {
-    private URL address;
+  public static class TaxonomyConfigurationInput {
+    private URL server;
     private String thesaurus;
     private List<String> categoryBlacklist;
 
     @Deprecated
-    public void setAddress(URL address) {
-      this.address = address;
+    public void setServer(URL server) {
+      this.server = server;
     }
 
     @Deprecated
