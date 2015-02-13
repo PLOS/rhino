@@ -17,7 +17,17 @@ public interface TaxonomyClassificationService {
    * @return a map of categories to which the article belongs. Each entry should use <code>/</code>s to delimit subject
    * hierarchy.  Categories are returned in descending order of the strength of the match paired with the strength
    * value
+   * @throws TaxonomyClassificationServiceNotConfiguredException if a remote service is required but not configured
    */
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException;
+
+  /**
+   * Indicates that a remote service is required to classify articles but is not configured on this system.
+   */
+  public static class TaxonomyClassificationServiceNotConfiguredException extends RuntimeException {
+    public TaxonomyClassificationServiceNotConfiguredException() {
+      super();
+    }
+  }
 
 }

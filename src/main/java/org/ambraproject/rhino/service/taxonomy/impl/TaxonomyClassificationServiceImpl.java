@@ -62,8 +62,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
     if (configuration.getServer() == null || configuration.getThesaurus() == null) {
-      log.info("AIArticleClassifier is not configured");
-      return ImmutableMap.of();
+      throw new TaxonomyClassificationServiceNotConfiguredException();
     }
 
     List<String> rawTerms = getRawTerms(articleXml);
