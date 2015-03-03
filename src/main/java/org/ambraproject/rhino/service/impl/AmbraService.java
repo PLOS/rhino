@@ -183,10 +183,10 @@ public abstract class AmbraService {
    */
   private static DocumentBuilder newDocumentBuilder() {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setNamespaceAware(false);
+    // at a minimum the document builder needs to be namespace aware
+    factory.setNamespaceAware(true);
     factory.setValidating(false);
     try {
-      factory.setFeature("http://xml.org/sax/features/namespaces", false);
       factory.setFeature("http://xml.org/sax/features/validation", false);
       factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
       factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
