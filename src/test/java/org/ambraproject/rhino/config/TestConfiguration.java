@@ -25,16 +25,19 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.DummyMessageSender;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ClassificationServiceImpl;
-import org.ambraproject.service.article.ArticleClassifier;
+import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyLookupServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.article.ArticleServiceImpl;
-import org.ambraproject.service.article.DummyArticleClassifier;
 import org.ambraproject.service.syndication.SyndicationService;
 import org.ambraproject.service.syndication.impl.SyndicationServiceImpl;
 import org.ambraproject.testutils.AmbraTestConfigurationFactory;
@@ -112,8 +115,8 @@ public class TestConfiguration extends BaseConfiguration {
 
 
   @Bean
-  public ArticleClassifier articleClassifier() {
-    return new DummyArticleClassifier();
+  public TaxonomyClassificationService taxonomyClassificationService() {
+    return new DummyTaxonomyClassificationService();
   }
 
   @Bean
@@ -158,8 +161,18 @@ public class TestConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ClassificationService classificationService() {
-    return new ClassificationServiceImpl(null);
+  public TaxonomyService taxonomyService() {
+    return new TaxonomyServiceImpl();
+  }
+
+  @Bean
+  public TaxonomyLookupService taxonomyLookupService() {
+    return new TaxonomyLookupService() {
+      @Override
+      public Transceiver read(String journal, String parent) throws IOException {
+        throw new UnsupportedOperationException("Dummy service");
+      }
+    };
   }
 
   @Bean
@@ -174,7 +187,7 @@ public class TestConfiguration extends BaseConfiguration {
     boolean threw = true;
     try {
       is = TestConfiguration.class.getClassLoader().getResourceAsStream("rhino-test.yaml");
-      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.UserFields.class));
+      runtimeConfiguration = new YamlConfiguration(yaml.loadAs(is, YamlConfiguration.Input.class));
       threw = false;
     } finally {
       Closeables.close(is, threw);

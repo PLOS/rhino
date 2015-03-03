@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">PLoS ONE</journal-id>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="pmc">plosone</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS ONE</journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1932-6203</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PONE-D-12-26781</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pone.0048915</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Anatomy and physiology</subject>
+            <subj-group>
+              <subject>Endocrine system</subject>
+              <subj-group>
+                <subject>Endocrine physiology</subject>
+                <subj-group>
+                  <subject>Endocrine subsystems</subject>
+                  <subject>Neuroendocrinology</subject>
+                </subj-group>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Physiological processes</subject>
+              <subj-group>
+                <subject>Energy metabolism</subject>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Endocrinology</subject>
+            <subj-group>
+              <subject>Endocrine physiology</subject>
+              <subj-group>
+                <subject>Hormones</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Pediatric endocrinology</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Nutrition</subject>
+            <subj-group>
+              <subject>Obesity</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Diabetes and Endocrinology</subject>
+          <subject>Physiology</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Maternal Deprivation Exacerbates the Response to a High Fat Diet in a Sexually Dimorphic Manner</article-title>
+        <alt-title alt-title-type="running-head">Metabolic Effects of Maternal Deprivation</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Mela</surname>
+            <given-names>Virginia</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Llorente-Berzal</surname>
+            <given-names>Álvaro</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Díaz</surname>
+            <given-names>Francisca</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Argente</surname>
+            <given-names>Jesús</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Viveros</surname>
+            <given-names>María-Paz</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Chowen</surname>
+            <given-names>Julie A.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>Department of Physiology (Animal Physiology II), Faculty of Biology, Universidad Complutense, Instituto de Investigación Sanitaria del Hospital Clínico San Carlos, Madrid, Spain</addr-line>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <addr-line>Department of Endocrinology, Hospital Infantil Universitario Niño Jesús, Instituto de Investigación Biomédica Princesa, Madrid, Spain</addr-line>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <addr-line>Department of Pediatrics, Universidad Autónoma de Madrid, Madrid, Spain</addr-line>
+      </aff>
+      <aff id="aff4">
+        <label>4</label>
+        <addr-line>CIBER de Fisiopatología de Obesidad y Nutrición, Instituto Carlos III, Madrid, Spain</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Luque</surname>
+            <given-names>Raul M.</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>University of Cordoba, Spain</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">pazviver@bio.ucm.es</email> (M-PV); <email xlink:type="simple">julieann.chowen@madrid.salud.org</email> (JAC)</corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: VM JA M-PV JAC. Performed the experiments: VM ALB FD. Analyzed the data: VM M-PV JAC. Contributed reagents/materials/analysis tools: JA M-PV JAC. Wrote the paper: VM JA M-PV JAC.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <year>2012</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>7</day>
+        <month>11</month>
+        <year>2012</year>
+      </pub-date>
+      <volume>7</volume>
+      <issue>11</issue>
+      <elocation-id>e48915</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>31</day>
+          <month>8</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>3</day>
+          <month>10</month>
+          <year>2012</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2012</copyright-year>
+        <copyright-holder>Mela et al</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>Maternal deprivation (MD) during neonatal life has diverse long-term effects, including affectation of metabolism. Indeed, MD for 24 hours during the neonatal period reduces body weight throughout life when the animals are maintained on a normal diet. However, little information is available regarding how this early stress affects the response to increased metabolic challenges during postnatal life. We hypothesized that MD modifies the response to a high fat diet (HFD) and that this response differs between males and females. To address this question, both male and female Wistar rats were maternally deprived for 24 hours starting on the morning of postnatal day (PND) 9. Upon weaning on PND22 half of each group received a control diet (CD) and the other half HFD. MD rats of both sexes had significantly reduced accumulated food intake and weight gain compared to controls when raised on the CD. In contrast, when maintained on a HFD energy intake and weight gain did not differ between control and MD rats of either sex. However, high fat intake induced hyperleptinemia in MD rats as early as PND35, but not until PND85 in control males and control females did not become hyperleptinemic on the HFD even at PND102. High fat intake stimulated hypothalamic inflammatory markers in both male and female rats that had been exposed to MD, but not in controls. Reduced insulin sensitivity was observed only in MD males on the HFD. These results indicate that MD modifies the metabolic response to HFD intake, with this response being different between males and females. Thus, the development of obesity and secondary complications in response to high fat intake depends on numerous factors.</p>
+      </abstract>
+      <funding-group>
+        <funding-statement>This work was funded by grants from Fondos de Investigación Sanitaria (PI10 / 00747), CIBER Fisiopatología de Obesidad y Nutrición Instituto de Salud Carlos III, Ministerio de Ciencia e innovación: (BFU2009-10109, subprograma BFI and BFU2011-27492), GRUPOS UCM-BSCH (GRUPO UCM951579) and Fundación de Endocrinología y Nutrición. VM is supported by Red de Trastornos Adictivos RD06 / 0001/1013. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="13"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Studies investigating the long-term effects of the early developmental environment on health and well-being have increased dramatically in recent years. As a result the relationship between early events such as stress, illness, infection, nutrition or pharmacological treatments and the propensity towards a vast number of diseases has become apparent <xref ref-type="bibr" rid="pone.0048915-Bale1">[1]</xref>–<xref ref-type="bibr" rid="pone.0048915-Hochberg1">[5]</xref>. Moreover, these long-term responses to developmental perturbations often differ between males and females, which may partially explain the difference between the sexes in the prevalence of some diseases <xref ref-type="bibr" rid="pone.0048915-Bale1">[1]</xref>, <xref ref-type="bibr" rid="pone.0048915-Hochberg1">[5]</xref>–<xref ref-type="bibr" rid="pone.0048915-FuenteMartn1">[10]</xref>.</p>
+      <p>The dramatic rise in obesity during the past decades has been largely attributed to changes in lifestyle, with less physical activity and increased energy intake contributing greatly to this phenomenon. In addition, early environmental influences including both dietary modifications and diverse stresses can affect the response to a poor diet in later life, thus modulating the possibility of becoming obese and with many of these long-term effects being sexually dimorphic <xref ref-type="bibr" rid="pone.0048915-FuenteMartn1">[10]</xref>–<xref ref-type="bibr" rid="pone.0048915-Glavas1">[14]</xref>. Maternal deprivation (MD), which in some cases induces extended food restriction, as well as dehydration and thermal and psychological stress, can have long-lasting effects on diverse systems and functions, including metabolism <xref ref-type="bibr" rid="pone.0048915-LlorenteBerzal1">[9]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros1">[15]</xref>–<xref ref-type="bibr" rid="pone.0048915-Llorente2">[19]</xref>. Indeed, MD for 24 hours decreases body weight and circulating leptin levels in rats on a normal laboratory diet, with this effect being both age and sex dependent <xref ref-type="bibr" rid="pone.0048915-Llorente1">[6]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref>. However, little information is available regarding how these animals respond to metabolic challenges later in life.</p>
+      <p>Increased intake of high fat content foods is indicated as one of the main causes of obesity, as well as the secondary complications associated with weight gain. High fat intake is reported to induce hypothalamic inflammation and this inflammation is thought to be involved in the development of insulin and leptin resistance, resulting in further weight gain and secondary complications <xref ref-type="bibr" rid="pone.0048915-Thaler1">[20]</xref>–<xref ref-type="bibr" rid="pone.0048915-Cai1">[22]</xref>. Thus, in this study we aimed to determine the weight gain and metabolic responses of MD rats to a high fat diet (HFD) introduced at the time of weaning, comparing the responses between males and females. In addition, association of weight gain with hypothalamic inflammatory processes was analyzed.</p>
+    </sec>
+    <sec id="s2" sec-type="materials|methods">
+      <title>Materials and Methods</title>
+      <sec id="s2a">
+        <title>Ethics Statement</title>
+        <p>These studies were approved by the ethics committee of the Universidad Complutense de Madrid and complied with the Royal Decree 1201/2005 (BOE n° 252) pertaining to the protection of experimental animals and with the European Communities Council Directive (86/609/EEC). Special care was taken to reduce animal suffering and to use the minimum number of animals for all studies.</p>
+        <fig id="pone-0048915-g001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0048915.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>Experimental design.</title>
+            <p>Animals were deprived from their mother during 24h at postnatal day (PND) 9. From weaning (PND 22) and throughout the study rats received either a control or a high fat diet. Body weight and food intake were monitored daily. At PNDs 35, 45, 65 and 85 blood samples were obtained from the tail vein. At PND 102 animals were sacrificed after a 12 h fasting period, trunk blood was collected and the hypothalamus was dissected-out and rapidly frozen.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.g001" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2b">
+        <title>Animals</title>
+        <p>Adult Wistar rats were purchased from Harlan Interfauna Ibérica S.A. (Barcelona, Spain) and allowed to acclimate for 2 weeks before mating. One male was placed in a cage with two females for 10 days. On the day of birth litters were culled to eight pups per dam (four males and four females), with no cross-fostering employed. In all experimental groups at least three different litters were used to reduce the litter effect, with a total of 12 rats in each experimental group.</p>
+        <p>Rats were maintained at a constant temperature (22±1°C) and humidity (50±2%) in a reversed 12-h light-dark cycle (red light on at 0∶800 and white light on at 20∶00). Pregnant rats were given free access to rat chow (commercial diet for rodents A03; Safe, Augy, France) and water.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Maternal Deprivation</title>
+        <p>Maternal deprivation was performed as previously described <xref ref-type="bibr" rid="pone.0048915-Llorente1">[6]</xref>. Briefly, beginning at 09∶00 on postnatal day (PND) 9, mothers from the deprived group were removed and placed in a cage beside the home cage in the same room. On PND10 at 09∶00, mothers were returned to the cage of their respective litters. Mothers of the control litters were left undisturbed. All rats were left undisturbed until weaning at PND22 at which time 4 rats of the same sex and experimental group were placed in each cage. Half of each group received either a HFD (45% fat; D12451, Research Diets, New Brunswick, NJ, USA) or a control diet CD (10% fat; D12450B, Research Diets) and allowed to eat <italic>ad libitum.</italic> Body weight and food intake were monitored daily until PND101. Food intake was measured by placing a known amount of food in each cage and measuring the remaining amount at the same time the next day. This was then divided by the number of animals/cage, with statistics being performed using this value (n  =  the number of cages/experimental group).</p>
+        <fig id="pone-0048915-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0048915.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Body weight gain from the time of weaning (day 22 of age) until day 101 of life in males (A) and females (B).</title>
+            <p>Total weight gain from the time of weaning until day 101 of life (C). CtCD: controls on a control diet; CtHF: controls on a high fat diet from weaning onward; MDCD: maternally deprived rats on a control diet; MDHF: maternally deprived rats on a HFD from weaning onward. Significant differences: a: CtCD vs MDCD; b: CtCD vs CtHF; c: CtHF vs MDHF; d: MDCD vs MDHF. ***  =  ANOVA p&lt;0.0001.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.g002" position="float" xlink:type="simple"/>
+        </fig>
+        <p>This resulted in the following experimental groups in both sexes: control, CD (CtCD), control HFD (CtHF), maternally deprived CD (MDCD), and maternally deprived HFD (MDHF). Post-pubertal female rats were sacrificed randomly throughout the estrous cycle at the stipulated ages.</p>
+        <p>Non-fasting blood samples were collected from the tail vein at PNDs 35, 45, 65 and 85. On PND102 all rats were sacrificed after a 12h fast by rapid decapitation and trunk blood was collected in tubes containing EDTA (0.5 M) and rapidly placed on ice. The blood was centrifuged (3000 rpm for 15 min) and the plasma collected and stored at −80° until processed. The brain was rapidly removed and the hypothalamus dissected. It was then frozen in liquid nitrogen and stored at −80° until processed.</p>
+        <p>A schematic representation of the experimental design and tissue sample collection is shown in <xref ref-type="fig" rid="pone-0048915-g001">Figure 1</xref>.</p>
+        <fig id="pone-0048915-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0048915.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Kilocalorie intake from the time of weaning (day 22 of age) until day 101 of life in males (A) and females (B).</title>
+            <p>Total kilocalorie intake throughout the study (C). CtCD: controls on a control diet; CtHF: controls on a high fat diet from weaning onward; MDCD: maternally deprived rats on a control diet; MDHF: maternally deprived rats on a HFD from weaning onward. Significant differences: a: CtCD vs MDCD; b: CtCD vs CtHF; c: CtHF vs MDHF; d: MDCD vs MDHF. ***  =  ANOVA p&lt;0.0001.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.g003" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2d">
+        <title>Plasma Insulin, Leptin, Glucose and Triglyceride Measurements</title>
+        <p>Plasma leptin levels were measured by using B-bridge mouse/rat leptin ELISA kits (Cupertino, CA, USA) and insulin with Mercodia rat insulin ELISA kits (Uppsala, Sweden) following the manufacturers’ instructions. For insulin the sensitivity of the assay was 0.07 µg/ml with an inter- and intra-assay variation of 3.3% and 2%, respectively. The assay sensitivity for the leptin assay was 0.5 ng/ml with an inter-assay variation 6.5% and intra-assay variation of 3.7%. All samples were run in duplicate.</p>
+        <p>Plasma glucose and total triglycerides were measured by using commercial kits (RANDOX, Antrin, UK) according to the manufacturer’s instructions. Briefly, to measure triglycerides plasma was incubated with the commercial solution containing lipoprotein lipase, glycerol kinase, glycerol-3-oxidase, peroxidase, 4 aminophenazone and ATP for 5 minutes at 37°C under agitation. The resulting color was detected at 500 nm in a spectrophotometer and compared to a standard curve. Glucose levels were determined by incubating the samples with the commercial solution containing peroxidase, 4-aminofenazone and glucose oxidase for 10 min at 37°C under agitation and the results determine as described above.</p>
+        <fig id="pone-0048915-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0048915.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Mean HOMA index (A) and serum triglyceride (B) and leptin (C) levels at the time of sacrifice.</title>
+            <p>CtCD: controls on a control diet; CtHF: controls on a high fat diet from weaning onward; MDCD: maternally deprived rats on a control diet; MDHF: maternally deprived rats on a HFD from weaning onward. ***  =  ANOVA p&lt;0.0001., **  =  ANOVA p&lt;0.0005. NS  =  not significant.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.g004" position="float" xlink:type="simple"/>
+        </fig>
+        <p>The homeostasis model assessment (HOMA) index was used to access insulin sensitivity at PND102. This was calculated by using the formula: HOMA-IR  =  [Glucose (mmol/l) x insulin (µU/ml)]/22.5.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Quantitative Real-time PCR</title>
+        <p>Total RNA was extracted from each hypothalamus with TRIzol® Reagent (Invitrogen). High Capacity cDNA Reverse Transcription kits (Applied Biosystems, Foster City, CA) were used according to the manufacturer’s protocol on a Peltier thermal Cycler Tetrad2 (BioRad) to transcribe 2 µg total RNA isolated from each individual hypothalamus. Amplification of the cDNA template was performed with an ABI PRISM 7900HT Sequence Detection System (Applied Biosystems) using TaqMan Universal PCR Master Mix (Applied Biosystems) and TaqMan Gene Expression Assay kits for each detected gene (Applied Biosystems). The commercial reference for each predesigned expression assay is as follows for each gene measured in the hypothalamus: neuropeptide Y (NPY, Rn01410145), proopiomelanocortin (POMC; Rn00595020), Agouti-related peptide (AgRP; Rn014311703), cocaine and amphetamine-regulated transcript (CART; Rn00567382), interleukin (IL)-1β (Rn00580432), IL-6 (Rn01410330), TNF-α (Rn01525859), leptin receptor (LepR; Rn01433250), suppressor of cytokine signaling 3 (SOCS3; Rn00585674) and glial fibrillary acidic protein (GFAP; Rn00566603). Results were normalized to 18S (Rn01428915) mRNA levels in all samples. According to manufacturer’s guidelines, the ΔΔCT method was used for relative quantification. Statistics were performed using ΔΔCT values.</p>
+        <table-wrap id="pone-0048915-t001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0048915.t001</object-id>
+          <label>Table 1</label>
+          <caption>
+            <title>Serum levels of glucose (n = 10), insulin (n = 5), triglycerides (n = 11–12) and leptin (n = 12) at 35, 45, 65 and 85 days of age.</title>
+          </caption>
+          <alternatives>
+            <graphic id="pone-0048915-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Age</td>
+                  <td colspan="4" align="left" rowspan="1">Males</td>
+                  <td colspan="4" align="left" rowspan="1">Females</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">CtCD</td>
+                  <td align="left" rowspan="1" colspan="1">CtHF</td>
+                  <td align="left" rowspan="1" colspan="1">MDCD</td>
+                  <td align="left" rowspan="1" colspan="1">MDHF</td>
+                  <td align="left" rowspan="1" colspan="1">CtCD</td>
+                  <td align="left" rowspan="1" colspan="1">CtHF</td>
+                  <td align="left" rowspan="1" colspan="1">MDCD</td>
+                  <td align="left" rowspan="1" colspan="1">MDHF</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>Glycemia</bold>
+                    <bold>(mg/dl)</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">35</td>
+                  <td align="left" rowspan="1" colspan="1">147.1±9.8</td>
+                  <td align="left" rowspan="1" colspan="1">152.1±10.1</td>
+                  <td align="left" rowspan="1" colspan="1">150.5±9.5</td>
+                  <td align="left" rowspan="1" colspan="1">140.9±13.4</td>
+                  <td align="left" rowspan="1" colspan="1">138.3±9.1</td>
+                  <td align="left" rowspan="1" colspan="1">124.8±9.2 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">105.6±10.1<bold>a,da,d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">154.2±13.1 <bold>b,c</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">45</td>
+                  <td align="left" rowspan="1" colspan="1">160.0±14.3</td>
+                  <td align="left" rowspan="1" colspan="1">157.9±9.1</td>
+                  <td align="left" rowspan="1" colspan="1">151.0±9.8</td>
+                  <td align="left" rowspan="1" colspan="1">146.2±7.7</td>
+                  <td align="left" rowspan="1" colspan="1">134.8±13.6</td>
+                  <td align="left" rowspan="1" colspan="1">148.1±16.7</td>
+                  <td align="left" rowspan="1" colspan="1">142.9±12.3</td>
+                  <td align="left" rowspan="1" colspan="1">136.2±6.4</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">65</td>
+                  <td align="left" rowspan="1" colspan="1">137.3±12.1</td>
+                  <td align="left" rowspan="1" colspan="1">148.5±6.3</td>
+                  <td align="left" rowspan="1" colspan="1">146.6±7.4</td>
+                  <td align="left" rowspan="1" colspan="1">144.1±4.8</td>
+                  <td align="left" rowspan="1" colspan="1">156.5±5.4</td>
+                  <td align="left" rowspan="1" colspan="1">147.8±9.8</td>
+                  <td align="left" rowspan="1" colspan="1">144.8±13.0</td>
+                  <td align="left" rowspan="1" colspan="1">131.9±8.4</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">85</td>
+                  <td align="left" rowspan="1" colspan="1">136.0±9.8</td>
+                  <td align="left" rowspan="1" colspan="1">146.6±5.5</td>
+                  <td align="left" rowspan="1" colspan="1">122.4±8.2</td>
+                  <td align="left" rowspan="1" colspan="1">117.3±9.3</td>
+                  <td align="left" rowspan="1" colspan="1">129.5±5.4</td>
+                  <td align="left" rowspan="1" colspan="1">130.4±6.5 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">126.4±6.1</td>
+                  <td align="left" rowspan="1" colspan="1">124.1±8.1</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>Insulin</bold>
+                    <bold>(ng/ml)</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">35</td>
+                  <td align="left" rowspan="1" colspan="1">2.0±0.3</td>
+                  <td align="left" rowspan="1" colspan="1">2.0±0.3</td>
+                  <td align="left" rowspan="1" colspan="1">1.9±0.3</td>
+                  <td align="left" rowspan="1" colspan="1">1.5±0.3</td>
+                  <td align="left" rowspan="1" colspan="1">2.5±0.4</td>
+                  <td align="left" rowspan="1" colspan="1">1.7±0.5</td>
+                  <td align="left" rowspan="1" colspan="1">1.2±0.1</td>
+                  <td align="left" rowspan="1" colspan="1">1.8±0.4</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">45</td>
+                  <td align="left" rowspan="1" colspan="1">7.9±0.5</td>
+                  <td align="left" rowspan="1" colspan="1">4.0±0.8 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">5.3±0.6 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">5.2±1.2 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">3.7±0.5 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">2.9±0.2</td>
+                  <td align="left" rowspan="1" colspan="1">3.2±0.4 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">3.1±0.7 <bold>d</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">65</td>
+                  <td align="left" rowspan="1" colspan="1">7.8±0.3</td>
+                  <td align="left" rowspan="1" colspan="1">5.3±0.8 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">6.3±0.9</td>
+                  <td align="left" rowspan="1" colspan="1">5.4±0.8</td>
+                  <td align="left" rowspan="1" colspan="1">4.4±0.4 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">2.5±0.3 <bold>a,d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">3.3±0.4 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">2.0±0.4 <bold>b,d</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">85</td>
+                  <td align="left" rowspan="1" colspan="1">12.7±1.1</td>
+                  <td align="left" rowspan="1" colspan="1">10.6±1.9</td>
+                  <td align="left" rowspan="1" colspan="1">7.6±1.3 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">8.3±2.1</td>
+                  <td align="left" rowspan="1" colspan="1">4.3±0.9 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">2.7±0.4 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">2.9±0.5 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">2.7±0.4 <bold>d</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>Triglyce-rides</bold>
+                    <bold>(mg/dl)</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">35</td>
+                  <td align="left" rowspan="1" colspan="1">135.1±13.2</td>
+                  <td align="left" rowspan="1" colspan="1">103.9±24.7</td>
+                  <td align="left" rowspan="1" colspan="1">93.1±24.5</td>
+                  <td align="left" rowspan="1" colspan="1">93.6±20.5</td>
+                  <td align="left" rowspan="1" colspan="1">112.3±16.4</td>
+                  <td align="left" rowspan="1" colspan="1">68.0±16.3</td>
+                  <td align="left" rowspan="1" colspan="1">59.3±14.8 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">76.9±13.5</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">45</td>
+                  <td align="left" rowspan="1" colspan="1">143.4±14.8</td>
+                  <td align="left" rowspan="1" colspan="1">140.9±29.8</td>
+                  <td align="left" rowspan="1" colspan="1">172.0±8.6</td>
+                  <td align="left" rowspan="1" colspan="1">144.4±28.9</td>
+                  <td align="left" rowspan="1" colspan="1">101.9±12.0</td>
+                  <td align="left" rowspan="1" colspan="1">73.1±12.5 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">100.1±16.4 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">78.0±10.5 <bold>d</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">65</td>
+                  <td align="left" rowspan="1" colspan="1">157.1±15.2</td>
+                  <td align="left" rowspan="1" colspan="1">215.8±43.0</td>
+                  <td align="left" rowspan="1" colspan="1">137.5±17.5</td>
+                  <td align="left" rowspan="1" colspan="1">150.1±28.5</td>
+                  <td align="left" rowspan="1" colspan="1">169.8±21.3</td>
+                  <td align="left" rowspan="1" colspan="1">224.5±40.6</td>
+                  <td align="left" rowspan="1" colspan="1">205.1±40.2</td>
+                  <td align="left" rowspan="1" colspan="1">97.9±23.4</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">85</td>
+                  <td align="left" rowspan="1" colspan="1">162.1±21.2</td>
+                  <td align="left" rowspan="1" colspan="1">301.7±39.2</td>
+                  <td align="left" rowspan="1" colspan="1">197.0±38.7</td>
+                  <td align="left" rowspan="1" colspan="1">157.5±29.0</td>
+                  <td align="left" rowspan="1" colspan="1">177.7±20.4</td>
+                  <td align="left" rowspan="1" colspan="1">135.2±16.5 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">190.9±45.2</td>
+                  <td align="left" rowspan="1" colspan="1">151.4±35.7</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">
+                    <bold>Leptin</bold>
+                    <bold>(ng/ml)</bold>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">35</td>
+                  <td align="left" rowspan="1" colspan="1">6.5±0.4</td>
+                  <td align="left" rowspan="1" colspan="1">6.5±0.8</td>
+                  <td align="left" rowspan="1" colspan="1">4.0±0.4 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">6.1±0.8 <bold>b</bold></td>
+                  <td align="left" rowspan="1" colspan="1">7.2±0.6</td>
+                  <td align="left" rowspan="1" colspan="1">6.0±1.0</td>
+                  <td align="left" rowspan="1" colspan="1">2.6±0.5 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">4.8±0.7 <bold>b</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">45</td>
+                  <td align="left" rowspan="1" colspan="1">8.0±0.7</td>
+                  <td align="left" rowspan="1" colspan="1">8.3±0.7</td>
+                  <td align="left" rowspan="1" colspan="1">4.0±0.4 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">9.5±0.9 <bold>b</bold></td>
+                  <td align="left" rowspan="1" colspan="1">8.8±0.7</td>
+                  <td align="left" rowspan="1" colspan="1">8.2±1.0</td>
+                  <td align="left" rowspan="1" colspan="1">4.3±0.5 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">6.5±0.7 <bold>b,d</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">65</td>
+                  <td align="left" rowspan="1" colspan="1">15.6±0.7</td>
+                  <td align="left" rowspan="1" colspan="1">17.3±1.3</td>
+                  <td align="left" rowspan="1" colspan="1">11.3±0.9 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">19.2±2.5 <bold>b</bold></td>
+                  <td align="left" rowspan="1" colspan="1">12.7±0.8 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">11.3±1.3 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">8.5±0.9 <bold>a,d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">11.5±1.4 <bold>d</bold></td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">85</td>
+                  <td align="left" rowspan="1" colspan="1">21.5±1.3</td>
+                  <td align="left" rowspan="1" colspan="1">28.8±2.4 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">14.0±1.4 <bold>a</bold></td>
+                  <td align="left" rowspan="1" colspan="1">34.4±3.9 <bold>a,b</bold></td>
+                  <td align="left" rowspan="1" colspan="1">12.6±0.7 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">14.6±1.7 <bold>d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">9.01±0.6 <bold>a,d</bold></td>
+                  <td align="left" rowspan="1" colspan="1">14.7±1.0 <bold>b,d</bold></td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt101">
+              <label/>
+              <p>CtCD: controls on a control diet; CtHF: controls on a high fat diet from weaning onward; MDCD: maternally deprived rats on a control diet; MDHF: maternally deprived rats on a HFD from weaning onward. a: different from CtCD of same sex; b: different from MDCD of same sex; c: different from CtHF of same sex; d: different from males of same treatment.</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+      </sec>
+      <sec id="s2f">
+        <title>Statistical Analysis</title>
+        <p>Body weight gain and food intake were analyzed by three-way analysis of variance (ANOVA) with the factors being sex (males and females), MD (maternal non deprived and deprived rats) and diet (control or HF), with repeated measures. Three-way ANOVA was used to analyze results when tissue from males and females were processed simultaneously (hormone assays), followed by two-way and one-way ANOVAs when appropriate. Two-way ANOVAs were employed when samples from males and females were processed separately (<italic>e.g</italic>., RT-PCR). Scheffe’s F test was used for post-hoc comparisons. Simple regression analysis was performed to determine the relationship between circulating metabolic factors and body weight and weight gain. The level of significance was chosen as p&lt;0.05. All results are reported as mean ± SEM. In the figures only physiologically relevant comparisons are demonstrated. Although weight gain and food intake over time were analyzed simultaneously in both sexes, the results are represented in separate figures to facilitate interpretation.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <sec id="s3a">
+        <title>Weight Gain and Food Intake</title>
+        <p>Weight gain over time depended on sex (p&lt;0.0001) and diet (p&lt;0.0001), with interactions between sex and diet (p&lt;0.0001) and MD and diet (p&lt;0.0001). In males weight gain was affected by MD (p&lt;0.005) and diet (p&lt;0.0001) with an interaction between these two factors (p&lt;0.01; <xref ref-type="fig" rid="pone-0048915-g002">Fig. 2A</xref>). Similar effects were found in females [MD (p&lt;0.0001), diet (p&lt;0.005), MD x diet (p&lt;0.01; <xref ref-type="fig" rid="pone-0048915-g002">Fig. 2B</xref>)].</p>
+        <p>This resulted in total weight gain also being affected by sex (p&lt;0.0001) and diet (p&lt;0.0001) with the effect of diet being influenced by sex (p&lt;0.0001) and MD (p&lt;0.005). Males gained more weight than females in all corresponding groups (p&lt;0.0001; <xref ref-type="fig" rid="pone-0048915-g002">Fig. 2C</xref>). After weaning, male MD rats gained less weight than their controls, but MD females did not. All rats consuming HFD gained more weight than their controls (<xref ref-type="fig" rid="pone-0048915-g002">Fig. 2C</xref>). Mean weight gain was increased by HFD by approximately 16% in control males, 33% in MD males, 10% in control females and 20% in MD females compared to their appropriate controls on a normal diet.</p>
+        <p>The final weights at sacrifice were affected by sex (p&lt;0.0002), MD (p&lt;0.05) and diet (p&lt;0.0001) with interactions between sex and diet (p&lt;0.0001) and MD and diet (p&lt;0.002). Although control females gained significantly more weight on the HFD than on the CD, this was not reflected in their final weight. Likewise, MD did not affect post-weaning weight gain in females, but the final weight remained less due to the difference in starting weight when they were weaned. Both sex (p&lt;0.0001) and diet (p&lt;0.02) affected Kcal intake over time. In males (<xref ref-type="fig" rid="pone-0048915-g003">Fig. 3A</xref>) MD rats ate less than controls with this being significant at specific time-points. During the first day on the HFD (PND23) Ct and MD rats of both sexes ate considerably more than their controls (<xref ref-type="fig" rid="pone-0048915-g003">Figs. 3A and 3B</xref>). Until approximately PND45 no difference in Kcal intake was found between Ct and MD rats on the HFD, but afterwards MD males ate significantly more Kcal than their controls. In control males the increase in Kcal intake on the HFD diet occurred at a later age. On the control diet, MD females ate significantly less than their controls at various time-points. Subsequent to the first day, HFD did not affect Kcal intake in control females, whereas in MD females it increased Kcal intake compared to their controls at specific time-points.</p>
+        <p>Total accumulated Kcal intake throughout the study (<xref ref-type="fig" rid="pone-0048915-g003">Fig. 3C</xref>) was influenced by sex (p&lt;0.0001), MD (p&lt;0.05) and type of diet (p&lt;0.0001). Males ate more than females in all corresponding groups (p&lt;0.0001). On a normal diet MD males (p&lt;0.0005) and females (p&lt;0.001) ate fewer Kcals than their controls. In contrast, HFD increased total Kcals consumed in all groups with no effect of MD on this parameter.</p>
+        <fig id="pone-0048915-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pone.0048915.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Hypothalamic mRNA levels of neuropeptide Y (NPY; A &amp; B), Agouti related peptide (AgRP; C &amp; D), proopiomelanocortin (POMC; E &amp; F) and cocaine- and amphetamine regulated transcript (CART; G &amp; H) in male (left column) and female (right column) rats.</title>
+            <p>CtCD: controls on a control diet; CtHF: controls on a high fat diet from weaning onward; MDCD: maternally deprived rats on a control diet; MDHF: maternally deprived rats on a HFD from weaning onward. *  =  ANOVA p&lt;0.05, NS  =  not significant.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.g005" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3b">
+        <title>Serum Metabolic Factors</title>
+        <p>Levels of distinct metabolic factors at PNDs 35, 45, 65 and 85 are shown in <xref ref-type="table" rid="pone-0048915-t001">Table 1</xref>. Levels at sacrifice are shown in <xref ref-type="fig" rid="pone-0048915-g004">Figure 4</xref>.</p>
+        <sec id="s3b1">
+          <title>Glycemia</title>
+          <p>At PND35 glycemia was affected by sex, MD and diet (p&lt;0.02). While in males glycemia was unaffected, in females there was an interaction between MD and diet (p&lt;0.004). MD females had lower glycemia than controls and HFD increased glucose levels in female MD rats (p&lt;0.02).</p>
+          <p>Glycemia was not affected by any of the experimental factors at PNDs 45 or 65. At PND85 HFD induced higher glycemia in control males compared to control females (p&lt;0.04).</p>
+          <p>At sacrifice fasting glycemia was unaffected (males CtCD: 123.4±11.6, CtHF: 134.2±8.6, MDCD: 124.4±8.6, MDHF: 124.3±7.8; females CtCD: 132.0±9.8, CtHF: 122.6±7.5, MDCD: 127.9±5.7, MDHF: 118.9±5.5 mg/dl).</p>
+        </sec>
+        <sec id="s3b2">
+          <title>Insulin</title>
+          <p>There were no effects of any of the factors on insulin levels at PND35. At PND45 there was an effect of sex (p&lt;0.0001) and diet (p&lt;0.02), with an interaction between MD and diet (p&lt;0.03). Males had higher insulin levels than females in all groups (p&lt;0.0001) except controls on the HFD. In males insulin levels were affected by diet (p&lt;0.03) with an interaction between MD and diet (p&lt;0.04). HFD decreased insulin levels in control, but not MD males (p&lt;0.03). At this age insulin levels in females were unaffected by MD or HFD intake.</p>
+          <fig id="pone-0048915-g006" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pone.0048915.g006</object-id>
+            <label>Figure 6</label>
+            <caption>
+              <title>Hypothalamic mRNA levels of interleukin (IL)-1β (A &amp; B), IL-6 (C &amp; D), tumor necrosis factor (TNF)-α (E &amp; F), and silencer of cytokine signaling 3 (SOCS3; G &amp; H) in male (left column) and female (right column) rats.</title>
+              <p>CtCD: controls on a control diet; CtHF: controls on a high fat diet from weaning onward; MDCD: maternally deprived rats on a control diet; MDHF: maternally deprived rats on a HFD from weaning onward. *  =  ANOVA p&lt;0.05, NS  =  not significant.</p>
+            </caption>
+            <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pone.0048915.g006" position="float" xlink:type="simple"/>
+          </fig>
+          <p>At PND 65 insulin levels were affected by sex (p&lt;0.0001), with males having higher levels than females in all groups (p&lt;0.0001). Diet also affected insulin levels (p&lt;0.0004), with HFD decreasing them in control males (p&lt;0.05). In females insulin levels were affected by MD (p&lt;0.05), decreasing them in rats on the control diet (p&lt;0.002), and diet (p&lt;0.0005) with HFD decreasing insulin levels in both control and MD females.</p>
+          <p>At PND85 insulin levels were affected by sex (p&lt;0.0001), with levels being lower in females of all groups, and MD (p&lt;0.02), with MD reducing insulin levels in males on a control diet (p&lt;0.05).</p>
+          <p>At sacrifice serum insulin levels were affected by sex (p&lt;0.0001) with males continuing to have higher levels than females in all corresponding groups (males CtCD: 2.7±0.2, CtHF: 2.6±0.3, MDCD: 2.3±0.3, MDHF: 4.0±0.9; females CtCD: 1.2±0.2, CtHF: 0.8±0.1, MDCD: 1.3±0.2, MDHF 1.3±0.3 ng/ml; p&lt;0.0001). There was no effect of MD or diet.</p>
+        </sec>
+        <sec id="s3b3">
+          <title>HOMA-IR</title>
+          <p>There was an effect of sex (p&lt;0.0001) on HOMA-IR at sacrifice (<xref ref-type="fig" rid="pone-0048915-g004">Fig. 4A</xref>), with males having a higher index in all corresponding groups (p&lt;0.0001). Consumption of HFD increased the HOMA index in MD males, but not in any other group.</p>
+        </sec>
+        <sec id="s3b4">
+          <title>Triglycerides</title>
+          <p>At PND35 triglyceride levels were affected by MD (p&lt;0.03), resulting in a significant reduction in females on a control diet. At PND45 triglyceride levels were modified by sex (p&lt;0.0001) with males having higher levels in all corresponding group (p&lt;0.0001), except for controls on a control diet.</p>
+          <p>There was no effect of any factor on triglyceride levels at PND65. At PND85 control males had higher triglycerides than females in response to the HFD (p&lt;0.04).</p>
+          <p>At sacrifice triglyceride levels (<xref ref-type="fig" rid="pone-0048915-g004">Fig. 4B</xref>) were affected by diet (p&lt;0.0001), decreasing in response to HFD in all groups (p&lt;0.0005).</p>
+        </sec>
+        <sec id="s3b5">
+          <title>Leptin</title>
+          <p>At PND35 leptin levels were affected by MD (p&lt;0.0001), with an interaction between MD and diet (p&lt;0.005). MD rats of both sexes on a normal diet had decreased leptin levels (p&lt;0.0001) and HFD increased leptin only in MD rats.</p>
+          <p>At PND45 leptin levels were influenced by MD (p&lt;0.0001) and diet (p&lt;0.0005) with interactions between sex and diet (p&lt;0.05) and MD and diet (p&lt;0.0002). Leptin levels were decreased in MD rats on a normal diet (p&lt;0.0001). HFD increased leptin levels only in MD rats, with this increase being greater in males than in females.</p>
+          <p>At PND65 leptin levels continued to be affected by sex (p&lt;0.0001) and diet (p&lt;0.005), with interactions between sex and diet (p&lt;0.04) and MD and diet (p&lt;0.005). Males had higher levels than females in all groups (p&lt;0.0001). On the control diet MD rats continued to have lower levels than their controls and HFD significantly increased leptin levels only in MD males.</p>
+          <p>At PND85 leptin levels were affected by sex (p&lt;0.0001) and diet (p&lt;0.0001), with interactions between sex and diet (p&lt;0.0004) and MD and diet (p&lt;0.003). Males had higher levels than females and MD rats continued to have lower levels than their controls (p&lt;0.0001). In males HFD increased leptin levels in both controls and MD rats, while in females this increase was only seen in MD rats.</p>
+          <p>At sacrifice circulating leptin levels (<xref ref-type="fig" rid="pone-0048915-g004">Fig. 4C</xref>) were affected by sex (p&lt;0.0001) and diet (p&lt;0.0001), with interactions between sex and diet (p&lt;0.0001), MD and diet (p&lt;0.004) and sex, MD and diet (p&lt;0.04). Levels were higher in males (p&lt;0.0001) and MD rats on a control diet had decreased leptin levels. In males HFD increased leptin levels in both controls and MD rats, with this rise from control levels being greater in MD rats on the HFD. In females the increase due to HFD was only significant in MD rats.</p>
+        </sec>
+        <sec id="s3b6">
+          <title>Regression analysis</title>
+          <p>Insulin levels were significantly correlated with weight gain from weaning until the end of the study (R: 0.721; p&lt;0.0001) and final weight (R: 0.733; p&lt;0.0001). Leptin levels were also correlated with accumulated weight gain (R: 0.757; p&lt;0.0001) and final weight (R: 0.759; p&lt;0.0001). There was no relationship between weight gain or body weight with glycemia or triglyceride levels.</p>
+        </sec>
+      </sec>
+      <sec id="s3c">
+        <title>Hypothalamic Gene Expression</title>
+        <p>Hypothalamic NPY mRNA levels were not affected by any of the experimental treatments in males (<xref ref-type="fig" rid="pone-0048915-g005">Fig. 5A</xref>), while HFD decreased them in female MD rats (p&lt;0.03; <xref ref-type="fig" rid="pone-0048915-g005">Fig. 5B</xref>).</p>
+        <p>There was no effect of either MD or diet on AgRP mRNA levels in males (<xref ref-type="fig" rid="pone-0048915-g005">Fig. 5C</xref>), but in females they were affected by diet (p&lt;0.006; <xref ref-type="fig" rid="pone-0048915-g005">Fig. 5D</xref>), with HFD decreasing AgRP in MD females (p&lt;0.03).</p>
+        <p>In both males (p&lt;0.03) and females (p&lt;0.01) POMC levels were modified by diet (<xref ref-type="fig" rid="pone-0048915-g005">Fig. 5E and F</xref>, respectively). HFD increased POMC mRNA levels in all groups but this was only significant in control males and MD females.</p>
+        <p>Hypothalamic CART mRNA levels were affected by diet in males (p&lt;0.02; <xref ref-type="fig" rid="pone-0048915-g005">Fig. 5G</xref>) and females (p&lt;0.008; <xref ref-type="fig" rid="pone-0048915-g005">Fig. 5H</xref>), with HFD inducing CART levels in control males and MD males and females.</p>
+        <p>No effect on hypothalamic LepR levels was found (males CtCD: 100±8.9, CtHF: 92.9±10.1, MDCD: 97.1±17.2, MDHF: 123.0±12.1%; females CtCD: 100±9.2, CtHFD: 100.4±6.8, MDCD: 111.8±9.5, MDHF: 123.1±6.1%).</p>
+        <p>In males IL-1β levels (<xref ref-type="fig" rid="pone-0048915-g006">Fig. 6A</xref>) were influenced by diet (p&lt;0.005) with an interaction between MD and diet (p&lt;0.0007). HFD increased hypothalamic IL-1β levels in MD males, but not in controls. In females there was also an interaction between MD and diet (p&lt;0.03), with HFD increasing IL-1β levels in MD females (<xref ref-type="fig" rid="pone-0048915-g006">Fig. 6B</xref>).</p>
+        <p>Hypothalamic IL-6 levels were unaffected in males (<xref ref-type="fig" rid="pone-0048915-g006">Fig. 6C</xref>) and increased by MD in females (p&lt;0.0008; <xref ref-type="fig" rid="pone-0048915-g006">Fig. 6D</xref>), with this being significant in MD females on the HFD (p&lt;0.04).</p>
+        <p>There was an interaction between MD and diet on TNF-α mRNA levels in males (p&lt;0.02), with HFD decreasing them in controls and increasing them in MD rats (<xref ref-type="fig" rid="pone-0048915-g006">Fig. 6E</xref>). In females there was an effect of diet (p&lt;0.05) with an interaction between MD and diet (p&lt;0.05), as HFD increased TNF-α mRNA levels in MD females and had no effect in control females (<xref ref-type="fig" rid="pone-0048915-g006">Fig. 6F</xref>).</p>
+        <p>In males there was an interaction between MD and diet on GFAP mRNA levels (p&lt;0.05), with HFD decreasing GFAP levels in controls and increase them in MD males, but these changes were not significant individually (CtCD: 100±9.5, CtHF: 77.9±5.1; MDCD: 67.3±6.0; MDHF: 81.5±9.8%). In females there was no effect of any treatment (CtCD: 100±10.1, CtHF: 110.0±10.3; MDCD: 102.2±14.0; MDHF: 123.2±6.0%).</p>
+        <p>There was no effect of any treatment on SOCS3 mRNA levels in males (<xref ref-type="fig" rid="pone-0048915-g006">Fig. 6G</xref>). In females HFD increased SOCS3 levels in MD rats (p&lt;0.004; <xref ref-type="fig" rid="pone-0048915-g006">Fig. 6H</xref>).</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>Body weight and the propensity to become obese are determined by the interaction of an individual’s genetic make-up with environmental influences, including energy intake, dietary composition and energy expenditure, but also early environmental events. It is clear that prenatal and early postnatal occurrences such as stress, dietary inadequacies or hormonal modifications can have long-term implications in metabolism, modifying body weight and the response to later metabolic challenges <xref ref-type="bibr" rid="pone.0048915-Bale1">[1]</xref>–<xref ref-type="bibr" rid="pone.0048915-Hochberg1">[5]</xref>, <xref ref-type="bibr" rid="pone.0048915-GarcaCceres1">[8]</xref>, <xref ref-type="bibr" rid="pone.0048915-FuenteMartn1">[10]</xref>, <xref ref-type="bibr" rid="pone.0048915-Maniam1">[17]</xref>, <xref ref-type="bibr" rid="pone.0048915-Maniam2">[18]</xref>. We have previously reported that MD for 24 hours starting on PND9 reduces body weight and circulating leptin levels in a sex- and time-dependent manner <xref ref-type="bibr" rid="pone.0048915-Llorente1">[6]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros1">[15]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref>, with the MD-induced weight reduction no longer being significant in early adulthood. Here we found this difference to persist at all stages, becoming more pronounced with advancing age in both males and females. One possible explanation for these differences is that the effect of MD on body weight is less pronounced in early adulthood such that a smaller sample size or even a slight increase in variability could result in no significant differences in some studies. Indeed, although in our previous study <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref> the reduction in body weight did not reach significance in early adulthood, circulating leptin levels were significantly decreased. This suggests that these animals were metabolically affected. Furthermore, here we show that this early environmental assault renders these animals more susceptible to some of the negative effects of high fat intake.</p>
+      <p>The total energy consumed throughout the study by male MD rats on normal rat chow was significantly less than in control rats, which most likely contributes to their decreased weight gain. In contrast, during the last half of the study the mean daily energy consumption by MD females on normal chow was no longer different from their controls although they continued to gain less weight; thus, other mechanisms must be involved. This could include increased energy expenditure, but MD did not modify hypothalamic mRNA levels of orexigenic or anorexigeneic neuropeptides in either sex. This is in agreement with previous results where we found no effect of MD on hypothalamic mRNA levels of POMC, CART, NPY or AgRP levels at different post-natal ages <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref>.</p>
+      <p>It is conceivable that there are differences in the organization and functioning of the neurocircuits controlling appetite and metabolism that are not reflected in overall mRNA levels of these neuropeptides. MD affects hypothalamic cell-turnover, neurotrophic factors and markers of neuronal maturation during the separation period and up to 3 days later <xref ref-type="bibr" rid="pone.0048915-Viveros1">[15]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref>, suggesting modifications in hypothalamic development. These changes could result from the decline in glycemia and circulating leptin levels and/or the rise in corticosterone observed in pups during the separation period <xref ref-type="bibr" rid="pone.0048915-Viveros1">[15]</xref>. Indeed, modifications in neonatal leptin levels induce long-term changes in metabolism <xref ref-type="bibr" rid="pone.0048915-Kirk1">[23]</xref>–<xref ref-type="bibr" rid="pone.0048915-Granado1">[26]</xref> due, at least in part, to leptin’s neurotrophic effects on metabolic circuits <xref ref-type="bibr" rid="pone.0048915-Ahima1">[27]</xref>–<xref ref-type="bibr" rid="pone.0048915-Bouret2">[29]</xref>. Administration of a leptin antagonist at PND9, the age at which MD is induced here, results in hypothalamic changes at PND13 with females being more affected than males <xref ref-type="bibr" rid="pone.0048915-Mela1">[30]</xref>. This pharmacological reduction in leptin’s actions neonatally is also associated with reduced weight gain in adult males <xref ref-type="bibr" rid="pone.0048915-Granado1">[26]</xref>. Thus, the decline in leptin during MD probably induces some of the long-term metabolic effects reported here, but other factors are also likely to be involved. During MD pups not only experience food restriction and dehydration, but also thermal and psychological stress, all of which will contribute to the various metabolic, behavioral and psychological outcomes observed in this experimental model <xref ref-type="bibr" rid="pone.0048915-Marco1">[31]</xref>. In humans maternal care during early stages of life is also associated with long-term consequences, including behavioral and metabolic outcomes <xref ref-type="bibr" rid="pone.0048915-Johnson1">[32]</xref>–<xref ref-type="bibr" rid="pone.0048915-Shin1">[34]</xref>, further emphasizing the importance of early life experiences.</p>
+      <p>The appearance of some long-term consequences of MD depends on the type of diet to which individuals are exposed. We found that weight gain and total Kcal intake were decreased in MD rats on a normal diet, but when exposed to a HFD the mean Kcal intake of these rats was not different from controls and their body weight increased to control levels. HFD has also been shown to reduce some psychological and behavioral effects of MD <xref ref-type="bibr" rid="pone.0048915-Maniam1">[17]</xref>, <xref ref-type="bibr" rid="pone.0048915-Maniam2">[18]</xref>, suggesting that HFD-induced modifications in behavior, stress and anxiety could also be involved in the observed changes in metabolism and weight gain.</p>
+      <p>In addition to decreasing leptin levels throughout development <xref ref-type="bibr" rid="pone.0048915-Llorente1">[6]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref> MD modified the HFD-induced changes in this metabolic hormone. Leptin levels rose significantly with HFD intake and weight gain as early as PND35 in MD rats of both sexes, while in control males they were not increased until PND85 and in control females leptin did not rise significantly even at PND102. Leptin levels were highly correlated with both accumulated weight gain and body weight, as previously reported for both sexes <xref ref-type="bibr" rid="pone.0048915-Landt1">[35]</xref>. Not only do post-pubertal male rats have higher leptin levels than females, as seen here, but males are reported to have a greater relative increase in leptin concentrations per increase in body fat than do females <xref ref-type="bibr" rid="pone.0048915-Landt1">[35]</xref>, <xref ref-type="bibr" rid="pone.0048915-Shen1">[36]</xref>. This, in conjunction with the relatively small rise in body weight in control females induced by HFD, could explain why no significant increase in leptin was found in these female rats.</p>
+      <p>In spite of the rapid rise in circulating leptin levels in response to HFD, MD rats continued to have increased energy intake. This suggests that central leptin sensitivity may be altered, although there was no effect of either MD or HFD on hypothalamic LepR mRNA levels, in agreement with earlier studies <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref>. In contrast, during the period of maternal separation hypothalamic LepR mRNA levels are increased <xref ref-type="bibr" rid="pone.0048915-Viveros1">[15]</xref>. As hypothalamic metabolic circuits are developing at this time <xref ref-type="bibr" rid="pone.0048915-Bouret3">[37]</xref>, long-term changes could be evoked in LepR distribution and/or the relative abundance of the different leptin receptor isoforms (<italic>e.g.,</italic> post-translational processing) that are not reflected in its mRNA levels. Moreover, leptin signaling can be affected without changes in receptor number, such as decreased intracellular leptin signaling due to an increase in SOCS3 <xref ref-type="bibr" rid="pone.0048915-Reed1">[38]</xref>. The mRNA levels of this cytokine signaling inhibitor were unaffected in males, but increased in females in response to the combination of MD and HFD. This might suggest that females are more susceptible to developing leptin resistance and possibly other secondary complications in response to these factors. However, this was not reflected in the systemic metabolic parameters measured here.</p>
+      <p>HFD-induced hypothalamic inflammation is suggested to be involved in the development of obesity and its associated secondary complications, with inflammation occurring centrally before systemic inflammatory markers are detected and insulin and leptin resistance are incurred <xref ref-type="bibr" rid="pone.0048915-Thaler1">[20]</xref>. Here we found that HFD increased hypothalamic IL-1β and TNF-α mRNA levels in both male and female MD rats, but not in controls. Furthermore, this hypothalamic inflammatory state was associated with a rise in circulating leptin levels and HOMA index in male MD rats, but not in females. It is unknown whether these females would become insulin resistant after a longer period of HFD, but the fact that leptin levels rose rapidly (as early as PND35) in response to HFD and markers of hypothalamic inflammation were increased suggests that these processes do precede insulin resistance and possibly other secondary complications and in females these detrimental effects could appear after longer exposure to HFD. It should be taken into consideration that most studies reporting HFD-induced hypothalamic inflammation and its relationship with secondary effects have been performed in males and the mechanisms involved or the sensitivity to this phenomenon could differ in females. Indeed, although central inflammatory markers and SOCS3 were increased, HFD decreased orexigenic and increased anorexigenic neuropeptide mRNA levels in MD females. This would suggest that the increase in leptin levels continues to signal to these animals to decrease food intake and increase energy output, which could also be involved in impeding systemic changes such as increased insulin levels and HOMA-IR. Modulation of all four neuropeptides was not found in any other experimental group. These results are in agreement with other authors reporting that there is no change in neuropeptide mRNA levels in response to HFD or that the response is sex and time-dependant <xref ref-type="bibr" rid="pone.0048915-Xu1">[39]</xref>–<xref ref-type="bibr" rid="pone.0048915-Palou1">[41]</xref>. In addition, as reported here the early neonatal environment has previously been shown to affect the response to HFD <xref ref-type="bibr" rid="pone.0048915-Glavas1">[14]</xref>, <xref ref-type="bibr" rid="pone.0048915-Patterson1">[42]</xref>.</p>
+      <p>Our results indicate that MD may predispose rats to more rapid weight gain and development of secondary effects such as hyperleptinemia and hyperinsulinemia in response to HFD. Indeed, HFD did not induce hypothalamic cytokine production or increase the HOMA-IR in control rats, while MD rats developed hyperinsulinemia and hypothalamic inflammation in a sex dependent manner. Similar observations have been reported in obesity-prone (DIO) and obesity-resistant (DR) rats. Although HFD increases weight gain in both DIO and DR rats, DIO rats gain more weight and develop hyperleptinemia and hyperinsulinemia, while DR rats are hyperleptinemic, but normoinsulinemic <xref ref-type="bibr" rid="pone.0048915-Horvath1">[43]</xref>. The synaptic inputs to POMC and NPY/AgRP neurons in the hypothalamus of DIO and DR are significantly different, which is suggested to underlie their differential response to high fat intake <xref ref-type="bibr" rid="pone.0048915-Horvath1">[43]</xref>. Future experiments will be necessary to determine if MD induces organizational changes in the hypothalamus that changes their susceptibility to HFD, but it is clear that the metabolic response to high fat intake is determined by multiple factors.</p>
+      <p>Astrocytes have recently been suggested to play an important role in metabolic control <xref ref-type="bibr" rid="pone.0048915-Yi1">[44]</xref>. These glial cells are reported to be activated in response to a HFD <xref ref-type="bibr" rid="pone.0048915-Thaler1">[20]</xref>, <xref ref-type="bibr" rid="pone.0048915-Horvath1">[43]</xref>, <xref ref-type="bibr" rid="pone.0048915-Hsuchou1">[45]</xref>; however, HFD did not modulate the mRNA levels of GFAP in either control or MD rats. Hypothalamic GFAP mRNA levels increase in response to high fat intake during adulthood <xref ref-type="bibr" rid="pone.0048915-Thaler1">[20]</xref>, <xref ref-type="bibr" rid="pone.0048915-Horvath1">[43]</xref>, <xref ref-type="bibr" rid="pone.0048915-Hsuchou1">[45]</xref>. It is possible that the astrocytic response is different when a HFD is introduced at weaning, as at this younger age the neuroendocrine circuits may be more capable of adjusting to this metabolic insult over time.</p>
+      <p>By the end of the study HFD decreased circulating triglyceride levels in both control and MD rats, with few changes at earlier ages. The effect of HFD on circulating triglyceride levels is variable in the literature and it is clear that the response is affected by starting triglyceride levels, other dietary components, metabolic status (<italic>i.e</italic>., insulin resistance or no) and time of day <xref ref-type="bibr" rid="pone.0048915-Margolis1">[46]</xref>–<xref ref-type="bibr" rid="pone.0048915-Sherman1">[50]</xref>. In addition, as these rats were fasted before sacrifice the decrease in triglycerides may reflect a differential response to fasting when on a HFD <xref ref-type="bibr" rid="pone.0048915-Frier1">[51]</xref>. Circulating triglycerides can be derived from dietary fat or endogenous production and the removal of a large dietary source could result in a larger decrease in serum levels. A similar caveat must be taken into consideration when analyzing and interpreting all levels of circulating metabolic factors reported here. First, during development the results reported are non-fasting. In addition, when allowed to eat a HFD <italic>ad libitum</italic>, rodents modify their circadian patterns of eating and this is associated with decreased insulin and triglyceride levels with no change in glucose levels <xref ref-type="bibr" rid="pone.0048915-Sherman1">[50]</xref>. Whereas when HF feeding is restricted to normal eating patterns, although energy intake is similar, the metabolic changes are not <xref ref-type="bibr" rid="pone.0048915-Sherman1">[50]</xref>.</p>
+      <p>The differential responses of males and females to MD and HFD are in accordance with previous reports as metabolic responses to early nutritional changes or stress <xref ref-type="bibr" rid="pone.0048915-GarcaCceres1">[8]</xref>, <xref ref-type="bibr" rid="pone.0048915-FuenteMartn1">[10]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros1">[15]</xref>, <xref ref-type="bibr" rid="pone.0048915-Viveros2">[16]</xref> and to HFD in adulthood <xref ref-type="bibr" rid="pone.0048915-AmengualCladera1">[52]</xref>, <xref ref-type="bibr" rid="pone.0048915-NadalCasellas1">[53]</xref> are reported to be sexually dimorphic. Thus, it is clear that not only sex, but early life experiences and the interaction between these two factors can have significant effects on metabolism and the propensity to become obese. Not only should these concepts be taken into consideration when interpreting experimental results, but also in the search for effective treatments against the rapid rise in obesity and its secondary complications.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="pone.0048915-Bale1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bale</surname><given-names>TL</given-names></name>, <name name-style="western"><surname>Baram</surname><given-names>TZ</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Goldstein</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Insel</surname><given-names>TR</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Early life programming and neurodevelopmental disorders</article-title>. <source>Biol Psychiatry</source> <volume>68</volume>: <fpage>314</fpage>–<lpage>319</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-FernandezTwinn1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fernandez-Twinn</surname><given-names>DS</given-names></name>, <name name-style="western"><surname>Ozanne</surname><given-names>SE</given-names></name> (<year>2010</year>) <article-title>Early life nutrition and metabolic programming</article-title>. <source>Ann NY Acad Sci</source> <volume>1212</volume>: <fpage>78</fpage>–<lpage>96</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Maringhini1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maringhini</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Corrado</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Maringhini</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Cusumano</surname><given-names>R</given-names></name>, <name name-style="western"><surname>AzzolinaV, et</surname><given-names>al</given-names></name> (<year>2010</year>) <article-title>Early origin of adult renal disease</article-title>. <source>J Matern Fetal Neonatal Med</source> <volume>23</volume> Suppl 3<fpage>84</fpage>–<lpage>86</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Martino1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Martino</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Prescott</surname><given-names>S</given-names></name> (<year>2011</year>) <article-title>Epigenetics and prenatal influences on asthma and allergic airways disease</article-title>. <volume>Chest139</volume>: <fpage>640</fpage>–<lpage>647</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Hochberg1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hochberg</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Feil</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Constancia</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Fraga</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Junien</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Child health, developmental plasticity, and epigenetic programming</article-title>. <source>Endocr Rev</source> <volume>32</volume>: <fpage>159</fpage>–<lpage>224</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Llorente1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Llorente</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Arranz</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Marco</surname><given-names>E-M</given-names></name>, <name name-style="western"><surname>Moreno</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Puerto</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Early maternal deprivation and neonatal single administration with a cannabinoid agonist induce long-term sex-dependent psychoimmunoendocrine effects in adolescent rats</article-title>. <source>Psychoneuroendocrinology</source> <volume>32</volume>: <fpage>636</fpage>–<lpage>650</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Bassett1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bassett</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Craig</surname><given-names>BW</given-names></name> (<year>1988</year>) <article-title>Influence of early nutrition on growth and adipose tissue characteristics in male and female rats</article-title>. <source>J Appl Physiol</source> <volume>64</volume>: <fpage>1249</fpage>–<lpage>1256</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-GarcaCceres1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>García-Cáceres</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lagunas</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Calmarza-Font</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Azcoitia</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Diz-Chaves</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Gender differences in the long-term effects of chronic prenatal stress on the HPA axis and hypothalamic structure in rats</article-title>. <source>Psychoneuroendocrinology</source> <volume>35</volume>: <fpage>1525</fpage>–<lpage>1535</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-LlorenteBerzal1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Llorente-Berzal</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Mela</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Borcel</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Valero</surname><given-names>M</given-names></name>, <name name-style="western"><surname>López-Garrardo</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Neurobehavioral and metabolic long-term consequences of neonatal maternal deprivation stress and adolescent olanzapine treatment in male and female rats</article-title>. <source>Neuropharmacology</source> <volume>62</volume>: <fpage>1332</fpage>–<lpage>1341</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-FuenteMartn1">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fuente-Martín</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Granado</surname><given-names>M</given-names></name>, <name name-style="western"><surname>García-Cáceres</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Sanchez-Garrido</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Frago</surname><given-names>LM</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Early nutritional changes induce sexually dimorphic long-term effects on bodyweight gain and the response to sucrose intake in adult rats</article-title>. <source>Metabolism</source> <volume>61</volume>: <fpage>812</fpage>–<lpage>822</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-BoulluCiocca1">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Boullu-Ciocca</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Achard</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Tassistro</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Dutour</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Grino</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Postnatal programming of glucocorticoid metabolism in rats modulates high-fat diet-induced regulation of visceral adipose tissue glucocorticoid exposure and sensitivity and adiponectin and proinflammatory adipokines gene expression in adulthood</article-title>. <source>Diabetes</source> <volume>57</volume>: <fpage>669</fpage>–<lpage>677</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-BoulluCiocca2">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Boullu-Ciocca</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Dutour</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Guillaume</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Achard</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Oliver</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Postnatal diet-induced obesity in rats upregulates systemic and adipose tissue glucocorticoid metabolism during development and in adulthood: its relationship with the metabolic syndrome</article-title>. <source>Diabetes</source> <volume>54</volume>: <fpage>197</fpage>–<lpage>203</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Plagemann1">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Plagemann</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Harder</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Brunn</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Harder</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Roepke</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Hypothalamic proopiomelanocortin promoter methylation becomes altered by early overfeeding: an epigenetic model of obesity and the metabolic syndrome</article-title>. <source>J Physiol</source> <volume>587</volume>: <fpage>4963</fpage>–<lpage>4976</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Glavas1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Glavas</surname><given-names>MM</given-names></name>, <name name-style="western"><surname>Kirigiti</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Xiao</surname><given-names>XQ</given-names></name>, <name name-style="western"><surname>Enriori</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Fisher</surname><given-names>SK</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Early overnutrition results in early-onset arcuate leptin resistance and increased sensitivity to high-fat diet</article-title>. <source>Endocrinology</source> <volume>151</volume>: <fpage>1598</fpage>–<lpage>1610</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Viveros1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Viveros</surname><given-names>M-P</given-names></name>, <name name-style="western"><surname>Díaz</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Mateos</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Rodríguez</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Chowen</surname><given-names>JA</given-names></name> (<year>2010</year>) <article-title>Maternal deprivation induces a rapid decline in circulating leptin levels and sexually dimorphic modifications in hypothalamic trophic factors and cell turnover</article-title>. <source>Horm Behav</source> <volume>57</volume>: <fpage>405</fpage>–<lpage>414</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Viveros2">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Viveros</surname><given-names>M-P</given-names></name>, <name name-style="western"><surname>Llorente</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Díaz</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Romero-Zerbo</surname><given-names>SY</given-names></name>, <name name-style="western"><surname>Bermudez-Silva</surname><given-names>FJ</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Maternal deprivation has sexually dimorphic long-term effects on hypothalamic cell-turnover, body weight and circulating hormone levels</article-title>. <source>Horm Behav</source> <volume>58</volume>: <fpage>808</fpage>–<lpage>819</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Maniam1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maniam</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Morris</surname><given-names>MJ</given-names></name> (<year>2010</year>) <article-title>Voluntary exercise and palatable high-fat diet both improve behavioural profile and stress responses in male rats exposed to early life stress: role of hippocampus</article-title>. <source>Psychoneuroendocrinology</source> <volume>35</volume>: <fpage>1553</fpage>–<lpage>1564</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Maniam2">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maniam</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Morris</surname><given-names>MJ</given-names></name> (<year>2010</year>) <article-title>Palatable cafeteria diet ameliorates anxiety and depression-like symptoms following an adverse early environment</article-title>. <source>Psychoneuroendocrinology</source> <volume>35</volume>: <fpage>717</fpage>–<lpage>728</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Llorente2">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Llorente</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Miguel-Blanco</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Aisa</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Lachize</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Borcel</surname><given-names>E</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Long term sex-dependent psychoneuroendocrine effects of maternal deprivation and juvenile unpredictable stress in rats</article-title>. <source>J Neuroendocrinol</source> <volume>23</volume>: <fpage>329</fpage>–<lpage>344</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Thaler1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Thaler</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Yi</surname><given-names>CX</given-names></name>, <name name-style="western"><surname>Schur</surname><given-names>EA</given-names></name>, <name name-style="western"><surname>Guyenet</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Hwang</surname><given-names>BH</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Obesity is associated with hypothalamic injury in rodents and humans</article-title>. <source>J Clin Invest</source> <volume>122</volume>: <fpage>153</fpage>–<lpage>162</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Milanski1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Milanski</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Arruda</surname><given-names>AP</given-names></name>, <name name-style="western"><surname>Coope</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Ignacio-Souza</surname><given-names>LM</given-names></name>, <name name-style="western"><surname>Nunez</surname><given-names>CE</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Inhibition of hypothalamicinflammation reverses diet-induced insulin resistance in the liver</article-title>. <source>Diabetes</source> <volume>61</volume>: <fpage>1455</fpage>–<lpage>1462</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Cai1">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cai</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Liu</surname><given-names>T</given-names></name> (<year>2012</year>) <article-title>Inflammatory cause of metabolic syndrome via brain stress and NF-κB</article-title>. <source>Aging</source> <volume>4</volume>: <fpage>98</fpage>–<lpage>115</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Kirk1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kirk</surname><given-names>SL</given-names></name>, <name name-style="western"><surname>Samuelsson</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Argenton</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Dhonye</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Kalamatianos</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Maternal obesity induced by diet in rats permanently influences central processes regulating food intake in offspring</article-title>. <source>PLoS One</source> <volume>4</volume>: <fpage>e5870</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Yura1">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Itoh</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Sagawa</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Yamamoto</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Masuzaki</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Role of premature leptin surge in obesity resulting from intrauterine undernutrition</article-title>. <source>Cell Metab</source> <volume>1</volume>: <fpage>371</fpage>–<lpage>378</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Cottrell1">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cottrell</surname><given-names>EC</given-names></name>, <name name-style="western"><surname>Cripps</surname><given-names>RL</given-names></name>, <name name-style="western"><surname>Duncan</surname><given-names>JS</given-names></name>, <name name-style="western"><surname>Barrett</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Mercer</surname><given-names>JG</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Developmental changes in hypothalamic leptin receptor: Relationship with the postnatal leptin surge and energy balance neuropeptides in the postnatal rat</article-title>. <source>Am J Physiol Regul Integr Comp Physiol</source> <volume>296</volume>: <fpage>R631</fpage>–<lpage>R639</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Granado1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Granado</surname><given-names>M</given-names></name>, <name name-style="western"><surname>García-Cáceres</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Fuente-Martín</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Díaz</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Mela</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Effects of acute changes in neonatal leptin levels on food intake and long-term metabolic profiles in rats</article-title>. <source>Endocrinology</source> <volume>152</volume>: <fpage>4116</fpage>–<lpage>4126</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Ahima1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ahima</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Bjorbaek</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Osei</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Flier</surname><given-names>JS</given-names></name> (<year>1999</year>) <article-title>Regulation of neuronal and glial proteins by leptin: implications for brain development</article-title>. <source>Endocrinology</source> <volume>140</volume>: <fpage>2755</fpage>–<lpage>2762</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Bouret1">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bouret</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Draper</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Simerly</surname><given-names>RB</given-names></name> (<year>2004</year>) <article-title>Trophic action of leptin on hypothalamic neurons that regulate feeding</article-title>. <source>Science</source> <volume>304</volume>: <fpage>108</fpage>–<lpage>110</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Bouret2">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bouret</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Simerly</surname><given-names>RB</given-names></name> (<year>2004</year>) <article-title>Minireview: leptin and development of hypothalamic feeding circuits</article-title>. <source>Endocrinology</source> <volume>145</volume>: <fpage>2621</fpage>–<lpage>2626</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Mela1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mela</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Díaz</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Gertler</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Solomon</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Argente</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Neonatal treatment with a pegylated leptin antagonist has a sexually dimorphic effect on hypothalamic trophic factors and neuropeptide levels</article-title>. <source>J Neuroendocrinol</source> <volume>24</volume>: <fpage>756</fpage>–<lpage>765</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Marco1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marco</surname><given-names>EM</given-names></name>, <name name-style="western"><surname>Adriani</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Llorente</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Laviola</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Viveros</surname><given-names>M-P</given-names></name> (<year>2009</year>) <article-title>Detrimental psychophysiological effects of early maternal deprivation in adolescent and adult rodents: Altered responses to cannabinoid exposure</article-title>. <source>Neurosciens Biobehav Rev</source> <volume>33</volume>: <fpage>498</fpage>–<lpage>507</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Johnson1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Johnson</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Cohen</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Kasen</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Brook</surname><given-names>JS</given-names></name> (<year>2002</year>) <article-title>Childhood adversities associated with risk for eating disorders or weight problems during adolescence or early adulthood</article-title>. <source>Am J Psychiatry</source> <volume>159</volume>: <fpage>394</fpage>–<lpage>400</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Vmosi1">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vámosi</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Heitmann</surname><given-names>BL</given-names></name>, <name name-style="western"><surname>Thinggaard</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kyvik</surname><given-names>KO</given-names></name> (<year>2011</year>) <article-title>Parental care in childhood and obesity in adulthood: a study among twins</article-title>. <source>Obesity (Silver Spring)</source> <volume>19</volume>: <fpage>1445</fpage>–<lpage>1450</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Shin1">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shin</surname><given-names>SH</given-names></name>, <name name-style="western"><surname>Miller</surname><given-names>DP</given-names></name> (<year>2012</year>) <article-title>A longitudinal examination of childhood maltreatment and adolescent obesity: results from the National Longitudinal Study of Adolescent Health (AddHealth) Study</article-title>. <source>Child Abuse Negl</source> <volume>36</volume>: <fpage>84</fpage>–<lpage>94</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Landt1">
+        <label>35</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Landt</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Gingerich</surname><given-names>RL</given-names></name>, <name name-style="western"><surname>Havel</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Mueller</surname><given-names>WM</given-names></name>, <name name-style="western"><surname>Schoner</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>1998</year>) <article-title>Radioimmunoassay of rat leptin: sexual dimorphism reversed from humans</article-title>. <source>Clin Chem</source> <volume>44</volume>: <fpage>565</fpage>–<lpage>570</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Shen1">
+        <label>36</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shen</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Punyanitya</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Silva</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gallagher</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Sexual dimorphism of adipose tissue distribution across the lifespan: a cross-sectional whole-body magnetic resonance imaging study</article-title>. <source>Nutr Metab (Lond)</source> <volume>6</volume>: <fpage>17</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Bouret3">
+        <label>37</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bouret</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Draper</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Simerly</surname><given-names>RB</given-names></name> (<year>2004</year>) <article-title>Formation of projection pathways from the arcuate nucleus of the hypothalamus to hypothalamic regions implicated in the neural control of feeding behavior in mice</article-title>. <source>J Neurosci</source> <volume>24</volume>: <fpage>2797</fpage>–<lpage>2805</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Reed1">
+        <label>38</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reed</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Unger</surname><given-names>EK</given-names></name>, <name name-style="western"><surname>Olofsson</surname><given-names>LE</given-names></name>, <name name-style="western"><surname>Piper</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Myers</surname><given-names>MG</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Functional role of suppressor of cytokine signaling 3 upregulation in hypothalamic leptin resistance and long-term energy homeostasis</article-title>. <source>Diabetes</source> <volume>59</volume>: <fpage>894</fpage>–<lpage>906</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Xu1">
+        <label>39</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname><given-names>RY</given-names></name>, <name name-style="western"><surname>Wan</surname><given-names>YP</given-names></name>, <name name-style="western"><surname>Tang</surname><given-names>QY</given-names></name>, <name name-style="western"><surname>Wu</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Cai</surname><given-names>W</given-names></name> (<year>2008</year>) <article-title>The effects of high fat on central appetite genes in Wistar rats: a microarray analysis</article-title>. <source>Clin Chim Acta</source> <volume>397</volume>: <fpage>96</fpage>–<lpage>100</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Priego1">
+        <label>40</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Priego</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sánchez</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Picó</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Palou</surname><given-names>A</given-names></name> (<year>2009</year>) <article-title>Sex-associated differences in the leptin and ghrelin systems related with the induction of hyperphagia under high-fat diet exposure in rats</article-title>. <source>Horm Behav</source> <volume>55</volume>: <fpage>33</fpage>–<lpage>40</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Palou1">
+        <label>41</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Palou</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Torrens</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Priego</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Sánchez</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Palou</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Moderate caloric restriction in lactating rats programs their offspring for a better response to HF diet feeding in a sex-dependent manner</article-title>. <source>J Nutr Biochem</source> <volume>22</volume>: <fpage>574</fpage>–<lpage>584</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Patterson1">
+        <label>42</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patterson</surname><given-names>CM</given-names></name>, <name name-style="western"><surname>Bouret</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Park</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Irani</surname><given-names>BG</given-names></name>, <name name-style="western"><surname>Dunn-Meynell</surname><given-names>AA</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Large litter rearing enhances leptin sensitivity and protects selectively bred diet-induced obese rats from becoming obese</article-title>. <source>Endocrinology</source> <volume>151</volume>: <fpage>4270</fpage>–<lpage>4279</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Horvath1">
+        <label>43</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Horvath</surname><given-names>TL</given-names></name>, <name name-style="western"><surname>Sarman</surname><given-names>B</given-names></name>, <name name-style="western"><surname>García-Cáceres</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Enriori</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Sotonyi</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Synaptic input organization of the melanocortin system predicts diet-induced hypothalamic reactive gliosis and obesity</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>107</volume>: <fpage>14875</fpage>–<lpage>14889</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Yi1">
+        <label>44</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yi</surname><given-names>CX</given-names></name>, <name name-style="western"><surname>Habegger</surname><given-names>KM</given-names></name>, <name name-style="western"><surname>Chowen</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Stern</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Tschöp</surname><given-names>MH</given-names></name> (<year>2011</year>) <article-title>A role for astrocytes in the central control of metabolism</article-title>. <source>Neuroendocrinology</source> <volume>93</volume>: <fpage>143</fpage>–<lpage>149</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Hsuchou1">
+        <label>45</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hsuchou</surname><given-names>H</given-names></name>, <name name-style="western"><surname>He</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kastin</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Tu</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Markadakis</surname><given-names>EN</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Obesity induces functional astrocytic leptin receptors in hypothalamus</article-title>. <source>Brain</source> <volume>132</volume>: <fpage>889</fpage>–<lpage>902</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Margolis1">
+        <label>46</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Margolis</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Dobs</surname><given-names>AS</given-names></name> (<year>1989</year>) <article-title>Nutritional management of plasma lipid disorders</article-title>. <source>J Am Coll Nutr</source> <volume>8</volume>: <fpage>33S</fpage>–<lpage>45S</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Anderson1">
+        <label>47</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anderson</surname><given-names>JW</given-names></name> (<year>2000</year>) <article-title>Dietary fiber prevents carbohydrate-induced hypertriglyceridemia</article-title>. <source>Curr Atheroscler Rep</source> <volume>2</volume>: <fpage>536</fpage>–<lpage>541</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Jacobs1">
+        <label>48</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jacobs</surname><given-names>B</given-names></name>, <name name-style="western"><surname>De Angelis-Schierbaum</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Egert</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Assmann</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Kratz</surname><given-names>M</given-names></name> (<year>2004</year>) <article-title>Individual serum triglyceride responses to high-fat and low-fat diets differ in men with modest and severe hypertriglyceridemia</article-title>. <source>J Nutr</source> <volume>134</volume>: <fpage>1400</fpage>–<lpage>1405</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Branchi1">
+        <label>49</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Branchi</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Torri</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Berra</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Colombo</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Sommariva</surname><given-names>D</given-names></name> (<year>2012</year>) <article-title>Changes in serum lipids and blood glucose in non diabetic patients with metabolic syndrome after mixed meals of different composition</article-title>. <source>J Nutr Metab</source> <volume>2012</volume>: <fpage>215052</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Sherman1">
+        <label>50</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sherman</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Genzer</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Cohen</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Chapnik</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Madar</surname><given-names>Z</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Timed high-fat diet resets circadian metabolism and prevents obesity</article-title>. <source>FASEB J</source> <volume>26</volume>: <fpage>3493</fpage>–<lpage>3502</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-Frier1">
+        <label>51</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frier</surname><given-names>BC</given-names></name>, <name name-style="western"><surname>Jacobs</surname><given-names>RL</given-names></name>, <name name-style="western"><surname>Wright</surname><given-names>DC</given-names></name> (<year>2011</year>) <article-title>Interactions between the consumption of a high-fat diet and fasting in the regulation of fatty acid oxidation enzyme gene expression: an evaluation of potential mechanisms</article-title>. <source>Am J Physiol Regul Integr Comp Physiol</source> <volume>300</volume>: <fpage>R212</fpage>–<lpage>221</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-AmengualCladera1">
+        <label>52</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Amengual-Cladera</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Lladó</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Gianotti</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Proenza</surname><given-names>AM</given-names></name> (<year>2012</year>) <article-title>Sex differences in the effect of high-fat diet feeding on rat white adipose tissue mitochondrial function and insulin sensitivity</article-title>. <source>Metabolism</source> <volume>61</volume>: <fpage>1108</fpage>–<lpage>1117</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pone.0048915-NadalCasellas1">
+        <label>53</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nadal-Casellas</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Proenza</surname><given-names>AM</given-names></name>, <name name-style="western"><surname>Lladó</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Gianotti</surname><given-names>M</given-names></name> (<year>2012</year>) <article-title>Sex-dependent differences in rat hepatic lipid accumulation and insulin sensitivity in response to diet-induced obesity</article-title>. <source>Biochem Cell Biol</source> <volume>90</volume>: <fpage>164</fpage>–<lpage>712</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

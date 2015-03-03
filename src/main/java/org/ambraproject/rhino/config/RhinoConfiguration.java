@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
@@ -30,7 +31,6 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.ClassificationService;
 import org.ambraproject.rhino.service.ConfigurationReadService;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.service.IssueCrudService;
@@ -43,7 +43,6 @@ import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
-import org.ambraproject.rhino.service.impl.ClassificationServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
@@ -51,18 +50,22 @@ import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
 import org.ambraproject.rhino.service.impl.PingbackReadServiceImpl;
 import org.ambraproject.rhino.service.impl.UserCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.VolumeCrudServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyClassificationServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyLookupServiceImpl;
+import org.ambraproject.rhino.service.taxonomy.impl.TaxonomyServiceImpl;
 import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
-import org.ambraproject.service.crossref.CrossRefLookupService;
-import org.ambraproject.service.crossref.CrossRefLookupServiceImpl;
-import org.ambraproject.service.taxonomy.TaxonomyService;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.config.BasicContentRepoAccessConfig;
 import org.plos.crepo.config.ContentRepoAccessConfig;
 import org.plos.crepo.service.contentRepo.ContentRepoService;
 import org.plos.crepo.service.contentRepo.impl.factory.ContentRepoServiceFactory;
@@ -167,44 +170,43 @@ public class RhinoConfiguration extends BaseConfiguration {
     return ConfigurationStore.getInstance().getConfiguration();
   }
 
-  /*
-   * At least one bean from legacy Ambra (org.ambraproject.service.article.AIArticleClassifier) requires this
-   * HttpClient type from the deprecated Apache Commons HttpClient 3.* library. It has an HTTP connection manager
-   * (org.apache.commons.httpclient.HttpConnectionManager) behind it. The contentRepoService bean depends on the more
-   * recent Apache HttpClient 4.* library, and has a separate HTTP connection manager
-   * (org.apache.http.conn.HttpClientConnectionManager) from that version behind it. Because the two libraries require
-   * incompatible versions, we have two connection managers on the heap at the same time, presumably with their own
-   * connection pools. This is a potential performance problem.
-   *
-   * When possible, it would be best to absorb the legacy bean(s), modify them to accept a connection manager from
-   * HttpClient 4.*, and have them share access to that connection manager with contentRepoService.
-   */
   @Bean
-  public HttpClient httpClient() {
-    HttpConnectionManagerParams params = new HttpConnectionManagerParams();
-    params.setSoTimeout(30000);
-    params.setConnectionTimeout(30000);
-    MultiThreadedHttpConnectionManager manager = new MultiThreadedHttpConnectionManager();
-    manager.setParams(params);
-    return new HttpClient(manager);
+  public CloseableHttpClient httpClient(RuntimeConfiguration runtimeConfiguration) {
+    PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
+
+    Integer maxTotal = runtimeConfiguration.getHttpConnectionPoolConfiguration().getMaxTotal();
+    manager.setMaxTotal(maxTotal == null ? 400 : maxTotal);
+
+    Integer defaultMaxPerRoute = runtimeConfiguration.getHttpConnectionPoolConfiguration().getDefaultMaxPerRoute();
+    manager.setDefaultMaxPerRoute(defaultMaxPerRoute == null ? 20 : defaultMaxPerRoute);
+
+    return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
 
   @Bean
-  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration) {
+  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
+                                               final CloseableHttpClient httpClient) {
     RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
+    final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
+    final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
+    Preconditions.checkNotNull(httpClient);
 
-    /*
-     * This BasicContentRepoAccessConfig object will have its own HttpClientConnectionManager object behind it. This is
-     * redundant to the org.apache.commons.httpclient.HttpConnectionManager behind the httpClient bean, which (as
-     * explained there) is a deprecated version that legacy beans depend on. When that dependency is broken, there
-     * should be a shared HttpClientConnectionManager (probably as its own bean), and this BasicContentRepoAccessConfig
-     * should be replaced with a custom ContentRepoAccessConfig that uses the shared connection manager for its 'open'
-     * method.
-     */
-    ContentRepoAccessConfig accessConfig = BasicContentRepoAccessConfig.builder()
-        .setRepoServer(corpus.getAddress().toString())
-        .setBucketName(corpus.getBucket())
-        .build();
+    ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
+      @Override
+      public String getRepoServer() {
+        return repoServer;
+      }
+
+      @Override
+      public String getBucketName() {
+        return bucketName;
+      }
+
+      @Override
+      public CloseableHttpResponse open(HttpUriRequest request) throws IOException {
+        return httpClient.execute(request);
+      }
+    };
 
     return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
   }
@@ -263,8 +265,18 @@ public class RhinoConfiguration extends BaseConfiguration {
   }
 
   @Bean
-  public ClassificationService classificationService(TaxonomyService taxonomyService) {
-    return new ClassificationServiceImpl(taxonomyService);
+  public TaxonomyService taxonomyService() {
+    return new TaxonomyServiceImpl();
+  }
+
+  @Bean
+  public TaxonomyClassificationService taxonomyClassificationService() {
+    return new TaxonomyClassificationServiceImpl();
+  }
+
+  @Bean
+  public TaxonomyLookupService taxonomyLookupService(org.ambraproject.service.taxonomy.TaxonomyService legacyTaxonomyService) {
+    return new TaxonomyLookupServiceImpl(legacyTaxonomyService);
   }
 
   @Bean
@@ -296,7 +308,7 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     YamlConfiguration runtimeConfiguration;
     try (Reader reader = new BufferedReader(new FileReader(configPath))) {
-      YamlConfiguration.UserFields configValues = yaml.loadAs(reader, YamlConfiguration.UserFields.class);
+      YamlConfiguration.Input configValues = yaml.loadAs(reader, YamlConfiguration.Input.class);
       runtimeConfiguration = new YamlConfiguration(configValues);
     }
 

@@ -79,12 +79,6 @@
     <beans:property name="permissionsService" ref="permissionsService"/>
   </beans:bean>
 
-  <beans:bean id="articleClassifier" class="org.ambraproject.service.article.AIArticleClassifier">
-    <beans:property name="httpClient" ref="httpClient"/>
-    <beans:property name="serviceUrl" value="${ambra.services.ai.url}"/>
-    <beans:property name="thesaurus" value="${ambra.services.ai.thesaurus}"/>
-  </beans:bean>
-
   <beans:bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore"
         factory-method="getInstance" />
 
@@ -148,7 +142,7 @@
 
   <beans:bean id="rhinoCache" factory-bean="cacheFactory" factory-method="getCache"/>
 
-  <beans:bean id="taxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
+  <beans:bean id="legacyTaxonomyService" class="org.ambraproject.service.taxonomy.TaxonomyServiceImpl">
     <beans:property name="cache" ref="rhinoCache" />
     <beans:property name="searchService" ref="searchService" />
     <beans:property name="sessionFactory" ref="sessionFactory" />

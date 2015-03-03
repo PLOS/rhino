@@ -45,6 +45,8 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
+import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
@@ -105,6 +107,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleOutputViewFactory articleOutputViewFactory;
   @Autowired
   private XpathReader xpathReader;
+  @Autowired
+  private TaxonomyService taxonomyService;
 
   private boolean articleExistsAt(DoiBasedIdentity id) {
     DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
@@ -560,7 +564,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     try {
       if (!articleService.isAmendment(article)) {
-        terms = articleClassifier.classifyArticle(xml);
+        terms = taxonomyService.classifyArticle(xml);
         if (terms != null && terms.size() > 0) {
           articleService.setArticleCategories(article, terms);
         } else {
@@ -569,6 +573,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       } else {
         article.setCategories(new HashMap<Category, Integer>());
       }
+    } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
+      log.info("Taxonomy server not configured. Ingesting article without categories.");
     } catch (Exception e) {
       log.warn("Taxonomy server not responding, but ingesting article anyway", e);
     }
