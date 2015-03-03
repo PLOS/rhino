@@ -233,6 +233,44 @@ public class AuthorsXmlExtractorTest extends BaseRhinoTest {
                     .setCustomFootnotes(ImmutableList.of("<p>Membership of the NephroTest Study Group is provided in the Acknowledgments..</p>"))
                     .build(),
             }},
+        {"journal.pone.0055490.xml", new AuthorView[]{
+            AuthorView.builder().setGivenNames("Michael P.").setSurnames("Heaton")
+                .setEqualContrib(true)
+                .setCorresponding( "<span class=\"email\">* E-mail:</span> <a href=\"mailto:mike.heaton@ars.usda.gov\">mike.heaton@ars.usda.gov</a> (MPH); <a href=\"mailto:ted.kalbfleisch@louisville.edu\">ted.kalbfleisch@louisville.edu</a> (TSK)")
+                .setAffiliations(ImmutableList.of("U.S. Meat Animal Research Center (USMARC), Clay Center, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Theodore S.").setSurnames("Kalbfleisch")
+                .setEqualContrib(true)
+                .setCorresponding("<span class=\"email\">* E-mail:</span> <a href=\"mailto:mike.heaton@ars.usda.gov\">mike.heaton@ars.usda.gov</a> (MPH); <a href=\"mailto:ted.kalbfleisch@louisville.edu\">ted.kalbfleisch@louisville.edu</a> (TSK)")
+                .setAffiliations(ImmutableList.of(
+                    "Department of Biochemistry and Molecular Biology, School of Medicine, University of Louisville, Louisville, Kentucky, United States of America",
+                    "Intrepid Bioinformatics, Louisville, Kentucky, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Dustin T.").setSurnames("Petrik")
+                .setAffiliations(ImmutableList.of("GeneSeek, a Neogen company, Lincoln, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Barry").setSurnames("Simpson")
+                .setAffiliations(ImmutableList.of("GeneSeek, a Neogen company, Lincoln, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("James W.").setSurnames("Kijas")
+                .setAffiliations(ImmutableList.of("Division of Animal, Food and Health Sciences, CSIRO, Brisbane, Australia"))
+                .build(),
+            AuthorView.builder().setGivenNames("Michael L.").setSurnames("Clawson")
+                .setAffiliations(ImmutableList.of("U.S. Meat Animal Research Center (USMARC), Clay Center, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Carol G.").setSurnames("Chitko-McKown")
+                .setAffiliations(ImmutableList.of("U.S. Meat Animal Research Center (USMARC), Clay Center, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Gregory P.").setSurnames("Harhay")
+                .setAffiliations(ImmutableList.of("U.S. Meat Animal Research Center (USMARC), Clay Center, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Kreg A.").setSurnames("Leymaster")
+                .setAffiliations(ImmutableList.of("U.S. Meat Animal Research Center (USMARC), Clay Center, Nebraska, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("the International Sheep Genomics Consortium")
+                .setCustomFootnotes(ImmutableList.of("<p>Membership of the International Sheep Genomics Consortium is provided in the Acknowledgments and at <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://www.sheephapmap.org/participants.php\" xlink:type=\"simple\">http://www.sheephapmap.org/participants.php</ext-link>.</p>"))
+                .build(),
+        }},
     };
   }
 
