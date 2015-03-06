@@ -36,9 +36,6 @@ class JournalCCJson(BaseServiceTest):
     :return: Journal List + OK
     """
     print ('Validating journals...'),
-    #actual_journals = self.parsed.get_journals()
-    #print(str(actual_journals))
     actual_keys = self.parsed.get_journalKey()
-    assert actual_keys == EXPECTED_KEYS
-    #print(str(actual_keys))
+    assert actual_keys == EXPECTED_KEYS, 'Journals keys did not match: Actual Keys %s != Expected Keys %s' % (actual_keys, EXPECTED_KEYS)
     print ('OK')
