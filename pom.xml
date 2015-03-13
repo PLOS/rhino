@@ -51,7 +51,7 @@
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
     <ambra.version>2.10.3</ambra.version>
-    <rhombat.version>1.0.1</rhombat.version>
+    <rhombat.version>1.0.2</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
