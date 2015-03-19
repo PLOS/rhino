@@ -4,18 +4,20 @@
 Base class for Rhino related service tests.
 """
 
-__author__ = 'jkrzemien@plos.org'
+__author__ = 'jgray@plos.org'
 
 import unittest
-import random
 import json
-from os import walk
-from os.path import dirname, abspath
-from inspect import getfile
-from requests import get, post, patch, put, delete
+import random
+from ..api.Response.JSONResponse import JSONResponse
 from api import timeit
 from Config import TIMEOUT, PRINT_DEBUG
-from ..api.Response.JSONResponse import JSONResponse
+from inspect import getfile
+from os import walk
+from os.path import dirname, abspath
+from requests import get, post, patch, put, delete
+from teamcity import is_running_under_teamcity
+from teamcity.unittestpy import TeamcityTestRunner
 
 
 class BaseServiceTest(unittest.TestCase):
@@ -92,4 +94,8 @@ class BaseServiceTest(unittest.TestCase):
   @staticmethod
   def _run_tests_randomly():
     unittest.TestLoader.sortTestMethodsUsing = lambda _, x, y: random.choice([-1, 1])
-    unittest.main()
+    if is_running_under_teamcity():
+      runner = TeamcityTestRunner()
+    else:
+      runner = unittest.TextTestRunner()
+    unittest.main(testRunner=runner)
