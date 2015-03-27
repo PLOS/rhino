@@ -44,7 +44,7 @@ import org.ambraproject.testutils.AmbraTestConfigurationFactory;
 import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.plos.crepo.service.contentRepo.ContentRepoService;
+import org.plos.crepo.service.ContentRepoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

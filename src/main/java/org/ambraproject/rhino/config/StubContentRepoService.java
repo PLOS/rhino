@@ -1,14 +1,19 @@
 package org.ambraproject.rhino.config;
 
+
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.RepoCollection;
+import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.service.contentRepo.ContentRepoService;
+import org.plos.crepo.model.RepoObjectMetadata;
+import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.RepoVersionNumber;
+import org.plos.crepo.model.RepoVersionTag;
+import org.plos.crepo.service.ContentRepoService;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,20 +41,20 @@ public class StubContentRepoService implements ContentRepoService {
 
 
   @Override
-  public Map<String, Object> createRepoObject(RepoObject repoObject) {
+  public RepoObjectMetadata createRepoObject(RepoObject repoObject) {
     RepoObject previous = defaultBucket.objects.put(repoObject.getKey(), repoObject);
     if (previous != null) throw new RuntimeException("Overwrote object");
     return null;
   }
 
   @Override
-  public Map<String, Object> autoCreateRepoObject(RepoObject repoObject) {
+  public RepoObjectMetadata autoCreateRepoObject(RepoObject repoObject) {
     defaultBucket.objects.put(repoObject.getKey(), repoObject);
     return null;
   }
 
   @Override
-  public InputStream getLatestRepoObjStream(String key) {
+  public InputStream getLatestRepoObject(String key) {
     RepoObject repoObject = defaultBucket.objects.get(key);
     if (repoObject == null) {
       throw new ContentRepoException(ErrorType.ErrorFetchingObject,
@@ -59,73 +64,13 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public Boolean deleteLatestRepoObj(String key) {
+  public boolean deleteLatestRepoObject(String key) {
     return defaultBucket.objects.remove(key) != null;
   }
 
 
   @Override
-  public List<Map<String, Object>> getBuckets() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> getBucket(String key) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> createBucket(String key) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> createCollection(RepoCollection repoCollection) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> versionCollection(RepoCollection repoCollection) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Boolean deleteCollectionUsingVersionCks(String key, String versionChecksum) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Boolean deleteCollectionUsingVersionNumb(String key, int versionNumber) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> getCollectionUsingVersionCks(String key, String versionChecksum) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> getCollectionUsingVersionNumber(String key, int versionNumber) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Map<String, Object> getCollectionUsingTag(String key, String tag) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public List<Map<String, Object>> getCollectionVersions(String key) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public List<Map<String, Object>> getCollections(int offset, int limit, boolean includeDeleted, String tag) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Boolean hasXReproxy() {
+  public boolean hasXReproxy() {
     throw new UnsupportedOperationException();
   }
 
@@ -140,82 +85,117 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public URL[] getRepoObjRedirectURL(String key) {
+  public List<Map<String, Object>> getBuckets() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public URL[] getRepoObjRedirectURL(String key, String versionChecksum) {
+  public Map<String, Object> getBucket(String s) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public byte[] getLatestRepoObjByteArray(String key) {
+  public Map<String, Object> createBucket(String s) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public InputStream getRepoObjStreamUsingVersionCks(String key, String versionChecksum) {
+  public InputStream getRepoObject(RepoVersion repoVersion) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public byte[] getRepoObjByteArrayUsingVersionCks(String key, String versionChecksum) {
+  public InputStream getRepoObject(RepoVersionNumber repoVersionNumber) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public InputStream getRepoObjStreamUsingVersionNum(String key, int versionNumber) {
+  public RepoObjectMetadata getLatestRepoObjectMetadata(String s) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public byte[] getRepoObjByteArrayUsingVersionNum(String key, int versionNumber) {
+  public RepoObjectMetadata getRepoObjectMetadata(RepoVersion repoVersion) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<String, Object> getRepoObjMetaLatestVersion(String key) {
+  public RepoObjectMetadata getRepoObjectMetadata(RepoVersionNumber repoVersionNumber) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<String, Object> getRepoObjMetaUsingVersionChecksum(String key, String versionChecksum) {
+  public RepoObjectMetadata getRepoObjectMetadata(RepoVersionTag repoVersionTag) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<String, Object> getRepoObjMetaUsingVersionNum(String key, int versionNumber) {
+  public List<RepoObjectMetadata> getRepoObjectVersions(String s) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<String, Object> getRepoObjMetaUsingTag(String key, String tag) {
+  public boolean deleteRepoObject(RepoVersion repoVersion) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public List<Map<String, Object>> getRepoObjVersions(String key) {
+  public boolean deleteRepoObject(RepoVersionNumber repoVersionNumber) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Boolean deleteRepoObjUsingVersionCks(String key, String versionChecksum) {
+  public RepoObjectMetadata versionRepoObject(RepoObject repoObject) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Boolean deleteRepoObjUsingVersionNum(String key, int versionNumber) {
+  public List<RepoObjectMetadata> getRepoObjects(int i, int i1, boolean b, String s) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<String, Object> versionRepoObject(RepoObject repoObject) {
+  public RepoCollectionMetadata createCollection(RepoCollection repoCollection) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public List<Map<String, Object>> getRepoObjects(int offset, int limit, boolean includeDeleted, String tag) {
+  public RepoCollectionMetadata versionCollection(RepoCollection repoCollection) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean deleteCollection(RepoVersion repoVersion) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean deleteCollection(RepoVersionNumber repoVersionNumber) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public RepoCollectionMetadata getCollection(RepoVersion repoVersion) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public RepoCollectionMetadata getCollection(RepoVersionNumber repoVersionNumber) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public RepoCollectionMetadata getCollection(RepoVersionTag repoVersionTag) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<RepoCollectionMetadata> getCollectionVersions(String s) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<RepoCollectionMetadata> getCollections(int i, int i1, boolean b, String s) {
     throw new UnsupportedOperationException();
   }
 }

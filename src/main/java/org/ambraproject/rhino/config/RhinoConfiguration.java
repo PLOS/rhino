@@ -67,8 +67,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.config.ContentRepoAccessConfig;
-import org.plos.crepo.service.contentRepo.ContentRepoService;
-import org.plos.crepo.service.contentRepo.impl.factory.ContentRepoServiceFactory;
+import org.plos.crepo.service.ContentRepoService;
+import org.plos.crepo.service.ContentRepoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -183,12 +183,9 @@ public class RhinoConfiguration extends BaseConfiguration {
     return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
 
-  @Bean
-  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
-                                               final CloseableHttpClient httpClient) {
-    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
-    final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
-    final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
+  private static ContentRepoService buildContentRepoService(RuntimeConfiguration.ContentRepoEndpoint endpoint, final CloseableHttpClient httpClient) {
+    final String repoServer = Preconditions.checkNotNull(endpoint.getAddress().toString());
+    final String bucketName = Preconditions.checkNotNull(endpoint.getBucket());
     Preconditions.checkNotNull(httpClient);
 
     ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
@@ -208,7 +205,7 @@ public class RhinoConfiguration extends BaseConfiguration {
       }
     };
 
-    return new ContentRepoServiceFactory().createContentRepoService(accessConfig);
+    return new ContentRepoServiceImpl(accessConfig);
   }
 
 
