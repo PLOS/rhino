@@ -208,6 +208,11 @@ public class RhinoConfiguration extends BaseConfiguration {
     return new ContentRepoServiceImpl(accessConfig);
   }
 
+  @Bean
+  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
+                                               final CloseableHttpClient httpClient) {
+    return buildContentRepoService(runtimeConfiguration.getCorpusBucket(), httpClient);
+  }
 
   @Bean
   public ArticleCrudService articleCrudService() {
