@@ -842,7 +842,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream readXml(ArticleIdentity id) {
     try {
-      return contentRepoService.getLatestRepoObjStream(id.forXmlAsset().toString());
+      return contentRepoService.getLatestRepoObject(id.forXmlAsset().toString());
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
         throw reportNotFound(id);

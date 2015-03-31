@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.ArticleAsset;
@@ -28,7 +29,8 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.service.contentRepo.ContentRepoService;
+import org.plos.crepo.model.RepoObjectMetadata;
+import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
@@ -133,9 +136,9 @@ public class AssetFileCrudController extends DoiBasedCrudController {
 
   void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
       throws IOException {
-    Map<String, Object> objMeta;
+    RepoObjectMetadata objMeta;
     try {
-      objMeta = contentRepoService.getRepoObjMetaLatestVersion(id.toString());
+      objMeta = contentRepoService.getLatestRepoObjectMetadata(id.toString());
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
         throw reportNotFound(id);
@@ -144,29 +147,23 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
-    String contentType = (String) objMeta.get("contentType");
-    if (contentType == null) {
+    Optional<String> contentType = objMeta.getContentType();
       // In case contentType field is empty, default to what we would have written at ingestion
-      contentType = id.inferContentType().toString();
-    }
-    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.or(id.inferContentType().toString()));
 
-    String filename = (String) objMeta.get("downloadName");
-    if (filename == null) {
-      // In case downloadName field is empty, default to what we would have written at ingestion
-      filename = id.getFileName();
-    }
-    String contentDisposition = "attachment; filename=" + filename; // TODO: 'attachment' is not always correct
+    Optional<String> filename = objMeta.getDownloadName();
+    // In case downloadName field is empty, default to what we would have written at ingestion
+    String contentDisposition = "attachment; filename=" + filename.or(id.getFileName()); // TODO: 'attachment' is not always correct
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
 
-    Timestamp timestamp = Timestamp.valueOf((String) objMeta.get("timestamp"));
+    Timestamp timestamp = objMeta.getTimestamp();
     setLastModifiedHeader(response, timestamp);
     if (!checkIfModifiedSince(request, timestamp)) {
       response.setStatus(HttpStatus.NOT_MODIFIED.value());
       return;
     }
 
-    List<String> reproxyUrls = (List<String>) objMeta.get("reproxyURL");
+    List<URL> reproxyUrls = objMeta.getReproxyUrls();
     if (clientSupportsReproxy(request) && reproxyUrls != null && !reproxyUrls.isEmpty()) {
       String reproxyUrlHeader = REPROXY_URL_JOINER.join(reproxyUrls);
 

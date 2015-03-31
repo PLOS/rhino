@@ -35,7 +35,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.plos.crepo.model.RepoObject;
-import org.plos.crepo.service.contentRepo.ContentRepoService;
+import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -136,7 +136,7 @@ public abstract class AmbraService {
   }
 
   protected void deleteAssetFile(AssetFileIdentity identity) {
-    contentRepoService.deleteLatestRepoObj(identity.toString()); // TODO: Need to delete all versions?
+    contentRepoService.deleteLatestRepoObject(identity.toString()); // TODO: Need to delete all versions?
   }
 
   protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
