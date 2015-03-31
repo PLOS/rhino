@@ -90,12 +90,12 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public Map<String, Object> getBucket(String s) {
+  public Map<String, Object> getBucket(String key) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Map<String, Object> createBucket(String s) {
+  public Map<String, Object> createBucket(String key) {
     throw new UnsupportedOperationException();
   }
 
@@ -110,7 +110,7 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public RepoObjectMetadata getLatestRepoObjectMetadata(String s) {
+  public RepoObjectMetadata getLatestRepoObjectMetadata(String key) {
     throw new UnsupportedOperationException();
   }
 
@@ -130,12 +130,12 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public List<RepoObjectMetadata> getRepoObjectVersions(String s) {
+  public List<RepoObjectMetadata> getRepoObjectVersions(String key) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public boolean deleteRepoObject(RepoVersion repoVersion) {
+  public boolean deleteRepoObject(RepoVersion version) {
     throw new UnsupportedOperationException();
   }
 
@@ -150,8 +150,8 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public List<RepoObjectMetadata> getRepoObjects(int i, int i1, boolean b, String s) {
-    throw new UnsupportedOperationException();
+  public List<RepoObjectMetadata> getRepoObjects(int offset, int limit, boolean includeDeleted, String tag) {
+    return null;
   }
 
   @Override
@@ -190,12 +190,12 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public List<RepoCollectionMetadata> getCollectionVersions(String s) {
+  public List<RepoCollectionMetadata> getCollectionVersions(String key) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public List<RepoCollectionMetadata> getCollections(int i, int i1, boolean b, String s) {
+  public List<RepoCollectionMetadata> getCollections(int offset, int limit, boolean includeDeleted, String tag) {
     throw new UnsupportedOperationException();
   }
 }

@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.ArticleAsset;
@@ -146,19 +147,13 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
-    String contentType = objMeta.getContentType().get();
-    if (contentType == null) {
+    Optional<String> contentType = objMeta.getContentType();
       // In case contentType field is empty, default to what we would have written at ingestion
-      contentType = id.inferContentType().toString();
-    }
-    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType);
+    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.or(id.inferContentType().toString()));
 
-    String filename = objMeta.getDownloadName().get();
-    if (filename == null) {
-      // In case downloadName field is empty, default to what we would have written at ingestion
-      filename = id.getFileName();
-    }
-    String contentDisposition = "attachment; filename=" + filename; // TODO: 'attachment' is not always correct
+    Optional<String> filename = objMeta.getDownloadName();
+    // In case downloadName field is empty, default to what we would have written at ingestion
+    String contentDisposition = "attachment; filename=" + filename.or(id.getFileName()); // TODO: 'attachment' is not always correct
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
 
     Timestamp timestamp = objMeta.getTimestamp();

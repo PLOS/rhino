@@ -183,9 +183,12 @@ public class RhinoConfiguration extends BaseConfiguration {
     return HttpClientBuilder.create().setConnectionManager(manager).build();
   }
 
-  private static ContentRepoService buildContentRepoService(RuntimeConfiguration.ContentRepoEndpoint endpoint, final CloseableHttpClient httpClient) {
-    final String repoServer = Preconditions.checkNotNull(endpoint.getAddress().toString());
-    final String bucketName = Preconditions.checkNotNull(endpoint.getBucket());
+  @Bean
+  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
+                                               final CloseableHttpClient httpClient) {
+    RuntimeConfiguration.ContentRepoEndpoint corpus = runtimeConfiguration.getCorpusBucket();
+    final String repoServer = Preconditions.checkNotNull(corpus.getAddress().toString());
+    final String bucketName = Preconditions.checkNotNull(corpus.getBucket());
     Preconditions.checkNotNull(httpClient);
 
     ContentRepoAccessConfig accessConfig = new ContentRepoAccessConfig() {
@@ -208,11 +211,6 @@ public class RhinoConfiguration extends BaseConfiguration {
     return new ContentRepoServiceImpl(accessConfig);
   }
 
-  @Bean
-  public ContentRepoService contentRepoService(RuntimeConfiguration runtimeConfiguration,
-                                               final CloseableHttpClient httpClient) {
-    return buildContentRepoService(runtimeConfiguration.getCorpusBucket(), httpClient);
-  }
 
   @Bean
   public ArticleCrudService articleCrudService() {
