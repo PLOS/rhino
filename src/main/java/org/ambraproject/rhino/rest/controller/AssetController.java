@@ -19,51 +19,41 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class AssetController extends DoiBasedCrudController {
+public class AssetController extends RestController {
 
   private static final String ASSET_META_NAMESPACE = "/assets/";
-  private static final String ASSET_META_TEMPLATE = ASSET_META_NAMESPACE + "**";
-
-  @Override
-  protected String getNamespacePrefix() {
-    return ASSET_META_NAMESPACE;
-  }
-
-  @Override
-  protected AssetIdentity parse(HttpServletRequest request) {
-    return AssetIdentity.create(getIdentifier(request));
-  }
 
   @Autowired
   private AssetCrudService assetCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ASSET_META_NAMESPACE, method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(ID_PARAM) String id)
       throws IOException {
-    AssetIdentity id = parse(request);
-    assetCrudService.readMetadata(id).respond(request, response, entityGson);
+    assetCrudService.readMetadata(AssetIdentity.create(id)).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_TEMPLATE, params = {"figure"}, method = RequestMethod.GET)
-  public void readAsFigure(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ASSET_META_NAMESPACE, params = {"figure"}, method = RequestMethod.GET)
+  public void readAsFigure(HttpServletRequest request, HttpServletResponse response,
+                           @RequestParam(ID_PARAM) String id)
       throws IOException {
-    AssetIdentity id = parse(request);
-    assetCrudService.readFigureMetadata(id).respond(request, response, entityGson);
+    assetCrudService.readFigureMetadata(AssetIdentity.create(id)).respond(request, response, entityGson);
   }
 
 }

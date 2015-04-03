@@ -17,7 +17,7 @@ import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
@@ -40,11 +40,9 @@ import java.io.IOException;
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
-public class IngestibleController extends DoiBasedCrudController {
+public class IngestibleController extends RestController {
 
   private static final String INGESTIBLE_ROOT = "/ingestibles";
-  private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
-  private static final String INGESTIBLE_TEMPLATE = INGESTIBLE_NAMESPACE + "**";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -52,15 +50,6 @@ public class IngestibleController extends DoiBasedCrudController {
   @Autowired
   private IngestibleService ingestibleService;
 
-  @Override
-  protected String getNamespacePrefix() {
-    return INGESTIBLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
 
   /**
    * Method that lists all ingestible archives in the ingest source directory.

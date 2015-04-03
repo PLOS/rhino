@@ -46,7 +46,6 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    *
    * @param path the full path variable from the URL that identifies the entity
    * @return an identifier object for the entity
-   * @see org.ambraproject.rhino.rest.controller.abstr.RestController#getFullPathVariable
    */
   public static AssetFileIdentity parse(String path) {
     int dotIndex = path.lastIndexOf('.');

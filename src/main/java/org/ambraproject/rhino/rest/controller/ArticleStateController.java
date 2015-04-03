@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,12 +51,13 @@ public class ArticleStateController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.PATCH)
-  public void write(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.PATCH)
+  public void write(HttpServletRequest request, HttpServletResponse response,
+                    @RequestParam(ID_PARAM) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentity articleIdentity = ArticleIdentity.create(id);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
-    articleStateService.update(id, input);
-    articleCrudService.readMetadata(id, false).respond(request, response, entityGson);
+    articleStateService.update(articleIdentity, input);
+    articleCrudService.readMetadata(articleIdentity, false).respond(request, response, entityGson);
   }
 }

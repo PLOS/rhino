@@ -145,12 +145,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = ID_PARAM)
   public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = ID_PARAM, required = true) String id,
                    @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
+    articleCrudService.readMetadata(ArticleIdentity.create(id), excludeCitations).respond(request, response, entityGson);
   }
 
   /**
@@ -162,11 +162,11 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "comments")
-  public void readComments(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "comments"})
+  public void readComments(HttpServletRequest request, HttpServletResponse response,
+                           @RequestParam(ID_PARAM) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    annotationCrudService.readComments(id).respond(request, response, entityGson);
+    annotationCrudService.readComments(ArticleIdentity.create(id)).respond(request, response, entityGson);
   }
 
   /**
@@ -179,11 +179,11 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "authors")
-  public void readAuthors(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "authors"})
+  public void readAuthors(HttpServletRequest request, HttpServletResponse response,
+                          @RequestParam(ID_PARAM) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readAuthors(id).respond(request, response, entityGson);
+    articleCrudService.readAuthors(ArticleIdentity.create(id)).respond(request, response, entityGson);
   }
 
   /**
@@ -194,18 +194,18 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
-  public void readXml(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "xml"})
+  public void readXml(HttpServletRequest request, HttpServletResponse response,
+                      @RequestParam(ID_PARAM) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    assetFileCrudController.read(request, response, id.forXmlAsset());
+    assetFileCrudController.read(request, response, ArticleIdentity.create(id).forXmlAsset());
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) {
-    ArticleIdentity id = parse(request);
-    articleCrudService.delete(id);
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.DELETE)
+  public ResponseEntity<?> delete(HttpServletRequest request,
+                                  @RequestParam(ID_PARAM) String id) {
+    articleCrudService.delete(ArticleIdentity.create(id));
     return reportOk();
   }
 

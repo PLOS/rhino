@@ -19,7 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,38 +27,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class IssueCrudController extends DoiBasedCrudController {
+public class IssueCrudController extends RestController {
 
   private static final String ISSUE_NAMESPACE = "/issues/";
-  private static final String ISSUE_TEMPLATE = ISSUE_NAMESPACE + "**";
-
-  @Override
-  protected String getNamespacePrefix() {
-    return ISSUE_NAMESPACE;
-  }
 
   @Autowired
   private IssueCrudService issueCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ISSUE_NAMESPACE, method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(ID_PARAM) String id)
       throws IOException {
-    DoiBasedIdentity id = parse(request);
-    issueCrudService.read(id).respond(request, response, entityGson);
+    issueCrudService.read(DoiBasedIdentity.create(id)).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ISSUE_TEMPLATE, method = RequestMethod.PATCH)
-  public void update(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ISSUE_NAMESPACE, method = RequestMethod.PATCH)
+  public void update(HttpServletRequest request, HttpServletResponse response,
+                     @RequestParam(ID_PARAM) String id)
       throws IOException {
-    DoiBasedIdentity issueId = parse(request);
+    DoiBasedIdentity issueId = DoiBasedIdentity.create(id);
     IssueInputView input = readJsonFromRequest(request, IssueInputView.class);
     issueCrudService.update(issueId, input);
 
