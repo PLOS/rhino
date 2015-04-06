@@ -31,7 +31,6 @@ import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -142,13 +141,6 @@ public class AssetFileCrudController extends RestController {
                            @RequestParam(ID_PARAM) String id)
       throws IOException {
     assetCrudService.readFileMetadata(AssetFileIdentity.parse(id)).respond(request, response, entityGson);
-  }
-
-  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request,
-                                  @RequestParam(ID_PARAM) String id) {
-    assetCrudService.delete(AssetFileIdentity.parse(id));
-    return reportOk();
   }
 
 }

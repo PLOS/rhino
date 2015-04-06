@@ -25,7 +25,6 @@ import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -162,14 +161,6 @@ public class ArticleCrudController extends ArticleSpaceController {
                       @RequestParam(ID_PARAM) String id)
       throws IOException {
     assetFileCrudController.read(request, response, ArticleIdentity.create(id).forXmlAsset());
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request,
-                                  @RequestParam(ID_PARAM) String id) {
-    articleCrudService.delete(ArticleIdentity.create(id));
-    return reportOk();
   }
 
 }
