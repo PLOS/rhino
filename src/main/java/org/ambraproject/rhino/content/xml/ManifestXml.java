@@ -13,9 +13,13 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +70,135 @@ public class ManifestXml extends AbstractXpathReader {
       }
     }
     return builder.build();
+  }
+
+
+  private transient ImmutableList<Asset> parsedAssets;
+
+  public ImmutableList<Asset> parse() {
+    if (parsedAssets != null) return parsedAssets;
+
+    List<Node> assetNodes = readNodeList("//article|//object");
+    List<Asset> assets = new ArrayList<>(assetNodes.size());
+
+    for (Node assetNode : assetNodes) {
+      String nodeName = assetNode.getNodeName();
+      String uri = readString("@uri", assetNode);
+      String mainEntry = readString("@main-entry", assetNode);
+      String strkImage = readString("@strkImage", assetNode);
+
+      AssetType assetType = AssetType.fromNodeName(nodeName);
+      boolean isStrikingImage = Boolean.toString(true).equalsIgnoreCase(strkImage);
+
+      List<Node> representationNodes = readNodeList("child::representation", assetNode);
+      List<Representation> representations = new ArrayList<>(representationNodes.size());
+      for (Node representationNode : representationNodes) {
+        String name = readString("@name", representationNode);
+        String entry = readString("@entry", representationNode);
+        representations.add(new Representation(name, entry));
+      }
+
+      assets.add(new Asset(assetType, uri, mainEntry, isStrikingImage, representations));
+    }
+
+    return parsedAssets = ImmutableList.copyOf(assets);
+  }
+
+  public static enum AssetType {
+    ARTICLE, OBJECT;
+
+    private static AssetType fromNodeName(String nodeName) {
+      switch (nodeName) {
+        case "article":
+          return ARTICLE;
+        case "object":
+          return OBJECT;
+        default:
+          throw new IllegalArgumentException();
+      }
+    }
+  }
+
+  public static class Asset {
+    private final AssetType assetType;
+    private final String uri;
+    private final Optional<String> mainEntry;
+    private final boolean isStrikingImage;
+    private final ImmutableList<Representation> representations;
+
+    public Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, Iterable<Representation> representations) {
+      this.isStrikingImage = isStrikingImage;
+      this.assetType = Preconditions.checkNotNull(assetType);
+      this.uri = Preconditions.checkNotNull(uri);
+      this.mainEntry = Optional.fromNullable(mainEntry);
+      this.representations = ImmutableList.copyOf(representations);
+    }
+
+    public AssetType getAssetType() {
+      return assetType;
+    }
+
+    public String getUri() {
+      return uri;
+    }
+
+    public Optional<String> getMainEntry() {
+      return mainEntry;
+    }
+
+    public boolean isStrikingImage() {
+      return isStrikingImage;
+    }
+
+    public ImmutableList<Representation> getRepresentations() {
+      return representations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      Asset asset = (Asset) o;
+      return isStrikingImage == asset.isStrikingImage && assetType == asset.assetType && uri.equals(asset.uri)
+          && mainEntry.equals(asset.mainEntry) && representations.equals(asset.representations);
+    }
+
+    @Override
+    public int hashCode() {
+      return 31 * (31 * (31 * (31 * assetType.hashCode() + uri.hashCode()) + mainEntry.hashCode())
+          + (isStrikingImage ? 1 : 0)) + representations.hashCode();
+    }
+  }
+
+  public static class Representation {
+    private final String name;
+    private final String entry;
+
+    public Representation(String name, String entry) {
+      this.name = Preconditions.checkNotNull(name);
+      this.entry = Preconditions.checkNotNull(entry);
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public String getEntry() {
+      return entry;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      Representation that = (Representation) o;
+      return name.equals(that.name) && entry.equals(that.entry);
+    }
+
+    @Override
+    public int hashCode() {
+      return 31 * name.hashCode() + entry.hashCode();
+    }
   }
 
 }

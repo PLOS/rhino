@@ -28,6 +28,7 @@ import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.ArticleStateService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -164,6 +165,16 @@ public class RhinoConfiguration extends BaseConfiguration {
     return builder.create();
   }
 
+  /**
+   * Gson instance for serializing and deserializing {@code userMetadata} fields for the CRepo. Unlike {@link
+   * #entityGson}, it requires no adapters (at this time) and should never pretty-print (because we always want to print
+   * compact JSON for efficient storage).
+   */
+  @Bean
+  public Gson crepoGson() {
+    return new Gson();
+  }
+
   @Bean
   public org.apache.commons.configuration.Configuration ambraConfiguration() {
     // Fetch from Ambra's custom container
@@ -277,6 +288,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public TaxonomyLookupService taxonomyLookupService(org.ambraproject.service.taxonomy.TaxonomyService legacyTaxonomyService) {
     return new TaxonomyLookupServiceImpl(legacyTaxonomyService);
+  }
+
+  @Bean
+  public ArticleRevisionService articleRevisionService() {
+    return new ArticleRevisionService();
   }
 
   @Bean

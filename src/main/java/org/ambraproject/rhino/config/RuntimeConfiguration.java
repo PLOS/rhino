@@ -21,7 +21,6 @@ package org.ambraproject.rhino.config;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -67,6 +66,13 @@ public interface RuntimeConfiguration {
    * @return the homepage bucket name
    */
   ContentRepoEndpoint getEditorialBucket();
+
+  /**
+   * TEMPORARY while the versioned-article prototype is under development.
+   * <p/>
+   * TODO: Unify with {@link #getCorpusBucket}
+   */
+  ContentRepoEndpoint getVersionedCorpusBucket();
 
   interface HttpConnectionPoolConfiguration {
     /**

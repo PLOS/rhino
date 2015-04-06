@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2006-2014 by Public Library of Science
+  ~
+  ~ http://plos.org
+  ~ http://ambraproject.org
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!--
+    For performance reasons, we want the ability to lazily load Article.citedArticles.
+    We do this by substituting in our own Hibernate Article mapping, since the one
+    in ambra-models uses eager loading (and changing it in ambra would likely break
+    things there).
+  -->
+
+<hibernate-mapping package="org.ambraproject.rhino.model" default-lazy="false">
+
+  <class name="ArticleAssociation" table="articleAssociation">
+    <id name="ID" column="articleAssociationID" type="long">
+      <generator class="native"/>
+    </id>
+
+    <timestamp name="lastModified" column="lastModified"/>
+    <property name="created" column="created" type="timestamp" not-null="true" update="false"/>
+
+    <property name="doi" column="doi" type="string" not-null="true"/>
+    <property name="parentArticleDoi" column="parentArticleDoi" type="string" not-null="true"/>
+
+  </class>
+
+</hibernate-mapping>

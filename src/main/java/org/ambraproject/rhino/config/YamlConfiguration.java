@@ -19,6 +19,7 @@
 
 package org.ambraproject.rhino.config;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
 import java.net.URI;
@@ -100,6 +101,24 @@ public class YamlConfiguration implements RuntimeConfiguration {
             : input.contentRepo.editorial);
   }
 
+  // TEMPORARY for versioned-article prototype development. TODO: Remove
+  @Override
+  public ContentRepoEndpoint getVersionedCorpusBucket() {
+    // For now, use the configured server for the corpus with a hard-coded bucket name.
+    // This could be expanded into an actual config value if needed during prototype development.
+    final URI corpusServer = Preconditions.checkNotNull(getCorpusBucket().getAddress());
+    return new ContentRepoEndpoint() {
+      @Override
+      public URI getAddress() {
+        return corpusServer;
+      }
+
+      @Override
+      public String getBucket() {
+        return "versionedArticlePrototype";
+      }
+    };
+  }
 
   private final HttpConnectionPoolConfiguration httpConnectionPoolConfiguration = new HttpConnectionPoolConfiguration() {
     @Override
