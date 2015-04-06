@@ -22,11 +22,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
-import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.WriteResult;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.RepoObjectMetadata;
@@ -39,7 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,48 +61,7 @@ public class AssetFileCrudController extends RestController {
   private ContentRepoService contentRepoService;
 
 
-  private static final String DOI_PARAM = "doi";
-  private static final String EXTENSION_PARAM = "ext";
-  private static final String FILE_PARAM = "file";
   private static final String METADATA_PARAM = "metadata";
-
-  /**
-   * Dispatch an action to upload a file for an asset. When the client does this action, the asset ought to already
-   * exist as a database entity as a result of ingesting its parent article. The action uploads a data blob to put in
-   * the file store, and doesn't change any database data defined by article XML.
-   *
-   * @param assetDoi  the DOI of the asset to receive the file, which should already exist
-   * @param assetFile the blob of data to associate with the asset
-   * @return
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.POST)
-  public void upload(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(value = DOI_PARAM) String assetDoi,
-                     @RequestParam(value = EXTENSION_PARAM) String extension,
-                     @RequestParam(value = FILE_PARAM) MultipartFile assetFile)
-      throws IOException {
-    AssetFileIdentity fileIdentity = AssetFileIdentity.create(assetDoi, extension);
-    WriteResult<ArticleAsset> result;
-    try (InputStream fileContent = assetFile.getInputStream()) {
-      result = assetCrudService.upload(fileContent, fileIdentity);
-    }
-
-    response.setStatus(result.getStatus().value());
-    assetCrudService.readMetadata(fileIdentity.forAsset()).respond(request, response, entityGson);
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.PUT)
-  public ResponseEntity<?> overwrite(HttpServletRequest request,
-                                     @RequestParam(ID_PARAM) String id) throws IOException {
-    AssetFileIdentity assetFileIdentity = AssetFileIdentity.parse(id);
-    try (InputStream fileContent = request.getInputStream()) {
-      assetCrudService.overwrite(fileContent, assetFileIdentity);
-    }
-    return reportOk();
-  }
 
   private static final Joiner REPROXY_URL_JOINER = Joiner.on(' ');
   private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable

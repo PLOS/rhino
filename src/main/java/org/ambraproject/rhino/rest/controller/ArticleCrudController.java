@@ -18,31 +18,23 @@
 
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
-import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,13 +43,6 @@ import java.util.List;
  */
 @Controller
 public class ArticleCrudController extends ArticleSpaceController {
-
-  private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
-
-  /**
-   * The request parameter whose value is the XML file being uploaded for a create operation.
-   */
-  private static final String ARTICLE_XML_FIELD = "xml";
 
   private static final String DATE_PARAM = "date";
   private static final String PUB_STATE_PARAM = "state";
@@ -113,28 +98,6 @@ public class ArticleCrudController extends ArticleSpaceController {
     articleCrudService.listRecent(query).respond(request, response, entityGson);
   }
 
-
-  /**
-   * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
-   *
-   * @param response
-   * @param requestFile
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
-      throws IOException {
-    Article result;
-    try (InputStream requestBody = requestFile.getInputStream()) {
-      result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
-    }
-    response.setStatus(HttpStatus.CREATED.value());
-
-    // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
-  }
 
   /**
    * Retrieves metadata about an article.
