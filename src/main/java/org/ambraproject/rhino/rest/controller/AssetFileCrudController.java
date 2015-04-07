@@ -82,7 +82,7 @@ public class AssetFileCrudController extends RestController {
       throws IOException {
     RepoObjectMetadata objMeta;
     try {
-      objMeta = contentRepoService.getLatestRepoObjectMetadata(id.toString());
+      objMeta = contentRepoService.getLatestRepoObjectMetadata(id.getFilePath());
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
         throw reportNotFound(id);

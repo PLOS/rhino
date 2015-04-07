@@ -97,7 +97,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
   }
 
   private void checkFileExistence(AssetFileIdentity fileIdentity, boolean expectedToExist) throws IOException {
-    try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.toString())) {
+    try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.getFilePath())) {
       assertNotNull(stream);
       assertTrue(expectedToExist);
     } catch (ContentRepoException e) {

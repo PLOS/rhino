@@ -166,7 +166,7 @@ public class ArticleRevisionService extends AmbraService {
 
     // Create collection
     RepoCollection collection = RepoCollection.builder()
-        .setKey(articleIdentity.toString())
+        .setKey(articleIdentity.getIdentifier())
         .setObjects(created.values())
         .setUserMetadata(crepoGson.toJson(userMetadataForCollection.map))
         .build();
@@ -174,15 +174,15 @@ public class ArticleRevisionService extends AmbraService {
 
     // Associate DOIs
     for (String assetDoi : userMetadataForCollection.dois) {
-      assetDoi = AssetIdentity.create(assetDoi).toString();
+      assetDoi = AssetIdentity.create(assetDoi).getIdentifier();
       ArticleAssociation existing = (ArticleAssociation) DataAccessUtils.uniqueResult(hibernateTemplate.find(
           "from ArticleAssociation where doi=?", assetDoi));
       if (existing == null) {
         ArticleAssociation association = new ArticleAssociation();
         association.setDoi(assetDoi);
-        association.setParentArticleDoi(articleIdentity.toString());
+        association.setParentArticleDoi(articleIdentity.getIdentifier());
         hibernateTemplate.persist(association);
-      } else if (!existing.getParentArticleDoi().equalsIgnoreCase(articleIdentity.toString())) {
+      } else if (!existing.getParentArticleDoi().equalsIgnoreCase(articleIdentity.getIdentifier())) {
         throw new RuntimeException("Asset DOI already belongs to another parent article"); // TODO: Rollback
       } // else, leave it as is
     }
@@ -212,7 +212,7 @@ public class ArticleRevisionService extends AmbraService {
     List<String> assetDois = new ArrayList<>(assetSpec.size());
     for (ManifestXml.Asset asset : assetSpec) {
       Map<String, Object> assetMetadata = new LinkedHashMap<>();
-      String doi = AssetIdentity.create(asset.getUri()).toString();
+      String doi = AssetIdentity.create(asset.getUri()).getIdentifier();
       assetMetadata.put("doi", doi);
       assetDois.add(doi);
 
@@ -232,7 +232,7 @@ public class ArticleRevisionService extends AmbraService {
 
 
   public Transceiver readVersion(ArticleIdentity articleIdentity, UUID uuid) {
-    final RepoVersion version = RepoVersion.create(articleIdentity.toString(), uuid);
+    final RepoVersion version = RepoVersion.create(articleIdentity.getIdentifier(), uuid);
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
@@ -273,7 +273,7 @@ public class ArticleRevisionService extends AmbraService {
   }
 
   public InputStream readFileVersion(ArticleIdentity articleIdentity, UUID articleUuid, String fileKey) {
-    RepoObjectMetadata objectMetadata = findObjectInCollection(RepoVersion.create(articleIdentity.toString(), articleUuid), fileKey);
+    RepoObjectMetadata objectMetadata = findObjectInCollection(RepoVersion.create(articleIdentity.getIdentifier(), articleUuid), fileKey);
     if (objectMetadata == null) throw new RestClientException("File not found", HttpStatus.NOT_FOUND);
     return contentRepoService.getRepoObject(objectMetadata.getVersion());
   }
@@ -330,14 +330,14 @@ public class ArticleRevisionService extends AmbraService {
   }
 
   private Collection<?> fetchRevisions(ArticleIdentity articleIdentity) throws IOException {
-    List<RepoCollectionMetadata> versions = versionedContentRepoService.getCollectionVersions(articleIdentity.toString());
+    List<RepoCollectionMetadata> versions = versionedContentRepoService.getCollectionVersions(articleIdentity.getIdentifier());
     Map<UUID, RevisionVersionMapping> mappings = Maps.newHashMapWithExpectedSize(versions.size());
     for (RepoCollectionMetadata version : versions) {
       RevisionVersionMapping mapping = new RevisionVersionMapping(version.getVersionNumber().getNumber());
       mappings.put(version.getVersion().getUuid(), mapping);
     }
 
-    List<ArticleRevision> revisions = hibernateTemplate.find("from ArticleRevision where doi=?", articleIdentity.toString());
+    List<ArticleRevision> revisions = hibernateTemplate.find("from ArticleRevision where doi=?", articleIdentity.getIdentifier());
     for (ArticleRevision revision : revisions) {
       RevisionVersionMapping mapping = mappings.get(UUID.fromString(revision.getCrepoUuid()));
       mapping.revisionNumbers.add(revision.getRevisionNumber());

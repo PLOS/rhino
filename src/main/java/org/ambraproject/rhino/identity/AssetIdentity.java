@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.identity;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
@@ -14,12 +15,12 @@ import org.ambraproject.models.ArticleAsset;
  */
 public class AssetIdentity extends DoiBasedIdentity {
 
-  protected AssetIdentity(String identifier) {
-    super(identifier);
+  protected AssetIdentity(String identifier, Optional<Integer> versionNumber) {
+    super(identifier, versionNumber);
   }
 
   public static AssetIdentity create(String identifier) {
-    return new AssetIdentity(identifier);
+    return new AssetIdentity(identifier, Optional.<Integer>absent());
   }
 
   /**

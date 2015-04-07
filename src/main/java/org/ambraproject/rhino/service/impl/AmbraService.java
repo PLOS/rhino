@@ -127,7 +127,7 @@ public abstract class AmbraService {
    * @throws IOException
    */
   protected void write(byte[] fileData, AssetFileIdentity identity) throws IOException {
-    RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.toString())
+    RepoObject repoObject = new RepoObject.RepoObjectBuilder(identity.getFilePath())
         .byteContent(fileData)
         .contentType(identity.inferContentType().toString())
         .downloadName(identity.getFileName())
@@ -136,7 +136,7 @@ public abstract class AmbraService {
   }
 
   protected void deleteAssetFile(AssetFileIdentity identity) {
-    contentRepoService.deleteLatestRepoObject(identity.toString()); // TODO: Need to delete all versions?
+    contentRepoService.deleteLatestRepoObject(identity.getFilePath()); // TODO: Need to delete all versions?
   }
 
   protected static Document parseXml(byte[] bytes) throws IOException, RestClientException {
