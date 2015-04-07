@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -110,9 +111,11 @@ public class ArticleCrudController extends ArticleSpaceController {
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = ID_PARAM)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = ID_PARAM, required = true) String id,
+                   @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                   @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
                    @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
       throws IOException {
-    articleCrudService.readMetadata(ArticleIdentity.create(id), excludeCitations).respond(request, response, entityGson);
+    articleCrudService.readMetadata(parse(id, versionNumber, revisionNumber), excludeCitations).respond(request, response, entityGson);
   }
 
   /**
@@ -126,9 +129,11 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "comments"})
   public void readComments(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam(ID_PARAM) String id)
+                           @RequestParam(value = ID_PARAM, required = true) String id,
+                           @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                           @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    annotationCrudService.readComments(ArticleIdentity.create(id)).respond(request, response, entityGson);
+    annotationCrudService.readComments(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   /**
@@ -143,9 +148,11 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "authors"})
   public void readAuthors(HttpServletRequest request, HttpServletResponse response,
-                          @RequestParam(ID_PARAM) String id)
+                          @RequestParam(value = ID_PARAM, required = true) String id,
+                          @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                          @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    articleCrudService.readAuthors(ArticleIdentity.create(id)).respond(request, response, entityGson);
+    articleCrudService.readAuthors(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   /**
@@ -158,9 +165,13 @@ public class ArticleCrudController extends ArticleSpaceController {
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "xml"})
   public void readXml(HttpServletRequest request, HttpServletResponse response,
-                      @RequestParam(ID_PARAM) String id)
+                      @RequestParam(value = ID_PARAM, required = true) String id,
+                      @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                      @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    assetFileCrudController.read(request, response, ArticleIdentity.create(id).forXmlAsset());
+    ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
+    AssetFileIdentity xmlAsset = articleIdentity.forXmlAsset();
+    assetFileCrudController.read(request, response, xmlAsset);
   }
 
 }

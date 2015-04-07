@@ -23,7 +23,7 @@ import org.ambraproject.models.Article;
 
 public class ArticleIdentity extends DoiBasedIdentity {
 
-  private ArticleIdentity(String identifier, Optional<Integer> versionNumber) {
+  public ArticleIdentity(String identifier, Optional<Integer> versionNumber) {
     super(identifier, versionNumber);
   }
 

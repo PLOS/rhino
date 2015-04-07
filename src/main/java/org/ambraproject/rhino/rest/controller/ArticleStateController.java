@@ -53,9 +53,11 @@ public class ArticleStateController extends ArticleSpaceController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.PATCH)
   public void write(HttpServletRequest request, HttpServletResponse response,
-                    @RequestParam(ID_PARAM) String id)
+                    @RequestParam(value = ID_PARAM, required = true) String id,
+                    @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                    @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity articleIdentity = ArticleIdentity.create(id);
+    ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(articleIdentity, input);
     articleCrudService.readMetadata(articleIdentity, false).respond(request, response, entityGson);

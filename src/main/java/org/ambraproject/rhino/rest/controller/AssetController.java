@@ -18,10 +18,14 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Optional;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,20 +44,35 @@ public class AssetController extends RestController {
   @Autowired
   private AssetCrudService assetCrudService;
 
+  private AssetIdentity parse(String id, Integer versionNumber, Integer revisionNumber) {
+    if (revisionNumber == null) {
+      return new AssetIdentity(id, Optional.fromNullable(versionNumber));
+    } else {
+      if (versionNumber != null) {
+        throw new RestClientException("Cannot specify version and revision", HttpStatus.NOT_FOUND);
+      }
+      return null; // TODO: Look up by revision and return with correct version
+    }
+  }
+
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_META_NAMESPACE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(ID_PARAM) String id)
+                   @RequestParam(value = ID_PARAM, required = true) String id,
+                   @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                   @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    assetCrudService.readMetadata(AssetIdentity.create(id)).respond(request, response, entityGson);
+    assetCrudService.readMetadata(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ASSET_META_NAMESPACE, params = {"figure"}, method = RequestMethod.GET)
   public void readAsFigure(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam(ID_PARAM) String id)
+                           @RequestParam(value = ID_PARAM, required = true) String id,
+                           @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                           @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    assetCrudService.readFigureMetadata(AssetIdentity.create(id)).respond(request, response, entityGson);
+    assetCrudService.readFigureMetadata(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
 }

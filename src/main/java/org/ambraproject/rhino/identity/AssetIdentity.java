@@ -15,7 +15,7 @@ import org.ambraproject.models.ArticleAsset;
  */
 public class AssetIdentity extends DoiBasedIdentity {
 
-  protected AssetIdentity(String identifier, Optional<Integer> versionNumber) {
+  public AssetIdentity(String identifier, Optional<Integer> versionNumber) {
     super(identifier, versionNumber);
   }
 
