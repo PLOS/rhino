@@ -23,6 +23,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
@@ -60,7 +61,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException;
 
   /**

@@ -25,6 +25,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.google.common.io.ByteStreams;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -46,6 +47,7 @@ import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
@@ -82,13 +84,10 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -384,22 +383,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException {
-    ZipFile zip = new ZipFile(filename);
-    Document manifestDoc = getManifest(zip);
+    Document manifestDoc = getManifest(archive);
     ManifestXml manifest = new ManifestXml(manifestDoc);
-    byte[] xmlData = readZipFile(zip, manifest.getArticleXml());
+
+    byte[] xmlData;
+    try (InputStream xmlStream = archive.openFile(manifest.getArticleXml())) {
+      xmlData = ByteStreams.toByteArray(xmlStream);
+    }
     Document doc = parseXml(xmlData);
     Article article = populateArticleFromXml(doc, Optional.fromNullable(manifest), suppliedId, mode, xmlData.length);
-    article.setArchiveName(new File(filename).getName());
+    article.setArchiveName(new File(archive.getArchiveName()).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 
     // Save now, before we add asset files, since AssetCrudServiceImpl will expect the
     // Article to be persisted at this point.
     persistArticle(article, xmlData);
     try {
-      addAssetFiles(article, zip, manifest);
+      addAssetFiles(article, archive, manifest);
 
       /*
        * Refresh the article in order to force it contain any new asset file objects that might have been inserted into
@@ -442,16 +444,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return !(filename.startsWith("manifest.") || filename.startsWith(articleXmlFilename));
   }
 
-  private void addAssetFiles(Article article, ZipFile zipFile, ManifestXml manifest)
+  private void addAssetFiles(Article article, Archive zipFile, ManifestXml manifest)
       throws IOException {
     String articleXmlFilename = manifest.getArticleXml().toLowerCase();
 
     // TODO: remove existing files if this is a reingest (see IngesterImpl.java line 324)
 
-    Enumeration<? extends ZipEntry> entries = zipFile.entries();
-    while (entries.hasMoreElements()) {
-      ZipEntry entry = entries.nextElement();
-      String filename = entry.getName();
+    for (String filename : zipFile.getEntryNames()) {
       if (shouldSaveAssetFile(filename, articleXmlFilename)) {
         String[] fields = filename.split("\\.");
 
@@ -463,7 +462,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               HttpStatus.METHOD_NOT_ALLOWED);
         }
 
-        try (InputStream is = zipFile.getInputStream(entry)) {
+        try (InputStream is = zipFile.openFile(filename)) {
           assetService.upload(is, AssetFileIdentity.create(doi, extension));
         }
       }
@@ -477,36 +476,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * @return Document view of the manifest
    * @throws IOException
    */
-  private Document getManifest(ZipFile archive) throws IOException {
-    byte[] bytes = readZipFile(archive, "MANIFEST.xml");
-    if (bytes == null) {
-
-      // I've seen a few archives with the name in lowercase.  Not common.
-      bytes = readZipFile(archive, "manifest.xml");
-      if (bytes == null) {
-        throw new RestClientException("No manifest found in archive " + archive.getName(),
-            HttpStatus.METHOD_NOT_ALLOWED);
+  private Document getManifest(Archive archive) throws IOException {
+    for (String entryName : archive.getEntryNames()) {
+      if ("MANIFEST.xml".equalsIgnoreCase(entryName)) {
+        return parseXml(archive.openFile(entryName));
       }
     }
-    return parseXml(bytes);
-  }
-
-  /**
-   * Reads and returns the contents of a file in a .zip archive.
-   *
-   * @param zipFile  zip file
-   * @param filename name of the file within the archive to read
-   * @return contents of the file, or null if the file does not exist in zipFile
-   * @throws IOException
-   */
-  private byte[] readZipFile(ZipFile zipFile, String filename) throws IOException {
-    ZipEntry entry = zipFile.getEntry(filename);
-    if (entry == null) {
-      return null;
-    }
-    try (InputStream is = zipFile.getInputStream(entry)) {
-      return readClientInput(is);
-    }
+    throw new RestClientException("No manifest found in archive " + archive.getArchiveName(),
+        HttpStatus.METHOD_NOT_ALLOWED);
   }
 
   /**
