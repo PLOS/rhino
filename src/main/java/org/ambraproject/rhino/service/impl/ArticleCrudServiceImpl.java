@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
@@ -85,7 +84,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -109,12 +107,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private XpathReader xpathReader;
   @Autowired
   private TaxonomyService taxonomyService;
-
-  private boolean articleExistsAt(DoiBasedIdentity id) {
-    DetachedCriteria criteria = DetachedCriteria.forClass(Article.class)
-        .add(Restrictions.eq("doi", id.getKey()));
-    return exists(criteria);
-  }
 
   /**
    * Query for an article by its identifier.
@@ -781,50 +773,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return parseAssetNode(matchingNodes.get(0), assetIdentity);
   }
 
-  /**
-   * Parse an asset from multiple redundant asset nodes only if they have equal values. Throw an exception if two nodes
-   * do not describe the same asset.
-   *
-   * @param assetNodes    one or more article XML nodes representing an asset
-   * @param assetIdentity the identity of the asset to parse
-   * @return the parsed asset
-   * @throws XmlContentException
-   */
-  private static ArticleAsset parseDistinctAsset(List<Node> assetNodes, AssetIdentity assetIdentity) throws XmlContentException {
-    Preconditions.checkArgument(!assetNodes.isEmpty());
-    Iterator<Node> nodeIterator = assetNodes.iterator();
-    ArticleAsset asset = parseAssetNode(nodeIterator.next(), assetIdentity);
-    while (nodeIterator.hasNext()) {
-      ArticleAsset nextAsset = parseAssetNode(nodeIterator.next(), assetIdentity);
-      if (!haveEqualFields(asset, nextAsset)) {
-        String errorMsg = "Article XML contains multiple, non-matching assets with DOI=" + assetIdentity.getIdentifier();
-        throw new XmlContentException(errorMsg);
-      }
-    }
-    return asset;
-  }
-
   private static ArticleAsset parseAssetNode(Node assetNode, AssetIdentity assetIdentity) throws XmlContentException {
     return new AssetXml(assetNode, assetIdentity).build(new ArticleAsset());
-  }
-
-  /**
-   * Check if two assets have equal values for all fields defined in article XML. This is more stringent than {@link
-   * ArticleAsset#equals(Object)}.
-   *
-   * @param a1 an asset
-   * @param a2 another asset
-   * @return {@code true} they have equal values for all fields defined in article XML
-   */
-  private static boolean haveEqualFields(ArticleAsset a1, ArticleAsset a2) {
-    if (Preconditions.checkNotNull(a1) == Preconditions.checkNotNull(a2)) return true;
-    if (!Objects.equal(a1.getDoi(), a2.getDoi())) return false;
-    if (!Objects.equal(a1.getContextElement(), a2.getContextElement())) return false;
-    if (!Objects.equal(a1.getExtension(), a2.getExtension())) return false;
-    if (!Objects.equal(a1.getContentType(), a2.getContentType())) return false;
-    if (!Objects.equal(a1.getTitle(), a2.getTitle())) return false;
-    if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
-    return true;
   }
 
   private static RestClientException complainAboutXml(XmlContentException e) {
