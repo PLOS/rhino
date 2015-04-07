@@ -3,6 +3,7 @@ package org.ambraproject.rhino.util;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.Set;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -27,7 +28,19 @@ import java.util.zip.ZipInputStream;
  * Abstraction over a .zip archive or equivalent structure.
  */
 public abstract class Archive implements Closeable {
-  Archive() {
+
+  private final String archiveName;
+
+  /**
+   * Keys are zip file entry names. Values are objects from which the file content may be extracted. Subclasses define
+   * the value type. (This would be a good thing to make a generic type parameter, except that we don't want to expose
+   * it publicly.)
+   */
+  private final ImmutableMap<String, ?> files;
+
+  Archive(String archiveName, Map<String, ?> files) {
+    this.archiveName = Preconditions.checkNotNull(archiveName);
+    this.files = ImmutableMap.copyOf(files);
   }
 
   /**
@@ -35,14 +48,22 @@ public abstract class Archive implements Closeable {
    *
    * @return the zip archive file name
    */
-  public abstract String getArchiveName();
+  public final String getArchiveName() {
+    return archiveName;
+  }
+
+  protected final ImmutableMap<String, ?> getFiles() {
+    return files;
+  }
 
   /**
    * Return the set of file entry names in this archive.
    *
    * @return the set of file entry names
    */
-  public abstract Set<String> getEntryNames();
+  public final ImmutableSet<String> getEntryNames() {
+    return files.keySet();
+  }
 
   /**
    * Open a file from the archive. The argument must be one of the strings contained in the set returned by {@link
@@ -54,13 +75,20 @@ public abstract class Archive implements Closeable {
    * @return a stream containing the file
    * @throws IllegalArgumentException if no entry with that name is in the archive
    */
-  public abstract InputStream openFile(String entryName);
+  public final InputStream openFile(String entryName) {
+    Object fileObj = files.get(entryName);
+    if (fileObj == null) throw new IllegalArgumentException();
+    return openFileFrom(fileObj);
+  }
+
+  protected abstract InputStream openFileFrom(Object fileObj);
 
   /**
    * Release or delete resources associated with storing the archive contents. Files cannot be opened afterward.
    */
   @Override
-  public abstract void close();
+  public void close() {
+  }
 
 
   public static Archive readZipFile(File file) throws IOException {
@@ -77,13 +105,10 @@ public abstract class Archive implements Closeable {
    * @return the archive representing the read files
    * @throws IOException
    */
-  public static Archive readZipFile(final String archiveName, InputStream zipFile) throws IOException {
-    Preconditions.checkNotNull(archiveName);
-
-    final ImmutableMap<String, File> tempFiles;
+  public static Archive readZipFile(String archiveName, InputStream zipFile) throws IOException {
+    ImmutableMap.Builder<String, File> tempFiles = ImmutableMap.builder();
     try (ZipInputStream zipStream = new ZipInputStream(zipFile)) {
       String prefix = "archive_" + new Date().getTime() + "_";
-      ImmutableMap.Builder<String, File> tempFilesBuilder = ImmutableMap.builder();
 
       ZipEntry entry;
       while ((entry = zipStream.getNextEntry()) != null) {
@@ -91,31 +116,17 @@ public abstract class Archive implements Closeable {
         try (OutputStream tempFileStream = new FileOutputStream(tempFile)) {
           ByteStreams.copy(zipStream, tempFileStream);
         }
-        tempFilesBuilder.put(entry.getName(), tempFile);
+        tempFiles.put(entry.getName(), tempFile);
       }
-
-      tempFiles = tempFilesBuilder.build();
     } finally {
       zipFile.close();
     }
 
-    return new Archive() {
+    return new Archive(archiveName, tempFiles.build()) {
       @Override
-      public String getArchiveName() {
-        return archiveName;
-      }
-
-      @Override
-      public Set<String> getEntryNames() {
-        return tempFiles.keySet();
-      }
-
-      @Override
-      public InputStream openFile(String entryName) {
-        File file = tempFiles.get(entryName);
-        if (file == null) throw new IllegalArgumentException();
+      protected InputStream openFileFrom(Object file) {
         try {
-          return new FileInputStream(file);
+          return new FileInputStream((File) file);
         } catch (FileNotFoundException e) {
           throw new RuntimeException(e);
         }
@@ -123,8 +134,8 @@ public abstract class Archive implements Closeable {
 
       @Override
       public void close() {
-        for (File file : tempFiles.values()) {
-          file.delete();
+        for (Object file : getFiles().values()) {
+          ((File) file).delete();
         }
       }
     };
@@ -136,47 +147,27 @@ public abstract class Archive implements Closeable {
     }
   }
 
-  public static Archive readZipFileIntoMemory(final String archiveName, InputStream zipFile) throws IOException {
-    Preconditions.checkNotNull(archiveName);
-
-    final ImmutableMap<String, byte[]> files;
+  public static Archive readZipFileIntoMemory(String archiveName, InputStream zipFile) throws IOException {
+    ImmutableMap.Builder<String, byte[]> files = ImmutableMap.builder();
     try (ZipInputStream zipStream = new ZipInputStream(zipFile)) {
-      ImmutableMap.Builder<String, byte[]> filesBuilder = ImmutableMap.builder();
       ZipEntry entry;
       while ((entry = zipStream.getNextEntry()) != null) {
         byte[] fileContent = ByteStreams.toByteArray(zipStream);
-        filesBuilder.put(entry.getName(), fileContent);
+        files.put(entry.getName(), fileContent);
       }
-      files = filesBuilder.build();
     } finally {
       zipFile.close();
     }
 
-    return new Archive() {
+    return new Archive(archiveName, files.build()) {
       @Override
-      public String getArchiveName() {
-        return archiveName;
-      }
-
-      @Override
-      public Set<String> getEntryNames() {
-        return files.keySet();
-      }
-
-      @Override
-      public InputStream openFile(String entryName) {
-        byte[] fileContent = files.get(entryName);
-        if (fileContent == null) throw new IllegalArgumentException();
-        return new ByteArrayInputStream(fileContent);
-      }
-
-      @Override
-      public void close() {
+      protected InputStream openFileFrom(Object fileContent) {
+        return new ByteArrayInputStream((byte[]) fileContent);
       }
     };
   }
 
-  public static Archive readCollection(final ContentRepoService service, final RepoCollectionMetadata collection) {
+  public static Archive readCollection(ContentRepoService service, RepoCollectionMetadata collection) {
     String key = collection.getVersion().getKey();
     int slashIndex = key.lastIndexOf('/');
     String lastToken = (slashIndex < 0) ? key : key.substring(slashIndex + 1);
@@ -193,45 +184,27 @@ public abstract class Archive implements Closeable {
    * @param collection the collection version
    * @return the archive representation
    */
-  public static Archive readCollection(final String archiveName,
+  public static Archive readCollection(String archiveName,
                                        final ContentRepoService service,
-                                       final RepoCollectionMetadata collection) {
-    Preconditions.checkNotNull(archiveName);
+                                       RepoCollectionMetadata collection) {
     Preconditions.checkNotNull(service);
 
-    ImmutableMap.Builder<String, RepoVersion> objectsBuilder = ImmutableMap.builder();
+    ImmutableMap.Builder<String, RepoVersion> objects = ImmutableMap.builder();
     for (RepoObjectMetadata objectMetadata : collection.getObjects()) {
       Optional<String> downloadName = objectMetadata.getDownloadName();
       RepoVersion version = objectMetadata.getVersion();
       if (downloadName.isPresent()) {
-        objectsBuilder.put(downloadName.get(), version);
+        objects.put(downloadName.get(), version);
       } else {
         String message = "Repo objects must have downloadNames to be represented as an Archive. Object does not: " + version;
         throw new RuntimeException(message);
       }
     }
-    final ImmutableMap<String, RepoVersion> objects = objectsBuilder.build();
 
-    return new Archive() {
+    return new Archive(archiveName, objects.build()) {
       @Override
-      public String getArchiveName() {
-        return archiveName;
-      }
-
-      @Override
-      public Set<String> getEntryNames() {
-        return objects.keySet();
-      }
-
-      @Override
-      public InputStream openFile(String entryName) {
-        RepoVersion repoVersion = objects.get(entryName);
-        if (repoVersion == null) throw new IllegalArgumentException();
-        return service.getRepoObject(repoVersion);
-      }
-
-      @Override
-      public void close() {
+      protected InputStream openFileFrom(Object repoVersion) {
+        return service.getRepoObject((RepoVersion) repoVersion);
       }
     };
   }
