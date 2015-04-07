@@ -39,7 +39,6 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -56,14 +55,15 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.model.RepoCollectionMetadata;
+import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathException;
 import java.io.File;
 import java.io.IOException;
@@ -81,7 +85,6 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -108,21 +111,44 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   private TaxonomyService taxonomyService;
 
+  private Document fetchArticleXml(ArticleIdentity id) {
+    String identifier = id.getIdentifier();
+    Optional<Integer> versionNumber = id.getVersionNumber();
+    RepoCollectionMetadata collection;
+    if (versionNumber.isPresent()) {
+      collection = contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
+    } else {
+      collection = null; // TODO: get latest collection
+    }
+
+    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
+    Map<String, String> manuscriptId = (Map<String, String>) userMetadata.get("manuscript");
+    RepoVersion manuscript = RepoVersion.create(manuscriptId.get("key"), manuscriptId.get("uuid"));
+
+    Document document;
+    try (InputStream manuscriptStream = contentRepoService.getRepoObject(manuscript)) {
+      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder(); // TODO: Efficiency
+      document = documentBuilder.parse(manuscriptStream);
+    } catch (IOException | SAXException | ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+    return document;
+  }
+
   /**
    * Query for an article by its identifier.
    *
    * @param id the article's identity
    * @return the article, or {@code null} if not found
    */
-  public Article findArticleById(DoiBasedIdentity id) {
-    return (Article) DataAccessUtils.uniqueResult((List<?>)
-        hibernateTemplate.findByCriteria(DetachedCriteria
-                .forClass(Article.class)
-                .add(Restrictions.eq("doi", id.getKey()))
-                .setFetchMode("articleType", FetchMode.JOIN)
-                .setFetchMode("citedArticles", FetchMode.JOIN)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-        ));
+  @Override
+  public Article findArticleById(ArticleIdentity id) {
+    Document document = fetchArticleXml(id);
+    try {
+      return new ArticleXml(document).build(new Article());
+    } catch (XmlContentException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -803,32 +829,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Transceiver readMetadata(final DoiBasedIdentity id, final boolean excludeCitations) throws IOException {
+  public Transceiver readMetadata(final ArticleIdentity id) throws IOException {
     return new EntityTransceiver<Article>() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-            "select lastModified from Article where doi = ?", id.getKey()));
-        if (lastModified == null) {
-          return null;
-        }
-        return copyToCalendar(lastModified);
+        return null;
       }
 
       @Override
       protected Article fetchEntity() {
-        Article article = (Article) DataAccessUtils.uniqueResult((List<?>)
-            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Article.class)
-                    .add(Restrictions.eq("doi", id.getKey()))
-                    .setFetchMode("categories", FetchMode.SELECT)
-                    .setFetchMode("assets", FetchMode.SELECT)
-                    .setFetchMode("articleType", FetchMode.JOIN)
-                    .setFetchMode("journals", FetchMode.JOIN)
-                    .setFetchMode("journals.volumes", FetchMode.JOIN)
-                    .setFetchMode("journals.volumes.issues", FetchMode.JOIN)
-                    .setFetchMode("journals.articleList", FetchMode.JOIN)
-                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-            ));
+        Article article = findArticleById(id);
         if (article == null) {
           throw reportNotFound(id);
         }
@@ -837,7 +847,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getView(Article entity) {
-        return createArticleView(entity, excludeCitations);
+        return createArticleView(entity, false);
       }
     };
   }
@@ -870,19 +880,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate() throws IOException {
-        AssetFileIdentity xmlAssetIdentity = id.forXmlAsset();
-        Date lastModified = (Date) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-            "select lastModified from ArticleAsset where doi = ? and extension = ?",
-            xmlAssetIdentity.getKey(), xmlAssetIdentity.getFileExtension()));
-        if (lastModified == null) {
-          throw reportNotFound(id);
-        }
-        return copyToCalendar(lastModified);
+        return null;
       }
 
       @Override
       protected Object getData() throws IOException {
-        Document doc = parseXml(readXml(id));
+        Document doc = fetchArticleXml(id);
         List<AuthorView> authors;
         try {
           authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
@@ -955,6 +958,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return relatedArticleViews;
   }
 
+  @Override
   @Required
   public void setAssetService(AssetCrudService assetService) {
     this.assetService = assetService;
