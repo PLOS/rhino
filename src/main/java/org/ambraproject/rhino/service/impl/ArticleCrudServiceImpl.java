@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
@@ -29,6 +30,7 @@ import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
@@ -54,6 +56,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -85,6 +88,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private XpathReader xpathReader;
   @Autowired
   TaxonomyService taxonomyService;
+  @Autowired
+  Gson crepoGson;
 
   private Document fetchArticleXml(ArticleIdentity id) {
     String identifier = id.getIdentifier();
@@ -128,7 +133,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
-    return new LegacyIngestionService(this).writeArchive(archive, suppliedId, mode);
+    try {
+      new VersionedIngestionService(this).ingest(null); // TODO Adapt to archive
+    } catch (XmlContentException e) {
+      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+    }
+
+    return new LegacyIngestionService(this).writeArchive(archive, suppliedId, mode); // TODO: Reconcile return type
   }
 
   /**
