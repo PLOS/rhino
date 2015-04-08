@@ -60,6 +60,6 @@ public class ArticleStateController extends ArticleSpaceController {
     ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
     ArticleInputView input = readJsonFromRequest(request, ArticleInputView.class);
     articleStateService.update(articleIdentity, input);
-    articleCrudService.readMetadata(articleIdentity, false).respond(request, response, entityGson);
+    articleCrudService.readMetadata(articleIdentity).respond(request, response, entityGson);
   }
 }

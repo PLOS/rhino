@@ -21,7 +21,6 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -87,17 +86,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @param id specifies the article
    * @return Article object encapsulating metadata
    */
-  public abstract Article findArticleById(DoiBasedIdentity id);
+  public abstract Article findArticleById(ArticleIdentity id);
 
   /**
    * Read the metadata of an article.
    *
    * @param id               the identifier of the article
-   * @param excludeCitations if true, no citation information will be included in the response (useful for performance
-   *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract Transceiver readMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
+  public abstract Transceiver readMetadata(ArticleIdentity id) throws IOException;
 
   /**
    * Read the metadata of an article.

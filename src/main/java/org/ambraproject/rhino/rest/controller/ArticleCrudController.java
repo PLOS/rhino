@@ -104,7 +104,6 @@ public class ArticleCrudController extends ArticleSpaceController {
    *
    * @param request          HttpServletRequest
    * @param response         HttpServletResponse
-   * @param excludeCitations
    * @throws IOException
    */
   @Transactional(readOnly = true)
@@ -112,10 +111,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = ID_PARAM, required = true) String id,
                    @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
-                   @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
-                   @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
+                   @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    articleCrudService.readMetadata(parse(id, versionNumber, revisionNumber), excludeCitations).respond(request, response, entityGson);
+    articleCrudService.readMetadata(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   /**
