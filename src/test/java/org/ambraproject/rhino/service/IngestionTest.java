@@ -43,6 +43,7 @@ import org.ambraproject.models.CitedArticlePerson;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -256,7 +257,10 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    Article actual = articleCrudService.write(new RhinoTestHelper.TestFile(xmlFile).read(),
+    RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
+    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip",
+        IngestibleUtil.buildMockIngestible(testInputStream));
+    Article actual = articleCrudService.writeArchive(ingestible,
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");

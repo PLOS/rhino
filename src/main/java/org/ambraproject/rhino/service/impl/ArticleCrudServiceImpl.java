@@ -151,22 +151,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
-    if (mode == null) {
-      mode = WriteMode.WRITE_ANY;
-    }
-
-    byte[] xmlData = readClientInput(file);
-    Document doc = parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, suppliedId, mode, xmlData.length);
-    persistArticle(article, xmlData);
-    return article;
-  }
-
-  /**
    * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
    * responsibility of the caller.
    *

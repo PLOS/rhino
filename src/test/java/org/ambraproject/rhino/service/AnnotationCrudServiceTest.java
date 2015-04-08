@@ -21,8 +21,10 @@ import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.views.AnnotationView;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +72,9 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     String doi = articleId.getIdentifier();
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.write(input, Optional.of(articleId),
+    Archive ingestible = Archive.readZipFileIntoMemory(articleId.getLastToken() + ".zip",
+        IngestibleUtil.buildMockIngestible(input));
+    Article article = articleCrudService.writeArchive(ingestible, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
     UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");

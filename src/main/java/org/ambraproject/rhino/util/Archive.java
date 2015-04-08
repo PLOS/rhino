@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -169,8 +170,7 @@ public abstract class Archive implements Closeable {
 
   public static Archive readCollection(ContentRepoService service, RepoCollectionMetadata collection) {
     String key = collection.getVersion().getKey();
-    int slashIndex = key.lastIndexOf('/');
-    String lastToken = (slashIndex < 0) ? key : key.substring(slashIndex + 1);
+    String lastToken = DoiBasedIdentity.create(key).getLastToken();
     String archiveName = lastToken + ".zip";
 
     return readCollection(archiveName, service, collection);

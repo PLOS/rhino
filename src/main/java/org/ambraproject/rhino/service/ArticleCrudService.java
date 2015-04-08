@@ -34,22 +34,6 @@ import java.util.Collection;
 public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
-   * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
-   * entity is created; else, the article is re-ingested and the new data replaces the old data in the file store.
-   * <p/>
-   * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
-   * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
-   *
-   * @param file       the XML data for the article
-   * @param suppliedId the identifier supplied for the article, if any
-   * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
-   * @throws IOException
-   */
-  public abstract Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
-      throws IOException;
-
-  /**
    * Create or update an article from supplied ,zip archive data. If no article exists with the given identity, a new
    * article entity is created; else, the article is re-ingested and the new data replaces the old data in the file
    * store.
