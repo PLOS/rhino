@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.RepoCollectionMetadata;
+import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
@@ -83,6 +84,18 @@ public abstract class Archive implements Closeable {
   }
 
   protected abstract InputStream openFileFrom(Object fileObj);
+
+  public final RepoObject.ContentAccessor getContentAccessorFor(final String entryName) {
+    if (!files.containsKey(Preconditions.checkNotNull(entryName))) {
+      throw new IllegalArgumentException("Archive does not contain an entry named: " + entryName);
+    }
+    return new RepoObject.ContentAccessor() {
+      @Override
+      public InputStream open() throws IOException {
+        return openFile(entryName);
+      }
+    };
+  }
 
   /**
    * Release or delete resources associated with storing the archive contents. Files cannot be opened afterward.

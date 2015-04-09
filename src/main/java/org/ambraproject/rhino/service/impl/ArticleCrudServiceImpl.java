@@ -98,7 +98,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     if (versionNumber.isPresent()) {
       collection = contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
     } else {
-      collection = null; // TODO: get latest collection
+      collection = contentRepoService.getLatestCollection(identifier);
     }
 
     Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
@@ -133,13 +133,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
+    RepoCollectionMetadata createdVersionedArticle;
     try {
-      new VersionedIngestionService(this).ingest(null); // TODO Adapt to archive
+      createdVersionedArticle = new VersionedIngestionService(this).ingest(archive);
     } catch (XmlContentException e) {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
     }
 
-    return new LegacyIngestionService(this).writeArchive(archive, suppliedId, mode); // TODO: Reconcile return type
+    Article createdLegacyArticle = new LegacyIngestionService(this).writeArchive(archive, suppliedId, mode);
+
+    return createdLegacyArticle; // TODO: Reconcile return type with createdVersionedArticle
   }
 
   /**

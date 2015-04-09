@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.io.ByteStreams;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -13,6 +12,8 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.model.ArticleAssociation;
+import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
@@ -21,25 +22,18 @@ import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.core.MediaType;
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 class VersionedIngestionService {
 
@@ -51,44 +45,19 @@ class VersionedIngestionService {
     this.parentService = Preconditions.checkNotNull(parentService);
   }
 
-  public RepoCollectionMetadata ingest(InputStream archiveStream) throws IOException, XmlContentException {
-    String prefix = "ingest_" + new Date().getTime() + "_";
-    Map<String, File> extracted = new HashMap<>();
-
-    try {
-      File manifestFile = null;
-      try (ZipInputStream zipStream = new ZipInputStream(archiveStream)) {
-        ZipEntry entry;
-        while ((entry = zipStream.getNextEntry()) != null) {
-          File tempFile = File.createTempFile(prefix, null);
-          try (OutputStream tempFileStream = new FileOutputStream(tempFile)) {
-            ByteStreams.copy(zipStream, tempFileStream);
-          }
-
-          String name = entry.getName();
-          extracted.put(name, tempFile);
-          if (name.equalsIgnoreCase("manifest.xml")) {
-            manifestFile = tempFile;
-          }
-        }
-      } finally {
-        archiveStream.close();
-      }
-      if (manifestFile == null) {
-        // TODO complain
-      }
-
-      return writeCollection(extracted, manifestFile);
-    } finally {
-      for (File file : extracted.values()) {
-        file.delete();
+  public RepoCollectionMetadata ingest(Archive archive) throws IOException, XmlContentException {
+    String manifestEntry = null;
+    for (String entryName : archive.getEntryNames()) {
+      if (entryName.equalsIgnoreCase("manifest.xml")) {
+        manifestEntry = entryName;
       }
     }
-  }
+    if (manifestEntry == null) {
+      throw new RestClientException("Archive has no manifest file", HttpStatus.BAD_REQUEST);
+    }
 
-  private RepoCollectionMetadata writeCollection(Map<String, File> files, File manifestFile) throws IOException, XmlContentException {
     ManifestXml manifestXml;
-    try (InputStream manifestStream = new BufferedInputStream(new FileInputStream(manifestFile))) {
+    try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
     ImmutableList<ManifestXml.Asset> assets = manifestXml.parse();
@@ -109,13 +78,16 @@ class VersionedIngestionService {
       }
     }
     if (manuscriptAsset == null || manuscriptRepr == null) {
-      throw new IllegalArgumentException(); // TODO Better failure
+      throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
     }
 
-    File manuscriptFile = files.get(manuscriptRepr.getEntry());
+    String manuscriptEntry = manuscriptRepr.getEntry();
+    if (!archive.getEntryNames().contains(manifestEntry)) {
+      throw new RestClientException("Manifest refers to missing file as main-entry: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
+    }
     ArticleIdentity articleIdentity;
     Article articleMetadata;
-    try (InputStream manuscriptStream = new BufferedInputStream(new FileInputStream(manuscriptFile))) {
+    try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       ArticleXml parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
       articleIdentity = parsedArticle.readDoi();
       articleMetadata = parsedArticle.build(new Article());
@@ -124,8 +96,8 @@ class VersionedIngestionService {
 
     Map<String, RepoObject> toUpload = new LinkedHashMap<>(); // keys are zip entry names
 
-    RepoObject manifestObject = new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity)
-        .fileContent(manuscriptFile)
+    RepoObject manifestObject = new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
+        .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
         .contentType(MediaType.APPLICATION_XML)
         .downloadName(articleIdentity.forXmlAsset().getFileName())
         .build();
@@ -134,11 +106,14 @@ class VersionedIngestionService {
     for (ManifestXml.Asset asset : assets) {
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
         String entry = representation.getEntry();
-        File file = files.get(entry);
-        if (file.equals(manuscriptFile)) continue;
-        String key = representation.getName() + "/" + AssetIdentity.create(asset.getUri());
+        if (entry.equals(manuscriptEntry)) continue;
+        if (!archive.getEntryNames().contains(entry)) {
+          // TODO: Rollback needed?
+          throw new RestClientException("Manifest refers to missing file: " + entry, HttpStatus.BAD_REQUEST);
+        }
+        String key = representation.getName() + "/" + AssetIdentity.create(asset.getUri()).getIdentifier();
         RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
-            .fileContent(file)
+            .contentAccessor(archive.getContentAccessorFor(entry))
                 // TODO Add more metadata. Extract from articleMetadata and manifestXml as necessary.
             .build();
         toUpload.put(entry, repoObject);

@@ -142,18 +142,6 @@ public class ArticleRevisionController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "articles/versions/ingest", method = RequestMethod.POST)
-  public void ingest(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam("archive") MultipartFile requestFile)
-      throws IOException {
-    try (InputStream requestStream = requestFile.getInputStream()) {
-      articleRevisionService.ingest(requestStream);
-    } catch (XmlContentException e) {
-      throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
-    }
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "articles/revisions", method = RequestMethod.POST)
   public ResponseEntity<?> createRevision(HttpServletRequest request, HttpServletResponse response,
                                           @RequestParam(value = "doi", required = true) String doi,
