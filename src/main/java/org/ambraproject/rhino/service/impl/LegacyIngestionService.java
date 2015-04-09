@@ -21,12 +21,15 @@ import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -59,6 +62,17 @@ class LegacyIngestionService {
     this.parentService = Preconditions.checkNotNull(parentService);
   }
 
+  private Article findArticleById(DoiBasedIdentity id) {
+    return (Article) DataAccessUtils.uniqueResult((List<?>)
+        parentService.hibernateTemplate.findByCriteria(DetachedCriteria
+                .forClass(Article.class)
+                .add(Restrictions.eq("doi", id.getKey()))
+                .setFetchMode("articleType", FetchMode.JOIN)
+                .setFetchMode("citedArticles", FetchMode.JOIN)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        ));
+  }
+
   /**
    * Creates or updates an Article instance based on the given Document.  Does not persist the Article; that is the
    * responsibility of the caller.
@@ -89,7 +103,7 @@ class LegacyIngestionService {
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
 
-    Article article = parentService.findArticleById(doi);
+    Article article = findArticleById(doi);
     final boolean creating = (article == null);
     if ((creating && mode == DoiBasedCrudService.WriteMode.UPDATE_ONLY) || (!creating && mode == DoiBasedCrudService.WriteMode.CREATE_ONLY)) {
       String messageStub = (creating ?
