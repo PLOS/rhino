@@ -56,6 +56,8 @@ class VersionedIngestionService {
       throw new RestClientException("Archive has no manifest file", HttpStatus.BAD_REQUEST);
     }
 
+    Map<String, RepoObject> toUpload = new LinkedHashMap<>(); // keys are zip entry names
+
     ManifestXml manifestXml;
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
@@ -94,15 +96,21 @@ class VersionedIngestionService {
       articleMetadata.setDoi(articleIdentity.getKey()); // Should ArticleXml.build do this itself?
     }
 
-    Map<String, RepoObject> toUpload = new LinkedHashMap<>(); // keys are zip entry names
+    RepoObject manifestObject = new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
+        .contentAccessor(archive.getContentAccessorFor(manifestEntry))
+        .downloadName(manifestEntry)
+        .contentType(MediaType.APPLICATION_XML)
+        .userMetadata(createUserMetadataForArchiveEntryName(manifestEntry))
+        .build();
+    toUpload.put(manifestEntry, manifestObject);
 
-    RepoObject manifestObject = new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
+    RepoObject manuscriptObject = new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
         .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
         .contentType(MediaType.APPLICATION_XML)
         .downloadName(articleIdentity.forXmlAsset().getFileName())
         .userMetadata(createUserMetadataForArchiveEntryName(manuscriptEntry))
         .build();
-    toUpload.put(manuscriptRepr.getEntry(), manifestObject);
+    toUpload.put(manuscriptEntry, manuscriptObject);
 
     for (ManifestXml.Asset asset : assets) {
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
@@ -117,6 +125,19 @@ class VersionedIngestionService {
             .contentAccessor(archive.getContentAccessorFor(entry))
             .userMetadata(createUserMetadataForArchiveEntryName(entry))
                 // TODO Add more metadata. Extract from articleMetadata and manifestXml as necessary.
+            .build();
+        toUpload.put(entry, repoObject);
+      }
+    }
+
+    // Create RepoObjects for files in the archive not referenced by the manifest
+    int stragglerIndex = 0;
+    for (String entry : archive.getEntryNames()) {
+      if (!toUpload.containsKey(entry)) {
+        String key = "extraFile-" + (++stragglerIndex) + "/" + articleIdentity.getIdentifier();
+        RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
+            .contentAccessor(archive.getContentAccessorFor(entry))
+            .userMetadata(createUserMetadataForArchiveEntryName(entry))
             .build();
         toUpload.put(entry, repoObject);
       }
