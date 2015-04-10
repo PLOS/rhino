@@ -23,14 +23,11 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
@@ -94,7 +91,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Autowired
   Gson crepoGson;
 
-  private Document fetchArticleXml(ArticleIdentity id) {
+  private RepoCollectionMetadata fetchArticleCollection(ArticleIdentity id) {
     String identifier = id.getIdentifier();
     Optional<Integer> versionNumber = id.getVersionNumber();
     RepoCollectionMetadata collection;
@@ -103,6 +100,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } else {
       collection = contentRepoService.getLatestCollection(identifier);
     }
+    return collection;
+  }
+
+  private Document fetchArticleXml(ArticleIdentity id) {
+    RepoCollectionMetadata collection = fetchArticleCollection(id);
 
     Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
     Map<String, String> manuscriptId = (Map<String, String>) userMetadata.get("manuscript");
@@ -166,6 +168,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     Article createdLegacyArticle = new LegacyIngestionService(this).writeArchive(collectionArchive, suppliedId, mode);
 
     return createdLegacyArticle; // TODO: Reconcile return type with createdVersionedArticle
+  }
+
+  @Override
+  public Archive readArchive(ArticleIdentity articleIdentity) {
+    RepoCollectionMetadata collection = fetchArticleCollection(articleIdentity);
+    String archiveName = articleIdentity.getLastToken() + ".zip";
+    return Archive.readCollection(contentRepoService, archiveName, collection, ARCHIVE_ENTRY_NAME_EXTRACTOR);
   }
 
   /**

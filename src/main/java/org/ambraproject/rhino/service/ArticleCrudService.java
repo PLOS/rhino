@@ -47,6 +47,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException;
 
+  public abstract Archive readArchive(ArticleIdentity articleIdentity);
+
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
    *

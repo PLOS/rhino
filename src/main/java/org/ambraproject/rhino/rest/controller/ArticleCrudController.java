@@ -23,9 +23,11 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -170,6 +174,22 @@ public class ArticleCrudController extends ArticleSpaceController {
     ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
     AssetFileIdentity xmlAsset = articleIdentity.forXmlAsset();
     assetFileCrudController.read(request, response, xmlAsset);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "repack"})
+  public void repack(HttpServletResponse response,
+                     @RequestParam(value = ID_PARAM, required = true) String id,
+                     @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                     @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
+    Archive repacked = articleCrudService.readArchive(articleIdentity);
+
+    response.setContentType(MediaType.APPLICATION_XML.toString());
+    try (OutputStream stream = new BufferedOutputStream(response.getOutputStream())) {
+      repacked.write(stream);
+    }
   }
 
 }
