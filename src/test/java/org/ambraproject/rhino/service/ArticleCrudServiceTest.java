@@ -193,9 +193,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
-
-    articleCrudService.delete(articleId);
-    assertArticleExistence(articleId, false);
   }
 
   @Test(dataProvider = "sampleAssets")

@@ -333,7 +333,7 @@ class LegacyIngestionService {
       try {
         // If there is an error processing the assets, delete the article we created
         // above, since it won't be valid.
-        parentService.delete(ArticleIdentity.create(article));
+        delete(ArticleIdentity.create(article));
       } catch (RuntimeException exceptionOnDeletion) {
         exceptionOnDeletion.addSuppressed(rce);
         throw exceptionOnDeletion;
@@ -341,6 +341,21 @@ class LegacyIngestionService {
       throw rce;
     }
     return article;
+  }
+
+  private void delete(ArticleIdentity id) {
+    Article article = findArticleById(id);
+    if (article == null) {
+      throw AmbraService.reportNotFound(id);
+    }
+
+    for (ArticleAsset asset : article.getAssets()) {
+      if (AssetIdentity.hasFile(asset)) {
+        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
+        parentService.deleteAssetFile(assetFileIdentity);
+      }
+    }
+    parentService.hibernateTemplate.delete(article);
   }
 
   /**

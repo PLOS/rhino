@@ -230,25 +230,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     };
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void delete(ArticleIdentity id) {
-    Article article = findArticleById(id);
-    if (article == null) {
-      throw reportNotFound(id);
-    }
-
-    for (ArticleAsset asset : article.getAssets()) {
-      if (AssetIdentity.hasFile(asset)) {
-        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
-        deleteAssetFile(assetFileIdentity);
-      }
-    }
-    hibernateTemplate.delete(article);
-  }
-
   @Override
   public Transceiver listDois(final ArticleCriteria articleCriteria)
       throws IOException {

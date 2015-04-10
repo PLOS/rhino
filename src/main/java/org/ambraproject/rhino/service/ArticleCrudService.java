@@ -57,14 +57,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract InputStream readXml(ArticleIdentity id);
 
   /**
-   * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
-   *
-   * @param id the identifier of the article to delete
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
-   */
-  public abstract void delete(ArticleIdentity id);
-
-  /**
    * Loads and returns article metadata.
    *
    * @param id specifies the article
