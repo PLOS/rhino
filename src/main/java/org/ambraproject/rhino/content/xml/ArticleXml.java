@@ -151,6 +151,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    */
   @Override
   public Article build(Article article) throws XmlContentException {
+    article.setDoi(readDoi().getKey());
     setConstants(article);
     setFromXml(article);
     return article;

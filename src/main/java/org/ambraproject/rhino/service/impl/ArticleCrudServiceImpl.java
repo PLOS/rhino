@@ -20,10 +20,16 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.models.Category;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -129,11 +135,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Article findArticleById(ArticleIdentity id) {
     Document document = fetchArticleXml(id);
+    Article article;
     try {
-      return new ArticleXml(document).build(new Article());
+      article = new ArticleXml(document).build(new Article());
     } catch (XmlContentException e) {
       throw new RuntimeException(e);
     }
+
+    return kludgeArticleFields(article);
+  }
+
+  /*
+   * While versioned articles from CRepo back end are under development, fill in dummy values for fields not populated
+   * by ArticleXml.
+   *
+   * TODO: Fill in real values or obviate the fields; delete this method
+   */
+  private static Article kludgeArticleFields(Article article) {
+    ArticleAsset xmlAsset = new ArticleAsset();
+    xmlAsset.setDoi(article.getDoi());
+    xmlAsset.setExtension("XML");
+
+    article.setID(-1L);
+    article.setAssets(ImmutableList.of(xmlAsset));
+    article.setJournals(ImmutableSet.<Journal>of());
+    article.setRelatedArticles(ImmutableList.<ArticleRelationship>of());
+    article.setCategories(ImmutableMap.<Category, Integer>of());
+    return article;
   }
 
 

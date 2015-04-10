@@ -93,7 +93,6 @@ class VersionedIngestionService {
       ArticleXml parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
       articleIdentity = parsedArticle.readDoi();
       articleMetadata = parsedArticle.build(new Article());
-      articleMetadata.setDoi(articleIdentity.getKey()); // Should ArticleXml.build do this itself?
     }
 
     RepoObject manifestObject = new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
