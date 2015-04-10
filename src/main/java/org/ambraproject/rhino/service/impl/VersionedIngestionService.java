@@ -100,6 +100,7 @@ class VersionedIngestionService {
         .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
         .contentType(MediaType.APPLICATION_XML)
         .downloadName(articleIdentity.forXmlAsset().getFileName())
+        .userMetadata(createUserMetadataForArchiveEntryName(manuscriptEntry))
         .build();
     toUpload.put(manuscriptRepr.getEntry(), manifestObject);
 
@@ -114,6 +115,7 @@ class VersionedIngestionService {
         String key = representation.getName() + "/" + AssetIdentity.create(asset.getUri()).getIdentifier();
         RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
             .contentAccessor(archive.getContentAccessorFor(entry))
+            .userMetadata(createUserMetadataForArchiveEntryName(entry))
                 // TODO Add more metadata. Extract from articleMetadata and manifestXml as necessary.
             .build();
         toUpload.put(entry, repoObject);
@@ -154,6 +156,11 @@ class VersionedIngestionService {
     }
 
     return collectionMetadata;
+  }
+
+  private String createUserMetadataForArchiveEntryName(String entryName) {
+    ImmutableMap<String, String> map = ImmutableMap.of(ArticleCrudServiceImpl.ARCHIVE_ENTRY_NAME_KEY, entryName);
+    return parentService.crepoGson.toJson(map);
   }
 
   private static class ArticleUserMetadata {

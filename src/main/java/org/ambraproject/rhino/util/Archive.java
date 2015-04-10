@@ -1,11 +1,11 @@
 package org.ambraproject.rhino.util;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Abstraction over a .zip archive or equivalent structure.
@@ -104,6 +105,19 @@ public abstract class Archive implements Closeable {
   public void close() {
   }
 
+  public final void write(OutputStream stream) throws IOException {
+    try (ZipOutputStream zipOutputStream = new ZipOutputStream(stream)) {
+      for (Map.Entry<String, ?> entry : files.entrySet()) {
+        zipOutputStream.putNextEntry(new ZipEntry(entry.getKey()));
+        try (InputStream entryFile = openFileFrom(entry.getValue())) {
+          ByteStreams.copy(entryFile, zipOutputStream);
+        }
+      }
+    } finally {
+      stream.close();
+    }
+  }
+
 
   public static Archive readZipFile(File file) throws IOException {
     try (InputStream stream = new FileInputStream(file)) {
@@ -181,37 +195,37 @@ public abstract class Archive implements Closeable {
     };
   }
 
-  public static Archive readCollection(ContentRepoService service, RepoCollectionMetadata collection) {
-    String key = collection.getVersion().getKey();
-    String lastToken = DoiBasedIdentity.create(key).getLastToken();
-    String archiveName = lastToken + ".zip";
-
-    return readCollection(archiveName, service, collection);
-  }
-
   /**
    * Represent an archive from a content repo collection, equivalent to the actual zip archive that would have been
    * ingested to create the collection.
    *
-   * @param service    a content repo service that can be used to read objects in the collection
-   * @param collection the collection version
+   * @param service            a content repo service that can be used to read objects in the collection
+   * @param archiveName        the name of the .zip file being represented
+   * @param collection         the collection version
+   * @param entryNameExtractor logic for recovering a zip entry name from a content repo object (may return null, in
+   *                           which case the object downloadName is required and used)
    * @return the archive representation
    */
-  public static Archive readCollection(String archiveName,
-                                       final ContentRepoService service,
-                                       RepoCollectionMetadata collection) {
+  public static Archive readCollection(final ContentRepoService service, String archiveName,
+                                       RepoCollectionMetadata collection,
+                                       Function<? super RepoObjectMetadata, String> entryNameExtractor) {
     Preconditions.checkNotNull(service);
 
     ImmutableMap.Builder<String, RepoVersion> objects = ImmutableMap.builder();
     for (RepoObjectMetadata objectMetadata : collection.getObjects()) {
-      Optional<String> downloadName = objectMetadata.getDownloadName();
       RepoVersion version = objectMetadata.getVersion();
-      if (downloadName.isPresent()) {
-        objects.put(downloadName.get(), version);
-      } else {
-        String message = "Repo objects must have downloadNames to be represented as an Archive. Object does not: " + version;
-        throw new RuntimeException(message);
+
+      String entryName = entryNameExtractor.apply(objectMetadata);
+      if (entryName == null) {
+        Optional<String> downloadName = objectMetadata.getDownloadName();
+        if (downloadName.isPresent()) {
+          entryName = downloadName.get();
+        } else {
+          String message = "Repo objects must have downloadNames to be represented as an Archive. Object does not: " + version;
+          throw new RuntimeException(message);
+        }
       }
+      objects.put(entryName, version);
     }
 
     return new Archive(archiveName, objects.build()) {

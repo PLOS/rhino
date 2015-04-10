@@ -18,6 +18,7 @@
  */
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
@@ -49,6 +50,7 @@ import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.model.RepoCollectionMetadata;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
@@ -60,6 +62,7 @@ import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -131,16 +134,36 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
+
+  static final String ARCHIVE_ENTRY_NAME_KEY = "archiveEntryName";
+  private static final Function<RepoObjectMetadata, String> ARCHIVE_ENTRY_NAME_EXTRACTOR = new Function<RepoObjectMetadata, String>() {
+    @Nullable
+    @Override
+    public String apply(RepoObjectMetadata input) {
+      Optional<Object> jsonUserMetadata = input.getJsonUserMetadata();
+      if (jsonUserMetadata.isPresent()) {
+        Object metadataValue = jsonUserMetadata.get();
+        if (metadataValue instanceof Map) {
+          return (String) ((Map) metadataValue).get(ARCHIVE_ENTRY_NAME_KEY);
+        }
+      }
+      return null; // default to downloadName value
+    }
+  };
+
   @Override
-  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
+  public Article writeArchive(Archive inputArchive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
     RepoCollectionMetadata createdVersionedArticle;
     try {
-      createdVersionedArticle = new VersionedIngestionService(this).ingest(archive);
+      createdVersionedArticle = new VersionedIngestionService(this).ingest(inputArchive);
     } catch (XmlContentException e) {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
     }
+    Archive collectionArchive = Archive.readCollection(contentRepoService,
+        inputArchive.getArchiveName(), createdVersionedArticle, ARCHIVE_ENTRY_NAME_EXTRACTOR);
+    inputArchive.close();
 
-    Article createdLegacyArticle = new LegacyIngestionService(this).writeArchive(archive, suppliedId, mode);
+    Article createdLegacyArticle = new LegacyIngestionService(this).writeArchive(collectionArchive, suppliedId, mode);
 
     return createdLegacyArticle; // TODO: Reconcile return type with createdVersionedArticle
   }
@@ -257,7 +280,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     List<ArticleRelationship> rawRelationships = article.getRelatedArticles();
     List<RelatedArticleView> relatedArticleViews = Lists.newArrayListWithCapacity(rawRelationships.size());
     for (ArticleRelationship rawRelationship : rawRelationships) {
-      if (rawRelationship.getOtherArticleID() == null) { continue; } // ignore when doi not present in article table
+      if (rawRelationship.getOtherArticleID() == null) {
+        continue;
+      } // ignore when doi not present in article table
       String otherArticleDoi = rawRelationship.getOtherArticleDoi();
 
       // Simple and inefficient implementation. Same solution as legacy Ambra. TODO: Optimize
@@ -266,7 +291,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
               .add(Restrictions.eq("doi", otherArticleDoi))));
 
       RelatedArticleView relatedArticleView = new RelatedArticleView(rawRelationship, relatedArticle.getTitle(),
-              relatedArticle.getAuthors());
+          relatedArticle.getAuthors());
       relatedArticleViews.add(relatedArticleView);
     }
     return relatedArticleViews;
