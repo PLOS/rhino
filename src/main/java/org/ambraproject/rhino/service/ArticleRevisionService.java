@@ -1,23 +1,31 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.service.ContentRepoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.plos.crepo.model.RepoVersionNumber;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -27,39 +35,91 @@ import java.util.UUID;
 
 public class ArticleRevisionService extends AmbraService {
 
-  @Autowired
-  private ContentRepoService versionedContentRepoService;
-
-
-  public Transceiver readVersion(ArticleIdentity articleIdentity, UUID uuid) {
-    final RepoVersion version = RepoVersion.create(articleIdentity.getIdentifier(), uuid);
-    return new Transceiver() {
-      @Override
-      protected Object getData() throws IOException {
-        RepoCollectionMetadata collection = versionedContentRepoService.getCollection(version);
-
-        // TODO: Implement a view. Don't actually want to expose UUIDs, etc.
-        return collection.getJsonUserMetadata().orNull();
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
+  private RepoCollectionMetadata findCollectionFor(ArticleIdentity article) {
+    String articleKey = article.getIdentifier();
+    Optional<Integer> versionNumber = article.getVersionNumber();
+    return versionNumber.isPresent()
+        ? contentRepoService.getCollection(new RepoVersionNumber(articleKey, versionNumber.get()))
+        : contentRepoService.getLatestCollection(articleKey);
   }
 
+  private ArticleRevision getLatestRevision(final String doi) {
+    return hibernateTemplate.execute(new HibernateCallback<ArticleRevision>() {
+      @Override
+      public ArticleRevision doInHibernate(Session session) {
+        Query query = session.createQuery("from ArticleRevision where doi=? order by revisionNumber desc");
+        query.setString(0, doi);
+        query.setMaxResults(1);
+        return (ArticleRevision) DataAccessUtils.singleResult(query.list());
+      }
+    });
+  }
+
+  public void createRevision(ArticleIdentity article, Integer revisionNumber) {
+    String articleKey = article.getIdentifier();
+
+    ArticleRevision revision;
+    if (revisionNumber == null) {
+      ArticleRevision latestRevision = getLatestRevision(articleKey); // TODO: Transaction safety
+      int newRevisionNumber = (latestRevision == null) ? 1 : latestRevision.getRevisionNumber() + 1;
+
+      revision = new ArticleRevision();
+      revision.setDoi(articleKey);
+      revision.setRevisionNumber(newRevisionNumber);
+    } else {
+      revision = (ArticleRevision) DataAccessUtils.uniqueResult(
+          hibernateTemplate.find("from ArticleRevision where doi=? and revisionNumber=?",
+              articleKey, revisionNumber));
+      if (revision == null) {
+        revision = new ArticleRevision();
+        revision.setDoi(articleKey);
+        revision.setRevisionNumber(revisionNumber);
+      }
+    }
+
+    RepoCollectionMetadata collection = findCollectionFor(article);
+    revision.setCrepoUuid(collection.getVersion().getUuid().toString());
+    hibernateTemplate.persist(revision);
+  }
+
+  public boolean deleteRevision(ArticleIdentity article, Integer revisionNumber) {
+    ArticleRevision revision = (ArticleRevision) DataAccessUtils.uniqueResult(
+        hibernateTemplate.find("from ArticleRevision where doi=? and revisionNumber=?",
+            article.getIdentifier(), revisionNumber));
+    if (revision == null) {
+      return false;
+    }
+    hibernateTemplate.delete(revision);
+    return true;
+  }
+
+  private String findRevisionUuid(String articleKey, int revisionNumber) {
+    return (String) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(ArticleRevision.class)
+            .setProjection(Projections.property("crepoUuid"))
+            .add(Restrictions.eq("doi", articleKey))
+            .add(Restrictions.eq("revisionNumber", revisionNumber))));
+  }
+
+  public Integer findVersionNumber(ArticleIdentity article, int revisionNumber) {
+    String articleKey = article.getIdentifier();
+    String uuid = findRevisionUuid(articleKey, revisionNumber);
+    if (uuid == null) return null;
+
+    RepoCollectionMetadata collectionMetadata = contentRepoService.getCollection(RepoVersion.create(articleKey, uuid));
+    return collectionMetadata.getVersionNumber().getNumber();
+  }
+
+
   /**
-   * Return the metadata for the object in a collection with a given key.
+   * Search a collection for an object in it with a given key.
    *
-   * @param collectionVersion the collection's identifier
-   * @param objectKey         the key of the object to search for
-   * @return the metadata of the object, or {@code null} if no object with the key is in the collection
+   * @param collection the collection to search
+   * @param objectKey  the key of the object to search for
+   * @return the metadata of the found object, or {@code null} if no object with the key is in the collection
    * @throws IllegalArgumentException if two or more objects in the collection have the given key
    */
-  private RepoObjectMetadata findObjectInCollection(RepoVersion collectionVersion, String objectKey) {
-    Preconditions.checkNotNull(objectKey);
-    RepoCollectionMetadata collection = versionedContentRepoService.getCollection(collectionVersion);
+  private RepoObjectMetadata findObjectInCollection(RepoCollectionMetadata collection, String objectKey) {
     RepoObjectMetadata found = null;
     for (RepoObjectMetadata objectMetadata : collection.getObjects()) {
       if (objectMetadata.getVersion().getKey().equals(objectKey)) {
@@ -72,10 +132,11 @@ public class ArticleRevisionService extends AmbraService {
     return found;
   }
 
-  public InputStream readFileVersion(ArticleIdentity articleIdentity, UUID articleUuid, String fileKey) {
-    RepoObjectMetadata objectMetadata = findObjectInCollection(RepoVersion.create(articleIdentity.getIdentifier(), articleUuid), fileKey);
+  public RepoObjectMetadata readFileVersion(ArticleIdentity articleIdentity, String fileKey) {
+    RepoCollectionMetadata collection = findCollectionFor(articleIdentity);
+    RepoObjectMetadata objectMetadata = findObjectInCollection(collection, fileKey);
     if (objectMetadata == null) throw new RestClientException("File not found", HttpStatus.NOT_FOUND);
-    return contentRepoService.getRepoObject(objectMetadata.getVersion());
+    return objectMetadata;
   }
 
 
@@ -119,7 +180,7 @@ public class ArticleRevisionService extends AmbraService {
   }
 
   private Collection<?> fetchRevisions(ArticleIdentity articleIdentity) throws IOException {
-    List<RepoCollectionMetadata> versions = versionedContentRepoService.getCollectionVersions(articleIdentity.getIdentifier());
+    List<RepoCollectionMetadata> versions = contentRepoService.getCollectionVersions(articleIdentity.getIdentifier());
     Map<UUID, RevisionVersionMapping> mappings = Maps.newHashMapWithExpectedSize(versions.size());
     for (RepoCollectionMetadata version : versions) {
       RevisionVersionMapping mapping = new RevisionVersionMapping(version.getVersionNumber().getNumber());
@@ -135,4 +196,40 @@ public class ArticleRevisionService extends AmbraService {
     return ORDER_BY_VERSION_NUMBER.immutableSortedCopy(mappings.values());
   }
 
+  public String getParentDoi(String doi) {
+    doi = DoiBasedIdentity.asIdentifier(doi);
+    return (String) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+        "select parentArticleDoi from ArticleAssociation where doi=?", doi));
+  }
+
+  public RepoObjectMetadata getObjectVersion(AssetIdentity assetIdentity, String repr, int revisionNumber) {
+    String parentArticleDoi = getParentDoi(assetIdentity.getIdentifier());
+    if (parentArticleDoi == null) throw new RestClientException("Unrecognized asset DOI", HttpStatus.NOT_FOUND);
+
+    String parentArticleUuid = findRevisionUuid(parentArticleDoi, revisionNumber);
+    if (parentArticleUuid == null) throw new RestClientException("Revision not found", HttpStatus.NOT_FOUND);
+
+    RepoCollectionMetadata articleCollection = contentRepoService.getCollection(RepoVersion.create(parentArticleDoi, parentArticleUuid));
+    Map<String, ?> articleMetadata = (Map<String, ?>) articleCollection.getJsonUserMetadata().get();
+    Collection<Map<String, ?>> assets = (Collection<Map<String, ?>>) articleMetadata.get("assets");
+    RepoVersion assetVersion = findAssetVersion(repr, assets, assetIdentity);
+
+    return contentRepoService.getRepoObjectMetadata(assetVersion);
+  }
+
+  private static RepoVersion findAssetVersion(String repr, Collection<Map<String, ?>> assets, AssetIdentity targetAssetId) {
+    for (Map<String, ?> asset : assets) {
+      AssetIdentity assetId = AssetIdentity.create((String) asset.get("doi"));
+      if (assetId.equals(targetAssetId)) {
+        Map<String, ?> assetObjects = (Map<String, ?>) asset.get("objects");
+        Map<String, ?> assetRepr = (Map<String, ?>) assetObjects.get(repr);
+        if (assetRepr == null) throw new RestClientException("repr not found", HttpStatus.NOT_FOUND);
+        return RepoVersion.create((String) assetRepr.get("key"), (String) assetRepr.get("uuid"));
+      }
+    }
+    // We already match the asset DOI to this article in the ArticleAssociation table,
+    // but this is still possible if the asset appears in other revisions of the article but not this one.
+    throw new RestClientException("Asset not in revision", HttpStatus.NOT_FOUND);
+  }
+  
 }
