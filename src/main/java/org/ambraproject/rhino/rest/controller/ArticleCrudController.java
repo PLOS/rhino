@@ -18,14 +18,16 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.net.HttpHeaders;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
+import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -59,8 +61,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String EXCLUDE_PARAM = "exclude";
 
   @Autowired
+  private ArticleRevisionService articleRevisionService;
+  @Autowired
   private AnnotationCrudService annotationCrudService;
-
   @Autowired
   private AssetFileCrudController assetFileCrudController;
 
@@ -106,8 +109,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Retrieves metadata about an article.
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @throws IOException
    */
   @Transactional(readOnly = true)
@@ -172,8 +175,8 @@ public class ArticleCrudController extends ArticleSpaceController {
                       @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
     ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
-    AssetFileIdentity xmlAsset = articleIdentity.forXmlAsset();
-    assetFileCrudController.read(request, response, xmlAsset);
+    RepoObjectMetadata manuscript = articleRevisionService.getManuscript(articleIdentity);
+    streamRepoObject(response, manuscript);
   }
 
   @Transactional(readOnly = true)
@@ -187,6 +190,7 @@ public class ArticleCrudController extends ArticleSpaceController {
     Archive repacked = articleCrudService.readArchive(articleIdentity);
 
     response.setContentType(MediaType.APPLICATION_XML.toString());
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "filename=" + repacked.getArchiveName());
     try (OutputStream stream = new BufferedOutputStream(response.getOutputStream())) {
       repacked.write(stream);
     }

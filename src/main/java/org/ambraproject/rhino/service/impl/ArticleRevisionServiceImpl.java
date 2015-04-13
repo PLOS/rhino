@@ -224,6 +224,10 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
     return contentRepoService.getRepoObjectMetadata(assetVersion);
   }
 
+  private static RepoVersion parseRepoVersion(Map<String, ?> versionJson) {
+    return RepoVersion.create((String) versionJson.get("key"), (String) versionJson.get("uuid"));
+  }
+
   private static RepoVersion findAssetVersion(String repr, Collection<Map<String, ?>> assets, AssetIdentity targetAssetId) {
     for (Map<String, ?> asset : assets) {
       AssetIdentity assetId = AssetIdentity.create((String) asset.get("doi"));
@@ -231,12 +235,20 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
         Map<String, ?> assetObjects = (Map<String, ?>) asset.get("objects");
         Map<String, ?> assetRepr = (Map<String, ?>) assetObjects.get(repr);
         if (assetRepr == null) throw new RestClientException("repr not found", HttpStatus.NOT_FOUND);
-        return RepoVersion.create((String) assetRepr.get("key"), (String) assetRepr.get("uuid"));
+        return parseRepoVersion(assetRepr);
       }
     }
     // We already match the asset DOI to this article in the ArticleAssociation table,
     // but this is still possible if the asset appears in other revisions of the article but not this one.
     throw new RestClientException("Asset not in revision", HttpStatus.NOT_FOUND);
+  }
+
+  @Override
+  public RepoObjectMetadata getManuscript(ArticleIdentity article) {
+    RepoCollectionMetadata articleCollection = findCollectionFor(article);
+    Map<String, ?> manuscript = (Map<String, ?>) ((Map<String, ?>) articleCollection.getJsonUserMetadata().get()).get("manuscript");
+    RepoVersion manuscriptVersion = parseRepoVersion(manuscript);
+    return contentRepoService.getRepoObjectMetadata(manuscriptVersion);
   }
 
 }

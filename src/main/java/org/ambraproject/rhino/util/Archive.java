@@ -221,7 +221,7 @@ public abstract class Archive implements Closeable {
         if (downloadName.isPresent()) {
           entryName = downloadName.get();
         } else {
-          String message = "Repo objects must have downloadNames to be represented as an Archive. Object does not: " + version;
+          String message = "Could not find archive entry name for object: " + version;
           throw new RuntimeException(message);
         }
       }

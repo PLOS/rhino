@@ -27,8 +27,6 @@ import java.io.OutputStream;
 public class ArticleRevisionController extends ArticleSpaceController {
 
   @Autowired
-  private ContentRepoService contentRepoService;
-  @Autowired
   private ArticleRevisionService articleRevisionService;
 
   @RequestMapping(value = "articles/revisions", method = RequestMethod.POST)
@@ -82,14 +80,7 @@ public class ArticleRevisionController extends ArticleSpaceController {
       throws IOException {
     AssetIdentity assetIdentity = AssetIdentity.create(assetDoi);
     RepoObjectMetadata objectVersion = articleRevisionService.getObjectVersion(assetIdentity, repr, revisionNumber);
-
-    // TODO: Respect headers, reproxying, etc. This is just prototype code.
-    // See org.ambraproject.rhino.rest.controller.AssetFileCrudController.read
-    response.setStatus(HttpStatus.OK.value());
-    try (InputStream fileStream = contentRepoService.getRepoObject(objectVersion.getVersion());
-         OutputStream responseStream = response.getOutputStream()) {
-      ByteStreams.copy(fileStream, responseStream);
-    }
+    streamRepoObject(response, objectVersion);
   }
 
 }

@@ -157,6 +157,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     xmlAsset.setExtension("XML");
 
     article.setID(-1L);
+    article.setState(Article.STATE_ACTIVE);
     article.setAssets(ImmutableList.of(xmlAsset));
     article.setJournals(ImmutableSet.<Journal>of());
     article.setRelatedArticles(ImmutableList.<ArticleRelationship>of());

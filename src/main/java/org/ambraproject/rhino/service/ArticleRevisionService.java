@@ -21,4 +21,6 @@ public interface ArticleRevisionService {
 
   RepoObjectMetadata getObjectVersion(AssetIdentity assetIdentity, String repr, int revisionNumber);
 
+  RepoObjectMetadata getManuscript(ArticleIdentity article);
+
 }
