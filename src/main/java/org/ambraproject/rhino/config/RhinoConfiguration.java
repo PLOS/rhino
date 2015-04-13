@@ -42,6 +42,7 @@ import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.service.VolumeCrudService;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
+import org.ambraproject.rhino.service.impl.ArticleRevisionServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
@@ -292,7 +293,7 @@ public class RhinoConfiguration extends BaseConfiguration {
 
   @Bean
   public ArticleRevisionService articleRevisionService() {
-    return new ArticleRevisionService();
+    return new ArticleRevisionServiceImpl();
   }
 
   @Bean
