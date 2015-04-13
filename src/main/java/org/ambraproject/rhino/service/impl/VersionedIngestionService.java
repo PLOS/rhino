@@ -124,6 +124,7 @@ class VersionedIngestionService {
             .contentAccessor(archive.getContentAccessorFor(entry))
             .userMetadata(createUserMetadataForArchiveEntryName(entry))
                 // TODO Add more metadata. Extract from articleMetadata and manifestXml as necessary.
+            .contentType(MediaType.APPLICATION_OCTET_STREAM) // Temporary! TODO: Remove
             .build();
         toUpload.put(entry, repoObject);
       }
@@ -137,6 +138,7 @@ class VersionedIngestionService {
         RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
             .contentAccessor(archive.getContentAccessorFor(entry))
             .userMetadata(createUserMetadataForArchiveEntryName(entry))
+            .contentType(MediaType.APPLICATION_OCTET_STREAM) // Temporary! TODO: Infer from file name?
             .build();
         toUpload.put(entry, repoObject);
       }
