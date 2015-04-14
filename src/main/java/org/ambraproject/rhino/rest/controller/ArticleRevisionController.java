@@ -41,11 +41,11 @@ public class ArticleRevisionController extends ArticleSpaceController {
 
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "articles/revisions", method = RequestMethod.GET, params = {"doi"})
+  @RequestMapping(value = "articles/revisions", method = RequestMethod.GET, params = {ID_PARAM})
   public void list(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam("doi") String doi)
+                   @RequestParam(value = ID_PARAM) String id)
       throws IOException {
-    articleRevisionService.listRevisions(ArticleIdentity.create(doi)).respond(request, response, entityGson);
+    articleRevisionService.listRevisions(ArticleIdentity.create(id)).respond(request, response, entityGson);
   }
 
 
