@@ -30,8 +30,8 @@
 
 <hibernate-mapping package="org.ambraproject.rhino.model" default-lazy="false">
 
-  <class name="ArticleAssociation" table="articleAssociation">
-    <id name="ID" column="articleAssociationID" type="long">
+  <class name="org.ambraproject.rhino.model.DoiAssociation" table="doiAssociation">
+    <id name="ID" column="doiAssociationID" type="long">
       <generator class="native"/>
     </id>
 

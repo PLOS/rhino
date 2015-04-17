@@ -2,7 +2,7 @@ package org.ambraproject.rhino.model;
 
 import org.ambraproject.models.AmbraEntity;
 
-public class ArticleAssociation extends AmbraEntity {
+public class DoiAssociation extends AmbraEntity {
 
   private String doi;
   private String parentArticleDoi;
@@ -28,7 +28,7 @@ public class ArticleAssociation extends AmbraEntity {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArticleAssociation that = (ArticleAssociation) o;
+    DoiAssociation that = (DoiAssociation) o;
 
     if (doi != null ? !doi.equals(that.doi) : that.doi != null) return false;
     if (parentArticleDoi != null ? !parentArticleDoi.equals(that.parentArticleDoi) : that.parentArticleDoi != null) {

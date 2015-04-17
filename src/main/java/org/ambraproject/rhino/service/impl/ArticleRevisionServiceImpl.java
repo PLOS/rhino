@@ -205,7 +205,7 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
   public String getParentDoi(String doi) {
     doi = DoiBasedIdentity.asIdentifier(doi);
     return (String) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-        "select parentArticleDoi from ArticleAssociation where doi=?", doi));
+        "select parentArticleDoi from DoiAssociation where doi=?", doi));
   }
 
   @Override
@@ -238,7 +238,7 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
         return parseRepoVersion(assetRepr);
       }
     }
-    // We already match the asset DOI to this article in the ArticleAssociation table,
+    // We already match the asset DOI to this article in the DoiAssociation table,
     // but this is still possible if the asset appears in other revisions of the article but not this one.
     throw new RestClientException("Asset not in revision", HttpStatus.NOT_FOUND);
   }

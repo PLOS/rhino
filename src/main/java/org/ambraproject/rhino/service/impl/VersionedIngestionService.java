@@ -11,7 +11,7 @@ import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.model.ArticleAssociation;
+import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.RepoCollection;
@@ -131,10 +131,10 @@ class VersionedIngestionService {
     }
 
     // Create RepoObjects for files in the archive not referenced by the manifest
-    int stragglerIndex = 0;
+    int nonAssetFileIndex = 0;
     for (String entry : archive.getEntryNames()) {
       if (!toUpload.containsKey(entry)) {
-        String key = "extraFile-" + (++stragglerIndex) + "/" + articleIdentity.getIdentifier();
+        String key = "nonAssetFile-" + (++nonAssetFileIndex) + "/" + articleIdentity.getIdentifier();
         RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
             .contentAccessor(archive.getContentAccessorFor(entry))
             .userMetadata(createUserMetadataForArchiveEntryName(entry))
@@ -165,10 +165,10 @@ class VersionedIngestionService {
     // Associate DOIs
     for (String assetDoi : userMetadataForCollection.dois) {
       assetDoi = AssetIdentity.create(assetDoi).getIdentifier();
-      ArticleAssociation existing = (ArticleAssociation) DataAccessUtils.uniqueResult(parentService.hibernateTemplate.find(
-          "from ArticleAssociation where doi=?", assetDoi));
+      DoiAssociation existing = (DoiAssociation) DataAccessUtils.uniqueResult(parentService.hibernateTemplate.find(
+          "from DoiAssociation where doi=?", assetDoi));
       if (existing == null) {
-        ArticleAssociation association = new ArticleAssociation();
+        DoiAssociation association = new DoiAssociation();
         association.setDoi(assetDoi);
         association.setParentArticleDoi(articleIdentity.getIdentifier());
         parentService.hibernateTemplate.persist(association);
