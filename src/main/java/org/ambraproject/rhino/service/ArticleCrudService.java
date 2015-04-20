@@ -21,8 +21,8 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
@@ -32,22 +32,6 @@ import java.io.InputStream;
 import java.util.Collection;
 
 public interface ArticleCrudService extends DoiBasedCrudService {
-
-  /**
-   * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
-   * entity is created; else, the article is re-ingested and the new data replaces the old data in the file store.
-   * <p/>
-   * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
-   * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
-   *
-   * @param file       the XML data for the article
-   * @param suppliedId the identifier supplied for the article, if any
-   * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
-   * @throws IOException
-   */
-  public abstract Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
-      throws IOException;
 
   /**
    * Create or update an article from supplied ,zip archive data. If no article exists with the given identity, a new
@@ -60,8 +44,10 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException;
+
+  public abstract Archive readArchive(ArticleIdentity articleIdentity);
 
   /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
@@ -73,30 +59,20 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract InputStream readXml(ArticleIdentity id);
 
   /**
-   * Delete an article. Both its database entry and the associated XML file in the file store are deleted.
-   *
-   * @param id the identifier of the article to delete
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
-   */
-  public abstract void delete(ArticleIdentity id);
-
-  /**
    * Loads and returns article metadata.
    *
    * @param id specifies the article
    * @return Article object encapsulating metadata
    */
-  public abstract Article findArticleById(DoiBasedIdentity id);
+  public abstract Article findArticleById(ArticleIdentity id);
 
   /**
    * Read the metadata of an article.
    *
    * @param id               the identifier of the article
-   * @param excludeCitations if true, no citation information will be included in the response (useful for performance
-   *                         reasons, since this is a lot of data)
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI does not belong to an article
    */
-  public abstract Transceiver readMetadata(DoiBasedIdentity id, boolean excludeCitations) throws IOException;
+  public abstract Transceiver readMetadata(ArticleIdentity id) throws IOException;
 
   /**
    * Read the metadata of an article.

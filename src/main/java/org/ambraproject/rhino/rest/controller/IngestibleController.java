@@ -17,10 +17,11 @@ import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
+import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -40,11 +41,9 @@ import java.io.IOException;
  * ambra.services.documentManagement.ingestSourceDir property of ambra.xml).
  */
 @Controller
-public class IngestibleController extends DoiBasedCrudController {
+public class IngestibleController extends RestController {
 
   private static final String INGESTIBLE_ROOT = "/ingestibles";
-  private static final String INGESTIBLE_NAMESPACE = INGESTIBLE_ROOT + "/";
-  private static final String INGESTIBLE_TEMPLATE = INGESTIBLE_NAMESPACE + "**";
 
   @Autowired
   private ArticleCrudService articleCrudService;
@@ -52,15 +51,6 @@ public class IngestibleController extends DoiBasedCrudController {
   @Autowired
   private IngestibleService ingestibleService;
 
-  @Override
-  protected String getNamespacePrefix() {
-    return INGESTIBLE_NAMESPACE;
-  }
-
-  @Override
-  protected ArticleIdentity parse(HttpServletRequest request) {
-    return ArticleIdentity.create(getIdentifier(request));
-  }
 
   /**
    * Method that lists all ingestible archives in the ingest source directory.
@@ -90,9 +80,9 @@ public class IngestibleController extends DoiBasedCrudController {
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException {
 
-    File archive;
+    File archiveFile;
     try {
-      archive = ingestibleService.getIngestibleArchive(name);
+      archiveFile = ingestibleService.getIngestibleArchive(name);
     } catch (FileNotFoundException fnfe) {
       throw new RestClientException("Could not find ingestible archive for: " + name,
           HttpStatus.METHOD_NOT_ALLOWED, fnfe);
@@ -103,7 +93,10 @@ public class IngestibleController extends DoiBasedCrudController {
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
     Optional<ArticleIdentity> expectedId = Optional.absent();
 
-    Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), expectedId, reingestMode);
+    Article result;
+    try (Archive archive = Archive.readZipFile(archiveFile)) {
+      result = articleCrudService.writeArchive(archive, expectedId, reingestMode);
+    }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
 

@@ -24,8 +24,8 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Code common to both the main and testing configurations.
@@ -35,25 +35,27 @@ abstract class BaseConfiguration {
   @Inject
   private ApplicationContext context;
 
-  protected void setAmbraMappings(LocalSessionFactoryBean sessionFactoryBean) throws IOException {
-    final String mappingLocation = "classpath:org/ambraproject/models/*.hbm.xml";
-    Resource[] mappingLocations = context.getResources(mappingLocation);
-    if (mappingLocations.length == 0) {
-      throw new IllegalStateException("Config error: No Ambra data models found");
+  private Map<String, Resource> getHibernateMappings(String locationPattern) throws IOException {
+    Resource[] resources = context.getResources(locationPattern);
+    if (resources.length == 0) {
+      throw new RuntimeException("Config error: No Hibernate mappings found at " + locationPattern);
     }
+    Map<String, Resource> mappings = new TreeMap<>();
+    for (Resource resource : resources) {
+      mappings.put(resource.getFilename(), resource);
+    }
+    return mappings;
+  }
 
-    // For performance reasons, we want the ability to lazily load Article.citedArticles.
-    // We do this by substituting in our own Hibernate Article mapping, since the one
-    // in ambra-models uses eager loading (and changing it in ambra would likely break
-    // things there).
-    List<Resource> finalResources = new ArrayList<>(mappingLocations.length);
-    for (Resource resource : mappingLocations) {
-      if (!"Article.hbm.xml".equals(resource.getFilename())) {
-        finalResources.add(resource);
-      }
-    }
-    finalResources.add(context.getResource("classpath:ambra/configuration/Article.hbm.xml"));
-    sessionFactoryBean.setMappingLocations(finalResources.toArray(new Resource[finalResources.size()]));
+  protected void setAmbraMappings(LocalSessionFactoryBean sessionFactoryBean) throws IOException {
+    final String legacyMappingLocation = "classpath:org/ambraproject/models/*.hbm.xml";
+    Map<String, Resource> mappings = getHibernateMappings(legacyMappingLocation);
+
+    // Local mappings override legacy mappings that have the same filename
+    final String localMappingLocation = "classpath:ambra/configuration/*.hbm.xml";
+    mappings.putAll(getHibernateMappings(localMappingLocation));
+
+    sessionFactoryBean.setMappingLocations(mappings.values().toArray(new Resource[0]));
   }
 
 }

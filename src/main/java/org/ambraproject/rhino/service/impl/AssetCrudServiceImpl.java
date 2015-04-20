@@ -268,7 +268,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public InputStream read(AssetFileIdentity assetId) {
     try {
-      return contentRepoService.getLatestRepoObject(assetId.toString());
+      return contentRepoService.getLatestRepoObject(assetId.getFilePath());
     } catch (ContentRepoException e) {
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());

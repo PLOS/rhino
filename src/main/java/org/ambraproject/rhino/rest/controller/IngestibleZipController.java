@@ -6,6 +6,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService;
+import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 public class IngestibleZipController extends RestController {
@@ -48,14 +49,16 @@ public class IngestibleZipController extends RestController {
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
-    String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
-    requestFile.transferTo(new File(zipFilename));
-    Article result = articleCrudService.writeArchive(zipFilename,
-        Optional.<ArticleIdentity>absent(),
 
-        // If forceReingest is the empty string, the parameter was present.  Only
-        // treat null as false.
-        forceReingest == null ? DoiBasedCrudService.WriteMode.CREATE_ONLY : DoiBasedCrudService.WriteMode.WRITE_ANY);
+    // If forceReingest is the empty string, the parameter was present.  Only
+    // treat null as false.
+    DoiBasedCrudService.WriteMode mode = forceReingest == null ? DoiBasedCrudService.WriteMode.CREATE_ONLY : DoiBasedCrudService.WriteMode.WRITE_ANY;
+
+    Article result;
+    try (InputStream requestInputStream = requestFile.getInputStream();
+         Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
+      result = articleCrudService.writeArchive(archive, Optional.<ArticleIdentity>absent(), mode);
+    }
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
