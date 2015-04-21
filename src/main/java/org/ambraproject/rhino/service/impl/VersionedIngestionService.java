@@ -10,6 +10,7 @@ import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -120,11 +121,12 @@ class VersionedIngestionService {
           throw new RestClientException("Manifest refers to missing file: " + entry, HttpStatus.BAD_REQUEST);
         }
         String key = representation.getName() + "/" + AssetIdentity.create(asset.getUri()).getIdentifier();
+        AssetFileIdentity assetFileIdentity = AssetFileIdentity.create(asset.getUri(), representation.getName());
         RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
             .contentAccessor(archive.getContentAccessorFor(entry))
             .userMetadata(createUserMetadataForArchiveEntryName(entry))
-                // TODO Add more metadata. Extract from articleMetadata and manifestXml as necessary.
-            .contentType(MediaType.APPLICATION_OCTET_STREAM) // Temporary! TODO: Remove
+            .downloadName(assetFileIdentity.getFileName())
+            .contentType(assetFileIdentity.inferContentType().toString())
             .build();
         toUpload.put(entry, repoObject);
       }
@@ -138,7 +140,8 @@ class VersionedIngestionService {
         RepoObject repoObject = new RepoObject.RepoObjectBuilder(key)
             .contentAccessor(archive.getContentAccessorFor(entry))
             .userMetadata(createUserMetadataForArchiveEntryName(entry))
-            .contentType(MediaType.APPLICATION_OCTET_STREAM) // Temporary! TODO: Infer from file name?
+            .downloadName(entry)
+            .contentType(AssetFileIdentity.parse(entry).inferContentType().toString())
             .build();
         toUpload.put(entry, repoObject);
       }
