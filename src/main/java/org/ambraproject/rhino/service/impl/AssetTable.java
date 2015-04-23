@@ -4,6 +4,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -13,6 +15,7 @@ import org.plos.crepo.model.RepoVersion;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -70,6 +73,14 @@ class AssetTable<T> {
     this.map = ImmutableMap.copyOf(map);
   }
 
+
+  public ImmutableSet<AssetIdentity> getAssetIdentities() {
+    ImmutableSet.Builder<AssetIdentity> set = ImmutableSet.builder();
+    for (Key key : map.keySet()) {
+      set.add(key.id);
+    }
+    return set.build();
+  }
 
   public static interface Asset<T> {
     public AssetIdentity getIdentity();
@@ -181,11 +192,12 @@ class AssetTable<T> {
     Map<Key, Value<String>> ingestibleEntryNames = new LinkedHashMap<>();
     for (ManifestXml.Asset asset : manifest.parse()) {
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        AssetType assetType = getAssetType(assetNodeMap, asset, representation);
-        String fileType = assetType.getFileType(representation.getName());
-
         AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
         String entryName = representation.getEntry();
+
+        AssetType assetType = asset.getAssetType().equals(ManifestXml.AssetType.ARTICLE) ? AssetType.ARTICLE
+            : getAssetType(assetNodeMap, assetIdentity);
+        String fileType = assetType.getFileType(representation.getName());
 
         Key key = new Key(assetIdentity, fileType);
         Value<String> value = new Value<>(entryName, representation.getName());
@@ -213,17 +225,12 @@ class AssetTable<T> {
     }
   }
 
-  private static AssetType getAssetType(AssetNodesByDoi assetNodeMap, ManifestXml.Asset asset, ManifestXml.Representation repr) {
-    if (asset.getAssetType().equals(ManifestXml.AssetType.ARTICLE)) {
-      return AssetType.ARTICLE;
-    }
-
-    String assetDoi = AssetIdentity.create(asset.getUri()).getIdentifier();
-    if (!assetNodeMap.getDois().contains(assetDoi)) {
+  private static AssetType getAssetType(AssetNodesByDoi assetNodeMap, AssetIdentity assetId) {
+    if (!assetNodeMap.getDois().contains(assetId.getIdentifier())) {
       throw new RestClientException("Asset not mentioned in manuscript", HttpStatus.BAD_REQUEST);
     }
 
-    List<Node> nodes = assetNodeMap.getNodes(assetDoi);
+    List<Node> nodes = assetNodeMap.getNodes(assetId.getIdentifier());
     AssetType identifiedType = null;
     for (Node node : nodes) {
       String nodeName = node.getNodeName();
@@ -243,9 +250,35 @@ class AssetTable<T> {
     return identifiedType;
   }
 
+  public List<Map<String, Object>> buildAsAssetMetadata(Map<? super T, RepoVersion> repoObjectVersions) {
+    Collection<Asset<T>> assets = getAssets();
+    List<Map<String, Object>> assetMetadataList = new ArrayList<>(assets.size());
+    for (Asset<T> asset : assets) {
+      ImmutableMap.Builder<String, Object> assetMetadata = ImmutableMap.builder();
+      assetMetadata.put("id", asset.getIdentity().getIdentifier());
+      assetMetadata.put("repr", asset.getReprName());
+      RepoVersion repoVersion = repoObjectVersions.get(asset.getFileLocator());
+      assetMetadata.put("object", new VersionedIngestionService.RepoVersionRepr(repoVersion));
+      assetMetadataList.add(assetMetadata.build());
+    }
+    return assetMetadataList;
+  }
 
-  public static AssetTable<RepoVersion> build(RepoCollectionMetadata collection) {
-    return null; // TODO
+  public static AssetTable<RepoVersion> buildFromAssetMetadata(RepoCollectionMetadata collection,
+                                                               ArticleXml articleXml) {
+    Map<Key, Value<RepoVersion>> map = new LinkedHashMap<>();
+    List<Map<String, ?>> assets = (List<Map<String, ?>>) ((Map) collection.getJsonUserMetadata().get()).get("assets");
+    for (Map<String, ?> asset : assets) {
+      Map<String, String> object = (Map<String, String>) asset.get("object");
+      RepoVersion repoVersion = RepoVersion.create(object.get("key"), object.get("uuid"));
+
+      AssetIdentity id = AssetIdentity.create((String) asset.get("id"));
+      String reprName = (String) asset.get("repr");
+      String fileType = getAssetType(articleXml.findAllAssetNodes(), id).getFileType(reprName);
+
+      map.put(new Key(id, fileType), new Value<>(repoVersion, reprName));
+    }
+    return new AssetTable<>(map);
   }
 
   public T lookup(AssetIdentity id, String fileType) {

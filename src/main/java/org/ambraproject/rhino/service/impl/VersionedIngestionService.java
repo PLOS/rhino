@@ -4,7 +4,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -29,12 +28,8 @@ import javax.ws.rs.core.MediaType;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 class VersionedIngestionService {
 
@@ -151,19 +146,19 @@ class VersionedIngestionService {
       created.put(entry.getKey(), createdMetadata.getVersion());
     }
 
-    ArticleUserMetadata userMetadataForCollection = buildArticleAsUserMetadata(manifestXml, created);
+    Map<String, Object> userMetadataForCollection = buildArticleAsUserMetadata(manifestXml, created, assetTable);
 
     // Create collection
     RepoCollection collection = RepoCollection.builder()
         .setKey(articleIdentity.getIdentifier())
         .setObjects(created.values())
-        .setUserMetadata(parentService.crepoGson.toJson(userMetadataForCollection.map))
+        .setUserMetadata(parentService.crepoGson.toJson(userMetadataForCollection))
         .build();
     RepoCollectionMetadata collectionMetadata = parentService.contentRepoService.autoCreateCollection(collection);
 
     // Associate DOIs
-    for (String assetDoi : userMetadataForCollection.dois) {
-      assetDoi = AssetIdentity.create(assetDoi).getIdentifier();
+    for (AssetIdentity assetIdentity : assetTable.getAssetIdentities()) {
+      String assetDoi = assetIdentity.getIdentifier();
       DoiAssociation existing = (DoiAssociation) DataAccessUtils.uniqueResult(parentService.hibernateTemplate.find(
           "from DoiAssociation where doi=?", assetDoi));
       if (existing == null) {
@@ -185,54 +180,29 @@ class VersionedIngestionService {
     return parentService.crepoGson.toJson(map);
   }
 
-  private static class ArticleUserMetadata {
-    private final Map<String, Object> map;
-    private final Set<String> dois;
 
-    private ArticleUserMetadata(Map<String, Object> map, Collection<String> dois) {
-      this.map = ImmutableMap.copyOf(map);
-      this.dois = ImmutableSet.copyOf(dois);
-    }
-  }
-
-  private static class RepoVersionRepr {
+  static class RepoVersionRepr {
     private final String key;
     private final String uuid;
 
-    private RepoVersionRepr(RepoVersion repoVersion) {
+    RepoVersionRepr(RepoVersion repoVersion) {
       this.key = repoVersion.getKey();
       this.uuid = repoVersion.getUuid().toString();
     }
   }
 
-  private ArticleUserMetadata buildArticleAsUserMetadata(ManifestXml manifestXml, Map<String, RepoVersion> objects) {
+  private Map<String, Object> buildArticleAsUserMetadata(ManifestXml manifestXml,
+                                                         Map<String, RepoVersion> objects,
+                                                         AssetTable<String> assetTable) {
     Map<String, Object> map = new LinkedHashMap<>();
     map.put("format", "nlm");
 
     String manuscriptKey = manifestXml.getArticleXml();
     map.put("manuscript", new RepoVersionRepr(objects.get(manuscriptKey)));
 
-    List<ManifestXml.Asset> assetSpec = manifestXml.parse();
-    List<Map<String, Object>> assetList = new ArrayList<>(assetSpec.size());
-    List<String> assetDois = new ArrayList<>(assetSpec.size());
-    for (ManifestXml.Asset asset : assetSpec) {
-      Map<String, Object> assetMetadata = new LinkedHashMap<>();
-      String doi = AssetIdentity.create(asset.getUri()).getIdentifier();
-      assetMetadata.put("doi", doi);
-      assetDois.add(doi);
+    map.put("assets", assetTable.buildAsAssetMetadata(objects));
 
-      Map<String, Object> assetObjects = new LinkedHashMap<>();
-      for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        RepoVersion objectForRepr = objects.get(representation.getEntry());
-        assetObjects.put(representation.getName(), new RepoVersionRepr(objectForRepr));
-      }
-      assetMetadata.put("objects", assetObjects);
-
-      assetList.add(assetMetadata);
-    }
-    map.put("assets", assetList);
-
-    return new ArticleUserMetadata(map, assetDois);
+    return map;
   }
 
 }
