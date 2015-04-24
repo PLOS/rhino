@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.w3c.dom.Document;
 
@@ -22,9 +23,7 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
 
   @Override
   public List<String> getRawTerms(Document articleXml) throws IOException {
-    ArrayList<String> rawTerms = new ArrayList<>();
-    rawTerms.add("dummy raw term");
-    return rawTerms;
+    return ImmutableList.of("dummy raw term");
   }
 
 }

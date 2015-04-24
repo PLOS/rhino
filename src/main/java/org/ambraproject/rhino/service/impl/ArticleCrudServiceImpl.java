@@ -26,11 +26,7 @@ import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleAsset;
-import org.ambraproject.models.ArticleRelationship;
-import org.ambraproject.models.Category;
-import org.ambraproject.models.Journal;
+import org.ambraproject.models.*;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.AssetXml;
@@ -80,16 +76,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -966,19 +953,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
    * {@inheritDoc}
    */
   @Override
-  public Transceiver readCategories(final ArticleIdentity id)
-      throws IOException {
+  public Transceiver readCategories(final ArticleIdentity id) throws IOException {
 
-    return new Transceiver() {
+    return new EntityTransceiver<Article>() {
+
       @Override
-      protected Calendar getLastModifiedDate()  {
-        return null;
+      protected Article fetchEntity() {
+        return findArticleById(id);
       }
 
       @Override
-      protected Object getData() throws IOException {
-        Article article = findArticleById(id);
-        return article.getCategories();
+      protected Object getView(Article entity) {
+        return entity.getCategories();
       }
     };
   }
@@ -993,7 +979,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return new Transceiver() {
       @Override
       protected Calendar getLastModifiedDate()  {
-        return null;
+        return copyToCalendar(findArticleById(id).getLastModified());
       }
 
       @Override
