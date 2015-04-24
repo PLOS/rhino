@@ -10,6 +10,7 @@ import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.springframework.http.HttpStatus;
@@ -258,7 +259,7 @@ class AssetTable<T> {
       assetMetadata.put("id", asset.getIdentity().getIdentifier());
       assetMetadata.put("repr", asset.getReprName());
       RepoVersion repoVersion = repoObjectVersions.get(asset.getFileLocator());
-      assetMetadata.put("object", new VersionedIngestionService.RepoVersionRepr(repoVersion));
+      assetMetadata.put("object", new RepoVersionRepr(repoVersion));
       assetMetadataList.add(assetMetadata.build());
     }
     return assetMetadataList;
@@ -270,7 +271,7 @@ class AssetTable<T> {
     List<Map<String, ?>> assets = (List<Map<String, ?>>) ((Map) collection.getJsonUserMetadata().get()).get("assets");
     for (Map<String, ?> asset : assets) {
       Map<String, String> object = (Map<String, String>) asset.get("object");
-      RepoVersion repoVersion = RepoVersion.create(object.get("key"), object.get("uuid"));
+      RepoVersion repoVersion = RepoVersionRepr.read(object);
 
       AssetIdentity id = AssetIdentity.create((String) asset.get("id"));
       String reprName = (String) asset.get("repr");

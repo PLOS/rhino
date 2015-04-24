@@ -14,6 +14,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
+import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
@@ -178,17 +179,6 @@ class VersionedIngestionService {
   private String createUserMetadataForArchiveEntryName(String entryName) {
     ImmutableMap<String, String> map = ImmutableMap.of(ArticleCrudServiceImpl.ARCHIVE_ENTRY_NAME_KEY, entryName);
     return parentService.crepoGson.toJson(map);
-  }
-
-
-  static class RepoVersionRepr {
-    private final String key;
-    private final String uuid;
-
-    RepoVersionRepr(RepoVersion repoVersion) {
-      this.key = repoVersion.getKey();
-      this.uuid = repoVersion.getUuid().toString();
-    }
   }
 
   private Map<String, Object> buildArticleAsUserMetadata(ManifestXml manifestXml,

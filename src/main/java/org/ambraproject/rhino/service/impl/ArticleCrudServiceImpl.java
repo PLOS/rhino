@@ -47,6 +47,7 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.ambraproject.views.AuthorView;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -114,7 +115,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
     Map<String, String> manuscriptId = (Map<String, String>) userMetadata.get("manuscript");
-    RepoVersion manuscript = RepoVersion.create(manuscriptId.get("key"), manuscriptId.get("uuid"));
+    RepoVersion manuscript = RepoVersionRepr.read(manuscriptId);
 
     Document document;
     try (InputStream manuscriptStream = contentRepoService.getRepoObject(manuscript)) {

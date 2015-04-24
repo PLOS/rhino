@@ -12,6 +12,7 @@ import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -224,10 +225,6 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
     return contentRepoService.getRepoObjectMetadata(assetVersion);
   }
 
-  private static RepoVersion parseRepoVersion(Map<String, ?> versionJson) {
-    return RepoVersion.create((String) versionJson.get("key"), (String) versionJson.get("uuid"));
-  }
-
   private static RepoVersion findAssetVersion(String repr, Collection<Map<String, ?>> assets, AssetIdentity targetAssetId) {
     for (Map<String, ?> asset : assets) {
       AssetIdentity assetId = AssetIdentity.create((String) asset.get("doi"));
@@ -235,7 +232,7 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
         Map<String, ?> assetObjects = (Map<String, ?>) asset.get("objects");
         Map<String, ?> assetRepr = (Map<String, ?>) assetObjects.get(repr);
         if (assetRepr == null) throw new RestClientException("repr not found", HttpStatus.NOT_FOUND);
-        return parseRepoVersion(assetRepr);
+        return RepoVersionRepr.read(assetRepr);
       }
     }
     // We already match the asset DOI to this article in the DoiAssociation table,
@@ -247,7 +244,7 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
   public RepoObjectMetadata getManuscript(ArticleIdentity article) {
     RepoCollectionMetadata articleCollection = findCollectionFor(article);
     Map<String, ?> manuscript = (Map<String, ?>) ((Map<String, ?>) articleCollection.getJsonUserMetadata().get()).get("manuscript");
-    RepoVersion manuscriptVersion = parseRepoVersion(manuscript);
+    RepoVersion manuscriptVersion = RepoVersionRepr.read(manuscript);
     return contentRepoService.getRepoObjectMetadata(manuscriptVersion);
   }
 
