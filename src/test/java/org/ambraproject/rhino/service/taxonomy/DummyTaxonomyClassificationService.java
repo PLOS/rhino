@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class DummyTaxonomyClassificationService implements TaxonomyClassificationService {
@@ -16,6 +18,13 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
     return DUMMY_DATA;
+  }
+
+  @Override
+  public List<String> getRawTerms(Document articleXml) throws IOException {
+    ArrayList<String> rawTerms = new ArrayList<>();
+    rawTerms.add("dummy raw term");
+    return rawTerms;
   }
 
 }

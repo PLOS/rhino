@@ -60,10 +60,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    */
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
-    RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
-    if (configuration.getServer() == null || configuration.getThesaurus() == null) {
-      throw new TaxonomyClassificationServiceNotConfiguredException();
-    }
+    RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     List<String> rawTerms = getRawTerms(articleXml);
     Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
@@ -87,16 +84,20 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     return results;
   }
 
-  /**
-   * Queries the MAI server for taxonomic terms for a given article, and returns a list of the raw results.
-   *
-   * @param articleXml DOM of the article to categorize
-   * @return List of results from the server.  This will consist of raw XML fragments, and include things like counts
-   * that we don't currently store in mysql.
-   * @throws IOException
-   */
-  private List<String> getRawTerms(Document articleXml) throws IOException {
+  private RuntimeConfiguration.TaxonomyConfiguration getTaxonomyConfiguration() {
     RuntimeConfiguration.TaxonomyConfiguration configuration = runtimeConfiguration.getTaxonomyConfiguration();
+    if (configuration.getServer() == null || configuration.getThesaurus() == null) {
+      throw new TaxonomyClassificationServiceNotConfiguredException();
+    }
+    return configuration;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  @Override
+  public List<String> getRawTerms(Document articleXml) throws IOException {
+    RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
     String toCategorize = getCategorizationContent(articleXml);
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus()) + toCategorize + MESSAGE_END;
     HttpPost post = new HttpPost(configuration.getServer().toString());

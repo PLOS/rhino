@@ -25,6 +25,7 @@ import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
@@ -137,6 +138,28 @@ public class ArticleCrudController extends ArticleSpaceController {
   }
 
   /**
+   * Repopulates article category information by making a call to the taxonomy server.
+   *
+   * @param request          HttpServletRequest
+   * @param response         HttpServletResponse
+   * @throws IOException
+   */
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
+      params = "repopulateCategories")
+  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+
+    articleCrudService.repopulateCategories(id);
+
+    response.setStatus(HttpStatus.ACCEPTED.value());
+
+    // Report the current categories
+    articleCrudService.readCategories(id).respond(request, response, entityGson);
+  }
+
+  /**
    * Retrieves metadata about an article.
    *
    * @param request          HttpServletRequest
@@ -199,6 +222,36 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleIdentity id = parse(request);
     assetFileCrudController.read(request, response, id.forXmlAsset());
+  }
+
+  /**
+   * Retrieves a list of objects representing categories associated with the article.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "categories")
+  public void readCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    articleCrudService.readCategories(id).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves a list of objects representing raw taxonomy categories associated with the article.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategories")
+  public void getRawCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    articleCrudService.getRawCategories(id).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

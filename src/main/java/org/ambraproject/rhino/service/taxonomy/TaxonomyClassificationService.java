@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service.taxonomy;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,16 @@ public interface TaxonomyClassificationService {
    * @throws TaxonomyClassificationServiceNotConfiguredException if a remote service is required but not configured
    */
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException;
+
+  /**
+   * Queries the MAI server for taxonomic terms for a given article, and returns a list of the raw results.
+   *
+   * @param articleXml DOM of the article to categorize
+   * @return List of results from the server.  This will consist of raw XML fragments, and include things like counts
+   * that we don't currently store in mysql.
+   * @throws IOException
+   */
+  public List<String> getRawTerms(Document articleXml) throws IOException;
 
   /**
    * Indicates that a remote service is required to classify articles but is not configured on this system.
