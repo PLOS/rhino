@@ -98,14 +98,6 @@ class VersionedIngestionService {
         .build();
     toUpload.put(manifestEntry, manifestObject);
 
-    RepoObject manuscriptObject = new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
-        .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
-        .contentType(MediaType.APPLICATION_XML)
-        .downloadName(articleIdentity.forXmlAsset().getFileName())
-        .userMetadata(createUserMetadataForArchiveEntryName(manuscriptEntry))
-        .build();
-    toUpload.put(manuscriptEntry, manuscriptObject);
-
     AssetNodesByDoi assetNodeMap = parsedArticle.findAllAssetNodes();
 
     // Create RepoObjects for assets
