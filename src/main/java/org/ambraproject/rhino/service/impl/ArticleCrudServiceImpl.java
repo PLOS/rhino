@@ -80,6 +80,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -221,19 +222,28 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   /**
+   * Saves the hibernate entity representing an article.
+   *
+   * @param article the new or updated Article instance to save
+   *
+   */
+  private void saveArticleToHibernate(Article article) {
+    if (article.getID() == null) {
+      hibernateTemplate.save(article);
+    } else {
+      hibernateTemplate.update(article);
+    }
+  }
+
+  /**
    * Saves both the hibernate entity and the bytes representing an article.
    *
    * @param article the new or updated Article instance to save
    * @param xmlData bytes of the article XML file to save
    * @throws IOException
    */
-  private void persistArticle(Article article, byte[] xmlData)
-      throws IOException {
-    if (article.getID() == null) {
-      hibernateTemplate.save(article);
-    } else {
-      hibernateTemplate.update(article);
-    }
+  private void persistArticle(Article article, byte[] xmlData) throws IOException {
+    saveArticleToHibernate(article);
     String doi = article.getDoi();
 
     createReciprocalRelationships(article);
@@ -548,6 +558,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       journals = Sets.newHashSet(journal);
     }
     article.setJournals(journals);
+  }
+
+  @Override
+  public void repopulateCategories(ArticleIdentity id) throws IOException {
+      Document doc = parseXml(readXml(id));
+      Article article = findArticleById(id);
+      populateCategories(article, doc);
+      saveArticleToHibernate(article);
   }
 
   /**
@@ -940,6 +958,52 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
         }
         return ArticleAuthorView.createList(authors);
+      }
+    };
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver readCategories(final ArticleIdentity id) throws IOException {
+
+    return new EntityTransceiver<Article>() {
+
+      @Override
+      protected Article fetchEntity() {
+        return findArticleById(id);
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return entity.getCategories();
+      }
+    };
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver getRawCategories(final ArticleIdentity id)
+      throws IOException {
+
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate()  {
+        return copyToCalendar(findArticleById(id).getLastModified());
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)));
+        List<String> cleanedTerms = new ArrayList<>();
+        for (String term : rawTerms) {
+          term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
+          cleanedTerms.add(term);
+        }
+        return cleanedTerms;
       }
     };
   }

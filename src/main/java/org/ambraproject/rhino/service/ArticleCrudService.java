@@ -64,6 +64,12 @@ public interface ArticleCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
+   * Repopulates article category information by making a call to the taxonomy server.
+   * @param id the identifier of the article
+   */
+  public abstract void repopulateCategories(ArticleIdentity id) throws IOException;
+
+  /**
    * Open a stream to read the XML file for an article, as raw bytes. The caller must close the stream.
    *
    * @param id the identifier of the article
@@ -115,6 +121,24 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @throws IOException
    */
   public abstract Transceiver readAuthors(ArticleIdentity id)
+      throws IOException;
+
+  /**
+   * Read category information from the Ambra database.
+   *
+   * @param id specifies the article
+   * @throws IOException
+   */
+  public abstract Transceiver readCategories(ArticleIdentity id)
+      throws IOException;
+
+  /**
+   * Get raw taxonomy terms from the taxonomy server about an article.
+   *
+   * @param id specifies the article
+   * @throws IOException
+   */
+  public abstract Transceiver getRawCategories(ArticleIdentity id)
       throws IOException;
 
   public abstract void setAssetService(AssetCrudService assetService);
