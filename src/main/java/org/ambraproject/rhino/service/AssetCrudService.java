@@ -19,8 +19,10 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.io.IOException;
@@ -88,5 +90,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
    */
   public abstract void overwrite(InputStream fileContent, AssetFileIdentity id)
       throws IOException;
+
+  public abstract ArticleIdentity getParentArticle(DoiBasedIdentity identity);
 
 }

@@ -22,9 +22,11 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
@@ -41,6 +43,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.slf4j.Logger;
@@ -406,6 +409,15 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     List<Journal> journalResult = hibernateTemplate.find("select journals from Article where doi = ?", articleDoi);
 
     return new ArticleVisibility(articleDoi, articleState, journalResult);
+  }
+
+  @Override
+  public ArticleIdentity getParentArticle(DoiBasedIdentity identity) {
+    String parentArticleDoi = (String) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(DoiAssociation.class)
+            .setProjection(Projections.property("parentArticleDoi"))
+            .add(Restrictions.eq("doi", identity.getIdentifier()))));
+    return (parentArticleDoi == null) ? null : ArticleIdentity.create(parentArticleDoi);
   }
 
 }

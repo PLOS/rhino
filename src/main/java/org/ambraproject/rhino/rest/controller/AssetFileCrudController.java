@@ -22,8 +22,11 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.rest.controller.abstr.RestController;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
@@ -50,7 +53,7 @@ import java.util.List;
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
 @Controller
-public class AssetFileCrudController extends RestController {
+public class AssetFileCrudController extends ArticleSpaceController {
 
   private static final String ASSET_ROOT = "/assetfiles";
 
@@ -66,6 +69,23 @@ public class AssetFileCrudController extends RestController {
   private static final int REPROXY_CACHE_FOR_VALUE = 6 * 60 * 60; // TODO: Make configurable
   private static final String REPROXY_CACHE_FOR_HEADER =
       REPROXY_CACHE_FOR_VALUE + "; Last-Modified Content-Type Content-Disposition";
+
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.GET, params = ID_PARAM)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @RequestParam(value = ID_PARAM, required = true) String id,
+                   @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                   @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
+                   @RequestParam(value = "file", required = true) String fileType)
+      throws IOException {
+    ArticleIdentity parentArticle = assetCrudService.getParentArticle(DoiBasedIdentity.create(id));
+    if (parentArticle == null) {
+      throw new RestClientException("Asset ID not mapped to article", HttpStatus.NOT_FOUND);
+    }
+    parentArticle = parse(parentArticle.getIdentifier(), versionNumber, revisionNumber); // apply revision
+
+  }
 
   /**
    * Serve an identified asset file.
