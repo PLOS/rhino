@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
@@ -39,7 +38,7 @@ import java.io.IOException;
 @Controller
 public class AssetController extends RestController {
 
-  private static final String ASSET_META_NAMESPACE = "/assets/";
+  private static final String ASSET_META_ROOT = "/assets";
 
   @Autowired
   private AssetCrudService assetCrudService;
@@ -56,7 +55,7 @@ public class AssetController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_NAMESPACE, method = RequestMethod.GET)
+  @RequestMapping(value = ASSET_META_ROOT, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @RequestParam(value = ID_PARAM, required = true) String id,
                    @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
@@ -66,7 +65,7 @@ public class AssetController extends RestController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_META_NAMESPACE, params = {"figure"}, method = RequestMethod.GET)
+  @RequestMapping(value = ASSET_META_ROOT, params = {"figure"}, method = RequestMethod.GET)
   public void readAsFigure(HttpServletRequest request, HttpServletResponse response,
                            @RequestParam(value = ID_PARAM, required = true) String id,
                            @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
