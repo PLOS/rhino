@@ -179,7 +179,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           return (String) ((Map) metadataValue).get(ARCHIVE_ENTRY_NAME_KEY);
         }
       }
-      return null; // default to downloadName value
+      return null; // object is not part of the original ingestible
     }
   };
 

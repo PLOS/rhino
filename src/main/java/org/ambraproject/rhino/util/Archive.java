@@ -1,7 +1,6 @@
 package org.ambraproject.rhino.util;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -12,6 +11,7 @@ import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
 
+import javax.annotation.Nullable;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -195,6 +195,14 @@ public abstract class Archive implements Closeable {
     };
   }
 
+  public static final Function<RepoObjectMetadata, String> USE_DOWNLOAD_NAME = new Function<RepoObjectMetadata, String>() {
+    @Nullable
+    @Override
+    public String apply(RepoObjectMetadata input) {
+      return input.getDownloadName().orNull();
+    }
+  };
+
   /**
    * Represent an archive from a content repo collection, equivalent to the actual zip archive that would have been
    * ingested to create the collection.
@@ -202,8 +210,8 @@ public abstract class Archive implements Closeable {
    * @param service            a content repo service that can be used to read objects in the collection
    * @param archiveName        the name of the .zip file being represented
    * @param collection         the collection version
-   * @param entryNameExtractor logic for recovering a zip entry name from a content repo object (may return null, in
-   *                           which case the object downloadName is required and used)
+   * @param entryNameExtractor logic for recovering a zip entry name from a content repo object (return null to exclude
+   *                           the object from the archive)
    * @return the archive representation
    */
   public static Archive readCollection(final ContentRepoService service, String archiveName,
@@ -216,16 +224,9 @@ public abstract class Archive implements Closeable {
       RepoVersion version = objectMetadata.getVersion();
 
       String entryName = entryNameExtractor.apply(objectMetadata);
-      if (entryName == null) {
-        Optional<String> downloadName = objectMetadata.getDownloadName();
-        if (downloadName.isPresent()) {
-          entryName = downloadName.get();
-        } else {
-          String message = "Could not find archive entry name for object: " + version;
-          throw new RuntimeException(message);
-        }
+      if (entryName != null) {
+        objects.put(entryName, version);
       }
-      objects.put(entryName, version);
     }
 
     return new Archive(archiveName, objects.build()) {
