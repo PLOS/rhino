@@ -5,6 +5,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimaps;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -251,18 +254,23 @@ class AssetTable<T> {
     return identifiedType;
   }
 
-  public List<Map<String, Object>> buildAsAssetMetadata(Map<? super T, RepoVersion> repoObjectVersions) {
+  public Map<String, Object> buildAsAssetMetadata(Map<? super T, RepoVersion> repoObjectVersions) {
     Collection<Asset<T>> assets = getAssets();
-    List<Map<String, Object>> assetMetadataList = new ArrayList<>(assets.size());
+    ListMultimap<String, Asset<T>> filesByAsset= LinkedListMultimap.create();
     for (Asset<T> asset : assets) {
-      ImmutableMap.Builder<String, Object> assetMetadata = ImmutableMap.builder();
-      assetMetadata.put("id", asset.getIdentity().getIdentifier());
-      assetMetadata.put("repr", asset.getReprName());
-      RepoVersion repoVersion = repoObjectVersions.get(asset.getFileLocator());
-      assetMetadata.put("object", new RepoVersionRepr(repoVersion));
-      assetMetadataList.add(assetMetadata.build());
+      filesByAsset.put(asset.getIdentity().getIdentifier(), asset);
     }
-    return assetMetadataList;
+
+    Map<String, Object> assetMetadataTable = new LinkedHashMap<>();
+    for (Map.Entry<String, List<Asset<T>>> entry : Multimaps.asMap(filesByAsset).entrySet()) {
+      Map<String, Object> files = new LinkedHashMap<>();
+      for (Asset<T> asset : entry.getValue()) {
+        RepoVersion repoVersion = repoObjectVersions.get(asset.getFileLocator());
+        files.put(asset.getFileType(), new RepoVersionRepr(repoVersion));
+      }
+      assetMetadataTable.put(entry.getKey(), files);
+    }
+    return assetMetadataTable;
   }
 
   public static AssetTable<RepoVersion> buildFromAssetMetadata(RepoCollectionMetadata collection,
