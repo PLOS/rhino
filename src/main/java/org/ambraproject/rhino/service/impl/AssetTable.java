@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.CaseFormat;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
@@ -19,8 +20,8 @@ import org.plos.crepo.model.RepoVersion;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,10 +51,12 @@ class AssetTable<T> {
   }
 
   private static class Value<T> {
+    private final AssetType assetType;
     private final T fileLocator;
     private final String reprName;
 
-    private Value(T fileLocator, String reprName) {
+    private Value(AssetType assetType, T fileLocator, String reprName) {
+      this.assetType = Preconditions.checkNotNull(assetType);
       this.fileLocator = Preconditions.checkNotNull(fileLocator);
       this.reprName = Preconditions.checkNotNull(reprName);
     }
@@ -89,6 +92,8 @@ class AssetTable<T> {
   public static interface Asset<T> {
     public AssetIdentity getIdentity();
 
+    public AssetType getAssetType();
+
     public String getFileType();
 
     public T getFileLocator();
@@ -109,6 +114,11 @@ class AssetTable<T> {
           @Override
           public AssetIdentity getIdentity() {
             return mapEntry.getKey().id;
+          }
+
+          @Override
+          public AssetType getAssetType() {
+            return mapEntry.getValue().assetType;
           }
 
           @Override
@@ -181,12 +191,14 @@ class AssetTable<T> {
         }
       }
     },
-    SUPP_INFO {
+    SUPPLEMENTARY_MATERIAL {
       @Override
       protected String getFileType(String reprName) {
-        return "supplemental";
+        return "supplementary";
       }
     };
+
+    private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
     protected abstract String getFileType(String reprName);
   }
@@ -204,7 +216,7 @@ class AssetTable<T> {
         String fileType = assetType.getFileType(representation.getName());
 
         Key key = new Key(assetIdentity, fileType);
-        Value<String> value = new Value<>(entryName, representation.getName());
+        Value<String> value = new Value<>(assetType, entryName, representation.getName());
         Value<String> previous = ingestibleEntryNames.put(key, value);
         if (previous != null) {
           String message = String.format("More than one file has uri=\"%s\" and repr=\"%s\"",
@@ -223,7 +235,7 @@ class AssetTable<T> {
       case "disp-formula":
         return AssetType.GRAPHIC;
       case "supplementary-material":
-        return AssetType.SUPP_INFO;
+        return AssetType.SUPPLEMENTARY_MATERIAL;
       default:
         throw new RestClientException("XML node name could not be matched to asset type: " + nodeName, HttpStatus.BAD_REQUEST);
     }
@@ -254,21 +266,63 @@ class AssetTable<T> {
     return identifiedType;
   }
 
+  // TODO: Refactor to group asset files by identifier, and store only one asset type for the group?
+  private static AssetType getCommonAssetType(Iterable<? extends Asset<?>> assets) {
+    Iterator<? extends Asset<?>> iterator = assets.iterator();
+    if (!iterator.hasNext()) {
+      throw new IllegalArgumentException("No assets");
+    }
+
+    Asset<?> asset = iterator.next();
+    AssetType assetType = asset.getAssetType();
+    AssetIdentity identity = asset.getIdentity();
+
+    while (iterator.hasNext()) {
+      Asset<?> nextAsset = iterator.next();
+      AssetIdentity nextIdentity = nextAsset.getIdentity();
+      if (!identity.equals(nextIdentity)) {
+        String message = String.format("Inconsistent asset types: \"%s\", \"%s\"", identity, nextIdentity);
+        throw new IllegalArgumentException(message);
+      }
+
+      AssetType nextAssetType = nextAsset.getAssetType();
+      if (!assetType.equals(nextAssetType)) {
+        String message = String.format("Inconsistent asset types (%s, %s) for: %s", assetType, nextAssetType, identity);
+        throw new IllegalArgumentException(message);
+      }
+    }
+
+    return assetType;
+  }
+
   public Map<String, Object> buildAsAssetMetadata(Map<? super T, RepoVersion> repoObjectVersions) {
     Collection<Asset<T>> assets = getAssets();
-    ListMultimap<String, Asset<T>> filesByAsset= LinkedListMultimap.create();
+    ListMultimap<String, Asset<T>> filesByAsset = LinkedListMultimap.create();
     for (Asset<T> asset : assets) {
       filesByAsset.put(asset.getIdentity().getIdentifier(), asset);
     }
 
+    /*
+     * TODO: Provide assets as an ordered list?
+     * Once this is in JSON, the order of assets will be lost. (LinkedHashMap is only for ease of human readability.)
+     * Even if we change to a list, the order from getAssets() comes from the manifest. It might be more correct (for
+     * display purposes?) to use the same order in which the DOIs are referenced in the manuscript.
+     */
     Map<String, Object> assetMetadataTable = new LinkedHashMap<>();
     for (Map.Entry<String, List<Asset<T>>> entry : Multimaps.asMap(filesByAsset).entrySet()) {
-      Map<String, Object> files = new LinkedHashMap<>();
-      for (Asset<T> asset : entry.getValue()) {
+      List<Asset<T>> entryAssets = entry.getValue();
+      Map<String, Object> assetMetadata = new LinkedHashMap<>();
+
+      assetMetadata.put("type", getCommonAssetType(entryAssets).identifier);
+
+      Map<String, Object> fileTable = new LinkedHashMap<>();
+      for (Asset<T> asset : entryAssets) {
         RepoVersion repoVersion = repoObjectVersions.get(asset.getFileLocator());
-        files.put(asset.getFileType(), new RepoVersionRepr(repoVersion));
+        fileTable.put(asset.getFileType(), new RepoVersionRepr(repoVersion));
       }
-      assetMetadataTable.put(entry.getKey(), files);
+      assetMetadata.put("files", fileTable);
+
+      assetMetadataTable.put(entry.getKey(), assetMetadata);
     }
     return assetMetadataTable;
   }
@@ -283,9 +337,10 @@ class AssetTable<T> {
 
       AssetIdentity id = AssetIdentity.create((String) asset.get("id"));
       String reprName = (String) asset.get("repr");
-      String fileType = getAssetType(articleXml.findAllAssetNodes(), id).getFileType(reprName);
+      AssetType assetType = getAssetType(articleXml.findAllAssetNodes(), id);
+      String fileType = assetType.getFileType(reprName);
 
-      map.put(new Key(id, fileType), new Value<>(repoVersion, reprName));
+      map.put(new Key(id, fileType), new Value<>(assetType, repoVersion, reprName));
     }
     return new AssetTable<>(map);
   }
