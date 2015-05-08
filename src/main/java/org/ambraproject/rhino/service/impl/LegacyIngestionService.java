@@ -129,19 +129,28 @@ class LegacyIngestionService {
   }
 
   /**
+   * Saves the hibernate entity representing an article.
+   *
+   * @param article the new or updated Article instance to save
+   *
+   */
+  private void saveArticleToHibernate(Article article) {
+    if (article.getID() == null) {
+      parentService.hibernateTemplate.save(article);
+    } else {
+      parentService.hibernateTemplate.update(article);
+    }
+  }
+
+  /**
    * Saves both the hibernate entity and the bytes representing an article.
    *
    * @param article the new or updated Article instance to save
    * @param xmlData bytes of the article XML file to save
    * @throws IOException
    */
-  private void persistArticle(Article article, byte[] xmlData)
-      throws IOException {
-    if (article.getID() == null) {
-      parentService.hibernateTemplate.save(article);
-    } else {
-      parentService.hibernateTemplate.update(article);
-    }
+  private void persistArticle(Article article, byte[] xmlData) throws IOException {
+    saveArticleToHibernate(article);
     String doi = article.getDoi();
 
     createReciprocalRelationships(article);
@@ -445,6 +454,13 @@ class LegacyIngestionService {
       journals = Sets.newHashSet(journal);
     }
     article.setJournals(journals);
+  }
+
+  void repopulateCategories(ArticleIdentity id) throws IOException {
+    Document doc = parentService.parseXml(parentService.readXml(id));
+    Article article = findArticleById(id);
+    populateCategories(article, doc);
+    saveArticleToHibernate(article);
   }
 
   /**

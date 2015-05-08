@@ -73,6 +73,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -207,6 +208,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return Archive.readCollection(contentRepoService, archiveName, collection, ARCHIVE_ENTRY_NAME_EXTRACTOR);
   }
 
+  @Override
+  public void repopulateCategories(ArticleIdentity id) throws IOException {
+    new LegacyIngestionService(this).repopulateCategories(id);
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -288,6 +294,52 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
           throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
         }
         return ArticleAuthorView.createList(authors);
+      }
+    };
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver readCategories(final ArticleIdentity id) throws IOException {
+
+    return new EntityTransceiver<Article>() {
+
+      @Override
+      protected Article fetchEntity() {
+        return findArticleById(id);
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return entity.getCategories();
+      }
+    };
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver getRawCategories(final ArticleIdentity id)
+      throws IOException {
+
+    return new Transceiver() {
+      @Override
+      protected Calendar getLastModifiedDate()  {
+        return copyToCalendar(findArticleById(id).getLastModified());
+      }
+
+      @Override
+      protected Object getData() throws IOException {
+        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)));
+        List<String> cleanedTerms = new ArrayList<>();
+        for (String term : rawTerms) {
+          term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
+          cleanedTerms.add(term);
+        }
+        return cleanedTerms;
       }
     };
   }

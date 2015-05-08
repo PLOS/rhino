@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService {
@@ -26,6 +27,11 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   @Override
   public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
     return taxonomyClassificationService.classifyArticle(articleXml);
+  }
+
+  @Override
+  public List<String> getRawTerms(Document articleXml) throws IOException {
+    return taxonomyClassificationService.getRawTerms(articleXml);
   }
 
   @Override
