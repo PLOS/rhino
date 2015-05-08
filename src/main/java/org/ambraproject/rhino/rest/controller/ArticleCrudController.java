@@ -18,28 +18,34 @@
 
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Optional;
 import com.google.common.net.HttpHeaders;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionService;
+import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -105,6 +111,28 @@ public class ArticleCrudController extends ArticleSpaceController {
     articleCrudService.listRecent(query).respond(request, response, entityGson);
   }
 
+
+  /**
+   * Repopulates article category information by making a call to the taxonomy server.
+   *
+   * @param request          HttpServletRequest
+   * @param response         HttpServletResponse
+   * @throws IOException
+   */
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
+      params = "repopulateCategories")
+  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+
+    articleCrudService.repopulateCategories(id);
+
+    response.setStatus(HttpStatus.ACCEPTED.value());
+
+    // Report the current categories
+    articleCrudService.readCategories(id).respond(request, response, entityGson);
+  }
 
   /**
    * Retrieves metadata about an article.
@@ -194,6 +222,36 @@ public class ArticleCrudController extends ArticleSpaceController {
     try (OutputStream stream = new BufferedOutputStream(response.getOutputStream())) {
       repacked.write(stream);
     }
+  }
+
+  /**
+   * Retrieves a list of objects representing categories associated with the article.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "categories")
+  public void readCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    articleCrudService.readCategories(id).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves a list of objects representing raw taxonomy categories associated with the article.
+   *
+   * @param request
+   * @param response
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategories")
+  public void getRawCategories(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    articleCrudService.getRawCategories(id).respond(request, response, entityGson);
   }
 
 }
