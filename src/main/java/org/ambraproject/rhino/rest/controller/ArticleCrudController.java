@@ -120,18 +120,19 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST,
       params = "repopulateCategories")
-  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response)
+  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam(value = ID_PARAM, required = true) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentity articleIdentity = parse(id, null, null);
 
-    articleCrudService.repopulateCategories(id);
+    articleCrudService.repopulateCategories(articleIdentity);
 
     response.setStatus(HttpStatus.ACCEPTED.value());
 
     // Report the current categories
-    articleCrudService.readCategories(id).respond(request, response, entityGson);
+    articleCrudService.readCategories(articleIdentity).respond(request, response, entityGson);
   }
 
   /**
@@ -232,11 +233,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "categories")
-  public void readCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = "categories")
+  public void readCategories(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(value = ID_PARAM, required = true) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readCategories(id).respond(request, response, entityGson);
+    ArticleIdentity articleIdentity = parse(id, null, null);
+    articleCrudService.readCategories(articleIdentity).respond(request, response, entityGson);
   }
 
   /**
@@ -247,11 +249,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategories")
-  public void getRawCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = "rawCategories")
+  public void getRawCategories(HttpServletRequest request, HttpServletResponse response,
+                               @RequestParam(value = ID_PARAM, required = true) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.getRawCategories(id).respond(request, response, entityGson);
+    ArticleIdentity articleIdentity = parse(id, null, null);
+    articleCrudService.getRawCategories(articleIdentity).respond(request, response, entityGson);
   }
 
 }

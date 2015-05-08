@@ -141,7 +141,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     String doi = articleId.getIdentifier();
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.write(input, Optional.of(articleId),
+    Archive archive = createMockIngestible(articleId, input);
+    Article article = articleCrudService.writeArchive(archive, Optional.of(articleId),
         WriteMode.CREATE_ONLY);
 
     HashMap<ArticleIdentity, Article> articleHashMap = new HashMap<>();
