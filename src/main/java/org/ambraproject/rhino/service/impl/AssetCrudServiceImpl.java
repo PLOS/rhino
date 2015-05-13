@@ -28,6 +28,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
@@ -46,8 +47,10 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -62,6 +65,10 @@ import java.util.Date;
 import java.util.List;
 
 public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
+
+
+  @Autowired
+  private ArticleRevisionService articleRevisionService;
 
   private static final Logger log = LoggerFactory.getLogger(AssetCrudServiceImpl.class);
 
@@ -280,6 +287,22 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public InputStream read(AssetIdentity assetIdentity){
+    try {
+      return contentRepoService.getRepoObject(
+          RepoVersion.create(assetIdentity.getIdentifier(), assetIdentity.getUuid().get()));
+    } catch (ContentRepoException e) {
+      String message = String.format("Asset not found at DOI \"%s\" with uuid \"%s\"",
+          assetIdentity.getIdentifier(), assetIdentity.getUuid());
+      throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
+    }
+
+  }
+
+  /**
    * Find article asset objects.
    *
    * @param id the asset ID
@@ -419,5 +442,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .add(Restrictions.eq("doi", identity.getIdentifier()))));
     return (parentArticleDoi == null) ? null : ArticleIdentity.create(parentArticleDoi);
   }
+
+
 
 }

@@ -3,9 +3,12 @@ package org.ambraproject.rhino.service;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 
 public interface ArticleRevisionService {
+
+  RepoCollectionMetadata findCollectionFor(ArticleIdentity article);
 
   void createRevision(ArticleIdentity article, Integer revisionNumber);
 

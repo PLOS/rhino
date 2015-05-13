@@ -32,7 +32,7 @@ public abstract class ArticleSpaceController extends RestController {
 
   protected ArticleIdentity parse(String id, Integer versionNumber, Integer revisionNumber) {
     if (revisionNumber == null) {
-      return new ArticleIdentity(id, Optional.fromNullable(versionNumber));
+      return new ArticleIdentity(id, Optional.fromNullable(versionNumber), Optional.<String>absent());
     } else {
       int revisionVersionNumber = articleRevisionService.findVersionNumber(ArticleIdentity.create(id), revisionNumber);
       if (versionNumber != null && versionNumber != revisionVersionNumber) {
@@ -41,7 +41,7 @@ public abstract class ArticleSpaceController extends RestController {
             versionNumber, revisionNumber, versionNumber, revisionVersionNumber);
         throw new RestClientException(message, HttpStatus.NOT_FOUND);
       }
-      return new ArticleIdentity(id, Optional.of(revisionVersionNumber));
+      return new ArticleIdentity(id, Optional.of(revisionVersionNumber), Optional.<String>absent());
     }
   }
 

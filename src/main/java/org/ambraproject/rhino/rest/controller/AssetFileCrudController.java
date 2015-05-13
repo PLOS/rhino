@@ -24,13 +24,18 @@ import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
+import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.AssetCrudService;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
+import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +54,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
@@ -61,6 +67,8 @@ public class AssetFileCrudController extends ArticleSpaceController {
   private AssetCrudService assetCrudService;
   @Autowired
   private ContentRepoService contentRepoService;
+  @Autowired
+  private ArticleRevisionService articleRevisionService;
 
 
   private static final String METADATA_PARAM = "metadata";
@@ -79,33 +87,48 @@ public class AssetFileCrudController extends ArticleSpaceController {
                    @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
                    @RequestParam(value = "file", required = true) String fileType)
       throws IOException {
-    ArticleIdentity parentArticle = assetCrudService.getParentArticle(DoiBasedIdentity.create(id));
+
+
+    DoiBasedIdentity assetId = DoiBasedIdentity.create(id);
+    ArticleIdentity parentArticle = assetCrudService.getParentArticle(assetId);
     if (parentArticle == null) {
       throw new RestClientException("Asset ID not mapped to article", HttpStatus.NOT_FOUND);
     }
     parentArticle = parse(parentArticle.getIdentifier(), versionNumber, revisionNumber); // apply revision
 
+    // get the userMeta of the article
+    RepoCollectionMetadata articleMetadata = articleRevisionService.findCollectionFor(parentArticle);
+
+    // get the uuid of the asset
+    Map<String, Object> userMetadata = (Map<String, Object>) articleMetadata.getJsonUserMetadata().get();
+    AssetIdentity assetIdentity = getAssetUUIDFromUserMetadata(userMetadata, assetId, fileType);
+
+    //return the asset
+    read(request, response, assetIdentity);
+
   }
 
-  /**
-   * Serve an identified asset file.
-   */
-  @Transactional(readOnly = true)
-  @RequestMapping(value = ASSET_ROOT, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(ID_PARAM) String id)
-      throws IOException {
-    read(request, response, AssetFileIdentity.parse(id));
+  protected AssetIdentity getAssetUUIDFromUserMetadata(Map<String,Object> userMetadata, DoiBasedIdentity assetId, String fileType){
+
+    Map<String, Object> assets = (Map<String, Object>) userMetadata.get("assets");
+    Map<String, Object>  assetInfo = (Map<String, Object>)  assets.get(assetId.getIdentifier());
+    Map<String, Object> assetsFiles = (Map<String, Object>) assetInfo.get("files");
+    String uuid = (String)((Map<String, Object>) assetsFiles.get(fileType)).get("uuid");
+    String id = fileType + "/" + assetId.getIdentifier();
+    return new AssetIdentity(id, Optional.<Integer>absent(), Optional.fromNullable(uuid));
+
   }
 
-  void read(HttpServletRequest request, HttpServletResponse response, AssetFileIdentity id)
+
+  void read(HttpServletRequest request, HttpServletResponse response, AssetIdentity assetIdentity)
       throws IOException {
     RepoObjectMetadata objMeta;
     try {
-      objMeta = contentRepoService.getLatestRepoObjectMetadata(id.getFilePath());
+      objMeta = contentRepoService.getRepoObjectMetadata(
+          RepoVersion.create(assetIdentity.getIdentifier(), assetIdentity.getUuid().get()));
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-        throw reportNotFound(id);
+        throw reportNotFound(assetIdentity);
       } else {
         throw e;
       }
@@ -113,11 +136,11 @@ public class AssetFileCrudController extends ArticleSpaceController {
 
     Optional<String> contentType = objMeta.getContentType();
     // In case contentType field is empty, default to what we would have written at ingestion
-    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.or(id.inferContentType().toString()));
+    response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.or(objMeta.getContentType().get()));
 
     Optional<String> filename = objMeta.getDownloadName();
     // In case downloadName field is empty, default to what we would have written at ingestion
-    String contentDisposition = "attachment; filename=" + filename.or(id.getFileName()); // TODO: 'attachment' is not always correct
+    String contentDisposition = "attachment; filename=" + filename.or(objMeta.getDownloadName().get()); // TODO: 'attachment' is not always correct
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
 
     Timestamp timestamp = objMeta.getTimestamp();
@@ -135,7 +158,7 @@ public class AssetFileCrudController extends ArticleSpaceController {
       response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     } else {
-      try (InputStream fileStream = assetCrudService.read(id);
+      try (InputStream fileStream = assetCrudService.read(assetIdentity);
            OutputStream responseStream = response.getOutputStream()) {
         ByteStreams.copy(fileStream, responseStream);
       }

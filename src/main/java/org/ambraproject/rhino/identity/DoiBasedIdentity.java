@@ -22,6 +22,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.StringEscapeUtils;
 
+import javax.swing.text.html.Option;
+
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
  * <li>The entity is an article, in which case the {@link #getIdentifier() identifier} is the article's actual DOI that
@@ -36,6 +38,7 @@ public class DoiBasedIdentity {
 
   private final String identifier; // non-null, non-empty, doesn't have URI scheme prefix
   private final Optional<Integer> versionNumber;
+  private final Optional<String> uuid;
 
   /**
    * Constructor.
@@ -43,7 +46,7 @@ public class DoiBasedIdentity {
    * @param identifier    the DOI for this resource
    * @param versionNumber
    */
-  protected DoiBasedIdentity(String identifier, Optional<Integer> versionNumber) {
+  protected DoiBasedIdentity(String identifier, Optional<Integer> versionNumber, Optional<String> uuid) {
     identifier = Preconditions.checkNotNull(identifier).trim();
     Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
     if (identifier.startsWith("info:doi/")) {
@@ -52,6 +55,7 @@ public class DoiBasedIdentity {
     this.identifier = identifier;
 
     this.versionNumber = Preconditions.checkNotNull(versionNumber);
+    this.uuid = Preconditions.checkNotNull(uuid);
   }
 
   /**
@@ -61,7 +65,7 @@ public class DoiBasedIdentity {
    * @return the identity
    */
   public static DoiBasedIdentity create(String identifier) {
-    return new DoiBasedIdentity(identifier, Optional.<Integer>absent());
+    return new DoiBasedIdentity(identifier, Optional.<Integer>absent(), Optional.<String>absent());
   }
 
   /**
@@ -130,6 +134,10 @@ public class DoiBasedIdentity {
 
   public Optional<Integer> getVersionNumber() {
     return versionNumber;
+  }
+
+  public Optional<String> getUuid() {
+    return uuid;
   }
 
   @Override

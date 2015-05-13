@@ -19,9 +19,11 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
+import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,15 +44,20 @@ public class AssetController extends RestController {
 
   @Autowired
   private AssetCrudService assetCrudService;
+  @Autowired
+  private ArticleRevisionService articleRevisionService;
 
   private AssetIdentity parse(String id, Integer versionNumber, Integer revisionNumber) {
     if (revisionNumber == null) {
-      return new AssetIdentity(id, Optional.fromNullable(versionNumber));
+      return new AssetIdentity(id, Optional.fromNullable(versionNumber), Optional.<String>absent());
     } else {
       if (versionNumber != null) {
         throw new RestClientException("Cannot specify version and revision", HttpStatus.NOT_FOUND);
       }
-      return null; // TODO: Look up by revision and return with correct version
+
+      int revisionVersionNumber = articleRevisionService.findVersionNumber(ArticleIdentity.create(id), revisionNumber);
+      return new AssetIdentity(id, Optional.fromNullable(revisionVersionNumber), Optional.<String>absent());
+
     }
   }
 

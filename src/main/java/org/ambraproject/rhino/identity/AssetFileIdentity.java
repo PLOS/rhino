@@ -36,8 +36,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
 
   private final String extension;
 
-  private AssetFileIdentity(String identifier, String extension, Optional<Integer> versionNumber) {
-    super(identifier, versionNumber);
+  private AssetFileIdentity(String identifier, String extension, Optional<Integer> versionNumber, Optional<String> uuid) {
+    super(identifier, versionNumber, uuid);
     Preconditions.checkArgument(StringUtils.isNotBlank(extension));
     this.extension = extension;
   }
@@ -56,11 +56,11 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     String identifier = path.substring(0, dotIndex);
     String extension = path.substring(dotIndex + 1);
 
-    return new AssetFileIdentity(identifier, extension, Optional.<Integer>absent());
+    return new AssetFileIdentity(identifier, extension, Optional.<Integer>absent(), Optional.<String>absent());
   }
 
   public static AssetFileIdentity create(String identifier, String extension) {
-    return new AssetFileIdentity(asIdentifier(identifier), extension, Optional.<Integer>absent());
+    return new AssetFileIdentity(asIdentifier(identifier), extension, Optional.<Integer>absent(), Optional.<String>absent());
   }
 
   /**
@@ -169,8 +169,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
 
   @Override
   public String toString() {
-    return String.format("(\"%s\" . \"%s\", %s)",
-        StringEscapeUtils.escapeJava(getIdentifier()), extension, String.valueOf(getVersionNumber().orNull()));
+    return String.format("(\"%s\" . \"%s\", %s, %s)",
+        StringEscapeUtils.escapeJava(getIdentifier()), extension, String.valueOf(getVersionNumber().orNull()), getUuid().orNull());
   }
 
   @Override
