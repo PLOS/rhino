@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.net.HttpHeaders;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
@@ -110,8 +111,8 @@ public class ArticleCrudController extends ArticleSpaceController {
   /**
    * Repopulates article category information by making a call to the taxonomy server.
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
@@ -145,6 +146,17 @@ public class ArticleCrudController extends ArticleSpaceController {
                    @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
     articleCrudService.readMetadata(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
+  }
+
+  @Transactional(readOnly = false)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST, params = {ID_PARAM, "legacyReingest"})
+  public void legacyReingest(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(value = ID_PARAM, required = true) String id,
+                             @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                             @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
+      throws IOException {
+    Article article = articleCrudService.writeToLegacy(parse(id, versionNumber, revisionNumber));
+    articleCrudService.readMetadata(article, false).respond(request, response, entityGson);
   }
 
   /**

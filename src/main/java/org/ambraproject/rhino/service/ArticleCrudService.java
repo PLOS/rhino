@@ -46,6 +46,8 @@ public interface ArticleCrudService {
   public abstract Article writeArchive(Archive archive)
       throws IOException;
 
+  public abstract Article writeToLegacy(ArticleIdentity articleIdentity) throws IOException;
+
   public abstract Article writeToLegacy(RepoCollectionMetadata articleCollection) throws IOException;
 
   public abstract Archive readArchive(ArticleIdentity articleIdentity);
