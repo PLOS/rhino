@@ -372,6 +372,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public Transceiver readFileMetadata(final AssetFileIdentity id)
       throws IOException {
+
+    // TODO : stop using versionNumber and start using uuid (included in AssetFileIdentity)
+
     return new EntityTransceiver<ArticleAsset>() {
       @Override
       protected ArticleAsset fetchEntity() {

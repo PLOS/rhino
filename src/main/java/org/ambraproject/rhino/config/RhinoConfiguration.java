@@ -26,26 +26,14 @@ import org.ambraproject.rhino.config.json.AdapterRegistry;
 import org.ambraproject.rhino.config.json.DoiBasedIdentitySerializer;
 import org.ambraproject.rhino.config.json.ExclusionSpecialCase;
 import org.ambraproject.rhino.content.xml.XpathReader;
-import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.ArticleRevisionService;
-import org.ambraproject.rhino.service.ArticleStateService;
-import org.ambraproject.rhino.service.ArticleTypeService;
-import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.ConfigurationReadService;
-import org.ambraproject.rhino.service.IngestibleService;
-import org.ambraproject.rhino.service.IssueCrudService;
-import org.ambraproject.rhino.service.JournalReadService;
-import org.ambraproject.rhino.service.LegacyArticleTypeService;
-import org.ambraproject.rhino.service.PingbackReadService;
-import org.ambraproject.rhino.service.UserCrudService;
-import org.ambraproject.rhino.service.VolumeCrudService;
+import org.ambraproject.rhino.service.*;
 import org.ambraproject.rhino.service.impl.AnnotationCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleRevisionServiceImpl;
 import org.ambraproject.rhino.service.impl.ArticleStateServiceImpl;
 import org.ambraproject.rhino.service.impl.AssetCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.ConfigurationReadServiceImpl;
+import org.ambraproject.rhino.service.impl.IdentityServiceImpl;
 import org.ambraproject.rhino.service.impl.IngestibleServiceImpl;
 import org.ambraproject.rhino.service.impl.IssueCrudServiceImpl;
 import org.ambraproject.rhino.service.impl.JournalReadServiceImpl;
@@ -234,6 +222,11 @@ public class RhinoConfiguration extends BaseConfiguration {
   @Bean
   public AssetCrudService assetCrudService() {
     return new AssetCrudServiceImpl();
+  }
+
+  @Bean
+  public IdentityService identityService() {
+    return new IdentityServiceImpl();
   }
 
   @Bean
