@@ -10,6 +10,7 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.ArticleRevision;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.hibernate.Query;
@@ -21,6 +22,7 @@ import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.model.RepoVersionNumber;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -34,6 +36,9 @@ import java.util.TreeSet;
 import java.util.UUID;
 
 public class ArticleRevisionServiceImpl extends AmbraService implements ArticleRevisionService {
+
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   private RepoCollectionMetadata findCollectionFor(ArticleIdentity article) {
     String articleKey = article.getIdentifier();
@@ -56,31 +61,39 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
   }
 
   @Override
-  public void createRevision(ArticleIdentity article, Integer revisionNumber) {
+  public void createRevision(ArticleIdentity article, Integer revisionNumber) throws IOException {
     String articleKey = article.getIdentifier();
+    ArticleRevision latestRevision = getLatestRevision(articleKey); // TODO: Transaction safety
 
     ArticleRevision revision;
+    final boolean isNewLatestRevision;
     if (revisionNumber == null) {
-      ArticleRevision latestRevision = getLatestRevision(articleKey); // TODO: Transaction safety
-      int newRevisionNumber = (latestRevision == null) ? 1 : latestRevision.getRevisionNumber() + 1;
+      isNewLatestRevision = true;
 
+      int newRevisionNumber = (latestRevision == null) ? 1 : latestRevision.getRevisionNumber() + 1;
       revision = new ArticleRevision();
       revision.setDoi(articleKey);
       revision.setRevisionNumber(newRevisionNumber);
     } else {
+      isNewLatestRevision = (latestRevision == null) || (latestRevision.getRevisionNumber() <= revisionNumber);
+
       revision = (ArticleRevision) DataAccessUtils.uniqueResult(
           hibernateTemplate.find("from ArticleRevision where doi=? and revisionNumber=?",
               articleKey, revisionNumber));
       if (revision == null) {
         revision = new ArticleRevision();
         revision.setDoi(articleKey);
-        revision.setRevisionNumber(revisionNumber);
       }
+      revision.setRevisionNumber(revisionNumber);
     }
 
     RepoCollectionMetadata collection = findCollectionFor(article);
     revision.setCrepoUuid(collection.getVersion().getUuid().toString());
     hibernateTemplate.persist(revision);
+
+    if (isNewLatestRevision) {
+      articleCrudService.writeToLegacy(collection);
+    }
   }
 
   @Override

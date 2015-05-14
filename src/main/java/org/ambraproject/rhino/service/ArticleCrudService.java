@@ -26,6 +26,7 @@ import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.plos.crepo.model.RepoCollectionMetadata;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +47,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException;
+
+  public abstract Article writeToLegacy(RepoCollectionMetadata articleCollection) throws IOException;
 
   public abstract Archive readArchive(ArticleIdentity articleIdentity);
 

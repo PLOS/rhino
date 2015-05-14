@@ -5,9 +5,11 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.plos.crepo.model.RepoObjectMetadata;
 
+import java.io.IOException;
+
 public interface ArticleRevisionService {
 
-  void createRevision(ArticleIdentity article, Integer revisionNumber);
+  void createRevision(ArticleIdentity article, Integer revisionNumber) throws IOException;
 
   boolean deleteRevision(ArticleIdentity article, Integer revisionNumber);
 

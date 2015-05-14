@@ -197,6 +197,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
+  public Article writeToLegacy(RepoCollectionMetadata articleCollection) throws IOException {
+    RepoVersionNumber versionNumber = articleCollection.getVersionNumber();
+    ArticleIdentity articleIdentity = new ArticleIdentity(versionNumber.getKey(), Optional.of(versionNumber.getNumber()));
+    Archive archive = readArchive(articleIdentity);
+    return new LegacyIngestionService(this).writeArchive(archive, Optional.<ArticleIdentity>absent(), WriteMode.WRITE_ANY);
+  }
+
+  @Override
   public Archive readArchive(ArticleIdentity articleIdentity) {
     RepoCollectionMetadata collection = fetchArticleCollection(articleIdentity);
     String archiveName = articleIdentity.getLastToken() + ".zip";
