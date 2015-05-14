@@ -325,13 +325,6 @@ public class IngestionTest extends BaseRhinoTest {
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
     assertTrue(first.getCreated().getTime() >= start);
 
-    try {
-      Article second = articleCrudService.writeArchive(zipPath);
-      fail("Article creation succeeded for second ingestion in CREATE_ONLY mode");
-    } catch (RestClientException expected) {
-      assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
     Article second = articleCrudService.writeArchive(zipPath);
 
     // TODO: figure out how to detect that second was re-ingested.  Don't want to
