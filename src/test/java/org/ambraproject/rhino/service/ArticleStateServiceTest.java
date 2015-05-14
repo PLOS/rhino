@@ -115,7 +115,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     final String pubmed = "PUBMED";
 
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR, "pone.0056489.zip"));
-    Article article = articleCrudService.writeArchive(archive);
+    Article article = writeToLegacy(articleCrudService, archive);
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
     for (ArticleAsset asset : article.getAssets()) {

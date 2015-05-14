@@ -50,7 +50,7 @@ public class IngestibleZipController extends RestController {
     Article result;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
-      result = articleCrudService.writeArchive(archive);
+      result = articleCrudService.writeArchive(archive).getArticle();
     }
     response.setStatus(HttpStatus.CREATED.value());
 

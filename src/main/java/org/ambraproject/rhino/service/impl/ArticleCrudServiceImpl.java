@@ -184,8 +184,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   };
 
   @Override
-  public Article writeArchive(Archive inputArchive) throws IOException {
-    VersionedIngestionService.IngestionResult ingestionResult;
+  public IngestionResult writeArchive(Archive inputArchive) throws IOException {
+    IngestionResult ingestionResult;
     try {
       ingestionResult = new VersionedIngestionService(this).ingest(inputArchive);
     } catch (XmlContentException e) {
@@ -193,7 +193,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } finally {
       inputArchive.close();
     }
-    return ingestionResult.getArticle();
+    return ingestionResult;
   }
 
   @Override

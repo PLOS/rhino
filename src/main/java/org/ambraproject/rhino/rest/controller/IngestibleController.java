@@ -92,7 +92,7 @@ public class IngestibleController extends RestController {
 
     Article result;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
-      result = articleCrudService.writeArchive(archive);
+      result = articleCrudService.writeArchive(archive).getArticle();
     }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());

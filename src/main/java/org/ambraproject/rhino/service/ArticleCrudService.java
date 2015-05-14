@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Preconditions;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -43,7 +44,7 @@ public interface ArticleCrudService {
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(Archive archive)
+  public abstract IngestionResult writeArchive(Archive archive)
       throws IOException;
 
   public abstract Article writeToLegacy(ArticleIdentity articleIdentity) throws IOException;
@@ -146,5 +147,37 @@ public interface ArticleCrudService {
    * @return a set of views of the related articles
    */
   public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
+
+
+  public static class IngestionResult {
+    private final Article article;
+    private final RepoCollectionMetadata collection;
+
+    public IngestionResult(Article article, RepoCollectionMetadata collection) {
+      this.article = Preconditions.checkNotNull(article);
+      this.collection = Preconditions.checkNotNull(collection);
+    }
+
+    public Article getArticle() {
+      return article;
+    }
+
+    public RepoCollectionMetadata getCollection() {
+      return collection;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      IngestionResult that = (IngestionResult) o;
+      return article.equals(that.article) && collection.equals(that.collection);
+    }
+
+    @Override
+    public int hashCode() {
+      return 31 * article.hashCode() + collection.hashCode();
+    }
+  }
 
 }

@@ -73,8 +73,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive ingestible = Archive.readZipFileIntoMemory(articleId.getLastToken() + ".zip",
         IngestibleUtil.buildMockIngestible(input));
-    Article article = articleCrudService.writeArchive(ingestible
-    );
+    Article article = writeToLegacy(articleCrudService, ingestible);
 
     UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
     hibernateTemplate.save(creator);

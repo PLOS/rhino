@@ -258,7 +258,7 @@ public class IngestionTest extends BaseRhinoTest {
     RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
     Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip",
         IngestibleUtil.buildMockIngestible(testInputStream));
-    Article actual = articleCrudService.writeArchive(ingestible);
+    Article actual = writeToLegacy(articleCrudService, ingestible);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -292,7 +292,7 @@ public class IngestionTest extends BaseRhinoTest {
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = readReferenceCase(jsonFile);
-    Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile));
+    Article actual = writeToLegacy(articleCrudService, Archive.readZipFileIntoMemory(zipFile));
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -321,11 +321,11 @@ public class IngestionTest extends BaseRhinoTest {
     long start = System.currentTimeMillis();
     Archive zipPath = Archive.readZipFileIntoMemory(new File(
         ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip"));
-    Article first = articleCrudService.writeArchive(zipPath);
+    Article first = writeToLegacy(articleCrudService, zipPath);
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
     assertTrue(first.getCreated().getTime() >= start);
 
-    Article second = articleCrudService.writeArchive(zipPath);
+    Article second = writeToLegacy(articleCrudService, zipPath);
 
     // TODO: figure out how to detect that second was re-ingested.  Don't want to
     // use modification time since the test might run in less than one clock tick.
@@ -346,7 +346,7 @@ public class IngestionTest extends BaseRhinoTest {
     String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "bad_zips"
         + File.separator + "pone.0060593.zip";
     try {
-      Article article = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(new File(zipPath)));
+      Article article = writeToLegacy(articleCrudService, Archive.readZipFileIntoMemory(new File(zipPath)));
       fail("Ingesting bad zip did not throw exception");
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);

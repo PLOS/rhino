@@ -19,7 +19,10 @@
 package org.ambraproject.rhino;
 
 import com.google.gson.Gson;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.config.TestConfiguration;
+import org.ambraproject.rhino.service.ArticleCrudService;
+import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,6 +30,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+
+import java.io.IOException;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = TestConfiguration.class)
 
@@ -66,4 +71,10 @@ public abstract class BaseRhinoTest extends /* AbstractTransactionalTestNGSpring
   protected void addExpectedJournals() {
     RhinoTestHelper.addExpectedJournals(hibernateTemplate);
   }
+
+  public static Article writeToLegacy(ArticleCrudService articleCrudService, Archive ingestible) throws IOException {
+    ArticleCrudService.IngestionResult result = articleCrudService.writeArchive(ingestible);
+    return articleCrudService.writeToLegacy(result.getCollection());
+  }
+
 }

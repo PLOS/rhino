@@ -13,6 +13,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.util.Archive;
 import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoCollectionMetadata;
@@ -45,13 +46,7 @@ class VersionedIngestionService {
     this.parentService = Preconditions.checkNotNull(parentService);
   }
 
-  static interface IngestionResult {
-    Article getArticle();
-
-    RepoCollectionMetadata getRepoCollectionMetadata();
-  }
-
-  IngestionResult ingest(Archive archive) throws IOException, XmlContentException {
+  ArticleCrudService.IngestionResult ingest(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -183,17 +178,7 @@ class VersionedIngestionService {
       } // else, leave it as is
     }
 
-    return new IngestionResult() {
-      @Override
-      public Article getArticle() {
-        return articleMetadata;
-      }
-
-      @Override
-      public RepoCollectionMetadata getRepoCollectionMetadata() {
-        return collectionMetadata;
-      }
-    };
+    return new ArticleCrudService.IngestionResult(articleMetadata, collectionMetadata);
   }
 
   private String createUserMetadataForArchiveEntryName(String entryName) {
