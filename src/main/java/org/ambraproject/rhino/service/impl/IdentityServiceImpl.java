@@ -25,8 +25,8 @@ public class IdentityServiceImpl implements IdentityService {
     if (revisionNumber == null) {
       return new ArticleIdentity(articleId, Optional.fromNullable(versionNumber), Optional.<String>absent());
     } else {
-      int revisionVersionNumber = articleRevisionService.findVersionNumber(ArticleIdentity.create(articleId), revisionNumber);
-      if (versionNumber != null && versionNumber != revisionVersionNumber) {
+      Integer revisionVersionNumber = articleRevisionService.findVersionNumber(ArticleIdentity.create(articleId), revisionNumber);
+      if ((revisionVersionNumber == null) || (versionNumber != null && versionNumber != revisionVersionNumber)) {
         String message = String.format("Mismatch between version and revision " +
                 "(provided v=%d&r=%d; correct revision for v=%d is r=%d)",
             versionNumber, revisionNumber, versionNumber, revisionVersionNumber);

@@ -130,7 +130,7 @@ public class AssetController extends RestController {
                            @RequestParam(value = ID_PARAM, required = true) String id,
                            @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
                            @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
-                           @RequestParam(value = "file", required = false) String fileType)
+                           @RequestParam(value = "fileType", required = false) String fileType)
       throws IOException {
     assetCrudService.readFigureMetadata(parse(id, versionNumber, revisionNumber, fileType)).respond(request, response, entityGson);
   }
