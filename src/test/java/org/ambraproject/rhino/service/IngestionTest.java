@@ -21,7 +21,6 @@ package org.ambraproject.rhino.service;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -46,7 +45,6 @@ import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -260,8 +258,7 @@ public class IngestionTest extends BaseRhinoTest {
     RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
     Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip",
         IngestibleUtil.buildMockIngestible(testInputStream));
-    Article actual = articleCrudService.writeArchive(ingestible,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article actual = articleCrudService.writeArchive(ingestible);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -295,8 +292,7 @@ public class IngestionTest extends BaseRhinoTest {
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = readReferenceCase(jsonFile);
-    Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile),
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile));
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
 
@@ -325,21 +321,18 @@ public class IngestionTest extends BaseRhinoTest {
     long start = System.currentTimeMillis();
     Archive zipPath = Archive.readZipFileIntoMemory(new File(
         ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip"));
-    Article first = articleCrudService.writeArchive(zipPath,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article first = articleCrudService.writeArchive(zipPath);
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
     assertTrue(first.getCreated().getTime() >= start);
 
     try {
-      Article second = articleCrudService.writeArchive(zipPath,
-          Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+      Article second = articleCrudService.writeArchive(zipPath);
       fail("Article creation succeeded for second ingestion in CREATE_ONLY mode");
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    Article second = articleCrudService.writeArchive(zipPath,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.WRITE_ANY);
+    Article second = articleCrudService.writeArchive(zipPath);
 
     // TODO: figure out how to detect that second was re-ingested.  Don't want to
     // use modification time since the test might run in less than one clock tick.
@@ -360,8 +353,7 @@ public class IngestionTest extends BaseRhinoTest {
     String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "bad_zips"
         + File.separator + "pone.0060593.zip";
     try {
-      Article article = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(new File(zipPath)),
-          Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+      Article article = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(new File(zipPath)));
       fail("Ingesting bad zip did not throw exception");
     } catch (RestClientException expected) {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);

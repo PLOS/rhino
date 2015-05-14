@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.ambraproject.models.Annotation;
@@ -74,8 +73,8 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive ingestible = Archive.readZipFileIntoMemory(articleId.getLastToken() + ".zip",
         IngestibleUtil.buildMockIngestible(input));
-    Article article = articleCrudService.writeArchive(ingestible, Optional.of(articleId),
-        DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(ingestible
+    );
 
     UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
     hibernateTemplate.save(creator);

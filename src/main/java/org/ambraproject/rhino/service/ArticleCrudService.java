@@ -18,7 +18,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -32,20 +31,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-public interface ArticleCrudService extends DoiBasedCrudService {
+public interface ArticleCrudService {
 
   /**
    * Create or update an article from supplied ,zip archive data. If no article exists with the given identity, a new
    * article entity is created; else, the article is re-ingested and the new data replaces the old data in the file
    * store.
    *
-   * @param filename   path to the local .zip file
-   * @param suppliedId the identifier supplied for the article, if any
+   * @param archive the archive to ingest
    * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article writeArchive(Archive archive)
       throws IOException;
 
   public abstract Article writeToLegacy(RepoCollectionMetadata articleCollection) throws IOException;

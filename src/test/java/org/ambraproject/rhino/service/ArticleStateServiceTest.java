@@ -13,7 +13,6 @@
 
 package org.ambraproject.rhino.service;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
@@ -116,8 +115,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     final String pubmed = "PUBMED";
 
     Archive archive = Archive.readZipFileIntoMemory(new File(TEST_DATA_DIR, "pone.0056489.zip"));
-    Article article = articleCrudService.writeArchive(archive,
-        Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(archive);
     ArticleIdentity articleId = ArticleIdentity.create(article);
     assertEquals(article.getState(), Article.STATE_UNPUBLISHED);
     for (ArticleAsset asset : article.getAssets()) {

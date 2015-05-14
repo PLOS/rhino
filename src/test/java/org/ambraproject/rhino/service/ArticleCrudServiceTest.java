@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
@@ -36,7 +35,6 @@ import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -142,8 +140,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
     Archive archive = createMockIngestible(articleId, input);
-    Article article = articleCrudService.writeArchive(archive, Optional.of(articleId),
-        WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(archive
+    );
 
     HashMap<ArticleIdentity, Article> articleHashMap = new HashMap<>();
     articleHashMap.put(articleId, article);
@@ -161,7 +159,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertArticleExistence(articleId, false);
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId), WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input));
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -207,7 +205,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
-    article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId), WriteMode.UPDATE_ONLY);
+    article = articleCrudService.writeArchive(createMockIngestible(articleId, input));
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
@@ -225,7 +223,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
     RhinoTestHelper.TestInputStream input = new RhinoTestHelper.TestFile(articleFile).read();
     input = RhinoTestHelper.alterStream(input, articleDoi, articleDoi);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId), WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input));
 
     RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId);
@@ -276,8 +274,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     String doi = articleId.getIdentifier();
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId),
-        DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input)
+    );
 
     String json = articleCrudService.readMetadata(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);

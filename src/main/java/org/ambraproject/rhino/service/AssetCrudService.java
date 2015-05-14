@@ -26,7 +26,7 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface AssetCrudService extends DoiBasedCrudService {
+public interface AssetCrudService {
 
   /**
    * Upload a file to be associated with a created asset.

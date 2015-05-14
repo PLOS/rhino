@@ -23,7 +23,6 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.service.article.NoSuchArticleIdException;
@@ -79,16 +78,12 @@ class LegacyIngestionService {
    *
    * @param doc           Document describing the article XML
    * @param manifestXml   The manifestXml document
-   * @param suppliedId    the indentifier supplied for the article by the external caller, if any
-   * @param mode          whether to attempt a create or update
    * @param xmlDataLength the number of bytes in the uploaded XML file
    * @return the created Article
    * @throws IOException
    */
 
-  private Article populateArticleFromXml(Document doc, Optional<ManifestXml> manifestXml,
-                                         Optional<ArticleIdentity> suppliedId,
-                                         DoiBasedCrudService.WriteMode mode, int xmlDataLength) {
+  private Article populateArticleFromXml(Document doc, Optional<ManifestXml> manifestXml, int xmlDataLength) {
     ArticleXml xml = new ArticleXml(doc);
     ArticleIdentity doi;
     try {
@@ -97,19 +92,8 @@ class LegacyIngestionService {
       throw complainAboutXml(e);
     }
 
-    if (suppliedId.isPresent() && !doi.equals(suppliedId.get())) {
-      String message = String.format("Article XML with DOI=\"%s\" uploaded to mismatched address: \"%s\"",
-          doi.getIdentifier(), suppliedId.get().getIdentifier());
-      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-    }
-
     Article article = findArticleById(doi);
     final boolean creating = (article == null);
-    if ((creating && mode == DoiBasedCrudService.WriteMode.UPDATE_ONLY) || (!creating && mode == DoiBasedCrudService.WriteMode.CREATE_ONLY)) {
-      String messageStub = (creating ?
-          "Can't update; article does not exist at " : "Can't create; article already exists at ");
-      throw new RestClientException(messageStub + doi.getIdentifier(), HttpStatus.METHOD_NOT_ALLOWED);
-    }
     if (creating) {
       article = new Article();
       article.setDoi(doi.getKey());
@@ -305,7 +289,7 @@ class LegacyIngestionService {
   }
 
 
-  Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, DoiBasedCrudService.WriteMode mode)
+  Article writeArchive(Archive archive)
       throws IOException {
     Document manifestDoc = getManifest(archive);
     ManifestXml manifest = new ManifestXml(manifestDoc);
@@ -315,7 +299,7 @@ class LegacyIngestionService {
       xmlData = ByteStreams.toByteArray(xmlStream);
     }
     Document doc = AmbraService.parseXml(xmlData);
-    Article article = populateArticleFromXml(doc, Optional.fromNullable(manifest), suppliedId, mode, xmlData.length);
+    Article article = populateArticleFromXml(doc, Optional.fromNullable(manifest), xmlData.length);
     article.setArchiveName(new File(archive.getArchiveName()).getName());
     article.setStrkImgURI(manifest.getStrkImgURI());
 

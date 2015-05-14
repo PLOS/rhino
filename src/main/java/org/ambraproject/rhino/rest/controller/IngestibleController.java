@@ -19,7 +19,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,14 +87,12 @@ public class IngestibleController extends RestController {
           HttpStatus.METHOD_NOT_ALLOWED, fnfe);
     }
 
-    WriteMode reingestMode = booleanParameter(forceReingest) ? WriteMode.WRITE_ANY : WriteMode.CREATE_ONLY;
-
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
     Optional<ArticleIdentity> expectedId = Optional.absent();
 
     Article result;
     try (Archive archive = Archive.readZipFile(archiveFile)) {
-      result = articleCrudService.writeArchive(archive, expectedId, reingestMode);
+      result = articleCrudService.writeArchive(archive);
     }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());

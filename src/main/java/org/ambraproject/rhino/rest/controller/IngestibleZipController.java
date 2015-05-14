@@ -1,11 +1,8 @@
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,14 +47,10 @@ public class IngestibleZipController extends RestController {
 
     String archiveName = requestFile.getOriginalFilename();
 
-    // If forceReingest is the empty string, the parameter was present.  Only
-    // treat null as false.
-    DoiBasedCrudService.WriteMode mode = forceReingest == null ? DoiBasedCrudService.WriteMode.CREATE_ONLY : DoiBasedCrudService.WriteMode.WRITE_ANY;
-
     Article result;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
-      result = articleCrudService.writeArchive(archive, Optional.<ArticleIdentity>absent(), mode);
+      result = articleCrudService.writeArchive(archive);
     }
     response.setStatus(HttpStatus.CREATED.value());
 
