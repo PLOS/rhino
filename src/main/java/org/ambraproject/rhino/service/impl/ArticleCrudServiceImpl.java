@@ -185,19 +185,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Article writeArchive(Archive inputArchive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
-    RepoCollectionMetadata createdVersionedArticle;
+    VersionedIngestionService.IngestionResult ingestionResult;
     try {
-      createdVersionedArticle = new VersionedIngestionService(this).ingest(inputArchive);
+      ingestionResult = new VersionedIngestionService(this).ingest(inputArchive);
     } catch (XmlContentException e) {
       throw new RestClientException("Invalid XML", HttpStatus.BAD_REQUEST, e);
+    } finally {
+      inputArchive.close();
     }
-    Archive collectionArchive = Archive.readCollection(contentRepoService,
-        inputArchive.getArchiveName(), createdVersionedArticle, ARCHIVE_ENTRY_NAME_EXTRACTOR);
-    inputArchive.close();
-
-    Article createdLegacyArticle = new LegacyIngestionService(this).writeArchive(collectionArchive, suppliedId, mode);
-
-    return createdLegacyArticle; // TODO: Reconcile return type with createdVersionedArticle
+    return ingestionResult.getArticle();
   }
 
   @Override
@@ -326,7 +322,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     return new Transceiver() {
       @Override
-      protected Calendar getLastModifiedDate()  {
+      protected Calendar getLastModifiedDate() {
         return copyToCalendar(findArticleById(id).getLastModified());
       }
 

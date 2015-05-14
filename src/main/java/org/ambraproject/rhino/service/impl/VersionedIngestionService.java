@@ -45,7 +45,13 @@ class VersionedIngestionService {
     this.parentService = Preconditions.checkNotNull(parentService);
   }
 
-  public RepoCollectionMetadata ingest(Archive archive) throws IOException, XmlContentException {
+  static interface IngestionResult {
+    Article getArticle();
+
+    RepoCollectionMetadata getRepoCollectionMetadata();
+  }
+
+  IngestionResult ingest(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
       if (entryName.equalsIgnoreCase("manifest.xml")) {
@@ -88,7 +94,7 @@ class VersionedIngestionService {
       throw new RestClientException("Manifest refers to missing file as main-entry: " + manuscriptEntry, HttpStatus.BAD_REQUEST);
     }
     ArticleIdentity articleIdentity;
-    Article articleMetadata;
+    final Article articleMetadata;
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       ArticleXml parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
       articleIdentity = parsedArticle.readDoi();
@@ -160,7 +166,7 @@ class VersionedIngestionService {
         .setObjects(created.values())
         .setUserMetadata(parentService.crepoGson.toJson(userMetadataForCollection.map))
         .build();
-    RepoCollectionMetadata collectionMetadata = parentService.contentRepoService.autoCreateCollection(collection);
+    final RepoCollectionMetadata collectionMetadata = parentService.contentRepoService.autoCreateCollection(collection);
 
     // Associate DOIs
     for (String assetDoi : userMetadataForCollection.dois) {
@@ -177,7 +183,17 @@ class VersionedIngestionService {
       } // else, leave it as is
     }
 
-    return collectionMetadata;
+    return new IngestionResult() {
+      @Override
+      public Article getArticle() {
+        return articleMetadata;
+      }
+
+      @Override
+      public RepoCollectionMetadata getRepoCollectionMetadata() {
+        return collectionMetadata;
+      }
+    };
   }
 
   private String createUserMetadataForArchiveEntryName(String entryName) {
