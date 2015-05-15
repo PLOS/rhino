@@ -63,6 +63,7 @@ public abstract class RestController {
   protected static final String ID_PARAM = "id";
   protected static final String VERSION_PARAM = "v";
   protected static final String REVISION_PARAM = "r";
+  protected static final String FILE_TYPE_PARAM = "fileType";
 
   protected static final String ACCEPT_REQUEST_HEADER = "Accept";
   protected static final String JSONP_CALLBACK_PARAM = "callback";

@@ -88,7 +88,7 @@ public class AssetFileCrudController extends ArticleSpaceController {
                    @RequestParam(value = ID_PARAM, required = true) String id,
                    @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
                    @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
-                   @RequestParam(value = "fileType", required = true) String fileType)
+                   @RequestParam(value = FILE_TYPE_PARAM, required = true) String fileType)
       throws IOException {
 
 
