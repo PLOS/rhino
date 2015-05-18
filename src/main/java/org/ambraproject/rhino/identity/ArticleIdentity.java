@@ -23,8 +23,8 @@ import org.ambraproject.models.Article;
 
 public class ArticleIdentity extends DoiBasedIdentity {
 
-  public ArticleIdentity(String identifier, Optional<Integer> versionNumber, Optional<String> uuid) {
-    super(identifier, versionNumber, uuid);
+  public ArticleIdentity(String identifier, Optional<Integer> versionNumber) {
+    super(identifier, versionNumber);
   }
 
   /**
@@ -37,7 +37,7 @@ public class ArticleIdentity extends DoiBasedIdentity {
    * @throws IllegalArgumentException if the DOI is prefixed with a URI scheme value or is null or empty
    */
   public static ArticleIdentity create(String identifier) {
-    return new ArticleIdentity(identifier, Optional.<Integer>absent(), Optional.<String>absent());
+    return new ArticleIdentity(identifier, Optional.<Integer>absent());
   }
 
   /**

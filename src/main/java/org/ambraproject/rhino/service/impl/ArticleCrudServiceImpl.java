@@ -82,7 +82,7 @@ import java.util.Map;
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
  */
-public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudService {
+public class ArticleCrudServiceImpl extends ArticleSpaceService implements ArticleCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleCrudServiceImpl.class);
 
@@ -98,18 +98,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   TaxonomyService taxonomyService;
   @Autowired
   Gson crepoGson;
-
-  private RepoCollectionMetadata fetchArticleCollection(ArticleIdentity id) {
-    String identifier = id.getIdentifier();
-    Optional<Integer> versionNumber = id.getVersionNumber();
-    RepoCollectionMetadata collection;
-    if (versionNumber.isPresent()) {
-      collection = contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
-    } else {
-      collection = contentRepoService.getLatestCollection(identifier);
-    }
-    return collection;
-  }
 
   private Document fetchArticleXml(ArticleIdentity id) {
     RepoCollectionMetadata collection = fetchArticleCollection(id);

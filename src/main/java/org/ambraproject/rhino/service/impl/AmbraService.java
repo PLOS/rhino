@@ -24,7 +24,6 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
-import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.service.article.ArticleService;
@@ -95,11 +94,6 @@ public abstract class AmbraService {
 
   public static RestClientException reportNotFound(DoiBasedIdentity id) {
     String message = "Item not found at the provided ID: " + id;
-    return new RestClientException(message, HttpStatus.NOT_FOUND);
-  }
-
-  public static RestClientException reportNotFound(AssetIdentity assetId) {
-    String message = "Item not found at the provided ID: " + assetId.getIdentifier() + ", uuid: " + assetId.getUuid();
     return new RestClientException(message, HttpStatus.NOT_FOUND);
   }
 

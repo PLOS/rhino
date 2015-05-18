@@ -28,7 +28,6 @@ import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
@@ -39,6 +38,7 @@ import org.ambraproject.rhino.view.asset.groomed.GroomedImageView;
 import org.ambraproject.rhino.view.asset.groomed.UncategorizedAssetException;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetFileView;
+import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -47,10 +47,11 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.model.RepoCollectionMetadata;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -63,12 +64,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-public class AssetCrudServiceImpl extends AmbraService implements AssetCrudService {
-
-
-  @Autowired
-  private ArticleRevisionService articleRevisionService;
+public class AssetCrudServiceImpl extends ArticleSpaceService implements AssetCrudService {
 
   private static final Logger log = LoggerFactory.getLogger(AssetCrudServiceImpl.class);
 
@@ -272,34 +270,28 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     write(assetData, id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public InputStream read(AssetFileIdentity assetId) {
-    try {
-      return contentRepoService.getLatestRepoObject(assetId.getFilePath());
-    } catch (ContentRepoException e) {
-      String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
-          assetId.getIdentifier(), assetId.getFileExtension());
-      throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
-    }
-  }
+  public RepoObjectMetadata read(AssetIdentity assetIdentity, ArticleIdentity parentArticle, String fileType) {
+    RepoCollectionMetadata articleCollection = fetchArticleCollection(parentArticle);
+    Map<String, Object> articleMetadata = (Map<String, Object>) articleCollection.getJsonUserMetadata().get();
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public InputStream read(AssetIdentity assetIdentity){
-    try {
-      return contentRepoService.getRepoObject(
-          RepoVersion.create(assetIdentity.getIdentifier(), assetIdentity.getUuid().get()));
-    } catch (ContentRepoException e) {
-      String message = String.format("Asset not found at DOI \"%s\" with uuid \"%s\"",
-          assetIdentity.getIdentifier(), assetIdentity.getUuid());
-      throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
+    Map<String, Object> assets = (Map<String, Object>) articleMetadata.get("assets");
+    Map<String, Object> assetEntry = (Map<String, Object>) assets.get(assetIdentity.getIdentifier());
+    if (assetEntry == null) {
+      String message = String.format("Article (%s) does not have asset: %s", parentArticle, assetIdentity);
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
     }
 
+    Map<String, Object> files = (Map<String, Object>) assetEntry.get("files");
+    Map<String, Object> fileId = (Map<String, Object>) files.get(fileType);
+    if (fileId == null) {
+      String message = String.format("Asset (%s) of article (%s) does not have file type: \"%s\". Files types are: %s",
+          assetIdentity, parentArticle, fileType, files.keySet());
+      throw new RestClientException(message, HttpStatus.NOT_FOUND);
+    }
+    RepoVersion fileVersion = RepoVersionRepr.read(fileId);
+
+    return contentRepoService.getRepoObjectMetadata(fileVersion);
   }
 
   /**
@@ -372,9 +364,6 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   @Override
   public Transceiver readFileMetadata(final AssetFileIdentity id)
       throws IOException {
-
-    // TODO : stop using versionNumber and start using uuid (included in AssetFileIdentity)
-
     return new EntityTransceiver<ArticleAsset>() {
       @Override
       protected ArticleAsset fetchEntity() {
@@ -445,7 +434,5 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
             .add(Restrictions.eq("doi", identity.getIdentifier()))));
     return (parentArticleDoi == null) ? null : ArticleIdentity.create(parentArticleDoi);
   }
-
-
 
 }

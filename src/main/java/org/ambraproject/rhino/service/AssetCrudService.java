@@ -24,6 +24,7 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.plos.crepo.model.RepoObjectMetadata;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,22 +42,7 @@ public interface AssetCrudService extends DoiBasedCrudService {
   public abstract WriteResult<ArticleAsset> upload(InputStream file, AssetFileIdentity assetId)
       throws IOException;
 
-  /**
-   * Read the file associated with an asset.
-   *
-   * @param id the identifier of the asset whose file is to be read
-   * @return a stream containing the file data
-   */
-  public abstract InputStream read(AssetFileIdentity id);
-
-
-  /**
-   * Read the file associated with an asset.
-   *
-   * @param id the identifier of the asset
-   * @return a stream containing the file data
-   */
-  public abstract InputStream read(AssetIdentity id);
+  public abstract RepoObjectMetadata read(AssetIdentity assetIdentity, ArticleIdentity parentArticle, String fileType);
 
   /**
    * Delete an asset and its associated file.

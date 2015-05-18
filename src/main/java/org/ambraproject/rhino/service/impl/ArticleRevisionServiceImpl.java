@@ -36,7 +36,7 @@ import java.util.UUID;
 
 public class ArticleRevisionServiceImpl extends AmbraService implements ArticleRevisionService {
 
-  public RepoCollectionMetadata findCollectionFor(ArticleIdentity article) {
+  private RepoCollectionMetadata findCollectionFor(ArticleIdentity article) {
     String articleKey = article.getIdentifier();
     Optional<Integer> versionNumber = article.getVersionNumber();
     return versionNumber.isPresent()

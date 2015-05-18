@@ -15,12 +15,12 @@ import org.ambraproject.models.ArticleAsset;
  */
 public class AssetIdentity extends DoiBasedIdentity {
 
-  public AssetIdentity(String identifier, Optional<Integer> versionNumber, Optional<String> uuid) {
-    super(identifier, versionNumber, uuid);
+  public AssetIdentity(String identifier, Optional<Integer> versionNumber) {
+    super(identifier, versionNumber);
   }
 
   public static AssetIdentity create(String identifier) {
-    return new AssetIdentity(identifier, Optional.<Integer>absent(), Optional.<String>absent());
+    return new AssetIdentity(identifier, Optional.<Integer>absent());
   }
 
   /**

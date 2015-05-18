@@ -19,20 +19,10 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
-import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
-import org.ambraproject.rhino.service.ArticleRevisionService;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.ambraproject.rhino.service.IdentityService;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
-import org.plos.crepo.model.RepoObjectMetadata;
-import org.plos.crepo.model.RepoVersion;
-import org.plos.crepo.model.RepoVersionNumber;
-import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -45,8 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
-
 @Controller
 public class AssetController extends RestController {
 
@@ -54,63 +42,15 @@ public class AssetController extends RestController {
 
   @Autowired
   private AssetCrudService assetCrudService;
-  @Autowired
-  private IdentityService identityService;
-  @Autowired
-  private ContentRepoService contentRepoService;
 
   private AssetIdentity parse(String id, Integer versionNumber, Integer revisionNumber) {
     if (revisionNumber == null) {
-      return new AssetIdentity(id, Optional.fromNullable(versionNumber), Optional.<String>absent());
+      return new AssetIdentity(id, Optional.fromNullable(versionNumber));
     } else {
       if (versionNumber != null) {
         throw new RestClientException("Cannot specify version and revision", HttpStatus.NOT_FOUND);
       }
-
-      // TODO: Look up by revision and return with correct version
-
-      return null;
-
-    }
-  }
-
-  private AssetIdentity parse(String id, Integer versionNumber, Integer revisionNumber, String fileType) {
-    if (revisionNumber == null) {
-      return new AssetIdentity(id, Optional.fromNullable(versionNumber), Optional.<String>absent());
-    } else {
-      if (versionNumber != null) {
-        throw new RestClientException("Cannot specify version and revision", HttpStatus.NOT_FOUND);
-      }
-
-      // Look up by revision and return with correct version
-      DoiBasedIdentity assetId = DoiBasedIdentity.create(id);
-      ArticleIdentity parentArticle = assetCrudService.getParentArticle(assetId);
-      if (parentArticle == null) {
-        throw new RestClientException("Asset ID not mapped to article", HttpStatus.NOT_FOUND);
-      }
-
-      AssetIdentity assetIdentity = identityService.parseAssetId(parentArticle, assetId, fileType, revisionNumber);
-
-      // obs : when stopping using versionNumber to call the crepo, we can remove the call to obtain the metadata
-
-      RepoObjectMetadata objMeta;
-      try {
-        objMeta = contentRepoService.getRepoObjectMetadata(
-            RepoVersion.create(assetIdentity.getIdentifier(), assetIdentity.getUuid().get()));
-      } catch (ContentRepoException e) {
-        if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-          throw reportNotFound(assetIdentity);
-        } else {
-          throw e;
-        }
-      }
-
-      RepoVersionNumber objVersionNumb = objMeta.getVersionNumber();
-      return new AssetIdentity(id,
-          Optional.fromNullable(objVersionNumb.getNumber()),
-          Optional.fromNullable(objMeta.getVersion().getUuid().toString()));
-
-
+      return null; // TODO: Look up by revision and return with correct version
     }
   }
 
@@ -129,10 +69,9 @@ public class AssetController extends RestController {
   public void readAsFigure(HttpServletRequest request, HttpServletResponse response,
                            @RequestParam(value = ID_PARAM, required = true) String id,
                            @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
-                           @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber,
-                           @RequestParam(value = FILE_TYPE_PARAM, required = false) String fileType)
+                           @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    assetCrudService.readFigureMetadata(parse(id, versionNumber, revisionNumber, fileType)).respond(request, response, entityGson);
+    assetCrudService.readFigureMetadata(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
 }
