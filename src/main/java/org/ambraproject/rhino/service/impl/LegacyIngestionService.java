@@ -93,8 +93,7 @@ class LegacyIngestionService {
     }
 
     Article article = findArticleById(doi);
-    final boolean creating = (article == null);
-    if (creating) {
+    if (article == null) {
       article = new Article();
       article.setDoi(doi.getKey());
     }
