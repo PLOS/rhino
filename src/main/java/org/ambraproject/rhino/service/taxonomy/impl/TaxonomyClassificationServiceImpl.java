@@ -1,8 +1,10 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableMap;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
+import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -22,6 +24,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -43,9 +46,20 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private static final String MESSAGE_BEGIN = "<TMMAI project='%s' location = '.'>\n" +
       "  <Method name='getSuggestedTermsFullPaths' returnType='java.util.Vector'/>\n" +
       "  <VectorParam>\n" +
-      "    <VectorElement>";
+      "    <VectorElement>\n" +
+      "      <doc>";
 
-  private static final String MESSAGE_END = "</VectorElement>\n" +
+  private static final String MESSAGE_HEADER = "<header>\n" +
+      "   <publication-date>%s</publication-date>\n" +
+      "   <journal-title>%s</journal-title>\n" +
+      "   <article-type>%s</article-type>\n" +
+      "   <article-id pub-id-type=\"doi\">%s</article-id>\n" +
+      "</header>\n" +
+      "<content>\n";
+
+  private static final String MESSAGE_END = "</content>" +
+      "      </doc>\n" +
+      "    </VectorElement>\n" +
       "  </VectorParam>\n" +
       "</TMMAI>";
 
@@ -54,15 +68,17 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private CloseableHttpClient httpClient;
   @Autowired
   private RuntimeConfiguration runtimeConfiguration;
+  @Autowired
+  private ArticleTypeService articleTypeService;
 
   /**
    * @inheritDoc
    */
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
+  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
-    List<String> rawTerms = getRawTerms(articleXml);
+    List<String> rawTerms = getRawTerms(articleXml, article);
     Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
@@ -96,10 +112,21 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<String> getRawTerms(Document articleXml) throws IOException {
+  public List<String> getRawTerms(Document articleXml, Article article) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
+
     String toCategorize = getCategorizationContent(articleXml);
-    String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus()) + toCategorize + MESSAGE_END;
+
+    String header = String.format(MESSAGE_HEADER,
+        new SimpleDateFormat("yyyy-MM-dd").format(article.getDate()),
+        article.getJournals().iterator().next().getTitle(),
+        articleTypeService.getArticleType(article).getHeading(),
+        ArticleIdentity.create(article).getIdentifier());
+    String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
+        + header
+        + toCategorize
+        + MESSAGE_END;
+
     HttpPost post = new HttpPost(configuration.getServer().toString());
     post.setEntity(new StringEntity(aiMessage, ContentType.APPLICATION_XML));
 

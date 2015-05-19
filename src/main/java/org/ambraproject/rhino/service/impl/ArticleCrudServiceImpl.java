@@ -582,7 +582,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     try {
       if (!articleService.isAmendment(article)) {
-        terms = taxonomyService.classifyArticle(xml);
+        terms = taxonomyService.classifyArticle(xml, article);
         if (terms != null && terms.size() > 0) {
           articleService.setArticleCategories(article, terms);
         } else {
@@ -997,7 +997,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)));
+        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)),
+            findArticleById(id));
         List<String> cleanedTerms = new ArrayList<>();
         for (String term : rawTerms) {
           term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
