@@ -541,23 +541,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
      * TODO: If an article should have multiple journals, how does it get them?
      */
 
-    String eissn = article.geteIssn();
-    Set<Journal> journals;
-    if (eissn == null) {
-      log.warn("eIssn not set for article");
-      journals = Sets.newHashSetWithExpectedSize(0);
+    Journal journal = getPublicationJournal(article);
+    if (journal == null) {
+      article.setJournals(Sets.<Journal>newHashSetWithExpectedSize(0));
     } else {
-      Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-          hibernateTemplate.findByCriteria(journalCriteria()
-                  .add(Restrictions.eq("eIssn", eissn))
-          ));
-      if (journal == null) {
-        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-      }
-      journals = Sets.newHashSet(journal);
+      article.setJournals(Sets.newHashSet(journal));
     }
-    article.setJournals(journals);
   }
 
   @Override
@@ -868,6 +857,26 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         throw e;
       }
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Journal getPublicationJournal(Article article) {
+    String eissn = article.geteIssn();
+    Journal journal = null;
+    if (eissn == null) {
+      log.warn("eIssn not set for article");
+    } else {
+      journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(journalCriteria().add(Restrictions.eq("eIssn", eissn))));
+      if (journal == null) {
+        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
+        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+      }
+    }
+    return journal;
   }
 
   @Override

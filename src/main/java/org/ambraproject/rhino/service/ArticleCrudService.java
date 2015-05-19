@@ -20,6 +20,7 @@ package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
@@ -93,6 +94,14 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @return Article object encapsulating metadata
    */
   public abstract Article findArticleById(DoiBasedIdentity id);
+
+  /**
+   * Returns article publication journal based on eiSSN
+   *
+   * @param article article object from Ambra
+   * @return Journal object representing original publication journal
+   */
+  public abstract Journal getPublicationJournal(Article article); //todo: turn this into an API endpoint?
 
   /**
    * Read the metadata of an article.
