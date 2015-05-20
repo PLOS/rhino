@@ -100,10 +100,8 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * Retrieve an article's publication {@code journal} field based on the article's {@code eIssn}
    * field. Always expects {@code eIssn} to match to a journal in the system.
    *
-   * TODO: If an article should have multiple journals, how does it get them?
-   *
    * @param article the article to modify
-   * @throws RestClientException if {@code article.eIssn} is null or a non-null {@code article.eIssn}
+   * @throws RestClientException if {@code article.eIssn} is null or the {@code article.eIssn}
    *                         isn't matched to a journal in the database
    */
 

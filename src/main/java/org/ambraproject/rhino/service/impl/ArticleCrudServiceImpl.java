@@ -213,6 +213,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
+
+    // TODO: If an article should have multiple journals, how does it get them?
     article.setJournals(Sets.newHashSet(getPublicationJournal(article)));
     populateCategories(article, doc);
     initializeAssets(article, manifestXml, xml, xmlDataLength);
@@ -843,19 +845,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Journal getPublicationJournal(Article article) {
     String eissn = article.geteIssn();
-    Journal journal;
     if (eissn == null) {
       String msg = "eIssn not set for article: " + article.getDoi();
       throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     } else {
-      journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
+      Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria().add(Restrictions.eq("eIssn", eissn))));
       if (journal == null) {
         String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
         throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
       }
+      return journal;
     }
-    return journal;
   }
 
   @Override
