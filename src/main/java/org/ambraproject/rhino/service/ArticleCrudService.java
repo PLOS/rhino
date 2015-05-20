@@ -23,6 +23,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
@@ -96,12 +97,17 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Article findArticleById(DoiBasedIdentity id);
 
   /**
-   * Returns article publication journal based on eiSSN
+   * Retrieve an article's publication {@code journal} field based on the article's {@code eIssn}
+   * field. Always expects {@code eIssn} to match to a journal in the system.
    *
-   * @param article article object from Ambra
-   * @return Journal object representing original publication journal
+   * TODO: If an article should have multiple journals, how does it get them?
+   *
+   * @param article the article to modify
+   * @throws RestClientException if {@code article.eIssn} is null or a non-null {@code article.eIssn}
+   *                         isn't matched to a journal in the database
    */
-  public abstract Journal getPublicationJournal(Article article); //todo: turn this into an API endpoint?
+
+  public abstract Journal getPublicationJournal(Article article) throws RestClientException;
 
   /**
    * Read the metadata of an article.

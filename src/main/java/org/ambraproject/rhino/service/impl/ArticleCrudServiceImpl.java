@@ -213,7 +213,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
-    relateToJournals(article);
+    article.setJournals(Sets.newHashSet(getPublicationJournal(article)));
     populateCategories(article, doc);
     initializeAssets(article, manifestXml, xml, xmlDataLength);
     populateRelatedArticles(article, xml);
@@ -524,28 +524,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     try (InputStream is = zipFile.getInputStream(entry)) {
       return readClientInput(is);
-    }
-  }
-
-  /**
-   * Populate an article's {@code journals} field with {@link Journal} entities based on the article's {@code eIssn}
-   * field. Will set {@code journals} to an empty set if {@code eIssn} is null; otherwise, always expects {@code eIssn}
-   * to match to a journal in the system.
-   *
-   * @param article the article to modify
-   * @throws RestClientException if a non-null {@code article.eIssn} isn't matched to a journal in the database
-   */
-  private void relateToJournals(Article article) {
-    /*
-     * This sets a maximum of one journal, replicating web Admin behavior.
-     * TODO: If an article should have multiple journals, how does it get them?
-     */
-
-    Journal journal = getPublicationJournal(article);
-    if (journal == null) {
-      article.setJournals(Sets.<Journal>newHashSetWithExpectedSize(0));
-    } else {
-      article.setJournals(Sets.newHashSet(journal));
     }
   }
 
@@ -865,9 +843,10 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public Journal getPublicationJournal(Article article) {
     String eissn = article.geteIssn();
-    Journal journal = null;
+    Journal journal;
     if (eissn == null) {
-      log.warn("eIssn not set for article");
+      String msg = "eIssn not set for article: " + article.getDoi();
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
     } else {
       journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
         hibernateTemplate.findByCriteria(journalCriteria().add(Restrictions.eq("eIssn", eissn))));

@@ -2,7 +2,7 @@ package org.ambraproject.rhino.service.taxonomy;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.ambraproject.models.*;
+import org.ambraproject.models.Article;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
