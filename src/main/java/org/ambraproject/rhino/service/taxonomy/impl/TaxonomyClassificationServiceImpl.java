@@ -45,7 +45,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
 
   private static final String MESSAGE_BEGIN = "<TMMAI project='%s' location = '.'>\n" +
-      "  <Method name='getSuggestedTermsFullPaths' returnType='java.util.Vector'/>\n" +
+      "  <Method name='getSuggestedTermsFullPathsPlos' returnType='java.util.Vector'/>\n" +
       "  <VectorParam>\n" +
       "    <VectorElement>\n" +
       "      <doc>";
