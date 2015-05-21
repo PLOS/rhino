@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.config;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.ambraproject.configuration.ConfigurationStore;
@@ -62,6 +63,9 @@ import org.ambraproject.rhino.util.GitInfo;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
+import org.ambraproject.rhombat.cache.Cache;
+import org.ambraproject.rhombat.cache.MemcacheClient;
+import org.ambraproject.rhombat.cache.NullCache;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -221,6 +225,19 @@ public class RhinoConfiguration extends BaseConfiguration {
     };
 
     return new ContentRepoServiceImpl(accessConfig);
+  }
+
+  @Bean
+  public Cache cache(RuntimeConfiguration runtimeConfiguration) throws IOException {
+    RuntimeConfiguration.CacheConfiguration cacheConfiguration = runtimeConfiguration.getCacheConfiguration();
+    if (!Strings.isNullOrEmpty(cacheConfiguration.getMemcachedHost())) {
+      MemcacheClient result = new MemcacheClient(cacheConfiguration.getMemcachedHost(),
+          cacheConfiguration.getMemcachedPort(), cacheConfiguration.getCacheAppPrefix(), 60 * 60);
+      result.connect();
+      return result;
+    } else {
+      return new NullCache();
+    }
   }
 
 

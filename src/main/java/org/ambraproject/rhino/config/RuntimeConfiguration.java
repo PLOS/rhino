@@ -21,7 +21,6 @@ package org.ambraproject.rhino.config;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -91,5 +90,24 @@ public interface RuntimeConfiguration {
   }
 
   TaxonomyConfiguration getTaxonomyConfiguration();
+
+  interface CacheConfiguration {
+    /**
+     * @return the memcached host, or null if it is not present in the config
+     */
+    String getMemcachedHost();
+
+    /**
+     * @return the memcached port, or -1 if it is not present in the config
+     */
+    int getMemcachedPort();
+
+    /**
+     * @return the cacheAppPrefix value, or null if it is not defined in the config
+     */
+    String getCacheAppPrefix();
+  }
+
+  CacheConfiguration getCacheConfiguration();
 
 }

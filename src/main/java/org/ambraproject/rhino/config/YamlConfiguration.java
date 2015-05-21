@@ -145,6 +145,29 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
+  private final CacheConfiguration cacheConfiguration = new CacheConfiguration() {
+    @Override
+    public String getMemcachedHost() {
+      return (input.cache == null) ? null : input.cache.memcachedHost;
+    }
+
+    @Override
+    public int getMemcachedPort() {
+      return (input.cache == null || input.cache.memcachedPort == null) ? -1
+          : input.cache.memcachedPort;
+    }
+
+    @Override
+    public String getCacheAppPrefix() {
+      return (input.cache == null) ? null : input.cache.cacheAppPrefix;
+    }
+  };
+
+  @Override
+  public CacheConfiguration getCacheConfiguration() {
+    return cacheConfiguration;
+  }
+
 
   public static class Input {
 
@@ -152,6 +175,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
+    private CacheConfigurationInput cache;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -183,6 +207,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setCache(CacheConfigurationInput cache) {
+      this.cache = cache;
     }
   }
 
@@ -273,6 +305,36 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setCategoryBlacklist(List<String> categoryBlacklist) {
       this.categoryBlacklist = categoryBlacklist;
+    }
+  }
+
+  public static class CacheConfigurationInput {
+    private String memcachedHost;
+    private Integer memcachedPort;
+    private String cacheAppPrefix;
+
+    /**
+     * @deprecated For access by reflective deserializer only
+     */
+    @Deprecated
+    public void setMemcachedHost(String memcachedHost) {
+      this.memcachedHost = memcachedHost;
+    }
+
+    /**
+     * @deprecated For access by reflective deserializer only
+     */
+    @Deprecated
+    public void setMemcachedPort(Integer memcachedPort) {
+      this.memcachedPort = memcachedPort;
+    }
+
+    /**
+     * @deprecated For access by reflective deserializer only
+     */
+    @Deprecated
+    public void setCacheAppPrefix(String cacheAppPrefix) {
+      this.cacheAppPrefix = cacheAppPrefix;
     }
   }
 
