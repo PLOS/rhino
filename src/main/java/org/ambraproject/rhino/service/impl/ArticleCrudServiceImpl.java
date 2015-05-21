@@ -47,6 +47,7 @@ import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
+import org.ambraproject.rhombat.cache.Cache;
 import org.ambraproject.views.AuthorView;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -72,6 +73,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -93,6 +95,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   private ArticleOutputViewFactory articleOutputViewFactory;
   @Autowired
   private XpathReader xpathReader;
+  @Autowired
+  private Cache cache;
   @Autowired
   TaxonomyService taxonomyService;
   @Autowired
@@ -118,12 +122,23 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     RepoVersion manuscript = RepoVersion.create(manuscriptId.get("key"), manuscriptId.get("uuid"));
 
     Document document;
+
+    // TODO: Use ArticleIdentity for cache key instead of UUID?
+    // This would obviate a Content Repo lookup, but would complicate the creation of the cache key slightly
+    // because we would have to hash the ArticleIdentity fields in order to limit their length.
+    String cacheKey = "parsedManuscript:" + manuscript.getUuid().toString();
+    document = cache.get(cacheKey);
+    if (document != null) return document;
+
     try (InputStream manuscriptStream = contentRepoService.getRepoObject(manuscript)) {
       DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder(); // TODO: Efficiency
       document = documentBuilder.parse(manuscriptStream);
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new RuntimeException(e);
     }
+
+    cache.put(cacheKey, (Serializable) document);
+
     return document;
   }
 
