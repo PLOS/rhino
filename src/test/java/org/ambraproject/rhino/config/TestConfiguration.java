@@ -45,6 +45,7 @@ import org.ambraproject.testutils.HibernateTestSessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.plos.crepo.service.ContentRepoService;
+import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -110,7 +111,7 @@ public class TestConfiguration extends BaseConfiguration {
 
   @Bean
   public ContentRepoService contentRepoService() {
-    return new StubContentRepoService();
+    return new InMemoryContentRepoService("testBucket");
   }
 
 

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
@@ -44,7 +45,6 @@ public class TaxonomyController extends RestController {
 
   private static final String TAXONOMY_ROOT = "/taxonomy";
   private static final String TAXONOMY_NAMESPACE = TAXONOMY_ROOT + '/';
-  private static final String TAXONOMY_TEMPLATE = TAXONOMY_NAMESPACE + "**";
   private static final Splitter TAXONOMY_PATH_SPLITTER = Splitter.on('/');
 
   @Autowired
@@ -54,11 +54,11 @@ public class TaxonomyController extends RestController {
   protected ArticleCrudService articleCrudService;
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = TAXONOMY_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = TAXONOMY_ROOT, method = RequestMethod.GET)
   public void readRoot(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam(value = "journal", required = true) String journal)
+                       @RequestParam(value = "journal", required = true) String journal,
+                       @RequestParam(value = "parent", required = true) String parent)
       throws Exception {
-    String parent = getFullPathVariable(request, true, TAXONOMY_NAMESPACE);
     if (!Strings.isNullOrEmpty(parent)) {
       parent = URLDecoder.decode(parent, "UTF-8");
     }

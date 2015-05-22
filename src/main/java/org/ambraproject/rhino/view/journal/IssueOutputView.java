@@ -6,11 +6,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Issue;
-import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,8 +34,11 @@ public class IssueOutputView implements JsonOutputView {
 
     serialized.remove("articleDois");
     List<String> articleDois = issue.getArticleDois();
-    articleDois = DoiBasedIdentity.asIdentifiers(articleDois);
-    serialized.add("articleOrder", context.serialize(articleDois));
+    List<String> identifiers = new ArrayList<>(articleDois.size());
+    for (String doi : articleDois) {
+      identifiers.add(DoiBasedIdentity.asIdentifier(doi));
+    }
+    serialized.add("articleOrder", context.serialize(identifiers));
 
     if (parentVolumeView.isPresent()) {
       serialized.add("parentVolume", context.serialize(parentVolumeView.get()));

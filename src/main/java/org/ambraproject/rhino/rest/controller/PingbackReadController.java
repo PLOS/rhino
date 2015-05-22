@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,11 +49,11 @@ public class PingbackReadController extends ArticleSpaceController {
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = {PINGBACK_PARAM})
-  public void readPingbacks(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, PINGBACK_PARAM})
+  public void readPingbacks(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(ID_PARAM) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    pingbackReadService.read(id).respond(request, response, entityGson);
+    pingbackReadService.read(ArticleIdentity.create(id)).respond(request, response, entityGson);
   }
 
 

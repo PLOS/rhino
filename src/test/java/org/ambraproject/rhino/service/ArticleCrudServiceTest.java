@@ -31,14 +31,14 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
+import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
-import org.ambraproject.rhino.config.StubContentRepoService;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
-import org.ambraproject.rhino.service.impl.ArticleCrudServiceImpl;
 import org.ambraproject.rhino.service.taxonomy.DummyTaxonomyClassificationService;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.apache.commons.io.IOUtils;
@@ -47,6 +47,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.service.ContentRepoService;
+import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -99,7 +101,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
    */
   @BeforeMethod
   public void clearMockRepo() {
-    ((StubContentRepoService) contentRepoService).clear();
+    ((InMemoryContentRepoService) contentRepoService).clear();
   }
 
   private void assertArticleExistence(ArticleIdentity id, boolean expectedToExist) {
@@ -125,6 +127,12 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
         "Text field was set with trailing whitespace");
   }
 
+  private static Archive createMockIngestible(ArticleIdentity articleId, InputStream xmlData) throws IOException {
+    String archiveName = articleId.getLastToken() + ".zip";
+    InputStream mockIngestible = IngestibleUtil.buildMockIngestible(xmlData);
+    return Archive.readZipFileIntoMemory(archiveName, mockIngestible);
+  }
+
   private Map<ArticleIdentity, Article> createTestArticle() throws IOException {
     String doiStub = RhinoTestHelper.SAMPLE_ARTICLES.get(0);
     ArticleIdentity articleId = ArticleIdentity.create(RhinoTestHelper.prefixed(doiStub));
@@ -133,7 +141,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     String doi = articleId.getIdentifier();
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.write(input, Optional.of(articleId),
+    Archive archive = createMockIngestible(articleId, input);
+    Article article = articleCrudService.writeArchive(archive, Optional.of(articleId),
         WriteMode.CREATE_ONLY);
 
     HashMap<ArticleIdentity, Article> articleHashMap = new HashMap<>();
@@ -152,7 +161,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertArticleExistence(articleId, false);
 
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId), WriteMode.CREATE_ONLY);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
 
@@ -198,14 +207,11 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     final byte[] updated = Bytes.concat(sampleData, "\n<!-- Appended -->".getBytes());
     input = RhinoTestHelper.TestInputStream.of(updated);
-    article = articleCrudService.write(input, Optional.of(articleId), WriteMode.UPDATE_ONLY);
+    article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId), WriteMode.UPDATE_ONLY);
     byte[] updatedData = IOUtils.toByteArray(articleCrudService.readXml(articleId));
     assertEquals(updatedData, updated);
     assertArticleExistence(articleId, true);
     assertTrue(input.isClosed(), "Service didn't close stream");
-
-    articleCrudService.delete(articleId);
-    assertArticleExistence(articleId, false);
   }
 
   @Test(dataProvider = "sampleAssets")
@@ -219,7 +225,7 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     final ArticleIdentity articleId = ArticleIdentity.create(articleDoi);
     RhinoTestHelper.TestInputStream input = new RhinoTestHelper.TestFile(articleFile).read();
     input = RhinoTestHelper.alterStream(input, articleDoi, articleDoi);
-    Article article = articleCrudService.write(input, Optional.of(articleId), WriteMode.CREATE_ONLY);
+    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId), WriteMode.CREATE_ONLY);
 
     RhinoTestHelper.TestInputStream assetFileStream = new RhinoTestHelper.TestFile(assetFile).read();
     assetCrudService.upload(assetFileStream, assetId);
@@ -233,20 +239,6 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     assertNotNull(stored.getContextElement());
     assertNotNull(stored.getContentType());
     assertFalse(Strings.isNullOrEmpty(stored.getExtension()));
-  }
-
-  @Test
-  public void testShouldSaveAssetFile() {
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.g001.tif", "pone.0058631.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003193.g002.PNG_M", "ppat.1003193.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pcbi.1002867.pdf", "pcbi.1002867.xml"));
-    assertTrue(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0055746.s005.doc", "pone.0055746.xml"));
-
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("manifest.dtd", "p.0.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("MANIFEST.xml", "p.0.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml", "pone.0058631.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("ppat.1003188.xml.meta", "ppat.1003188.xml"));
-    assertFalse(ArticleCrudServiceImpl.shouldSaveAssetFile("pone.0058631.xml.orig", "pone.0058631.xml"));
   }
 
   @Test
@@ -284,10 +276,10 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     String doi = articleId.getIdentifier();
     byte[] sampleData = IOUtils.toByteArray(RhinoTestHelper.alterStream(sampleFile.read(), doi, doi));
     RhinoTestHelper.TestInputStream input = RhinoTestHelper.TestInputStream.of(sampleData);
-    Article article = articleCrudService.write(input, Optional.of(articleId),
+    Article article = articleCrudService.writeArchive(createMockIngestible(articleId, input), Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
 
-    String json = articleCrudService.readMetadata(articleId, true).readJson(entityGson);
+    String json = articleCrudService.readMetadata(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
     Map<?, ?> articleMap = gson.fromJson(json, Map.class);

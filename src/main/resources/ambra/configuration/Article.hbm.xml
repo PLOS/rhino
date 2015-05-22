@@ -21,6 +21,13 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
+<!--
+    For performance reasons, we want the ability to lazily load Article.citedArticles.
+    We do this by substituting in our own Hibernate Article mapping, since the one
+    in ambra-models uses eager loading (and changing it in ambra would likely break
+    things there).
+  -->
+
 <hibernate-mapping package="org.ambraproject.models" default-lazy="false">
 
   <class name="Article" table="article">

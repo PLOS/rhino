@@ -23,7 +23,6 @@ import com.google.common.collect.Lists;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -34,7 +33,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -115,7 +113,7 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
             .setProjection(Projections.property("ID"))
     ));
     if (articleId == null) {
-      throw new RestClientException("Article not found: " + article.getIdentifier(), HttpStatus.NOT_FOUND);
+      throw entityNotFound("Article not exist: " + article);
     }
     return loadPingbacks(articleId);
   }

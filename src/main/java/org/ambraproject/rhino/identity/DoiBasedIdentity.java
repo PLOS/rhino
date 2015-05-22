@@ -18,11 +18,9 @@
 
 package org.ambraproject.rhino.identity;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-
-import java.util.Collection;
-import java.util.List;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * An entity identifier based on a Digital Object Identifier (DOI). Instances of this class cover two cases: <ol>
@@ -36,20 +34,24 @@ public class DoiBasedIdentity {
   protected static final String DOI_SCHEME_VALUE = "info:doi/";
   protected static final String XML_EXTENSION = "XML";
 
-  private final String identifier; // non-null, non-empty, doesn't contain ':'
+  private final String identifier; // non-null, non-empty, doesn't have URI scheme prefix
+  private final Optional<Integer> versionNumber;
 
   /**
    * Constructor.
    *
-   * @param identifier the DOI for this resource
+   * @param identifier    the DOI for this resource
+   * @param versionNumber
    */
-  protected DoiBasedIdentity(String identifier) {
+  protected DoiBasedIdentity(String identifier, Optional<Integer> versionNumber) {
     identifier = Preconditions.checkNotNull(identifier).trim();
     Preconditions.checkArgument(!identifier.isEmpty(), "DOI is an empty string");
     if (identifier.startsWith("info:doi/")) {
       identifier = identifier.substring("info:doi/".length());
     }
     this.identifier = identifier;
+
+    this.versionNumber = Preconditions.checkNotNull(versionNumber);
   }
 
   /**
@@ -59,7 +61,7 @@ public class DoiBasedIdentity {
    * @return the identity
    */
   public static DoiBasedIdentity create(String identifier) {
-    return new DoiBasedIdentity(identifier);
+    return new DoiBasedIdentity(identifier, Optional.<Integer>absent());
   }
 
   /**
@@ -81,21 +83,6 @@ public class DoiBasedIdentity {
   }
 
   /**
-   * Represent a collection of identifier strings as REST-friendly identifiers (with no {@code "info:doi/"}). The order
-   * of the argument collection is preserved.
-   *
-   * @param dois
-   * @return
-   */
-  public static List<String> asIdentifiers(Collection<String> dois) {
-    List<String> identifiers = Lists.newArrayListWithCapacity(dois.size());
-    for (String doi : dois) {
-      identifiers.add(asIdentifier(doi));
-    }
-    return identifiers;
-  }
-
-  /**
    * Return the DOI formatted as a database key value. Under Ambra's current data model, it is prefixed with {@code
    * "info:doi/"}.
    *
@@ -104,21 +91,6 @@ public class DoiBasedIdentity {
    */
   public static String asKey(String doi) {
     return doi.startsWith(DOI_SCHEME_VALUE) ? doi : DOI_SCHEME_VALUE + doi;
-  }
-
-  /**
-   * Represent a collection of identifier strings as database key values (with {@code "info:doi/"}). The order of the
-   * argument collection is preserved.
-   *
-   * @param dois
-   * @return
-   */
-  public static List<String> asKeys(Collection<String> dois) {
-    List<String> keys = Lists.newArrayListWithCapacity(dois.size());
-    for (String doi : dois) {
-      keys.add(asKey(doi));
-    }
-    return keys;
   }
 
   /**
@@ -145,9 +117,24 @@ public class DoiBasedIdentity {
     return asKey(identifier);
   }
 
+  /**
+   * Return the last slash-separated token of the identifier (or the entire identifier if it contains no slashes).
+   *
+   * @return the token
+   */
+  public String getLastToken() {
+    String identifier = getIdentifier();
+    int lastSlashIndex = identifier.lastIndexOf('/');
+    return (lastSlashIndex < 0) ? identifier : identifier.substring(lastSlashIndex + 1);
+  }
+
+  public Optional<Integer> getVersionNumber() {
+    return versionNumber;
+  }
+
   @Override
   public String toString() {
-    return getIdentifier();
+    return String.format("(\"%s\", %s)", StringEscapeUtils.escapeJava(identifier), String.valueOf(versionNumber.orNull()));
   }
 
   @Override
@@ -157,14 +144,17 @@ public class DoiBasedIdentity {
 
     DoiBasedIdentity that = (DoiBasedIdentity) o;
 
-    if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
+    if (!identifier.equals(that.identifier)) return false;
+    if (!versionNumber.equals(that.versionNumber)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    return identifier != null ? identifier.hashCode() : 0;
+    int result = identifier.hashCode();
+    result = 31 * result + versionNumber.hashCode();
+    return result;
   }
 
 }

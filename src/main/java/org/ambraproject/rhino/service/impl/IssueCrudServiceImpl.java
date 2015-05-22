@@ -62,7 +62,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
                     .add(Restrictions.eq("issueUri", id.getKey()))
             ));
         if (issue == null) {
-          throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+          throw entityNotFound("Issue not found at URI:" + id);
         }
         return issue;
       }
@@ -105,7 +105,11 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
     List<String> inputArticleDois = input.getArticleOrder();
     if (inputArticleDois != null) {
-      issue.setArticleDois(DoiBasedIdentity.asKeys(inputArticleDois));
+      List<String> keys = new ArrayList<>(inputArticleDois.size());
+      for (String doi : inputArticleDois) {
+        keys.add(DoiBasedIdentity.asKey(doi));
+      }
+      issue.setArticleDois(keys);
     } else if (issue.getArticleDois() == null) {
       issue.setArticleDois(new ArrayList<String>(0));
     }

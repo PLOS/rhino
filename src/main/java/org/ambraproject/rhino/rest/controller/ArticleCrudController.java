@@ -19,20 +19,21 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.ArticleRevisionService;
+import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
-import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.plos.crepo.model.RepoObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +43,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,13 +55,6 @@ import java.util.List;
  */
 @Controller
 public class ArticleCrudController extends ArticleSpaceController {
-
-  private static final Logger log = LoggerFactory.getLogger(ArticleCrudController.class);
-
-  /**
-   * The request parameter whose value is the XML file being uploaded for a create operation.
-   */
-  private static final String ARTICLE_XML_FIELD = "xml";
 
   private static final String DATE_PARAM = "date";
   private static final String PUB_STATE_PARAM = "state";
@@ -71,8 +67,9 @@ public class ArticleCrudController extends ArticleSpaceController {
   private static final String EXCLUDE_PARAM = "exclude";
 
   @Autowired
+  private ArticleRevisionService articleRevisionService;
+  @Autowired
   private AnnotationCrudService annotationCrudService;
-
   @Autowired
   private AssetFileCrudController assetFileCrudController;
 
@@ -116,28 +113,6 @@ public class ArticleCrudController extends ArticleSpaceController {
 
 
   /**
-   * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
-   *
-   * @param response
-   * @param requestFile
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
-      throws IOException {
-    Article result;
-    try (InputStream requestBody = requestFile.getInputStream()) {
-      result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
-    }
-    response.setStatus(HttpStatus.CREATED.value());
-
-    // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
-  }
-
-  /**
    * Repopulates article category information by making a call to the taxonomy server.
    *
    * @param request          HttpServletRequest
@@ -145,35 +120,36 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.POST,
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST,
       params = "repopulateCategories")
-  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response)
+  public void repopulateCategories(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam(value = ID_PARAM, required = true) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
+    ArticleIdentity articleIdentity = parse(id, null, null);
 
-    articleCrudService.repopulateCategories(id);
+    articleCrudService.repopulateCategories(articleIdentity);
 
     response.setStatus(HttpStatus.ACCEPTED.value());
 
     // Report the current categories
-    articleCrudService.readCategories(id).respond(request, response, entityGson);
+    articleCrudService.readCategories(articleIdentity).respond(request, response, entityGson);
   }
 
   /**
    * Retrieves metadata about an article.
    *
-   * @param request          HttpServletRequest
-   * @param response         HttpServletResponse
-   * @param excludeCitations
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = ID_PARAM)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations)
+                   @RequestParam(value = ID_PARAM, required = true) String id,
+                   @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                   @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
+    articleCrudService.readMetadata(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   /**
@@ -185,11 +161,13 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "comments")
-  public void readComments(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "comments"})
+  public void readComments(HttpServletRequest request, HttpServletResponse response,
+                           @RequestParam(value = ID_PARAM, required = true) String id,
+                           @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                           @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    annotationCrudService.readComments(id).respond(request, response, entityGson);
+    annotationCrudService.readComments(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   /**
@@ -202,11 +180,13 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "authors")
-  public void readAuthors(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "authors"})
+  public void readAuthors(HttpServletRequest request, HttpServletResponse response,
+                          @RequestParam(value = ID_PARAM, required = true) String id,
+                          @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                          @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readAuthors(id).respond(request, response, entityGson);
+    articleCrudService.readAuthors(parse(id, versionNumber, revisionNumber)).respond(request, response, entityGson);
   }
 
   /**
@@ -217,11 +197,32 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "xml")
-  public void readXml(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "xml"})
+  public void readXml(HttpServletRequest request, HttpServletResponse response,
+                      @RequestParam(value = ID_PARAM, required = true) String id,
+                      @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                      @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    assetFileCrudController.read(request, response, id.forXmlAsset());
+    ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
+    RepoObjectMetadata manuscript = articleRevisionService.getManuscript(articleIdentity);
+    streamRepoObject(response, manuscript);
+  }
+
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = {ID_PARAM, "repack"})
+  public void repack(HttpServletResponse response,
+                     @RequestParam(value = ID_PARAM, required = true) String id,
+                     @RequestParam(value = VERSION_PARAM, required = false) Integer versionNumber,
+                     @RequestParam(value = REVISION_PARAM, required = false) Integer revisionNumber)
+      throws IOException {
+    ArticleIdentity articleIdentity = parse(id, versionNumber, revisionNumber);
+    Archive repacked = articleCrudService.readArchive(articleIdentity);
+
+    response.setContentType(MediaType.APPLICATION_XML.toString());
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "filename=" + repacked.getArchiveName());
+    try (OutputStream stream = new BufferedOutputStream(response.getOutputStream())) {
+      repacked.write(stream);
+    }
   }
 
   /**
@@ -232,11 +233,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "categories")
-  public void readCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = "categories")
+  public void readCategories(HttpServletRequest request, HttpServletResponse response,
+                             @RequestParam(value = ID_PARAM, required = true) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.readCategories(id).respond(request, response, entityGson);
+    ArticleIdentity articleIdentity = parse(id, null, null);
+    articleCrudService.readCategories(articleIdentity).respond(request, response, entityGson);
   }
 
   /**
@@ -247,19 +249,12 @@ public class ArticleCrudController extends ArticleSpaceController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategories")
-  public void getRawCategories(HttpServletRequest request, HttpServletResponse response)
+  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET, params = "rawCategories")
+  public void getRawCategories(HttpServletRequest request, HttpServletResponse response,
+                               @RequestParam(value = ID_PARAM, required = true) String id)
       throws IOException {
-    ArticleIdentity id = parse(request);
-    articleCrudService.getRawCategories(id).respond(request, response, entityGson);
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.DELETE)
-  public ResponseEntity<?> delete(HttpServletRequest request) {
-    ArticleIdentity id = parse(request);
-    articleCrudService.delete(id);
-    return reportOk();
+    ArticleIdentity articleIdentity = parse(id, null, null);
+    articleCrudService.getRawCategories(articleIdentity).respond(request, response, entityGson);
   }
 
 }

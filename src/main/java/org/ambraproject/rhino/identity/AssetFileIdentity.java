@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.util.ContentTypeInference;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.MediaType;
 
@@ -35,8 +36,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
 
   private final String extension;
 
-  private AssetFileIdentity(String identifier, String extension) {
-    super(identifier);
+  private AssetFileIdentity(String identifier, String extension, Optional<Integer> versionNumber) {
+    super(identifier, versionNumber);
     Preconditions.checkArgument(StringUtils.isNotBlank(extension));
     this.extension = extension;
   }
@@ -46,7 +47,6 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    *
    * @param path the full path variable from the URL that identifies the entity
    * @return an identifier object for the entity
-   * @see org.ambraproject.rhino.rest.controller.abstr.RestController#getFullPathVariable
    */
   public static AssetFileIdentity parse(String path) {
     int dotIndex = path.lastIndexOf('.');
@@ -56,11 +56,11 @@ public class AssetFileIdentity extends DoiBasedIdentity {
     String identifier = path.substring(0, dotIndex);
     String extension = path.substring(dotIndex + 1);
 
-    return new AssetFileIdentity(identifier, extension);
+    return new AssetFileIdentity(identifier, extension, Optional.<Integer>absent());
   }
 
   public static AssetFileIdentity create(String identifier, String extension) {
-    return new AssetFileIdentity(asIdentifier(identifier), extension);
+    return new AssetFileIdentity(asIdentifier(identifier), extension, Optional.<Integer>absent());
   }
 
   /**
@@ -117,17 +117,13 @@ public class AssetFileIdentity extends DoiBasedIdentity {
    * @return the file name
    */
   public String getFileName() {
-    String identifier = getIdentifier();
-    int lastSlashIndex = identifier.lastIndexOf('/');
-    String fileName = (lastSlashIndex < 0) ? identifier : identifier.substring(lastSlashIndex + 1);
-
     String fileExtension = getFileExtension();
     if (PNG_THUMBNAIL.matcher(fileExtension).matches()) {
       // Sanitize a "PNG_*" extension from our back end to a human-friendly "PNG"
       fileExtension = fileExtension.substring(0, 3); // preserve case
     }
 
-    return fileName + '.' + fileExtension;
+    return getLastToken() + '.' + fileExtension;
   }
 
   /**
@@ -173,7 +169,8 @@ public class AssetFileIdentity extends DoiBasedIdentity {
 
   @Override
   public String toString() {
-    return getFilePath();
+    return String.format("(\"%s\" . \"%s\", %s)",
+        StringEscapeUtils.escapeJava(getIdentifier()), extension, String.valueOf(getVersionNumber().orNull()));
   }
 
   @Override
