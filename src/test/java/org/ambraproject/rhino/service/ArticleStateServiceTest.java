@@ -35,8 +35,7 @@ import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import static org.ambraproject.rhino.service.impl.AmbraService.entityNotFound;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
@@ -102,10 +102,8 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.getFilePath())) {
       assertNotNull(stream);
       assertTrue(expectedToExist);
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        assertFalse(expectedToExist);
-      } else throw e;
+    } catch (NotFoundException nfe) {
+        throw entityNotFound(nfe.getMessage() + ": " + fileIdentity);
     }
   }
 

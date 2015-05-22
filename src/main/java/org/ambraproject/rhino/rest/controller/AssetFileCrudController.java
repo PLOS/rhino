@@ -25,8 +25,7 @@ import com.google.common.net.HttpHeaders;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.AssetCrudService;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
+import static org.ambraproject.rhino.service.impl.AmbraService.entityNotFound;
 
 @Controller
 public class AssetFileCrudController extends RestController {
@@ -83,12 +82,8 @@ public class AssetFileCrudController extends RestController {
     RepoObjectMetadata objMeta;
     try {
       objMeta = contentRepoService.getLatestRepoObjectMetadata(id.getFilePath());
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObjectMeta) {
-        throw reportNotFound(id);
-      } else {
-        throw e;
-      }
+    } catch (NotFoundException nfe ) {
+      throw entityNotFound(nfe.getMessage() + ": " + id);
     }
 
     Optional<String> contentType = objMeta.getContentType();

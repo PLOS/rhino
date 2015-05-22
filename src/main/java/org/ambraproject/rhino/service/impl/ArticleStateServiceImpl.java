@@ -264,8 +264,7 @@ public class ArticleStateServiceImpl extends AmbraService implements ArticleStat
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (result == null) {
-      throw new RestClientException("Article not found: " + articleId.getIdentifier(),
-          HttpStatus.NOT_FOUND);
+      throw entityNotFound("Article not found: " + articleId.getIdentifier());
     }
     return result;
   }

@@ -6,11 +6,14 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
+import org.ambraproject.rhino.rest.RestClientException;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
 import org.plos.crepo.service.ContentRepoService;
+import org.springframework.http.HttpStatus;
 
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
@@ -231,7 +234,12 @@ public abstract class Archive implements Closeable {
     return new Archive(archiveName, objects.build()) {
       @Override
       protected InputStream openFileFrom(Object repoVersion) {
-        return service.getRepoObject((RepoVersion) repoVersion);
+        try {
+          return service.getRepoObject((RepoVersion) repoVersion);
+        } catch(NotFoundException nfe) {
+          throw new RestClientException(nfe.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
       }
     };
   }

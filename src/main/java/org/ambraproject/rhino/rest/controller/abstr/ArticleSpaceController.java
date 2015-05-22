@@ -6,6 +6,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleRevisionService;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import static org.ambraproject.rhino.service.impl.AmbraService.entityNotFound;
 
 /**
  * Superclass for controllers that perform operations on article "REST nouns".
@@ -53,6 +56,8 @@ public abstract class ArticleSpaceController extends RestController {
     try (InputStream fileStream = contentRepoService.getRepoObject(objectVersion.getVersion());
          OutputStream responseStream = response.getOutputStream()) {
       ByteStreams.copy(fileStream, responseStream);
+    } catch (NotFoundException nfe) {
+      throw entityNotFound(nfe.getMessage());
     }
   }
 

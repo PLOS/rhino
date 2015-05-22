@@ -62,7 +62,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
                     .add(Restrictions.eq("issueUri", id.getKey()))
             ));
         if (issue == null) {
-          throw new RestClientException("Issue not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+          throw entityNotFound("Issue not found at URI:" + id);
         }
         return issue;
       }

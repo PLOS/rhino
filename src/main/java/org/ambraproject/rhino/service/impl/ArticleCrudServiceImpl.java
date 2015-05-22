@@ -50,8 +50,7 @@ import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.views.AuthorView;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -102,10 +101,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     String identifier = id.getIdentifier();
     Optional<Integer> versionNumber = id.getVersionNumber();
     RepoCollectionMetadata collection;
-    if (versionNumber.isPresent()) {
-      collection = contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
-    } else {
-      collection = contentRepoService.getLatestCollection(identifier);
+    try {
+      if (versionNumber.isPresent()) {
+        collection = contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
+      } else {
+        collection = contentRepoService.getLatestCollection(identifier);
+      }
+    } catch(NotFoundException nfe) {
+      throw entityNotFound(nfe.getMessage() + ": " + identifier);
     }
     return collection;
   }
@@ -123,6 +126,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       document = documentBuilder.parse(manuscriptStream);
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new RuntimeException(e);
+    } catch (NotFoundException nfe){
+      throw entityNotFound(nfe.getMessage() + ": " + manuscript);
     }
     return document;
   }
@@ -219,12 +224,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public InputStream readXml(ArticleIdentity id) {
     try {
       return contentRepoService.getLatestRepoObject(id.forXmlAsset().getFilePath());
-    } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        throw reportNotFound(id);
-      } else {
-        throw e;
-      }
+    } catch (NotFoundException nfe){
+      throw entityNotFound(nfe.getMessage() + ": " + id);
     }
   }
 
@@ -240,7 +241,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Article fetchEntity() {
         Article article = findArticleById(id);
         if (article == null) {
-          throw reportNotFound(id);
+          throw entityNotFound("Article doesn't exist: " + id);
         }
         return article;
       }
