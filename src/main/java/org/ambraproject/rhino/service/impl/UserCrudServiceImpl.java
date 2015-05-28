@@ -93,7 +93,7 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
         UserProfile userProfile = getUserByAuthId(authId);
 
         if (userProfile == null) {
-          throw entityNotFound("UserProfile not found at authId: " + authId);
+          throw reportNotFound("UserProfile not found with authId: " + authId);
         }
 
         return userProfile;
@@ -115,7 +115,7 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
 
     UserProfile userProfile = getUserByAuthId(authId);
     if (userProfile == null) {
-      throw entityNotFound("UserProfile not found for authId: " + authId);
+      throw reportNotFound("UserProfile not found with authId: " + authId);
     }
 
     if (this.advancedLogging) {

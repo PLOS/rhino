@@ -154,7 +154,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
                     .add(Restrictions.eq("annotationUri", annotationId.getKey()))
             ));
         if (annotation == null) {
-          throw entityNotFound("Annotation doesn't exist: " + annotationId);
+          throw reportNotFound(annotationId, "annotation");
         }
 
         // TODO: Make this more efficient. Three queries is too many.

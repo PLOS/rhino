@@ -200,7 +200,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
                 .add(Restrictions.eq("journalKey", journalKey))
         ));
     if (journal == null) {
-      throw entityNotFound(journalNotFoundMessage(journalKey));
+      throw reportNotFound(journalNotFoundMessage(journalKey));
     }
     return journal;
   }

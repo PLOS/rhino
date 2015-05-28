@@ -24,6 +24,7 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.service.article.ArticleService;
 import org.ambraproject.service.syndication.SyndicationService;
@@ -91,8 +92,20 @@ public abstract class AmbraService {
         .addOrder(Order.asc("journalKey"));
   }
 
-  public static RestClientException entityNotFound(String message) {
+  public static RestClientException reportNotFound(String message) {
     return new RestClientException(message, HttpStatus.NOT_FOUND);
+  }
+
+  public static RestClientException reportNotFound(String message, Throwable cause) {
+    return new RestClientException(message, HttpStatus.NOT_FOUND, cause);
+  }
+
+  public static RestClientException reportNotFound(DoiBasedIdentity id, String entityName) {
+    return reportNotFound(String.format("The %s with id: %s doesn't exist",entityName, id));
+  }
+
+  public static RestClientException reportNotFound(DoiBasedIdentity id, String entityName,  Throwable cause) {
+    return reportNotFound(String.format("The %s with id: %s doesn't exist", entityName, id), cause);
   }
 
   /**

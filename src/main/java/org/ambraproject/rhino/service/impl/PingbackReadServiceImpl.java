@@ -113,7 +113,7 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
             .setProjection(Projections.property("ID"))
     ));
     if (articleId == null) {
-      throw entityNotFound("Article not exist: " + article);
+      throw reportNotFound(article, "article");
     }
     return loadPingbacks(articleId);
   }

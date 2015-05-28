@@ -355,7 +355,7 @@ class LegacyIngestionService {
   private void delete(ArticleIdentity id) {
     Article article = findArticleById(id);
     if (article == null) {
-      throw AmbraService.entityNotFound("Article doesn't exist: " + id);
+      throw AmbraService.reportNotFound(id, "article");
     }
 
     for (ArticleAsset asset : article.getAssets()) {

@@ -25,7 +25,12 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+import java.util.UUID;
 
 public class ArticleRevisionServiceImpl extends AmbraService implements ArticleRevisionService {
 
@@ -37,7 +42,7 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
           ? contentRepoService.getCollection(new RepoVersionNumber(articleKey, versionNumber.get()))
           : contentRepoService.getLatestCollection(articleKey);
     }catch (NotFoundException nfe){
-      throw entityNotFound(nfe.getMessage() + ": " + articleKey);
+      throw reportNotFound(article, "collection", nfe);
     }
   }
 
@@ -102,21 +107,21 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
   }
 
   @Override
-  public Integer findVersionNumber(ArticleIdentity article, int revisionNumber) {
+  public int findVersionNumber(ArticleIdentity article, int revisionNumber) {
     String articleKey = article.getIdentifier();
     String uuid = findRevisionUuid(articleKey, revisionNumber);
+
     if (uuid == null) {
-      throw entityNotFound("Revision doesn't exist: " + article);
+      throw reportNotFound(article, "article revision UUID");
     }
 
-    RepoCollectionMetadata collectionMetadata;
     try {
-      collectionMetadata = contentRepoService.getCollection(RepoVersion.create(articleKey, uuid));
-    } catch(NotFoundException nfe) {
-      throw entityNotFound(nfe.getMessage() + ": " + articleKey);
-    }
 
-    return collectionMetadata.getVersionNumber().getNumber();
+      return contentRepoService.getCollection(RepoVersion.create(articleKey, uuid)).getVersionNumber().getNumber();
+
+    } catch(NotFoundException nfe) {
+      throw reportNotFound(article, "collection",  nfe);
+    }
   }
 
 
@@ -145,7 +150,9 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
   public RepoObjectMetadata readFileVersion(ArticleIdentity articleIdentity, String fileKey) {
     RepoCollectionMetadata collection = findCollectionFor(articleIdentity);
     RepoObjectMetadata objectMetadata = findObjectInCollection(collection, fileKey);
-    if (objectMetadata == null) throw entityNotFound("File not found: " + articleIdentity);
+    if (objectMetadata == null) {
+      throw reportNotFound(articleIdentity, "file object metadata");
+    }
     return objectMetadata;
   }
 
@@ -200,7 +207,7 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
 
     List<ArticleRevision> revisions = hibernateTemplate.find("from ArticleRevision where doi=?", articleIdentity.getIdentifier());
     if (revisions.isEmpty()) {
-      throw entityNotFound("Revision doesn't exist: " + articleIdentity);
+      throw reportNotFound(articleIdentity, "article revision");
     }
     for (ArticleRevision revision : revisions) {
       RevisionVersionMapping mapping = mappings.get(UUID.fromString(revision.getCrepoUuid()));
@@ -220,26 +227,27 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
   @Override
   public RepoObjectMetadata getObjectVersion(AssetIdentity assetIdentity, String repr, int revisionNumber) {
     String parentArticleDoi = getParentDoi(assetIdentity.getIdentifier());
-    if (parentArticleDoi == null) throw entityNotFound("Unrecognized asset DOI");
+    if (parentArticleDoi == null) {
+      throw reportNotFound(assetIdentity, " parent article DOI");
+    }
 
     String parentArticleUuid = findRevisionUuid(parentArticleDoi, revisionNumber);
-    if (parentArticleUuid == null) throw entityNotFound("Revision not found");
-
-    RepoObjectMetadata repoObjectMetadata = null;
+    if (parentArticleUuid == null) {
+      throw reportNotFound(assetIdentity, "parent article UUID");
+    }
 
     try {
       RepoCollectionMetadata articleCollection = contentRepoService.getCollection(RepoVersion.create(parentArticleDoi, parentArticleUuid));
+
       Map<String, ?> articleMetadata = (Map<String, ?>) articleCollection.getJsonUserMetadata().get();
       Collection<Map<String, ?>> assets = (Collection<Map<String, ?>>) articleMetadata.get("assets");
       RepoVersion assetVersion = findAssetVersion(repr, assets, assetIdentity);
 
-      repoObjectMetadata = contentRepoService.getRepoObjectMetadata(assetVersion);
+      return contentRepoService.getRepoObjectMetadata(assetVersion);
 
     } catch(NotFoundException nfe) {
-      entityNotFound(nfe.getMessage());
+      throw reportNotFound(assetIdentity, "object metadata",  nfe);
     }
-
-    return repoObjectMetadata;
   }
 
   private static RepoVersion parseRepoVersion(Map<String, ?> versionJson) {
@@ -252,13 +260,15 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
       if (assetId.equals(targetAssetId)) {
         Map<String, ?> assetObjects = (Map<String, ?>) asset.get("objects");
         Map<String, ?> assetRepr = (Map<String, ?>) assetObjects.get(repr);
-        if (assetRepr == null) throw entityNotFound("repr not found");
+        if (assetRepr == null) {
+          throw reportNotFound(targetAssetId, "asset repr");
+        }
         return parseRepoVersion(assetRepr);
       }
     }
     // We already match the asset DOI to this article in the DoiAssociation table,
     // but this is still possible if the asset appears in other revisions of the article but not this one.
-    throw entityNotFound("Asset not in revision");
+    throw reportNotFound(targetAssetId, "asset version");
   }
 
   @Override
@@ -266,13 +276,12 @@ public class ArticleRevisionServiceImpl extends AmbraService implements ArticleR
     RepoCollectionMetadata articleCollection = findCollectionFor(article);
     Map<String, ?> manuscript = (Map<String, ?>) ((Map<String, ?>) articleCollection.getJsonUserMetadata().get()).get("manuscript");
     RepoVersion manuscriptVersion = parseRepoVersion(manuscript);
-    RepoObjectMetadata repoObjectMetadata;
+
     try {
-      repoObjectMetadata = contentRepoService.getRepoObjectMetadata(manuscriptVersion);
+      return contentRepoService.getRepoObjectMetadata(manuscriptVersion);
     } catch (NotFoundException nfe){
-      throw entityNotFound(nfe.getMessage() + ": " + manuscriptVersion);
+      throw reportNotFound(article, "object metadata", nfe);
     }
-    return repoObjectMetadata;
   }
 
 }

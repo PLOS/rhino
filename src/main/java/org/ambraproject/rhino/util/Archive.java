@@ -237,7 +237,8 @@ public abstract class Archive implements Closeable {
         try {
           return service.getRepoObject((RepoVersion) repoVersion);
         } catch(NotFoundException nfe) {
-          throw new RestClientException(nfe.getMessage(), HttpStatus.NOT_FOUND);
+          throw new RestClientException(String.format("The object with id: %s doesn't exist", repoVersion),
+                                          HttpStatus.NOT_FOUND, nfe);
         }
 
       }

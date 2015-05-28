@@ -108,7 +108,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         collection = contentRepoService.getLatestCollection(identifier);
       }
     } catch(NotFoundException nfe) {
-      throw entityNotFound(nfe.getMessage() + ": " + identifier);
+      throw reportNotFound(id, "collection", nfe);
     }
     return collection;
   }
@@ -127,7 +127,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (IOException | SAXException | ParserConfigurationException e) {
       throw new RuntimeException(e);
     } catch (NotFoundException nfe){
-      throw entityNotFound(nfe.getMessage() + ": " + manuscript);
+      throw reportNotFound(id, "manuscript object",  nfe);
     }
     return document;
   }
@@ -225,7 +225,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     try {
       return contentRepoService.getLatestRepoObject(id.forXmlAsset().getFilePath());
     } catch (NotFoundException nfe){
-      throw entityNotFound(nfe.getMessage() + ": " + id);
+      throw reportNotFound(id, "xml file object", nfe);
     }
   }
 
@@ -241,7 +241,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Article fetchEntity() {
         Article article = findArticleById(id);
         if (article == null) {
-          throw entityNotFound("Article doesn't exist: " + id);
+          throw reportNotFound(id, "article");
         }
         return article;
       }

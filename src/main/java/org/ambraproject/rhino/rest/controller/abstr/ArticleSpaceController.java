@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.entityNotFound;
+import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
 /**
  * Superclass for controllers that perform operations on article "REST nouns".
@@ -57,7 +57,7 @@ public abstract class ArticleSpaceController extends RestController {
          OutputStream responseStream = response.getOutputStream()) {
       ByteStreams.copy(fileStream, responseStream);
     } catch (NotFoundException nfe) {
-      throw entityNotFound(nfe.getMessage());
+      throw reportNotFound(String.format("The repo object id: %s doesn't exist", objectVersion.getVersion()), nfe);
     }
   }
 

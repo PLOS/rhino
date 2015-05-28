@@ -46,7 +46,7 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
 
-import static org.ambraproject.rhino.service.impl.AmbraService.entityNotFound;
+import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
 @Controller
 public class AssetFileCrudController extends RestController {
@@ -83,7 +83,7 @@ public class AssetFileCrudController extends RestController {
     try {
       objMeta = contentRepoService.getLatestRepoObjectMetadata(id.getFilePath());
     } catch (NotFoundException nfe ) {
-      throw entityNotFound(nfe.getMessage() + ": " + id);
+      throw reportNotFound(id, "file object metadata", nfe);
     }
 
     Optional<String> contentType = objMeta.getContentType();

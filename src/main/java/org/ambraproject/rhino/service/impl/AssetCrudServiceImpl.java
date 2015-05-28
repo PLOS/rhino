@@ -255,7 +255,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
                 .add(Restrictions.eq("extension", id.getFileExtension()))
         ));
     if (asset == null) {
-      throw entityNotFound("Asset not found at: " + id);
+      throw reportNotFound(id, "article asset");
     }
 
     byte[] assetData = readClientInput(fileContent);
@@ -269,9 +269,9 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public InputStream read(AssetFileIdentity assetId) {
     try {
       return contentRepoService.getLatestRepoObject(assetId.getFilePath());
-    } catch (NotFoundException e) {
-      throw entityNotFound(String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
-          assetId.getIdentifier(), assetId.getFileExtension()));
+    } catch (NotFoundException nfe) {
+      throw reportNotFound(String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
+          assetId.getIdentifier(), assetId.getFileExtension()), nfe);
     }
   }
 
@@ -305,7 +305,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
                   .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
           ));
       if (assets.isEmpty()) {
-        throw entityNotFound("Article Asset doesn't exist: " + id);
+        throw reportNotFound(id, "article asset");
       }
       return assets;
     }
@@ -356,7 +356,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
                     .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             ));
         if (assets.isEmpty()) {
-          throw entityNotFound("Article Asset doesn't exist: " + id);
+          throw reportNotFound(id, "file asset");
         }
         return DataAccessUtils.requiredUniqueResult(assets);
       }
@@ -381,7 +381,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         ));
     if (asset == null) {
-      throw entityNotFound("Article Asset doesn't exist: " + assetId);
+      throw reportNotFound(assetId, "article asset");
     }
 
     hibernateTemplate.delete(asset);
@@ -399,7 +399,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
     String articleDoi = (String) articleResult[0];
     Integer articleState = (Integer) articleResult[1];
     if (articleDoi == null) {
-      throw entityNotFound("Asset not found for: " + id);
+      throw reportNotFound(id, "article");
     }
 
     List<Journal> journalResult = hibernateTemplate.find("select journals from Article where doi = ?", articleDoi);
