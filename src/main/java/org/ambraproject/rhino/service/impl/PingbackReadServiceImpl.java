@@ -74,7 +74,7 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
         //  ON article.articleID = pb.articleID
         //  ORDER BY pb.mostRecent DESC;
 
-        List<Object[]> results = hibernateTemplate.find(""
+        List<Object[]> results = (List<Object[]>) hibernateTemplate.find(""
                 + "select distinct a.doi, a.title, a.url, "
                 + "  (select count(*) from Pingback where articleID = a.ID) as pingbackCount, "
                 + "  (select max(created) from Pingback where articleID = a.ID) as mostRecent " // TODO Eliminate duplication?
@@ -121,7 +121,7 @@ public class PingbackReadServiceImpl extends AmbraService implements PingbackRea
   }
 
   private List<Pingback> loadPingbacks(long articleId) {
-    return hibernateTemplate.findByCriteria(
+    return (List<Pingback>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Pingback.class)
             .add(Restrictions.eq("articleID", articleId))
             .addOrder(Order.desc("created"))

@@ -35,6 +35,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -81,7 +82,19 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends Abstract
   protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
 
   // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES
-  protected static final String ASSET_EXPRESSION = String.format("//(%s)", Joiner.on('|').join(ASSET_NODE_NAMES));
+  protected static String assetExpression;
+  static {
+    StringBuilder sb = new StringBuilder();
+    Iterator<String> it = ASSET_NODE_NAMES.iterator();
+    while (it.hasNext()) {
+      sb.append("//");
+      sb.append(it.next());
+      if (it.hasNext()) {
+        sb.append('|');
+      }
+    }
+    assetExpression = sb.toString();
+  }
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();

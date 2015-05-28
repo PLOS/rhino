@@ -290,7 +290,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
     inboundCriteria = inboundCriteria.createCriteria("relatedArticles")
         .add(Restrictions.eq("otherArticleDoi", ingested.getDoi()));
-    List<Article> articlesWithInboundRelationships = hibernateTemplate.findByCriteria(inboundCriteria);
+    List<Article> articlesWithInboundRelationships = (List<Article>) hibernateTemplate.findByCriteria(inboundCriteria);
     if (!articlesWithInboundRelationships.isEmpty()) {
       for (Article inboundArticle : articlesWithInboundRelationships) {
         reciprocateInboundRelationship(ingested, inboundArticle);

@@ -83,7 +83,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    */
   public AssetNodesByDoi findAllAssetNodes() {
     // Find all nodes of an asset type and map them by DOI
-    List<Node> rawNodes = readNodeList(ASSET_EXPRESSION);
+    List<Node> rawNodes = readNodeList(assetExpression);
     ListMultimap<String, Node> nodeMap = LinkedListMultimap.create(rawNodes.size());
     for (Node node : rawNodes) {
       String assetDoi = getAssetDoi(node);
