@@ -22,7 +22,6 @@ import com.google.common.base.Preconditions;
 import org.ambraproject.configuration.ConfigurationStore;
 import org.ambraproject.models.UserLogin;
 import org.ambraproject.models.UserProfile;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.UserCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -33,7 +32,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.http.HttpStatus;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -95,7 +93,7 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
         UserProfile userProfile = getUserByAuthId(authId);
 
         if (userProfile == null) {
-          throw new RestClientException("UserProfile not found at authId=" + authId, HttpStatus.NOT_FOUND);
+          throw reportNotFound("UserProfile not found with authId: " + authId);
         }
 
         return userProfile;
@@ -117,7 +115,7 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
 
     UserProfile userProfile = getUserByAuthId(authId);
     if (userProfile == null) {
-      throw new RestClientException("UserProfile not found for authId " + authId, HttpStatus.NOT_FOUND);
+      throw reportNotFound("UserProfile not found with authId: " + authId);
     }
 
     if (this.advancedLogging) {

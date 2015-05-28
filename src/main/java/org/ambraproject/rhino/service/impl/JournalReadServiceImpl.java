@@ -200,7 +200,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
                 .add(Restrictions.eq("journalKey", journalKey))
         ));
     if (journal == null) {
-      throw new RestClientException(journalNotFoundMessage(journalKey), HttpStatus.NOT_FOUND);
+      throw reportNotFound(journalNotFoundMessage(journalKey));
     }
     return journal;
   }

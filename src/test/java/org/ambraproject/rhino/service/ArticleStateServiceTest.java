@@ -37,6 +37,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
@@ -103,9 +105,9 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
       assertNotNull(stream);
       assertTrue(expectedToExist);
     } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
+        throw e;
+    } catch (NotFoundException nfe) {
         assertFalse(expectedToExist);
-      } else throw e;
     }
   }
 

@@ -109,7 +109,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
     Preconditions.checkNotNull(input);
     Volume volume = findVolume(volumeId);
     if (volume == null) {
-      throw new RestClientException("Volume not found at URI=" + volumeId.getIdentifier(), HttpStatus.NOT_FOUND);
+      throw reportNotFound(volumeId, "volume");
     }
     volume = applyInput(volume, input);
     hibernateTemplate.update(volume);
@@ -127,7 +127,7 @@ public class VolumeCrudServiceImpl extends AmbraService implements VolumeCrudSer
                     .setFetchMode("issues", FetchMode.JOIN)
             ));
         if (volume == null) {
-          throw new RestClientException("Volume not found at URI=" + id.getIdentifier(), HttpStatus.NOT_FOUND);
+          throw reportNotFound(id, "volume");
         }
         return volume;
       }

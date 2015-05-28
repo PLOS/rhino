@@ -11,7 +11,7 @@ public interface ArticleRevisionService {
 
   boolean deleteRevision(ArticleIdentity article, Integer revisionNumber);
 
-  Integer findVersionNumber(ArticleIdentity article, int revisionNumber);
+  int findVersionNumber(ArticleIdentity article, int revisionNumber);
 
   RepoObjectMetadata readFileVersion(ArticleIdentity articleIdentity, String fileKey);
 

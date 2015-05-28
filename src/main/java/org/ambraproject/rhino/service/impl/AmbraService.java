@@ -92,9 +92,20 @@ public abstract class AmbraService {
         .addOrder(Order.asc("journalKey"));
   }
 
-  public static RestClientException reportNotFound(DoiBasedIdentity id) {
-    String message = "Item not found at the provided ID: " + id;
+  public static RestClientException reportNotFound(String message) {
     return new RestClientException(message, HttpStatus.NOT_FOUND);
+  }
+
+  public static RestClientException reportNotFound(String message, Throwable cause) {
+    return new RestClientException(message, HttpStatus.NOT_FOUND, cause);
+  }
+
+  public static RestClientException reportNotFound(DoiBasedIdentity id, String entityName) {
+    return reportNotFound(String.format("The %s with id: %s doesn't exist",entityName, id));
+  }
+
+  public static RestClientException reportNotFound(DoiBasedIdentity id, String entityName,  Throwable cause) {
+    return reportNotFound(String.format("The %s with id: %s doesn't exist", entityName, id), cause);
   }
 
   /**
