@@ -46,6 +46,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -106,12 +107,10 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     boolean received404 = false;
     try {
       articleCrudService.readXml(id);
+    } catch(NotFoundException nfe) {
+      received404 = true;
     } catch (RestClientException e) {
-      if (HttpStatus.NOT_FOUND.equals(e.getResponseStatus())) {
-        received404 = true;
-      } else {
-        throw e;
-      }
+      throw e;
     }
     assertEquals(received404, !expectedToExist,
         (expectedToExist ? "Article expected to exist but doesn't" : "Article expected not to exist but does"));

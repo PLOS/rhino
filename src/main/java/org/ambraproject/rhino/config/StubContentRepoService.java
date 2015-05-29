@@ -1,9 +1,9 @@
 package org.ambraproject.rhino.config;
 
 
-import org.plos.crepo.exceptions.ContentRepoException;
-import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollection;
+import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
@@ -12,7 +12,7 @@ import org.plos.crepo.model.RepoVersionNumber;
 import org.plos.crepo.model.RepoVersionTag;
 import org.plos.crepo.service.ContentRepoService;
 
-import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -57,10 +57,13 @@ public class StubContentRepoService implements ContentRepoService {
   public InputStream getLatestRepoObject(String key) {
     RepoObject repoObject = defaultBucket.objects.get(key);
     if (repoObject == null) {
-      throw new ContentRepoException(ErrorType.ErrorFetchingObject,
-          "StubContentRepoService's default bucket does not contain: " + key);
+      throw new NotFoundException("StubContentRepoService's default bucket does not contain: " + key);
     }
-    return new ByteArrayInputStream(repoObject.getByteContent());
+    try {
+      return repoObject.getContentAccessor().open();
+    } catch (IOException e){
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
@@ -155,17 +158,17 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public RepoCollectionMetadata createCollection(RepoCollection repoCollection) {
+  public RepoCollectionList createCollection(RepoCollection repoCollection) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public RepoCollectionMetadata versionCollection(RepoCollection repoCollection) {
+  public RepoCollectionList versionCollection(RepoCollection repoCollection) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public RepoCollectionMetadata autoCreateCollection(RepoCollection repoCollection) {
+  public RepoCollectionList autoCreateCollection(RepoCollection repoCollection) {
     throw new UnsupportedOperationException();
   }
 
@@ -180,27 +183,32 @@ public class StubContentRepoService implements ContentRepoService {
   }
 
   @Override
-  public RepoCollectionMetadata getCollection(RepoVersion repoVersion) {
+  public RepoCollectionList getCollection(RepoVersion repoVersion) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public RepoCollectionMetadata getCollection(RepoVersionNumber repoVersionNumber) {
+  public RepoCollectionList getCollection(RepoVersionNumber repoVersionNumber) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public RepoCollectionMetadata getCollection(RepoVersionTag repoVersionTag) {
+  public RepoCollectionList getCollection(RepoVersionTag repoVersionTag) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public List<RepoCollectionMetadata> getCollectionVersions(String key) {
+  public List<RepoCollectionList> getCollectionVersions(String key) {
     throw new UnsupportedOperationException();
   }
 
   @Override
   public List<RepoCollectionMetadata> getCollections(int offset, int limit, boolean includeDeleted, String tag) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public RepoCollectionMetadata getLatestCollection(String s) {
     throw new UnsupportedOperationException();
   }
 }

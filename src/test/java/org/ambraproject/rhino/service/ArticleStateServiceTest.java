@@ -36,6 +36,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -100,10 +101,10 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.toString())) {
       assertNotNull(stream);
       assertTrue(expectedToExist);
+    } catch (NotFoundException nfe) {
+      assertFalse(expectedToExist);
     } catch (ContentRepoException e) {
-      if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
-        assertFalse(expectedToExist);
-      } else throw e;
+      throw e;
     }
   }
 
