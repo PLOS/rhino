@@ -271,6 +271,24 @@ public class AuthorsXmlExtractorTest extends BaseRhinoTest {
                 .setCustomFootnotes(ImmutableList.of("<p>Membership of the International Sheep Genomics Consortium is provided in the Acknowledgments and at <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://www.sheephapmap.org/participants.php\" xlink:type=\"simple\">http://www.sheephapmap.org/participants.php</ext-link>.</p>"))
                 .build(),
         }},
+        {"journal.pgen.0030208.xml", new AuthorView[]{
+            AuthorView.builder().setGivenNames("Patrick J").setSurnames("Collins")
+                .setAffiliations(ImmutableList.of("Department of Genetics, Stanford University School of Medicine, Stanford, California, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Yuya").setSurnames("Kobayashi")
+                .setAffiliations(ImmutableList.of("Department of Genetics, Stanford University School of Medicine, Stanford, California, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Loan").setSurnames("Nguyen")
+                .setAffiliations(ImmutableList.of("Department of Genetics, Stanford University School of Medicine, Stanford, California, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Nathan D").setSurnames("Trinklein")
+                .setAffiliations(ImmutableList.of("Department of Genetics, Stanford University School of Medicine, Stanford, California, United States of America"))
+                .build(),
+            AuthorView.builder().setGivenNames("Richard M").setSurnames("Myers")
+                .setAffiliations(ImmutableList.of("Department of Genetics, Stanford University School of Medicine, Stanford, California, United States of America"))
+                .setCorresponding("<span class=\"email\">*</span>To whom correspondence should be addressed. E-mail: <a href=\"mailto:myers@shgc.stanford.edu\">myers@shgc.stanford.edu</a> ")
+                .build()
+        }}
     };
   }
 

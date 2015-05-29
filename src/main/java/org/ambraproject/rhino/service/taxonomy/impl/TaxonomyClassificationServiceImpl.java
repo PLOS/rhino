@@ -4,6 +4,7 @@ import com.google.common.annotations.VisibleForTesting;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
@@ -76,6 +77,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private RuntimeConfiguration runtimeConfiguration;
   @Autowired
   private ArticleTypeService articleTypeService;
+  @Autowired
+  private ArticleCrudService articleCrudService;
 
   /**
    * @inheritDoc
@@ -125,7 +128,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
 
     String header = String.format(MESSAGE_HEADER,
         new SimpleDateFormat("yyyy-MM-dd").format(article.getDate()),
-        article.getJournals().iterator().next().getTitle(),
+        articleCrudService.getPublicationJournal(article).getTitle(),
         articleTypeService.getArticleType(article).getHeading(),
         ArticleIdentity.create(article).getIdentifier());
 
