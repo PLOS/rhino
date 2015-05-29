@@ -176,7 +176,7 @@ public final class AuthorsXmlExtractor {
     Node equalContribNode = xpath.selectNode(authorDoc, "//@equal-contrib");
     Node deceasedNode = xpath.selectNode(authorDoc, "//@deceased");
     Node corresAuthorNode = xpath.selectNode(authorDoc, "//xref[@ref-type='corresp']");
-    NodeList addressList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']/sup[contains(text(),'¤')]/..");
+    NodeList addressList = xpath.selectNodes(authorDoc, "//xref[@ref-type='fn']/sup[contains(text()[1],'¤')]/..");
     NodeList affList = xpath.selectNodes(authorDoc, "//xref[@ref-type='aff']");
 
     // Either surname or givenName can be blank
