@@ -30,6 +30,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleAuthor;
 import org.ambraproject.models.Category;
+import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTransactionalTest;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.config.StubContentRepoService;
@@ -381,5 +382,14 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
 
     assertTrue(categories.size() > 0);
     assertEquals(categories.get(0), "dummy raw term");
+  }
+
+  @Test
+  public void testGetPublicationJournal() throws Exception {
+    Map<ArticleIdentity, Article> testArticle = createTestArticle();
+    ArticleIdentity articleId = testArticle.keySet().iterator().next();
+    Article article = testArticle.get(articleId);
+    Journal journal = articleCrudService.getPublicationJournal(article);
+    assertEquals(journal.getTitle(), "Test Journal 1932-6203");
   }
 }
