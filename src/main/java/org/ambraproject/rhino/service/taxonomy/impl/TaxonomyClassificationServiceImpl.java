@@ -44,21 +44,27 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   private static final Logger log = LoggerFactory.getLogger(TaxonomyClassificationServiceImpl.class);
 
   private static final String MESSAGE_BEGIN = "<TMMAI project='%s' location = '.'>\n" +
-      "  <Method name='getSuggestedTermsFullPaths' returnType='java.util.Vector'/>\n" +
+      "  <Method name='getSuggestedTermsFullPathsPlos' returnType='java.util.Vector'/>\n" +
       "  <VectorParam>\n" +
-      "    <VectorElement>\n" +
-      "      <doc>";
+      "    <VectorElement>\n";
 
-  private static final String MESSAGE_HEADER = "<header>\n" +
-      "   <publication-date>%s</publication-date>\n" +
-      "   <journal-title>%s</journal-title>\n" +
-      "   <article-type>%s</article-type>\n" +
-      "   <article-id pub-id-type=\"doi\">%s</article-id>\n" +
-      "</header>\n" +
-      "<content>\n";
+  private static final String MESSAGE_DOC_ELEMENT=
+      "      <doc>\n" +
+      "        <header>\n" +
+      "%s" +
+      "        </header>\n" +
+      "        <content>\n" +
+      "          %s\n" +
+      "        </content>\n" +
+      "      </doc>\n";
 
-  private static final String MESSAGE_END = "</content>" +
-      "      </doc>\n" +
+  private static final String MESSAGE_HEADER =
+      "          <publication-date>%s</publication-date>\n" +
+      "          <journal-title>%s</journal-title>\n" +
+      "          <article-type>%s</article-type>\n" +
+      "          <article-id pub-id-type=\"doi\">%s</article-id>\n";
+
+  private static final String MESSAGE_END =
       "    </VectorElement>\n" +
       "  </VectorParam>\n" +
       "</TMMAI>";
@@ -122,9 +128,9 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         article.getJournals().iterator().next().getTitle(),
         articleTypeService.getArticleType(article).getHeading(),
         ArticleIdentity.create(article).getIdentifier());
+
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
-        + header
-        + toCategorize
+        + StringEscapeUtils.escapeXml(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
         + MESSAGE_END;
 
     HttpPost post = new HttpPost(configuration.getServer().toString());
@@ -241,7 +247,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * text.  This is usually the case for non-research-articles, such as corrections, opinion pieces, etc.
    *
    * @param dom DOM tree of an article
-   * @return raw text content, XML-escaped, of the relevant article sections
+   * @return raw text content of the relevant article sections
    */
   @VisibleForTesting
   static String getCategorizationContent(Document dom) {
@@ -249,7 +255,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     appendElementIfExists(sb, dom, "article-title");
     appendAllElementsIfExists(sb, dom, "abstract");
     appendElementIfExists(sb, dom, "body");
-    return StringEscapeUtils.escapeXml(sb.toString().trim());
+    return sb.toString().trim();
   }
 
 }
