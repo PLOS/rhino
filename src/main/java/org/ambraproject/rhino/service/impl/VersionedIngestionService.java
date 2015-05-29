@@ -22,11 +22,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.w3c.dom.Node;
 
 import javax.ws.rs.core.MediaType;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -87,10 +95,25 @@ class VersionedIngestionService {
     }
     ArticleIdentity articleIdentity;
     Article articleMetadata;
+    String frontText = null;
+
     try (InputStream manuscriptStream = new BufferedInputStream(archive.openFile(manuscriptEntry))) {
       ArticleXml parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
       articleIdentity = parsedArticle.readDoi();
       articleMetadata = parsedArticle.build(new Article());
+
+      try {
+        Node frontNode = parsedArticle.extractFrontMatter();
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+//        transformer.setOutputProperty(OutputKeys.INDENT, "no");
+        StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(frontNode), new StreamResult(writer));
+        frontText = "<article>" + writer.toString() + "</article>";
+      } catch (Exception e) {
+        //throw new RuntimeException(e);
+        log.error("error getting front matter", e);
+      }
     }
 
     ArticleCollection collection = new ArticleCollection(manifestXml, articleIdentity);
@@ -108,6 +131,17 @@ class VersionedIngestionService {
             .contentType(MediaType.APPLICATION_XML)
             .downloadName(articleIdentity.forXmlAsset().getFileName()));
     collection.tagSpecialObject("manuscript", manuscript);
+
+    if (frontText != null) {
+      ImmutableMap<String, String> userMetadata = ImmutableMap.of("generated", "front");
+      ArticleObject front = createDynamicObject(
+          new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
+              .byteContent(frontText.getBytes(Charset.forName("UTF-8")))
+              .userMetadata(parentService.crepoGson.toJson(userMetadata))
+              .contentType(MediaType.APPLICATION_XML)
+              .build());
+      collection.tagSpecialObject("front", front);
+    }
 
     for (ManifestXml.Asset asset : assets) {
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
