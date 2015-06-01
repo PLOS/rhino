@@ -38,6 +38,7 @@ import org.plos.crepo.exceptions.ContentRepoException;
 import org.plos.crepo.exceptions.ErrorType;
 import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.service.ContentRepoService;
+import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
@@ -101,6 +102,8 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.toString())) {
       assertNotNull(stream);
       assertTrue(expectedToExist);
+    } catch (InMemoryContentRepoService.InMemoryContentRepoServiceException me) {
+      assertFalse(expectedToExist);
     } catch (NotFoundException nfe) {
       assertFalse(expectedToExist);
     } catch (ContentRepoException e) {
