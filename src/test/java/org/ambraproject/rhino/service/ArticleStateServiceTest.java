@@ -102,9 +102,7 @@ public class ArticleStateServiceTest extends BaseRhinoTest {
     try (InputStream stream = contentRepoService.getLatestRepoObject(fileIdentity.toString())) {
       assertNotNull(stream);
       assertTrue(expectedToExist);
-    } catch (InMemoryContentRepoService.InMemoryContentRepoServiceException me) {
-      assertFalse(expectedToExist);
-    } catch (NotFoundException nfe) {
+    } catch (InMemoryContentRepoService.InMemoryContentRepoServiceException|NotFoundException nfe) {
       assertFalse(expectedToExist);
     } catch (ContentRepoException e) {
       throw e;
