@@ -37,6 +37,7 @@ import org.w3c.dom.Node;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -81,20 +82,10 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends Abstract
   // The node-names for nodes that can be an asset if they have a descendant <graphic> node
   protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
 
-  // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES
-  protected static String assetExpression;
-  static {
-    StringBuilder sb = new StringBuilder();
-    Iterator<String> it = ASSET_NODE_NAMES.iterator();
-    while (it.hasNext()) {
-      sb.append("//");
-      sb.append(it.next());
-      if (it.hasNext()) {
-        sb.append('|');
-      }
-    }
-    assetExpression = sb.toString();
-  }
+  // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES.
+  protected static String ASSET_EXPRESSION = ASSET_NODE_NAMES.stream()
+      .map(nodeName -> "//" + nodeName)
+      .collect(Collectors.joining("|"));
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
