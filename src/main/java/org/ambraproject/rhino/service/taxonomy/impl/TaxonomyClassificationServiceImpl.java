@@ -247,10 +247,13 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * research articles, this is presently the title, the abstract, the Materials and Methods section, and the Results
    * section.  (If any of these sections are not present, they are not sent, but this is not a fatal error.) If none of
    * these sections (abstract, materials/methods, or results) are present, then this method will return the entire body
-   * text.  This is usually the case for non-research-articles, such as corrections, opinion pieces, etc.
+   * text. This is usually the case for non-research-articles, such as corrections, opinion pieces, etc.
+   * Please not that the "getSuggestedTermsFullPathsPlos" requires the data within the "content" tag to be
+   * XML-escaped twice. Hence, we XML escape it once in this method and once when we escape the "doc" tag in
+   * {@link getRawTerms} method.
    *
    * @param dom DOM tree of an article
-   * @return raw text content of the relevant article sections
+   * @return raw text content, XML-escaped, of the relevant article sections
    */
   @VisibleForTesting
   static String getCategorizationContent(Document dom) {
@@ -258,7 +261,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     appendElementIfExists(sb, dom, "article-title");
     appendAllElementsIfExists(sb, dom, "abstract");
     appendElementIfExists(sb, dom, "body");
-    return sb.toString().trim();
+    return StringEscapeUtils.escapeXml(sb.toString().trim());
   }
 
 }
