@@ -78,7 +78,8 @@ public class UserCrudServiceTest extends BaseRhinoTest {
 
     userCrudService.createUserLogin("34567", expectedUserLogin);
 
-    List<UserLogin> list = hibernateTemplate.find("from UserLogin where userProfileID = ?", userProfileId);
+    List<UserLogin> list = (List<UserLogin>) hibernateTemplate.find("from UserLogin where userProfileID = ?",
+        userProfileId);
 
     assertTrue(list.size() == 1, "Incorrect number of userLogin objects were returned");
     UserLogin actualUserLogin = list.get(0);

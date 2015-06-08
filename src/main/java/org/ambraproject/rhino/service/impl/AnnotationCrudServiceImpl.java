@@ -103,7 +103,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
    * @return the collection of annotations
    */
   private List<Annotation> fetchAllAnnotations(Article article) {
-    return hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
+    return (List<Annotation>) hibernateTemplate.find("FROM Annotation WHERE articleID = ?", article.getID());
   }
 
   /**

@@ -205,7 +205,7 @@ public abstract class AmbraService {
    * @throws RestClientException if no entity is found matching the given ID
    */
   protected <S, T> T findSingleEntity(String hql, S id) {
-    List<T> results = hibernateTemplate.find(hql, id);
+    List<T> results = (List<T>) hibernateTemplate.find(hql, id);
     if (results.isEmpty()) {
       String message = "Item not found at the provided ID: " + id;
       throw new RestClientException(message, HttpStatus.NOT_FOUND);
