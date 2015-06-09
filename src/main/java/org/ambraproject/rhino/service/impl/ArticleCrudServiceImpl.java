@@ -531,7 +531,6 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void repopulateCategories(ArticleIdentity id) throws IOException {
-
     Document doc = parseXml(readXml(id));
     Article article = findArticleById(id);
     populateCategories(article, doc);

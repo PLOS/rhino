@@ -68,7 +68,6 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   /**
    * Repopulates article category information by making a call to the taxonomy server.
    * @param id the identifier of the article
-   * @return boolean indicating success
    */
   public abstract void repopulateCategories(ArticleIdentity id) throws IOException;
 
