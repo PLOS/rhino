@@ -157,6 +157,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     //parse result
     NodeList vectorElements = response.getElementsByTagName("VectorElement");
     List<String> results = new ArrayList<>(vectorElements.getLength());
+
+    if (results.size() == 0) {
+      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+    }
+
     //The first and last elements of the vector response are just MAITERMS
     for (int i = 1; i < vectorElements.getLength() - 1; i++) {
       results.add(vectorElements.item(i).getTextContent());

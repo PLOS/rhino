@@ -531,10 +531,16 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public void repopulateCategories(ArticleIdentity id) throws IOException {
-      Document doc = parseXml(readXml(id));
-      Article article = findArticleById(id);
-      populateCategories(article, doc);
+
+    Document doc = parseXml(readXml(id));
+    Article article = findArticleById(id);
+    populateCategories(article, doc);
+    if (article.getCategories().size() > 0) {
       saveArticleToHibernate(article);
+    } else {
+      throw new IOException("Taxonomy server returned 0 terms. Cannot repopulate Categories. "
+          + article.getDoi());
+    }
   }
 
   /**
@@ -561,9 +567,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         article.setCategories(new HashMap<Category, Integer>());
       }
     } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
-      log.info("Taxonomy server not configured. Ingesting article without categories.");
+      log.error("Taxonomy server not configured. Ingesting article without categories. " + article.getDoi(), e);
     } catch (Exception e) {
-      log.warn("Taxonomy server not responding, but ingesting article anyway", e);
+      log.error("Taxonomy server not responding, but ingesting article anyway." + article.getDoi(), e);
     }
   }
 
