@@ -105,6 +105,10 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return new AssetNodesByDoi(nodeMap);
   }
 
+  public Node extractFrontMatter() {
+    return readNode("/article/front");
+  }
+
   /**
    * Return the node that should represent the asset for a "graphic" node.
    *
