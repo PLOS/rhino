@@ -20,12 +20,14 @@ package org.ambraproject.rhino.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
@@ -104,7 +106,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
-    return legacyIngestionService.writeArchive(archive, suppliedId, mode);
+    Article article = legacyIngestionService.writeArchive(archive, suppliedId, mode);
+
+    try {
+      versionedIngestionService.ingest(archive);
+    } catch (XmlContentException e) {
+      throw new RuntimeException(e);
+    }
+
+    return article;
   }
 
   @VisibleForTesting
@@ -115,6 +125,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public void repopulateCategories(ArticleIdentity id) throws IOException {
     legacyIngestionService.repopulateCategories(id);
+  }
+
+  static RestClientException complainAboutXml(XmlContentException e) {
+    String msg = "Error in submitted XML";
+    String nestedMsg = e.getMessage();
+    if (!Strings.isNullOrEmpty(nestedMsg)) {
+      msg = msg + " -- " + nestedMsg;
+    }
+    return new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
   }
 
   /**

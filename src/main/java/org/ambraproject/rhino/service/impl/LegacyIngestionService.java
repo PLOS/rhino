@@ -26,7 +26,6 @@ import org.ambraproject.rhino.service.DoiBasedCrudService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.service.article.NoSuchArticleIdException;
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
@@ -46,7 +45,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -131,7 +129,7 @@ class LegacyIngestionService {
     try {
       doi = xml.readDoi();
     } catch (XmlContentException e) {
-      throw complainAboutXml(e);
+      throw ArticleCrudServiceImpl.complainAboutXml(e);
     }
 
     if (suppliedId.isPresent() && !doi.equals(suppliedId.get())) {
@@ -155,7 +153,7 @@ class LegacyIngestionService {
     try {
       article = xml.build(article);
     } catch (XmlContentException e) {
-      throw complainAboutXml(e);
+      throw ArticleCrudServiceImpl.complainAboutXml(e);
     }
 
     // TODO: If an article should have multiple journals, how does it get them?
@@ -575,7 +573,7 @@ class LegacyIngestionService {
       try {
         asset = parseAsset(assetNodes, assetDoi);
       } catch (XmlContentException e) {
-        throw complainAboutXml(e);
+        throw ArticleCrudServiceImpl.complainAboutXml(e);
       }
       assets.add(asset);
     }
@@ -752,15 +750,5 @@ class LegacyIngestionService {
     if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
     return true;
   }
-
-  private static RestClientException complainAboutXml(XmlContentException e) {
-    String msg = "Error in submitted XML";
-    String nestedMsg = e.getMessage();
-    if (StringUtils.isNotBlank(nestedMsg)) {
-      msg = msg + " -- " + nestedMsg;
-    }
-    return new RestClientException(msg, HttpStatus.BAD_REQUEST, e);
-  }
-
 
 }
