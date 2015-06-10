@@ -43,6 +43,7 @@ import org.ambraproject.models.CitedArticlePerson;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.BaseRhinoTest;
+import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
 import org.ambraproject.rhino.content.PersonName;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -50,6 +51,7 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.test.AssertionCollector;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.apache.commons.lang.StringUtils;
@@ -255,7 +257,10 @@ public class IngestionTest extends BaseRhinoTest {
     final Article expected = readReferenceCase(jsonFile);
     final String caseDoi = expected.getDoi();
 
-    Article actual = articleCrudService.write(new RhinoTestHelper.TestFile(xmlFile).read(),
+    RhinoTestHelper.TestInputStream testInputStream = new RhinoTestHelper.TestFile(xmlFile).read();
+    Archive ingestible = Archive.readZipFileIntoMemory(xmlFile.getName() + ".zip",
+        IngestibleUtil.buildMockIngestible(testInputStream));
+    Article actual = articleCrudService.writeArchive(ingestible,
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
@@ -290,7 +295,7 @@ public class IngestionTest extends BaseRhinoTest {
   @Test(dataProvider = "generatedZipIngestionData")
   public void testZipIngestion(File jsonFile, File zipFile) throws Exception {
     final Article expected = readReferenceCase(jsonFile);
-    Article actual = articleCrudService.writeArchive(zipFile.getCanonicalPath(),
+    Article actual = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(zipFile),
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(actual.getID() > 0, "Article doesn't have a database ID");
     assertTrue(actual.getCreated() != null, "Article doesn't have a creation date");
@@ -318,7 +323,8 @@ public class IngestionTest extends BaseRhinoTest {
   public void testReingestion() throws Exception {
     createTestJournal("1932-6203");
     long start = System.currentTimeMillis();
-    String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip";
+    Archive zipPath = Archive.readZipFileIntoMemory(new File(
+        ZIP_DATA_PATH.getCanonicalPath() + File.separator + "pone.0056489.zip"));
     Article first = articleCrudService.writeArchive(zipPath,
         Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
     assertTrue(first.getID() > 0, "Article doesn't have a database ID");
@@ -354,7 +360,7 @@ public class IngestionTest extends BaseRhinoTest {
     String zipPath = ZIP_DATA_PATH.getCanonicalPath() + File.separator + "bad_zips"
         + File.separator + "pone.0060593.zip";
     try {
-      Article article = articleCrudService.writeArchive(zipPath,
+      Article article = articleCrudService.writeArchive(Archive.readZipFileIntoMemory(new File(zipPath)),
           Optional.<ArticleIdentity>absent(), DoiBasedCrudService.WriteMode.CREATE_ONLY);
       fail("Ingesting bad zip did not throw exception");
     } catch (RestClientException expected) {

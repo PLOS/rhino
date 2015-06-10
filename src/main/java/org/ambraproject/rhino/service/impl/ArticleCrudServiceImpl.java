@@ -36,6 +36,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
@@ -102,13 +103,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   }
 
   @Override
-  public Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
-    return legacyIngestionService.write(file, suppliedId, mode);
-  }
-
-  @Override
-  public Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
-    return legacyIngestionService.writeArchive(filename, suppliedId, mode);
+  public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
+    return legacyIngestionService.writeArchive(archive, suppliedId, mode);
   }
 
   @VisibleForTesting

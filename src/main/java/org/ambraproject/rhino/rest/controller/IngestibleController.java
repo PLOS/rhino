@@ -21,6 +21,7 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -90,9 +91,9 @@ public class IngestibleController extends DoiBasedCrudController {
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException {
 
-    File archive;
+    File archiveFile;
     try {
-      archive = ingestibleService.getIngestibleArchive(name);
+      archiveFile = ingestibleService.getIngestibleArchive(name);
     } catch (FileNotFoundException fnfe) {
       throw new RestClientException("Could not find ingestible archive for: " + name,
           HttpStatus.METHOD_NOT_ALLOWED, fnfe);
@@ -103,7 +104,10 @@ public class IngestibleController extends DoiBasedCrudController {
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
     Optional<ArticleIdentity> expectedId = Optional.absent();
 
-    Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), expectedId, reingestMode);
+    Article result;
+    try (Archive archive = Archive.readZipFile(archiveFile)) {
+      result = articleCrudService.writeArchive(archive, expectedId, reingestMode);
+    }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
 

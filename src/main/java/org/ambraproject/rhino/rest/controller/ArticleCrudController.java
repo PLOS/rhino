@@ -116,28 +116,6 @@ public class ArticleCrudController extends ArticleSpaceController {
 
 
   /**
-   * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
-   *
-   * @param response
-   * @param requestFile
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
-      throws IOException {
-    Article result;
-    try (InputStream requestBody = requestFile.getInputStream()) {
-      result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
-    }
-    response.setStatus(HttpStatus.CREATED.value());
-
-    // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
-  }
-
-  /**
    * Repopulates article category information by making a call to the taxonomy server.
    *
    * @param request          HttpServletRequest
