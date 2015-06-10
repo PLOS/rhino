@@ -22,6 +22,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Bytes;
@@ -53,7 +54,6 @@ import org.plos.crepo.service.ContentRepoService;
 import org.plos.crepo.service.InMemoryContentRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -62,7 +62,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -359,16 +358,10 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     Gson gson = new Gson();
     Map<String, Double> categories = gson.fromJson(json, Map.class);
 
-    assertEquals(categories.size(), 2);
-    Iterator<String> keyIterator = categories.keySet().iterator();
-    String key1 = keyIterator.next();
-    Double weight1 = categories.get(key1);
-    assertEquals(key1, "/TopLevel2/term2");
-    assertEquals(weight1, 10d);
-    String key2 = keyIterator.next();
-    Double weight2 = categories.get(key2);
-    assertEquals(key2, "/TopLevel1/term1");
-    assertEquals(weight2, 5d);
+    assertEquals(categories, ImmutableMap.builder()
+        .put("/TopLevel1/term1", 5d)
+        .put("/TopLevel2/term2", 10d)
+        .build());
   }
 
   @Test
