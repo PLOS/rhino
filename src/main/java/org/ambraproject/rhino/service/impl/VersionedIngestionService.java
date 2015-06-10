@@ -3,6 +3,7 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.ambraproject.models.Article;
@@ -18,7 +19,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.plos.crepo.model.RepoCollection;
-import org.plos.crepo.model.RepoCollectionMetadata;
+import org.plos.crepo.model.RepoCollectionList;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -60,9 +61,9 @@ class VersionedIngestionService {
 
   static class IngestionResult {
     private final Article article;
-    private final RepoCollectionMetadata collection;
+    private final RepoCollectionList collection;
 
-    public IngestionResult(Article article, RepoCollectionMetadata collection) {
+    public IngestionResult(Article article, RepoCollectionList collection) {
       this.article = Preconditions.checkNotNull(article);
       this.collection = Preconditions.checkNotNull(collection);
     }
@@ -71,7 +72,7 @@ class VersionedIngestionService {
       return article;
     }
 
-    public RepoCollectionMetadata getCollection() {
+    public RepoCollectionList getCollection() {
       return collection;
     }
 
@@ -153,7 +154,7 @@ class VersionedIngestionService {
       log.error("error getting front matter", e);
     }
 
-    ArticleCollection collection = new ArticleCollection(manifestXml, articleIdentity);
+    ArticleCollection collection = new ArticleCollection(archive.getArchiveName(), manifestXml, articleIdentity);
 
     ArticleObject manifest = collection.insertArchiveObject(manifestEntry,
         new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
@@ -222,7 +223,7 @@ class VersionedIngestionService {
       }
     }
 
-    RepoCollectionMetadata collectionMetadata = collection.persist();
+    RepoCollectionList collectionMetadata = collection.persist();
 
     // Associate DOIs
     for (ManifestXml.Asset asset : manifestXml.parse()) {
@@ -243,6 +244,7 @@ class VersionedIngestionService {
   }
 
 
+  private static final String ARCHIVE_NAME_KEY = "archiveName";
   private static final String ARCHIVE_ENTRY_NAME_KEY = "archiveEntryName";
   private static final Function<RepoObjectMetadata, String> ARCHIVE_ENTRY_NAME_EXTRACTOR = new Function<RepoObjectMetadata, String>() {
     @Nullable
@@ -263,6 +265,13 @@ class VersionedIngestionService {
     ImmutableMap<String, String> map = ImmutableMap.of(ARCHIVE_ENTRY_NAME_KEY, entryName);
     return parentService.crepoGson.toJson(map);
   }
+
+  public Archive repack(RepoCollectionList article) {
+    Map<String, Object> articleMetadata = (Map<String, Object>) article.getJsonUserMetadata().get();
+    String archiveName = (String) articleMetadata.get(ARCHIVE_NAME_KEY);
+    return Archive.readCollection(parentService.contentRepoService, archiveName, article, ARCHIVE_ENTRY_NAME_EXTRACTOR);
+  }
+
 
   private static class ArticleObject {
 
@@ -296,10 +305,13 @@ class VersionedIngestionService {
     private final Map<String, ArticleObject> archiveObjects = new LinkedHashMap<>(); // keys are archiveEntryNames
     private final Map<String, ArticleObject> specialObjects = new LinkedHashMap<>(); // keys to be used in JSON
 
+    private final String archiveName;
     private final ManifestXml manifestXml;
     private final ArticleIdentity articleIdentity;
 
-    private ArticleCollection(ManifestXml manifestXml, ArticleIdentity articleIdentity) {
+    private ArticleCollection(String archiveName, ManifestXml manifestXml, ArticleIdentity articleIdentity) {
+      Preconditions.checkArgument(!Strings.isNullOrEmpty(archiveName));
+      this.archiveName = archiveName;
       this.manifestXml = Preconditions.checkNotNull(manifestXml);
       this.articleIdentity = Preconditions.checkNotNull(articleIdentity);
     }
@@ -323,7 +335,7 @@ class VersionedIngestionService {
       return allObjects;
     }
 
-    public RepoCollectionMetadata persist() {
+    public RepoCollectionList persist() {
       // Persist objects
       Collection<ArticleObject> allObjects = getAllObjects();
       Collection<RepoVersion> createdObjects = new ArrayList<>(allObjects.size());
@@ -350,6 +362,7 @@ class VersionedIngestionService {
     private Map<String, Object> buildUserMetadata() {
       Map<String, Object> map = new LinkedHashMap<>();
       map.put("format", "nlm");
+      map.put(ARCHIVE_NAME_KEY, archiveName);
 
       for (Map.Entry<String, ArticleObject> entry : specialObjects.entrySet()) {
         RepoVersion version = entry.getValue().created.getVersion();
