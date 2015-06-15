@@ -29,7 +29,7 @@ import java.util.zip.ZipOutputStream;
  */
 public class IngestibleUtil {
 
-  private static DocumentBuilder newDocumentBuilder() {
+  public static DocumentBuilder newDocumentBuilder() {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setNamespaceAware(true);
     factory.setValidating(false);
