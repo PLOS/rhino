@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.w3c.dom.Node;
 
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -211,6 +213,14 @@ class AssetTable<T> {
     private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
     protected abstract String getFileType(String reprName);
+
+    private static final ImmutableMap<String, AssetType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(AssetType.class),
+        new Function<AssetType, String>() {
+          @Override
+          public String apply(AssetType input) {
+            return input.identifier;
+          }
+        });
   }
 
 
@@ -351,17 +361,22 @@ class AssetTable<T> {
   public static AssetTable<RepoVersion> buildFromAssetMetadata(RepoCollectionMetadata collection,
                                                                ArticleXml articleXml) {
     Map<Key, Value<RepoVersion>> map = new LinkedHashMap<>();
-    List<Map<String, ?>> assets = (List<Map<String, ?>>) ((Map) collection.getJsonUserMetadata().get()).get("assets");
-    for (Map<String, ?> asset : assets) {
-      Map<String, String> object = (Map<String, String>) asset.get("object");
-      RepoVersion repoVersion = RepoVersionRepr.read(object);
+    Map<String, Map<String, ?>> assets = (Map<String, Map<String, ?>>) ((Map) collection.getJsonUserMetadata().get()).get("assets");
+    for (Map.Entry<String, Map<String, ?>> assetEntry : assets.entrySet()) {
+      AssetIdentity id = AssetIdentity.create(assetEntry.getKey());
+      Map<String, ?> asset = assetEntry.getValue();
 
-      AssetIdentity id = AssetIdentity.create((String) asset.get("id"));
-      String reprName = (String) asset.get("repr");
-      AssetType assetType = null; // TODO: Read from JSON
-      String fileType = assetType.getFileType(reprName);
+      String type = (String) asset.get("type");
+      AssetType assetType = AssetType.BY_IDENTIFIER.get(type);
+      if (assetType == null) throw new RuntimeException("Unrecognized type: " + type);
 
-      map.put(new Key(id, fileType), new Value<>(assetType, repoVersion, reprName));
+      Map<String, ?> files = (Map<String, ?>) asset.get("files");
+      for (Map.Entry<String, ?> fileEntry : files.entrySet()) {
+        String fileType = fileEntry.getKey();
+        RepoVersion repoVersion = RepoVersionRepr.read((Map<?, ?>) fileEntry.getValue());
+        String reprName = "reprName"; // PLACEHOLDER! FIXME: Factor reprName out of value
+        map.put(new Key(id, fileType), new Value<>(assetType, repoVersion, reprName));
+      }
     }
     return new AssetTable<>(map);
   }
