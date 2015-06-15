@@ -217,15 +217,13 @@ class AssetTable<T> {
   public static AssetTable<String> buildFromIngestible(AssetNodesByDoi assetNodeMap, ManifestXml manifest) {
     Map<Key, Value<String>> ingestibleEntryNames = new LinkedHashMap<>();
     for (ManifestXml.Asset asset : manifest.parse()) {
+      AssetType assetType = findAssetType(assetNodeMap, asset);
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
         String entryName = representation.getEntry();
 
-        AssetType assetType = asset.getAssetType().equals(ManifestXml.AssetType.ARTICLE) ? AssetType.ARTICLE
-            : getAssetType(assetNodeMap, assetIdentity);
         String fileType = assetType.getFileType(representation.getName());
 
-        Key key = new Key(assetIdentity, fileType);
+        Key key = new Key(AssetIdentity.create(asset.getUri()), fileType);
         Value<String> value = new Value<>(assetType, entryName, representation.getName());
         Value<String> previous = ingestibleEntryNames.put(key, value);
         if (previous != null) {
@@ -253,12 +251,23 @@ class AssetTable<T> {
     }
   }
 
-  private static AssetType getAssetType(AssetNodesByDoi assetNodeMap, AssetIdentity assetId) {
-    if (!assetNodeMap.getDois().contains(assetId.getIdentifier())) {
-      throw new RestClientException("Asset not mentioned in manuscript", HttpStatus.BAD_REQUEST);
+  private static AssetType findAssetType(AssetNodesByDoi assetNodeMap, ManifestXml.Asset asset) {
+    if (asset.getAssetType().equals(ManifestXml.AssetType.ARTICLE)) {
+      return AssetType.ARTICLE;
+    }
+    AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
+    if (!assetNodeMap.getDois().contains(assetIdentity.getIdentifier())) {
+      if (asset.isStrikingImage()) {
+        // Only the declared striking image is allowed to be omitted from manuscript.
+        // Assume it is a figure.
+        // TODO: Be stricter? We could check asset.getRepresentations() to make sure it has the right file types.
+        return AssetType.FIGURE;
+      } else {
+        throw new RestClientException("Asset not mentioned in manuscript", HttpStatus.BAD_REQUEST);
+      }
     }
 
-    List<Node> nodes = assetNodeMap.getNodes(assetId.getIdentifier());
+    List<Node> nodes = assetNodeMap.getNodes(assetIdentity.getIdentifier());
     AssetType identifiedType = null;
     for (Node node : nodes) {
       String nodeName = node.getNodeName();
@@ -349,7 +358,7 @@ class AssetTable<T> {
 
       AssetIdentity id = AssetIdentity.create((String) asset.get("id"));
       String reprName = (String) asset.get("repr");
-      AssetType assetType = getAssetType(articleXml.findAllAssetNodes(), id);
+      AssetType assetType = null; // TODO: Read from JSON
       String fileType = assetType.getFileType(reprName);
 
       map.put(new Key(id, fileType), new Value<>(assetType, repoVersion, reprName));
