@@ -27,10 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -142,15 +144,20 @@ class VersionedIngestionService {
     String frontText = null;
     try {
       Node frontNode = parsedArticle.extractFrontMatter();
+      DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+      builderFactory.setNamespaceAware(true);
+      Document document = builderFactory.newDocumentBuilder().newDocument();
+      Node article = document.createElement("article");
+      document.appendChild(article);
+      article.appendChild(document.importNode(frontNode, true));
+
       Transformer transformer = TransformerFactory.newInstance().newTransformer();
-      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-//        transformer.setOutputProperty(OutputKeys.INDENT, "no");
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
       StringWriter writer = new StringWriter();
-      transformer.transform(new DOMSource(frontNode), new StreamResult(writer));
-      frontText = "<article>" + writer.toString() + "</article>";
+      transformer.transform(new DOMSource(document), new StreamResult(writer));
+      frontText = writer.toString();
     } catch (Exception e) {
-      //throw new RuntimeException(e);
-      log.error("error getting front matter", e);
+        throw new XmlContentException(e);
     }
 
     AssetTable<String> assetTable = AssetTable.buildFromIngestible(parsedArticle.findAllAssetNodes(), manifestXml);
@@ -171,11 +178,9 @@ class VersionedIngestionService {
     collection.tagSpecialObject("manuscript", manuscript);
 
     if (frontText != null) {
-      ImmutableMap<String, String> userMetadata = ImmutableMap.of("generated", "front");
       ArticleObject front = createDynamicObject(
           new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
               .byteContent(frontText.getBytes(Charset.forName("UTF-8")))
-              .userMetadata(parentService.crepoGson.toJson(userMetadata))
               .contentType(MediaType.APPLICATION_XML)
               .build());
       collection.tagSpecialObject("front", front);
