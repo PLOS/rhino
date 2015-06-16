@@ -33,16 +33,17 @@ import org.w3c.dom.Node;
 import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -141,25 +142,6 @@ class VersionedIngestionService {
     ArticleIdentity articleIdentity = parsedArticle.readDoi();
     final Article articleMetadata = parsedArticle.build(new Article());
 
-    String frontText = null;
-    try {
-      Node frontNode = parsedArticle.extractFrontMatter();
-      DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-      builderFactory.setNamespaceAware(true);
-      Document document = builderFactory.newDocumentBuilder().newDocument();
-      Node article = document.createElement("article");
-      document.appendChild(article);
-      article.appendChild(document.importNode(frontNode, true));
-
-      Transformer transformer = TransformerFactory.newInstance().newTransformer();
-      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-      StringWriter writer = new StringWriter();
-      transformer.transform(new DOMSource(document), new StreamResult(writer));
-      frontText = writer.toString();
-    } catch (Exception e) {
-        throw new XmlContentException(e);
-    }
-
     AssetTable<String> assetTable = AssetTable.buildFromIngestible(parsedArticle.findAllAssetNodes(), manifestXml);
     ArticleCollection collection = new ArticleCollection(archive.getArchiveName(), articleIdentity, assetTable);
 
@@ -177,14 +159,12 @@ class VersionedIngestionService {
             .downloadName(articleIdentity.forXmlAsset().getFileName()));
     collection.tagSpecialObject("manuscript", manuscript);
 
-    if (frontText != null) {
-      ArticleObject front = createDynamicObject(
-          new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
-              .byteContent(frontText.getBytes(Charset.forName("UTF-8")))
-              .contentType(MediaType.APPLICATION_XML)
-              .build());
-      collection.tagSpecialObject("front", front);
-    }
+    ArticleObject front = createDynamicObject(
+        new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
+            .byteContent(extractFrontMatter(parsedArticle))
+            .contentType(MediaType.APPLICATION_XML)
+            .build());
+    collection.tagSpecialObject("front", front);
 
     // Create RepoObjects for assets
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
@@ -243,6 +223,31 @@ class VersionedIngestionService {
     }
 
     return new IngestionResult(articleMetadata, collectionMetadata);
+  }
+
+  private static byte[] extractFrontMatter(ArticleXml parsedArticle) {
+    Node frontNode = parsedArticle.extractFrontMatter();
+    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+    builderFactory.setNamespaceAware(true);
+    Document document;
+    try {
+      document = builderFactory.newDocumentBuilder().newDocument();
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+    Node article = document.createElement("article");
+    document.appendChild(article);
+    article.appendChild(document.importNode(frontNode, true));
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try {
+      Transformer transformer = TransformerFactory.newInstance().newTransformer();
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+      transformer.transform(new DOMSource(document), new StreamResult(outputStream));
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
+    }
+    return outputStream.toByteArray();
   }
 
   /*
