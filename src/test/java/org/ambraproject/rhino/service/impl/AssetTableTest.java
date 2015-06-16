@@ -1,8 +1,15 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
+import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.content.xml.ArticleXml;
@@ -25,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
@@ -69,26 +77,38 @@ public class AssetTableTest {
     AssetTable<String> assetTable = AssetTable.buildFromIngestible(article.findAllAssetNodes(), manifest);
     assertFalse(assetTable.getAssets().isEmpty());
 
-    Map<String, RepoVersion> dummyObjects = createDummyRepoObjects(assetTable);
+    BiMap<String, RepoVersion> dummyObjects = createDummyRepoObjects(assetTable);
     Map<String, Object> assetMetadata = assetTable.buildAsAssetMetadata(dummyObjects);
 
     RepoCollectionList dummyCollection = createDummyRepoCollection(assetMetadata, dummyObjects.values());
     AssetTable<RepoVersion> rebuilt = AssetTable.buildFromAssetMetadata(dummyCollection, article);
-    assertEquals(assetTable.getAssetIdentities(), rebuilt.getAssetIdentities());
+    assertEqualAssetTables(rebuilt, assetTable, false);
+
+    // Test buildAsAssetMetadata once more on an AssetTable<RepoVersion>
+    Map<String, Object> rebuiltMetadata = rebuilt.buildAsAssetMetadata(Maps.asMap(dummyObjects.values(), Functions.<RepoVersion>identity()));
+    AssetTable<RepoVersion> rebuiltMetadataResult = AssetTable.buildFromAssetMetadata(
+        createDummyRepoCollection(rebuiltMetadata, dummyObjects.values()), article);
+    assertEqualAssetTables(rebuiltMetadataResult, assetTable, false);
+    assertEqualAssetTables(rebuiltMetadataResult, rebuilt, true);
   }
 
   private static final byte[] DUMMY_CONTENT = new byte[]{0};
   private final InMemoryContentRepoService inMemoryContentRepoService = new InMemoryContentRepoService("defaultBucket");
 
-  private Map<String, RepoVersion> createDummyRepoObjects(AssetTable<String> assetTable) {
-    ImmutableMap.Builder<String, RepoVersion> dummyRepoVersions = ImmutableMap.builder();
+  private ImmutableBiMap<String, RepoVersion> createDummyRepoObjects(AssetTable<String> assetTable) {
+    ImmutableBiMap.Builder<String, RepoVersion> dummyRepoVersions = ImmutableBiMap.builder();
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
       String key = asset.getFileLocator();
       RepoObjectMetadata dummyObject = inMemoryContentRepoService.autoCreateRepoObject(
-          new RepoObject.RepoObjectBuilder(key).byteContent(DUMMY_CONTENT).build());
+          new RepoObject.RepoObjectBuilder(mangle(key)).byteContent(DUMMY_CONTENT).build());
       dummyRepoVersions.put(key, dummyObject.getVersion());
     }
     return dummyRepoVersions.build();
+  }
+
+  // Create a meaningless but consistent key
+  private static String mangle(String key) {
+    return Hashing.sha1().newHasher().putLong(5842999961261284079L).putString(key, Charsets.UTF_8).hash().toString();
   }
 
   private RepoCollectionList createDummyRepoCollection(Map<String, Object> assetMetadata, Collection<RepoVersion> dummyObjects) {
@@ -98,6 +118,30 @@ public class AssetTableTest {
         .setObjects(dummyObjects)
         .setUserMetadata(new Gson().toJson(userMetadata))
         .build());
+  }
+
+  private static void assertEqualAssetTables(AssetTable<?> actual, AssetTable<?> expected, boolean compareFileLocators) {
+    Ordering<AssetTable.Asset<?>> assetOrdering = new Ordering<AssetTable.Asset<?>>() {
+      @Override
+      public int compare(AssetTable.Asset<?> o1, AssetTable.Asset<?> o2) {
+        int cmp = o1.getIdentity().getIdentifier().compareTo(o2.getIdentity().getIdentifier());
+        if (cmp != 0) return cmp;
+        return o1.getFileType().compareTo(o2.getFileType());
+      }
+    };
+    List<? extends AssetTable.Asset<?>> actualAssets = assetOrdering.immutableSortedCopy(actual.getAssets());
+    List<? extends AssetTable.Asset<?>> expectedAssets = assetOrdering.immutableSortedCopy(expected.getAssets());
+    assertEquals(actualAssets.size(), expectedAssets.size());
+    for (int i = 0; i < actualAssets.size(); i++) {
+      AssetTable.Asset<?> actualAsset = actualAssets.get(i);
+      AssetTable.Asset<?> expectedAsset = expectedAssets.get(i);
+      assertEquals(actualAsset.getIdentity(), expectedAsset.getIdentity());
+      assertEquals(actualAsset.getFileType(), expectedAsset.getFileType());
+      assertEquals(actualAsset.getAssetType(), expectedAsset.getAssetType());
+      if (compareFileLocators) {
+        assertEquals(actualAsset.getFileLocator(), expectedAsset.getFileLocator());
+      }
+    }
   }
 
 }
