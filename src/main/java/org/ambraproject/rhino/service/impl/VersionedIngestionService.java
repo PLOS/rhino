@@ -6,9 +6,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.content.xml.ArticleXml;
-import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -154,7 +153,8 @@ class VersionedIngestionService {
       log.error("error getting front matter", e);
     }
 
-    ArticleCollection collection = new ArticleCollection(archive.getArchiveName(), manifestXml, articleIdentity);
+    AssetTable<String> assetTable = AssetTable.buildFromIngestible(parsedArticle.findAllAssetNodes(), manifestXml);
+    ArticleCollection collection = new ArticleCollection(archive.getArchiveName(), articleIdentity, assetTable);
 
     ArticleObject manifest = collection.insertArchiveObject(manifestEntry,
         new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
@@ -181,10 +181,7 @@ class VersionedIngestionService {
       collection.tagSpecialObject("front", front);
     }
 
-    AssetNodesByDoi assetNodeMap = parsedArticle.findAllAssetNodes();
-
     // Create RepoObjects for assets
-    AssetTable<String> assetTable = AssetTable.buildFromIngestible(assetNodeMap, manifestXml);
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
       AssetIdentity assetIdentity = asset.getIdentity();
       String key = asset.getFileType() + "/" + assetIdentity.getIdentifier();
@@ -326,14 +323,14 @@ class VersionedIngestionService {
     private final Map<String, ArticleObject> specialObjects = new LinkedHashMap<>(); // keys to be used in JSON
 
     private final String archiveName;
-    private final ManifestXml manifestXml;
     private final ArticleIdentity articleIdentity;
+    private final AssetTable<String> assetTable;
 
-    private ArticleCollection(String archiveName, ManifestXml manifestXml, ArticleIdentity articleIdentity) {
+    private ArticleCollection(String archiveName, ArticleIdentity articleIdentity, AssetTable<String> assetTable) {
       Preconditions.checkArgument(!Strings.isNullOrEmpty(archiveName));
       this.archiveName = archiveName;
-      this.manifestXml = Preconditions.checkNotNull(manifestXml);
       this.articleIdentity = Preconditions.checkNotNull(articleIdentity);
+      this.assetTable = Preconditions.checkNotNull(assetTable);
     }
 
     public ArticleObject insertArchiveObject(String entryName, RepoObject.RepoObjectBuilder builder) {
@@ -375,10 +372,6 @@ class VersionedIngestionService {
       return parentService.contentRepoService.autoCreateCollection(collection);
     }
 
-    private RepoVersion getVersionForCreatedEntry(String archiveEntryName) {
-      return archiveObjects.get(archiveEntryName).created.getVersion();
-    }
-
     private Map<String, Object> buildUserMetadata() {
       Map<String, Object> map = new LinkedHashMap<>();
       map.put("format", "nlm");
@@ -389,28 +382,18 @@ class VersionedIngestionService {
         map.put(entry.getKey(), new RepoVersionRepr(version));
       }
 
-      List<ManifestXml.Asset> assetSpec = manifestXml.parse();
-      List<Map<String, Object>> assetList = new ArrayList<>(assetSpec.size());
-      List<String> assetDois = new ArrayList<>(assetSpec.size());
-      for (ManifestXml.Asset asset : assetSpec) {
-        Map<String, Object> assetMetadata = new LinkedHashMap<>();
-        String doi = AssetIdentity.create(asset.getUri()).getIdentifier();
-        assetMetadata.put("doi", doi);
-        assetDois.add(doi);
-
-        Map<String, Object> assetObjects = new LinkedHashMap<>();
-        for (ManifestXml.Representation representation : asset.getRepresentations()) {
-          RepoVersion objectForRepr = getVersionForCreatedEntry(representation.getEntry());
-          assetObjects.put(representation.getName(), new RepoVersionRepr(objectForRepr));
-        }
-        assetMetadata.put("objects", assetObjects);
-
-        assetList.add(assetMetadata);
-      }
-      map.put("assets", assetList);
+      Map<String, Object> assetMetadata = assetTable.buildAsAssetMetadata(Maps.transformValues(archiveObjects,
+          new Function<ArticleObject, RepoVersion>() {
+            @Override
+            public RepoVersion apply(ArticleObject articleObject) {
+              return articleObject.created.getVersion();
+            }
+          }));
+      map.put("assets", assetMetadata);
 
       return map;
     }
+
   }
 
 }

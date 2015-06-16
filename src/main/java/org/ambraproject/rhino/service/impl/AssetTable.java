@@ -305,6 +305,18 @@ class AssetTable<T> {
     return assetType;
   }
 
+  /**
+   * Build an asset metadata table. The table goes into the JSON metadata of a content repo collection representing an
+   * ingested article. One of these tables, inside a repo collection, can be parsed back into an {@code AssetTable}
+   * using {@link #buildFromAssetMetadata}.
+   * <p/>
+   * This can be called only after the assets in this table have been persisted to the content repo. The argument is a
+   * map from the assets' file locator values (see {@link org.ambraproject.rhino.service.impl.AssetTable.Asset#getFileLocator})
+   * to the keys of the persistent objects.
+   *
+   * @param repoObjectVersions a map from file locators to persisted objects
+   * @return an asset metadata table suitable for serializing to JSON
+   */
   public Map<String, Object> buildAsAssetMetadata(Map<? super T, RepoVersion> repoObjectVersions) {
     Collection<Asset<T>> assets = getAssets();
     ListMultimap<String, Asset<T>> filesByAsset = LinkedListMultimap.create();
