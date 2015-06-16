@@ -55,24 +55,10 @@ class AssetTable<T> {
   private static class Value<T> {
     private final AssetType assetType;
     private final T fileLocator;
-    private final String reprName;
 
-    private Value(AssetType assetType, T fileLocator, String reprName) {
+    private Value(AssetType assetType, T fileLocator) {
       this.assetType = Preconditions.checkNotNull(assetType);
       this.fileLocator = Preconditions.checkNotNull(fileLocator);
-      this.reprName = Preconditions.checkNotNull(reprName);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      return fileLocator.equals(((Value) o).fileLocator) && reprName.equals(((Value) o).reprName);
-    }
-
-    @Override
-    public int hashCode() {
-      return 31 * fileLocator.hashCode() + reprName.hashCode();
     }
   }
 
@@ -99,8 +85,6 @@ class AssetTable<T> {
     public String getFileType();
 
     public T getFileLocator();
-
-    public String getReprName();
   }
 
   /**
@@ -131,11 +115,6 @@ class AssetTable<T> {
           @Override
           public T getFileLocator() {
             return mapEntry.getValue().fileLocator;
-          }
-
-          @Override
-          public String getReprName() {
-            return mapEntry.getValue().reprName;
           }
         };
       }
@@ -234,7 +213,7 @@ class AssetTable<T> {
         String fileType = assetType.getFileType(representation.getName());
 
         Key key = new Key(AssetIdentity.create(asset.getUri()), fileType);
-        Value<String> value = new Value<>(assetType, entryName, representation.getName());
+        Value<String> value = new Value<>(assetType, entryName);
         Value<String> previous = ingestibleEntryNames.put(key, value);
         if (previous != null) {
           String message = String.format("More than one file has uri=\"%s\" and repr=\"%s\"",
@@ -374,8 +353,7 @@ class AssetTable<T> {
       for (Map.Entry<String, ?> fileEntry : files.entrySet()) {
         String fileType = fileEntry.getKey();
         RepoVersion repoVersion = RepoVersionRepr.read((Map<?, ?>) fileEntry.getValue());
-        String reprName = "reprName"; // PLACEHOLDER! FIXME: Factor reprName out of value
-        map.put(new Key(id, fileType), new Value<>(assetType, repoVersion, reprName));
+        map.put(new Key(id, fileType), new Value<>(assetType, repoVersion));
       }
     }
     return new AssetTable<>(map);

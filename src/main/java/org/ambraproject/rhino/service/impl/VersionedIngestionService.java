@@ -188,7 +188,7 @@ class VersionedIngestionService {
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
       AssetIdentity assetIdentity = asset.getIdentity();
       String key = asset.getFileType() + "/" + assetIdentity.getIdentifier();
-      AssetFileIdentity assetFileIdentity = AssetFileIdentity.create(assetIdentity.getIdentifier(), asset.getReprName());
+      AssetFileIdentity assetFileIdentity = buildAssetFileIdentity(manifestXml, asset);
       String archiveEntryName = asset.getFileLocator();
 
       ArticleObject preexisting = collection.archiveObjects.get(archiveEntryName);
@@ -241,6 +241,26 @@ class VersionedIngestionService {
     }
 
     return new IngestionResult(articleMetadata, collectionMetadata);
+  }
+
+  /*
+   * Build an AssetFileIdentity by looking up the file extension from the manifest. This information isn't retained in
+   * the AssetTable.Asset object but we need it temporarily to build the filename.
+   *
+   * Implementation note: Calling this once for each asset causes quadratic performance costs. This is probably not a
+   * big deal (happens only once per ingestion with everything on the heap). If it is found to be a problem, it could be
+   * solved by building a hash map from AssetTable.Asset keys to ManifestXml.Representation values.
+   */
+  private static AssetFileIdentity buildAssetFileIdentity(ManifestXml manifest, AssetTable.Asset<String> asset) {
+    String assetEntry = asset.getFileLocator();
+    for (ManifestXml.Asset assetObj : manifest.parse()) {
+      for (ManifestXml.Representation representation : assetObj.getRepresentations()) {
+        if (representation.getEntry().equals(assetEntry)) {
+          return AssetFileIdentity.create(asset.getIdentity().getIdentifier(), representation.getName());
+        }
+      }
+    }
+    throw new RuntimeException("Could not match " + assetEntry + " to manifest");
   }
 
 
