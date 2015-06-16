@@ -50,8 +50,8 @@
     <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
-    <ambra.version>2.11.0</ambra.version>
-    <rhombat.version>1.0.2</rhombat.version>
+    <ambra.version>2.10.13-J8</ambra.version>
+    <rhombat.version>1.0.2-J8</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
@@ -190,7 +190,7 @@
     <dependency>
       <groupId>org.plos</groupId>
       <artifactId>content-repo-library</artifactId>
-      <version>1.4.0</version>
+      <version>1.5.0-J8</version>
     </dependency>
 
     <!-- ========================= End Ambra inclusions ========================= -->
