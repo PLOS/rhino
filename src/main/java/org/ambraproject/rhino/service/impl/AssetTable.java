@@ -10,7 +10,6 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
-import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -349,8 +348,7 @@ class AssetTable<T> {
     return assetMetadataTable;
   }
 
-  public static AssetTable<RepoVersion> buildFromAssetMetadata(RepoCollectionMetadata collection,
-                                                               ArticleXml articleXml) {
+  public static AssetTable<RepoVersion> buildFromAssetMetadata(RepoCollectionMetadata collection) {
     Map<Key, Value<RepoVersion>> map = new LinkedHashMap<>();
     Map<String, Map<String, ?>> assets = (Map<String, Map<String, ?>>) ((Map) collection.getJsonUserMetadata().get()).get("assets");
     for (Map.Entry<String, Map<String, ?>> assetEntry : assets.entrySet()) {

@@ -81,13 +81,13 @@ public class AssetTableTest {
     Map<String, Object> assetMetadata = assetTable.buildAsAssetMetadata(dummyObjects);
 
     RepoCollectionList dummyCollection = createDummyRepoCollection(assetMetadata, dummyObjects.values());
-    AssetTable<RepoVersion> rebuilt = AssetTable.buildFromAssetMetadata(dummyCollection, article);
+    AssetTable<RepoVersion> rebuilt = AssetTable.buildFromAssetMetadata(dummyCollection);
     assertEqualAssetTables(rebuilt, assetTable, false);
 
     // Test buildAsAssetMetadata once more on an AssetTable<RepoVersion>
     Map<String, Object> rebuiltMetadata = rebuilt.buildAsAssetMetadata(Maps.asMap(dummyObjects.values(), Functions.<RepoVersion>identity()));
     AssetTable<RepoVersion> rebuiltMetadataResult = AssetTable.buildFromAssetMetadata(
-        createDummyRepoCollection(rebuiltMetadata, dummyObjects.values()), article);
+        createDummyRepoCollection(rebuiltMetadata, dummyObjects.values()));
     assertEqualAssetTables(rebuiltMetadataResult, assetTable, false);
     assertEqualAssetTables(rebuiltMetadataResult, rebuilt, true);
   }
