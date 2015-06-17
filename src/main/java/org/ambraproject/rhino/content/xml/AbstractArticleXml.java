@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
@@ -35,9 +36,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * A holder for a piece (node or document) of NLM-format XML, which can be built into an entity.
@@ -83,9 +82,14 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends Abstract
   protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
 
   // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES.
-  protected static String ASSET_EXPRESSION = ASSET_NODE_NAMES.stream()
-      .map(nodeName -> "//" + nodeName)
-      .collect(Collectors.joining("|"));
+  protected static final String ASSET_EXPRESSION = Joiner.on('|').join(
+      Iterables.transform(ASSET_NODE_NAMES, new Function<String, String>() {
+        @Override
+        public String apply(String nodeName) {
+          return "//" + nodeName;
+        }
+      })
+  );
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();
