@@ -213,7 +213,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     } catch (XmlContentException e) {
       throw complainAboutXml(e);
     }
-    relateToJournals(article);
+
+    // TODO: If an article should have multiple journals, how does it get them?
+    article.setJournals(Sets.newHashSet(getPublicationJournal(article)));
     populateCategories(article, doc);
     initializeAssets(article, manifestXml, xml, xmlDataLength);
     populateRelatedArticles(article, xml);
@@ -527,45 +529,17 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     }
   }
 
-  /**
-   * Populate an article's {@code journals} field with {@link Journal} entities based on the article's {@code eIssn}
-   * field. Will set {@code journals} to an empty set if {@code eIssn} is null; otherwise, always expects {@code eIssn}
-   * to match to a journal in the system.
-   *
-   * @param article the article to modify
-   * @throws RestClientException if a non-null {@code article.eIssn} isn't matched to a journal in the database
-   */
-  private void relateToJournals(Article article) {
-    /*
-     * This sets a maximum of one journal, replicating web Admin behavior.
-     * TODO: If an article should have multiple journals, how does it get them?
-     */
-
-    String eissn = article.geteIssn();
-    Set<Journal> journals;
-    if (eissn == null) {
-      log.warn("eIssn not set for article");
-      journals = Sets.newHashSetWithExpectedSize(0);
-    } else {
-      Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
-          hibernateTemplate.findByCriteria(journalCriteria()
-                  .add(Restrictions.eq("eIssn", eissn))
-          ));
-      if (journal == null) {
-        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
-        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
-      }
-      journals = Sets.newHashSet(journal);
-    }
-    article.setJournals(journals);
-  }
-
   @Override
   public void repopulateCategories(ArticleIdentity id) throws IOException {
-      Document doc = parseXml(readXml(id));
-      Article article = findArticleById(id);
-      populateCategories(article, doc);
+    Document doc = parseXml(readXml(id));
+    Article article = findArticleById(id);
+    populateCategories(article, doc);
+    if (article.getCategories().size() > 0) {
       saveArticleToHibernate(article);
+    } else {
+      throw new IOException("Taxonomy server returned 0 terms. Cannot repopulate Categories. "
+          + article.getDoi());
+    }
   }
 
   /**
@@ -582,7 +556,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     try {
       if (!articleService.isAmendment(article)) {
-        terms = taxonomyService.classifyArticle(xml);
+        terms = taxonomyService.classifyArticle(xml, article);
         if (terms != null && terms.size() > 0) {
           articleService.setArticleCategories(article, terms);
         } else {
@@ -592,9 +566,9 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         article.setCategories(new HashMap<Category, Integer>());
       }
     } catch (TaxonomyClassificationService.TaxonomyClassificationServiceNotConfiguredException e) {
-      log.info("Taxonomy server not configured. Ingesting article without categories.");
+      log.error("Taxonomy server not configured. Ingesting article without categories. " + article.getDoi(), e);
     } catch (Exception e) {
-      log.warn("Taxonomy server not responding, but ingesting article anyway", e);
+      log.error("Taxonomy server not responding, but ingesting article anyway." + article.getDoi(), e);
     }
   }
 
@@ -860,13 +834,33 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   @Override
   public InputStream readXml(ArticleIdentity id) {
     try {
-      return contentRepoService.getLatestRepoObject(id.forXmlAsset().toString());
+      return contentRepoService.getLatestRepoObject(id.forXmlAsset().getFilePath());
     } catch (ContentRepoException e) {
       if (e.getErrorType() == ErrorType.ErrorFetchingObject) {
         throw reportNotFound(id);
       } else {
         throw e;
       }
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Journal getPublicationJournal(Article article) {
+    String eissn = article.geteIssn();
+    if (eissn == null) {
+      String msg = "eIssn not set for article: " + article.getDoi();
+      throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+    } else {
+      Journal journal = (Journal) DataAccessUtils.uniqueResult((List<?>)
+        hibernateTemplate.findByCriteria(journalCriteria().add(Restrictions.eq("eIssn", eissn))));
+      if (journal == null) {
+        String msg = "XML contained eIssn that was not matched to a journal: " + eissn;
+        throw new RestClientException(msg, HttpStatus.BAD_REQUEST);
+      }
+      return journal;
     }
   }
 
@@ -997,7 +991,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
       @Override
       protected Object getData() throws IOException {
-        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)));
+        List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)),
+            findArticleById(id));
         List<String> cleanedTerms = new ArrayList<>();
         for (String term : rawTerms) {
           term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");

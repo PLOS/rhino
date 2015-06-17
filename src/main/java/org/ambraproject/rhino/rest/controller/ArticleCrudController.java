@@ -153,8 +153,6 @@ public class ArticleCrudController extends ArticleSpaceController {
 
     articleCrudService.repopulateCategories(id);
 
-    response.setStatus(HttpStatus.ACCEPTED.value());
-
     // Report the current categories
     articleCrudService.readCategories(id).respond(request, response, entityGson);
   }

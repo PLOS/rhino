@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.taxonomy.impl;
 
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.service.impl.AmbraService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyLookupService;
@@ -25,13 +26,13 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   private TaxonomyLookupService taxonomyLookupService;
 
   @Override
-  public Map<String, Integer> classifyArticle(Document articleXml) throws IOException {
-    return taxonomyClassificationService.classifyArticle(articleXml);
+  public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
+    return taxonomyClassificationService.classifyArticle(articleXml, article);
   }
 
   @Override
-  public List<String> getRawTerms(Document articleXml) throws IOException {
-    return taxonomyClassificationService.getRawTerms(articleXml);
+  public List<String> getRawTerms(Document articleXml, Article article) throws IOException {
+    return taxonomyClassificationService.getRawTerms(articleXml, article);
   }
 
   @Override
