@@ -403,7 +403,8 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
       throw new RestClientException("Asset not found for: " + id.getIdentifier(), HttpStatus.NOT_FOUND);
     }
 
-    List<Journal> journalResult = hibernateTemplate.find("select journals from Article where doi = ?", articleDoi);
+    List<Journal> journalResult = (List<Journal>) hibernateTemplate.find(
+        "select journals from Article where doi = ?", articleDoi);
 
     return new ArticleVisibility(articleDoi, articleState, journalResult);
   }
