@@ -212,6 +212,24 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     };
   }
 
+  @Deprecated
+  @Override
+  public Transceiver readVersionedMetadata(final ArticleIdentity id,
+                                           final Optional<Integer> versionNumber,
+                                           final ArticleMetadataSource source) {
+    return new EntityTransceiver<Article>() {
+      @Override
+      protected Article fetchEntity() {
+        return versionedIngestionService.getArticleMetadata(id, versionNumber, source);
+      }
+
+      @Override
+      protected Object getView(Article entity) {
+        return entity;
+      }
+    };
+  }
+
   @Override
   public Transceiver readMetadata(final Article article, final boolean excludeCitations) throws IOException {
     return new EntityTransceiver<Article>() {

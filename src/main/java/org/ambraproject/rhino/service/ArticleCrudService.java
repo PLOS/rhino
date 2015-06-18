@@ -166,4 +166,27 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
 
+
+  /**
+   * Replicates the behavior of {@link #readMetadata}, and forces the service to read from the versioned data model.
+   *
+   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
+   */
+  @Deprecated
+  public abstract Transceiver readVersionedMetadata(ArticleIdentity id,
+                                                    Optional<Integer> versionNumber,
+                                                    ArticleMetadataSource source);
+
+  /**
+   * Signifies which file to use when reading article metadata from a content repo collection. This exists for
+   * verification purposes only; when the versioned data model is stable, the service will use only one data source as
+   * an implementation choice.
+   *
+   * @deprecated <em>TEMPORARY.</em> To be removed when regular services fully use the versioned data model.
+   */
+  @Deprecated
+  public static enum ArticleMetadataSource {
+    FULL_MANUSCRIPT, FRONT_MATTER
+  }
+
 }

@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -16,22 +17,27 @@ import org.ambraproject.rhino.identity.AssetFileIdentity;
 import org.ambraproject.rhino.identity.AssetIdentity;
 import org.ambraproject.rhino.model.DoiAssociation;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.view.internal.RepoVersionRepr;
 import org.plos.crepo.model.RepoCollection;
 import org.plos.crepo.model.RepoCollectionList;
+import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObject;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
+import org.plos.crepo.model.RepoVersionNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -46,6 +52,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -157,14 +164,14 @@ class VersionedIngestionService {
             .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
             .contentType(MediaType.APPLICATION_XML)
             .downloadName(articleIdentity.forXmlAsset().getFileName()));
-    collection.tagSpecialObject("manuscript", manuscript);
+    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FULL_MANUSCRIPT), manuscript);
 
     ArticleObject front = createDynamicObject(
         new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
             .byteContent(extractFrontMatter(parsedArticle))
             .contentType(MediaType.APPLICATION_XML)
             .build());
-    collection.tagSpecialObject("front", front);
+    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FRONT_MATTER), front);
 
     // Create RepoObjects for assets
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
@@ -404,6 +411,68 @@ class VersionedIngestionService {
       return map;
     }
 
+  }
+
+
+  private static final ImmutableBiMap<ArticleMetadataSource, String> SOURCE_KEYS = ImmutableBiMap.<ArticleMetadataSource, String>builder()
+      .put(ArticleMetadataSource.FULL_MANUSCRIPT, "manuscript")
+      .put(ArticleMetadataSource.FRONT_MATTER, "front")
+      .build();
+
+  static {
+    if (!SOURCE_KEYS.keySet().equals(EnumSet.allOf(ArticleMetadataSource.class))) {
+      throw new AssertionError("ArticleMetadataSource values don't match key map");
+    }
+  }
+
+  /**
+   * Build a representation of an article's metadata from a persisted collection.
+   * <p/>
+   * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
+   * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
+   * <p/>
+   * The method signature will probably change when the deprecated methods {@link org.ambraproject.rhino.rest.controller.ArticleCrudController#previewMetadataFromVersionedModel}
+   * and {@link org.ambraproject.rhino.service.ArticleCrudService#readVersionedMetadata} are removed. At minimum, the
+   * {@code source} argument should be removed in favor of always using the "front" file. Also, the means of specifying
+   * a collection version (the {@code id} and {@code versionNumber} parameters) might be refactored.
+   *
+   * @param id            the ID of the article to serve
+   * @param versionNumber the number of the ingested version to read, or absent for the latest version
+   * @param source        whether to parse the extracted front matter or the full, original manuscript
+   * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
+   */
+  @Deprecated
+  Article getArticleMetadata(ArticleIdentity id, Optional<Integer> versionNumber, ArticleMetadataSource source) {
+    String identifier = id.getIdentifier();
+    RepoCollectionMetadata collection;
+    if (versionNumber.isPresent()) {
+      collection = parentService.contentRepoService.getCollection(new RepoVersionNumber(identifier, versionNumber.get()));
+    } else {
+      collection = parentService.contentRepoService.getLatestCollection(identifier);
+    }
+
+    Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
+    Map<String, String> manuscriptId = (Map<String, String>) userMetadata.get(SOURCE_KEYS.get(source));
+    RepoVersion manuscript = RepoVersionRepr.read(manuscriptId);
+
+    Document document;
+    try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscript)) {
+      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder(); // TODO: Efficiency
+      log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
+      document = documentBuilder.parse(manuscriptStream);
+      log.debug("finish");
+    } catch (IOException | SAXException | ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+
+    Article article;
+    try {
+      article = new ArticleXml(document).build(new Article());
+    } catch (XmlContentException e) {
+      throw new RuntimeException(e);
+    }
+    article.setLastModified(collection.getTimestamp());
+    return article;
   }
 
 }
