@@ -38,10 +38,17 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
   private static class Result implements Comparable<Result> {
     public String subject;
     public int childCount;
+    public long articleCount;
 
     Result(String subject, int childCount) {
       this.subject = subject;
       this.childCount = childCount;
+    }
+
+    public Result(String subject, int childCount, long articleCount) {
+      this.subject = subject;
+      this.childCount = childCount;
+      this.articleCount = articleCount;
     }
 
     public int compareTo(Result that) {
@@ -80,10 +87,19 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
             parent = '/' + parent;
           }
         }
+
+        Map<String, Long> articleCounts;
+        try {
+          articleCounts = legacyTaxonomyService.getCounts(categoryView, journal);
+        } catch (ApplicationException e) {
+          throw new IOException(e);
+        }
+
         Map<String, SortedSet<String>> tree = CategoryUtils.getShortTree(categoryView);
         List<Result> results = new ArrayList<>(tree.size());
         for (Map.Entry<String, SortedSet<String>> entry : tree.entrySet()) {
-          results.add(new Result(parent + '/' + entry.getKey(), entry.getValue().size()));
+          long articleCount = articleCounts.get(entry.getKey());
+          results.add(new Result(parent + '/' + entry.getKey(), entry.getValue().size(), articleCount));
         }
         Collections.sort(results);
         return results;
