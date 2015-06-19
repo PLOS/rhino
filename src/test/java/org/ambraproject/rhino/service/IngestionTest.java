@@ -367,7 +367,7 @@ public class IngestionTest extends BaseRhinoTest {
       assertEquals(expected.getResponseStatus(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    List<Article> articles = hibernateTemplate.findByCriteria(DetachedCriteria
+    List<Article> articles = (List<Article>) hibernateTemplate.findByCriteria(DetachedCriteria
         .forClass(Article.class)
         .add(Restrictions.eq("doi", "info:doi/10.1371/journal.pone.0060593")));
     assertEquals(articles.size(), 0, "Bad zip archive left a row in article!");
@@ -407,8 +407,8 @@ public class IngestionTest extends BaseRhinoTest {
     // Since citedArticles are lazily loaded, and this test doesn't currently execute transactionally,
     // we have to reload the actual citations separately.
     // TODO: fix this.
-    List<CitedArticle> actualCitations = hibernateTemplate.find("FROM CitedArticle WHERE articleID = ?",
-        actual.getID());
+    List<CitedArticle> actualCitations = (List<CitedArticle>) hibernateTemplate.find(
+        "FROM CitedArticle WHERE articleID = ?", actual.getID());
     compareCitationLists(results, actualCitations, expected.getCitedArticles());
     assertSyndications(results, actual);
     return results;
@@ -869,7 +869,7 @@ public class IngestionTest extends BaseRhinoTest {
     expected.add(buildExpectedSyndication("CROSSREF", article));
     expected.add(buildExpectedSyndication("PMC", article));
     expected.add(buildExpectedSyndication("PUBMED", article));
-    List<Syndication> actual = hibernateTemplate.findByCriteria(
+    List<Syndication> actual = (List<Syndication>) hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Syndication.class)
             .add(Restrictions.eq("doi", article.getDoi()))
             .addOrder(Order.asc("target"))
