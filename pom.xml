@@ -24,7 +24,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>1.1.2</version>
+  <version>1.1.3</version>
 
   <description>Service-oriented back end for Ambra.</description>
 
@@ -47,7 +47,7 @@
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
     <java-version>1.7</java-version>
-    <org.springframework-version>3.2.2.RELEASE</org.springframework-version>
+    <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
     <ambra.version>2.10.3</ambra.version>
@@ -55,6 +55,7 @@
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
     <activemq.version>5.2.0</activemq.version>
+    <ehcache.version>2.7.0</ehcache.version>
   </properties>
 
   <repositories>
@@ -168,6 +169,14 @@
           <groupId>org.slf4j</groupId>
           <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.sf.saxon</groupId>
+          <artifactId>saxon</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -175,6 +184,16 @@
       <groupId>org.ambraproject</groupId>
       <artifactId>ambra-queue</artifactId>
       <version>${ambra.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.sf.saxon</groupId>
+          <artifactId>saxon</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!--This allows us to reuse test code from ambra-->
@@ -182,6 +201,16 @@
       <groupId>org.ambraproject</groupId>
       <artifactId>ambra-base</artifactId>
       <version>${ambra.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.sf.saxon</groupId>
+          <artifactId>saxon</artifactId>
+        </exclusion>
+      </exclusions>
       <!--In a future version of maven, this classifier may need to change to test-jar-->
       <classifier>tests</classifier>
       <scope>test</scope>
@@ -203,8 +232,8 @@
 
     <dependency>
       <groupId>net.sf.saxon</groupId>
-      <artifactId>saxon</artifactId>
-      <version>9.3</version>
+      <artifactId>Saxon-HE</artifactId>
+      <version>9.6.0-4</version>
     </dependency>
 
     <dependency>
@@ -235,6 +264,16 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
       <version>${org.springframework-version}</version>
     </dependency>
     <dependency>
@@ -303,8 +342,8 @@
     <!-- Servlet -->
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -345,6 +384,12 @@
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-camel</artifactId>
       <version>${activemq.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>${ehcache.version}</version>
     </dependency>
 
     <!-- Test -->

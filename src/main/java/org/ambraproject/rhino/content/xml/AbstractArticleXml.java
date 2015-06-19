@@ -19,6 +19,7 @@
 package org.ambraproject.rhino.content.xml;
 
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
@@ -80,8 +81,15 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends Abstract
   // The node-names for nodes that can be an asset if they have a descendant <graphic> node
   protected static final ImmutableSet<String> GRAPHIC_NODE_PARENTS = ImmutableSet.of(TABLE_WRAP, "fig");
 
-  // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES
-  protected static final String ASSET_EXPRESSION = String.format("//(%s)", Joiner.on('|').join(ASSET_NODE_NAMES));
+  // An XPath expression that will match any node with one of the name in ASSET_NODE_NAMES.
+  protected static final String ASSET_EXPRESSION = Joiner.on('|').join(
+      Iterables.transform(ASSET_NODE_NAMES, new Function<String, String>() {
+        @Override
+        public String apply(String nodeName) {
+          return "//" + nodeName;
+        }
+      })
+  );
 
   protected String getAssetDoi(Node assetNode) {
     String nodeName = assetNode.getNodeName();

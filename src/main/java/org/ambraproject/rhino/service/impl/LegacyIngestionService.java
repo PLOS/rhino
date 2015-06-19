@@ -234,7 +234,7 @@ class LegacyIngestionService {
     }
     inboundCriteria = inboundCriteria.createCriteria("relatedArticles")
         .add(Restrictions.eq("otherArticleDoi", ingested.getDoi()));
-    List<Article> articlesWithInboundRelationships = parentService.hibernateTemplate.findByCriteria(inboundCriteria);
+    List<Article> articlesWithInboundRelationships = (List<Article>) parentService.hibernateTemplate.findByCriteria(inboundCriteria);
     if (!articlesWithInboundRelationships.isEmpty()) {
       for (Article inboundArticle : articlesWithInboundRelationships) {
         reciprocateInboundRelationship(ingested, inboundArticle);
