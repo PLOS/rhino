@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.annotation.Nullable;
@@ -166,12 +165,16 @@ class VersionedIngestionService {
             .downloadName(articleIdentity.forXmlAsset().getFileName()));
     collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FULL_MANUSCRIPT), manuscript);
 
-    ArticleObject front = createDynamicObject(
+    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FRONT_MATTER), createDynamicObject(
         new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
-            .byteContent(extractFrontMatter(parsedArticle))
+            .byteContent(serializeXml(parsedArticle.extractFrontMatter()))
             .contentType(MediaType.APPLICATION_XML)
-            .build());
-    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FRONT_MATTER), front);
+            .build()));
+    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FRONT_AND_BACK_MATTER), createDynamicObject(
+        new RepoObject.RepoObjectBuilder("frontAndBack/" + articleIdentity.getIdentifier())
+            .byteContent(serializeXml(parsedArticle.extractFrontAndBackMatter()))
+            .contentType(MediaType.APPLICATION_XML)
+            .build()));
 
     // Create RepoObjects for assets
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
@@ -232,8 +235,7 @@ class VersionedIngestionService {
     return new IngestionResult(articleMetadata, collectionMetadata);
   }
 
-  private static byte[] extractFrontMatter(ArticleXml parsedArticle) {
-    Document document = parsedArticle.extractFrontMatter();
+  private static byte[] serializeXml(Document document) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     try {
       Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -405,6 +407,7 @@ class VersionedIngestionService {
   private static final ImmutableBiMap<ArticleMetadataSource, String> SOURCE_KEYS = ImmutableBiMap.<ArticleMetadataSource, String>builder()
       .put(ArticleMetadataSource.FULL_MANUSCRIPT, "manuscript")
       .put(ArticleMetadataSource.FRONT_MATTER, "front")
+      .put(ArticleMetadataSource.FRONT_AND_BACK_MATTER, "frontAndBack")
       .build();
 
   static {

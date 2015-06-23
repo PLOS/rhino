@@ -21,6 +21,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -38,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.annotation.Nullable;
 import java.net.URLEncoder;
@@ -105,21 +107,41 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return new AssetNodesByDoi(nodeMap);
   }
 
+  private static final ImmutableSet<String> FRONT_ONLY = ImmutableSet.of("front");
+  private static final ImmutableSet<String> FRONT_AND_BACK = ImmutableSet.of("front", "back");
+
   /**
-   * Build a deep copy of the article XML document, with the {@code &lt;body>} excluded. The returned document can be
-   * read (into a future {@code ArticleXml} object, or by other means) and parsed to get metadata from the front
-   * matter.
-   * <p>
-   * The method name is a misnomer because it also contains the {@code &lt;back>} element.
+   * Build a deep copy of the article XML document that contains only the {@code &lt;front>} node. The returned document
+   * can be read (into a future {@code ArticleXml} object, or by other means) and parsed to get article metadata from
+   * the front matter. Metadata from the {@code &lt;back>} node will not be available.
    *
-   * @return a copy of the document with the {@code &lt;body>} excluded
+   * @return a copy of the document that contains only the {@code &lt;front>} node
    */
   public Document extractFrontMatter() {
+    return extractNodes(FRONT_ONLY);
+  }
+
+  /**
+   * Build a deep copy of the article XML document that contains only the {@code &lt;front>} and {@code &lt;back>} node.
+   * The returned document can be read (into a future {@code ArticleXml} object, or by other means) and parsed to get
+   * article metadata.
+   *
+   * @return a copy of the document that contains only the {@code &lt;front>} node
+   */
+  public Document extractFrontAndBackMatter() {
+    return extractNodes(FRONT_AND_BACK);
+  }
+
+  private Document extractNodes(Set<String> nodeNamesToKeep) {
+    Preconditions.checkNotNull(nodeNamesToKeep);
     Document document = (Document) xml.cloneNode(true);
     for (Node articleNode : NodeListAdapter.wrap(document.getChildNodes())) {
-      for (Node childNode : NodeListAdapter.wrap(articleNode.getChildNodes())) {
-        if (childNode.getNodeName().equals("body")) {
+      NodeList childNodes = articleNode.getChildNodes(); // can't use NodeListAdapter because we want to delete during iteration
+      for (int i = 0; i < childNodes.getLength(); i++) {
+        Node childNode = childNodes.item(i);
+        if (!nodeNamesToKeep.contains(childNode.getNodeName())) {
           articleNode.removeChild(childNode);
+          i--;
         }
       }
     }

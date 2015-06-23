@@ -186,7 +186,7 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   @Deprecated
   public static enum ArticleMetadataSource {
-    FULL_MANUSCRIPT, FRONT_MATTER
+    FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
   }
 
 }
