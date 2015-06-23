@@ -36,19 +36,26 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
    * Simple private class used for serialization of results from the read method.
    */
   private static class Result implements Comparable<Result> {
-    public String subject;
-    public int childCount;
-    public long articleCount;
-
-    Result(String subject, int childCount) {
-      this.subject = subject;
-      this.childCount = childCount;
-    }
+    private final String subject;
+    private final int childCount;
+    private final long articleCount;
 
     public Result(String subject, int childCount, long articleCount) {
       this.subject = subject;
       this.childCount = childCount;
       this.articleCount = articleCount;
+    }
+
+    public String getSubject() {
+      return subject;
+    }
+
+    public int getChildCount() {
+      return childCount;
+    }
+
+    public long getArticleCount() {
+      return articleCount;
     }
 
     public int compareTo(Result that) {
