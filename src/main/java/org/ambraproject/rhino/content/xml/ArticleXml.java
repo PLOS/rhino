@@ -105,8 +105,25 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return new AssetNodesByDoi(nodeMap);
   }
 
-  public Node extractFrontMatter() {
-    return readNode("/article/front");
+  /**
+   * Build a deep copy of the article XML document, with the {@code &lt;body>} excluded. The returned document can be
+   * read (into a future {@code ArticleXml} object, or by other means) and parsed to get metadata from the front
+   * matter.
+   * <p>
+   * The method name is a misnomer because it also contains the {@code &lt;back>} element.
+   *
+   * @return a copy of the document with the {@code &lt;body>} excluded
+   */
+  public Document extractFrontMatter() {
+    Document document = (Document) xml.cloneNode(true);
+    for (Node articleNode : NodeListAdapter.wrap(document.getChildNodes())) {
+      for (Node childNode : NodeListAdapter.wrap(articleNode.getChildNodes())) {
+        if (childNode.getNodeName().equals("body")) {
+          articleNode.removeChild(childNode);
+        }
+      }
+    }
+    return document;
   }
 
   /**

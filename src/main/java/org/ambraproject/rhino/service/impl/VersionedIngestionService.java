@@ -233,19 +233,7 @@ class VersionedIngestionService {
   }
 
   private static byte[] extractFrontMatter(ArticleXml parsedArticle) {
-    Node frontNode = parsedArticle.extractFrontMatter();
-    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-    builderFactory.setNamespaceAware(true);
-    Document document;
-    try {
-      document = builderFactory.newDocumentBuilder().newDocument();
-    } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
-    }
-    Node article = document.createElement("article");
-    document.appendChild(article);
-    article.appendChild(document.importNode(frontNode, true));
-
+    Document document = parsedArticle.extractFrontMatter();
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     try {
       Transformer transformer = TransformerFactory.newInstance().newTransformer();
