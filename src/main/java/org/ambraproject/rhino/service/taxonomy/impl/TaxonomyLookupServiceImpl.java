@@ -46,18 +46,6 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
       this.articleCount = articleCount;
     }
 
-    public String getSubject() {
-      return subject;
-    }
-
-    public int getChildCount() {
-      return childCount;
-    }
-
-    public long getArticleCount() {
-      return articleCount;
-    }
-
     public int compareTo(Result that) {
       return subject.compareTo(that.subject);
     }
@@ -105,8 +93,10 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
         Map<String, SortedSet<String>> tree = CategoryUtils.getShortTree(categoryView);
         List<Result> results = new ArrayList<>(tree.size());
         for (Map.Entry<String, SortedSet<String>> entry : tree.entrySet()) {
+          String subject = parent + '/' + entry.getKey();
+          int childCount = entry.getValue().size();
           long articleCount = articleCounts.get(entry.getKey());
-          results.add(new Result(parent + '/' + entry.getKey(), entry.getValue().size(), articleCount));
+          results.add(new Result(subject, childCount, articleCount));
         }
         Collections.sort(results);
         return results;
