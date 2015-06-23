@@ -363,6 +363,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return "http://dx.doi.org/" + URLEncoder.encode(doi);
   }
 
+  private static String buildArticleTypeUri(String articleType) {
+    // Represent a article type token as a URI, as required by legacy article type model.
+    // TODO: Either refactor URI-based data model, or allow base URI to be configured (no hard-coded "plos.org").
+    // This also ensures that we throw a NullPointerException rather than return "http://rdf.plos.org/RDF/articleType/null"
+    return "http://rdf.plos.org/RDF/articleType/" + Preconditions.checkNotNull(articleType);
+  }
+
   /**
    * @return set of article type strings for the article
    */
@@ -370,14 +377,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     // pmc2obj-v3.xslt lines 93-96
     Set<String> articleTypes = Sets.newHashSet();
-    articleTypes.add("http://rdf.plos.org/RDF/articleType/"
-        + readString("/article/@article-type"));
+    articleTypes.add(buildArticleTypeUri(readString("/article/@article-type")));
     List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
     for (String otherType : otherTypes) {
       otherType = uriEncode(otherType);
       otherType = SLASH_ESCAPE.replace(otherType); // uriEncode leaves slashes alone, but we actually want them escaped
-      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + otherType); // TODO PLOS-specific
+      articleTypes.add(buildArticleTypeUri(otherType));
     }
     return articleTypes;
   }
