@@ -107,8 +107,8 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return new AssetNodesByDoi(nodeMap);
   }
 
-  private static final ImmutableSet<String> FRONT_ONLY = ImmutableSet.of("front");
-  private static final ImmutableSet<String> FRONT_AND_BACK = ImmutableSet.of("front", "back");
+  private static final ImmutableSet<String> BODY = ImmutableSet.of("body");
+  private static final ImmutableSet<String> BODY_AND_BACK = ImmutableSet.of("body", "back");
 
   /**
    * Build a deep copy of the article XML document that contains only the {@code &lt;front>} node. The returned document
@@ -118,7 +118,7 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @return a copy of the document that contains only the {@code &lt;front>} node
    */
   public Document extractFrontMatter() {
-    return extractNodes(FRONT_ONLY);
+    return truncate(BODY_AND_BACK);
   }
 
   /**
@@ -129,17 +129,17 @@ public class ArticleXml extends AbstractArticleXml<Article> {
    * @return a copy of the document that contains only the {@code &lt;front>} node
    */
   public Document extractFrontAndBackMatter() {
-    return extractNodes(FRONT_AND_BACK);
+    return truncate(BODY);
   }
 
-  private Document extractNodes(Set<String> nodeNamesToKeep) {
-    Preconditions.checkNotNull(nodeNamesToKeep);
+  private Document truncate(Set<String> nodeNamesToRemove) {
+    Preconditions.checkNotNull(nodeNamesToRemove);
     Document document = (Document) xml.cloneNode(true);
     for (Node articleNode : NodeListAdapter.wrap(document.getChildNodes())) {
       NodeList childNodes = articleNode.getChildNodes(); // can't use NodeListAdapter because we want to delete during iteration
       for (int i = 0; i < childNodes.getLength(); i++) {
         Node childNode = childNodes.item(i);
-        if (!nodeNamesToKeep.contains(childNode.getNodeName())) {
+        if (nodeNamesToRemove.contains(childNode.getNodeName())) {
           articleNode.removeChild(childNode);
           i--;
         }
