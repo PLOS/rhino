@@ -44,3 +44,7 @@ class JSONResponse(AbstractResponse):
   def get_journalTitle(self):
     return self.jpath('$..title')
 
+  def get_attribute(self, name):
+      return self._json.get(name, None)
+
+
