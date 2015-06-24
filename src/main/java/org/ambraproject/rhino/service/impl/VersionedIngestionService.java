@@ -421,19 +421,36 @@ class VersionedIngestionService {
    * <p/>
    * The legacy Hibernate model object {@link Article} is used as a data-holder for convenience and compatibility. This
    * method constructs it anew, not by accessing Hibnerate, and populates only a subset of its normal fields.
-   * <p/>
-   * The method signature will probably change when the deprecated methods {@link org.ambraproject.rhino.rest.controller.ArticleCrudController#previewMetadataFromVersionedModel}
-   * and {@link org.ambraproject.rhino.service.ArticleCrudService#readVersionedMetadata} are removed. At minimum, the
-   * {@code source} argument should be removed in favor of always using the "front" file. Also, the means of specifying
-   * a collection version (the {@code id} and {@code versionNumber} parameters) might be refactored.
    *
    * @param id            the ID of the article to serve
    * @param versionNumber the number of the ingested version to read, or absent for the latest version
    * @param source        whether to parse the extracted front matter or the full, original manuscript
    * @return an object containing metadata that could be extracted from the manuscript, with other fields unfilled
+   * @deprecated method signature accommodates testing and will be changed
    */
   @Deprecated
   Article getArticleMetadata(ArticleIdentity id, Optional<Integer> versionNumber, ArticleMetadataSource source) {
+    /*
+     * *** Implementation notes ***
+     *
+     * The method signature accommodates the methods `ArticleCrudController.previewMetadataFromVersionedModel` and
+     * `ArticleCrudService.readVersionedMetadata`, which are temporary hacks to expose read-service functionality for
+     * testing. This method's signature will probably change when those methods are removed, though we expect to keep
+     * most of the business logic.
+     *
+     * The `source` argument ought to be replaced with something that doesn't expose so much detail. It gives the option
+     * to parse the full manuscript (including the body) for validation purposes, which should not be possible in the
+     * production implementation. We do currently plan to choose between the 'front' and 'frontAndBack' documents based
+     * on whether we need to serve cited articles, but the signature should talk about whether to include citations, not
+     * which file to read. In a future API version, we may wish to simplify further by splitting citations into a
+     * separate service.
+     *
+     * Also, the means of specifying a collection version (the `id` and `versionNumber` parameters) might be replaced
+     * with a better way of specifying an article version.
+     *
+     * TODO: Improve as described above and delete this comment block
+     */
+
     String identifier = id.getIdentifier();
     RepoCollectionMetadata collection;
     if (versionNumber.isPresent()) {
