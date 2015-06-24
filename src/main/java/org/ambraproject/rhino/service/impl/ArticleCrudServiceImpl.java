@@ -21,11 +21,15 @@ package org.ambraproject.rhino.service.impl;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
+import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
@@ -223,9 +227,31 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         return versionedIngestionService.getArticleMetadata(id, versionNumber, source);
       }
 
+      /**
+       * Populate fields required by {@link ArticleOutputView} with dummy values. This is a temporary kludge.
+       */
+      private void kludgeArticleFields(Article article) {
+        article.setDoi(id.getKey());
+
+        ArticleAsset articleXmlAsset = new ArticleAsset();
+        articleXmlAsset.setDoi(article.getDoi());
+        articleXmlAsset.setExtension("XML");
+        ArticleAsset articlePdfAsset = new ArticleAsset();
+        articlePdfAsset.setDoi(article.getDoi());
+        articlePdfAsset.setExtension("PDF");
+        article.setAssets(ImmutableList.of(articleXmlAsset, articlePdfAsset));
+
+        article.setID(-1L);
+        article.setRelatedArticles(ImmutableList.<ArticleRelationship>of());
+        article.setJournals(ImmutableSet.<Journal>of());
+        article.setCategories(ImmutableMap.<Category, Integer>of());
+      }
+
       @Override
-      protected Object getView(Article entity) {
-        return entity;
+      protected ArticleOutputView getView(Article article) {
+        kludgeArticleFields(article);
+        boolean excludeCitations = (source == ArticleMetadataSource.FRONT_MATTER);
+        return articleOutputViewFactory.create(article, excludeCitations);
       }
     };
   }

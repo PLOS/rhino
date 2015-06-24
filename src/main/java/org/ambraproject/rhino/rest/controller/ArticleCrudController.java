@@ -19,9 +19,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Strings;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
@@ -31,7 +29,6 @@ import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -162,19 +159,13 @@ public class ArticleCrudController extends ArticleSpaceController {
   public void previewMetadataFromVersionedModel(
       HttpServletRequest request, HttpServletResponse response,
       @RequestParam(value = "version", required = false) Integer versionNumber,
-      @RequestParam(value = "source", required = false) String sourceParam)
+      @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
+      @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
       throws IOException {
     ArticleIdentity id = parse(request);
-
-    ArticleMetadataSource sourceObj;
-    if (Strings.isNullOrEmpty(sourceParam) || sourceParam.equalsIgnoreCase("front")) {
-      sourceObj = ArticleMetadataSource.FRONT_MATTER;
-    } else if (sourceParam.equalsIgnoreCase("full")) {
-      sourceObj = ArticleMetadataSource.FULL_MANUSCRIPT;
-    } else {
-      throw new RestClientException("Unrecognized source param: " + sourceParam, HttpStatus.NOT_FOUND);
-    }
-
+    ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
+        : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
+        : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
     articleCrudService.readVersionedMetadata(id, Optional.fromNullable(versionNumber), sourceObj)
         .respond(request, response, entityGson);
   }
