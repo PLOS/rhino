@@ -36,12 +36,14 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
    * Simple private class used for serialization of results from the read method.
    */
   private static class Result implements Comparable<Result> {
-    public String subject;
-    public int childCount;
+    private final String subject;
+    private final int childCount;
+    private final long articleCount;
 
-    Result(String subject, int childCount) {
+    public Result(String subject, int childCount, long articleCount) {
       this.subject = subject;
       this.childCount = childCount;
+      this.articleCount = articleCount;
     }
 
     public int compareTo(Result that) {
@@ -80,10 +82,21 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
             parent = '/' + parent;
           }
         }
+
+        Map<String, Long> articleCounts;
+        try {
+          articleCounts = legacyTaxonomyService.getCounts(categoryView, journal);
+        } catch (ApplicationException e) {
+          throw new IOException(e);
+        }
+
         Map<String, SortedSet<String>> tree = CategoryUtils.getShortTree(categoryView);
         List<Result> results = new ArrayList<>(tree.size());
         for (Map.Entry<String, SortedSet<String>> entry : tree.entrySet()) {
-          results.add(new Result(parent + '/' + entry.getKey(), entry.getValue().size()));
+          String subject = parent + '/' + entry.getKey();
+          int childCount = entry.getValue().size();
+          long articleCount = articleCounts.get(entry.getKey());
+          results.add(new Result(subject, childCount, articleCount));
         }
         Collections.sort(results);
         return results;
