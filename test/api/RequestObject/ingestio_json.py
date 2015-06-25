@@ -19,7 +19,7 @@ class Ingestion(BaseServiceTest):
     """
     Validate ingestion with Article table
     """
-    article = self.get_article_sql_archiveName(resources.zip_article)
+    article = self.get_article_sql_archiveName(resources.ZIP_ARTICLE)
     # Verify uploaded DOI against the one stored in DB
     self.verify_ingestion_text_expected_only(article[0], 'doi')
     # Verify uploaded FORMAT against the one stored in DB
@@ -48,7 +48,7 @@ class Ingestion(BaseServiceTest):
     Validate ingestion with Syndication table
     """
     print 'Verify Syndications'
-    syndications = self.get_syndications_sql_archiveName(resources.zip_article)
+    syndications = self.get_syndications_sql_archiveName(resources.ZIP_ARTICLE)
     syndications_json = self.parsed.get_attribute('syndications')
     self.verify_array(syndications, syndications_json)
     for syndication in syndications:
@@ -63,7 +63,7 @@ class Ingestion(BaseServiceTest):
     Validate ingestion with articlePublishedJournals  table
     """
     print 'Verify Journals'
-    journals = self.get_journals_sql_archiveName(resources.zip_article)
+    journals = self.get_journals_sql_archiveName(resources.ZIP_ARTICLE)
     journals_json = self.parsed.get_attribute('journals')
     self.verify_array(journals, journals_json)
     for journal in journals:
@@ -77,7 +77,7 @@ class Ingestion(BaseServiceTest):
     Validate ingestion with CitedArticles  table
     """
     print 'Verify CitedArticles and CitedPersons'
-    citedArticles = self.get_citedArticles_sql_archiveName(resources.zip_article)
+    citedArticles = self.get_citedArticles_sql_archiveName(resources.ZIP_ARTICLE)
     citedArticles_json = self.parsed.get_attribute('citedArticles')
     self.verify_array(citedArticles, citedArticles_json)
     i = 0
@@ -124,7 +124,7 @@ class Ingestion(BaseServiceTest):
     Validate ingestion's files with Assert table
     """
     print 'Verify Article\'s files ' + file_type
-    asset_file = self.get_asset_file(content_type, resources.zip_article)
+    asset_file = self.get_asset_file(content_type, resources.ZIP_ARTICLE)
     asset_file_json = self.parsed.get_attribute(file_type)
     if asset_file and asset_file_json:
       self.verify_ingestion_text(asset_file_json['file'], asset_file[0], 'file')
@@ -148,7 +148,7 @@ class Ingestion(BaseServiceTest):
     self.verify_article_assets('inline-formula, disp-formula', 'graphics')
 
   def verify_article_assets(self, assets_type, assets_json_name):
-    assets = self.get_asset_figures_graphics(assets_type, resources.zip_article)
+    assets = self.get_asset_figures_graphics(assets_type, resources.ZIP_ARTICLE)
     assets_json = self.parsed.get_attribute(assets_json_name)
     i = 0
     for asset in assets:

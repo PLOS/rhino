@@ -47,4 +47,7 @@ class JSONResponse(AbstractResponse):
   def get_attribute(self, name):
       return self._json.get(name, None)
 
+  def get_list(self):
+    return self.jpath('$[*]')
+
 
