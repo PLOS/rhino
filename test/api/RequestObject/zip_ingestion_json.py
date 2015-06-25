@@ -12,7 +12,7 @@ from ..resources import *
 
 class ZIPIngestionJson(Ingestion):
 
-  def post_ingestible_zip(self, archive, force_reingest=''):
+  def post_ingestible_zip(self, archive, force_reingest=None):
     """
     Calls article API to ingest a zip article file
     POST /zips

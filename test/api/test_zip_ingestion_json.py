@@ -27,6 +27,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     """
     POST zips: Forced ingestion of ZIP archive
     """
+    print('\nTesting POST zips/\n')
     # Invoke ZIP API
     self.post_ingestible_zip(resources.ZIP_ARTICLE, force_reingest=True)
     # Validate HTTP code in the response is 201 (CREATED)
@@ -49,28 +50,44 @@ class ZipIngestionTest(ZIPIngestionJson):
     """
     POST zips: Not forced ingestion of ZIP archive
     """
+    print('\nTesting POST zips/ and not force reingest\n')
     # Ingest a ZIP file
     self.post_ingestible_zip(resources.ZIP_ARTICLE, force_reingest=True)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
     # Try to ingest the same ZIP file for a second time
     try:
-      self.post_ingestible_zip(resources.ZIP_ARTICLE, force_reingest=None)
+      self.post_ingestible_zip(resources.ZIP_ARTICLE)
       self.fail('No JSON object could be decoded')
     except:
       pass
 
+  def test_zip_ingestion_without_file(self):
+    """
+    POST zips: Try to ingest of ZIP archive without file name
+    """
+    print('\nTesting POST zips/ without parameters\n')
+    # Ingest a ZIP file
+    try:
+      self.post_ingestible_zip(None)
+    except:
+      pass
+
   def delete_test_article(self):
-    self.get_article(resources.ARTICLE_DOI)
-    if self.get_http_response().status_code == resources.OK:
-      self.delete_article(resources.ARTICLE_DOI)
-      self.verify_http_code_is(resources.OK)
-      #Delete SRepo collections
-      self.delete_test_collections()
-      #Delete CRepo objects
-      self.delete_test_objects()
-    else:
-      print self.parsed.get_attribute('message')
+    try:
+      self.get_article(resources.ARTICLE_DOI)
+      if self.get_http_response().status_code == resources.OK:
+        #Delete article
+        self.delete_article(resources.ARTICLE_DOI)
+        self.verify_http_code_is(resources.OK)
+        #Delete CRepo collections
+        self.delete_test_collections()
+        #Delete CRepo objects
+        self.delete_test_objects()
+      else:
+        print self.parsed.get_attribute('message')
+    except:
+      pass
 
   def delete_test_collections(self):
     self.get_collection_versions(bucketName=resources.BUCKET_NAME, key=resources.ARTICLE_DOI)
@@ -88,7 +105,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     if objects:
       for object in objects:
         if resources.ARTICLE_DOI in object['key']:
-          self.delete_object(bucketName= resources.BUCKET_NAME, key=object['key'], version=object['versionNumber'],
+          self.delete_object(bucketName=resources.BUCKET_NAME, key=object['key'], version=object['versionNumber'],
                              purge=True)
           self.verify_http_code_is(resources.OK)
 
