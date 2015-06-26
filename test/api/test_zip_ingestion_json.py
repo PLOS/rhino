@@ -52,7 +52,7 @@ class ZipIngestionTest(ZIPIngestionJson):
     """
     print('\nTesting POST zips/ and not force reingest\n')
     # Ingest a ZIP file
-    self.post_ingestible_zip(resources.ZIP_ARTICLE, force_reingest=True)
+    self.post_ingestible_zip(resources.ZIP_ARTICLE)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
     # Try to ingest the same ZIP file for a second time
