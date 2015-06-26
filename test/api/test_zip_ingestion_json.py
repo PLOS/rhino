@@ -32,19 +32,8 @@ class ZipIngestionTest(ZIPIngestionJson):
     self.post_ingestible_zip(resources.ZIP_ARTICLE, force_reingest=True)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
-    # Validate response with Article table
-    self.verify_article()
-    # Validate response with Syndication table
-    self.verify_syndications()
-    # Validate response with Journal table
-    self.verify_journals()
-    # Validate response with CitedArticle and CitedPerson tables
-    self.verify_citedArticles()
-    # Validate response with ArticleAsset table
-    self.verify_article_file(resources.PDF_CONTENT_TYPE, 'articlePdf')
-    self.verify_article_file(resources.XML_CONTENT_TYPE, 'articleXml')
-    self.verify_article_figures()
-    self.verify_article_graphics()
+    # Validate response with database tables
+    self.verify_zip_ingestion()
 
   def test_zip_ingestion_force_false(self):
     """
@@ -55,6 +44,8 @@ class ZipIngestionTest(ZIPIngestionJson):
     self.post_ingestible_zip(resources.ZIP_ARTICLE)
     # Validate HTTP code in the response is 201 (CREATED)
     self.verify_http_code_is(resources.CREATED)
+    # Validate response with database tables
+    self.verify_zip_ingestion()
     # Try to ingest the same ZIP file for a second time
     try:
       self.post_ingestible_zip(resources.ZIP_ARTICLE)
@@ -72,6 +63,21 @@ class ZipIngestionTest(ZIPIngestionJson):
       self.post_ingestible_zip(None)
     except:
       pass
+
+  def verify_zip_ingestion(self):
+    # Validate response with Article table
+    self.verify_article()
+    # Validate response with Syndication table
+    self.verify_syndications()
+    # Validate response with Journal table
+    self.verify_journals()
+    # Validate response with CitedArticle and CitedPerson tables
+    self.verify_citedArticles()
+    # Validate response with ArticleAsset table
+    self.verify_article_file(resources.PDF_CONTENT_TYPE, 'articlePdf')
+    self.verify_article_file(resources.XML_CONTENT_TYPE, 'articleXml')
+    self.verify_article_figures()
+    self.verify_article_graphics()
 
   def delete_test_article(self):
     try:
