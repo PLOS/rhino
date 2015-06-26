@@ -18,8 +18,8 @@ if API_BASE_URL.split('/')[2] in ('sfo-perf-plosrepo01.int.plos.org:8002', 'rwc-
   BUCKET_NAME = u'mogilefs-prod-repo'
 
 #URL's API
-ZIP_INGESTION_API = API_BASE_URL + '/zips'
-ARTICLE_API = API_BASE_URL + '/articles'
+ZIP_INGESTION_API = API_BASE_URL + '/v1/zips'
+ARTICLE_API = API_BASE_URL + '/v1/articles'
 
 CREPO_BASE_URL =  str(repo_config['transport']) + '://' + str(repo_config['host']) + ':' + \
                   str(repo_config['port']) + str(repo_config['path'])
