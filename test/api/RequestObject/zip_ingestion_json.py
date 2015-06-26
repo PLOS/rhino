@@ -7,7 +7,7 @@ Base class for Rhino ZIP Ingestion JSON related services
 __author__ = 'gfilomeno@plos.org'
 
 
-from ingestio_json import Ingestion
+from ingestion_json import Ingestion
 from ..resources import *
 
 class ZIPIngestionJson(Ingestion):
