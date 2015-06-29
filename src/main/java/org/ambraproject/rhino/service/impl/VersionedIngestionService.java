@@ -52,8 +52,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -156,25 +158,27 @@ class VersionedIngestionService {
             .contentAccessor(archive.getContentAccessorFor(manifestEntry))
             .downloadName(manifestEntry)
             .contentType(MediaType.APPLICATION_XML));
-    collection.tagSpecialObject("manifest", manifest);
+    collection.tagSpecialObject(manifest, "manifest");
 
     ArticleObject manuscript = collection.insertArchiveObject(manuscriptEntry,
         new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
             .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
             .contentType(MediaType.APPLICATION_XML)
             .downloadName(articleIdentity.forXmlAsset().getFileName()));
-    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FULL_MANUSCRIPT), manuscript);
+    collection.tagSpecialObject(manuscript, MANUSCRIPTS_KEY, SOURCE_KEYS.get(ArticleMetadataSource.FULL_MANUSCRIPT));
 
-    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FRONT_MATTER), createDynamicObject(
-        new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
-            .byteContent(serializeXml(parsedArticle.extractFrontMatter()))
-            .contentType(MediaType.APPLICATION_XML)
-            .build()));
-    collection.tagSpecialObject(SOURCE_KEYS.get(ArticleMetadataSource.FRONT_AND_BACK_MATTER), createDynamicObject(
-        new RepoObject.RepoObjectBuilder("frontAndBack/" + articleIdentity.getIdentifier())
-            .byteContent(serializeXml(parsedArticle.extractFrontAndBackMatter()))
-            .contentType(MediaType.APPLICATION_XML)
-            .build()));
+    collection.tagSpecialObject(createDynamicObject(
+            new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
+                .byteContent(serializeXml(parsedArticle.extractFrontMatter()))
+                .contentType(MediaType.APPLICATION_XML)
+                .build()),
+        MANUSCRIPTS_KEY, SOURCE_KEYS.get(ArticleMetadataSource.FRONT_MATTER));
+    collection.tagSpecialObject(createDynamicObject(
+            new RepoObject.RepoObjectBuilder("frontAndBack/" + articleIdentity.getIdentifier())
+                .byteContent(serializeXml(parsedArticle.extractFrontAndBackMatter()))
+                .contentType(MediaType.APPLICATION_XML)
+                .build()),
+        MANUSCRIPTS_KEY, SOURCE_KEYS.get(ArticleMetadataSource.FRONT_AND_BACK_MATTER));
 
     // Create RepoObjects for assets
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
@@ -327,7 +331,7 @@ class VersionedIngestionService {
 
   private class ArticleCollection {
     private final Map<String, ArticleObject> archiveObjects = new LinkedHashMap<>(); // keys are archiveEntryNames
-    private final Map<String, ArticleObject> specialObjects = new LinkedHashMap<>(); // keys to be used in JSON
+    private final Map<ImmutableList<String>, ArticleObject> specialObjects = new LinkedHashMap<>(); // keys to be used in JSON
 
     private final String archiveName;
     private final ArticleIdentity articleIdentity;
@@ -348,8 +352,8 @@ class VersionedIngestionService {
       return articleObject;
     }
 
-    public void tagSpecialObject(String name, ArticleObject articleObject) {
-      specialObjects.put(name, articleObject);
+    public void tagSpecialObject(ArticleObject articleObject, String... name) {
+      specialObjects.put(ImmutableList.copyOf(name), articleObject);
     }
 
     private Collection<ArticleObject> getAllObjects() {
@@ -384,9 +388,9 @@ class VersionedIngestionService {
       map.put("format", "nlm");
       map.put(ARCHIVE_NAME_KEY, archiveName);
 
-      for (Map.Entry<String, ArticleObject> entry : specialObjects.entrySet()) {
+      for (Map.Entry<ImmutableList<String>, ArticleObject> entry : specialObjects.entrySet()) {
         RepoVersion version = entry.getValue().created.getVersion();
-        map.put(entry.getKey(), new RepoVersionRepr(version));
+        insertSpecialObject(map, entry.getKey(), new RepoVersionRepr(version));
       }
 
       Map<String, Object> assetMetadata = assetTable.buildAsAssetMetadata(Maps.transformValues(archiveObjects,
@@ -401,11 +405,29 @@ class VersionedIngestionService {
       return map;
     }
 
+    private void insertSpecialObject(Map<String, Object> root, List<String> keySequence, Object valueToInsert) {
+      Map<String, Object> mapCursor = root;
+      for (Iterator<String> keyComponentIter = keySequence.iterator(); keyComponentIter.hasNext(); ) {
+        String keyComponent = keyComponentIter.next();
+        if (keyComponentIter.hasNext()) {
+          Map<String, Object> nextMap = (Map<String, Object>) mapCursor.get(keyComponent);
+          if (nextMap == null) {
+            nextMap = new LinkedHashMap<>();
+            mapCursor.put(keyComponent, nextMap);
+          }
+          mapCursor = nextMap;
+        } else {
+          mapCursor.put(keyComponent, valueToInsert);
+        }
+      }
+    }
+
   }
 
 
+  private static final String MANUSCRIPTS_KEY = "manuscripts";
   private static final ImmutableBiMap<ArticleMetadataSource, String> SOURCE_KEYS = ImmutableBiMap.<ArticleMetadataSource, String>builder()
-      .put(ArticleMetadataSource.FULL_MANUSCRIPT, "manuscript")
+      .put(ArticleMetadataSource.FULL_MANUSCRIPT, "full")
       .put(ArticleMetadataSource.FRONT_MATTER, "front")
       .put(ArticleMetadataSource.FRONT_AND_BACK_MATTER, "frontAndBack")
       .build();
@@ -460,7 +482,8 @@ class VersionedIngestionService {
     }
 
     Map<String, Object> userMetadata = (Map<String, Object>) collection.getJsonUserMetadata().get();
-    Map<String, String> manuscriptId = (Map<String, String>) userMetadata.get(SOURCE_KEYS.get(source));
+    Map<String, Object> manuscriptsMap = (Map<String, Object>) userMetadata.get(MANUSCRIPTS_KEY);
+    Map<String, String> manuscriptId = (Map<String, String>) manuscriptsMap.get(SOURCE_KEYS.get(source));
     RepoVersion manuscript = RepoVersionRepr.read(manuscriptId);
 
     Document document;
