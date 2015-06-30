@@ -56,6 +56,7 @@ import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.service.article.NoSuchArticleIdException;
 import org.ambraproject.views.AuthorView;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -992,7 +993,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       @Override
       protected Object getData() throws IOException {
         List<String> rawTerms = taxonomyService.getRawTerms(parseXml(readXml(id)),
-            findArticleById(id));
+            findArticleById(id), false);
         List<String> cleanedTerms = new ArrayList<>();
         for (String term : rawTerms) {
           term = term.replaceAll("<TERM>", "").replaceAll("</TERM>", "");
@@ -1002,6 +1003,29 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       }
     };
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getRawCategoriesAndText(final ArticleIdentity id) throws IOException {
+    List<String> rawTermsAndText = taxonomyService.getRawTerms(parseXml(readXml(id)),
+        findArticleById(id), true);
+    StringBuilder cleanedTermsAndText = new StringBuilder();
+    cleanedTermsAndText.append("<pre>");
+    // HTML-format the tex, which is in the first element of the result array
+    cleanedTermsAndText.append(StringEscapeUtils.escapeHtml(rawTermsAndText.get(0)));
+    cleanedTermsAndText.append("\n");
+
+    for (int i = 1; i < rawTermsAndText.size(); i++) {
+      String term = rawTermsAndText.get(i).replaceAll("<TERM>", "").replaceAll("</TERM>", "");
+      cleanedTermsAndText.append("\n");
+      cleanedTermsAndText.append(term);
+    }
+    cleanedTermsAndText.append("</pre>");
+    return cleanedTermsAndText.toString();
+  }
+
 
   /**
    * {@inheritDoc}
