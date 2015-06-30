@@ -31,8 +31,8 @@ public class TaxonomyServiceImpl extends AmbraService implements TaxonomyService
   }
 
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article) throws IOException {
-    return taxonomyClassificationService.getRawTerms(articleXml, article);
+  public List<String> getRawTerms(Document articleXml, Article article, boolean isTextRequired) throws IOException {
+    return taxonomyClassificationService.getRawTerms(articleXml, article, isTextRequired);
   }
 
   @Override

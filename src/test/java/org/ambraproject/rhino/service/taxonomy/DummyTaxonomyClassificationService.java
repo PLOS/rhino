@@ -22,7 +22,8 @@ public class DummyTaxonomyClassificationService implements TaxonomyClassificatio
   }
 
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article) throws IOException {
+  public List<String> getRawTerms(Document articleXml, Article article,
+                                  boolean isTextRequired) throws IOException {
     return ImmutableList.of("dummy raw term");
   }
 
