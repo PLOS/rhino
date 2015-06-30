@@ -384,6 +384,16 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
   }
 
   @Test
+  public void testGetRawCategoriesAndText() throws Exception {
+    Map<ArticleIdentity, Article> testArticle = createTestArticle();
+    ArticleIdentity articleId = testArticle.keySet().iterator().next();
+
+    String response = articleCrudService.getRawCategoriesAndText(articleId);
+    assertTrue(response.length() > 0);
+    assertEquals(response, "<pre>dummy text sent to MAIstro\n\ndummy raw term</pre>");
+  }
+
+  @Test
   public void testGetPublicationJournal() throws Exception {
     Map<ArticleIdentity, Article> testArticle = createTestArticle();
     ArticleIdentity articleId = testArticle.keySet().iterator().next();
