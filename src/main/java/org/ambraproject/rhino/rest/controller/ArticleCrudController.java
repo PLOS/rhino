@@ -267,7 +267,7 @@ public class ArticleCrudController extends ArticleSpaceController {
    * taxonomy server for classification
    *
    * @param request
-   * @return a String containing the text and raw categories
+   * @return a String containing the text and raw categories in the form of <text> \n\n <categories>
    * @throws IOException
    */
   @Transactional(readOnly = true)

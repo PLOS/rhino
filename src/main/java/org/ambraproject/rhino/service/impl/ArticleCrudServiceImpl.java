@@ -1013,7 +1013,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
         findArticleById(id), true);
     StringBuilder cleanedTermsAndText = new StringBuilder();
     cleanedTermsAndText.append("<pre>");
-    // HTML-format the tex, which is in the first element of the result array
+    // HTML-escape the text, which is in the first element of the result array
     cleanedTermsAndText.append(StringEscapeUtils.escapeHtml(rawTermsAndText.get(0)));
     cleanedTermsAndText.append("\n");
 
