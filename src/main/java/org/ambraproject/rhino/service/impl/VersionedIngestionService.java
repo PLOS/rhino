@@ -100,6 +100,21 @@ class VersionedIngestionService {
     }
   }
 
+  /**
+   * Identifies the model that we are using for representing articles as CRepo collections. To be stored in the
+   * collection's {@code userMetadata} field under the "schema" key.
+   * <p/>
+   * Currently, this is not consumed anywhere. The "schema" field is future-proofing against changes to the model that
+   * would require backfilling or special handling. The "format" value can be used to disambiguate different models or
+   * different inputs. ("ambra-nlm" means that the article is an XML file under the NLM DTD, packaged as a zip file with
+   * manifest as input for Ambra.) The "version" value can be incremented to reflect changes in ingestion logic that
+   * break backwards compatibility.
+   */
+  private static final ImmutableMap<String, Object> SCHEMA_REPR = ImmutableMap.<String, Object>builder()
+      .put("format", "ambra-nlm")
+      .put("version", 1)
+      .build();
+
   IngestionResult ingest(Archive archive) throws IOException, XmlContentException {
     String manifestEntry = null;
     for (String entryName : archive.getEntryNames()) {
@@ -385,7 +400,7 @@ class VersionedIngestionService {
 
     private Map<String, Object> buildUserMetadata() {
       Map<String, Object> map = new LinkedHashMap<>();
-      map.put("format", "nlm");
+      map.put("schema", SCHEMA_REPR);
       map.put(ARCHIVE_NAME_KEY, archiveName);
 
       for (Map.Entry<ImmutableList<String>, ArticleObject> entry : specialObjects.entrySet()) {
