@@ -51,7 +51,21 @@ public interface ArticleCrudService extends DoiBasedCrudService {
       throws IOException;
 
   /**
+   * Ingest an article under the versioned data model only. This should be used only for articles that were ingested
+   * normally, prior to the update to {@link #writeArchive} that made
+   *
+   * @param archive
+   * @return
+   * @throws IOException
+   * @deprecated This is a temporary kludge for data migration. It should be deleted when the legacy article model is no
+   * longer supported.
+   */
+  @Deprecated
+  public abstract Article writeArchiveAsVersionedOnly(Archive archive) throws IOException;
+
+  /**
    * Repopulates article category information by making a call to the taxonomy server.
+   *
    * @param id the identifier of the article
    */
   public abstract void repopulateCategories(ArticleIdentity id) throws IOException;

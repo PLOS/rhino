@@ -121,6 +121,15 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return article;
   }
 
+  @Override
+  public Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
+    try {
+      return versionedIngestionService.ingest(archive).getArticle();
+    } catch (XmlContentException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @VisibleForTesting
   public static boolean shouldSaveAssetFile(String filename, String articleXmlFilename) {
     return LegacyIngestionService.shouldSaveAssetFile(filename, articleXmlFilename);
