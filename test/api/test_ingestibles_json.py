@@ -10,7 +10,8 @@ This test case validates Rhino's ingestibles API.
 import os, random, shutil
 from ..api.RequestObject.ingestibles_json import IngestiblesJson, OK, CREATED, BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, NOT_ALLOWED
 
-RHINO_INGEST_PATH = "../datastores/ingest"
+#RHINO_INGEST_PATH = "../datastores/ingest"
+RHINO_INGEST_PATH = "/var/spool/ambra/ingestion-queue"
 TEST_DATA_PATH = "test/data"
 
 class IngestiblesTest(IngestiblesJson):
@@ -40,7 +41,6 @@ class IngestiblesTest(IngestiblesJson):
     try:
       self.post_ingestibles(name=files[0], force_reingest='')
       self.verify_http_code_is(CREATED)
-      # print self.parsed.get_json()
     except:
       # delete file if there was exception, otherwise Rhino already moves it
       self.verify_ingest_files(exists=files)

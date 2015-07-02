@@ -9,7 +9,6 @@ __author__ = 'msingh@plos.org'
 
 from ...Base.base_service_test import BaseServiceTest
 from ...Base.Config import API_BASE_URL
-from ...Base.api import needs
 
 INGESTIBLES_API = API_BASE_URL + '/ingestibles'
 DEFAULT_HEADERS = {'Accept': 'application/json'}
