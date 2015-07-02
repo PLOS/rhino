@@ -418,6 +418,11 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return relatedArticleViews;
   }
 
+  @Override
+  public Archive repack(ArticleIdentity articleIdentity) {
+    return legacyIngestionService.repack(articleIdentity);
+  }
+
   @Required
   public void setAssetService(AssetCrudService assetService) {
     this.assetService = assetService;

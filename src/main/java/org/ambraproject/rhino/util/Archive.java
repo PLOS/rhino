@@ -41,7 +41,7 @@ public abstract class Archive implements Closeable {
    */
   private final ImmutableMap<String, ?> files;
 
-  Archive(String archiveName, Map<String, ?> files) {
+  private Archive(String archiveName, Map<String, ?> files) {
     this.archiveName = Preconditions.checkNotNull(archiveName);
     this.files = ImmutableMap.copyOf(files);
   }
@@ -232,6 +232,24 @@ public abstract class Archive implements Closeable {
       @Override
       protected InputStream openFileFrom(Object repoVersion) {
         return service.getRepoObject((RepoVersion) repoVersion);
+      }
+    };
+  }
+
+  public static interface InputStreamSource {
+    public abstract InputStream open() throws IOException;
+  }
+
+  public static Archive pack(String archiveName, Map<String, ? extends InputStreamSource> files) {
+    final ImmutableMap<String, InputStreamSource> defensiveFiles = ImmutableMap.copyOf(files);
+    return new Archive(archiveName, defensiveFiles) {
+      @Override
+      protected InputStream openFileFrom(Object source) {
+        try {
+          return ((InputStreamSource) source).open();
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
       }
     };
   }

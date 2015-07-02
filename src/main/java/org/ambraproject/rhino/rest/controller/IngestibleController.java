@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Controller enabling access to the ambra ingest directory (whose location is defined by the
@@ -114,4 +116,19 @@ public class IngestibleController extends DoiBasedCrudController {
     // Report the written data, as JSON, in the response.
     articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
   }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = "article")
+  public void repack(HttpServletResponse response,
+                     @RequestParam("article") String articleId)
+      throws IOException {
+    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
+    response.setStatus(HttpStatus.OK.value());
+    response.setContentType("application/zip");
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "filename=" + archive.getArchiveName());
+    try (OutputStream outputStream = response.getOutputStream()) {
+      archive.write(outputStream);
+    }
+  }
+
 }

@@ -1,11 +1,15 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
 import org.ambraproject.models.Article;
@@ -38,18 +42,32 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -749,6 +767,124 @@ class LegacyIngestionService {
     if (!Objects.equal(a1.getTitle(), a2.getTitle())) return false;
     if (!Objects.equal(a1.getDescription(), a2.getDescription())) return false;
     return true;
+  }
+
+  public Archive repack(ArticleIdentity articleIdentity) {
+    Article article = findArticleById(articleIdentity);
+    ImmutableMap.Builder<String, Archive.InputStreamSource> map = ImmutableMap.builder();
+
+    map.put("manifest.dtd", MANIFEST_SOURCE);
+    map.put("MANIFEST.xml", rebuildManifest(article));
+
+    for (ArticleAsset articleAsset : article.getAssets()) {
+      final AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(articleAsset);
+      String entryName = inferFileName(assetFileIdentity) + "." + assetFileIdentity.getFileExtension();
+      map.put(entryName, new Archive.InputStreamSource() {
+        @Override
+        public InputStream open() throws IOException {
+          return parentService.assetService.read(assetFileIdentity);
+        }
+      });
+    }
+
+    String archiveName = inferFileName(articleIdentity) + ".zip";
+    return Archive.pack(archiveName, map.build());
+  }
+
+  private static final Archive.InputStreamSource MANIFEST_SOURCE = new Archive.InputStreamSource() {
+    @Override
+    public InputStream open() throws IOException {
+      return getClass().getClassLoader().getResourceAsStream("manifest.dtd");
+    }
+  };
+
+  private static Archive.InputStreamSource rebuildManifest(Article article) {
+    Document manifest;
+    try {
+      manifest = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+    } catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+
+    Element manifestElement = (Element) manifest.appendChild(manifest.createElement("manifest"));
+    Element articleBundle = (Element) manifestElement.appendChild(manifest.createElement("articleBundle"));
+
+    String articleNameStub = inferFileName(ArticleIdentity.create(article));
+    String xmlEntryName = articleNameStub + ".XML";
+    Element articleElement = (Element) articleBundle.appendChild(manifest.createElement("article"));
+    articleElement.setAttribute("uri", article.getDoi());
+    articleElement.setAttribute("main-entry", xmlEntryName);
+    Element xmlRepr = (Element) articleElement.appendChild(manifest.createElement("representation"));
+    xmlRepr.setAttribute("name", "XML");
+    xmlRepr.setAttribute("entry", xmlEntryName);
+    Element pdfRepr = (Element) articleElement.appendChild(manifest.createElement("representation"));
+    pdfRepr.setAttribute("name", "PDF");
+    pdfRepr.setAttribute("entry", articleNameStub + ".PDF");
+
+    ListMultimap<String, ArticleAsset> assetsByDoi = Multimaps.index(article.getAssets(), new Function<ArticleAsset, String>() {
+      @Override
+      public String apply(ArticleAsset input) {
+        return input.getDoi();
+      }
+    });
+    for (Map.Entry<String, List<ArticleAsset>> assetGroup : Multimaps.asMap(assetsByDoi).entrySet()) {
+      Element objectElement = (Element) articleBundle.appendChild(manifest.createElement("object"));
+      objectElement.setAttribute("uri", assetGroup.getKey());
+
+      if (article.getStrkImgURI().equals(assetGroup.getKey())) {
+        objectElement.setAttribute("strkImage", "True");
+      }
+
+      for (ArticleAsset asset : assetGroup.getValue()) {
+        Element reprElement = (Element) objectElement.appendChild(manifest.createElement("representation"));
+        reprElement.setAttribute("name", asset.getExtension());
+
+        // TODO: Deduplicate code from 'repack' method
+        AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(asset);
+        String entryName = inferFileName(assetFileIdentity) + "." + assetFileIdentity.getFileExtension();
+
+        reprElement.setAttribute("entry", entryName);
+      }
+    }
+
+    String comment = "Repacked at " + new Date();
+    manifestElement.insertBefore(manifest.createComment(comment), articleBundle);
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try {
+      Transformer transformer = TransformerFactory.newInstance().newTransformer();
+      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "manifest.dtd");
+      transformer.transform(new DOMSource(manifest), new StreamResult(outputStream));
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
+    }
+    final byte[] result = outputStream.toByteArray();
+
+    return new Archive.InputStreamSource() {
+      @Override
+      public InputStream open() throws IOException {
+        return new ByteArrayInputStream(result);
+      }
+    };
+  }
+
+  private static final Pattern PLOS_DOI_NAMING_CONVENTION = Pattern.compile(
+      "info:doi/10\\.\\d+/(?:journal\\.)?(\\w+(?:\\.\\w+)*)");
+
+  /**
+   * Generate a file name, to be used as a zip archive entry name, for an article or asset.
+   * <p/>
+   * The legacy data model gives us no way to recover the actual file name from the original archive. PLOS gets
+   * preferential treatment here -- if a DOI matches PLOS's naming convention, apply PLOS's corresponding convention for
+   * file names. Otherwise, return the last slash-delimited token.
+   *
+   * @param identity an identifier for an article or asset
+   * @return a filename with no extension for representing the argument
+   */
+  private static String inferFileName(DoiBasedIdentity identity) {
+    Matcher matcher = PLOS_DOI_NAMING_CONVENTION.matcher(identity.getKey());
+    return matcher.matches() ? matcher.group(1) : identity.getLastToken();
   }
 
 }

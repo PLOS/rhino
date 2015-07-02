@@ -166,6 +166,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    */
   public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
 
+  /**
+   * Represent an existing article as an ingestible archive. The archive, if it were reingested, should produce an
+   * identical article and assets.
+   *
+   * @param articleIdentity the article to represent
+   * @return the archive
+   */
+  public abstract Archive repack(ArticleIdentity articleIdentity);
+
 
   /**
    * Replicates the behavior of {@link #readMetadata}, and forces the service to read from the versioned data model.
