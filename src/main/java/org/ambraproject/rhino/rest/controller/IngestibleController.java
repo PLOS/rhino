@@ -140,7 +140,7 @@ public class IngestibleController extends DoiBasedCrudController {
    * longer supported.
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = {"versionedReingestInPlace", "article"})
+  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST, params = {"versionedReingestInPlace", "article"})
   @Deprecated
   public ResponseEntity<?> versionedReingestInPlace(@RequestParam("article") String articleId)
       throws IOException {
