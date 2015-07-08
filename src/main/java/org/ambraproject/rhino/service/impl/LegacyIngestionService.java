@@ -771,6 +771,9 @@ class LegacyIngestionService {
 
   public Archive repack(ArticleIdentity articleIdentity) {
     Article article = findArticleById(articleIdentity);
+    if (article == null) {
+      throw new RestClientException("Article to repack not found: " + articleIdentity, HttpStatus.NOT_FOUND);
+    }
     ImmutableMap.Builder<String, Archive.InputStreamSource> map = ImmutableMap.builder();
 
     map.put("manifest.dtd", MANIFEST_SOURCE);
@@ -831,7 +834,7 @@ class LegacyIngestionService {
       Element objectElement = (Element) articleBundle.appendChild(manifest.createElement("object"));
       objectElement.setAttribute("uri", assetGroup.getKey());
 
-      if (article.getStrkImgURI().equals(assetGroup.getKey())) {
+      if (assetGroup.getKey().equals(article.getStrkImgURI())) {
         objectElement.setAttribute("strkImage", "True");
       }
 
