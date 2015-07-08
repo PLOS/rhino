@@ -11,7 +11,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
-import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.util.Archive;
@@ -66,7 +65,7 @@ public class AssetTableTest {
 
   private static Document parseFrom(Archive archive, String entryName) throws IOException {
     try (InputStream stream = archive.openFile(entryName)) {
-      return IngestibleUtil.newDocumentBuilder().parse(stream);
+      return AmbraService.newDocumentBuilder().parse(stream);
     } catch (SAXException e) {
       throw new RuntimeException(e);
     }
