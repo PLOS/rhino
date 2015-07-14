@@ -6,7 +6,6 @@ Base class for Rhino Ingestibles JSON related services
 
 __author__ = 'msingh@plos.org'
 
-
 from ...Base.base_service_test import BaseServiceTest
 from ...Base.Config import API_BASE_URL
 
