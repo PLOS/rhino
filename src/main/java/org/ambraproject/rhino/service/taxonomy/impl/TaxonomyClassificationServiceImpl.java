@@ -159,10 +159,6 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     NodeList vectorElements = response.getElementsByTagName("VectorElement");
     List<String> results = new ArrayList<>(vectorElements.getLength());
 
-    if (results.size() == 0) {
-      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
-    }
-
     // Add the text that is sent to taxonomy server if isTextRequired is true
     if (isTextRequired) {
       toCategorize = StringEscapeUtils.unescapeXml(toCategorize);
@@ -173,6 +169,11 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     for (int i = 1; i < vectorElements.getLength() - 1; i++) {
       results.add(vectorElements.item(i).getTextContent());
     }
+
+    if ((isTextRequired && results.size() == 1) || results.isEmpty()) {
+      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+    }
+
     return results;
   }
 
