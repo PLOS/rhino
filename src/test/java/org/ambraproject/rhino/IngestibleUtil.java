@@ -4,14 +4,12 @@ import com.google.common.io.ByteStreams;
 import org.ambraproject.rhino.content.xml.ArticleXml;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.apache.commons.io.output.WriterOutputStream;
+import org.ambraproject.rhino.service.impl.AmbraService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -20,7 +18,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -29,22 +26,8 @@ import java.util.zip.ZipOutputStream;
  */
 public class IngestibleUtil {
 
-  public static DocumentBuilder newDocumentBuilder() {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    factory.setNamespaceAware(true);
-    factory.setValidating(false);
-    try {
-      factory.setFeature("http://xml.org/sax/features/validation", false);
-      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-      return factory.newDocumentBuilder();
-    } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
   private static Document buildManifest(ArticleIdentity identity) {
-    Document manifest = newDocumentBuilder().newDocument();
+    Document manifest = AmbraService.newDocumentBuilder().newDocument();
     Element manifestElement = (Element) manifest.appendChild(manifest.createElement("manifest"));
     Element articleBundle = (Element) manifestElement.appendChild(manifest.createElement("articleBundle"));
 
@@ -68,7 +51,7 @@ public class IngestibleUtil {
       xml.close();
     }
 
-    DocumentBuilder documentBuilder = newDocumentBuilder();
+    DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
     Document document;
     try {
       document = documentBuilder.parse(new ByteArrayInputStream(xmlData));

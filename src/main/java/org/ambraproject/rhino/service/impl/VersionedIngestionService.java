@@ -503,11 +503,11 @@ class VersionedIngestionService {
 
     Document document;
     try (InputStream manuscriptStream = parentService.contentRepoService.getRepoObject(manuscript)) {
-      DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder(); // TODO: Efficiency
+      DocumentBuilder documentBuilder = AmbraService.newDocumentBuilder();
       log.debug("In getArticleMetadata source={} documentBuilder.parse() called", source);
       document = documentBuilder.parse(manuscriptStream);
       log.debug("finish");
-    } catch (IOException | SAXException | ParserConfigurationException e) {
+    } catch (IOException | SAXException e) {
       throw new RuntimeException(e);
     }
 
