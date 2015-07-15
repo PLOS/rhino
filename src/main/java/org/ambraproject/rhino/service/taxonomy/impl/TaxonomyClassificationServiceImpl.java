@@ -170,7 +170,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
       results.add(vectorElements.item(i).getTextContent());
     }
 
-    if (results.isEmpty()) {
+    if ((isTextRequired && results.size() == 1) || results.isEmpty()) {
       log.error("Taxonomy server returned 0 terms. " + article.getDoi());
     }
 
