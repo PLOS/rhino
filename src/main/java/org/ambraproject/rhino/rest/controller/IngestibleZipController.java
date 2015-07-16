@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -50,8 +49,6 @@ public class IngestibleZipController extends RestController {
       throws IOException {
 
     String archiveName = requestFile.getOriginalFilename();
-    String zipFilename = System.getProperty("java.io.tmpdir") + File.separator + archiveName;
-    requestFile.transferTo(new File(zipFilename));
     Article result;
     try (InputStream requestInputStream = requestFile.getInputStream();
          Archive archive = Archive.readZipFile(archiveName, requestInputStream)) {
