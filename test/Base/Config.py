@@ -5,7 +5,8 @@ from os import getenv
 from selenium.webdriver import DesiredCapabilities
 
 # Set API_BASE_URL environment variable to desired URL in order to run suite against it
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://one-dpro2.plosjournals.org/v1')
+API_BASE_URL = os.getenv('API_BASE_URL', 'http://one-dpro.plosjournals.org/v1')
+SERVER_HOST = os.getenv('SERVER_HOST', 'sfo-dpro-devstack01.int.plos.org')
 PRINT_DEBUG = False
 TIMEOUT = 30         # API call timeout, in seconds
 
