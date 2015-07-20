@@ -81,7 +81,7 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public Transceiver read(final String slug, final String journalKey) {
+  public Transceiver read(final String journalKey, final String slug) {
     return new EntityTransceiver() {
       @Override
       protected ArticleCollection fetchEntity() {

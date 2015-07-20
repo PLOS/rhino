@@ -11,7 +11,7 @@ public interface CollectionCrudService {
 
   ArticleCollection create(String slug, String journalKey, String title, Set<ArticleIdentity> articleIds);
 
-  Transceiver read(String slug, String journalKey);
+  Transceiver read(String journalKey, String slug);
 
   Collection<ArticleCollection> findContainingCollections(ArticleIdentity articleId);
 
