@@ -42,6 +42,7 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     if (journal == null) {
       throw new RestClientException("Journal not found: " + journalKey, HttpStatus.BAD_REQUEST);
     }
+    coll.setJournal(journal);
 
     final Map<String, Integer> articleKeys = Maps.newHashMapWithExpectedSize(articleIds.size());
     int i = 0;
