@@ -24,10 +24,10 @@ public class CollectionCrudController extends RestController {
 
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/collections", method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam String slug,
-                                  @RequestParam String journalKey,
-                                  @RequestParam String title,
-                                  @RequestParam String[] articleDois)
+  public ResponseEntity<?> create(@RequestParam("slug") String slug,
+                                  @RequestParam("journal") String journalKey,
+                                  @RequestParam("title") String title,
+                                  @RequestParam("articles") String[] articleDois)
       throws IOException {
     Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
     for (String articleDoi : articleDois) {
