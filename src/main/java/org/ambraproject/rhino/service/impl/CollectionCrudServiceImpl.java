@@ -1,6 +1,8 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
@@ -18,7 +20,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,15 +69,14 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     return coll;
   }
 
-  private static String buildMissingArticleMessage(Collection<Article> articles, Set<String> requestedArticleKeys) {
-    Collection<String> missingKeys = new ArrayList<>();
-    for (Article article : articles) {
-      String key = article.getDoi();
-      if (!requestedArticleKeys.contains(key)) {
-        missingKeys.add(key);
-      }
+  private static String buildMissingArticleMessage(Collection<Article> foundArticles, Set<String> requestedArticleKeys) {
+    Set<String> foundArticleKeys = Sets.newHashSetWithExpectedSize(foundArticles.size());
+    for (Article article : foundArticles) {
+      foundArticleKeys.add(ArticleIdentity.create(article).getKey());
     }
-    return "Articles not found with DOIs: " + missingKeys;
+    String[] badDois = Sets.difference(requestedArticleKeys, foundArticleKeys).toArray(new String[0]);
+    Arrays.sort(badDois);
+    return "Articles not found with DOIs: " + new Gson().toJson(badDois);
   }
 
   @Override
