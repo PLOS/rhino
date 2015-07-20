@@ -119,8 +119,9 @@ public class RhinoConfiguration extends BaseConfiguration {
 
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", org.hibernate.dialect.MySQLDialect.class.getName());
-    hibernateProperties.setProperty("hibernate.show_sql", Boolean.FALSE.toString());
-    hibernateProperties.setProperty("hibernate.format_sql", Boolean.FALSE.toString());
+    final boolean hibernateIsInDebugMode = false;
+    hibernateProperties.setProperty("hibernate.show_sql", Boolean.toString(hibernateIsInDebugMode));
+    hibernateProperties.setProperty("hibernate.format_sql", Boolean.toString(hibernateIsInDebugMode));
     bean.setHibernateProperties(hibernateProperties);
 
     return bean;
