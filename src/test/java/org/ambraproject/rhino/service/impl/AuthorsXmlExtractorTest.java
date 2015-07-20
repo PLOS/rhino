@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 public class AuthorsXmlExtractorTest extends BaseRhinoTest {
 
@@ -91,7 +93,7 @@ public class AuthorsXmlExtractorTest extends BaseRhinoTest {
                     .setAffiliations(ImmutableList.of("Department of Infectious Diseases, Duke Medical Center, Durham, North Carolina, United States of America"))
                     .build(),
                 AuthorView.builder().setGivenNames("the Danish SAB Study Group Consortium")
-                    .setCustomFootnotes(ImmutableList.of("<p>Membership of the Danish SAB Study Group Consortium is provided in the Acknowledgments.</p>"))
+                    .setCustomFootnotes(ImmutableList.of("<p><span class=\"rel-footnote\">¶</span>Membership of the Danish SAB Study Group Consortium is provided in the Acknowledgments.</p>"))
                     .build(),
                 AuthorView.builder().setGivenNames("Paal Skytt").setSurnames("Andersen")
                     .setCorresponding("<span class=\"email\">* E-mail:</span> <a href=\"mailto:psa@ssi.dk\">psa@ssi.dk</a>")
@@ -268,7 +270,7 @@ public class AuthorsXmlExtractorTest extends BaseRhinoTest {
                 .setAffiliations(ImmutableList.of("U.S. Meat Animal Research Center (USMARC), Clay Center, Nebraska, United States of America"))
                 .build(),
             AuthorView.builder().setGivenNames("the International Sheep Genomics Consortium")
-                .setCustomFootnotes(ImmutableList.of("<p>Membership of the International Sheep Genomics Consortium is provided in the Acknowledgments and at <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://www.sheephapmap.org/participants.php\" xlink:type=\"simple\">http://www.sheephapmap.org/participants.php</ext-link>.</p>"))
+                .setCustomFootnotes(ImmutableList.of("<p><span class=\"rel-footnote\">¶</span>Membership of the International Sheep Genomics Consortium is provided in the Acknowledgments and at <ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"http://www.sheephapmap.org/participants.php\" xlink:type=\"simple\">http://www.sheephapmap.org/participants.php</ext-link>.</p>"))
                 .build(),
         }},
         {"journal.pgen.0030208.xml", new AuthorView[]{
