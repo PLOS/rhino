@@ -802,6 +802,8 @@ class LegacyIngestionService {
   };
 
   private static Archive.InputStreamSource rebuildManifest(Article article) {
+    final String articleDoi = article.getDoi();
+
     Document manifest;
     try {
       manifest = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -815,7 +817,7 @@ class LegacyIngestionService {
     String articleNameStub = inferFileName(ArticleIdentity.create(article));
     String xmlEntryName = articleNameStub + ".XML";
     Element articleElement = (Element) articleBundle.appendChild(manifest.createElement("article"));
-    articleElement.setAttribute("uri", article.getDoi());
+    articleElement.setAttribute("uri", articleDoi);
     articleElement.setAttribute("main-entry", xmlEntryName);
     Element xmlRepr = (Element) articleElement.appendChild(manifest.createElement("representation"));
     xmlRepr.setAttribute("name", "XML");
@@ -831,10 +833,17 @@ class LegacyIngestionService {
       }
     });
     for (Map.Entry<String, List<ArticleAsset>> assetGroup : Multimaps.asMap(assetsByDoi).entrySet()) {
-      Element objectElement = (Element) articleBundle.appendChild(manifest.createElement("object"));
-      objectElement.setAttribute("uri", assetGroup.getKey());
+      String key = assetGroup.getKey();
+      if (key.equals(articleDoi)) {
+        // These assets were represented above as the <article> element.
+        // There should not be a second <object> element for them.
+        continue;
+      }
 
-      if (assetGroup.getKey().equals(article.getStrkImgURI())) {
+      Element objectElement = (Element) articleBundle.appendChild(manifest.createElement("object"));
+      objectElement.setAttribute("uri", key);
+
+      if (key.equals(article.getStrkImgURI())) {
         objectElement.setAttribute("strkImage", "True");
       }
 
