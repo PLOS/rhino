@@ -21,7 +21,6 @@ package org.ambraproject.rhino.config;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -91,5 +90,11 @@ public interface RuntimeConfiguration {
   }
 
   TaxonomyConfiguration getTaxonomyConfiguration();
+
+  /**
+   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
+   */
+  @Deprecated
+  boolean isUsingVersionedIngestion();
 
 }

@@ -31,6 +31,7 @@ import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.models.ArticleRelationship;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.content.xml.XmlContentException;
 import org.ambraproject.rhino.content.xml.XpathReader;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -84,6 +85,8 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   AssetCrudService assetService;
 
   @Autowired
+  RuntimeConfiguration runtimeConfiguration;
+  @Autowired
   protected PingbackReadService pingbackReadService;
   @Autowired
   private ArticleOutputViewFactory articleOutputViewFactory;
@@ -112,10 +115,12 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
   public Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode) throws IOException {
     Article article = legacyIngestionService.writeArchive(archive, suppliedId, mode);
 
-    try {
-      versionedIngestionService.ingest(archive);
-    } catch (XmlContentException e) {
-      throw new RuntimeException(e);
+    if (runtimeConfiguration.isUsingVersionedIngestion()) {
+      try {
+        versionedIngestionService.ingest(archive);
+      } catch (XmlContentException e) {
+        throw new RuntimeException(e);
+      }
     }
 
     return article;
@@ -123,10 +128,14 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
   @Override
   public Article writeArchiveAsVersionedOnly(Archive archive) throws IOException {
-    try {
-      return versionedIngestionService.ingest(archive).getArticle();
-    } catch (XmlContentException e) {
-      throw new RuntimeException(e);
+    if (runtimeConfiguration.isUsingVersionedIngestion()) {
+      try {
+        return versionedIngestionService.ingest(archive).getArticle();
+      } catch (XmlContentException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      throw new RestClientException("Versioned ingestion is not enabled on this system", HttpStatus.BAD_REQUEST);
     }
   }
 

@@ -145,6 +145,15 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
+  /**
+   * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
+   */
+  @Deprecated
+  @Override
+  public boolean isUsingVersionedIngestion() {
+    return input.usingVersionedIngestion;
+  }
+
 
   public static class Input {
 
@@ -152,6 +161,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private ContentRepoInput contentRepo;
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
+    private boolean usingVersionedIngestion = false; // default is false
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -183,6 +193,17 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * This one will likely be removed in the future, when versioned ingestion is stable and/or the only data schema in
+     * use.
+     *
+     * @deprecated Temporary; for reflective access by SnakeYAML only.
+     */
+    @Deprecated
+    public void setUsingVersionedIngestion(boolean usingVersionedIngestion) {
+      this.usingVersionedIngestion = usingVersionedIngestion;
     }
   }
 
