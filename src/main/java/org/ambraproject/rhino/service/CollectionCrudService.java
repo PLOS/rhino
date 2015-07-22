@@ -4,7 +4,6 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.ArticleCollection;
 import org.ambraproject.rhino.util.response.Transceiver;
 
-import java.util.Collection;
 import java.util.Set;
 
 public interface CollectionCrudService {
@@ -13,6 +12,6 @@ public interface CollectionCrudService {
 
   Transceiver read(String journalKey, String slug);
 
-  Collection<ArticleCollection> findContainingCollections(ArticleIdentity articleId);
+  Transceiver findContainingCollections(ArticleIdentity articleId);
 
 }
