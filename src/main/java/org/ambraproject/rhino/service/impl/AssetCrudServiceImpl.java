@@ -47,6 +47,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
+import org.plos.crepo.exceptions.NotFoundException;
 import org.plos.crepo.model.RepoCollectionMetadata;
 import org.plos.crepo.model.RepoObjectMetadata;
 import org.plos.crepo.model.RepoVersion;
@@ -277,7 +278,7 @@ public class AssetCrudServiceImpl extends AmbraService implements AssetCrudServi
   public InputStream read(AssetFileIdentity assetId) {
     try {
       return contentRepoService.getLatestRepoObject(assetId.toString());
-    } catch (ContentRepoException e) {
+    } catch (ContentRepoException | NotFoundException e) {
       String message = String.format("Asset not found at DOI \"%s\" with extension \"%s\"",
           assetId.getIdentifier(), assetId.getFileExtension());
       throw new RestClientException(message, HttpStatus.NOT_FOUND, e);
