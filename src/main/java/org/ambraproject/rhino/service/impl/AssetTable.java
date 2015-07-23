@@ -230,6 +230,7 @@ class AssetTable<T> {
         return AssetType.FIGURE;
       case "table-wrap":
         return AssetType.TABLE;
+      case "graphic":
       case "disp-formula":
       case "inline-formula":
         return AssetType.GRAPHIC;
