@@ -25,6 +25,14 @@ public class CollectionCrudController extends RestController {
   @Autowired
   private CollectionCrudService collectionCrudService;
 
+  private static Set<ArticleIdentity> asArticleIdentities(String[] articleDois) {
+    Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
+    for (String articleDoi : articleDois) {
+      articleIdentities.add(ArticleIdentity.create(articleDoi));
+    }
+    return articleIdentities;
+  }
+
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/collections", method = RequestMethod.POST)
   public ResponseEntity<?> create(@RequestParam("journal") String journalKey,
@@ -32,13 +40,26 @@ public class CollectionCrudController extends RestController {
                                   @RequestParam("title") String title,
                                   @RequestParam("articles") String[] articleDois)
       throws IOException {
-    Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
-    for (String articleDoi : articleDois) {
-      articleIdentities.add(ArticleIdentity.create(articleDoi));
-    }
-
-    collectionCrudService.create(slug, journalKey, title, articleIdentities);
+    collectionCrudService.create(slug, journalKey, title, asArticleIdentities(articleDois));
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  /*
+   * API design note: This, for now, is inconsistent with our other PATCH method (on article state). This one uses
+   * request parameters to be consistent with its POST. The other one uses a JSON request body to be consistent with its
+   * GET.
+   *
+   * TODO: Make PATCH requests consistent once we decide how we want to do it
+   */
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/collections/{journalKey}/{slug}", method = RequestMethod.PATCH)
+  public ResponseEntity<?> update(@PathVariable("journalKey") String journalKey,
+                                  @PathVariable("slug") String slug,
+                                  @RequestParam("title") String title,
+                                  @RequestParam("articles") String[] articleDois)
+      throws IOException {
+    collectionCrudService.update(journalKey, slug, title, asArticleIdentities(articleDois));
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

@@ -12,6 +12,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.CollectionCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -20,6 +21,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -45,6 +47,47 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     }
     coll.setJournal(journal);
 
+    List<Article> articles = fetchArticles(articleIds);
+    coll.setArticles(articles);
+
+    hibernateTemplate.persist(coll);
+    return coll;
+  }
+
+  @Override
+  public ArticleCollection update(final String slug, final String journalKey,
+                                  String title, Set<ArticleIdentity> articleIds) {
+    ArticleCollection coll = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
+      @Override
+      public List<ArticleCollection> doInHibernate(Session session) throws HibernateException, SQLException {
+        Query query = session.createQuery("" +
+            "from ArticleCollection c " +
+            "where c.slug=:slug and c.journal.journalKey=:journalKey");
+        query.setString("slug", slug);
+        query.setString("journalKey", journalKey);
+        return query.list();
+      }
+    }));
+    if (coll == null) {
+      throw new RestClientException("Collection does not exist", HttpStatus.NOT_FOUND);
+    }
+
+    if (title != null) {
+      coll.setTitle(title);
+    }
+
+    if (articleIds != null) {
+      List<Article> newArticles = fetchArticles(articleIds);
+      List<Article> oldArticles = coll.getArticles();
+      oldArticles.clear();
+      oldArticles.addAll(newArticles);
+    }
+
+    hibernateTemplate.update(coll);
+    return coll;
+  }
+
+  private List<Article> fetchArticles(Set<ArticleIdentity> articleIds) {
     final Map<String, Integer> articleKeys = Maps.newHashMapWithExpectedSize(articleIds.size());
     int i = 0;
     for (ArticleIdentity articleId : articleIds) {
@@ -65,10 +108,7 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
         return articleKeys.get(o1.getDoi()) - articleKeys.get(o2.getDoi());
       }
     });
-    coll.setArticles(articles);
-
-    hibernateTemplate.persist(coll);
-    return coll;
+    return articles;
   }
 
   private static String buildMissingArticleMessage(Collection<Article> foundArticles, Set<String> requestedArticleKeys) {
