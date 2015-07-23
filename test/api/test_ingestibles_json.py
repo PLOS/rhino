@@ -4,17 +4,17 @@ __author__ = 'msingh@plos.org'
 
 """
 This test case validates Rhino's ingestibles API.
+This test requires sshpass to be installed %apt-get install sshpass
 """
 
 import os, random
 from ..api.RequestObject.ingestibles_json import IngestiblesJson, OK, CREATED, BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, NOT_ALLOWED
-import time
-from ..Base.Config import SERVER_HOST
+from ..Base.Config import INGESTION_HOST
 
 USER = 'rinotest'
 RHINO_INGEST_PATH = '/var/spool/ambra/ingestion-queue'
 TEST_DATA_PATH = 'test/data'
-HOST_HOME = USER +'@'+ SERVER_HOST
+HOST_HOME = USER +'@'+ INGESTION_HOST
 USER_HOME = '/home/' + USER + '/'
 
 class IngestiblesTest(IngestiblesJson):
@@ -44,7 +44,6 @@ class IngestiblesTest(IngestiblesJson):
     try:
       self.post_ingestibles(name=files[0], force_reingest='')
       self.verify_http_code_is(CREATED)
-      time.sleep(5)
     except:
       # delete file if there was exception, otherwise Rhino already moves it
       self.verify_ingest_files(exists=files)
@@ -92,7 +91,6 @@ class IngestiblesTest(IngestiblesJson):
       COMMAND= 'sshpass -pShoh1yar ' +  COMMAND_MOVE
       print('sshpass -pPassword ' +  COMMAND_MOVE)
       os.system(COMMAND)
-      time.sleep(5)
       src = USER_HOME + filename
       dst = RHINO_INGEST_PATH
       try:
@@ -100,7 +98,6 @@ class IngestiblesTest(IngestiblesJson):
         COMMAND= 'sshpass -pShoh1yar ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_MOVE
         print('sshpass -pPassword ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_MOVE)
         os.system(COMMAND)
-        time.sleep(5)
       except:
         raise RuntimeError('error copying from %r to %r'%(src, dst))
     return files
@@ -113,7 +110,6 @@ class IngestiblesTest(IngestiblesJson):
         COMMAND= 'sshpass -pShoh1yar ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_DELETE
         print('sshpass -pPassword ssh -o StrictHostKeyChecking=no ' + HOST_HOME + COMMAND_DELETE)
         os.system(COMMAND)
-        time.sleep(5)
       except:
         raise RuntimeError('error removing from %r'%(src,))
 
