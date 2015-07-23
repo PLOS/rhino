@@ -231,6 +231,7 @@ class AssetTable<T> {
       case "table-wrap":
         return AssetType.TABLE;
       case "disp-formula":
+      case "inline-formula":
         return AssetType.GRAPHIC;
       case "supplementary-material":
         return AssetType.SUPPLEMENTARY_MATERIAL;
