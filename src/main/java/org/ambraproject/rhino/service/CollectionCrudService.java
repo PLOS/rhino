@@ -30,7 +30,7 @@ public interface CollectionCrudService {
    * @param slug       the slug of the collection to modify
    * @param journalKey the key of the journal to which the collection belongs
    * @param title      the new collection title, or {@code null} to leave the title unchanged
-   * @param articleIds the new set of collections
+   * @param articleIds the new set of articles in the collection, or {@code null} to leave them unchanged
    * @return the modified collection
    */
   ArticleCollection update(String slug, String journalKey, String title, Set<ArticleIdentity> articleIds);

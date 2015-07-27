@@ -55,10 +55,12 @@ public class CollectionCrudController extends RestController {
   @RequestMapping(value = "/collections/{journalKey}/{slug}", method = RequestMethod.PATCH)
   public ResponseEntity<?> update(@PathVariable("journalKey") String journalKey,
                                   @PathVariable("slug") String slug,
-                                  @RequestParam("title") String title,
-                                  @RequestParam("articles") String[] articleDois)
+                                  @RequestParam(value = "title", required = false) String title,
+                                  @RequestParam(value = "articles", required = false) String[] articleDois)
       throws IOException {
-    collectionCrudService.update(journalKey, slug, title, asArticleIdentities(articleDois));
+    Set<ArticleIdentity> articleIds = (articleDois == null || articleDois.length == 0) ? null
+        : asArticleIdentities(articleDois);
+    collectionCrudService.update(journalKey, slug, title, articleIds);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 

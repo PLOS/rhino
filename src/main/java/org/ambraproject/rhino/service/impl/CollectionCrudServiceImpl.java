@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -77,6 +78,7 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     }
 
     if (articleIds != null) {
+      Preconditions.checkArgument(!articleIds.isEmpty());
       List<Article> newArticles = fetchArticles(articleIds);
       List<Article> oldArticles = coll.getArticles();
       oldArticles.clear();
