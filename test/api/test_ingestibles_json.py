@@ -16,6 +16,9 @@ RHINO_INGEST_PATH = '/var/spool/ambra/ingestion-queue'
 TEST_DATA_PATH = 'test/data'
 HOST_HOME = USER +'@'+ INGESTION_HOST
 USER_HOME = '/home/' + USER + '/'
+ARTICLE_ID = 'pone.0122963'
+ARTICLE_ID_EXTENDED = '10.1371/journal.'+ ARTICLE_ID
+ARTICLE_ID_ZIP = 'pone.0122963.zip'
 
 class IngestiblesTest(IngestiblesJson):
 
@@ -87,6 +90,7 @@ class IngestiblesTest(IngestiblesJson):
       random.shuffle(files)
       files = files[:count]
     for filename in files:
+      print(filename)
       COMMAND_MOVE= 'scp -r ' + TEST_DATA_PATH + '/' + filename + ' ' + HOST_HOME + ':' + USER_HOME
       COMMAND= 'sshpass -pShoh1yar ' +  COMMAND_MOVE
       print('sshpass -pPassword ' +  COMMAND_MOVE)
