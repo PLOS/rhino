@@ -226,13 +226,11 @@ public final class AuthorsXmlExtractor {
         String value = otherFootnotesMap.get(id);
 
         if (value != null) {
+          value = fixPilcrow(value, true);
           //If the current footnote is also referenced by another contrib
           //We want to notify the end user of the relation
           if (hasRelatedFootnote(doc, xpath, id)) {
-            value = fixPilcrow(value, true);
             relatedFootnote = true;
-          } else {
-            value = fixPilcrow(value, false);
           }
 
           otherFootnotes.add(value);

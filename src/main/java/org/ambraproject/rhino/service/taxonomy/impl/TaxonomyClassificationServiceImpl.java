@@ -87,7 +87,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
-    List<String> rawTerms = getRawTerms(articleXml, article);
+    List<String> rawTerms = getRawTerms(articleXml, article, false);
     Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
@@ -121,7 +121,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article) throws IOException {
+  public List<String> getRawTerms(Document articleXml, Article article,
+                                  boolean isTextRequired) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     String toCategorize = getCategorizationContent(articleXml);
@@ -158,17 +159,23 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     NodeList vectorElements = response.getElementsByTagName("VectorElement");
     List<String> results = new ArrayList<>(vectorElements.getLength());
 
-    if (results.size() == 0) {
-      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+    // Add the text that is sent to taxonomy server if isTextRequired is true
+    if (isTextRequired) {
+      toCategorize = StringEscapeUtils.unescapeXml(toCategorize);
+      results.add(toCategorize);
     }
 
     //The first and last elements of the vector response are just MAITERMS
     for (int i = 1; i < vectorElements.getLength() - 1; i++) {
       results.add(vectorElements.item(i).getTextContent());
     }
+
+    if ((isTextRequired && results.size() == 1) || results.isEmpty()) {
+      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+    }
+
     return results;
   }
-
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.
   // It's supposed to return a slash-delimited path that starts with a slash,

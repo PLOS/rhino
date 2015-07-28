@@ -153,6 +153,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Transceiver getRawCategories(ArticleIdentity id)
       throws IOException;
 
+  /**
+   * Get the text that is sent to the taxonomy server as well as the taxonomy terms returned by the server
+   *
+   * @param id specifies the article
+   * @return a String containing the text and raw categories
+   * @throws IOException
+   */
+  public abstract String getRawCategoriesAndText(ArticleIdentity id) throws IOException;
+
   public abstract void setAssetService(AssetCrudService assetService);
 
   /**

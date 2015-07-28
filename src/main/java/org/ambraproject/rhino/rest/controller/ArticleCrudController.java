@@ -29,6 +29,9 @@ import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -254,6 +257,28 @@ public class ArticleCrudController extends ArticleSpaceController {
     ArticleIdentity id = parse(request);
     articleCrudService.delete(id);
     return reportOk();
+  }
+
+  /**
+   * Retrieves the raw taxonomy categories associated with the article along with the text that is sent to the
+   * taxonomy server for classification
+   *
+   * @param request
+   * @return a String containing the text and raw categories in the form of <text> \n\n <categories>
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "rawCategoriesAndText")
+  public ResponseEntity<String> getRawCategoriesAndText(HttpServletRequest request)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+
+    String categoriesAndText = articleCrudService.getRawCategoriesAndText(id);
+    HttpHeaders responseHeader = new HttpHeaders();
+    responseHeader.setContentType(MediaType.TEXT_HTML);
+    ResponseEntity<String> response = new ResponseEntity<>(categoriesAndText, responseHeader,
+        HttpStatus.OK);
+    return response;
   }
 
 }
