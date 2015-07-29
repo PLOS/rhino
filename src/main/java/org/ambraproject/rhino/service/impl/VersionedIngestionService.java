@@ -37,8 +37,6 @@ import org.xml.sax.SAXException;
 import javax.annotation.Nullable;
 import javax.ws.rs.core.MediaType;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -126,32 +124,14 @@ class VersionedIngestionService {
       throw new RestClientException("Archive has no manifest file", HttpStatus.BAD_REQUEST);
     }
 
-    Map<String, RepoObject> toUpload = new LinkedHashMap<>(); // keys are zip entry names
-
     ManifestXml manifestXml;
     try (InputStream manifestStream = new BufferedInputStream(archive.openFile(manifestEntry))) {
       manifestXml = new ManifestXml(AmbraService.parseXml(manifestStream));
     }
     ImmutableList<ManifestXml.Asset> assets = manifestXml.parse();
 
-    ManifestXml.Asset manuscriptAsset = null;
-    ManifestXml.Representation manuscriptRepr = null;
-    for (ManifestXml.Asset asset : assets) {
-      Optional<String> mainEntry = asset.getMainEntry();
-      if (mainEntry.isPresent()) {
-        for (ManifestXml.Representation representation : asset.getRepresentations()) {
-          if (representation.getEntry().equals(mainEntry.get())) {
-            manuscriptRepr = representation;
-            break;
-          }
-        }
-        manuscriptAsset = asset;
-        break;
-      }
-    }
-    if (manuscriptAsset == null || manuscriptRepr == null) {
-      throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
-    }
+    ManifestXml.Asset manuscriptAsset = findManuscriptAsset(assets);
+    ManifestXml.Representation manuscriptRepr = findManuscriptRepr(manuscriptAsset);
 
     String manuscriptEntry = manuscriptRepr.getEntry();
     if (!archive.getEntryNames().contains(manifestEntry)) {
@@ -168,19 +148,51 @@ class VersionedIngestionService {
     AssetTable<String> assetTable = AssetTable.buildFromIngestible(parsedArticle.findAllAssetNodes(), manifestXml);
     ArticleCollection collection = new ArticleCollection(archive.getArchiveName(), articleIdentity, assetTable);
 
-    ArticleObject manifest = collection.insertArchiveObject(manifestEntry,
-        new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
-            .contentAccessor(archive.getContentAccessorFor(manifestEntry))
-            .downloadName(manifestEntry)
-            .contentType(MediaType.APPLICATION_XML));
-    collection.tagSpecialObject(manifest, "manifest");
+    createSpecialXmlObjects(archive, manifestEntry, manuscriptEntry, parsedArticle, articleIdentity, collection);
+    createAssetObjects(archive, manifestXml, assetTable, collection);
+    createNonAssetObjects(archive, articleIdentity, collection);
 
-    ArticleObject manuscript = collection.insertArchiveObject(manuscriptEntry,
-        new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
-            .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
-            .contentType(MediaType.APPLICATION_XML)
-            .downloadName(articleIdentity.forXmlAsset().getFileName()));
-    collection.tagSpecialObject(manuscript, MANUSCRIPTS_KEY, SOURCE_KEYS.get(ArticleMetadataSource.FULL_MANUSCRIPT));
+    RepoCollectionList collectionMetadata = collection.persist();
+
+    associateDois(manifestXml, articleIdentity);
+
+    return new IngestionResult(articleMetadata, collectionMetadata);
+  }
+
+  private ManifestXml.Asset findManuscriptAsset(List<ManifestXml.Asset> assets) {
+    for (ManifestXml.Asset asset : assets) {
+      if (asset.getMainEntry().isPresent()) {
+        return asset;
+      }
+    }
+    throw new RestClientException("main-entry not found", HttpStatus.BAD_REQUEST);
+  }
+
+  private ManifestXml.Representation findManuscriptRepr(ManifestXml.Asset manuscriptAsset) {
+    Optional<String> mainEntry = manuscriptAsset.getMainEntry();
+    Preconditions.checkArgument(mainEntry.isPresent(), "manuscriptAsset must have main-entry");
+    for (ManifestXml.Representation representation : manuscriptAsset.getRepresentations()) {
+      if (representation.getEntry().equals(mainEntry.get())) {
+        return representation;
+      }
+    }
+    throw new RestClientException("main-entry not matched to asset", HttpStatus.BAD_REQUEST);
+  }
+
+  private void createSpecialXmlObjects(Archive archive, String manifestEntry, String manuscriptEntry, ArticleXml parsedArticle, ArticleIdentity articleIdentity, ArticleCollection collection) {
+    collection.tagSpecialObject(collection.insertArchiveObject(manifestEntry,
+            new RepoObject.RepoObjectBuilder("manifest/" + articleIdentity.getIdentifier())
+                .contentAccessor(archive.getContentAccessorFor(manifestEntry))
+                .downloadName(manifestEntry)
+                .contentType(MediaType.APPLICATION_XML)),
+        "manifest");
+
+    collection.tagSpecialObject(collection.insertArchiveObject(manuscriptEntry,
+            new RepoObject.RepoObjectBuilder("manuscript/" + articleIdentity.getIdentifier())
+                .contentAccessor(archive.getContentAccessorFor(manuscriptEntry))
+                .contentType(MediaType.APPLICATION_XML)
+                .downloadName(articleIdentity.forXmlAsset().getFileName())),
+        MANUSCRIPTS_KEY, SOURCE_KEYS.get(ArticleMetadataSource.FULL_MANUSCRIPT));
 
     collection.tagSpecialObject(createDynamicObject(
             new RepoObject.RepoObjectBuilder("front/" + articleIdentity.getIdentifier())
@@ -194,8 +206,9 @@ class VersionedIngestionService {
                 .contentType(MediaType.APPLICATION_XML)
                 .build()),
         MANUSCRIPTS_KEY, SOURCE_KEYS.get(ArticleMetadataSource.FRONT_AND_BACK_MATTER));
+  }
 
-    // Create RepoObjects for assets
+  private void createAssetObjects(Archive archive, ManifestXml manifestXml, AssetTable<String> assetTable, ArticleCollection collection) {
     for (AssetTable.Asset<String> asset : assetTable.getAssets()) {
       AssetIdentity assetIdentity = asset.getIdentity();
       String key = asset.getFileType() + "/" + assetIdentity.getIdentifier();
@@ -209,7 +222,7 @@ class VersionedIngestionService {
               preexisting.input.getKey(), key, archiveEntryName);
           throw new RuntimeException(message);
         }
-        continue; // Don't insert a RepoObject redundant to a special object created above
+        continue; // Don't insert a RepoObject redundant to a special object
       }
 
       RepoObject.RepoObjectBuilder repoObject = new RepoObject.RepoObjectBuilder(key)
@@ -219,8 +232,9 @@ class VersionedIngestionService {
           .contentType(assetFileIdentity.inferContentType().toString());
       collection.insertArchiveObject(archiveEntryName, repoObject);
     }
+  }
 
-    // Create RepoObjects for files in the archive not referenced by the manifest
+  private void createNonAssetObjects(Archive archive, ArticleIdentity articleIdentity, ArticleCollection collection) {
     int nonAssetFileIndex = 0;
     for (String entry : archive.getEntryNames()) {
       if (!collection.archiveObjects.containsKey(entry)) {
@@ -233,10 +247,9 @@ class VersionedIngestionService {
         collection.insertArchiveObject(entry, repoObject);
       }
     }
+  }
 
-    RepoCollectionList collectionMetadata = collection.persist();
-
-    // Associate DOIs
+  private void associateDois(ManifestXml manifestXml, ArticleIdentity articleIdentity) {
     for (ManifestXml.Asset asset : manifestXml.parse()) {
       String assetDoi = AssetIdentity.create(asset.getUri()).getIdentifier();
       DoiAssociation existing = (DoiAssociation) DataAccessUtils.uniqueResult(parentService.hibernateTemplate.find(
@@ -250,8 +263,6 @@ class VersionedIngestionService {
         throw new RuntimeException("Asset DOI already belongs to another parent article"); // TODO: Rollback
       } // else, leave it as is
     }
-
-    return new IngestionResult(articleMetadata, collectionMetadata);
   }
 
   private static byte[] serializeXml(Document document) {
