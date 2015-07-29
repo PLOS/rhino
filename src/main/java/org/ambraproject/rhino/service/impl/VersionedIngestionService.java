@@ -323,7 +323,7 @@ class VersionedIngestionService {
   public Archive repack(RepoCollectionList article) {
     Map<String, Object> articleMetadata = (Map<String, Object>) article.getJsonUserMetadata().get();
     String archiveName = (String) articleMetadata.get(ARCHIVE_NAME_KEY);
-    return Archive.readCollection(parentService.contentRepoService, archiveName, article, ARCHIVE_ENTRY_NAME_EXTRACTOR);
+    return Archive.readRepoCollection(parentService.contentRepoService, archiveName, article, ARCHIVE_ENTRY_NAME_EXTRACTOR);
   }
 
 

@@ -206,9 +206,9 @@ public abstract class Archive implements Closeable {
    *                           which case the object downloadName is required and used)
    * @return the archive representation
    */
-  public static Archive readCollection(final ContentRepoService service, String archiveName,
-                                       RepoCollectionList collection,
-                                       Function<? super RepoObjectMetadata, String> entryNameExtractor) {
+  public static Archive readRepoCollection(final ContentRepoService service, String archiveName,
+                                           RepoCollectionList collection,
+                                           Function<? super RepoObjectMetadata, String> entryNameExtractor) {
     Preconditions.checkNotNull(service);
 
     ImmutableMap.Builder<String, RepoVersion> objects = ImmutableMap.builder();
