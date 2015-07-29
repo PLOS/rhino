@@ -126,7 +126,7 @@ public class ManifestXml extends AbstractXpathReader {
     private final boolean isStrikingImage;
     private final ImmutableList<Representation> representations;
 
-    public Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, Iterable<Representation> representations) {
+    private Asset(AssetType assetType, String uri, String mainEntry, boolean isStrikingImage, Iterable<Representation> representations) {
       this.isStrikingImage = isStrikingImage;
       this.assetType = Preconditions.checkNotNull(assetType);
       this.uri = Preconditions.checkNotNull(uri);
@@ -174,7 +174,7 @@ public class ManifestXml extends AbstractXpathReader {
     private final String name;
     private final String entry;
 
-    public Representation(String name, String entry) {
+    private Representation(String name, String entry) {
       this.name = Preconditions.checkNotNull(name);
       this.entry = Preconditions.checkNotNull(entry);
     }

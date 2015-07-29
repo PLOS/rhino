@@ -207,21 +207,28 @@ class AssetTable<T> {
     for (ManifestXml.Asset asset : manifest.parse()) {
       AssetType assetType = findAssetType(assetNodeMap, asset);
       for (ManifestXml.Representation representation : asset.getRepresentations()) {
-        String entryName = representation.getEntry();
-
-        String fileType = assetType.getFileType(representation.getName());
-
-        Key key = new Key(AssetIdentity.create(asset.getUri()), fileType);
-        Value<String> value = new Value<>(assetType, entryName);
-        Value<String> previous = ingestibleEntryNames.put(key, value);
-        if (previous != null) {
-          String message = String.format("More than one file has uri=\"%s\" and repr=\"%s\"",
-              asset.getUri(), representation.getName());
-          throw new RestClientException(message, HttpStatus.BAD_REQUEST);
-        }
+        insertEntryForAssetRepr(ingestibleEntryNames, asset, assetType, representation);
       }
     }
     return new AssetTable<>(ingestibleEntryNames);
+  }
+
+  private static void insertEntryForAssetRepr(Map<Key, Value<String>> ingestibleEntryNames,
+                                              ManifestXml.Asset asset,
+                                              AssetType assetType,
+                                              ManifestXml.Representation representation) {
+    String entryName = representation.getEntry();
+    String fileType = assetType.getFileType(representation.getName());
+
+    Key key = new Key(AssetIdentity.create(asset.getUri()), fileType);
+    Value<String> value = new Value<>(assetType, entryName);
+
+    Value<String> previous = ingestibleEntryNames.put(key, value);
+    if (previous != null) {
+      String message = String.format("More than one file has uri=\"%s\" and repr=\"%s\"",
+          asset.getUri(), representation.getName());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   private static AssetType getByXmlNodeName(String nodeName) {
