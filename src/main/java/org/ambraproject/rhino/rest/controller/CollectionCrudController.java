@@ -81,7 +81,7 @@ public class CollectionCrudController extends RestController {
   public void findForArticle(HttpServletRequest request, HttpServletResponse response,
                              @RequestParam("article") String articleDoi)
       throws IOException {
-    collectionCrudService.findContainingCollections(ArticleIdentity.create(articleDoi))
+    collectionCrudService.readContainingCollections(ArticleIdentity.create(articleDoi))
         .respond(request, response, entityGson);
   }
 
