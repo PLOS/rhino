@@ -19,13 +19,11 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
-import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
+import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
@@ -40,12 +38,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -118,28 +114,6 @@ public class ArticleCrudController extends ArticleSpaceController {
 
 
   /**
-   * Create an article received at the root noun, without an identifier in the URL. Respond with the received data.
-   *
-   * @param response
-   * @param requestFile
-   * @throws IOException
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.POST)
-  public void create(HttpServletRequest request, HttpServletResponse response,
-                     @RequestParam(ARTICLE_XML_FIELD) MultipartFile requestFile)
-      throws IOException {
-    Article result;
-    try (InputStream requestBody = requestFile.getInputStream()) {
-      result = articleCrudService.write(requestBody, Optional.<ArticleIdentity>absent(), WriteMode.CREATE_ONLY);
-    }
-    response.setStatus(HttpStatus.CREATED.value());
-
-    // Report the written data, as JSON, in the response.
-    articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
-  }
-
-  /**
    * Repopulates article category information by making a call to the taxonomy server.
    *
    * @param request          HttpServletRequest
@@ -174,6 +148,29 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleIdentity id = parse(request);
     articleCrudService.readMetadata(id, excludeCitations).respond(request, response, entityGson);
+  }
+
+  /**
+   * Replicates the behavior of {@link #read}, and forces the service to read from the versioned data model. For
+   * verification and debugging purposes only, while regular read services don't fully use the versioned data model.
+   *
+   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
+   */
+  @Deprecated
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
+  public void previewMetadataFromVersionedModel(
+      HttpServletRequest request, HttpServletResponse response,
+      @RequestParam(value = "version", required = false) Integer versionNumber,
+      @RequestParam(value = "excludeCitations", required = false) boolean excludeCitations,
+      @RequestParam(value = "parseFullManuscript", required = false) boolean parseFullManuscript)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    ArticleMetadataSource sourceObj = parseFullManuscript ? ArticleMetadataSource.FULL_MANUSCRIPT
+        : excludeCitations ? ArticleMetadataSource.FRONT_MATTER
+        : ArticleMetadataSource.FRONT_AND_BACK_MATTER;
+    articleCrudService.readVersionedMetadata(id, Optional.fromNullable(versionNumber), sourceObj)
+        .respond(request, response, entityGson);
   }
 
   /**

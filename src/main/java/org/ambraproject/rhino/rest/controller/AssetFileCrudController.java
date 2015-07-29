@@ -23,7 +23,10 @@ import com.google.common.base.Optional;
 import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.ArticleAsset;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.AssetFileIdentity;
+import org.ambraproject.rhino.identity.AssetIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.AssetCrudService;
 import org.ambraproject.rhino.service.WriteResult;
@@ -50,7 +53,6 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
 import static org.ambraproject.rhino.service.impl.AmbraService.reportNotFound;
 
@@ -147,8 +149,14 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       }
     }
 
+    serve(request, response, id, objMeta);
+  }
+
+  private void serve(HttpServletRequest request, HttpServletResponse response,
+                     AssetFileIdentity id, RepoObjectMetadata objMeta)
+      throws IOException {
     Optional<String> contentType = objMeta.getContentType();
-      // In case contentType field is empty, default to what we would have written at ingestion
+    // In case contentType field is empty, default to what we would have written at ingestion
     response.setHeader(HttpHeaders.CONTENT_TYPE, contentType.or(id.inferContentType().toString()));
 
     Optional<String> filename = objMeta.getDownloadName();
@@ -171,7 +179,7 @@ public class AssetFileCrudController extends DoiBasedCrudController {
       response.setHeader("X-Reproxy-URL", reproxyUrlHeader);
       response.setHeader("X-Reproxy-Cache-For", REPROXY_CACHE_FOR_HEADER);
     } else {
-      try (InputStream fileStream = assetCrudService.read(id);
+      try (InputStream fileStream = contentRepoService.getRepoObject(objMeta.getVersion());
            OutputStream responseStream = response.getOutputStream()) {
         ByteStreams.copy(fileStream, responseStream);
       }
@@ -204,6 +212,32 @@ public class AssetFileCrudController extends DoiBasedCrudController {
     AssetFileIdentity id = parse(request);
     assetCrudService.delete(id);
     return reportOk();
+  }
+
+  /**
+   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
+   */
+  @Deprecated
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ASSET_TEMPLATE, method = RequestMethod.GET, params = "versionedPreview")
+  public void previewFileFromVersionedModel(
+      HttpServletRequest request, HttpServletResponse response,
+      @RequestParam(value = "type", required = true) String fileType,
+      @RequestParam(value = "version", required = false) Integer versionNumber)
+      throws IOException {
+    AssetIdentity assetId = AssetIdentity.create(getIdentifier(request));
+    ArticleIdentity parentArticle = assetCrudService.getParentArticle(assetId);
+    if (parentArticle == null) {
+      throw new RestClientException("Asset ID not mapped to article", HttpStatus.NOT_FOUND);
+    }
+
+    RepoObjectMetadata assetObject = assetCrudService.getAssetObject(
+        parentArticle, assetId, Optional.fromNullable(versionNumber), fileType);
+
+    // TODO: Factor out of 'serve'. This shouldn't need to exist.
+    AssetFileIdentity dummyAssetFileIdentity = AssetFileIdentity.parse(assetObject.getDownloadName().get());
+
+    serve(request, response, dummyAssetFileIdentity, assetObject);
   }
 
 }
