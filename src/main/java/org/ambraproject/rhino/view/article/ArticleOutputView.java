@@ -46,6 +46,7 @@ import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -156,6 +157,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
     serialized.add("relatedArticles", context.serialize(relatedArticles));
     serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
+    serialized.add("collections", context.serialize(buildCollectionViews(collections)));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
@@ -194,6 +196,14 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       categoryViews.add(new CategoryView(category, weight));
     }
     return categoryViews;
+  }
+
+  private static Collection<Object> buildCollectionViews(Collection<ArticleCollection> articleCollections) {
+    Collection<Object> views = new ArrayList<>(articleCollections.size());
+    for (ArticleCollection articleCollection : articleCollections) {
+      views.add(new CollectionView(articleCollection));
+    }
+    return views;
   }
 
   private static final Pattern PAGE_PATTERN = Pattern.compile("(\\d+)-(\\d+)");
