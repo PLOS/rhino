@@ -145,6 +145,17 @@ public class DoiBasedIdentity {
     return asKey(identifier);
   }
 
+  /**
+   * Return the last slash-separated token of the identifier (or the entire identifier if it contains no slashes).
+   *
+   * @return the token
+   */
+  public String getLastToken() {
+    String identifier = getIdentifier();
+    int lastSlashIndex = identifier.lastIndexOf('/');
+    return (lastSlashIndex < 0) ? identifier : identifier.substring(lastSlashIndex + 1);
+  }
+
   @Override
   public String toString() {
     return getIdentifier();

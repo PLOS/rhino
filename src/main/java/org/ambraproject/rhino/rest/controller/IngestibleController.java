@@ -14,6 +14,7 @@
 package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.base.Optional;
+import com.google.common.net.HttpHeaders;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -21,8 +22,10 @@ import org.ambraproject.rhino.rest.controller.abstr.DoiBasedCrudController;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.DoiBasedCrudService.WriteMode;
 import org.ambraproject.rhino.service.IngestibleService;
+import org.ambraproject.rhino.util.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Controller enabling access to the ambra ingest directory (whose location is defined by the
@@ -90,9 +94,9 @@ public class IngestibleController extends DoiBasedCrudController {
                      @RequestParam(value = "force_reingest", required = false) String forceReingest)
       throws IOException {
 
-    File archive;
+    File archiveFile;
     try {
-      archive = ingestibleService.getIngestibleArchive(name);
+      archiveFile = ingestibleService.getIngestibleArchive(name);
     } catch (FileNotFoundException fnfe) {
       throw new RestClientException("Could not find ingestible archive for: " + name,
           HttpStatus.METHOD_NOT_ALLOWED, fnfe);
@@ -103,11 +107,46 @@ public class IngestibleController extends DoiBasedCrudController {
     // TODO: Add user-specific (i.e., PLOS-vs-non-PLOS) way to infer expected ID from zip file naming convention.
     Optional<ArticleIdentity> expectedId = Optional.absent();
 
-    Article result = articleCrudService.writeArchive(archive.getCanonicalPath(), expectedId, reingestMode);
+    Article result;
+    try (Archive archive = Archive.readZipFile(archiveFile)) {
+      result = articleCrudService.writeArchive(archive, expectedId, reingestMode);
+    }
     ingestibleService.archiveIngested(name);
     response.setStatus(HttpStatus.CREATED.value());
 
     // Report the written data, as JSON, in the response.
     articleCrudService.readMetadata(result, false).respond(request, response, entityGson);
   }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.GET, params = "article")
+  public void repack(HttpServletResponse response,
+                     @RequestParam("article") String articleId)
+      throws IOException {
+    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
+    response.setStatus(HttpStatus.OK.value());
+    response.setContentType("application/zip");
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "filename=" + archive.getArchiveName());
+    try (OutputStream outputStream = response.getOutputStream()) {
+      archive.write(outputStream);
+    }
+  }
+
+  /**
+   * Read an article from the legacy data model and rewrite it as a versioned article. Does not reingest the article to
+   * legacy persistence.
+   *
+   * @deprecated This is a temporary kludge for data migration. It should be deleted when the legacy article model is no
+   * longer supported.
+   */
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = INGESTIBLE_ROOT, method = RequestMethod.POST, params = {"versionedReingestInPlace", "article"})
+  @Deprecated
+  public ResponseEntity<?> versionedReingestInPlace(@RequestParam("article") String articleId)
+      throws IOException {
+    Archive archive = articleCrudService.repack(ArticleIdentity.create(articleId));
+    articleCrudService.writeArchiveAsVersionedOnly(archive);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
 }

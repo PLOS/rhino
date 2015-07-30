@@ -177,7 +177,7 @@ public abstract class AmbraService {
    *
    * @return a new document builder
    */
-  private static DocumentBuilder newDocumentBuilder() {
+  public static DocumentBuilder newDocumentBuilder() {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     // at a minimum the document builder needs to be namespace aware
     factory.setNamespaceAware(true);
