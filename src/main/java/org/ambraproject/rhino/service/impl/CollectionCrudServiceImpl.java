@@ -55,10 +55,8 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     return coll;
   }
 
-  @Override
-  public ArticleCollection update(final String slug, final String journalKey,
-                                  String title, Set<ArticleIdentity> articleIds) {
-    ArticleCollection coll = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
+  private ArticleCollection getCollection(final String journalKey, final String slug) {
+    return DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
       @Override
       public List<ArticleCollection> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery("" +
@@ -69,6 +67,12 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
         return query.list();
       }
     }));
+  }
+
+  @Override
+  public ArticleCollection update(final String slug, final String journalKey,
+                                  String title, Set<ArticleIdentity> articleIds) {
+    ArticleCollection coll = getCollection(journalKey, slug);
     if (coll == null) {
       throw new RestClientException("Collection does not exist", HttpStatus.NOT_FOUND);
     }
@@ -128,18 +132,7 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     return new EntityTransceiver() {
       @Override
       protected ArticleCollection fetchEntity() {
-        ArticleCollection result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
-          @Override
-          public List<ArticleCollection> doInHibernate(Session session) {
-            Query query = session.createQuery("" +
-                "select c " +
-                "from ArticleCollection as c inner join c.journal as j " +
-                "where c.slug=:slug and j.journalKey=:journalKey");
-            query.setString("slug", slug);
-            query.setString("journalKey", journalKey);
-            return query.list();
-          }
-        }));
+        ArticleCollection result = getCollection(journalKey, slug);
         if (result == null) {
           String message = String.format("No collection exists in journal=%s with slug=%s", journalKey, slug);
           throw new RestClientException(message, HttpStatus.NOT_FOUND);
