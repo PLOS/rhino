@@ -35,7 +35,7 @@ import java.util.Set;
 public class CollectionCrudServiceImpl extends AmbraService implements CollectionCrudService {
 
   @Override
-  public ArticleCollection create(String slug, String journalKey, String title, Set<ArticleIdentity> articleIds) {
+  public ArticleCollection create(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds) {
     ArticleCollection coll = new ArticleCollection();
     coll.setSlug(slug);
     coll.setTitle(title);
@@ -70,7 +70,7 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public ArticleCollection update(final String slug, final String journalKey,
+  public ArticleCollection update(final String journalKey, final String slug,
                                   String title, Set<ArticleIdentity> articleIds) {
     ArticleCollection coll = getCollection(journalKey, slug);
     if (coll == null) {

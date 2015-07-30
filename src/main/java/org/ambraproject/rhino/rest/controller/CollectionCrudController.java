@@ -40,7 +40,7 @@ public class CollectionCrudController extends RestController {
                                   @RequestParam("title") String title,
                                   @RequestParam("articles") String[] articleDois)
       throws IOException {
-    collectionCrudService.create(slug, journalKey, title, asArticleIdentities(articleDois));
+    collectionCrudService.create(journalKey, slug, title, asArticleIdentities(articleDois));
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
