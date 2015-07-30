@@ -24,7 +24,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -160,21 +159,6 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
         return query.list();
       }
     });
-  }
-
-  @Override
-  public Transceiver readContainingCollections(final ArticleIdentity articleId) {
-    return new Transceiver() {
-      @Override
-      protected Collection<ArticleCollection> getData() {
-        return getContainingCollections(articleId);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() {
-        return null;
-      }
-    };
   }
 
 }

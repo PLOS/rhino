@@ -73,16 +73,4 @@ public class CollectionCrudController extends RestController {
     collectionCrudService.read(journalKey, slug).respond(request, response, entityGson);
   }
 
-  /*
-   * TODO: Should be returned in article metadata instead?
-   */
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/collections", method = RequestMethod.GET)
-  public void findForArticle(HttpServletRequest request, HttpServletResponse response,
-                             @RequestParam("article") String articleDoi)
-      throws IOException {
-    collectionCrudService.readContainingCollections(ArticleIdentity.create(articleDoi))
-        .respond(request, response, entityGson);
-  }
-
 }

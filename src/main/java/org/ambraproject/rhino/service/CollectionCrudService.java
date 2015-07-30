@@ -40,6 +40,4 @@ public interface CollectionCrudService {
 
   Collection<ArticleCollection> getContainingCollections(ArticleIdentity articleId);
 
-  Transceiver readContainingCollections(ArticleIdentity articleId);
-
 }
