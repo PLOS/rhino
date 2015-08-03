@@ -225,8 +225,9 @@ class AssetTable<T> {
 
     Value<String> previous = ingestibleEntryNames.put(key, value);
     if (previous != null) {
-      String message = String.format("More than one file has uri=\"%s\" and repr=\"%s\"",
-          asset.getUri(), representation.getName());
+      String message = String.format("More than one file has uri=\"%s\" and type=\"%s\". " +
+              "(Entry names: \"%s\"; \"%s\")",
+          asset.getUri(), fileType, entryName, previous.fileLocator);
       throw new RestClientException(message, HttpStatus.BAD_REQUEST);
     }
   }
