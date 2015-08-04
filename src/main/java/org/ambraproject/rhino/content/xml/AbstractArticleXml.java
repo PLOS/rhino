@@ -160,7 +160,7 @@ public abstract class AbstractArticleXml<T extends AmbraEntity> extends Abstract
     String suffix = readString("suffix", nameNode);
 
     if (surname == null) {
-      throw new XmlContentException("Required surname is omitted");
+      throw new XmlContentException("Required surname is omitted from node: " + logNode(nameNode));
     }
 
     String[] fullNameParts;
