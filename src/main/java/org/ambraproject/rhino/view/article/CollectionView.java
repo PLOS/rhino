@@ -6,27 +6,27 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.ArticleCollection;
+import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.view.JsonOutputView;
 
 public class CollectionView implements JsonOutputView {
 
-  private final ArticleCollection articleCollection;
+  private final ArticleLink articleLink;
 
-  CollectionView(ArticleCollection articleCollection) {
-    this.articleCollection = articleCollection;
+  CollectionView(ArticleLink articleLink) {
+    this.articleLink = articleLink;
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
 
-    serialized.add("journalKey", context.serialize(articleCollection.getJournal().getJournalKey()));
-    serialized.add("slug", context.serialize(articleCollection.getSlug()));
-    serialized.add("title", context.serialize(articleCollection.getTitle()));
+    serialized.add("journalKey", context.serialize(articleLink.getJournal().getJournalKey()));
+    serialized.add("slug", context.serialize(articleLink.getTarget()));
+    serialized.add("title", context.serialize(articleLink.getTitle()));
 
     JsonArray articleIds = new JsonArray();
-    for (Article article : articleCollection.getArticles()) {
+    for (Article article : articleLink.getArticles()) {
       String articleIdString = ArticleIdentity.create(article).getIdentifier();
       articleIds.add(context.serialize(articleIdString));
     }

@@ -35,7 +35,7 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
-import org.ambraproject.rhino.model.ArticleCollection;
+import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
@@ -73,7 +73,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<ArticleIssue> articleIssues;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
-  private final ImmutableList<ArticleCollection> collections;
+  private final ImmutableList<ArticleLink> collections;
   private final boolean excludeCitations;
 
   // Package-private; should be called only by ArticleOutputViewFactory
@@ -84,7 +84,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                     Collection<ArticleIssue> articleIssues,
                     Collection<Syndication> syndications,
                     Collection<Pingback> pingbacks,
-                    Collection<ArticleCollection> collections,
+                    Collection<ArticleLink> collections,
                     boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);
@@ -198,10 +198,10 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     return categoryViews;
   }
 
-  private static Collection<Object> buildCollectionViews(Collection<ArticleCollection> articleCollections) {
-    Collection<Object> views = new ArrayList<>(articleCollections.size());
-    for (ArticleCollection articleCollection : articleCollections) {
-      views.add(new CollectionView(articleCollection));
+  private static Collection<Object> buildCollectionViews(Collection<ArticleLink> articleLinks) {
+    Collection<Object> views = new ArrayList<>(articleLinks.size());
+    for (ArticleLink articleLink : articleLinks) {
+      views.add(new CollectionView(articleLink));
     }
     return views;
   }

@@ -6,19 +6,19 @@ import org.ambraproject.models.Journal;
 
 import java.util.List;
 
-public class ArticleCollection extends AmbraEntity {
+public class ArticleLink extends AmbraEntity {
 
-  private String slug;
+  private String target;
   private String title;
   private Journal journal;
   private List<Article> articles;
 
-  public String getSlug() {
-    return slug;
+  public String getTarget() {
+    return target;
   }
 
-  public void setSlug(String slug) {
-    this.slug = slug;
+  public void setTarget(String target) {
+    this.target = target;
   }
 
   public String getTitle() {

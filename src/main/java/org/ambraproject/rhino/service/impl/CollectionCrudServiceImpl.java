@@ -8,7 +8,7 @@ import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.ArticleCollection;
+import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.CollectionCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -34,9 +34,9 @@ import java.util.Set;
 public class CollectionCrudServiceImpl extends AmbraService implements CollectionCrudService {
 
   @Override
-  public ArticleCollection create(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds) {
-    ArticleCollection coll = new ArticleCollection();
-    coll.setSlug(slug);
+  public ArticleLink create(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds) {
+    ArticleLink coll = new ArticleLink();
+    coll.setTarget(slug);
     coll.setTitle(title);
 
     Journal journal = (Journal) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
@@ -54,10 +54,10 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
     return coll;
   }
 
-  private ArticleCollection getCollection(final String journalKey, final String slug) {
-    return DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
+  private ArticleLink getCollection(final String journalKey, final String slug) {
+    return DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleLink>>() {
       @Override
-      public List<ArticleCollection> doInHibernate(Session session) throws HibernateException, SQLException {
+      public List<ArticleLink> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery("" +
             "from ArticleCollection c " +
             "where c.slug=:slug and c.journal.journalKey=:journalKey");
@@ -69,9 +69,9 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public ArticleCollection update(final String journalKey, final String slug,
+  public ArticleLink update(final String journalKey, final String slug,
                                   String title, Set<ArticleIdentity> articleIds) {
-    ArticleCollection coll = getCollection(journalKey, slug);
+    ArticleLink coll = getCollection(journalKey, slug);
     if (coll == null) {
       throw new RestClientException("Collection does not exist", HttpStatus.NOT_FOUND);
     }
@@ -130,8 +130,8 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   public Transceiver read(final String journalKey, final String slug) {
     return new EntityTransceiver() {
       @Override
-      protected ArticleCollection fetchEntity() {
-        ArticleCollection result = getCollection(journalKey, slug);
+      protected ArticleLink fetchEntity() {
+        ArticleLink result = getCollection(journalKey, slug);
         if (result == null) {
           String message = String.format("No collection exists in journal=%s with slug=%s", journalKey, slug);
           throw new RestClientException(message, HttpStatus.NOT_FOUND);
@@ -147,10 +147,10 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public Collection<ArticleCollection> getContainingCollections(final ArticleIdentity articleId) {
-    return hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
+  public Collection<ArticleLink> getContainingCollections(final ArticleIdentity articleId) {
+    return hibernateTemplate.execute(new HibernateCallback<List<ArticleLink>>() {
       @Override
-      public List<ArticleCollection> doInHibernate(Session session) {
+      public List<ArticleLink> doInHibernate(Session session) {
         Query query = session.createQuery("" +
             "select c " +
             "from ArticleCollection c join c.articles a " +

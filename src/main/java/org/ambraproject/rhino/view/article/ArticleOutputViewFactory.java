@@ -5,7 +5,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.ArticleCollection;
+import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
@@ -67,7 +67,7 @@ public class ArticleOutputViewFactory {
 
     List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
-    Collection<ArticleCollection> collections = collectionCrudService.getContainingCollections(articleIdentity);
+    Collection<ArticleLink> collections = collectionCrudService.getContainingCollections(articleIdentity);
 
     return new ArticleOutputView(
         article,

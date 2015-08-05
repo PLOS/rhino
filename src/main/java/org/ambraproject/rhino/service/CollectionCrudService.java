@@ -1,7 +1,7 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.ArticleCollection;
+import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.util.response.Transceiver;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ public interface CollectionCrudService {
    * @param articleIds the non-empty set of articles to insert into the new collection
    * @return the created collection
    */
-  ArticleCollection create(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds);
+  ArticleLink create(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds);
 
   /**
    * Modify an existing collection.
@@ -34,10 +34,10 @@ public interface CollectionCrudService {
    * @param articleIds the new set of articles in the collection, or {@code null} to leave them unchanged
    * @return the modified collection
    */
-  ArticleCollection update(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds);
+  ArticleLink update(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds);
 
   Transceiver read(String journalKey, String slug);
 
-  Collection<ArticleCollection> getContainingCollections(ArticleIdentity articleId);
+  Collection<ArticleLink> getContainingCollections(ArticleIdentity articleId);
 
 }

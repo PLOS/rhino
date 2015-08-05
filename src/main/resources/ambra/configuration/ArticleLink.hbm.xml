@@ -5,22 +5,22 @@
 
 <hibernate-mapping package="org.ambraproject.models" default-lazy="false">
 
-  <class name="org.ambraproject.rhino.model.ArticleCollection" table="articleCollection">
-    <id name="ID" column="collectionID" type="long">
+  <class name="org.ambraproject.rhino.model.ArticleLink" table="articleCollection">
+    <id name="ID" column="linkID" type="long">
       <generator class="native"/>
     </id>
 
     <timestamp name="lastModified" column="lastModified"/>
     <property name="created" column="created" type="timestamp" not-null="true" update="false"/>
 
-    <property name="slug" column="slug" type="string"/>
+    <property name="target" column="target" type="string"/>
     <property name="title" column="title" type="text"/>
 
     <!-- TODO: Is this right? -->
     <many-to-one name="journal" column="journalID" class="org.ambraproject.models.Journal"/>
 
-    <list name="articles" table="articleCollectionJoinTable" cascade="none" lazy="true">
-      <key column="collectionID"/>
+    <list name="articles" table="articleLinkJoinTable" cascade="none" lazy="true">
+      <key column="linkID"/>
       <list-index column="sortOrder"/>
       <many-to-many class="Article" column="articleID"/>
     </list>
