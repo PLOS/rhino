@@ -24,7 +24,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -148,28 +147,18 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public Transceiver findContainingCollections(final ArticleIdentity articleId) {
-    return new Transceiver() {
+  public Collection<ArticleCollection> getContainingCollections(final ArticleIdentity articleId) {
+    return hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
       @Override
-      protected Collection<ArticleCollection> getData() {
-        return hibernateTemplate.execute(new HibernateCallback<List<ArticleCollection>>() {
-          @Override
-          public List<ArticleCollection> doInHibernate(Session session) {
-            Query query = session.createQuery("" +
-                "select c " +
-                "from ArticleCollection c join c.articles a " +
-                "where a.doi=:doi");
-            query.setString("doi", articleId.getKey());
-            return query.list();
-          }
-        });
+      public List<ArticleCollection> doInHibernate(Session session) {
+        Query query = session.createQuery("" +
+            "select c " +
+            "from ArticleCollection c join c.articles a " +
+            "where a.doi=:doi");
+        query.setString("doi", articleId.getKey());
+        return query.list();
       }
-
-      @Override
-      protected Calendar getLastModifiedDate() {
-        return null;
-      }
-    };
+    });
   }
 
 }

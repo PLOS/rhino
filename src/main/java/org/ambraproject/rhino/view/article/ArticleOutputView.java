@@ -35,17 +35,18 @@ import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.model.ArticleCollection;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
-import org.ambraproject.rhino.view.article.ArticleIssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -72,6 +73,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<ArticleIssue> articleIssues;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
+  private final ImmutableList<ArticleCollection> collections;
   private final boolean excludeCitations;
 
   // Package-private; should be called only by ArticleOutputViewFactory
@@ -82,6 +84,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                     Collection<ArticleIssue> articleIssues,
                     Collection<Syndication> syndications,
                     Collection<Pingback> pingbacks,
+                    Collection<ArticleCollection> collections,
                     boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);
@@ -90,6 +93,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     this.articleIssues = ImmutableList.copyOf(articleIssues);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
+    this.collections = ImmutableList.copyOf(collections);
     this.excludeCitations = excludeCitations;
   }
 
@@ -153,6 +157,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
     serialized.add("relatedArticles", context.serialize(relatedArticles));
     serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
+    serialized.add("collections", context.serialize(buildCollectionViews(collections)));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
@@ -191,6 +196,14 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       categoryViews.add(new CategoryView(category, weight));
     }
     return categoryViews;
+  }
+
+  private static Collection<Object> buildCollectionViews(Collection<ArticleCollection> articleCollections) {
+    Collection<Object> views = new ArrayList<>(articleCollections.size());
+    for (ArticleCollection articleCollection : articleCollections) {
+      views.add(new CollectionView(articleCollection));
+    }
+    return views;
   }
 
   private static final Pattern PAGE_PATTERN = Pattern.compile("(\\d+)-(\\d+)");

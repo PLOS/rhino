@@ -156,12 +156,12 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
   /**
    * Get a list of issues for a given article with associated journal and volume objects
    *
-   * @param articleDoi Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
+   * @param articleIdentity Article DOI that is contained in the Journal/Volume/Issue combinations which will be returned
    * @return a list of ArticleIssue objects that wrap each issue with its associated journal and volume objects
    */
   @Transactional(readOnly = true)
   @Override
-  public List<ArticleIssue> getArticleIssues(final String articleDoi) {
+  public List<ArticleIssue> getArticleIssues(final ArticleIdentity articleIdentity) {
     return (List<ArticleIssue>) hibernateTemplate.execute(new HibernateCallback() {
       public Object doInHibernate(Session session) throws HibernateException, SQLException {
         List<Object[]> queryResults = session.createSQLQuery(
@@ -175,7 +175,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
                 .addEntity("j", Journal.class)
                 .addEntity("v", Volume.class)
                 .addEntity("i", Issue.class)
-                .setString("articleURI", articleDoi)
+                .setString("articleURI", articleIdentity.getKey())
                 .list();
 
         List<ArticleIssue> articleIssues = new ArrayList<>(queryResults.size());
