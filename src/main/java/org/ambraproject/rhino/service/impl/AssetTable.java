@@ -167,14 +167,22 @@ class AssetTable<T> {
     SUPPLEMENTARY_MATERIAL {
       @Override
       protected String getFileType(String reprName) {
+        // Accept all file types
         return "supplementary";
+      }
+    },
+    STANDALONE_STRIKING_IMAGE {
+      @Override
+      protected String getFileType(String reprName) {
+        // Accept all file types
+        // TODO: Validate on expected image file types?
+        return "strikingImage";
       }
     };
 
     private static String getFileTypeForStandardThumbnails(String reprName) {
       switch (reprName) {
         case "TIF":
-        case "JPG":
           return "original";
         case "PNG_S":
           return "small";
@@ -256,10 +264,7 @@ class AssetTable<T> {
     AssetIdentity assetIdentity = AssetIdentity.create(asset.getUri());
     if (!assetNodeMap.getDois().contains(assetIdentity.getIdentifier())) {
       if (asset.isStrikingImage()) {
-        // Only the declared striking image is allowed to be omitted from manuscript.
-        // Assume it is a figure.
-        // TODO: Be stricter? We could check asset.getRepresentations() to make sure it has the right file types.
-        return AssetType.FIGURE;
+        return AssetType.STANDALONE_STRIKING_IMAGE;
       } else {
         throw new RestClientException("Asset not mentioned in manuscript", HttpStatus.BAD_REQUEST);
       }
