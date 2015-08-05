@@ -67,7 +67,7 @@ public class ArticleOutputViewFactory {
 
     List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
-    Collection<ArticleLink> collections = articleLinkCrudService.getAssociatedLinks(articleIdentity);
+    Collection<ArticleLink> links = articleLinkCrudService.getAssociatedLinks(articleIdentity);
 
     return new ArticleOutputView(
         article,
@@ -77,7 +77,7 @@ public class ArticleOutputViewFactory {
         articleIssues,
         syndications,
         pingbacks,
-        collections,
+        links,
         excludeCitations);
   }
 

@@ -9,11 +9,11 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.view.JsonOutputView;
 
-public class CollectionView implements JsonOutputView {
+public class ArticleLinkView implements JsonOutputView {
 
   private final ArticleLink articleLink;
 
-  CollectionView(ArticleLink articleLink) {
+  ArticleLinkView(ArticleLink articleLink) {
     this.articleLink = articleLink;
   }
 
@@ -21,8 +21,9 @@ public class CollectionView implements JsonOutputView {
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
 
+    serialized.add("linkType", context.serialize(articleLink.getLinkType()));
     serialized.add("journalKey", context.serialize(articleLink.getJournal().getJournalKey()));
-    serialized.add("slug", context.serialize(articleLink.getTarget()));
+    serialized.add("target", context.serialize(articleLink.getTarget()));
     serialized.add("title", context.serialize(articleLink.getTitle()));
 
     JsonArray articleIds = new JsonArray();

@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
+import org.ambraproject.rhino.view.article.ArticleLinkView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
@@ -51,7 +52,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
       .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
       .add(org.ambraproject.rhino.view.article.CategoryView.class)
-      .add(org.ambraproject.rhino.view.article.CollectionView.class)
+      .add(ArticleLinkView.class)
       .add(org.ambraproject.rhino.view.article.RelatedArticleView.class)
 
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
