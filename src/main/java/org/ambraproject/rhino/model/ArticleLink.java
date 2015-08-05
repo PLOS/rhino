@@ -8,10 +8,19 @@ import java.util.List;
 
 public class ArticleLink extends AmbraEntity {
 
+  private String linkType;
   private String target;
   private String title;
   private Journal journal;
   private List<Article> articles;
+
+  public String getLinkType() {
+    return linkType;
+  }
+
+  public void setLinkType(String linkType) {
+    this.linkType = linkType;
+  }
 
   public String getTarget() {
     return target;

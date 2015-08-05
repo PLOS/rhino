@@ -9,7 +9,7 @@ import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
-import org.ambraproject.rhino.service.CollectionCrudService;
+import org.ambraproject.rhino.service.ArticleLinkCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.service.article.NoSuchArticleIdException;
@@ -36,7 +36,7 @@ public class ArticleOutputViewFactory {
   @Autowired
   private IssueCrudService issueCrudService;
   @Autowired
-  private CollectionCrudService collectionCrudService;
+  private ArticleLinkCrudService articleLinkCrudService;
 
   /**
    * Creates a new view of the given article and associated data.
@@ -67,7 +67,7 @@ public class ArticleOutputViewFactory {
 
     List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
-    Collection<ArticleLink> collections = collectionCrudService.getContainingCollections(articleIdentity);
+    Collection<ArticleLink> collections = articleLinkCrudService.getAssociatedLinks(articleIdentity);
 
     return new ArticleOutputView(
         article,

@@ -8,9 +8,10 @@ import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.identity.ArticleLinkIdentity;
 import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.service.CollectionCrudService;
+import org.ambraproject.rhino.service.ArticleLinkCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.hibernate.HibernateException;
@@ -31,65 +32,70 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CollectionCrudServiceImpl extends AmbraService implements CollectionCrudService {
+public class ArticleLinkCrudServiceImpl extends AmbraService implements ArticleLinkCrudService {
 
   @Override
-  public ArticleLink create(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds) {
-    ArticleLink coll = new ArticleLink();
-    coll.setTarget(slug);
-    coll.setTitle(title);
+  public ArticleLink create(ArticleLinkIdentity identity, String title, Set<ArticleIdentity> articleIds) {
+    ArticleLink link = new ArticleLink();
+    link.setLinkType(identity.getLinkType());
+    link.setTarget(identity.getTarget());
+    link.setTitle(title);
 
     Journal journal = (Journal) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Journal.class)
-            .add(Restrictions.eq("journalKey", journalKey))));
+            .add(Restrictions.eq("journalKey", identity.getJournalKey()))));
     if (journal == null) {
-      throw new RestClientException("Journal not found: " + journalKey, HttpStatus.BAD_REQUEST);
+      throw new RestClientException("Journal not found: " + identity.getJournalKey(), HttpStatus.BAD_REQUEST);
     }
-    coll.setJournal(journal);
+    link.setJournal(journal);
 
     List<Article> articles = fetchArticles(articleIds);
-    coll.setArticles(articles);
+    link.setArticles(articles);
 
-    hibernateTemplate.persist(coll);
-    return coll;
+    hibernateTemplate.persist(link);
+    return link;
   }
 
-  private ArticleLink getCollection(final String journalKey, final String slug) {
+  private ArticleLink getArticleLink(final ArticleLinkIdentity identity) {
     return DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleLink>>() {
       @Override
       public List<ArticleLink> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery("" +
-            "from ArticleCollection c " +
-            "where c.slug=:slug and c.journal.journalKey=:journalKey");
-        query.setString("slug", slug);
-        query.setString("journalKey", journalKey);
+            "from ArticleLink l " +
+            "where l.linkType=:linkType and l.target=:target and l.journal.journalKey=:journalKey");
+        query.setString("linkType", identity.getLinkType());
+        query.setString("target", identity.getTarget());
+        query.setString("journalKey", identity.getJournalKey());
         return query.list();
       }
     }));
   }
 
+  private static RuntimeException nonexistentLink(ArticleLinkIdentity identity) {
+    return new RestClientException("Link does not exist: " + identity, HttpStatus.NOT_FOUND);
+  }
+
   @Override
-  public ArticleLink update(final String journalKey, final String slug,
-                                  String title, Set<ArticleIdentity> articleIds) {
-    ArticleLink coll = getCollection(journalKey, slug);
-    if (coll == null) {
-      throw new RestClientException("Collection does not exist", HttpStatus.NOT_FOUND);
+  public ArticleLink update(ArticleLinkIdentity identity, String title, Set<ArticleIdentity> articleIds) {
+    ArticleLink link = getArticleLink(identity);
+    if (link == null) {
+      throw nonexistentLink(identity);
     }
 
     if (title != null) {
-      coll.setTitle(title);
+      link.setTitle(title);
     }
 
     if (articleIds != null) {
       Preconditions.checkArgument(!articleIds.isEmpty());
       List<Article> newArticles = fetchArticles(articleIds);
-      List<Article> oldArticles = coll.getArticles();
+      List<Article> oldArticles = link.getArticles();
       oldArticles.clear();
       oldArticles.addAll(newArticles);
     }
 
-    hibernateTemplate.update(coll);
-    return coll;
+    hibernateTemplate.update(link);
+    return link;
   }
 
   private List<Article> fetchArticles(Set<ArticleIdentity> articleIds) {
@@ -127,14 +133,13 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public Transceiver read(final String journalKey, final String slug) {
+  public Transceiver read(final ArticleLinkIdentity identity) {
     return new EntityTransceiver() {
       @Override
       protected ArticleLink fetchEntity() {
-        ArticleLink result = getCollection(journalKey, slug);
+        ArticleLink result = getArticleLink(identity);
         if (result == null) {
-          String message = String.format("No collection exists in journal=%s with slug=%s", journalKey, slug);
-          throw new RestClientException(message, HttpStatus.NOT_FOUND);
+          throw nonexistentLink(identity);
         }
         return result;
       }
@@ -147,13 +152,13 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
   }
 
   @Override
-  public Collection<ArticleLink> getContainingCollections(final ArticleIdentity articleId) {
+  public Collection<ArticleLink> getAssociatedLinks(final ArticleIdentity articleId) {
     return hibernateTemplate.execute(new HibernateCallback<List<ArticleLink>>() {
       @Override
       public List<ArticleLink> doInHibernate(Session session) {
         Query query = session.createQuery("" +
-            "select c " +
-            "from ArticleCollection c join c.articles a " +
+            "select l " +
+            "from ArticleLink l join l.articles a " +
             "where a.doi=:doi");
         query.setString("doi", articleId.getKey());
         return query.list();

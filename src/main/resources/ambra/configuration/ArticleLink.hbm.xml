@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="org.ambraproject.models" default-lazy="false">
 
-  <class name="org.ambraproject.rhino.model.ArticleLink" table="articleCollection">
+  <class name="org.ambraproject.rhino.model.ArticleLink" table="articleLink">
     <id name="ID" column="linkID" type="long">
       <generator class="native"/>
     </id>
@@ -13,10 +13,10 @@
     <timestamp name="lastModified" column="lastModified"/>
     <property name="created" column="created" type="timestamp" not-null="true" update="false"/>
 
+    <property name="linkType" column="linkType" type="string"/>
     <property name="target" column="target" type="string"/>
     <property name="title" column="title" type="text"/>
 
-    <!-- TODO: Is this right? -->
     <many-to-one name="journal" column="journalID" class="org.ambraproject.models.Journal"/>
 
     <list name="articles" table="articleLinkJoinTable" cascade="none" lazy="true">
