@@ -55,9 +55,9 @@ public class ArticleLinkCrudController extends RestController {
    * TODO: Make PATCH requests consistent once we decide how we want to do it
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/links/{linkType}/{journalKey}/{target}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/links/{linkType}/{journal}/{target}", method = RequestMethod.PATCH)
   public ResponseEntity<?> update(@PathVariable("linkType") String linkType,
-                                  @PathVariable("journalKey") String journalKey,
+                                  @PathVariable("journal") String journalKey,
                                   @PathVariable("target") String target,
                                   @RequestParam(value = "title", required = false) String title,
                                   @RequestParam(value = "articles", required = false) String[] articleDois)
@@ -70,10 +70,10 @@ public class ArticleLinkCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/links/{linkType}/{journalKey}/{target}", method = RequestMethod.GET)
+  @RequestMapping(value = "/links/{linkType}/{journal}/{target}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("linkType") String linkType,
-                   @PathVariable("journalKey") String journalKey,
+                   @PathVariable("journal") String journalKey,
                    @PathVariable("target") String target)
       throws IOException {
     ArticleLinkIdentity identity = new ArticleLinkIdentity(linkType, journalKey, target);
