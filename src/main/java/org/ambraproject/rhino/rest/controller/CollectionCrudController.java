@@ -52,8 +52,8 @@ public class CollectionCrudController extends RestController {
    * TODO: Make PATCH requests consistent once we decide how we want to do it
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/collections/{journalKey}/{slug}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(@PathVariable("journalKey") String journalKey,
+  @RequestMapping(value = "/collections/{journal}/{slug}", method = RequestMethod.PATCH)
+  public ResponseEntity<?> update(@PathVariable("journal") String journalKey,
                                   @PathVariable("slug") String slug,
                                   @RequestParam(value = "title", required = false) String title,
                                   @RequestParam(value = "articles", required = false) String[] articleDois)
@@ -65,9 +65,9 @@ public class CollectionCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/collections/{journalKey}/{slug}", method = RequestMethod.GET)
+  @RequestMapping(value = "/collections/{journal}/{slug}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("journalKey") String journalKey,
+                   @PathVariable("journal") String journalKey,
                    @PathVariable("slug") String slug)
       throws IOException {
     collectionCrudService.read(journalKey, slug).respond(request, response, entityGson);
