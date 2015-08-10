@@ -23,7 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.models.ArticleAsset;
 import org.ambraproject.rhino.util.ContentTypeInference;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 
 import java.util.regex.Pattern;

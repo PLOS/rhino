@@ -52,7 +52,7 @@ import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.ambraproject.rhino.view.article.ArticleOutputViewFactory;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
 import org.ambraproject.views.AuthorView;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -384,7 +384,7 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     StringBuilder cleanedTermsAndText = new StringBuilder();
     cleanedTermsAndText.append("<pre>");
     // HTML-escape the text, which is in the first element of the result array
-    cleanedTermsAndText.append(StringEscapeUtils.escapeHtml(rawTermsAndText.get(0)));
+    cleanedTermsAndText.append(StringEscapeUtils.escapeHtml4(rawTermsAndText.get(0)));
     cleanedTermsAndText.append("\n");
 
     for (int i = 1; i < rawTermsAndText.size(); i++) {

@@ -54,7 +54,7 @@ import org.ambraproject.rhino.test.AssertionCollector;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.StringReplacer;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
