@@ -2,14 +2,14 @@ package org.ambraproject.rhino.view.article;
 
 import com.google.common.collect.ImmutableList;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
-import org.ambraproject.rhino.service.ArticleLinkCrudService;
+import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.PingbackReadService;
 import org.ambraproject.service.article.NoSuchArticleIdException;
@@ -36,7 +36,7 @@ public class ArticleOutputViewFactory {
   @Autowired
   private IssueCrudService issueCrudService;
   @Autowired
-  private ArticleLinkCrudService articleLinkCrudService;
+  private ArticleListCrudService articleListCrudService;
 
   /**
    * Creates a new view of the given article and associated data.
@@ -67,7 +67,7 @@ public class ArticleOutputViewFactory {
 
     List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
-    Collection<ArticleLink> links = articleLinkCrudService.getAssociatedLinks(articleIdentity);
+    Collection<ArticleList> lists = articleListCrudService.getContainingLists(articleIdentity);
 
     return new ArticleOutputView(
         article,
@@ -77,7 +77,7 @@ public class ArticleOutputViewFactory {
         articleIssues,
         syndications,
         pingbacks,
-        links,
+        lists,
         excludeCitations);
   }
 

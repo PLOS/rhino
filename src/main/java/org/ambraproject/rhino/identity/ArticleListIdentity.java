@@ -4,18 +4,16 @@ import com.google.common.base.CharMatcher;
 import com.google.common.base.Preconditions;
 
 /**
- * Information that uniquely identifies an {@link org.ambraproject.rhino.model.ArticleLink} entity.
+ * Information that uniquely identifies an {@link org.ambraproject.models.ArticleList} entity.
  */
-public final class ArticleLinkIdentity {
+public final class ArticleListIdentity {
 
-  private final String linkType;
   private final String journalKey;
-  private final String target;
+  private final String listCode;
 
-  public ArticleLinkIdentity(String linkType, String journalKey, String target) {
-    this.linkType = validate(linkType);
+  public ArticleListIdentity(String journalKey, String listCode) {
     this.journalKey = validate(journalKey);
-    this.target = validate(target);
+    this.listCode = validate(listCode);
   }
 
   private static final CharMatcher INVALID_CHARACTERS = CharMatcher.WHITESPACE.or(CharMatcher.is('/'));
@@ -26,21 +24,17 @@ public final class ArticleLinkIdentity {
     return token;
   }
 
-  public String getLinkType() {
-    return linkType;
-  }
-
   public String getJournalKey() {
     return journalKey;
   }
 
-  public String getTarget() {
-    return target;
+  public String getListCode() {
+    return listCode;
   }
 
   @Override
   public String toString() {
-    return linkType + '/' + journalKey + '/' + target;
+    return journalKey + '/' + listCode;
   }
 
   @Override
@@ -48,20 +42,18 @@ public final class ArticleLinkIdentity {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    ArticleLinkIdentity that = (ArticleLinkIdentity) o;
+    ArticleListIdentity that = (ArticleListIdentity) o;
 
-    if (!linkType.equals(that.linkType)) return false;
     if (!journalKey.equals(that.journalKey)) return false;
-    if (!target.equals(that.target)) return false;
+    if (!listCode.equals(that.listCode)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = linkType.hashCode();
-    result = 31 * result + journalKey.hashCode();
-    result = 31 * result + target.hashCode();
+    int result = journalKey.hashCode();
+    result = 31 * result + listCode.hashCode();
     return result;
   }
 

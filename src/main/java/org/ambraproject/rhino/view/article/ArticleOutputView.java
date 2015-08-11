@@ -34,11 +34,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
-import org.ambraproject.rhino.model.ArticleLink;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
@@ -76,7 +76,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<ArticleIssue> articleIssues;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
-  private final ImmutableList<ArticleLink> links;
+  private final ImmutableList<ArticleList> lists;
   private final boolean excludeCitations;
 
   // Package-private; should be called only by ArticleOutputViewFactory
@@ -87,7 +87,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                     Collection<ArticleIssue> articleIssues,
                     Collection<Syndication> syndications,
                     Collection<Pingback> pingbacks,
-                    Collection<ArticleLink> links,
+                    Collection<ArticleList> lists,
                     boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);
@@ -96,7 +96,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     this.articleIssues = ImmutableList.copyOf(articleIssues);
     this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
     this.pingbacks = ImmutableList.copyOf(pingbacks);
-    this.links = ImmutableList.copyOf(links);
+    this.lists = ImmutableList.copyOf(lists);
     this.excludeCitations = excludeCitations;
   }
 
@@ -160,7 +160,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
     serialized.add("relatedArticles", context.serialize(relatedArticles));
     serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
-    serialized.add("links", context.serialize(buildLinkViews(links)));
+    serialized.add("lists", context.serialize(lists));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
     JsonAdapterUtil.copyWithoutOverwriting((JsonObject) context.serialize(groomedAssets), serialized);
@@ -199,14 +199,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       categoryViews.add(new CategoryView(category, weight));
     }
     return categoryViews;
-  }
-
-  private static Map<String, List<Object>> buildLinkViews(Collection<ArticleLink> articleLinks) {
-    ListMultimap<String, Object> byType = LinkedListMultimap.create();
-    for (ArticleLink articleLink : articleLinks) {
-      byType.put(articleLink.getLinkType(), new ArticleLinkView(articleLink));
-    }
-    return Multimaps.asMap(byType);
   }
 
   private static final Pattern PAGE_PATTERN = Pattern.compile("(\\d+)-(\\d+)");

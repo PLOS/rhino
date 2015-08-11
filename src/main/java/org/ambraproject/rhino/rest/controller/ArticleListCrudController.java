@@ -2,9 +2,9 @@ package org.ambraproject.rhino.rest.controller;
 
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.ArticleIdentity;
-import org.ambraproject.rhino.identity.ArticleLinkIdentity;
+import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
-import org.ambraproject.rhino.service.ArticleLinkCrudService;
+import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ import java.io.IOException;
 import java.util.Set;
 
 @Controller
-public class ArticleLinkCrudController extends RestController {
+public class ArticleListCrudController extends RestController {
 
   @Autowired
-  private ArticleLinkCrudService articleLinkCrudService;
+  private ArticleListCrudService articleListCrudService;
 
   private static Set<ArticleIdentity> asArticleIdentities(String[] articleDois) {
     Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
@@ -35,15 +35,14 @@ public class ArticleLinkCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/links", method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam("type") String linkType,
-                                  @RequestParam("journal") String journalKey,
-                                  @RequestParam("target") String target,
+  @RequestMapping(value = "/lists", method = RequestMethod.POST)
+  public ResponseEntity<?> create(@RequestParam("journal") String journalKey,
+                                  @RequestParam("listCode") String listCode,
                                   @RequestParam("title") String title,
                                   @RequestParam("articles") String[] articleDois)
       throws IOException {
-    ArticleLinkIdentity identity = new ArticleLinkIdentity(linkType, journalKey, target);
-    articleLinkCrudService.create(identity, title, asArticleIdentities(articleDois));
+    ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
+    articleListCrudService.create(identity, title, asArticleIdentities(articleDois));
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
@@ -55,29 +54,27 @@ public class ArticleLinkCrudController extends RestController {
    * TODO: Make PATCH requests consistent once we decide how we want to do it
    */
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/links/{linkType}/{journal}/{target}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(@PathVariable("linkType") String linkType,
-                                  @PathVariable("journal") String journalKey,
-                                  @PathVariable("target") String target,
+  @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.PATCH)
+  public ResponseEntity<?> update(@PathVariable("journal") String journalKey,
+                                  @PathVariable("listCode") String listCode,
                                   @RequestParam(value = "title", required = false) String title,
                                   @RequestParam(value = "articles", required = false) String[] articleDois)
       throws IOException {
     Set<ArticleIdentity> articleIds = (articleDois == null || articleDois.length == 0) ? null
         : asArticleIdentities(articleDois);
-    ArticleLinkIdentity identity = new ArticleLinkIdentity(linkType, journalKey, target);
-    articleLinkCrudService.update(identity, title, articleIds);
+    ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
+    articleListCrudService.update(identity, title, articleIds);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/links/{linkType}/{journal}/{target}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("linkType") String linkType,
                    @PathVariable("journal") String journalKey,
-                   @PathVariable("target") String target)
+                   @PathVariable("listCode") String listCode)
       throws IOException {
-    ArticleLinkIdentity identity = new ArticleLinkIdentity(linkType, journalKey, target);
-    articleLinkCrudService.read(identity).respond(request, response, entityGson);
+    ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
+    articleListCrudService.read(identity).respond(request, response, entityGson);
   }
 
 }
