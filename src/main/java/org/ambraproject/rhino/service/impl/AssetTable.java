@@ -183,6 +183,7 @@ class AssetTable<T> {
     private static String getFileTypeForStandardThumbnails(String reprName) {
       switch (reprName) {
         case "TIF":
+        case "TIFF":
           return "original";
         case "PNG_S":
           return "small";
