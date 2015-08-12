@@ -71,10 +71,11 @@ public class ArticleListCrudController extends RestController {
   @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("journal") String journalKey,
-                   @PathVariable("listCode") String listCode)
+                   @PathVariable("listCode") String listCode,
+                   @RequestParam(value = "articles", required = false) String articles)
       throws IOException {
     ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
-    articleListCrudService.read(identity).respond(request, response, entityGson);
+    articleListCrudService.read(identity, booleanParameter(articles)).respond(request, response, entityGson);
   }
 
 }

@@ -1,11 +1,15 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.ambraproject.models.AmbraEntity;
+import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -14,6 +18,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.DeepArticleListView;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,8 +28,11 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
+import javax.annotation.Nullable;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +64,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   private ArticleList getArticleList(final ArticleListIdentity identity) {
-    return DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
+    ArticleList result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
       @Override
       public List<ArticleList> doInHibernate(Session session) throws HibernateException, SQLException {
         Query query = session.createQuery("" +
@@ -68,6 +76,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
         return query.list();
       }
     }));
+    if (result == null) {
+      throw nonexistentList(identity);
+    }
+    return result;
   }
 
   private static RuntimeException nonexistentList(ArticleListIdentity identity) {
@@ -77,9 +89,6 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   @Override
   public ArticleList update(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
     ArticleList list = getArticleList(identity);
-    if (list == null) {
-      throw nonexistentList(identity);
-    }
 
     if (displayName != null) {
       list.setDisplayName(displayName);
@@ -112,14 +121,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
       articleKeys.add(articleId.getKey());
     }
 
-    List<String> foundDois = hibernateTemplate.execute(new HibernateCallback<List<String>>() {
-      @Override
-      public List<String> doInHibernate(Session session) throws HibernateException, SQLException {
-        Query query = session.createQuery("select distinct doi from Article where doi in :articleKeys");
-        query.setParameterList("articleKeys", articleKeys);
-        return query.list();
-      }
-    }); // make sure not to return foundDois, because it doesn't have the same order as articleKeys
+    List<String> foundDois = (List<String>) hibernateTemplate.findByNamedParam(
+        "select distinct doi from Article where doi in :articleKeys",
+        "articleKeys", articleKeys);
+    // Make sure not to return foundDois, because it doesn't have the same order as articleKeys
     if (foundDois.size() < articleKeys.size()) {
       throw new RestClientException(buildMissingArticleMessage(foundDois, articleKeys), HttpStatus.NOT_FOUND);
     }
@@ -134,20 +139,51 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver read(final ArticleListIdentity identity) {
+  public Transceiver read(final ArticleListIdentity identity, boolean includeArticleMetadata) {
+    return includeArticleMetadata ? readDeep(identity) : readShallow(identity);
+  }
+
+  private Transceiver readShallow(final ArticleListIdentity identity) {
     return new EntityTransceiver() {
       @Override
       protected ArticleList fetchEntity() {
-        ArticleList result = getArticleList(identity);
-        if (result == null) {
-          throw nonexistentList(identity);
-        }
-        return result;
+        return getArticleList(identity);
       }
 
       @Override
       protected Object getView(AmbraEntity entity) {
         return entity;
+      }
+    };
+  }
+
+  private Transceiver readDeep(ArticleListIdentity identity) {
+    // "Last modified" is the latest timestamp among all articles in the collection.
+    // For now, don't bother trying to read it, and always return data. Could revisit this if necessary.
+
+    final ArticleList articleList = getArticleList(identity);
+    List<String> articleKeys = articleList.getArticleDois();
+    Collection<Article> unsortedArticles = (Collection<Article>) hibernateTemplate.findByNamedParam(
+        "from Article where doi in :articleKeys",
+        "articleKeys", articleKeys);
+
+    // Hibernate may return them in a different order. Sort into the same order as in articleList.getArticleDois()
+    final List<Article> sortedArticles = Ordering.explicit(articleKeys).onResultOf(new Function<Article, String>() {
+      @Override
+      public String apply(Article input) {
+        return input.getDoi();
+      }
+    }).immutableSortedCopy(unsortedArticles);
+
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        return new DeepArticleListView(articleList, sortedArticles);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
       }
     };
   }

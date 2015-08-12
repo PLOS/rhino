@@ -22,7 +22,7 @@ public interface ArticleListCrudService {
 
   ArticleList update(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds);
 
-  Transceiver read(ArticleListIdentity identity);
+  Transceiver read(ArticleListIdentity identity, boolean includeArticleMetadata);
 
   Collection<ArticleList> getContainingLists(ArticleIdentity articleId);
 
