@@ -143,6 +143,11 @@ class VersionedIngestionService {
       parsedArticle = new ArticleXml(AmbraService.parseXml(manuscriptStream));
     }
     ArticleIdentity articleIdentity = parsedArticle.readDoi();
+    if (!manuscriptAsset.getUri().equals(articleIdentity.getKey())) {
+      String message = String.format("Article DOI is inconsistent. From manifest: \"%s\" From manuscript: \"%s\"",
+          manuscriptAsset.getUri(), articleIdentity.getKey());
+      throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+    }
     final Article articleMetadata = parsedArticle.build(new Article());
 
     AssetTable<String> assetTable = AssetTable.buildFromIngestible(parsedArticle.findAllAssetNodes(), manifestXml);
