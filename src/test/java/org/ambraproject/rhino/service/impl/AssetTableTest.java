@@ -71,7 +71,7 @@ public class AssetTableTest {
     }
   }
 
-  @Test(dataProvider = "ingestibles")
+  @Test(dataProvider = "ingestibles", enabled = false)
   public void test(ManifestXml manifest, ArticleXml article) throws IOException {
     AssetTable<String> assetTable = AssetTable.buildFromIngestible(article.findAllAssetNodes(), manifest);
     assertFalse(assetTable.getAssets().isEmpty());
