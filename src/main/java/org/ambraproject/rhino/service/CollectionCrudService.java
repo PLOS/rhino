@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.model.ArticleCollection;
 import org.ambraproject.rhino.util.response.Transceiver;
@@ -24,17 +25,18 @@ public interface CollectionCrudService {
    * Modify an existing collection.
    * <p/>
    * The first two arguments identify the collection to modify. The last two arguments represent new values to assign,
-   * and a {@code null} value signifies that the value should not be modified. Note that a non-null value of {@code
+   * and an absent value signifies that the value should not be modified. Note that a present value of {@code
    * articleIds} completely replaces the old collection of articles; omitting an article that is already in the
    * collection will remove it.
    *
    * @param journalKey the key of the journal to which the collection belongs
    * @param slug       the slug of the collection to modify
-   * @param title      the new collection title, or {@code null} to leave the title unchanged
-   * @param articleIds the new set of articles in the collection, or {@code null} to leave them unchanged
+   * @param title      the new collection title (leave the title unchanged if absent)
+   * @param articleIds the new set of articles in the collection (leave them unchanged if absent)
    * @return the modified collection
    */
-  ArticleCollection update(String journalKey, String slug, String title, Set<ArticleIdentity> articleIds);
+  ArticleCollection update(String journalKey, String slug,
+                           Optional<String> title, Optional<? extends Set<ArticleIdentity>> articleIds);
 
   Transceiver read(String journalKey, String slug);
 

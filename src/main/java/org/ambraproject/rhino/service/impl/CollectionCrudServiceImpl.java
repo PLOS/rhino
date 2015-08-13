@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -70,19 +71,18 @@ public class CollectionCrudServiceImpl extends AmbraService implements Collectio
 
   @Override
   public ArticleCollection update(final String journalKey, final String slug,
-                                  String title, Set<ArticleIdentity> articleIds) {
+                                  Optional<String> title, Optional<? extends Set<ArticleIdentity>> articleIds) {
     ArticleCollection coll = getCollection(journalKey, slug);
     if (coll == null) {
       throw new RestClientException("Collection does not exist", HttpStatus.NOT_FOUND);
     }
 
-    if (title != null) {
-      coll.setTitle(title);
+    if (title.isPresent()) {
+      coll.setTitle(title.get());
     }
 
-    if (articleIds != null) {
-      Preconditions.checkArgument(!articleIds.isEmpty());
-      List<Article> newArticles = fetchArticles(articleIds);
+    if (articleIds.isPresent()) {
+      List<Article> newArticles = fetchArticles(articleIds.get());
       List<Article> oldArticles = coll.getArticles();
       oldArticles.clear();
       oldArticles.addAll(newArticles);

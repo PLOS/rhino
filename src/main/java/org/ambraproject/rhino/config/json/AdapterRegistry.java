@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
+import org.ambraproject.rhino.view.article.CollectionInputView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
@@ -85,6 +86,7 @@ public class AdapterRegistry {
       .put(DoiList.class, KeyedStringList.ADAPTER)
       .put(AuthIdList.class, KeyedStringList.ADAPTER)
       .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
+      .put(CollectionInputView.class, CollectionInputView.DESERIALIZER)
       .build();
 
 

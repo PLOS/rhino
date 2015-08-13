@@ -1,9 +1,14 @@
 package org.ambraproject.rhino.rest.controller;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.CollectionCrudService;
+import org.ambraproject.rhino.view.article.CollectionInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -25,22 +31,23 @@ public class CollectionCrudController extends RestController {
   @Autowired
   private CollectionCrudService collectionCrudService;
 
-  private static Set<ArticleIdentity> asArticleIdentities(String[] articleDois) {
-    Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
-    for (String articleDoi : articleDois) {
-      articleIdentities.add(ArticleIdentity.create(articleDoi));
-    }
-    return articleIdentities;
-  }
-
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/collections", method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam("journal") String journalKey,
-                                  @RequestParam("slug") String slug,
-                                  @RequestParam("title") String title,
-                                  @RequestParam("articles") String[] articleDois)
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @RequestParam("journal") String journalKey,
+                                  @RequestParam("slug") String slug)
       throws IOException {
-    collectionCrudService.create(journalKey, slug, title, asArticleIdentities(articleDois));
+    CollectionInputView inputView = readJsonFromRequest(request, CollectionInputView.class);
+    Optional<String> title = inputView.getTitle();
+    if (!title.isPresent()){
+      throw new RestClientException("title required",HttpStatus.BAD_REQUEST);
+    }
+    Optional<ImmutableSet<ArticleIdentity>> articleDois = inputView.getArticleIds();
+    if (!articleDois.isPresent()){
+      throw new RestClientException("articleDois required",HttpStatus.BAD_REQUEST);
+    }
+
+    collectionCrudService.create(journalKey, slug, title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
@@ -53,14 +60,12 @@ public class CollectionCrudController extends RestController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/collections/{journal}/{slug}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(@PathVariable("journal") String journalKey,
-                                  @PathVariable("slug") String slug,
-                                  @RequestParam(value = "title", required = false) String title,
-                                  @RequestParam(value = "articles", required = false) String[] articleDois)
+  public ResponseEntity<?> update(HttpServletRequest request,
+                                  @PathVariable("journal") String journalKey,
+                                  @PathVariable("slug") String slug                                  )
       throws IOException {
-    Set<ArticleIdentity> articleIds = (articleDois == null || articleDois.length == 0) ? null
-        : asArticleIdentities(articleDois);
-    collectionCrudService.update(journalKey, slug, title, articleIds);
+    CollectionInputView inputView = readJsonFromRequest(request, CollectionInputView.class);
+    collectionCrudService.update(journalKey, slug, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
