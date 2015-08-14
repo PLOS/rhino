@@ -6,8 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.rhino.view.article.ArticleLinkView;
-import org.ambraproject.rhino.view.article.CollectionInputView;
+import org.ambraproject.rhino.view.article.LinkInputView;
 import org.ambraproject.rhino.view.article.DoiList;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
@@ -49,11 +48,11 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.article.ArticleAuthorView.class)
       .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)
       .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleLinkView.class)
       .add(org.ambraproject.rhino.view.article.ArticleOutputView.class)
       .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
       .add(org.ambraproject.rhino.view.article.ArticleViewList.class)
       .add(org.ambraproject.rhino.view.article.CategoryView.class)
-      .add(ArticleLinkView.class)
       .add(org.ambraproject.rhino.view.article.RelatedArticleView.class)
 
       .add(org.ambraproject.rhino.view.asset.groomed.GroomedAssetFileView.class)
@@ -87,7 +86,7 @@ public class AdapterRegistry {
       .put(DoiList.class, KeyedStringList.ADAPTER)
       .put(AuthIdList.class, KeyedStringList.ADAPTER)
       .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
-      .put(CollectionInputView.class, CollectionInputView.DESERIALIZER)
+      .put(LinkInputView.class, LinkInputView.DESERIALIZER)
       .build();
 
 
