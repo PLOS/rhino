@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -87,16 +88,16 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ArticleList update(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
+  public ArticleList update(ArticleListIdentity identity, Optional<String> displayName,
+                            Optional<? extends Set<ArticleIdentity>> articleIds) {
     ArticleList list = getArticleList(identity);
 
-    if (displayName != null) {
-      list.setDisplayName(displayName);
+    if (displayName.isPresent()) {
+      list.setDisplayName(displayName.get());
     }
 
-    if (articleIds != null) {
-      Preconditions.checkArgument(!articleIds.isEmpty());
-      List<String> newDois = getArticleKeys(articleIds);
+    if (articleIds.isPresent()) {
+      List<String> newDois = getArticleKeys(articleIds.get());
       List<String> oldDois = list.getArticleDois();
       oldDois.clear();
       oldDois.addAll(newDois);

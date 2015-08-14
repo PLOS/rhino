@@ -1,10 +1,13 @@
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.collect.Sets;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleListCrudService;
+import org.ambraproject.rhino.view.article.LinkInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Set;
 
 @Controller
 public class ArticleListCrudController extends RestController {
@@ -26,23 +28,24 @@ public class ArticleListCrudController extends RestController {
   @Autowired
   private ArticleListCrudService articleListCrudService;
 
-  private static Set<ArticleIdentity> asArticleIdentities(String[] articleDois) {
-    Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
-    for (String articleDoi : articleDois) {
-      articleIdentities.add(ArticleIdentity.create(articleDoi));
-    }
-    return articleIdentities;
-  }
-
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam("journal") String journalKey,
-                                  @RequestParam("listCode") String listCode,
-                                  @RequestParam("title") String title,
-                                  @RequestParam("articles") String[] articleDois)
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @RequestParam("journal") String journalKey,
+                                  @RequestParam("listCode") String listCode)
       throws IOException {
+    LinkInputView inputView = readJsonFromRequest(request, LinkInputView.class);
+    Optional<String> title = inputView.getTitle();
+    if (!title.isPresent()) {
+      throw new RestClientException("title required", HttpStatus.BAD_REQUEST);
+    }
+    Optional<ImmutableSet<ArticleIdentity>> articleDois = inputView.getArticleIds();
+    if (!articleDois.isPresent()) {
+      throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
+    }
+
     ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
-    articleListCrudService.create(identity, title, asArticleIdentities(articleDois));
+    articleListCrudService.create(identity, title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
@@ -55,15 +58,13 @@ public class ArticleListCrudController extends RestController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(@PathVariable("journal") String journalKey,
-                                  @PathVariable("listCode") String listCode,
-                                  @RequestParam(value = "title", required = false) String title,
-                                  @RequestParam(value = "articles", required = false) String[] articleDois)
+  public ResponseEntity<?> update(HttpServletRequest request,
+                                  @PathVariable("journal") String journalKey,
+                                  @PathVariable("listCode") String listCode)
       throws IOException {
-    Set<ArticleIdentity> articleIds = (articleDois == null || articleDois.length == 0) ? null
-        : asArticleIdentities(articleDois);
+    LinkInputView inputView = readJsonFromRequest(request, LinkInputView.class);
     ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
-    articleListCrudService.update(identity, title, articleIds);
+    articleListCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
   }
 

@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
@@ -20,7 +21,8 @@ public interface ArticleListCrudService {
    */
   ArticleList create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds);
 
-  ArticleList update(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds);
+  ArticleList update(ArticleListIdentity identity, Optional<String> displayName,
+                     Optional<? extends Set<ArticleIdentity>> articleIds);
 
   Transceiver read(ArticleListIdentity identity, boolean includeArticleMetadata);
 
