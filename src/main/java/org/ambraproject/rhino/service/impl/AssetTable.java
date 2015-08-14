@@ -158,6 +158,7 @@ class AssetTable<T> {
           case "TIF":
             return "original";
           case "PNG":
+          case "GIF":
             return "thumbnail";
           default:
             throw unmatchedReprException(reprName);
