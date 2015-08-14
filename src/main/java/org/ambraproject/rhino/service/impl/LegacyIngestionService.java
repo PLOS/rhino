@@ -778,9 +778,12 @@ class LegacyIngestionService {
     Element xmlRepr = (Element) articleElement.appendChild(manifest.createElement("representation"));
     xmlRepr.setAttribute("name", "XML");
     xmlRepr.setAttribute("entry", xmlEntryName);
-    Element pdfRepr = (Element) articleElement.appendChild(manifest.createElement("representation"));
-    pdfRepr.setAttribute("name", "PDF");
-    pdfRepr.setAttribute("entry", articleNameStub + ".PDF");
+
+    if (articleHasPdfRepresentation(article)) {
+      Element pdfRepr = (Element) articleElement.appendChild(manifest.createElement("representation"));
+      pdfRepr.setAttribute("name", "PDF");
+      pdfRepr.setAttribute("entry", articleNameStub + ".PDF");
+    }
 
     ListMultimap<String, ArticleAsset> assetsByDoi = Multimaps.index(article.getAssets(), new Function<ArticleAsset, String>() {
       @Override
@@ -855,4 +858,21 @@ class LegacyIngestionService {
     return matcher.matches() ? matcher.group(1) : identity.getLastToken();
   }
 
+  /**
+   * Iterate through an article's assets to determine if the article has a PDF representation
+   *
+   * @param article the article to analyze
+   * @return boolean indicating existence of article PDF representation
+   */
+  private static boolean articleHasPdfRepresentation(Article article) {
+    String articleNameStub = inferFileName(ArticleIdentity.create(article));
+    for (ArticleAsset articleAsset : article.getAssets()) {
+      final AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(articleAsset);
+      String entryName = inferFileName(assetFileIdentity) + "." + assetFileIdentity.getFileExtension();
+      if (entryName.equals(articleNameStub + ".PDF")) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
