@@ -1,10 +1,13 @@
 package org.ambraproject.rhino.rest.controller;
 
-import com.google.common.collect.Sets;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleLinkIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleLinkCrudService;
+import org.ambraproject.rhino.view.article.CollectionInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Set;
 
 @Controller
 public class ArticleLinkCrudController extends RestController {
@@ -26,24 +28,25 @@ public class ArticleLinkCrudController extends RestController {
   @Autowired
   private ArticleLinkCrudService articleLinkCrudService;
 
-  private static Set<ArticleIdentity> asArticleIdentities(String[] articleDois) {
-    Set<ArticleIdentity> articleIdentities = Sets.newLinkedHashSetWithExpectedSize(articleDois.length);
-    for (String articleDoi : articleDois) {
-      articleIdentities.add(ArticleIdentity.create(articleDoi));
-    }
-    return articleIdentities;
-  }
-
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/links", method = RequestMethod.POST)
-  public ResponseEntity<?> create(@RequestParam("type") String linkType,
+  public ResponseEntity<?> create(HttpServletRequest request,
+                                  @RequestParam("type") String linkType,
                                   @RequestParam("journal") String journalKey,
-                                  @RequestParam("target") String target,
-                                  @RequestParam("title") String title,
-                                  @RequestParam("articles") String[] articleDois)
+                                  @RequestParam("target") String target)
       throws IOException {
+    CollectionInputView inputView = readJsonFromRequest(request, CollectionInputView.class);
+    Optional<String> title = inputView.getTitle();
+    if (!title.isPresent()) {
+      throw new RestClientException("title required", HttpStatus.BAD_REQUEST);
+    }
+    Optional<ImmutableSet<ArticleIdentity>> articleDois = inputView.getArticleIds();
+    if (!articleDois.isPresent()) {
+      throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
+    }
+
     ArticleLinkIdentity identity = new ArticleLinkIdentity(linkType, journalKey, target);
-    articleLinkCrudService.create(identity, title, asArticleIdentities(articleDois));
+    articleLinkCrudService.create(identity, title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
@@ -56,16 +59,14 @@ public class ArticleLinkCrudController extends RestController {
    */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/links/{linkType}/{journal}/{target}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(@PathVariable("linkType") String linkType,
+  public ResponseEntity<?> update(HttpServletRequest request,
+                                  @PathVariable("linkType") String linkType,
                                   @PathVariable("journal") String journalKey,
-                                  @PathVariable("target") String target,
-                                  @RequestParam(value = "title", required = false) String title,
-                                  @RequestParam(value = "articles", required = false) String[] articleDois)
+                                  @PathVariable("target") String target)
       throws IOException {
-    Set<ArticleIdentity> articleIds = (articleDois == null || articleDois.length == 0) ? null
-        : asArticleIdentities(articleDois);
+    CollectionInputView inputView = readJsonFromRequest(request, CollectionInputView.class);
     ArticleLinkIdentity identity = new ArticleLinkIdentity(linkType, journalKey, target);
-    articleLinkCrudService.update(identity, title, articleIds);
+    articleLinkCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
   }
 

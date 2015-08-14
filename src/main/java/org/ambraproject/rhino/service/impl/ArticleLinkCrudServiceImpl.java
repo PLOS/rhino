@@ -1,6 +1,6 @@
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Preconditions;
+import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -76,19 +76,19 @@ public class ArticleLinkCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ArticleLink update(ArticleLinkIdentity identity, String title, Set<ArticleIdentity> articleIds) {
+  public ArticleLink update(ArticleLinkIdentity identity,
+                            Optional<String> title, Optional<? extends Set<ArticleIdentity>> articleIds) {
     ArticleLink link = getArticleLink(identity);
     if (link == null) {
       throw nonexistentLink(identity);
     }
 
-    if (title != null) {
-      link.setTitle(title);
+    if (title.isPresent()) {
+      link.setTitle(title.get());
     }
 
-    if (articleIds != null) {
-      Preconditions.checkArgument(!articleIds.isEmpty());
-      List<Article> newArticles = fetchArticles(articleIds);
+    if (articleIds.isPresent()) {
+      List<Article> newArticles = fetchArticles(articleIds.get());
       List<Article> oldArticles = link.getArticles();
       oldArticles.clear();
       oldArticles.addAll(newArticles);

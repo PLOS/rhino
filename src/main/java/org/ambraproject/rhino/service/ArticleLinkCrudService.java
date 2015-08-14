@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.service;
 
+import com.google.common.base.Optional;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleLinkIdentity;
 import org.ambraproject.rhino.model.ArticleLink;
@@ -23,17 +24,18 @@ public interface ArticleLinkCrudService {
   /**
    * Modify the set of articles that display a link.
    * <p/>
-   * The first two arguments identify the set to modify. The last two arguments represent new values to assign, and a
-   * {@code null} value signifies that the value should not be modified. Note that a non-null value of {@code
-   * articleIds} completely replaces the old collection of articles; omitting an article that is already in the
-   * collection will remove it.
+   * The first two arguments identify the set to modify. The last two arguments represent new values to assign, and an
+   * absent value signifies that the value should not be modified. Note that a present value of {@code articleIds}
+   * completely replaces the old collection of articles; omitting an article that is already in the collection will
+   * remove it.
    *
    * @param identity   the identity of the link to update
    * @param title      the new link text, or {@code null} to leave the title unchanged
    * @param articleIds the new set of articles to display the link, or {@code null} to leave them unchanged
    * @return the modified collection
    */
-  ArticleLink update(ArticleLinkIdentity identity, String title, Set<ArticleIdentity> articleIds);
+  ArticleLink update(ArticleLinkIdentity identity,
+                     Optional<String> title, Optional<? extends Set<ArticleIdentity>> articleIds);
 
   Transceiver read(ArticleLinkIdentity identity);
 
