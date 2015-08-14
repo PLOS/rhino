@@ -7,7 +7,7 @@ import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.rest.controller.abstr.RestController;
 import org.ambraproject.rhino.service.ArticleListCrudService;
-import org.ambraproject.rhino.view.article.LinkInputView;
+import org.ambraproject.rhino.view.article.ListInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class ArticleListCrudController extends RestController {
                                   @RequestParam("journal") String journalKey,
                                   @RequestParam("listCode") String listCode)
       throws IOException {
-    LinkInputView inputView = readJsonFromRequest(request, LinkInputView.class);
+    ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
     Optional<String> title = inputView.getTitle();
     if (!title.isPresent()) {
       throw new RestClientException("title required", HttpStatus.BAD_REQUEST);
@@ -62,7 +62,7 @@ public class ArticleListCrudController extends RestController {
                                   @PathVariable("journal") String journalKey,
                                   @PathVariable("listCode") String listCode)
       throws IOException {
-    LinkInputView inputView = readJsonFromRequest(request, LinkInputView.class);
+    ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
     ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
     articleListCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);

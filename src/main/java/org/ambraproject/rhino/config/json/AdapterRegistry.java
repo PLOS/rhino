@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableMap;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedStringList;
 import org.ambraproject.rhino.view.article.ArticleInputView;
-import org.ambraproject.rhino.view.article.LinkInputView;
 import org.ambraproject.rhino.view.article.DoiList;
+import org.ambraproject.rhino.view.article.ListInputView;
 import org.ambraproject.rhino.view.user.AuthIdList;
 
 import java.lang.reflect.Type;
@@ -86,7 +86,7 @@ public class AdapterRegistry {
       .put(DoiList.class, KeyedStringList.ADAPTER)
       .put(AuthIdList.class, KeyedStringList.ADAPTER)
       .put(ArticleInputView.class, ArticleInputView.DESERIALIZER)
-      .put(LinkInputView.class, LinkInputView.DESERIALIZER)
+      .put(ListInputView.class, ListInputView.DESERIALIZER)
       .build();
 
 

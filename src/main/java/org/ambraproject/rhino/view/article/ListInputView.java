@@ -14,12 +14,12 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import java.lang.reflect.Type;
 import java.util.Set;
 
-public class LinkInputView {
+public class ListInputView {
 
   private final Optional<String> title;
   private final Optional<ImmutableSet<ArticleIdentity>> articleIds;
 
-  private LinkInputView(String title, Set<ArticleIdentity> articleIds) {
+  private ListInputView(String title, Set<ArticleIdentity> articleIds) {
     this.title = Optional.fromNullable(title);
     this.articleIds = (articleIds == null) ? Optional.<ImmutableSet<ArticleIdentity>>absent()
         : Optional.of(ImmutableSet.copyOf(articleIds));
@@ -33,9 +33,9 @@ public class LinkInputView {
     return articleIds;
   }
 
-  public static final JsonDeserializer<LinkInputView> DESERIALIZER = new JsonDeserializer<LinkInputView>() {
+  public static final JsonDeserializer<ListInputView> DESERIALIZER = new JsonDeserializer<ListInputView>() {
     @Override
-    public LinkInputView deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public ListInputView deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
       JsonObject jsonObject = json.getAsJsonObject();
 
       JsonElement titleElement = jsonObject.get("title");
@@ -54,7 +54,7 @@ public class LinkInputView {
         }
       }
 
-      return new LinkInputView(title, articleIds);
+      return new ListInputView(title, articleIds);
     }
   };
 
@@ -64,7 +64,7 @@ public class LinkInputView {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    LinkInputView that = (LinkInputView) o;
+    ListInputView that = (ListInputView) o;
 
     if (!articleIds.equals(that.articleIds)) return false;
     if (!title.equals(that.title)) return false;
