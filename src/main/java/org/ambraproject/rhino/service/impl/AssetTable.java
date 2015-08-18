@@ -156,6 +156,7 @@ class AssetTable<T> {
       protected String getFileType(String reprName) {
         switch (reprName) {
           case "TIF":
+          case "GIF":
             return "original";
           case "PNG":
             return "thumbnail";
