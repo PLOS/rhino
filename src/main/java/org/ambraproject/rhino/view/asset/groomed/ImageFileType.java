@@ -13,7 +13,12 @@ import com.google.common.collect.ImmutableSet;
 enum ImageFileType {
 
   // The original, highest-resolution copy. Expected to be present for all figures.
-  ORIGINAL("TIF", "TIFF"),
+  ORIGINAL(
+      // Typical for most figures
+      "TIF", "TIFF",
+
+      // Accepted as original format for inline graphics (deprecated; "TIF" is preferred)
+      "GIF"),
 
   // Resized thumbnails for "normal" figures, which under PLOS's naming scheme have DOIs like *.g000 or *.t000
   SMALL("PNG_S"),
