@@ -10,6 +10,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
+import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
 import org.ambraproject.rhino.identity.AssetIdentity;
@@ -31,9 +32,9 @@ class AssetTable<T> {
 
   private static class Key {
     private final AssetIdentity id;
-    private final String fileType;
+    private final FileType fileType;
 
-    private Key(AssetIdentity id, String fileType) {
+    private Key(AssetIdentity id, FileType fileType) {
       this.id = Preconditions.checkNotNull(id);
       this.fileType = Preconditions.checkNotNull(fileType);
     }
@@ -108,7 +109,7 @@ class AssetTable<T> {
 
           @Override
           public String getFileType() {
-            return mapEntry.getKey().fileType;
+            return mapEntry.getKey().fileType.identifier;
           }
 
           @Override
@@ -126,74 +127,150 @@ class AssetTable<T> {
     return new RestClientException(message, HttpStatus.BAD_REQUEST);
   }
 
+  private static enum FileType {
+    MANUSCRIPT, PRINTABLE, ORIGINAL, SMALL, MEDIUM, INLINE, LARGE, THUMBNAIL, SUPPLEMENTARY, STRIKING_IMAGE;
+    private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
+
+    private static final ImmutableMap<String, FileType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(FileType.class),
+        new Function<FileType, String>() {
+          @Override
+          public String apply(FileType input) {
+            return input.identifier;
+          }
+        });
+
+    private static FileType getByIdentifier(String fileTypeIdentifier) {
+      FileType fileTypeObj = FileType.BY_IDENTIFIER.get(fileTypeIdentifier);
+      if (fileTypeObj == null) {
+        String message = String.format("File type not recognized: \"%s\". Must be one of: %s",
+            fileTypeIdentifier, FileType.BY_IDENTIFIER.keySet());
+        throw new IllegalArgumentException(message);
+      }
+      return fileTypeObj;
+    }
+  }
+
   private static enum AssetType {
     ARTICLE {
-      protected String getFileType(String reprName) {
+      private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.MANUSCRIPT, FileType.PRINTABLE);
+      private final ImmutableSet<FileType> REQUIRED = Sets.immutableEnumSet(FileType.MANUSCRIPT);
+
+      @Override
+      protected FileType getFileType(String reprName) {
         switch (reprName) {
           case "XML":
-            return "manuscript";
+            return FileType.MANUSCRIPT;
           case "PDF":
-            return "printable";
+            return FileType.PRINTABLE;
           default:
             throw unmatchedReprException(reprName);
         }
       }
+
+      @Override
+      protected ImmutableSet<FileType> getSupportedFileTypes() {
+        return TYPES;
+      }
+
+      @Override
+      protected ImmutableSet<FileType> getRequiredFileTypes() {
+        return REQUIRED;
+      }
     },
+
     FIGURE {
       @Override
-      protected String getFileType(String reprName) {
+      protected FileType getFileType(String reprName) {
         return getFileTypeForStandardThumbnails(reprName);
       }
+
+      @Override
+      protected ImmutableSet<FileType> getSupportedFileTypes() {
+        return STANDARD_THUMBNAIL_FILE_TYPES;
+      }
     },
+
     TABLE {
       @Override
-      protected String getFileType(String reprName) {
+      protected FileType getFileType(String reprName) {
         return getFileTypeForStandardThumbnails(reprName);
       }
-    },
-    GRAPHIC {
+
       @Override
-      protected String getFileType(String reprName) {
+      protected ImmutableSet<FileType> getSupportedFileTypes() {
+        return STANDARD_THUMBNAIL_FILE_TYPES;
+      }
+    },
+
+    GRAPHIC {
+      private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.ORIGINAL, FileType.THUMBNAIL);
+
+      @Override
+      protected FileType getFileType(String reprName) {
         switch (reprName) {
           case "TIF":
           case "GIF":
-            return "original";
+            return FileType.ORIGINAL;
           case "PNG":
-            return "thumbnail";
+            return FileType.THUMBNAIL;
           default:
             throw unmatchedReprException(reprName);
         }
       }
-    },
-    SUPPLEMENTARY_MATERIAL {
+
       @Override
-      protected String getFileType(String reprName) {
-        // Accept all file types
-        return "supplementary";
+      protected ImmutableSet<FileType> getSupportedFileTypes() {
+        return TYPES;
       }
     },
-    STANDALONE_STRIKING_IMAGE {
+
+    SUPPLEMENTARY_MATERIAL {
+      private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.SUPPLEMENTARY);
+
       @Override
-      protected String getFileType(String reprName) {
+      protected FileType getFileType(String reprName) {
+        // Accept all file types
+        return FileType.SUPPLEMENTARY;
+      }
+
+      @Override
+      protected ImmutableSet<FileType> getSupportedFileTypes() {
+        return TYPES;
+      }
+    },
+
+    STANDALONE_STRIKING_IMAGE {
+      private final ImmutableSet<FileType> TYPES = Sets.immutableEnumSet(FileType.STRIKING_IMAGE);
+
+      @Override
+      protected FileType getFileType(String reprName) {
         // Accept all file types
         // TODO: Validate on expected image file types?
-        return "strikingImage";
+        return FileType.STRIKING_IMAGE;
+      }
+
+      @Override
+      protected ImmutableSet<FileType> getSupportedFileTypes() {
+        return TYPES;
       }
     };
 
-    private static String getFileTypeForStandardThumbnails(String reprName) {
+    private static final ImmutableSet<FileType> STANDARD_THUMBNAIL_FILE_TYPES = Sets.immutableEnumSet(
+        FileType.ORIGINAL, FileType.SMALL, FileType.INLINE, FileType.MEDIUM, FileType.LARGE);
+
+    private static FileType getFileTypeForStandardThumbnails(String reprName) {
       switch (reprName) {
         case "TIF":
         case "TIFF":
-          return "original";
+          return FileType.ORIGINAL;
         case "PNG_S":
-          return "small";
+          return FileType.SMALL;
         case "PNG_I":
-          return "inline";
+          return FileType.INLINE;
         case "PNG_M":
-          return "medium";
+          return FileType.MEDIUM;
         case "PNG_L":
-          return "large";
+          return FileType.LARGE;
         default:
           throw unmatchedReprException(reprName);
       }
@@ -201,7 +278,13 @@ class AssetTable<T> {
 
     private final String identifier = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 
-    protected abstract String getFileType(String reprName);
+    protected abstract FileType getFileType(String reprName);
+
+    protected abstract ImmutableSet<FileType> getSupportedFileTypes();
+
+    protected ImmutableSet<FileType> getRequiredFileTypes() {
+      return getSupportedFileTypes();
+    }
 
     private static final ImmutableMap<String, AssetType> BY_IDENTIFIER = Maps.uniqueIndex(EnumSet.allOf(AssetType.class),
         new Function<AssetType, String>() {
@@ -229,7 +312,7 @@ class AssetTable<T> {
                                               AssetType assetType,
                                               ManifestXml.Representation representation) {
     String entryName = representation.getEntry();
-    String fileType = assetType.getFileType(representation.getName());
+    FileType fileType = assetType.getFileType(representation.getName());
 
     Key key = new Key(AssetIdentity.create(asset.getUri()), fileType);
     Value<String> value = new Value<>(assetType, entryName);
@@ -381,16 +464,19 @@ class AssetTable<T> {
       for (Map.Entry<String, ?> fileEntry : files.entrySet()) {
         String fileType = fileEntry.getKey();
         RepoVersion repoVersion = RepoVersionRepr.read((Map<?, ?>) fileEntry.getValue());
-        map.put(new Key(id, fileType), new Value<>(assetType, repoVersion));
+        map.put(new Key(id, FileType.getByIdentifier(fileType)), new Value<>(assetType, repoVersion));
       }
     }
     return new AssetTable<>(map);
   }
 
   public T lookup(AssetIdentity id, String fileType) {
-    Key key = new Key(id, fileType);
+    Key key = new Key(id, FileType.getByIdentifier(fileType));
     Value<T> value = map.get(key);
-    if (value == null) throw new IllegalArgumentException();
+    if (value == null) {
+      String message = String.format("No asset found with id=\"%s\" and fileType=\"%s\"", id, fileType);
+      throw new IllegalArgumentException(message);
+    }
     return value.fileLocator;
   }
 
