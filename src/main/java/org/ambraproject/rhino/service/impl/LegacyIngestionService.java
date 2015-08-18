@@ -860,16 +860,15 @@ class LegacyIngestionService {
 
   /**
    * Iterate through an article's assets to determine if the article has a PDF representation
+   * The PDF asset DOI is equal to the article DOI, and the extension is "PDF".
    *
    * @param article the article to analyze
    * @return boolean indicating existence of article PDF representation
    */
   private static boolean articleHasPdfRepresentation(Article article) {
-    String articleNameStub = inferFileName(ArticleIdentity.create(article));
     for (ArticleAsset articleAsset : article.getAssets()) {
-      final AssetFileIdentity assetFileIdentity = AssetFileIdentity.from(articleAsset);
-      String entryName = inferFileName(assetFileIdentity) + "." + assetFileIdentity.getFileExtension();
-      if (entryName.equals(articleNameStub + ".PDF")) {
+      if (articleAsset.getDoi().equals(article.getDoi())
+          && articleAsset.getExtension().equals("PDF")) {
         return true;
       }
     }
