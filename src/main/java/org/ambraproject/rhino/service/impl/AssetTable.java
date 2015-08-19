@@ -4,12 +4,14 @@ import com.google.common.base.CaseFormat;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.ambraproject.rhino.content.xml.AssetNodesByDoi;
 import org.ambraproject.rhino.content.xml.ManifestXml;
@@ -23,10 +25,12 @@ import org.w3c.dom.Node;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class AssetTable<T> {
 
@@ -304,7 +308,43 @@ class AssetTable<T> {
         insertEntryForAssetRepr(ingestibleEntryNames, asset, assetType, representation);
       }
     }
-    return new AssetTable<>(ingestibleEntryNames);
+    AssetTable<String> created = new AssetTable<>(ingestibleEntryNames);
+    created.validateFileTypes();
+    return created;
+  }
+
+  private void validateFileTypes() {
+    Map<AssetIdentity, AssetType> assetTypes = new HashMap<>();
+    SetMultimap<AssetIdentity, FileType> fileTypes = HashMultimap.create();
+
+    // First pass to populate the two maps, grouping asset files by the asset they belong to
+    for (Map.Entry<Key, Value<T>> entry : map.entrySet()) {
+      AssetIdentity assetIdentity = entry.getKey().id;
+      AssetType assetType = entry.getValue().assetType;
+      FileType fileType = entry.getKey().fileType;
+
+      AssetType previous = assetTypes.put(assetIdentity, assetType);
+      if (previous != null && !previous.equals(assetType)) {
+        String message = String.format("Inconsistent asset types for %s: %s, %s", assetIdentity, previous, assetType);
+        throw new IllegalStateException(message);
+      }
+
+      fileTypes.put(assetIdentity, fileType);
+    }
+
+    // Second pass to validate each set of files against its asset type
+    for (Map.Entry<AssetIdentity, Set<FileType>> entry : Multimaps.asMap(fileTypes).entrySet()) {
+      AssetIdentity assetIdentity = entry.getKey();
+      AssetType assetType = Preconditions.checkNotNull(assetTypes.get(assetIdentity));
+      Set<FileType> assetFileTypes = entry.getValue();
+
+      Set<FileType> requiredFileTypes = assetType.getRequiredFileTypes();
+      if (!assetFileTypes.containsAll(requiredFileTypes)) {
+        String message = String.format("Asset \"%s\" is of type: %s. Received files: %s. Missing files: %s.",
+            assetIdentity, assetType, assetFileTypes, Sets.difference(requiredFileTypes, assetFileTypes));
+        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
+      }
+    }
   }
 
   private static void insertEntryForAssetRepr(Map<Key, Value<String>> ingestibleEntryNames,
@@ -471,7 +511,8 @@ class AssetTable<T> {
   }
 
   public T lookup(AssetIdentity id, String fileType) {
-    Key key = new Key(id, FileType.getByIdentifier(fileType));
+    FileType fileTypeObj = FileType.getByIdentifier(fileType);
+    Key key = new Key(id, fileTypeObj);
     Value<T> value = map.get(key);
     if (value == null) {
       String message = String.format("No asset found with id=\"%s\" and fileType=\"%s\"", id, fileType);
