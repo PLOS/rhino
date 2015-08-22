@@ -132,8 +132,8 @@ class AssetTable<T> {
   }
 
   /**
-   * The type of a file that represents an asset. Each asset type has a set of these that it uses, as defined by
-   * {@link AssetType#getSupportedFileTypes}. File types may be shared among more than one asset type.
+   * The type of a file that represents an asset. Each asset type has a set of these that it uses, as defined by {@link
+   * AssetType#getSupportedFileTypes}. File types may be shared among more than one asset type.
    */
   private static enum FileType {
 
@@ -338,6 +338,15 @@ class AssetTable<T> {
   }
 
 
+  /**
+   * Build an asset table from input being ingested.
+   * <p/>
+   * The asset table can then be persisted by {@link #buildAsAssetMetadata}.
+   *
+   * @param assetNodeMap encapsulated descriptions of references to asset DOIs in the manuscript
+   * @param manifest     encapsulated manifest document describing the supplied files
+   * @return the built asset table
+   */
   public static AssetTable<String> buildFromIngestible(AssetNodesByDoi assetNodeMap, ManifestXml manifest) {
     Map<Key, Value<String>> ingestibleEntryNames = new LinkedHashMap<>();
     for (ManifestXml.Asset asset : manifest.parse()) {
@@ -534,6 +543,12 @@ class AssetTable<T> {
     return assetMetadataTable;
   }
 
+  /**
+   * Reconstruct the asset table from a persisted article.
+   *
+   * @param collection a collection representing an article
+   * @return the article's asset table
+   */
   public static AssetTable<RepoVersion> buildFromAssetMetadata(RepoCollectionMetadata collection) {
     Map<Key, Value<RepoVersion>> map = new LinkedHashMap<>();
     Map<String, Map<String, ?>> assets = (Map<String, Map<String, ?>>) ((Map) collection.getJsonUserMetadata().get()).get("assets");
@@ -559,6 +574,13 @@ class AssetTable<T> {
     return new AssetTable<>(map);
   }
 
+  /**
+   * Look up the file locator for one file representing an asset.
+   *
+   * @param id       the asset's identifier (a DOI, not representing an individual file)
+   * @param fileType a string indicating one of the files that belong to the asset
+   * @return the file locator for the asset
+   */
   public T lookup(AssetIdentity id, String fileType) {
     FileType fileTypeObj = FileType.BY_IDENTIFIER.get(fileType);
     if (fileTypeObj == null) {
