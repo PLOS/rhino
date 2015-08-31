@@ -55,6 +55,8 @@ import org.ambraproject.views.AuthorView;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.plos.crepo.exceptions.ContentRepoException;
@@ -458,6 +460,21 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       relatedArticleViews.add(relatedArticleView);
     }
     return relatedArticleViews;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver readRandom() throws IOException {
+    Criteria criteria = hibernateTemplate.getSessionFactory()
+        .getCurrentSession().createCriteria(Article.class);
+
+    criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
+    criteria.setMaxResults(1);
+    Article randomArticle = (Article) criteria.uniqueResult();
+
+    return readMetadata(randomArticle, true /*excludeCitations*/);
   }
 
   @Override

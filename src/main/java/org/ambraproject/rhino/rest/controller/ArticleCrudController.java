@@ -24,6 +24,7 @@ import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
 import org.slf4j.Logger;
@@ -279,6 +280,22 @@ public class ArticleCrudController extends ArticleSpaceController {
     ResponseEntity<String> response = new ResponseEntity<>(categoriesAndText, responseHeader,
         HttpStatus.OK);
     return response;
+  }
+
+  /**
+   * Retrieves the metadata from a random article
+   *
+   * @param request          HttpServletRequest
+   * @param response         HttpServletResponse
+   * @return a JSON representation of the random article
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "random")
+  public void readRandom(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+
+    articleCrudService.readRandom().respond(request, response, entityGson);
   }
 
 }
