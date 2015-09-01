@@ -281,4 +281,20 @@ public class ArticleCrudController extends ArticleSpaceController {
     return response;
   }
 
+  /**
+   * Retrieves the metadata from a random article
+   *
+   * @param request          HttpServletRequest
+   * @param response         HttpServletResponse
+   * @return a JSON representation of the random article
+   * @throws IOException
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "random")
+  public void readRandom(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+
+    articleCrudService.readRandom().respond(request, response, entityGson);
+  }
+
 }

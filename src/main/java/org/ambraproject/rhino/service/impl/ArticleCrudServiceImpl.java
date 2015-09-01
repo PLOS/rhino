@@ -460,6 +460,25 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
     return relatedArticleViews;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver readRandom() throws IOException {
+    Criteria criteria = hibernateTemplate.getSessionFactory()
+        .getCurrentSession().createCriteria(Article.class);
+
+    criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
+    criteria.setMaxResults(1);
+
+    Object result = criteria.uniqueResult();
+    if (result != null) {
+      Article randomArticle = (Article) result;
+      return readMetadata(randomArticle, true /*excludeCitations*/);
+    }
+    throw new RestClientException("No articles present in database.", HttpStatus.NOT_FOUND);
+  }
+
   @Override
   public Archive repack(ArticleIdentity articleIdentity) {
     return legacyIngestionService.repack(articleIdentity);
