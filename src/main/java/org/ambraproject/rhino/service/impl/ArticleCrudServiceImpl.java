@@ -470,9 +470,13 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
 
     criteria.add(Restrictions.sqlRestriction("1=1 order by rand()"));
     criteria.setMaxResults(1);
-    Article randomArticle = (Article) criteria.uniqueResult();
 
-    return readMetadata(randomArticle, true /*excludeCitations*/);
+    Object result = criteria.uniqueResult();
+    if (result != null) {
+      Article randomArticle = (Article) result;
+      return readMetadata(randomArticle, true /*excludeCitations*/);
+    }
+    throw new RestClientException("No articles present in database.", HttpStatus.NOT_FOUND);
   }
 
   @Override
