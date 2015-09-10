@@ -71,6 +71,8 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
         } catch (ApplicationException e) {
           throw new RuntimeException(e);
         }
+
+        //parent will be null only for the ROOT taxonomy
         if (parent == null) {
           parent = "";
         } else {
@@ -98,6 +100,11 @@ public class TaxonomyLookupServiceImpl implements TaxonomyLookupService {
           long articleCount = articleCounts.get(entry.getKey());
           results.add(new Result(subject, childCount, articleCount));
         }
+
+        if(categoryView.getName().equals("ROOT")) {
+          results.add(new Result("ROOT", results.size(), articleCounts.get("ROOT")));
+        }
+
         Collections.sort(results);
         return results;
       }
