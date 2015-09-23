@@ -18,17 +18,29 @@
 
 package org.ambraproject.rhino.content.xml;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.ambraproject.rhino.util.NodeListAdapter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -109,6 +121,38 @@ public abstract class AbstractXpathReader {
       textList.add(getTextFromNode(node));
     }
     return textList;
+  }
+
+
+  /**
+   * Produce a description of a node suitable for debugging.
+   */
+  protected static String logNode(Node node) {
+    List<String> parentChain = getParentChain(node);
+    String xml = recoverXml(node);
+    xml = CharMatcher.WHITESPACE.trimAndCollapseFrom(xml, ' '); // Condense whitespace to log onto one line
+    return String.format("{Location: %s. Node: %s}", Joiner.on('/').join(parentChain), xml);
+  }
+
+  private static List<String> getParentChain(Node node) {
+    Deque<String> stack = new ArrayDeque<>();
+    while (node != null) {
+      stack.push(node.getNodeName());
+      node = node.getParentNode();
+    }
+    return ImmutableList.copyOf(stack);
+  }
+
+  private static String recoverXml(Node node) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try {
+      Transformer transformer = TransformerFactory.newInstance().newTransformer();
+      transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+      transformer.transform(new DOMSource(node), new StreamResult(outputStream));
+    } catch (TransformerException e) {
+      throw new RuntimeException(e);
+    }
+    return new String(outputStream.toByteArray()); // TODO: Encoding?
   }
 
 }

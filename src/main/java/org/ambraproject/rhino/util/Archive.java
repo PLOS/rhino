@@ -129,6 +129,9 @@ public abstract class Archive implements Closeable {
    * Read a zip file from a stream to temp files on disk. Creating the {@code Archive} object exhausts the stream.
    * Closing the archive deletes the temp files.
    *
+   * ZipStream.getNextEntry() will return an additional ZipEntry for directories, including archive files.
+   * Nested asset ingestion is not supported in Rhino and these ZipEntries are skipped during repackaging.
+   *
    * @param zipFile a stream containing the zip archive
    * @return the archive representing the read files
    * @throws IOException
@@ -140,6 +143,11 @@ public abstract class Archive implements Closeable {
 
       ZipEntry entry;
       while ((entry = zipStream.getNextEntry()) != null) {
+
+        if (entry.isDirectory()) {
+          continue;
+        }
+
         File tempFile = File.createTempFile(prefix, null);
         try (OutputStream tempFileStream = new FileOutputStream(tempFile)) {
           ByteStreams.copy(zipStream, tempFileStream);

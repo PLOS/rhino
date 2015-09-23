@@ -190,6 +190,13 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
 
   /**
+   * Read the metadata of a random article.
+   *
+   * <em>WARNING</em> random retrieval of records is not performant and should be used only for testing
+   */
+  public abstract Transceiver readRandom() throws IOException;
+
+  /**
    * Represent an existing article as an ingestible archive. The archive, if it were reingested, should produce an
    * identical article and assets.
    *

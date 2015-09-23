@@ -8,7 +8,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -134,7 +134,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         ArticleIdentity.create(article).getIdentifier());
 
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
-        + StringEscapeUtils.escapeXml(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
+        + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
         + MESSAGE_END;
 
     HttpPost post = new HttpPost(configuration.getServer().toString());
@@ -273,7 +273,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     appendElementIfExists(sb, dom, "article-title");
     appendAllElementsIfExists(sb, dom, "abstract");
     appendElementIfExists(sb, dom, "body");
-    return StringEscapeUtils.escapeXml(sb.toString().trim());
+    return StringEscapeUtils.escapeXml10(sb.toString().trim());
   }
 
 }
