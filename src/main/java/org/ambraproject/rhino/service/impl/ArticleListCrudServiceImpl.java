@@ -42,6 +42,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   @Override
   public ArticleList create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
     ArticleList list = new ArticleList();
+    list.setListType(identity.getListType().orNull());
     list.setListCode(identity.getListCode());
     list.setDisplayName(displayName);
 
@@ -70,9 +71,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
         Query query = session.createQuery("" +
             "select l " +
             "from Journal j inner join j.articleList l " +
-            "where (j.journalKey=:journalKey) and (l.listCode=:listCode)");
-        query.setString("listCode", identity.getListCode());
+            "where (j.journalKey=:journalKey) and (l.listType=:listType) and (l.listCode=:listCode)");
         query.setString("journalKey", identity.getJournalKey());
+        query.setString("listType", identity.getListType().orNull());
+        query.setString("listCode", identity.getListCode());
         return query.list();
       }
     }));
@@ -189,13 +191,25 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Collection<ArticleList> getContainingLists(final ArticleIdentity articleId) {
-    return hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
+  public Collection<ArticleListIdentity> findContainingLists(final ArticleIdentity articleId) {
+    return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListIdentity>>() {
       @Override
-      public List<ArticleList> doInHibernate(Session session) {
-        Query query = session.createQuery("from ArticleList l join l.articles a where a.doi=:doi");
+      public Collection<ArticleListIdentity> doInHibernate(Session session) {
+        Query query = session.createQuery("" +
+            "select j.journalKey, l.listType, l.listCode " +
+            "from Journal j join j.articleLists l join l.articles a " +
+            "where a.doi=:doi");
         query.setString("doi", articleId.getKey());
-        return query.list();
+        List<Object[]> results = query.list();
+
+        Collection<ArticleListIdentity> views = new ArrayList<>(results.size());
+        for (Object[] result : results) {
+          String journalKey = (String) result[0];
+          Optional<String> listType = Optional.fromNullable((String) result[1]);
+          String listCode = (String) result[2];
+          views.add(new ArticleListIdentity(listType, journalKey, listCode));
+        }
+        return views;
       }
     });
   }

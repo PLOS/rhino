@@ -31,8 +31,9 @@ public class ArticleListCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam("journal") String journalKey,
-                                  @RequestParam("listCode") String listCode)
+                                  @RequestParam(value = "listType", required = false) String listType,
+                                  @RequestParam(value = "journal", required = true) String journalKey,
+                                  @RequestParam(value = "listCode", required = true) String listCode)
       throws IOException {
     ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
     Optional<String> title = inputView.getTitle();
@@ -44,26 +45,30 @@ public class ArticleListCrudController extends RestController {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
 
-    ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(Optional.fromNullable(listType), journalKey, listCode);
     articleListCrudService.create(identity, title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
-  /*
-   * API design note: This, for now, is inconsistent with our other PATCH method (on article state). This one uses
-   * request parameters to be consistent with its POST. The other one uses a JSON request body to be consistent with its
-   * GET.
-   *
-   * TODO: Make PATCH requests consistent once we decide how we want to do it
-   */
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.PATCH)
   public ResponseEntity<?> update(HttpServletRequest request,
                                   @PathVariable("journal") String journalKey,
                                   @PathVariable("listCode") String listCode)
       throws IOException {
+    return update(request, null, journalKey, listCode);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/lists/{listType}/{journal}/{listCode}", method = RequestMethod.PATCH)
+  public ResponseEntity<?> update(HttpServletRequest request,
+                                  @PathVariable("listType") String listType,
+                                  @PathVariable("journal") String journalKey,
+                                  @PathVariable("listCode") String listCode)
+      throws IOException {
     ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
-    ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
+    Optional<String> listTypeObj = Optional.fromNullable(listType);
+    ArticleListIdentity identity = new ArticleListIdentity(listTypeObj, journalKey, listCode);
     articleListCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -75,7 +80,18 @@ public class ArticleListCrudController extends RestController {
                    @PathVariable("listCode") String listCode,
                    @RequestParam(value = "articles", required = false) String articles)
       throws IOException {
-    ArticleListIdentity identity = new ArticleListIdentity(journalKey, listCode);
+    read(request, response, null, journalKey, listCode);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/lists/{listType}/{journal}/{listCode}", method = RequestMethod.GET)
+  public void read(HttpServletRequest request, HttpServletResponse response,
+                   @PathVariable("listType") String listType,
+                   @PathVariable("journal") String journalKey,
+                   @PathVariable("listCode") String listCode,
+                   @RequestParam(value = "articles", required = false) String articles)
+      throws IOException {
+    ArticleListIdentity identity = new ArticleListIdentity(Optional.fromNullable(listType), journalKey, listCode);
     articleListCrudService.read(identity, booleanParameter(articles)).respond(request, response, entityGson);
   }
 

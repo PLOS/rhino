@@ -26,6 +26,12 @@ public interface ArticleListCrudService {
 
   Transceiver read(ArticleListIdentity identity, boolean includeArticleMetadata);
 
-  Collection<ArticleList> getContainingLists(ArticleIdentity articleId);
+  /**
+   * Find the identities of all lists that contain the article.
+   *
+   * @param articleId the identity of an article
+   * @return the identities of all lists that contain the article
+   */
+  Collection<ArticleListIdentity> findContainingLists(ArticleIdentity articleId);
 
 }

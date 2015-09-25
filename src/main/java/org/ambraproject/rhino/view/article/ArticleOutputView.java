@@ -25,20 +25,17 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.LinkedListMultimap;
-import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimaps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Category;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
@@ -51,7 +48,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -76,7 +72,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<ArticleIssue> articleIssues;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
-  private final ImmutableList<ArticleList> lists;
+  private final ImmutableList<ArticleListIdentity> lists;
   private final boolean excludeCitations;
 
   // Package-private; should be called only by ArticleOutputViewFactory
@@ -87,7 +83,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                     Collection<ArticleIssue> articleIssues,
                     Collection<Syndication> syndications,
                     Collection<Pingback> pingbacks,
-                    Collection<ArticleList> lists,
+                    Collection<ArticleListIdentity> lists,
                     boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);
