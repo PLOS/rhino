@@ -60,7 +60,7 @@ public final class NoCitationsArticleAdapter {
   private List<ArticleRelationship> relatedArticles;
   private List<ArticleAuthor> authors;
   private List<ArticleEditor> editors;
-  private Set<Journal> journals;
+  // Omit Set<Journal> journals: it's handled in ArticleOutputView.serialize() via JournalNonAssocView
   // Omit Map<Category, Integer> categories: it's handled in ArticleOutputView.serialize() via CategoryView
 
   public NoCitationsArticleAdapter(Article article) {
@@ -89,7 +89,6 @@ public final class NoCitationsArticleAdapter {
     relatedArticles = article.getRelatedArticles();
     authors = article.getAuthors();
     editors = article.getEditors();
-    journals = article.getJournals();
   }
 
   @Override

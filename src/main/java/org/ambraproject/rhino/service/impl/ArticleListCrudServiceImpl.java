@@ -1,14 +1,10 @@
 package org.ambraproject.rhino.service.impl;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
@@ -29,13 +25,16 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
@@ -46,7 +45,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     list.setListCode(identity.getListCode());
     list.setDisplayName(displayName);
 
-    list.setArticleDois(getArticleKeys(articleIds));
+    list.setArticles(fetchArticles(articleIds));
 
     Journal journal = (Journal) DataAccessUtils.uniqueResult(hibernateTemplate.findByCriteria(
         DetachedCriteria.forClass(Journal.class)
@@ -54,11 +53,11 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     if (journal == null) {
       throw new RestClientException("Journal not found: " + identity.getJournalKey(), HttpStatus.BAD_REQUEST);
     }
-    List<ArticleList> journalLists = journal.getArticleList();
+    Collection<ArticleList> journalLists = journal.getArticleLists();
     if (journalLists == null) {
-      journal.setArticleList(journalLists = new ArrayList<>(1));
+      journal.setArticleLists(journalLists = new ArrayList<>(1));
     }
-    journalLists.add(list);
+    journalLists.add(list); // TODO: Check that new identity doesn't collide
     hibernateTemplate.update(journal);
 
     return list;
@@ -97,10 +96,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     }
 
     if (articleIds.isPresent()) {
-      List<String> newDois = getArticleKeys(articleIds.get());
-      List<String> oldDois = list.getArticleDois();
-      oldDois.clear();
-      oldDois.addAll(newDois);
+      List<Article> newArticles = fetchArticles(articleIds.get());
+      List<Article> oldArticles = list.getArticles();
+      oldArticles.clear();
+      oldArticles.addAll(newArticles);
     }
 
     hibernateTemplate.update(list);
@@ -108,34 +107,47 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   /**
-   * Validate that all of a set of named articles exist. Convert into a form that can be persisted in an {@link
-   * org.ambraproject.models.ArticleList}.
+   * Fetch all articles with the given IDs, in the same iteration error.
    *
    * @param articleIds a set of article IDs
-   * @return the article IDs, formatted for storage, if all exist
+   * @return the articles in the same order, if all exist
    * @throws RestClientException if not every article ID belongs to an existing article
    */
-  private List<String> getArticleKeys(Set<ArticleIdentity> articleIds) {
+  private List<Article> fetchArticles(Set<ArticleIdentity> articleIds) {
     if (articleIds.isEmpty()) return ImmutableList.of();
-    final List<String> articleKeys = new ArrayList<>(articleIds.size());
+    final Map<String, Integer> articleKeys = new HashMap<>();
+    int i = 0;
     for (ArticleIdentity articleId : articleIds) {
-      articleKeys.add(articleId.getKey());
+      articleKeys.put(articleId.getKey(), i++);
     }
 
-    List<String> foundDois = (List<String>) hibernateTemplate.findByNamedParam(
-        "select distinct doi from Article where doi in :articleKeys",
-        "articleKeys", articleKeys);
-    // Make sure not to return foundDois, because it doesn't have the same order as articleKeys
-    if (foundDois.size() < articleKeys.size()) {
-      throw new RestClientException(buildMissingArticleMessage(foundDois, articleKeys), HttpStatus.NOT_FOUND);
+    List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
+        "from Article where doi in :articleKeys", "articleKeys", articleKeys);
+    if (articles.size() < articleKeys.size()) {
+      throw new RestClientException(buildMissingArticleMessage(articles, articleKeys.keySet()), HttpStatus.NOT_FOUND);
     }
 
-    return articleKeys;
+    Collections.sort(articles, new Comparator<Article>() {
+      @Override
+      public int compare(Article o1, Article o2) {
+        // We expect the error check above to guarantee that both values will be found in the map
+        int i1 = articleKeys.get(o1.getDoi());
+        int i2 = articleKeys.get(o2.getDoi());
+        return i1 - i2;
+      }
+    });
+
+    return articles;
   }
 
-  private static String buildMissingArticleMessage(Collection<String> foundArticleKeys, Collection<String> requestedArticleKeys) {
+  private static String buildMissingArticleMessage(Collection<Article> foundArticles, Collection<String> requestedArticleKeys) {
+    ImmutableSet.Builder<String> foundArticleKeys = ImmutableSet.builder();
+    for (Article foundArticle : foundArticles) {
+      foundArticleKeys.add(foundArticle.getDoi());
+    }
+
     Collection<String> missingKeys = Sets.difference(
-        ImmutableSet.copyOf(requestedArticleKeys), ImmutableSet.copyOf(foundArticleKeys));
+        ImmutableSet.copyOf(requestedArticleKeys), foundArticleKeys.build());
     return "Articles not found with DOIs: " + new Gson().toJson(missingKeys);
   }
 
@@ -163,23 +175,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     // For now, don't bother trying to read it, and always return data. Could revisit this if necessary.
 
     final ArticleList articleList = getArticleList(identity);
-    List<String> articleKeys = articleList.getArticleDois();
-    Collection<Article> unsortedArticles = (Collection<Article>) hibernateTemplate.findByNamedParam(
-        "from Article where doi in :articleKeys",
-        "articleKeys", articleKeys);
-
-    // Hibernate may return them in a different order. Sort into the same order as in articleList.getArticleDois()
-    final List<Article> sortedArticles = Ordering.explicit(articleKeys).onResultOf(new Function<Article, String>() {
-      @Override
-      public String apply(Article input) {
-        return input.getDoi();
-      }
-    }).immutableSortedCopy(unsortedArticles);
-
     return new Transceiver() {
       @Override
       protected Object getData() throws IOException {
-        return new DeepArticleListView(articleList, sortedArticles);
+        return new DeepArticleListView(articleList);
       }
 
       @Override
@@ -194,7 +193,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     return hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
       @Override
       public List<ArticleList> doInHibernate(Session session) {
-        Query query = session.createQuery("from ArticleList l join l.articleDois d where d=:doi");
+        Query query = session.createQuery("from ArticleList l join l.articleDois d where d=:doi"); // TODO: Fix query
         query.setString("doi", articleId.getKey());
         return query.list();
       }

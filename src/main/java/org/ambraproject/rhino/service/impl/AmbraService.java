@@ -88,7 +88,7 @@ public abstract class AmbraService {
         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         .setFetchMode("volumes", FetchMode.JOIN)
         .setFetchMode("volumes.issues", FetchMode.JOIN)
-        .setFetchMode("articleList", FetchMode.JOIN)
+        .setFetchMode("articleLists", FetchMode.JOIN)
         .addOrder(Order.asc("journalKey"));
   }
 

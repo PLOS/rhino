@@ -14,11 +14,9 @@ import java.util.List;
 public class DeepArticleListView implements JsonOutputView {
 
   private final ArticleList articleList;
-  private final ImmutableList<Article> articles;
 
-  public DeepArticleListView(ArticleList articleList, List<Article> articles) {
+  public DeepArticleListView(ArticleList articleList) {
     this.articleList = Preconditions.checkNotNull(articleList);
-    this.articles = ImmutableList.copyOf(articles);
   }
 
   @Override
@@ -26,7 +24,7 @@ public class DeepArticleListView implements JsonOutputView {
     JsonObject serializedList = context.serialize(articleList).getAsJsonObject();
 
     JsonArray serializedArticles = new JsonArray();
-    for (Article article : articles) {
+    for (Article article : articleList.getArticles()) {
       serializedArticles.add(serialize(article));
     }
     serializedList.add("articles", serializedArticles);

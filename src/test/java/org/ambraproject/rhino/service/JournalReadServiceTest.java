@@ -86,23 +86,21 @@ public class JournalReadServiceTest extends BaseRhinoTest {
 
     // Trigger a bug where JournalReadServiceImpl was returning the DOIs in the order that
     // the articles where created, rather than the order specified in the article list.
+    List<Article> articleEntities = new ArrayList<>(ARTICLE_LIST.length);
     for (String[] arr : ARTICLE_LIST) {
       Article article = new Article();
       article.setDoi(arr[0]);
       article.setTitle(arr[1]);
       hibernateTemplate.save(article);
+      articleEntities.add(article);
     }
 
     ArticleList articleList = new ArticleList();
 
     // Now reverse the order to save in the article list.
-    List<String[]> expected = Arrays.asList(ARTICLE_LIST);
+    List<Article> expected = new ArrayList<>(articleEntities);
     Collections.reverse(expected);
-    List<String> expectedDois = new ArrayList<>(expected.size());
-    for (String[] arr : expected) {
-      expectedDois.add(arr[0]);
-    }
-    articleList.setArticleDois(expectedDois);
+    articleList.setArticles(expected);
     articleList.setListCode("testjournal19326203_news");
     hibernateTemplate.save(articleList);
 
@@ -111,8 +109,8 @@ public class JournalReadServiceTest extends BaseRhinoTest {
     assertEquals(actual.size(), expected.size());
     for (int i = 0; i < actual.size(); i++) {
       Map<String, String> map = (Map<String, String>) actual.get(i);
-      assertEquals(map.get("doi"), expected.get(i)[0]);
-      assertEquals(map.get("title"), expected.get(i)[1]);
+      assertEquals(map.get("doi"), expected.get(i).getDoi());
+      assertEquals(map.get("title"), expected.get(i).getTitle());
     }
   }
 }

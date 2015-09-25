@@ -38,9 +38,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class JournalReadServiceImpl extends AmbraService implements JournalReadService {
 
@@ -160,30 +158,16 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
         // A bit of a hack...
         final String key = journalKey.toLowerCase() + "_news";
 
-        // articleList.sortOrder is not exposed as a hibernate property for some reason (although it's a column
-        // in the underlying table).  We rely on the fact that sortOrder is part of the primary key for
-        // articleListJoinTable to ensure that DOIs are returned in the correct order.  This seems sketchy to
-        // me but I don't feel like changing the ambra model class right now.
         ArticleList list = (ArticleList) DataAccessUtils.requiredUniqueResult(hibernateTemplate.findByNamedParam(
             "SELECT al from ArticleList al WHERE al.listCode = :listCode", "listCode", key));
-        List<String> articleDois = list.getArticleDois();
-        if (articleDois.isEmpty()) {
+        List<Article> articles = list.getArticles();
+        if (articles.isEmpty()) {
           return ImmutableList.of();
         }
-        List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
-            "SELECT a from Article a WHERE doi IN (:dois)", "dois", articleDois);
-        if (articles.size() != articleDois.size()) {
-          throw new IllegalStateException("Cannot find all articles for articleList " + key);
-        }
 
-        // The results of the last query might not be in the order we want them in...
-        Map<String, Article> articleMap = new HashMap<>();
-        for (Article article : articles) {
-          articleMap.put(article.getDoi(), article);
-        }
         List<JsonWrapper<Article>> results = new ArrayList<>(articles.size());
-        for (String doi : articleDois) {
-          results.add(new JsonWrapper<Article>(articleMap.get(doi), "doi", "title"));
+        for (Article article : articles) {
+          results.add(new JsonWrapper<Article>(article, "doi", "title"));
         }
         return results;
       }
