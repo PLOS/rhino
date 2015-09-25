@@ -122,7 +122,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     }
 
     List<Article> articles = (List<Article>) hibernateTemplate.findByNamedParam(
-        "from Article where doi in :articleKeys", "articleKeys", articleKeys);
+        "from Article where doi in :articleKeys", "articleKeys", articleKeys.keySet());
     if (articles.size() < articleKeys.size()) {
       throw new RestClientException(buildMissingArticleMessage(articles, articleKeys.keySet()), HttpStatus.NOT_FOUND);
     }
@@ -193,7 +193,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     return hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
       @Override
       public List<ArticleList> doInHibernate(Session session) {
-        Query query = session.createQuery("from ArticleList l join l.articleDois d where d=:doi"); // TODO: Fix query
+        Query query = session.createQuery("from ArticleList l join l.articles a where a.doi=:doi");
         query.setString("doi", articleId.getKey());
         return query.list();
       }
