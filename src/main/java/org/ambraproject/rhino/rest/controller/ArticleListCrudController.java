@@ -80,7 +80,7 @@ public class ArticleListCrudController extends RestController {
                    @PathVariable("listCode") String listCode,
                    @RequestParam(value = "articles", required = false) String articles)
       throws IOException {
-    read(request, response, null, journalKey, listCode);
+    read(request, response, null, journalKey, listCode, articles);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
