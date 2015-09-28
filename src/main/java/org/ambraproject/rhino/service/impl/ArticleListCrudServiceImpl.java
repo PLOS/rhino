@@ -69,13 +69,17 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     ArticleList result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
       @Override
       public List<ArticleList> doInHibernate(Session session) throws HibernateException, SQLException {
+        Optional<String> listType = identity.getListType();
         Query query = session.createQuery("" +
             "select l " +
-            "from Journal j inner join j.articleList l " +
-            "where (j.journalKey=:journalKey) and (l.listType=:listType) and (l.listCode=:listCode)");
+            "from Journal j inner join j.articleLists l " +
+            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
+            (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
         query.setString("journalKey", identity.getJournalKey());
-        query.setString("listType", identity.getListType().orNull());
         query.setString("listCode", identity.getListCode());
+        if (listType.isPresent()) {
+          query.setString("listType", identity.getListType().get());
+        }
         return query.list();
       }
     }));
@@ -86,7 +90,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   private static RuntimeException nonexistentList(ArticleListIdentity identity) {
-    return new RestClientException("Link does not exist: " + identity, HttpStatus.NOT_FOUND);
+    return new RestClientException("List does not exist: " + identity, HttpStatus.NOT_FOUND);
   }
 
   @Override
