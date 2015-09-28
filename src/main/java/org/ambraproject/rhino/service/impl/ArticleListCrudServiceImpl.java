@@ -16,6 +16,7 @@ import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.DeepArticleListView;
+import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -191,23 +192,26 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Collection<ArticleListIdentity> findContainingLists(final ArticleIdentity articleId) {
-    return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListIdentity>>() {
+  public Collection<ArticleListView> findContainingLists(final ArticleIdentity articleId) {
+    return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListView>>() {
       @Override
-      public Collection<ArticleListIdentity> doInHibernate(Session session) {
+      public Collection<ArticleListView> doInHibernate(Session session) {
         Query query = session.createQuery("" +
-            "select j.journalKey, l.listType, l.listCode " +
+            "select j.journalKey, l.listType, l.listCode, l.displayName " +
             "from Journal j join j.articleLists l join l.articles a " +
             "where a.doi=:doi");
         query.setString("doi", articleId.getKey());
         List<Object[]> results = query.list();
 
-        Collection<ArticleListIdentity> views = new ArrayList<>(results.size());
+        Collection<ArticleListView> views = new ArrayList<>(results.size());
         for (Object[] result : results) {
           String journalKey = (String) result[0];
           Optional<String> listType = Optional.fromNullable((String) result[1]);
           String listCode = (String) result[2];
-          views.add(new ArticleListIdentity(listType, journalKey, listCode));
+          String displayName = (String) result[3];
+
+          ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
+          views.add(new ArticleListView(identity, displayName));
         }
         return views;
       }

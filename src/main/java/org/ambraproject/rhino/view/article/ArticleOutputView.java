@@ -42,6 +42,7 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
+import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
   private final ImmutableList<ArticleIssue> articleIssues;
   private final ImmutableMap<String, Syndication> syndications;
   private final ImmutableList<Pingback> pingbacks;
-  private final ImmutableList<ArticleListIdentity> lists;
+  private final ImmutableList<ArticleListView> lists;
   private final boolean excludeCitations;
 
   // Package-private; should be called only by ArticleOutputViewFactory
@@ -83,7 +84,7 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
                     Collection<ArticleIssue> articleIssues,
                     Collection<Syndication> syndications,
                     Collection<Pingback> pingbacks,
-                    Collection<ArticleListIdentity> lists,
+                    Collection<ArticleListView> lists,
                     boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
     this.nlmArticleType = Optional.fromNullable(nlmArticleType);

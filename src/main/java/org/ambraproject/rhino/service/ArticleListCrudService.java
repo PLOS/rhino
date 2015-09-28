@@ -5,6 +5,7 @@ import org.ambraproject.models.ArticleList;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.journal.ArticleListView;
 
 import java.util.Collection;
 import java.util.Set;
@@ -32,6 +33,6 @@ public interface ArticleListCrudService {
    * @param articleId the identity of an article
    * @return the identities of all lists that contain the article
    */
-  Collection<ArticleListIdentity> findContainingLists(ArticleIdentity articleId);
+  Collection<ArticleListView> findContainingLists(ArticleIdentity articleId);
 
 }

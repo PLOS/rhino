@@ -61,6 +61,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileCollectionView.class)
       .add(org.ambraproject.rhino.view.asset.raw.RawAssetFileView.class)
 
+      .add(org.ambraproject.rhino.view.journal.ArticleListView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.class)
       .add(org.ambraproject.rhino.view.journal.IssueOutputView.ListView.class)
       .add(org.ambraproject.rhino.view.journal.JournalListView.class)
