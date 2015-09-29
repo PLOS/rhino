@@ -14,22 +14,15 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableSet;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.rest.RestClientException;
-import org.ambraproject.rhino.util.response.Transceiver;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
@@ -80,37 +73,4 @@ public class JournalReadServiceTest extends BaseRhinoTest {
     assertEquals(currentIssueResult.get("issueUri"), testIssueUri);
   }
 
-  @Test
-  public void testReadInTheNewsArticles() throws Exception {
-    addExpectedJournals();
-
-    // Trigger a bug where JournalReadServiceImpl was returning the DOIs in the order that
-    // the articles where created, rather than the order specified in the article list.
-    List<Article> articleEntities = new ArrayList<>(ARTICLE_LIST.length);
-    for (String[] arr : ARTICLE_LIST) {
-      Article article = new Article();
-      article.setDoi(arr[0]);
-      article.setTitle(arr[1]);
-      hibernateTemplate.save(article);
-      articleEntities.add(article);
-    }
-
-    ArticleList articleList = new ArticleList();
-
-    // Now reverse the order to save in the article list.
-    List<Article> expected = new ArrayList<>(articleEntities);
-    Collections.reverse(expected);
-    articleList.setArticles(expected);
-    articleList.setListCode("testjournal19326203_news");
-    hibernateTemplate.save(articleList);
-
-    Transceiver resp = journalReadService.readInTheNewsArticles("TestJournal19326203");
-    List actual = entityGson.fromJson(resp.readJson(entityGson), List.class);
-    assertEquals(actual.size(), expected.size());
-    for (int i = 0; i < actual.size(); i++) {
-      Map<String, String> map = (Map<String, String>) actual.get(i);
-      assertEquals(map.get("doi"), expected.get(i).getDoi());
-      assertEquals(map.get("title"), expected.get(i).getTitle());
-    }
-  }
 }

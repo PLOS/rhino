@@ -1,10 +1,7 @@
 package org.ambraproject.rhino.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import edu.emory.mathcs.backport.java.util.Collections;
-import org.ambraproject.models.Article;
-import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
@@ -12,7 +9,6 @@ import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.JsonWrapper;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.ambraproject.rhino.view.journal.JournalOutputView;
@@ -33,7 +29,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -135,41 +130,6 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
             : VolumeNonAssocView.fromArray(parentVolumeResults);
 
         return new IssueOutputView(issue, parentVolumeView);
-      }
-    };
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Transceiver readInTheNewsArticles(final String journalKey)
-      throws IOException {
-    return new Transceiver() {
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null; // Unsupported on this operation for now
-      }
-
-      @Override
-      protected List<JsonWrapper<Article>> getData() throws IOException {
-        loadJournal(journalKey);  // just to ensure journalKey is valid
-
-        // A bit of a hack...
-        final String key = journalKey.toLowerCase() + "_news";
-
-        ArticleList list = (ArticleList) DataAccessUtils.requiredUniqueResult(hibernateTemplate.findByNamedParam(
-            "SELECT al from ArticleList al WHERE al.listCode = :listCode", "listCode", key));
-        List<Article> articles = list.getArticles();
-        if (articles.isEmpty()) {
-          return ImmutableList.of();
-        }
-
-        List<JsonWrapper<Article>> results = new ArrayList<>(articles.size());
-        for (Article article : articles) {
-          results.add(new JsonWrapper<Article>(article, "doi", "title"));
-        }
-        return results;
       }
     };
   }

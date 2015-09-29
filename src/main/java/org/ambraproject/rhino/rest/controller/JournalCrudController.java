@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,22 +36,6 @@ public class JournalCrudController extends RestController {
   public void listJournals(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     journalReadService.listJournals().respond(request, response, entityGson);
-  }
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable String journalKey,
-                   @RequestParam(value = "currentIssue", required = false) String currentIssue,
-                   @RequestParam(value = "inTheNewsArticles", required = false) String inTheNewsArticles)
-      throws IOException {
-    if (booleanParameter(currentIssue)) {
-      journalReadService.readCurrentIssue(journalKey).respond(request, response, entityGson);
-    } else if (booleanParameter(inTheNewsArticles)) {
-      journalReadService.readInTheNewsArticles(journalKey).respond(request, response, entityGson);
-    } else {
-      journalReadService.read(journalKey).respond(request, response, entityGson);
-    }
   }
 
   @Transactional(rollbackFor = {Throwable.class})
