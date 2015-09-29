@@ -27,7 +27,6 @@ public class JournalOutputView implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(journal).getAsJsonObject();
-    serialized.remove("articleLists");
 
     List<Volume> volumes = journal.getVolumes();
     KeyedListView<Volume> volumeView = VolumeOutputView.wrapList(volumes);
