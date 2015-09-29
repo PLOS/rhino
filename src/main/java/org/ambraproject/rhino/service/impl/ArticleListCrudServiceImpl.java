@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import org.ambraproject.models.AmbraEntity;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.models.Journal;
@@ -13,9 +12,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.ArticleListCrudService;
-import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.DeepArticleListView;
 import org.ambraproject.rhino.view.journal.ArticleListView;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -41,7 +38,7 @@ import java.util.Set;
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
 
   @Override
-  public ArticleList create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
+  public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
     ArticleList list = new ArticleList();
     list.setListType(identity.getListType().orNull());
     list.setListCode(identity.getListCode());
@@ -62,16 +59,16 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     journalLists.add(list); // TODO: Check that new identity doesn't collide
     hibernateTemplate.update(journal);
 
-    return list;
+    return new ArticleListView(journal.getJournalKey(), list);
   }
 
-  private ArticleList getArticleList(final ArticleListIdentity identity) {
-    ArticleList result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<ArticleList>>() {
+  private ArticleListView getArticleList(final ArticleListIdentity identity) {
+    Object[] result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
-      public List<ArticleList> doInHibernate(Session session) throws HibernateException, SQLException {
+      public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
         Optional<String> listType = identity.getListType();
         Query query = session.createQuery("" +
-            "select l " +
+            "select j.journalKey, l " +
             "from Journal j inner join j.articleLists l " +
             "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
             (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
@@ -86,7 +83,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     if (result == null) {
       throw nonexistentList(identity);
     }
-    return result;
+
+    String journalKey = (String) result[0];
+    ArticleList articleList = (ArticleList) result[1];
+    return new ArticleListView(journalKey, articleList);
   }
 
   private static RuntimeException nonexistentList(ArticleListIdentity identity) {
@@ -94,9 +94,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public ArticleList update(ArticleListIdentity identity, Optional<String> displayName,
-                            Optional<? extends Set<ArticleIdentity>> articleIds) {
-    ArticleList list = getArticleList(identity);
+  public ArticleListView update(ArticleListIdentity identity, Optional<String> displayName,
+                                Optional<? extends Set<ArticleIdentity>> articleIds) {
+    ArticleListView listView = getArticleList(identity);
+    ArticleList list = listView.getArticleList();
 
     if (displayName.isPresent()) {
       list.setDisplayName(displayName.get());
@@ -110,7 +111,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     }
 
     hibernateTemplate.update(list);
-    return list;
+    return listView;
   }
 
   /**
@@ -159,33 +160,11 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   }
 
   @Override
-  public Transceiver read(final ArticleListIdentity identity, boolean includeArticleMetadata) {
-    return includeArticleMetadata ? readDeep(identity) : readShallow(identity);
-  }
-
-  private Transceiver readShallow(final ArticleListIdentity identity) {
-    return new EntityTransceiver() {
-      @Override
-      protected ArticleList fetchEntity() {
-        return getArticleList(identity);
-      }
-
-      @Override
-      protected Object getView(AmbraEntity entity) {
-        return entity;
-      }
-    };
-  }
-
-  private Transceiver readDeep(ArticleListIdentity identity) {
-    // "Last modified" is the latest timestamp among all articles in the collection.
-    // For now, don't bother trying to read it, and always return data. Could revisit this if necessary.
-
-    final ArticleList articleList = getArticleList(identity);
+  public Transceiver read(final ArticleListIdentity identity) {
     return new Transceiver() {
       @Override
-      protected Object getData() throws IOException {
-        return new DeepArticleListView(articleList);
+      protected ArticleListView getData() throws IOException {
+        return getArticleList(identity);
       }
 
       @Override
@@ -201,7 +180,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
       @Override
       public Collection<ArticleListView> doInHibernate(Session session) {
         Query query = session.createQuery("" +
-            "select j.journalKey, l.listType, l.listCode, l.displayName " +
+            "select j.journalKey, l " +
             "from Journal j join j.articleLists l join l.articles a " +
             "where a.doi=:doi");
         query.setString("doi", articleId.getKey());
@@ -210,12 +189,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
         Collection<ArticleListView> views = new ArrayList<>(results.size());
         for (Object[] result : results) {
           String journalKey = (String) result[0];
-          Optional<String> listType = Optional.fromNullable((String) result[1]);
-          String listCode = (String) result[2];
-          String displayName = (String) result[3];
-
-          ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
-          views.add(new ArticleListView(identity, displayName));
+          ArticleList articleList = (ArticleList) result[1];
+          views.add(new ArticleListView(journalKey, articleList));
         }
         return views;
       }

@@ -77,10 +77,9 @@ public class ArticleListCrudController extends RestController {
   @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("journal") String journalKey,
-                   @PathVariable("listCode") String listCode,
-                   @RequestParam(value = "articles", required = false) String articles)
+                   @PathVariable("listCode") String listCode)
       throws IOException {
-    read(request, response, null, journalKey, listCode, articles);
+    read(request, response, null, journalKey, listCode);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -88,11 +87,10 @@ public class ArticleListCrudController extends RestController {
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("listType") String listType,
                    @PathVariable("journal") String journalKey,
-                   @PathVariable("listCode") String listCode,
-                   @RequestParam(value = "articles", required = false) String articles)
+                   @PathVariable("listCode") String listCode)
       throws IOException {
     ArticleListIdentity identity = new ArticleListIdentity(Optional.fromNullable(listType), journalKey, listCode);
-    articleListCrudService.read(identity, booleanParameter(articles)).respond(request, response, entityGson);
+    articleListCrudService.read(identity).respond(request, response, entityGson);
   }
 
 }

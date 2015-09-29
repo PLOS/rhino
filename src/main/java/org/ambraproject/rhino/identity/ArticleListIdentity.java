@@ -40,6 +40,11 @@ public final class ArticleListIdentity {
   }
 
   @Override
+  public String toString() {
+    return (listType == null ? "" : listType + "/") + journalKey + "/" + listCode;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
