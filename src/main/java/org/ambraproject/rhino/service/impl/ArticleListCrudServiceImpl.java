@@ -174,8 +174,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     };
   }
 
-  @Override
-  public Collection<ArticleListView> findContainingLists(final ArticleIdentity articleId) {
+  private Collection<ArticleListView> findContainingLists(final ArticleIdentity articleId) {
     return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListView>>() {
       @Override
       public Collection<ArticleListView> doInHibernate(Session session) {
@@ -195,6 +194,23 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
         return views;
       }
     });
+  }
+
+  @Override
+  public Transceiver readContainingLists(final ArticleIdentity articleId) {
+    return new Transceiver() {
+      @Override
+      protected Collection<ArticleListView> getData() throws IOException {
+        return findContainingLists(articleId);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        // TODO: Use maximum lastModified from findContainingLists(articleId)?
+        // Maybe we want to adapt EntityCollectionTransceiver to extract the entity (ArticleList) from a wrapping view
+        return null;
+      }
+    };
   }
 
 }

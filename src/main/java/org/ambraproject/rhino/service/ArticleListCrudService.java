@@ -27,11 +27,11 @@ public interface ArticleListCrudService {
   Transceiver read(ArticleListIdentity identity);
 
   /**
-   * Find the identities of all lists that contain the article.
+   * Read all lists that contain the article.
    *
    * @param articleId the identity of an article
    * @return the identities of all lists that contain the article
    */
-  Collection<ArticleListView> findContainingLists(ArticleIdentity articleId);
+  Transceiver readContainingLists(ArticleIdentity articleId);
 
 }
