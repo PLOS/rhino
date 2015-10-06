@@ -37,8 +37,33 @@ import java.util.Set;
 
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
 
+  private boolean listExists(final ArticleListIdentity identity) {
+    long count = hibernateTemplate.execute(new HibernateCallback<Long>() {
+      @Override
+      public Long doInHibernate(Session session) throws HibernateException, SQLException {
+        Optional<String> listType = identity.getListType();
+        Query query = session.createQuery("" +
+            "select count(*) " +
+            "from Journal j inner join j.articleLists l " +
+            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
+            (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
+        query.setString("journalKey", identity.getJournalKey());
+        query.setString("listCode", identity.getListCode());
+        if (listType.isPresent()) {
+          query.setString("listType", identity.getListType().get());
+        }
+        return (Long) query.uniqueResult();
+      }
+    });
+    return count > 0L;
+  }
+
   @Override
   public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
+    if (listExists(identity)) {
+      throw new RestClientException("List already exists: " + identity, HttpStatus.BAD_REQUEST);
+    }
+
     ArticleList list = new ArticleList();
     list.setListType(identity.getListType().orNull());
     list.setListCode(identity.getListCode());
@@ -56,7 +81,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     if (journalLists == null) {
       journal.setArticleLists(journalLists = new ArrayList<>(1));
     }
-    journalLists.add(list); // TODO: Check that new identity doesn't collide
+    journalLists.add(list);
     hibernateTemplate.update(journal);
 
     return new ArticleListView(journal.getJournalKey(), list);
