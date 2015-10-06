@@ -37,8 +37,33 @@ import java.util.Set;
 
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
 
+  private static Query queryFor(Session hibernateSession, String selectClause, ArticleListIdentity identity) {
+    Query query = hibernateSession.createQuery(selectClause +
+        " from Journal j inner join j.articleLists l " +
+        "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and (l.listType=:listType)");
+    query.setString("journalKey", identity.getJournalKey());
+    query.setString("listCode", identity.getListCode());
+    query.setString("listType", identity.getListType());
+    return query;
+  }
+
+  private boolean listExists(final ArticleListIdentity identity) {
+    long count = hibernateTemplate.execute(new HibernateCallback<Long>() {
+      @Override
+      public Long doInHibernate(Session session) throws HibernateException, SQLException {
+        Query query = queryFor(session, "select count(*)", identity);
+        return (Long) query.uniqueResult();
+      }
+    });
+    return count > 0L;
+  }
+
   @Override
   public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
+    if (listExists(identity)) {
+      throw new RestClientException("List already exists: " + identity, HttpStatus.BAD_REQUEST);
+    }
+
     ArticleList list = new ArticleList();
     list.setListType(identity.getListType());
     list.setListCode(identity.getListCode());
@@ -56,7 +81,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     if (journalLists == null) {
       journal.setArticleLists(journalLists = new ArrayList<>(1));
     }
-    journalLists.add(list); // TODO: Check that new identity doesn't collide
+    journalLists.add(list);
     hibernateTemplate.update(journal);
 
     return new ArticleListView(journal.getJournalKey(), list);
@@ -66,13 +91,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     Object[] result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
       public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-        Query query = session.createQuery("" +
-            "select j.journalKey, l " +
-            "from Journal j inner join j.articleLists l " +
-            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and (l.listType=:listType)");
-        query.setString("journalKey", identity.getJournalKey());
-        query.setString("listCode", identity.getListCode());
-        query.setString("listType", identity.getListType());
+        Query query = queryFor(session, "select j.journalKey, l", identity);
         return query.list();
       }
     }));
