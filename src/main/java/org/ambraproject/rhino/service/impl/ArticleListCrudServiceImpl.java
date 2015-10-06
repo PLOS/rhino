@@ -170,6 +170,57 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     };
   }
 
+  private static Collection<ArticleListView> asArticleListViews(List<Object[]> results) {
+    Collection<ArticleListView> views = new ArrayList<>(results.size());
+    for (Object[] result : results) {
+      String journalKey = (String) result[0];
+      ArticleList articleList = (ArticleList) result[1];
+      views.add(new ArticleListView(journalKey, articleList));
+    }
+    return views;
+  }
+
+  @Override
+  public Transceiver readAll(final Optional<String> listType, final Optional<String> journalKey) {
+    if (!listType.isPresent() && journalKey.isPresent()) {
+      throw new IllegalArgumentException();
+    }
+    return new Transceiver() {
+      @Override
+      protected Object getData() throws IOException {
+        List<Object[]> result = hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
+          @Override
+          public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+            StringBuilder queryString = new StringBuilder(125)
+                .append("select j.journalKey, l from Journal j inner join j.articleLists l");
+            if (listType.isPresent()) {
+              queryString.append(" where (l.listType=:listType)");
+              if (journalKey.isPresent()) {
+                queryString.append(" and (j.journalKey=:journalKey)");
+              }
+            }
+
+            Query query = session.createQuery(queryString.toString());
+            if (listType.isPresent()) {
+              query.setParameter("listType", listType.get());
+              if (journalKey.isPresent()) {
+                query.setParameter("journalKey", journalKey.get());
+              }
+            }
+
+            return query.list();
+          }
+        });
+        return asArticleListViews(result);
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
+  }
+
   private Collection<ArticleListView> findContainingLists(final ArticleIdentity articleId) {
     return hibernateTemplate.execute(new HibernateCallback<Collection<ArticleListView>>() {
       @Override
@@ -180,14 +231,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
             "where a.doi=:doi");
         query.setString("doi", articleId.getKey());
         List<Object[]> results = query.list();
-
-        Collection<ArticleListView> views = new ArrayList<>(results.size());
-        for (Object[] result : results) {
-          String journalKey = (String) result[0];
-          ArticleList articleList = (ArticleList) result[1];
-          views.add(new ArticleListView(journalKey, articleList));
-        }
-        return views;
+        return asArticleListViews(results);
       }
     });
   }

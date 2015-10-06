@@ -26,6 +26,8 @@ public interface ArticleListCrudService {
 
   Transceiver read(ArticleListIdentity identity);
 
+  Transceiver readAll(Optional<String> listType, Optional<String> journalKey);
+
   /**
    * Read all lists that contain the article.
    *

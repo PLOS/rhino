@@ -64,6 +64,30 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/lists", method = RequestMethod.GET)
+  public void listAll(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    articleListCrudService.readAll(Optional.<String>absent(), Optional.<String>absent()).respond(request, response, entityGson);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/lists/{listType}", method = RequestMethod.GET)
+  public void listAll(HttpServletRequest request, HttpServletResponse response,
+                      @PathVariable("listType") String listType)
+      throws IOException {
+    articleListCrudService.readAll(Optional.of(listType), Optional.<String>absent()).respond(request, response, entityGson);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
+  @RequestMapping(value = "/lists/{listType}/{journal}", method = RequestMethod.GET)
+  public void listAll(HttpServletRequest request, HttpServletResponse response,
+                      @PathVariable("listType") String listType,
+                      @PathVariable("journal") String journalKey)
+      throws IOException {
+    articleListCrudService.readAll(Optional.of(listType), Optional.of(journalKey)).respond(request, response, entityGson);
+  }
+
+  @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists/{listType}/{journal}/{listCode}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable("listType") String listType,
