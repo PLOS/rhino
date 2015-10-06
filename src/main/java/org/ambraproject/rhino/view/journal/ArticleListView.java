@@ -20,7 +20,9 @@ public class ArticleListView implements JsonOutputView {
   }
 
   public ArticleListIdentity getIdentity() {
-    return new ArticleListIdentity(articleList.getListType(), journalKey, articleList.getListCode());
+    String listType = articleList.getListType();
+    String listCode = articleList.getListCode();
+    return new ArticleListIdentity(listType, journalKey, listCode);
   }
 
   public ArticleList getArticleList() {
