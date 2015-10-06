@@ -37,21 +37,25 @@ import java.util.Set;
 
 public class ArticleListCrudServiceImpl extends AmbraService implements ArticleListCrudService {
 
+  private static Query queryFor(Session hibernateSession, String selectClause, ArticleListIdentity identity) {
+    Optional<String> listType = identity.getListType();
+    Query query = hibernateSession.createQuery(selectClause +
+        " from Journal j inner join j.articleLists l " +
+        "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
+        (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
+    query.setString("journalKey", identity.getJournalKey());
+    query.setString("listCode", identity.getListCode());
+    if (listType.isPresent()) {
+      query.setString("listType", identity.getListType().get());
+    }
+    return query;
+  }
+
   private boolean listExists(final ArticleListIdentity identity) {
     long count = hibernateTemplate.execute(new HibernateCallback<Long>() {
       @Override
       public Long doInHibernate(Session session) throws HibernateException, SQLException {
-        Optional<String> listType = identity.getListType();
-        Query query = session.createQuery("" +
-            "select count(*) " +
-            "from Journal j inner join j.articleLists l " +
-            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
-            (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
-        query.setString("journalKey", identity.getJournalKey());
-        query.setString("listCode", identity.getListCode());
-        if (listType.isPresent()) {
-          query.setString("listType", identity.getListType().get());
-        }
+        Query query = queryFor(session, "select count(*)", identity);
         return (Long) query.uniqueResult();
       }
     });
@@ -91,17 +95,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     Object[] result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
       public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-        Optional<String> listType = identity.getListType();
-        Query query = session.createQuery("" +
-            "select j.journalKey, l " +
-            "from Journal j inner join j.articleLists l " +
-            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
-            (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
-        query.setString("journalKey", identity.getJournalKey());
-        query.setString("listCode", identity.getListCode());
-        if (listType.isPresent()) {
-          query.setString("listType", identity.getListType().get());
-        }
+        Query query = queryFor(session, "select j.journalKey, l", identity);
         return query.list();
       }
     }));
