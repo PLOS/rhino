@@ -40,7 +40,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   @Override
   public ArticleListView create(ArticleListIdentity identity, String displayName, Set<ArticleIdentity> articleIds) {
     ArticleList list = new ArticleList();
-    list.setListType(identity.getListType().orNull());
+    list.setListType(identity.getListType());
     list.setListCode(identity.getListCode());
     list.setDisplayName(displayName);
 
@@ -66,17 +66,13 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     Object[] result = DataAccessUtils.uniqueResult(hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
       @Override
       public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-        Optional<String> listType = identity.getListType();
         Query query = session.createQuery("" +
             "select j.journalKey, l " +
             "from Journal j inner join j.articleLists l " +
-            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and " +
-            (listType.isPresent() ? "(l.listType=:listType)" : "(l.listType is null)"));
+            "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and (l.listType=:listType)");
         query.setString("journalKey", identity.getJournalKey());
         query.setString("listCode", identity.getListCode());
-        if (listType.isPresent()) {
-          query.setString("listType", identity.getListType().get());
-        }
+        query.setString("listType", identity.getListType());
         return query.list();
       }
     }));

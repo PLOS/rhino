@@ -31,7 +31,7 @@ public class ArticleListCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam(value = "listType", required = false) String listType,
+                                  @RequestParam(value = "listType", required = true) String listType,
                                   @RequestParam(value = "journal", required = true) String journalKey,
                                   @RequestParam(value = "listCode", required = true) String listCode)
       throws IOException {
@@ -45,18 +45,9 @@ public class ArticleListCrudController extends RestController {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
 
-    ArticleListIdentity identity = new ArticleListIdentity(Optional.fromNullable(listType), journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
     articleListCrudService.create(identity, title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.PATCH)
-  public ResponseEntity<?> update(HttpServletRequest request,
-                                  @PathVariable("journal") String journalKey,
-                                  @PathVariable("listCode") String listCode)
-      throws IOException {
-    return update(request, null, journalKey, listCode);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -67,19 +58,9 @@ public class ArticleListCrudController extends RestController {
                                   @PathVariable("listCode") String listCode)
       throws IOException {
     ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
-    Optional<String> listTypeObj = Optional.fromNullable(listType);
-    ArticleListIdentity identity = new ArticleListIdentity(listTypeObj, journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
     articleListCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{journal}/{listCode}", method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("journal") String journalKey,
-                   @PathVariable("listCode") String listCode)
-      throws IOException {
-    read(request, response, null, journalKey, listCode);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -89,7 +70,7 @@ public class ArticleListCrudController extends RestController {
                    @PathVariable("journal") String journalKey,
                    @PathVariable("listCode") String listCode)
       throws IOException {
-    ArticleListIdentity identity = new ArticleListIdentity(Optional.fromNullable(listType), journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
     articleListCrudService.read(identity).respond(request, response, entityGson);
   }
 

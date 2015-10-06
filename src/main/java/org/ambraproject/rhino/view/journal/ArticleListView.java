@@ -1,6 +1,5 @@
 package org.ambraproject.rhino.view.journal;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -21,8 +20,7 @@ public class ArticleListView implements JsonOutputView {
   }
 
   public ArticleListIdentity getIdentity() {
-    return new ArticleListIdentity(Optional.fromNullable(articleList.getListType()),
-        journalKey, articleList.getListCode());
+    return new ArticleListIdentity(articleList.getListType(), journalKey, articleList.getListCode());
   }
 
   public ArticleList getArticleList() {
