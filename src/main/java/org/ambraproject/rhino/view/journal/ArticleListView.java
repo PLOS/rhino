@@ -21,8 +21,8 @@ public class ArticleListView implements JsonOutputView {
 
   public ArticleListIdentity getIdentity() {
     String listType = articleList.getListType();
-    String listCode = articleList.getListCode();
-    return new ArticleListIdentity(listType, journalKey, listCode);
+    String listKey = articleList.getListKey();
+    return new ArticleListIdentity(listType, journalKey, listKey);
   }
 
   public ArticleList getArticleList() {

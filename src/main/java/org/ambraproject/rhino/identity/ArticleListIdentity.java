@@ -8,14 +8,14 @@ import com.google.common.base.Preconditions;
  */
 public final class ArticleListIdentity {
 
-  private final String listType;
+  private final String type;
   private final String journalKey;
-  private final String listCode;
+  private final String key;
 
-  public ArticleListIdentity(String listType, String journalKey, String listCode) {
-    this.listType = validate(listType);
+  public ArticleListIdentity(String type, String journalKey, String key) {
+    this.type = validate(type);
     this.journalKey = validate(journalKey);
-    this.listCode = validate(listCode);
+    this.key = validate(key);
   }
 
   private static final CharMatcher INVALID_CHARACTERS = CharMatcher.WHITESPACE.or(CharMatcher.is('/'));
@@ -26,21 +26,21 @@ public final class ArticleListIdentity {
     return token;
   }
 
-  public String getListType() {
-    return listType;
+  public String getType() {
+    return type;
   }
 
   public String getJournalKey() {
     return journalKey;
   }
 
-  public String getListCode() {
-    return listCode;
+  public String getKey() {
+    return key;
   }
 
   @Override
   public String toString() {
-    return listType + "/" + journalKey + "/" + listCode;
+    return type + "/" + journalKey + "/" + key;
   }
 
   @Override
@@ -50,18 +50,18 @@ public final class ArticleListIdentity {
 
     ArticleListIdentity that = (ArticleListIdentity) o;
 
-    if (!listType.equals(that.listType)) return false;
+    if (!type.equals(that.type)) return false;
     if (!journalKey.equals(that.journalKey)) return false;
-    if (!listCode.equals(that.listCode)) return false;
+    if (!key.equals(that.key)) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = listType.hashCode();
+    int result = type.hashCode();
     result = 31 * result + journalKey.hashCode();
-    result = 31 * result + listCode.hashCode();
+    result = 31 * result + key.hashCode();
     return result;
   }
 

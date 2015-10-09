@@ -40,10 +40,10 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
   private static Query queryFor(Session hibernateSession, String selectClause, ArticleListIdentity identity) {
     Query query = hibernateSession.createQuery(selectClause +
         " from Journal j inner join j.articleLists l " +
-        "where (j.journalKey=:journalKey) and (l.listCode=:listCode) and (l.listType=:listType)");
+        "where (j.journalKey=:journalKey) and (l.listKey=:listKey) and (l.listType=:listType)");
     query.setString("journalKey", identity.getJournalKey());
-    query.setString("listCode", identity.getListCode());
-    query.setString("listType", identity.getListType());
+    query.setString("listKey", identity.getKey());
+    query.setString("listType", identity.getType());
     return query;
   }
 
@@ -65,8 +65,8 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
     }
 
     ArticleList list = new ArticleList();
-    list.setListType(identity.getListType());
-    list.setListCode(identity.getListCode());
+    list.setListType(identity.getType());
+    list.setListKey(identity.getKey());
     list.setDisplayName(displayName);
 
     list.setArticles(fetchArticles(articleIds));

@@ -31,9 +31,9 @@ public class ArticleListCrudController extends RestController {
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.POST)
   public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam(value = "listType", required = true) String listType,
+                                  @RequestParam(value = "type", required = true) String type,
                                   @RequestParam(value = "journal", required = true) String journalKey,
-                                  @RequestParam(value = "listCode", required = true) String listCode)
+                                  @RequestParam(value = "key", required = true) String key)
       throws IOException {
     ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
     Optional<String> title = inputView.getTitle();
@@ -45,20 +45,20 @@ public class ArticleListCrudController extends RestController {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
 
-    ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(type, journalKey, key);
     articleListCrudService.create(identity, title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{listType}/{journal}/{listCode}", method = RequestMethod.PATCH)
+  @RequestMapping(value = "/lists/{type}/{journal}/{key}", method = RequestMethod.PATCH)
   public ResponseEntity<?> update(HttpServletRequest request,
-                                  @PathVariable("listType") String listType,
+                                  @PathVariable("type") String type,
                                   @PathVariable("journal") String journalKey,
-                                  @PathVariable("listCode") String listCode)
+                                  @PathVariable("key") String key)
       throws IOException {
     ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
-    ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(type, journalKey, key);
     articleListCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -71,30 +71,30 @@ public class ArticleListCrudController extends RestController {
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{listType}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}", method = RequestMethod.GET)
   public void listAll(HttpServletRequest request, HttpServletResponse response,
-                      @PathVariable("listType") String listType)
+                      @PathVariable("type") String type)
       throws IOException {
-    articleListCrudService.readAll(Optional.of(listType), Optional.<String>absent()).respond(request, response, entityGson);
+    articleListCrudService.readAll(Optional.of(type), Optional.<String>absent()).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{listType}/{journal}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}/{journal}", method = RequestMethod.GET)
   public void listAll(HttpServletRequest request, HttpServletResponse response,
-                      @PathVariable("listType") String listType,
+                      @PathVariable("type") String type,
                       @PathVariable("journal") String journalKey)
       throws IOException {
-    articleListCrudService.readAll(Optional.of(listType), Optional.of(journalKey)).respond(request, response, entityGson);
+    articleListCrudService.readAll(Optional.of(type), Optional.of(journalKey)).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = "/lists/{listType}/{journal}/{listCode}", method = RequestMethod.GET)
+  @RequestMapping(value = "/lists/{type}/{journal}/{key}", method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
-                   @PathVariable("listType") String listType,
+                   @PathVariable("type") String type,
                    @PathVariable("journal") String journalKey,
-                   @PathVariable("listCode") String listCode)
+                   @PathVariable("key") String key)
       throws IOException {
-    ArticleListIdentity identity = new ArticleListIdentity(listType, journalKey, listCode);
+    ArticleListIdentity identity = new ArticleListIdentity(type, journalKey, key);
     articleListCrudService.read(identity).respond(request, response, entityGson);
   }
 
