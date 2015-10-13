@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,14 +27,24 @@ public class ArticleListCrudController extends RestController {
   @Autowired
   private ArticleListCrudService articleListCrudService;
 
+  private static RestClientException complainAboutRequiredListIdentity(Exception cause) {
+    return new RestClientException("type, journal, and key are required", HttpStatus.BAD_REQUEST, cause);
+  }
+
   @Transactional(rollbackFor = {Throwable.class})
   @RequestMapping(value = "/lists", method = RequestMethod.POST)
-  public ResponseEntity<?> create(HttpServletRequest request,
-                                  @RequestParam(value = "type", required = true) String type,
-                                  @RequestParam(value = "journal", required = true) String journalKey,
-                                  @RequestParam(value = "key", required = true) String key)
-      throws IOException {
-    ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
+  public ResponseEntity<?> create(HttpServletRequest request) throws IOException {
+    final ListInputView inputView;
+    try {
+      inputView = readJsonFromRequest(request, ListInputView.class);
+    } catch (ListInputView.PartialIdentityException e) {
+      throw complainAboutRequiredListIdentity(e);
+    }
+
+    Optional<ArticleListIdentity> identity = inputView.getIdentity();
+    if (!identity.isPresent()) {
+      throw complainAboutRequiredListIdentity(null);
+    }
     Optional<String> title = inputView.getTitle();
     if (!title.isPresent()) {
       throw new RestClientException("title required", HttpStatus.BAD_REQUEST);
@@ -45,9 +54,12 @@ public class ArticleListCrudController extends RestController {
       throw new RestClientException("articleDois required", HttpStatus.BAD_REQUEST);
     }
 
-    ArticleListIdentity identity = new ArticleListIdentity(type, journalKey, key);
-    articleListCrudService.create(identity, title.get(), articleDois.get());
+    articleListCrudService.create(identity.get(), title.get(), articleDois.get());
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  private static RestClientException complainAboutListIdentityOnPatch(Exception cause) {
+    return new RestClientException("type, journal, and key cannot be changed with PATCH", HttpStatus.BAD_REQUEST, cause);
   }
 
   @Transactional(rollbackFor = {Throwable.class})
@@ -57,7 +69,16 @@ public class ArticleListCrudController extends RestController {
                                   @PathVariable("journal") String journalKey,
                                   @PathVariable("key") String key)
       throws IOException {
-    ListInputView inputView = readJsonFromRequest(request, ListInputView.class);
+    final ListInputView inputView;
+    try {
+      inputView = readJsonFromRequest(request, ListInputView.class);
+    } catch (ListInputView.PartialIdentityException e) {
+      throw complainAboutListIdentityOnPatch(e);
+    }
+    if (inputView.getIdentity().isPresent()) {
+      throw complainAboutListIdentityOnPatch(null);
+    }
+
     ArticleListIdentity identity = new ArticleListIdentity(type, journalKey, key);
     articleListCrudService.update(identity, inputView.getTitle(), inputView.getArticleIds());
     return new ResponseEntity<>(HttpStatus.OK);
