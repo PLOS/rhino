@@ -18,6 +18,7 @@
 
 package org.ambraproject.rhino.service;
 
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
@@ -34,5 +35,5 @@ public interface IssueCrudService {
 
   public abstract void update(DoiBasedIdentity issueId, IssueInputView input);
 
-  public abstract List<ArticleIssue> getArticleIssues(final String articleDoi);
+  public abstract List<ArticleIssue> getArticleIssues(ArticleIdentity articleIdentity);
 }

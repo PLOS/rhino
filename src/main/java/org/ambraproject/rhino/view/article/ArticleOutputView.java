@@ -41,7 +41,6 @@ import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.rhino.view.KeyedListView;
 import org.ambraproject.rhino.view.asset.groomed.GroomedAssetsView;
 import org.ambraproject.rhino.view.asset.raw.RawAssetCollectionView;
-import org.ambraproject.rhino.view.article.ArticleIssueOutputView;
 import org.ambraproject.rhino.view.journal.JournalNonAssocView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

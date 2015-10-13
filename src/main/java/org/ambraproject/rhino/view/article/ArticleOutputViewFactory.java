@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.Pingback;
 import org.ambraproject.models.Syndication;
+import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleType;
 import org.ambraproject.rhino.service.ArticleTypeService;
@@ -41,6 +42,8 @@ public class ArticleOutputViewFactory {
    * @return view of the article and associated data
    */
   public ArticleOutputView create(Article article, boolean excludeCitations) {
+    final ArticleIdentity articleIdentity = ArticleIdentity.create(article);
+
     Collection<RelatedArticleView> relatedArticles = articleCrudService.getRelatedArticles(article);
     Collection<Syndication> syndications;
     try {
@@ -58,9 +61,17 @@ public class ArticleOutputViewFactory {
 
     List<Pingback> pingbacks = pingbackReadService.loadPingbacks(article);
 
-    List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(article.getDoi());
+    List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
-    return new ArticleOutputView(article, nlmArticleType, articleType, relatedArticles, articleIssues, syndications, pingbacks, excludeCitations);
+    return new ArticleOutputView(
+        article,
+        nlmArticleType,
+        articleType,
+        relatedArticles,
+        articleIssues,
+        syndications,
+        pingbacks,
+        excludeCitations);
   }
 
 }
