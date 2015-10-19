@@ -171,6 +171,7 @@ public class ArticleListCrudServiceImpl extends AmbraService implements ArticleL
 
     Collection<String> missingKeys = Sets.difference(
         ImmutableSet.copyOf(requestedArticleKeys), foundArticleKeys.build());
+    missingKeys = new ArrayList<>(missingKeys); // coerce to a type that Gson can handle
     return "Articles not found with DOIs: " + new Gson().toJson(missingKeys);
   }
 
