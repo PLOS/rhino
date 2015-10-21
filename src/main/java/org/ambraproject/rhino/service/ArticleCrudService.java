@@ -25,6 +25,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
+import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.RelatedArticleView;
@@ -36,37 +37,35 @@ import java.util.Collection;
 public interface ArticleCrudService extends DoiBasedCrudService {
 
   /**
-   * Create or update an article from supplied XML data. If no article exists with the given identity, a new article
-   * entity is created; else, the article is re-ingested and the new data replaces the old data in the file store.
-   * <p/>
-   * The input stream is closed after being successfully read, but this is not guaranteed. Any invocation of this method
-   * must be enclosed in a {@code try} block, with the argument input stream closed in the {@code finally} block.
-   *
-   * @param file       the XML data for the article
-   * @param suppliedId the identifier supplied for the article, if any
-   * @return the created or update Article
-   * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
-   * @throws IOException
-   */
-  public abstract Article write(InputStream file, Optional<ArticleIdentity> suppliedId, WriteMode mode)
-      throws IOException;
-
-  /**
    * Create or update an article from supplied ,zip archive data. If no article exists with the given identity, a new
    * article entity is created; else, the article is re-ingested and the new data replaces the old data in the file
    * store.
    *
-   * @param filename   path to the local .zip file
+   * @param archive    the local .zip file
    * @param suppliedId the identifier supplied for the article, if any
    * @return the created or update Article
    * @throws org.ambraproject.rhino.rest.RestClientException if the DOI is already used
    * @throws IOException
    */
-  public abstract Article writeArchive(String filename, Optional<ArticleIdentity> suppliedId, WriteMode mode)
+  public abstract Article writeArchive(Archive archive, Optional<ArticleIdentity> suppliedId, WriteMode mode)
       throws IOException;
 
   /**
+   * Ingest an article under the versioned data model only. This should be used only for articles that were ingested
+   * normally, prior to the update to {@link #writeArchive} that made
+   *
+   * @param archive
+   * @return
+   * @throws IOException
+   * @deprecated This is a temporary kludge for data migration. It should be deleted when the legacy article model is no
+   * longer supported.
+   */
+  @Deprecated
+  public abstract Article writeArchiveAsVersionedOnly(Archive archive) throws IOException;
+
+  /**
    * Repopulates article category information by making a call to the taxonomy server.
+   *
    * @param id the identifier of the article
    */
   public abstract void repopulateCategories(ArticleIdentity id) throws IOException;
@@ -154,6 +153,15 @@ public interface ArticleCrudService extends DoiBasedCrudService {
   public abstract Transceiver getRawCategories(ArticleIdentity id)
       throws IOException;
 
+  /**
+   * Get the text that is sent to the taxonomy server as well as the taxonomy terms returned by the server
+   *
+   * @param id specifies the article
+   * @return a String containing the text and raw categories
+   * @throws IOException
+   */
+  public abstract String getRawCategoriesAndText(ArticleIdentity id) throws IOException;
+
   public abstract void setAssetService(AssetCrudService assetService);
 
   /**
@@ -180,5 +188,44 @@ public interface ArticleCrudService extends DoiBasedCrudService {
    * @return a set of views of the related articles
    */
   public abstract Collection<RelatedArticleView> getRelatedArticles(Article article);
+
+  /**
+   * Read the metadata of a random article.
+   *
+   * <em>WARNING</em> random retrieval of records is not performant and should be used only for testing
+   */
+  public abstract Transceiver readRandom() throws IOException;
+
+  /**
+   * Represent an existing article as an ingestible archive. The archive, if it were reingested, should produce an
+   * identical article and assets.
+   *
+   * @param articleIdentity the article to represent
+   * @return the archive
+   */
+  public abstract Archive repack(ArticleIdentity articleIdentity);
+
+
+  /**
+   * Replicates the behavior of {@link #readMetadata}, and forces the service to read from the versioned data model.
+   *
+   * @deprecated <em>TEMPORARY.</em> To be removed when the versioned data model is fully supported.
+   */
+  @Deprecated
+  public abstract Transceiver readVersionedMetadata(ArticleIdentity id,
+                                                    Optional<Integer> versionNumber,
+                                                    ArticleMetadataSource source);
+
+  /**
+   * Signifies which file to use when reading article metadata from a content repo collection. This exists for
+   * verification purposes only; when the versioned data model is stable, the service will use only one data source as
+   * an implementation choice.
+   *
+   * @deprecated <em>TEMPORARY.</em> To be removed when regular services fully use the versioned data model.
+   */
+  @Deprecated
+  public static enum ArticleMetadataSource {
+    FULL_MANUSCRIPT, FRONT_MATTER, FRONT_AND_BACK_MATTER
+  }
 
 }

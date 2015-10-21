@@ -8,7 +8,7 @@ import org.ambraproject.rhino.service.ArticleCrudService;
 import org.ambraproject.rhino.service.ArticleTypeService;
 import org.ambraproject.rhino.service.taxonomy.TaxonomyClassificationService;
 import org.ambraproject.util.DocumentBuilderFactoryCreator;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -87,7 +87,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
   public Map<String, Integer> classifyArticle(Document articleXml, Article article) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
-    List<String> rawTerms = getRawTerms(articleXml, article);
+    List<String> rawTerms = getRawTerms(articleXml, article, false);
     Map<String, Integer> results = new LinkedHashMap<>(rawTerms.size());
 
     for (String rawTerm : rawTerms) {
@@ -121,7 +121,8 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
    * @inheritDoc
    */
   @Override
-  public List<String> getRawTerms(Document articleXml, Article article) throws IOException {
+  public List<String> getRawTerms(Document articleXml, Article article,
+                                  boolean isTextRequired) throws IOException {
     RuntimeConfiguration.TaxonomyConfiguration configuration = getTaxonomyConfiguration();
 
     String toCategorize = getCategorizationContent(articleXml);
@@ -133,7 +134,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
         ArticleIdentity.create(article).getIdentifier());
 
     String aiMessage = String.format(MESSAGE_BEGIN, configuration.getThesaurus())
-        + StringEscapeUtils.escapeXml(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
+        + StringEscapeUtils.escapeXml10(String.format(MESSAGE_DOC_ELEMENT, header, toCategorize))
         + MESSAGE_END;
 
     HttpPost post = new HttpPost(configuration.getServer().toString());
@@ -158,17 +159,23 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     NodeList vectorElements = response.getElementsByTagName("VectorElement");
     List<String> results = new ArrayList<>(vectorElements.getLength());
 
-    if (results.size() == 0) {
-      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+    // Add the text that is sent to taxonomy server if isTextRequired is true
+    if (isTextRequired) {
+      toCategorize = StringEscapeUtils.unescapeXml(toCategorize);
+      results.add(toCategorize);
     }
 
     //The first and last elements of the vector response are just MAITERMS
     for (int i = 1; i < vectorElements.getLength() - 1; i++) {
       results.add(vectorElements.item(i).getTextContent());
     }
+
+    if ((isTextRequired && results.size() == 1) || results.isEmpty()) {
+      log.error("Taxonomy server returned 0 terms. " + article.getDoi());
+    }
+
     return results;
   }
-
 
   // There appears to be a bug in the AI getSuggestedTermsFullPath method.
   // It's supposed to return a slash-delimited path that starts with a slash,
@@ -266,7 +273,7 @@ public class TaxonomyClassificationServiceImpl implements TaxonomyClassification
     appendElementIfExists(sb, dom, "article-title");
     appendAllElementsIfExists(sb, dom, "abstract");
     appendElementIfExists(sb, dom, "body");
-    return StringEscapeUtils.escapeXml(sb.toString().trim());
+    return StringEscapeUtils.escapeXml10(sb.toString().trim());
   }
 
 }

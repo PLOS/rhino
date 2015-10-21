@@ -21,6 +21,7 @@ package org.ambraproject.rhino.content.xml;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -38,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.annotation.Nullable;
 import java.net.URLEncoder;
@@ -103,6 +105,47 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     }
 
     return new AssetNodesByDoi(nodeMap);
+  }
+
+  private static final ImmutableSet<String> BODY = ImmutableSet.of("body");
+  private static final ImmutableSet<String> BODY_AND_BACK = ImmutableSet.of("body", "back");
+
+  /**
+   * Build a deep copy of the article XML document that contains only the {@code &lt;front>} node. The returned document
+   * can be read (into a future {@code ArticleXml} object, or by other means) and parsed to get article metadata from
+   * the front matter. Metadata from the {@code &lt;back>} node will not be available.
+   *
+   * @return a copy of the document that contains only the {@code &lt;front>} node
+   */
+  public Document extractFrontMatter() {
+    return truncate(BODY_AND_BACK);
+  }
+
+  /**
+   * Build a deep copy of the article XML document that contains only the {@code &lt;front>} and {@code &lt;back>} node.
+   * The returned document can be read (into a future {@code ArticleXml} object, or by other means) and parsed to get
+   * article metadata.
+   *
+   * @return a copy of the document that contains only the {@code &lt;front>} node
+   */
+  public Document extractFrontAndBackMatter() {
+    return truncate(BODY);
+  }
+
+  private Document truncate(Set<String> nodeNamesToRemove) {
+    Preconditions.checkNotNull(nodeNamesToRemove);
+    Document document = (Document) xml.cloneNode(true);
+    for (Node articleNode : NodeListAdapter.wrap(document.getChildNodes())) {
+      NodeList childNodes = articleNode.getChildNodes(); // can't use NodeListAdapter because we want to delete during iteration
+      for (int i = 0; i < childNodes.getLength(); i++) {
+        Node childNode = childNodes.item(i);
+        if (nodeNamesToRemove.contains(childNode.getNodeName())) {
+          articleNode.removeChild(childNode);
+          i--;
+        }
+      }
+    }
+    return document;
   }
 
   /**
@@ -359,6 +402,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
     return "http://dx.doi.org/" + URLEncoder.encode(doi);
   }
 
+  private static String buildArticleTypeUri(String articleType) {
+    // Represent a article type token as a URI, as required by legacy article type model.
+    // TODO: Either refactor URI-based data model, or allow base URI to be configured (no hard-coded "plos.org").
+    // This also ensures that we throw a NullPointerException rather than return "http://rdf.plos.org/RDF/articleType/null"
+    return "http://rdf.plos.org/RDF/articleType/" + Preconditions.checkNotNull(articleType);
+  }
+
   /**
    * @return set of article type strings for the article
    */
@@ -366,14 +416,13 @@ public class ArticleXml extends AbstractArticleXml<Article> {
 
     // pmc2obj-v3.xslt lines 93-96
     Set<String> articleTypes = Sets.newHashSet();
-    articleTypes.add("http://rdf.plos.org/RDF/articleType/"
-        + readString("/article/@article-type"));
+    articleTypes.add(buildArticleTypeUri(readString("/article/@article-type")));
     List<String> otherTypes = readTextList("/article/front/article-meta/article-categories/"
         + "subj-group[@subj-group-type = 'heading']/subject");
     for (String otherType : otherTypes) {
       otherType = uriEncode(otherType);
       otherType = SLASH_ESCAPE.replace(otherType); // uriEncode leaves slashes alone, but we actually want them escaped
-      articleTypes.add("http://rdf.plos.org/RDF/articleType/" + otherType); // TODO PLOS-specific
+      articleTypes.add(buildArticleTypeUri(otherType));
     }
     return articleTypes;
   }
