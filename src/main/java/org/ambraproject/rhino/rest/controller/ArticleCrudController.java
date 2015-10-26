@@ -23,6 +23,7 @@ import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.rest.controller.abstr.ArticleSpaceController;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.service.ArticleCrudService.ArticleMetadataSource;
+import org.ambraproject.rhino.service.ArticleListCrudService;
 import org.ambraproject.rhino.service.impl.RecentArticleQuery;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhombat.HttpDateUtil;
@@ -73,6 +74,9 @@ public class ArticleCrudController extends ArticleSpaceController {
 
   @Autowired
   private AssetFileCrudController assetFileCrudController;
+
+  @Autowired
+  private ArticleListCrudService articleListCrudService;
 
   @Transactional(readOnly = true)
   @RequestMapping(value = ARTICLE_ROOT, method = RequestMethod.GET)
@@ -249,6 +253,17 @@ public class ArticleCrudController extends ArticleSpaceController {
       throws IOException {
     ArticleIdentity id = parse(request);
     articleCrudService.getRawCategories(id).respond(request, response, entityGson);
+  }
+
+  /**
+   * Retrieves a collection of article lists that contain an article.
+   */
+  @Transactional(readOnly = true)
+  @RequestMapping(value = ARTICLE_TEMPLATE, method = RequestMethod.GET, params = "lists")
+  public void getContainingLists(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+    ArticleIdentity id = parse(request);
+    articleListCrudService.readContainingLists(id).respond(request, response, entityGson);
   }
 
   @Transactional(rollbackFor = {Throwable.class})

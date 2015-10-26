@@ -43,13 +43,10 @@ public class JournalCrudController extends RestController {
   @RequestMapping(value = JOURNAL_TEMPLATE, method = RequestMethod.GET)
   public void read(HttpServletRequest request, HttpServletResponse response,
                    @PathVariable String journalKey,
-                   @RequestParam(value = "currentIssue", required = false) String currentIssue,
-                   @RequestParam(value = "inTheNewsArticles", required = false) String inTheNewsArticles)
+                   @RequestParam(value = "currentIssue", required = false) String currentIssue)
       throws IOException {
     if (booleanParameter(currentIssue)) {
       journalReadService.readCurrentIssue(journalKey).respond(request, response, entityGson);
-    } else if (booleanParameter(inTheNewsArticles)) {
-      journalReadService.readInTheNewsArticles(journalKey).respond(request, response, entityGson);
     } else {
       journalReadService.read(journalKey).respond(request, response, entityGson);
     }
