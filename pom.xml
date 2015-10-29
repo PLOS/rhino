@@ -24,7 +24,7 @@
   <artifactId>rhino</artifactId>
   <name>rhino</name>
   <packaging>war</packaging>
-  <version>1.2.3</version>
+  <version>1.2.4</version>
 
   <description>Service-oriented back end for Ambra.</description>
 
@@ -50,7 +50,7 @@
     <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
     <org.aspectj-version>1.6.9</org.aspectj-version>
     <org.slf4j-version>1.6.1</org.slf4j-version>
-    <ambra.version>2.10.20-SNAPSHOT</ambra.version>
+    <ambra.version>2.10.20</ambra.version>
     <rhombat.version>1.0.2</rhombat.version>
     <conf-helper.version>2.2.1</conf-helper.version>
     <camel.version>2.10.4</camel.version>
