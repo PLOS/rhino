@@ -168,11 +168,8 @@ public class TestConfiguration extends BaseConfiguration {
 
   @Bean
   public TaxonomyLookupService taxonomyLookupService() {
-    return new TaxonomyLookupService() {
-      @Override
-      public Transceiver read(String journal, String parent) throws IOException {
-        throw new UnsupportedOperationException("Dummy service");
-      }
+    return (journal, parent) -> {
+      throw new UnsupportedOperationException("Dummy service");
     };
   }
 
