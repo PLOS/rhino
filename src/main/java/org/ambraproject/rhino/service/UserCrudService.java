@@ -46,12 +46,4 @@ public interface UserCrudService {
    */
   public abstract Transceiver read(String authId) throws IOException;
 
-  /**
-   * Record user logging in
-   * @param authId authId
-   * @param loginInfo UserLogin object
-   * @return UserProfile object
-   */
-  public abstract UserProfile createUserLogin(final String authId, final UserLogin loginInfo);
-
 }

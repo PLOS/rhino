@@ -56,14 +56,4 @@ public class UserCrudController extends RestController {
     userCrudService.read(authId).respond(request, response, entityGson);
   }
 
-  @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = USER_TEMPLATE, method = RequestMethod.POST)
-  public void createUserLogin(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
-
-    UserLogin input = readJsonFromRequest(request, UserLogin.class);
-    userCrudService.createUserLogin(authId, input);
-
-    userCrudService.read(authId).respond(request, response, entityGson);
-  }
-
 }

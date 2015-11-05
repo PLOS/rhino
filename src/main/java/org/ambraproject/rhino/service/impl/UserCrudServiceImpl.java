@@ -109,26 +109,6 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public UserProfile createUserLogin(final String authId, final UserLogin userLogin) {
-    Preconditions.checkNotNull(userLogin);
-
-    UserProfile userProfile = getUserByAuthId(authId);
-    if (userProfile == null) {
-      throw new RestClientException("UserProfile not found for authId " + authId, HttpStatus.NOT_FOUND);
-    }
-
-    if (this.advancedLogging) {
-      userLogin.setUserProfileID(userProfile.getID());
-      hibernateTemplate.save(userLogin);
-    }
-
-    return userProfile;
-  }
-
-  /**
    * Find the UserProfile object for a given authId
    * @param authId authId
    * @return UserProfile object
