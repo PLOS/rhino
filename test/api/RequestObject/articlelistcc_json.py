@@ -15,7 +15,7 @@ ARTICLE_LIST_API = API_BASE_URL + '/v1/lists/'
 
 class ArticlesListJSON(BaseServiceTest):
 
-  def add_article_list(self):
+  def add_article_list(self, expected_response_code):
     '''
     Calls rhino POST article list API with parameters
     :param articlelistbody: body of articlelist
@@ -34,6 +34,7 @@ class ArticlesListJSON(BaseServiceTest):
                    ]
            })
     self.doPost(ARTICLE_LIST_API, daData)
+    self.verify_http_code_is(expected_response_code)
 
   def delete_lists_articlelistjointable(self, list_name):
     """
