@@ -41,6 +41,7 @@ class BaseServiceTest(unittest.TestCase):
   def _debug(self):
     if PRINT_DEBUG:
       print 'API Response = %s' % self.__response.text
+      print 'API Response Code = %s' % self.__response.status_code
 
   @timeit
   def doGet(self, url, params=None, headers=None):
