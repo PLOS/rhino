@@ -6,7 +6,7 @@ from selenium.webdriver import DesiredCapabilities
 
 # Set API_BASE_URL environment variable to desired URL in order to run suite against it
 API_BASE_URL = os.getenv('API_BASE_URL', 'http://one-dpro.plosjournals.org')
-PRINT_DEBUG = False
+PRINT_DEBUG = True
 TIMEOUT = 30         # API call timeout, in seconds
 
 # === WebDriver specific section ===

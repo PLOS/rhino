@@ -50,14 +50,12 @@ class BaseServiceTest(unittest.TestCase):
 
   @timeit
   def doPost(self, url, data=None, files=None, headers=None):
-    self.__response = post(url, headers=headers, data=data, files=files, verify=False, timeout=TIMEOUT,
-                           allow_redirects=True)
+    self.__response = post(url, headers=headers, data=data, files=files, verify=False, timeout=TIMEOUT, allow_redirects=True)
     self._debug()
 
   @timeit
   def doPatch(self, url, data=None, headers=None):
-    self.__response = patch(url, headers=headers, data=json.dumps(data), verify=False, timeout=TIMEOUT,
-                            allow_redirects=True)
+    self.__response = patch(url, headers=headers, data=data, verify=False, timeout=TIMEOUT, allow_redirects=True)
     self._debug()
 
   @timeit

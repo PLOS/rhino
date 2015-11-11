@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 
-'''
+"""
 Base class for Article list crud controller  JSON related services
-'''
+"""
 
 __author__ = 'fcabrales@plos.org'
 
@@ -12,15 +12,14 @@ import json
 from ...Base.MySQL import MySQL
 
 ARTICLE_LIST_API = API_BASE_URL + '/v1/lists/'
+ARTICLE_LIST_PATCH_API = ARTICLE_LIST_API + 'collection/PLoSCollections/'
 
 class ArticlesListJSON(BaseServiceTest):
 
   def add_article_list(self, expected_response_code):
-    '''
+    """
     Calls rhino POST article list API with parameters
-    :param articlelistbody: body of articlelist
-    :return:JSON response
-    '''
+    """
     daData = json.dumps({
                "type": "collection",
                "journal": "PLoSCollections",
@@ -34,6 +33,26 @@ class ArticlesListJSON(BaseServiceTest):
                    ]
            })
     self.doPost(ARTICLE_LIST_API, daData)
+    self.verify_http_code_is(expected_response_code)
+
+  def patch_article_list(self, expected_response_code, article_list_key, use_bogus_data=False):
+    """
+    Calls rhino PATCH article list API with parameters
+    """
+    if use_bogus_data:
+      data = json.dumps({
+        "blitle": "Rhino cell collection - The Next Generation",
+        "articleDois": ["Garbagio!"]
+      })
+    else:
+      data = json.dumps({
+          "title": "Rhino cell collection - The Next Generation",
+          "articleDois": [
+              "10.1371/journal.pone.0009957",
+              "10.1371/journal.pone.0010363",
+          ]
+      })
+    self.doPatch(ARTICLE_LIST_PATCH_API + article_list_key, data)
     self.verify_http_code_is(expected_response_code)
 
   def delete_lists_articlelistjointable(self, list_name):
