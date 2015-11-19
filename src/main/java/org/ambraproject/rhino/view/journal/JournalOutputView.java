@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.view.journal;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -8,7 +9,6 @@ import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
 import org.ambraproject.models.Volume;
 import org.ambraproject.rhino.view.JsonOutputView;
-import org.ambraproject.rhino.view.KeyedListView;
 
 import java.util.List;
 
@@ -29,8 +29,8 @@ public class JournalOutputView implements JsonOutputView {
     JsonObject serialized = context.serialize(journal).getAsJsonObject();
 
     List<Volume> volumes = journal.getVolumes();
-    KeyedListView<Volume> volumeView = VolumeOutputView.wrapList(volumes);
-    serialized.add("volumes", context.serialize(volumeView));
+    List<VolumeOutputView> volumeViews = Lists.transform(volumes, VolumeOutputView::new);
+    serialized.add("volumes", context.serialize(volumeViews));
 
     Issue currentIssue = journal.getCurrentIssue();
     if (currentIssue != null) {
