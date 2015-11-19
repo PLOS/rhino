@@ -5,6 +5,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 import org.ambraproject.models.Issue;
 import org.ambraproject.models.Journal;
 import org.ambraproject.rhino.rest.RestClientException;
+import org.ambraproject.rhino.service.IssueCrudService;
 import org.ambraproject.rhino.service.JournalReadService;
 import org.ambraproject.rhino.util.response.EntityCollectionTransceiver;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
@@ -39,6 +40,8 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
 
   @Autowired
   private HibernateTemplate hibernateTemplate;
+  @Autowired
+  private IssueCrudService issueCrudService;
 
   @Override
   public Transceiver listJournals() throws IOException {
@@ -116,18 +119,7 @@ public class JournalReadServiceImpl extends AmbraService implements JournalReadS
           throw new RestClientException(message, HttpStatus.BAD_REQUEST);
         }
 
-        Object[] parentVolumeResults = hibernateTemplate.execute(new HibernateCallback<Object[]>() {
-          @Override
-          public Object[] doInHibernate(Session session) throws HibernateException, SQLException {
-            String hql = "select volumeUri, displayName, imageUri, title, description " +
-                "from Volume where :issue in elements(issues)";
-            Query query = session.createQuery(hql);
-            query.setParameter("issue", issue);
-            return (Object[]) query.uniqueResult();
-          }
-        });
-        VolumeNonAssocView parentVolumeView = (parentVolumeResults == null) ? null
-            : VolumeNonAssocView.fromArray(parentVolumeResults);
+        VolumeNonAssocView parentVolumeView = issueCrudService.getParentVolume(issue);
 
         return new IssueOutputView(issue, parentVolumeView);
       }
