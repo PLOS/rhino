@@ -2,10 +2,15 @@ package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.Article;
 import org.ambraproject.rhino.util.NlmArticleTypes;
+import org.ambraproject.rhino.util.response.Transceiver;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Retrieve article types using the imported org.ambraproject.views.article.ArticleType code.
@@ -85,6 +90,27 @@ public class LegacyArticleTypeService implements ArticleTypeService {
       }
     }
     return matchedType;
+  }
+
+  /*
+   * return a list of all defined article types, ordered for display
+   * // TODO: remove dependency on ambra-base jar when ArticleType objects are persisted in the db
+   */
+  @Override
+  public Transceiver listArticleTypes() throws IOException {
+    return new Transceiver() {
+      @Override
+      protected Collection<? extends ArticleType> getData() {
+        return org.ambraproject.views.article.ArticleType.getOrderedListForDisplay().stream()
+                .map(LegacyArticleTypeService::convertFromLegacy)
+                .collect(Collectors.toList());
+      }
+
+      @Override
+      protected Calendar getLastModifiedDate() throws IOException {
+        return null;
+      }
+    };
   }
 
   /**
