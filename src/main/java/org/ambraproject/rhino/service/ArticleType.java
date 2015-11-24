@@ -43,7 +43,7 @@ public class ArticleType implements JsonOutputView {
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.addProperty("uri", uri.toString());
+    // Suppress uri
     serialized.addProperty("heading", heading);
     serialized.addProperty("pluralHeading", pluralHeading);
     serialized.addProperty("code", code);

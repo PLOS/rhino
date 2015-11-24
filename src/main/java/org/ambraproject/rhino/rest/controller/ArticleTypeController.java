@@ -26,7 +26,7 @@ public class ArticleTypeController extends RestController {
    * @throws IOException
    */
   @Transactional(readOnly = true)
-  @RequestMapping(value = "/articletypes", method = RequestMethod.GET)
+  @RequestMapping(value = "/articleTypes", method = RequestMethod.GET)
   public void readArticleTypes(HttpServletRequest request, HttpServletResponse response)
           throws IOException {
     articleTypeService.listArticleTypes().respond(request, response, entityGson);
