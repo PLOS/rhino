@@ -34,6 +34,7 @@ public class ArticleListView implements JsonOutputView {
     JsonObject articleIdObj = new JsonObject();
     articleIdObj.addProperty("doi", article.getDoi());
     articleIdObj.addProperty("title", article.getTitle());
+    articleIdObj.addProperty("strkImgURI", article.getStrkImgURI());
     return articleIdObj;
   }
 
