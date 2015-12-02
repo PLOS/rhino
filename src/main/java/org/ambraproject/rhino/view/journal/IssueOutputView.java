@@ -14,13 +14,13 @@ import java.util.List;
 public class IssueOutputView implements JsonOutputView {
 
   private final Issue issue;
-  private final Optional<Object> parentVolumeView;
+  private final Optional<VolumeNonAssocView> parentVolumeView;
 
   public IssueOutputView(Issue issue) {
     this(issue, null);
   }
 
-  public IssueOutputView(Issue issue, Object parentVolumeView) {
+  public IssueOutputView(Issue issue, VolumeNonAssocView parentVolumeView) {
     this.issue = Preconditions.checkNotNull(issue);
     this.parentVolumeView = Optional.fromNullable(parentVolumeView);
   }

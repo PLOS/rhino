@@ -32,9 +32,11 @@ import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.article.ArticleIssue;
 import org.ambraproject.rhino.view.journal.IssueInputView;
 import org.ambraproject.rhino.view.journal.IssueOutputView;
+import org.ambraproject.rhino.view.journal.VolumeNonAssocView;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -69,7 +71,7 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
 
       @Override
       protected Object getView(Issue issue) {
-        return new IssueOutputView(issue);
+        return new IssueOutputView(issue, getParentVolume(issue));
       }
     };
   }
@@ -227,6 +229,21 @@ public class IssueCrudServiceImpl extends AmbraService implements IssueCrudServi
     }
     issue = applyInput(issue, input);
     hibernateTemplate.update(issue);
+  }
+
+  @Override
+  public VolumeNonAssocView getParentVolume(Issue issue) {
+    Object[] parentVolumeResults = hibernateTemplate.execute((Session session) -> {
+      String hql = "select volumeUri, displayName, imageUri, title, description " +
+          "from Volume where :issue in elements(issues)";
+      Query query = session.createQuery(hql);
+      query.setParameter("issue", issue);
+      return (Object[]) query.uniqueResult();
+    });
+
+    return (parentVolumeResults == null) ? null : new VolumeNonAssocView(
+        (String) parentVolumeResults[0], (String) parentVolumeResults[1], (String) parentVolumeResults[2],
+        (String) parentVolumeResults[3], (String) parentVolumeResults[4]);
   }
 
 }
