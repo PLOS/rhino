@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleAsset;
@@ -28,14 +29,21 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
                                       Journal dummyJournal,
                                       Calendar pubDate,
                                       String... types) {
+    String doi = DoiBasedIdentity.create(id).getKey();
+
     Article article = new Article();
-    article.setDoi(DoiBasedIdentity.create(id).getKey());
+    article.setDoi(doi);
     article.setJournals(ImmutableSet.of(dummyJournal));
     article.setDate(pubDate.getTime());
 
     article.setTitle(id);
-    article.setAssets(ImmutableList.<ArticleAsset>of());
     article.setTypes(ImmutableSet.copyOf(types));
+    article.setCategories(ImmutableMap.of());
+
+    ArticleAsset xml = new ArticleAsset();
+    xml.setDoi(doi);
+    xml.setExtension("XML");
+    article.setAssets(ImmutableList.of(xml));
 
     hibernateTemplate.save(article);
     return article;
@@ -61,7 +69,8 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     assertEquals(jsonObjects.size(), expectedDois.length);
     for (int i = 0; i < expectedDois.length; i++) {
       Map<?, ?> jsonObject = (Map<?, ?>) jsonObjects.get(i);
-      assertEquals(jsonObject.get("doi"), expectedDois[i]);
+      String expectedDoi = expectedDois[i];
+      assertEquals(jsonObject.get("doi"), DoiBasedIdentity.create(expectedDoi).getKey());
     }
   }
 
@@ -74,7 +83,7 @@ public class RecentArticleQueryTest extends BaseRhinoTransactionalTest {
     createRecentArticle("stale", dummyJournal, timestamp(-1), "t1", "t3");
     createRecentArticle("otherType", dummyJournal, timestamp(2), "t2", "t3");
     createRecentArticle("issueImageType", dummyJournal, timestamp(2),
-            "http://rdf.plos.org/RDF/articleType/Issue%20Image"); // should always be filtered out
+        "http://rdf.plos.org/RDF/articleType/Issue%20Image"); // should always be filtered out
 
     List<?> results;
 
