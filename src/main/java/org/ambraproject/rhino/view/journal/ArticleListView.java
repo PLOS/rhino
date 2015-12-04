@@ -1,13 +1,15 @@
 package org.ambraproject.rhino.view.journal;
 
 import com.google.common.base.Preconditions;
-import com.google.gson.JsonArray;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import org.ambraproject.models.Article;
 import org.ambraproject.models.ArticleList;
 import org.ambraproject.rhino.identity.ArticleListIdentity;
 import org.ambraproject.rhino.view.JsonOutputView;
+import org.ambraproject.rhino.view.article.ArticleOutputView;
+
+import java.util.List;
 
 public class ArticleListView implements JsonOutputView {
 
@@ -30,24 +32,13 @@ public class ArticleListView implements JsonOutputView {
   }
 
 
-  private JsonObject serializeArticle(JsonSerializationContext context, Article article) {
-    JsonObject articleIdObj = new JsonObject();
-    articleIdObj.addProperty("doi", article.getDoi());
-    articleIdObj.addProperty("title", article.getTitle());
-    articleIdObj.addProperty("striking_image", article.getStrkImgURI());
-    return articleIdObj;
-  }
-
   @Override
   public JsonObject serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(getIdentity()).getAsJsonObject();
     serialized.addProperty("title", articleList.getDisplayName());
 
-    JsonArray articleIdList = new JsonArray();
-    for (Article article : articleList.getArticles()) {
-      articleIdList.add(serializeArticle(context, article));
-    }
-    serialized.add("articles", articleIdList);
+    List<ArticleOutputView> articleIdList = Lists.transform(articleList.getArticles(), ArticleOutputView::createMinimalView);
+    serialized.add("articles", context.serialize(articleIdList));
 
     return serialized;
   }

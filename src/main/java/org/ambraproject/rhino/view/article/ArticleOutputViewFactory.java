@@ -63,7 +63,7 @@ public class ArticleOutputViewFactory {
 
     List<ArticleIssue> articleIssues = issueCrudService.getArticleIssues(articleIdentity);
 
-    return new ArticleOutputView(
+    return new ArticleOutputView.AugmentedView(
         article,
         nlmArticleType,
         articleType,

@@ -48,6 +48,7 @@ public class AdapterRegistry {
       .add(org.ambraproject.rhino.view.article.ArticleAuthorView.class)
       .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.ListView.class)
       .add(org.ambraproject.rhino.view.article.ArticleIssueOutputView.class)
+      .add(org.ambraproject.rhino.view.article.ArticleOutputView.AugmentedView.class)
       .add(org.ambraproject.rhino.view.article.ArticleOutputView.class)
       .add(org.ambraproject.rhino.view.article.ArticleStateView.class)
       .add(org.ambraproject.rhino.view.article.ArticleViewList.class)

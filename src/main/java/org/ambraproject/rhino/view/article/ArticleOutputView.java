@@ -19,7 +19,6 @@
 package org.ambraproject.rhino.view.article;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -57,47 +56,101 @@ import static org.ambraproject.rhino.view.article.ArticleJsonConstants.PUBLICATI
 import static org.ambraproject.rhino.view.article.ArticleJsonConstants.getPublicationStateName;
 
 /**
- * A view of an article for printing to JSON. When serialized to a JSON object, it should contain all the same fields as
- * a default dump of the article, plus a few added or augmented.
+ * A view of an article for printing to JSON.
  */
 public class ArticleOutputView implements JsonOutputView, ArticleView {
 
   private static final Logger log = LoggerFactory.getLogger(ArticleOutputView.class);
 
+  // The base view contains only the data that Hibernate ordinarily puts into an Article model object
   private final Article article;
-  private final Optional<String> nlmArticleType;
-  private final Optional<ArticleType> articleType;
-  private final ImmutableList<RelatedArticleView> relatedArticles;
-  private final ImmutableList<ArticleIssue> articleIssues;
-  private final ImmutableMap<String, Syndication> syndications;
-  private final ImmutableList<Pingback> pingbacks;
   private final boolean excludeCitations;
 
-  // Package-private; should be called only by ArticleOutputViewFactory
-  ArticleOutputView(Article article,
-                    String nlmArticleType,
-                    ArticleType articleType,
-                    Collection<RelatedArticleView> relatedArticles,
-                    Collection<ArticleIssue> articleIssues,
-                    Collection<Syndication> syndications,
-                    Collection<Pingback> pingbacks,
-                    boolean excludeCitations) {
+  private ArticleOutputView(Article article, boolean excludeCitations) {
     this.article = Preconditions.checkNotNull(article);
-    this.nlmArticleType = Optional.fromNullable(nlmArticleType);
-    this.articleType = Optional.fromNullable(articleType);
-    this.relatedArticles = ImmutableList.copyOf(relatedArticles);
-    this.articleIssues = ImmutableList.copyOf(articleIssues);
-    this.syndications = Maps.uniqueIndex(syndications, GET_TARGET);
-    this.pingbacks = ImmutableList.copyOf(pingbacks);
     this.excludeCitations = excludeCitations;
   }
 
-  private static final Function<Syndication, String> GET_TARGET = new Function<Syndication, String>() {
-    @Override
-    public String apply(Syndication input) {
-      return input.getTarget();
+  public static ArticleOutputView createMinimalView(Article article) {
+    return new ArticleOutputView(article, true);
+  }
+
+  /**
+   * Data in addition to the Article object that can be provided by an {@link org.ambraproject.rhino.view.article.ArticleOutputViewFactory}.
+   */
+  public static class AugmentedView extends ArticleOutputView {
+    private final Optional<String> nlmArticleType;
+    private final Optional<ArticleType> articleType;
+    private final ImmutableList<RelatedArticleView> relatedArticles;
+    private final ImmutableList<ArticleIssue> articleIssues;
+    private final ImmutableMap<String, Syndication> syndications;
+    private final ImmutableList<Pingback> pingbacks;
+
+    // Package-private; should be called only by ArticleOutputViewFactory
+    AugmentedView(Article article,
+                  String nlmArticleType,
+                  ArticleType articleType,
+                  Collection<RelatedArticleView> relatedArticles,
+                  Collection<ArticleIssue> articleIssues,
+                  Collection<Syndication> syndications,
+                  Collection<Pingback> pingbacks,
+                  boolean excludeCitations) {
+      super(article, excludeCitations);
+      this.nlmArticleType = Optional.fromNullable(nlmArticleType);
+      this.articleType = Optional.fromNullable(articleType);
+      this.relatedArticles = ImmutableList.copyOf(relatedArticles);
+      this.articleIssues = ImmutableList.copyOf(articleIssues);
+      this.syndications = Maps.uniqueIndex(syndications, Syndication::getTarget);
+      this.pingbacks = ImmutableList.copyOf(pingbacks);
     }
-  };
+
+    @Override
+    public Syndication getSyndication(String target) {
+      return syndications.get(target);
+    }
+
+    @Override
+    protected void augment(JsonSerializationContext context, JsonObject serialized) {
+      if (nlmArticleType.isPresent()) {
+        serialized.addProperty("nlmArticleType", nlmArticleType.get());
+      }
+      if (articleType.isPresent()) {
+        serialized.add("articleType", context.serialize(articleType.get()));
+      }
+
+      JsonElement syndications = serializeSyndications(this.syndications.values(), context);
+      if (syndications != null) {
+        serialized.add(MemberNames.SYNDICATIONS, syndications);
+      }
+      serializePingbackDigest(serialized, context);
+
+      KeyedListView<ArticleIssue> articleIssuesView = ArticleIssueOutputView.wrapList(articleIssues);
+      serialized.add("issues", context.serialize(articleIssuesView));
+
+      serialized.add("relatedArticles", context.serialize(relatedArticles));
+
+      serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+    }
+
+    /**
+     * Add fields summarizing pingback data. These are redundant to the explicit list of pingback objects, but include
+     * them anyway so that ArticlePingbackView is a subset of ArticleOutputView.
+     *
+     * @param serialized the JSON object to modify by adding pingback digest values
+     * @param context    the JSON context
+     * @return the modified object
+     */
+    private JsonObject serializePingbackDigest(JsonObject serialized, JsonSerializationContext context) {
+      // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
+      serialized.addProperty("pingbackCount", pingbacks.size());
+      if (!pingbacks.isEmpty()) {
+        // The service guarantees that the list is ordered by timestamp
+        Date mostRecent = pingbacks.get(0).getLastModified();
+        serialized.add("mostRecentPingback", context.serialize(mostRecent));
+      }
+      return serialized;
+    }
+  }
 
 
   @Override
@@ -112,20 +165,16 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
 
   @VisibleForTesting
   public Syndication getSyndication(String target) {
-    return syndications.get(target);
+    return null;
+  }
+
+  protected void augment(JsonSerializationContext context, JsonObject serialized) {
   }
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
     serialized.addProperty(MemberNames.DOI, article.getDoi()); // Force it to be printed first, for human-friendliness
-
-    if (nlmArticleType.isPresent()) {
-      serialized.addProperty("nlmArticleType", nlmArticleType.get());
-    }
-    if (articleType.isPresent()) {
-      serialized.add("articleType", context.serialize(articleType.get()));
-    }
 
     int articleState = article.getState();
     String pubState = getPublicationStateName(articleState);
@@ -136,21 +185,11 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     }
     serialized.addProperty(MemberNames.STATE, pubState);
 
-    JsonElement syndications = serializeSyndications(this.syndications.values(), context);
-    if (syndications != null) {
-      serialized.add(MemberNames.SYNDICATIONS, syndications);
-    }
-    serializePingbackDigest(serialized, context);
-
     Set<Journal> journals = article.getJournals();
     KeyedListView<Journal> journalsView = JournalNonAssocView.wrapList(journals);
     serialized.add("journals", context.serialize(journalsView));
 
-    KeyedListView<ArticleIssue> articleIssuesView = ArticleIssueOutputView.wrapList(articleIssues);
-    serialized.add("issues", context.serialize(articleIssuesView));
-
     serialized.addProperty("pageCount", parsePageCount(article.getPages()));
-    serialized.add("relatedArticles", context.serialize(relatedArticles));
     serialized.add("categories", context.serialize(buildCategoryViews(article.getCategories())));
 
     GroomedAssetsView groomedAssets = GroomedAssetsView.create(article);
@@ -168,9 +207,9 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
       baseJson = context.serialize(article).getAsJsonObject();
     }
 
-    serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
+    augment(context, serialized);
 
-    serialized.add(MemberNames.PINGBACKS, context.serialize(pingbacks));
+    serialized = JsonAdapterUtil.copyWithoutOverwriting(baseJson, serialized);
 
     /*
      * Because it is so bulky, put the raw asset view at the bottom (overwriting the default serialization of the
@@ -208,25 +247,6 @@ public class ArticleOutputView implements JsonOutputView, ArticleView {
     }
     log.error("Article page range could not be parsed: {}", pages);
     return 0;
-  }
-
-  /**
-   * Add fields summarizing pingback data. These are redundant to the explicit list of pingback objects, but include
-   * them anyway so that ArticlePingbackView is a subset of ArticleOutputView.
-   *
-   * @param serialized the JSON object to modify by adding pingback digest values
-   * @param context    the JSON context
-   * @return the modified object
-   */
-  private JsonObject serializePingbackDigest(JsonObject serialized, JsonSerializationContext context) {
-    // These two fields are redundant, but include them so that ArticlePingbackView is a subset of this.
-    serialized.addProperty("pingbackCount", pingbacks.size());
-    if (!pingbacks.isEmpty()) {
-      // The service guarantees that the list is ordered by timestamp
-      Date mostRecent = pingbacks.get(0).getLastModified();
-      serialized.add("mostRecentPingback", context.serialize(mostRecent));
-    }
-    return serialized;
   }
 
   /**

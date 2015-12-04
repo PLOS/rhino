@@ -4,12 +4,10 @@ import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import org.ambraproject.rhino.identity.ArticleIdentity;
+import org.ambraproject.models.Article;
 import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.article.RecentArticleView;
-import org.hibernate.HibernateException;
+import org.ambraproject.rhino.view.article.ArticleOutputView;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.http.HttpStatus;
@@ -17,16 +15,14 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Encapsulates a query that will list the DOIs, titles, and publication dates of all articles published after a certain
@@ -77,8 +73,8 @@ public class RecentArticleQuery {
 
     // TODO: Move this to external config
     private ImmutableList<String> alwaysExcludedArticleTypes = ImmutableList.of(
-            "http://rdf.plos.org/RDF/articleType/Issue%20Image"
-            );
+        "http://rdf.plos.org/RDF/articleType/Issue%20Image"
+    );
 
     /**
      * @param journalKey key of the journal to search
@@ -147,51 +143,48 @@ public class RecentArticleQuery {
      *                     be present if {@code forceMinimum} is true)
      * @param articleType  if absent, return results of all article types; if present, filter results for that type
      */
-    private List<Object[]> query(final boolean forceMinimum, final Optional<String> articleType) {
-      return hibernateTemplate.execute(new HibernateCallback<List<Object[]>>() {
-        @Override
-        public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
-          StringBuilder hql = new StringBuilder(211)
-              .append("select distinct a.doi, a.title, a.date ")
-              .append("from Article a, Journal j ")
-              .append("where j in elements(a.journals) and j.journalKey = :journalKey");
-          if (!forceMinimum) {
-            hql.append(" and a.date >= :threshold");
-          }
-          if (articleType.isPresent()) {
-            hql.append(" and :articleType in elements(a.types)");
-          }
-          for (int i = 0; i < excludedArticleTypes.size(); i++) {
-            // No type in excludedArticleTypes should be in a.types. Until we can figure out a better way to express
-            // this in HQL, just kludge in a variable number of clauses. TODO: Improve?
-            hql.append(" and not (:exclude").append(i) // variable names are exclude0, exclude1, etc.
-                .append(" in elements(a.types))");
-          }
-          hql.append(" order by a.date desc");
-
-          Query query = session.createQuery(hql.toString());
-          query.setString("journalKey", journalKey);
-          if (forceMinimum) {
-            query.setMaxResults(minimum.get());
-          } else {
-            query.setDate("threshold", threshold.getTime());
-          }
-          if (articleType.isPresent()) {
-            query.setString("articleType", articleType.get());
-          }
-          for (ListIterator<String> iter = excludedArticleTypes.listIterator(); iter.hasNext(); ) {
-            String paramName = "exclude" + iter.nextIndex();
-            query.setParameter(paramName, iter.next());
-          }
-
-          return query.list();
+    private List<Article> query(final boolean forceMinimum, final Optional<String> articleType) {
+      return hibernateTemplate.execute((HibernateCallback<List<Article>>) (Session session) -> {
+        StringBuilder hql = new StringBuilder(211)
+            .append("select distinct a ")
+            .append("from Article a, Journal j ")
+            .append("where j in elements(a.journals) and j.journalKey = :journalKey");
+        if (!forceMinimum) {
+          hql.append(" and a.date >= :threshold");
         }
+        if (articleType.isPresent()) {
+          hql.append(" and :articleType in elements(a.types)");
+        }
+        for (int i = 0; i < excludedArticleTypes.size(); i++) {
+          // No type in excludedArticleTypes should be in a.types. Until we can figure out a better way to express
+          // this in HQL, just kludge in a variable number of clauses. TODO: Improve?
+          hql.append(" and not (:exclude").append(i) // variable names are exclude0, exclude1, etc.
+              .append(" in elements(a.types))");
+        }
+        hql.append(" order by a.date desc");
+
+        Query query = session.createQuery(hql.toString());
+        query.setString("journalKey", journalKey);
+        if (forceMinimum) {
+          query.setMaxResults(minimum.get());
+        } else {
+          query.setDate("threshold", threshold.getTime());
+        }
+        if (articleType.isPresent()) {
+          query.setString("articleType", articleType.get());
+        }
+        for (ListIterator<String> iter = excludedArticleTypes.listIterator(); iter.hasNext(); ) {
+          String paramName = "exclude" + iter.nextIndex();
+          query.setParameter(paramName, iter.next());
+        }
+
+        return query.list();
       });
     }
 
     @Override
-    protected List<RecentArticleView> getData() throws IOException {
-      List<Object[]> results;
+    protected List<ArticleOutputView> getData() throws IOException {
+      List<Article> results;
 
       // Get all articles more recent than the threshold
       if (articleTypes.isEmpty()) {
@@ -205,11 +198,11 @@ public class RecentArticleQuery {
         for (String articleType : articleTypes) {
           Optional<String> articleTypeArg = articleType.equals(ARTICLE_TYPE_WILDCARD)
               ? Optional.<String>absent() : Optional.of(articleType);
-          List<Object[]> queryResults = query(false, articleTypeArg);
+          List<Article> queryResults = query(false, articleTypeArg);
 
           // Add each query result to 'results' only if the DOI is not already in 'uniqueDois'
-          for (Object[] queryResult : queryResults) {
-            if (uniqueDois.add((String) queryResult[0])) {
+          for (Article queryResult : queryResults) {
+            if (uniqueDois.add(queryResult.getDoi())) {
               results.add(queryResult);
             }
           }
@@ -235,13 +228,10 @@ public class RecentArticleQuery {
         }
       }
 
-      // Transform into results view.
-      List<RecentArticleView> views = transformResults(results);
-
-      // Sort them by date, relying on stable sort to keep articles with the same date ordered by type
-      Collections.sort(views, BY_DATE_DESCENDING);
-
-      return views;
+      return results.stream()
+          .sorted(BY_DATE_DESCENDING) // rely on stable sort to keep articles with the same date ordered by type
+          .map(ArticleOutputView::createMinimalView)
+          .collect(Collectors.toList());
     }
 
     @Override
@@ -250,32 +240,6 @@ public class RecentArticleQuery {
     }
   }
 
-  /**
-   * Represent raw query results from {@link org.ambraproject.rhino.service.impl.RecentArticleQuery.Result#getData()} as
-   * {@code RecentArticleView} objects. The returned list is mutable.
-   */
-  private static List<RecentArticleView> transformResults(List<Object[]> results) {
-    List<RecentArticleView> views = Lists.newArrayListWithCapacity(results.size());
-    for (Object[] result : results) {
-      Preconditions.checkArgument(result.length == 3);
-      String doi = (String) result[0];
-      String title = (String) result[1];
-      Date date = (Date) result[2];
-      ArticleIdentity article = ArticleIdentity.create(doi);
-      views.add(new RecentArticleView(article, title, date));
-    }
-    return views;
-  }
-
-  /**
-   * Order by date. Maintain stable order for objects with the same date. Not consistent with {@link
-   * RecentArticleView#equals}.
-   */
-  private static final Comparator<RecentArticleView> BY_DATE_DESCENDING = new Comparator<RecentArticleView>() {
-    @Override
-    public int compare(RecentArticleView o1, RecentArticleView o2) {
-      return -o1.getDate().compareTo(o2.getDate());
-    }
-  };
+  private static final Comparator<Article> BY_DATE_DESCENDING = Comparator.comparing(Article::getDate).reversed();
 
 }
