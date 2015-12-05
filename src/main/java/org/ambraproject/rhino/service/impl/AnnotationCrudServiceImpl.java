@@ -57,6 +57,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(article, comments);
         return comments.stream()
             .filter(comment -> comment.getParentID() == null)
+            .sorted(AnnotationOutputView.BY_DATE)
             .map(factory::buildView)
             .collect(Collectors.toList());
       }

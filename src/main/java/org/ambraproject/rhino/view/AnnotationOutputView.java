@@ -9,6 +9,7 @@ import org.ambraproject.models.Article;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -53,11 +54,14 @@ public class AnnotationOutputView implements JsonOutputView {
     public AnnotationOutputView buildView(Annotation comment) {
       List<Annotation> childObjects = commentsByParent.getOrDefault(comment.getID(), ImmutableList.of());
       List<AnnotationOutputView> childViews = childObjects.stream()
+          .sorted(BY_DATE)
           .map(this::buildView) // recursion (terminal case is when childObjects is empty)
           .collect(Collectors.toList());
       return new AnnotationOutputView(parentArticle, comment, childViews);
     }
   }
+
+  public static final Comparator<Annotation> BY_DATE = Comparator.comparing(Annotation::getCreated);
 
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
