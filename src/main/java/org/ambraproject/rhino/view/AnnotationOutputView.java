@@ -1,5 +1,6 @@
 package org.ambraproject.rhino.view;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -23,17 +24,22 @@ public class AnnotationOutputView implements JsonOutputView {
 
   private final ArticleVisibility parentArticle;
   private final Annotation comment;
-  private final Date mostRecentActivity;
   private final ImmutableList<AnnotationOutputView> replies;
+
+  private final int replyTreeSize;
+  private final Date mostRecentActivity;
 
   private AnnotationOutputView(ArticleVisibility parentArticle,
                                Annotation comment,
-                               Date mostRecentActivity,
-                               List<AnnotationOutputView> replies) {
+                               List<AnnotationOutputView> replies,
+                               int replyTreeSize, Date mostRecentActivity) {
     this.parentArticle = Objects.requireNonNull(parentArticle);
     this.comment = Objects.requireNonNull(comment);
-    this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
     this.replies = ImmutableList.copyOf(replies);
+
+    Preconditions.checkArgument(replyTreeSize >= 0);
+    this.replyTreeSize = replyTreeSize;
+    this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
   }
 
   public static class Factory {
@@ -61,8 +67,15 @@ public class AnnotationOutputView implements JsonOutputView {
           .sorted(BY_DATE)
           .map(this::buildView) // recursion (terminal case is when childObjects is empty)
           .collect(Collectors.toList());
+
+      int replyTreeSize = calculateReplyTreeSize(childViews);
       Date mostRecentActivity = findMostRecentActivity(comment, childViews);
-      return new AnnotationOutputView(parentArticle, comment, mostRecentActivity, childViews);
+
+      return new AnnotationOutputView(parentArticle, comment, childViews, replyTreeSize, mostRecentActivity);
+    }
+
+    private static int calculateReplyTreeSize(Collection<AnnotationOutputView> childViews) {
+      return childViews.size() + childViews.stream().mapToInt(view -> view.replyTreeSize).sum();
     }
 
     private static Date findMostRecentActivity(Annotation comment, Collection<AnnotationOutputView> childViews) {
@@ -80,6 +93,7 @@ public class AnnotationOutputView implements JsonOutputView {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
     serialized.remove("articleID");
     serialized.add("parentArticle", context.serialize(parentArticle));
+    serialized.add("replyTreeSize", context.serialize(replyTreeSize));
     serialized.add("mostRecentActivity", context.serialize(mostRecentActivity));
     serialized.add("replies", context.serialize(replies));
     return serialized;
