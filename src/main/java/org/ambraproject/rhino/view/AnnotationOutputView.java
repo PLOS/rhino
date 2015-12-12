@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.Article;
@@ -88,9 +89,27 @@ public class AnnotationOutputView implements JsonOutputView {
 
   public static final Comparator<Annotation> BY_DATE = Comparator.comparing(Annotation::getCreated);
 
+
+  /**
+   * If the named field is null or absent, replace it with an empty string.
+   */
+  private static void normalizeField(JsonObject object, String name) {
+    JsonElement element = object.get(name);
+    if (element == null || element.isJsonNull()) {
+      object.add(name, EMPTY_STRING);
+    }
+  }
+
+  private static final JsonElement EMPTY_STRING = new JsonPrimitive("");
+
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
+    normalizeField(serialized, "title");
+    normalizeField(serialized, "body");
+    normalizeField(serialized, "highlightedText");
+    normalizeField(serialized, "competingInterestBody");
+
     serialized.remove("articleID");
     serialized.add("parentArticle", context.serialize(parentArticle));
     serialized.add("replyTreeSize", context.serialize(replyTreeSize));
