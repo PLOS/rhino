@@ -28,28 +28,42 @@ public class AnnotationOutputView implements JsonOutputView {
 
   private final ArticleVisibility parentArticle;
   private final Annotation comment;
-  private final ImmutableList<AnnotationOutputView> replies;
+  private final CompetingInterestStatement competingInterestStatement;
 
+  private final ImmutableList<AnnotationOutputView> replies;
   private final int replyTreeSize;
   private final Date mostRecentActivity;
 
-  private final Date competingInterestThreshold;
-
   private AnnotationOutputView(ArticleVisibility parentArticle,
                                Annotation comment,
-                               List<AnnotationOutputView> replies,
-                               int replyTreeSize, Date mostRecentActivity,
-                               Date competingInterestThreshold) {
+                               CompetingInterestStatement competingInterestStatement, List<AnnotationOutputView> replies,
+                               int replyTreeSize, Date mostRecentActivity) {
     this.parentArticle = Objects.requireNonNull(parentArticle);
     this.comment = Objects.requireNonNull(comment);
+    this.competingInterestStatement = Objects.requireNonNull(competingInterestStatement);
     this.replies = ImmutableList.copyOf(replies);
 
     Preconditions.checkArgument(replyTreeSize >= 0);
     this.replyTreeSize = replyTreeSize;
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
-
-    this.competingInterestThreshold = Objects.requireNonNull(competingInterestThreshold);
   }
+
+  public static class CompetingInterestStatement {
+    private final boolean creatorWasPrompted;
+    private final boolean hasCompetingInterests;
+    private final String body;
+
+    private CompetingInterestStatement(boolean creatorWasPrompted, boolean hasCompetingInterests, String body) {
+      Preconditions.checkArgument((creatorWasPrompted && hasCompetingInterests) == (body != null));
+      this.creatorWasPrompted = creatorWasPrompted;
+      this.hasCompetingInterests = hasCompetingInterests;
+      this.body = body;
+    }
+  }
+
+  private static final CompetingInterestStatement NOT_PROMPTED = new CompetingInterestStatement(false, false, null);
+  private static final CompetingInterestStatement NO_STATEMENT = new CompetingInterestStatement(true, false, null);
+
 
   public static class Factory {
     private final ArticleVisibility parentArticle;
@@ -81,11 +95,21 @@ public class AnnotationOutputView implements JsonOutputView {
           .map(this::buildView) // recursion (terminal case is when childObjects is empty)
           .collect(Collectors.toList());
 
+      CompetingInterestStatement competingInterestStatement = createCompetingInterestStatement(comment);
       int replyTreeSize = calculateReplyTreeSize(childViews);
       Date mostRecentActivity = findMostRecentActivity(comment, childViews);
 
-      return new AnnotationOutputView(parentArticle, comment, childViews, replyTreeSize, mostRecentActivity,
-          competingInterestThreshold);
+      return new AnnotationOutputView(parentArticle, comment, competingInterestStatement,
+          childViews, replyTreeSize, mostRecentActivity);
+    }
+
+    private CompetingInterestStatement createCompetingInterestStatement(Annotation comment) {
+      String competingInterestBody = comment.getCompetingInterestBody();
+      boolean commentCreatedBeforeThreshold = comment.getCreated().compareTo(competingInterestThreshold) < 0;
+      boolean hasCompetingInterests = !Strings.isNullOrEmpty(competingInterestBody);
+      boolean creatorWasPrompted = !commentCreatedBeforeThreshold || hasCompetingInterests;
+      return !creatorWasPrompted ? NOT_PROMPTED : !hasCompetingInterests ? NO_STATEMENT
+          : new CompetingInterestStatement(true, true, competingInterestBody);
     }
 
     private static int calculateReplyTreeSize(Collection<AnnotationOutputView> childViews) {
@@ -115,30 +139,17 @@ public class AnnotationOutputView implements JsonOutputView {
 
   private static final JsonElement EMPTY_STRING = new JsonPrimitive("");
 
-  /**
-   * Check whether the competing interest statement should be suppressed.
-   * <p>
-   * An empty competing interest statement indicates that the user actively indicated that they had no competing
-   * interests at the time the comment was created. If the comment was created before the competing interests feature
-   * was implemented, then the user was silent. Indicate the difference by deleting the value if needed.
-   */
-  private boolean competingInterestShouldBeSuppressed() {
-    boolean commentCreatedBeforeThreshold = comment.getCreated().compareTo(competingInterestThreshold) < 0;
-    return commentCreatedBeforeThreshold && Strings.isNullOrEmpty(comment.getCompetingInterestBody());
-  }
-
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
+    serialized.remove("articleID");
     normalizeField(serialized, "title");
     normalizeField(serialized, "body");
     normalizeField(serialized, "highlightedText");
-    normalizeField(serialized, "competingInterestBody");
-    if (competingInterestShouldBeSuppressed()) {
-      serialized.remove("competingInterestBody");
-    }
 
-    serialized.remove("articleID");
+    serialized.remove("competingInterestBody");
+    serialized.add("competingInterestStatement", context.serialize(competingInterestStatement));
+
     serialized.add("parentArticle", context.serialize(parentArticle));
     serialized.add("replyTreeSize", context.serialize(replyTreeSize));
     serialized.add("mostRecentActivity", context.serialize(mostRecentActivity));
