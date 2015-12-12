@@ -23,6 +23,8 @@ import com.google.common.collect.ImmutableSet;
 
 import java.net.URI;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Set;
 
@@ -145,6 +147,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
+  @Override
+  public LocalDate getCompetingInterestThreshold() {
+    return (input.competingInterestThreshold == null) ? DEFAULT_COMPETING_INTEREST_THRESHOLD
+        : LocalDate.parse(input.competingInterestThreshold);
+  }
+
+  private static final LocalDate DEFAULT_COMPETING_INTEREST_THRESHOLD = LocalDate.of(2009, Month.MARCH, 3);
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */
@@ -162,6 +172,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private boolean usingVersionedIngestion = false; // default is false
+    private String competingInterestThreshold;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -193,6 +204,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setCompetingInterestThreshold(String competingInterestThreshold) {
+      this.competingInterestThreshold = competingInterestThreshold;
     }
 
     /**

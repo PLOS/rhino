@@ -15,6 +15,7 @@ package org.ambraproject.rhino.service.impl;
 
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.Article;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
@@ -23,6 +24,7 @@ import org.ambraproject.rhino.view.AnnotationOutputView;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 
 import java.io.IOException;
@@ -32,6 +34,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AnnotationCrudServiceImpl extends AmbraService implements AnnotationCrudService {
+
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Fetch all annotations that belong to an article.
@@ -54,7 +59,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
                     .add(Restrictions.eq("doi", articleIdentity.getKey()))
             ));
         Collection<Annotation> comments = fetchAllAnnotations(article);
-        AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(article, comments);
+        AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(runtimeConfiguration, article, comments);
         return comments.stream()
             .filter(comment -> comment.getParentID() == null)
             .sorted(AnnotationOutputView.BY_DATE)
@@ -89,7 +94,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
                     .add(Restrictions.eq("ID", annotation.getArticleID()))
             ));
 
-        return new AnnotationOutputView.Factory(article, fetchAllAnnotations(article)).buildView(annotation);
+        return new AnnotationOutputView.Factory(runtimeConfiguration, article, fetchAllAnnotations(article)).buildView(annotation);
       }
 
       @Override

@@ -21,6 +21,7 @@ package org.ambraproject.rhino.config;
 
 import java.net.URI;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -90,6 +91,8 @@ public interface RuntimeConfiguration {
   }
 
   TaxonomyConfiguration getTaxonomyConfiguration();
+
+  LocalDate getCompetingInterestThreshold();
 
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.

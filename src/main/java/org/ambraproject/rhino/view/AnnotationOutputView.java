@@ -1,6 +1,7 @@
 package org.ambraproject.rhino.view;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,8 +9,10 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.Article;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.view.article.ArticleVisibility;
 
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -30,10 +33,13 @@ public class AnnotationOutputView implements JsonOutputView {
   private final int replyTreeSize;
   private final Date mostRecentActivity;
 
+  private final Date competingInterestThreshold;
+
   private AnnotationOutputView(ArticleVisibility parentArticle,
                                Annotation comment,
                                List<AnnotationOutputView> replies,
-                               int replyTreeSize, Date mostRecentActivity) {
+                               int replyTreeSize, Date mostRecentActivity,
+                               Date competingInterestThreshold) {
     this.parentArticle = Objects.requireNonNull(parentArticle);
     this.comment = Objects.requireNonNull(comment);
     this.replies = ImmutableList.copyOf(replies);
@@ -41,17 +47,23 @@ public class AnnotationOutputView implements JsonOutputView {
     Preconditions.checkArgument(replyTreeSize >= 0);
     this.replyTreeSize = replyTreeSize;
     this.mostRecentActivity = Objects.requireNonNull(mostRecentActivity);
+
+    this.competingInterestThreshold = Objects.requireNonNull(competingInterestThreshold);
   }
 
   public static class Factory {
     private final ArticleVisibility parentArticle;
     private final Map<Long, List<Annotation>> commentsByParent;
 
+    private final Date competingInterestThreshold;
+
     /**
      * @param parentArticle an article
      * @param comments      all comments belonging to the parent article
      */
-    public Factory(Article parentArticle, Collection<Annotation> comments) {
+    public Factory(RuntimeConfiguration runtimeConfiguration, Article parentArticle, Collection<Annotation> comments) {
+      this.competingInterestThreshold = Date.from(runtimeConfiguration.getCompetingInterestThreshold()
+          .atStartOfDay(ZoneId.systemDefault()).toInstant());
       this.parentArticle = ArticleVisibility.create(parentArticle);
       this.commentsByParent = comments.stream()
           .filter(comment -> comment.getParentID() != null)
@@ -72,7 +84,8 @@ public class AnnotationOutputView implements JsonOutputView {
       int replyTreeSize = calculateReplyTreeSize(childViews);
       Date mostRecentActivity = findMostRecentActivity(comment, childViews);
 
-      return new AnnotationOutputView(parentArticle, comment, childViews, replyTreeSize, mostRecentActivity);
+      return new AnnotationOutputView(parentArticle, comment, childViews, replyTreeSize, mostRecentActivity,
+          competingInterestThreshold);
     }
 
     private static int calculateReplyTreeSize(Collection<AnnotationOutputView> childViews) {
@@ -102,6 +115,18 @@ public class AnnotationOutputView implements JsonOutputView {
 
   private static final JsonElement EMPTY_STRING = new JsonPrimitive("");
 
+  /**
+   * Check whether the competing interest statement should be suppressed.
+   * <p>
+   * An empty competing interest statement indicates that the user actively indicated that they had no competing
+   * interests at the time the comment was created. If the comment was created before the competing interests feature
+   * was implemented, then the user was silent. Indicate the difference by deleting the value if needed.
+   */
+  private boolean competingInterestShouldBeSuppressed() {
+    boolean commentCreatedBeforeThreshold = comment.getCreated().compareTo(competingInterestThreshold) < 0;
+    return commentCreatedBeforeThreshold && Strings.isNullOrEmpty(comment.getCompetingInterestBody());
+  }
+
   @Override
   public JsonElement serialize(JsonSerializationContext context) {
     JsonObject serialized = context.serialize(comment).getAsJsonObject();
@@ -109,6 +134,9 @@ public class AnnotationOutputView implements JsonOutputView {
     normalizeField(serialized, "body");
     normalizeField(serialized, "highlightedText");
     normalizeField(serialized, "competingInterestBody");
+    if (competingInterestShouldBeSuppressed()) {
+      serialized.remove("competingInterestBody");
+    }
 
     serialized.remove("articleID");
     serialized.add("parentArticle", context.serialize(parentArticle));
