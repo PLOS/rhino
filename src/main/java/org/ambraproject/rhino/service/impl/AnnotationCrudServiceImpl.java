@@ -13,24 +13,31 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Strings;
 import org.ambraproject.models.Annotation;
+import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
+import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.AnnotationOutputView;
+import org.ambraproject.rhino.view.CommentInputView;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class AnnotationCrudServiceImpl extends AmbraService implements AnnotationCrudService {
@@ -102,6 +109,59 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         return null;
       }
     };
+  }
+
+  @Override
+  public Annotation createComment(CommentInputView input) {
+    ArticleIdentity articleDoi = ArticleIdentity.create(input.getArticleDoi());
+    Long articlePk = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+        "SELECT ID FROM Article WHERE doi = ?", articleDoi.getKey()));
+    if (articlePk == null) {
+      throw new RestClientException("Parent article not found: " + articleDoi, HttpStatus.BAD_REQUEST);
+    }
+
+    final AnnotationType annotationType;
+    final Long parentCommentPk;
+    String parentCommentUri = input.getParentCommentId();
+    if (Strings.isNullOrEmpty(parentCommentUri)) {
+      annotationType = AnnotationType.COMMENT;
+      parentCommentPk = null;
+    } else {
+      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+          "SELECT ID, articleID FROM Annotation WHERE annotationUri = ?", DoiBasedIdentity.create(parentCommentUri).getKey()));
+      if (parentAnnotationData == null) {
+        throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
+      }
+      parentCommentPk = (Long) parentAnnotationData[0];
+      annotationType = AnnotationType.REPLY;
+
+      Long parentCommentArticlePk = (Long) parentAnnotationData[1];
+      if (!articlePk.equals(parentCommentArticlePk)) {
+        throw new RestClientException("Parent comment not from same article.", HttpStatus.BAD_REQUEST);
+      }
+    }
+
+    UserProfile creator = (UserProfile) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+        "FROM UserProfile WHERE authId = ?", input.getCreatorAuthId()));
+    if (creator == null) {
+      throw new RestClientException("UserProfile not found: " + input.getCreatorAuthId(), HttpStatus.BAD_REQUEST);
+    }
+
+    DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create("annotation/" + UUID.randomUUID());
+
+    Annotation created = new Annotation();
+    created.setType(annotationType);
+    created.setCreator(creator);
+    created.setArticleID(articlePk);
+    created.setParentID(parentCommentPk);
+    created.setAnnotationUri(createdAnnotationUri.getKey());
+    created.setTitle(Strings.nullToEmpty(input.getTitle()));
+    created.setBody(Strings.nullToEmpty(input.getBody()));
+    created.setHighlightedText(Strings.nullToEmpty(input.getHighlightedText()));
+    created.setCompetingInterestBody(Strings.nullToEmpty(input.getCompetingInterestStatement()));
+
+    hibernateTemplate.save(created);
+    return created;
   }
 
 }
