@@ -325,7 +325,8 @@ public class ArticleCrudServiceTest extends BaseRhinoTransactionalTest {
     String json = articleCrudService.readAuthors(articleId).readJson(entityGson);
     assertTrue(json.length() > 0);
     Gson gson = new Gson();
-    List<?> authors = gson.fromJson(json, List.class);
+    Map<String, ?> authorMetadata = gson.fromJson(json, Map.class);
+    List<?> authors = (List<?>) authorMetadata.get("authors");
 
     assertEquals(authors.size(), 5);
     Map<?, ?> author = (Map<?, ?>) authors.get(0);
