@@ -46,6 +46,7 @@ import org.ambraproject.rhino.service.taxonomy.TaxonomyService;
 import org.ambraproject.rhino.util.Archive;
 import org.ambraproject.rhino.util.response.EntityTransceiver;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.article.ArticleAllAuthorsView;
 import org.ambraproject.rhino.view.article.ArticleAuthorView;
 import org.ambraproject.rhino.view.article.ArticleCriteria;
 import org.ambraproject.rhino.view.article.ArticleOutputView;
@@ -75,6 +76,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service implementing _c_reate, _r_ead, _u_pdate, and _d_elete operations on article entities and files.
@@ -317,12 +319,18 @@ public class ArticleCrudServiceImpl extends AmbraService implements ArticleCrudS
       protected Object getData() throws IOException {
         Document doc = parseXml(readXml(id));
         List<AuthorView> authors;
+        List<String> authorContributions;
+        List<String> competingInterests;
         try {
           authors = AuthorsXmlExtractor.getAuthors(doc, xpathReader);
+          authorContributions = AuthorsXmlExtractor.getAuthorContributions(doc, xpathReader);
+          competingInterests = AuthorsXmlExtractor.getCompetingInterests(doc, xpathReader);
         } catch (XPathException e) {
           throw new RuntimeException("Invalid XML when parsing authors from: " + id, e);
         }
-        return ArticleAuthorView.createList(authors);
+        List<ArticleAuthorView> authorViews = authors.stream().map(ArticleAuthorView::new)
+            .collect(Collectors.toList());
+        return new ArticleAllAuthorsView(authorViews, authorContributions, competingInterests);
       }
     };
   }

@@ -20,8 +20,7 @@ import org.ambraproject.rhino.util.JsonAdapterUtil;
 import org.ambraproject.rhino.view.JsonOutputView;
 import org.ambraproject.views.AuthorView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * JSON output view class for authors of an article.
@@ -33,22 +32,8 @@ public class ArticleAuthorView implements JsonOutputView {
 
   private AuthorView authorView;
 
-  private ArticleAuthorView(AuthorView authorView) {
-    this.authorView = authorView;
-  }
-
-  /**
-   * Creates a list of views given a list of authors.
-   *
-   * @param authors list of AuthorViews to convert
-   * @return list of ArticleAuthorViews
-   */
-  public static List<ArticleAuthorView> createList(List<AuthorView> authors) {
-    List<ArticleAuthorView> results = new ArrayList<>(authors.size());
-    for (AuthorView author : authors) {
-      results.add(new ArticleAuthorView(author));
-    }
-    return results;
+  public ArticleAuthorView(AuthorView authorView) {
+    this.authorView = Objects.requireNonNull(authorView);
   }
 
   /**

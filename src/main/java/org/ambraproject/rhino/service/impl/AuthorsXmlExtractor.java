@@ -15,6 +15,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathException;
+import javax.xml.xpath.XPathExpressionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -55,6 +56,8 @@ public final class AuthorsXmlExtractor {
       .replaceRegex("</body>", "")
       .build();
 
+  private final static String COMPETING_INTERESTS_XPATH = "//fn[@fn-type='conflict']";
+  private final static String AUTHOR_CONTRIBUTIONS_XPATH = "//author-notes/fn[@fn-type='con']";
 
   private final Document doc;
   private final XPathExtractor xpath;
@@ -408,10 +411,32 @@ public final class AuthorsXmlExtractor {
   }
 
   /**
+   * Get the author contributions
+   *
+   * @param doc   the article XML document
+   * @param xpath XPathExtractor to use to process xpath expressions
+   * @return the author contributions
+   */
+  public static List<String> getAuthorContributions(Document doc, XPathExtractor xpath) throws XPathException {
+    return findTextFromNodes(doc, AUTHOR_CONTRIBUTIONS_XPATH, xpath);
+  }
+
+  /**
+   * Get the competing interests statement
+   *
+   * @param doc   the article XML document
+   * @param xpath XPathExtractor to use to process xpath expressions
+   * @return the competing interests statement
+   */
+  public static List<String> getCompetingInterests(Document doc, XPathExtractor xpath) throws XPathException {
+    return findTextFromNodes(doc, COMPETING_INTERESTS_XPATH, xpath);
+  }
+
+  /**
    * Reformat html embedded into the XML into something more easily styled on the front end
    *
    * @param source      html fragment
-   * @param prependHTML if true, append a html snippet for a 'pilcro'
+   * @param prependHTML if true, append a html snippet for a 'pilcrow' (¶)
    * @return html fragment
    */
   private static String fixPilcrow(String source, boolean prependHTML) {
@@ -470,5 +495,31 @@ public final class AuthorsXmlExtractor {
    */
   private static String transFormCorresponding(String source) {
     return MARKUP_REPLACER.replace(source);
+  }
+
+  /**
+   * @param document        a document to search for nodes
+   * @param xpathExpression XPath describing the nodes to find
+   * @return a list of the text content of the nodes found, or {@code null} if none
+   */
+  private static List<String> findTextFromNodes(Document document, String xpathExpression,
+      XPathExtractor xPath) throws XPathException {
+
+    NodeList nodes;
+    try {
+      nodes = xPath.selectNodes(document, xpathExpression);
+      //todo: this should catch explicit "node missing" exceptions instead of generic XPathException
+    } catch (XPathExpressionException ex) {
+      log.error("Error occurred while gathering text with: " + xpathExpression, ex);
+      return null;
+    }
+
+    List<String> text = new ArrayList<>(nodes.getLength());
+
+    for (int i = 0; i < nodes.getLength(); i++) {
+      text.add(nodes.item(i).getTextContent());
+    }
+
+    return text;
   }
 }
