@@ -153,7 +153,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
         : LocalDate.parse(input.competingInterestThreshold);
   }
 
-  private static final LocalDate DEFAULT_COMPETING_INTEREST_THRESHOLD = LocalDate.of(2009, Month.MARCH, 3);
+  private static final LocalDate DEFAULT_COMPETING_INTEREST_THRESHOLD = LocalDate.of(2009, Month.MARCH, 20);
 
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
