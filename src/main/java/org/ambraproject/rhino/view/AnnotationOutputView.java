@@ -69,14 +69,14 @@ public class AnnotationOutputView implements JsonOutputView {
     private final ArticleVisibility parentArticle;
     private final Map<Long, List<Annotation>> commentsByParent;
 
-    private final Date competingInterestThreshold;
+    private final Date competingInterestPolicyStart;
 
     /**
      * @param parentArticle an article
      * @param comments      all comments belonging to the parent article
      */
     public Factory(RuntimeConfiguration runtimeConfiguration, Article parentArticle, Collection<Annotation> comments) {
-      this.competingInterestThreshold = Date.from(runtimeConfiguration.getCompetingInterestThreshold()
+      this.competingInterestPolicyStart = Date.from(runtimeConfiguration.getCompetingInterestPolicyStart()
           .atStartOfDay(ZoneId.systemDefault()).toInstant());
       this.parentArticle = ArticleVisibility.create(parentArticle);
       this.commentsByParent = comments.stream()
@@ -105,9 +105,8 @@ public class AnnotationOutputView implements JsonOutputView {
 
     private CompetingInterestStatement createCompetingInterestStatement(Annotation comment) {
       String competingInterestBody = comment.getCompetingInterestBody();
-      boolean commentCreatedBeforeThreshold = comment.getCreated().compareTo(competingInterestThreshold) < 0;
       boolean hasCompetingInterests = !Strings.isNullOrEmpty(competingInterestBody);
-      boolean creatorWasPrompted = !commentCreatedBeforeThreshold || hasCompetingInterests;
+      boolean creatorWasPrompted = hasCompetingInterests || comment.getCreated().after(competingInterestPolicyStart);
       return !creatorWasPrompted ? NOT_PROMPTED : !hasCompetingInterests ? NO_STATEMENT
           : new CompetingInterestStatement(true, true, competingInterestBody);
     }

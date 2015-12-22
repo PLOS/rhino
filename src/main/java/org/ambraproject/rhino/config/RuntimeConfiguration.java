@@ -92,7 +92,14 @@ public interface RuntimeConfiguration {
 
   TaxonomyConfiguration getTaxonomyConfiguration();
 
-  LocalDate getCompetingInterestThreshold();
+  /**
+   * Return the date, for comments persisted on this system, at which commenters were first prompted for competing
+   * interests. Comments from before this date will necessarily lack competing interest statements, but the system
+   * should not indicate that the commenters affirmatively declared that they had no competing interests.
+   *
+   * @return the date at which commenters were first prompted for competing interests
+   */
+  LocalDate getCompetingInterestPolicyStart();
 
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
