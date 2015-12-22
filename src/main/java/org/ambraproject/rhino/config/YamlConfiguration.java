@@ -23,6 +23,8 @@ import com.google.common.collect.ImmutableSet;
 
 import java.net.URI;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Set;
 
@@ -145,6 +147,19 @@ public class YamlConfiguration implements RuntimeConfiguration {
     return taxonomyConfiguration;
   }
 
+  @Override
+  public LocalDate getCompetingInterestPolicyStart() {
+    return (input.competingInterestPolicyStart == null) ? DEFAULT_COMPETING_INTEREST_POLICY_START
+        : LocalDate.parse(input.competingInterestPolicyStart);
+  }
+
+  /**
+   * The date at which the relevant software upgrade was deployed on PLOS's Ambra system, which was the only extant
+   * Ambra system at the time. Because no other systems will have older comments, it should never be necessary to
+   * override this default except in test environments.
+   */
+  private static final LocalDate DEFAULT_COMPETING_INTEREST_POLICY_START = LocalDate.of(2009, Month.MARCH, 20);
+
   /**
    * @deprecated Temporary; to be removed when versioned ingestion data model is stable.
    */
@@ -162,6 +177,7 @@ public class YamlConfiguration implements RuntimeConfiguration {
     private HttpConnectionPoolConfigurationInput httpConnectionPool;
     private TaxonomyConfigurationInput taxonomy;
     private boolean usingVersionedIngestion = false; // default is false
+    private String competingInterestPolicyStart;
 
     /**
      * @deprecated For reflective access by SnakeYAML only
@@ -193,6 +209,14 @@ public class YamlConfiguration implements RuntimeConfiguration {
     @Deprecated
     public void setTaxonomy(TaxonomyConfigurationInput taxonomy) {
       this.taxonomy = taxonomy;
+    }
+
+    /**
+     * @deprecated For reflective access by SnakeYAML only
+     */
+    @Deprecated
+    public void setCompetingInterestPolicyStart(String competingInterestPolicyStart) {
+      this.competingInterestPolicyStart = competingInterestPolicyStart;
     }
 
     /**

@@ -14,6 +14,8 @@
 package org.ambraproject.rhino.service;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.ambraproject.models.Annotation;
@@ -23,9 +25,10 @@ import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.BaseRhinoTest;
 import org.ambraproject.rhino.IngestibleUtil;
 import org.ambraproject.rhino.RhinoTestHelper;
+import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.util.Archive;
-import org.ambraproject.views.AnnotationView;
+import org.ambraproject.rhino.view.AnnotationOutputView;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
@@ -34,9 +37,8 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -54,6 +56,9 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
 
   @Autowired
   protected Gson entityGson;
+
+  @Autowired
+  private RuntimeConfiguration runtimeConfiguration;
 
   /**
    * Create journals with all eIssn values mentioned in test cases' XML files.
@@ -75,13 +80,14 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Archive archive = Archive.readZipFileIntoMemory(doiStub + ".zip", IngestibleUtil.buildMockIngestible(input));
     Article article = articleCrudService.writeArchive(archive, Optional.of(articleId),
         DoiBasedCrudService.WriteMode.CREATE_ONLY);
+    article.setJournals(ImmutableSet.of());
 
     UserProfile creator = new UserProfile("fake@example.org", "displayName", "password");
     hibernateTemplate.save(creator);
     Annotation comment1 = new Annotation();
     comment1.setCreator(creator);
     comment1.setArticleID(article.getID());
-    comment1.setAnnotationUri("info:doi/10.1371/annotation/test_comment_1");
+    comment1.setAnnotationUri("10.1371/annotation/test_comment_1");
     comment1.setType(AnnotationType.COMMENT);
     comment1.setTitle("Test Comment One");
     comment1.setBody("Test Comment One Body");
@@ -92,7 +98,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Annotation reply = new Annotation();
     reply.setCreator(creator);
     reply.setArticleID(article.getID());
-    reply.setAnnotationUri("info:doi/10.1371/reply/test_reply_level_1");
+    reply.setAnnotationUri("10.1371/reply/test_reply_level_1");
     reply.setParentID(comment1.getID());
     reply.setType(AnnotationType.REPLY);
     reply.setTitle("Test Reply Level 1");
@@ -103,7 +109,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Annotation reply2 = new Annotation();
     reply2.setCreator(creator);
     reply2.setArticleID(article.getID());
-    reply2.setAnnotationUri("info:doi/10.1371/reply/test_reply_2_level_1");
+    reply2.setAnnotationUri("10.1371/reply/test_reply_2_level_1");
     reply2.setParentID(comment1.getID());
     reply2.setType(AnnotationType.REPLY);
     reply2.setTitle("Test Reply 2 Level 1");
@@ -114,7 +120,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Annotation reply3 = new Annotation();
     reply3.setCreator(creator);
     reply3.setArticleID(article.getID());
-    reply3.setAnnotationUri("info:doi/10.1371/reply/test_reply_3_level_2");
+    reply3.setAnnotationUri("10.1371/reply/test_reply_3_level_2");
     reply3.setParentID(reply.getID());
     reply3.setType(AnnotationType.REPLY);
     reply3.setTitle("Test Reply 3 Level 2");
@@ -124,7 +130,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Annotation comment2 = new Annotation();
     comment2.setCreator(creator);
     comment2.setArticleID(article.getID());
-    comment2.setAnnotationUri("info:doi/10.1371/annotation/test_comment_2");
+    comment2.setAnnotationUri("10.1371/annotation/test_comment_2");
     comment2.setType(AnnotationType.COMMENT);
     comment2.setTitle("Test Comment Two");
     comment2.setBody("Test Comment Two Body");
@@ -133,7 +139,7 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     Annotation comment3 = new Annotation();
     comment3.setCreator(creator);
     comment3.setArticleID(article.getID());
-    comment3.setAnnotationUri("info:doi/10.1371/annotation/test_comment_3");
+    comment3.setAnnotationUri("10.1371/annotation/test_comment_3");
     comment3.setType(AnnotationType.COMMENT);
     comment3.setTitle("Test Comment");
     comment3.setBody("Test Comment Body");
@@ -145,66 +151,66 @@ public class AnnotationCrudServiceTest extends BaseRhinoTest {
     // Confirm that date strings in the JSON are formatted as ISO8601 ("2012-04-23T18:25:43.511Z").
     // We have to do this at a lower level since AnnotationView exposes the created field as
     // a Java Date instead of a String.
-    Gson gson = new Gson();
-    List commentsList = gson.fromJson(json, List.class);
-    Map commentMap = (Map) commentsList.get(0);
-    String createdStr = (String) commentMap.get("created");
-
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'");
-    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-    // TODO: this might fail near midnight, if we're unlucky and the hibernate
-    // entity gets saved just before midnight, and this is executed just after.
-    assertTrue(createdStr.startsWith(dateFormat.format(commentCreated)), createdStr);
-
-    // Now deserialize to AnnotationView to do more comparisons.
-    List<AnnotationView> actualAnnotations = entityGson.fromJson(json,
-        new TypeToken<List<AnnotationView>>() {
+    List<Map<String, ?>> actualAnnotations = entityGson.fromJson(json,
+        new TypeToken<List<Map<String, ?>>>() {
         }.getType()
     );
     assertEquals(actualAnnotations.size(), 3);
-    Map<Long, List<Annotation>> replies = new HashMap<Long, List<Annotation>>();
-    replies.put(comment1.getID(), Arrays.asList(reply, reply2));
-    replies.put(reply.getID(), Arrays.asList(reply3));
+    for (Map<String, ?> commentMap : actualAnnotations) {
+      String createdStr = (String) commentMap.get("created");
 
-    // We can't use vanilla assertEquals because AnnotationView has a property, ID, set to
-    // the underlying annotationID.  That property is not in the returned JSON, by design.
-    assertAnnotationsEqual(actualAnnotations.get(0),
-        new AnnotationView(comment1, article.getDoi(), article.getTitle(), replies));
-    replies = new HashMap<Long, List<Annotation>>();
-    assertAnnotationsEqual(actualAnnotations.get(1),
-        new AnnotationView(comment2, article.getDoi(), article.getTitle(), replies));
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'");
+      dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+      // TODO: this might fail near midnight, if we're unlucky and the hibernate
+      // entity gets saved just before midnight, and this is executed just after.
+      assertTrue(createdStr.startsWith(dateFormat.format(commentCreated)), createdStr);
+    }
+
+    AnnotationOutputView.Factory factory = new AnnotationOutputView.Factory(runtimeConfiguration, article,
+        ImmutableList.of(comment1, comment2, comment3, reply, reply2, reply3));
+
+    assertAnnotationsEqual(actualAnnotations.get(0), factory.buildView(comment1));
+    assertAnnotationsEqual(actualAnnotations.get(1), factory.buildView(comment2));
 
     // Comment with no replies.
-    json = annotationCrudService.readComments(articleId).readJson(entityGson);
-    List<AnnotationView> actualComments = entityGson.fromJson(json, new TypeToken<List<AnnotationView>>() {
-    }.getType());
-    assertEquals(actualComments.size(), 3);
-    replies = new HashMap<Long, List<Annotation>>();
-    assertAnnotationsEqual(actualComments.get(2),
-        new AnnotationView(comment3, article.getDoi(), article.getTitle(), replies));
+    assertAnnotationsEqual(actualAnnotations.get(2), factory.buildView(comment3));
   }
 
-  private void assertAnnotationsEqual(AnnotationView actual, AnnotationView expected) {
-    assertEquals(actual.getAnnotationUri(), expected.getAnnotationUri());
-    assertEquals(actual.getArticleDoi(), expected.getArticleDoi());
-    assertEquals(actual.getArticleTitle(), expected.getArticleTitle());
-    assertEquals(actual.getParentID(), expected.getParentID());
-    assertEquals(actual.getBody(), expected.getBody());
-    assertEquals(actual.getCompetingInterestStatement(), expected.getCompetingInterestStatement());
-    assertEquals(actual.getCreatorID(), expected.getCreatorID());
-    assertEquals(actual.getCreatorDisplayName(), expected.getCreatorDisplayName());
-    assertEquals(actual.getCreatorFormattedName(), expected.getCreatorFormattedName());
-    assertEquals(actual.getTitle(), expected.getTitle());
-    assertEquals(actual.getType(), expected.getType());
-    assertEquals(actual.getTotalNumReplies(), expected.getTotalNumReplies());
+  private static final ImmutableSet<String> ANNOTATION_FIELDS = ImmutableSet.of(
+      "type", "annotationUri", "title", "body", "created", "lastModified", "highlightedText",
+      "competingInterestStatement", "replyTreeSize", "mostRecentActivity");
+  private static final ImmutableSet<String> CREATOR_FIELDS = ImmutableSet.of("profileUri", "authId");
+  private static final ImmutableSet<String> ARTICLE_FIELDS = ImmutableSet.of("doi", "state");
 
-    // Don't test this one.  AnnotationView made the dubious choice of setting the last
-    // reply date to NOW() if there are no replies.
-//    assertEquals(actual.getLastReplyDate(), expected.getLastReplyDate());
-    assertEquals(actual.getReplies().length, expected.getReplies().length);
-    for (int i = 0; i < actual.getReplies().length; i++) {
-      assertAnnotationsEqual(actual.getReplies()[i], expected.getReplies()[i]);
+  private static <K> void assertMapsEqual(Map<K, ?> actual, Map<K, ?> expected, Collection<? extends K> keys) {
+    for (K key : keys) {
+      assertEquals(actual.get(key), expected.get(key), key.toString());
     }
   }
+
+  private void assertAnnotationsEqual(Map<String, ?> actualRepr, AnnotationOutputView expectedObj) {
+    Map<String, ?> expectedRepr = entityGson.fromJson(entityGson.toJson(expectedObj), Map.class);
+    assertAnnotationsEqual(actualRepr, expectedRepr);
+  }
+
+  private static void assertAnnotationsEqual(Map<String, ?> actual, Map<String, ?> expected) {
+    assertMapsEqual(actual, expected, ANNOTATION_FIELDS);
+
+    Map<String, ?> actualCreator = (Map<String, ?>) actual.get("creator");
+    Map<String, ?> expectedCreator = (Map<String, ?>) expected.get("creator");
+    assertMapsEqual(actualCreator, expectedCreator, CREATOR_FIELDS);
+
+    Map<String, ?> actualArticle = (Map<String, ?>) actual.get("parentArticle");
+    Map<String, ?> expectedArticle = (Map<String, ?>) expected.get("parentArticle");
+    assertMapsEqual(actualArticle, expectedArticle, ARTICLE_FIELDS);
+
+    List<Map<String, ?>> actualReplies = (List<Map<String, ?>>) actual.get("replies");
+    List<Map<String, ?>> expectedReplies = (List<Map<String, ?>>) expected.get("replies");
+    assertEquals(actualReplies.size(), expectedReplies.size());
+    for (int i = 0; i < expectedReplies.size(); i++) {
+      assertAnnotationsEqual(actualReplies.get(i), expectedReplies.get(i));
+    }
+  }
+
 }
