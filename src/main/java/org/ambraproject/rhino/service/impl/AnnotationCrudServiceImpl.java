@@ -13,6 +13,7 @@
 
 package org.ambraproject.rhino.service.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
@@ -38,6 +39,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class AnnotationCrudServiceImpl extends AmbraService implements AnnotationCrudService {
@@ -111,6 +114,14 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     };
   }
 
+  private static final Pattern DOI_PREFIX_PATTERN = Pattern.compile("^\\d+\\.\\d+/");
+
+  private static String extractDoiPrefix(DoiBasedIdentity doi) {
+    Matcher matcher = DOI_PREFIX_PATTERN.matcher(doi.getIdentifier());
+    Preconditions.checkArgument(matcher.find());
+    return matcher.group();
+  }
+
   @Override
   public Annotation createComment(CommentInputView input) {
     ArticleIdentity articleDoi = ArticleIdentity.create(input.getArticleDoi());
@@ -147,7 +158,9 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       throw new RestClientException("UserProfile not found: " + input.getCreatorAuthId(), HttpStatus.BAD_REQUEST);
     }
 
-    DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create("annotation/" + UUID.randomUUID());
+    String doiPrefix = extractDoiPrefix(articleDoi); // comment receives same DOI prefix as article
+    UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
+    DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
 
     Annotation created = new Annotation();
     created.setType(annotationType);
