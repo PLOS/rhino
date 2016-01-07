@@ -5,7 +5,6 @@ import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.view.CommentInputView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +41,7 @@ public class CommentCrudController extends DoiBasedCrudController {
       throws IOException {
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
     Annotation created = annotationCrudService.createComment(input);
-    return new ResponseEntity<>(HttpStatus.CREATED); // TODO: Report (at minimum) created annotationUri
+    return reportCreated(created.getAnnotationUri());
   }
 
 }
