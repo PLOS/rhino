@@ -26,7 +26,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.AnnotationOutputView;
-import org.ambraproject.rhino.view.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;

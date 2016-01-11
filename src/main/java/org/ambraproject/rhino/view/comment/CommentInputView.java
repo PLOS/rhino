@@ -1,4 +1,4 @@
-package org.ambraproject.rhino.view;
+package org.ambraproject.rhino.view.comment;
 
 public class CommentInputView {
 

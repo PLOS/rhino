@@ -17,7 +17,7 @@ import org.ambraproject.models.Annotation;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
-import org.ambraproject.rhino.view.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentInputView;
 
 import java.io.IOException;
 
