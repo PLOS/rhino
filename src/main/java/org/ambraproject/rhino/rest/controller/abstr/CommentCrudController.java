@@ -1,9 +1,11 @@
 package org.ambraproject.rhino.rest.controller.abstr;
 
 import org.ambraproject.models.Annotation;
+import org.ambraproject.models.Flag;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.service.AnnotationCrudService;
-import org.ambraproject.rhino.view.CommentInputView;
+import org.ambraproject.rhino.view.comment.CommentFlagInputView;
+import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,14 @@ public class CommentCrudController extends DoiBasedCrudController {
     CommentInputView input = readJsonFromRequest(request, CommentInputView.class);
     Annotation created = annotationCrudService.createComment(input);
     return reportCreated(created.getAnnotationUri());
+  }
+
+  @RequestMapping(value = COMMENT_META_TEMPLATE, method = RequestMethod.POST, params = "flag")
+  public ResponseEntity<String> createFlag(HttpServletRequest request) throws IOException {
+    DoiBasedIdentity commentId = parse(request);
+    CommentFlagInputView input = readJsonFromRequest(request, CommentFlagInputView.class);
+    Flag commentFlag = annotationCrudService.createCommentFlag(commentId, input);
+    return reportCreated(commentFlag.getID().toString());
   }
 
 }
