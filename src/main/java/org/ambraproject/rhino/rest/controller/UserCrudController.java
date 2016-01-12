@@ -24,7 +24,6 @@ import org.ambraproject.rhino.service.UserCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,12 +42,6 @@ public class UserCrudController extends RestController {
 
   @Autowired
   private UserCrudService userCrudService;
-
-  @Transactional(readOnly = true)
-  @RequestMapping(value = USER_ROOT, method = RequestMethod.GET)
-  public void listUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    userCrudService.listUsers().respond(request, response, entityGson);
-  }
 
   @Transactional(readOnly = true)
   @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "authId")
