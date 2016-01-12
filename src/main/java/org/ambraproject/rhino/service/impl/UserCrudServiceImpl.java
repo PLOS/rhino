@@ -60,7 +60,7 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
    * {@inheritDoc}
    */
   @Override
-  public Transceiver read(final String authId) throws IOException {
+  public Transceiver readUsingAuthId(final String authId) throws IOException {
 
     return new EntityTransceiver<UserProfile>() {
 

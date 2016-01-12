@@ -45,8 +45,8 @@ public class UserCrudController extends RestController {
 
   @Transactional(readOnly = true)
   @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "authId")
-  public void read(HttpServletRequest request, HttpServletResponse response, @RequestParam String authId) throws IOException {
-    userCrudService.read(authId).respond(request, response, entityGson);
+  public void readUsingAuthId(HttpServletRequest request, HttpServletResponse response, @RequestParam String authId) throws IOException {
+    userCrudService.readUsingAuthId(authId).respond(request, response, entityGson);
   }
 
   @Transactional(readOnly = true)
@@ -63,7 +63,7 @@ public class UserCrudController extends RestController {
     UserLogin input = readJsonFromRequest(request, UserLogin.class);
     userCrudService.createUserLogin(authId, input);
 
-    userCrudService.read(authId).respond(request, response, entityGson);
+    userCrudService.readUsingAuthId(authId).respond(request, response, entityGson);
   }
 
 }
