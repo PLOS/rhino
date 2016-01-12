@@ -21,8 +21,21 @@ public enum UserProfileSerializer implements JsonSerializer<UserProfile> {
   @Override
   public JsonElement serialize(UserProfile src, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject serialized = new JsonObject();
-    serialized.addProperty("authId", src.getAuthId());
     serialized.addProperty("displayName", src.getDisplayName());
+    serialized.addProperty("title", src.getTitle());
+    serialized.addProperty("givenNames", src.getGivenNames());
+    serialized.addProperty("surname", src.getSurname());
+    serialized.addProperty("city", src.getCity());
+    serialized.addProperty("country", src.getCountry());
+    serialized.addProperty("postalAddress", src.getPostalAddress());
+    serialized.addProperty("organizationType", src.getOrganizationType());
+    serialized.addProperty("organizationName", src.getOrganizationName());
+    serialized.addProperty("positionType", src.getPositionType());
+    serialized.addProperty("biography", src.getBiography());
+    serialized.addProperty("researchAreas", src.getResearchAreas());
+    serialized.addProperty("interests", src.getInterests());
+    serialized.addProperty("homePage", src.getHomePage());
+    serialized.addProperty("weblog", src.getWeblog());
     return serialized;
   }
 
