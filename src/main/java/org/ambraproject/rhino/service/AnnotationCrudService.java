@@ -14,9 +14,11 @@
 package org.ambraproject.rhino.service;
 
 import org.ambraproject.models.Annotation;
+import org.ambraproject.models.Flag;
 import org.ambraproject.rhino.identity.ArticleIdentity;
 import org.ambraproject.rhino.identity.DoiBasedIdentity;
 import org.ambraproject.rhino.util.response.Transceiver;
+import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 
 import java.io.IOException;
@@ -47,5 +49,7 @@ public interface AnnotationCrudService {
       throws IOException;
 
   public Annotation createComment(CommentInputView input);
+
+  public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input);
 
 }

@@ -18,6 +18,8 @@ import com.google.common.base.Strings;
 import org.ambraproject.models.Annotation;
 import org.ambraproject.models.AnnotationType;
 import org.ambraproject.models.Article;
+import org.ambraproject.models.Flag;
+import org.ambraproject.models.FlagReasonCode;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.rhino.config.RuntimeConfiguration;
 import org.ambraproject.rhino.identity.ArticleIdentity;
@@ -26,6 +28,7 @@ import org.ambraproject.rhino.rest.RestClientException;
 import org.ambraproject.rhino.service.AnnotationCrudService;
 import org.ambraproject.rhino.util.response.Transceiver;
 import org.ambraproject.rhino.view.AnnotationOutputView;
+import org.ambraproject.rhino.view.comment.CommentFlagInputView;
 import org.ambraproject.rhino.view.comment.CommentInputView;
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -89,13 +92,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     return new Transceiver() {
       @Override
       protected AnnotationOutputView getData() throws IOException {
-        Annotation annotation = (Annotation) DataAccessUtils.uniqueResult(
-            hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
-                    .add(Restrictions.eq("annotationUri", commentId.getKey()))
-            ));
-        if (annotation == null) {
-          throw reportNotFound(commentId);
-        }
+        Annotation annotation = getComment(commentId);
 
         // TODO: Make this more efficient. Three queries is too many.
         Article article = (Article) DataAccessUtils.uniqueResult(
@@ -112,6 +109,25 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         return null;
       }
     };
+  }
+
+  private Annotation getComment(DoiBasedIdentity commentId) {
+    Annotation annotation = (Annotation) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Annotation.class)
+            .add(Restrictions.eq("annotationUri", commentId.getKey()))));
+    if (annotation == null) {
+      throw reportNotFound(commentId);
+    }
+    return annotation;
+  }
+
+  private UserProfile getUserProfile(String authId) {
+    UserProfile creator = (UserProfile) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+        "FROM UserProfile WHERE authId = ?", authId));
+    if (creator == null) {
+      throw new RestClientException("UserProfile not found: " + authId, HttpStatus.BAD_REQUEST);
+    }
+    return creator;
   }
 
   private static final Pattern DOI_PREFIX_PATTERN = Pattern.compile("^\\d+\\.\\d+/");
@@ -152,11 +168,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       }
     }
 
-    UserProfile creator = (UserProfile) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-        "FROM UserProfile WHERE authId = ?", input.getCreatorAuthId()));
-    if (creator == null) {
-      throw new RestClientException("UserProfile not found: " + input.getCreatorAuthId(), HttpStatus.BAD_REQUEST);
-    }
+    UserProfile creator = getUserProfile(input.getCreatorAuthId());
 
     String doiPrefix = extractDoiPrefix(articleDoi); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
@@ -175,6 +187,21 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
     hibernateTemplate.save(created);
     return created;
+  }
+
+  @Override
+  public Flag createCommentFlag(DoiBasedIdentity commentId, CommentFlagInputView input) {
+    Annotation comment = getComment(commentId);
+    UserProfile flagCreator = getUserProfile(input.getCreatorAuthId());
+
+    Flag flag = new Flag();
+    flag.setFlaggedAnnotation(comment);
+    flag.setCreator(flagCreator);
+    flag.setComment(input.getBody());
+    flag.setReason(FlagReasonCode.fromString(input.getReasonCode()));
+
+    hibernateTemplate.save(flag);
+    return flag;
   }
 
 }
