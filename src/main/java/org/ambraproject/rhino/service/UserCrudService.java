@@ -29,22 +29,17 @@ import java.io.IOException;
  */
 public interface UserCrudService {
 
-  /**
-   * List all the users
-   *
-   * @return list of users
-   * @throws IOException
-   */
-  public abstract Transceiver listUsers() throws IOException;
+  public abstract Transceiver read(String authId) throws IOException;
+
 
   /**
-   * UserProfile object for a given authId
+   * UserProfile object for a given displayName
    *
-   * @param authId authId
+   * @param displayName displayName
    * @return UserProfile object
    * @throws IOException
    */
-  public abstract Transceiver read(String authId) throws IOException;
+  public abstract Transceiver readUsingDisplayName(String displayName) throws IOException;
 
   /**
    * Record user logging in

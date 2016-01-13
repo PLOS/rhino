@@ -60,31 +60,6 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
    * {@inheritDoc}
    */
   @Override
-  public Transceiver listUsers() throws IOException {
-    return new Transceiver() {
-      @Override
-      protected Object getData() throws IOException {
-
-        List<String> authIds = (List<String>) hibernateTemplate.findByCriteria(
-            DetachedCriteria
-                .forClass(UserProfile.class)
-                .setProjection(Projections.projectionList().add(Projections.property("authId")))
-        );
-
-        return new AuthIdList(authIds);
-      }
-
-      @Override
-      protected Calendar getLastModifiedDate() throws IOException {
-        return null;
-      }
-    };
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public Transceiver read(final String authId) throws IOException {
 
     return new EntityTransceiver<UserProfile>() {
@@ -96,6 +71,33 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
 
         if (userProfile == null) {
           throw new RestClientException("UserProfile not found at authId=" + authId, HttpStatus.NOT_FOUND);
+        }
+
+        return userProfile;
+      }
+
+      @Override
+      protected Object getView(UserProfile userProfile) {
+        return userProfile;
+      }
+    };
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Transceiver readUsingDisplayName(final String displayName) throws IOException {
+
+    return new EntityTransceiver<UserProfile>() {
+
+      @Override
+      protected UserProfile fetchEntity() {
+
+        UserProfile userProfile = getUserByDisplayName(displayName);
+
+        if (userProfile == null) {
+          throw new RestClientException("UserProfile not found at displayName=" + displayName, HttpStatus.NOT_FOUND);
         }
 
         return userProfile;
@@ -139,6 +141,23 @@ public class UserCrudServiceImpl extends AmbraService implements UserCrudService
             DetachedCriteria
                 .forClass(UserProfile.class)
                 .add(Restrictions.eq("authId", authId))
+        )
+    );
+
+    return userProfile;
+  }
+
+    /**
+     * Find the UserProfile object for a given displayName
+     * @param authId authId
+     * @return UserProfile object
+     */
+  private UserProfile getUserByDisplayName(String displayName) {
+    UserProfile userProfile = (UserProfile) DataAccessUtils.uniqueResult(
+        hibernateTemplate.findByCriteria(
+            DetachedCriteria
+                .forClass(UserProfile.class)
+                .add(Restrictions.eq("displayName", displayName))
         )
     );
 

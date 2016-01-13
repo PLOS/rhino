@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,27 +39,37 @@ import java.io.IOException;
 @Controller
 public class UserCrudController extends RestController {
 
-  private static final String USER_ROOT = "/users";
-  private static final String USER_TEMPLATE = USER_ROOT + "/{authId}";
+  private static final String USER_ROOT = "/user";
 
   @Autowired
   private UserCrudService userCrudService;
 
+  /**
+   * @deprecated Older endpoint kept for compatibility. Prefer "?authId=" or "?displayName=".
+   */
+  @Deprecated
   @Transactional(readOnly = true)
-  @RequestMapping(value = USER_ROOT, method = RequestMethod.GET)
-  public void listUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    userCrudService.listUsers().respond(request, response, entityGson);
+  @RequestMapping(value = "/users/{authId}", method = RequestMethod.GET)
+  public void legacyRead(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
+    read(request, response, authId);
   }
 
   @Transactional(readOnly = true)
-  @RequestMapping(value = USER_TEMPLATE, method = RequestMethod.GET)
-  public void read(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
+  @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "authId")
+  public void read(HttpServletRequest request, HttpServletResponse response, @RequestParam String authId) throws IOException {
     userCrudService.read(authId).respond(request, response, entityGson);
   }
 
+  @Transactional(readOnly = true)
+  @RequestMapping(value = USER_ROOT, method = RequestMethod.GET, params = "displayName")
+  public void readUsingDisplayName(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam String displayName) throws IOException {
+    userCrudService.readUsingDisplayName(displayName).respond(request, response, entityGson);
+  }
+
   @Transactional(rollbackFor = {Throwable.class})
-  @RequestMapping(value = USER_TEMPLATE, method = RequestMethod.POST)
-  public void createUserLogin(HttpServletRequest request, HttpServletResponse response, @PathVariable String authId) throws IOException {
+  @RequestMapping(value = USER_ROOT, method = RequestMethod.POST)
+  public void createUserLogin(HttpServletRequest request, HttpServletResponse response, @RequestParam String authId) throws IOException {
 
     UserLogin input = readJsonFromRequest(request, UserLogin.class);
     userCrudService.createUserLogin(authId, input);
