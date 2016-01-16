@@ -148,8 +148,11 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     final Optional<Long> parentCommentPk;
     final AnnotationType annotationType;
     if (parentCommentUri.isPresent()) {
-      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-          "SELECT ID, articleID FROM Annotation WHERE annotationUri = ?", parentCommentUri.get().getKey()));
+      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find("" +
+              "SELECT ann.ID, ann.articleID, art.doi " +
+              "FROM Annotation ann, Article art " +
+              "WHERE ann.annotationUri = ? AND ann.articleID = art.ID",
+          parentCommentUri.get().getKey()));
       if (parentAnnotationData == null) {
         throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
       }
@@ -158,8 +161,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
       articlePk = (Long) parentAnnotationData[1];
       annotationType = AnnotationType.REPLY;
 
-      ArticleIdentity articleDoiFromDb = ArticleIdentity.create((String) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-          "SELECT doi FROM Article WHERE articleID = ?", articlePk)));
+      ArticleIdentity articleDoiFromDb = ArticleIdentity.create((String) parentAnnotationData[2]);
       if (!articleDoi.isPresent()) {
         articleDoi = Optional.of(articleDoiFromDb);
       } else if (!articleDoi.get().equals(articleDoiFromDb)) {
