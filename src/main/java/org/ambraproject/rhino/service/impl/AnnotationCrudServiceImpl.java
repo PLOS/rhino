@@ -148,6 +148,8 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     final Optional<Long> parentCommentPk;
     final AnnotationType annotationType;
     if (parentCommentUri.isPresent()) {
+      // The comment is a reply to a parent comment.
+      // The client might not have declared the parent article, so look it up from the parent comment.
       Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find("" +
               "SELECT ann.ID, ann.articleID, art.doi " +
               "FROM Annotation ann, Article art " +
@@ -170,6 +172,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
         throw new RestClientException(message, HttpStatus.BAD_REQUEST);
       }
     } else {
+      // The comment is a root-level reply to an article (no parent comment).
       if (!articleDoi.isPresent()) {
         throw new RestClientException("Must provide articleDoi or parentCommentId", HttpStatus.BAD_REQUEST);
       }
