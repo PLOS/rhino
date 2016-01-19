@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -140,37 +141,54 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
 
   @Override
   public Annotation createComment(CommentInputView input) {
-    ArticleIdentity articleDoi = ArticleIdentity.create(input.getArticleDoi());
-    Long articlePk = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-        "SELECT ID FROM Article WHERE doi = ?", articleDoi.getKey()));
-    if (articlePk == null) {
-      throw new RestClientException("Parent article not found: " + articleDoi, HttpStatus.BAD_REQUEST);
-    }
+    final Optional<DoiBasedIdentity> parentCommentUri = Optional.ofNullable(input.getParentCommentId()).map(DoiBasedIdentity::create);
+    Optional<ArticleIdentity> articleDoi = Optional.ofNullable(input.getArticleDoi()).map(ArticleIdentity::create);
 
+    final Long articlePk;
+    final Optional<Long> parentCommentPk;
     final AnnotationType annotationType;
-    final Long parentCommentPk;
-    String parentCommentUri = input.getParentCommentId();
-    if (Strings.isNullOrEmpty(parentCommentUri)) {
-      annotationType = AnnotationType.COMMENT;
-      parentCommentPk = null;
-    } else {
-      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-          "SELECT ID, articleID FROM Annotation WHERE annotationUri = ?", DoiBasedIdentity.create(parentCommentUri).getKey()));
+    if (parentCommentUri.isPresent()) {
+      // The comment is a reply to a parent comment.
+      // The client might not have declared the parent article, so look it up from the parent comment.
+      Object[] parentAnnotationData = (Object[]) DataAccessUtils.uniqueResult(hibernateTemplate.find("" +
+              "SELECT ann.ID, ann.articleID, art.doi " +
+              "FROM Annotation ann, Article art " +
+              "WHERE ann.annotationUri = ? AND ann.articleID = art.ID",
+          parentCommentUri.get().getKey()));
       if (parentAnnotationData == null) {
         throw new RestClientException("Parent comment not found: " + parentCommentUri, HttpStatus.BAD_REQUEST);
       }
-      parentCommentPk = (Long) parentAnnotationData[0];
+
+      parentCommentPk = Optional.of((Long) parentAnnotationData[0]);
+      articlePk = (Long) parentAnnotationData[1];
       annotationType = AnnotationType.REPLY;
 
-      Long parentCommentArticlePk = (Long) parentAnnotationData[1];
-      if (!articlePk.equals(parentCommentArticlePk)) {
-        throw new RestClientException("Parent comment not from same article.", HttpStatus.BAD_REQUEST);
+      ArticleIdentity articleDoiFromDb = ArticleIdentity.create((String) parentAnnotationData[2]);
+      if (!articleDoi.isPresent()) {
+        articleDoi = Optional.of(articleDoiFromDb);
+      } else if (!articleDoi.get().equals(articleDoiFromDb)) {
+        String message = String.format("Parent comment (%s) not from declared article (%s).",
+            parentCommentUri.get().getKey(), articleDoi.get().getKey());
+        throw new RestClientException(message, HttpStatus.BAD_REQUEST);
       }
+    } else {
+      // The comment is a root-level reply to an article (no parent comment).
+      if (!articleDoi.isPresent()) {
+        throw new RestClientException("Must provide articleDoi or parentCommentId", HttpStatus.BAD_REQUEST);
+      }
+
+      articlePk = (Long) DataAccessUtils.uniqueResult(hibernateTemplate.find(
+          "SELECT ID FROM Article WHERE doi = ?", articleDoi.get().getKey()));
+      if (articlePk == null) {
+        throw new RestClientException("Parent article not found: " + articleDoi.get(), HttpStatus.BAD_REQUEST);
+      }
+      parentCommentPk = Optional.empty();
+      annotationType = AnnotationType.COMMENT;
     }
 
     UserProfile creator = getUserProfile(input.getCreatorAuthId());
 
-    String doiPrefix = extractDoiPrefix(articleDoi); // comment receives same DOI prefix as article
+    String doiPrefix = extractDoiPrefix(articleDoi.get()); // comment receives same DOI prefix as article
     UUID uuid = UUID.randomUUID(); // generate a new DOI out of a random UUID
     DoiBasedIdentity createdAnnotationUri = DoiBasedIdentity.create(doiPrefix + "annotation/" + uuid);
 
@@ -178,7 +196,7 @@ public class AnnotationCrudServiceImpl extends AmbraService implements Annotatio
     created.setType(annotationType);
     created.setCreator(creator);
     created.setArticleID(articlePk);
-    created.setParentID(parentCommentPk);
+    created.setParentID(parentCommentPk.orElse(null));
     created.setAnnotationUri(createdAnnotationUri.getKey());
     created.setTitle(Strings.nullToEmpty(input.getTitle()));
     created.setBody(Strings.nullToEmpty(input.getBody()));
