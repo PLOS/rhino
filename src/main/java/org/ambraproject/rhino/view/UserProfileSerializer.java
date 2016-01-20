@@ -30,6 +30,7 @@ public enum UserProfileSerializer implements JsonSerializer<UserProfile> {
     serialized.addProperty("postalAddress", src.getPostalAddress());
     serialized.addProperty("organizationType", src.getOrganizationType());
     serialized.addProperty("organizationName", src.getOrganizationName());
+    serialized.addProperty("organizationVisibility", src.getOrganizationVisibility());
     serialized.addProperty("positionType", src.getPositionType());
     serialized.addProperty("biography", src.getBiography());
     serialized.addProperty("researchAreas", src.getResearchAreas());
